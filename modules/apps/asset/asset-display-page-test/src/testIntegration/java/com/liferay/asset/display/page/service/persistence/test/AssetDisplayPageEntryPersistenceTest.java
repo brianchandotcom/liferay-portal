@@ -248,6 +248,14 @@ public class AssetDisplayPageEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_CN() throws Exception {
+		_persistence.countByG_CN(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_CN(0L, 0L);
+	}
+
+	@Test
 	public void testCountByG_C_C() throws Exception {
 		_persistence.countByG_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

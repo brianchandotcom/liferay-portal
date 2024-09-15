@@ -2566,6 +2566,562 @@ public class AssetDisplayPageEntryPersistenceImpl
 		_FINDER_COLUMN_LAYOUTPAGETEMPLATEENTRYID_LAYOUTPAGETEMPLATEENTRYID_2 =
 			"assetDisplayPageEntry.layoutPageTemplateEntryId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByG_CN;
+	private FinderPath _finderPathWithoutPaginationFindByG_CN;
+	private FinderPath _finderPathCountByG_CN;
+
+	/**
+	 * Returns all the asset display page entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the matching asset display page entries
+	 */
+	@Override
+	public List<AssetDisplayPageEntry> findByG_CN(
+		long groupId, long classNameId) {
+
+		return findByG_CN(
+			groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset display page entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of asset display page entries
+	 * @param end the upper bound of the range of asset display page entries (not inclusive)
+	 * @return the range of matching asset display page entries
+	 */
+	@Override
+	public List<AssetDisplayPageEntry> findByG_CN(
+		long groupId, long classNameId, int start, int end) {
+
+		return findByG_CN(groupId, classNameId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset display page entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of asset display page entries
+	 * @param end the upper bound of the range of asset display page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset display page entries
+	 */
+	@Override
+	public List<AssetDisplayPageEntry> findByG_CN(
+		long groupId, long classNameId, int start, int end,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
+
+		return findByG_CN(
+			groupId, classNameId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset display page entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of asset display page entries
+	 * @param end the upper bound of the range of asset display page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset display page entries
+	 */
+	@Override
+	public List<AssetDisplayPageEntry> findByG_CN(
+		long groupId, long classNameId, int start, int end,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AssetDisplayPageEntry.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_CN;
+					finderArgs = new Object[] {groupId, classNameId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_CN;
+				finderArgs = new Object[] {
+					groupId, classNameId, start, end, orderByComparator
+				};
+			}
+
+			List<AssetDisplayPageEntry> list = null;
+
+			if (useFinderCache) {
+				list = (List<AssetDisplayPageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (AssetDisplayPageEntry assetDisplayPageEntry : list) {
+						if ((groupId != assetDisplayPageEntry.getGroupId()) ||
+							(classNameId !=
+								assetDisplayPageEntry.getClassNameId())) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
+
+				sb.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
+
+				sb.append(_FINDER_COLUMN_G_CN_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_G_CN_CLASSNAMEID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					queryPos.add(classNameId);
+
+					list = (List<AssetDisplayPageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset display page entry
+	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry findByG_CN_First(
+			long groupId, long classNameId,
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
+		throws NoSuchDisplayPageEntryException {
+
+		AssetDisplayPageEntry assetDisplayPageEntry = fetchByG_CN_First(
+			groupId, classNameId, orderByComparator);
+
+		if (assetDisplayPageEntry != null) {
+			return assetDisplayPageEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append("}");
+
+		throw new NoSuchDisplayPageEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry fetchByG_CN_First(
+		long groupId, long classNameId,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
+
+		List<AssetDisplayPageEntry> list = findByG_CN(
+			groupId, classNameId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset display page entry
+	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry findByG_CN_Last(
+			long groupId, long classNameId,
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
+		throws NoSuchDisplayPageEntryException {
+
+		AssetDisplayPageEntry assetDisplayPageEntry = fetchByG_CN_Last(
+			groupId, classNameId, orderByComparator);
+
+		if (assetDisplayPageEntry != null) {
+			return assetDisplayPageEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append("}");
+
+		throw new NoSuchDisplayPageEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry fetchByG_CN_Last(
+		long groupId, long classNameId,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
+
+		int count = countByG_CN(groupId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetDisplayPageEntry> list = findByG_CN(
+			groupId, classNameId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset display page entry
+	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry[] findByG_CN_PrevAndNext(
+			long assetDisplayPageEntryId, long groupId, long classNameId,
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
+		throws NoSuchDisplayPageEntryException {
+
+		AssetDisplayPageEntry assetDisplayPageEntry = findByPrimaryKey(
+			assetDisplayPageEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetDisplayPageEntry[] array = new AssetDisplayPageEntryImpl[3];
+
+			array[0] = getByG_CN_PrevAndNext(
+				session, assetDisplayPageEntry, groupId, classNameId,
+				orderByComparator, true);
+
+			array[1] = assetDisplayPageEntry;
+
+			array[2] = getByG_CN_PrevAndNext(
+				session, assetDisplayPageEntry, groupId, classNameId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetDisplayPageEntry getByG_CN_PrevAndNext(
+		Session session, AssetDisplayPageEntry assetDisplayPageEntry,
+		long groupId, long classNameId,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_CN_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_CN_CLASSNAMEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(classNameId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						assetDisplayPageEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AssetDisplayPageEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset display page entries where groupId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 */
+	@Override
+	public void removeByG_CN(long groupId, long classNameId) {
+		for (AssetDisplayPageEntry assetDisplayPageEntry :
+				findByG_CN(
+					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(assetDisplayPageEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of asset display page entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching asset display page entries
+	 */
+	@Override
+	public int countByG_CN(long groupId, long classNameId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AssetDisplayPageEntry.class)) {
+
+			FinderPath finderPath = _finderPathCountByG_CN;
+
+			Object[] finderArgs = new Object[] {groupId, classNameId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE);
+
+				sb.append(_FINDER_COLUMN_G_CN_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_G_CN_CLASSNAMEID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					queryPos.add(classNameId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_CN_GROUPID_2 =
+		"assetDisplayPageEntry.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_CN_CLASSNAMEID_2 =
+		"assetDisplayPageEntry.classNameId = ?";
+
 	private FinderPath _finderPathFetchByG_C_C;
 	private FinderPath _finderPathCountByG_C_C;
 
@@ -3826,6 +4382,25 @@ public class AssetDisplayPageEntryPersistenceImpl
 			"countByLayoutPageTemplateEntryId",
 			new String[] {Long.class.getName()},
 			new String[] {"layoutPageTemplateEntryId"}, false);
+
+		_finderPathWithPaginationFindByG_CN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "classNameId"}, true);
+
+		_finderPathWithoutPaginationFindByG_CN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CN",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"groupId", "classNameId"}, true);
+
+		_finderPathCountByG_CN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CN",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"groupId", "classNameId"}, false);
 
 		_finderPathFetchByG_C_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",

@@ -270,40 +270,42 @@ test('Allows duplicating an experience', async ({
 	await expect(row).toContainText('Inactive');
 });
 
-test('Allows creating experiences with different fragments', async ({
-	apiHelpers,
-	pageEditorPage,
-	site,
-}) => {
+test(
+	'Allows creating experiences with different fragments',
+	{
+		tag: '@LPS-86285',
+	},
+	async ({apiHelpers, pageEditorPage, site}) => {
 
-	// Create a page with a Heading fragment and go to edit mode
+		// Create a page with a Heading fragment and go to edit mode
 
-	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition({
-		id: headingId,
-		key: 'BASIC_COMPONENT-heading',
-	});
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([headingDefinition]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	// Create new experience and remove the fragment
+		// Create new experience and remove the fragment
 
-	await pageEditorPage.createExperience('E1');
+		await pageEditorPage.createExperience('E1');
 
-	await pageEditorPage.removeFragment(headingId);
+		await pageEditorPage.removeFragment(headingId);
 
-	// Change to Default experience again and check the fragment is present
+		// Change to Default experience again and check the fragment is present
 
-	await pageEditorPage.switchExperience('Default');
+		await pageEditorPage.switchExperience('Default');
 
-	await expect(pageEditorPage.getFragment(headingId)).toBeVisible();
-});
+		await expect(pageEditorPage.getFragment(headingId)).toBeVisible();
+	}
+);
 
 test('Allows editing and deleting an experience', async ({
 	apiHelpers,

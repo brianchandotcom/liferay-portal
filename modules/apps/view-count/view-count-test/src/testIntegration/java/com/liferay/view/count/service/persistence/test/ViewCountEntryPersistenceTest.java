@@ -137,6 +137,14 @@ public class ViewCountEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CN() throws Exception {
+		_persistence.countByC_CN(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_CN(0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ViewCountEntry newViewCountEntry = addViewCountEntry();
 

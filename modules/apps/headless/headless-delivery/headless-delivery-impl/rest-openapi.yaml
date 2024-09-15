@@ -8471,6 +8471,7 @@ paths:
             tags: ["StructuredContent"]
     "/document-data-definition-types/{documentDataDefinitionTypeId}":
         delete:
+            operationId: deleteDocumentDataDefinitionType
             parameters:
                 - in: path
                   name: documentDataDefinitionTypeId

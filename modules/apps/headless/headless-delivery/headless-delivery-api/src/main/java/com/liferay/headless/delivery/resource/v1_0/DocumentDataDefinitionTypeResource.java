@@ -72,6 +72,14 @@ public interface DocumentDataDefinitionTypeResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteDocumentDataDefinitionType(
+			Long documentDataDefinitionTypeId)
+		throws Exception;
+
+	public Response deleteDocumentDataDefinitionTypeBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public DocumentDataDefinitionType getDocumentDataDefinitionType(
 			Long documentDataDefinitionTypeId)
 		throws Exception;

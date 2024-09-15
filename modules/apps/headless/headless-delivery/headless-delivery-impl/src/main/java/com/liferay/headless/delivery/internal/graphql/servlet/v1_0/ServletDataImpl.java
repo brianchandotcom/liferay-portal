@@ -615,6 +615,16 @@ public class ServletDataImpl implements ServletData {
 							DocumentDataDefinitionTypeResourceImpl.class,
 							"postAssetLibraryDocumentDataDefinitionTypeBatch"));
 					put(
+						"mutation#deleteDocumentDataDefinitionType",
+						new ObjectValuePair<>(
+							DocumentDataDefinitionTypeResourceImpl.class,
+							"deleteDocumentDataDefinitionType"));
+					put(
+						"mutation#deleteDocumentDataDefinitionTypeBatch",
+						new ObjectValuePair<>(
+							DocumentDataDefinitionTypeResourceImpl.class,
+							"deleteDocumentDataDefinitionTypeBatch"));
+					put(
 						"mutation#createSiteDocumentDataDefinitionTypesPageExportBatch",
 						new ObjectValuePair<>(
 							DocumentDataDefinitionTypeResourceImpl.class,

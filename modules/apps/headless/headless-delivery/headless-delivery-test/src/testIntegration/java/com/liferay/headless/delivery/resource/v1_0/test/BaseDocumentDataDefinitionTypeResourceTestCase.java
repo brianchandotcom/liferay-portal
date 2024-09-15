@@ -26,6 +26,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -277,6 +278,12 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			page,
 			testGetAssetLibraryDocumentDataDefinitionTypesPage_getExpectedActions(
 				assetLibraryId));
+
+		documentDataDefinitionTypeResource.deleteDocumentDataDefinitionType(
+			documentDataDefinitionType1.getId());
+
+		documentDataDefinitionTypeResource.deleteDocumentDataDefinitionType(
+			documentDataDefinitionType2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -750,6 +757,125 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDocumentDataDefinitionType() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentDataDefinitionType documentDataDefinitionType =
+			testDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentDataDefinitionTypeResource.
+				deleteDocumentDataDefinitionTypeHttpResponse(
+					documentDataDefinitionType.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentDataDefinitionTypeResource.
+				getDocumentDataDefinitionTypeHttpResponse(
+					documentDataDefinitionType.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentDataDefinitionTypeResource.
+				getDocumentDataDefinitionTypeHttpResponse(0L));
+	}
+
+	protected DocumentDataDefinitionType
+			testDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return documentDataDefinitionTypeResource.
+			postSiteDocumentDataDefinitionType(
+				testGroup.getGroupId(), randomDocumentDataDefinitionType());
+	}
+
+	@Test
+	public void testGraphQLDeleteDocumentDataDefinitionType() throws Exception {
+
+		// No namespace
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentDataDefinitionTypeId",
+									documentDataDefinitionType1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentDataDefinitionType"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"documentDataDefinitionType",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"documentDataDefinitionTypeId",
+								documentDataDefinitionType1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentDataDefinitionType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentDataDefinitionTypeId",
+										documentDataDefinitionType2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentDataDefinitionType"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"documentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentDataDefinitionTypeId",
+									documentDataDefinitionType2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType();
+	}
+
+	@Test
 	public void testGetDocumentDataDefinitionType() throws Exception {
 		DocumentDataDefinitionType postDocumentDataDefinitionType =
 			testGetDocumentDataDefinitionType_addDocumentDataDefinitionType();
@@ -939,6 +1065,12 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			page,
 			testGetSiteDocumentDataDefinitionTypesPage_getExpectedActions(
 				siteId));
+
+		documentDataDefinitionTypeResource.deleteDocumentDataDefinitionType(
+			documentDataDefinitionType1.getId());
+
+		documentDataDefinitionTypeResource.deleteDocumentDataDefinitionType(
+			documentDataDefinitionType2.getId());
 	}
 
 	protected Map<String, Map<String, String>>

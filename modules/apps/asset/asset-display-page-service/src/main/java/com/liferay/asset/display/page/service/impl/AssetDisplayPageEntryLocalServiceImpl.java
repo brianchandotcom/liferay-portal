@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,11 +35,14 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -118,8 +122,39 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		assetDisplayPageEntryPersistence.removeByG_C_C(
-			groupId, classNameId, classPK);
+		Map<Long, List<AssetDisplayPageEntry>>
+			partitionAssetDisplayPageEntries =
+				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+					StringBundler.concat(
+						AssetDisplayPageEntryLocalServiceImpl.class.getName(),
+						".fetchAssetDisplayPageEntry#", groupId, classNameId),
+					() -> MapUtil.toPartitionMap(
+						assetDisplayPageEntryPersistence.findByG_CN(
+							groupId, classNameId),
+						AssetDisplayPageEntry::getClassPK));
+
+		if (partitionAssetDisplayPageEntries == null) {
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				assetDisplayPageEntryPersistence.fetchByG_C_C(
+					groupId, classNameId, classPK);
+
+			if (assetDisplayPageEntry != null) {
+				assetDisplayPageEntryPersistence.remove(assetDisplayPageEntry);
+			}
+		}
+		else {
+			List<AssetDisplayPageEntry> assetDisplayPageEntries =
+				partitionAssetDisplayPageEntries.remove(classPK);
+
+			if (assetDisplayPageEntries != null) {
+				for (AssetDisplayPageEntry assetDisplayPageEntry :
+						assetDisplayPageEntries) {
+
+					assetDisplayPageEntryPersistence.remove(
+						assetDisplayPageEntry);
+				}
+			}
+		}
 	}
 
 	@Override

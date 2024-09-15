@@ -5,10 +5,10 @@
 
 package com.liferay.asset.display.page.internal.model.listener;
 
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -25,14 +25,13 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	public void onBeforeRemove(AssetEntry assetEntry)
 		throws ModelListenerException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+		try {
+			_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
 				assetEntry.getGroupId(), assetEntry.getClassNameId(),
 				assetEntry.getClassPK());
-
-		if (assetDisplayPageEntry != null) {
-			_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
-				assetDisplayPageEntry);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

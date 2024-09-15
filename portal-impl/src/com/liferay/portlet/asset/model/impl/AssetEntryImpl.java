@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
+import com.liferay.portlet.asset.util.DeletedAssetObjectThreadLocal;
 
 import java.util.List;
 
@@ -29,6 +30,12 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 
 	@Override
 	public AssetRenderer<?> getAssetRenderer() {
+		if (DeletedAssetObjectThreadLocal.isDeletedAssetObject(
+				getClassName(), getClassPK())) {
+
+			return null;
+		}
+
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());

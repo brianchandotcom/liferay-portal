@@ -204,6 +204,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portlet.asset.util.DeletedAssetObjectThreadLocal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -549,8 +550,15 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCompanyId(), objectDefinition.getClassName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, objectEntry.getObjectEntryId());
 
-		_assetEntryLocalService.deleteEntry(
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+		try (SafeCloseable safeCloseable =
+				DeletedAssetObjectThreadLocal.setWithSafeCloseable(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId())) {
+
+			_assetEntryLocalService.deleteEntry(
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
+		}
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),

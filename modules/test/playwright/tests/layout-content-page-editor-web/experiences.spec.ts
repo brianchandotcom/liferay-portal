@@ -386,3 +386,65 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Allows prioritize and deprioritize experiences',
+	{
+		tag: '@LPS-90585',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Create new experience
+
+		await pageEditorPage.createExperience('E1');
+
+		// Prioritize priority
+
+		await pageEditorPage.openExperienceSelector();
+
+		const defaultExperience = page.locator('.dropdown-menu__experience', {
+			hasText: 'Default',
+		});
+
+		const experience = page.locator('.dropdown-menu__experience', {
+			hasText: 'E1',
+		});
+
+		const listItems = page.locator('ul.list-group');
+
+		await experience
+			.getByLabel('Prioritize Experience', {exact: true})
+			.click();
+
+		await expect(listItems.locator('li').last()).toContainText('Default');
+
+		await expect(defaultExperience).toContainText('Inactive');
+
+		await expect(listItems.locator('li').first()).toContainText('E1');
+
+		await expect(experience).toContainText('Active');
+
+		// Decrease priority
+
+		await experience
+			.getByLabel('Deprioritize Experience', {exact: true})
+			.click();
+
+		await expect(listItems.locator('li').first()).toContainText('Default');
+
+		await expect(defaultExperience).toContainText('Active');
+
+		await expect(listItems.locator('li').last()).toContainText('E1');
+
+		await expect(experience).toContainText('Inactive');
+	}
+);

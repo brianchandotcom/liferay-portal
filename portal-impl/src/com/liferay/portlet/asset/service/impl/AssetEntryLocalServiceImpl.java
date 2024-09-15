@@ -7,6 +7,7 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntries_AssetTagsTable;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -20,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -49,7 +52,9 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,6 +70,7 @@ import com.liferay.social.kernel.service.SocialActivityCounterLocalService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service for accessing, deleting, updating, and validating
@@ -80,21 +86,49 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteEntry(AssetEntry entry) throws PortalException {
 
-		// Entry
-
-		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
-			entry.getEntryId());
-
-		assetEntryPersistence.remove(entry);
-
 		// Tags
 
-		for (AssetTag tag : tags) {
-			if (entry.isVisible()) {
-				_assetTagLocalService.decrementAssetCount(
-					tag.getTagId(), entry.getClassNameId());
+		Map<Long, List<Object[]>> partitionAssetEntryAssetTagIds =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				AssetEntryLocalServiceImpl.class.getName() + ".deleteEntry",
+				() -> MapUtil.toPartitionMap(
+					dslQuery(
+						DSLQueryFactoryUtil.select(
+							AssetEntries_AssetTagsTable.INSTANCE.entryId,
+							AssetEntries_AssetTagsTable.INSTANCE.tagId
+						).from(
+							AssetEntries_AssetTagsTable.INSTANCE
+						).where(
+							AssetEntries_AssetTagsTable.INSTANCE.companyId.eq(
+								CompanyThreadLocal.getCompanyId())
+						)),
+					ids -> (Long)ids[0]));
+
+		if (partitionAssetEntryAssetTagIds == null) {
+			List<AssetTag> tags = assetEntryPersistence.getAssetTags(
+				entry.getEntryId());
+
+			for (AssetTag tag : tags) {
+				if (entry.isVisible()) {
+					_assetTagLocalService.decrementAssetCount(
+						tag.getTagId(), entry.getClassNameId());
+				}
 			}
 		}
+		else {
+			List<Object[]> assertEntryAssetTagIds =
+				partitionAssetEntryAssetTagIds.remove(entry.getEntryId());
+
+			if (assertEntryAssetTagIds != null) {
+				for (Object[] assetEntryAssetTag : assertEntryAssetTagIds) {
+					assetTagPersistence.remove((Long)assetEntryAssetTag[1]);
+				}
+			}
+		}
+
+		// Entry
+
+		assetEntryPersistence.remove(entry);
 
 		// View count
 

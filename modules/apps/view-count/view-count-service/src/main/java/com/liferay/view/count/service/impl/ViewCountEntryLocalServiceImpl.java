@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.view.count.configuration.ViewCountConfiguration;
@@ -34,6 +37,7 @@ import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,14 +64,37 @@ public class ViewCountEntryLocalServiceImpl
 	public void deleteViewCount(
 		long companyId, long classNameId, long classPK) {
 
-		ViewCountEntryPK viewCountEntryPK = new ViewCountEntryPK(
-			companyId, classNameId, classPK);
+		Map<Long, List<ViewCountEntry>> partitionViewCountEntries =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				StringBundler.concat(
+					ViewCountEntryLocalServiceImpl.class.getName(),
+					".deleteViewCount#", companyId, classNameId),
+				() -> MapUtil.toPartitionMap(
+					viewCountEntryPersistence.findByC_CN(
+						companyId, classNameId),
+					ViewCountEntry::getClassPK));
 
-		ViewCountEntry viewCountEntry =
-			viewCountEntryPersistence.fetchByPrimaryKey(viewCountEntryPK);
+		if (partitionViewCountEntries == null) {
+			ViewCountEntryPK viewCountEntryPK = new ViewCountEntryPK(
+				companyId, classNameId, classPK);
 
-		if (viewCountEntry != null) {
-			viewCountEntryPersistence.remove(viewCountEntry);
+			ViewCountEntry viewCountEntry =
+				viewCountEntryPersistence.fetchByPrimaryKey(viewCountEntryPK);
+
+			if (viewCountEntry != null) {
+				viewCountEntryPersistence.remove(viewCountEntry);
+			}
+
+			return;
+		}
+
+		List<ViewCountEntry> viewCountEntries =
+			partitionViewCountEntries.remove(classPK);
+
+		if (viewCountEntries != null) {
+			for (ViewCountEntry viewCountEntry : viewCountEntries) {
+				viewCountEntryPersistence.remove(viewCountEntry);
+			}
 		}
 	}
 

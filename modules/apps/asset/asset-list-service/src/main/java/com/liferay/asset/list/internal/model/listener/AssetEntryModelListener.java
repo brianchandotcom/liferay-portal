@@ -6,7 +6,6 @@
 package com.liferay.asset.list.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,23 +27,17 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	public void onAfterRemove(AssetEntry assetEntry)
 		throws ModelListenerException {
 
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				_assetListEntryAssetEntryRelLocalService.
-					getAssetListEntryAssetEntryRelByAssetEntryId(
-						assetEntry.getEntryId())) {
-
-			try {
-				_assetListEntryAssetEntryRelLocalService.
-					deleteAssetListEntryAssetEntryRel(
-						assetListEntryAssetEntryRel);
+		try {
+			_assetListEntryAssetEntryRelLocalService.
+				deleteAssetListEntryAssetEntryRelByAssetEntryId(
+					assetEntry.getEntryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
 
-				throw new ModelListenerException(portalException);
-			}
+			throw new ModelListenerException(portalException);
 		}
 	}
 

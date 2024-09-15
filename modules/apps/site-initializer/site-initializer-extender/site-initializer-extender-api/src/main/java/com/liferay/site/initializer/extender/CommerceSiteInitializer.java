@@ -30,6 +30,12 @@ public interface CommerceSiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception;
 
+	public void addFDSEntries(
+			Bundle bundle, ServiceContext serviceContext,
+			ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception;
+
 	public void addPortletSettings(
 			ClassLoader classLoader, ServiceContext serviceContext,
 			ServletContext servletContext)

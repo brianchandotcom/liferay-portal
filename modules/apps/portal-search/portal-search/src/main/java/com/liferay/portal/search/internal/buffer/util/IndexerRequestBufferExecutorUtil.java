@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
 import com.liferay.portal.search.internal.buffer.IndexerRequest;
 import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
@@ -38,6 +39,12 @@ public class IndexerRequestBufferExecutorUtil {
 
 		if (!SearchContext.isBatchMode()) {
 			_execute(indexerRequestBuffer, numRequests, true);
+
+			return;
+		}
+
+		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+			_execute(indexerRequestBuffer, numRequests, false);
 
 			return;
 		}

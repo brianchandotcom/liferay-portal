@@ -128,23 +128,38 @@ public class BulkDocumentRequestExecutorImpl
 			bulkableDocumentRequest.accept(
 				request -> {
 					if (request instanceof DeleteDocumentRequest) {
+						DeleteDocumentRequest deleteDocumentRequest =
+							(DeleteDocumentRequest)request;
+
+						deleteDocumentRequest.setRefresh(false);
+
 						DeleteRequest deleteRequest =
 							_elasticsearchBulkableDocumentRequestTranslator.
-								translate((DeleteDocumentRequest)request);
+								translate(deleteDocumentRequest);
 
 						bulkRequest.add(deleteRequest);
 					}
 					else if (request instanceof IndexDocumentRequest) {
+						IndexDocumentRequest indexDocumentRequest =
+							(IndexDocumentRequest)request;
+
+						indexDocumentRequest.setRefresh(false);
+
 						IndexRequest indexRequest =
 							_elasticsearchBulkableDocumentRequestTranslator.
-								translate((IndexDocumentRequest)request);
+								translate(indexDocumentRequest);
 
 						bulkRequest.add(indexRequest);
 					}
 					else if (request instanceof UpdateDocumentRequest) {
+						UpdateDocumentRequest updateDocumentRequest =
+							(UpdateDocumentRequest)request;
+
+						updateDocumentRequest.setRefresh(false);
+
 						UpdateRequest updateRequest =
 							_elasticsearchBulkableDocumentRequestTranslator.
-								translate((UpdateDocumentRequest)request);
+								translate(updateDocumentRequest);
 
 						bulkRequest.add(updateRequest);
 					}

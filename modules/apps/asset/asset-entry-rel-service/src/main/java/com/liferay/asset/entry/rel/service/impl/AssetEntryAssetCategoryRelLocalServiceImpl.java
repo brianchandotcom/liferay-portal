@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,8 +104,32 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	public void deleteAssetEntryAssetCategoryRelByAssetEntryId(
 		long assetEntryId) {
 
-		assetEntryAssetCategoryRelPersistence.removeByAssetEntryId(
-			assetEntryId);
+		Map<Long, List<AssetEntryAssetCategoryRel>>
+			partitionAssetEntryAssetCategoryRels =
+				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+					AssetEntryAssetCategoryRelLocalServiceImpl.class.getName() +
+						".deleteAssetEntryAssetCategoryRelByAssetEntryId",
+					() -> MapUtil.toPartitionMap(
+						assetEntryAssetCategoryRelPersistence.findAll(),
+						AssetEntryAssetCategoryRel::getAssetEntryId));
+
+		if (partitionAssetEntryAssetCategoryRels == null) {
+			assetEntryAssetCategoryRelPersistence.removeByAssetEntryId(
+				assetEntryId);
+		}
+		else {
+			List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+				partitionAssetEntryAssetCategoryRels.remove(assetEntryId);
+
+			if (assetEntryAssetCategoryRels != null) {
+				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
+						assetEntryAssetCategoryRels) {
+
+					assetEntryAssetCategoryRelPersistence.remove(
+						assetEntryAssetCategoryRel);
+				}
+			}
+		}
 
 		_reindex(assetEntryId);
 	}

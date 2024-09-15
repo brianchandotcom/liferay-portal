@@ -8470,6 +8470,20 @@ paths:
                                 type: array
             tags: ["StructuredContent"]
     "/document-data-definition-types/{documentDataDefinitionTypeId}":
+        delete:
+            parameters:
+                - in: path
+                  name: documentDataDefinitionTypeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DocumentDataDefinitionType"]
         get:
             operationId: getDocumentDataDefinitionType
             parameters:

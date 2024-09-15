@@ -5,8 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
@@ -14,6 +19,8 @@ import com.liferay.portal.search.engine.adapter.ccr.CCRResponse;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterResponse;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
@@ -26,6 +33,8 @@ import com.liferay.portal.search.engine.adapter.search.SearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
+
+import java.util.List;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
@@ -67,6 +76,84 @@ public class ElasticsearchSearchEngineAdapterImpl
 	@Override
 	public <S extends DocumentResponse> S execute(
 		DocumentRequest<S> documentRequest) {
+
+		if (SearchContext.isBatchMode() &&
+			(documentRequest instanceof BulkableDocumentRequest ||
+			 documentRequest instanceof BulkDocumentRequest)) {
+
+			BulkDocumentRequest bulkDocumentRequest =
+				_bulkDocumentRequestThreadLocal.get();
+
+			if (bulkDocumentRequest == null) {
+				bulkDocumentRequest = new BulkDocumentRequest();
+
+				_bulkDocumentRequestThreadLocal.set(bulkDocumentRequest);
+
+				BulkDocumentRequest finalBulkDocumentRequest =
+					bulkDocumentRequest;
+
+				SearchContext.registerBatchModeSyncCallable(
+					() -> {
+						List<BulkableDocumentRequest<?>>
+							bulkableDocumentRequests =
+								finalBulkDocumentRequest.
+									getBulkableDocumentRequests();
+
+						if (bulkableDocumentRequests.isEmpty()) {
+							return null;
+						}
+
+						try {
+							finalBulkDocumentRequest.accept(
+								_documentRequestExecutor);
+						}
+						catch (RuntimeException runtimeException) {
+							throw _getRuntimeException(runtimeException);
+						}
+						finally {
+							_bulkDocumentRequestThreadLocal.remove();
+						}
+
+						return null;
+					});
+			}
+
+			if (documentRequest instanceof BulkDocumentRequest) {
+				BulkDocumentRequest incomingBulkDocumentRequest =
+					(BulkDocumentRequest)documentRequest;
+
+				for (BulkableDocumentRequest<?> bulkableDocumentRequest :
+						incomingBulkDocumentRequest.
+							getBulkableDocumentRequests()) {
+
+					bulkDocumentRequest.addBulkableDocumentRequest(
+						bulkableDocumentRequest);
+				}
+			}
+			else {
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					(BulkableDocumentRequest)documentRequest);
+			}
+
+			List<BulkableDocumentRequest<?>> bulkableDocumentRequests =
+				bulkDocumentRequest.getBulkableDocumentRequests();
+
+			if (bulkableDocumentRequests.size() >= _HIBERNATE_JDBC_BATCH_SIZE) {
+				try {
+					S documentResponse = documentRequest.accept(
+						_documentRequestExecutor);
+
+					bulkableDocumentRequests.clear();
+
+					return documentResponse;
+				}
+				catch (RuntimeException runtimeException) {
+					throw _getRuntimeException(runtimeException);
+				}
+			}
+
+			return null;
+		}
 
 		try {
 			return documentRequest.accept(_documentRequestExecutor);
@@ -152,6 +239,14 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 		return runtimeException1;
 	}
+
+	private static final int _HIBERNATE_JDBC_BATCH_SIZE = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE));
+
+	private static final ThreadLocal<BulkDocumentRequest>
+		_bulkDocumentRequestThreadLocal = new CentralizedThreadLocal<>(
+			ElasticsearchSearchEngineAdapterImpl.class.getName() +
+				"._bulkDocumentRequestThreadLocal");
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private CCRRequestExecutor _ccrRequestExecutor;

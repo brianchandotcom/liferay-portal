@@ -31,6 +31,17 @@ public class BulkDeleteCacheThreadLocal {
 			ownerName, key -> supplier.get());
 	}
 
+	public static boolean isBulkDeleteMode() {
+		Map<String, Object> bulkDeleteCacheMap =
+			_bulkDeleteCacheThreadLocal.get();
+
+		if (bulkDeleteCacheMap == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static SafeCloseable openBulkDeleteMode() {
 		return _bulkDeleteCacheThreadLocal.setWithSafeCloseable(
 			new HashMap<>());

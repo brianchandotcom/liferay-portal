@@ -1785,6 +1785,37 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteDocumentDataDefinitionType(
+			@GraphQLName("documentDataDefinitionTypeId") Long
+				documentDataDefinitionTypeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					deleteDocumentDataDefinitionType(
+						documentDataDefinitionTypeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentDataDefinitionTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					deleteDocumentDataDefinitionTypeBatch(callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response createSiteDocumentDataDefinitionTypesPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,

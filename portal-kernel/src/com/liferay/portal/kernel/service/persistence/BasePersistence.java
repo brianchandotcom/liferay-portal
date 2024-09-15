@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -252,6 +253,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @return the model instance that was removed
 	 */
 	public T remove(T model);
+
+	public T removeByFunction(T model, Function<T, T> function);
 
 	/**
 	 * Sets the data source for this model.

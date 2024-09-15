@@ -94,6 +94,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -647,6 +648,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public T remove(T model) {
+		return removeByFunction(model, this::removeImpl);
+	}
+
+	@Override
+	public T removeByFunction(T model, Function<T, T> function) {
 		if (ReadOnlyTransactionThreadLocal.isReadOnly()) {
 			throw new IllegalStateException(
 				"Remove called with read only transaction");
@@ -664,7 +670,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			modelListener.onBeforeRemove(model);
 		}
 
-		T removedModel = removeImpl(model);
+		T removedModel = function.apply(model);
 
 		if (removedModel != null) {
 			model = removedModel;

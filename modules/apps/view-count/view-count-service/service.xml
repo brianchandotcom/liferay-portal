@@ -15,5 +15,12 @@
 		<!-- Other fields -->
 
 		<column name="viewCount" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_CN" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+		</finder>
 	</entity>
 </service-builder>

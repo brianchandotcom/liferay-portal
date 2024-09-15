@@ -17,6 +17,7 @@ import com.liferay.asset.link.service.base.AssetLinkLocalServiceBaseImpl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,12 +29,17 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -180,12 +186,85 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public void deleteLinks(long entryId) {
-		for (AssetLink link : assetLinkPersistence.findByEntryId1(entryId)) {
-			deleteLink(link);
+		Map<Long, List<AssetLink>> leftPartitionAssetLinks =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				StringBundler.concat(
+					AssetLinkLocalServiceImpl.class.getName(),
+					".deleteLinks#left#", entryId),
+				() -> MapUtil.toPartitionMap(
+					assetLinkPersistence.findAll(), AssetLink::getEntryId1));
+
+		if (leftPartitionAssetLinks == null) {
+			for (AssetLink link :
+					assetLinkPersistence.findByEntryId1(entryId)) {
+
+				deleteLink(link);
+			}
+
+			for (AssetLink link :
+					assetLinkPersistence.findByEntryId2(entryId)) {
+
+				deleteLink(link);
+			}
+
+			return;
 		}
 
-		for (AssetLink link : assetLinkPersistence.findByEntryId2(entryId)) {
-			deleteLink(link);
+		Set<AssetLink> deletedAssetLinks = new HashSet<>();
+
+		List<AssetLink> leftAssetLinks = leftPartitionAssetLinks.remove(
+			entryId);
+
+		if (leftAssetLinks != null) {
+			for (AssetLink leftAssetLink : leftAssetLinks) {
+				assetLinkPersistence.remove(leftAssetLink);
+
+				deletedAssetLinks.add(leftAssetLink);
+			}
+		}
+
+		Map<Long, List<AssetLink>> rightPartitionAssetLinks =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				StringBundler.concat(
+					AssetLinkLocalServiceImpl.class.getName(),
+					".deleteLinks#right#", entryId),
+				() -> MapUtil.toPartitionMap(
+					assetLinkPersistence.findAll(), AssetLink::getEntryId2));
+
+		List<AssetLink> rightAssetLinks = rightPartitionAssetLinks.remove(
+			entryId);
+
+		if (rightAssetLinks != null) {
+			for (AssetLink rightAssetLink : rightAssetLinks) {
+				if (deletedAssetLinks.add(rightAssetLink)) {
+					assetLinkPersistence.remove(rightAssetLink);
+				}
+			}
+		}
+
+		for (AssetLink deletedAssetLink : deletedAssetLinks) {
+			leftPartitionAssetLinks.computeIfPresent(
+				deletedAssetLink.getEntryId1(),
+				(key, assetLinks) -> {
+					assetLinks.remove(deletedAssetLink);
+
+					if (assetLinks.isEmpty()) {
+						return null;
+					}
+
+					return assetLinks;
+				});
+			rightPartitionAssetLinks.computeIfPresent(
+				deletedAssetLink.getEntryId2(),
+				(key, assetLinks) -> {
+					assetLinks.remove(deletedAssetLink);
+
+					if (assetLinks.isEmpty()) {
+						return null;
+					}
+
+					return assetLinks;
+				});
 		}
 	}
 

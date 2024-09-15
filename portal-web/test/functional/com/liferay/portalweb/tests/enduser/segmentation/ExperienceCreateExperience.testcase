@@ -137,59 +137,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-96828 Bug: In different experiences, the same non-instantiable widget can't be added."
-	@priority = 4
-	test AddNonInstantiableWidget {
-		property portal.acceptance = "true";
-
-		task ("Create a Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment Name",
-				text = "Test");
-		}
-
-		task ("Add an Experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "Experience Name",
-				segmentName = "Segment Name");
-		}
-
-		task ("Add an non-instantiable widget to default experience") {
-			PageEditor.changeExperience(newExperience = "Default");
-
-			PageEditor.addWidget(portletName = "Sign In");
-		}
-
-		task ("Add the same widget to the created experience") {
-			PageEditor.changeExperience(newExperience = "Experience Name");
-
-			PageEditor.addWidget(portletName = "Sign In");
-
-			Button.clickPublish();
-		}
-
-		task ("Check that widget is present at both experiences") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "SignIn#PORTLET_TITLE",
-				value1 = "You are signed in as");
-
-			ContentPages.changeExperience(experienceName = "Experience Name");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "SignIn#PORTLET_TITLE",
-				value1 = "You are signed in as");
-		}
-	}
-
 	@description = "LPS-90585: Validate in the list of Experiences if the decrease priority button working properly"
 	@priority = 4
 	test DecreaseExperiencePriority {

@@ -308,6 +308,40 @@ test(
 );
 
 test(
+	'Allows creating experiences with the same non-instantiable widget',
+	{
+		tag: '@LPS-96828',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Create new experience and remove the fragment
+
+		await pageEditorPage.createExperience('E1');
+
+		await pageEditorPage.addWidget('Tools', 'Sign In');
+
+		await expect(page.getByText('You are signed in')).toBeVisible();
+
+		// Change to Default experience again and check the fragment is present
+
+		await pageEditorPage.switchExperience('Default');
+
+		await pageEditorPage.addWidget('Tools', 'Sign In');
+
+		await expect(page.getByText('You are signed in')).toBeVisible();
+	}
+);
+
+test(
 	'Allows editing and deleting an experience',
 	{
 		tag: '@LPS-90586',

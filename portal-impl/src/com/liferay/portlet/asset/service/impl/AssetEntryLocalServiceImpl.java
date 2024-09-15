@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.LongPKRemoveFunction;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.DeletedAssetEntryThreadLocal;
@@ -81,6 +83,14 @@ import java.util.Map;
  * @author Zsolt Berentey
  */
 public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		_assetEntryLongPKRemoveFunction = new LongPKRemoveFunction<>(
+			assetEntryPersistence, AssetEntryModelImpl.TABLE_NAME, "entryId");
+	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -114,6 +124,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 						tag.getTagId(), entry.getClassNameId());
 				}
 			}
+
+			// Entry
+
+			assetEntryPersistence.remove(entry);
 		}
 		else {
 			List<Object[]> assertEntryAssetTagIds =
@@ -124,11 +138,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 					assetTagPersistence.remove((Long)assetEntryAssetTag[1]);
 				}
 			}
+
+			// Entry
+
+			assetEntryPersistence.removeByFunction(
+				entry, _assetEntryLongPKRemoveFunction);
 		}
-
-		// Entry
-
-		assetEntryPersistence.remove(entry);
 
 		// View count
 
@@ -1346,6 +1361,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@BeanReference(type = AssetCategoryLocalService.class)
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
+	private LongPKRemoveFunction<AssetEntry> _assetEntryLongPKRemoveFunction;
 	private final ServiceTrackerMap
 		<String, List<AssetEntryValidatorExclusionRule>>
 			_assetEntryValidatorExclusionRuleServiceTrackerMap =

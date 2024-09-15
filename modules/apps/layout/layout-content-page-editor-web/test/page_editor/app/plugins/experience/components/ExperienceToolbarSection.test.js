@@ -241,6 +241,47 @@ describe('ExperienceToolbarSection', () => {
 		).toBeInTheDocument();
 	});
 
+	it('default experience cannot be edited, deleted, duplicated or prioritized', async () => {
+		const mockDispatch = jest.fn((a) => {
+			if (typeof a === 'function') {
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
+			}
+		});
+
+		const {findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
+
+		const dropDownButton = getByLabelText('experience', {exact: false});
+
+		userEvent.click(dropDownButton);
+
+		await findByRole('list');
+
+		const experienceItems = getAllByRole('listitem');
+
+		expect(
+			within(experienceItems[2]).queryByTitle('prioritize-experience')
+		).not.toBeInTheDocument();
+
+		expect(
+			within(experienceItems[2]).queryByTitle('deprioritize-experience')
+		).not.toBeInTheDocument();
+
+		expect(
+			within(experienceItems[2]).queryByTitle('edit-experience')
+		).not.toBeInTheDocument();
+
+		expect(
+			within(experienceItems[2]).queryByTitle('duplicate-experience')
+		).not.toBeInTheDocument();
+
+		expect(
+			within(experienceItems[2]).queryByTitle('delete-experience')
+		).not.toBeInTheDocument();
+	});
+
 	it('displays a help hint on the locked icon for a locked Experience', async () => {
 		serviceFetch.mockImplementation(() => Promise.resolve());
 

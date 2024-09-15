@@ -248,26 +248,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-90586: Validate if the Default experience doesn't offer a delete button"
-	@priority = 3
-	test CheckDefaultDeleteButton {
-		task ("Create an experience and add on content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "Name Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Assert that 'Default' can not be deleted") {
-			PageEditor.deleteExperience(experienceName = "Name Experience");
-
-			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
-		}
-	}
-
 	@description = "LPS-86285: Validate in the content page if, the user can create the content in the experiences that can be different from others experiences"
 	@priority = 3
 	test CreatingContentInDifferentExperiences {
@@ -382,47 +362,6 @@ definition {
 
 		task ("Assert the experience is not 'Active'") {
 			PageEditor.viewExperienceNotActiveInEditMode(experienceName = "Segment Name Experience");
-		}
-	}
-
-	@description = "LPS-90585: Validate if the Default segment doesn't offer any option to be prioritized"
-	@priority = 3
-	test DefaultExperienceCantBePrioritized {
-		task ("Create Name Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Name Segment",
-				text = "Test");
-		}
-
-		task ("Go to Experience Content Page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-		}
-
-		task ("Create an experience and add on content page") {
-			PageEditor.addExperience(
-				experienceName = "Segment Name Experience",
-				segmentName = "Name Segment");
-		}
-
-		task ("Add an element to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Priorize experience") {
-			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
-		}
-
-		task ("Assert Default segment buttons is not present") {
-			AssertElementNotPresent(
-				key_index = 2,
-				locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
 		}
 	}
 

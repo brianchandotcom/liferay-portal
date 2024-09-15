@@ -263,6 +263,14 @@ public class DocumentDataDefinitionTypeResourceImpl
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, dlFileEntryType.getFileEntryTypeId(),
+						"deleteDocumentDataDefinitionType",
+						dlFileEntryType.getUserId(),
+						DLFileEntryType.class.getName(),
+						dlFileEntryType.getGroupId())
+				).put(
 					"get",
 					addAction(
 						ActionKeys.VIEW, dlFileEntryType.getFileEntryTypeId(),

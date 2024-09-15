@@ -399,11 +399,13 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		int rowCount = 0;
 
-		try {
-			rowCount = deleteSqlUpdate.update(masterPrimaryKey);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
+		if (slavePrimaryKeys.length > 0) {
+			try {
+				rowCount = deleteSqlUpdate.update(masterPrimaryKey);
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
 		}
 
 		if ((masterModelListeners.length > 0) ||

@@ -52,6 +52,34 @@ public class DocumentDataDefinitionTypeResourceImpl
 	extends BaseDocumentDataDefinitionTypeResourceImpl {
 
 	@Override
+	public void deleteDocumentDataDefinitionType(
+			Long documentDataDefinitionTypeId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DLFileEntryType fileEntryType =
+			_dlFileEntryTypeService.getFileEntryType(
+				documentDataDefinitionTypeId);
+
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.user(
+				contextUser
+			).build();
+
+		dataDefinitionResource.deleteDataDefinition(
+			fileEntryType.getDataDefinitionId());
+
+		_dlFileEntryTypeService.deleteFileEntryType(
+			documentDataDefinitionTypeId);
+	}
+
+	@Override
 	public Page<DocumentDataDefinitionType>
 			getAssetLibraryDocumentDataDefinitionTypesPage(
 				Long assetLibraryId, String search, Aggregation aggregation,

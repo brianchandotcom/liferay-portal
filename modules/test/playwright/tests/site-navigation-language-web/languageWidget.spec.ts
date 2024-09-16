@@ -85,17 +85,13 @@ test(
 			.locator('select[id*="languageId"]')
 			.selectOption({label: 'español'});
 
-		await expect(
-			page.getByText('Añadir cuenta', {exact: true})
-		).toBeVisible();
+		await page.getByText('Añadir cuenta', {exact: true}).waitFor();
 
 		await page
 			.locator('select[id*="languageId"]')
 			.selectOption({label: 'english'});
 
-		await expect(
-			page.getByText('Add Account', {exact: true})
-		).toBeVisible();
+		await page.getByText('Add Account', {exact: true}).waitFor();
 	}
 );
 

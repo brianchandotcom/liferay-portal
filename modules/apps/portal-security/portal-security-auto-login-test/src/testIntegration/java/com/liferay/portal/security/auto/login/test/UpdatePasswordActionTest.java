@@ -8,25 +8,23 @@ package com.liferay.portal.security.auto.login.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.UpdatePasswordAction;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,7 +39,6 @@ import java.util.Date;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,34 +58,21 @@ public class UpdatePasswordActionTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		try {
-			_user = UserTestUtil.addUser();
-
-			_user.setLastLoginDate(null);
-
-			_user = UserLocalServiceUtil.updateUser(_user);
-
-			_company = CompanyLocalServiceUtil.getCompany(_user.getCompanyId());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Error getting user ", exception);
-			}
-		}
-	}
-
 	@Test
 	public void testUpdatePasswordSetLastLogin() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		_user.setLastLoginDate(null);
+
+		_user = _userLocalService.updateUser(_user);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			_prepareHttpServletRequestWithTicket();
 
 		_updatePasswordAction.execute(
 			null, mockHttpServletRequest, new MockHttpServletResponse());
 
-		User setPasswordUser = UserLocalServiceUtil.getUserByEmailAddress(
-			_company.getCompanyId(), _user.getEmailAddress());
+		User setPasswordUser = _userLocalService.getUser(_user.getUserId());
 
 		Assert.assertNotNull(setPasswordUser.getLastLoginDate());
 	}
@@ -132,11 +116,12 @@ public class UpdatePasswordActionTest {
 		httpSession.setAttribute(
 			"LIFERAY_SHARED_AUTHENTICATION_TOKEN#CSRF", "test");
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(1);
+		Layout layout = _layoutLocalService.getLayout(1);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_user.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 
@@ -157,15 +142,21 @@ public class UpdatePasswordActionTest {
 		return mockHttpServletRequest;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdatePasswordActionTest.class);
-
-	private static Company _company;
+	@DeleteAfterTestRun
 	private static User _user;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private TicketLocalService _ticketLocalService;
 
 	private final Action _updatePasswordAction = new UpdatePasswordAction();
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

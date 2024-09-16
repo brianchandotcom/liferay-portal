@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,6 +37,7 @@ import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -413,6 +415,100 @@ public class TestrayTestFlowResourceImpl
 			contextUser.getUserId());
 
 		return testrayTestFlow;
+	}
+
+	@Override
+	public Page<TestraySubtask> putTestrayTestFlowTestraySubtaskMergePage(
+			TestraySubtask[] testraySubtasks)
+		throws Exception {
+
+		if (testraySubtasks.length < 2) {
+			return Page.of(ListUtil.fromArray(testraySubtasks));
+		}
+
+		List<TestraySubtask> sortedTestraySubtasks = ListUtil.sort(
+			ListUtil.fromArray(testraySubtasks),
+			new Comparator<TestraySubtask>() {
+
+				@Override
+				public int compare(
+					TestraySubtask testraySubtask1,
+					TestraySubtask testraySubtask2) {
+
+					return GetterUtil.getInteger(
+						testraySubtask2.getScore() -
+							testraySubtask1.getScore());
+				}
+
+			});
+
+		TestraySubtask parentTestraySubtask = sortedTestraySubtasks.get(0);
+
+		long totalScore = parentTestraySubtask.getScore();
+
+		for (int i = 1; i < sortedTestraySubtasks.size(); i++) {
+			TestraySubtask testraySubtask = sortedTestraySubtasks.get(i);
+
+			totalScore += testraySubtask.getScore();
+
+			Map<String, Serializable> values =
+				_objectEntryLocalService.getValues(testraySubtask.getId());
+
+			values.put("dueStatus", "MERGED");
+			values.put(
+				"r_mergedToTestraySubtask_c_subtaskId",
+				parentTestraySubtask.getId());
+			values.put("score", 0);
+
+			if (Validator.isNull(values.get("issues"))) {
+				values.put("issues", "");
+			}
+
+			_objectEntryLocalService.updateObjectEntry(
+				contextUser.getUserId(), testraySubtask.getId(), values,
+				new ServiceContext());
+
+			List<Object> params = new ArrayList<>();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("update O_[%COMPANY_ID%]_CaseResult set ");
+			sb.append("r_subtasktocaseresults_c_subtaskid = ? ");
+
+			params.add(parentTestraySubtask.getId());
+
+			if (Validator.isNotNull(parentTestraySubtask.getIssues())) {
+				sb.append(", issues_ = ? ");
+				params.add(parentTestraySubtask.getIssues());
+			}
+
+			sb.append("where r_subtasktocaseresults_c_subtaskid = ?");
+
+			params.add(GetterUtil.getLong(values.get("c_subtaskId")));
+
+			TestrayUtil.executeUpdate(
+				StringUtil.replace(
+					sb.toString(), "[%COMPANY_ID%]",
+					String.valueOf(contextCompany.getCompanyId())),
+				params);
+		}
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			parentTestraySubtask.getId());
+
+		values.put("score", totalScore);
+
+		if (Validator.isNull(values.get("issues"))) {
+			values.put("issues", "");
+		}
+
+		_objectEntryLocalService.updateObjectEntry(
+			contextUser.getUserId(), parentTestraySubtask.getId(), values,
+			new ServiceContext());
+
+		EntityCacheUtil.clearCache();
+
+		return Page.of(sortedTestraySubtasks);
 	}
 
 	@Reference(

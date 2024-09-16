@@ -183,7 +183,7 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 
 	async getProductUsages(): Promise<ConsoleProjectsUsage> {
 		const response = await this.oAuth2Client.fetch(
-			'/console/projects-usage?emailAddress=keven.leone@liferay.com'
+			'/console/projects-usage'
 		);
 
 		return response.json();

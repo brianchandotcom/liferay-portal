@@ -41,6 +41,7 @@ import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateIte
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import moveItem from '../../thunks/moveItem';
+import moveStepper from '../../thunks/moveStepper';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
 import {deepEqual} from '../../utils/checkDeepEqual';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
@@ -158,13 +159,19 @@ function TopperContent({
 	);
 
 	const onDragEnd = (parentItemId, position) => {
-		dispatch(
-			moveItem({
-				itemId: item.itemId,
-				parentItemId,
-				position,
-			})
-		);
+		const thunk = fieldTypes?.includes('stepper')
+			? moveStepper({
+					itemId: item.itemId,
+					parentItemId,
+					position,
+				})
+			: moveItem({
+					itemId: item.itemId,
+					parentItemId,
+					position,
+				});
+
+		dispatch(thunk);
 	};
 
 	const {handlerRef: itemHandlerRef, isDraggingSource: itemIsDraggingSource} =

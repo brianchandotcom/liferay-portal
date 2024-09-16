@@ -6,16 +6,18 @@
 package com.liferay.portal.search.web.internal.portlet.shared.search;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -311,9 +313,27 @@ public class PortletSharedSearchRequestImpl
 					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			segmentExperiencePortletIds.addAll(
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink));
+			try {
+				if (fragmentEntryLink.isTypePortlet()) {
+					JSONObject editableValuesJSONObject =
+						_jsonFactory.createJSONObject(
+							fragmentEntryLink.getEditableValues());
+
+					String portletId = editableValuesJSONObject.getString(
+						"portletId");
+
+					if (Validator.isNotNull(portletId)) {
+						String instanceId = editableValuesJSONObject.getString(
+							"instanceId");
+
+						segmentExperiencePortletIds.add(
+							PortletIdCodec.encode(portletId, instanceId));
+					}
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		return segmentExperiencePortletIds;
@@ -345,13 +365,13 @@ public class PortletSharedSearchRequestImpl
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -43,23 +43,23 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteEntry(AssetEntry entry) throws PortalException {
+	public AssetEntry deleteEntry(AssetEntry entry) throws PortalException {
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRelByAssetEntryId(entry.getEntryId());
 
-		super.deleteEntry(entry);
+		return super.deleteEntry(entry);
 	}
 
 	@Override
-	public void deleteEntry(long entryId) throws PortalException {
+	public AssetEntry deleteEntry(long entryId) throws PortalException {
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRelByAssetEntryId(entryId);
 
-		super.deleteEntry(entryId);
+		return super.deleteEntry(entryId);
 	}
 
 	@Override
-	public void deleteEntry(String className, long classPK)
+	public AssetEntry deleteEntry(String className, long classPK)
 		throws PortalException {
 
 		AssetEntry entry = super.fetchEntry(className, classPK);
@@ -70,7 +70,7 @@ public class AssetEntryLocalServiceWrapper
 					entry.getEntryId());
 		}
 
-		super.deleteEntry(className, classPK);
+		return super.deleteEntry(className, classPK);
 	}
 
 	@Override

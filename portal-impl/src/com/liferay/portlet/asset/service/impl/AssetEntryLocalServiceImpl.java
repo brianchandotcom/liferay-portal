@@ -94,7 +94,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteEntry(AssetEntry entry) throws PortalException {
+	public AssetEntry deleteEntry(AssetEntry entry) throws PortalException {
 
 		// Tags
 
@@ -127,7 +127,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			// Entry
 
-			assetEntryPersistence.remove(entry);
+			entry = assetEntryPersistence.remove(entry);
 		}
 		else {
 			List<Object[]> assertEntryAssetTagIds =
@@ -159,25 +159,29 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			SocialActivityManagerUtil.deleteActivities(entry);
 		}
+
+		return entry;
 	}
 
 	@Override
-	public void deleteEntry(long entryId) throws PortalException {
+	public AssetEntry deleteEntry(long entryId) throws PortalException {
 		AssetEntry entry = assetEntryPersistence.findByPrimaryKey(entryId);
 
-		deleteEntry(entry);
+		return deleteEntry(entry);
 	}
 
 	@Override
-	public void deleteEntry(String className, long classPK)
+	public AssetEntry deleteEntry(String className, long classPK)
 		throws PortalException {
 
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			_classNameLocalService.getClassNameId(className), classPK);
 
 		if (entry != null) {
-			deleteEntry(entry);
+			return deleteEntry(entry);
 		}
+
+		return null;
 	}
 
 	@Override

@@ -7766,16 +7766,6 @@ public class ObjectEntryResourceTest {
 	@Test
 	public void testPostCustomObjectEntryWithStatus() throws Exception {
 
-		// Without status field
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).toString(),
-				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
-
 		// With code subfield inside status
 
 		Assert.assertEquals(
@@ -7797,6 +7787,16 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 				).put(
 					"status", JSONUtil.put("label", "approved")
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		// Without status field
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 				).toString(),
 				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
 	}

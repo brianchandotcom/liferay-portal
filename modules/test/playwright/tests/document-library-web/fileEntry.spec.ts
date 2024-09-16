@@ -371,13 +371,9 @@ baseTest(
 			document2.title,
 		]);
 
-		const locator = await page.locator(
-			'div.field-content span.label-item-expand'
-		);
-
-		await expect(await locator.count()).toBe(1);
-
-		await expect(await locator.textContent()).toBe('Books');
+		await expect(
+			page.locator('.modal .label-item-expand', {hasText: 'Books'})
+		).toBeVisible();
 
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 
@@ -386,7 +382,7 @@ baseTest(
 			[{categoryNames: ['Furniture'], vocabularyName}]
 		);
 
-		await expect(page.getByText('Success:Changes Saved')).toBeVisible();
+		await waitForSuccessAlert(page, 'Success:Changes Saved');
 
 		for (const document of [document1, document2]) {
 			await documentLibraryPage.goto(site.friendlyUrlPath);

@@ -1521,7 +1521,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
               </div>
             </div>
             <div
-              aria-labelledby="tab-2"
+              aria-labelledby="tab-3"
               class="tab-pane fade flex-shrink-0"
               role="tabpanel"
               tabindex="0"

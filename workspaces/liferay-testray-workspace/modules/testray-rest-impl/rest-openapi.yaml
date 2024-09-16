@@ -1234,6 +1234,35 @@ paths:
                                     $ref: "#/components/schemas/TestraySubtask"
                                 type: array
             tags: ["TestrayTestFlow"]
+    "/testray-testflow/testray-subtask/merge":
+        put:
+            operationId: putTestrayTestFlowTestraySubtaskMergePage
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/TestraySubtask"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/TestraySubtask"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestraySubtask"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestraySubtask"
+                                type: array
+            tags: ["TestrayTestFlow"]
     "/testray-testflow/{testrayTaskId}":
         post:
             operationId: postTestrayTestFlow

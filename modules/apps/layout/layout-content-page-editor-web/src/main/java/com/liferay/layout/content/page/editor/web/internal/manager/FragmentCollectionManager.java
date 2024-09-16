@@ -427,6 +427,8 @@ public class FragmentCollectionManager {
 
 			filteredFragmentCompositions.add(
 				HashMapBuilder.<String, Object>put(
+					"fieldTypes", _jsonFactory.createJSONArray()
+				).put(
 					"fragmentEntryKey",
 					fragmentComposition.getFragmentCompositionKey()
 				).put(

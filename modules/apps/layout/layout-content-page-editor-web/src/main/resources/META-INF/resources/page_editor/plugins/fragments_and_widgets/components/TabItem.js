@@ -104,7 +104,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 				if (item.data.portletId) {
 					thunk = addWidget;
 				}
-				else if (item.data.fieldTypes.includes('stepper')) {
+				else if (item.data.fieldTypes?.includes('stepper')) {
 					thunk = addStepper;
 				}
 				else {

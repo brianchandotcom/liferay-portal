@@ -396,7 +396,7 @@ function computeDrop({
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 
-			if (dropItem.fieldTypes.includes('stepper')) {
+			if (dropItem.fieldTypes?.includes('stepper')) {
 				const form = getFormParent(
 					dropTargetItem,
 					layoutDataRef.current

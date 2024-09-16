@@ -125,7 +125,7 @@ export default function KeyboardMovementManager() {
 								selectItems,
 							});
 						}
-						else if (source.fieldTypes.includes('stepper')) {
+						else if (source.fieldTypes?.includes('stepper')) {
 							thunk = addStepper({
 								fragmentEntryKey: source.fragmentEntryKey,
 								groupId: source.groupId,

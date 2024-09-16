@@ -139,7 +139,7 @@ exports[`ConnectDXPModal renders 1`] = `
                 <span
                   class="content-container"
                 >
-                  DXP Fix Pack Requirements
+                  DXP Requirements
                   <span
                     class="info-popover-root ml-2"
                   >

@@ -38,7 +38,7 @@ import java.util.concurrent.Future;
 public class SearchContext implements Serializable {
 
 	public static boolean isBatchMode() {
-		Map.Entry<List<Future<?>>, List<Callable<Void>>> entry =
+		Map.Entry<Set<Future<?>>, List<Callable<Void>>> entry =
 			_batchModeSyncFuturesAndCallablesThreadLocal.get();
 
 		if (entry == null) {
@@ -56,13 +56,14 @@ public class SearchContext implements Serializable {
 		SafeCloseable safeCloseable =
 			_batchModeSyncFuturesAndCallablesThreadLocal.setWithSafeCloseable(
 				new AbstractMap.SimpleImmutableEntry<>(
-					new ArrayList<>(), new ArrayList<>()));
+					Collections.newSetFromMap(new ConcurrentHashMap<>()),
+					new ArrayList<>()));
 
 		return () -> {
 			Exception exception1 = null;
 
 			try {
-				Map.Entry<List<Future<?>>, List<Callable<Void>>> entry =
+				Map.Entry<Set<Future<?>>, List<Callable<Void>>> entry =
 					_batchModeSyncFuturesAndCallablesThreadLocal.get();
 
 				for (Future<?> future : entry.getKey()) {
@@ -111,7 +112,7 @@ public class SearchContext implements Serializable {
 	}
 
 	public static void registerBatchModeSyncCallable(Callable<Void> callable) {
-		Map.Entry<List<Future<?>>, List<Callable<Void>>> entry =
+		Map.Entry<Set<Future<?>>, List<Callable<Void>>> entry =
 			_batchModeSyncFuturesAndCallablesThreadLocal.get();
 
 		if (entry == null) {
@@ -124,16 +125,27 @@ public class SearchContext implements Serializable {
 	}
 
 	public static void registerBatchModeSyncFuture(Future<?> future) {
-		Map.Entry<List<Future<?>>, List<Callable<Void>>> entry =
+		Map.Entry<Set<Future<?>>, List<Callable<Void>>> entry =
 			_batchModeSyncFuturesAndCallablesThreadLocal.get();
 
 		if (entry == null) {
 			throw new IllegalStateException("Not in batch mode");
 		}
 
-		List<Future<?>> batchModeSyncFutures = entry.getKey();
+		Set<Future<?>> batchModeSyncFutures = entry.getKey();
 
 		batchModeSyncFutures.add(future);
+	}
+
+	public static void unregisterBatchModeSyncFuture(Future<?> future) {
+		Map.Entry<Set<Future<?>>, List<Callable<Void>>> entry =
+			_batchModeSyncFuturesAndCallablesThreadLocal.get();
+
+		if (entry != null) {
+			Set<Future<?>> batchModeSyncFutures = entry.getKey();
+
+			batchModeSyncFutures.remove(future);
+		}
 	}
 
 	public void addFacet(Facet facet) {
@@ -525,7 +537,7 @@ public class SearchContext implements Serializable {
 	}
 
 	private static final CentralizedThreadLocal
-		<Map.Entry<List<Future<?>>, List<Callable<Void>>>>
+		<Map.Entry<Set<Future<?>>, List<Callable<Void>>>>
 			_batchModeSyncFuturesAndCallablesThreadLocal =
 				new CentralizedThreadLocal<>(
 					SearchContext.class.getName() +

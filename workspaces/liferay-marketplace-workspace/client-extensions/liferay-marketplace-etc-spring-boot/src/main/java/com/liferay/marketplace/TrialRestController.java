@@ -16,6 +16,7 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstanceResource;
 import com.liferay.marketplace.service.ConsoleService;
+import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
@@ -84,11 +85,12 @@ public class TrialRestController extends BaseRestController {
 
 	@PostMapping("expire/{orderId}")
 	public void postExpire(@PathVariable long orderId) throws Exception {
-		_updateOrder(null, orderId, _ORDER_STATUS_PENDING);
+		_marketplaceService.updateOrder(null, orderId, _ORDER_STATUS_PENDING);
 
-		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
+		_marketplaceService.updateOrder(
+			null, orderId, _ORDER_STATUS_PROCESSING);
 
-		_updateOrder(null, orderId, _ORDER_STATUS_COMPLETED);
+		_marketplaceService.updateOrder(null, orderId, _ORDER_STATUS_COMPLETED);
 
 		delete(orderId);
 
@@ -133,7 +135,8 @@ public class TrialRestController extends BaseRestController {
 				DateTimeFormatter.ISO_INSTANT
 			));
 
-		_updateOrder(customFields, orderId, order.getOrderStatus());
+		_marketplaceService.updateOrder(
+			customFields, orderId, order.getOrderStatus());
 	}
 
 	@PostMapping("provisioning")
@@ -168,7 +171,8 @@ public class TrialRestController extends BaseRestController {
 						modelDTOOrderJSONObject.getString("accountId") +
 							" already has a provisioned order");
 
-				_updateOrder(null, orderId, _ORDER_STATUS_CANCELLED);
+				_marketplaceService.updateOrder(
+					null, orderId, _ORDER_STATUS_CANCELLED);
 
 				return;
 			}
@@ -180,7 +184,8 @@ public class TrialRestController extends BaseRestController {
 		if (portalInstancesPage.getTotalCount() == _TRIAL_MAX_INSTANCES) {
 			_log.error("Order is on hold");
 
-			_updateOrder(null, orderId, _ORDER_STATUS_ON_HOLD);
+			_marketplaceService.updateOrder(
+				null, orderId, _ORDER_STATUS_ON_HOLD);
 
 			return;
 		}
@@ -188,10 +193,12 @@ public class TrialRestController extends BaseRestController {
 		if (modelDTOOrderJSONObject.getInt("orderStatus") ==
 				_ORDER_STATUS_OPEN) {
 
-			_updateOrder(null, orderId, _ORDER_STATUS_PENDING);
+			_marketplaceService.updateOrder(
+				null, orderId, _ORDER_STATUS_PENDING);
 		}
 
-		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
+		_marketplaceService.updateOrder(
+			null, orderId, _ORDER_STATUS_PROCESSING);
 
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
@@ -208,7 +215,7 @@ public class TrialRestController extends BaseRestController {
 
 			_deletePortalInstance(orderId);
 
-			_updateOrder(
+			_marketplaceService.updateOrder(
 				HashMapBuilder.put(
 					"trial-error", exception.toString()
 				).put(
@@ -225,7 +232,7 @@ public class TrialRestController extends BaseRestController {
 			return;
 		}
 
-		_updateOrder(
+		_marketplaceService.updateOrder(
 			HashMapBuilder.put(
 				"trial-end-date",
 				ZonedDateTime.now(
@@ -512,20 +519,6 @@ public class TrialRestController extends BaseRestController {
 		return string;
 	}
 
-	private void _updateOrder(
-			Map<String, ?> customFields, long orderId, int orderStatus)
-		throws Exception {
-
-		OrderResource orderResource = _getOrderResource();
-
-		Order order = new Order();
-
-		order.setCustomFields(() -> customFields);
-		order.setOrderStatus(() -> orderStatus);
-
-		orderResource.patchOrder(orderId, order);
-	}
-
 	private static final int _ORDER_STATUS_CANCELLED = 8;
 
 	private static final int _ORDER_STATUS_COMPLETED = 0;
@@ -560,6 +553,9 @@ public class TrialRestController extends BaseRestController {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Autowired
+	private MarketplaceService _marketplaceService;
 
 	@Value("${liferay.marketplace.trial.dxp.domain}")
 	private String _trialDXPDomain;

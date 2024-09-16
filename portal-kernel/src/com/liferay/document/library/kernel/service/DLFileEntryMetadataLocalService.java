@@ -135,6 +135,9 @@ public interface DLFileEntryMetadataLocalService
 	public void deleteFileEntryMetadata(long fileEntryId)
 		throws PortalException;
 
+	public void deleteFileEntryMetadataByDDMStructureId(long ddmStructureId)
+		throws PortalException;
+
 	public void deleteFileEntryMetadataByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException;

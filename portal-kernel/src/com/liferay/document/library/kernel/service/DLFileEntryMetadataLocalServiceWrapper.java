@@ -130,6 +130,14 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteFileEntryMetadataByDDMStructureId(long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileEntryMetadataLocalService.
+			deleteFileEntryMetadataByDDMStructureId(ddmStructureId);
+	}
+
+	@Override
 	public void deleteFileEntryMetadataByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -92,8 +92,10 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -503,13 +505,45 @@ public class ObjectDefinitionLocalServiceImpl
 		if (!objectDefinition.isUnmodifiableSystemObject()) {
 			_deleteObjectDefinitionPLOEntries(objectDefinition);
 
-			List<ObjectEntry> objectEntries =
-				_objectEntryPersistence.findByObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId());
+			ActionableDynamicQuery actionableDynamicQuery =
+				new DefaultActionableDynamicQuery() {
 
-			for (ObjectEntry objectEntry : objectEntries) {
-				_objectEntryLocalService.deleteObjectEntry(objectEntry);
-			}
+					@Override
+					protected void intervalCompleted(
+							long startPrimaryKey, long endPrimaryKey)
+						throws PortalException {
+
+						Session session = _objectEntryPersistence.openSession();
+
+						session.flush();
+
+						session.clear();
+					}
+
+				};
+
+			actionableDynamicQuery.setBaseLocalService(
+				_objectEntryLocalService);
+			actionableDynamicQuery.setClassLoader(getClassLoader());
+			actionableDynamicQuery.setModelClass(ObjectEntry.class);
+
+			actionableDynamicQuery.setPrimaryKeyPropertyName("objectEntryId");
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					Property nameProperty = PropertyFactoryUtil.forName(
+						"objectDefinitionId");
+
+					dynamicQuery.add(
+						nameProperty.eq(
+							objectDefinition.getObjectDefinitionId()));
+				});
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(ObjectEntry objectEntry) ->
+					_objectEntryLocalService.deleteObjectEntry(objectEntry));
+
+			actionableDynamicQuery.performActions();
 		}
 
 		for (ObjectRelationship objectRelationship :

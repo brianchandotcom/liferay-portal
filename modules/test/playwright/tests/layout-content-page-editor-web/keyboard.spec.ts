@@ -464,3 +464,80 @@ test(
 		expect(await pageEditorPage.isActive(secondHeadingId)).toBe(true);
 	}
 );
+
+test(
+	'Check that Move Items action from the browser toolbar works correctly',
+	{
+		tag: '@LPD-30901',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const buttonId = getRandomString();
+		const buttonDefinition = getFragmentDefinition({
+			id: buttonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const containerDefinition = getContainerDefinition({
+			id: getRandomString(),
+			pageElements: [],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				buttonDefinition,
+				headingDefinition,
+				containerDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode of page and select multiple fragments
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectFragment(headingId);
+
+		await page.keyboard.down('Shift');
+
+		await pageEditorPage.selectFragment(buttonId);
+
+		await page.keyboard.up('Shift');
+
+		// Move multiple fragments from the browser toolbar
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		const actionsButton = page.getByLabel('Actions for Selected Items');
+
+		await actionsButton.press('Enter');
+
+		await page.getByText('Move 2 Items').press('Enter');
+
+		// Check drag preview label
+
+		expect(
+			page.locator('.page-editor__keyboard-movement-preview__content')
+		).toHaveText('2 Items');
+
+		// Move fragments inside the container
+
+		await page.keyboard.press('ArrowDown');
+
+		await page.keyboard.press('ArrowDown');
+
+		await page.keyboard.press('Enter');
+
+		// Check that both elements are active when they have been moved
+
+		expect(await pageEditorPage.isActive(buttonId)).toBe(true);
+
+		expect(await pageEditorPage.isActive(headingId)).toBe(true);
+	}
+);

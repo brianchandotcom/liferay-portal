@@ -11,7 +11,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import SidebarHeader from '../../../../src/main/resources/META-INF/resources/js/components/SidebarHeader';
+import {SidebarHeader} from '../../../../src/main/resources/META-INF/resources/js/components/Sidebar';
 import BasicInformation from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/BasicInformation';
 import ErrorAlert from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/ErrorAlert';
 import {

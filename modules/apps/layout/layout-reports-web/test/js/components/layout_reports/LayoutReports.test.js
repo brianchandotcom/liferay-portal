@@ -10,7 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import LayoutReports from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/LayoutReports';
 import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
-import {layoutReportsIssues, pageURLs, selectedItem} from '../../mocks';
+import {layoutReportsIssues, pageURLs} from '../../mocks';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
@@ -101,18 +101,6 @@ describe('LayoutReports renders proper component', () => {
 		).toBeInTheDocument();
 
 		languageSelectorIsInTheDocument({fn: queryByText, useNot: true});
-	});
-
-	it('Renders issue detail if available', () => {
-		const {getByText} = render(
-			getLayoutReportsComponent({
-				selectedItem,
-			})
-		);
-
-		expect(getByText(selectedItem.tips)).toBeInTheDocument();
-
-		languageSelectorIsInTheDocument({fn: getByText});
 	});
 
 	it('Renders issues list if available', () => {

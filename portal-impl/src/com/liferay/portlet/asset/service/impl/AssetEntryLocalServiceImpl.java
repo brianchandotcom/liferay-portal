@@ -25,6 +25,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
@@ -180,10 +181,20 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
 				AssetEntryLocalServiceImpl.class.getName() + ".deleteEntry#" +
 					classNameId,
-				() -> MapUtil.toPartitionMap(
-					assetEntryPersistence.findByC_CN(
-						CompanyThreadLocal.getCompanyId(), classNameId),
-					AssetEntry::getClassPK));
+				() -> {
+					Session session = assetEntryPersistence.openSession();
+
+					session.flush();
+
+					List<AssetEntry> assetEntries =
+						assetEntryPersistence.findByC_CN(
+							CompanyThreadLocal.getCompanyId(), classNameId);
+
+					session.clear();
+
+					return MapUtil.toPartitionMap(
+						assetEntries, AssetEntry::getClassPK);
+				});
 
 		if (partitionAssertEntries == null) {
 			AssetEntry entry = assetEntryPersistence.fetchByC_C(

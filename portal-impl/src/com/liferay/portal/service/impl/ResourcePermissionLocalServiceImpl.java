@@ -656,10 +656,21 @@ public class ResourcePermissionLocalServiceImpl
 				StringBundler.concat(
 					ResourcePermissionLocalServiceImpl.class.getName(),
 					".deleteResourcePermissions#", companyId, name, scope),
-				() -> MapUtil.toPartitionMap(
-					resourcePermissionPersistence.findByC_N_S(
-						companyId, name, scope),
-					ResourcePermission::getPrimKey));
+				() -> {
+					Session session =
+						resourcePermissionPersistence.openSession();
+
+					session.flush();
+
+					List<ResourcePermission> resourcePermissions =
+						resourcePermissionPersistence.findByC_N_S(
+							companyId, name, scope);
+
+					session.clear();
+
+					return MapUtil.toPartitionMap(
+						resourcePermissions, ResourcePermission::getPrimKey);
+				});
 
 		if (partitionResourcePermissions == null) {
 			for (ResourcePermission resourcePermission :

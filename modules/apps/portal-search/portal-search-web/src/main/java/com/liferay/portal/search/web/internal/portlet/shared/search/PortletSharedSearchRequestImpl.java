@@ -197,26 +197,6 @@ public class PortletSharedSearchRequestImpl
 		return instantiatedPortlets;
 	}
 
-	private Set<String> _getSegmentExperiencePortletIds(
-		Layout layout, long segmentsExperienceId) {
-
-		Set<String> segmentExperiencePortletIds = new HashSet<>();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksBySegmentsExperienceId(
-					layout.getGroupId(), segmentsExperienceId,
-					layout.getPlid());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			segmentExperiencePortletIds.addAll(
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink));
-		}
-
-		return segmentExperiencePortletIds;
-	}
-
 	private List<Portlet> _getPortlets(
 		Layout layout, long companyId, long segmentsExperienceId) {
 
@@ -317,6 +297,26 @@ public class PortletSharedSearchRequestImpl
 		}
 
 		return searchSettingsContributors;
+	}
+
+	private Set<String> _getSegmentExperiencePortletIds(
+		Layout layout, long segmentsExperienceId) {
+
+		Set<String> segmentExperiencePortletIds = new HashSet<>();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), segmentsExperienceId,
+					layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			segmentExperiencePortletIds.addAll(
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink));
+		}
+
+		return segmentExperiencePortletIds;
 	}
 
 	private PortletSharedSearchResponse _search(RenderRequest renderRequest) {

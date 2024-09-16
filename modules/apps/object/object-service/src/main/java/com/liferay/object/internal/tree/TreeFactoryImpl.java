@@ -44,21 +44,21 @@ public class TreeFactoryImpl implements TreeFactory {
 		ObjectDefinitionLocalService objectDefinitionLocalService =
 			_objectDefinitionLocalServiceSnapshot.get();
 
+		ObjectDefinition rootObjectDefinition =
+			objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
 		return _create(
 			objectDefinitionId,
 			node -> TransformUtil.transform(
 				_objectRelationshipLocalService.getObjectRelationships(
 					node.getPrimaryKey(), true),
 				objectRelationship -> {
-					ObjectDefinition objectDefinition1 =
-						objectDefinitionLocalService.getObjectDefinition(
-							node.getPrimaryKey());
-
 					ObjectDefinition objectDefinition2 =
 						objectDefinitionLocalService.getObjectDefinition(
 							objectRelationship.getObjectDefinitionId2());
 
-					if (objectDefinition1.isApproved() !=
+					if (rootObjectDefinition.isApproved() !=
 							objectDefinition2.isApproved()) {
 
 						return null;

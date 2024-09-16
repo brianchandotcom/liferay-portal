@@ -263,7 +263,7 @@ test.describe('Fragments Panel', () => {
 		await expect(searchInput).toHaveValue('Headin');
 	});
 
-	test('Favorite section', async ({
+	test('Favorite section is empty when there are no favorites', async ({
 		apiHelpers,
 		page,
 		pageEditorPage,

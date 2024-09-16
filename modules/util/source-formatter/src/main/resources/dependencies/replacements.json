@@ -1,6 +1,20 @@
 [
 	{
 		"classNames": [
+			"CPDefinitionLocalService",
+			"CPDefinitionLocalServiceUtil",
+			"CPDefinitionService",
+			"CPDefinitionServiceUtil"
+		],
+		"from": "copyCPDefinition(long paramName, long paramName)",
+		"issueKey": "LPD-7741",
+		"newImports": [
+			"com.liferay.portal.kernel.workflow.WorkflowConstants"
+		],
+		"to": "copyCPDefinition(param#0#, param#1#, WorkflowConstants.STATUS_DRAFT)"
+	},
+	{
+		"classNames": [
 			"Product"
 		],
 		"from": "getConfiguration",

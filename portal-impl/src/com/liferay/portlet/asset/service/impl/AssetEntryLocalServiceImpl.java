@@ -174,11 +174,32 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry deleteEntry(String className, long classPK)
 		throws PortalException {
 
-		AssetEntry entry = assetEntryPersistence.fetchByC_C(
-			_classNameLocalService.getClassNameId(className), classPK);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
-		if (entry != null) {
-			return deleteEntry(entry);
+		Map<Long, List<AssetEntry>> partitionAssertEntries =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				AssetEntryLocalServiceImpl.class.getName() + ".deleteEntry#" +
+					classNameId,
+				() -> MapUtil.toPartitionMap(
+					assetEntryPersistence.findByC_CN(
+						CompanyThreadLocal.getCompanyId(), classNameId),
+					AssetEntry::getClassPK));
+
+		if (partitionAssertEntries == null) {
+			AssetEntry entry = assetEntryPersistence.fetchByC_C(
+				classNameId, classPK);
+
+			if (entry != null) {
+				return deleteEntry(entry);
+			}
+
+			return null;
+		}
+
+		List<AssetEntry> assetEntries = partitionAssertEntries.remove(classPK);
+
+		if (assetEntries != null) {
+			return deleteEntry(assetEntries.get(0));
 		}
 
 		return null;

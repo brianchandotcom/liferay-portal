@@ -108,7 +108,7 @@ function PageContentSelectors({
 		}
 	}, [selectedSegmentEntry, simulateSegmentsEntriesURL]);
 
-	const simulateSegmentsExperiment = useCallback(
+	const simulateSegmentsExperience = useCallback(
 		(experience) => {
 			const iframe = document.querySelector('iframe');
 
@@ -184,11 +184,11 @@ function PageContentSelectors({
 
 	useEffect(() => {
 		if (!firstRenderRef.current) {
-			simulateSegmentsExperiment(
+			simulateSegmentsExperience(
 				selectedSegmentsExperience?.segmentsExperienceId
 			);
 		}
-	}, [selectedSegmentsExperience, simulateSegmentsExperiment]);
+	}, [selectedSegmentsExperience, simulateSegmentsExperience]);
 
 	useEffect(() => {
 		if (firstRenderRef.current) {
@@ -216,7 +216,7 @@ function PageContentSelectors({
 				),
 				method: 'POST',
 			}).then(() => {
-				simulateSegmentsExperiment(
+				simulateSegmentsExperience(
 					selectedSegmentsExperience?.segmentsExperienceId
 				);
 			});

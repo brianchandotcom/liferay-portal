@@ -145,18 +145,20 @@ public class AssetEntryLocalServiceUtil {
 		getService().deleteAssetTagAssetEntry(tagId, entryId);
 	}
 
-	public static void deleteEntry(AssetEntry entry) throws PortalException {
-		getService().deleteEntry(entry);
-	}
-
-	public static void deleteEntry(long entryId) throws PortalException {
-		getService().deleteEntry(entryId);
-	}
-
-	public static void deleteEntry(String className, long classPK)
+	public static AssetEntry deleteEntry(AssetEntry entry)
 		throws PortalException {
 
-		getService().deleteEntry(className, classPK);
+		return getService().deleteEntry(entry);
+	}
+
+	public static AssetEntry deleteEntry(long entryId) throws PortalException {
+		return getService().deleteEntry(entryId);
+	}
+
+	public static AssetEntry deleteEntry(String className, long classPK)
+		throws PortalException {
+
+		return getService().deleteEntry(className, classPK);
 	}
 
 	public static void deleteGroupEntries(long groupId) throws PortalException {

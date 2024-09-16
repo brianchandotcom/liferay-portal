@@ -29,15 +29,6 @@ import org.json.JSONObject;
 public class ScanCodeProject {
 
 	public ScanCodeProject(String buildURL, String pipelineName) {
-		try {
-			_apiKey = JenkinsResultsParserUtil.getBuildProperty(
-				"scancode.api.key");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get Scancode api key", ioException);
-		}
-
 		_buildURL = buildURL;
 
 		_labels.add("automated");
@@ -71,7 +62,7 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _apiKey + '\"');
+		sb.append("\"Authorization:Token " + _API_KEY + '\"');
 		sb.append(" --request POST ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
@@ -259,7 +250,7 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _apiKey + "\"");
+		sb.append("\"Authorization:Token " + _API_KEY + "\"");
 		sb.append(" --request POST ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
@@ -364,7 +355,7 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _apiKey + '\"');
+		sb.append("\"Authorization:Token " + _API_KEY + '\"');
 		sb.append(" --request GET ");
 
 		while (true) {
@@ -414,6 +405,8 @@ public class ScanCodeProject {
 		setProjectURL(_projectID, _projectName);
 	}
 
+	private static final String _API_KEY;
+
 	private static final String _API_URL =
 		"https://liferay1.scancode.io/api/projects/";
 
@@ -424,7 +417,17 @@ public class ScanCodeProject {
 		"attribution", "cyclonedx", "spdx", "xls"
 	};
 
-	private final String _apiKey;
+	static {
+		try {
+			_API_KEY = JenkinsResultsParserUtil.getBuildProperty(
+				"scancode.api.key");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get Scancode api key", ioException);
+		}
+	}
+
 	private final String _buildURL;
 	private final List<String> _labels = new ArrayList<>();
 	private final String _pipelineName;

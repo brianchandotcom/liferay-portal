@@ -15,6 +15,8 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
@@ -55,6 +57,26 @@ public class KoroneikiService {
 		throws Exception {
 
 		return ProductPurchaseResource.builder(
+		).header(
+			"API_TOKEN", _koroneikiAuthToken
+		).endpoint(
+			new URL(_koroneikiAuthURL)
+		).build();
+	}
+
+	public ProductPurchaseViewResource getProductPurchaseViewResource()
+		throws Exception {
+
+		return ProductPurchaseViewResource.builder(
+		).header(
+			"API_TOKEN", _koroneikiAuthToken
+		).endpoint(
+			new URL(_koroneikiAuthURL)
+		).build();
+	}
+
+	public ProductResource getProductResource() throws Exception {
+		return ProductResource.builder(
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(

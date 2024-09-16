@@ -4,18 +4,25 @@
  */
 
 import {cleanup, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import LayoutReports from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/LayoutReports';
 import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import loadIssues from '../../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
 import {layoutReportsIssues, pageURLs} from '../../mocks';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 }));
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/utils/loadIssues',
+	() => jest.fn(() => () => {})
+);
 
 const getLayoutReportsComponent = ({
 	error = null,
@@ -134,5 +141,41 @@ describe('LayoutReports renders proper component', () => {
 		).toBeInTheDocument();
 
 		expect(screen.getByText('relaunch-to-update-data')).toBeInTheDocument();
+	});
+
+	it('calls loadIssues when clicking relaunch button', () => {
+		render(getLayoutReportsComponent({layoutReportsIssues}));
+
+		const button = screen.getByText('relaunch-to-update-data');
+
+		userEvent.click(button);
+
+		expect(loadIssues).toBeCalled();
+	});
+
+	it('does not render relaunch button if it is private page', () => {
+		render(
+			getLayoutReportsComponent({
+				layoutReportsIssues,
+				privateLayout: true,
+			})
+		);
+
+		expect(
+			screen.queryByText('relaunch-to-update-data')
+		).not.toBeInTheDocument();
+	});
+
+	it('does not render relaunch button if key is not configured', () => {
+		render(
+			getLayoutReportsComponent({
+				layoutReportsIssues,
+				validConnection: false,
+			})
+		);
+
+		expect(
+			screen.queryByText('relaunch-to-update-data')
+		).not.toBeInTheDocument();
 	});
 });

@@ -134,20 +134,12 @@ public class DiscardDraftLayoutMVCActionCommandTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		draftLayout.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		draftLayout = _layoutLocalService.updateLayout(draftLayout);
-
-		MockActionRequest mockActionRequest =
-			_getMockLiferayPortletActionRequest(
-				draftLayout, TestPropsValues.getUser());
-
-		_layoutLockManager.getLock(mockActionRequest);
+		_layoutLockManager.getLock(draftLayout, TestPropsValues.getUserId());
 
 		User user = UserTestUtil.addGroupAdminUser(_group);
 
-		mockActionRequest = _getMockLiferayPortletActionRequest(
-			draftLayout, user);
+		MockActionRequest mockActionRequest =
+			_getMockLiferayPortletActionRequest(draftLayout, user);
 
 		MockActionResponse mockActionResponse = new MockActionResponse();
 

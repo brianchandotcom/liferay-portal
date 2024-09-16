@@ -1493,6 +1493,23 @@ public class ObjectRelationshipLocalServiceImpl
 					"an edge of a root context");
 		}
 
+		int objectDefinition1ObjectEntriesCount =
+			_objectEntryLocalService.getObjectEntriesCount(
+				objectRelationship.getObjectDefinitionId1());
+		int objectDefinition2ObjectEntriesCount =
+			_objectEntryLocalService.getObjectEntriesCount(
+				objectRelationship.getObjectDefinitionId2());
+
+		if ((objectDefinition1ObjectEntriesCount > 0) ||
+			(objectDefinition2ObjectEntriesCount > 0)) {
+
+			throw new ObjectRelationshipEdgeException(
+				StringBundler.concat(
+					"Object relationship must not be between object ",
+					"definitions that contains object entries to be an edge ",
+					"of a root context"));
+		}
+
 		ObjectDefinitionLocalService objectDefinitionLocalService =
 			_objectDefinitionLocalServiceSnapshot.get();
 
@@ -1509,23 +1526,6 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipEdgeException(
 				"Object relationship must not be between unmodifiable system " +
 					"object definitions to be an edge of a root context");
-		}
-
-		int objectDefinition1ObjectEntriesCount =
-			_objectEntryLocalService.getObjectEntriesCount(
-				objectDefinition1.getObjectDefinitionId());
-		int objectDefinition2ObjectEntriesCount =
-			_objectEntryLocalService.getObjectEntriesCount(
-				objectDefinition2.getObjectDefinitionId());
-
-		if ((objectDefinition1ObjectEntriesCount > 0) ||
-			(objectDefinition2ObjectEntriesCount > 0)) {
-
-			throw new ObjectRelationshipEdgeException(
-				StringBundler.concat(
-					"Object relationship must not be between object ",
-					"definitions that contains object entries to be an edge ",
-					"of a root context"));
 		}
 	}
 

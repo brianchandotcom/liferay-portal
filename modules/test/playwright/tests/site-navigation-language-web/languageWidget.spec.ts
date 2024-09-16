@@ -121,6 +121,14 @@ test('The user can choose which languages will be available to site via language
 		'iframe[title*="Language Selector"]'
 	);
 
+	// Confirm iframe has loaded by waiting for Display Template select
+
+	await expandSection(
+		configurationIFrame.getByRole('link', {name: 'Display Settings'})
+	);
+
+	await configurationIFrame.getByLabel('Display Template').waitFor();
+
 	// Configure available languages
 
 	await expandSection(

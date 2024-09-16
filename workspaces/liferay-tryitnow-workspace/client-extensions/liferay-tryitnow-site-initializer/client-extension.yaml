@@ -1,7 +1,7 @@
 liferay-tryitnow-site-initializer:
     name: Liferay Try It Now Site Initializer
     oAuthApplicationHeadlessServer: liferay-tryitnow-site-initializer-oauth-application-headless-server
-    siteExternalReferenceCode: liferayTryItNow
+    siteExternalReferenceCode: L_GUEST
     siteName: Liferay Try It Now
     type: siteInitializer
 liferay-tryitnow-site-initializer-oauth-application-headless-server:

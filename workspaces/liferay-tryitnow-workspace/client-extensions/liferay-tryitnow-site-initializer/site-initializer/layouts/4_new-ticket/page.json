@@ -1,6 +1,6 @@
 {
 	"friendlyURL": "/new-ticket",
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
 		"en_US": "New Ticket"
 	},

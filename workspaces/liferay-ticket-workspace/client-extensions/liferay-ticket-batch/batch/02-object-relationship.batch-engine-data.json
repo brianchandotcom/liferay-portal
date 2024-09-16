@@ -6,9 +6,9 @@
 			"createStrategy": "INSERT",
 			"externalReferenceCode": "L_USER",
 			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		},
-		"taskItemDelegateName": "DEFAULT"
+		}
 	},
 	"items": [
 		{

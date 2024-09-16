@@ -38,7 +38,7 @@ public class ConsoleService {
 	public void deleteProject(String projectId) throws Exception {
 		String projectName = _consoleProjectPrefix + "-ext" + projectId;
 
-		_getWebClient(
+		getWebClient(
 		).delete(
 		).uri(
 			"/projects/" + projectName
@@ -50,6 +50,26 @@ public class ConsoleService {
 		if (_log.isInfoEnabled()) {
 			_log.info("Deleted project " + projectName);
 		}
+	}
+
+	public JSONObject deployApp(
+			String emailAddress, String orderId, String projectId)
+		throws Exception {
+
+		JSONObject jsonObject = _post(
+			new JSONObject(
+			).put(
+				"orderId", orderId
+			).put(
+				"userEmail", emailAddress
+			),
+			"/admin/projects/" + projectId + "/apps");
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Deployed app for project " + projectId);
+		}
+
+		return jsonObject;
 	}
 
 	public String getAccessToken() throws Exception {
@@ -99,6 +119,17 @@ public class ConsoleService {
 		return _accessToken;
 	}
 
+	public WebClient getWebClient() throws Exception {
+		return WebClient.builder(
+		).baseUrl(
+			_consoleAuthURL
+		).defaultHeader(
+			HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()
+		).filter(
+			_getRetryExchangeFilterFunction()
+		).build();
+	}
+
 	public void setUpProject(String dxpVirtualInstanceId, long orderId)
 		throws Exception {
 
@@ -110,26 +141,20 @@ public class ConsoleService {
 
 		_linkDXPWithProject(dxpVirtualInstanceId, jsonObject.getString("id"));
 
-		_deployApp(
+		deployApp(
 			_consoleAuthEmailAddress, String.valueOf(orderId),
 			jsonObject.getString("projectId"));
 	}
 
-	private void _deployApp(String email, String orderId, String projectId)
-		throws Exception {
-
-		_post(
-			new JSONObject(
-			).put(
-				"orderId", orderId
-			).put(
-				"userEmail", email
-			),
-			"/admin/projects/" + projectId + "/apps");
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Deployed app for project " + projectId);
-		}
+	public void uninstallApp(long orderId) {
+		getWebClient(
+		).delete(
+		).uri(
+			"/apps/" + orderId
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
 	}
 
 	private ExchangeFilterFunction _getRetryExchangeFilterFunction() {
@@ -147,17 +172,6 @@ public class ConsoleService {
 				}
 			)
 		);
-	}
-
-	private WebClient _getWebClient() throws Exception {
-		return WebClient.builder(
-		).baseUrl(
-			_consoleAuthURL
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()
-		).filter(
-			_getRetryExchangeFilterFunction()
-		).build();
 	}
 
 	private void _inviteProject(String emailAddress, String projectId)
@@ -206,7 +220,7 @@ public class ConsoleService {
 		throws Exception {
 
 		return new JSONObject(
-			_getWebClient(
+			getWebClient(
 			).post(
 			).uri(
 				path

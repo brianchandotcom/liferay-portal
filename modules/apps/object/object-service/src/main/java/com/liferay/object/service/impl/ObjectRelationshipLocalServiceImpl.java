@@ -1565,6 +1565,9 @@ public class ObjectRelationshipLocalServiceImpl
 				"Object relationship must not be between unmodifiable system " +
 					"object definitions to be an edge of a root context");
 		}
+
+		_validateObjectEntries(
+			objectDefinition1, objectDefinition2, objectRelationship);
 	}
 
 	private void _validateExternalReferenceCode(
@@ -1687,6 +1690,29 @@ public class ObjectRelationshipLocalServiceImpl
 				"the object definition \"", objectDefinition.getShortName(),
 				".\" Parent and child object definitions cannot have the same ",
 				"name."));
+	}
+
+	private void _validateObjectEntries(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2,
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		if (!objectDefinition1.isApproved() ||
+			!objectDefinition2.isApproved()) {
+
+			return;
+		}
+
+		int oneToManyObjectEntriesCount =
+			_objectEntryLocalService.getOneToManyObjectEntriesCount(
+				0, objectRelationship.getObjectRelationshipId(), 0L, false,
+				null);
+
+		if (oneToManyObjectEntriesCount > 0) {
+			throw new ObjectRelationshipEdgeException(
+				"There must not exist unrelated entries");
+		}
 	}
 
 	private void _validateObjectEntryId(

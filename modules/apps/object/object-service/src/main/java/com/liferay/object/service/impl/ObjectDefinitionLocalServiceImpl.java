@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -513,11 +514,19 @@ public class ObjectDefinitionLocalServiceImpl
 							long startPrimaryKey, long endPrimaryKey)
 						throws PortalException {
 
-						Session session = _objectEntryPersistence.openSession();
+						Session portletSession =
+							_objectEntryPersistence.openSession();
 
-						session.flush();
+						portletSession.flush();
 
-						session.clear();
+						portletSession.clear();
+
+						Session portalSession =
+							_resourcePermissionPersistence.openSession();
+
+						portalSession.flush();
+
+						portalSession.clear();
 					}
 
 				};
@@ -2594,6 +2603,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private ResourcePermissionPersistence _resourcePermissionPersistence;
 
 	private final Map
 		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>

@@ -613,12 +613,16 @@ export default function FieldBase({
 								}
 							)}
 							disabled={readOnly || disabledRepeatableButton}
-							onClick={() =>
+							onClick={() => {
 								dispatch({
 									payload: name,
 									type: CORE_EVENT_TYPES.FIELD.REMOVED,
-								})
-							}
+								});
+
+								Liferay.fire('journal:storeState', {
+									fieldName: 'Repeatable Removed',
+								});
+							}}
 							small
 							title={Liferay.Language.get('remove')}
 							type="button"
@@ -641,12 +645,16 @@ export default function FieldBase({
 							}
 						)}
 						disabled={readOnly || disabledRepeatableButton}
-						onClick={() =>
+						onClick={() => {
 							dispatch({
 								payload: name,
 								type: CORE_EVENT_TYPES.FIELD.REPEATED,
-							})
-						}
+							});
+
+							Liferay.fire('journal:storeState', {
+								fieldName: 'Repeatable Added',
+							});
+						}}
 						small
 						title={Liferay.Language.get('duplicate')}
 						type="button"

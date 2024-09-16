@@ -1237,6 +1237,528 @@ public class DLFileEntryMetadataPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"dlFileEntryMetadata.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
+	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
+	private FinderPath _finderPathCountByDDMStructureId;
+
+	/**
+	 * Returns all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching document library file entry metadatas
+	 */
+	@Override
+	public List<DLFileEntryMetadata> findByDDMStructureId(long DDMStructureId) {
+		return findByDDMStructureId(
+			DDMStructureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @return the range of matching document library file entry metadatas
+	 */
+	@Override
+	public List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId, int start, int end) {
+
+		return findByDDMStructureId(DDMStructureId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	@Override
+	public List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return findByDDMStructureId(
+			DDMStructureId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	@Override
+	public List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileEntryMetadata.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindByDDMStructureId;
+					finderArgs = new Object[] {DDMStructureId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByDDMStructureId;
+				finderArgs = new Object[] {
+					DDMStructureId, start, end, orderByComparator
+				};
+			}
+
+			List<DLFileEntryMetadata> list = null;
+
+			if (useFinderCache) {
+				list = (List<DLFileEntryMetadata>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (DLFileEntryMetadata dlFileEntryMetadata : list) {
+						if (DDMStructureId !=
+								dlFileEntryMetadata.getDDMStructureId()) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
+
+				sb.append(_SQL_SELECT_DLFILEENTRYMETADATA_WHERE);
+
+				sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DLFileEntryMetadataModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(DDMStructureId);
+
+					list = (List<DLFileEntryMetadata>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata
+	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata findByDDMStructureId_First(
+			long DDMStructureId,
+			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+		throws NoSuchFileEntryMetadataException {
+
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByDDMStructureId_First(
+			DDMStructureId, orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("DDMStructureId=");
+		sb.append(DDMStructureId);
+
+		sb.append("}");
+
+		throw new NoSuchFileEntryMetadataException(sb.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata fetchByDDMStructureId_First(
+		long DDMStructureId,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		List<DLFileEntryMetadata> list = findByDDMStructureId(
+			DDMStructureId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata
+	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata findByDDMStructureId_Last(
+			long DDMStructureId,
+			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+		throws NoSuchFileEntryMetadataException {
+
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByDDMStructureId_Last(
+			DDMStructureId, orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("DDMStructureId=");
+		sb.append(DDMStructureId);
+
+		sb.append("}");
+
+		throw new NoSuchFileEntryMetadataException(sb.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata fetchByDDMStructureId_Last(
+		long DDMStructureId,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		int count = countByDDMStructureId(DDMStructureId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DLFileEntryMetadata> list = findByDDMStructureId(
+			DDMStructureId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file entry metadata
+	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata[] findByDDMStructureId_PrevAndNext(
+			long fileEntryMetadataId, long DDMStructureId,
+			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+		throws NoSuchFileEntryMetadataException {
+
+		DLFileEntryMetadata dlFileEntryMetadata = findByPrimaryKey(
+			fileEntryMetadataId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileEntryMetadata[] array = new DLFileEntryMetadataImpl[3];
+
+			array[0] = getByDDMStructureId_PrevAndNext(
+				session, dlFileEntryMetadata, DDMStructureId, orderByComparator,
+				true);
+
+			array[1] = dlFileEntryMetadata;
+
+			array[2] = getByDDMStructureId_PrevAndNext(
+				session, dlFileEntryMetadata, DDMStructureId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileEntryMetadata getByDDMStructureId_PrevAndNext(
+		Session session, DLFileEntryMetadata dlFileEntryMetadata,
+		long DDMStructureId,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_DLFILEENTRYMETADATA_WHERE);
+
+		sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(DLFileEntryMetadataModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(DDMStructureId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						dlFileEntryMetadata)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DLFileEntryMetadata> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the document library file entry metadatas where DDMStructureId = &#63; from the database.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 */
+	@Override
+	public void removeByDDMStructureId(long DDMStructureId) {
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				findByDDMStructureId(
+					DDMStructureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(dlFileEntryMetadata);
+		}
+	}
+
+	/**
+	 * Returns the number of document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching document library file entry metadatas
+	 */
+	@Override
+	public int countByDDMStructureId(long DDMStructureId) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileEntryMetadata.class)) {
+
+			FinderPath finderPath = _finderPathCountByDDMStructureId;
+
+			Object[] finderArgs = new Object[] {DDMStructureId};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_DLFILEENTRYMETADATA_WHERE);
+
+				sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(DDMStructureId);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2 =
+		"dlFileEntryMetadata.DDMStructureId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
 	private FinderPath _finderPathCountByFileEntryId;
@@ -3756,6 +4278,24 @@ public class DLFileEntryMetadataPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_finderPathWithPaginationFindByDDMStructureId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMStructureId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"DDMStructureId"}, true);
+
+		_finderPathWithoutPaginationFindByDDMStructureId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMStructureId",
+			new String[] {Long.class.getName()},
+			new String[] {"DDMStructureId"}, true);
+
+		_finderPathCountByDDMStructureId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
+			new String[] {Long.class.getName()},
+			new String[] {"DDMStructureId"}, false);
 
 		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",

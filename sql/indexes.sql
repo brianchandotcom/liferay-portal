@@ -99,9 +99,10 @@ create index IX_9EE96CAD on DLFileEntry (repositoryId);
 create index IX_25F5CAB9 on DLFileEntry (smallImageId, largeImageId, custom1ImageId, custom2ImageId);
 create index IX_64F0FE40 on DLFileEntry (uuid_[$COLUMN_LENGTH:75$]);
 
+create unique index IX_B9210CAD on DLFileEntryMetadata (DDMStructureId, fileVersionId, ctCollectionId);
 create unique index IX_36AA016C on DLFileEntryMetadata (ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
 create index IX_4F40FE5E on DLFileEntryMetadata (fileEntryId);
-create unique index IX_BE290777 on DLFileEntryMetadata (fileVersionId, ctCollectionId, DDMStructureId);
+create index IX_1FE9C04 on DLFileEntryMetadata (fileVersionId);
 create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_93ED0F06 on DLFileEntryType (groupId, ctCollectionId, dataDefinitionId);

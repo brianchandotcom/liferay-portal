@@ -1308,6 +1308,12 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
+		objectDefinition2.setPortlet(false);
+
+		if (!objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
+			objectDefinition2.setPortlet(true);
+		}
+
 		String objectDefinition2PreviousRESTContextPath =
 			objectDefinition2.getRESTContextPath();
 
@@ -1319,8 +1325,6 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition2.getObjectDefinitionId());
 		}
-
-		objectDefinition2.setPortlet(false);
 
 		objectDefinition2 = objectDefinitionLocalService.updateObjectDefinition(
 			objectDefinition2);

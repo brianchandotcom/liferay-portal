@@ -295,18 +295,41 @@ public class AnalyticsBatchExportImportManagerImpl
 				"Uploading resource " + resourceName,
 				notificationUnsafeConsumer);
 
-			InputStream contentInputStream =
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId());
+			File tempFile = FileUtil.createTempFile();
 
-			_upload(
-				companyId, "zip", contentInputStream, resourceLastModifiedDate,
-				resourceName);
+			try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
+					new FileOutputStream(tempFile));
+				ZipInputStream zipInputStream = new ZipInputStream(
+					_batchEngineExportTaskLocalService.openContentInputStream(
+						batchEngineExportTask.getBatchEngineExportTaskId()))) {
 
-			contentInputStream.close();
+				zipInputStream.getNextEntry();
+
+				StreamUtil.transfer(zipInputStream, gzipOutputStream, false);
+			}
+
+			try (FileInputStream fileInputStream = new FileInputStream(
+					tempFile)) {
+
+				_upload(
+					companyId, "gzip", fileInputStream,
+					resourceLastModifiedDate, resourceName);
+			}
 
 			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
 				batchEngineExportTask);
+
+			boolean deleted = tempFile.delete();
+
+			if (_log.isDebugEnabled()) {
+				if (deleted) {
+					_log.debug("Deleted temp file: " + tempFile.getName());
+				}
+				else {
+					_log.debug(
+						"Unable to delete temp file: " + tempFile.getName());
+				}
+			}
 
 			_notify(
 				"Completed uploading resource " + resourceName,

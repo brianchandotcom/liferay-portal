@@ -64,6 +64,7 @@ public class SaveCompanyConfigurationMVCActionCommand
 			ParamUtil.getBoolean(actionRequest, "includeCategories"),
 			ParamUtil.getBoolean(actionRequest, "includePages"),
 			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
+			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"),
 			ArrayUtil.filter(
 				ArrayUtil.unique(
 					ParamUtil.getLongValues(

@@ -591,11 +591,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 				String fieldName = String.valueOf(properties.get("fieldName"));
 
-				fieldName = StringUtil.replace(
-					fieldName, "[]", StringPool.FORWARD_SLASH);
-
-				fieldName = StringUtil.replace(
-					fieldName, CharPool.PERIOD, CharPool.FORWARD_SLASH);
+				fieldName = fieldName.replaceAll(
+					"(\\[\\]|\\.)", StringPool.FORWARD_SLASH);
 
 				String type = MapUtil.getString(properties, "type");
 

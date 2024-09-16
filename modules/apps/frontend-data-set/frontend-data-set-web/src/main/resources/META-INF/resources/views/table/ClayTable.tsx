@@ -448,7 +448,6 @@ function HeadCellResizer({
 	...otherProps
 }: React.ComponentProps<typeof Cell> & {
 	columnName: string;
-	resizable?: boolean;
 }) {
 	const {
 		draggingAllowed,

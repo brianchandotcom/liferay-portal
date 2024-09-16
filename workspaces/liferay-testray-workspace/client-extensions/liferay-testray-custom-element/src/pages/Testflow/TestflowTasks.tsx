@@ -132,7 +132,7 @@ const TestFlowTasks = () => {
 	) => {
 		setIsLoading(true);
 
-		const {childTestraySubtasks, parentTestraySubtask} =
+		const testraySubtasks =
 			await testraySubtaskImpl.mergedToSubtask(subtasks);
 
 		updateItemFromList(
@@ -155,15 +155,15 @@ const TestFlowTasks = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.sub('x-successfully-merged-with-x-view-x', [
-				childTestraySubtasks[0].name,
-				parentTestraySubtask.name,
-				parentTestraySubtask.name,
+				testraySubtasks?.items[1].name,
+				testraySubtasks?.items[0].name,
+				testraySubtasks?.items[0].name,
 			]),
 			onClick: ({event}) => {
 				const {target} = event;
 
 				if (target?.id === 'testray-link') {
-					navigate(`subtasks/${parentTestraySubtask.id}`);
+					navigate(`subtasks/${testraySubtasks?.items[0].id}`);
 				}
 			},
 		});

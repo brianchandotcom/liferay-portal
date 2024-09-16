@@ -81,17 +81,6 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 		});
 	}
 
-	private async getCaseResultsFromSubtask(subtaskId: number) {
-		const subtaskCaseResultResponse =
-			await testraySubtaskCaseResultImpl.getAll({
-				filter: SearchBuilder.eq('subtaskId', subtaskId),
-			});
-
-		return subtaskCaseResultResponse
-			? subtaskCaseResultResponse?.items
-			: [];
-	}
-
 	public async assignTo(subtask: TestraySubtask, userId: number) {
 		const response = await this.update(subtask.id, {
 			dueStatus: SubtaskStatuses.IN_ANALYSIS,
@@ -189,45 +178,13 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 		});
 	}
 
-	public async mergedToSubtask(subtasks: TestraySubtask[]) {
-		const [parentTestraySubtask, ...childTestraySubtasks] = subtasks.sort(
-			({score: scoreA}, {score: scoreB}) => scoreB - scoreA
+	public async mergedToSubtask(
+		subtasks: TestraySubtask[]
+	): Promise<APIResponse<TestraySubtask>> {
+		return this.fetcher.put(
+			`/testray-testflow/testray-subtask/merge`,
+			subtasks
 		);
-
-		let sumScore = parentTestraySubtask.score ?? 0;
-
-		for (const testraySubtask of childTestraySubtasks) {
-			await this.update(testraySubtask.id, {
-				dueStatus: SubtaskStatuses.MERGED,
-				mergedToSubtaskId: parentTestraySubtask.id,
-				score: 0,
-			});
-
-			const caseResults = await this.getCaseResultsFromSubtask(
-				testraySubtask.id
-			);
-
-			for (const caseResult of caseResults) {
-				sumScore += caseResult?.case?.priority || 0;
-
-				await testraySubtaskCaseResultImpl.update(caseResult.id, {
-					issues: parentTestraySubtask?.issues,
-					subtaskId: parentTestraySubtask.id,
-				});
-			}
-		}
-
-		await this.update(parentTestraySubtask.id, {
-			dueStatus:
-				parentTestraySubtask.dueStatus?.key ||
-				parentTestraySubtask.status,
-			score: sumScore,
-		});
-
-		return {
-			childTestraySubtasks,
-			parentTestraySubtask,
-		};
 	}
 
 	public async split(

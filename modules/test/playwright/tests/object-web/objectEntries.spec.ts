@@ -479,8 +479,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	});
 
-	test('can delete attachment field from object entry', async ({
+	test('can download and delete a file from the Attachment field when adding an object entry', async ({
 		apiHelpers,
+		page,
 		viewObjectEntriesPage,
 	}) => {
 		const {objectDefinitions} = createdEntities;
@@ -527,11 +528,27 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		const downloadPromise = page.waitForEvent('download');
+
+		await page.getByRole('button', {name: ATTACHMENT_FILE_NAME}).hover();
+
+		await page.locator('.lexicon-icon-download').click();
+
+		expect((await downloadPromise).suggestedFilename()).toStrictEqual(
+			`${ATTACHMENT_FILE_NAME}`
+		);
+
 		await viewObjectEntriesPage.deleteFileButton.click();
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await expect(
+			viewObjectEntriesPage.successMessage.first()
+		).toBeVisible();
 	});
 
 	test('can view all entries related to an object in the relationship field using autocomplete', async ({

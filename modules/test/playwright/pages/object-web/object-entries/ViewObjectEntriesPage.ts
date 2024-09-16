@@ -121,13 +121,7 @@ export class ViewObjectEntriesPage {
 			.getByRole('link', {name: 'Provided by Liferay'})
 			.click();
 
-		await this.selectFileIframe
-			.locator(
-				'[id="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_repositoryEntriesSearchContainer_1"] div'
-			)
-			.filter({hasText: fileName})
-			.first()
-			.click();
+		await this.selectFileIframe.getByText(fileName).dblclick();
 	}
 
 	async selectFileFromDocumentsAndMediaArabic() {

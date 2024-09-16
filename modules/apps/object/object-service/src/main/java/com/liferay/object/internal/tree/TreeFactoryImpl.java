@@ -18,6 +18,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -41,13 +42,16 @@ public class TreeFactoryImpl implements TreeFactory {
 				objectDefinitionLookupUnsafeFunction)
 		throws PortalException {
 
+		ObjectRelationshipLocalService objectRelationshipLocalService =
+			_objectRelationshipLocalServiceSnapshot.get();
+
 		ObjectDefinition rootObjectDefinition =
 			objectDefinitionLookupUnsafeFunction.apply(objectDefinitionId);
 
 		return _create(
 			objectDefinitionId,
 			node -> TransformUtil.transform(
-				_objectRelationshipLocalService.getObjectRelationships(
+				objectRelationshipLocalService.getObjectRelationships(
 					node.getPrimaryKey(), true),
 				objectRelationship -> {
 					ObjectDefinition objectDefinition2 =
@@ -70,6 +74,9 @@ public class TreeFactoryImpl implements TreeFactory {
 	public Tree createObjectEntryTree(long objectEntryId)
 		throws PortalException {
 
+		ObjectRelationshipLocalService objectRelationshipLocalService =
+			_objectRelationshipLocalServiceSnapshot.get();
+
 		UnsafeFunction<Node, List<Node>, PortalException> unsafeFunction =
 			node -> {
 				ObjectEntry parentObjectEntry =
@@ -79,7 +86,7 @@ public class TreeFactoryImpl implements TreeFactory {
 				List<Node> childrenNodes = new ArrayList<>();
 
 				for (ObjectRelationship objectRelationship :
-						_objectRelationshipLocalService.getObjectRelationships(
+						objectRelationshipLocalService.getObjectRelationships(
 							parentObjectEntry.getObjectDefinitionId(), true)) {
 
 					childrenNodes.addAll(
@@ -128,10 +135,12 @@ public class TreeFactoryImpl implements TreeFactory {
 		return new Tree(rootNode);
 	}
 
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private static final Snapshot<ObjectRelationshipLocalService>
+		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
+			TreeFactoryImpl.class, ObjectRelationshipLocalService.class, null,
+			true);
 
 	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

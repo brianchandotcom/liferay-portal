@@ -122,6 +122,13 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		getService().deleteFileEntryMetadata(fileEntryId);
 	}
 
+	public static void deleteFileEntryMetadataByDDMStructureId(
+			long ddmStructureId)
+		throws PortalException {
+
+		getService().deleteFileEntryMetadataByDDMStructureId(ddmStructureId);
+	}
+
 	public static void deleteFileEntryMetadataByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

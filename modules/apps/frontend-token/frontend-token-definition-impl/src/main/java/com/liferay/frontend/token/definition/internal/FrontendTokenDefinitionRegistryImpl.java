@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -57,6 +59,23 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = FrontendTokenDefinitionRegistry.class)
 public class FrontendTokenDefinitionRegistryImpl
 	implements FrontendTokenDefinitionRegistry {
+
+	@Override
+	public List<FrontendTokenDefinition> getAllFrontendTokenDefinition(
+		long companyId) {
+
+		List<FrontendTokenDefinition> themesFrontendTokenDefinitions =
+			(List<FrontendTokenDefinition>)
+				_frontendTokenDefinitionImpls.values();
+
+		List<FrontendTokenDefinition> cetFrontendTokenDefinitions =
+			(List<FrontendTokenDefinition>)_frontendTokenDefinitionsMap.get(
+				companyId
+			).values();
+
+		return ListUtil.concat(
+			themesFrontendTokenDefinitions, cetFrontendTokenDefinitions);
+	}
 
 	@Override
 	public FrontendTokenDefinition getFrontendTokenDefinition(
@@ -272,7 +291,7 @@ public class FrontendTokenDefinitionRegistryImpl
 			}
 		}
 
-		Map<String, FrontendTokenDefinitionImpl> frontendTokenDefinitionImpls =
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitionImpls =
 			_frontendTokenDefinitionImplsDCLSingleton.getSingleton(
 				() -> {
 					_bundleTracker.open();
@@ -367,9 +386,9 @@ public class FrontendTokenDefinitionRegistryImpl
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
 
-	private final Map<String, FrontendTokenDefinitionImpl>
+	private final Map<String, FrontendTokenDefinition>
 		_frontendTokenDefinitionImpls = new ConcurrentHashMap<>();
-	private final DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
+	private final DCLSingleton<Map<String, FrontendTokenDefinition>>
 		_frontendTokenDefinitionImplsDCLSingleton = new DCLSingleton<>();
 	private final FrontendTokenDefinitionJSONValidator
 		_frontendTokenDefinitionJSONValidator =

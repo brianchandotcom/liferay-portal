@@ -61,6 +61,18 @@ public class DLFileEntryMetadataLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFileEntryMetadataByDDMStructureId(long ddmStructureId)
+		throws PortalException {
+
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				dlFileEntryMetadataPersistence.findByDDMStructureId(
+					ddmStructureId)) {
+
+			deleteFileEntryMetadata(dlFileEntryMetadata);
+		}
+	}
+
+	@Override
 	public void deleteFileEntryMetadataByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

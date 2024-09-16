@@ -37,6 +37,7 @@ import com.liferay.portal.search.indexer.BaseModelRetriever;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.internal.index.contributor.helper.ModelIndexerWriterDocumentHelperImpl;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
@@ -61,7 +62,8 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		SearchPermissionIndexWriter searchPermissionIndexWriter,
 		UpdateDocumentIndexWriter updateDocumentIndexWriter,
 		IndexStatusManager indexStatusManager,
-		IndexWriterHelper indexWriterHelper, Props props) {
+		IndexWriterHelper indexWriterHelper, Props props,
+		UIDFactory uidFactory) {
 
 		_modelSearchSettings = modelSearchSettings;
 		_baseModelRetriever = baseModelRetriever;
@@ -74,6 +76,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		_indexStatusManager = indexStatusManager;
 		_indexWriterHelper = indexWriterHelper;
 		_props = props;
+		_uidFactory = uidFactory;
 	}
 
 	@Override
@@ -96,11 +99,9 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		long companyId = _modelIndexerWriterContributor.getCompanyId(baseModel);
-
-		String uid = _indexerDocumentBuilder.getDocumentUID(baseModel);
-
-		delete(companyId, uid);
+		delete(
+			_modelIndexerWriterContributor.getCompanyId(baseModel),
+			_uidFactory.getUID(baseModel));
 
 		_modelIndexerWriterContributor.modelDeleted(baseModel);
 	}
@@ -330,6 +331,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 	private final ModelSearchSettings _modelSearchSettings;
 	private final Props _props;
 	private final SearchPermissionIndexWriter _searchPermissionIndexWriter;
+	private final UIDFactory _uidFactory;
 	private final UpdateDocumentIndexWriter _updateDocumentIndexWriter;
 
 }

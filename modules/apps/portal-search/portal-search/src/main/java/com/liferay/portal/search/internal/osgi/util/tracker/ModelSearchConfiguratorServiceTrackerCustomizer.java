@@ -49,6 +49,7 @@ import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
 import com.liferay.portal.search.internal.indexer.helper.AddSearchKeywordsQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.helper.PreFilterContributorHelper;
 import com.liferay.portal.search.internal.searcher.helper.IndexSearcherHelper;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -247,6 +248,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		searchResultPermissionFilterFactory;
 
 	@Reference
+	protected UIDFactory uidFactory;
+
+	@Reference
 	protected UpdateDocumentIndexWriter updateDocumentIndexWriter;
 
 	private Indexer<?> _buildIndexer(
@@ -322,7 +326,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			modelSearchConfigurator.getModelIndexerWriterContributor(),
 			indexerDocumentBuilder, searchPermissionIndexWriter,
 			updateDocumentIndexWriter, indexStatusManager, indexWriterHelper,
-			props);
+			props, uidFactory);
 
 		serviceRegistrationHolder.setIndexerWriterServiceRegistration(
 			_bundleContext.registerService(

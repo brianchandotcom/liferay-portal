@@ -871,6 +871,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
+		long sourceCPDefinitionId, long groupId, int status) {
+
+		CPDefinitionLocalServiceUtil.copyCPDefinition(null, groupId);
+		CPDefinitionLocalServiceUtil.copyCPDefinition(sourceCPDefinitionId, groupId);
+		_cpDefinitionLocalService.copyCPDefinition(sourceCPDefinitionId, groupId);
+    }
+
+	public void method(
 		long commerceOrderId, long cpInstanceId, int quantity,
 		int shippedQuantity, String json, CommerceContext commerceContext,
 		ServiceContext serviceContext) {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 
@@ -883,6 +884,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, priority, type, serviceContext);
 		_cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, priority, type, serviceContext);
 	}
+
+	public void method(
+		long sourceCPDefinitionId, long groupId, int status) {
+
+		CPDefinitionLocalServiceUtil.copyCPDefinition(null, groupId);
+		CPDefinitionLocalServiceUtil.copyCPDefinition(sourceCPDefinitionId, groupId, WorkflowConstants.STATUS_DRAFT);
+		_cpDefinitionLocalService.copyCPDefinition(sourceCPDefinitionId, groupId, WorkflowConstants.STATUS_DRAFT);
+    }
 
 	public void method(
 		long commerceOrderId, long cpInstanceId, int quantity,

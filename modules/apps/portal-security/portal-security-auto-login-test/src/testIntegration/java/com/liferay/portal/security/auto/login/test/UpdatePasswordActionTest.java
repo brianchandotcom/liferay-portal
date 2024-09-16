@@ -72,9 +72,9 @@ public class UpdatePasswordActionTest {
 		_updatePasswordAction.execute(
 			null, mockHttpServletRequest, new MockHttpServletResponse());
 
-		User setPasswordUser = _userLocalService.getUser(_user.getUserId());
+		_user = _userLocalService.getUser(_user.getUserId());
 
-		Assert.assertNotNull(setPasswordUser.getLastLoginDate());
+		Assert.assertNotNull(_user.getLastLoginDate());
 	}
 
 	private MockHttpServletRequest _prepareHttpServletRequestWithTicket()

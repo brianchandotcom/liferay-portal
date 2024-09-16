@@ -4,7 +4,8 @@
 	},
 	"devDependencies": {
 		"webpack": "5.90.1",
-		"webpack-cli": "5.1.4"
+		"webpack-cli": "5.1.4",
+		"webpack-rtl-plugin": "^2.0.0"
 	},
 	"liferayDesignPack": {
 		"baseTheme": "styled"

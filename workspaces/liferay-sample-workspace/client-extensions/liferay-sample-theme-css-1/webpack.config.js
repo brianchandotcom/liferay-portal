@@ -3,32 +3,34 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fs = require('fs');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const WebpackRTLPlugin = require('webpack-rtl-plugin');
 
 const buildCSSDir = path.join(__dirname, 'build', 'buildTheme', 'css');
 const DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 const includeReferencedAsset = (assetUrl) => {
-	const urlTokens = ['@base_url@', '@portal_ctx@', '@theme_image_path@']
+	const urlTokens = ['@base_url@', '@portal_ctx@', '@theme_image_path@'];
 
-	if (!fs.existsSync(path.join(__dirname, 'src', 'css', assetUrl)) ||
-		assetUrl.startsWith("data:image") ||
-		urlTokens.some((token) => assetUrl.includes(token))) {
-
+	if (
+		!fs.existsSync(path.join(__dirname, 'src', 'css', assetUrl)) ||
+		assetUrl.startsWith('data:image') ||
+		urlTokens.some((token) => assetUrl.includes(token))
+	) {
 		return false;
 	}
 
 	return true;
-}
+};
 
 module.exports = {
 	context: buildCSSDir,
 	entry: {
 		clay: './clay.css',
-		main: './main.css'
+		main: './main.css',
 	},
 	mode: DEVELOPMENT ? 'development' : 'production',
 	module: {
@@ -40,21 +42,21 @@ module.exports = {
 						loader: MiniCssExtractPlugin.loader,
 					},
 					{
-						loader: "css-loader",
+						loader: 'css-loader',
 						options: {
 							url: {
-								filter: includeReferencedAsset
-							}
-						}
-					}
-				]
+								filter: includeReferencedAsset,
+							},
+						},
+					},
+				],
 			},
 			{
 				generator: {
-					filename: '../assets/[name].[contenthash][ext]'
+					filename: '../assets/[name].[contenthash][ext]',
 				},
 				test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-				type: "asset/resource",
+				type: 'asset/resource',
 			},
 		],
 	},
@@ -65,16 +67,19 @@ module.exports = {
 		clean: {
 			keep(asset) {
 				return !['main', 'clay'].some((file) => asset.includes(file));
-			}
+			},
 		},
-		path: buildCSSDir
+		path: buildCSSDir,
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: "[name].[contenthash].css"
+			filename: '[name].[contenthash].css',
+		}),
+		new WebpackRTLPlugin({
+			filename: '[name]_rtl.[contenthash].css',
 		}),
 		new webpack.optimize.LimitChunkCountPlugin({
 			maxChunks: 1,
-		})
-	]
+		}),
+	],
 };

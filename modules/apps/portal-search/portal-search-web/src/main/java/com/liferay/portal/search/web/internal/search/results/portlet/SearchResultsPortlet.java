@@ -235,10 +235,19 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultsPortletDisplayContext.setSearchContainer(
 			_buildSearchContainer(
 				documents, searchResponse.getTotalHits(),
-				portletSharedSearchResponse.getPaginationStart(),
+				GetterUtil.getInteger(
+					portletSharedSearchResponse.getParameter(
+						searchResultsPortletPreferences.
+							getPaginationStartParameterName(),
+						renderRequest)),
 				searchResultsPortletPreferences.
 					getPaginationStartParameterName(),
-				portletSharedSearchResponse.getPaginationDelta(),
+				GetterUtil.getInteger(
+					portletSharedSearchResponse.getParameter(
+						searchResultsPortletPreferences.
+							getPaginationDeltaParameterName(),
+						renderRequest),
+					searchResultsPortletPreferences.getPaginationDelta()),
 				searchResultsPortletPreferences.
 					getPaginationDeltaParameterName(),
 				renderRequest));

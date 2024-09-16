@@ -62,9 +62,7 @@ public class UpdatePasswordActionTest {
 	public void testUpdatePasswordSetLastLogin() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		_user.setLastLoginDate(null);
-
-		_user = _userLocalService.updateUser(_user);
+		Assert.assertNull(_user.getLastLoginDate());
 
 		_updatePasswordAction.execute(
 			null, _prepareHttpServletRequestWithTicket(),

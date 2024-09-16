@@ -24,9 +24,11 @@ dependencies {
 	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
+	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.3"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:data-engine:data-engine-api")
 	compileOnly project(":apps:depot:depot-api")

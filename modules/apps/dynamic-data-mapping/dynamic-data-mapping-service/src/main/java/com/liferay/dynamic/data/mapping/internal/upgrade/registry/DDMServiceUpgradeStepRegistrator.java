@@ -67,12 +67,15 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -583,6 +586,14 @@ public class DDMServiceUpgradeStepRegistrator
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.
 				DDMFieldUpgradeProcess(),
 			new DDMFieldAttributeUpgradeProcess());
+
+		registry.register(
+			"5.5.1", "5.5.2",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_2.
+				DDMFieldAttributeUpgradeProcess(
+					_classNameLocalService, _dlFileEntryLocalService,
+					_fileEntryFriendlyURLResolver, _groupLocalService,
+					_userLocalService));
 	}
 
 	@Activate
@@ -639,6 +650,12 @@ public class DDMServiceUpgradeStepRegistrator
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
 
+	@Reference
+	private FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
@@ -680,6 +697,9 @@ public class DDMServiceUpgradeStepRegistrator
 
 	@Reference(target = "(default=true)")
 	private Store _store;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private ViewCountEntryLocalService _viewCountEntryLocalService;

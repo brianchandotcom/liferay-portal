@@ -472,6 +472,185 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
+	 * Returns all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId) {
+
+		return getPersistence().findByDDMStructureId(DDMStructureId);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @return the range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId, int start, int end) {
+
+		return getPersistence().findByDDMStructureId(
+			DDMStructureId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().findByDDMStructureId(
+			DDMStructureId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByDDMStructureId(
+			DDMStructureId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata
+	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
+	 */
+	public static DLFileEntryMetadata findByDDMStructureId_First(
+			long DDMStructureId,
+			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileEntryMetadataException {
+
+		return getPersistence().findByDDMStructureId_First(
+			DDMStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	public static DLFileEntryMetadata fetchByDDMStructureId_First(
+		long DDMStructureId,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().fetchByDDMStructureId_First(
+			DDMStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata
+	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
+	 */
+	public static DLFileEntryMetadata findByDDMStructureId_Last(
+			long DDMStructureId,
+			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileEntryMetadataException {
+
+		return getPersistence().findByDDMStructureId_Last(
+			DDMStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	public static DLFileEntryMetadata fetchByDDMStructureId_Last(
+		long DDMStructureId,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().fetchByDDMStructureId_Last(
+			DDMStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file entry metadata
+	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
+	 */
+	public static DLFileEntryMetadata[] findByDDMStructureId_PrevAndNext(
+			long fileEntryMetadataId, long DDMStructureId,
+			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileEntryMetadataException {
+
+		return getPersistence().findByDDMStructureId_PrevAndNext(
+			fileEntryMetadataId, DDMStructureId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the document library file entry metadatas where DDMStructureId = &#63; from the database.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 */
+	public static void removeByDDMStructureId(long DDMStructureId) {
+		getPersistence().removeByDDMStructureId(DDMStructureId);
+	}
+
+	/**
+	 * Returns the number of document library file entry metadatas where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching document library file entry metadatas
+	 */
+	public static int countByDDMStructureId(long DDMStructureId) {
+		return getPersistence().countByDDMStructureId(DDMStructureId);
+	}
+
+	/**
 	 * Returns all the document library file entry metadatas where fileEntryId = &#63;.
 	 *
 	 * @param fileEntryId the file entry ID

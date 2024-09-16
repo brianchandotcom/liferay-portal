@@ -214,6 +214,13 @@ public class DLFileEntryMetadataPersistenceTest {
 	}
 
 	@Test
+	public void testCountByDDMStructureId() throws Exception {
+		_persistence.countByDDMStructureId(RandomTestUtil.nextLong());
+
+		_persistence.countByDDMStructureId(0L);
+	}
+
+	@Test
 	public void testCountByFileEntryId() throws Exception {
 		_persistence.countByFileEntryId(RandomTestUtil.nextLong());
 

@@ -116,11 +116,11 @@ describe('LayoutReports renders proper component', () => {
 	});
 
 	it('Renders issues list if available', () => {
-		const {getByRole, getByText} = render(
+		const {getByText} = render(
 			getLayoutReportsComponent({layoutReportsIssues})
 		);
 
-		const alert = getByRole('alert');
+		const alert = document.querySelector('.alert');
 
 		expect(alert).toBeInTheDocument();
 		expect(

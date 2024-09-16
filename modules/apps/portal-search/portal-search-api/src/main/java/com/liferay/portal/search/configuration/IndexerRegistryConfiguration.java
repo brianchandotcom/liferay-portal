@@ -29,10 +29,4 @@ public interface IndexerRegistryConfiguration {
 	@Meta.AD(deflt = "10000", name = "max-buffer-size", required = false)
 	public int maxBufferSize();
 
-	@Meta.AD(
-		deflt = "0.90", max = "0.99", min = "0.1",
-		name = "minimum-buffer-availability-percentage", required = false
-	)
-	public float minimumBufferAvailabilityPercentage();
-
 }

@@ -8,7 +8,6 @@ package com.liferay.portal.security.auto.login.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.UpdatePasswordAction;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
@@ -120,11 +119,7 @@ public class UpdatePasswordActionTest {
 			_companyLocalService.getCompany(_user.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
-
-		Group group = layout.getGroup();
-
-		themeDisplay.setSiteGroupId(group.getGroupId());
-
+		themeDisplay.setSiteGroupId(layout.getGroupId());
 		themeDisplay.setUser(_user);
 
 		mockHttpServletRequest.setAttribute(

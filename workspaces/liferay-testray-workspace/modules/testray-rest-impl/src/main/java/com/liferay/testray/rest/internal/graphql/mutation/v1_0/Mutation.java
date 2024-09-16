@@ -11,8 +11,10 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuild;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
+import com.liferay.testray.rest.dto.v1_0.TestraySubtask;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
@@ -127,6 +129,26 @@ public class Mutation {
 				testrayTestFlowResource.
 					putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
 						testraySubtaskId, testrayTestFlow));
+	}
+
+	@GraphQLField
+	public java.util.Collection<TestraySubtask>
+			updateTestrayTestFlowTestraySubtaskMergePage(
+				@GraphQLName("testraySubtasks") TestraySubtask[]
+					testraySubtasks)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayTestFlowResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayTestFlowResource -> {
+				Page paginationPage =
+					testrayTestFlowResource.
+						putTestrayTestFlowTestraySubtaskMergePage(
+							testraySubtasks);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField

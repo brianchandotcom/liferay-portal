@@ -119,6 +119,11 @@ public class ServletDataImpl implements ServletData {
 							TestrayTestFlowResourceImpl.class,
 							"putTestrayTestFlowByTestraySubtaskIdTestraySubtask"));
 					put(
+						"mutation#updateTestrayTestFlowTestraySubtaskMergePage",
+						new ObjectValuePair<>(
+							TestrayTestFlowResourceImpl.class,
+							"putTestrayTestFlowTestraySubtaskMergePage"));
+					put(
 						"mutation#createTestrayTestFlow",
 						new ObjectValuePair<>(
 							TestrayTestFlowResourceImpl.class,

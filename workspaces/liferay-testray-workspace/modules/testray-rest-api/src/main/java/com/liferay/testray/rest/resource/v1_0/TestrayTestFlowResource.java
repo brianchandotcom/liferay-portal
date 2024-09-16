@@ -54,6 +54,10 @@ public interface TestrayTestFlowResource {
 			String testrayTeamIds, String userId, Pagination pagination)
 		throws Exception;
 
+	public Page<TestraySubtask> putTestrayTestFlowTestraySubtaskMergePage(
+			TestraySubtask[] testraySubtasks)
+		throws Exception;
+
 	public TestrayTestFlow postTestrayTestFlow(Long testrayTaskId)
 		throws Exception;
 

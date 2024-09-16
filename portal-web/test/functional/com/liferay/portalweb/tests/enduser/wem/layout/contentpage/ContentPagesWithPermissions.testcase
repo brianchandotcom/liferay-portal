@@ -121,7 +121,7 @@ definition {
 
 			PageAudit.openPageAuditSidebar();
 
-			AssertTextPresent(value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(value1 = "Render times are approximate and subject to slight variations due to server status and load.");
 		}
 
 		task ("Given a page marketer with update-basic permission has a content page") {
@@ -166,7 +166,7 @@ definition {
 
 			PageAudit.openPageAuditSidebar();
 
-			AssertTextPresent(value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(value1 = "Render times are approximate and subject to slight variations due to server status and load.");
 		}
 	}
 

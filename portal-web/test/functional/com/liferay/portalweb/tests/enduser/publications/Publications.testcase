@@ -1170,7 +1170,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",
-			value1 = "Listas de cambios");
+			value1 = "Publicaciones");
 
 		AssertTextEquals.assertPartialText(
 			key_navItem = "Continua",

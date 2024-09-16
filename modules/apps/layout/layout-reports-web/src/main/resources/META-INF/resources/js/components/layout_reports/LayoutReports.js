@@ -7,7 +7,6 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
 
 import {LOAD_DATA, SET_DATA, SET_ERROR} from '../../constants/actionTypes';
@@ -167,7 +166,3 @@ export default function LayoutReports({url}) {
 		</>
 	);
 }
-
-LayoutReports.propTypes = {
-	eventTriggered: PropTypes.bool,
-};

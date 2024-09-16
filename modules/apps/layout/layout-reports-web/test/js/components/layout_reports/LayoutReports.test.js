@@ -41,7 +41,7 @@ const getLayoutReportsComponent = ({
 				selectedItem,
 			}}
 		>
-			<LayoutReports eventTriggered={true} />
+			<LayoutReports />
 		</StoreContextProvider>
 	);
 };

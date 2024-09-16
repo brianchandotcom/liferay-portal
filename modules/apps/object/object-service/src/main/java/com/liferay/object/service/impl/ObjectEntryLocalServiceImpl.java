@@ -125,7 +125,10 @@ import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -239,6 +242,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -1624,6 +1628,145 @@ public class ObjectEntryLocalServiceImpl
 			user);
 
 		return objectEntry;
+	}
+
+	@Override
+	public void updateRootObjectEntryIds(
+			ObjectDefinition objectDefinition1,
+			ObjectRelationship objectRelationship,
+			ObjectDefinition oldObjectDefinition2)
+		throws PortalException {
+
+		Connection connection = _currentConnection.getConnection(
+			objectEntryPersistence.getDataSource());
+
+		String sql1 =
+			"update ObjectEntry set rootObjectEntryId = ? where " +
+				"objectEntryId = ?";
+		String sql2 =
+			"update ObjectEntry set rootObjectEntryId = ? where " +
+				"rootObjectEntryId = ?";
+
+		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
+			objectRelationship.getObjectFieldId2());
+
+		String sql3 = StringBundler.concat(
+			"select ", oldObjectDefinition2.getPKObjectFieldDBColumnName(),
+			" from ", objectField.getDBTableName(), " where ",
+			objectField.getDBColumnName(), " = ?");
+
+		AtomicBoolean isObjectDefinition1RootNode = new AtomicBoolean(false);
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				sql1);
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				sql2);
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
+				sql3)) {
+
+			long oldObjectDefinition2RootObjectDefinitionId =
+				oldObjectDefinition2.getRootObjectDefinitionId();
+
+			_performActionableDynamicQuery(
+				objectDefinition1.getObjectDefinitionId(),
+				(ObjectEntry objectEntry) -> {
+					try {
+						long rootObjectEntryId =
+							objectEntry.getRootObjectEntryId();
+
+						if (rootObjectEntryId == 0) {
+							rootObjectEntryId = objectEntry.getObjectEntryId();
+
+							preparedStatement1.setLong(1, rootObjectEntryId);
+
+							preparedStatement1.setLong(
+								2, objectEntry.getObjectEntryId());
+
+							preparedStatement1.addBatch();
+
+							isObjectDefinition1RootNode.set(true);
+						}
+
+						preparedStatement3.setLong(
+							1, objectEntry.getObjectEntryId());
+
+						try (ResultSet resultSet =
+								preparedStatement3.executeQuery()) {
+
+							while (resultSet.next()) {
+								long relatedObjectEntryId = resultSet.getLong(
+									oldObjectDefinition2.
+										getPKObjectFieldDBColumnName());
+
+								if (oldObjectDefinition2RootObjectDefinitionId ==
+										0) {
+
+									preparedStatement1.setLong(
+										1, rootObjectEntryId);
+									preparedStatement1.setLong(
+										2, relatedObjectEntryId);
+
+									preparedStatement1.addBatch();
+
+									continue;
+								}
+
+								preparedStatement2.setLong(
+									1, rootObjectEntryId);
+								preparedStatement2.setLong(
+									2, relatedObjectEntryId);
+
+								preparedStatement2.addBatch();
+							}
+						}
+					}
+					catch (SQLException sqlException) {
+						throw new SystemException(sqlException);
+					}
+				});
+
+			preparedStatement1.executeBatch();
+
+			if (oldObjectDefinition2RootObjectDefinitionId != 0) {
+				preparedStatement2.executeBatch();
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				_objectDefinitionPersistence,
+				_objectRelationshipLocalServiceSnapshot.get());
+
+		long objectDefinitionId = objectRelationship.getObjectDefinitionId2();
+
+		if (isObjectDefinition1RootNode.get()) {
+			objectDefinitionId = objectDefinition1.getObjectDefinitionId();
+		}
+
+		Tree objectDefinitionTree = objectDefinitionTreeFactory.create(
+			objectDefinitionId);
+
+		Iterator<Node> iterator = objectDefinitionTree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					node.getPrimaryKey());
+
+			Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+				objectDefinition.getClassName());
+
+			_performActionableDynamicQuery(
+				objectDefinition.getObjectDefinitionId(),
+				(ObjectEntry objectEntry) -> indexer.reindex(objectEntry));
+		}
+
+		objectEntryPersistence.clearCache();
 	}
 
 	@Override
@@ -3838,6 +3981,28 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return results;
+	}
+
+	private void _performActionableDynamicQuery(
+			long objectDefinitionId,
+			ActionableDynamicQuery.PerformActionMethod<?> performActionMethod)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property objectDefinitionIdProperty =
+					PropertyFactoryUtil.forName("objectDefinitionId");
+
+				dynamicQuery.add(
+					objectDefinitionIdProperty.eq(objectDefinitionId));
+			});
+		actionableDynamicQuery.setParallel(true);
+		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private void _putInsertedValue(

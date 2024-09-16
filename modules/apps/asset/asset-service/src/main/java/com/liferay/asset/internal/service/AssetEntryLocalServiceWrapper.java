@@ -62,7 +62,7 @@ public class AssetEntryLocalServiceWrapper
 	public AssetEntry deleteEntry(String className, long classPK)
 		throws PortalException {
 
-		AssetEntry entry = super.fetchEntry(className, classPK);
+		AssetEntry entry = super.deleteEntry(className, classPK);
 
 		if (entry != null) {
 			_assetEntryAssetCategoryRelLocalService.
@@ -70,7 +70,7 @@ public class AssetEntryLocalServiceWrapper
 					entry.getEntryId());
 		}
 
-		return super.deleteEntry(className, classPK);
+		return entry;
 	}
 
 	@Override

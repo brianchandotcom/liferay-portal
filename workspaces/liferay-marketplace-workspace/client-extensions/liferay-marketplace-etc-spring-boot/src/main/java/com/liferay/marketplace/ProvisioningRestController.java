@@ -6,8 +6,8 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
-import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
@@ -55,9 +55,7 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id)
 		throws Exception {
 
-		_initResourceBuilders();
-
-		_appLicenseKeyResource.putAppLicenseKeyDeactivate(
+		_getAppLicenseKeyResource().putAppLicenseKeyDeactivate(
 			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
 
 		if (_log.isInfoEnabled()) {
@@ -69,22 +67,21 @@ public class ProvisioningRestController extends BaseRestController {
 	public AppLicenseKey getLicenseKeys(@PathVariable("id") String id)
 		throws Exception {
 
-		_initResourceBuilders();
-
-		return _appLicenseKeyResource.getAppLicenseKey(Long.valueOf(id));
+		return _getAppLicenseKeyResource().getAppLicenseKey(Long.valueOf(id));
 	}
 
 	@GetMapping("license-keys/{id}/download")
 	public ResponseEntity getLicenseKeysDownload(@PathVariable("id") long id)
 		throws Exception {
 
-		_initResourceBuilders();
+		AppLicenseKeyResource appLicenseKeyResource =
+			_getAppLicenseKeyResource();
 
-		AppLicenseKey appLicenseKey = _appLicenseKeyResource.getAppLicenseKey(
+		AppLicenseKey appLicenseKey = appLicenseKeyResource.getAppLicenseKey(
 			id);
 
 		HttpInvoker.HttpResponse httpResponse =
-			_appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
+			appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
 				appLicenseKey.getId());
 
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -124,9 +121,7 @@ public class ProvisioningRestController extends BaseRestController {
 			@RequestParam(defaultValue = "20", required = false) int pageSize)
 		throws Exception {
 
-		_initResourceBuilders();
-
-		return _appLicenseKeyResource.getAppLicenseKeysPage(
+		return _getAppLicenseKeyResource().getAppLicenseKeysPage(
 			"", "active eq true and orderId eq '" + orderId + "'",
 			Pagination.of(page, pageSize), "");
 	}
@@ -135,8 +130,6 @@ public class ProvisioningRestController extends BaseRestController {
 	public AppLicenseKey postLicenseKeys(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
-
-		_initResourceBuilders();
 
 		JSONObject jsonObject = new JSONObject(json);
 
@@ -149,8 +142,10 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setCreateDate(new Date());
 
 		ProductPurchase productPurchase =
-			_productPurchaseResource.getProductPurchase(
-				appLicenseKey.getProductPurchaseKey());
+			_koroneikiService.getProductPurchaseResource(
+			).getProductPurchase(
+				appLicenseKey.getProductPurchaseKey()
+			);
 
 		Date expirationDate = productPurchase.getEndDate();
 
@@ -190,7 +185,7 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setUserName((String)jwt.getClaim("username"));
 		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
 
-		appLicenseKey = _appLicenseKeyResource.postAppLicenseKey(
+		appLicenseKey = _getAppLicenseKeyResource().postAppLicenseKey(
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
 
 		if (_log.isInfoEnabled()) {
@@ -200,8 +195,8 @@ public class ProvisioningRestController extends BaseRestController {
 		return appLicenseKey;
 	}
 
-	private void _initResourceBuilders() throws Exception {
-		_appLicenseKeyResource = AppLicenseKeyResource.builder(
+	private AppLicenseKeyResource _getAppLicenseKeyResource() throws Exception {
+		return AppLicenseKeyResource.builder(
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -209,19 +204,10 @@ public class ProvisioningRestController extends BaseRestController {
 		).endpoint(
 			_externalProvisioningHomePageURL
 		).build();
-
-		_productPurchaseResource = ProductPurchaseResource.builder(
-		).header(
-			"API_TOKEN", _koroneikiAuthToken
-		).endpoint(
-			_koroneikiAuthURL
-		).build();
 	}
 
 	private static final Log _log = LogFactory.getLog(
 		ProvisioningRestController.class);
-
-	private AppLicenseKeyResource _appLicenseKeyResource;
 
 	@Value("${external.provisioning.oauth2.headless.server.home.page.url}")
 	private URL _externalProvisioningHomePageURL;
@@ -233,8 +219,9 @@ public class ProvisioningRestController extends BaseRestController {
 	private URL _koroneikiAuthURL;
 
 	@Autowired
-	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+	private KoroneikiService _koroneikiService;
 
-	private ProductPurchaseResource _productPurchaseResource;
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 }

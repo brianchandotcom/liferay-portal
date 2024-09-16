@@ -46,7 +46,7 @@ const selectCustomTemplate = async (
 };
 
 test(
-	'Select box template is not redirecting to the correct page after changing the language',
+	'Selecting a language redirects to correct page when using Select Box template',
 	{
 		tag: '@LPD-36184',
 	},

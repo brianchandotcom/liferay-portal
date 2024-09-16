@@ -22,13 +22,7 @@ import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
 import VersionsContent from './VersionsContent';
 
-const TABS_1 = {
-	categorization: 1,
-	details: 0,
-	version: 2,
-};
-
-const TABS_2 = {
+const TABS = {
 	categorization: 1,
 	details: 0,
 	performance: 2,
@@ -58,8 +52,6 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const TABS = Liferay.FeatureFlags['LPD-28830'] ? TABS_2 : TABS_1;
-
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(TABS.details);
 
 	const [error, setError] = useState(false);

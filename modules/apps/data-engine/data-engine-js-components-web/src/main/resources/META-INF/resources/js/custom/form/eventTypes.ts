@@ -18,6 +18,15 @@ const FORM_VIEW = {
 	},
 };
 
+const HISTORY = {
+	ADD: 'add_step',
+	BLUR: 'handle_blur',
+	EDITED: 'mark_edited',
+	NEXT: 'next_step',
+	PREV: 'prev_step',
+	RESET: 'reset_history',
+};
+
 const OBJECT = {
 	FIELDS_CHANGE: 'object_fields_change',
 	RELATIONSHIPS_CHANGE: 'object_relationships_change',
@@ -45,6 +54,7 @@ const RULES = {
 export const EVENT_TYPES = {
 	FORM_BUILDER,
 	FORM_VIEW,
+	HISTORY,
 	OBJECT,
 	PAGE,
 	PAGINATION,

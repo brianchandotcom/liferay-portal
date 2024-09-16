@@ -34,8 +34,8 @@ public class BlogsFriendlyURLFormatUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select distinct classPK, ctCollectionId, ",
-					"friendlyURLEntryId, groupId, languageId, urlTitle from ",
+					"select distinct ctCollectionId, friendlyURLEntryId, ",
+					"languageId, urlTitle, groupId, classPK from ",
 					"FriendlyURLEntryLocalization where urlTitle like '%/' ",
 					"and classNameId = ?"))) {
 

@@ -35,8 +35,8 @@ public class JournalArticleFriendlyURLFormatUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select distinct classPK, ctCollectionId, ",
-					"friendlyURLEntryId, groupId, languageId, urlTitle from ",
+					"select distinct ctCollectionId, friendlyURLEntryId, ",
+					"languageId, urlTitle, groupId, classPK from ",
 					"FriendlyURLEntryLocalization where urlTitle like '%/' ",
 					"and classNameId = ?"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
@@ -103,12 +103,12 @@ public class JournalArticleFriendlyURLFormatUpgradeProcess
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update JournalArticle set urlTitle = ? where " +
-					"resourcePrimKey = ? and ctCollectionId = ?")) {
+				"update JournalArticle set urlTitle = ? where ctCollectionId " +
+					"= ? and resourcePrimKey = ?")) {
 
 			preparedStatement.setString(1, urlTitle);
-			preparedStatement.setLong(2, classPK);
-			preparedStatement.setLong(3, ctCollectionId);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, classPK);
 
 			preparedStatement.executeUpdate();
 		}

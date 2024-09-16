@@ -66,11 +66,9 @@ public class UpdatePasswordActionTest {
 
 		_user = _userLocalService.updateUser(_user);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_prepareHttpServletRequestWithTicket();
-
 		_updatePasswordAction.execute(
-			null, mockHttpServletRequest, new MockHttpServletResponse());
+			null, _prepareHttpServletRequestWithTicket(),
+			new MockHttpServletResponse());
 
 		_user = _userLocalService.getUser(_user.getUserId());
 

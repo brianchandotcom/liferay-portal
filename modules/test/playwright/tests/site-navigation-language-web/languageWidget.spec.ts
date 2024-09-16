@@ -216,12 +216,12 @@ test('The user can choose which languages will be available to site via language
 	await selectCustomTemplate(page, 'Select Box', widgetPagePage);
 
 	await expect(
-		page.locator('option[value="en_US"][selected]')
+		page.locator('option[value="english"][selected]')
 	).toBeAttached();
 
-	await expect(page.locator('option[value="de_DE"]')).toBeAttached();
+	await expect(page.locator('option[value*="de_DE"]')).toBeAttached();
 
-	await expect(page.locator('option[value="es_ES"]')).toBeAttached();
+	await expect(page.locator('option[value*="es_ES"]')).toBeAttached();
 
 	// Configure short text template
 

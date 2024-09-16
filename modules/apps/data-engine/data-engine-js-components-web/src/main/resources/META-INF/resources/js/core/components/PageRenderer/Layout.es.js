@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 
 import {getFormId, getFormNode} from '../../../utils/formId.es';
-import {EVENT_TYPES} from '../../actions/eventTypes.es';
 import {useConfig} from '../../hooks/useConfig.es';
 import {useEvaluate} from '../../hooks/useEvaluate.es';
 import {useForm, useFormState} from '../../hooks/useForm.es';
@@ -30,41 +29,6 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 	const variants = useContext(VariantsContext);
 
 	const Components = components ?? mergeVariants(editable, variants);
-
-	useEffect(() => {
-		dispatch({type: EVENT_TYPES.HISTORY.RESET});
-	}, [defaultLanguageId, dispatch]);
-
-	useEffect(() => {
-		const goToHandler = ({step}) => {
-			dispatch({step, type: EVENT_TYPES.HISTORY.GOTO});
-		};
-		const handleStoreState = () => {
-			dispatch({type: EVENT_TYPES.HISTORY.ADD});
-		};
-		const undoHandler = () => {
-			dispatch({type: EVENT_TYPES.HISTORY.PREV});
-		};
-		const redoHandler = () => {
-			dispatch({type: EVENT_TYPES.HISTORY.NEXT});
-		};
-
-		Liferay.on('journal:goto', goToHandler);
-		Liferay.on('journal:undo', undoHandler);
-		Liferay.on('journal:redo', redoHandler);
-		Liferay.on('journal:storeState', handleStoreState);
-
-		return () => {
-			Liferay.detach('journal:goto', goToHandler);
-			Liferay.detach('journal:undo', undoHandler);
-			Liferay.detach('journal:redo', redoHandler);
-			Liferay.detach('journal:storeState', handleStoreState);
-		};
-	}, [dispatch]);
-
-	useEffect(() => {
-		dispatch({type: EVENT_TYPES.HISTORY.RESET});
-	}, [dispatch]);
 
 	return (
 		<Components.Rows

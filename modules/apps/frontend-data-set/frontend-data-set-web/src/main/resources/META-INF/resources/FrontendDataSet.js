@@ -651,15 +651,20 @@ const FrontendDataSet = ({
 		successMessage,
 		url,
 	}) {
-		return fetch(url, {
-			body: requestBody ? requestBody : '{}',
+		const requestOptions = {
 			headers: {
 				'Accept': 'application/json',
 				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 				'Content-Type': 'application/json',
 			},
 			method,
-		})
+		};
+
+		if (method !== 'GET') {
+			requestOptions.body = requestBody ? requestBody : '{}';
+		}
+
+		return fetch(url, requestOptions)
 			.then((response) => {
 				if (response.ok) {
 					Liferay.fire(EVENTS.ACTION_PERFORMED, {

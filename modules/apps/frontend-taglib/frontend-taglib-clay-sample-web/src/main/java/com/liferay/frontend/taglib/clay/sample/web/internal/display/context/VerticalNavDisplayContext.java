@@ -69,6 +69,23 @@ public class VerticalNavDisplayContext {
 		return _verticalNavItems;
 	}
 
+	public List<VerticalNavItem> getVerticalNavSecurityItems() {
+		_verticalNavItems = new VerticalNavItemList() {
+			{
+				add(
+					verticalNavItem -> {
+						verticalNavItem.setHref("#alert");
+						verticalNavItem.setLabel(
+							"<img src=\"alertTest\" " +
+								"onerror=alert(\"Alert\");>");
+						verticalNavItem.setId("id-alert");
+					});
+			}
+		};
+
+		return _verticalNavItems;
+	}
+
 	private VerticalNavItemList _createVerticalNavItemsList(
 		int size, VerticalNavItem parent) {
 

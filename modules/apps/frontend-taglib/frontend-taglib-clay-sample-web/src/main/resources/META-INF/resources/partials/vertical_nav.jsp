@@ -74,3 +74,15 @@
 		/>
 	</clay:col>
 </clay:row>
+
+<h3>TEST VERTICAL NAV</h3>
+
+<clay:row
+	cssClass="mb-3"
+>
+	<clay:col>
+		<clay:vertical-nav
+			verticalNavItems="<%= verticalNavDisplayContext.getVerticalNavSecurityItems() %>"
+		/>
+	</clay:col>
+</clay:row>

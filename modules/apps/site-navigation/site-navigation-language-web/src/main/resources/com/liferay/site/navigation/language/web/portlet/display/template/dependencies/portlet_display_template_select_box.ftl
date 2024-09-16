@@ -17,14 +17,14 @@
 				lang=entry.getW3cLanguageId()
 				localizeLabel=false
 				selected=entry.isSelected()
-				value=entry.getURL()
+				value=entry.getURL()!
 			/>
 		</#list>
 	</@>
 
 	<@liferay_aui["script"]>
 		function ${randomNamespace}changeLanguage() {
-			window.location.href=document.getElementById('${randomNamespace}${name}').value;
+			window.location.href=event.target.value;
 		}
 	</@>
 </#if>

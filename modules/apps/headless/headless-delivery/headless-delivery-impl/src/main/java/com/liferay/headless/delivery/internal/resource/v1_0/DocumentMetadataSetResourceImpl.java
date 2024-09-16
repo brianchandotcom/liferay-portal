@@ -26,7 +26,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,18 +53,10 @@ public class DocumentMetadataSetResourceImpl
 		_ddmStructureLinkLocalService.deleteStructureStructureLinks(
 			documentMetadataSetId);
 
+		_dlFileEntryMetadataLocalService.
+			deleteFileEntryMetadataByDDMStructureId(documentMetadataSetId);
+
 		_ddmStructureLocalService.deleteStructure(documentMetadataSetId);
-
-		List<DLFileEntryMetadata> dlFileEntryMetadataList =
-			_dlFileEntryMetadataLocalService.
-				getNoStructuresFileEntryMetadatas();
-
-		for (DLFileEntryMetadata dlFileEntryMetadata :
-				dlFileEntryMetadataList) {
-
-			_dlFileEntryMetadataLocalService.deleteDLFileEntryMetadata(
-				dlFileEntryMetadata);
-		}
 	}
 
 	@Override

@@ -155,6 +155,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="DDMStructureId" return-type="Collection">
+			<finder-column name="DDMStructureId" />
+		</finder>
 		<finder name="FileEntryId" return-type="Collection">
 			<finder-column name="fileEntryId" />
 		</finder>

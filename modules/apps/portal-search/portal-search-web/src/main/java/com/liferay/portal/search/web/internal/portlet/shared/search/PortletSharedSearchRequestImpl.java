@@ -181,7 +181,7 @@ public class PortletSharedSearchRequestImpl
 		List<Portlet> instantiatedPortlets = new ArrayList<>();
 
 		Set<String> segmentExperiencePortletIds =
-			_getPortletIdsForSegmentExperience(layout, segmentsExperienceId);
+			_getSegmentExperiencePortletIds(layout, segmentsExperienceId);
 
 		for (String segmentExperiencePortletId : segmentExperiencePortletIds) {
 			Portlet portlet = portletLocalService.getPortletById(
@@ -197,10 +197,10 @@ public class PortletSharedSearchRequestImpl
 		return instantiatedPortlets;
 	}
 
-	private Set<String> _getPortletIdsForSegmentExperience(
+	private Set<String> _getSegmentExperiencePortletIds(
 		Layout layout, long segmentsExperienceId) {
 
-		Set<String> portletIdsForSegmentExperience = new HashSet<>();
+		Set<String> segmentExperiencePortletIds = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
@@ -209,12 +209,12 @@ public class PortletSharedSearchRequestImpl
 					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			portletIdsForSegmentExperience.addAll(
+			segmentExperiencePortletIds.addAll(
 				_portletRegistry.getFragmentEntryLinkPortletIds(
 					fragmentEntryLink));
 		}
 
-		return portletIdsForSegmentExperience;
+		return segmentExperiencePortletIds;
 	}
 
 	private List<Portlet> _getPortlets(

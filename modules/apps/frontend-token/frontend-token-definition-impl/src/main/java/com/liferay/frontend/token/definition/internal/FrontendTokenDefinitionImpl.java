@@ -84,6 +84,7 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		return _jsonLocalizer.getJSONObject(locale);
 	}
 
+	@Override
 	public String getThemeId() {
 		return _themeId;
 	}

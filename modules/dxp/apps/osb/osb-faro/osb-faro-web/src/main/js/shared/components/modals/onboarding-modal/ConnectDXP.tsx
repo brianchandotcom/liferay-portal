@@ -397,16 +397,14 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<div className='fix-pack-container'>
 				<div className='fix-pack-select'>
 					<Label>
-						{Liferay.Language.get('dxp-fix-pack-requirements')}
+						{Liferay.Language.get('dxp-requirements')}
 
 						<InfoPopover
 							className='ml-2'
 							content={Liferay.Language.get(
 								'minimum-fix-pack-version-required-for-full-functionality'
 							)}
-							title={Liferay.Language.get(
-								'dxp-fix-pack-requirements'
-							)}
+							title={Liferay.Language.get('dxp-requirements')}
 						/>
 					</Label>
 					<Select

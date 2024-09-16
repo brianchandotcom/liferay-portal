@@ -17,7 +17,14 @@ export const FORM = 'Form';
 export const PAGE = 'Page';
 export const WEB_CONTENT = 'WebContent';
 
-export const DXP_APPLICATION_IDS = [BLOG, CUSTOM, DOCUMENT, FORM, WEB_CONTENT];
+export const DXP_APPLICATION_IDS = [
+	BLOG,
+	CUSTOM,
+	DOCUMENT,
+	FORM,
+	PAGE,
+	WEB_CONTENT,
+];
 
 // Default Config
 

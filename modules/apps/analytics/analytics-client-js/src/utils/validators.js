@@ -21,14 +21,16 @@ const isValidEvent = ({applicationId, eventId, eventProps}) => {
 		validateEmptyString('eventPropKey'),
 		validateMaxLength(),
 	]);
-	const validateValue = [
-		validateMaxLength(VALIDATION_PROPERTY_VALUE_MAXIMUM_LENGTH),
-	];
 
-	// Ignore validation by attribute if applicationId is from DXP
+	let validateValue = [];
+
+	// Ignore validations by attribute and string max length if applicationId is from DXP
 
 	if (!DXP_APPLICATION_IDS.includes(applicationId)) {
-		validateValue.push(validateAttributeType);
+		validateValue = [
+			validateAttributeType,
+			validateMaxLength(VALIDATION_PROPERTY_VALUE_MAXIMUM_LENGTH),
+		];
 	}
 
 	const validationsValue = _validate(validateValue);

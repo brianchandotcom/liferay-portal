@@ -12,6 +12,7 @@ import KeyboardMovementManager, {
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {
 	useDisableKeyboardMovement,
+	useMovementSource,
 	useSetMovementTarget,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
 import moveItems from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/moveItems';
@@ -42,7 +43,7 @@ jest.mock(
 
 		return {
 			useDisableKeyboardMovement: () => disableMovement,
-			useMovementSource: () => sources,
+			useMovementSource: jest.fn(() => sources),
 			useMovementTarget: () => initialTarget,
 			useSetMovementTarget: () => setTarget,
 			useSetMovementText: () => setText,
@@ -121,6 +122,10 @@ jest.mock(
 );
 
 describe('KeyboardMovementManager', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('calculates previous drop position when pressing up arrow', () => {
 		renderComponent();
 
@@ -197,6 +202,86 @@ describe('KeyboardMovementManager', () => {
 				positions: [2],
 			})
 		);
+	});
+
+	it('calls move item thunk with two items when pressing enter', () => {
+		const mockDispatch = jest.fn((a) => {
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
+		});
+
+		useMovementSource.mockImplementation(() => [
+			{
+				fieldTypes: [],
+				fragmentEntryType: 'component',
+				isWidget: false,
+				itemId: 'item-3',
+				name: 'Item 3',
+				type: 'fragment',
+			},
+			{
+				fieldTypes: [],
+				fragmentEntryType: 'component',
+				isWidget: false,
+				itemId: 'item-1',
+				name: 'Item 1',
+				type: 'fragment',
+			},
+		]);
+
+		renderComponent({dispatch: mockDispatch});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'Enter',
+			})
+		);
+
+		expect(moveItems).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['item-3', 'item-1'],
+				parentItemIds: ['root-id'],
+				positions: [2],
+			})
+		);
+	});
+
+	it('does not call move item thunk when pressing enter and some of the active items are the same as the target', () => {
+		const mockDispatch = jest.fn((a) => {
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
+		});
+
+		useMovementSource.mockImplementation(() => [
+			{
+				fieldTypes: [],
+				fragmentEntryType: 'component',
+				isWidget: false,
+				itemId: 'item-3',
+				name: 'Item 3',
+				type: 'fragment',
+			},
+			{
+				fieldTypes: [],
+				fragmentEntryType: 'component',
+				isWidget: false,
+				itemId: 'item-2',
+				name: 'Item 2',
+				type: 'fragment',
+			},
+		]);
+
+		renderComponent({dispatch: mockDispatch});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'Enter',
+			})
+		);
+
+		expect(moveItems).toBeCalledTimes(0);
 	});
 
 	it('looks for initial target recursively', () => {

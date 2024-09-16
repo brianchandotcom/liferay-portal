@@ -157,13 +157,13 @@
 			<finder-column name="groupId" />
 			<finder-column name="classUuid" />
 		</finder>
-		<finder name="C_C" return-type="AssetEntry" unique="true">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
 		<finder name="C_CN" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
+		</finder>
+		<finder name="C_C" return-type="AssetEntry" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 		</finder>
 		<finder name="G_C_V" return-type="Collection">
 			<finder-column name="groupId" />

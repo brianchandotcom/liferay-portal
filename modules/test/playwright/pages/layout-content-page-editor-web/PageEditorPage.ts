@@ -434,7 +434,6 @@ export class PageEditorPage {
 	async editHTMLEditable({
 		editableId,
 		fragmentId,
-		useBackwardCompatibility = false,
 		value,
 	}: {
 		editableId: string;
@@ -450,7 +449,6 @@ export class PageEditorPage {
 		const editable = this.getEditable({
 			editableId,
 			fragmentId,
-			useBackwardCompatibility,
 		});
 
 		// Enable editor
@@ -1089,23 +1087,18 @@ export class PageEditorPage {
 		editableId,
 		fragmentId,
 		isDesktop = true,
-		useBackwardCompatibility = false,
 	}: {
 		editableId: string;
 		fragmentId: string;
 		isDesktop?: boolean;
-		useBackwardCompatibility?: boolean;
 	}) {
-		if (useBackwardCompatibility) {
-			return this.getFragment(fragmentId, isDesktop)
-				.locator(`lfr-editable[id="${editableId}"]`)
-				.first();
-		}
-		else {
-			return this.getFragment(fragmentId, isDesktop)
-				.locator(`[data-lfr-editable-id="${editableId}"]`)
-				.first();
-		}
+		const fragment = this.getFragment(fragmentId, isDesktop);
+		const dataAttributeLocator = fragment.locator(
+			`[data-lfr-editable-id="${editableId}"]`
+		);
+		const tagLocator = fragment.locator(`lfr-editable[id="${editableId}"]`);
+
+		return dataAttributeLocator.or(tagLocator).first();
 	}
 
 	getFragment(fragmentId: string, isDesktop = true) {

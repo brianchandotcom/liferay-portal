@@ -889,7 +889,6 @@ test.describe('HTML Fragment', () => {
 			await pageEditorPage.editHTMLEditable({
 				editableId: 'element-html',
 				fragmentId: fragmentName,
-				useBackwardCompatibility: true,
 				value: '<div class="text-success"><h1>test html</h1></div>',
 			});
 

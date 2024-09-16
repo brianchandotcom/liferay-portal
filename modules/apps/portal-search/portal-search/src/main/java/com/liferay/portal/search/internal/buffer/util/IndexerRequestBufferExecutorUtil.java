@@ -24,6 +24,9 @@ import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Michael C. Han
@@ -64,23 +67,38 @@ public class IndexerRequestBufferExecutorUtil {
 		IndexerRequestBuffer transferCopyIndexerRequestBuffer =
 			indexerRequestBuffer.transferCopy();
 
-		SearchContext.registerBatchModeSyncFuture(
-			executorService.submit(
-				() -> {
-					ServiceContextThreadLocal.pushServiceContext(
-						finalServiceContext);
+		AtomicReference<Future<?>> futureReference = new AtomicReference<>();
 
-					try (SafeCloseable safeCloseable =
-							SearchContext.openBatchMode(false)) {
+		FutureTask<?> futureTask = new FutureTask<Void>(
+			() -> {
+				ServiceContextThreadLocal.pushServiceContext(
+					finalServiceContext);
 
-						_execute(
-							transferCopyIndexerRequestBuffer,
-							transferCopyIndexerRequestBuffer.size(), false);
-					}
-					finally {
-						ServiceContextThreadLocal.popServiceContext();
-					}
-				}));
+				try (SafeCloseable safeCloseable = SearchContext.openBatchMode(
+						false)) {
+
+					_execute(
+						transferCopyIndexerRequestBuffer,
+						transferCopyIndexerRequestBuffer.size(), false);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+				finally {
+					ServiceContextThreadLocal.popServiceContext();
+
+					SearchContext.unregisterBatchModeSyncFuture(
+						futureReference.get());
+				}
+
+				return null;
+			});
+
+		futureReference.set(futureTask);
+
+		SearchContext.registerBatchModeSyncFuture(futureTask);
+
+		executorService.execute(futureTask);
 	}
 
 	private static void _execute(

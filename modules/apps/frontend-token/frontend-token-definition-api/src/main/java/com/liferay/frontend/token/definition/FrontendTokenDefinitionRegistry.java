@@ -7,10 +7,15 @@ package com.liferay.frontend.token.definition;
 
 import com.liferay.portal.kernel.model.LayoutSet;
 
+import java.util.List;
+
 /**
  * @author Iván Zaera
  */
 public interface FrontendTokenDefinitionRegistry {
+
+	public List<FrontendTokenDefinition> getAllFrontendTokenDefinition(
+		long companyId);
 
 	public FrontendTokenDefinition getFrontendTokenDefinition(
 		LayoutSet layoutSet);

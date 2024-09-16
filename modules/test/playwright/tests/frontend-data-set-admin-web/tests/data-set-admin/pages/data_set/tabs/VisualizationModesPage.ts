@@ -19,7 +19,10 @@ export class VisualizationModesPage {
 	readonly tableVisualizationModeContainer: Locator;
 
 	constructor(page: Page) {
-		this.addFieldsButton = page.getByRole('tabpanel').getByRole('list').getByLabel('New');
+		this.addFieldsButton = page
+			.getByRole('tabpanel')
+			.getByRole('list')
+			.getByLabel('New');
 		this.cardsVisualizationModeContainer = page.locator(
 			'.cards-visualization-mode'
 		);
@@ -79,7 +82,10 @@ export class VisualizationModesPage {
 	async openAddFieldsFromDataSourceModal() {
 		await this.addFieldsButton.click();
 
-		const assignFromDataSourceButton = await this.page.getByRole('menuitem', { name: 'Assign from Data Source' });
+		const assignFromDataSourceButton = await this.page.getByRole(
+			'menuitem',
+			{name: 'Assign from Data Source'}
+		);
 
 		await assignFromDataSourceButton.waitFor();
 		await assignFromDataSourceButton.click();
@@ -92,14 +98,13 @@ export class VisualizationModesPage {
 	async openAddFieldsFromTextModal() {
 		await this.addFieldsButton.click();
 
-		const assignFromDataSourceButton = await this.page.getByRole('menuitem', { name: 'Assign Field Manually' });
+		const assignFromTextSourceButton = await this.page.getByRole(
+			'menuitem',
+			{name: 'Assign Field Manually'}
+		);
 
-		await assignFromDataSourceButton.waitFor();
-		await assignFromDataSourceButton.click();
-
-		await this.fieldSelectModalPage.addFieldsDialog.fields
-			.first()
-			.waitFor();
+		await assignFromTextSourceButton.waitFor();
+		await assignFromTextSourceButton.click();
 	}
 
 	async openAssignFieldFromDataSourceModal({
@@ -115,7 +120,10 @@ export class VisualizationModesPage {
 			.getByTitle('Assign Field')
 			.click();
 
-		const assignFromDataSourceButton = await this.page.getByRole('menuitem', { name: 'Assign from Data Source' });
+		const assignFromDataSourceButton = await this.page.getByRole(
+			'menuitem',
+			{name: 'Assign from Data Source'}
+		);
 
 		await assignFromDataSourceButton.waitFor();
 		await assignFromDataSourceButton.click();
@@ -134,10 +142,13 @@ export class VisualizationModesPage {
 			.getByTitle('Assign Field')
 			.click();
 
-		const assignFromDataSourceButton = await this.page.getByRole('menuitem', { name: 'Assign Field Manually' });
+		const assignFromTextSourceButton = await this.page.getByRole(
+			'menuitem',
+			{name: 'Assign Field Manually'}
+		);
 
-		await assignFromDataSourceButton.waitFor();
-		await assignFromDataSourceButton.click();
+		await assignFromTextSourceButton.waitFor();
+		await assignFromTextSourceButton.click();
 	}
 
 	async openChangeFieldFromDataSourceModal({
@@ -153,7 +164,9 @@ export class VisualizationModesPage {
 			.getByTitle(`View ${sectionLabel} Options`)
 			.click();
 
-		const changeAssignmentButton = await this.page.getByRole('menuitem', { name: 'Change Field From Data Source' });
+		const changeAssignmentButton = await this.page.getByRole('menuitem', {
+			name: 'Change Field From Data Source',
+		});
 
 		await changeAssignmentButton.waitFor();
 		await changeAssignmentButton.click();
@@ -176,14 +189,14 @@ export class VisualizationModesPage {
 			.getByTitle(`View ${sectionLabel} Options`)
 			.click();
 
-		const changeAssignmentButton = await this.page.getByRole('menuitem', { name: 'Change Field Manually' });
+		const changeAssignmentButton = await this.page.getByRole('menuitem', {
+			name: 'Change Field Manually',
+		});
 
 		await changeAssignmentButton.waitFor();
 		await changeAssignmentButton.click();
 
-		await this.fieldSelectModalPage.fieldSelectModalContainer
-			.getByPlaceholder('Search')
-			.waitFor();
+		await this.page.getByRole('heading', {name: 'Add Field Manually'});
 	}
 
 	async searchAndSelectField(path: string) {

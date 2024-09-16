@@ -5,10 +5,16 @@
 
 import {Page, expect} from '@playwright/test';
 
-export default async function saveFromModal({page}: {page: Page}) {
+export default async function saveFromModal({
+	page,
+	saveText = 'Save',
+}: {
+	page: Page;
+	saveText?: string;
+}) {
 	const saveButton = page.locator('.liferay-modal').getByRole('button', {
 		exact: true,
-		name: 'Save',
+		name: saveText,
 	});
 
 	await expect(saveButton).toBeInViewport();

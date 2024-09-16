@@ -8,8 +8,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import IssueDetail from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/IssueDetail';
-import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import {IssueDetail} from '../../../../src/main/resources/META-INF/resources/js/components/ItemDetail';
 
 const MOCK_ISSUES = {
 	aspectRatio: {
@@ -236,16 +235,7 @@ const MOCK_ISSUES = {
 	},
 };
 
-const renderIssueDetail = (selectedItem) =>
-	render(
-		<StoreContextProvider
-			value={{
-				selectedItem,
-			}}
-		>
-			<IssueDetail />
-		</StoreContextProvider>
-	);
+const renderIssueDetail = (issue) => render(<IssueDetail issue={issue} />);
 
 const checkContentOfElement = (issue) => {
 	const {getByText} = renderIssueDetail(issue);

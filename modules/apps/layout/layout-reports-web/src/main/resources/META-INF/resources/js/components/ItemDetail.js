@@ -101,7 +101,7 @@ function FragmentDetail({fragment}) {
 	);
 }
 
-function IssueDetail({issue}) {
+export function IssueDetail({issue}) {
 	const {description, failingElements, key, tips} = issue;
 
 	const badge = {

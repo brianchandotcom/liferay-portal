@@ -43,6 +43,8 @@ public class TreeFactoryImpl implements TreeFactory {
 
 		ObjectDefinitionLocalService objectDefinitionLocalService =
 			_objectDefinitionLocalServiceSnapshot.get();
+		ObjectRelationshipLocalService objectRelationshipLocalService =
+			_objectRelationshipLocalServiceSnapshot.get();
 
 		ObjectDefinition rootObjectDefinition =
 			objectDefinitionLocalService.getObjectDefinition(
@@ -51,7 +53,7 @@ public class TreeFactoryImpl implements TreeFactory {
 		return _create(
 			objectDefinitionId,
 			node -> TransformUtil.transform(
-				_objectRelationshipLocalService.getObjectRelationships(
+				objectRelationshipLocalService.getObjectRelationships(
 					node.getPrimaryKey(), true),
 				objectRelationship -> {
 					ObjectDefinition objectDefinition2 =
@@ -74,6 +76,9 @@ public class TreeFactoryImpl implements TreeFactory {
 	public Tree createObjectEntryTree(long objectEntryId)
 		throws PortalException {
 
+		ObjectRelationshipLocalService objectRelationshipLocalService =
+			_objectRelationshipLocalServiceSnapshot.get();
+
 		UnsafeFunction<Node, List<Node>, PortalException> unsafeFunction =
 			node -> {
 				ObjectEntry parentObjectEntry =
@@ -83,7 +88,7 @@ public class TreeFactoryImpl implements TreeFactory {
 				List<Node> childrenNodes = new ArrayList<>();
 
 				for (ObjectRelationship objectRelationship :
-						_objectRelationshipLocalService.getObjectRelationships(
+						objectRelationshipLocalService.getObjectRelationships(
 							parentObjectEntry.getObjectDefinitionId(), true)) {
 
 					childrenNodes.addAll(
@@ -136,11 +141,12 @@ public class TreeFactoryImpl implements TreeFactory {
 		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
 			ObjectRelationshipLocalServiceImpl.class,
 			ObjectDefinitionLocalService.class, null, true);
+	private static final Snapshot<ObjectRelationshipLocalService>
+		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
+			TreeFactoryImpl.class, ObjectRelationshipLocalService.class, null,
+			true);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

@@ -26,7 +26,7 @@ public interface IndexerRegistryConfiguration {
 	@Meta.AD(deflt = "true", name = "buffered", required = false)
 	public boolean buffered();
 
-	@Meta.AD(deflt = "10000", name = "max-buffer-size", required = false)
+	@Meta.AD(deflt = "100000", name = "max-buffer-size", required = false)
 	public int maxBufferSize();
 
 }

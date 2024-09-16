@@ -212,9 +212,11 @@ public class PortletSharedSearchRequestImpl
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructureRel.getData());
 
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
 		for (Map.Entry<Long, LayoutStructureItem> fragmentLayoutStructureItem :
-				layoutStructure.getFragmentLayoutStructureItems(
-				).entrySet()) {
+				fragmentLayoutStructureItems.entrySet()) {
 
 			Long fragmentEntryLinkId = fragmentLayoutStructureItem.getKey();
 

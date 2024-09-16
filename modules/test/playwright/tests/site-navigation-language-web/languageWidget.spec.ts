@@ -139,6 +139,10 @@ test('The user can choose which languages will be available to site via language
 
 	await configurationIFrame
 		.getByTitle('Move selected items from Current to Available.')
+		.waitFor();
+
+	await configurationIFrame
+		.getByTitle('Move selected items from Current to Available.')
 		.click();
 
 	await rightSelector.selectOption(['de_DE', 'en_US', 'es_ES']);

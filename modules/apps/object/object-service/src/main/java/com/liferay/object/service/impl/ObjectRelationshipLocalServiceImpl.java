@@ -1460,11 +1460,10 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		if (edge &&
+		if (edge && objectRelationship.isEdge() &&
 			!StringUtil.equals(
 				deletionType,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
-			objectRelationship.isEdge()) {
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
 			throw new ObjectRelationshipDeletionTypeException.
 				MustHaveCascadeDeletionType();

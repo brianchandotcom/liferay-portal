@@ -585,6 +585,11 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/move_fragment_entry_link")
 			).put(
+				"moveStepperFragmentEntryLinkURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor" +
+						"/move_stepper_fragment_entry_link")
+			).put(
 				"paddingOptions",
 				() -> {
 					Set<Map.Entry<String, String>> entrySet =

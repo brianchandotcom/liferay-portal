@@ -170,6 +170,7 @@ export interface Config {
 	}>;
 	masterUsed: boolean;
 	moveItemURL: string;
+	moveStepperFragmentEntryLinkURL: string;
 	paddingOptions: Array<{
 		label: string;
 		value: string;

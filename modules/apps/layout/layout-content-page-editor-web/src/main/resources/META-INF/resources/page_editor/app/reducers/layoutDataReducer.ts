@@ -12,6 +12,7 @@ import deleteItem from '../actions/deleteItem';
 import deleteRule from '../actions/deleteRule';
 import duplicateItem from '../actions/duplicateItem';
 import moveItem from '../actions/moveItem';
+import moveStepper from '../actions/moveStepper';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
@@ -21,6 +22,7 @@ import {
 	DELETE_RULE,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
+	MOVE_STEPPER,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_COL_SIZE,
 	UPDATE_FORM_ITEM_CONFIG,
@@ -59,6 +61,7 @@ export default function layoutDataReducer(
 		| ReturnType<typeof deleteRule>
 		| ReturnType<typeof duplicateItem>
 		| ReturnType<typeof moveItem>
+		| ReturnType<typeof moveStepper>
 		| ReturnType<typeof updateCollectionDisplayCollection>
 		| ReturnType<typeof updateColSize>
 		| ReturnType<typeof updateFormItemConfig>
@@ -77,6 +80,7 @@ export default function layoutDataReducer(
 		case DELETE_RULE:
 		case DUPLICATE_ITEM:
 		case MOVE_ITEM:
+		case MOVE_STEPPER:
 		case UPDATE_COL_SIZE:
 		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:

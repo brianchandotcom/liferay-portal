@@ -5,25 +5,22 @@
 
 package com.liferay.marketplace;
 
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
-import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
-import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.net.URL;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -39,8 +36,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,8 +55,6 @@ public class KoroneikiRestController extends BaseRestController {
 	public String getSubscriptions(@PathVariable("orderId") long orderId)
 		throws Exception {
 
-		_initResourceBuilders();
-
 		JSONArray jsonArray = new JSONArray();
 
 		Order order = _marketplaceService.getOrderResource(
@@ -78,10 +71,11 @@ public class KoroneikiRestController extends BaseRestController {
 				).getItems()) {
 
 			ProductPurchaseView productPurchaseView =
-				_productPurchaseViewResource.
-					getAccountAccountKeyProductProductKeyProductPurchaseView(
-						order.getAccountExternalReferenceCode(),
-						orderItem.getSkuExternalReferenceCode());
+				_koroneikiService.getProductPurchaseViewResource(
+				).getAccountAccountKeyProductProductKeyProductPurchaseView(
+					order.getAccountExternalReferenceCode(),
+					orderItem.getSkuExternalReferenceCode()
+				);
 
 			ProductPurchase productPurchase = null;
 
@@ -184,12 +178,15 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("productId") long productId)
 		throws Exception {
 
-		_initResourceBuilders();
+		Product product = _marketplaceService.getProductResource(
+		).getProduct(
+			productId
+		);
 
-		Product product = _productResource.getProduct(productId);
+		SkuResource skuResource = _marketplaceService.getSkuResource();
 
 		for (Sku sku :
-				_skuResource.getProductIdSkusPage(
+				skuResource.getProductIdSkusPage(
 					product.getProductId(), Pagination.of(1, 10)
 				).getItems()) {
 
@@ -217,9 +214,12 @@ public class KoroneikiRestController extends BaseRestController {
 
 			String name = productName + " - " + dxpLicenseUsageType;
 
+			ProductResource productResource =
+				_koroneikiService.getProductResource();
+
 			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
 				<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product>
-					page = _koroneikiProductResource.getProductsPage(
+					page = productResource.getProductsPage(
 						"", "name eq '" + name + "'",
 						com.liferay.osb.koroneiki.phloem.rest.client.pagination.
 							Pagination.of(1, 1),
@@ -245,7 +245,7 @@ public class KoroneikiRestController extends BaseRestController {
 						"type", "marketplace-app"
 					).build());
 
-				koroneikiProduct = _koroneikiProductResource.postProduct(
+				koroneikiProduct = productResource.postProduct(
 					jwt.getClaim("username"), jwt.getClaim("sub"),
 					koroneikiProduct);
 
@@ -256,7 +256,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 			sku.setExternalReferenceCode(koroneikiProduct::getKey);
 
-			_skuResource.patchSku(sku.getId(), sku);
+			skuResource.patchSku(sku.getId(), sku);
 		}
 	}
 
@@ -264,7 +264,10 @@ public class KoroneikiRestController extends BaseRestController {
 		String version = "1.0.0";
 
 		try {
-			Sku sku = _skuResource.getSku(skuId);
+			Sku sku = _marketplaceService.getSkuResource(
+			).getSku(
+				skuId
+			);
 
 			for (com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.
 					CustomField customField : sku.getCustomFields()) {
@@ -286,69 +289,13 @@ public class KoroneikiRestController extends BaseRestController {
 		return version;
 	}
 
-	private void _initResourceBuilders() throws Exception {
-		String authorization =
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server");
-
-		URL liferayDXPURL = new URL(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
-
-		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
-
-		_koroneikiProductResource =
-			com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
-				ProductResource.builder(
-				).header(
-					"API_TOKEN", _koroneikiAuthToken
-				).endpoint(
-					liferayMarketplaceKoroneikiAuthURL
-				).build();
-
-		_productResource = ProductResource.builder(
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).endpoint(
-			liferayDXPURL
-		).build();
-
-		_productPurchaseViewResource = ProductPurchaseViewResource.builder(
-		).header(
-			"API_TOKEN", _koroneikiAuthToken
-		).endpoint(
-			liferayMarketplaceKoroneikiAuthURL
-		).build();
-
-		_skuResource = SkuResource.builder(
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).endpoint(
-			liferayDXPURL
-		).build();
-	}
-
 	private static final Log _log = LogFactory.getLog(
 		KoroneikiRestController.class);
 
-	@Value("${liferay.marketplace.koroneiki.auth.token}")
-	private String _koroneikiAuthToken;
-
-	@Value("${liferay.marketplace.koroneiki.auth.url}")
-	private String _koroneikiAuthURL;
-
-	private
-		com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
-			ProductResource _koroneikiProductResource;
-
 	@Autowired
-	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+	private KoroneikiService _koroneikiService;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;
-
-	private ProductPurchaseViewResource _productPurchaseViewResource;
-	private ProductResource _productResource;
-	private SkuResource _skuResource;
 
 }

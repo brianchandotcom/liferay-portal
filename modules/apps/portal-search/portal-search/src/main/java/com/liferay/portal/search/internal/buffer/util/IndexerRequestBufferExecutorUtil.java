@@ -61,6 +61,9 @@ public class IndexerRequestBufferExecutorUtil {
 		ExecutorService executorService =
 			SystemExecutorServiceUtil.getExecutorService();
 
+		IndexerRequestBuffer transferCopyIndexerRequestBuffer =
+			indexerRequestBuffer.transferCopy();
+
 		SearchContext.registerBatchModeSyncFuture(
 			executorService.submit(
 				() -> {
@@ -70,7 +73,9 @@ public class IndexerRequestBufferExecutorUtil {
 					try (SafeCloseable safeCloseable =
 							SearchContext.openBatchMode(false)) {
 
-						_execute(indexerRequestBuffer, numRequests, false);
+						_execute(
+							transferCopyIndexerRequestBuffer,
+							transferCopyIndexerRequestBuffer.size(), false);
 					}
 					finally {
 						ServiceContextThreadLocal.popServiceContext();

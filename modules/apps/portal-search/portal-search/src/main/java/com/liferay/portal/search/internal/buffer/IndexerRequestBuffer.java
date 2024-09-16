@@ -82,6 +82,19 @@ public class IndexerRequestBuffer {
 		return _indexerRequests.size();
 	}
 
+	public IndexerRequestBuffer transferCopy() {
+		IndexerRequestBuffer indexerRequestBuffer = new IndexerRequestBuffer();
+
+		LinkedHashMap<IndexerRequest, IndexerRequest> indexerRequests =
+			indexerRequestBuffer._indexerRequests;
+
+		indexerRequests.putAll(_indexerRequests);
+
+		_indexerRequests.clear();
+
+		return indexerRequestBuffer;
+	}
+
 	private static final ThreadLocal<List<IndexerRequestBuffer>>
 		_indexerRequestBuffersThreadLocal = new CentralizedThreadLocal<>(
 			IndexerRequestBuffer.class + "._indexerRequestBuffersThreadLocal",

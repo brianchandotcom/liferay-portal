@@ -38,8 +38,8 @@ public interface SimilarResultsContributor {
 	public void detectRoute(RouteBuilder routeBuilder, RouteHelper routeHelper);
 
 	/**
-	 * Adds the criteria of the originating asset in order to run a search query
-	 * based on that asset. Implementations should add the asset's UID and
+	 * Adds the criteria of the originating asset to run a search query based
+	 * on that asset. Implementations should add the asset's UID and
 	 * (optionally) className to {@link CriteriaBuilder} and use {@link
 	 * CriteriaHelper} to access any attributes added to the routeBuilder during
 	 * {@link #detectRoute}.

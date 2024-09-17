@@ -49,6 +49,7 @@ export default function TranslationOptions({
 
 	const markAsTranslatedHandler = () => {
 		Liferay.fire('inputLocalized:markAsTranslated', {selectedLanguageId});
+		Liferay.fire('journal:storeState', {fieldName: 'Mark Translated'});
 	};
 
 	const resetButtonHandler = () => {
@@ -77,6 +78,8 @@ export default function TranslationOptions({
 		});
 
 		Liferay.fire('inputLocalized:updateTranslationStatus');
+
+		Liferay.fire('journal:storeState', {fieldName: 'Reset Translation'});
 	};
 
 	const disabledResetButton =

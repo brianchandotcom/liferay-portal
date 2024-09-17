@@ -23,5 +23,4 @@ Export-Package:\
 	com.liferay.segments.provider,\
 	com.liferay.segments.service,\
 	com.liferay.segments.service.persistence,\
-	com.liferay.segments.simulator,\
 	com.liferay.segments.source.provider

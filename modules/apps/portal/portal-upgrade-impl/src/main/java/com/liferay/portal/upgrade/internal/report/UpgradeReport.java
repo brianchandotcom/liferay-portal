@@ -356,7 +356,7 @@ public class UpgradeReport {
 				).build();
 			}
 		).put(
-			"properties.set.by.user",
+			"properties",
 			() -> {
 				Map<String, String> propertiesMap = new TreeMap<>();
 

@@ -344,16 +344,18 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.setValues(insertedValues);
 		}
 
-		_resourcePermissionLocalService.addResourcePermissions(
-			objectEntry.getCompanyId(), objectEntry.getGroupId(),
-			objectEntry.getUserId(), objectDefinition.getClassName(),
-			String.valueOf(objectEntry.getPrimaryKey()), false,
-			new ServiceContext() {
-				{
-					setIndexingEnabled(false);
-					setStrictAdd(true);
-				}
-			});
+		if (!objectDefinition.isRootDescendantNode()) {
+			_resourcePermissionLocalService.addResourcePermissions(
+				objectEntry.getCompanyId(), objectEntry.getGroupId(),
+				objectEntry.getUserId(), objectDefinition.getClassName(),
+				String.valueOf(objectEntry.getPrimaryKey()), false,
+				new ServiceContext() {
+					{
+						setIndexingEnabled(false);
+						setStrictAdd(true);
+					}
+				});
+		}
 
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 			try {

@@ -183,12 +183,25 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 	@Override
 	public PriceList postPriceList(PriceList priceList) throws Exception {
-		CommercePriceList commercePriceList = _addOrUpdatePriceList(priceList);
+		CommercePriceList commercePriceList = _addOrUpdatePriceList(
+			priceList.getExternalReferenceCode(), priceList);
 
 		return _toPriceList(commercePriceList.getCommercePriceListId());
 	}
 
-	private CommercePriceList _addOrUpdatePriceList(PriceList priceList)
+	@Override
+	public PriceList putPriceListByExternalReferenceCode(
+			String externalReferenceCode, PriceList priceList)
+		throws Exception {
+
+		CommercePriceList commercePriceList = _addOrUpdatePriceList(
+			externalReferenceCode, priceList);
+
+		return _toPriceList(commercePriceList.getCommercePriceListId());
+	}
+
+	private CommercePriceList _addOrUpdatePriceList(
+			String externalReferenceCode, PriceList priceList)
 		throws Exception {
 
 		CommerceCatalog commerceCatalog =
@@ -216,8 +229,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.addOrUpdateCommercePriceList(
-				priceList.getExternalReferenceCode(),
-				commerceCatalog.getGroupId(), 0L,
+				externalReferenceCode, commerceCatalog.getGroupId(), 0L,
 				commerceCurrency.getCommerceCurrencyId(), true,
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 				priceList.getName(),

@@ -544,8 +544,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectViewLocalService.deleteObjectViews(
 			objectDefinition.getObjectDefinitionId());
 
-		objectDefinitionPersistence.remove(objectDefinition);
-
 		_resourceLocalService.deleteResource(
 			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -579,6 +577,8 @@ public class ObjectDefinitionLocalServiceImpl
 			_registerTransactionCallbackForCluster(
 				_undeployObjectDefinitionMethodKey, objectDefinition);
 		}
+
+		objectDefinitionPersistence.remove(objectDefinition);
 
 		return objectDefinition;
 	}

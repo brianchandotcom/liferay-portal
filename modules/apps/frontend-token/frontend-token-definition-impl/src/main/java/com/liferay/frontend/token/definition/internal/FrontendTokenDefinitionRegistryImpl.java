@@ -33,6 +33,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -75,16 +76,14 @@ public class FrontendTokenDefinitionRegistryImpl
 		long companyId) {
 
 		List<FrontendTokenDefinition> themesFrontendTokenDefinitions =
-			(List<FrontendTokenDefinition>)
-				_themeFrontendTokenDefinitions.values();
+			new ArrayList<>(_themeFrontendTokenDefinitions.values());
 
 		Map<String, FrontendTokenDefinition>
 			companyCETFrontendTokenDefinitions =
 				_cetFrontendTokenDefinitions.get(companyId);
 
 		List<FrontendTokenDefinition> cetFrontendTokenDefinitions =
-			(List<FrontendTokenDefinition>)
-				companyCETFrontendTokenDefinitions.values();
+			new ArrayList<>(companyCETFrontendTokenDefinitions.values());
 
 		return ListUtil.concat(
 			themesFrontendTokenDefinitions, cetFrontendTokenDefinitions);

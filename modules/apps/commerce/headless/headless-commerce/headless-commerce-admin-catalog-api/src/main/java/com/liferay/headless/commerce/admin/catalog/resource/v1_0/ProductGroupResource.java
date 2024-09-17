@@ -75,6 +75,10 @@ public interface ProductGroupResource {
 			String externalReferenceCode, ProductGroup productGroup)
 		throws Exception;
 
+	public ProductGroup putProductGroupByExternalReferenceCode(
+			String externalReferenceCode, ProductGroup productGroup)
+		throws Exception;
+
 	public void deleteProductGroup(Long id) throws Exception;
 
 	public Response deleteProductGroupBatch(String callbackURL, Object object)

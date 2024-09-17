@@ -285,6 +285,11 @@ public class ServletDataImpl implements ServletData {
 							AttachmentResourceImpl.class,
 							"patchAttachmentByExternalReferenceCode"));
 					put(
+						"mutation#updateAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"putAttachmentByExternalReferenceCode"));
+					put(
 						"mutation#deleteAttachment",
 						new ObjectValuePair<>(
 							AttachmentResourceImpl.class, "deleteAttachment"));
@@ -368,6 +373,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CatalogResourceImpl.class,
 							"patchCatalogByExternalReferenceCode"));
+					put(
+						"mutation#updateCatalogByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CatalogResourceImpl.class,
+							"putCatalogByExternalReferenceCode"));
 					put(
 						"mutation#deleteCatalog",
 						new ObjectValuePair<>(
@@ -545,6 +555,11 @@ public class ServletDataImpl implements ServletData {
 							OptionResourceImpl.class,
 							"patchOptionByExternalReferenceCode"));
 					put(
+						"mutation#updateOptionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionResourceImpl.class,
+							"putOptionByExternalReferenceCode"));
+					put(
 						"mutation#deleteOption",
 						new ObjectValuePair<>(
 							OptionResourceImpl.class, "deleteOption"));
@@ -581,6 +596,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OptionCategoryResourceImpl.class,
 							"patchOptionCategoryByExternalReferenceCode"));
+					put(
+						"mutation#updateOptionCategoryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionCategoryResourceImpl.class,
+							"putOptionCategoryByExternalReferenceCode"));
 					put(
 						"mutation#deleteOptionCategory",
 						new ObjectValuePair<>(
@@ -684,6 +704,11 @@ public class ServletDataImpl implements ServletData {
 							ProductResourceImpl.class,
 							"patchProductByExternalReferenceCode"));
 					put(
+						"mutation#updateProductByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductResourceImpl.class,
+							"putProductByExternalReferenceCode"));
+					put(
 						"mutation#deleteProductByExternalReferenceCodeByVersion",
 						new ObjectValuePair<>(
 							ProductResourceImpl.class,
@@ -769,6 +794,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductGroupResourceImpl.class,
 							"patchProductGroupByExternalReferenceCode"));
+					put(
+						"mutation#updateProductGroupByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductGroupResourceImpl.class,
+							"putProductGroupByExternalReferenceCode"));
 					put(
 						"mutation#deleteProductGroup",
 						new ObjectValuePair<>(
@@ -992,6 +1022,11 @@ public class ServletDataImpl implements ServletData {
 							SkuResourceImpl.class,
 							"patchSkuByExternalReferenceCode"));
 					put(
+						"mutation#updateSkuByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"putSkuByExternalReferenceCode"));
+					put(
 						"mutation#deleteSku",
 						new ObjectValuePair<>(
 							SkuResourceImpl.class, "deleteSku"));
@@ -1078,6 +1113,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
 							"patchSpecificationByExternalReferenceCode"));
+					put(
+						"mutation#updateSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SpecificationResourceImpl.class,
+							"putSpecificationByExternalReferenceCode"));
 					put(
 						"mutation#deleteSpecification",
 						new ObjectValuePair<>(

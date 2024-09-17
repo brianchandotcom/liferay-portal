@@ -1082,6 +1082,53 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testPutSkuByExternalReferenceCode() throws Exception {
+		Sku postSku = testPutSkuByExternalReferenceCode_addSku();
+
+		Sku randomSku = randomSku();
+
+		Sku putSku = skuResource.putSkuByExternalReferenceCode(
+			postSku.getExternalReferenceCode(), randomSku);
+
+		assertEquals(randomSku, putSku);
+		assertValid(putSku);
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			putSku.getExternalReferenceCode());
+
+		assertEquals(randomSku, getSku);
+		assertValid(getSku);
+
+		Sku newSku = testPutSkuByExternalReferenceCode_createSku();
+
+		putSku = skuResource.putSkuByExternalReferenceCode(
+			newSku.getExternalReferenceCode(), newSku);
+
+		assertEquals(newSku, putSku);
+		assertValid(putSku);
+
+		getSku = skuResource.getSkuByExternalReferenceCode(
+			putSku.getExternalReferenceCode());
+
+		assertEquals(newSku, getSku);
+
+		Assert.assertEquals(
+			newSku.getExternalReferenceCode(),
+			putSku.getExternalReferenceCode());
+	}
+
+	protected Sku testPutSkuByExternalReferenceCode_createSku()
+		throws Exception {
+
+		return randomSku();
+	}
+
+	protected Sku testPutSkuByExternalReferenceCode_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSku() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku = testDeleteSku_addSku();

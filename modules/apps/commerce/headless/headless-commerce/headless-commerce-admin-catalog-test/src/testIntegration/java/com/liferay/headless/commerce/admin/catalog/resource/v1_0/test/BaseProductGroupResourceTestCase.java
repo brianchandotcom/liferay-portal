@@ -798,6 +798,64 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPutProductGroupByExternalReferenceCode() throws Exception {
+		ProductGroup postProductGroup =
+			testPutProductGroupByExternalReferenceCode_addProductGroup();
+
+		ProductGroup randomProductGroup = randomProductGroup();
+
+		ProductGroup putProductGroup =
+			productGroupResource.putProductGroupByExternalReferenceCode(
+				postProductGroup.getExternalReferenceCode(),
+				randomProductGroup);
+
+		assertEquals(randomProductGroup, putProductGroup);
+		assertValid(putProductGroup);
+
+		ProductGroup getProductGroup =
+			productGroupResource.getProductGroupByExternalReferenceCode(
+				putProductGroup.getExternalReferenceCode());
+
+		assertEquals(randomProductGroup, getProductGroup);
+		assertValid(getProductGroup);
+
+		ProductGroup newProductGroup =
+			testPutProductGroupByExternalReferenceCode_createProductGroup();
+
+		putProductGroup =
+			productGroupResource.putProductGroupByExternalReferenceCode(
+				newProductGroup.getExternalReferenceCode(), newProductGroup);
+
+		assertEquals(newProductGroup, putProductGroup);
+		assertValid(putProductGroup);
+
+		getProductGroup =
+			productGroupResource.getProductGroupByExternalReferenceCode(
+				putProductGroup.getExternalReferenceCode());
+
+		assertEquals(newProductGroup, getProductGroup);
+
+		Assert.assertEquals(
+			newProductGroup.getExternalReferenceCode(),
+			putProductGroup.getExternalReferenceCode());
+	}
+
+	protected ProductGroup
+			testPutProductGroupByExternalReferenceCode_createProductGroup()
+		throws Exception {
+
+		return randomProductGroup();
+	}
+
+	protected ProductGroup
+			testPutProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteProductGroup() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductGroup productGroup = testDeleteProductGroup_addProductGroup();

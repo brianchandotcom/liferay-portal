@@ -348,6 +348,57 @@ public abstract class BaseCatalogResourceTestCase {
 	}
 
 	@Test
+	public void testPutCatalogByExternalReferenceCode() throws Exception {
+		Catalog postCatalog =
+			testPutCatalogByExternalReferenceCode_addCatalog();
+
+		Catalog randomCatalog = randomCatalog();
+
+		Catalog putCatalog = catalogResource.putCatalogByExternalReferenceCode(
+			postCatalog.getExternalReferenceCode(), randomCatalog);
+
+		assertEquals(randomCatalog, putCatalog);
+		assertValid(putCatalog);
+
+		Catalog getCatalog = catalogResource.getCatalogByExternalReferenceCode(
+			putCatalog.getExternalReferenceCode());
+
+		assertEquals(randomCatalog, getCatalog);
+		assertValid(getCatalog);
+
+		Catalog newCatalog =
+			testPutCatalogByExternalReferenceCode_createCatalog();
+
+		putCatalog = catalogResource.putCatalogByExternalReferenceCode(
+			newCatalog.getExternalReferenceCode(), newCatalog);
+
+		assertEquals(newCatalog, putCatalog);
+		assertValid(putCatalog);
+
+		getCatalog = catalogResource.getCatalogByExternalReferenceCode(
+			putCatalog.getExternalReferenceCode());
+
+		assertEquals(newCatalog, getCatalog);
+
+		Assert.assertEquals(
+			newCatalog.getExternalReferenceCode(),
+			putCatalog.getExternalReferenceCode());
+	}
+
+	protected Catalog testPutCatalogByExternalReferenceCode_createCatalog()
+		throws Exception {
+
+		return randomCatalog();
+	}
+
+	protected Catalog testPutCatalogByExternalReferenceCode_addCatalog()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteCatalog() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Catalog catalog = testDeleteCatalog_addCatalog();

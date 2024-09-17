@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -473,6 +474,132 @@ public abstract class BaseSkuResourceImpl
 			Sku sku)
 		throws Exception {
 
+		Sku existingSku = getSkuByExternalReferenceCode(externalReferenceCode);
+
+		if (sku.getCost() != null) {
+			existingSku.setCost(sku.getCost());
+		}
+
+		existingSku.setCustomFields(sku.getCustomFields());
+
+		if (sku.getDepth() != null) {
+			existingSku.setDepth(sku.getDepth());
+		}
+
+		if (sku.getDiscontinued() != null) {
+			existingSku.setDiscontinued(sku.getDiscontinued());
+		}
+
+		if (sku.getDiscontinuedDate() != null) {
+			existingSku.setDiscontinuedDate(sku.getDiscontinuedDate());
+		}
+
+		if (sku.getDisplayDate() != null) {
+			existingSku.setDisplayDate(sku.getDisplayDate());
+		}
+
+		if (sku.getExpirationDate() != null) {
+			existingSku.setExpirationDate(sku.getExpirationDate());
+		}
+
+		if (sku.getExternalReferenceCode() != null) {
+			existingSku.setExternalReferenceCode(
+				sku.getExternalReferenceCode());
+		}
+
+		if (sku.getGtin() != null) {
+			existingSku.setGtin(sku.getGtin());
+		}
+
+		if (sku.getHeight() != null) {
+			existingSku.setHeight(sku.getHeight());
+		}
+
+		if (sku.getManufacturerPartNumber() != null) {
+			existingSku.setManufacturerPartNumber(
+				sku.getManufacturerPartNumber());
+		}
+
+		if (sku.getNeverExpire() != null) {
+			existingSku.setNeverExpire(sku.getNeverExpire());
+		}
+
+		if (sku.getPrice() != null) {
+			existingSku.setPrice(sku.getPrice());
+		}
+
+		if (sku.getPromoPrice() != null) {
+			existingSku.setPromoPrice(sku.getPromoPrice());
+		}
+
+		if (sku.getPublished() != null) {
+			existingSku.setPublished(sku.getPublished());
+		}
+
+		if (sku.getPurchasable() != null) {
+			existingSku.setPurchasable(sku.getPurchasable());
+		}
+
+		if (sku.getReplacementSkuExternalReferenceCode() != null) {
+			existingSku.setReplacementSkuExternalReferenceCode(
+				sku.getReplacementSkuExternalReferenceCode());
+		}
+
+		if (sku.getReplacementSkuId() != null) {
+			existingSku.setReplacementSkuId(sku.getReplacementSkuId());
+		}
+
+		if (sku.getSku() != null) {
+			existingSku.setSku(sku.getSku());
+		}
+
+		if (sku.getUnspsc() != null) {
+			existingSku.setUnspsc(sku.getUnspsc());
+		}
+
+		if (sku.getWeight() != null) {
+			existingSku.setWeight(sku.getWeight());
+		}
+
+		if (sku.getWidth() != null) {
+			existingSku.setWidth(sku.getWidth());
+		}
+
+		preparePatch(sku, existingSku);
+
+		return putSkuByExternalReferenceCode(
+			externalReferenceCode, existingSku);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}' -d $'{"cost": ___, "customFields": ___, "depth": ___, "discontinued": ___, "discontinuedDate": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "gtin": ___, "height": ___, "manufacturerPartNumber": ___, "neverExpire": ___, "price": ___, "promoPrice": ___, "published": ___, "purchasable": ___, "replacementSkuExternalReferenceCode": ___, "replacementSkuId": ___, "sku": ___, "skuOptions": ___, "skuSubscriptionConfiguration": ___, "skuUnitOfMeasures": ___, "skuVirtualSettings": ___, "unspsc": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Sku")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Sku putSkuByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Sku sku)
+		throws Exception {
+
 		return new Sku();
 	}
 
@@ -682,6 +809,47 @@ public abstract class BaseSkuResourceImpl
 			}
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				skuUnsafeFunction = sku -> putSkuByExternalReferenceCode(
+					sku.getExternalReferenceCode(), sku);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				skuUnsafeFunction = sku -> {
+					Sku persistedSku = null;
+
+					try {
+						Sku getSku = getSkuByExternalReferenceCode(
+							sku.getExternalReferenceCode());
+
+						persistedSku = patchSku(
+							getSku.getId() != null ? getSku.getId() :
+								_parseLong((String)parameters.get("skuId")),
+							sku);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("externalReferenceCode")) {
+							persistedSku =
+								postProductByExternalReferenceCodeSku(
+									(String)parameters.get(
+										"externalReferenceCode"),
+									sku);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
+					}
+
+					return persistedSku;
+				};
+			}
+		}
+
 		if (skuUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -712,7 +880,7 @@ public abstract class BaseSkuResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -1016,6 +1184,9 @@ public abstract class BaseSkuResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(Sku sku, Sku existingSku) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

@@ -84,6 +84,10 @@ public interface SkuResource {
 			String externalReferenceCode, Sku sku)
 		throws Exception;
 
+	public Sku putSkuByExternalReferenceCode(
+			String externalReferenceCode, Sku sku)
+		throws Exception;
+
 	public Response deleteSku(Long id) throws Exception;
 
 	public Response deleteSkuBatch(String callbackURL, Object object)

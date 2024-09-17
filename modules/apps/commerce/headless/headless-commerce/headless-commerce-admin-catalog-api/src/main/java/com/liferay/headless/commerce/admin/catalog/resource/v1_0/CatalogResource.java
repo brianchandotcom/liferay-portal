@@ -60,6 +60,10 @@ public interface CatalogResource {
 			String externalReferenceCode, Catalog catalog)
 		throws Exception;
 
+	public Catalog putCatalogByExternalReferenceCode(
+			String externalReferenceCode, Catalog catalog)
+		throws Exception;
+
 	public Response deleteCatalog(Long id) throws Exception;
 
 	public Response deleteCatalogBatch(String callbackURL, Object object)

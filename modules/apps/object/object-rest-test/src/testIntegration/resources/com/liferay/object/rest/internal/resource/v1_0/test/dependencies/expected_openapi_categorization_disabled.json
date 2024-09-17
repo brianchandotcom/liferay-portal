@@ -366,6 +366,9 @@
 						"type": "string"
 					}
 				},
+				"required": [
+					"code"
+				],
 				"type": "object",
 				"xml": {
 					"name": "Status"

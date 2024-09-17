@@ -161,7 +161,7 @@ const reducer = (state, action) => {
 				// the range is kept and the activeItemIds from the last range
 				// selection are removed.
 
-				startLimitId = state.rangeLimitIds.start;
+				startLimitId = state.rangeLimitIds.start || startLimitId;
 
 				initialActiveItemIds = state.activeItemIds.slice(
 					0,
@@ -174,7 +174,10 @@ const reducer = (state, action) => {
 
 			rangeLimitIds = {end: itemId, start: startLimitId};
 
-			if (rangeLimitIds.end === rangeLimitIds.start) {
+			if (
+				!rangeLimitIds.start ||
+				rangeLimitIds.end === rangeLimitIds.start
+			) {
 
 				// If the start and end of the range are the same id, only
 				// this item is selected

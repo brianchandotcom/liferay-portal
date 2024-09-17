@@ -6,6 +6,7 @@
 package com.liferay.layout.taglib.internal.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -66,11 +67,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print("<link");
-		printWriter.print(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				httpServletRequest));
-		printWriter.print(" data-senna-track=\"temporary\" href=\"");
+		printWriter.print("<link data-senna-track=\"temporary\" href=\"");
 		printWriter.print(
 			_portal.getPathContext() +
 				"/o/layout-common-styles/main.css?plid=");
@@ -91,7 +88,11 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			_addModifiedDate(printWriter, masterLayout);
 		}
 
-		printWriter.print("\" rel=\"stylesheet\" type=\"text/css\">");
+		printWriter.print(StringPool.QUOTE);
+		printWriter.print(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		printWriter.print(" rel=\"stylesheet\" type=\"text/css\">");
 	}
 
 	@Override

@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.js.aui.web.internal.servlet.taglib;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -36,11 +37,7 @@ public class AUITopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print("<link data-senna-track=\"permanent\"");
-		printWriter.print(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				httpServletRequest));
-		printWriter.print(" rel=\"stylesheet\" href=\"");
+		printWriter.print("<link data-senna-track=\"permanent\" href=\"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
@@ -51,7 +48,11 @@ public class AUITopHeadDynamicInclude extends BaseDynamicInclude {
 				_bundleContext.getBundle(), "alloy_ui.css"
 			).build());
 
-		printWriter.print("\">\n");
+		printWriter.write(StringPool.QUOTE);
+		printWriter.print(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		printWriter.print(" rel=\"stylesheet\"></link>\n");
 	}
 
 	@Override

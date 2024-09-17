@@ -52,16 +52,16 @@ public class StylesheetTag extends AttributesTagSupport {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<link");
-		sb.append(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				httpServletRequest));
-		sb.append(" rel=\"stylesheet\" type=\"text/css\" href=\"");
+		sb.append("<link href=\"");
 		sb.append(
 			absolutePortalURLBuilder.forBundleStylesheet(
 				bundle, _css
 			).build());
-		sb.append("\"></link>");
+		sb.append(StringPool.QUOTE);
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		sb.append(" rel=\"stylesheet\" type=\"text/css\"></link>");
 
 		outputData.addDataSB(_getOutputKey(), WebKeys.PAGE_TOP, sb);
 

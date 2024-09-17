@@ -84,6 +84,10 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 	@Test
 	public void testOrganizationMissingRefValidation() throws Exception {
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				Organization.class.getName());
+
 		Portlet portlet = _portletLocalService.getPortletById(
 			_portletDataContextExport.getCompanyId(),
 			BlogsPortletKeys.BLOGS_AGGREGATOR);
@@ -92,16 +96,11 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 			portlet, _portletDataContextExport.getExportDataRootElement(),
 			_organization, PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-		StagedModelDataHandler<?> stagedModelDataHandler =
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				Organization.class.getName());
-
-		boolean result = stagedModelDataHandler.validateReference(
-			_portletDataContextImport,
-			_portletDataContextImport.getMissingReferenceElement(
-				_organization));
-
-		Assert.assertTrue(result);
+		Assert.assertTrue(
+			stagedModelDataHandler.validateReference(
+				_portletDataContextImport,
+				_portletDataContextImport.getMissingReferenceElement(
+					_organization)));
 	}
 
 	@Test

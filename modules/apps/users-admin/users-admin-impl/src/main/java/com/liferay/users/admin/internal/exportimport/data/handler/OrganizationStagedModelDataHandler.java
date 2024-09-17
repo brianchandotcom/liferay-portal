@@ -106,15 +106,11 @@ public class OrganizationStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		long companyId = GetterUtil.getLong(
-			referenceElement.attributeValue("company-id"));
-
-		String uuid = GetterUtil.getString(
-			referenceElement.attributeValue("uuid"));
-
 		Organization organization =
 			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
-				uuid, companyId);
+				GetterUtil.getString(referenceElement.attributeValue("uuid")),
+				GetterUtil.getLong(
+					referenceElement.attributeValue("company-id")));
 
 		if (organization == null) {
 			return false;

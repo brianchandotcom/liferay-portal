@@ -799,6 +799,60 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	@Test
+	public void testPutOrderRuleByExternalReferenceCode() throws Exception {
+		OrderRule postOrderRule =
+			testPutOrderRuleByExternalReferenceCode_addOrderRule();
+
+		OrderRule randomOrderRule = randomOrderRule();
+
+		OrderRule putOrderRule =
+			orderRuleResource.putOrderRuleByExternalReferenceCode(
+				postOrderRule.getExternalReferenceCode(), randomOrderRule);
+
+		assertEquals(randomOrderRule, putOrderRule);
+		assertValid(putOrderRule);
+
+		OrderRule getOrderRule =
+			orderRuleResource.getOrderRuleByExternalReferenceCode(
+				putOrderRule.getExternalReferenceCode());
+
+		assertEquals(randomOrderRule, getOrderRule);
+		assertValid(getOrderRule);
+
+		OrderRule newOrderRule =
+			testPutOrderRuleByExternalReferenceCode_createOrderRule();
+
+		putOrderRule = orderRuleResource.putOrderRuleByExternalReferenceCode(
+			newOrderRule.getExternalReferenceCode(), newOrderRule);
+
+		assertEquals(newOrderRule, putOrderRule);
+		assertValid(putOrderRule);
+
+		getOrderRule = orderRuleResource.getOrderRuleByExternalReferenceCode(
+			putOrderRule.getExternalReferenceCode());
+
+		assertEquals(newOrderRule, getOrderRule);
+
+		Assert.assertEquals(
+			newOrderRule.getExternalReferenceCode(),
+			putOrderRule.getExternalReferenceCode());
+	}
+
+	protected OrderRule
+			testPutOrderRuleByExternalReferenceCode_createOrderRule()
+		throws Exception {
+
+		return randomOrderRule();
+	}
+
+	protected OrderRule testPutOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOrderRule() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRule orderRule = testDeleteOrderRule_addOrderRule();

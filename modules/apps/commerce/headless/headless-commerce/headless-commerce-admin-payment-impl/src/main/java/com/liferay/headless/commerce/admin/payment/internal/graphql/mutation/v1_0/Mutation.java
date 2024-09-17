@@ -116,6 +116,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Payment updatePaymentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("payment") Payment payment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentResource ->
+				paymentResource.putPaymentByExternalReferenceCode(
+					externalReferenceCode, payment));
+	}
+
+	@GraphQLField
 	public Payment createPaymentByExternalReferenceCodeRefund(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {

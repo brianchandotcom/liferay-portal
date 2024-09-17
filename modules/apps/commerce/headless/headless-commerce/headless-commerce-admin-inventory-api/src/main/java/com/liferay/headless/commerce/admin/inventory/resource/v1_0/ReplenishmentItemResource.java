@@ -60,6 +60,10 @@ public interface ReplenishmentItemResource {
 			String externalReferenceCode, ReplenishmentItem replenishmentItem)
 		throws Exception;
 
+	public ReplenishmentItem putReplenishmentItemByExternalReferenceCode(
+			String externalReferenceCode, ReplenishmentItem replenishmentItem)
+		throws Exception;
+
 	public void deleteReplenishmentItem(Long replenishmentItemId)
 		throws Exception;
 

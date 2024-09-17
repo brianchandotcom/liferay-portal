@@ -191,6 +191,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Discount updateDiscountByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("discount") Discount discount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_discountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			discountResource ->
+				discountResource.putDiscountByExternalReferenceCode(
+					externalReferenceCode, discount));
+	}
+
+	@GraphQLField
 	public Response deleteDiscount(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -690,6 +704,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			priceListResource ->
 				priceListResource.patchPriceListByExternalReferenceCode(
+					externalReferenceCode, priceList));
+	}
+
+	@GraphQLField
+	public PriceList updatePriceListByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("priceList") PriceList priceList)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_priceListResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			priceListResource ->
+				priceListResource.putPriceListByExternalReferenceCode(
 					externalReferenceCode, priceList));
 	}
 

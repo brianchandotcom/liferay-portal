@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -380,6 +381,83 @@ public abstract class BaseOrderTypeResourceImpl
 			OrderType orderType)
 		throws Exception {
 
+		OrderType existingOrderType = getOrderTypeByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (orderType.getActive() != null) {
+			existingOrderType.setActive(orderType.getActive());
+		}
+
+		if (orderType.getCustomFields() != null) {
+			existingOrderType.setCustomFields(orderType.getCustomFields());
+		}
+
+		if (orderType.getDescription() != null) {
+			existingOrderType.setDescription(orderType.getDescription());
+		}
+
+		if (orderType.getDisplayDate() != null) {
+			existingOrderType.setDisplayDate(orderType.getDisplayDate());
+		}
+
+		if (orderType.getDisplayOrder() != null) {
+			existingOrderType.setDisplayOrder(orderType.getDisplayOrder());
+		}
+
+		if (orderType.getExpirationDate() != null) {
+			existingOrderType.setExpirationDate(orderType.getExpirationDate());
+		}
+
+		if (orderType.getExternalReferenceCode() != null) {
+			existingOrderType.setExternalReferenceCode(
+				orderType.getExternalReferenceCode());
+		}
+
+		if (orderType.getName() != null) {
+			existingOrderType.setName(orderType.getName());
+		}
+
+		if (orderType.getNeverExpire() != null) {
+			existingOrderType.setNeverExpire(orderType.getNeverExpire());
+		}
+
+		preparePatch(orderType, existingOrderType);
+
+		return putOrderTypeByExternalReferenceCode(
+			externalReferenceCode, existingOrderType);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "customFields": ___, "description": ___, "displayDate": ___, "displayOrder": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderTypeChannels": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderType")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/order-types/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public OrderType putOrderTypeByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			OrderType orderType)
+		throws Exception {
+
 		return new OrderType();
 	}
 
@@ -561,6 +639,41 @@ public abstract class BaseOrderTypeResourceImpl
 			orderTypeUnsafeFunction = orderType -> postOrderType(orderType);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				orderTypeUnsafeFunction =
+					orderType -> putOrderTypeByExternalReferenceCode(
+						orderType.getExternalReferenceCode(), orderType);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				orderTypeUnsafeFunction = orderType -> {
+					OrderType persistedOrderType = null;
+
+					try {
+						OrderType getOrderType =
+							getOrderTypeByExternalReferenceCode(
+								orderType.getExternalReferenceCode());
+
+						persistedOrderType = patchOrderType(
+							getOrderType.getId() != null ?
+								getOrderType.getId() :
+									_parseLong(
+										(String)parameters.get("orderTypeId")),
+							orderType);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedOrderType = postOrderType(orderType);
+					}
+
+					return persistedOrderType;
+				};
+			}
+		}
+
 		if (orderTypeUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -594,7 +707,7 @@ public abstract class BaseOrderTypeResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -903,6 +1016,10 @@ public abstract class BaseOrderTypeResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		OrderType orderType, OrderType existingOrderType) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

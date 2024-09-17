@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -352,6 +353,130 @@ public abstract class BasePaymentResourceImpl
 			Payment payment)
 		throws Exception {
 
+		Payment existingPayment = getPaymentByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (payment.getAmount() != null) {
+			existingPayment.setAmount(payment.getAmount());
+		}
+
+		if (payment.getCallbackURL() != null) {
+			existingPayment.setCallbackURL(payment.getCallbackURL());
+		}
+
+		if (payment.getCancelURL() != null) {
+			existingPayment.setCancelURL(payment.getCancelURL());
+		}
+
+		if (payment.getChannelId() != null) {
+			existingPayment.setChannelId(payment.getChannelId());
+		}
+
+		if (payment.getComment() != null) {
+			existingPayment.setComment(payment.getComment());
+		}
+
+		if (payment.getCurrencyCode() != null) {
+			existingPayment.setCurrencyCode(payment.getCurrencyCode());
+		}
+
+		if (payment.getErrorMessages() != null) {
+			existingPayment.setErrorMessages(payment.getErrorMessages());
+		}
+
+		if (payment.getExternalReferenceCode() != null) {
+			existingPayment.setExternalReferenceCode(
+				payment.getExternalReferenceCode());
+		}
+
+		if (payment.getLanguageId() != null) {
+			existingPayment.setLanguageId(payment.getLanguageId());
+		}
+
+		if (payment.getPayload() != null) {
+			existingPayment.setPayload(payment.getPayload());
+		}
+
+		if (payment.getPaymentIntegrationKey() != null) {
+			existingPayment.setPaymentIntegrationKey(
+				payment.getPaymentIntegrationKey());
+		}
+
+		if (payment.getPaymentIntegrationType() != null) {
+			existingPayment.setPaymentIntegrationType(
+				payment.getPaymentIntegrationType());
+		}
+
+		if (payment.getPaymentStatus() != null) {
+			existingPayment.setPaymentStatus(payment.getPaymentStatus());
+		}
+
+		if (payment.getReasonKey() != null) {
+			existingPayment.setReasonKey(payment.getReasonKey());
+		}
+
+		if (payment.getRedirectURL() != null) {
+			existingPayment.setRedirectURL(payment.getRedirectURL());
+		}
+
+		if (payment.getRelatedItemId() != null) {
+			existingPayment.setRelatedItemId(payment.getRelatedItemId());
+		}
+
+		if (payment.getRelatedItemName() != null) {
+			existingPayment.setRelatedItemName(payment.getRelatedItemName());
+		}
+
+		if (payment.getRelatedItemNameLabel() != null) {
+			existingPayment.setRelatedItemNameLabel(
+				payment.getRelatedItemNameLabel());
+		}
+
+		if (payment.getTransactionCode() != null) {
+			existingPayment.setTransactionCode(payment.getTransactionCode());
+		}
+
+		if (payment.getType() != null) {
+			existingPayment.setType(payment.getType());
+		}
+
+		preparePatch(payment, existingPayment);
+
+		return putPaymentByExternalReferenceCode(
+			externalReferenceCode, existingPayment);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-payment/v1.0/payments/by-externalReferenceCode/{externalReferenceCode}' -d $'{"amount": ___, "callbackURL": ___, "cancelURL": ___, "channelId": ___, "comment": ___, "currencyCode": ___, "errorMessages": ___, "externalReferenceCode": ___, "languageId": ___, "payload": ___, "paymentIntegrationKey": ___, "paymentIntegrationType": ___, "paymentStatus": ___, "reasonKey": ___, "redirectURL": ___, "relatedItemId": ___, "relatedItemName": ___, "relatedItemNameLabel": ___, "transactionCode": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Payment")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/payments/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Payment putPaymentByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Payment payment)
+		throws Exception {
+
 		return new Payment();
 	}
 
@@ -567,6 +692,38 @@ public abstract class BasePaymentResourceImpl
 			paymentUnsafeFunction = payment -> postPayment(payment);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				paymentUnsafeFunction =
+					payment -> putPaymentByExternalReferenceCode(
+						payment.getExternalReferenceCode(), payment);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				paymentUnsafeFunction = payment -> {
+					Payment persistedPayment = null;
+
+					try {
+						Payment getPayment = getPaymentByExternalReferenceCode(
+							payment.getExternalReferenceCode());
+
+						persistedPayment = patchPayment(
+							getPayment.getId() != null ? getPayment.getId() :
+								_parseLong((String)parameters.get("paymentId")),
+							payment);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedPayment = postPayment(payment);
+					}
+
+					return persistedPayment;
+				};
+			}
+		}
+
 		if (paymentUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -599,7 +756,7 @@ public abstract class BasePaymentResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -906,6 +1063,9 @@ public abstract class BasePaymentResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(Payment payment, Payment existingPayment) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

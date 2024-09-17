@@ -144,6 +144,11 @@ public class ServletDataImpl implements ServletData {
 							MeasurementUnitResourceImpl.class,
 							"patchMeasurementUnitByExternalReferenceCode"));
 					put(
+						"mutation#updateMeasurementUnitByExternalReferenceCode",
+						new ObjectValuePair<>(
+							MeasurementUnitResourceImpl.class,
+							"putMeasurementUnitByExternalReferenceCode"));
+					put(
 						"mutation#deleteMeasurementUnitByKey",
 						new ObjectValuePair<>(
 							MeasurementUnitResourceImpl.class,

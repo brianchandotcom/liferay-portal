@@ -825,6 +825,55 @@ public abstract class BaseOrderResourceTestCase {
 	}
 
 	@Test
+	public void testPutOrderByExternalReferenceCode() throws Exception {
+		Order postOrder = testPutOrderByExternalReferenceCode_addOrder();
+
+		Order randomOrder = randomOrder();
+
+		Order putOrder = orderResource.putOrderByExternalReferenceCode(
+			postOrder.getExternalReferenceCode(), randomOrder);
+
+		assertEquals(randomOrder, putOrder);
+		assertValid(putOrder);
+
+		Order getOrder = orderResource.getOrderByExternalReferenceCode(
+			putOrder.getExternalReferenceCode());
+
+		assertEquals(randomOrder, getOrder);
+		assertValid(getOrder);
+
+		Order newOrder = testPutOrderByExternalReferenceCode_createOrder();
+
+		putOrder = orderResource.putOrderByExternalReferenceCode(
+			newOrder.getExternalReferenceCode(), newOrder);
+
+		assertEquals(newOrder, putOrder);
+		assertValid(putOrder);
+
+		getOrder = orderResource.getOrderByExternalReferenceCode(
+			putOrder.getExternalReferenceCode());
+
+		assertEquals(newOrder, getOrder);
+
+		Assert.assertEquals(
+			newOrder.getExternalReferenceCode(),
+			putOrder.getExternalReferenceCode());
+	}
+
+	protected Order testPutOrderByExternalReferenceCode_createOrder()
+		throws Exception {
+
+		return randomOrder();
+	}
+
+	protected Order testPutOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOrder() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Order order = testDeleteOrder_addOrder();

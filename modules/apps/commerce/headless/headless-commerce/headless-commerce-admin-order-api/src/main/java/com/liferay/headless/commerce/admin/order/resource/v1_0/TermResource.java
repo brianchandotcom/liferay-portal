@@ -72,6 +72,10 @@ public interface TermResource {
 			String externalReferenceCode, Term term)
 		throws Exception;
 
+	public Term putTermByExternalReferenceCode(
+			String externalReferenceCode, Term term)
+		throws Exception;
+
 	public void deleteTerm(Long id) throws Exception;
 
 	public Response deleteTermBatch(String callbackURL, Object object)

@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -359,6 +360,42 @@ public abstract class BaseMeasurementUnitResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "MeasurementUnit")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/measurement-units/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public MeasurementUnit putMeasurementUnitByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return new MeasurementUnit();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -656,6 +693,45 @@ public abstract class BaseMeasurementUnitResourceImpl
 				measurementUnit -> postMeasurementUnit(measurementUnit);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				measurementUnitUnsafeFunction =
+					measurementUnit ->
+						putMeasurementUnitByExternalReferenceCode(
+							measurementUnit.getExternalReferenceCode(),
+							measurementUnit);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				measurementUnitUnsafeFunction = measurementUnit -> {
+					MeasurementUnit persistedMeasurementUnit = null;
+
+					try {
+						MeasurementUnit getMeasurementUnit =
+							getMeasurementUnitByExternalReferenceCode(
+								measurementUnit.getExternalReferenceCode());
+
+						patchMeasurementUnit(
+							getMeasurementUnit.getId() != null ?
+								getMeasurementUnit.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"measurementUnitId")),
+							measurementUnit);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedMeasurementUnit = postMeasurementUnit(
+							measurementUnit);
+					}
+
+					return persistedMeasurementUnit;
+				};
+			}
+		}
+
 		if (measurementUnitUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -689,7 +765,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

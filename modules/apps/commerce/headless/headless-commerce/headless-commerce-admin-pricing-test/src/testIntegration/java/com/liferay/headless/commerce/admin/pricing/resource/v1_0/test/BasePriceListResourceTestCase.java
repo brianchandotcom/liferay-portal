@@ -766,6 +766,60 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	@Test
+	public void testPutPriceListByExternalReferenceCode() throws Exception {
+		PriceList postPriceList =
+			testPutPriceListByExternalReferenceCode_addPriceList();
+
+		PriceList randomPriceList = randomPriceList();
+
+		PriceList putPriceList =
+			priceListResource.putPriceListByExternalReferenceCode(
+				postPriceList.getExternalReferenceCode(), randomPriceList);
+
+		assertEquals(randomPriceList, putPriceList);
+		assertValid(putPriceList);
+
+		PriceList getPriceList =
+			priceListResource.getPriceListByExternalReferenceCode(
+				putPriceList.getExternalReferenceCode());
+
+		assertEquals(randomPriceList, getPriceList);
+		assertValid(getPriceList);
+
+		PriceList newPriceList =
+			testPutPriceListByExternalReferenceCode_createPriceList();
+
+		putPriceList = priceListResource.putPriceListByExternalReferenceCode(
+			newPriceList.getExternalReferenceCode(), newPriceList);
+
+		assertEquals(newPriceList, putPriceList);
+		assertValid(putPriceList);
+
+		getPriceList = priceListResource.getPriceListByExternalReferenceCode(
+			putPriceList.getExternalReferenceCode());
+
+		assertEquals(newPriceList, getPriceList);
+
+		Assert.assertEquals(
+			newPriceList.getExternalReferenceCode(),
+			putPriceList.getExternalReferenceCode());
+	}
+
+	protected PriceList
+			testPutPriceListByExternalReferenceCode_createPriceList()
+		throws Exception {
+
+		return randomPriceList();
+	}
+
+	protected PriceList testPutPriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeletePriceList() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList priceList = testDeletePriceList_addPriceList();

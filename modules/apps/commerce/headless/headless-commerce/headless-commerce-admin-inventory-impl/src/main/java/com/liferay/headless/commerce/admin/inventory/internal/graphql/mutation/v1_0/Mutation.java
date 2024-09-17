@@ -119,6 +119,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ReplenishmentItem updateReplenishmentItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("replenishmentItem") ReplenishmentItem
+				replenishmentItem)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_replenishmentItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			replenishmentItemResource ->
+				replenishmentItemResource.
+					putReplenishmentItemByExternalReferenceCode(
+						externalReferenceCode, replenishmentItem));
+	}
+
+	@GraphQLField
 	public boolean deleteReplenishmentItem(
 			@GraphQLName("replenishmentItemId") Long replenishmentItemId)
 		throws Exception {
@@ -281,6 +297,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			warehouseResource ->
 				warehouseResource.patchWarehouseByExternalReferenceCode(
+					externalReferenceCode, warehouse));
+	}
+
+	@GraphQLField
+	public Warehouse updateWarehouseByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("warehouse") Warehouse warehouse)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseResource ->
+				warehouseResource.putWarehouseByExternalReferenceCode(
 					externalReferenceCode, warehouse));
 	}
 

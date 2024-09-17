@@ -754,6 +754,55 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	@Test
+	public void testPutTermByExternalReferenceCode() throws Exception {
+		Term postTerm = testPutTermByExternalReferenceCode_addTerm();
+
+		Term randomTerm = randomTerm();
+
+		Term putTerm = termResource.putTermByExternalReferenceCode(
+			postTerm.getExternalReferenceCode(), randomTerm);
+
+		assertEquals(randomTerm, putTerm);
+		assertValid(putTerm);
+
+		Term getTerm = termResource.getTermByExternalReferenceCode(
+			putTerm.getExternalReferenceCode());
+
+		assertEquals(randomTerm, getTerm);
+		assertValid(getTerm);
+
+		Term newTerm = testPutTermByExternalReferenceCode_createTerm();
+
+		putTerm = termResource.putTermByExternalReferenceCode(
+			newTerm.getExternalReferenceCode(), newTerm);
+
+		assertEquals(newTerm, putTerm);
+		assertValid(putTerm);
+
+		getTerm = termResource.getTermByExternalReferenceCode(
+			putTerm.getExternalReferenceCode());
+
+		assertEquals(newTerm, getTerm);
+
+		Assert.assertEquals(
+			newTerm.getExternalReferenceCode(),
+			putTerm.getExternalReferenceCode());
+	}
+
+	protected Term testPutTermByExternalReferenceCode_createTerm()
+		throws Exception {
+
+		return randomTerm();
+	}
+
+	protected Term testPutTermByExternalReferenceCode_addTerm()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteTerm() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term = testDeleteTerm_addTerm();

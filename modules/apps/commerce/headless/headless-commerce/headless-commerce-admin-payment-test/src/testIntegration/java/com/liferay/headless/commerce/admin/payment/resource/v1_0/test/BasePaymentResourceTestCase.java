@@ -794,6 +794,57 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	@Test
+	public void testPutPaymentByExternalReferenceCode() throws Exception {
+		Payment postPayment =
+			testPutPaymentByExternalReferenceCode_addPayment();
+
+		Payment randomPayment = randomPayment();
+
+		Payment putPayment = paymentResource.putPaymentByExternalReferenceCode(
+			postPayment.getExternalReferenceCode(), randomPayment);
+
+		assertEquals(randomPayment, putPayment);
+		assertValid(putPayment);
+
+		Payment getPayment = paymentResource.getPaymentByExternalReferenceCode(
+			putPayment.getExternalReferenceCode());
+
+		assertEquals(randomPayment, getPayment);
+		assertValid(getPayment);
+
+		Payment newPayment =
+			testPutPaymentByExternalReferenceCode_createPayment();
+
+		putPayment = paymentResource.putPaymentByExternalReferenceCode(
+			newPayment.getExternalReferenceCode(), newPayment);
+
+		assertEquals(newPayment, putPayment);
+		assertValid(putPayment);
+
+		getPayment = paymentResource.getPaymentByExternalReferenceCode(
+			putPayment.getExternalReferenceCode());
+
+		assertEquals(newPayment, getPayment);
+
+		Assert.assertEquals(
+			newPayment.getExternalReferenceCode(),
+			putPayment.getExternalReferenceCode());
+	}
+
+	protected Payment testPutPaymentByExternalReferenceCode_createPayment()
+		throws Exception {
+
+		return randomPayment();
+	}
+
+	protected Payment testPutPaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostPaymentByExternalReferenceCodeRefund()
 		throws Exception {
 

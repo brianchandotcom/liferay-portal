@@ -118,6 +118,11 @@ public class ServletDataImpl implements ServletData {
 							ReplenishmentItemResourceImpl.class,
 							"patchReplenishmentItemByExternalReferenceCode"));
 					put(
+						"mutation#updateReplenishmentItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ReplenishmentItemResourceImpl.class,
+							"putReplenishmentItemByExternalReferenceCode"));
+					put(
 						"mutation#deleteReplenishmentItem",
 						new ObjectValuePair<>(
 							ReplenishmentItemResourceImpl.class,
@@ -170,6 +175,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class,
 							"patchWarehouseByExternalReferenceCode"));
+					put(
+						"mutation#updateWarehouseByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseResourceImpl.class,
+							"putWarehouseByExternalReferenceCode"));
 					put(
 						"mutation#deleteWarehouseId",
 						new ObjectValuePair<>(

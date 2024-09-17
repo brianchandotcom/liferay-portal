@@ -74,6 +74,10 @@ public interface WarehouseResource {
 			String externalReferenceCode, Warehouse warehouse)
 		throws Exception;
 
+	public Warehouse putWarehouseByExternalReferenceCode(
+			String externalReferenceCode, Warehouse warehouse)
+		throws Exception;
+
 	public void deleteWarehouseId(Long id) throws Exception;
 
 	public Warehouse getWarehouseId(Long id) throws Exception;

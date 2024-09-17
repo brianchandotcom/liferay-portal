@@ -272,6 +272,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Order updateOrderByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("order") Order order)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderResource -> orderResource.putOrderByExternalReferenceCode(
+				externalReferenceCode, order));
+	}
+
+	@GraphQLField
 	public Response deleteOrder(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_orderResourceComponentServiceObjects,
@@ -640,6 +653,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			orderRuleResource ->
 				orderRuleResource.patchOrderRuleByExternalReferenceCode(
+					externalReferenceCode, orderRule));
+	}
+
+	@GraphQLField
+	public OrderRule updateOrderRuleByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderRule") OrderRule orderRule)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource ->
+				orderRuleResource.putOrderRuleByExternalReferenceCode(
 					externalReferenceCode, orderRule));
 	}
 
@@ -1062,6 +1089,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public OrderType updateOrderTypeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderType") OrderType orderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.putOrderTypeByExternalReferenceCode(
+					externalReferenceCode, orderType));
+	}
+
+	@GraphQLField
 	public boolean deleteOrderType(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1266,6 +1307,19 @@ public class Mutation {
 			_termResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			termResource -> termResource.patchTermByExternalReferenceCode(
+				externalReferenceCode, term));
+	}
+
+	@GraphQLField
+	public Term updateTermByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("term") Term term)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.putTermByExternalReferenceCode(
 				externalReferenceCode, term));
 	}
 

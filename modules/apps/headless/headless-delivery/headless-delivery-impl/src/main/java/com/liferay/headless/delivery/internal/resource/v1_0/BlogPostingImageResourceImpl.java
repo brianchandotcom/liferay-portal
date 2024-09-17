@@ -226,7 +226,7 @@ public class BlogPostingImageResourceImpl
 		if (fileEntry.getFolderId() != folder.getFolderId()) {
 			throw new BadRequestException(
 				fileEntry.getFileEntryId() +
-					" does not correspond to a valid BlogPostingImage");
+					" does not correspond to a valid blog posting image");
 		}
 	}
 

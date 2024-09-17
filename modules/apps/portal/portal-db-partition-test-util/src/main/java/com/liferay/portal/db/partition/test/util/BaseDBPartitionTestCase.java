@@ -158,7 +158,7 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void dropControlTable(String tableName) throws Exception {
-		db.runSQL("drop table if exists " + tableName);
+		dropTable(tableName);
 
 		if (_controlTableNames != null) {
 			_controlTableNames.remove(StringUtil.toLowerCase(tableName));

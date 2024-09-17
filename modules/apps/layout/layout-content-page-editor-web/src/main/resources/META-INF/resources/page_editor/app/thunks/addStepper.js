@@ -18,24 +18,23 @@ export default function addStepper({
 	type,
 }) {
 	return (dispatch, getState) => {
-		const params = {
+		const form = getState().layoutData.items[parentItemId];
+
+		const numberOfSteps =
+			form.config.formType === 'simple'
+				? FORM_DEFAULT_NUMBER_OF_STEPS
+				: form.config.numberOfSteps;
+
+		return FragmentService.addStepperFragmentEntryLink({
 			fragmentEntryKey,
 			groupId,
+			numberOfSteps,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
 			segmentsExperienceId: getState().segmentsExperienceId,
 			type,
-		};
-
-		const form = getState().layoutData.items[parentItemId];
-
-		params.numberOfSteps =
-			form.config.formType === 'simple'
-				? FORM_DEFAULT_NUMBER_OF_STEPS
-				: form.config.numberOfSteps;
-
-		return FragmentService.addStepperFragmentEntryLink(params).then(
+		}).then(
 			({
 				addedItemIds,
 				fragmentEntryLinks,

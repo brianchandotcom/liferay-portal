@@ -888,6 +888,10 @@ public class LayoutStructureRenderer {
 				jspWriter.write(" class=\"d-none\"");
 			}
 
+			jspWriter.write(" data-step-index=\"");
+			jspWriter.write(String.valueOf(i));
+			jspWriter.write(StringPool.QUOTE);
+
 			jspWriter.write(StringPool.GREATER_THAN);
 
 			LayoutStructureItem layoutStructureItem =

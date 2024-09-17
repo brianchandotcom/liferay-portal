@@ -1254,8 +1254,9 @@ public class PortalImpl implements Portal {
 
 		if ((pos <= 0) || (pos >= canonicalURL.length())) {
 			for (Locale locale : availableLocales) {
-				if (siteDefaultLocale.equals(locale) &&
-					(localePrependFriendlyURLStyle != 2)) {
+				if ((siteDefaultLocale.equals(locale) &&
+					 (localePrependFriendlyURLStyle != 2)) ||
+					(localePrependFriendlyURLStyle == 0)) {
 
 					alternateURLs.put(locale, canonicalURL);
 				}

@@ -219,6 +219,34 @@ public class MeasurementUnitResourceImpl
 		}
 	}
 
+	@Override
+	public MeasurementUnit putMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, MeasurementUnit measurementUnit)
+		throws Exception {
+
+		CPMeasurementUnit cpMeasurementUnit =
+			_cpMeasurementUnitService.
+				fetchCPMeasurementUnitByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (cpMeasurementUnit == null) {
+			return postMeasurementUnit(measurementUnit);
+		}
+
+		return _toMeasurementUnit(
+			_cpMeasurementUnitService.updateCPMeasurementUnit(
+				GetterUtil.getString(
+					measurementUnit.getExternalReferenceCode()),
+				cpMeasurementUnit.getCPMeasurementUnitId(),
+				LanguageUtils.getLocalizedMap(measurementUnit.getName()),
+				GetterUtil.getString(measurementUnit.getKey()),
+				GetterUtil.getDouble(measurementUnit.getRate()),
+				GetterUtil.getBoolean(measurementUnit.getPrimary()),
+				GetterUtil.getDouble(measurementUnit.getPriority()),
+				_getType(measurementUnit.getType()),
+				_serviceContextHelper.getServiceContext(contextUser)));
+	}
+
 	private CPMeasurementUnit _findByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {

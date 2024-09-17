@@ -86,6 +86,8 @@ public class UpgradeReport {
 		if (StartupHelperUtil.isNewRelease()) {
 			_initialTableCounts = _getTableCounts();
 		}
+
+		_propertiesFilePaths = _getPropertiesFilePaths();
 	}
 
 	public void generateReport(UpgradeRecorder upgradeRecorder) {
@@ -152,6 +154,31 @@ public class UpgradeReport {
 		}
 
 		return messagesPrinters;
+	}
+
+	private List<String> _getPropertiesFilePaths() {
+		List<String> propertiesFilePaths = new ArrayList<>();
+
+		for (String loadedSource : PropsUtil.getLoadedSources()) {
+			try {
+				URI uri = new URI(loadedSource);
+
+				if (StringUtil.equals("file", uri.getScheme())) {
+					String propertiesFilePath = String.valueOf(Paths.get(uri));
+
+					if (FileUtil.exists(propertiesFilePath)) {
+						propertiesFilePaths.add(propertiesFilePath);
+					}
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("The file path could not be parsed", exception);
+				}
+			}
+		}
+
+		return propertiesFilePaths;
 	}
 
 	private Map<String, Object> _getReportData(
@@ -360,24 +387,11 @@ public class UpgradeReport {
 			() -> {
 				Map<String, String> propertiesMap = new TreeMap<>();
 
-				for (String loadedSource : PropsUtil.getLoadedSources()) {
-					URI uri = new URI(loadedSource);
-
-					String propertiesFilePathString = StringPool.BLANK;
-
-					if (StringUtil.equals("file", uri.getScheme())) {
-						propertiesFilePathString = String.valueOf(
-							Paths.get(uri));
-					}
-
-					if (!FileUtil.exists(propertiesFilePathString)) {
-						continue;
-					}
-
+				for (String propertiesFilePath : _propertiesFilePaths) {
 					Properties properties = new Properties();
 
 					try (InputStream inputStream = new FileInputStream(
-							propertiesFilePathString)) {
+							propertiesFilePath)) {
 
 						properties.load(inputStream);
 					}
@@ -385,7 +399,7 @@ public class UpgradeReport {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to load properties file from: " +
-									propertiesFilePathString,
+									propertiesFilePath,
 								ioException);
 						}
 
@@ -427,25 +441,7 @@ public class UpgradeReport {
 				return propertyLines;
 			}
 		).put(
-			"properties.files",
-			() -> {
-				List<String> propertiesFilePaths = new ArrayList<>();
-
-				for (String loadedSource : PropsUtil.getLoadedSources()) {
-					URI uri = new URI(loadedSource);
-
-					if (StringUtil.equals("file", uri.getScheme())) {
-						String propertiesFilePath = String.valueOf(
-							Paths.get(uri));
-
-						if (FileUtil.exists(propertiesFilePath)) {
-							propertiesFilePaths.add(propertiesFilePath);
-						}
-					}
-				}
-
-				return propertiesFilePaths;
-			}
+			"properties.files", _propertiesFilePaths
 		).put(
 			"document.library.storage.size",
 			() -> {
@@ -951,6 +947,7 @@ public class UpgradeReport {
 	private final Thread _dlSizeThread = new DLSizeThread();
 	private final int _initialBuildNumber;
 	private Map<String, Integer> _initialTableCounts;
+	private final List<String> _propertiesFilePaths;
 	private String _rootDir;
 
 	private class DLSizeThread extends Thread {

@@ -492,6 +492,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testBindPublishedObjectDefinitions() throws Exception {
+
+		// Bind two published object definitions
+
 		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
 		ObjectDefinition objectDefinitionAA =
@@ -514,6 +517,76 @@ public class ObjectRelationshipLocalServiceTest {
 					_treeFactory.createObjectDefinitionTree(
 						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
+
+		// Bind two published object definitions that belong to a
+		// hierarchical structure
+
+		objectDefinitionA = _addAndPublishCustomObjectDefinition();
+		objectDefinitionAA = _addAndPublishCustomObjectDefinition();
+
+		_addObjectRelationshipEdge(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId());
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				objectDefinitionA.getShortName(),
+				new String[] {objectDefinitionAA.getShortName()}
+			).put(
+				objectDefinitionAA.getShortName(), new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionAAA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAAAA =
+			_addAndPublishCustomObjectDefinition();
+
+		_addObjectRelationshipEdge(
+			objectDefinitionAAA.getObjectDefinitionId(),
+			objectDefinitionAAAA.getObjectDefinitionId());
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				objectDefinitionAAA.getShortName(),
+				new String[] {objectDefinitionAAAA.getShortName()}
+			).put(
+				objectDefinitionAAAA.getShortName(), new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionAAA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		_addObjectRelationshipEdge(
+			objectDefinitionAA.getObjectDefinitionId(),
+			objectDefinitionAAA.getObjectDefinitionId());
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				objectDefinitionA.getShortName(),
+				new String[] {objectDefinitionAA.getShortName()}
+			).put(
+				objectDefinitionAA.getShortName(),
+				new String[] {objectDefinitionAAA.getShortName()}
+			).put(
+				objectDefinitionAAA.getShortName(),
+				new String[] {objectDefinitionAAAA.getShortName()}
+			).put(
+				objectDefinitionAAAA.getShortName(), new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName(),
+				objectDefinitionAAA.getName(), objectDefinitionAAAA.getName()
+			},
+			_objectEntryLocalService);
 	}
 
 	@Test
@@ -862,6 +935,26 @@ public class ObjectRelationshipLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectRelationship _addObjectRelationshipEdge(
+			long objectDefinitionId1, long objectDefinitionId2)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				StringUtil.randomId(), TestPropsValues.getUserId(),
+				objectDefinitionId1, objectDefinitionId2, 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		return _objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(), 0,
+			objectRelationship.getDeletionType(), true,
+			objectRelationship.getLabelMap(), null);
+	}
+
 	private ObjectRelationship _addObjectRelationshipSystemObjectDefinition()
 		throws Exception {
 
@@ -1087,22 +1180,9 @@ public class ObjectRelationshipLocalServiceTest {
 				biConsumer)
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				StringUtil.randomId(), TestPropsValues.getUserId(),
-				objectDefinition1.getObjectDefinitionId(),
-				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getExternalReferenceCode(),
-				objectRelationship.getObjectRelationshipId(), 0,
-				objectRelationship.getDeletionType(), true,
-				objectRelationship.getLabelMap(), null);
+		ObjectRelationship objectRelationship = _addObjectRelationshipEdge(
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId());
 
 		Assert.assertTrue(objectRelationship.isEdge());
 		Assert.assertEquals(

@@ -158,6 +158,53 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		return _addOrUpdateSpecification(specification);
 	}
 
+	@Override
+	public Specification putSpecificationByExternalReferenceCode(
+			String externalReferenceCode, Specification specification)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.
+				fetchCPSpecificationOptionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpSpecificationOption == null) {
+			cpSpecificationOption =
+				_cpSpecificationOptionService.addCPSpecificationOption(
+					specification.getExternalReferenceCode(),
+					_getCPOptionCategoryId(specification),
+					GetterUtil.getLong(specification.getListTypeDefinitionId()),
+					LanguageUtils.getLocalizedMap(specification.getTitle()),
+					LanguageUtils.getLocalizedMap(
+						specification.getDescription()),
+					GetterUtil.getBoolean(specification.getFacetable()),
+					GetterUtil.getString(specification.getKey()),
+					GetterUtil.getDouble(specification.getPriority()),
+					_serviceContextHelper.getServiceContext());
+
+			return _toSpecification(
+				cpSpecificationOption.getCPSpecificationOptionId());
+		}
+
+		Map<String, String> descriptionMap = specification.getDescription();
+		Map<String, String> titleMap = specification.getTitle();
+
+		_cpSpecificationOptionService.updateCPSpecificationOption(
+			GetterUtil.getString(specification.getExternalReferenceCode()),
+			cpSpecificationOption.getCPSpecificationOptionId(),
+			GetterUtil.getLong(_getCPOptionCategoryId(specification)),
+			GetterUtil.getLong(specification.getListTypeDefinitionId()),
+			LanguageUtils.getLocalizedMap(titleMap),
+			LanguageUtils.getLocalizedMap(descriptionMap),
+			GetterUtil.getBoolean(specification.getFacetable()),
+			GetterUtil.getString(specification.getKey()),
+			GetterUtil.getDouble(specification.getPriority()),
+			_serviceContextHelper.getServiceContext());
+
+		return _toSpecification(
+			cpSpecificationOption.getCPSpecificationOptionId());
+	}
+
 	private Specification _addOrUpdateSpecification(Specification specification)
 		throws Exception {
 

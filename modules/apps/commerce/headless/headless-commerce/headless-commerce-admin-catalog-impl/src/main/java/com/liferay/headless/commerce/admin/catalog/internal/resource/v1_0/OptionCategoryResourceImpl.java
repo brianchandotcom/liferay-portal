@@ -153,6 +153,22 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 				_serviceContextHelper.getServiceContext(contextUser)));
 	}
 
+	@Override
+	public OptionCategory putOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, OptionCategory optionCategory)
+		throws Exception {
+
+		return _toOptionCategory(
+			_cpOptionCategoryService.addOrUpdateCPOptionCategory(
+				GetterUtil.getString(optionCategory.getExternalReferenceCode()),
+				GetterUtil.getLong(optionCategory.getId()),
+				LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
+				LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
+				GetterUtil.getLong(optionCategory.getPriority()),
+				optionCategory.getKey(),
+				_serviceContextHelper.getServiceContext(contextUser)));
+	}
+
 	private OptionCategory _toOptionCategory(CPOptionCategory cpOptionCategory)
 		throws Exception {
 

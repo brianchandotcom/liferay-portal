@@ -164,19 +164,31 @@ public class ProductGroupResourceImpl extends BaseProductGroupResourceImpl {
 		throws Exception {
 
 		CommercePricingClass commercePricingClass = _addOrUpdateProductGroup(
-			productGroup);
+			productGroup.getExternalReferenceCode(), productGroup);
+
+		return _toProductGroup(
+			commercePricingClass.getCommercePricingClassId());
+	}
+
+	@Override
+	public ProductGroup putProductGroupByExternalReferenceCode(
+			String externalReferenceCode, ProductGroup productGroup)
+		throws Exception {
+
+		CommercePricingClass commercePricingClass = _addOrUpdateProductGroup(
+			externalReferenceCode, productGroup);
 
 		return _toProductGroup(
 			commercePricingClass.getCommercePricingClassId());
 	}
 
 	private CommercePricingClass _addOrUpdateProductGroup(
-			ProductGroup productGroup)
+			String externalReferenceCode, ProductGroup productGroup)
 		throws Exception {
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassService.addOrUpdateCommercePricingClass(
-				productGroup.getExternalReferenceCode(), 0L,
+				externalReferenceCode, 0L,
 				LanguageUtils.getLocalizedMap(productGroup.getTitle()),
 				LanguageUtils.getLocalizedMap(productGroup.getDescription()),
 				_serviceContextHelper.getServiceContext());

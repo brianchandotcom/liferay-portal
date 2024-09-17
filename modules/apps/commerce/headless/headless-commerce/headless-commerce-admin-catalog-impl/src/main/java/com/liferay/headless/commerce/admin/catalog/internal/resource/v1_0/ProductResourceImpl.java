@@ -386,7 +386,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Override
 	public Product postProduct(Product product) throws Exception {
-		CPDefinition cpDefinition = _addOrUpdateProduct(product);
+		CPDefinition cpDefinition = _addOrUpdateProduct(
+			product.getExternalReferenceCode(), product);
 
 		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
@@ -452,6 +453,17 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	@Override
+	public Product putProductByExternalReferenceCode(
+			String externalReferenceCode, Product product)
+		throws Exception {
+
+		CPDefinition cpDefinition = _addOrUpdateProduct(
+			externalReferenceCode, product);
+
+		return _toProduct(cpDefinition.getCPDefinitionId());
+	}
+
+	@Override
 	public void update(
 			Collection<Product> products, Map<String, Serializable> parameters)
 		throws Exception {
@@ -461,7 +473,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		}
 	}
 
-	private CPDefinition _addOrUpdateProduct(Product product) throws Exception {
+	private CPDefinition _addOrUpdateProduct(
+			String externalReferenceCode, Product product)
+		throws Exception {
+
 		CommerceCatalog commerceCatalog = null;
 
 		if (product.getCatalogId() != null) {
@@ -588,8 +603,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					product.getExternalReferenceCode(),
-					contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		Category[] categories = product.getCategories();
 
@@ -682,7 +696,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		}
 
 		cpDefinition = _cpDefinitionService.addOrUpdateCPDefinition(
-			product.getExternalReferenceCode(), commerceCatalog.getGroupId(),
+			externalReferenceCode, commerceCatalog.getGroupId(),
 			LanguageUtils.getLocalizedMap(nameMap),
 			LanguageUtils.getLocalizedMap(shortDescriptionMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),

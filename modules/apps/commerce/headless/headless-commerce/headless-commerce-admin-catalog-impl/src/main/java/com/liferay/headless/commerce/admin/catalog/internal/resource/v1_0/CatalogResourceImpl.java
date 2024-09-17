@@ -238,6 +238,37 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 		return _toCatalog(commerceCatalog);
 	}
 
+	@Override
+	public Catalog putCatalogByExternalReferenceCode(
+			String externalReferenceCode, Catalog catalog)
+		throws Exception {
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceCatalog == null) {
+			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
+				catalog.getExternalReferenceCode(),
+				GetterUtil.get(
+					catalog.getAccountId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+				catalog.getName(), catalog.getCurrencyCode(),
+				catalog.getDefaultLanguageId(),
+				_serviceContextHelper.getServiceContext());
+		}
+		else {
+			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
+				commerceCatalog.getCommerceCatalogId(),
+				GetterUtil.getLong(catalog.getAccountId()),
+				GetterUtil.getString(catalog.getName()),
+				GetterUtil.getString(catalog.getCurrencyCode()),
+				GetterUtil.getString(catalog.getDefaultLanguageId()));
+		}
+
+		return _toCatalog(commerceCatalog);
+	}
+
 	private Map<String, Map<String, String>> _getActions(
 		CommerceCatalog commerceCatalog) {
 

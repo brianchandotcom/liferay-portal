@@ -33,12 +33,43 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
 		super(batchTestClassGroup, testClassFile, "packageRunTest");
+
+		File testPropertiesBaseDir = getTestPropertiesBaseDir(
+			getTestClassFile());
+
+		if ((testPropertiesBaseDir != null) && testPropertiesBaseDir.exists()) {
+			_testPropertiesFile = new File(
+				testPropertiesBaseDir, "test.properties");
+
+			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getProperties(_testPropertiesFile),
+				"testray.main.component.name");
+		}
+		else {
+			_testPropertiesFile = null;
+			_testrayMainComponentName = null;
+		}
 	}
 
 	protected JSUnitModulesTestClass(
 		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
 
 		super(batchTestClassGroup, jsonObject);
+
+		if (jsonObject.has("test_properties_file")) {
+			_testPropertiesFile = new File(
+				jsonObject.getString("test_properties_file"));
+		}
+		else {
+			_testPropertiesFile = null;
+		}
+
+		_testrayMainComponentName = jsonObject.optString(
+			"testray_main_component_name");
+	}
+
+	public String getTestrayMainComponentName() {
+		return _testrayMainComponentName;
 	}
 
 	@Override
@@ -147,5 +178,8 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 
 		return jsUnitModulesBatchTestClassGroup.testGitrepoJSUnit();
 	}
+
+	private final File _testPropertiesFile;
+	private final String _testrayMainComponentName;
 
 }

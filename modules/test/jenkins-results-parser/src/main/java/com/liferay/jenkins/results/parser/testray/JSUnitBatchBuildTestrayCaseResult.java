@@ -35,6 +35,30 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public String getComponentName() {
+		try {
+			return JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"testray.case.component", getBatchName());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	@Override
+	public String getComponentName() {
+		String componentName = 
+			_JSUnitModulesTestClass.getTestrayMainComponentName();
+
+		if (JenkinsResultsParserUtil.isNullorEmpty(componentName)) {
+			return super.getComponentName();
+		}
+
+		return componentName;
+	}
+
+	@Override
 	public long getDuration() {
 		List<TestClassResult> testClassResults = _getTestClassResults();
 

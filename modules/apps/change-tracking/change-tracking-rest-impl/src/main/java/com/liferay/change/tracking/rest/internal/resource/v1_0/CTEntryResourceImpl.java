@@ -158,6 +158,8 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 						Field.GROUP_ID, new Long[] {siteId});
 				}
 
+				searchContext.setAttribute("ctCollectionId", -1);
+
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				BooleanFilter booleanFilter = new BooleanFilter();

@@ -41,7 +41,9 @@ public class CTEntryModelPreFilterContributor
 		long ctCollectionId = GetterUtil.getLong(
 			searchContext.getAttribute("ctCollectionId"));
 
-		booleanFilter.addRequiredTerm("ctCollectionId", ctCollectionId);
+		if (ctCollectionId > -1) {
+			booleanFilter.addRequiredTerm("ctCollectionId", ctCollectionId);
+		}
 
 		long[] groupIds = GetterUtil.getLongValues(
 			searchContext.getAttribute(Field.GROUP_ID));

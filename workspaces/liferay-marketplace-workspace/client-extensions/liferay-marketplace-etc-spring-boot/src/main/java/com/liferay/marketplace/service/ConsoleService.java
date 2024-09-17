@@ -146,7 +146,7 @@ public class ConsoleService {
 			jsonObject.getString("projectId"));
 	}
 
-	public void uninstallApp(long orderId) {
+	public void uninstallApp(long orderId) throws Exception {
 		getWebClient(
 		).delete(
 		).uri(

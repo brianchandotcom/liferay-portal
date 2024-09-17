@@ -10,7 +10,7 @@ import MultiSelectManager from '../../../../src/main/resources/META-INF/resource
 import {
 	useActivateMultiSelect,
 	useActiveItemIds,
-	useMultiSelectIsActivated,
+	useMultiSelectType,
 	useSelectItem,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
@@ -24,7 +24,7 @@ jest.mock(
 		return {
 			useActivateMultiSelect: () => activateMultiSelect,
 			useActiveItemIds: jest.fn(() => []),
-			useMultiSelectIsActivated: jest.fn(() => false),
+			useMultiSelectType: jest.fn(() => null),
 			useSelectItem: () => selectItem,
 		};
 	}
@@ -77,7 +77,7 @@ describe('MultiSelectManager', () => {
 		});
 
 		it('disable simple multiselect when the ctrl key is released', () => {
-			useMultiSelectIsActivated.mockImplementation(() => true);
+			useMultiSelectType.mockImplementation(() => 'simple');
 
 			renderComponent();
 
@@ -91,7 +91,7 @@ describe('MultiSelectManager', () => {
 
 			expect(activateMultiSelect).toBeCalledWith(null);
 
-			useMultiSelectIsActivated.mockImplementation(() => false);
+			useMultiSelectType.mockImplementation(() => null);
 		});
 	});
 
@@ -128,7 +128,7 @@ describe('MultiSelectManager', () => {
 		});
 
 		it('disable range multiselect when the shift key is released', () => {
-			useMultiSelectIsActivated.mockImplementation(() => true);
+			useMultiSelectType.mockImplementation(() => 'range');
 
 			renderComponent();
 
@@ -142,7 +142,7 @@ describe('MultiSelectManager', () => {
 
 			expect(activateMultiSelect).toBeCalledWith(null);
 
-			useMultiSelectIsActivated.mockImplementation(() => false);
+			useMultiSelectType.mockImplementation(() => null);
 		});
 	});
 

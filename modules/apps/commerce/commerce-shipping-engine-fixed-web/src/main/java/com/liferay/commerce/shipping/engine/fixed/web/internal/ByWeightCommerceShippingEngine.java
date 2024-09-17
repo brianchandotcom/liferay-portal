@@ -7,11 +7,11 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
@@ -206,9 +206,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		BigDecimal ratePercentage = new BigDecimal(
 			commerceShippingFixedOptionRel.getRatePercentage());
 
-		CommerceMoney commerceMoney = commerceOrder.getSubtotalMoney();
-
-		BigDecimal orderPrice = commerceMoney.getPrice();
+		BigDecimal orderPrice = _getOrderShippableSubtotal(commerceOrder);
 
 		amount = amount.add(
 			ratePercentage.multiply(orderPrice.divide(new BigDecimal(100))));
@@ -299,6 +297,20 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		return ListUtil.sort(
 			commerceShippingOptions,
 			new CommerceShippingOptionPriorityComparator());
+	}
+
+	private BigDecimal _getOrderShippableSubtotal(CommerceOrder commerceOrder) {
+		BigDecimal subtotal = BigDecimal.ZERO;
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			if (commerceOrderItem.isShippable()) {
+				subtotal = subtotal.add(commerceOrderItem.getFinalPrice());
+			}
+		}
+
+		return subtotal;
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

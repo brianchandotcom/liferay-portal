@@ -66,7 +66,6 @@ const LAYOUT_DATA = {
 			parentId: 'column',
 			type: LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
 		},
-
 		formStep: {
 			children: [],
 			itemId: 'formStep',
@@ -440,6 +439,55 @@ describe('Reducer', () => {
 							'fragment02',
 							'container02',
 						],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
+
+			it('selects the item when the range multiselection is activated before there are any items selected', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'fragment01',
+					type: SELECT_ITEM,
+				};
+				const state = {
+					...STATE,
+					activeItemIds: [],
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: ['fragment01'],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
+
+			it('selects a single item when the start and the end of the range are the same id', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'fragment01',
+					type: SELECT_ITEM,
+				};
+				const state = {
+					...STATE,
+					activeItemIds: ['fragment01', 'fragment02'],
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
+					rangeLimitIds: {end: 'fragment01', start: 'fragment01'},
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: ['fragment01'],
 					})
 				);
 

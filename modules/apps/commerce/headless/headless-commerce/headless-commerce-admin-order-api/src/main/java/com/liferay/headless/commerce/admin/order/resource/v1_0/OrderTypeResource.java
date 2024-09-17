@@ -77,6 +77,10 @@ public interface OrderTypeResource {
 			String externalReferenceCode, OrderType orderType)
 		throws Exception;
 
+	public OrderType putOrderTypeByExternalReferenceCode(
+			String externalReferenceCode, OrderType orderType)
+		throws Exception;
+
 	public void deleteOrderType(Long id) throws Exception;
 
 	public Response deleteOrderTypeBatch(String callbackURL, Object object)

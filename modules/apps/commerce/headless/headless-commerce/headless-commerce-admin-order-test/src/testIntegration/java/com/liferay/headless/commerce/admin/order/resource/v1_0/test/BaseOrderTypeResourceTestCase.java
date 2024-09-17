@@ -928,6 +928,60 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testPutOrderTypeByExternalReferenceCode() throws Exception {
+		OrderType postOrderType =
+			testPutOrderTypeByExternalReferenceCode_addOrderType();
+
+		OrderType randomOrderType = randomOrderType();
+
+		OrderType putOrderType =
+			orderTypeResource.putOrderTypeByExternalReferenceCode(
+				postOrderType.getExternalReferenceCode(), randomOrderType);
+
+		assertEquals(randomOrderType, putOrderType);
+		assertValid(putOrderType);
+
+		OrderType getOrderType =
+			orderTypeResource.getOrderTypeByExternalReferenceCode(
+				putOrderType.getExternalReferenceCode());
+
+		assertEquals(randomOrderType, getOrderType);
+		assertValid(getOrderType);
+
+		OrderType newOrderType =
+			testPutOrderTypeByExternalReferenceCode_createOrderType();
+
+		putOrderType = orderTypeResource.putOrderTypeByExternalReferenceCode(
+			newOrderType.getExternalReferenceCode(), newOrderType);
+
+		assertEquals(newOrderType, putOrderType);
+		assertValid(putOrderType);
+
+		getOrderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
+			putOrderType.getExternalReferenceCode());
+
+		assertEquals(newOrderType, getOrderType);
+
+		Assert.assertEquals(
+			newOrderType.getExternalReferenceCode(),
+			putOrderType.getExternalReferenceCode());
+	}
+
+	protected OrderType
+			testPutOrderTypeByExternalReferenceCode_createOrderType()
+		throws Exception {
+
+		return randomOrderType();
+	}
+
+	protected OrderType testPutOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOrderType() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderType orderType = testDeleteOrderType_addOrderType();

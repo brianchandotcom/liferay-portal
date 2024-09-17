@@ -99,6 +99,11 @@ public class ServletDataImpl implements ServletData {
 							PaymentResourceImpl.class,
 							"patchPaymentByExternalReferenceCode"));
 					put(
+						"mutation#updatePaymentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PaymentResourceImpl.class,
+							"putPaymentByExternalReferenceCode"));
+					put(
 						"mutation#createPaymentByExternalReferenceCodeRefund",
 						new ObjectValuePair<>(
 							PaymentResourceImpl.class,

@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -348,6 +349,146 @@ public abstract class BaseDiscountResourceImpl
 			Discount discount)
 		throws Exception {
 
+		Discount existingDiscount = getDiscountByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (discount.getActive() != null) {
+			existingDiscount.setActive(discount.getActive());
+		}
+
+		if (discount.getAmountFormatted() != null) {
+			existingDiscount.setAmountFormatted(discount.getAmountFormatted());
+		}
+
+		if (discount.getCouponCode() != null) {
+			existingDiscount.setCouponCode(discount.getCouponCode());
+		}
+
+		if (discount.getCustomFields() != null) {
+			existingDiscount.setCustomFields(discount.getCustomFields());
+		}
+
+		if (discount.getDisplayDate() != null) {
+			existingDiscount.setDisplayDate(discount.getDisplayDate());
+		}
+
+		if (discount.getExpirationDate() != null) {
+			existingDiscount.setExpirationDate(discount.getExpirationDate());
+		}
+
+		if (discount.getExternalReferenceCode() != null) {
+			existingDiscount.setExternalReferenceCode(
+				discount.getExternalReferenceCode());
+		}
+
+		if (discount.getLevel() != null) {
+			existingDiscount.setLevel(discount.getLevel());
+		}
+
+		if (discount.getLimitationTimes() != null) {
+			existingDiscount.setLimitationTimes(discount.getLimitationTimes());
+		}
+
+		if (discount.getLimitationTimesPerAccount() != null) {
+			existingDiscount.setLimitationTimesPerAccount(
+				discount.getLimitationTimesPerAccount());
+		}
+
+		if (discount.getLimitationType() != null) {
+			existingDiscount.setLimitationType(discount.getLimitationType());
+		}
+
+		if (discount.getMaximumDiscountAmount() != null) {
+			existingDiscount.setMaximumDiscountAmount(
+				discount.getMaximumDiscountAmount());
+		}
+
+		if (discount.getNeverExpire() != null) {
+			existingDiscount.setNeverExpire(discount.getNeverExpire());
+		}
+
+		if (discount.getNumberOfUse() != null) {
+			existingDiscount.setNumberOfUse(discount.getNumberOfUse());
+		}
+
+		if (discount.getPercentageLevel1() != null) {
+			existingDiscount.setPercentageLevel1(
+				discount.getPercentageLevel1());
+		}
+
+		if (discount.getPercentageLevel2() != null) {
+			existingDiscount.setPercentageLevel2(
+				discount.getPercentageLevel2());
+		}
+
+		if (discount.getPercentageLevel3() != null) {
+			existingDiscount.setPercentageLevel3(
+				discount.getPercentageLevel3());
+		}
+
+		if (discount.getPercentageLevel4() != null) {
+			existingDiscount.setPercentageLevel4(
+				discount.getPercentageLevel4());
+		}
+
+		if (discount.getRulesConjunction() != null) {
+			existingDiscount.setRulesConjunction(
+				discount.getRulesConjunction());
+		}
+
+		if (discount.getTarget() != null) {
+			existingDiscount.setTarget(discount.getTarget());
+		}
+
+		if (discount.getTitle() != null) {
+			existingDiscount.setTitle(discount.getTitle());
+		}
+
+		if (discount.getUseCouponCode() != null) {
+			existingDiscount.setUseCouponCode(discount.getUseCouponCode());
+		}
+
+		if (discount.getUsePercentage() != null) {
+			existingDiscount.setUsePercentage(discount.getUsePercentage());
+		}
+
+		preparePatch(discount, existingDiscount);
+
+		return putDiscountByExternalReferenceCode(
+			externalReferenceCode, existingDiscount);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "amountFormatted": ___, "couponCode": ___, "customFields": ___, "discountAccountGroups": ___, "discountAccounts": ___, "discountCategories": ___, "discountChannels": ___, "discountOrderTypes": ___, "discountProductGroups": ___, "discountProducts": ___, "discountRules": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "level": ___, "limitationTimes": ___, "limitationTimesPerAccount": ___, "limitationType": ___, "maximumDiscountAmount": ___, "neverExpire": ___, "numberOfUse": ___, "percentageLevel1": ___, "percentageLevel2": ___, "percentageLevel3": ___, "percentageLevel4": ___, "rulesConjunction": ___, "target": ___, "title": ___, "useCouponCode": ___, "usePercentage": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Discount")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/discounts/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Discount putDiscountByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Discount discount)
+		throws Exception {
+
 		return new Discount();
 	}
 
@@ -499,6 +640,40 @@ public abstract class BaseDiscountResourceImpl
 			discountUnsafeFunction = discount -> postDiscount(discount);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				discountUnsafeFunction =
+					discount -> putDiscountByExternalReferenceCode(
+						discount.getExternalReferenceCode(), discount);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				discountUnsafeFunction = discount -> {
+					Discount persistedDiscount = null;
+
+					try {
+						Discount getDiscount =
+							getDiscountByExternalReferenceCode(
+								discount.getExternalReferenceCode());
+
+						persistedDiscount = patchDiscount(
+							getDiscount.getId() != null ? getDiscount.getId() :
+								_parseLong(
+									(String)parameters.get("discountId")),
+							discount);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedDiscount = postDiscount(discount);
+					}
+
+					return persistedDiscount;
+				};
+			}
+		}
+
 		if (discountUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -532,7 +707,7 @@ public abstract class BaseDiscountResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -841,6 +1016,9 @@ public abstract class BaseDiscountResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(Discount discount, Discount existingDiscount) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

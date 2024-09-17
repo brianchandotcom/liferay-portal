@@ -773,6 +773,60 @@ public abstract class BaseWarehouseResourceTestCase {
 	}
 
 	@Test
+	public void testPutWarehouseByExternalReferenceCode() throws Exception {
+		Warehouse postWarehouse =
+			testPutWarehouseByExternalReferenceCode_addWarehouse();
+
+		Warehouse randomWarehouse = randomWarehouse();
+
+		Warehouse putWarehouse =
+			warehouseResource.putWarehouseByExternalReferenceCode(
+				postWarehouse.getExternalReferenceCode(), randomWarehouse);
+
+		assertEquals(randomWarehouse, putWarehouse);
+		assertValid(putWarehouse);
+
+		Warehouse getWarehouse =
+			warehouseResource.getWarehouseByExternalReferenceCode(
+				putWarehouse.getExternalReferenceCode());
+
+		assertEquals(randomWarehouse, getWarehouse);
+		assertValid(getWarehouse);
+
+		Warehouse newWarehouse =
+			testPutWarehouseByExternalReferenceCode_createWarehouse();
+
+		putWarehouse = warehouseResource.putWarehouseByExternalReferenceCode(
+			newWarehouse.getExternalReferenceCode(), newWarehouse);
+
+		assertEquals(newWarehouse, putWarehouse);
+		assertValid(putWarehouse);
+
+		getWarehouse = warehouseResource.getWarehouseByExternalReferenceCode(
+			putWarehouse.getExternalReferenceCode());
+
+		assertEquals(newWarehouse, getWarehouse);
+
+		Assert.assertEquals(
+			newWarehouse.getExternalReferenceCode(),
+			putWarehouse.getExternalReferenceCode());
+	}
+
+	protected Warehouse
+			testPutWarehouseByExternalReferenceCode_createWarehouse()
+		throws Exception {
+
+		return randomWarehouse();
+	}
+
+	protected Warehouse testPutWarehouseByExternalReferenceCode_addWarehouse()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteWarehouseId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse = testDeleteWarehouseId_addWarehouse();

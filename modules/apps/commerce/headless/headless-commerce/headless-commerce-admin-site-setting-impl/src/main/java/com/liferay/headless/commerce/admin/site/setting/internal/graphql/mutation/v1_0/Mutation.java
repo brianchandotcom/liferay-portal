@@ -226,6 +226,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public MeasurementUnit updateMeasurementUnitByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.
+					putMeasurementUnitByExternalReferenceCode(
+						externalReferenceCode, measurementUnit));
+	}
+
+	@GraphQLField
 	public boolean deleteMeasurementUnitByKey(@GraphQLName("key") String key)
 		throws Exception {
 

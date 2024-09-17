@@ -199,6 +199,11 @@ public class ServletDataImpl implements ServletData {
 							OrderResourceImpl.class,
 							"patchOrderByExternalReferenceCode"));
 					put(
+						"mutation#updateOrderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderResourceImpl.class,
+							"putOrderByExternalReferenceCode"));
+					put(
 						"mutation#deleteOrder",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "deleteOrder"));
@@ -327,6 +332,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrderRuleResourceImpl.class,
 							"patchOrderRuleByExternalReferenceCode"));
+					put(
+						"mutation#updateOrderRuleByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderRuleResourceImpl.class,
+							"putOrderRuleByExternalReferenceCode"));
 					put(
 						"mutation#deleteOrderRule",
 						new ObjectValuePair<>(
@@ -464,6 +474,11 @@ public class ServletDataImpl implements ServletData {
 							OrderTypeResourceImpl.class,
 							"patchOrderTypeByExternalReferenceCode"));
 					put(
+						"mutation#updateOrderTypeByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderTypeResourceImpl.class,
+							"putOrderTypeByExternalReferenceCode"));
+					put(
 						"mutation#deleteOrderType",
 						new ObjectValuePair<>(
 							OrderTypeResourceImpl.class, "deleteOrderType"));
@@ -534,6 +549,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
 							"patchTermByExternalReferenceCode"));
+					put(
+						"mutation#updateTermByExternalReferenceCode",
+						new ObjectValuePair<>(
+							TermResourceImpl.class,
+							"putTermByExternalReferenceCode"));
 					put(
 						"mutation#deleteTerm",
 						new ObjectValuePair<>(

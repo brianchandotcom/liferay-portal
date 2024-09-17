@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -348,6 +349,117 @@ public abstract class BasePriceListResourceImpl
 			PriceList priceList)
 		throws Exception {
 
+		PriceList existingPriceList = getPriceListByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (priceList.getActive() != null) {
+			existingPriceList.setActive(priceList.getActive());
+		}
+
+		if (priceList.getAuthor() != null) {
+			existingPriceList.setAuthor(priceList.getAuthor());
+		}
+
+		if (priceList.getCatalogBasePriceList() != null) {
+			existingPriceList.setCatalogBasePriceList(
+				priceList.getCatalogBasePriceList());
+		}
+
+		if (priceList.getCatalogId() != null) {
+			existingPriceList.setCatalogId(priceList.getCatalogId());
+		}
+
+		if (priceList.getCatalogName() != null) {
+			existingPriceList.setCatalogName(priceList.getCatalogName());
+		}
+
+		if (priceList.getCreateDate() != null) {
+			existingPriceList.setCreateDate(priceList.getCreateDate());
+		}
+
+		if (priceList.getCurrencyCode() != null) {
+			existingPriceList.setCurrencyCode(priceList.getCurrencyCode());
+		}
+
+		if (priceList.getCustomFields() != null) {
+			existingPriceList.setCustomFields(priceList.getCustomFields());
+		}
+
+		if (priceList.getDisplayDate() != null) {
+			existingPriceList.setDisplayDate(priceList.getDisplayDate());
+		}
+
+		if (priceList.getExpirationDate() != null) {
+			existingPriceList.setExpirationDate(priceList.getExpirationDate());
+		}
+
+		if (priceList.getExternalReferenceCode() != null) {
+			existingPriceList.setExternalReferenceCode(
+				priceList.getExternalReferenceCode());
+		}
+
+		if (priceList.getName() != null) {
+			existingPriceList.setName(priceList.getName());
+		}
+
+		if (priceList.getNetPrice() != null) {
+			existingPriceList.setNetPrice(priceList.getNetPrice());
+		}
+
+		if (priceList.getNeverExpire() != null) {
+			existingPriceList.setNeverExpire(priceList.getNeverExpire());
+		}
+
+		if (priceList.getParentPriceListId() != null) {
+			existingPriceList.setParentPriceListId(
+				priceList.getParentPriceListId());
+		}
+
+		if (priceList.getPriority() != null) {
+			existingPriceList.setPriority(priceList.getPriority());
+		}
+
+		if (priceList.getType() != null) {
+			existingPriceList.setType(priceList.getType());
+		}
+
+		preparePatch(priceList, existingPriceList);
+
+		return putPriceListByExternalReferenceCode(
+			externalReferenceCode, existingPriceList);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "author": ___, "catalogBasePriceList": ___, "catalogId": ___, "catalogName": ___, "createDate": ___, "currencyCode": ___, "customFields": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "netPrice": ___, "neverExpire": ___, "parentPriceListId": ___, "priceEntries": ___, "priceListAccountGroups": ___, "priceListAccounts": ___, "priceListChannels": ___, "priceListDiscounts": ___, "priceListOrderTypes": ___, "priceModifiers": ___, "priority": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PriceList")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/price-lists/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public PriceList putPriceListByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			PriceList priceList)
+		throws Exception {
+
 		return new PriceList();
 	}
 
@@ -499,6 +611,41 @@ public abstract class BasePriceListResourceImpl
 			priceListUnsafeFunction = priceList -> postPriceList(priceList);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				priceListUnsafeFunction =
+					priceList -> putPriceListByExternalReferenceCode(
+						priceList.getExternalReferenceCode(), priceList);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				priceListUnsafeFunction = priceList -> {
+					PriceList persistedPriceList = null;
+
+					try {
+						PriceList getPriceList =
+							getPriceListByExternalReferenceCode(
+								priceList.getExternalReferenceCode());
+
+						persistedPriceList = patchPriceList(
+							getPriceList.getId() != null ?
+								getPriceList.getId() :
+									_parseLong(
+										(String)parameters.get("priceListId")),
+							priceList);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedPriceList = postPriceList(priceList);
+					}
+
+					return persistedPriceList;
+				};
+			}
+		}
+
 		if (priceListUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -532,7 +679,7 @@ public abstract class BasePriceListResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -841,6 +988,10 @@ public abstract class BasePriceListResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		PriceList priceList, PriceList existingPriceList) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -342,6 +343,97 @@ public abstract class BaseTermResourceImpl
 			Term term)
 		throws Exception {
 
+		Term existingTerm = getTermByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (term.getActive() != null) {
+			existingTerm.setActive(term.getActive());
+		}
+
+		if (term.getCreateDate() != null) {
+			existingTerm.setCreateDate(term.getCreateDate());
+		}
+
+		if (term.getDescription() != null) {
+			existingTerm.setDescription(term.getDescription());
+		}
+
+		if (term.getDisplayDate() != null) {
+			existingTerm.setDisplayDate(term.getDisplayDate());
+		}
+
+		if (term.getExpirationDate() != null) {
+			existingTerm.setExpirationDate(term.getExpirationDate());
+		}
+
+		if (term.getExternalReferenceCode() != null) {
+			existingTerm.setExternalReferenceCode(
+				term.getExternalReferenceCode());
+		}
+
+		if (term.getLabel() != null) {
+			existingTerm.setLabel(term.getLabel());
+		}
+
+		if (term.getName() != null) {
+			existingTerm.setName(term.getName());
+		}
+
+		if (term.getNeverExpire() != null) {
+			existingTerm.setNeverExpire(term.getNeverExpire());
+		}
+
+		if (term.getPriority() != null) {
+			existingTerm.setPriority(term.getPriority());
+		}
+
+		if (term.getType() != null) {
+			existingTerm.setType(term.getType());
+		}
+
+		if (term.getTypeLocalized() != null) {
+			existingTerm.setTypeLocalized(term.getTypeLocalized());
+		}
+
+		if (term.getTypeSettings() != null) {
+			existingTerm.setTypeSettings(term.getTypeSettings());
+		}
+
+		preparePatch(term, existingTerm);
+
+		return putTermByExternalReferenceCode(
+			externalReferenceCode, existingTerm);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "label": ___, "name": ___, "neverExpire": ___, "priority": ___, "termOrderType": ___, "type": ___, "typeLocalized": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Term")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/terms/by-externalReferenceCode/{externalReferenceCode}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Term putTermByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Term term)
+		throws Exception {
+
 		return new Term();
 	}
 
@@ -491,6 +583,37 @@ public abstract class BaseTermResourceImpl
 			termUnsafeFunction = term -> postTerm(term);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				termUnsafeFunction = term -> putTermByExternalReferenceCode(
+					term.getExternalReferenceCode(), term);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				termUnsafeFunction = term -> {
+					Term persistedTerm = null;
+
+					try {
+						Term getTerm = getTermByExternalReferenceCode(
+							term.getExternalReferenceCode());
+
+						persistedTerm = patchTerm(
+							getTerm.getId() != null ? getTerm.getId() :
+								_parseLong((String)parameters.get("termId")),
+							term);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedTerm = postTerm(term);
+					}
+
+					return persistedTerm;
+				};
+			}
+		}
+
 		if (termUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -521,7 +644,7 @@ public abstract class BaseTermResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -825,6 +948,9 @@ public abstract class BaseTermResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(Term term, Term existingTerm) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

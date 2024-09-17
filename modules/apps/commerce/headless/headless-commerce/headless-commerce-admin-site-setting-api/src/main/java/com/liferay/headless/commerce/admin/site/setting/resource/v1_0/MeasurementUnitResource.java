@@ -75,6 +75,10 @@ public interface MeasurementUnitResource {
 			String externalReferenceCode, MeasurementUnit measurementUnit)
 		throws Exception;
 
+	public MeasurementUnit putMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, MeasurementUnit measurementUnit)
+		throws Exception;
+
 	public void deleteMeasurementUnitByKey(String key) throws Exception;
 
 	public MeasurementUnit getMeasurementUnitByKey(String key) throws Exception;

@@ -830,6 +830,67 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	}
 
 	@Test
+	public void testPutMeasurementUnitByExternalReferenceCode()
+		throws Exception {
+
+		MeasurementUnit postMeasurementUnit =
+			testPutMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
+
+		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
+
+		MeasurementUnit putMeasurementUnit =
+			measurementUnitResource.putMeasurementUnitByExternalReferenceCode(
+				postMeasurementUnit.getExternalReferenceCode(),
+				randomMeasurementUnit);
+
+		assertEquals(randomMeasurementUnit, putMeasurementUnit);
+		assertValid(putMeasurementUnit);
+
+		MeasurementUnit getMeasurementUnit =
+			measurementUnitResource.getMeasurementUnitByExternalReferenceCode(
+				putMeasurementUnit.getExternalReferenceCode());
+
+		assertEquals(randomMeasurementUnit, getMeasurementUnit);
+		assertValid(getMeasurementUnit);
+
+		MeasurementUnit newMeasurementUnit =
+			testPutMeasurementUnitByExternalReferenceCode_createMeasurementUnit();
+
+		putMeasurementUnit =
+			measurementUnitResource.putMeasurementUnitByExternalReferenceCode(
+				newMeasurementUnit.getExternalReferenceCode(),
+				newMeasurementUnit);
+
+		assertEquals(newMeasurementUnit, putMeasurementUnit);
+		assertValid(putMeasurementUnit);
+
+		getMeasurementUnit =
+			measurementUnitResource.getMeasurementUnitByExternalReferenceCode(
+				putMeasurementUnit.getExternalReferenceCode());
+
+		assertEquals(newMeasurementUnit, getMeasurementUnit);
+
+		Assert.assertEquals(
+			newMeasurementUnit.getExternalReferenceCode(),
+			putMeasurementUnit.getExternalReferenceCode());
+	}
+
+	protected MeasurementUnit
+			testPutMeasurementUnitByExternalReferenceCode_createMeasurementUnit()
+		throws Exception {
+
+		return randomMeasurementUnit();
+	}
+
+	protected MeasurementUnit
+			testPutMeasurementUnitByExternalReferenceCode_addMeasurementUnit()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteMeasurementUnitByKey() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit =

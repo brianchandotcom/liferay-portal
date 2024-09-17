@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -161,6 +162,77 @@ public abstract class BaseReplenishmentItemResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public ReplenishmentItem patchReplenishmentItemByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		ReplenishmentItem existingReplenishmentItem =
+			getReplenishmentItemByExternalReferenceCode(externalReferenceCode);
+
+		if (replenishmentItem.getAvailabilityDate() != null) {
+			existingReplenishmentItem.setAvailabilityDate(
+				replenishmentItem.getAvailabilityDate());
+		}
+
+		if (replenishmentItem.getExternalReferenceCode() != null) {
+			existingReplenishmentItem.setExternalReferenceCode(
+				replenishmentItem.getExternalReferenceCode());
+		}
+
+		if (replenishmentItem.getQuantity() != null) {
+			existingReplenishmentItem.setQuantity(
+				replenishmentItem.getQuantity());
+		}
+
+		if (replenishmentItem.getSku() != null) {
+			existingReplenishmentItem.setSku(replenishmentItem.getSku());
+		}
+
+		if (replenishmentItem.getUnitOfMeasureKey() != null) {
+			existingReplenishmentItem.setUnitOfMeasureKey(
+				replenishmentItem.getUnitOfMeasureKey());
+		}
+
+		if (replenishmentItem.getWarehouseId() != null) {
+			existingReplenishmentItem.setWarehouseId(
+				replenishmentItem.getWarehouseId());
+		}
+
+		preparePatch(replenishmentItem, existingReplenishmentItem);
+
+		return putReplenishmentItemByExternalReferenceCode(
+			externalReferenceCode, existingReplenishmentItem);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-inventory/v1.0/replenishment-items/by-externalReferenceCode/{externalReferenceCode}' -d $'{"availabilityDate": ___, "externalReferenceCode": ___, "id": ___, "quantity": ___, "sku": ___, "unitOfMeasureKey": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ReplenishmentItem")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/replenishment-items/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public ReplenishmentItem putReplenishmentItemByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -590,6 +662,45 @@ public abstract class BaseReplenishmentItemResourceImpl
 					(String)parameters.get("sku"), replenishmentItem);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				replenishmentItemUnsafeFunction = replenishmentItem ->
+					putReplenishmentItemByExternalReferenceCode(
+						replenishmentItem.getExternalReferenceCode(),
+						replenishmentItem);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				replenishmentItemUnsafeFunction = replenishmentItem -> {
+					ReplenishmentItem persistedReplenishmentItem = null;
+
+					try {
+						ReplenishmentItem getReplenishmentItem =
+							getReplenishmentItemByExternalReferenceCode(
+								replenishmentItem.getExternalReferenceCode());
+
+						persistedReplenishmentItem = patchReplenishmentItem(
+							getReplenishmentItem.getId() != null ?
+								getReplenishmentItem.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"replenishmentItemId")),
+							replenishmentItem);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedReplenishmentItem = postReplenishmentItem(
+							_parseLong((String)parameters.get("warehouseId")),
+							(String)parameters.get("sku"), replenishmentItem);
+					}
+
+					return persistedReplenishmentItem;
+				};
+			}
+		}
+
 		if (replenishmentItemUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -623,7 +734,7 @@ public abstract class BaseReplenishmentItemResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -937,6 +1048,11 @@ public abstract class BaseReplenishmentItemResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		ReplenishmentItem replenishmentItem,
+		ReplenishmentItem existingReplenishmentItem) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

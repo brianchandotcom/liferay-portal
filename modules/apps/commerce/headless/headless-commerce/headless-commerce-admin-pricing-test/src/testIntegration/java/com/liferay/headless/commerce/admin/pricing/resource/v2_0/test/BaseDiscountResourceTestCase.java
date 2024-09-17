@@ -784,6 +784,59 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
+	public void testPutDiscountByExternalReferenceCode() throws Exception {
+		Discount postDiscount =
+			testPutDiscountByExternalReferenceCode_addDiscount();
+
+		Discount randomDiscount = randomDiscount();
+
+		Discount putDiscount =
+			discountResource.putDiscountByExternalReferenceCode(
+				postDiscount.getExternalReferenceCode(), randomDiscount);
+
+		assertEquals(randomDiscount, putDiscount);
+		assertValid(putDiscount);
+
+		Discount getDiscount =
+			discountResource.getDiscountByExternalReferenceCode(
+				putDiscount.getExternalReferenceCode());
+
+		assertEquals(randomDiscount, getDiscount);
+		assertValid(getDiscount);
+
+		Discount newDiscount =
+			testPutDiscountByExternalReferenceCode_createDiscount();
+
+		putDiscount = discountResource.putDiscountByExternalReferenceCode(
+			newDiscount.getExternalReferenceCode(), newDiscount);
+
+		assertEquals(newDiscount, putDiscount);
+		assertValid(putDiscount);
+
+		getDiscount = discountResource.getDiscountByExternalReferenceCode(
+			putDiscount.getExternalReferenceCode());
+
+		assertEquals(newDiscount, getDiscount);
+
+		Assert.assertEquals(
+			newDiscount.getExternalReferenceCode(),
+			putDiscount.getExternalReferenceCode());
+	}
+
+	protected Discount testPutDiscountByExternalReferenceCode_createDiscount()
+		throws Exception {
+
+		return randomDiscount();
+	}
+
+	protected Discount testPutDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteDiscount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Discount discount = testDeleteDiscount_addDiscount();

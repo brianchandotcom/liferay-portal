@@ -74,6 +74,10 @@ public interface PriceListResource {
 			String externalReferenceCode, PriceList priceList)
 		throws Exception;
 
+	public PriceList putPriceListByExternalReferenceCode(
+			String externalReferenceCode, PriceList priceList)
+		throws Exception;
+
 	public void deletePriceList(Long id) throws Exception;
 
 	public Response deletePriceListBatch(String callbackURL, Object object)

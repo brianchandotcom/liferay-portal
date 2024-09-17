@@ -73,6 +73,10 @@ public interface OrderResource {
 			String externalReferenceCode, Order order)
 		throws Exception;
 
+	public Order putOrderByExternalReferenceCode(
+			String externalReferenceCode, Order order)
+		throws Exception;
+
 	public Response deleteOrder(Long id) throws Exception;
 
 	public Response deleteOrderBatch(String callbackURL, Object object)

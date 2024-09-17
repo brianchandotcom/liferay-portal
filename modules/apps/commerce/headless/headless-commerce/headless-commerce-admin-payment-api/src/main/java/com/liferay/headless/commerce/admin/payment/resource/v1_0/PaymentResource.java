@@ -74,6 +74,10 @@ public interface PaymentResource {
 			String externalReferenceCode, Payment payment)
 		throws Exception;
 
+	public Payment putPaymentByExternalReferenceCode(
+			String externalReferenceCode, Payment payment)
+		throws Exception;
+
 	public Payment postPaymentByExternalReferenceCodeRefund(
 			String externalReferenceCode)
 		throws Exception;

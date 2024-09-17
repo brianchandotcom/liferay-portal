@@ -395,6 +395,71 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	@Test
+	public void testPutReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
+		ReplenishmentItem postReplenishmentItem =
+			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
+
+		ReplenishmentItem randomReplenishmentItem = randomReplenishmentItem();
+
+		ReplenishmentItem putReplenishmentItem =
+			replenishmentItemResource.
+				putReplenishmentItemByExternalReferenceCode(
+					postReplenishmentItem.getExternalReferenceCode(),
+					randomReplenishmentItem);
+
+		assertEquals(randomReplenishmentItem, putReplenishmentItem);
+		assertValid(putReplenishmentItem);
+
+		ReplenishmentItem getReplenishmentItem =
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					putReplenishmentItem.getExternalReferenceCode());
+
+		assertEquals(randomReplenishmentItem, getReplenishmentItem);
+		assertValid(getReplenishmentItem);
+
+		ReplenishmentItem newReplenishmentItem =
+			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem();
+
+		putReplenishmentItem =
+			replenishmentItemResource.
+				putReplenishmentItemByExternalReferenceCode(
+					newReplenishmentItem.getExternalReferenceCode(),
+					newReplenishmentItem);
+
+		assertEquals(newReplenishmentItem, putReplenishmentItem);
+		assertValid(putReplenishmentItem);
+
+		getReplenishmentItem =
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					putReplenishmentItem.getExternalReferenceCode());
+
+		assertEquals(newReplenishmentItem, getReplenishmentItem);
+
+		Assert.assertEquals(
+			newReplenishmentItem.getExternalReferenceCode(),
+			putReplenishmentItem.getExternalReferenceCode());
+	}
+
+	protected ReplenishmentItem
+			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem()
+		throws Exception {
+
+		return randomReplenishmentItem();
+	}
+
+	protected ReplenishmentItem
+			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteReplenishmentItem() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReplenishmentItem replenishmentItem =

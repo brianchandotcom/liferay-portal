@@ -257,6 +257,11 @@ public class ServletDataImpl implements ServletData {
 							DiscountResourceImpl.class,
 							"patchDiscountByExternalReferenceCode"));
 					put(
+						"mutation#updateDiscountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DiscountResourceImpl.class,
+							"putDiscountByExternalReferenceCode"));
+					put(
 						"mutation#deleteDiscount",
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class, "deleteDiscount"));
@@ -559,6 +564,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PriceListResourceImpl.class,
 							"patchPriceListByExternalReferenceCode"));
+					put(
+						"mutation#updatePriceListByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class,
+							"putPriceListByExternalReferenceCode"));
 					put(
 						"mutation#deletePriceList",
 						new ObjectValuePair<>(

@@ -74,6 +74,10 @@ public interface OrderRuleResource {
 			String externalReferenceCode, OrderRule orderRule)
 		throws Exception;
 
+	public OrderRule putOrderRuleByExternalReferenceCode(
+			String externalReferenceCode, OrderRule orderRule)
+		throws Exception;
+
 	public void deleteOrderRule(Long id) throws Exception;
 
 	public Response deleteOrderRuleBatch(String callbackURL, Object object)

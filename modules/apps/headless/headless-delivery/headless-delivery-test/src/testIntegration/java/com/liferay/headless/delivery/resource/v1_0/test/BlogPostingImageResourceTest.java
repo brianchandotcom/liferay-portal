@@ -33,8 +33,20 @@ import org.junit.runner.RunWith;
 public class BlogPostingImageResourceTest
 	extends BaseBlogPostingImageResourceTestCase {
 
+	@Override
 	@Test
-	public void testPostSiteBlogPostingImageRollback() throws Exception {
+	public void testPostSiteBlogPostingImage() throws Exception {
+		super.testPostSiteBlogPostingImage();
+
+		_testPostSiteBlogPostingImageRollback();
+		_testPostSiteBlogPostingImageWithDuplicatedExternalReferenceCode();
+		_testPostSiteBlogPostingImageWithDuplicatedTitle();
+	}
+
+	private void _testPostSiteBlogPostingImageRollback() throws Exception {
+		tearDown();
+		setUp();
+
 		Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId());
@@ -62,8 +74,7 @@ public class BlogPostingImageResourceTest
 		Assert.assertNull(folder);
 	}
 
-	@Test(expected = Problem.ProblemException.class)
-	public void testPostSiteBlogPostingImageWithDuplicatedExternalReferenceCode()
+	private void _testPostSiteBlogPostingImageWithDuplicatedExternalReferenceCode()
 		throws Exception {
 
 		Map<String, File> multipartFiles = getMultipartFiles();
@@ -78,12 +89,18 @@ public class BlogPostingImageResourceTest
 		randomBlogPostingImage2.setExternalReferenceCode(
 			randomBlogPostingImage1.getExternalReferenceCode());
 
-		testPostSiteBlogPostingImage_addBlogPostingImage(
-			randomBlogPostingImage2, multipartFiles);
+		try {
+			testPostSiteBlogPostingImage_addBlogPostingImage(
+				randomBlogPostingImage2, multipartFiles);
+
+			Assert.fail();
+		}
+		catch (Throwable throwable) {
+			Assert.assertTrue(throwable instanceof Problem.ProblemException);
+		}
 	}
 
-	@Test
-	public void testPostSiteBlogPostingImageWithDuplicatedTitle()
+	private void _testPostSiteBlogPostingImageWithDuplicatedTitle()
 		throws Exception {
 
 		Map<String, File> multipartFiles = getMultipartFiles();

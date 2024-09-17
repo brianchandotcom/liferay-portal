@@ -531,7 +531,77 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkMissingEmptyLinesAfterChaining(DetailAST detailAST) {
+		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotDetailAST != null) {
+			List<DetailAST> childMethodCallDetailASTList = getAllChildTokens(
+				dotDetailAST, false, TokenTypes.METHOD_CALL);
+
+			if (!childMethodCallDetailASTList.isEmpty()) {
+				return;
+			}
+		}
+
+		ChainInformation chainInformation = getChainInformation(detailAST);
+
+		List<String> chainedMethodNames = chainInformation.getMethodNames();
+
+		int chainSize = chainedMethodNames.size();
+
+		if (chainSize == 1) {
+			return;
+		}
+
+		DetailAST topLevelMethodCallDetailAST = getTopLevelMethodCallDetailAST(
+			detailAST);
+
+		DetailAST parentDetailAST = topLevelMethodCallDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
+
+		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+			return;
+		}
+
+		nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
+		}
+
+		DetailAST nextMethodCallDetailAST =
+			nextSiblingDetailAST.getFirstChild();
+
+		if (nextMethodCallDetailAST.getType() != TokenTypes.METHOD_CALL) {
+			return;
+		}
+
+		int endLineNumber = getEndLineNumber(detailAST);
+
+		int nextExpressionStartLineNumber = getStartLineNumber(
+			nextSiblingDetailAST);
+
+		if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
+			return;
+		}
+
+		log(
+			endLineNumber, _MSG_MISSING_EMPTY_LINE_LINE_NUMBER, "after",
+			endLineNumber);
+	}
+
 	private void _checkMissingEmptyLinesAroundMethodCall(DetailAST detailAST) {
+		_checkMissingEmptyLinesAfterChaining(detailAST);
+
 		String variableName = getVariableName(detailAST);
 
 		if ((variableName == null) ||

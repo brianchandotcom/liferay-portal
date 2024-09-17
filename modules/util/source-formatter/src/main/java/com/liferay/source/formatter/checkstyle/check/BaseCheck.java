@@ -330,6 +330,13 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected int getEndLineNumber(DetailAST detailAST) {
+		DetailAST topLevelMethodCallDetailAST = getTopLevelMethodCallDetailAST(
+			detailAST);
+
+		if (topLevelMethodCallDetailAST != null) {
+			detailAST = topLevelMethodCallDetailAST;
+		}
+
 		int endLineNumber = detailAST.getLineNo();
 
 		for (DetailAST childDetailAST :

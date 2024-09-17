@@ -24,6 +24,7 @@ import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
 import pasteItem from '../../thunks/pasteItem';
+import canBeCopied from '../../utils/canBeCopied';
 import canBeDuplicated from '../../utils/canBeDuplicated';
 import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
@@ -158,14 +159,29 @@ export default function TopperItemActions({disabled, item}) {
 			canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
 		) {
 			items.push({
-				action: () =>
-					dispatch(
-						pasteItem({
-							copiedItemIds,
-							parentItemId: item.itemId,
-							selectItems,
-						})
-					),
+				action: () => {
+					if (
+						copiedItemIds.every(
+							(copiedItemId) =>
+								!!layoutData.items[copiedItemId] &&
+								!!item &&
+								canBeCopied(
+									copiedItemId,
+									fragmentEntryLinks,
+									item.itemId,
+									layoutData
+								)
+						)
+					) {
+						dispatch(
+							pasteItem({
+								copiedItemIds,
+								parentItemId: item.itemId,
+								selectItems,
+							})
+						);
+					}
+				},
 				disabled: !copiedItemIds?.length,
 				icon: 'paste',
 				label: Liferay.Language.get('paste'),

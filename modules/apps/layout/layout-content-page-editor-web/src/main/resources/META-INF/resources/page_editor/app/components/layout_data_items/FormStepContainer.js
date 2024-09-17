@@ -84,7 +84,8 @@ const FormStepContainer = React.forwardRef(({children, item}, ref) => {
 				className={classNames(
 					getLayoutDataItemClassName(item.type),
 					getLayoutDataItemCssClasses(item),
-					getLayoutDataItemUniqueClassName(item.itemId)
+					getLayoutDataItemUniqueClassName(item.itemId),
+					{'custom-height': item.config.styles.height}
 				)}
 				ref={ref}
 				style={style}

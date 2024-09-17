@@ -8,9 +8,10 @@ import React from 'react';
 
 import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
+import {config} from '../../config';
 import {useActiveStep} from '../../contexts/FormStepContext';
 import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
-import {useSelectorCallback} from '../../contexts/StoreContext';
+import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import isItemEmpty from '../../utils/isItemEmpty';
 import TopperEmpty from '../topper/TopperEmpty';
@@ -45,6 +46,28 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const [setRef, itemElement] = useSetRef(ref);
 
+	const hasHeight = (item) =>
+		item?.config?.styles?.height &&
+		['form', 'form-step-container', 'fragment'].includes(item.type);
+
+	const getParentHeight = (item, layoutData) => {
+		if (!item) {
+			return null;
+		}
+
+		const parentItem = layoutData.items[item.parentId];
+
+		if (!parentItem) {
+			return null;
+		}
+
+		return hasHeight(parentItem)
+			? parentItem.config.styles.height
+			: getParentHeight(parentItem, layoutData);
+	};
+
+	const layoutData = useSelector((state) => state.layoutData);
+
 	return (
 		<TopperEmpty
 			className={classNames(
@@ -61,7 +84,15 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 				ref={setRef}
 			>
 				{isEmpty && (
-					<div className="page-editor__no-fragments-state">
+					<div
+						className="d-flex flex-column page-editor__no-fragments-state"
+						style={{height: getParentHeight(item, layoutData)}}
+					>
+						<img
+							className="page-editor__no-fragments-state__image"
+							src={`${config.imagesPath}/drag_and_drop.svg`}
+						/>
+
 						<p className="page-editor__no-fragments-state__message">
 							{Liferay.Language.get(
 								'drag-and-drop-fragments-or-widgets-here'

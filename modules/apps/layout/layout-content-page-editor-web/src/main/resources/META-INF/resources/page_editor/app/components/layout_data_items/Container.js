@@ -108,6 +108,7 @@ const Container = React.memo(
 							widthType === CONTAINER_WIDTH_TYPES.fixed,
 						[`container-fluid-max-xl`]:
 							widthType === CONTAINER_WIDTH_TYPES.fixed,
+						'custom-height': item.config.styles.height,
 						'd-flex flex-column':
 							contentDisplay ===
 							CONTENT_DISPLAY_OPTIONS.flexColumn,

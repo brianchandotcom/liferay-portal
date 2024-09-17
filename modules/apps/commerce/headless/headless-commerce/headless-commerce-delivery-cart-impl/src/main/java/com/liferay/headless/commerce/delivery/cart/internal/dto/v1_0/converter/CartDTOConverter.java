@@ -13,6 +13,8 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
@@ -21,6 +23,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
@@ -63,6 +66,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			(Long)dtoConverterContext.getId());
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceOrder.getCommerceShippingMethod();
 
 		Locale locale = dtoConverterContext.getLocale();
 
@@ -182,6 +188,29 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 							getExternalReferenceCode();
 					});
 				setShippingAddressId(commerceOrder::getShippingAddressId);
+				setShippingMethod(
+					() -> {
+						if (commerceShippingMethod == null) {
+							return null;
+						}
+
+						return commerceShippingMethod.getName(locale);
+					});
+				setShippingOption(
+					() -> {
+						if (commerceShippingMethod == null) {
+							return null;
+						}
+
+						CommerceShippingEngine commerceShippingEngine =
+							_commerceShippingEngineRegistry.
+								getCommerceShippingEngine(
+									commerceShippingMethod.getEngineKey());
+
+						return commerceShippingEngine.
+							getCommerceShippingOptionLabel(
+								commerceOrder.getShippingOptionName(), locale);
+					});
 				setStatus(
 					() -> WorkflowConstants.getStatusLabel(
 						commerceOrder.getStatus()));
@@ -605,6 +634,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@Reference
 	private Language _language;

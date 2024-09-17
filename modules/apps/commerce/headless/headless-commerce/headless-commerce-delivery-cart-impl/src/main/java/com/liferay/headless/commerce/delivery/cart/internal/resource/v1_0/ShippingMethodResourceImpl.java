@@ -141,6 +141,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				setDescription(
 					() -> commerceShippingMethod.getDescription(
 						contextAcceptLanguage.getPreferredLocale()));
+				setEngineKey(commerceShippingMethod::getEngineKey);
 				setId(commerceShippingMethod::getCommerceShippingMethodId);
 				setName(
 					() -> commerceShippingMethod.getName(

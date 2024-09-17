@@ -142,6 +142,34 @@ public class CTEntryDTOConverter
 							GetterUtil.getInteger(
 								document.get("changeType")))));
 				setCtCollectionId(ctEntry::getCtCollectionId);
+				setCtCollectionName(
+					() -> {
+						if (document.hasField("ctCollectionName")) {
+							return document.get("ctCollectionName");
+						}
+
+						return null;
+					});
+				setCtCollectionStatus(
+					() -> _toStatus(
+						dtoConverterContext.getLocale(), document,
+						"ctCollectionStatus"));
+				setCtCollectionStatusDate(
+					() -> {
+						if (document.hasField("ctCollectionStatusDate")) {
+							return document.getDate("ctCollectionStatusDate");
+						}
+
+						return null;
+					});
+				setCtCollectionStatusUserName(
+					() -> {
+						if (document.hasField("ctCollectionStatusUserName")) {
+							return document.get("ctCollectionStatusUserName");
+						}
+
+						return null;
+					});
 				setDateCreated(ctEntry::getCreateDate);
 				setDateModified(ctEntry::getModifiedDate);
 				setHideable(
@@ -171,7 +199,9 @@ public class CTEntryDTOConverter
 						return null;
 					});
 				setStatus(
-					() -> _toStatus(dtoConverterContext.getLocale(), document));
+					() -> _toStatus(
+						dtoConverterContext.getLocale(), document,
+						Field.STATUS));
 				setStatusMessage(
 					() -> _getStatusMessage(
 						ctEntry, dtoConverterContext.getHttpServletRequest()));
@@ -187,14 +217,14 @@ public class CTEntryDTOConverter
 		};
 	}
 
-	private Status _toStatus(Locale locale, Document document)
+	private Status _toStatus(Locale locale, Document document, String fieldName)
 		throws Exception {
 
-		if (!document.hasField(Field.STATUS)) {
+		if (!document.hasField(fieldName)) {
 			return null;
 		}
 
-		int status = Integer.valueOf(document.get(Field.STATUS));
+		int status = Integer.valueOf(document.get(fieldName));
 
 		String statusLabel = WorkflowConstants.getStatusLabel(status);
 

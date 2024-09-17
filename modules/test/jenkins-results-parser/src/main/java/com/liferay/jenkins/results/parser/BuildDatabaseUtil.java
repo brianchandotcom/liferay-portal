@@ -34,6 +34,37 @@ public class BuildDatabaseUtil {
 		}
 	}
 
+	public static void downloadBuildDatabase(String buildURL) {
+		String buildDirPath = JenkinsResultsParserUtil.getBuildDirPath(
+			buildURL);
+
+		if (buildDirPath == null) {
+			return;
+		}
+
+		File buildDir = new File(buildDirPath);
+
+		File buildDatabaseFile = new File(
+			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+		buildDatabaseFile.delete();
+
+		try {
+			System.out.println(
+				"Downloading " + buildURL + " to " + buildDatabaseFile);
+
+			JenkinsResultsParserUtil.write(
+				buildDatabaseFile,
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getBuildArtifactURL(
+						buildURL, BuildDatabase.FILE_NAME_BUILD_DATABASE)));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to write build-database.json", ioException);
+		}
+	}
+
 	public static BuildDatabase getBuildDatabase() {
 		return getBuildDatabase(null);
 	}

@@ -1257,23 +1257,41 @@ public class JenkinsResultsParserUtil {
 
 		sb.append("/tmp/jenkins/");
 
+		String topLevelBuildURL = System.getenv("TOP_LEVEL_BUILD_URL");
+
+		if (topLevelBuildURL != null) {
+			String buildDirPath = getBuildDirPath(topLevelBuildURL);
+
+			if (buildDirPath != null) {
+				return buildDirPath;
+			}
+		}
+
 		String buildNumber = System.getenv("BUILD_NUMBER");
 		String jobName = System.getenv("JOB_NAME");
 		String masterHostname = System.getenv("MASTER_HOSTNAME");
 
-		String topLevelBuildURL = System.getenv("TOP_LEVEL_BUILD_URL");
+		return getBuildDirPath(buildNumber, jobName, masterHostname);
+	}
 
-		if (topLevelBuildURL == null) {
-			topLevelBuildURL = "";
-		}
-
-		Matcher matcher = _buildURLPattern.matcher(topLevelBuildURL);
+	public static String getBuildDirPath(String buildURL) {
+		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
 		if (matcher.find()) {
-			buildNumber = matcher.group("buildNumber");
-			jobName = matcher.group("jobName");
-			masterHostname = matcher.group("masterHostname");
+			return getBuildDirPath(
+				matcher.group("buildNumber"), matcher.group("jobName"),
+				matcher.group("masterHostname"));
 		}
+
+		return null;
+	}
+
+	public static String getBuildDirPath(
+		String buildNumber, String jobName, String masterHostname) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("/tmp/jenkins/");
 
 		if (!isCINode() || isNullOrEmpty(buildNumber) ||
 			isNullOrEmpty(jobName) || isNullOrEmpty(masterHostname)) {

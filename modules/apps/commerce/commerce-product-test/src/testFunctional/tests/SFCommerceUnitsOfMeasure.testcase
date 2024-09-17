@@ -760,13 +760,9 @@ definition {
 					if (${quantity} == "0.6") {
 						var multipleConditionNotSatisfied = "false";
 
-						Click(
+						AssertElementPresent(
 							key_productName = "U-Joint",
-							locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
-
-						AssertTextEquals.assertPartialText(
-							locator1 = "Message#ERROR_DISMISSIBLE",
-							value1 = "The specified quantity is not a multiple of 1.5");
+							locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_INVALID");
 
 						Click(
 							key_productName = "U-Joint",
@@ -790,7 +786,7 @@ definition {
 
 				FrontStore.viewQuantitySelectorPopoverListItem(
 					conditionNotSatisfied = ${multipleConditionNotSatisfied},
-					quantity = "0.3",
+					quantity = "1.5",
 					quantityConfiguration = "multiple");
 			}
 		}
@@ -1136,11 +1132,7 @@ definition {
 					if (${quantity} == "0.6") {
 						var multipleConditionNotSatisfied = "false";
 
-						Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
-
-						AssertTextEquals.assertPartialText(
-							locator1 = "Message#ERROR_DISMISSIBLE",
-							value1 = "The specified quantity is not a multiple of 1.5");
+						AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
 
 						Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD");
 					}
@@ -1158,7 +1150,7 @@ definition {
 
 				FrontStore.viewQuantitySelectorPopoverListItem(
 					conditionNotSatisfied = ${multipleConditionNotSatisfied},
-					quantity = "0.3",
+					quantity = "1.5",
 					quantityConfiguration = "multiple");
 			}
 		}

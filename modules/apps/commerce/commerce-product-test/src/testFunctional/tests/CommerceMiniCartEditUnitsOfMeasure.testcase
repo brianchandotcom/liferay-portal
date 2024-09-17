@@ -382,7 +382,7 @@ definition {
 
 		task ("When edits the UOM and Quantity to add it to the cart") {
 			FrontStore.editUOMAndQuantityInMiniCart(
-				quantity = 4,
+				quantity = 6,
 				uomKey = "uom2",
 				uomName = "UOM3");
 		}

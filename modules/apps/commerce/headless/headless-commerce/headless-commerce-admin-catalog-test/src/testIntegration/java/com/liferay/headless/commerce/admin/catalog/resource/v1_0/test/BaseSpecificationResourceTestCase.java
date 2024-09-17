@@ -844,6 +844,64 @@ public abstract class BaseSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testPutSpecificationByExternalReferenceCode() throws Exception {
+		Specification postSpecification =
+			testPutSpecificationByExternalReferenceCode_addSpecification();
+
+		Specification randomSpecification = randomSpecification();
+
+		Specification putSpecification =
+			specificationResource.putSpecificationByExternalReferenceCode(
+				postSpecification.getExternalReferenceCode(),
+				randomSpecification);
+
+		assertEquals(randomSpecification, putSpecification);
+		assertValid(putSpecification);
+
+		Specification getSpecification =
+			specificationResource.getSpecificationByExternalReferenceCode(
+				putSpecification.getExternalReferenceCode());
+
+		assertEquals(randomSpecification, getSpecification);
+		assertValid(getSpecification);
+
+		Specification newSpecification =
+			testPutSpecificationByExternalReferenceCode_createSpecification();
+
+		putSpecification =
+			specificationResource.putSpecificationByExternalReferenceCode(
+				newSpecification.getExternalReferenceCode(), newSpecification);
+
+		assertEquals(newSpecification, putSpecification);
+		assertValid(putSpecification);
+
+		getSpecification =
+			specificationResource.getSpecificationByExternalReferenceCode(
+				putSpecification.getExternalReferenceCode());
+
+		assertEquals(newSpecification, getSpecification);
+
+		Assert.assertEquals(
+			newSpecification.getExternalReferenceCode(),
+			putSpecification.getExternalReferenceCode());
+	}
+
+	protected Specification
+			testPutSpecificationByExternalReferenceCode_createSpecification()
+		throws Exception {
+
+		return randomSpecification();
+	}
+
+	protected Specification
+			testPutSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSpecification() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Specification specification =

@@ -75,6 +75,10 @@ public interface SpecificationResource {
 			String externalReferenceCode, Specification specification)
 		throws Exception;
 
+	public Specification putSpecificationByExternalReferenceCode(
+			String externalReferenceCode, Specification specification)
+		throws Exception;
+
 	public void deleteSpecification(Long id) throws Exception;
 
 	public Response deleteSpecificationBatch(String callbackURL, Object object)

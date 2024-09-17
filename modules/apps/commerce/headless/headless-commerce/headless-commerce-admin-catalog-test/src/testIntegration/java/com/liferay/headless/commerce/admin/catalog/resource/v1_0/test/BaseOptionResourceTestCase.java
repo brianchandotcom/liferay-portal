@@ -733,6 +733,55 @@ public abstract class BaseOptionResourceTestCase {
 	}
 
 	@Test
+	public void testPutOptionByExternalReferenceCode() throws Exception {
+		Option postOption = testPutOptionByExternalReferenceCode_addOption();
+
+		Option randomOption = randomOption();
+
+		Option putOption = optionResource.putOptionByExternalReferenceCode(
+			postOption.getExternalReferenceCode(), randomOption);
+
+		assertEquals(randomOption, putOption);
+		assertValid(putOption);
+
+		Option getOption = optionResource.getOptionByExternalReferenceCode(
+			putOption.getExternalReferenceCode());
+
+		assertEquals(randomOption, getOption);
+		assertValid(getOption);
+
+		Option newOption = testPutOptionByExternalReferenceCode_createOption();
+
+		putOption = optionResource.putOptionByExternalReferenceCode(
+			newOption.getExternalReferenceCode(), newOption);
+
+		assertEquals(newOption, putOption);
+		assertValid(putOption);
+
+		getOption = optionResource.getOptionByExternalReferenceCode(
+			putOption.getExternalReferenceCode());
+
+		assertEquals(newOption, getOption);
+
+		Assert.assertEquals(
+			newOption.getExternalReferenceCode(),
+			putOption.getExternalReferenceCode());
+	}
+
+	protected Option testPutOptionByExternalReferenceCode_createOption()
+		throws Exception {
+
+		return randomOption();
+	}
+
+	protected Option testPutOptionByExternalReferenceCode_addOption()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOption() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Option option = testDeleteOption_addOption();

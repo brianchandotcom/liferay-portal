@@ -164,6 +164,121 @@ public abstract class BaseAttachmentResourceImpl
 			Attachment attachment)
 		throws Exception {
 
+		Attachment existingAttachment = getAttachmentByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (attachment.getAttachment() != null) {
+			existingAttachment.setAttachment(attachment.getAttachment());
+		}
+
+		if (attachment.getCdnEnabled() != null) {
+			existingAttachment.setCdnEnabled(attachment.getCdnEnabled());
+		}
+
+		if (attachment.getCdnURL() != null) {
+			existingAttachment.setCdnURL(attachment.getCdnURL());
+		}
+
+		if (attachment.getContentType() != null) {
+			existingAttachment.setContentType(attachment.getContentType());
+		}
+
+		existingAttachment.setCustomFields(attachment.getCustomFields());
+
+		if (attachment.getDisplayDate() != null) {
+			existingAttachment.setDisplayDate(attachment.getDisplayDate());
+		}
+
+		if (attachment.getExpirationDate() != null) {
+			existingAttachment.setExpirationDate(
+				attachment.getExpirationDate());
+		}
+
+		if (attachment.getExternalReferenceCode() != null) {
+			existingAttachment.setExternalReferenceCode(
+				attachment.getExternalReferenceCode());
+		}
+
+		if (attachment.getFileEntryExternalReferenceCode() != null) {
+			existingAttachment.setFileEntryExternalReferenceCode(
+				attachment.getFileEntryExternalReferenceCode());
+		}
+
+		if (attachment.getFileEntryGroupExternalReferenceCode() != null) {
+			existingAttachment.setFileEntryGroupExternalReferenceCode(
+				attachment.getFileEntryGroupExternalReferenceCode());
+		}
+
+		if (attachment.getFileEntryId() != null) {
+			existingAttachment.setFileEntryId(attachment.getFileEntryId());
+		}
+
+		if (attachment.getGalleryEnabled() != null) {
+			existingAttachment.setGalleryEnabled(
+				attachment.getGalleryEnabled());
+		}
+
+		if (attachment.getNeverExpire() != null) {
+			existingAttachment.setNeverExpire(attachment.getNeverExpire());
+		}
+
+		if (attachment.getOptions() != null) {
+			existingAttachment.setOptions(attachment.getOptions());
+		}
+
+		if (attachment.getPriority() != null) {
+			existingAttachment.setPriority(attachment.getPriority());
+		}
+
+		if (attachment.getSrc() != null) {
+			existingAttachment.setSrc(attachment.getSrc());
+		}
+
+		if (attachment.getTags() != null) {
+			existingAttachment.setTags(attachment.getTags());
+		}
+
+		if (attachment.getTitle() != null) {
+			existingAttachment.setTitle(attachment.getTitle());
+		}
+
+		preparePatch(attachment, existingAttachment);
+
+		return putAttachmentByExternalReferenceCode(
+			externalReferenceCode, existingAttachment);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/attachment/by-externalReferenceCode/{externalReferenceCode}' -d $'{"attachment": ___, "cdnEnabled": ___, "cdnURL": ___, "contentType": ___, "customFields": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "fileEntryExternalReferenceCode": ___, "fileEntryGroupExternalReferenceCode": ___, "fileEntryId": ___, "galleryEnabled": ___, "id": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "tags": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/attachment/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Attachment putAttachmentByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Attachment attachment)
+		throws Exception {
+
 		return new Attachment();
 	}
 
@@ -856,6 +971,17 @@ public abstract class BaseAttachmentResourceImpl
 			}
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				attachmentUnsafeFunction =
+					attachment -> putAttachmentByExternalReferenceCode(
+						attachment.getExternalReferenceCode(), attachment);
+			}
+		}
+
 		if (attachmentUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -889,7 +1015,7 @@ public abstract class BaseAttachmentResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -1161,6 +1287,10 @@ public abstract class BaseAttachmentResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		Attachment attachment, Attachment existingAttachment) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

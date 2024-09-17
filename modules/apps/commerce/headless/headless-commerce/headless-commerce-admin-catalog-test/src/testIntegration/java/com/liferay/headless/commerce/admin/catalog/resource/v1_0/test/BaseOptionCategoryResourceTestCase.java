@@ -854,6 +854,67 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testPutOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory postOptionCategory =
+			testPutOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		OptionCategory randomOptionCategory = randomOptionCategory();
+
+		OptionCategory putOptionCategory =
+			optionCategoryResource.putOptionCategoryByExternalReferenceCode(
+				postOptionCategory.getExternalReferenceCode(),
+				randomOptionCategory);
+
+		assertEquals(randomOptionCategory, putOptionCategory);
+		assertValid(putOptionCategory);
+
+		OptionCategory getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				putOptionCategory.getExternalReferenceCode());
+
+		assertEquals(randomOptionCategory, getOptionCategory);
+		assertValid(getOptionCategory);
+
+		OptionCategory newOptionCategory =
+			testPutOptionCategoryByExternalReferenceCode_createOptionCategory();
+
+		putOptionCategory =
+			optionCategoryResource.putOptionCategoryByExternalReferenceCode(
+				newOptionCategory.getExternalReferenceCode(),
+				newOptionCategory);
+
+		assertEquals(newOptionCategory, putOptionCategory);
+		assertValid(putOptionCategory);
+
+		getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				putOptionCategory.getExternalReferenceCode());
+
+		assertEquals(newOptionCategory, getOptionCategory);
+
+		Assert.assertEquals(
+			newOptionCategory.getExternalReferenceCode(),
+			putOptionCategory.getExternalReferenceCode());
+	}
+
+	protected OptionCategory
+			testPutOptionCategoryByExternalReferenceCode_createOptionCategory()
+		throws Exception {
+
+		return randomOptionCategory();
+	}
+
+	protected OptionCategory
+			testPutOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOptionCategory() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionCategory optionCategory =

@@ -749,6 +749,57 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testPutProductByExternalReferenceCode() throws Exception {
+		Product postProduct =
+			testPutProductByExternalReferenceCode_addProduct();
+
+		Product randomProduct = randomProduct();
+
+		Product putProduct = productResource.putProductByExternalReferenceCode(
+			postProduct.getExternalReferenceCode(), randomProduct);
+
+		assertEquals(randomProduct, putProduct);
+		assertValid(putProduct);
+
+		Product getProduct = productResource.getProductByExternalReferenceCode(
+			putProduct.getExternalReferenceCode());
+
+		assertEquals(randomProduct, getProduct);
+		assertValid(getProduct);
+
+		Product newProduct =
+			testPutProductByExternalReferenceCode_createProduct();
+
+		putProduct = productResource.putProductByExternalReferenceCode(
+			newProduct.getExternalReferenceCode(), newProduct);
+
+		assertEquals(newProduct, putProduct);
+		assertValid(putProduct);
+
+		getProduct = productResource.getProductByExternalReferenceCode(
+			putProduct.getExternalReferenceCode());
+
+		assertEquals(newProduct, getProduct);
+
+		Assert.assertEquals(
+			newProduct.getExternalReferenceCode(),
+			putProduct.getExternalReferenceCode());
+	}
+
+	protected Product testPutProductByExternalReferenceCode_createProduct()
+		throws Exception {
+
+		return randomProduct();
+	}
+
+	protected Product testPutProductByExternalReferenceCode_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteProductByExternalReferenceCodeByVersion()
 		throws Exception {
 

@@ -388,6 +388,61 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testPutAttachmentByExternalReferenceCode() throws Exception {
+		Attachment postAttachment =
+			testPutAttachmentByExternalReferenceCode_addAttachment();
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment putAttachment =
+			attachmentResource.putAttachmentByExternalReferenceCode(
+				postAttachment.getExternalReferenceCode(), randomAttachment);
+
+		assertEquals(randomAttachment, putAttachment);
+		assertValid(putAttachment);
+
+		Attachment getAttachment =
+			attachmentResource.getAttachmentByExternalReferenceCode(
+				putAttachment.getExternalReferenceCode());
+
+		assertEquals(randomAttachment, getAttachment);
+		assertValid(getAttachment);
+
+		Attachment newAttachment =
+			testPutAttachmentByExternalReferenceCode_createAttachment();
+
+		putAttachment = attachmentResource.putAttachmentByExternalReferenceCode(
+			newAttachment.getExternalReferenceCode(), newAttachment);
+
+		assertEquals(newAttachment, putAttachment);
+		assertValid(putAttachment);
+
+		getAttachment = attachmentResource.getAttachmentByExternalReferenceCode(
+			putAttachment.getExternalReferenceCode());
+
+		assertEquals(newAttachment, getAttachment);
+
+		Assert.assertEquals(
+			newAttachment.getExternalReferenceCode(),
+			putAttachment.getExternalReferenceCode());
+	}
+
+	protected Attachment
+			testPutAttachmentByExternalReferenceCode_createAttachment()
+		throws Exception {
+
+		return randomAttachment();
+	}
+
+	protected Attachment
+			testPutAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteAttachment() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment = testDeleteAttachment_addAttachment();

@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -365,6 +366,79 @@ public abstract class BaseSpecificationResourceImpl
 			Specification specification)
 		throws Exception {
 
+		Specification existingSpecification =
+			getSpecificationByExternalReferenceCode(externalReferenceCode);
+
+		if (specification.getDescription() != null) {
+			existingSpecification.setDescription(
+				specification.getDescription());
+		}
+
+		if (specification.getExternalReferenceCode() != null) {
+			existingSpecification.setExternalReferenceCode(
+				specification.getExternalReferenceCode());
+		}
+
+		if (specification.getFacetable() != null) {
+			existingSpecification.setFacetable(specification.getFacetable());
+		}
+
+		if (specification.getKey() != null) {
+			existingSpecification.setKey(specification.getKey());
+		}
+
+		if (specification.getListTypeDefinitionId() != null) {
+			existingSpecification.setListTypeDefinitionId(
+				specification.getListTypeDefinitionId());
+		}
+
+		if (specification.getPriority() != null) {
+			existingSpecification.setPriority(specification.getPriority());
+		}
+
+		if (specification.getTitle() != null) {
+			existingSpecification.setTitle(specification.getTitle());
+		}
+
+		preparePatch(specification, existingSpecification);
+
+		return putSpecificationByExternalReferenceCode(
+			externalReferenceCode, existingSpecification);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "facetable": ___, "key": ___, "listTypeDefinitionId": ___, "optionCategory": ___, "priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "Specification")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/specifications/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Specification putSpecificationByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Specification specification)
+		throws Exception {
+
 		return new Specification();
 	}
 
@@ -525,6 +599,44 @@ public abstract class BaseSpecificationResourceImpl
 				specification);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				specificationUnsafeFunction =
+					specification -> putSpecificationByExternalReferenceCode(
+						specification.getExternalReferenceCode(),
+						specification);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				specificationUnsafeFunction = specification -> {
+					Specification persistedSpecification = null;
+
+					try {
+						Specification getSpecification =
+							getSpecificationByExternalReferenceCode(
+								specification.getExternalReferenceCode());
+
+						persistedSpecification = patchSpecification(
+							getSpecification.getId() != null ?
+								getSpecification.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"specificationId")),
+							specification);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedSpecification = postSpecification(
+							specification);
+					}
+
+					return persistedSpecification;
+				};
+			}
+		}
+
 		if (specificationUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -558,7 +670,7 @@ public abstract class BaseSpecificationResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -868,6 +980,10 @@ public abstract class BaseSpecificationResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		Specification specification, Specification existingSpecification) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

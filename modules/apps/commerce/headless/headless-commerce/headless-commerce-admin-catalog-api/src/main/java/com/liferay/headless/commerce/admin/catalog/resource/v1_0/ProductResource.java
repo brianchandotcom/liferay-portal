@@ -74,6 +74,10 @@ public interface ProductResource {
 			String externalReferenceCode, Product product)
 		throws Exception;
 
+	public Product putProductByExternalReferenceCode(
+			String externalReferenceCode, Product product)
+		throws Exception;
+
 	public void deleteProductByExternalReferenceCodeByVersion(
 			String externalReferenceCode, Integer version)
 		throws Exception;

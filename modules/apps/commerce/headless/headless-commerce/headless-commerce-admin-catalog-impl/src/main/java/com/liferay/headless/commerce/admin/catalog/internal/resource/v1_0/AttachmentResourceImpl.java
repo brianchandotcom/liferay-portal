@@ -424,6 +424,36 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 	}
 
 	@Override
+	public Attachment putAttachmentByExternalReferenceCode(
+			String externalReferenceCode, Attachment attachment)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpAttachmentFileEntry == null) {
+			throw new NoSuchCPAttachmentFileEntryException(
+				"Unable to find attachment with external reference code " +
+					externalReferenceCode);
+		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			cpAttachmentFileEntry.getGroupId());
+
+		cpAttachmentFileEntry = AttachmentUtil.updateCPAttachmentFileEntry(
+			cpAttachmentFileEntry, _cpAttachmentFileEntryService,
+			_cpDefinitionOptionRelService, _cpDefinitionOptionValueRelService,
+			_cpOptionService, _dlAppLocalService,
+			_dlFileEntryModelResourcePermission, groupLocalService, attachment,
+			cpAttachmentFileEntry.getClassPK(),
+			CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
+
+		return _toAttachment(
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+	}
+
+	@Override
 	public Page<Attachment> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)

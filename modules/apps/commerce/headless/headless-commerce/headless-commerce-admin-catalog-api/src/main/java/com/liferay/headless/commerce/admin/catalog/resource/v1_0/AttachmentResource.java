@@ -62,6 +62,10 @@ public interface AttachmentResource {
 			String externalReferenceCode, Attachment attachment)
 		throws Exception;
 
+	public Attachment putAttachmentByExternalReferenceCode(
+			String externalReferenceCode, Attachment attachment)
+		throws Exception;
+
 	public void deleteAttachment(Long id) throws Exception;
 
 	public Response deleteAttachmentBatch(String callbackURL, Object object)

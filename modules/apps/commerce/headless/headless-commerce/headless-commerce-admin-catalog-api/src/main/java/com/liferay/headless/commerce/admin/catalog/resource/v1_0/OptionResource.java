@@ -73,6 +73,10 @@ public interface OptionResource {
 			String externalReferenceCode, Option option)
 		throws Exception;
 
+	public Option putOptionByExternalReferenceCode(
+			String externalReferenceCode, Option option)
+		throws Exception;
+
 	public Response deleteOption(Long id) throws Exception;
 
 	public Response deleteOptionBatch(String callbackURL, Object object)

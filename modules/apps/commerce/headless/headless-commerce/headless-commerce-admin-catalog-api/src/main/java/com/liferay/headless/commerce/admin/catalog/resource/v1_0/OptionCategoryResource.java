@@ -75,6 +75,10 @@ public interface OptionCategoryResource {
 			String externalReferenceCode, OptionCategory optionCategory)
 		throws Exception;
 
+	public OptionCategory putOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, OptionCategory optionCategory)
+		throws Exception;
+
 	public Response deleteOptionCategory(Long id) throws Exception;
 
 	public Response deleteOptionCategoryBatch(String callbackURL, Object object)

@@ -141,4 +141,12 @@ public class SpecificationResourceTest
 		return specificationResource.postSpecification(randomSpecification());
 	}
 
+	@Override
+	protected Specification
+			testPutSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		return specificationResource.postSpecification(randomSpecification());
+	}
+
 }

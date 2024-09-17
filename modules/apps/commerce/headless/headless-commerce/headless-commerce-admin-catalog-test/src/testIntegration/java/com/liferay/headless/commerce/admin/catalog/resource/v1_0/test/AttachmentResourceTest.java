@@ -272,6 +272,12 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutAttachmentByExternalReferenceCode() throws Exception {
+		testPatchAttachmentByExternalReferenceCode();
+	}
+
+	@Override
 	protected Attachment randomAttachment() throws PortalException {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
@@ -371,6 +377,15 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 
 		return attachmentResource.postProductIdImage(
 			_cpDefinition.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment
+			testPutAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		return attachmentResource.postProductByExternalReferenceCodeAttachment(
+			_cProduct.getExternalReferenceCode(), randomAttachment());
 	}
 
 	private Attachment _randomImageAttachment() throws Exception {

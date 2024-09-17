@@ -331,6 +331,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutProductByExternalReferenceCode() throws Exception {
+		testPatchProductByExternalReferenceCode();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"active", "catalogId", "description", "externalReferenceCode",

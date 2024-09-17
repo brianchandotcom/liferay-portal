@@ -148,4 +148,13 @@ public class OptionCategoryResourceTest
 		return optionCategoryResource.postOptionCategory(optionCategory);
 	}
 
+	@Override
+	protected OptionCategory
+			testPutOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		return optionCategoryResource.postOptionCategory(
+			randomOptionCategory());
+	}
+
 }

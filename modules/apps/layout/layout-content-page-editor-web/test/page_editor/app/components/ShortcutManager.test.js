@@ -59,6 +59,11 @@ jest.mock(
 );
 
 jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/canBePasted',
+	() => jest.fn(() => true)
+);
+
+jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem',
 	() => jest.fn()
 );

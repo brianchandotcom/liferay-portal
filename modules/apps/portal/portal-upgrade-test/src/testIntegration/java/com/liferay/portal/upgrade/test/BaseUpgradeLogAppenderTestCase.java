@@ -585,13 +585,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_appender.stop();
 
 		_assertLogContextContains(
-			"upgrade.report.properties.set.by.user",
-			"Properties set with environment variables");
-		_assertLogContextContains(
-			"upgrade.report.properties.set.by.user",
-			"my.environment.property: my environment property value");
-		_assertReport("Properties set with environment variables");
-		_assertReport("my.environment.property: my environment property value");
+			"upgrade.report.properties",
+			"my.environment.property:my environment property value");
+
+		_assertReport("my.environment.property=my environment property value");
 	}
 
 	@Test
@@ -610,6 +607,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		properties.setProperty("my.property", "my property value");
 
+		PropsUtil.addProperties(properties);
+
 		try (Writer writer = new FileWriter(file)) {
 			properties.store(writer, null);
 
@@ -618,13 +617,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender.stop();
 
 			_assertLogContextContains(
-				"upgrade.report.properties.set.by.user",
-				file.getAbsolutePath());
+				"upgrade.report.properties.files", file.getAbsolutePath());
 			_assertLogContextContains(
-				"upgrade.report.properties.set.by.user",
-				"my.property: my property value");
+				"upgrade.report.properties", "my.property:my property value");
 			_assertReport(file.getAbsolutePath());
-			_assertReport("my.property: my property value");
+			_assertReport("my.property=my property value");
 		}
 		finally {
 			loadedSources.remove(loadedSource);

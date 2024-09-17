@@ -80,6 +80,8 @@ public class ExecUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(bashCommands);
 
+		processBuilder.redirectErrorStream(true);
+
 		processBuilder.directory(baseDir.getAbsoluteFile());
 
 		Process process = new BufferedProcess(2000000, processBuilder.start());

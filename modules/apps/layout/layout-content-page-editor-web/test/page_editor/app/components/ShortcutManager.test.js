@@ -59,6 +59,11 @@ jest.mock(
 );
 
 jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/canBeCopied',
+	() => jest.fn(() => true)
+);
+
+jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem',
 	() => jest.fn()
 );
@@ -343,7 +348,7 @@ describe('ShortcutManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('item id will be pasted to the root because no parents are selected', () => {
+	it('item id will be copied to the root because no parents are selected', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		renderComponent({

@@ -14,34 +14,9 @@ import {
 	ClipboardContextProvider,
 	useSetCopiedItemIds,
 } from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
+import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import deleteItem from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import pasteItem from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem';
-
-const LAYOUT_DATA = {
-	items: {
-		itemId: {
-			children: [],
-			config: {styles: {}},
-			itemId: 'itemId',
-			parentId: null,
-			type: LAYOUT_DATA_ITEM_TYPES.row,
-		},
-	},
-};
-
-const renderTopperItemActions = ({
-	isDisabled = false,
-	itemId = 'itemId',
-	layoutData = LAYOUT_DATA,
-} = {}) => {
-	const item = layoutData.items[itemId];
-
-	return render(
-		<ClipboardContextProvider>
-			<TopperItemActions disabled={isDisabled} item={item} />
-		</ClipboardContextProvider>
-	);
-};
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
@@ -52,7 +27,7 @@ jest.mock(
 			...jest.requireActual(
 				'../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
 			),
-			useCopiedItemIds: () => ['item-1'],
+			useCopiedItemIds: () => ['itemId2'],
 			useSetCopiedItemIds: () => setCopiedItemIds,
 		};
 	}
@@ -64,9 +39,53 @@ jest.mock(
 );
 
 jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/canBeCopied',
+	() => jest.fn(() => true)
+);
+
+jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem',
 	() => jest.fn()
 );
+
+const LAYOUT_DATA = {
+	items: {
+		itemId1: {
+			children: [],
+			config: {styles: {}},
+			itemId: 'itemId1',
+			parentId: null,
+			type: LAYOUT_DATA_ITEM_TYPES.row,
+		},
+		itemId2: {
+			children: [],
+			config: {styles: {}},
+			itemId: 'itemId2',
+			parentId: null,
+			type: LAYOUT_DATA_ITEM_TYPES.row,
+		},
+	},
+};
+
+const renderTopperItemActions = ({
+	isDisabled = false,
+	itemId = 'itemId1',
+	layoutData = LAYOUT_DATA,
+} = {}) => {
+	const item = layoutData.items[itemId];
+
+	return render(
+		<StoreAPIContextProvider
+			getState={() => ({
+				layoutData,
+			})}
+		>
+			<ClipboardContextProvider>
+				<TopperItemActions disabled={isDisabled} item={item} />
+			</ClipboardContextProvider>
+		</StoreAPIContextProvider>
+	);
+};
 
 describe('TopperItemActions', () => {
 	it('does not open TopperItemActions if disabled', () => {
@@ -99,12 +118,12 @@ describe('TopperItemActions', () => {
 
 		expect(deleteItem).toBeCalledWith(
 			expect.objectContaining({
-				itemIds: ['itemId'],
+				itemIds: ['itemId1'],
 			})
 		);
 
 		expect(setCopiedItemIds).toBeCalledWith(
-			expect.objectContaining(['itemId'])
+			expect.objectContaining(['itemId1'])
 		);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
@@ -120,7 +139,7 @@ describe('TopperItemActions', () => {
 		userEvent.click(screen.getByText('copy'));
 
 		expect(setCopiedItemIds).toBeCalledWith(
-			expect.objectContaining(['itemId'])
+			expect.objectContaining(['itemId1'])
 		);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
@@ -135,8 +154,8 @@ describe('TopperItemActions', () => {
 
 		expect(pasteItem).toBeCalledWith(
 			expect.objectContaining({
-				copiedItemIds: ['item-1'],
-				parentItemId: 'itemId',
+				copiedItemIds: ['itemId2'],
+				parentItemId: 'itemId1',
 			})
 		);
 

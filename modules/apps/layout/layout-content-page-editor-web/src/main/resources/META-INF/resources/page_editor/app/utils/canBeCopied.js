@@ -20,10 +20,6 @@ const PARENT_TYPES = [
 	LAYOUT_DATA_ITEM_TYPES.root,
 ];
 
-function isUnmappedForm(item) {
-	return item.type === LAYOUT_DATA_ITEM_TYPES.form && !formIsMapped(item);
-}
-
 function getFragmentEntryLink(item, fragmentEntryLinks) {
 	if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 		return null;
@@ -99,6 +95,12 @@ export default function canBeCopied(
 			'element-can-not-be-copied-please-try-again'
 		);
 
+		const isForm = (item) => item.type === LAYOUT_DATA_ITEM_TYPES.form;
+
+		const isUnmappedForm = (item) => {
+			return isForm(item) && !formIsMapped(item);
+		};
+
 		if (parent.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
 			error = Liferay.Language.get(
 				'fragments-and-widgets-cannot-be-placed-inside-this-area'
@@ -120,10 +122,7 @@ export default function canBeCopied(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 		}
-		else if (
-			source.isWidget &&
-			parent.type === LAYOUT_DATA_ITEM_TYPES.form
-		) {
+		else if (source.isWidget && isForm(parent)) {
 			error = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'
 			);

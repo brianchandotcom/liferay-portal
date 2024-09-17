@@ -29,6 +29,10 @@ import org.json.JSONObject;
  */
 public class JSUnitModulesTestClass extends ModulesTestClass {
 
+	public String getTestrayMainComponentName() {
+		return _testrayMainComponentName;
+	}
+
 	protected JSUnitModulesTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
@@ -66,10 +70,6 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 
 		_testrayMainComponentName = jsonObject.optString(
 			"testray_main_component_name");
-	}
-
-	public String getTestrayMainComponentName() {
-		return _testrayMainComponentName;
 	}
 
 	@Override

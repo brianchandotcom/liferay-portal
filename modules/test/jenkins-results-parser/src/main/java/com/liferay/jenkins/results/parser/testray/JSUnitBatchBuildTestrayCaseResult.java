@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
@@ -32,26 +33,17 @@ public class JSUnitBatchBuildTestrayCaseResult
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
 		_testClassMethod = testClassMethod;
+
+		_jsUnitModulesTestClass =
+			(JSUnitModulesTestClass)testClassMethod.getTestClass();
 	}
 
 	@Override
 	public String getComponentName() {
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.component", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
+		String componentName =
+			_jsUnitModulesTestClass.getTestrayMainComponentName();
 
-	@Override
-	public String getComponentName() {
-		String componentName = 
-			_JSUnitModulesTestClass.getTestrayMainComponentName();
-
-		if (JenkinsResultsParserUtil.isNullorEmpty(componentName)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
 		}
 
@@ -251,6 +243,7 @@ public class JSUnitBatchBuildTestrayCaseResult
 		return false;
 	}
 
+	private final JSUnitModulesTestClass _jsUnitModulesTestClass;
 	private final TestClassMethod _testClassMethod;
 	private List<TestClassResult> _testClassResults;
 

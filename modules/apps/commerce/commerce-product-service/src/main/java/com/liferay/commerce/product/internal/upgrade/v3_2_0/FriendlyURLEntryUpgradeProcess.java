@@ -51,12 +51,12 @@ public class FriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update FriendlyURLEntry set groupId = ? where " +
-						"friendlyURLEntryId = ?");
+						"ctCollectionId = ? and friendlyURLEntryId = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update FriendlyURLEntryLocalization set groupId = ? " +
-						"where friendlyURLEntryId = ?");
+						"where ctCollectionId = ? and friendlyURLEntryId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -82,16 +82,19 @@ public class FriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
+				long ctCollectionId = resultSet.getLong("ctCollectionId");
 				long friendlyURLEntryId = resultSet.getLong(
 					"friendlyURLEntryId");
 
 				preparedStatement2.setLong(1, group.getGroupId());
-				preparedStatement2.setLong(2, friendlyURLEntryId);
+				preparedStatement2.setLong(2, ctCollectionId);
+				preparedStatement2.setLong(3, friendlyURLEntryId);
 
 				preparedStatement2.execute();
 
 				preparedStatement3.setLong(1, group.getGroupId());
-				preparedStatement3.setLong(2, friendlyURLEntryId);
+				preparedStatement3.setLong(2, ctCollectionId);
+				preparedStatement3.setLong(3, friendlyURLEntryId);
 
 				preparedStatement3.execute();
 			}

@@ -92,6 +92,47 @@ public class ShippingMethod implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
+	public String getEngineKey() {
+		if (_engineKeySupplier != null) {
+			engineKey = _engineKeySupplier.get();
+
+			_engineKeySupplier = null;
+		}
+
+		return engineKey;
+	}
+
+	public void setEngineKey(String engineKey) {
+		this.engineKey = engineKey;
+
+		_engineKeySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEngineKey(
+		UnsafeSupplier<String, Exception> engineKeyUnsafeSupplier) {
+
+		_engineKeySupplier = () -> {
+			try {
+				return engineKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String engineKey;
+
+	@JsonIgnore
+	private Supplier<String> _engineKeySupplier;
+
+	@Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -251,6 +292,22 @@ public class ShippingMethod implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(description));
+
+			sb.append("\"");
+		}
+
+		String engineKey = getEngineKey();
+
+		if (engineKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"engineKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(engineKey));
 
 			sb.append("\"");
 		}

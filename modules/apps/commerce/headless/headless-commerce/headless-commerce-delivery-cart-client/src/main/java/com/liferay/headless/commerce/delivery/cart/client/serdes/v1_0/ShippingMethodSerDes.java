@@ -61,6 +61,20 @@ public class ShippingMethodSerDes {
 			sb.append("\"");
 		}
 
+		if (shippingMethod.getEngineKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"engineKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shippingMethod.getEngineKey()));
+
+			sb.append("\"");
+		}
+
 		if (shippingMethod.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -135,6 +149,13 @@ public class ShippingMethodSerDes {
 				"description", String.valueOf(shippingMethod.getDescription()));
 		}
 
+		if (shippingMethod.getEngineKey() == null) {
+			map.put("engineKey", null);
+		}
+		else {
+			map.put("engineKey", String.valueOf(shippingMethod.getEngineKey()));
+		}
+
 		if (shippingMethod.getId() == null) {
 			map.put("id", null);
 		}
@@ -179,6 +200,9 @@ public class ShippingMethodSerDes {
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "engineKey")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -200,6 +224,11 @@ public class ShippingMethodSerDes {
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					shippingMethod.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "engineKey")) {
+				if (jsonParserFieldValue != null) {
+					shippingMethod.setEngineKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

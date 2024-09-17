@@ -46,6 +46,27 @@ public class ShippingMethod implements Cloneable, Serializable {
 
 	protected String description;
 
+	public String getEngineKey() {
+		return engineKey;
+	}
+
+	public void setEngineKey(String engineKey) {
+		this.engineKey = engineKey;
+	}
+
+	public void setEngineKey(
+		UnsafeSupplier<String, Exception> engineKeyUnsafeSupplier) {
+
+		try {
+			engineKey = engineKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String engineKey;
+
 	public Long getId() {
 		return id;
 	}

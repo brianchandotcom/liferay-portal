@@ -161,6 +161,7 @@ public abstract class BaseShippingMethodResourceTestCase {
 		ShippingMethod shippingMethod = randomShippingMethod();
 
 		shippingMethod.setDescription(regex);
+		shippingMethod.setEngineKey(regex);
 		shippingMethod.setName(regex);
 
 		String json = ShippingMethodSerDes.toJSON(shippingMethod);
@@ -170,6 +171,7 @@ public abstract class BaseShippingMethodResourceTestCase {
 		shippingMethod = ShippingMethodSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, shippingMethod.getDescription());
+		Assert.assertEquals(regex, shippingMethod.getEngineKey());
 		Assert.assertEquals(regex, shippingMethod.getName());
 	}
 
@@ -439,6 +441,14 @@ public abstract class BaseShippingMethodResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("engineKey", additionalAssertFieldName)) {
+				if (shippingMethod.getEngineKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (shippingMethod.getName() == null) {
 					valid = false;
@@ -578,6 +588,17 @@ public abstract class BaseShippingMethodResourceTestCase {
 				if (!Objects.deepEquals(
 						shippingMethod1.getDescription(),
 						shippingMethod2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("engineKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						shippingMethod1.getEngineKey(),
+						shippingMethod2.getEngineKey())) {
 
 					return false;
 				}
@@ -770,6 +791,52 @@ public abstract class BaseShippingMethodResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("engineKey")) {
+			Object object = shippingMethod.getEngineKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -872,6 +939,8 @@ public abstract class BaseShippingMethodResourceTestCase {
 		return new ShippingMethod() {
 			{
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				engineKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

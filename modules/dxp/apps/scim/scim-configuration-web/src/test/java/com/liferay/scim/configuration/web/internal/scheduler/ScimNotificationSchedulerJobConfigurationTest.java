@@ -35,8 +35,8 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				new Date(currentTimeMillis - (Time.DAY * 2)),
-				new Date(currentTimeMillis - Time.DAY));
+				new Date(currentTimeMillis - (Time.DAY * 200)),
+				new Date(currentTimeMillis - (Time.DAY * 190)));
 
 		Assert.assertFalse(notification);
 	}
@@ -84,7 +84,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
 				new Date(currentTimeMillis + (Time.DAY * 28)),
-				new Date(currentTimeMillis - (Time.DAY * 29)));
+				new Date(currentTimeMillis - (Time.DAY * 1)));
 
 		Assert.assertFalse(notification);
 	}
@@ -117,6 +117,102 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
 				new Date(currentTimeMillis - Time.DAY),
 				new Date(currentTimeMillis - (Time.DAY * 20000)));
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenExpiredAndNotSentExpirationNotificationYet() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+				new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		boolean notification =
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis - (Time.DAY + 2)),
+				new Date(currentTimeMillis - (Time.DAY + 2)));
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenExpiredAndNotSentNotificationAndExpirationYet() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+				new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		boolean notification =
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis - (Time.DAY * 2)),
+				new Date(currentTimeMillis - (Time.DAY * 2)));
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenExpiredAndNotSentNotificationAndTwoExpirationYet() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+				new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		boolean notification =
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis - (Time.DAY * 3)),
+				new Date(currentTimeMillis - (Time.DAY * 4)));
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenExpiredAndNotSentNotificationYet() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+				new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		boolean notification =
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis - (Time.DAY * 3)),
+				new Date(currentTimeMillis - (Time.DAY * 3)));
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenNotExpiredAndNotificationDay() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+				new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		boolean notification =
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis),
+				new Date(currentTimeMillis - (Time.DAY + 1)));
+
+		Assert.assertFalse(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenNotExpiredAndNotSentNotificationYet() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+				new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		boolean notification =
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis),
+				new Date(currentTimeMillis - (Time.DAY * 2)));
 
 		Assert.assertTrue(notification);
 	}

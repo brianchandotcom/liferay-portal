@@ -9,13 +9,22 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -35,6 +44,7 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.taglib.servlet.taglib.TemplateSelectorTag;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -140,6 +150,66 @@ public class TemplateSelectorTagTest {
 			mockHttpServletRequest);
 	}
 
+	@Test
+	public void testGetGroupIds() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					serviceContext);
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeService.addLayoutPrototype(
+				RandomTestUtil.randomLocaleStringMap(), new HashMap<>(), true,
+				serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
+
+		layoutPageTemplateEntry.setGroupId(_group.getGroupId());
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		TemplateSelectorTag templateSelectorTag = new TemplateSelectorTag();
+
+		templateSelectorTag.setClassName(TemplateEntry.class.getName());
+		templateSelectorTag.setDisplayStyleGroupId(_group.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layoutPrototype.getGroupId());
+
+		templateSelectorTag.setPageContext(
+			new MockPageContext(
+				null, mockHttpServletRequest, new MockHttpServletResponse()));
+
+		templateSelectorTag.doStartTag();
+
+		Map<String, Object> templateSelectorProps =
+			(Map<String, Object>)mockHttpServletRequest.getAttribute(
+				templateSelectorTag.getAttributeNamespace() +
+					"templateSelectorProps");
+
+		JSONArray templateSelectorPropsJSONArray =
+			(JSONArray)templateSelectorProps.get("items");
+
+		Assert.assertEquals(
+			templateSelectorPropsJSONArray.toString(), 1,
+			templateSelectorPropsJSONArray.length());
+	}
+
 	private void _assertTemplateSelectorProps(
 			String attributeNamespace,
 			MockHttpServletRequest mockHttpServletRequest)
@@ -184,6 +254,12 @@ public class TemplateSelectorTagTest {
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
+		return _getMockHttpServletRequest(_group.getGroupId());
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(long groupId)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -196,7 +272,7 @@ public class TemplateSelectorTagTest {
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(groupId);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -217,6 +293,17 @@ public class TemplateSelectorTagTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Inject
 	private Portal _portal;

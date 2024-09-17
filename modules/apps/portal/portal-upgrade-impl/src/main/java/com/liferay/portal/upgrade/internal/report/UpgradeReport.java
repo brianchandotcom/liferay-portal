@@ -429,16 +429,16 @@ public class UpgradeReport {
 						entry.getValue());
 				}
 
-				List<PropertyLine> propertyLines = new ArrayList<>();
+				List<PropertyPrinter> propertyPrinters = new ArrayList<>();
 
 				for (Map.Entry<String, String> entry :
 						propertiesMap.entrySet()) {
 
-					propertyLines.add(
-						new PropertyLine(entry.getKey(), entry.getValue()));
+					propertyPrinters.add(
+						new PropertyPrinter(entry.getKey(), entry.getValue()));
 				}
 
-				return propertyLines;
+				return propertyPrinters;
 			}
 		).put(
 			"properties.files", propertiesFilePaths
@@ -1018,9 +1018,9 @@ public class UpgradeReport {
 
 	}
 
-	private class PropertyLine {
+	private class PropertyPrinter {
 
-		public PropertyLine(String key, String value) {
+		public PropertyPrinter(String key, String value) {
 			_key = key;
 
 			if (ArrayUtil.contains(

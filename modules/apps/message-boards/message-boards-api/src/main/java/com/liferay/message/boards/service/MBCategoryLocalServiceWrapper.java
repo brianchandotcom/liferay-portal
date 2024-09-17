@@ -173,10 +173,12 @@ public class MBCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCategory(String externalReferenceCode, long groupId)
+	public void deleteCategoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_mbCategoryLocalService.deleteCategory(externalReferenceCode, groupId);
+		_mbCategoryLocalService.deleteCategoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

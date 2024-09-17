@@ -9,12 +9,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -35,6 +40,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
@@ -83,6 +90,25 @@ public class SegmentsEntryRetrieverTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntryIdsInSimulationModeWithDefaultSegmentsEntry()
+		throws Exception {
+
+		_assertGetSegmentsEntryIdsInSimulationMode(
+			SegmentsEntryConstants.ID_DEFAULT, Constants.PREVIEW,
+			SegmentsEntryConstants.ID_DEFAULT);
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsInSimulationModeWithSegmentsEntry()
+		throws Exception {
+
+		long segmentsEntryId = RandomTestUtil.randomLong();
+
+		_assertGetSegmentsEntryIdsInSimulationMode(
+			segmentsEntryId, Constants.PREVIEW, segmentsEntryId);
+	}
+
+	@Test
 	public void testGetSegmentsEntryIdsWithoutSegmentsEntry() throws Exception {
 		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
 			_group.getGroupId(), _user.getUserId(), null, new long[0]);
@@ -91,6 +117,15 @@ public class SegmentsEntryRetrieverTest {
 			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
 		Assert.assertEquals(
 			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[0]);
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsWithSegmentsEntryIdParameterInViewMode()
+		throws Exception {
+
+		_assertGetSegmentsEntryIdsInSimulationMode(
+			SegmentsEntryConstants.ID_DEFAULT, Constants.VIEW,
+			RandomTestUtil.randomLong());
 	}
 
 	private SegmentsEntry _addSegmentsEntry(User user) throws Exception {
@@ -102,6 +137,39 @@ public class SegmentsEntryRetrieverTest {
 
 		return SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+	}
+
+	private void _assertGetSegmentsEntryIdsInSimulationMode(
+			long expectedSegmentsEntryId, String layoutMode,
+			long segmentsEntryId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("p_l_mode", layoutMode);
+		mockHttpServletRequest.setParameter(
+			"segmentsEntryId", String.valueOf(segmentsEntryId));
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			long[] segmentsEntryIds =
+				_segmentsEntryRetriever.getSegmentsEntryIds(
+					_group.getGroupId(), _user.getUserId(), null, new long[0]);
+
+			Assert.assertEquals(
+				Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
+			Assert.assertEquals(expectedSegmentsEntryId, segmentsEntryIds[0]);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@DeleteAfterTestRun

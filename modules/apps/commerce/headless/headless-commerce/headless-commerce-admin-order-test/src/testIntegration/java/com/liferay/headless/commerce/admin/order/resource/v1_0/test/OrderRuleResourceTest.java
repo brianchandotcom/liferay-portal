@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Before;
@@ -68,6 +69,7 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 				id = RandomTestUtil.nextLong();
 				name = RandomTestUtil.randomString();
 				neverExpire = true;
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -126,6 +128,13 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 		throws Exception {
 
 		return _addCOREntry(orderRule);
+	}
+
+	@Override
+	protected OrderRule testPutOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		return _addCOREntry(randomOrderRule());
 	}
 
 	private OrderRule _addCOREntry(OrderRule orderRule) throws Exception {

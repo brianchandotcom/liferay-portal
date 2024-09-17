@@ -135,6 +135,13 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 		return _addTerm(term);
 	}
 
+	@Override
+	protected Term testPutTermByExternalReferenceCode_addTerm()
+		throws Exception {
+
+		return _addTerm(randomTerm());
+	}
+
 	private Term _addTerm(Term term) throws Exception {
 		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			term.getDisplayDate(), _user.getTimeZone());

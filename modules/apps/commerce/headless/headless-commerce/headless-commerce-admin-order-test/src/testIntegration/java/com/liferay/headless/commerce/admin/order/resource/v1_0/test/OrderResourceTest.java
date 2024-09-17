@@ -423,6 +423,13 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		return orderResource.postOrder(order);
 	}
 
+	@Override
+	protected Order testPutOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		return orderResource.postOrder(randomOrder());
+	}
+
 	private OrderItem _randomOrderItem(boolean useUnitOfMeasure)
 		throws Exception {
 

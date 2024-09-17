@@ -199,6 +199,13 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return _addCommerceOrderType(orderType);
 	}
 
+	@Override
+	protected OrderType testPutOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		return _addCommerceOrderType(randomOrderType());
+	}
+
 	private OrderType _addCommerceOrderType(OrderType orderType)
 		throws Exception {
 

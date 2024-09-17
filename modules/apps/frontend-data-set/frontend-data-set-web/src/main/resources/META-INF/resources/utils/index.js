@@ -167,7 +167,7 @@ export async function loadData(
 			if (key === 'filter' && existingFilter) {
 				url.searchParams.set(
 					'filter',
-					existingFilter + ' and ' + value
+					`(${existingFilter}) and (${value})`
 				);
 			}
 			else if (key === 'sort' && url.searchParams.get('sort')) {

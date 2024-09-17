@@ -18,14 +18,14 @@ public interface SettingsHelper {
 	public String get(String key);
 
 	/**
-	 * This method allows contributors to add one or more search engine settings.
+	 * Adds one or more search engine settings from contributors.
 	 *
 	 * @param source The settings in either JSON or YAML format.
 	 */
 	public void loadFromSource(String source);
 
 	/**
-	 * This method allows contributors to add a single search engine setting.
+	 * Adds a single search engine setting from contributors.
 	 *
 	 * @param key The name of the setting to be added.
 	 * @param value The value of the setting to be added.

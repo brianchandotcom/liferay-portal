@@ -357,8 +357,7 @@ const useSelectMultipleItems = () => {
 	);
 };
 
-const useMultiSelectIsActivated = () =>
-	useContext(ActiveStateContext).multiSelect;
+const useMultiSelectType = () => useContext(ActiveStateContext).multiSelect;
 
 export {
 	ControlsProvider,
@@ -373,7 +372,7 @@ export {
 	useHoverItem,
 	useIsActive,
 	useIsHovered,
-	useMultiSelectIsActivated,
+	useMultiSelectType,
 	useSelectItem,
 	useSelectMultipleItems,
 };

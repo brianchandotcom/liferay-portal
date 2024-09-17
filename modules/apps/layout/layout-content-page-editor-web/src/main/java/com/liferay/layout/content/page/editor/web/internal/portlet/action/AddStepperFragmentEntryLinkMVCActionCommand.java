@@ -183,6 +183,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			actionRequest, "parentItemId");
 		int numberOfSteps = ParamUtil.getInteger(
 			actionRequest, "numberOfSteps");
+		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -194,7 +195,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				stepperFragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
-				0);
+				position);
 
 		jsonObject.put("addedItemId", layoutStructureItem.getItemId());
 

@@ -12,7 +12,11 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
-import {LEMON_OBJECT_ERC} from '../setup/page-management-site/constants';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {
+	LEMON_OBJECT_ERC,
+	POTATO_OBJECT_ERC,
+} from '../setup/page-management-site/constants';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -918,6 +922,148 @@ test.describe('Multistep', () => {
 			await expect(
 				secondForm.locator('.multi-step-nav')
 			).not.toBeVisible();
+		}
+	);
+
+	test(
+		'Correctly handle multistep form errors in view mode',
+		{tag: '@LPD-10727'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Potato object from the site initializer
+
+			const {id: objectDefinitionId} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					POTATO_OBJECT_ERC
+				);
+
+			// Create a form with three steps and a stepper
+
+			const stepperId = getRandomString();
+
+			const stepperFragment = getFragmentDefinition({
+				fragmentConfig: {
+					numberOfSteps: 3,
+				},
+				id: stepperId,
+				key: 'INPUTS-stepper',
+			});
+
+			const textInputId = getRandomString();
+
+			const textInputFragment = getFragmentDefinition({
+				id: textInputId,
+				key: 'INPUTS-text-input',
+			});
+
+			const submitButtonFragment = getFragmentDefinition({
+				fragmentConfig: {
+					type: 'submit',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionId,
+				pageElements: [stepperFragment],
+				steps: [[], [textInputFragment], [submitButtonFragment]],
+			});
+
+			// Create page and go to edit mode
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map text input fragment to Potato Origin field
+
+			await page.locator('[data-multi-step-icon="2"]').click();
+
+			await pageEditorPage.selectFragment(textInputId);
+
+			await page.getByLabel('Field', {exact: true}).waitFor();
+
+			await page
+				.getByLabel('Field', {exact: true})
+				.selectOption('Potato Origin*');
+
+			// Publish
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.modal-title', {hasText: 'Form Errors'}),
+				timeout: 3000,
+				trigger: pageEditorPage.publishButton,
+			});
+
+			await page.locator('.modal-footer').getByText('Publish').click();
+
+			await waitForSuccessAlert(
+				page,
+				'Success:The page was published successfully.'
+			);
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Create function to submit form
+
+			const submitForm = async () => {
+				await expect(async () => {
+					await page.locator('[data-multi-step-icon="2"]').click();
+
+					const submitButton = page.getByRole('button', {
+						name: 'Submit',
+					});
+
+					await page.locator('[data-multi-step-icon="3"]').click();
+
+					await expect(submitButton).toBeVisible({timeout: 100});
+
+					await submitButton.click();
+				}).toPass();
+			};
+
+			// Try to submit and check it takes to step 2 because field is required
+
+			const field = page.getByLabel('Potato Origin');
+
+			await submitForm();
+
+			await field.waitFor();
+
+			// Fill field with incorrect value, submit and check it shows error
+
+			await field.fill('Madrid');
+
+			await submitForm();
+
+			await page
+				.getByText('Potato Origin should be Canary Islands')
+				.waitFor();
+
+			// Fill field with correct value, submit and check it submits
+
+			await page.getByLabel('Potato Origin').fill('Canary Islands');
+
+			await submitForm();
+
+			await expect(
+				page.getByText('Your information was successfully received')
+			).toBeVisible();
 		}
 	);
 });

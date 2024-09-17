@@ -25,6 +25,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -328,34 +329,9 @@ public class ContentFieldUtil {
 				return new ContentFieldValue() {
 					{
 						setImage(
-							() -> {
-								ContentDocument contentDocument =
-									ContentDocumentUtil.toContentDocument(
-										dlURLHelper,
-										"contentFields.contentFieldValue.image",
-										dlAppService.getFileEntry(fileEntryId),
-										uriInfo);
-
-								String alt = jsonObject.getString("alt");
-
-								contentDocument.setDescription(
-									() -> {
-										if (Validator.isNotNull(alt) &&
-											JSONUtil.isJSONObject(alt)) {
-
-											JSONObject altJSONObject =
-												jsonObject.getJSONObject("alt");
-
-											return altJSONObject.getString(
-												LocaleUtil.toLanguageId(
-													locale));
-										}
-
-										return alt;
-									});
-
-								return contentDocument;
-							});
+							() -> _toImage(
+								dlURLHelper, dlAppService, fileEntryId, uriInfo,
+								jsonObject, locale));
 					}
 				};
 			}
@@ -574,6 +550,46 @@ public class ContentFieldUtil {
 				"Unable to parse date that does not conform to ISO-8601",
 				parseException);
 		}
+	}
+
+	private static ContentDocument _toImage(
+			DLURLHelper dlURLHelper, DLAppService dlAppService,
+			long fileEntryId, UriInfo uriInfo, JSONObject jsonObject,
+			Locale locale)
+		throws Exception {
+
+		try {
+			ContentDocument contentDocument =
+				ContentDocumentUtil.toContentDocument(
+					dlURLHelper, "contentFields.contentFieldValue.image",
+					dlAppService.getFileEntry(fileEntryId), uriInfo);
+
+			String alt = jsonObject.getString("alt");
+
+			contentDocument.setDescription(
+				() -> {
+					if (Validator.isNotNull(alt) &&
+						JSONUtil.isJSONObject(alt)) {
+
+						JSONObject altJSONObject = jsonObject.getJSONObject(
+							"alt");
+
+						return altJSONObject.getString(
+							LocaleUtil.toLanguageId(locale));
+					}
+
+					return alt;
+				});
+
+			return contentDocument;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private static StructuredContent _toStructuredContent(

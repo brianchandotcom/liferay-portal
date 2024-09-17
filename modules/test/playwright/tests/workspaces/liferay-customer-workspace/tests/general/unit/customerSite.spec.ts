@@ -20,5 +20,7 @@ test.describe('Customer Site', () => {
 		await homePage.goto();
 
 		await expect(homePage.heading).toBeVisible();
+		await expect(homePage.searchBar).toBeVisible();
+		await expect(homePage.testKoroneikiAccountCode).toBeVisible();
 	});
 });

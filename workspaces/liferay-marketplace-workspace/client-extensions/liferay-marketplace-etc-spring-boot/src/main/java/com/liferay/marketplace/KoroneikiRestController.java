@@ -13,12 +13,14 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -62,20 +64,24 @@ public class KoroneikiRestController extends BaseRestController {
 			orderId
 		);
 
+		OrderItemResource orderItemResource =
+			_marketplaceService.getOrderItemResource();
+
+		ProductPurchaseViewResource productPurchaseViewResource =
+			_koroneikiService.getProductPurchaseViewResource();
+
 		for (OrderItem orderItem :
-				_marketplaceService.getOrderItemResource(
-				).getOrderIdOrderItemsPage(
+				orderItemResource.getOrderIdOrderItemsPage(
 					orderId,
 					com.liferay.headless.commerce.admin.order.client.pagination.
 						Pagination.of(1, 10)
 				).getItems()) {
 
 			ProductPurchaseView productPurchaseView =
-				_koroneikiService.getProductPurchaseViewResource(
-				).getAccountAccountKeyProductProductKeyProductPurchaseView(
-					order.getAccountExternalReferenceCode(),
-					orderItem.getSkuExternalReferenceCode()
-				);
+				productPurchaseViewResource.
+					getAccountAccountKeyProductProductKeyProductPurchaseView(
+						order.getAccountExternalReferenceCode(),
+						orderItem.getSkuExternalReferenceCode());
 
 			ProductPurchase productPurchase = null;
 
@@ -183,6 +189,9 @@ public class KoroneikiRestController extends BaseRestController {
 			productId
 		);
 
+		ProductResource productResource =
+			_koroneikiService.getProductResource();
+
 		SkuResource skuResource = _marketplaceService.getSkuResource();
 
 		for (Sku sku :
@@ -213,9 +222,6 @@ public class KoroneikiRestController extends BaseRestController {
 			);
 
 			String name = productName + " - " + dxpLicenseUsageType;
-
-			ProductResource productResource =
-				_koroneikiService.getProductResource();
 
 			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
 				<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product>

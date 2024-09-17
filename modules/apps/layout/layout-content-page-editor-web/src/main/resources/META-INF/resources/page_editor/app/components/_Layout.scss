@@ -244,6 +244,7 @@ html#{$cadmin-selector} {
 		}
 
 		&__no-fragments-state {
+			align-items: center;
 			background: $cadmin-primary-l3;
 			border: $dashedBorderWidth dashed $cadmin-primary-l2;
 			border-radius: 8px;
@@ -271,6 +272,17 @@ html#{$cadmin-selector} {
 
 			// stylelint-disable-next-line at-rule-no-unknown
 			@container (max-width: 100px) {
+				&__image {
+					display: none;
+				}
+
+				&__message {
+					overflow-wrap: anywhere;
+				}
+			}
+
+			// stylelint-disable-next-line at-rule-no-unknown
+			@container (max-height: 100px) {
 				&__image {
 					display: none;
 				}
@@ -363,6 +375,8 @@ html#{$cadmin-selector} {
 	}
 
 	.custom-height .page-editor__no-fragments-state {
+		// stylelint-disable-next-line property-no-unknown
+		container-type: size;
 		padding: 0;
 	}
 }

@@ -372,8 +372,6 @@ public class ExportTaskResourceTest {
 			"AccountOrganization",
 		"com.liferay.headless.commerce.admin.account.dto.v1_0." +
 			"AdminAccountGroup",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram",
@@ -383,15 +381,11 @@ public class ExportTaskResourceTest {
 			"ListTypeDefinition",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LowStockAction",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductAccountGroup",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductGroupProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption",
@@ -400,9 +394,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductSpecification",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure",
-		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"AccountAddressChannel",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +

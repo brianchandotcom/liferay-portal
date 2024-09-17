@@ -417,31 +417,23 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +
 			"WarehouseOrderType",
-		"com.liferay.headless.commerce.admin.order.dto.v1_0.Order",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote",
-		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0." +
 			"OrderRuleAccountGroup",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType",
-		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel",
-		"com.liferay.headless.commerce.admin.order.dto.v1_0.Term",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType",
-		"com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment",
-		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.Discount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0." +
 			"DiscountAccountGroup",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountCategory",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountProduct",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountRule",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceEntry",
-		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceList",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0." +
 			"PriceListAccountGroup",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.TierPrice",
-		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.Discount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0." +
 			"DiscountAccountGroup",
@@ -455,7 +447,6 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountRule",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry",
-		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0." +
 			"PriceListAccountGroup",
@@ -475,8 +466,6 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem",
 		"com.liferay.headless.commerce.admin.site.setting.dto.v1_0." +
 			"AvailabilityEstimate",
-		"com.liferay.headless.commerce.admin.site.setting.dto.v1_0." +
-			"MeasurementUnit",
 		"com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory",
 		"com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse",
 		"com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart",

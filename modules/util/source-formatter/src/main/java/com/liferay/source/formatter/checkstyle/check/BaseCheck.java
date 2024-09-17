@@ -692,6 +692,34 @@ public abstract class BaseCheck extends AbstractCheck {
 		return startLineNumber;
 	}
 
+	protected DetailAST getTopLevelMethodCallDetailAST(DetailAST detailAST) {
+		if ((detailAST.getType() != TokenTypes.DOT) &&
+			(detailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return null;
+		}
+
+		DetailAST topLevelMethodCallDetailAST = detailAST;
+
+		while (true) {
+			DetailAST parentDetailAST = topLevelMethodCallDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.DOT) {
+				break;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				break;
+			}
+
+			topLevelMethodCallDetailAST = parentDetailAST;
+		}
+
+		return topLevelMethodCallDetailAST;
+	}
+
 	protected DetailAST getTypeArgumentsDetailAST(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 

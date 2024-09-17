@@ -200,23 +200,8 @@ public class ChainingCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST topLevelMethodCallDetailAST = methodCallDetailAST;
-
-		while (true) {
-			DetailAST parentDetailAST = topLevelMethodCallDetailAST.getParent();
-
-			if (parentDetailAST.getType() != TokenTypes.DOT) {
-				break;
-			}
-
-			parentDetailAST = parentDetailAST.getParent();
-
-			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
-				break;
-			}
-
-			topLevelMethodCallDetailAST = parentDetailAST;
-		}
+		DetailAST topLevelMethodCallDetailAST = getTopLevelMethodCallDetailAST(
+			methodCallDetailAST);
 
 		DetailAST parentDetailAST = topLevelMethodCallDetailAST.getParent();
 

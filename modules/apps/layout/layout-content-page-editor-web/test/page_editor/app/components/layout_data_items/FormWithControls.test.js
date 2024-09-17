@@ -124,7 +124,9 @@ describe('FormWithControls', () => {
 			</StoreMother.Component>
 		);
 
-		expect(screen.getByText('place-fragments-here')).toBeInTheDocument();
+		expect(
+			screen.getByText('drag-and-drop-fragments-or-widgets-here')
+		).toBeInTheDocument();
 	});
 
 	it('renders children inside container', () => {

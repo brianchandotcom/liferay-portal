@@ -370,7 +370,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		sb.append(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
-
 		sb.append(" rel=\"");
 		sb.append(layoutSEOLink.getRelationship());
 		sb.append("\" />");

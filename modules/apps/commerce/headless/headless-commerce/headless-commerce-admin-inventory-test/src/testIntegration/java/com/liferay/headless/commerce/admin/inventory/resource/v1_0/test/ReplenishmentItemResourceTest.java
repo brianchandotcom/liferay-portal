@@ -108,6 +108,31 @@ public class ReplenishmentItemResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
+		ReplenishmentItem replenishmentItem =
+			testGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
+
+		String externalReferenceCode =
+			replenishmentItem.getExternalReferenceCode();
+
+		replenishmentItem.setAvailabilityDate(_dateFormat.parse("2022-09-24"));
+		replenishmentItem.setQuantity(BigDecimal.valueOf(25));
+
+		replenishmentItemResource.putReplenishmentItemByExternalReferenceCode(
+			externalReferenceCode, replenishmentItem);
+
+		ReplenishmentItem patchReplenishmentItem =
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					replenishmentItem.getExternalReferenceCode());
+
+		Assert.assertTrue(equals(replenishmentItem, patchReplenishmentItem));
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"availabilityDate", "warehouseId", "externalReferenceCode",
@@ -250,6 +275,14 @@ public class ReplenishmentItemResourceTest
 					StringPool.BLANK);
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
+	}
+
+	@Override
+	protected ReplenishmentItem
+			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
+		throws Exception {
+
+		return _toReplenishmentItem(_addReplenishmentItem());
 	}
 
 	private CommerceInventoryWarehouse _addCommerceInventoryWarehouse()

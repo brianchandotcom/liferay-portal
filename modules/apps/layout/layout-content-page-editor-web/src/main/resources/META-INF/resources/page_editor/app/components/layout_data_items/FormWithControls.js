@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
+import {config} from '../../config';
 import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -109,8 +110,13 @@ function FormEmptyState({isMapped, item}) {
 
 	if (isMapped) {
 		return (
-			<div className="page-editor__no-fragments-state">
-				<p className="m-0 page-editor__no-fragments-state__message">
+			<div className="page-editor__no-fragments-state text-center">
+				<img
+					className="page-editor__no-fragments-state__image"
+					src={`${config.imagesPath}/drag_and_drop.svg`}
+				/>
+
+				<p className="page-editor__no-fragments-state__message">
 					{Liferay.Language.get(
 						'drag-and-drop-fragments-or-widgets-here'
 					)}

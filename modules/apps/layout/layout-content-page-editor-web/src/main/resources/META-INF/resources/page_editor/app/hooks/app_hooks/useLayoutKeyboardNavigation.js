@@ -8,25 +8,42 @@ import {useContext, useEffect, useRef} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
-import {useHoverItem, useSelectItem} from '../../contexts/ControlsContext';
+import {MULTI_SELECT_TYPES} from '../../config/constants/multiSelectTypes';
+import {
+	useHoverItem,
+	useMultiSelectType,
+	useSelectItem,
+} from '../../contexts/ControlsContext';
 import {LayoutKeyboardContext} from '../../contexts/LayoutKeyboardContext';
 
 export function useLayoutKeyboardNavigation(item) {
 	const elementRef = useRef(null);
 
 	const hoverItem = useHoverItem();
+	const multiSelectType = useMultiSelectType();
 	const selectItem = useSelectItem();
 
 	const {itemList, setTargetId, targetId} = useContext(LayoutKeyboardContext);
 
-	// Focus and hover when changing target
+	// Focus when changing target, and if the multiselection in range is
+	// activated in range the element is selected, if not it is hovered.
 
 	useEffect(() => {
 		if (targetId === item.itemId) {
 			elementRef.current.focus();
-			hoverItem(item.itemId);
+
+			if (multiSelectType === MULTI_SELECT_TYPES.range) {
+				selectItem(item.itemId, {
+					origin: ITEM_ACTIVATION_ORIGINS.keyboard,
+				});
+			}
+			else {
+				hoverItem(item.itemId);
+			}
 		}
-	}, [hoverItem, item, targetId]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [hoverItem, item, selectItem, targetId]);
 
 	// Hover and set target when focusing first item
 

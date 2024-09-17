@@ -5,8 +5,9 @@
 
 import ClayAlert from '@clayui/alert';
 import {TreeView as ClayTreeView} from '@clayui/core';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import getAllEditables from '../../../../../app/components/fragment_content/getAllEditables';
 import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
@@ -28,11 +29,13 @@ import {
 } from '../../../../../app/config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
+import {MULTI_SELECT_TYPES} from '../../../../../app/config/constants/multiSelectTypes';
 import {config} from '../../../../../app/config/index';
 import {
 	useActiveItemIds,
 	useHoverItem,
 	useHoveredItemId,
+	useMultiSelectType,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
 import {useEditedNodeId} from '../../../../../app/contexts/ShortcutContext';
@@ -95,10 +98,12 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 	);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
+	const multiSelectType = useMultiSelectType();
 	const pageContents = usePageContents();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
 	const selectItem = useSelectItem();
+	const treeRef = useRef(null);
 
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const masterLayoutData = useSelector(
@@ -285,10 +290,35 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		}
 	};
 
+	// Each time an item is focused on, if range multiselect is enabled,
+	// the item is selected.
+
+	useEventListener(
+		'focusin',
+		(event) => {
+			if (multiSelectType === MULTI_SELECT_TYPES.range) {
+				const itemId = event.target.querySelector(
+					'.page-editor__page-structure__tree-node__mask'
+				).dataset.itemId;
+
+				const item = layoutData.items[itemId];
+
+				if (item) {
+					selectItem(itemId, {
+						origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+					});
+				}
+			}
+		},
+		false,
+		treeRef.current
+	);
+
 	return (
 		<div
 			className="overflow-auto page-editor__page-structure__structure-tree pt-4"
 			onFocus={handleNodeFocus}
+			ref={treeRef}
 		>
 			{!nodes.length && (
 				<ClayAlert

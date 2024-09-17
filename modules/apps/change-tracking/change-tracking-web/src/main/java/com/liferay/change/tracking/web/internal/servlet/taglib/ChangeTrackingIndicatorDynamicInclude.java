@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -697,7 +696,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			return false;
 		}
 
-		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
 		long ctLastGroupId = GetterUtil.getLong(
 			httpSession.getAttribute(CTWebKeys.CT_LAST_GROUP_ID));

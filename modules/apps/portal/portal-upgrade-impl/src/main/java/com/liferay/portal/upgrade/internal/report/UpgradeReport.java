@@ -86,8 +86,6 @@ public class UpgradeReport {
 		if (StartupHelperUtil.isNewRelease()) {
 			_initialTableCounts = _getTableCounts();
 		}
-
-		_propertiesFilePaths = _getPropertiesFilePaths();
 	}
 
 	public void generateReport(UpgradeRecorder upgradeRecorder) {
@@ -183,6 +181,8 @@ public class UpgradeReport {
 
 	private Map<String, Object> _getReportData(
 		UpgradeRecorder upgradeRecorder) {
+
+		List<String> propertiesFilePaths = _getPropertiesFilePaths();
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"execution.date",
@@ -387,7 +387,7 @@ public class UpgradeReport {
 			() -> {
 				Map<String, String> propertiesMap = new TreeMap<>();
 
-				for (String propertiesFilePath : _propertiesFilePaths) {
+				for (String propertiesFilePath : propertiesFilePaths) {
 					Properties properties = new Properties();
 
 					try (InputStream inputStream = new FileInputStream(
@@ -441,7 +441,7 @@ public class UpgradeReport {
 				return propertyLines;
 			}
 		).put(
-			"properties.files", _propertiesFilePaths
+			"properties.files", propertiesFilePaths
 		).put(
 			"document.library.storage.size",
 			() -> {
@@ -947,7 +947,6 @@ public class UpgradeReport {
 	private final Thread _dlSizeThread = new DLSizeThread();
 	private final int _initialBuildNumber;
 	private Map<String, Integer> _initialTableCounts;
-	private final List<String> _propertiesFilePaths;
 	private String _rootDir;
 
 	private class DLSizeThread extends Thread {

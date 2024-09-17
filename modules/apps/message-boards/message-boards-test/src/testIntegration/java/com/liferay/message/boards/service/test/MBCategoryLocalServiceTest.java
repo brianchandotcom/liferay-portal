@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
+import com.liferay.message.boards.exception.DuplicateMBCategoryExternalReferenceCodeException;
+import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
@@ -61,6 +63,52 @@ public class MBCategoryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test(expected = DuplicateMBCategoryExternalReferenceCodeException.class)
+	public void testAddCategoryWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		addCategory(externalReferenceCode);
+		addCategory(externalReferenceCode);
+	}
+
+	@Test
+	public void testAddCategoryWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		MBCategory category1 = addCategory(externalReferenceCode);
+
+		Assert.assertNotNull(category1);
+
+		Assert.assertEquals(
+			externalReferenceCode, category1.getExternalReferenceCode());
+
+		MBCategory category2 =
+			_mbCategoryLocalService.getMBCategoryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId());
+
+		Assert.assertEquals(category1, category2);
+	}
+
+	@Test(expected = NoSuchCategoryException.class)
+	public void testDeleteCategoryByExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		MBCategory category = addCategory(externalReferenceCode);
+
+		Assert.assertNotNull(category);
+
+		Assert.assertEquals(
+			externalReferenceCode, category.getExternalReferenceCode());
+
+		_mbCategoryLocalService.deleteCategoryByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+
+		_mbCategoryLocalService.getMBCategoryByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
 	}
 
 	@Test
@@ -535,9 +583,24 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	protected MBCategory addCategory(long parentCategoryId) throws Exception {
+		return addCategory(null, parentCategoryId);
+	}
+
+	protected MBCategory addCategory(String externalReferenceCode)
+		throws Exception {
+
+		return addCategory(
+			externalReferenceCode,
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+	}
+
+	protected MBCategory addCategory(
+			String externalReferenceCode, long parentCategoryId)
+		throws Exception {
+
 		return _mbCategoryLocalService.addCategory(
-			null, TestPropsValues.getUserId(), parentCategoryId,
-			RandomTestUtil.randomString(), StringPool.BLANK,
+			externalReferenceCode, TestPropsValues.getUserId(),
+			parentCategoryId, RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}

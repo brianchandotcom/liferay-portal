@@ -258,6 +258,11 @@ public class ServletDataImpl implements ServletData {
 							CTEntryResourceImpl.class,
 							"getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"));
 					put(
+						"query#cTEntriesHistory",
+						new ObjectValuePair<>(
+							CTEntryResourceImpl.class,
+							"getCTEntriesHistoryPage"));
+					put(
 						"query#cTEntry",
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class, "getCTEntry"));

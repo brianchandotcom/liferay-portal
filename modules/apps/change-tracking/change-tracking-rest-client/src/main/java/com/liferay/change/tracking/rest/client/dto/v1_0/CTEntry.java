@@ -91,6 +91,94 @@ public class CTEntry implements Cloneable, Serializable {
 
 	protected Long ctCollectionId;
 
+	public String getCtCollectionName() {
+		return ctCollectionName;
+	}
+
+	public void setCtCollectionName(String ctCollectionName) {
+		this.ctCollectionName = ctCollectionName;
+	}
+
+	public void setCtCollectionName(
+		UnsafeSupplier<String, Exception> ctCollectionNameUnsafeSupplier) {
+
+		try {
+			ctCollectionName = ctCollectionNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String ctCollectionName;
+
+	public Status getCtCollectionStatus() {
+		return ctCollectionStatus;
+	}
+
+	public void setCtCollectionStatus(Status ctCollectionStatus) {
+		this.ctCollectionStatus = ctCollectionStatus;
+	}
+
+	public void setCtCollectionStatus(
+		UnsafeSupplier<Status, Exception> ctCollectionStatusUnsafeSupplier) {
+
+		try {
+			ctCollectionStatus = ctCollectionStatusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Status ctCollectionStatus;
+
+	public Date getCtCollectionStatusDate() {
+		return ctCollectionStatusDate;
+	}
+
+	public void setCtCollectionStatusDate(Date ctCollectionStatusDate) {
+		this.ctCollectionStatusDate = ctCollectionStatusDate;
+	}
+
+	public void setCtCollectionStatusDate(
+		UnsafeSupplier<Date, Exception> ctCollectionStatusDateUnsafeSupplier) {
+
+		try {
+			ctCollectionStatusDate = ctCollectionStatusDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date ctCollectionStatusDate;
+
+	public String getCtCollectionStatusUserName() {
+		return ctCollectionStatusUserName;
+	}
+
+	public void setCtCollectionStatusUserName(
+		String ctCollectionStatusUserName) {
+
+		this.ctCollectionStatusUserName = ctCollectionStatusUserName;
+	}
+
+	public void setCtCollectionStatusUserName(
+		UnsafeSupplier<String, Exception>
+			ctCollectionStatusUserNameUnsafeSupplier) {
+
+		try {
+			ctCollectionStatusUserName =
+				ctCollectionStatusUserNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String ctCollectionStatusUserName;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

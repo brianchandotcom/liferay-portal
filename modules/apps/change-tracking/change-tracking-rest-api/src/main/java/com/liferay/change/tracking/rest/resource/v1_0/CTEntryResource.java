@@ -57,6 +57,11 @@ public interface CTEntryResource {
 				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
 		throws Exception;
 
+	public Page<CTEntry> getCTEntriesHistoryPage(
+			Long classNameId, Long classPK, String search, Long siteId,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
 
 	public default void setContextAcceptLanguage(

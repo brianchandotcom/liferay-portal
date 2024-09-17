@@ -165,6 +165,8 @@ public abstract class BaseCTEntryResourceTestCase {
 		CTEntry ctEntry = randomCTEntry();
 
 		ctEntry.setChangeType(regex);
+		ctEntry.setCtCollectionName(regex);
+		ctEntry.setCtCollectionStatusUserName(regex);
 		ctEntry.setOwnerName(regex);
 		ctEntry.setSiteName(regex);
 		ctEntry.setStatusMessage(regex);
@@ -178,6 +180,8 @@ public abstract class BaseCTEntryResourceTestCase {
 		ctEntry = CTEntrySerDes.toDTO(json);
 
 		Assert.assertEquals(regex, ctEntry.getChangeType());
+		Assert.assertEquals(regex, ctEntry.getCtCollectionName());
+		Assert.assertEquals(regex, ctEntry.getCtCollectionStatusUserName());
 		Assert.assertEquals(regex, ctEntry.getOwnerName());
 		Assert.assertEquals(regex, ctEntry.getSiteName());
 		Assert.assertEquals(regex, ctEntry.getStatusMessage());
@@ -784,6 +788,338 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetCTEntriesHistoryPage() throws Exception {
+		Page<CTEntry> page = ctEntryResource.getCTEntriesHistoryPage(
+			null, null, null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		CTEntry ctEntry1 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		CTEntry ctEntry2 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		page = ctEntryResource.getCTEntriesHistoryPage(
+			null, null, null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(ctEntry1, (List<CTEntry>)page.getItems());
+		assertContains(ctEntry2, (List<CTEntry>)page.getItems());
+		assertValid(page, testGetCTEntriesHistoryPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCTEntriesHistoryPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CTEntry ctEntry1 = randomCTEntry();
+
+		ctEntry1 = testGetCTEntriesHistoryPage_addCTEntry(ctEntry1);
+
+		for (EntityField entityField : entityFields) {
+			Page<CTEntry> page = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null,
+				getFilterString(entityField, "between", ctEntry1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(ctEntry1),
+				(List<CTEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetCTEntriesHistoryPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithFilterStringContains()
+		throws Exception {
+
+		testGetCTEntriesHistoryPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetCTEntriesHistoryPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetCTEntriesHistoryPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetCTEntriesHistoryPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CTEntry ctEntry1 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTEntry ctEntry2 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<CTEntry> page = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null,
+				getFilterString(entityField, operator, ctEntry1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(ctEntry1),
+				(List<CTEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithPagination() throws Exception {
+		Page<CTEntry> ctEntryPage = ctEntryResource.getCTEntriesHistoryPage(
+			null, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(ctEntryPage.getTotalCount());
+
+		CTEntry ctEntry1 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		CTEntry ctEntry2 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		CTEntry ctEntry3 = testGetCTEntriesHistoryPage_addCTEntry(
+			randomCTEntry());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<CTEntry> page1 = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(ctEntry1, (List<CTEntry>)page1.getItems());
+
+			Page<CTEntry> page2 = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(ctEntry2, (List<CTEntry>)page2.getItems());
+
+			Page<CTEntry> page3 = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+		}
+		else {
+			Page<CTEntry> page1 = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null, Pagination.of(1, totalCount + 2),
+				null);
+
+			List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				ctEntries1.toString(), totalCount + 2, ctEntries1.size());
+
+			Page<CTEntry> page2 = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null, Pagination.of(2, totalCount + 2),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CTEntry> ctEntries2 = (List<CTEntry>)page2.getItems();
+
+			Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
+
+			Page<CTEntry> page3 = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
+			assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
+			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithSortDateTime() throws Exception {
+		testGetCTEntriesHistoryPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, ctEntry1, ctEntry2) -> {
+				BeanTestUtil.setProperty(
+					ctEntry1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithSortDouble() throws Exception {
+		testGetCTEntriesHistoryPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, ctEntry1, ctEntry2) -> {
+				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(ctEntry2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithSortInteger() throws Exception {
+		testGetCTEntriesHistoryPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, ctEntry1, ctEntry2) -> {
+				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(ctEntry2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageWithSortString() throws Exception {
+		testGetCTEntriesHistoryPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, ctEntry1, ctEntry2) -> {
+				Class<?> clazz = ctEntry1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						ctEntry1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						ctEntry2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						ctEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						ctEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						ctEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						ctEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetCTEntriesHistoryPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, CTEntry, CTEntry, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CTEntry ctEntry1 = randomCTEntry();
+		CTEntry ctEntry2 = randomCTEntry();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, ctEntry1, ctEntry2);
+		}
+
+		ctEntry1 = testGetCTEntriesHistoryPage_addCTEntry(ctEntry1);
+
+		ctEntry2 = testGetCTEntriesHistoryPage_addCTEntry(ctEntry2);
+
+		Page<CTEntry> page = ctEntryResource.getCTEntriesHistoryPage(
+			null, null, null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<CTEntry> ascPage = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
+
+			assertContains(ctEntry1, (List<CTEntry>)ascPage.getItems());
+			assertContains(ctEntry2, (List<CTEntry>)ascPage.getItems());
+
+			Page<CTEntry> descPage = ctEntryResource.getCTEntriesHistoryPage(
+				null, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
+
+			assertContains(ctEntry2, (List<CTEntry>)descPage.getItems());
+			assertContains(ctEntry1, (List<CTEntry>)descPage.getItems());
+		}
+	}
+
+	protected CTEntry testGetCTEntriesHistoryPage_addCTEntry(CTEntry ctEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetCTEntry() throws Exception {
 		CTEntry postCTEntry = testGetCTEntry_addCTEntry();
 
@@ -997,6 +1333,44 @@ public abstract class BaseCTEntryResourceTestCase {
 
 			if (Objects.equals("ctCollectionId", additionalAssertFieldName)) {
 				if (ctEntry.getCtCollectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ctCollectionName", additionalAssertFieldName)) {
+				if (ctEntry.getCtCollectionName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"ctCollectionStatus", additionalAssertFieldName)) {
+
+				if (ctEntry.getCtCollectionStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"ctCollectionStatusDate", additionalAssertFieldName)) {
+
+				if (ctEntry.getCtCollectionStatusDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"ctCollectionStatusUserName", additionalAssertFieldName)) {
+
+				if (ctEntry.getCtCollectionStatusUserName() == null) {
 					valid = false;
 				}
 
@@ -1229,6 +1603,56 @@ public abstract class BaseCTEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						ctEntry1.getCtCollectionId(),
 						ctEntry2.getCtCollectionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ctCollectionName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctEntry1.getCtCollectionName(),
+						ctEntry2.getCtCollectionName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"ctCollectionStatus", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						ctEntry1.getCtCollectionStatus(),
+						ctEntry2.getCtCollectionStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"ctCollectionStatusDate", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						ctEntry1.getCtCollectionStatusDate(),
+						ctEntry2.getCtCollectionStatusDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"ctCollectionStatusUserName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						ctEntry1.getCtCollectionStatusUserName(),
+						ctEntry2.getCtCollectionStatusUserName())) {
 
 					return false;
 				}
@@ -1529,6 +1953,135 @@ public abstract class BaseCTEntryResourceTestCase {
 		if (entityFieldName.equals("ctCollectionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("ctCollectionName")) {
+			Object object = ctEntry.getCtCollectionName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("ctCollectionStatus")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("ctCollectionStatusDate")) {
+			if (operator.equals("between")) {
+				Date date = ctEntry.getCtCollectionStatusDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(ctEntry.getCtCollectionStatusDate()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("ctCollectionStatusUserName")) {
+			Object object = ctEntry.getCtCollectionStatusUserName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
@@ -1906,6 +2459,11 @@ public abstract class BaseCTEntryResourceTestCase {
 				changeType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				ctCollectionId = RandomTestUtil.randomLong();
+				ctCollectionName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				ctCollectionStatusDate = RandomTestUtil.nextDate();
+				ctCollectionStatusUserName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				hideable = RandomTestUtil.randomBoolean();

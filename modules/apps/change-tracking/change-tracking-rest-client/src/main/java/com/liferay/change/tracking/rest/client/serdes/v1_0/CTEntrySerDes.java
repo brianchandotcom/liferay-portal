@@ -84,6 +84,60 @@ public class CTEntrySerDes {
 			sb.append(ctEntry.getCtCollectionId());
 		}
 
+		if (ctEntry.getCtCollectionName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ctCollectionName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctEntry.getCtCollectionName()));
+
+			sb.append("\"");
+		}
+
+		if (ctEntry.getCtCollectionStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ctCollectionStatus\": ");
+
+			sb.append(String.valueOf(ctEntry.getCtCollectionStatus()));
+		}
+
+		if (ctEntry.getCtCollectionStatusDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ctCollectionStatusDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					ctEntry.getCtCollectionStatusDate()));
+
+			sb.append("\"");
+		}
+
+		if (ctEntry.getCtCollectionStatusUserName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ctCollectionStatusUserName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctEntry.getCtCollectionStatusUserName()));
+
+			sb.append("\"");
+		}
+
 		if (ctEntry.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -296,6 +350,43 @@ public class CTEntrySerDes {
 				"ctCollectionId", String.valueOf(ctEntry.getCtCollectionId()));
 		}
 
+		if (ctEntry.getCtCollectionName() == null) {
+			map.put("ctCollectionName", null);
+		}
+		else {
+			map.put(
+				"ctCollectionName",
+				String.valueOf(ctEntry.getCtCollectionName()));
+		}
+
+		if (ctEntry.getCtCollectionStatus() == null) {
+			map.put("ctCollectionStatus", null);
+		}
+		else {
+			map.put(
+				"ctCollectionStatus",
+				String.valueOf(ctEntry.getCtCollectionStatus()));
+		}
+
+		if (ctEntry.getCtCollectionStatusDate() == null) {
+			map.put("ctCollectionStatusDate", null);
+		}
+		else {
+			map.put(
+				"ctCollectionStatusDate",
+				liferayToJSONDateFormat.format(
+					ctEntry.getCtCollectionStatusDate()));
+		}
+
+		if (ctEntry.getCtCollectionStatusUserName() == null) {
+			map.put("ctCollectionStatusUserName", null);
+		}
+		else {
+			map.put(
+				"ctCollectionStatusUserName",
+				String.valueOf(ctEntry.getCtCollectionStatusUserName()));
+		}
+
 		if (ctEntry.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -427,6 +518,24 @@ public class CTEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "ctCollectionId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "ctCollectionName")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "ctCollectionStatus")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "ctCollectionStatusDate")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "ctCollectionStatusUserName")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -493,6 +602,35 @@ public class CTEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					ctEntry.setCtCollectionId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ctCollectionName")) {
+				if (jsonParserFieldValue != null) {
+					ctEntry.setCtCollectionName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "ctCollectionStatus")) {
+
+				if (jsonParserFieldValue != null) {
+					ctEntry.setCtCollectionStatus(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "ctCollectionStatusDate")) {
+
+				if (jsonParserFieldValue != null) {
+					ctEntry.setCtCollectionStatusDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "ctCollectionStatusUserName")) {
+
+				if (jsonParserFieldValue != null) {
+					ctEntry.setCtCollectionStatusUserName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

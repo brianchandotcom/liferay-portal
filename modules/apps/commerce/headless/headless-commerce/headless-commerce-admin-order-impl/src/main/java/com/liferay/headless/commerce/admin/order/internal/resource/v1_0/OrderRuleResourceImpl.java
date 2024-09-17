@@ -162,12 +162,55 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 
 	@Override
 	public OrderRule postOrderRule(OrderRule orderRule) throws Exception {
-		COREntry corEntry = _addCOREntry(orderRule);
+		COREntry corEntry = _addCOREntry(
+			orderRule.getExternalReferenceCode(), orderRule);
 
 		return _toOrderRule(corEntry.getCOREntryId());
 	}
 
-	private COREntry _addCOREntry(OrderRule orderRule) throws Exception {
+	@Override
+	public OrderRule putOrderRuleByExternalReferenceCode(
+			String externalReferenceCode, OrderRule orderRule)
+		throws Exception {
+
+		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
+			contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (corEntry == null) {
+			corEntry = _addCOREntry(externalReferenceCode, orderRule);
+
+			return _toOrderRule(corEntry.getCOREntryId());
+		}
+
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
+			orderRule.getDisplayDate(), serviceContext.getTimeZone());
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
+			orderRule.getExpirationDate(), serviceContext.getTimeZone());
+
+		corEntry = _corEntryService.updateCOREntry(
+			corEntry.getCOREntryId(),
+			GetterUtil.getBoolean(orderRule.getActive()),
+			GetterUtil.getString(orderRule.getDescription()),
+			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+			displayDateConfig.getYear(), displayDateConfig.getHour(),
+			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
+			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
+			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
+			GetterUtil.getBoolean(orderRule.getNeverExpire()),
+			GetterUtil.getString(orderRule.getName()),
+			GetterUtil.getInteger(orderRule.getPriority()),
+			GetterUtil.getString(orderRule.getTypeSettings()), serviceContext);
+
+		return _toOrderRule(_updateNestedResources(corEntry, orderRule));
+	}
+
+	private COREntry _addCOREntry(
+			String externalReferenceCode, OrderRule orderRule)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
@@ -177,8 +220,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			orderRule.getExpirationDate(), serviceContext.getTimeZone());
 
 		COREntry corEntry = _corEntryService.addCOREntry(
-			orderRule.getExternalReferenceCode(),
-			GetterUtil.getBoolean(orderRule.getActive()),
+			externalReferenceCode, GetterUtil.getBoolean(orderRule.getActive()),
 			orderRule.getDescription(), displayDateConfig.getMonth(),
 			displayDateConfig.getDay(), displayDateConfig.getYear(),
 			displayDateConfig.getHour(), displayDateConfig.getMinute(),

@@ -10,7 +10,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import {AsyncArray} from './utils/AsyncArray';
-import {mockObjectFields} from './utils/mockObjectFields';
+import {createObjectField, mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
@@ -312,6 +312,56 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 
 		await expect(page.getByText(picklistFieldName)).toBeVisible();
+	});
+
+	test('can navigate to picklist portlet through manage picklist button', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
+		modelBuilderRightSidebarPage,
+		page,
+	}) => {
+		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
+
+		const [objectDefinition] = objectDefinitions;
+
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		listTypeDefinitionIds.push(listTypeDefinition.id);
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition.externalReferenceCode,
+			createObjectField(
+				'picklist',
+				{label: 'picklistField', name: 'picklistField'},
+				{
+					listTypeDefinitionExternalReferenceCode:
+						listTypeDefinition.externalReferenceCode,
+					listTypeDefinitionId: listTypeDefinition.id,
+				}
+			)
+		);
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
+
+		await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+			objectDefinition.name,
+			modelBuilderDiagramPage.objectDefinitionNodes
+		);
+
+		await page.getByText('picklistField').click();
+
+		await modelBuilderRightSidebarPage.managePicklistsButton.click();
+
+		await expect(
+			page.getByRole('heading', {name: 'Picklists'})
+		).toBeVisible();
 	});
 
 	test('can see the translation of the object fields businesses types in object definition node', async ({

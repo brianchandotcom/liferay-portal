@@ -9,6 +9,7 @@ export class ModelBuilderRightSidebarPage {
 	readonly deleteButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly deleteTrashButton: Locator;
+	readonly managePicklistsButton: Locator;
 	readonly modalDeleteObjectRelationshipTextField: Locator;
 	readonly objectDefinitionActivateObject: Locator;
 	readonly objectDefinitionEntryTitleField: Locator;
@@ -36,6 +37,9 @@ export class ModelBuilderRightSidebarPage {
 		this.deleteTrashButton = page
 			.getByRole('tabpanel')
 			.getByTitle('Delete');
+		this.managePicklistsButton = page.getByRole('button', {
+			name: 'Manage Picklists',
+		});
 		this.modalDeleteObjectRelationshipTextField = page.getByPlaceholder(
 			'Confirm Relationship Name'
 		);

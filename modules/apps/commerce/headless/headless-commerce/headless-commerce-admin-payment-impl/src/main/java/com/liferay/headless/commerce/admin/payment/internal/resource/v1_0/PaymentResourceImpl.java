@@ -202,7 +202,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 	@Override
 	public Payment postPayment(Payment payment) throws Exception {
 		CommercePaymentEntry commercePaymentEntry = _addOrUpdatePayment(
-			payment);
+			payment.getExternalReferenceCode(), payment);
 
 		return _toPayment(
 			commercePaymentEntry.getCommercePaymentEntryId(),
@@ -256,6 +256,21 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 
 		commercePaymentEntry = _commercePaymentGateway.refund(
 			contextHttpServletRequest, commercePaymentEntry);
+
+		return _toPayment(
+			commercePaymentEntry.getCommercePaymentEntryId(),
+			contextAcceptLanguage.getPreferredLocale(),
+			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
+			contextUriInfo, _getActions(commercePaymentEntry));
+	}
+
+	@Override
+	public Payment putPaymentByExternalReferenceCode(
+			String externalReferenceCode, Payment payment)
+		throws Exception {
+
+		CommercePaymentEntry commercePaymentEntry = _addOrUpdatePayment(
+			externalReferenceCode, payment);
 
 		return _toPayment(
 			commercePaymentEntry.getCommercePaymentEntryId(),
@@ -328,11 +343,12 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		).build();
 	}
 
-	private CommercePaymentEntry _addOrUpdatePayment(Payment payment)
+	private CommercePaymentEntry _addOrUpdatePayment(
+			String externalReferenceCode, Payment payment)
 		throws Exception {
 
 		return _commercePaymentEntryService.addOrUpdateCommercePaymentEntry(
-			payment.getExternalReferenceCode(),
+			externalReferenceCode,
 			GetterUtil.getLong(
 				_classNameLocalService.getClassNameId(
 					payment.getRelatedItemName())),

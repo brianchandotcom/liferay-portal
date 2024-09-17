@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -302,6 +301,95 @@ public class UpgradeReport {
 					StringPool.PERIOD, db.getMinorVersion());
 			}
 		).put(
+			"document.library",
+			LinkedHashMapBuilder.put(
+				"root.dir",
+				() -> {
+					if (StringUtil.equals(
+							PropsValues.DL_STORE_IMPL,
+							"com.liferay.portal.store.file.system." +
+								"AdvancedFileSystemStore")) {
+
+						_rootDir = _getRootDir(
+							_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
+					}
+					else if (StringUtil.equals(
+								PropsValues.DL_STORE_IMPL,
+								"com.liferay.portal.store.file.system." +
+									"FileSystemStore")) {
+
+						_rootDir = _getRootDir(
+							_CONFIGURATION_PID_FILE_SYSTEM_STORE);
+
+						if (_rootDir == null) {
+							_rootDir =
+								PropsValues.LIFERAY_HOME +
+									"/data/document_library";
+						}
+					}
+
+					if (_rootDir != null) {
+						return _rootDir;
+					}
+
+					return "Undefined";
+				}
+			).put(
+				"storage.impl", PropsValues.DL_STORE_IMPL
+			).put(
+				"storage.size",
+				() -> {
+					if (PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT ==
+							0) {
+
+						return "Disabled";
+					}
+
+					if (!StringUtil.endsWith(
+							PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
+
+						return "Check externally";
+					}
+
+					if (_rootDir == null) {
+						return "Unable to determine. Document library " +
+							"\"rootDir\" was not set";
+					}
+
+					_dlSize = 0;
+
+					try {
+						_dlSizeThread.start();
+						_dlSizeThread.join(
+							PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT *
+								Time.SECOND);
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to determine the document library size",
+							exception);
+
+						return "Unable to determine";
+					}
+
+					if (_dlSizeThread.isAlive()) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Unable to determine the document library " +
+									"size. Increase the timeout or check it " +
+										"manually.");
+						}
+
+						return "Unable to determine";
+					}
+
+					return LanguageUtil.formatStorageSize(
+						_dlSize, LocaleUtil.US);
+				}
+			).build()
+		).put(
+			"liferay.home", PropsValues.LIFERAY_HOME
+		).put(
 			"jvm.arguments",
 			() -> {
 				List<String> jvmArguments = new ArrayList<>();
@@ -349,46 +437,11 @@ public class UpgradeReport {
 			}
 		).put(
 			"property",
-			() -> {
-
-				// This section will be removed in the next PR. That is why we
-				// do not use the PropertyPrinter here.
-
-				if (StringUtil.equals(
-						PropsValues.DL_STORE_IMPL,
-						"com.liferay.portal.store.file.system." +
-							"AdvancedFileSystemStore")) {
-
-					_rootDir = _getRootDir(
-						_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
-				}
-				else if (StringUtil.equals(
-							PropsValues.DL_STORE_IMPL,
-							"com.liferay.portal.store.file.system." +
-								"FileSystemStore")) {
-
-					_rootDir = _getRootDir(
-						_CONFIGURATION_PID_FILE_SYSTEM_STORE);
-
-					if (_rootDir == null) {
-						_rootDir =
-							PropsValues.LIFERAY_HOME + "/data/document_library";
-					}
-				}
-
-				return LinkedHashMapBuilder.<String, Object>put(
-					"liferay.home", PropsValues.LIFERAY_HOME
-				).put(
-					"locales", Arrays.toString(PropsValues.LOCALES)
-				).put(
-					"locales.enabled",
-					Arrays.toString(PropsValues.LOCALES_ENABLED)
-				).put(
-					PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
-				).put(
-					"rootDir", (_rootDir != null) ? _rootDir : "Undefined"
-				).build();
-			}
+			LinkedHashMapBuilder.<String, Object>put(
+				"locales", Arrays.toString(PropsValues.LOCALES)
+			).put(
+				"locales.enabled", Arrays.toString(PropsValues.LOCALES_ENABLED)
+			).build()
 		).put(
 			"properties",
 			() -> {
@@ -451,52 +504,6 @@ public class UpgradeReport {
 			}
 		).put(
 			"properties.files", propertiesFilePathStrings
-		).put(
-			"document.library.storage.size",
-			() -> {
-				if (PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT == 0) {
-					return "Disabled";
-				}
-
-				if (!StringUtil.endsWith(
-						PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
-
-					return "Check externally";
-				}
-
-				if (_rootDir == null) {
-					return "Unable to determine. Document library " +
-						"\"rootDir\" was not set";
-				}
-
-				_dlSize = 0;
-
-				try {
-					_dlSizeThread.start();
-					_dlSizeThread.join(
-						PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT *
-							Time.SECOND);
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to determine the document library size",
-						exception);
-
-					return "Unable to determine";
-				}
-
-				if (_dlSizeThread.isAlive()) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Unable to determine the document library size. " +
-								"Increase the timeout or check it manually.");
-					}
-
-					return "Unable to determine";
-				}
-
-				return LanguageUtil.formatStorageSize(_dlSize, LocaleUtil.US);
-			}
 		).put(
 			"tables.initial.final.rows",
 			() -> {

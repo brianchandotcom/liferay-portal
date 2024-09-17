@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -148,6 +149,10 @@ public abstract class BaseRestController {
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).block();
+	}
+
+	protected ExchangeFilterFunction getExchangeFilterFunction() {
+		return (clientRequest, next) -> next.exchange(clientRequest);
 	}
 
 	protected String getLXCDXPURL() {
@@ -283,6 +288,8 @@ public abstract class BaseRestController {
 					16 * 1024 * 1024
 				)
 			).build()
+		).filter(
+			getExchangeFilterFunction()
 		).build();
 	}
 

@@ -3325,6 +3325,18 @@
 		"to": "fetchRole"
 	},
 	{
+		"from": "HtmlUtil.extractText",
+		"issueKey": "LPD-36631",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HtmlParserUtil"
+		],
+		"to": "HtmlParserUtil.extractText",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
 		"classNames": [
 			"DDMFormViewFormInstanceRecordsDisplayContext"
 		],
@@ -3512,15 +3524,6 @@
 			"com.liferay.portal.kernel.search.Sort"
 		],
 		"to": "searchVocabularies(param#0#, new long[] {param#1#}, param#2#, new int[0], param#3#, param#4#, new Sort())"
-	},
-	{
-		"from": "HtmlUtil.extractText",
-		"issueKey": "LPS-189929",
-		"newImports": [
-			"com.liferay.portal.kernel.util.HtmlParser"
-		],
-		"newReference": "HtmlParser _htmlParser",
-		"to": "_htmlParser.extractText"
 	},
 	{
 		"classNames": [

@@ -323,16 +323,6 @@ public class TemplateSelectorTag extends IncludeTag {
 			group = group.getParentGroup();
 		}
 
-		long groupId = group.getGroupId();
-
-		if (group.isStagingGroup()) {
-			Group liveGroup = group.getLiveGroup();
-
-			if (!liveGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
-				groupId = liveGroup.getGroupId();
-			}
-		}
-
 		if (group.isLayoutPrototype()) {
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
@@ -348,6 +338,16 @@ public class TemplateSelectorTag extends IncludeTag {
 
 				return PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					layoutPageTemplateEntry.getGroupId());
+			}
+		}
+
+		long groupId = group.getGroupId();
+
+		if (group.isStagingGroup()) {
+			Group liveGroup = group.getLiveGroup();
+
+			if (!liveGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+				groupId = liveGroup.getGroupId();
 			}
 		}
 

@@ -56,6 +56,13 @@ public class CTEntryModelPreFilterContributor
 			booleanFilter, "modelClassNameId",
 			ArrayUtil.toStringArray(modelClassNameIds));
 
+		long[] modelClassPKs = GetterUtil.getLongValues(
+			searchContext.getAttribute("modelClassPK"));
+
+		_addTermsFilter(
+			booleanFilter, "modelClassPK",
+			ArrayUtil.toStringArray(modelClassPKs));
+
 		long[] userIds = GetterUtil.getLongValues(
 			searchContext.getAttribute(Field.USER_ID));
 

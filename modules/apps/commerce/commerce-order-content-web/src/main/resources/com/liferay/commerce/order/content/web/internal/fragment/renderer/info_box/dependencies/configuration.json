@@ -54,6 +54,10 @@
 							{
 								"label": "requested-delivery-date",
 								"value": "requestedDeliveryDate"
+							},
+							{
+								"label": "shipping-method",
+								"value": "shippingMethod"
 							}
 						]
 					}

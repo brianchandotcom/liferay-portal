@@ -75,6 +75,9 @@ export default function Cart(basePath) {
 				resolveCartsPath(basePath, cartId) + '?nestedFields=cartItems'
 			),
 
+		getCartShippingMethodsPage: (cartId) =>
+			AJAX.GET(resolveCartsPath(basePath, cartId) + '/shipping-methods'),
+
 		getCartsByAccountIdAndChannelId: (accountId, channelId, searchParams) =>
 			AJAX.GET(
 				resolveCartsByAccountIdAndChannelIdPath(

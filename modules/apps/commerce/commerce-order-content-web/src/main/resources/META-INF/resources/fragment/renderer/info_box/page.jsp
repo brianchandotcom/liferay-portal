@@ -11,6 +11,8 @@
 	module="{InfoBox} from commerce-order-content-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"additionalProps", additionalProps
+		).put(
 			"buttonDisplayType", buttonStyle
 		).put(
 			"elementId", uuid

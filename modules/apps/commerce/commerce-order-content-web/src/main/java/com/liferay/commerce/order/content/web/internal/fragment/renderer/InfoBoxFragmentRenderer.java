@@ -8,10 +8,13 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -55,7 +58,9 @@ import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
@@ -195,6 +200,10 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 					"/fragment/renderer/info_box/page.jsp");
 
 			httpServletRequest.setAttribute(
+				"liferay-commerce:info-box:additionalProps",
+				_getAdditionalProps(
+					commerceOrder, field));
+			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:commerceOrderId",
 				commerceOrder.getCommerceOrderId());
 			httpServletRequest.setAttribute(
@@ -248,6 +257,33 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private Map<String, Object> _getAdditionalProps(
+			CommerceOrder commerceOrder, String field)
+		throws PortalException {
+
+		Map<String, Object> additionalProps = new HashMap<>();
+
+		if (field.equals("shippingMethod")) {
+			CommerceShippingMethod commerceShippingMethod =
+				commerceOrder.getCommerceShippingMethod();
+
+			if (commerceShippingMethod != null) {
+				if (Validator.isNull(commerceOrder.getShippingOptionName())) {
+					additionalProps.put(
+						"value", commerceShippingMethod.getEngineKey());
+				}
+				else {
+					additionalProps.put(
+						"value",
+						commerceShippingMethod.getEngineKey() + "#" +
+							commerceOrder.getShippingOptionName());
+				}
+			}
+		}
+
+		return additionalProps;
 	}
 
 	private String _getConfigurationValue(
@@ -362,6 +398,24 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			}
 
 			return String.valueOf(commerceOrder.getRequestedDeliveryDate());
+		} else if (field.equals("shippingMethod")) {
+			CommerceShippingMethod commerceShippingMethod =
+				commerceOrder.getCommerceShippingMethod();
+
+			if (commerceShippingMethod != null) {
+				if (Validator.isNull(commerceOrder.getShippingOptionName())) {
+					return commerceShippingMethod.getName(locale);
+				}
+
+				CommerceShippingEngine commerceShippingEngine =
+					_commerceShippingEngineRegistry.getCommerceShippingEngine(
+						commerceShippingMethod.getEngineKey());
+
+				return StringBundler.concat(
+					commerceShippingMethod.getName(locale), " - ",
+					commerceShippingEngine.getCommerceShippingOptionLabel(
+						commerceOrder.getShippingOptionName(), locale));
+			}
 		}
 
 		return StringPool.BLANK;
@@ -430,6 +484,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
+	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

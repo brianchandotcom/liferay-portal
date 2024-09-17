@@ -14,32 +14,37 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 public interface DestinationHelper {
 
 	/**
-	 * @return The {@link AssetEntry} object associated with the current destination.
+	 * @return The {@link AssetEntry} object associated with the current
+	 *         destination.
 	 */
 	public AssetEntry getAssetEntry();
 
 	/**
-	 * @return The {@link AssetRenderer} for the {@link AssetEntry} associated with the current destination.
+	 * @return The {@link AssetRenderer} for the {@link AssetEntry} associated
+	 *         with the current destination.
 	 */
 	public AssetRenderer<?> getAssetRenderer();
 
 	/**
-	 * @return The view URL of the asset associated with the current destination.
+	 * @return The view URL of the asset associated with the current
+	 *         destination.
 	 */
 	public String getAssetViewURL();
 
 	/**
-	 * @return The fully qualified class name of the {@link AssetEntry} associated with the current destination.
+	 * @return The fully qualified class name of the {@link AssetEntry}
+	 *         associated with the current destination.
 	 */
 	public String getClassName();
 
 	/**
-	 * @return The class primary key of the {@link AssetEntry} associated with the current destination.
+	 * @return The class primary key of the {@link AssetEntry} associated with
+	 *         the current destination.
 	 */
 	public long getClassPK();
 
 	/**
-	 * @param name The name of the route parameter to retrieve.
+	 * @param  name The name of the route parameter to retrieve.
 	 * @return The value of a route parameter with the specified name.
 	 */
 	public Object getRouteParameter(String name);
@@ -50,7 +55,8 @@ public interface DestinationHelper {
 	public long getScopeGroupId();
 
 	/**
-	 * @return The unique identifier (UID) of the {@link AssetEntry} associated with the current destination.
+	 * @return The unique identifier (UID) of the {@link AssetEntry} associated
+	 *         with the current destination.
 	 */
 	public String getUID();
 

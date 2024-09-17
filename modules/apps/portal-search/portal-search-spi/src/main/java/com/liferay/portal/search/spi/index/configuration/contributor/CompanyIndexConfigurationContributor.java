@@ -19,9 +19,11 @@ public interface CompanyIndexConfigurationContributor {
 	/**
 	 * Adds search engine mappings via the provided {@link MappingsHelper}.
 	 *
+	 * <p>
 	 * Implementations of this method should use the {@link
 	 * MappingsHelper#putMappings(String)} method to
 	 * add the desired mappings to the search engine.
+	 * </p>
 	 *
 	 * @param companyId the company ID of the index targeted by the new
 	 *        mappings.
@@ -34,9 +36,11 @@ public interface CompanyIndexConfigurationContributor {
 	/**
 	 * Adds search engine settings via the provided {@link SettingsHelper}.
 	 *
+	 * <p>
 	 * Implementations of this method should use the {@link
 	 * SettingsHelper#put(String, String)} method to
 	 * add the desired settings to the search engine.
+	 * </p>
 	 *
 	 * @param companyId the company ID of the index targeted by the new
 	 *        settings.

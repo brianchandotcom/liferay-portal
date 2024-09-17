@@ -13,7 +13,7 @@ public interface SettingsHelper {
 	/**
 	 * Returns a setting value based on the setting key.
 	 *
-	 * @param key The name of the setting whose value will be returned.
+	 * @param key The name of the setting whose value is returned.
 	 */
 	public String get(String key);
 

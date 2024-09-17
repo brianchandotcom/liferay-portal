@@ -1334,6 +1334,12 @@ public class ObjectRelationshipLocalServiceImpl
 
 				objectDefinitionLocalService.deployObjectDefinition(
 					objectDefinition1);
+
+				if (objectDefinition2.isApproved()) {
+					_objectEntryLocalService.updateRootObjectEntryIds(
+						objectDefinition1, objectRelationship,
+						objectDefinition2);
+				}
 			}
 
 			ObjectDefinitionTreeFactory objectDefinitionTreeFactory =

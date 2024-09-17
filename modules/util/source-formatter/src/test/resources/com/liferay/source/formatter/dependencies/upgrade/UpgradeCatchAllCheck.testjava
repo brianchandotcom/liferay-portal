@@ -697,6 +697,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		contact.setSuffixId();
 	}
 
+	public void method(
+		DDMFormViewFormInstanceRecordsDisplayContext
+			ddmFormViewFormInstanceRecordsDisplayContext){
+		
+		ddmFormViewFormInstanceRecordsDisplayContext.getSearch();
+	}
+
 	public void method(DDMStructure ddmStructure, Fields ddmFields) {
 		_journalConverter.getContent(ddmStructure, null);
 		_journalConverter.getContent(ddmStructure, ddmFields);

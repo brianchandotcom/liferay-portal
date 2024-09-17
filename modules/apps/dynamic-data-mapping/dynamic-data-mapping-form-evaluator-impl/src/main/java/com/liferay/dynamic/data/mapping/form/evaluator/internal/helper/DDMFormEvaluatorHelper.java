@@ -505,6 +505,12 @@ public class DDMFormEvaluatorHelper {
 	private boolean _isConfirmationValueInvalid(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
+		if (!_isFieldWithConfirmationFieldAndVisible(
+				ddmFormEvaluatorFieldContextKey)) {
+
+			return false;
+		}
+
 		DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
 			ddmFormEvaluatorFieldContextKey);
 
@@ -875,8 +881,6 @@ public class DDMFormEvaluatorHelper {
 				if (nonevaluableFieldNames.contains(
 						ddmFormEvaluatorFieldContextKey.getName()) ||
 					!_isConfirmationValueInvalid(
-						ddmFormEvaluatorFieldContextKey) ||
-					!_isFieldWithConfirmationFieldAndVisible(
 						ddmFormEvaluatorFieldContextKey)) {
 
 					continue;
@@ -927,15 +931,9 @@ public class DDMFormEvaluatorHelper {
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
 			entry.getKey();
 
-		if ((_isConfirmationValueInvalid(ddmFormEvaluatorFieldContextKey) &&
-			 _isFieldWithConfirmationFieldAndVisible(
-				 ddmFormEvaluatorFieldContextKey)) ||
-			_isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
-
-			return;
-		}
-
-		if (_isFieldReadOnly(ddmFormEvaluatorFieldContextKey) ||
+		if (_isConfirmationValueInvalid(ddmFormEvaluatorFieldContextKey) ||
+			_isFieldEmpty(ddmFormEvaluatorFieldContextKey) ||
+			_isFieldReadOnly(ddmFormEvaluatorFieldContextKey) ||
 			!_isFieldVisible(ddmFormEvaluatorFieldContextKey) ||
 			_isHideField(ddmFormEvaluatorFieldContextKey)) {
 

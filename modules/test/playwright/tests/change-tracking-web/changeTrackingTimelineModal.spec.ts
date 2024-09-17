@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
@@ -12,6 +12,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {JournalPage} from '../journal-web/pages/JournalPage';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -60,10 +61,11 @@ test.beforeEach(
 
 			if (i !== publicationCount - 1) {
 				await journalPage.goto();
-				const webContentHeader = page.getByRole('heading', {
-					name: 'Web Content',
-				});
-				await expect(webContentHeader).toBeVisible();
+				await page
+					.getByRole('heading', {
+						name: 'Web Content',
+					})
+					.waitFor();
 				await journalPage.goToJournalArticleAction(
 					'Delete',
 					articleTitle
@@ -87,40 +89,53 @@ test.afterEach(async ({apiHelpers, changeTrackingPage, journalPage, page}) => {
 	await changeTrackingPage.workOnProduction();
 
 	await journalPage.goto();
-	await page.getByRole('heading', {name: 'Web Content'}).isVisible();
+	await page.getByRole('heading', {name: 'Web Content'}).waitFor();
 	await journalPage.goToJournalArticleAction('Delete', articleTitle);
 });
+
+const getEntityHistoryModalLocator = (page: Page) => {
+	return page.locator('.entity-history-modal');
+};
+
+const getPublicationTimelineLocator = (page: Page) => {
+	return page.locator('.publication-timeline');
+};
+
+const goToPublicationTimelineModal = async (
+	page: Page,
+	journalPage: JournalPage
+) => {
+	await journalPage.goto();
+	await page.getByRole('heading', {name: 'Web Content'}).waitFor();
+	await journalPage.goToJournalArticleAction('Edit', articleTitle);
+	await page.getByRole('tab', {name: 'Properties'}).waitFor();
+
+	await page.locator('.change-tracking-timeline-button').click();
+
+	const publicationTimelineLocator = getPublicationTimelineLocator(page);
+
+	await publicationTimelineLocator.getByText('Modified').first().waitFor();
+	await publicationTimelineLocator
+		.getByRole('button', {name: 'View More'})
+		.click();
+
+	await getEntityHistoryModalLocator(page)
+		.getByRole('heading', {name: 'View All History'})
+		.waitFor();
+};
 
 test('LPD-22759 Allow users to view the entire history of an entity in a popup modal', async ({
 	journalPage,
 	page,
 }) => {
-	await journalPage.goto();
-	await page.getByRole('heading', {name: 'Web Content'}).isVisible();
-	await journalPage.goToJournalArticleAction('Edit', articleTitle);
-	await page.getByRole('tab', {name: 'Properties'}).waitFor();
-
-	await page.locator('.change-tracking-timeline-button').click();
-	await page
-		.locator('.publication-timeline')
-		.getByText('Modified')
-		.first()
-		.isVisible();
-	await page
-		.locator('.publication-timeline')
-		.getByRole('button', {name: 'View More'})
-		.click();
-	await page
-		.locator('.entity-history-modal')
-		.getByRole('heading', {name: 'View All History'})
-		.isVisible();
+	await goToPublicationTimelineModal(page, journalPage);
 
 	for (let i = 0; i < ctCollections.length; i++) {
 		if (i !== ctCollections.length - 1) {
 			await expect(
-				page
-					.locator('.entity-history-modal')
-					.getByText(ctCollections[i].name)
+				getEntityHistoryModalLocator(page).getByText(
+					ctCollections[i].name
+				)
 			).toBeVisible();
 		}
 	}

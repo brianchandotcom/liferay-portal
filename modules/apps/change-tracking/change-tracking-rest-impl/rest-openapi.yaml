@@ -70,6 +70,19 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                ctCollectionName:
+                    readOnly: true
+                    type: string
+                ctCollectionStatus:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+                ctCollectionStatusDate:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                ctCollectionStatusUserName:
+                    readOnly: true
+                    type: string
                 dateCreated:
                     format: date-time
                     readOnly: true

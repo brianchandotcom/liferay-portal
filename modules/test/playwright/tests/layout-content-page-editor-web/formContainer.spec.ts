@@ -922,7 +922,7 @@ test.describe('Multistep', () => {
 	);
 });
 
-test.describe('Form errors', () => {
+test.describe('Edit mode form errors', () => {
 	test(
 		'Show an error when there is no Submit Button',
 		{tag: '@LPS-151754'},

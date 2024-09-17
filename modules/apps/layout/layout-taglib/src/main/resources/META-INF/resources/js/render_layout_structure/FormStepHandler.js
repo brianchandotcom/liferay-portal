@@ -71,9 +71,33 @@ export default function FormStepHandler({formId}) {
 		}
 	}
 
+	// Set active step when there's an invalid field
+
+	const onSubmit = () => {
+		const fields = form.querySelectorAll('input');
+
+		for (const field of Array.from(fields)) {
+			if (!field.checkValidity()) {
+				const step = field.closest('[data-step-index]');
+
+				const index = Number(step.dataset.stepIndex);
+
+				Liferay.fire('formFragment:changeStep', {
+					emitter: form,
+					step: index,
+				});
+
+				break;
+			}
+		}
+	};
+
+	Liferay.on('formFragment:submit', onSubmit);
+
 	return {
 		dispose: () => {
 			Liferay.detach('formFragment:changeStep', onStepChange);
+			Liferay.detach('formFragment:submit', onSubmit);
 		},
 	};
 }

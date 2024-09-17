@@ -360,27 +360,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-91946 Given in the Site Editor => Page => Content Editor; Having at least on Segment created When trying to create a new experience without filling the Experience Name input Then the modal does not hides away and the Experience Name input reports an error"
-	@priority = 4
-	test RequiredExperienceNameField {
-		property portal.acceptance = "true";
-
-		task ("Try to create new experience without name") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "",
-				failureText = "An experience name is required.",
-				segmentName = "Anyone");
-		}
-
-		task ("Check if the warning message appears") {
-			AssertTextEquals(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "An experience name is required.");
-		}
-	}
-
 }

@@ -113,6 +113,20 @@ test.beforeEach(async ({apiHelpers, page}) => {
 	project = result.project;
 });
 
+test.afterEach(async ({apiHelpers, page}) => {
+	await test.step('Delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
+
+	await test.step('Delete site on DXP side', async () => {
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		await apiHelpers.headlessSite.deleteSite(String(site.id));
+	});
+});
 		await test.step('Go to My Page', async () => {
 			await navigateToSitePage({
 				page,

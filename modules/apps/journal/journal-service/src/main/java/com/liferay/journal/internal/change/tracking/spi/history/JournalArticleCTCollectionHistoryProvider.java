@@ -12,11 +12,14 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class JournalArticleCTCollectionHistoryProvider
 		throws PortalException {
 
 		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.getJournalArticle(classPK);
+			_journalArticleLocalService.getJournalArticle(classPK);
 
 		return _ctCollectionLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -79,7 +82,45 @@ public class JournalArticleCTCollectionHistoryProvider
 		return JournalArticle.class;
 	}
 
+	@Override
+	public UnsafeConsumer<SearchUtil.SearchContext, Exception>
+		getSearchContextUnsafeConsumer(long classNameId, long classPK) {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchJournalArticle(classPK);
+
+		return searchContext -> {
+			searchContext.setAttribute(
+				"modelClassNameId", new Long[] {classNameId});
+
+			if (journalArticle != null) {
+				List<Long> modelClassPKs = _ctCollectionLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						CTEntryTable.INSTANCE.modelClassPK
+					).from(
+						CTEntryTable.INSTANCE
+					).where(
+						CTEntryTable.INSTANCE.modelClassPK.in(
+							DSLQueryFactoryUtil.select(
+								JournalArticleTable.INSTANCE.id
+							).from(
+								JournalArticleTable.INSTANCE
+							).where(
+								JournalArticleTable.INSTANCE.resourcePrimKey.eq(
+									journalArticle.getResourcePrimKey())
+							))
+					));
+
+				searchContext.setAttribute(
+					"modelClassPK", ArrayUtil.toLongArray(modelClassPKs));
+			}
+		};
+	}
+
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

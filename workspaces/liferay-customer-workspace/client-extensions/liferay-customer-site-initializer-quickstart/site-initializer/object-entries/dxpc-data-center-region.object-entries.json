@@ -2,66 +2,71 @@
 	"object-entries": [
 		{
 			"externalReferenceCode": "CP-REGION-01",
+			"name": "Dammam, Saudi Arabia",
+			"value": "Dammam, Saudi Arabia"
+		},
+		{
+			"externalReferenceCode": "CP-REGION-02",
 			"name": "Doha, Qatar",
 			"value": "Doha, Qatar"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-02",
+			"externalReferenceCode": "CP-REGION-03",
 			"name": "Frankfurt, Germany",
 			"value": "Frankfurt, Germany"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-03",
+			"externalReferenceCode": "CP-REGION-04",
 			"name": "Hamina, Finland",
 			"value": "Hamina, Finland"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-04",
+			"externalReferenceCode": "CP-REGION-05",
 			"name": "Iowa, USA",
 			"value": "Iowa, USA"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-05",
+			"externalReferenceCode": "CP-REGION-06",
 			"name": "Jurong West, Singapore",
 			"value": "Jurong West, Singapore"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-06",
+			"externalReferenceCode": "CP-REGION-07",
 			"name": "London, England",
 			"value": "London, England"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-07",
+			"externalReferenceCode": "CP-REGION-08",
 			"name": "Montreal, Canada",
 			"value": "Montreal, Canada"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-08",
+			"externalReferenceCode": "CP-REGION-09",
 			"name": "Mumbai, India",
 			"value": "Mumbai, India"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-09",
+			"externalReferenceCode": "CP-REGION-10",
 			"name": "Oregon, USA",
 			"value": "Oregon, USA"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-10",
+			"externalReferenceCode": "CP-REGION-11",
 			"name": "Osaka, Japan",
 			"value": "Osaka, Japan"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-11",
+			"externalReferenceCode": "CP-REGION-12",
 			"name": "São Paulo, Brazil",
 			"value": "São Paulo, Brazil"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-12",
+			"externalReferenceCode": "CP-REGION-13",
 			"name": "Sydney, Australia",
 			"value": "Sydney, Australia"
 		},
 		{
-			"externalReferenceCode": "CP-REGION-13",
+			"externalReferenceCode": "CP-REGION-14",
 			"name": "Tokyo, Japan",
 			"value": "Tokyo, Japan"
 		}

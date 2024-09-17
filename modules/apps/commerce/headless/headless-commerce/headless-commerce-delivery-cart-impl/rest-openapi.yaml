@@ -460,6 +460,8 @@ components:
             properties:
                 description:
                     type: string
+                engineKey:
+                    type: string
                 id:
                     format: int64
                     type: integer

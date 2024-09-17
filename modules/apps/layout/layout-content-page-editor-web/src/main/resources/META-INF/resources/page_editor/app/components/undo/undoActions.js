@@ -32,13 +32,13 @@ import {getItemNameFromAction} from './getItemNameFromAction';
 import * as undoAddFragmentEntryLinks from './undoAddFragmentEntryLinks';
 import * as undoAddItem from './undoAddItem';
 import * as undoAddRule from './undoAddRule';
-import * as undoAddStepper from './undoAddStepper';
 import * as undoChangeMasterLayout from './undoChangeMasterLayout';
 import * as undoDeleteItem from './undoDeleteItem';
 import * as undoDeleteRule from './undoDeleteRule';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoMoveItem from './undoMoveItem';
 import * as undoSelectExperience from './undoSelectExperience';
+import * as undoStepperAction from './undoStepperAction';
 import * as undoSwitchViewportSize from './undoSwitchViewportSize';
 import * as undoToggleFragmentHighlighted from './undoToggleFragmentHighlighted';
 import * as undoToggleWidgetHighlighted from './undoToggleWidgetHighlighted';
@@ -56,13 +56,13 @@ const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoAddFragmentEntryLinks,
 	[ADD_ITEM]: undoAddItem,
 	[ADD_RULE]: undoAddRule,
-	[ADD_STEPPER]: undoAddStepper,
+	[ADD_STEPPER]: undoStepperAction,
 	[CHANGE_MASTER_LAYOUT]: undoChangeMasterLayout,
 	[DELETE_ITEM]: undoDeleteItem,
 	[DELETE_RULE]: undoDeleteRule,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoMoveItem,
-	[MOVE_STEPPER]: undoAddStepper,
+	[MOVE_STEPPER]: undoStepperAction,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
 	[TOGGLE_FRAGMENT_HIGHLIGHTED]: undoToggleFragmentHighlighted,

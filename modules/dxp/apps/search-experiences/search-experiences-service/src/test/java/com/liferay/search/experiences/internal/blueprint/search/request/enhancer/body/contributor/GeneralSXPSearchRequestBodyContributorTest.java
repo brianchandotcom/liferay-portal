@@ -45,6 +45,36 @@ public class GeneralSXPSearchRequestBodyContributorTest {
 	}
 
 	@Test
+	public void testIgnoreSearchableAssetTypesIfEmpty() {
+		List<String> entryClassNames = new ArrayList<>();
+
+		entryClassNames.add("com.liferay.journal.model.JournalArticle");
+
+		_searchRequestBuilder.withSearchContext(
+			searchContext -> searchContext.setEntryClassNames(
+				entryClassNames.toArray(new String[1])));
+
+		GeneralConfiguration generalConfiguration = new GeneralConfiguration();
+
+		generalConfiguration.setSearchableAssetTypes(new String[0]);
+
+		Configuration configuration = new Configuration();
+
+		configuration.setGeneralConfiguration(generalConfiguration);
+
+		_generalSXPSearchRequestBodyContributor.contribute(
+			configuration, _searchRequestBuilder, null);
+
+		SearchRequest searchRequest = _searchRequestBuilder.build();
+
+		Assert.assertEquals(
+			entryClassNames, searchRequest.getEntryClassNames());
+		Assert.assertTrue(
+			searchRequest.getModelIndexerClassNames(
+			).isEmpty());
+	}
+
+	@Test
 	public void testSearchableAssetTypes() {
 		List<String> searchableAssetTypes = new ArrayList<>();
 

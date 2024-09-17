@@ -409,12 +409,13 @@ public class ObjectDefinitionLocalServiceImpl
 				continue;
 			}
 
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getExternalReferenceCode(),
-				objectRelationship.getObjectRelationshipId(),
-				objectRelationship.getParameterObjectFieldId(),
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				objectRelationship.getLabelMap(), null);
+			objectRelationship.setDeletionType(
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
+			objectRelationship.setEdge(true);
+
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					objectRelationship);
 
 			ObjectDefinition objectDefinition1 =
 				objectDefinitionLocalService.getObjectDefinition(

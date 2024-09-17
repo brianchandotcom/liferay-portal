@@ -46,6 +46,10 @@ describe('MultiSelectManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	describe('Simple multiselect', () => {
 		it('activates simple multiselect when pressing ctrl + click', () => {
 			renderComponent();
@@ -68,6 +72,21 @@ describe('MultiSelectManager', () => {
 				new KeyboardEvent('keydown', {
 					ctrlKey: true,
 					key: 'Enter',
+				})
+			);
+
+			const activateMultiSelect = useActivateMultiSelect();
+
+			expect(activateMultiSelect).toBeCalledWith('simple');
+		});
+
+		it('activates simple multiselect when pressing ctrl + "Space"', () => {
+			renderComponent();
+
+			document.body.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					ctrlKey: true,
+					key: 'Space',
 				})
 			);
 
@@ -111,13 +130,12 @@ describe('MultiSelectManager', () => {
 			expect(activateMultiSelect).toBeCalledWith('range');
 		});
 
-		it('activates range multiselect when pressing shift + "Enter"', () => {
+		it('activates range multiselect when pressing shift', () => {
 			renderComponent();
 
 			document.body.dispatchEvent(
 				new KeyboardEvent('keydown', {
 					ctrlKey: false,
-					key: 'Enter',
 					shiftKey: true,
 				})
 			);

@@ -3214,6 +3214,14 @@
 	},
 	{
 		"classNames": [
+			"CustomFacetPortletPreferences"
+		],
+		"from": "getFederatedSearchKeyOptional",
+		"issueKey": "LPD-31972",
+		"to": "getFederatedSearchKey"
+	},
+	{
+		"classNames": [
 			"Country"
 		],
 		"from": "getCommerceCountryId",

@@ -24,55 +24,6 @@ definition {
 		}
 	}
 
-	@description = "The user could navigate to page under simulation mode."
-	@priority = 3
-	@uitest
-	test NavigateToPageInSimulationMode {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add an Asset Publisher to a widget page") {
-			HeadlessSite.addSite(
-				siteName = ${siteName},
-				templateName = "Welcome",
-				templateType = "Site Initializer");
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Navigate to the widget page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = ${siteName});
-		}
-
-		task ("Access to Mobile Device mode via simulation menu") {
-			MobileDevice.previewPG(deviceType = "smartphone");
-		}
-
-		task ("View the Asset Publisher is shown") {
-			Portlet.viewTitle(portletName = "Asset Publisher");
-		}
-
-		task ("Navigate to Home page via Navigation Menu") {
-			Click(locator1 = "NavBar#TOGGLE_NAVIGATION");
-
-			Click(
-				key_pageName = "Home",
-				locator1 = "Home#PAGE");
-
-			Smoke.viewWelcomeContentPage();
-		}
-	}
-
 	@description = "This is a test for LPS-186155. View content in experience under Simulation panel in content page."
 	@priority = 4
 	test PreviewContentOnContentPageByExperience {

@@ -8,6 +8,7 @@
 <%@ page import="com.liferay.commerce.constants.CommerceOrderPaymentConstants" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
 page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlParserUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
@@ -23,6 +24,8 @@ PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
 
 DLURLHelperUtil.getDownloadURL(null, null, null, null, null, null);
 DLURLHelperUtil.getImagePreviewURL(null, null);
+
+HtmlParserUtil.extractText(null);
 
 JSONUtil.isJSONObject("test123");
 

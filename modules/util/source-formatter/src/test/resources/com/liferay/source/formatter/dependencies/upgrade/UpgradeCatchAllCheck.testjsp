@@ -19,6 +19,8 @@ DLUtil.getGroupIds(themeDisplay);
 DLUtil.getDownloadURL(null, null, null, null, null, null);
 DLUtil.getImagePreviewURL(null, null);
 
+HtmlUtil.extractText(null);
+
 JSONUtil.isValid("test123");
 
 portletDisplay.getPortletInstanceConfiguration(clazz);

@@ -91,25 +91,27 @@ let channel;
 let project;
 let site;
 
-			name: siteName,
-		});
+test.beforeEach(async ({apiHelpers, page}) => {
+	site = await apiHelpers.headlessSite.createSite({
+		name: siteName,
+	});
 
-		const pageTitle = 'MyPage ' + getRandomString();
+	await createSitePage({
+		apiHelpers,
+		pageTitle: pageTitle,
+		siteName,
+	});
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName,
-		});
+	const result = await syncAnalyticsCloud({
+		apiHelpers,
+		channelName,
+		page,
+		siteName,
+	});
 
-		const channelName = 'My Property ' + getRandomString();
-
-		const {channel, project} = await syncAnalyticsCloud({
-			apiHelpers,
-			channelName,
-			page,
-			siteName,
-		});
+	channel = result.channel;
+	project = result.project;
+});
 
 		await test.step('Go to My Page', async () => {
 			await navigateToSitePage({

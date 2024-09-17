@@ -347,6 +347,10 @@ public class UpgradeReport {
 		).put(
 			"property",
 			() -> {
+
+				// This section will be removed in the next PR. That is why we
+				// do not use the PropertyPrinter here.
+
 				if (StringUtil.equals(
 						PropsValues.DL_STORE_IMPL,
 						"com.liferay.portal.store.file.system." +

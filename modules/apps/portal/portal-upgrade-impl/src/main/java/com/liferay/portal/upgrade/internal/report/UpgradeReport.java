@@ -422,11 +422,11 @@ public class UpgradeReport {
 						continue;
 					}
 
-					String decodedKey = EnvPropertiesUtil.decode(
-						StringUtil.toLowerCase(
-							key.substring(envPrefix.length())));
-
-					propertiesMap.put(decodedKey, PropsUtil.get(decodedKey));
+					propertiesMap.put(
+						EnvPropertiesUtil.decode(
+							StringUtil.toLowerCase(
+								key.substring(envPrefix.length()))),
+						entry.getValue());
 				}
 
 				List<PropertyLine> propertyLines = new ArrayList<>();

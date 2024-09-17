@@ -76,7 +76,11 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		_addDBPartition(companyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
+
+			_addDBPartition(companyId);
+		}
 
 		return _companyIds.add(companyId);
 	}
@@ -117,7 +121,11 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		_extractDBPartition(companyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
+
+			_extractDBPartition(companyId);
+		}
 
 		return _companyIds.remove(companyId);
 	}
@@ -237,7 +245,11 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		_dropDBPartition(companyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
+
+			_dropDBPartition(companyId);
+		}
 
 		return _companyIds.remove(companyId);
 	}

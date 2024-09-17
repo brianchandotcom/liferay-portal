@@ -173,6 +173,7 @@ public class FunctionActionExecutorImplTest {
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
+
 		Mockito.when(
 			functionActionExecutorImplConfiguration.resourcePath()
 		).thenReturn(

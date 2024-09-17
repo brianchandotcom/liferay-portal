@@ -76,6 +76,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListenerTest
 		).create(
 			Mockito.any()
 		);
+
 		Mockito.verify(
 			_filterToIndexSynchronizer, Mockito.times(1)
 		).copyToIndex(
@@ -95,6 +96,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListenerTest
 		).create(
 			Mockito.any()
 		);
+
 		Mockito.verify(
 			_filterToIndexSynchronizer, Mockito.never()
 		).copyToIndex(

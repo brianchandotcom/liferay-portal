@@ -308,6 +308,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 		Mockito.verify(
 			serviceContext
 		).getRequest();
+
 		Mockito.verify(
 			serviceContext
 		).getResponse();
@@ -315,6 +316,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 		Mockito.verify(
 			themeDisplay
 		).getRequest();
+
 		Mockito.verify(
 			themeDisplay
 		).getResponse();

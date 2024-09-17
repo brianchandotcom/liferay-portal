@@ -300,6 +300,7 @@ public class EditAssetListDisplayContextTest {
 		).thenReturn(
 			classTypeId
 		);
+
 		Mockito.when(
 			classType.getName()
 		).thenReturn(
@@ -374,11 +375,13 @@ public class EditAssetListDisplayContextTest {
 		).thenReturn(
 			assetEntrySubtype
 		);
+
 		Mockito.when(
 			assetListEntry.getAssetEntryType()
 		).thenReturn(
 			assetEntryType
 		);
+
 		Mockito.when(
 			assetListEntry.getTypeSettings(Mockito.anyLong())
 		).thenReturn(

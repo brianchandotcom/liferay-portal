@@ -69,6 +69,7 @@ public class PlacedCommerceOrderTableFDSView extends BaseTableFDSView {
 		).setLabel(
 			"account"
 		);
+
 		stringFDSTableSchemaField.setTruncate(true);
 
 		return stringFDSTableSchemaField;

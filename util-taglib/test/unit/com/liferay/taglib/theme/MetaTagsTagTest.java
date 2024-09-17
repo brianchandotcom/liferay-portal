@@ -226,11 +226,13 @@ public class MetaTagsTagTest {
 		).thenReturn(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN)
 		);
+
 		Mockito.when(
 			language.getLanguageId(Mockito.any(Locale.class))
 		).thenReturn(
 			LocaleUtil.toLanguageId(LocaleUtil.US)
 		);
+
 		Mockito.when(
 			language.getLanguageId((Locale)null)
 		).thenReturn(

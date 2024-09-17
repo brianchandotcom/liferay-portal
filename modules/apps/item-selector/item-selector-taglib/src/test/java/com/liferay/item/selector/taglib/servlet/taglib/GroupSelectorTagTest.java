@@ -82,6 +82,7 @@ public class GroupSelectorTagTest {
 		).thenReturn(
 			_COMPANY_ID
 		);
+
 		Mockito.when(
 			group.isCompany()
 		).thenReturn(

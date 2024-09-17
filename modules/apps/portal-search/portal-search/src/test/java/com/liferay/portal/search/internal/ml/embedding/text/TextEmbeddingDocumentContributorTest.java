@@ -183,6 +183,7 @@ public class TextEmbeddingDocumentContributorTest {
 				}.toString()
 			}
 		);
+
 		Mockito.when(
 			semanticSearchConfiguration.textEmbeddingsEnabled()
 		).thenReturn(

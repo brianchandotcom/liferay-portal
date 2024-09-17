@@ -247,6 +247,7 @@ public class AssetPublisherUtilTest {
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
+
 		Mockito.when(
 			assetListEntry.getAssetListEntryId()
 		).thenReturn(
@@ -264,6 +265,7 @@ public class AssetPublisherUtilTest {
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
+
 		Mockito.when(
 			group.getGroupId()
 		).thenReturn(
@@ -321,6 +323,7 @@ public class AssetPublisherUtilTest {
 			).thenReturn(
 				assetListEntry
 			);
+
 			_assetListEntryLocalServiceUtilMockedStatic.when(
 				() -> AssetListEntryLocalServiceUtil.fetchAssetListEntry(
 					Mockito.anyLong())
@@ -337,6 +340,7 @@ public class AssetPublisherUtilTest {
 		).thenReturn(
 			null
 		);
+
 		_assetListEntryLocalServiceUtilMockedStatic.when(
 			() -> AssetListEntryLocalServiceUtil.fetchAssetListEntry(
 				assetListEntry.getAssetListEntryId())
@@ -380,6 +384,7 @@ public class AssetPublisherUtilTest {
 			).thenReturn(
 				assetListEntry
 			);
+
 			_assetListEntryLocalServiceUtilMockedStatic.when(
 				() ->
 					AssetListEntryLocalServiceUtil.
@@ -400,6 +405,7 @@ public class AssetPublisherUtilTest {
 		).thenReturn(
 			null
 		);
+
 		_assetListEntryLocalServiceUtilMockedStatic.when(
 			() ->
 				AssetListEntryLocalServiceUtil.

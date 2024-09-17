@@ -164,6 +164,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		).thenReturn(
 			_getThemeDisplay()
 		);
+
 		Mockito.when(
 			httpServletRequest.getParameterMap()
 		).thenReturn(

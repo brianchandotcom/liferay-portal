@@ -227,6 +227,7 @@ public class TextEmbeddingRetrieverTest {
 				}.toString()
 			}
 		);
+
 		Mockito.when(
 			semanticSearchConfiguration.textEmbeddingsEnabled()
 		).thenReturn(

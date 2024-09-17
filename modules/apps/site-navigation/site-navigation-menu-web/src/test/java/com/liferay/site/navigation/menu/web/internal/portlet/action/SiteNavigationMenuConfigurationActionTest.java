@@ -148,11 +148,13 @@ public class SiteNavigationMenuConfigurationActionTest {
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
+
 		Mockito.when(
 			group.getGroupId()
 		).thenReturn(
 			groupId
 		);
+
 		Mockito.when(
 			group.getGroupKey()
 		).thenReturn(

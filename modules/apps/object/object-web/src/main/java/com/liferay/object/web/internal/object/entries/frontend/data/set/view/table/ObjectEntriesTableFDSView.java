@@ -213,6 +213,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			).setLocalizeLabel(
 				localizeLabel
 			);
+
 			stringFDSTableSchemaField.setTruncate(true);
 
 			fdsTableSchemaBuilder.add(stringFDSTableSchemaField);

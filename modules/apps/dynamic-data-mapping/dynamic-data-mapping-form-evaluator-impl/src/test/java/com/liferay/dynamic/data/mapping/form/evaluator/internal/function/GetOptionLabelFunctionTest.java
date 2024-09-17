@@ -49,6 +49,7 @@ public class GetOptionLabelFunctionTest {
 		).thenReturn(
 			_getLocalizedValue("Option 1", "Opcao 1")
 		);
+
 		Mockito.when(
 			ddmFormFieldOptions.getOptionLabels(Mockito.eq("option2"))
 		).thenReturn(

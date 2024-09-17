@@ -203,6 +203,7 @@ public class EntityExtensionWriterInterceptorTest {
 		).thenReturn(
 			_entityExtensionHandlerContextResolver
 		);
+
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
 		).thenReturn(

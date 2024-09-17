@@ -76,6 +76,7 @@ public class SingleIndexToMultipleIndexImporterTest
 		).execute(
 			(BulkDocumentRequest)Mockito.any()
 		);
+
 		_rankingIndexCreatorUtilMockedStatic.verify(
 			() -> RankingIndexCreatorUtil.deleteIfExists(
 				Mockito.any(), Mockito.any()),

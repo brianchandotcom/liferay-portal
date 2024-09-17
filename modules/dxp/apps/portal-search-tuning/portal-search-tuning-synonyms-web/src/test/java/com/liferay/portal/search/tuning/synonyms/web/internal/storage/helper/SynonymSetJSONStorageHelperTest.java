@@ -66,6 +66,7 @@ public class SynonymSetJSONStorageHelperTest {
 		).getClassNameId(
 			Mockito.eq(SynonymSet.class)
 		);
+
 		Mockito.verify(
 			_jsonStorageEntryLocalService, Mockito.times(1)
 		).deleteJSONStorageEntries(
@@ -85,6 +86,7 @@ public class SynonymSetJSONStorageHelperTest {
 		).getClassNameId(
 			Mockito.eq(SynonymSet.class)
 		);
+
 		Mockito.verify(
 			_jsonStorageEntryLocalService, Mockito.times(1)
 		).updateJSONStorageEntries(

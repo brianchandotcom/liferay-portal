@@ -45,6 +45,7 @@ public abstract class BaseRankingsIndexTestCase
 		).when(
 			queries
 		).booleanQuery();
+
 		Mockito.doReturn(
 			Mockito.mock(TermsQuery.class)
 		).when(

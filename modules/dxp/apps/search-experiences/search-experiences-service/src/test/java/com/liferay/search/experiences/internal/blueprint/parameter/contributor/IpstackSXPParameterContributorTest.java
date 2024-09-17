@@ -99,6 +99,7 @@ public class IpstackSXPParameterContributorTest {
 		).getAttribute(
 			Mockito.anyString()
 		);
+
 		Mockito.verify(
 			_sxpParameters, Mockito.never()
 		).add(

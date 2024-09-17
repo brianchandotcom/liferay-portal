@@ -198,6 +198,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
+
 		portalUtil.setPortal(portal);
 
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(

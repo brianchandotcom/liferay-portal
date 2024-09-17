@@ -62,6 +62,7 @@ public class SearchSynonymSetRequestTest extends BaseSynonymsWebTestCase {
 		).match(
 			Mockito.anyString(), Mockito.anyString()
 		);
+
 		Mockito.verify(
 			_queries, Mockito.times(1)
 		).matchAll();
@@ -92,6 +93,7 @@ public class SearchSynonymSetRequestTest extends BaseSynonymsWebTestCase {
 		).match(
 			Mockito.anyString(), Mockito.anyString()
 		);
+
 		Mockito.verify(
 			_queries, Mockito.never()
 		).matchAll();

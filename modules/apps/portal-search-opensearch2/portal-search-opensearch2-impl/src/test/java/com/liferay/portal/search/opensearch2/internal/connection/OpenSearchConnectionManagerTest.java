@@ -105,6 +105,7 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			null
 		);
+
 		Mockito.when(
 			openSearchConnection.isActive()
 		).thenReturn(
@@ -133,6 +134,7 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			null
 		);
+
 		Mockito.when(
 			openSearchConnection.isActive()
 		).thenReturn(
@@ -161,6 +163,7 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			"test"
 		);
+
 		Mockito.when(
 			openSearchConnection.isActive()
 		).thenReturn(
@@ -189,6 +192,7 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			"test"
 		);
+
 		Mockito.when(
 			openSearchConnection.isActive()
 		).thenReturn(
@@ -439,11 +443,13 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			_REMOTE_1_CONNECTION_ID
 		);
+
 		Mockito.when(
 			_remoteOpenSearchConnection1.getOpenSearchClient()
 		).thenReturn(
 			Mockito.mock(OpenSearchClient.class)
 		);
+
 		Mockito.when(
 			_remoteOpenSearchConnection1.isActive()
 		).thenReturn(
@@ -457,11 +463,13 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			_REMOTE_2_CONNECTION_ID
 		);
+
 		Mockito.when(
 			_remoteOpenSearchConnection2.getOpenSearchClient()
 		).thenReturn(
 			Mockito.mock(OpenSearchClient.class)
 		);
+
 		Mockito.when(
 			_remoteOpenSearchConnection2.isActive()
 		).thenReturn(
@@ -475,11 +483,13 @@ public class OpenSearchConnectionManagerTest {
 		).thenReturn(
 			_REMOTE_3_CONNECTION_ID
 		);
+
 		Mockito.when(
 			_remoteOpenSearchConnection3.getOpenSearchClient()
 		).thenReturn(
 			null
 		);
+
 		Mockito.when(
 			_remoteOpenSearchConnection3.isActive()
 		).thenReturn(

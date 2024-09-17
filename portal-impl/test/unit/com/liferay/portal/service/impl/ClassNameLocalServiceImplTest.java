@@ -109,6 +109,7 @@ public class ClassNameLocalServiceImplTest {
 		).thenReturn(
 			classNameId
 		);
+
 		Mockito.when(
 			className.getValue()
 		).thenReturn(

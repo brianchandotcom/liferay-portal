@@ -184,6 +184,7 @@ public class EditRankingMVCActionCommandTest
 		).sendRedirect(
 			Mockito.anyString()
 		);
+
 		Mockito.verify(
 			_actionResponse, Mockito.times(1)
 		).setRenderParameter(

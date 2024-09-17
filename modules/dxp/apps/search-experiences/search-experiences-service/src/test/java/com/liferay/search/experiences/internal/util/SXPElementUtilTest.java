@@ -77,6 +77,7 @@ public class SXPElementUtilTest {
 		).thenReturn(
 			1L
 		);
+
 		Mockito.when(
 			_company.getGroupId()
 		).thenReturn(
@@ -90,6 +91,7 @@ public class SXPElementUtilTest {
 		).thenReturn(
 			user
 		);
+
 		Mockito.when(
 			user.getUserId()
 		).thenReturn(

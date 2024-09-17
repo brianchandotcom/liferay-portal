@@ -53,6 +53,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImplTest {
 		).thenReturn(
 			_resourceBundle
 		);
+
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormBuilderSettingsRetrieverHelperImpl, "_portal", portal);
 

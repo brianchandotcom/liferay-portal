@@ -114,11 +114,13 @@ public class ActionExecutorManagerImplTest {
 		).thenReturn(
 			script
 		);
+
 		Mockito.when(
 			kaleoAction.getScriptLanguage()
 		).thenReturn(
 			"java"
 		);
+
 		Mockito.when(
 			kaleoAction.getType()
 		).thenReturn(

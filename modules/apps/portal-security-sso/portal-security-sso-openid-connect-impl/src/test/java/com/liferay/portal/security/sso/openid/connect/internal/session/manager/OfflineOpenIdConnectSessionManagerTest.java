@@ -81,6 +81,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		).setAccessToken(
 			accessToken.toJSONString()
 		);
+
 		Mockito.verify(
 			openIdConnectSession
 		).setIdToken(

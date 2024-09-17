@@ -75,6 +75,7 @@ public class AMImageValidatorImplTest {
 		).thenReturn(
 			false
 		);
+
 		Mockito.doReturn(
 			false
 		).when(
@@ -96,6 +97,7 @@ public class AMImageValidatorImplTest {
 		).thenReturn(
 			false
 		);
+
 		Mockito.doReturn(
 			true
 		).when(

@@ -12,6 +12,7 @@ export default function addStepper({
 	addedItemIds,
 	formId,
 	fragmentEntryLinks,
+	itemId,
 	layoutData,
 	movedItemIds,
 	removedItemIds,
@@ -19,6 +20,7 @@ export default function addStepper({
 	addedItemIds: string[];
 	formId: string;
 	fragmentEntryLinks: FragmentEntryLink[];
+	itemId: string;
 	layoutData: LayoutData;
 	movedItemIds: {itemId: string; parentId: string}[];
 	removedItemIds: string[];
@@ -27,6 +29,7 @@ export default function addStepper({
 		addedItemIds,
 		formId,
 		fragmentEntryLinks,
+		itemId,
 		layoutData,
 		movedItemIds,
 		removedItemIds,

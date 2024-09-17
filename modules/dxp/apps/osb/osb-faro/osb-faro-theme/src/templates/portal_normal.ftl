@@ -9,10 +9,10 @@
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	<link ${nonceAttribute} href="/o/osb-faro-theme/css/fonts.css" rel="stylesheet" type = "text/css" />
+	<link href="/o/osb-faro-theme/css/fonts.css" ${nonceAttribute} rel="stylesheet" type = "text/css" />
 
 	<#if is_signed_in>
-		<link ${nonceAttribute} href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, "/o/osb-faro-web/dist/main.css"))}" rel="stylesheet" type = "text/css" />
+		<link href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, "/o/osb-faro-web/dist/main.css"))}" ${nonceAttribute} rel="stylesheet" type = "text/css" />
 	</#if>
 </head>
 

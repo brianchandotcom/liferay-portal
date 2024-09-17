@@ -45,11 +45,10 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print("<style data-senna-track=\"temporary\" ");
-		printWriter.print("type=\"text/css\"");
 		printWriter.print(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
-		printWriter.print(">\n");
+		printWriter.print(" type=\"text/css\">\n");
 
 		for (ScopedCSSVariablesProvider scopedCSSVariablesProvider :
 				_scopedCSSVariablesProviders) {

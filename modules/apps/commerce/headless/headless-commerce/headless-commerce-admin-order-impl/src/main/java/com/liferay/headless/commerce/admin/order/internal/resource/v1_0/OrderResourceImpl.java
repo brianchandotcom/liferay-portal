@@ -234,7 +234,23 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	@Override
 	public Order postOrder(Order order) throws Exception {
-		CommerceOrder commerceOrder = _addOrUpdateOrder(order);
+		CommerceOrder commerceOrder = _addOrUpdateOrder(
+			order.getExternalReferenceCode(), order);
+
+		return _toOrder(
+			commerceOrder.getCommerceOrderId(),
+			contextAcceptLanguage.getPreferredLocale(),
+			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
+			contextUriInfo, _getActions(commerceOrder));
+	}
+
+	@Override
+	public Order putOrderByExternalReferenceCode(
+			String externalReferenceCode, Order order)
+		throws Exception {
+
+		CommerceOrder commerceOrder = _addOrUpdateOrder(
+			externalReferenceCode, order);
 
 		return _toOrder(
 			commerceOrder.getCommerceOrderId(),
@@ -271,7 +287,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		).build();
 	}
 
-	private CommerceOrder _addOrUpdateOrder(Order order) throws Exception {
+	private CommerceOrder _addOrUpdateOrder(
+			String externalReferenceCode, Order order)
+		throws Exception {
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(
 				order.getChannelId());
@@ -343,7 +362,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.addOrUpdateCommerceOrder(
-				order.getExternalReferenceCode(), commerceChannel.getGroupId(),
+				externalReferenceCode, commerceChannel.getGroupId(),
 				billingAddressId, accountEntry.getAccountEntryId(),
 				commerceCurrency.getCommerceCurrencyId(),
 				_getCommerceOrderTypeId(order), commerceShippingMethodId,

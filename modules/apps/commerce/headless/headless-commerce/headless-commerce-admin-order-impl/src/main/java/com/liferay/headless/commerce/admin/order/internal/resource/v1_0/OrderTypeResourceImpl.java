@@ -184,12 +184,64 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 	@Override
 	public OrderType postOrderType(OrderType orderType) throws Exception {
-		CommerceOrderType commerceOrderType = _addCommerceOrderType(orderType);
+		CommerceOrderType commerceOrderType = _addCommerceOrderType(
+			orderType.getExternalReferenceCode(), orderType);
 
 		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
 	}
 
-	private CommerceOrderType _addCommerceOrderType(OrderType orderType)
+	@Override
+	public OrderType putOrderTypeByExternalReferenceCode(
+			String externalReferenceCode, OrderType orderType)
+		throws Exception {
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderType == null) {
+			commerceOrderType = _addCommerceOrderType(
+				externalReferenceCode, orderType);
+
+			return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
+		}
+
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
+			orderType.getDisplayDate(), serviceContext.getTimeZone());
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
+			orderType.getExpirationDate(), serviceContext.getTimeZone());
+
+		commerceOrderType = _commerceOrderTypeService.updateCommerceOrderType(
+			GetterUtil.getString(orderType.getExternalReferenceCode()),
+			commerceOrderType.getCommerceOrderTypeId(),
+			LanguageUtils.getLocalizedMap(orderType.getName()),
+			LanguageUtils.getLocalizedMap(orderType.getDescription()),
+			GetterUtil.getBoolean(orderType.getActive()),
+			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+			displayDateConfig.getYear(), displayDateConfig.getHour(),
+			displayDateConfig.getMinute(),
+			GetterUtil.getInteger(orderType.getDisplayOrder()),
+			expirationDateConfig.getMonth(), expirationDateConfig.getDay(),
+			expirationDateConfig.getYear(), expirationDateConfig.getHour(),
+			expirationDateConfig.getMinute(),
+			GetterUtil.getBoolean(orderType.getNeverExpire()), serviceContext);
+
+		Map<String, ?> customFields = orderType.getCustomFields();
+
+		if ((customFields != null) && !customFields.isEmpty()) {
+			ExpandoUtil.updateExpando(
+				serviceContext.getCompanyId(), CommerceOrderType.class,
+				commerceOrderType.getPrimaryKey(), customFields);
+		}
+
+		return _toOrderType(commerceOrderType);
+	}
+
+	private CommerceOrderType _addCommerceOrderType(
+			String externalReferenceCode, OrderType orderType)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -201,7 +253,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 			orderType.getExpirationDate(), serviceContext.getTimeZone());
 
 		return _commerceOrderTypeService.addCommerceOrderType(
-			orderType.getExternalReferenceCode(),
+			externalReferenceCode,
 			LanguageUtils.getLocalizedMap(orderType.getName()),
 			LanguageUtils.getLocalizedMap(orderType.getDescription()),
 			GetterUtil.getBoolean(orderType.getActive()),

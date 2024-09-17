@@ -2155,6 +2155,81 @@ paths:
                       - HeadlessCommerceAdminOrder.write
             summary: Updates a Order Rule by external reference code.
             tags: ["OrderRule"]
+        put:
+            operationId: putOrderRuleByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                    description:
+                        Succesfully update the order Rule
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Replaces a order rule with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            tags: ["OrderRule"]
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-account-groups:
         get:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage
@@ -4092,6 +4167,83 @@ paths:
             summary: Updates an OrderType by external reference code.
             tags:
                 - OrderType
+        put:
+            operationId: putOrderTypeByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderType"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderType"
+                required: true
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderType"
+                    description:
+                        Succesfully update the Order Type
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Replaces a order type with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            tags:
+                - OrderType
     /order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels:
         get:
             operationId: getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage
@@ -5894,6 +6046,80 @@ paths:
                 - OAuth2:
                       - CommerceOpenApiAdmin.write
             summary: Updates an Order by external reference code.
+            tags:
+                - Order
+        put:
+            operationId: putOrderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Replaces a order with information sent in the request body. Any missing fields are deleted
+                unless they are required.
             tags:
                 - Order
     /orders/by-externalReferenceCode/{externalReferenceCode}/account:
@@ -7936,6 +8162,81 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminOrder.write
             summary: Updates a Term by external reference code.
+            tags: ["Term"]
+        put:
+            operationId: putTermByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Term"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Term"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Term"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Term"
+                    description:
+                        Succesfully update the Term
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Replaces a term with information sent in the request body. Any missing fields are deleted
+                unless they are required.
             tags: ["Term"]
     /terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types:
         get:

@@ -820,6 +820,106 @@ test.describe('Multistep', () => {
 			await expect(page.locator('.multi-step-nav')).not.toBeVisible();
 		}
 	);
+
+	test(
+		'Undoing the action of moving a stepper from a multistep to a simple form changes the form type to simple again',
+		{tag: '@LPD-10727'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const {id: objectDefinitionId} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				);
+
+			// Create a page containing a multistep form with a stepper and a simple form
+
+			const stepperId = getRandomString();
+
+			const stepperFragment = getFragmentDefinition({
+				id: stepperId,
+				key: 'INPUTS-stepper',
+			});
+
+			const firstFormId = getRandomString();
+
+			const firstFormDefinition = getFormContainerDefinition({
+				id: firstFormId,
+				objectDefinitionId,
+				pageElements: [stepperFragment],
+				steps: [[]],
+			});
+
+			const secondFormId = getRandomString();
+
+			const secondFormDefinition = getFormContainerDefinition({
+				id: secondFormId,
+				objectDefinitionId,
+				pageElements: [],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					firstFormDefinition,
+					secondFormDefinition,
+				]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Move the stepper to the second form
+
+			const stepper = pageEditorPage.getFragment(stepperId);
+
+			const secondForm = page
+				.locator('.page-editor__form .page-editor__container')
+				.last();
+
+			await stepper.dragTo(
+				secondForm.locator('.page-editor__no-fragments-state__message')
+			);
+
+			await page
+				.locator('.modal-title', {hasText: 'Convert to Multistep Form'})
+				.waitFor();
+
+			await page.locator('.modal-footer').getByText('Continue').click();
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Check type changed to Multistep
+
+			await pageEditorPage.selectFragment(secondFormId);
+
+			await expect(
+				page.getByLabel('Form Type', {exact: true})
+			).toHaveValue('multistep');
+
+			// Undo the action
+
+			await pageEditorPage.undoButton.click();
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Check Stepper disappeared and type changed to Simple again
+
+			await expect(
+				page.getByLabel('Form Type', {exact: true})
+			).toHaveValue('simple');
+
+			await expect(
+				secondForm.locator('.multi-step-nav')
+			).not.toBeVisible();
+		}
+	);
 });
 
 test.describe('Form errors', () => {

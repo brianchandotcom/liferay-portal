@@ -14,10 +14,10 @@ import java.util.List;
  */
 public interface FrontendTokenDefinitionRegistry {
 
-	public List<FrontendTokenDefinition> getAllFrontendTokenDefinition(
-		long companyId);
-
 	public FrontendTokenDefinition getFrontendTokenDefinition(
 		LayoutSet layoutSet);
+
+	public List<FrontendTokenDefinition> getFrontendTokenDefinitions(
+		long companyId);
 
 }

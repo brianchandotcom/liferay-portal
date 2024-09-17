@@ -11,11 +11,13 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
-<%@ page import="java.util.UUID" %>
+<%@ page import="java.util.Map" %><%@
+page import="java.util.UUID" %>
 
 <liferay-theme:defineObjects />
 
 <%
+Map<String, Object> additionalProps = (Map<String, Object>)request.getAttribute("liferay-commerce:info-box:additionalProps");
 String buttonStyle = (String)request.getAttribute("liferay-commerce:info-box:buttonStyle");
 long commerceOrderId = (long)request.getAttribute("liferay-commerce:info-box:commerceOrderId");
 String field = (String)request.getAttribute("liferay-commerce:info-box:field");

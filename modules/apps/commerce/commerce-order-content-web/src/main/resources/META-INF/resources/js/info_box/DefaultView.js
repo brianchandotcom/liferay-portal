@@ -23,7 +23,10 @@ const formatValue = (value, type) => {
 };
 
 const isEditable = (field, isOpen) => {
-	if (field === 'requestedDeliveryDate' && !isOpen) {
+	if (
+		['requestedDeliveryDate', 'shippingMethod'].indexOf(field) >= 0 &&
+		!isOpen
+	) {
 		return false;
 	}
 
@@ -31,6 +34,7 @@ const isEditable = (field, isOpen) => {
 };
 
 const DefaultView = ({
+	additionalProps,
 	buttonDisplayType,
 	elementId,
 	field,
@@ -45,7 +49,25 @@ const DefaultView = ({
 	spritemap,
 }) => {
 	const {observer, onOpenChange, open} = useModal();
-	const [inputValue, setInputValue] = useState(fieldValue);
+	const [inputValue, setInputValue] = useState(
+		additionalProps?.value ? additionalProps?.value : fieldValue
+	);
+	const [parseRequest, setParseRequest] = useState(
+		() => (field, inputValue) => {
+			return {
+				[field]: inputValue,
+			};
+		}
+	);
+	const [parseResponse, setParseResponse] = useState(
+		() => (field, response) => {
+			if (response) {
+				return response[field];
+			}
+
+			return null;
+		}
+	);
 	const [value, setValue] = useState(fieldValue);
 
 	const handleSubmit = async (event) => {
@@ -56,11 +78,9 @@ const DefaultView = ({
 			: CommerceServiceProvider.DeliveryOrderAPI('v1')
 					.updatePlacedOrderById;
 
-		updateOrder(orderId, {
-			[field]: inputValue,
-		})
+		updateOrder(orderId, parseRequest(field, inputValue))
 			.then((response) => {
-				setValue(response[field]);
+				setValue(parseResponse(field, response));
 
 				onOpenChange(false);
 			})
@@ -109,6 +129,8 @@ const DefaultView = ({
 			</div>
 
 			<InfoBoxModal
+				additionalProps={additionalProps}
+				field={field}
 				fieldValueType={fieldValueType}
 				handleSubmit={handleSubmit}
 				id={`${namespace}infoBoxModal`}
@@ -117,7 +139,10 @@ const DefaultView = ({
 				observer={observer}
 				onOpenChange={onOpenChange}
 				open={open}
+				orderId={orderId}
 				setInputValue={setInputValue}
+				setParseRequest={setParseRequest}
+				setParseResponse={setParseResponse}
 				spritemap={spritemap}
 			/>
 		</div>

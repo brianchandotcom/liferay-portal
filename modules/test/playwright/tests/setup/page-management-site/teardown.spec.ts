@@ -11,6 +11,7 @@ import {
 	LEMON_BASKET_OBJECT_ERC,
 	LEMON_OBJECT_ERC,
 	PAGE_MANAGEMENT_SITE_ERC,
+	POTATO_OBJECT_ERC,
 } from './constants';
 
 export const test = mergeTests(backendPageTest);
@@ -22,7 +23,11 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 
 	// Delete object definitions
 
-	for (const ERC of [LEMON_OBJECT_ERC, LEMON_BASKET_OBJECT_ERC]) {
+	for (const ERC of [
+		LEMON_OBJECT_ERC,
+		LEMON_BASKET_OBJECT_ERC,
+		POTATO_OBJECT_ERC,
+	]) {
 		const {id} =
 			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 				ERC

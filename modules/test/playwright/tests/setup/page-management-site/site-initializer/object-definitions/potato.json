@@ -1,0 +1,50 @@
+{
+	"externalReferenceCode": "potato-object-erc",
+	"label": {
+		"en_US": "Potato"
+	},
+	"name": "Potato",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"externalReferenceCode": "potato-origin-erc",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Potato Origin"
+			},
+			"name": "potatoOrigin",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "ddm",
+			"engineLabel": "Expression Builder",
+			"errorLabel": {
+				"en_US": "Potato origin should be Canary Islands"
+			},
+			"externalReferenceCode": "potato-validation-erc",
+			"name": {
+				"en_US": "Potato Origin Validation"
+			},
+			"objectDefinitionExternalReferenceCode": "potato-object-erc",
+			"objectValidationRuleSettings": [
+				{
+					"name": "outputObjectFieldExternalReferenceCode",
+					"value": "potato-origin-erc"
+				}
+			],
+			"outputType": "partialValidation",
+			"script": "potatoOrigin=\"Canary Islands\"",
+			"system": false
+		}
+	],
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Potatoes"
+	},
+	"scope": "site"
+}

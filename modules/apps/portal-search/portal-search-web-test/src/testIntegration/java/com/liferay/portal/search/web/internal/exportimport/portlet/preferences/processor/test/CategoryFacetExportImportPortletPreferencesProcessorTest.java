@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -27,6 +28,9 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.test.util.exportimport.BaseExportImportPortletPreferencesProcessorTestCase;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -60,18 +64,20 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId());
 
 		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout,
+			TestPropsValues.getUserId(), layout,
 			CategoryFacetPortletKeys.CATEGORY_FACET, "column-1",
 			new HashMap<String, String[]>());
 
 		_portletDataContextExport =
 			ExportImportTestUtil.getExportPortletDataContext(
-				_group.getGroupId());
+				_group.getCompanyId(), _group.getGroupId(),
+				new HashMap<String, String[]>(), null, null);
 
-		_portletDataContextExport.setPlid(_layout.getPlid());
+		_portletDataContextExport.setPlid(layout.getPlid());
 		_portletDataContextExport.setPortletId(
 			CategoryFacetPortletKeys.CATEGORY_FACET);
 
@@ -79,21 +85,32 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 			ExportImportTestUtil.getImportPortletDataContext(
 				_group.getGroupId());
 
-		_portletDataContextImport.setPlid(_layout.getPlid());
+		_portletDataContextImport.setPlid(layout.getPlid());
 		_portletDataContextImport.setPortletId(
 			CategoryFacetPortletKeys.CATEGORY_FACET);
 
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				_layout, CategoryFacetPortletKeys.CATEGORY_FACET);
+				layout, CategoryFacetPortletKeys.CATEGORY_FACET);
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to get a staged model data handler for a null value because a model was not exported properly",
+				expectedType = ExpectedType.EXACT
+			)
+		},
+		level = "ERROR", loggerClass = StagedModelDataHandlerUtil.class
+	)
 	@Test
-	public void testProcessAssetVocabularyId() throws Exception {
-		AssetVocabulary exportedAssetVocabulary = AssetTestUtil.addVocabulary(
+	public void testProcessAssetVocabularyIdWithMissingReference()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
 
-		_setCategoryFacetPortletPreferences(exportedAssetVocabulary);
+		_setCategoryFacetPortletPreferences(assetVocabulary);
 
 		PortletPreferences exportedPortletPreferences =
 			_exportImportPortletPreferencesProcessor.
@@ -105,13 +122,100 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				exportedAssetVocabulary.getExternalReferenceCode(),
-				StringPool.POUND, _group.getGroupId(), StringPool.POUND,
+				assetVocabulary.getExternalReferenceCode(), StringPool.POUND,
+				_group.getGroupId(), StringPool.POUND,
 				_group.getExternalReferenceCode()),
 			exportedAssetVocabularyId);
 
-		AssetVocabulary importedAssetVocabulary = _addImportedAssetVocabulary(
-			exportedAssetVocabulary, exportedAssetVocabularyId);
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			assetVocabulary.getVocabularyId());
+
+		_portletDataContextImport.setImportDataRootElement(
+			_portletDataContextExport.getExportDataRootElement());
+
+		_exportImportPortletPreferencesProcessor.
+			processImportPortletPreferences(
+				_portletDataContextImport, exportedPortletPreferences);
+	}
+
+	@Test
+	public void testProcessAssetVocabularyIdWithReference() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		_setCategoryFacetPortletPreferences(assetVocabulary);
+
+		PortletPreferences exportedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processExportPortletPreferences(
+					_portletDataContextExport, _portletPreferences);
+
+		String exportedAssetVocabularyId = exportedPortletPreferences.getValue(
+			"vocabularyIds", "");
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				assetVocabulary.getExternalReferenceCode(), StringPool.POUND,
+				_group.getGroupId(), StringPool.POUND,
+				_group.getExternalReferenceCode()),
+			exportedAssetVocabularyId);
+
+		_portletDataContextImport.setImportDataRootElement(
+			_portletDataContextExport.getExportDataRootElement());
+
+		PortletPreferences importedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processImportPortletPreferences(
+					_portletDataContextImport, exportedPortletPreferences);
+
+		String importedVocabularyId = importedPortletPreferences.getValue(
+			"vocabularyIds", "");
+
+		Assert.assertEquals(
+			assetVocabulary.getVocabularyId(),
+			GetterUtil.getLong(importedVocabularyId));
+	}
+
+	@Test
+	public void testProcessAssetVocabularyIdWithReplacedReference()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		_setCategoryFacetPortletPreferences(assetVocabulary);
+
+		PortletPreferences exportedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processExportPortletPreferences(
+					_portletDataContextExport, _portletPreferences);
+
+		String exportedAssetVocabularyId = exportedPortletPreferences.getValue(
+			"vocabularyIds", "");
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				assetVocabulary.getExternalReferenceCode(), StringPool.POUND,
+				_group.getGroupId(), StringPool.POUND,
+				_group.getExternalReferenceCode()),
+			exportedAssetVocabularyId);
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			assetVocabulary.getVocabularyId());
+
+		AssetVocabulary importedAssetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		importedAssetVocabulary.setExternalReferenceCode(
+			exportedAssetVocabularyId.substring(
+				0, exportedAssetVocabularyId.indexOf(CharPool.POUND)));
+
+		importedAssetVocabulary =
+			AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
+				importedAssetVocabulary);
+
+		_portletDataContextImport.setImportDataRootElement(
+			_portletDataContextExport.getExportDataRootElement());
 
 		PortletPreferences importedPortletPreferences =
 			_exportImportPortletPreferencesProcessor.
@@ -133,23 +237,6 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 		return _exportImportPortletPreferencesProcessor;
 	}
 
-	private AssetVocabulary _addImportedAssetVocabulary(
-			AssetVocabulary assetVocabulary, String exportedAssetVocabularyId)
-		throws Exception {
-
-		AssetVocabularyLocalServiceUtil.deleteVocabulary(
-			assetVocabulary.getVocabularyId());
-
-		assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
-
-		assetVocabulary.setExternalReferenceCode(
-			exportedAssetVocabularyId.substring(
-				0, exportedAssetVocabularyId.indexOf(CharPool.POUND)));
-
-		return AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
-			assetVocabulary);
-	}
-
 	private void _setCategoryFacetPortletPreferences(
 			AssetVocabulary assetVocabulary)
 		throws Exception {
@@ -169,7 +256,6 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Layout _layout;
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private PortletPreferences _portletPreferences;

@@ -141,6 +141,12 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 			assetCategoryId);
 	}
 
+	public static void deleteAssetEntryAssetCategoryRelByAssetEntry(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry) {
+
+		getService().deleteAssetEntryAssetCategoryRelByAssetEntry(assetEntry);
+	}
+
 	public static void deleteAssetEntryAssetCategoryRelByAssetEntryId(
 		long assetEntryId) {
 

@@ -150,6 +150,14 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteAssetEntryAssetCategoryRelByAssetEntry(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry) {
+
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRelByAssetEntry(assetEntry);
+	}
+
+	@Override
 	public void deleteAssetEntryAssetCategoryRelByAssetEntryId(
 		long assetEntryId) {
 

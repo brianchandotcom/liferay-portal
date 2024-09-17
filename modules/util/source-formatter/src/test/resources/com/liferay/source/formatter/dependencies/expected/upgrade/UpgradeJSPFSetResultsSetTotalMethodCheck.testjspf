@@ -8,5 +8,5 @@
 <%
 SearchContainer<Entry> searchContainer = new SearchContainer();
 
-searchContainer.setResultsAndTotal(resultsParameter, totalParameter);
+searchContainer.setResultsAndTotal(() -> resultsParameter, totalParameter);
 %>

@@ -25,6 +25,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -329,32 +330,44 @@ public class ContentFieldUtil {
 					{
 						setImage(
 							() -> {
-								ContentDocument contentDocument =
-									ContentDocumentUtil.toContentDocument(
-										dlURLHelper,
-										"contentFields.contentFieldValue.image",
-										dlAppService.getFileEntry(fileEntryId),
-										uriInfo);
+								try {
+									ContentDocument contentDocument =
+										ContentDocumentUtil.toContentDocument(
+											dlURLHelper,
+											"contentFields.contentFieldValue." +
+												"image",
+											dlAppService.getFileEntry(
+												fileEntryId),
+											uriInfo);
 
-								String alt = jsonObject.getString("alt");
+									String alt = jsonObject.getString("alt");
 
-								contentDocument.setDescription(
-									() -> {
-										if (Validator.isNotNull(alt) &&
-											JSONUtil.isJSONObject(alt)) {
+									contentDocument.setDescription(
+										() -> {
+											if (Validator.isNotNull(alt) &&
+												JSONUtil.isJSONObject(alt)) {
 
-											JSONObject altJSONObject =
-												jsonObject.getJSONObject("alt");
+												JSONObject altJSONObject =
+													jsonObject.getJSONObject(
+														"alt");
 
-											return altJSONObject.getString(
-												LocaleUtil.toLanguageId(
-													locale));
-										}
+												return altJSONObject.getString(
+													LocaleUtil.toLanguageId(
+														locale));
+											}
 
-										return alt;
-									});
+											return alt;
+										});
 
-								return contentDocument;
+									return contentDocument;
+								}
+								catch (PortalException portalException) {
+									if (_log.isDebugEnabled()) {
+										_log.debug(portalException);
+									}
+								}
+
+								return null;
 							});
 					}
 				};

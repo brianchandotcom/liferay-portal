@@ -10,6 +10,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -21,7 +23,8 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	pageManagementSiteTest
 );
 
 test('Allows renaming an experience', async ({
@@ -304,6 +307,99 @@ test(
 		await pageEditorPage.switchExperience('Default');
 
 		await expect(pageEditorPage.getFragment(headingId)).toBeVisible();
+	}
+);
+
+test(
+	'Allows creating experiences with different fragments mapped to different content',
+	{
+		tag: '@LPS-113248',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Create new experience, add heading fragment and map it
+
+		await pageEditorPage.createExperience('E1');
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		const headingId1 = await pageEditorPage.getFragmentId('Heading');
+
+		await pageEditorPage.selectEditable(headingId1, 'element-text');
+
+		await pageEditorPage.setMappingConfiguration({
+			mapping: {
+				entity: 'Web Content',
+				entry: 'Animal 01 - Dogs and Cats categories',
+				field: 'Title',
+				folder: 'Animals',
+			},
+		});
+
+		// Change to Default experience, add heading fragment and map it
+
+		await pageEditorPage.switchExperience('Default');
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		const headingId2 = await pageEditorPage.getFragmentId('Heading');
+
+		await pageEditorPage.selectEditable(headingId2, 'element-text');
+
+		await pageEditorPage.setMappingConfiguration({
+			mapping: {
+				entity: 'Web Content',
+				entry: 'Animal 02 - Dogs category',
+				field: 'Title',
+				folder: 'Animals',
+			},
+		});
+
+		// Publish and go to view mode
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Assert it displays the Default experience mapping
+
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).not.toBeVisible();
+
+		await expect(
+			page.getByText('Animal 02 - Dogs category')
+		).toBeAttached();
+
+		// Assert it displays the new experience mapping
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'E1 Segment: Anyone Inactive',
+			}),
+			trigger: page.getByLabel('Experience Selector'),
+		});
+
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
+
+		await expect(
+			page.getByText('Animal 02 - Dogs category')
+		).not.toBeAttached();
 	}
 );
 

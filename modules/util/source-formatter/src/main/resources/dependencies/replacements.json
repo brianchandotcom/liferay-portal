@@ -3325,6 +3325,14 @@
 		"to": "fetchRole"
 	},
 	{
+		"classNames": [
+			"DDMFormViewFormInstanceRecordsDisplayContext"
+		],
+		"from": "getSearch",
+		"issueKey": "LPD-36648",
+		"to": "getSearchContainer"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

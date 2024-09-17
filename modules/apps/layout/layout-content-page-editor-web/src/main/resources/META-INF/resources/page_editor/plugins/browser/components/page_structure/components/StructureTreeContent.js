@@ -167,17 +167,6 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		]
 	);
 
-	const handleNodeFocus = () => {
-		const focusedItem =
-			document.activeElement?.querySelector('[data-item-id]');
-
-		if (focusedItem) {
-			hoverItem(focusedItem.dataset.itemId, {
-				origin: ITEM_ACTIVATION_ORIGINS.sidebar,
-			});
-		}
-	};
-
 	const handleButtonsKeyDown = (event) => {
 		if (
 			[
@@ -317,7 +306,6 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 	return (
 		<div
 			className="overflow-auto page-editor__page-structure__structure-tree pt-4"
-			onFocus={handleNodeFocus}
 			ref={treeRef}
 		>
 			{!nodes.length && (
@@ -345,7 +333,6 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 					{(item) => (
 						<ClayTreeView.Item
 							actions={<ItemActions item={item} />}
-							active={item.active && item.activable}
 						>
 							<ClayTreeView.ItemStack
 								className={classNames(

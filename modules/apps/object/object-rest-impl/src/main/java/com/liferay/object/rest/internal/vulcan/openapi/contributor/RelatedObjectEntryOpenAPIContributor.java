@@ -37,6 +37,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -146,21 +147,34 @@ public class RelatedObjectEntryOpenAPIContributor
 			systemObjectRelationship.getName());
 
 		Schema parameterSchema = null;
-		PathItem pathItem = paths.get(StringBundler.concat(
-			StringPool.SLASH, version, StringPool.SLASH,
-			jaxRsApplicationDescriptor.getPath(), StringPool.SLASH,
-			_getIdParameterTemplate(schemaName)));
-		if (pathItem != null && pathItem.getGet() != null && pathItem.getGet().getParameters() != null) {
-			for (Parameter parameter : pathItem.getGet().getParameters()) {
-				if (parameter != null && _getIdParameterName(schemaName).equals(parameter.getName())) {
+
+		PathItem pathItem = paths.get(
+			StringBundler.concat(
+				StringPool.SLASH, version, StringPool.SLASH,
+				jaxRsApplicationDescriptor.getPath(), StringPool.SLASH,
+				_getIdParameterTemplate(schemaName)));
+
+		Operation getOperation = (pathItem != null) ? pathItem.getGet() : null;
+
+		if ((getOperation != null) && (getOperation.getParameters() != null)) {
+			for (Parameter parameter : getOperation.getParameters()) {
+				if ((parameter != null) &&
+					Objects.equals(
+						_getIdParameterName(schemaName), parameter.getName())) {
+
 					parameterSchema = parameter.getSchema();
+
 					break;
 				}
 			}
 		}
+
 		if (parameterSchema == null) {
-			parameterSchema = new Schema<String>().type("string");
+			parameterSchema = new Schema<>().type(
+				"string"
+			);
 		}
+
 		Schema finalParameterSchema = parameterSchema;
 
 		paths.addPathItem(
@@ -244,8 +258,8 @@ public class RelatedObjectEntryOpenAPIContributor
 							setDefault(
 								new ApiResponse() {
 									{
-										setDescription("default response");
 										setContent(_getContent(null));
+										setDescription("default response");
 									}
 								});
 						}
@@ -282,12 +296,12 @@ public class RelatedObjectEntryOpenAPIContributor
 							setDefault(
 								new ApiResponse() {
 									{
-										setDescription("default response");
 										setContent(
 											_getContent(
 												OpenAPIContributorUtil.
 													getPageSchemaName(
 														relatedSchemaName)));
+										setDescription("default response");
 									}
 								});
 						}
@@ -354,9 +368,9 @@ public class RelatedObjectEntryOpenAPIContributor
 							setDefault(
 								new ApiResponse() {
 									{
-										setDescription("default response");
 										setContent(
 											_getContent(relatedSchemaName));
+										setDescription("default response");
 									}
 								});
 						}

@@ -158,11 +158,12 @@ public class MBCategoryLocalServiceUtil {
 		getService().deleteCategory(category, includeTrashedEntries);
 	}
 
-	public static void deleteCategory(
+	public static void deleteCategoryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		getService().deleteCategory(externalReferenceCode, groupId);
+		getService().deleteCategoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

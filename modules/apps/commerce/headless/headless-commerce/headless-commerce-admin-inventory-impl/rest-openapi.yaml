@@ -491,6 +491,82 @@ paths:
             summary: "Updates a Replenishment Item by external reference code."
             tags:
                 - ReplenishmentItem
+        put:
+            operationId: putReplenishmentItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Replaces a replenishment item with information sent in the request body.
+                Any missing fields are deleted unless they are required."
+            tags:
+                - ReplenishmentItem
     "/replenishment-items/{replenishmentItemId}":
         delete:
             operationId: deleteReplenishmentItem
@@ -1789,6 +1865,85 @@ paths:
                 - OAuth2:
                       - CommerceOpenApiAdmin.write
             summary: "Updates a Warehouse by external reference code."
+            tags:
+                - Warehouse
+        put:
+            operationId: putWarehouseByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Warehouse"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Warehouse"
+                required: true
+            responses:
+                "201":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Warehouse"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Warehouse"
+                    description:
+                        Created
+                "202":
+                    description:
+                        "Accepted - Async"
+                "204":
+                    description:
+                        Updated
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: [ ]
+                - BearerAuth: [ ]
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Creates or updates a Warehouse."
             tags:
                 - Warehouse
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-channels":

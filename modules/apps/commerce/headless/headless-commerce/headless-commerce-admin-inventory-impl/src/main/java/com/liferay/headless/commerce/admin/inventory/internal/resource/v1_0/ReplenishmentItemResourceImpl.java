@@ -214,6 +214,32 @@ public class ReplenishmentItemResourceImpl
 					commerceInventoryWarehouseItem.getSku(), StringPool.BLANK));
 	}
 
+	@Override
+	public ReplenishmentItem putReplenishmentItemByExternalReferenceCode(
+			String externalReferenceCode, ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			_fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				externalReferenceCode);
+
+		return _toReplenishmentItem(
+			_commerceInventoryReplenishmentItemService.
+				updateCommerceInventoryReplenishmentItem(
+					commerceInventoryReplenishmentItem.
+						getExternalReferenceCode(),
+					commerceInventoryReplenishmentItem.
+						getCommerceInventoryReplenishmentItemId(),
+					GetterUtil.getDate(
+						replenishmentItem.getAvailabilityDate(),
+						DateFormatFactoryUtil.getDate(
+							contextAcceptLanguage.getPreferredLocale(),
+							contextUser.getTimeZone())),
+					BigDecimal.valueOf(
+						GetterUtil.getInteger(replenishmentItem.getQuantity())),
+					commerceInventoryReplenishmentItem.getMvccVersion()));
+	}
+
 	private CommerceInventoryReplenishmentItem
 			_fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
 				String externalReferenceCode)

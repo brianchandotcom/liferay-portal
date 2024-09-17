@@ -413,9 +413,6 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingMethod",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0.TaxCategory",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +
-			"ReplenishmentItem",
-		"com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse",
-		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +
 			"WarehouseChannel",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +

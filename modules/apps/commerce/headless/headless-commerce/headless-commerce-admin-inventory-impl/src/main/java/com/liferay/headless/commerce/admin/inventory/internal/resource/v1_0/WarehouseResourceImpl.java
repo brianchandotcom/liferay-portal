@@ -198,6 +198,59 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 		return _toWarehouse(commerceInventoryWarehouse);
 	}
 
+	@Override
+	public Warehouse putWarehouseByExternalReferenceCode(
+			String externalReferenceCode, Warehouse warehouse)
+		throws Exception {
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceInventoryWarehouse == null) {
+			commerceInventoryWarehouse =
+				_commerceInventoryWarehouseService.
+					addCommerceInventoryWarehouse(
+						externalReferenceCode,
+						LanguageUtils.getLocalizedMap(warehouse.getName()),
+						LanguageUtils.getLocalizedMap(
+							warehouse.getDescription()),
+						GetterUtil.get(warehouse.getActive(), true),
+						warehouse.getStreet1(), warehouse.getStreet2(),
+						warehouse.getStreet3(), warehouse.getCity(),
+						warehouse.getZip(), warehouse.getRegionISOCode(),
+						warehouse.getCountryISOCode(),
+						GetterUtil.get(warehouse.getLatitude(), 0D),
+						GetterUtil.get(warehouse.getLongitude(), 0D),
+						_serviceContextHelper.getServiceContext());
+		}
+		else {
+			commerceInventoryWarehouse =
+				_commerceInventoryWarehouseService.updateCommerceInventoryWarehouse(
+					commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+					LanguageUtils.getLocalizedMap(warehouse.getName()),
+					LanguageUtils.getLocalizedMap(warehouse.getDescription()),
+					GetterUtil.getBoolean(warehouse.getActive()),
+					GetterUtil.getString(warehouse.getStreet1()),
+					GetterUtil.getString(warehouse.getStreet2()),
+					GetterUtil.getString(warehouse.getStreet3()),
+					GetterUtil.getString(warehouse.getCity()),
+					GetterUtil.getString(warehouse.getZip()),
+					GetterUtil.getString(warehouse.getRegionISOCode()),
+					GetterUtil.getString(warehouse.getCountryISOCode()),
+					GetterUtil.getDouble(warehouse.getLatitude()),
+					GetterUtil.getDouble(warehouse.getLongitude()),
+					commerceInventoryWarehouse.getMvccVersion(),
+					_serviceContextHelper.getServiceContext());
+		}
+
+		// Update nested resources
+
+		_updateNestedResources(warehouse, commerceInventoryWarehouse);
+
+		return _toWarehouse(commerceInventoryWarehouse);
+	}
+
 	private Map<String, Map<String, String>> _getActions(
 			CommerceInventoryWarehouse commerceInventoryWarehouse)
 		throws Exception {

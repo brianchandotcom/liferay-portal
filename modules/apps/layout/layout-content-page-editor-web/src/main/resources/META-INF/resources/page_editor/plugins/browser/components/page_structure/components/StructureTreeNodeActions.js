@@ -34,6 +34,7 @@ import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import pasteItem from '../../../../../app/thunks/pasteItem';
 import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
+import canBePasted from '../../../../../app/utils/canBePasted';
 import canBeRemoved from '../../../../../app/utils/canBeRemoved';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import canBeSaved from '../../../../../app/utils/canBeSaved';
@@ -275,15 +276,29 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		) {
 			items.push({
 				action: () => {
-					dispatch(
-						pasteItem({
-							copiedItemIds,
-							parentItemId: item.id,
-							selectItems,
-						})
-					);
+					if (
+						copiedItemIds.every(
+							(copiedItemId) =>
+								!!layoutData.items[copiedItemId] &&
+								!!item &&
+								canBePasted(
+									copiedItemId,
+									fragmentEntryLinks,
+									item.id,
+									layoutData
+								)
+						)
+					) {
+						dispatch(
+							pasteItem({
+								copiedItemIds,
+								parentItemId: item.id,
+								selectItems,
+							})
+						);
 
-					setText(Liferay.Language.get('item-pasted'));
+						setText(Liferay.Language.get('item-pasted'));
+					}
 				},
 				disabled: !copiedItemIds?.length,
 				icon: 'paste',

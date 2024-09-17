@@ -44,6 +44,7 @@ import pasteItem from '../thunks/pasteItem';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeHidden from '../utils/canBeHidden';
+import canBePasted from '../utils/canBePasted';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeRenamed from '../utils/canBeRenamed';
 import canBeSaved from '../utils/canBeSaved';
@@ -137,6 +138,12 @@ export default function ShortcutManager() {
 		);
 	};
 
+	const getParentItemId = () => {
+		const rootItem = layoutData.items[layoutData.rootItems.main];
+
+		return !activeItemIds?.length ? rootItem.itemId : activeItemIds[0];
+	};
+
 	const hideShow = () => {
 		updateItemStyle({
 			dispatch,
@@ -156,14 +163,10 @@ export default function ShortcutManager() {
 	};
 
 	const paste = () => {
-		const rootItem = layoutData.items[layoutData.rootItems.main];
-
 		dispatch(
 			pasteItem({
 				copiedItemIds,
-				parentItemId: !activeItemIds?.length
-					? rootItem.itemId
-					: activeItemIds[0],
+				parentItemId: getParentItemId(),
 				selectItems,
 			})
 		);
@@ -350,6 +353,17 @@ export default function ShortcutManager() {
 					canUpdatePageStructure &&
 					isOnlyOneParentSelected(activeItemIds) &&
 					!!copiedItemIds.length &&
+					copiedItemIds.every(
+						(copiedItemId) =>
+							!!layoutData.items[copiedItemId] &&
+							!!layoutData.items[getParentItemId()] &&
+							canBePasted(
+								copiedItemId,
+								fragmentEntryLinks,
+								getParentItemId(),
+								layoutData
+							)
+					) &&
 					copiedItemIds.every(
 						(copiedItemId) =>
 							!!layoutData.items[copiedItemId] &&

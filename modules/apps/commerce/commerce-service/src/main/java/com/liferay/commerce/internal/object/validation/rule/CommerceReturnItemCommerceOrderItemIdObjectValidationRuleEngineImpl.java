@@ -77,7 +77,22 @@ public class CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl
 			objectDefinition.getObjectDefinitionId());
 
 		if (objectEntry == null) {
-			return false;
+			Map<String, Object> originalEntryDTO =
+				(Map<String, Object>)inputObjects.get("originalEntryDTO");
+
+			Map<String, Object> originalProperties =
+				(Map<String, Object>)originalEntryDTO.get("properties");
+
+			objectEntry = _objectEntryLocalService.fetchObjectEntry(
+				GetterUtil.getString(
+					originalProperties.get(
+						"r_commerceReturnToCommerceReturnItems_c_" +
+							"commerceReturnERC")),
+				objectDefinition.getObjectDefinitionId());
+
+			if (objectEntry == null) {
+				return false;
+			}
 		}
 
 		Map<String, Serializable> values = objectEntry.getValues();

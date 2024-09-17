@@ -102,11 +102,24 @@ public class CommerceReturnItemObjectEntryValuesContributor
 		}
 
 		ObjectEntry originalObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
+			_objectEntryLocalService.fetchObjectEntry(
 				GetterUtil.getLong(
 					values.get(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId")));
+
+		if (originalObjectEntry == null) {
+			originalObjectEntry = _objectEntryLocalService.fetchObjectEntry(
+				GetterUtil.getString(
+					values.get(
+						"r_commerceReturnToCommerceReturnItems_c_" +
+							"commerceReturnERC")),
+				objectDefinition.getObjectDefinitionId());
+
+			if (originalObjectEntry == null) {
+				return;
+			}
+		}
 
 		Map<String, Serializable> originalValues =
 			originalObjectEntry.getValues();

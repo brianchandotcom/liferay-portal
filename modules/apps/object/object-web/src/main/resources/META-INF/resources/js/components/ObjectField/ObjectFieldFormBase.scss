@@ -22,40 +22,14 @@
 	}
 
 	&-picklist {
-		&-add-field {
+		.lfr-objects__object-field-form-base-picklist-container {
 			align-items: center;
 			display: flex;
-			justify-content: space-between;
-
-			.lfr-objects__object-field-form-base-picklist-container {
-				align-items: center;
-				display: flex;
-				width: 100%;
-			}
+			width: 100%;
 		}
 
-		&-edit-field {
-			align-items: end;
-			display: flex;
-			justify-content: space-between;
-
-			.lfr-objects__object-field-form-base-picklist-container {
-				align-items: end;
-				display: flex;
-				width: 100%;
-			}
-		}
-
-		&-edit-field-model-builder {
-			.lfr-objects__object-field-form-base-picklist-container {
-				align-items: center;
-				display: flex;
-				width: 100%;
-			}
-
-			.lfr-objects__object-field-form-base-picklist-manage-button {
-				margin-bottom: 1.5rem;
-			}
+		.lfr-objects__object-field-form-base-picklist-manage-button {
+			margin-bottom: 1.5rem;
 		}
 
 		&-manage-button {
@@ -69,11 +43,12 @@
 		}
 
 		&-reload-button {
-			margin: 5px 10px 0;
+			margin: 15px 10px 0;
 			min-width: 40px;
 		}
 
 		&-select-field {
+			margin-bottom: 5px;
 			width: 100%;
 		}
 	}

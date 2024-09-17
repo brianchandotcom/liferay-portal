@@ -3,6 +3,17 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.5rem;
+
+		.lfr-objects__object-field-form-base-picklist {
+			&-manage-button {
+				margin-bottom: 0 !important;
+			}
+
+			&-select-field {
+				margin-bottom: 5px !important;
+				width: 100%;
+			}
+		}
 	}
 
 	&-content-panel {

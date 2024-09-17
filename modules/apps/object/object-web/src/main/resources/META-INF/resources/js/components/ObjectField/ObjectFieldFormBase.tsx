@@ -13,7 +13,6 @@ import {
 	SingleSelect,
 	Toggle,
 } from '@liferay/object-js-components-web';
-import classNames from 'classnames';
 import {createResourceURL} from 'frontend-js-web';
 import React, {
 	ChangeEventHandler,
@@ -571,15 +570,7 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-				<div
-					className={classNames(
-						editingObjectField
-							? modelBuilder
-								? 'lfr-objects__object-field-form-base-picklist-edit-field-model-builder'
-								: 'lfr-objects__object-field-form-base-picklist-edit-field'
-							: 'lfr-objects__object-field-form-base-picklist-add-field'
-					)}
-				>
+				<div className="lfr-objects__object-field-form-base-picklist">
 					{reloadPicklistSingleSelect ? (
 						<ClayLoadingIndicator
 							displayType="secondary"

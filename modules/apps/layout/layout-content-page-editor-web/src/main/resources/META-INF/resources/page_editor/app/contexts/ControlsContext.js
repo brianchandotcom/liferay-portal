@@ -174,18 +174,27 @@ const reducer = (state, action) => {
 
 			rangeLimitIds = {end: itemId, start: startLimitId};
 
-			const root =
-				state.layoutData.items[state.layoutData.rootItems.main];
+			if (rangeLimitIds.end === rangeLimitIds.start) {
 
-			nextActiveItemIds = getItemsWithinRange({
-				itemIds: root.children,
-				layoutDataItems: state.layoutData.items,
-				rangeLimitIds,
-			});
+				// If the start and end of the range are the same id, only
+				// this item is selected
 
-			nextActiveItemIds = [
-				...new Set([...initialActiveItemIds, ...nextActiveItemIds]),
-			];
+				nextActiveItemIds = [itemId];
+			}
+			else {
+				const root =
+					state.layoutData.items[state.layoutData.rootItems.main];
+
+				nextActiveItemIds = getItemsWithinRange({
+					itemIds: root.children,
+					layoutDataItems: state.layoutData.items,
+					rangeLimitIds,
+				});
+
+				nextActiveItemIds = [
+					...new Set([...initialActiveItemIds, ...nextActiveItemIds]),
+				];
+			}
 		}
 
 		nextState = {

@@ -43,6 +43,78 @@ public class BlogPostingImageResourceTest
 		_testPostSiteBlogPostingImageWithDuplicatedTitle();
 	}
 
+	@Override
+	protected void assertValid(
+			BlogPostingImage blogPostingImage, Map<String, File> multipartFiles)
+		throws Exception {
+
+		Assert.assertEquals(
+			new String(FileUtil.getBytes(multipartFiles.get("file"))),
+			_read("http://localhost:8080" + blogPostingImage.getContentUrl()));
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"title"};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"fileExtension", "sizeInBytes"};
+	}
+
+	@Override
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		return HashMapBuilder.<String, File>put(
+			"file",
+			() -> FileUtil.createTempFile(TestDataConstants.TEST_BYTE_ARRAY)
+		).build();
+	}
+
+	@Override
+	protected Long
+			testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected Long
+			testGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
+		throws Exception {
+
+		return testDeleteBlogPostingImage_addBlogPostingImage();
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	private String _read(String url) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+		httpInvoker.path(url);
+		httpInvoker.userNameAndPassword(
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	private void _testPostSiteBlogPostingImageRollback() throws Exception {
 		tearDown();
 		setUp();
@@ -125,78 +197,6 @@ public class BlogPostingImageResourceTest
 			StringUtil.appendParentheticalSuffix(
 				randomBlogPostingImage2.getTitle(), 1),
 			blogPostingImage.getTitle());
-	}
-
-	@Override
-	protected void assertValid(
-			BlogPostingImage blogPostingImage, Map<String, File> multipartFiles)
-		throws Exception {
-
-		Assert.assertEquals(
-			new String(FileUtil.getBytes(multipartFiles.get("file"))),
-			_read("http://localhost:8080" + blogPostingImage.getContentUrl()));
-	}
-
-	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"title"};
-	}
-
-	@Override
-	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"fileExtension", "sizeInBytes"};
-	}
-
-	@Override
-	protected Map<String, File> getMultipartFiles() throws Exception {
-		return HashMapBuilder.<String, File>put(
-			"file",
-			() -> FileUtil.createTempFile(TestDataConstants.TEST_BYTE_ARRAY)
-		).build();
-	}
-
-	@Override
-	protected Long
-			testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	@Override
-	protected Long
-			testGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	@Override
-	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
-		throws Exception {
-
-		return testDeleteBlogPostingImage_addBlogPostingImage();
-	}
-
-	@Override
-	protected Long
-			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	private String _read(String url) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-		httpInvoker.path(url);
-		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
 	}
 
 }

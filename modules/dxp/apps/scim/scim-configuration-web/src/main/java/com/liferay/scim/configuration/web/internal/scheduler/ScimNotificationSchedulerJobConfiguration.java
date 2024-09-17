@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ScimNotificationSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
-	public static final int[] NOTIFICATION_DAYS = {30, 10, 1};
+	public static final int[] NOTIFICATION_DAYS = {30, 10, 1, -1};
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
@@ -84,7 +84,8 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		long daysSinceLastNotification =
 			java.util.concurrent.TimeUnit.DAYS.convert(
-				currentTime - lastNotificationDate.getTime(),
+				oAuth2AccessTokenExpirationDate.getTime() -
+					lastNotificationDate.getTime(),
 				java.util.concurrent.TimeUnit.MILLISECONDS);
 
 		for (int notificationDay : NOTIFICATION_DAYS) {

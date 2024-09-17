@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLUtil;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -88,17 +90,16 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	@Test
-	public void testGetAllFrontendTokenDefinitions() {
-		List<FrontendTokenDefinition> allFrontendTokenDefinitions =
-			_frontendTokenDefinitionRegistry.getAllFrontendTokenDefinition(
+	public void testGetFrontendTokenDefinitions() {
+		List<FrontendTokenDefinition> frontendTokenDefinitions =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 				_layoutSet.getCompanyId());
 
+		Predicate<FrontendTokenDefinition> hasSameThemeId =
+			item -> Objects.equals(item.getThemeId(), "theme-cet-1");
+
 		Assert.assertTrue(
-			allFrontendTokenDefinitions.stream(
-			).anyMatch(
-				frontendTokenDefinition -> Objects.equals(
-					frontendTokenDefinition.getThemeId(), "theme-cet-1")
-			));
+			ListUtil.exists(frontendTokenDefinitions, hasSameThemeId));
 	}
 
 	@Test

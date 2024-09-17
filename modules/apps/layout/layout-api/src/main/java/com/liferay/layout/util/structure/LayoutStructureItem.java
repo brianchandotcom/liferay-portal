@@ -70,7 +70,12 @@ public abstract class LayoutStructureItem implements Cloneable {
 	}
 
 	public void addChildrenItem(int position, String itemId) {
-		_childrenItemIds.add(position, itemId);
+		if ((position >= 0) && (position <= _childrenItemIds.size())) {
+			_childrenItemIds.add(position, itemId);
+		}
+		else {
+			_childrenItemIds.add(itemId);
+		}
 	}
 
 	public void addChildrenItem(String itemId) {

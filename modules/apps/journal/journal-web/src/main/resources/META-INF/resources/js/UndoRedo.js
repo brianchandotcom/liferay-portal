@@ -139,9 +139,16 @@ export default function UndoRedo({
 			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
 
 			selectedLanguageIdInput.value = nextStep.selectedLanguageId;
+
+			Liferay.fire('journal:updateSelectedLanguage', {
+				item: document.querySelector(
+					`[data-languageid="${nextStep.selectedLanguageId}"][data-value="${nextStep.selectedLanguageId}"]`
+				),
+			});
 		}
 
 		updateMetadataFields(nextStep, newStep);
+		Liferay.fire('inputLocalized:updateTranslationStatus');
 	};
 
 	const handleRedo = (newStep) => {
@@ -193,9 +200,16 @@ export default function UndoRedo({
 				}
 			});
 			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
+
+			Liferay.fire('journal:updateSelectedLanguage', {
+				item: document.querySelector(
+					`[data-languageid="${nextStep.selectedLanguageId}"][data-value="${nextStep.selectedLanguageId}"]`
+				),
+			});
 		}
 
 		updateMetadataFields(nextStep, newStep);
+		Liferay.fire('inputLocalized:updateTranslationStatus');
 	};
 
 	const handleStoreState = useCallback(

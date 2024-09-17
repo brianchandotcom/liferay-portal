@@ -72,14 +72,16 @@ export function createMoveURL(
 export function createViewURL(
 	ctCollectionId,
 	namespace,
-	timelineItemCtEntryId
+	timelineClassNameId,
+	timelineClassPK
 ) {
 	return createMVCRenderCommandURL(
 		ctCollectionId,
 		'/change_tracking/view_change',
 		namespace,
 		{
-			ctEntryId: timelineItemCtEntryId,
+			modelClassNameId: timelineClassNameId,
+			modelClassPK: timelineClassPK,
 		}
 	);
 }
@@ -121,7 +123,8 @@ export default function TimelineDropdownMenu({
 		const viewURL = createViewURL(
 			ctCollectionId,
 			namespace,
-			timelineItem.ctEntryId
+			timelineClassNameId,
+			timelineClassPK
 		);
 
 		if (

@@ -19,12 +19,13 @@ export const test = mergeTests(
 	changeTrackingPagesTest,
 	featureFlagsTest({
 		'LPD-20556': true,
+		'LPS-171364': true,
 	}),
 	journalPagesTest
 );
 
-const publicationCount = 8;
-const ctCollections = [];
+const publicationCount = 6;
+let ctCollections = [];
 let articleTitle: string;
 
 test.beforeEach(
@@ -39,6 +40,7 @@ test.beforeEach(
 
 		articleTitle = 'Test ' + getRandomInt() + ' WC Article';
 		await journalEditArticlePage.goto();
+		await page.locator('div[data-qa-id="content"]').waitFor();
 		await journalEditArticlePage.fillTitle(articleTitle);
 		await page.getByRole('button', {name: 'Publish'}).click();
 		await waitForSuccessAlert(
@@ -47,7 +49,9 @@ test.beforeEach(
 		);
 
 		const ctCollectionNamePrefix = getRandomString();
-		for (let i = 0; i < publicationCount; i++) {
+		ctCollections = [];
+
+		for (let i = 0; i <= publicationCount; i++) {
 			const ctCollectionName = ctCollectionNamePrefix + ' ' + i;
 
 			const newCTCollection =
@@ -59,13 +63,15 @@ test.beforeEach(
 
 			await changeTrackingPage.workOnPublication(newCTCollection);
 
-			if (i !== publicationCount - 1) {
+			if (i !== publicationCount) {
 				await journalPage.goto();
 				await page
 					.getByRole('heading', {
 						name: 'Web Content',
 					})
 					.waitFor();
+				await page.getByLabel(`Actions for ${articleTitle}`).waitFor();
+
 				await journalPage.goToJournalArticleAction(
 					'Delete',
 					articleTitle
@@ -91,14 +97,24 @@ test.afterEach(async ({apiHelpers, changeTrackingPage, journalPage, page}) => {
 	await journalPage.goto();
 	await page.getByRole('heading', {name: 'Web Content'}).waitFor();
 	await journalPage.goToJournalArticleAction('Delete', articleTitle);
+	await waitForSuccessAlert(
+		page,
+		`Success: The element ${articleTitle} was moved to the Recycle Bin.`
+	);
 });
 
-const getEntityHistoryModalLocator = (page: Page) => {
-	return page.locator('.entity-history-modal');
+const getEntityHistoryTableLocator = (page: Page) => {
+	return page.frameLocator(
+		'iframe[title="View Entity Modification History"]'
+	);
 };
 
 const getPublicationTimelineLocator = (page: Page) => {
 	return page.locator('.publication-timeline');
+};
+
+const getPublicationTimelineButton = (page: Page) => {
+	return page.locator('.change-tracking-timeline-button');
 };
 
 const goToPublicationTimelineModal = async (
@@ -110,17 +126,28 @@ const goToPublicationTimelineModal = async (
 	await journalPage.goToJournalArticleAction('Edit', articleTitle);
 	await page.getByRole('tab', {name: 'Properties'}).waitFor();
 
-	await page.locator('.change-tracking-timeline-button').click();
+	const timelineButton = getPublicationTimelineButton(page);
+	await timelineButton.waitFor();
+	await timelineButton.click();
 
 	const publicationTimelineLocator = getPublicationTimelineLocator(page);
-
-	await publicationTimelineLocator.getByText('Modified').first().waitFor();
 	await publicationTimelineLocator
-		.getByRole('button', {name: 'View More'})
-		.click();
+		.locator('li .dropdown-item')
+		.first()
+		.waitFor();
 
-	await getEntityHistoryModalLocator(page)
-		.getByRole('heading', {name: 'View All History'})
+	const timelineViewMoreButton = publicationTimelineLocator.getByRole(
+		'button',
+		{name: 'View More'}
+	);
+	await timelineViewMoreButton.waitFor();
+	await timelineViewMoreButton.click();
+
+	await page
+		.locator(
+			'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_publication-timeline-history-modal'
+		)
+		.getByRole('heading', {name: 'View Entity Modification History'})
 		.waitFor();
 };
 
@@ -130,13 +157,53 @@ test('LPD-22759 Allow users to view the entire history of an entity in a popup m
 }) => {
 	await goToPublicationTimelineModal(page, journalPage);
 
+	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
+	await entityHistoryModalLocator.getByText(ctCollections[0].name).waitFor();
+
 	for (let i = 0; i < ctCollections.length; i++) {
 		if (i !== ctCollections.length - 1) {
 			await expect(
-				getEntityHistoryModalLocator(page).getByText(
-					ctCollections[i].name
-				)
+				entityHistoryModalLocator.getByText(ctCollections[i].name)
 			).toBeVisible();
 		}
 	}
+});
+
+test('LPD-22768 Add options to interact with the same entity in other publications via a popup modal', async ({
+	journalPage,
+	page,
+}) => {
+	await goToPublicationTimelineModal(page, journalPage);
+
+	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
+	await entityHistoryModalLocator.getByText(ctCollections[0].name).waitFor();
+
+	const firstDropdown = entityHistoryModalLocator
+		.locator('.item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+		.first();
+	await firstDropdown.waitFor();
+	await firstDropdown.click();
+
+	await entityHistoryModalLocator
+		.locator('div.dropdown-menu.show li')
+		.first()
+		.waitFor();
+
+	await expect(
+		entityHistoryModalLocator.getByRole('menuitem', {name: 'Discard'})
+	).toBeVisible();
+
+	await expect(
+		entityHistoryModalLocator.getByRole('menuitem', {
+			name: 'Edit in Publication',
+		})
+	).toBeVisible();
+
+	await expect(
+		entityHistoryModalLocator.getByRole('menuitem', {name: 'Move Changes'})
+	).toBeVisible();
+
+	await expect(
+		entityHistoryModalLocator.getByRole('menuitem', {name: 'Review Change'})
+	).toBeVisible();
 });

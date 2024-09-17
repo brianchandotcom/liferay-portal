@@ -93,9 +93,13 @@ public class SegmentsEntryRetrieverTest {
 	public void testGetSegmentsEntryIdsInSimulationModeWithDefaultSegmentsEntry()
 		throws Exception {
 
-		_assertGetSegmentsEntryIdsInSimulationMode(
-			SegmentsEntryConstants.ID_DEFAULT, Constants.PREVIEW,
-			SegmentsEntryConstants.ID_DEFAULT);
+		long[] segmentsEntryIds = _getSegmentsEntryIdsInSimulationMode(
+			Constants.PREVIEW, SegmentsEntryConstants.ID_DEFAULT);
+
+		Assert.assertEquals(
+			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
+		Assert.assertEquals(
+			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[0]);
 	}
 
 	@Test
@@ -104,8 +108,14 @@ public class SegmentsEntryRetrieverTest {
 
 		long segmentsEntryId = RandomTestUtil.randomLong();
 
-		_assertGetSegmentsEntryIdsInSimulationMode(
-			segmentsEntryId, Constants.PREVIEW, segmentsEntryId);
+		long[] segmentsEntryIds = _getSegmentsEntryIdsInSimulationMode(
+			Constants.PREVIEW, segmentsEntryId);
+
+		Assert.assertEquals(
+			Arrays.toString(segmentsEntryIds), 2, segmentsEntryIds.length);
+		Assert.assertEquals(
+			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[0]);
+		Assert.assertEquals(segmentsEntryId, segmentsEntryIds[1]);
 	}
 
 	@Test
@@ -123,9 +133,13 @@ public class SegmentsEntryRetrieverTest {
 	public void testGetSegmentsEntryIdsWithSegmentsEntryIdParameterInViewMode()
 		throws Exception {
 
-		_assertGetSegmentsEntryIdsInSimulationMode(
-			SegmentsEntryConstants.ID_DEFAULT, Constants.VIEW,
-			RandomTestUtil.randomLong());
+		long[] segmentsEntryIds = _getSegmentsEntryIdsInSimulationMode(
+			Constants.VIEW, RandomTestUtil.randomLong());
+
+		Assert.assertEquals(
+			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
+		Assert.assertEquals(
+			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[0]);
 	}
 
 	private SegmentsEntry _addSegmentsEntry(User user) throws Exception {
@@ -139,9 +153,8 @@ public class SegmentsEntryRetrieverTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 	}
 
-	private void _assertGetSegmentsEntryIdsInSimulationMode(
-			long expectedSegmentsEntryId, String layoutMode,
-			long segmentsEntryId)
+	private long[] _getSegmentsEntryIdsInSimulationMode(
+			String layoutMode, long segmentsEntryId)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -159,13 +172,8 @@ public class SegmentsEntryRetrieverTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			long[] segmentsEntryIds =
-				_segmentsEntryRetriever.getSegmentsEntryIds(
-					_group.getGroupId(), _user.getUserId(), null, new long[0]);
-
-			Assert.assertEquals(
-				Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
-			Assert.assertEquals(expectedSegmentsEntryId, segmentsEntryIds[0]);
+			return _segmentsEntryRetriever.getSegmentsEntryIds(
+				_group.getGroupId(), _user.getUserId(), null, new long[0]);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

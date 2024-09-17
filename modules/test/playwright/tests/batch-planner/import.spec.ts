@@ -1450,3 +1450,397 @@ test('can see ObjectDefinition entity type in dropdown', async ({
 			.textContent()
 	).toContain('ObjectDefinition (v1.0 - Liferay Object Admin REST)');
 });
+
+test('cannot see relationship nested field', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+	page,
+}) => {
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
+		companyObjectDefinition
+	);
+
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
+
+	await dataMigrationCenterPage.selectEntityType(OBJECT_ENTRY_ENTITY_TYPE);
+
+	await expect(page.getByText('testRelationship')).not.toBeVisible();
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+});
+
+test.describe('can rely on anyOf form validation', () => {
+	const studentObjectDefinition = {
+		active: true,
+		externalReferenceCode: 'student-definition',
+		label: {
+			en_US: 'Student',
+		},
+		name: 'Student',
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'student-name-field',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: 'en_US',
+				label: {
+					en_US: 'Student name',
+				},
+				listTypeDefinitionId: 0,
+				name: 'studentName',
+				required: true,
+				state: false,
+				system: false,
+				type: 'String',
+			},
+		],
+		objectRelationships: [
+			{
+				deletionType: 'cascade',
+				externalReferenceCode: 'student-subjects-relationship-1',
+				label: {
+					en_US: 'Student subjects 1',
+				},
+				name: 'studentSubjects1',
+				objectDefinitionExternalReferenceCode1: 'student-definition',
+				objectDefinitionExternalReferenceCode2: 'subject-definition',
+				objectDefinitionModifiable2: true,
+				objectDefinitionName2: 'Subject',
+				objectDefinitionSystem2: false,
+				objectField: {
+					DBType: 'Long',
+					businessType: 'Relationship',
+					externalReferenceCode:
+						'student-subjects-relationship-field-1',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {
+						en_US: 'Student subjects 1',
+					},
+					name: 'r_studentSubjects1_c_studentId',
+					relationshipType: 'oneToMany',
+					required: true,
+					state: false,
+					system: false,
+					type: 'Long',
+					unique: false,
+				},
+				parameterObjectFieldId: 0,
+				parameterObjectFieldName: '',
+				reverse: false,
+				system: false,
+				type: 'oneToMany',
+			},
+			{
+				deletionType: 'cascade',
+				externalReferenceCode: 'student-subjects-relationship-2',
+				label: {
+					en_US: 'Student subjects 2',
+				},
+				name: 'studentSubjects2',
+				objectDefinitionExternalReferenceCode1: 'student-definition',
+				objectDefinitionExternalReferenceCode2: 'subject-definition',
+				objectDefinitionModifiable2: true,
+				objectDefinitionName2: 'Subject',
+				objectDefinitionSystem2: false,
+				objectField: {
+					DBType: 'Long',
+					businessType: 'Relationship',
+					externalReferenceCode:
+						'student-subjects-relationship-field-2',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {
+						en_US: 'Student subjects 2',
+					},
+					name: 'r_studentSubjects2_c_studentId',
+					relationshipType: 'oneToMany',
+					required: true,
+					state: false,
+					system: false,
+					type: 'Long',
+					unique: false,
+				},
+				parameterObjectFieldId: 0,
+				parameterObjectFieldName: '',
+				reverse: false,
+				system: false,
+				type: 'oneToMany',
+			},
+			{
+				deletionType: 'cascade',
+				externalReferenceCode: 'student-subjects-relationship-3',
+				label: {
+					en_US: 'Student subjects 3',
+				},
+				name: 'studentSubjects3',
+				objectDefinitionExternalReferenceCode1: 'student-definition',
+				objectDefinitionExternalReferenceCode2: 'subject-definition',
+				objectDefinitionModifiable2: true,
+				objectDefinitionName2: 'Subject',
+				objectDefinitionSystem2: false,
+				objectField: {
+					DBType: 'Long',
+					businessType: 'Relationship',
+					externalReferenceCode:
+						'student-subjects-relationship-field-3',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {
+						en_US: 'Student subjects 3',
+					},
+					name: 'r_studentSubjects3_c_studentId',
+					relationshipType: 'oneToMany',
+					required: false,
+					state: false,
+					system: false,
+					type: 'Long',
+					unique: false,
+				},
+				parameterObjectFieldId: 0,
+				parameterObjectFieldName: '',
+				reverse: false,
+				system: false,
+				type: 'oneToMany',
+			},
+		],
+		panelCategoryKey: 'control_panel.object',
+		pluralLabel: {
+			en_US: 'Students',
+		},
+		portlet: true,
+		restContextPath: '/o/c/students',
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	};
+
+	const subjectObjectDefinition = {
+		active: true,
+		externalReferenceCode: 'subject-definition',
+		label: {
+			en_US: 'Subject',
+		},
+		name: 'Subject',
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'subject-name-field',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: 'en_US',
+				label: {
+					en_US: 'Subject name',
+				},
+				listTypeDefinitionId: 0,
+				name: 'subjectName',
+				required: false,
+				state: false,
+				system: false,
+				type: 'String',
+			},
+		],
+		panelCategoryKey: 'control_panel.object',
+		pluralLabel: {
+			en_US: 'Subjects',
+		},
+		portlet: true,
+		restContextPath: '/o/c/subjects',
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	};
+
+	test('cannot preview fields with no required anyOf fields selected', async ({
+		apiHelpers,
+		dataMigrationCenterPage,
+		page,
+	}) => {
+		const subjectResponse =
+			await apiHelpers.objectAdmin.postObjectDefinition(
+				subjectObjectDefinition
+			);
+		const studentResponse =
+			await apiHelpers.objectAdmin.postObjectDefinition(
+				studentObjectDefinition
+			);
+
+		await dataMigrationCenterPage.goto();
+		await dataMigrationCenterPage.goToImportFile();
+
+		await dataMigrationCenterPage.selectEntityType(
+			'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Subject'
+		);
+
+		await expect(
+			page.getByLabel('r_studentSubjects1_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects1_c_studentId', {exact: true})
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects2_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects2_c_studentId', {exact: true})
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects3_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects3_c_studentId', {exact: true})
+		).toBeEmpty();
+
+		await dataMigrationCenterPage.selectFile(
+			path.join(__dirname, '/dependencies/c_subject.csv')
+		);
+		await page.getByRole('button', {name: 'Next'}).click();
+		await expect(
+			page.getByText(
+				'Error:You must map at least one field and all required fields before continuing.'
+			)
+		).toBeVisible();
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
+		await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
+	});
+
+	test('cannot preview fields with one required anyOf field missing', async ({
+		apiHelpers,
+		dataMigrationCenterPage,
+		page,
+	}) => {
+		const subjectResponse =
+			await apiHelpers.objectAdmin.postObjectDefinition(
+				subjectObjectDefinition
+			);
+		const studentResponse =
+			await apiHelpers.objectAdmin.postObjectDefinition(
+				studentObjectDefinition
+			);
+
+		await dataMigrationCenterPage.goto();
+		await dataMigrationCenterPage.goToImportFile();
+
+		await dataMigrationCenterPage.selectEntityType(
+			'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Subject'
+		);
+
+		await expect(
+			page.getByLabel('r_studentSubjects1_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects1_c_studentId', {exact: true})
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects2_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects2_c_studentId', {exact: true})
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects3_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects3_c_studentId', {exact: true})
+		).toBeEmpty();
+
+		await dataMigrationCenterPage.selectFile(
+			path.join(__dirname, '/dependencies/c_subject.csv')
+		);
+
+		await page
+			.getByLabel('r_studentSubjects1_c_studentERC')
+			.selectOption('subjectName');
+
+		await page.getByRole('button', {name: 'Next'}).click();
+
+		await expect(
+			page
+				.getByText(
+					'Error:You must map at least one field and all required fields before continuing.'
+				)
+				.first()
+		).toBeVisible();
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
+		await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
+	});
+
+	test('can preview import with all required anyOf fields selected', async ({
+		apiHelpers,
+		dataMigrationCenterPage,
+		page,
+	}) => {
+		const subjectResponse =
+			await apiHelpers.objectAdmin.postObjectDefinition(
+				subjectObjectDefinition
+			);
+		const studentResponse =
+			await apiHelpers.objectAdmin.postObjectDefinition(
+				studentObjectDefinition
+			);
+
+		await dataMigrationCenterPage.goto();
+		await dataMigrationCenterPage.goToImportFile();
+
+		await dataMigrationCenterPage.selectEntityType(
+			'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Subject'
+		);
+
+		await expect(
+			page.getByLabel('r_studentSubjects1_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects1_c_studentId', {exact: true})
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects2_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects2_c_studentId', {exact: true})
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects3_c_studentERC')
+		).toBeEmpty();
+		await expect(
+			page.getByLabel('r_studentSubjects3_c_studentId', {exact: true})
+		).toBeEmpty();
+
+		await dataMigrationCenterPage.selectFile(
+			path.join(__dirname, '/dependencies/c_subject.csv')
+		);
+
+		await page
+			.getByLabel('r_studentSubjects1_c_studentERC')
+			.selectOption('subjectName');
+		await page
+			.getByLabel('r_studentSubjects2_c_studentERC')
+			.selectOption('subjectName');
+
+		await page.getByRole('button', {name: 'Next'}).click();
+
+		await expect(
+			page
+				.getByLabel('Preview')
+				.getByRole('cell', {name: 'r_studentSubjects1_c_studentERC'})
+		).toBeVisible();
+		await expect(
+			page
+				.getByLabel('Preview')
+				.getByRole('cell', {name: 'r_studentSubjects2_c_studentERC'})
+		).toBeVisible();
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
+		await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
+	});
+});

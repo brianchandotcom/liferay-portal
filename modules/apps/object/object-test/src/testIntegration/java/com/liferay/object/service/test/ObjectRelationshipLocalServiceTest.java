@@ -23,9 +23,11 @@ import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -47,11 +49,13 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -877,6 +881,142 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testBindPublishedObjectDefinitionsWithObjectEntries()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"A" + RandomTestUtil.randomString(),
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(),
+						"a" + RandomTestUtil.randomString())),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectDefinition objectDefinitionAAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"A" + RandomTestUtil.randomString(),
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(),
+						"a" + RandomTestUtil.randomString())),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationship objectRelationship1 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				StringUtil.randomId(), TestPropsValues.getUserId(),
+				objectDefinitionAA.getObjectDefinitionId(),
+				objectDefinitionAAA.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(),
+			Collections.emptyMap());
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionAAA.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"There must not exist unrelated entries",
+			() -> _bindObjectRelationship(objectRelationship1));
+
+		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
+			objectRelationship1.getObjectFieldId2());
+
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			objectEntry2.getUserId(), objectEntry2.getObjectEntryId(),
+			Collections.singletonMap(
+				objectField1.getName(), objectEntry1.getObjectEntryId()),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, objectEntry1.getRootObjectEntryId());
+		Assert.assertEquals(0, objectEntry2.getRootObjectEntryId());
+
+		_bindObjectRelationship(objectRelationship1);
+
+		objectEntry1 = _objectEntryLocalService.getObjectEntry(
+			objectEntry1.getObjectEntryId());
+		objectEntry2 = _objectEntryLocalService.getObjectEntry(
+			objectEntry2.getObjectEntryId());
+
+		long expectedRootObjectEntryId = objectEntry1.getRootObjectEntryId();
+
+		Assert.assertEquals(
+			expectedRootObjectEntryId, objectEntry1.getRootObjectEntryId());
+		Assert.assertEquals(
+			expectedRootObjectEntryId, objectEntry2.getRootObjectEntryId());
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"A" + RandomTestUtil.randomString(),
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(),
+						"a" + RandomTestUtil.randomString())),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				StringUtil.randomId(), TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship2.getObjectFieldId2());
+
+		ObjectEntry rootObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		_objectEntryLocalService.updateObjectEntry(
+			objectEntry1.getUserId(), objectEntry1.getObjectEntryId(),
+			Collections.singletonMap(
+				objectField2.getName(), rootObjectEntry.getObjectEntryId()),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, rootObjectEntry.getRootObjectEntryId());
+
+		_bindObjectRelationship(objectRelationship2);
+
+		rootObjectEntry = _objectEntryLocalService.getObjectEntry(
+			rootObjectEntry.getObjectEntryId());
+		objectEntry1 = _objectEntryLocalService.getObjectEntry(
+			objectEntry1.getObjectEntryId());
+		objectEntry2 = _objectEntryLocalService.getObjectEntry(
+			objectEntry2.getObjectEntryId());
+
+		expectedRootObjectEntryId = rootObjectEntry.getRootObjectEntryId();
+
+		Assert.assertEquals(
+			expectedRootObjectEntryId, rootObjectEntry.getRootObjectEntryId());
+		Assert.assertEquals(
+			expectedRootObjectEntryId, objectEntry1.getRootObjectEntryId());
+		Assert.assertEquals(
+			expectedRootObjectEntryId, objectEntry2.getRootObjectEntryId());
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionAAA.getName(), objectDefinitionAA.getName(),
+				objectDefinitionA.getName()
+			},
+			_objectEntryLocalService);
+	}
+
+	@Test
 	public void testDeleteObjectRelationship() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
@@ -888,12 +1028,7 @@ public class ObjectRelationshipLocalServiceTest {
 						_objectDefinition2);
 
 				_objectRelationshipLocalService.deleteObjectRelationship(
-					_objectRelationshipLocalService.updateObjectRelationship(
-						objectRelationship.getExternalReferenceCode(),
-						objectRelationship.getObjectRelationshipId(),
-						objectRelationship.getParameterObjectFieldId(),
-						objectRelationship.getDeletionType(), true,
-						objectRelationship.getLabelMap(), null));
+					_bindObjectRelationship(objectRelationship));
 			});
 		AssertUtils.assertFailure(
 			ObjectRelationshipReverseException.class,
@@ -1124,12 +1259,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipEdgeException.class,
 			"Object relationship must be one to many to be an edge of a root " +
 				"context",
-			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship3.getExternalReferenceCode(),
-				objectRelationship3.getObjectRelationshipId(), 0,
-				objectRelationship3.getDeletionType(), true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				null));
+			() -> _bindObjectRelationship(objectRelationship3));
 
 		ObjectRelationship objectRelationship4 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -1144,12 +1274,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipEdgeException.class,
 			"Object relationship must not be a self-relationship to be an " +
 				"edge of a root context",
-			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship4.getExternalReferenceCode(),
-				objectRelationship4.getObjectRelationshipId(), 0,
-				objectRelationship4.getDeletionType(), true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				null));
+			() -> _bindObjectRelationship(objectRelationship4));
 
 		ObjectRelationship objectRelationship5 =
 			_addObjectRelationshipSystemObjectDefinition();
@@ -1363,6 +1488,17 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		return _objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(), 0,
+			objectRelationship.getDeletionType(), true,
+			objectRelationship.getLabelMap(), null);
+	}
+
+	private ObjectRelationship _bindObjectRelationship(
+			ObjectRelationship objectRelationship)
+		throws PortalException {
 
 		return _objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship.getExternalReferenceCode(),

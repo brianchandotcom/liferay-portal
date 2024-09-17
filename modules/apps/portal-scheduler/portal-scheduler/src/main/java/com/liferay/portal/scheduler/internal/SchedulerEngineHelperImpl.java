@@ -313,7 +313,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			return;
 		}
 
-		_schedulerJobConfigurationServiceTracker.close();
+		if (_schedulerJobConfigurationServiceTracker != null) {
+			_schedulerJobConfigurationServiceTracker.close();
+		}
 
 		try {
 			_schedulerEngine.shutdown();

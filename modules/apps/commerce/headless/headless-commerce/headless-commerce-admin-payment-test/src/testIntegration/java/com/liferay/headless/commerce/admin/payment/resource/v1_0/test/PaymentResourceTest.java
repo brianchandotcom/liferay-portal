@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -208,6 +209,13 @@ public class PaymentResourceTest extends BasePaymentResourceTestCase {
 		throws Exception {
 
 		return _addPayment(payment);
+	}
+
+	@Override
+	protected Payment testPutPaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		return _addPayment(randomPayment());
 	}
 
 	private Payment _addPayment(Payment payment) throws Exception {

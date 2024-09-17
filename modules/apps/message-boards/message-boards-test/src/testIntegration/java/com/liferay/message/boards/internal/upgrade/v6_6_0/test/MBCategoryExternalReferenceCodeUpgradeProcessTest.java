@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -34,7 +33,7 @@ public class MBCategoryExternalReferenceCodeUpgradeProcessTest
 		throws PortalException {
 
 		return new ExternalReferenceCodeModel[] {
-			MBCategoryLocalServiceUtil.addCategory(
+			_mbCategoryLocalService.addCategory(
 				null, serviceContext.getUserId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				RandomTestUtil.randomString(), StringPool.BLANK, serviceContext)

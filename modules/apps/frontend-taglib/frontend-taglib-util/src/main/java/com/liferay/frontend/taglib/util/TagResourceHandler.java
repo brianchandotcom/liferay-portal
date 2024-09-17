@@ -56,12 +56,12 @@ public class TagResourceHandler {
 		outputResource(
 			Position.TOP,
 			StringBundler.concat(
-				"<link",
+				"<link data-senna-track=\"temporary\" href=\"",
+				PortalUtil.getPathModule(), _webContextPath, StringPool.SLASH,
+				bundleCssPath, StringPool.QUOTE,
 				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					_getHttpServletRequest()),
-				" data-senna-track=\"temporary\" href=\"",
-				PortalUtil.getPathModule(), _webContextPath, StringPool.SLASH,
-				bundleCssPath, "\" rel=\"stylesheet\">"));
+				" rel=\"stylesheet\">"));
 	}
 
 	public void outputNPMResource(String npmResourcePath) {
@@ -91,11 +91,12 @@ public class TagResourceHandler {
 			outputResource(
 				Position.TOP,
 				StringBundler.concat(
-					"<link",
+					"<link href=\"", PortalUtil.getPathModule(),
+					_webContextPath, "/node_modules/", cssPath,
+					StringPool.QUOTE,
 					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 						_getHttpServletRequest()),
-					" href=\"", PortalUtil.getPathModule(), _webContextPath,
-					"/node_modules/", cssPath, "\" rel=\"stylesheet\">"));
+					" rel=\"stylesheet\">"));
 		}
 		catch (Exception exception) {
 			_log.error(

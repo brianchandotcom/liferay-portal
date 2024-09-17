@@ -355,23 +355,23 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	private String _addLinkTag(
 		HttpServletRequest httpServletRequest, LayoutSEOLink layoutSEOLink) {
 
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append("<link");
+		sb.append("<link data-senna-track=\"temporary\" href=\"");
+		sb.append(layoutSEOLink.getHref());
+		sb.append(StringPool.QUOTE);
+
+		if (Validator.isNotNull(layoutSEOLink.getHrefLang())) {
+			sb.append(" hreflang=\"");
+			sb.append(layoutSEOLink.getHrefLang());
+			sb.append(StringPool.QUOTE);
+		}
+
 		sb.append(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
-		sb.append(" data-senna-track=\"temporary\" href=\"");
-		sb.append(layoutSEOLink.getHref());
-		sb.append("\" ");
 
-		if (Validator.isNotNull(layoutSEOLink.getHrefLang())) {
-			sb.append("hreflang=\"");
-			sb.append(layoutSEOLink.getHrefLang());
-			sb.append("\" ");
-		}
-
-		sb.append("rel=\"");
+		sb.append(" rel=\"");
 		sb.append(layoutSEOLink.getRelationship());
 		sb.append("\" />");
 

@@ -24,6 +24,7 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTP
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -137,11 +138,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest, httpServletResponse,
 				pageContext -> {
 					try {
-						writer.write("<link");
-						writer.write(
-							ContentSecurityPolicyNonceProviderUtil.getNonce(
-								httpServletRequest));
-						writer.write(" href=\"");
+						writer.write("<link href=\"");
 						writer.write(
 							_portal.getStaticResourceURL(
 								httpServletRequest,
@@ -149,8 +146,11 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 									_servletContext.getContextPath(),
 									"/publications/css",
 									"/ChangeTrackingIndicator.css")));
+						writer.write(StringPool.QUOTE);
 						writer.write(
-							"\" rel=\"stylesheet\" type=\"text/css\" />");
+							ContentSecurityPolicyNonceProviderUtil.getNonce(
+								httpServletRequest));
+						writer.write(" rel=\"stylesheet\" type=\"text/css\"/>");
 					}
 					catch (IOException ioException) {
 						ReflectionUtil.throwException(ioException);

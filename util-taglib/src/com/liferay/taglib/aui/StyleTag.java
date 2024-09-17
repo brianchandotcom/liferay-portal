@@ -29,15 +29,6 @@ public class StyleTag extends BaseStyleTag {
 			JspWriter jspWriter = pageContext.getOut();
 
 			jspWriter.write("<style");
-			jspWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					getRequest()));
-
-			String type = getType();
-
-			if (Validator.isNotNull(type)) {
-				_write(jspWriter, "type", type);
-			}
 
 			String senna = getSenna();
 
@@ -46,6 +37,16 @@ public class StyleTag extends BaseStyleTag {
 			}
 			else if (Validator.isNotNull(senna)) {
 				_write(jspWriter, "data-senna-track", "senna");
+			}
+
+			jspWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					getRequest()));
+
+			String type = getType();
+
+			if (Validator.isNotNull(type)) {
+				_write(jspWriter, "type", type);
 			}
 
 			jspWriter.write(">");

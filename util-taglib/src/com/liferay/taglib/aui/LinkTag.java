@@ -26,9 +26,6 @@ public class LinkTag extends BaseLinkTag {
 			JspWriter jspWriter = pageContext.getOut();
 
 			jspWriter.write("<link");
-			jspWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					getRequest()));
 
 			String cssClass = getCssClass();
 
@@ -40,6 +37,12 @@ public class LinkTag extends BaseLinkTag {
 
 			if (Validator.isNotNull(crossOrigin)) {
 				_write(jspWriter, "crossorigin", crossOrigin);
+			}
+
+			String senna = getSenna();
+
+			if (Validator.isNotNull(senna)) {
+				_write(jspWriter, "data-senna-track", senna);
 			}
 
 			String href = getHref();
@@ -60,16 +63,14 @@ public class LinkTag extends BaseLinkTag {
 				_write(jspWriter, "id", id);
 			}
 
+			jspWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					getRequest()));
+
 			String rel = getRel();
 
 			if (Validator.isNotNull(rel)) {
 				_write(jspWriter, "rel", rel);
-			}
-
-			String senna = getSenna();
-
-			if (Validator.isNotNull(senna)) {
-				_write(jspWriter, "data-senna-track", senna);
 			}
 
 			String type = getType();

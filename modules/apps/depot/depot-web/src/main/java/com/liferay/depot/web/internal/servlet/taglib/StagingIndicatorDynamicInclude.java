@@ -11,6 +11,7 @@ import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.util.StagingIndicatorUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -329,18 +330,17 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 			httpServletRequest, httpServletResponse,
 			pageContext -> {
 				try {
-					writer.write("<link");
-					writer.write(
-						ContentSecurityPolicyNonceProviderUtil.getNonce(
-							httpServletRequest));
-					writer.write(" href=\"");
-
+					writer.write("<link href=\"");
 					writer.write(
 						_portal.getStaticResourceURL(
 							httpServletRequest,
 							_servletContext.getContextPath() +
 								"/dynamic_include/StagingIndicator.css"));
-					writer.write("\" rel=\"stylesheet\" type=\"text/css\" />");
+					writer.write(StringPool.QUOTE);
+					writer.write(
+						ContentSecurityPolicyNonceProviderUtil.getNonce(
+							httpServletRequest));
+					writer.write(" rel=\"stylesheet\" type=\"text/css\" />");
 				}
 				catch (IOException ioException) {
 					ReflectionUtil.throwException(ioException);

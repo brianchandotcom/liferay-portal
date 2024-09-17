@@ -8,6 +8,7 @@ package com.liferay.frontend.theme.contributor.extender.internal.servlet.taglib;
 import com.liferay.frontend.theme.contributor.extender.internal.BundleWebResources;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -260,18 +261,18 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		String portalURL, PrintWriter printWriter, List<String> resourceURLs) {
 
 		for (String resourceURL : resourceURLs) {
-			printWriter.write("<link");
-			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonce(
-					httpServletRequest));
-			printWriter.write(" data-senna-track=\"permanent\" href=\"");
+			printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 			printWriter.write(
 				_portal.getStaticResourceURL(
 					httpServletRequest,
 					StringBundler.concat(
 						portalURL, _portal.getPathProxy(), resourceURL),
 					themeLastModified));
-			printWriter.write("\" rel=\"stylesheet\" type = \"text/css\" />\n");
+			printWriter.write(StringPool.QUOTE);
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonce(
+					httpServletRequest));
+			printWriter.write(" rel=\"stylesheet\" type = \"text/css\" />\n");
 		}
 	}
 

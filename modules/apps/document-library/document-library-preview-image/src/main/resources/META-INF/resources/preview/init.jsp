@@ -31,3 +31,5 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

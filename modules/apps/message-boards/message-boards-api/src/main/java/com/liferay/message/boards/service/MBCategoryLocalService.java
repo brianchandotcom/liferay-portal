@@ -141,7 +141,8 @@ public interface MBCategoryLocalService
 			MBCategory category, boolean includeTrashedEntries)
 		throws PortalException;
 
-	public void deleteCategory(String externalReferenceCode, long groupId)
+	public void deleteCategoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

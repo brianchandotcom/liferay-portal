@@ -12,7 +12,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -542,5 +544,83 @@ test(
 		await expect(listItems.locator('li').last()).toContainText('E1');
 
 		await expect(experience).toContainText('Inactive');
+	}
+);
+
+test(
+	'Users without edit segments entry permissions cannot create new segments',
+	{
+		tag: '@LPS-90588',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add new user with permissions update page permissions and without edit segments entry permissions
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'role' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		// Create a new page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit and assert New Segment button is visible
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.openExperienceSelector();
+
+		await page.getByLabel('New Experience').click();
+
+		await expect(
+			page.getByRole('button', {name: 'New Segment'})
+		).toBeVisible();
+
+		// Logout and Login with the new user
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		// Go to edit and assert New Segment button is not visible
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.openExperienceSelector();
+
+		await page.getByLabel('New Experience').click();
+
+		await expect(
+			page.getByRole('button', {name: 'New Segment'})
+		).not.toBeVisible();
 	}
 );

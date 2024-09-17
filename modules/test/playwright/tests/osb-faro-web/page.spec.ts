@@ -81,16 +81,16 @@ const goToWithReferrer = async function ({
 	}, url);
 };
 
-test(
-	'Assert clicking on a page in the pages lists navigates to the page profile',
-	{
-		tag: '@LRAC-8112 Legacy',
-	},
+const randomString = getRandomString();
 
-	async ({apiHelpers, page}) => {
-		const siteName = getRandomString();
+const channelName = 'My Property ' + randomString;
+const pageTitle = 'My Page';
+const siteName = 'My Site ' + randomString;
 
-		const site = await apiHelpers.headlessSite.createSite({
+let channel;
+let project;
+let site;
+
 			name: siteName,
 		});
 

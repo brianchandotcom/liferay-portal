@@ -1034,10 +1034,6 @@ public class UpgradeReport {
 		}
 
 		public String toString() {
-			if (_logContext) {
-				return _key + StringPool.COLON + _value;
-			}
-
 			return _key + StringPool.EQUAL + _value;
 		}
 

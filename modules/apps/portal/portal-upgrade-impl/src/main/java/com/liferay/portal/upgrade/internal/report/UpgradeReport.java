@@ -58,7 +58,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -435,13 +434,6 @@ public class UpgradeReport {
 				return ListUtil.sort(jvmArguments);
 			}
 		).put(
-			"property",
-			LinkedHashMapBuilder.<String, Object>put(
-				"locales", Arrays.toString(PropsValues.LOCALES)
-			).put(
-				"locales.enabled", Arrays.toString(PropsValues.LOCALES_ENABLED)
-			).build()
-		).put(
 			"properties",
 			() -> {
 				Map<String, String> propertiesMap = new TreeMap<>();
@@ -726,11 +718,6 @@ public class UpgradeReport {
 	}
 
 	private String _getReportHeader(String key) {
-		if (key.startsWith("property.")) {
-			return StringUtil.replaceFirst(
-				StringUtil.upperCaseFirstLetter(key), '.', ' ');
-		}
-
 		if (key.startsWith("tables.")) {
 			return String.format(
 				TablePrinter.FORMAT, "Table Name", "Initial Rows",

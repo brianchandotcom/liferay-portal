@@ -27,7 +27,7 @@ public class AssetEntryLocalServiceWrapper
 	@Override
 	public AssetEntry deleteAssetEntry(AssetEntry entry) {
 		_assetEntryAssetCategoryRelLocalService.
-			deleteAssetEntryAssetCategoryRelByAssetEntryId(entry.getEntryId());
+			deleteAssetEntryAssetCategoryRelByAssetEntry(entry);
 
 		return super.deleteAssetEntry(entry);
 	}
@@ -66,8 +66,7 @@ public class AssetEntryLocalServiceWrapper
 
 		if (entry != null) {
 			_assetEntryAssetCategoryRelLocalService.
-				deleteAssetEntryAssetCategoryRelByAssetEntryId(
-					entry.getEntryId());
+				deleteAssetEntryAssetCategoryRelByAssetEntry(entry);
 		}
 
 		return entry;

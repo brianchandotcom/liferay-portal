@@ -80,7 +80,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 				assetEntryAssetCategoryRel);
 		}
 
-		_reindex(assetEntryId);
+		_reindex(_assetEntryLocalService.fetchEntry(assetEntryId));
 	}
 
 	@Override
@@ -96,30 +96,33 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 				assetEntryAssetCategoryRelPersistence.remove(
 					assetEntryAssetCategoryRel);
 
-				_reindex(assetEntryAssetCategoryRel.getAssetEntryId());
+				_reindex(
+					_assetEntryLocalService.fetchEntry(
+						assetEntryAssetCategoryRel.getAssetEntryId()));
 			});
 	}
 
 	@Override
-	public void deleteAssetEntryAssetCategoryRelByAssetEntryId(
-		long assetEntryId) {
+	public void deleteAssetEntryAssetCategoryRelByAssetEntry(
+		AssetEntry assetEntry) {
 
 		Map<Long, List<AssetEntryAssetCategoryRel>>
 			partitionAssetEntryAssetCategoryRels =
 				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
 					AssetEntryAssetCategoryRelLocalServiceImpl.class.getName() +
-						".deleteAssetEntryAssetCategoryRelByAssetEntryId",
+						".deleteAssetEntryAssetCategoryRelByAssetEntry",
 					() -> MapUtil.toPartitionMap(
 						assetEntryAssetCategoryRelPersistence.findAll(),
 						AssetEntryAssetCategoryRel::getAssetEntryId));
 
 		if (partitionAssetEntryAssetCategoryRels == null) {
 			assetEntryAssetCategoryRelPersistence.removeByAssetEntryId(
-				assetEntryId);
+				assetEntry.getEntryId());
 		}
 		else {
 			List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
-				partitionAssetEntryAssetCategoryRels.remove(assetEntryId);
+				partitionAssetEntryAssetCategoryRels.remove(
+					assetEntry.getEntryId());
 
 			if (assetEntryAssetCategoryRels != null) {
 				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
@@ -131,7 +134,19 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 			}
 		}
 
-		_reindex(assetEntryId);
+		_reindex(assetEntry);
+	}
+
+	@Override
+	public void deleteAssetEntryAssetCategoryRelByAssetEntryId(
+		long assetEntryId) {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(
+			assetEntryId);
+
+		if (assetEntry != null) {
+			deleteAssetEntryAssetCategoryRelByAssetEntry(assetEntry);
+		}
 	}
 
 	@Override
@@ -252,14 +267,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 			AssetEntryAssetCategoryRel::getAssetEntryId);
 	}
 
-	private void _reindex(long assetEntryId) {
-		if (assetEntryId <= 0) {
-			return;
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			assetEntryId);
-
+	private void _reindex(AssetEntry assetEntry) {
 		if (assetEntry == null) {
 			return;
 		}

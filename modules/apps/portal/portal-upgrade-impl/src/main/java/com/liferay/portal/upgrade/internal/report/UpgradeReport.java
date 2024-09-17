@@ -65,11 +65,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -358,7 +358,7 @@ public class UpgradeReport {
 		).put(
 			"properties.set.by.user",
 			() -> {
-				Map<String, Properties> propertiesMap = new LinkedHashMap<>();
+				Map<String, String> propertiesMap = new TreeMap<>();
 
 				for (String loadedSource : PropsUtil.getLoadedSources()) {
 					URI uri = new URI(loadedSource);
@@ -392,14 +392,14 @@ public class UpgradeReport {
 						continue;
 					}
 
-					propertiesMap.put(propertiesFilePathString, properties);
+					for (String key : properties.stringPropertyNames()) {
+						propertiesMap.put(key, PropsUtil.get(key));
+					}
 				}
 
 				String envPrefix = "LIFERAY_";
 
 				Map<String, String> env = System.getenv();
-
-				Properties properties = new Properties();
 
 				for (Map.Entry<String, String> entry : env.entrySet()) {
 					String key = entry.getKey();
@@ -408,17 +408,23 @@ public class UpgradeReport {
 						continue;
 					}
 
-					properties.setProperty(
-						EnvPropertiesUtil.decode(
-							StringUtil.toLowerCase(
-								key.substring(envPrefix.length()))),
-						entry.getValue());
+					String decodedKey = EnvPropertiesUtil.decode(
+						StringUtil.toLowerCase(
+							key.substring(envPrefix.length())));
+
+					propertiesMap.put(decodedKey, PropsUtil.get(decodedKey));
 				}
 
-				propertiesMap.put(
-					"Properties set with environment variables", properties);
+				List<PropertyLine> propertyLines = new ArrayList<>();
 
-				return new PropertiesPrinter(propertiesMap);
+				for (Map.Entry<String, String> entry :
+						propertiesMap.entrySet()) {
+
+					propertyLines.add(
+						new PropertyLine(entry.getKey(), entry.getValue()));
+				}
+
+				return propertyLines;
 			}
 		).put(
 			"document.library.storage.size",
@@ -996,64 +1002,31 @@ public class UpgradeReport {
 
 	}
 
-	private class PropertiesPrinter {
+	private class PropertyLine {
 
-		public PropertiesPrinter(Map<String, Properties> propertiesMap) {
-			_propertiesMap = propertiesMap;
+		public PropertyLine(String key, String value) {
+			_key = key;
+
+			if (ArrayUtil.contains(
+					PropsValues.ADMIN_OBFUSCATED_PROPERTIES, key)) {
+
+				_value = StringPool.EIGHT_STARS;
+			}
+			else {
+				_value = value;
+			}
 		}
 
-		@Override
 		public String toString() {
-			StringBundler sb = new StringBundler();
-
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-
-			for (Map.Entry<String, Properties> filePropertiesEntry :
-					_propertiesMap.entrySet()) {
-
-				String source = filePropertiesEntry.getKey();
-
-				Properties properties = filePropertiesEntry.getValue();
-
-				sb.append(source);
-
-				sb.append(StringPool.NEW_LINE);
-
-				sb.append(
-					ListUtil.toString(
-						Collections.nCopies(source.length(), StringPool.MINUS),
-						StringPool.NULL, StringPool.BLANK));
-
-				sb.append(StringPool.NEW_LINE);
-
-				for (Map.Entry<Object, Object> propertyEntry :
-						properties.entrySet()) {
-
-					sb.append(propertyEntry.getKey());
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.SPACE);
-
-					if (ArrayUtil.contains(
-							PropsValues.ADMIN_OBFUSCATED_PROPERTIES,
-							String.valueOf(propertyEntry.getKey()))) {
-
-						sb.append(StringPool.EIGHT_STARS);
-					}
-					else {
-						sb.append(propertyEntry.getValue());
-					}
-
-					sb.append(StringPool.NEW_LINE);
-				}
-
-				sb.append(StringPool.NEW_LINE);
+			if (_logContext) {
+				return _key + StringPool.COLON + _value;
 			}
 
-			return sb.toString();
+			return _key + StringPool.EQUAL + _value;
 		}
 
-		private final Map<String, Properties> _propertiesMap;
+		private final String _key;
+		private final String _value;
 
 	}
 

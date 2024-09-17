@@ -50,7 +50,11 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 	public String getDefaultPartitionName(Connection connection)
 		throws SQLException {
 
-		return connection.getCatalog();
+		if (_defaultPartitionName == null) {
+			_defaultPartitionName = connection.getCatalog();
+		}
+
+		return _defaultPartitionName;
 	}
 
 	@Override
@@ -86,5 +90,7 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 			return "utf8";
 		}
 	}
+
+	private static String _defaultPartitionName;
 
 }

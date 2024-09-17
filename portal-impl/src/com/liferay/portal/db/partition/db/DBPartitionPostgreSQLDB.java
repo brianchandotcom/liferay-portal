@@ -61,7 +61,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 				"ruledefinition from pg_catalog.pg_rewrite join pg_catalog.",
 				"pg_class on pg_catalog.pg_rewrite.ev_class = ",
 				"pg_catalog.pg_class.oid where ",
-				"pg_catalog.pg_class.relnamespace ='", connection.getSchema(),
+				"pg_catalog.pg_class.relnamespace ='", _defaultPartitionName,
 				"'::regnamespace and (pg_catalog.pg_rewrite.rulename like ",
 				"'delete_%' or pg_catalog.pg_rewrite.rulename like ",
 				"'update_%')");
@@ -121,7 +121,11 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	public String getDefaultPartitionName(Connection connection)
 		throws SQLException {
 
-		return connection.getSchema();
+		if (_defaultPartitionName == null) {
+			_defaultPartitionName = connection.getSchema();
+		}
+
+		return _defaultPartitionName;
 	}
 
 	@Override
@@ -159,6 +163,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 		connection.setSchema(partitionName);
 	}
 
+	private static String _defaultPartitionName;
 	private static final Pattern _rulePattern = Pattern.compile(
 		"create.* rule (.*?) as");
 

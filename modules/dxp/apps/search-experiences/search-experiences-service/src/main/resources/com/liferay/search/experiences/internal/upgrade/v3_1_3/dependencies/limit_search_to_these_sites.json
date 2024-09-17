@@ -1,0 +1,37 @@
+{
+	"category": "filter",
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "filter",
+							"query": {
+								"terms": {
+									"scopeGroupExternalReferenceCode": "${configuration.scope_group_external_reference_codes}"
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"icon": "filter",
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"helpText": "scope-group-external-reference-codes-help",
+						"label": "scope-group-external-reference-codes",
+						"name": "scope_group_external_reference_codes",
+						"type": "multiselect"
+					}
+				]
+			}
+		]
+	}
+}

@@ -61,23 +61,6 @@ public class FrontendTokenDefinitionRegistryImpl
 	implements FrontendTokenDefinitionRegistry {
 
 	@Override
-	public List<FrontendTokenDefinition> getAllFrontendTokenDefinition(
-		long companyId) {
-
-		List<FrontendTokenDefinition> themesFrontendTokenDefinitions =
-			(List<FrontendTokenDefinition>)
-				_frontendTokenDefinitionImpls.values();
-
-		List<FrontendTokenDefinition> cetFrontendTokenDefinitions =
-			(List<FrontendTokenDefinition>)_frontendTokenDefinitionsMap.get(
-				companyId
-			).values();
-
-		return ListUtil.concat(
-			themesFrontendTokenDefinitions, cetFrontendTokenDefinitions);
-	}
-
-	@Override
 	public FrontendTokenDefinition getFrontendTokenDefinition(
 		LayoutSet layoutSet) {
 
@@ -85,6 +68,26 @@ public class FrontendTokenDefinitionRegistryImpl
 			layoutSet.getCompanyId(),
 			_getCETExternalReferenceCode(layoutSet.getLayoutSetId()),
 			layoutSet.getThemeId());
+	}
+
+	@Override
+	public List<FrontendTokenDefinition> getFrontendTokenDefinitions(
+		long companyId) {
+
+		List<FrontendTokenDefinition> themesFrontendTokenDefinitions =
+			(List<FrontendTokenDefinition>)
+				_themeFrontendTokenDefinitions.values();
+
+		Map<String, FrontendTokenDefinition>
+			companyCETFrontendTokenDefinitions =
+				_cetFrontendTokenDefinitions.get(companyId);
+
+		List<FrontendTokenDefinition> cetFrontendTokenDefinitions =
+			(List<FrontendTokenDefinition>)
+				companyCETFrontendTokenDefinitions.values();
+
+		return ListUtil.concat(
+			themesFrontendTokenDefinitions, cetFrontendTokenDefinitions);
 	}
 
 	@Activate
@@ -242,7 +245,7 @@ public class FrontendTokenDefinitionRegistryImpl
 				themeCSSCET.getFrontendTokenDefinitionJSON());
 
 			Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
-				_frontendTokenDefinitionsMap.computeIfAbsent(
+				_cetFrontendTokenDefinitions.computeIfAbsent(
 					themeCSSCET.getCompanyId(),
 					entry -> new ConcurrentHashMap<>());
 
@@ -292,11 +295,11 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 
 		Map<String, FrontendTokenDefinition> frontendTokenDefinitionImpls =
-			_frontendTokenDefinitionImplsDCLSingleton.getSingleton(
+			_frontendTokenDefinitionsDCLSingleton.getSingleton(
 				() -> {
 					_bundleTracker.open();
 
-					return _frontendTokenDefinitionImpls;
+					return _themeFrontendTokenDefinitions;
 				});
 
 		return frontendTokenDefinitionImpls.get(themeId);
@@ -322,7 +325,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	private Map<String, FrontendTokenDefinition> _getFrontendTokenDefinitions(
 		long companyId) {
 
-		return _frontendTokenDefinitionsMap.getOrDefault(
+		return _cetFrontendTokenDefinitions.getOrDefault(
 			companyId, new ConcurrentHashMap<>());
 	}
 
@@ -355,7 +358,7 @@ public class FrontendTokenDefinitionRegistryImpl
 					if ((frontendTokenDefinitionImpl != null) &&
 						(frontendTokenDefinitionImpl.getThemeId() != null)) {
 
-						_frontendTokenDefinitionImpls.put(
+						_themeFrontendTokenDefinitions.put(
 							frontendTokenDefinitionImpl.getThemeId(),
 							frontendTokenDefinitionImpl);
 
@@ -376,29 +379,30 @@ public class FrontendTokenDefinitionRegistryImpl
 					Bundle bundle, BundleEvent bundleEvent,
 					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
 
-					_frontendTokenDefinitionImpls.remove(
+					_themeFrontendTokenDefinitions.remove(
 						frontendTokenDefinitionImpl.getThemeId());
 				}
 
 			};
 
+	private final Map<Long, Map<String, FrontendTokenDefinition>>
+		_cetFrontendTokenDefinitions = new ConcurrentHashMap<>();
+
 	@Reference
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
 
-	private final Map<String, FrontendTokenDefinition>
-		_frontendTokenDefinitionImpls = new ConcurrentHashMap<>();
-	private final DCLSingleton<Map<String, FrontendTokenDefinition>>
-		_frontendTokenDefinitionImplsDCLSingleton = new DCLSingleton<>();
 	private final FrontendTokenDefinitionJSONValidator
 		_frontendTokenDefinitionJSONValidator =
 			new FrontendTokenDefinitionJSONValidator();
-	private final Map<Long, Map<String, FrontendTokenDefinition>>
-		_frontendTokenDefinitionsMap = new ConcurrentHashMap<>();
+	private final DCLSingleton<Map<String, FrontendTokenDefinition>>
+		_frontendTokenDefinitionsDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private Portal _portal;
 
 	private ServiceTracker<ThemeCSSCET, ThemeCSSCET> _serviceTracker;
+	private final Map<String, FrontendTokenDefinition>
+		_themeFrontendTokenDefinitions = new ConcurrentHashMap<>();
 
 }

@@ -137,6 +137,37 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutWarehouseByExternalReferenceCode() throws Exception {
+		Warehouse postWarehouse = _addWarehouse();
+
+		postWarehouse.setName(
+			Collections.singletonMap(
+				"en_US", "testPutWarehouseByExternalReferenceCode"));
+
+		warehouseResource.putWarehouseByExternalReferenceCode(
+			postWarehouse.getExternalReferenceCode(), postWarehouse);
+
+		Warehouse putWarehouse =
+			warehouseResource.getWarehouseByExternalReferenceCode(
+				postWarehouse.getExternalReferenceCode());
+
+		assertEquals(postWarehouse, putWarehouse);
+
+		postWarehouse = randomWarehouse();
+
+		postWarehouse.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		warehouseResource.putWarehouseByExternalReferenceCode(
+			postWarehouse.getExternalReferenceCode(), postWarehouse);
+
+		putWarehouse = warehouseResource.getWarehouseByExternalReferenceCode(
+			postWarehouse.getExternalReferenceCode());
+
+		assertEquals(postWarehouse, putWarehouse);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"city", "name"};
 	}

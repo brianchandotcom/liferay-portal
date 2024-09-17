@@ -60,6 +60,7 @@ function undoAction({action, store}) {
 							return item?.config?.fragmentEntryLinkId;
 						})
 						.filter(Boolean),
+					triggerItemId: action.triggerItemId,
 				})
 			);
 		});
@@ -67,8 +68,14 @@ function undoAction({action, store}) {
 }
 
 function getDerivedStateForUndo({action, state}) {
-	const {addedItemIds, isMapping, itemIds, movedItemIds, removedItemIds} =
-		action;
+	const {
+		addedItemIds,
+		isMapping,
+		itemIds,
+		movedItemIds,
+		removedItemIds,
+		triggerItemId,
+	} = action;
 
 	const {layoutData} = state;
 	const [itemId] = itemIds;
@@ -83,7 +90,8 @@ function getDerivedStateForUndo({action, state}) {
 		itemIds: [itemId],
 		movedItemIds,
 		removedItemIds,
+		triggerItemId,
 	};
 }
 
-export {undoAction, getDerivedStateForUndo};
+export {getDerivedStateForUndo, undoAction};

@@ -18,6 +18,7 @@ export default function updateFormItemConfig({
 	removedFragmentEntryLinkIds = [],
 	removedItemIds = [],
 	restoredFragmentEntryLinkIds = [],
+	triggerItemId,
 }: {
 	addedFragmentEntryLinks?: FragmentEntryLinkMap | null;
 	addedItemIds: string[];
@@ -28,6 +29,7 @@ export default function updateFormItemConfig({
 	removedFragmentEntryLinkIds?: string[];
 	removedItemIds?: string[];
 	restoredFragmentEntryLinkIds?: string[];
+	triggerItemId?: string;
 }) {
 	return {
 		addedFragmentEntryLinks,
@@ -39,6 +41,7 @@ export default function updateFormItemConfig({
 		removedFragmentEntryLinkIds,
 		removedItemIds,
 		restoredFragmentEntryLinkIds,
+		triggerItemId,
 		type: UPDATE_FORM_ITEM_CONFIG,
 	} as const;
 }

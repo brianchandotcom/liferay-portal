@@ -64,6 +64,7 @@ function undoAction({
 							return item?.config?.fragmentEntryLinkId;
 						})
 						.filter(Boolean),
+					triggerItemId: action.itemId,
 				})
 			);
 		});

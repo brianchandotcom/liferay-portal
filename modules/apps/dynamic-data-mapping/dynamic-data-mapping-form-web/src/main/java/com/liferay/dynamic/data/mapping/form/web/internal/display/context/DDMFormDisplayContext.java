@@ -536,7 +536,11 @@ public class DDMFormDisplayContext {
 			return LanguageUtil.get(resourceBundle, "save");
 		}
 
-		if (_hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
+		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				ddmFormInstance.getCompanyId(), ddmFormInstance.getGroupId(),
+				DDMFormInstance.class.getName(),
+				ddmFormInstance.getFormInstanceId())) {
+
 			DDMFormInstanceRecord ddmFormInstanceRecord =
 				getFormInstanceRecord();
 
@@ -1170,15 +1174,6 @@ public class DDMFormDisplayContext {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		return themeDisplay.getUserId();
-	}
-
-	private boolean _hasWorkflowEnabled(
-		DDMFormInstance ddmFormInstance, ThemeDisplay themeDisplay) {
-
-		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-			themeDisplay.getCompanyId(), ddmFormInstance.getGroupId(),
-			DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

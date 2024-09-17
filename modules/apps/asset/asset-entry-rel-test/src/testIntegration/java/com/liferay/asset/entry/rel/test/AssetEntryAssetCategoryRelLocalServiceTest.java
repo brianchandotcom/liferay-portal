@@ -155,15 +155,21 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteAssetEntryAssetCategoryRelByAssetEntryId() {
-		long assetEntryId1 = RandomTestUtil.randomLong();
+	public void testDeleteAssetEntryAssetCategoryRelByAssetEntryId()
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		_assetEntry1 = AssetTestUtil.addAssetEntry(_group.getGroupId());
+		_assetEntry2 = AssetTestUtil.addAssetEntry(_group.getGroupId());
+
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
+		_addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(), assetCategoryId);
 
-		long assetEntryId2 = RandomTestUtil.randomLong();
-
-		_addAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId);
+		_addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(), assetCategoryId);
 
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 2,
@@ -171,7 +177,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 				getAssetEntryAssetCategoryRelsCount());
 
 		_assetEntryAssetCategoryRelLocalService.
-			deleteAssetEntryAssetCategoryRelByAssetEntryId(assetEntryId1);
+			deleteAssetEntryAssetCategoryRelByAssetEntryId(
+				_assetEntry1.getEntryId());
 
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 1,
@@ -187,7 +194,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 			assetEntryAssetCategoryRels.get(0);
 
 		Assert.assertEquals(
-			assetEntryId2, assetEntryAssetCategoryRel.getAssetEntryId());
+			_assetEntry2.getEntryId(),
+			assetEntryAssetCategoryRel.getAssetEntryId());
 		Assert.assertEquals(
 			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
 		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
@@ -378,6 +386,12 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 		return assetEntryAssetCategoryRel;
 	}
+
+	@DeleteAfterTestRun
+	private AssetEntry _assetEntry1;
+
+	@DeleteAfterTestRun
+	private AssetEntry _assetEntry2;
 
 	@Inject
 	private AssetEntryAssetCategoryRelLocalService

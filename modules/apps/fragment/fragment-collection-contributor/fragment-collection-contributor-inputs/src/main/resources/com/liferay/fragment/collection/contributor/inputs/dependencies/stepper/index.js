@@ -64,13 +64,21 @@ function main() {
 	}
 
 	Liferay.on('formFragment:changeStep', (event) => {
-		if (!event.emitter || event.emitter === fragmentElement) {
+		const {emitter, step} = event;
+
+		if (!emitter || emitter === fragmentElement) {
 			return;
 		}
 
-		const form = event.emitter.closest('.lfr-layout-structure-item-form');
+		const form = emitter.closest('.lfr-layout-structure-item-form');
 
 		if (!form || !form.contains(fragmentElement)) {
+			return;
+		}
+
+		if (typeof step === 'number') {
+			setActiveStep(step, {sendEvent: false});
+
 			return;
 		}
 
@@ -78,11 +86,11 @@ function main() {
 			step.classList.contains('active')
 		);
 
-		if (event.step === 'next' && activeIndex <= steps.length - 2) {
+		if (step === 'next' && activeIndex <= steps.length - 2) {
 			setActiveStep(activeIndex + 1, {sendEvent: false});
 		}
 
-		if (event.step === 'previous' && activeIndex !== 0) {
+		if (step === 'previous' && activeIndex !== 0) {
 			setActiveStep(activeIndex - 1, {sendEvent: false});
 		}
 	});

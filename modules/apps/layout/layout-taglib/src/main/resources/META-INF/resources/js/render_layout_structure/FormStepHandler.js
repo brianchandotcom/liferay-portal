@@ -54,6 +54,23 @@ export default function FormStepHandler({formId}) {
 
 	Liferay.on('formFragment:changeStep', onStepChange);
 
+	// Set active step when there's an error
+
+	const group = form.querySelector('.form-group.has-error');
+
+	if (group) {
+		const step = group.closest('[data-step-index]');
+
+		const index = Number(step.dataset.stepIndex);
+
+		if (index) {
+			Liferay.fire('formFragment:changeStep', {
+				emitter: form,
+				step: index,
+			});
+		}
+	}
+
 	return {
 		dispose: () => {
 			Liferay.detach('formFragment:changeStep', onStepChange);

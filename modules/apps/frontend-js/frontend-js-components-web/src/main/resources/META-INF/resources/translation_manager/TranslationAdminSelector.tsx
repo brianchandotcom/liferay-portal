@@ -175,6 +175,24 @@ export default function TranslationAdminSelector({
 		setSelectedLanguageId(initialSelectedLanguageId);
 	}, [initialSelectedLanguageId]);
 
+	useEffect(() => {
+		const handleUpdateSelectedLanguage = (event: any) => {
+			const selectedLanguageId = event.item.getAttribute('data-value');
+			setSelectedLanguageId(selectedLanguageId);
+		};
+		Liferay.on(
+			'journal:updateSelectedLanguage',
+			handleUpdateSelectedLanguage
+		);
+
+		return () => {
+			Liferay.detach(
+				'journal:updateSelectedLanguage',
+				handleUpdateSelectedLanguage as () => void
+			);
+		};
+	}, [initialSelectedLanguageId]);
+
 	if (Liferay.FeatureFlags['LPS-114700'] && !adminMode) {
 		return (
 			<Picker
@@ -192,6 +210,12 @@ export default function TranslationAdminSelector({
 				}}
 				onSelectionChange={(id: React.Key) => {
 					setSelectedLanguageId(id as Liferay.Language.Locale);
+
+					Liferay.fire('journal:localeChanged', {
+						item: document.querySelector(
+							`[data-languageid="${id}"][data-value="${id}"]`
+						),
+					});
 				}}
 				selectedItem={activeLocales.find(
 					(locale) => locale.id === selectedLanguageId

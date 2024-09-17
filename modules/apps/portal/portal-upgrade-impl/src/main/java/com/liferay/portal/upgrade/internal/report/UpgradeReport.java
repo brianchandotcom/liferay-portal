@@ -427,6 +427,26 @@ public class UpgradeReport {
 				return propertyLines;
 			}
 		).put(
+			"properties.files",
+			() -> {
+				List<String> propertiesFilePaths = new ArrayList<>();
+
+				for (String loadedSource : PropsUtil.getLoadedSources()) {
+					URI uri = new URI(loadedSource);
+
+					if (StringUtil.equals("file", uri.getScheme())) {
+						String propertiesFilePath = String.valueOf(
+							Paths.get(uri));
+
+						if (FileUtil.exists(propertiesFilePath)) {
+							propertiesFilePaths.add(propertiesFilePath);
+						}
+					}
+				}
+
+				return propertiesFilePaths;
+			}
+		).put(
 			"document.library.storage.size",
 			() -> {
 				if (PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT == 0) {

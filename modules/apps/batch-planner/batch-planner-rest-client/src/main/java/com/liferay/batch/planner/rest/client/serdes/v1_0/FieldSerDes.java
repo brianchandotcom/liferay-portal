@@ -44,6 +44,20 @@ public class FieldSerDes {
 
 		sb.append("{");
 
+		if (field.getAnyOfGroup() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"anyOfGroup\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(field.getAnyOfGroup()));
+
+			sb.append("\"");
+		}
+
 		if (field.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -134,6 +148,13 @@ public class FieldSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (field.getAnyOfGroup() == null) {
+			map.put("anyOfGroup", null);
+		}
+		else {
+			map.put("anyOfGroup", String.valueOf(field.getAnyOfGroup()));
+		}
+
 		if (field.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -188,7 +209,10 @@ public class FieldSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "anyOfGroup")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -214,7 +238,12 @@ public class FieldSerDes {
 			Field field, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "anyOfGroup")) {
+				if (jsonParserFieldValue != null) {
+					field.setAnyOfGroup((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					field.setDescription((String)jsonParserFieldValue);
 				}

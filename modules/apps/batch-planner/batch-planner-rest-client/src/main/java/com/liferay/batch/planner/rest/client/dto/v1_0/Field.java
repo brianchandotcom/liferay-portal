@@ -25,6 +25,27 @@ public class Field implements Cloneable, Serializable {
 		return FieldSerDes.toDTO(json);
 	}
 
+	public String getAnyOfGroup() {
+		return anyOfGroup;
+	}
+
+	public void setAnyOfGroup(String anyOfGroup) {
+		this.anyOfGroup = anyOfGroup;
+	}
+
+	public void setAnyOfGroup(
+		UnsafeSupplier<String, Exception> anyOfGroupUnsafeSupplier) {
+
+		try {
+			anyOfGroup = anyOfGroupUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String anyOfGroup;
+
 	public String getDescription() {
 		return description;
 	}

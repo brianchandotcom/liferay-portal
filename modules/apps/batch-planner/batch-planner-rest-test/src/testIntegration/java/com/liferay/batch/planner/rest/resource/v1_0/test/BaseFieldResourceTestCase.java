@@ -159,6 +159,7 @@ public abstract class BaseFieldResourceTestCase {
 
 		Field field = randomField();
 
+		field.setAnyOfGroup(regex);
 		field.setDescription(regex);
 		field.setName(regex);
 		field.setType(regex);
@@ -169,6 +170,7 @@ public abstract class BaseFieldResourceTestCase {
 
 		field = FieldSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, field.getAnyOfGroup());
 		Assert.assertEquals(regex, field.getDescription());
 		Assert.assertEquals(regex, field.getName());
 		Assert.assertEquals(regex, field.getType());
@@ -319,6 +321,14 @@ public abstract class BaseFieldResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("anyOfGroup", additionalAssertFieldName)) {
+				if (field.getAnyOfGroup() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (field.getDescription() == null) {
@@ -477,6 +487,16 @@ public abstract class BaseFieldResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("anyOfGroup", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						field1.getAnyOfGroup(), field2.getAnyOfGroup())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						field1.getDescription(), field2.getDescription())) {
@@ -632,6 +652,52 @@ public abstract class BaseFieldResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("anyOfGroup")) {
+			Object object = field.getAnyOfGroup();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
 
 		if (entityFieldName.equals("description")) {
 			Object object = field.getDescription();
@@ -826,6 +892,8 @@ public abstract class BaseFieldResourceTestCase {
 	protected Field randomField() throws Exception {
 		return new Field() {
 			{
+				anyOfGroup = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

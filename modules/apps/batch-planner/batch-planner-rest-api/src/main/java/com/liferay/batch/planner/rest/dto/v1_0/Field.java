@@ -49,6 +49,47 @@ public class Field implements Serializable {
 	}
 
 	@Schema
+	public String getAnyOfGroup() {
+		if (_anyOfGroupSupplier != null) {
+			anyOfGroup = _anyOfGroupSupplier.get();
+
+			_anyOfGroupSupplier = null;
+		}
+
+		return anyOfGroup;
+	}
+
+	public void setAnyOfGroup(String anyOfGroup) {
+		this.anyOfGroup = anyOfGroup;
+
+		_anyOfGroupSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAnyOfGroup(
+		UnsafeSupplier<String, Exception> anyOfGroupUnsafeSupplier) {
+
+		_anyOfGroupSupplier = () -> {
+			try {
+				return anyOfGroupUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String anyOfGroup;
+
+	@JsonIgnore
+	private Supplier<String> _anyOfGroupSupplier;
+
+	@Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -275,6 +316,22 @@ public class Field implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String anyOfGroup = getAnyOfGroup();
+
+		if (anyOfGroup != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"anyOfGroup\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(anyOfGroup));
+
+			sb.append("\"");
+		}
 
 		String description = getDescription();
 

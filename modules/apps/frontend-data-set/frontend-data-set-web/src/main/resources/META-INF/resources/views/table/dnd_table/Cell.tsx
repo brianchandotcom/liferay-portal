@@ -15,8 +15,8 @@ import getCellColumnClassName from '../../utils/getCellColumnClassName';
 
 // @ts-ignore
 
-import TableContext from './TableContext';
 import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
+import TableContext from './TableContext';
 
 const Cell = ({
 	children,

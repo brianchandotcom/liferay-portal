@@ -63,9 +63,11 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		String principalName = PrincipalThreadLocal.getName();
 
 		PermissionThreadLocal.setPermissionChecker(null);
+
+		String principalName = PrincipalThreadLocal.getName();
+
 		PrincipalThreadLocal.setName(null);
 
 		try {
@@ -139,6 +141,7 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
 			PrincipalThreadLocal.setName(principalName);
 		}
 	}

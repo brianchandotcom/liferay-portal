@@ -1308,14 +1308,14 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
+		String objectDefinition2PreviousRESTContextPath =
+			objectDefinition2.getRESTContextPath();
+
 		objectDefinition2.setPortlet(false);
 
 		if (!objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
 			objectDefinition2.setPortlet(true);
 		}
-
-		String objectDefinition2PreviousRESTContextPath =
-			objectDefinition2.getRESTContextPath();
 
 		if (objectDefinition1.isApproved() == objectDefinition2.isApproved()) {
 			objectDefinition2.setRootObjectDefinitionId(

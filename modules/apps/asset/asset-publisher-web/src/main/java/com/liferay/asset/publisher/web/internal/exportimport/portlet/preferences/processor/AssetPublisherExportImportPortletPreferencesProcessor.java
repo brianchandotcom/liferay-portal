@@ -199,6 +199,32 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	}
 
 	@Override
+	protected String getExportPortletPreferencesExternalReferenceCode(
+		PortletDataContext portletDataContext, Portlet portlet,
+		String className, String externalReferenceCode) {
+
+		if (className.equals(Group.class.getName())) {
+			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+				externalReferenceCode, portletDataContext.getCompanyId());
+
+			if (!group.isStagingGroup()) {
+				return externalReferenceCode;
+			}
+
+			Group liveGroup = groupLocalService.fetchGroup(
+				group.getLiveGroupId());
+
+			if (liveGroup == null) {
+				return externalReferenceCode;
+			}
+
+			return liveGroup.getExternalReferenceCode();
+		}
+
+		return externalReferenceCode;
+	}
+
+	@Override
 	protected String getExportPortletPreferencesValue(
 			PortletDataContext portletDataContext, Portlet portlet,
 			String className, long primaryKeyLong)
@@ -288,6 +314,26 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 
 		return StringUtil.merge(new Object[] {uuid, groupId}, StringPool.POUND);
+	}
+
+	@Override
+	protected String getImportPortletPreferencesNewExternalReferenceCode(
+		PortletDataContext portletDataContext, Class<?> clazz,
+		long companyGroupId, Map<String, String[]> primaryKeys,
+		String externalReferenceCode) {
+
+		String className = clazz.getName();
+
+		if (className.equals(Group.class.getName())) {
+			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+				externalReferenceCode, portletDataContext.getCompanyId());
+
+			if (group != null) {
+				return externalReferenceCode;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -1092,6 +1138,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 				portletPreferences.reset("assetListEntryId");
 			}
+			else if (name.equals("assetListEntryGroupExternalReferenceCode")) {
+				updateExportPortletPreferencesExternalReferenceCodes(
+					portletDataContext, portlet, portletPreferences, name,
+					Group.class.getName());
+			}
 			else if (name.equals("assetVocabularyId")) {
 				long assetVocabularyId = GetterUtil.getLong(value);
 
@@ -1299,6 +1350,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					DDMStructure.class, companyGroup.getGroupId());
+			}
+			else if (name.equals("assetListEntryGroupExternalReferenceCode")) {
+				updateImportPortletPreferencesExternalReferenceCodes(
+					portletDataContext, portletPreferences, name, Group.class,
+					companyGroup.getGroupId());
 			}
 			else if (name.equals("assetVocabularyId")) {
 				updateImportPortletPreferencesClassPKs(

@@ -63,6 +63,8 @@ public class SaveScimConfigurationMVCActionCommandTest {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
+		User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
+
 		_user = UserTestUtil.addCompanyAdminUser(company);
 
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
@@ -87,6 +89,9 @@ public class SaveScimConfigurationMVCActionCommandTest {
 
 		Assert.assertNotNull(oAuth2Application);
 
+		Assert.assertEquals(
+			_user.getUserId(), oAuth2Application.getClientCredentialUserId());
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
@@ -109,17 +114,32 @@ public class SaveScimConfigurationMVCActionCommandTest {
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
+		oAuth2Application.setClientCredentialUserId(adminUser.getUserId());
+
+		oAuth2Application =
+			_oAuth2ApplicationLocalService.updateOAuth2Application(
+				oAuth2Application);
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
 		List<OAuth2Authorization> oAuth2Authorizations =
 			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 				oAuth2Application.getOAuth2ApplicationId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			oAuth2Authorizations.toString(), 1, oAuth2Authorizations.size());
+			oAuth2Authorizations.toString(), 2, oAuth2Authorizations.size());
 
 		OAuth2Authorization oAuth2Authorization = oAuth2Authorizations.get(0);
 
 		Assert.assertEquals(_user.getUserId(), oAuth2Authorization.getUserId());
+
+		oAuth2Authorization = oAuth2Authorizations.get(1);
+
+		Assert.assertEquals(
+			adminUser.getUserId(), oAuth2Authorization.getUserId());
 	}
 
 	private static String _pid;

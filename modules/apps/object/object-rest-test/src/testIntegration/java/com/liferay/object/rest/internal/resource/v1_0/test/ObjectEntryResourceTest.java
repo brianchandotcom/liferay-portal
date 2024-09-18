@@ -8488,10 +8488,11 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testPutCustomObjectEntryPermissionsPage() throws Exception {
-		JSONObject objectEntryJSONObject =
-			_postCustomObjectEntryWithPermissions(true, null);
 
 		// Invalid permissions
+
+		JSONObject objectEntryJSONObject =
+			_postCustomObjectEntryWithPermissions(true, null);
 
 		JSONObject invalidPermissionJSONObject =
 			_putCustomObjectEntryPermissionsPage(

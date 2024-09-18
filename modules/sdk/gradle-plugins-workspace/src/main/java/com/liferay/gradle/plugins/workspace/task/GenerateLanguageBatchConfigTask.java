@@ -17,7 +17,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,6 +29,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -64,7 +68,6 @@ public class GenerateLanguageBatchConfigTask extends DefaultTask {
 
 	@TaskAction
 	public void convertPropertiesFilesToBatchFiles() throws IOException {
-		System.out.println("CONVERTING!!!!!");
 		Class<? extends GenerateLanguageBatchConfigTask> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
@@ -84,14 +87,20 @@ public class GenerateLanguageBatchConfigTask extends DefaultTask {
 
 				Properties properties = new Properties();
 
-				properties.load(Files.newInputStream(file.toPath()));
+				properties.load(Files.newBufferedReader(file.toPath()));
 
 				for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+					String value = (String)entry.getValue();
+
+					if (value.endsWith("(Automatic Copy)")) {
+						continue;
+					}
+
 					ObjectNode objectNode = _objectMapper.createObjectNode();
 
 					objectNode.put("key", (String)entry.getKey());
 					objectNode.put("languageId", languageId);
-					objectNode.put("value", (String)entry.getValue());
+					objectNode.put("value", value);
 
 					itemsArrayNode.add(objectNode);
 				}

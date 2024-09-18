@@ -70,11 +70,11 @@ public class GeneralSXPSearchRequestBodyContributorTest {
 	private void _testContribute(
 		List<String> expectedEntryClassNames,
 		List<String> expectedModelIndexerClassNames,
-		String[] entryClassNameArray) {
+		String[] searchableAssetTypes) {
 
 		_testContribute(
 			expectedEntryClassNames, expectedModelIndexerClassNames,
-			entryClassNameArray,
+			searchableAssetTypes,
 			searchContext -> {
 			});
 	}
@@ -82,7 +82,7 @@ public class GeneralSXPSearchRequestBodyContributorTest {
 	private void _testContribute(
 		List<String> expectedEntryClassNames,
 		List<String> expectedModelIndexerClassNames,
-		String[] searchableAssetTypes,
+		String[] searchableAssetTypes1,
 		Consumer<SearchContext> searchContextConsumer) {
 
 		GeneralSXPSearchRequestBodyContributor
@@ -98,7 +98,7 @@ public class GeneralSXPSearchRequestBodyContributorTest {
 					setGeneralConfiguration(
 						new GeneralConfiguration() {
 							{
-								setSearchableAssetTypes(searchableAssetTypes);
+								setSearchableAssetTypes(searchableAssetTypes1);
 							}
 						});
 				}

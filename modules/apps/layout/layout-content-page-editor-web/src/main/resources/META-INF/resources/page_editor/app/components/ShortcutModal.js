@@ -57,21 +57,21 @@ export default function ShortcutModal({onCloseModal}) {
 				{Liferay.FeatureFlags['LPD-18221'] && (
 					<KeyboardShorcut
 						description={Liferay.Language.get('cut')}
-						keyCombinations={[KEY_LABEL, 'X']}
+						keyCombinations={['⇧', KEY_LABEL, 'X']}
 					/>
 				)}
 
 				{Liferay.FeatureFlags['LPD-18221'] && (
 					<KeyboardShorcut
 						description={Liferay.Language.get('copy')}
-						keyCombinations={[KEY_LABEL, 'C']}
+						keyCombinations={['⇧', KEY_LABEL, 'C']}
 					/>
 				)}
 
 				{Liferay.FeatureFlags['LPD-18221'] && (
 					<KeyboardShorcut
 						description={Liferay.Language.get('paste')}
-						keyCombinations={[KEY_LABEL, 'V']}
+						keyCombinations={['⇧', KEY_LABEL, 'V']}
 					/>
 				)}
 

@@ -46,9 +46,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.deleteCP(
-			kbArticleTitle = "Knowledge Base Article Title",
-			moveToRecycleBin = "true");
+		KBArticle.deleteCP(kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

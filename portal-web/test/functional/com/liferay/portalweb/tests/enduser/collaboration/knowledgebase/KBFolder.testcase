@@ -219,7 +219,9 @@ definition {
 
 		KBArticle.selectAllCP();
 
-		KBArticle.deleteCP();
+		KBArticle.deleteCP(
+			itemsNumber = 2,
+			moveToRecycleBin = "multipleArticles");
 
 		KBArticle.viewDefaultCP(newFolder = "true");
 	}

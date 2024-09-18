@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -170,9 +172,10 @@ public class JournalTransformerTest {
 	}
 
 	@Test
-	public void testCreateTemplateNode() {
+	public void testCreateTemplateNode() throws Exception {
 		_testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions();
 		_testCreateTemplateNodeSelectTypeDDMFormFieldWithoutOptions();
+		_testCreateTemplateNodeDocumentLibraryDDMFormField();
 	}
 
 	@Test
@@ -693,6 +696,48 @@ public class JournalTransformerTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testCreateTemplateNodeDocumentLibraryDDMFormField()
+		throws Exception {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"fileEntryId", RandomTestUtil.randomLong()
+		).put(
+			"groupId", RandomTestUtil.randomLong()
+		);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.DOCUMENT_LIBRARY);
+
+		ddmFormField.setDataType("document_library");
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		Element dynamicContentElement = rootElement.addElement(
+			"dynamic-content");
+
+		dynamicContentElement.setText(jsonObject.toString());
+
+		TemplateNode templateNode = ReflectionTestUtil.invoke(
+			_journalTransformer, "_createTemplateNode",
+			new Class<?>[] {
+				DDMFormField.class, Element.class, Locale.class,
+				ThemeDisplay.class
+			},
+			ddmFormField, rootElement, LocaleUtil.getDefault(),
+			new ThemeDisplay());
+
+		Assert.assertFalse(MapUtil.isEmpty(templateNode.getAttributes()));
+
+		Assert.assertEquals(
+			jsonObject.getString("fileEntryId"),
+			templateNode.getAttribute("fileEntryId"));
+		Assert.assertEquals(
+			jsonObject.getString("groupId"),
+			templateNode.getAttribute("groupId"));
 	}
 
 	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions() {

@@ -71,7 +71,6 @@ definition {
 	}
 
 	@priority = 5
-	@refactorneeded
 	test DeleteImportedArticles {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -103,7 +102,9 @@ definition {
 
 		KBArticle.selectAllCP();
 
-		KBArticle.deleteCP();
+		KBArticle.deleteCP(
+			itemsNumber = 2,
+			moveToRecycleBin = "multipleArticles");
 	}
 
 	@priority = 4

@@ -75,7 +75,7 @@ definition {
 			Button.click(button = "Submit for Workflow");
 		}
 		else {
-			Button.click(button = "Publish");
+			KBArticle.clickPublish();
 		}
 
 		MenuItem.click(menuItem = "Schedule Publication");
@@ -157,7 +157,7 @@ definition {
 
 		CKEditor.addContent(content = ${kbChildArticleContent});
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 	}
 
 	@summary = "Default summary"
@@ -173,7 +173,9 @@ definition {
 			MenuItem.click(menuItem = "Basic Article");
 		}
 		else {
-			LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
+			Button.click(button = "New");
+
+			MenuItem.click(menuItem = "Basic Article");
 		}
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -347,7 +349,7 @@ definition {
 		else {
 			ProductMenuHelper.closeProductMenu();
 
-			Button.click(button = "Publish");
+			KBArticle.clickPublish();
 		}
 
 		if (${kbArticleInvalidContent} == "true") {
@@ -406,7 +408,7 @@ definition {
 			locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_INVALID_SIZE_ERROR",
 			value1 = "Please enter a file with a valid file size no larger than ${maxFileSize}KB.");
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 	}
 
 	@summary = "Default summary"
@@ -425,7 +427,7 @@ definition {
 
 		ProductMenuHelper.closeProductMenu();
 
-		Button.click(button = "Publish");
+		KBArticle.clickPublish();
 
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
@@ -450,7 +452,7 @@ definition {
 			locator1 = "TextInput#CUSTOM_FIELD",
 			value1 = ${customFieldText});
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 	}
 
 	@summary = "Default summary"
@@ -465,7 +467,7 @@ definition {
 
 		CKEditor.addContent(content = ${kbArticleContent});
 
-		Button.click(button = "Publish");
+		KBArticle.clickPublish();
 	}
 
 	@summary = "Default summary"
@@ -481,6 +483,15 @@ definition {
 		CKEditor.addContent(content = ${kbArticleContent});
 
 		Button.clickCancel();
+	}
+
+	@summary = "Default summary"
+	macro clickPublish() {
+		Button.clickPublish();
+
+		Click(
+			key_text = "arrow-right-full",
+			locator1 = "Icon#ANY");
 	}
 
 	@summary = "Default summary"
@@ -579,14 +590,7 @@ definition {
 				kbArticleTitle = ${kbArticleTitle},
 				menuItem = "Delete");
 
-			if (isSet(moveToRecycleBin)) {
-				Alert.viewSuccessMessageText(successMessage = "Success: The element ${kbArticleTitle} was moved to the Recycle Bin.");
-			}
-			else {
-				AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-				Alert.viewSuccessMessage();
-			}
+			Alert.viewSuccessMessageText(successMessage = "Success: The element ${kbArticleTitle} was moved to the Recycle Bin.");
 		}
 		else {
 			if (IsElementPresent(key_text = "trash", locator1 = "ManagementBar#ANY_ICON")) {
@@ -594,16 +598,11 @@ definition {
 					key_text = "trash",
 					locator1 = "ManagementBar#ANY_ICON");
 
-				if (${moveToRecycleBin} == "singleArticle") {
-					Alert.viewSuccessMessageText(successMessage = "Success: The element ${kbArticleTitle} was moved to the Recycle Bin.");
-				}
-				else if (${moveToRecycleBin} == "multipleArticles") {
+				if (${moveToRecycleBin} == "multipleArticles") {
 					Alert.viewSuccessMessageText(successMessage = "Success: ${itemsNumber} items were moved to the Recycle Bin.");
 				}
 				else {
-					AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
-
-					Alert.viewSuccessMessage();
+					Alert.viewSuccessMessageText(successMessage = "Success: The element ${kbArticleTitle} was moved to the Recycle Bin.");
 				}
 			}
 			else {
@@ -613,14 +612,7 @@ definition {
 
 				MenuItem.click(menuItem = "Delete");
 
-				if (isSet(moveToRecycleBin)) {
-					Alert.viewSuccessMessageText(successMessage = "Success: The element ${kbArticleTitle} was moved to the Recycle Bin.");
-				}
-				else {
-					AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-					Alert.viewSuccessMessage();
-				}
+				Alert.viewSuccessMessageText(successMessage = "Success: The element ${kbArticleTitle} was moved to the Recycle Bin.");
 			}
 		}
 
@@ -637,12 +629,10 @@ definition {
 	macro deletePG() {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
 		if (isSet(deleteViaKbArticle)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#INFO",
-				value1 = "Please configure this portlet to make it visible to all users.");
+				locator1 = "Message#ERROR",
+				value1 = "Error:The selected article no longer exists.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -784,7 +774,7 @@ definition {
 			PortletEntry.saveAsDraft();
 		}
 		else {
-			PortletEntry.publish();
+			KBArticle.clickPublish();
 		}
 	}
 
@@ -1305,6 +1295,19 @@ definition {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = ${kbArticleAttachment});
+	}
+
+	@summary = "Default summary"
+	macro selectDisplayPageTemplate(groupName = null, siteURLKey = null, kbChildArticleTitle = null, entryTitle = null, pageName = null) {
+		KBArticle.openToEditKBArticleInSite(
+			groupName = ${groupName},
+			kbArticleTitle = ${entryTitle},
+			kbChildArticleTitle = ${kbChildArticleTitle},
+			siteURLKey = ${siteURLKey});
+
+		WebContent.editDisplayPage(pageName = ${pageName});
+
+		KBArticle.clickPublish();
 	}
 
 	@summary = "Default summary"

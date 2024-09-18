@@ -76,7 +76,7 @@ definition {
 
 		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.deleteCP();
+		KBArticle.deleteCP(kbArticleTitle = "Knowledge Base Article Title");
 
 		PublicationsNavigator.gotoReviewChanges();
 

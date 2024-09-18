@@ -51,7 +51,7 @@ definition {
 			Button.clickSaveAsDraft();
 		}
 		else {
-			Button.click(button = "Publish");
+			KBArticle.clickPublish();
 		}
 	}
 
@@ -198,7 +198,7 @@ definition {
 			Button.clickSaveAsDraft();
 		}
 		else {
-			Button.click(button = "Publish");
+			KBArticle.clickPublish();
 		}
 	}
 
@@ -228,9 +228,11 @@ definition {
 			Click(locator1 = "Home#PORTAL_LOCALIZATION_IGNORE_BUTTON");
 		}
 
-		AssertClick(
-			locator1 = "Button#PUBLISH_LOCALIZED",
-			value1 = "Publicar");
+		Button.click(button = "Publicar");
+
+		Click(
+			key_text = "arrow-right-full",
+			locator1 = "Icon#ANY");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}

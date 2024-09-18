@@ -323,7 +323,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		LexiconTable.delete(tableEntry = "Knowledge Base Article Title");
+		LexiconTable.clickEllipsisItem(
+			item = "Delete",
+			tableEntry = "Knowledge Base Article Title");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -762,7 +764,7 @@ definition {
 
 		KBArticle.selectAttachmentCP(kbArticleAttachment = "Document_1.txt");
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -812,7 +814,7 @@ definition {
 			categoryName = "Category Name2",
 			vocabularyName = "Vocabulary Name");
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 
 		KBArticle.openToEditKBArticleInSite(
 			groupName = "Guest",
@@ -857,7 +859,7 @@ definition {
 			assetTitle = "Blogs Entry Title",
 			assetType = "Blogs Entry");
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -887,7 +889,7 @@ definition {
 
 		AssetCategorization.addTag(tagName = "Tag2");
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 
 		KBArticle.openToEditKBArticleInSite(
 			groupName = "Guest",
@@ -970,9 +972,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.deleteCP(
-			kbArticleTitle = "Knowledge Base Article Title",
-			moveToRecycleBin = "true");
+		KBArticle.deleteCP(kbArticleTitle = "Knowledge Base Article Title");
 
 		KBArticle.viewDefaultCP();
 
@@ -1048,9 +1048,7 @@ definition {
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.deleteCP(
-			kbArticleTitle = "Knowledge Base Child Article Title",
-			moveToRecycleBin = "true");
+		KBArticle.deleteCP(kbArticleTitle = "Knowledge Base Child Article Title");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -1085,9 +1083,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.deleteCP(
-			kbArticleTitle = "Knowledge Base Article Title",
-			moveToRecycleBin = "true");
+		KBArticle.deleteCP(kbArticleTitle = "Knowledge Base Article Title");
 
 		KBArticle.viewDefaultCP();
 
@@ -1281,7 +1277,7 @@ definition {
 
 		KBArticle.setReviewDate(increaseMinutes = 1);
 
-		PortletEntry.publish();
+		KBArticle.clickPublish();
 
 		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 

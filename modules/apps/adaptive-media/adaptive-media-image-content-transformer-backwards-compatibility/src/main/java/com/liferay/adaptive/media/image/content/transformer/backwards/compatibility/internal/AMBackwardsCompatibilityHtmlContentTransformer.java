@@ -6,6 +6,7 @@
 package com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
+import com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal.configuration.AMBackwardsCompatibilityHtmlContentTransformerConfiguration;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
@@ -14,6 +15,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,22 +29,33 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(service = ContentTransformer.class)
+@Component(
+	configurationPid = "com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal.configuration.AMBackwardsCompatibilityHtmlContentTransformerConfiguration",
+	service = ContentTransformer.class
+)
 public class AMBackwardsCompatibilityHtmlContentTransformer
 	implements ContentTransformer {
 
 	@Override
 	public String transform(String html) throws PortalException {
+		if (!_amBackwardsCompatibilityHtmlContentTransformerConfiguration.
+				enabled()) {
+
+			return html;
+		}
+
 		if (html == null) {
 			return null;
 		}
@@ -88,6 +101,15 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 
 		return sb.toString();
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_amBackwardsCompatibilityHtmlContentTransformerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AMBackwardsCompatibilityHtmlContentTransformerConfiguration.
+					class,
+				properties);
 	}
 
 	private FileEntry _getFileEntry(Matcher matcher) throws PortalException {
@@ -284,6 +306,9 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		"((?:/?[^\\s]*)/documents/(\\d+)/(\\d+)/([^/?]+)(?:/([-0-9a-fA-F]+))?" +
 			"(?:\\?.*$)?)|((?:/?[^\\s]*)/documents/(d)/(.*)/" +
 				"([_A-Za-z0-9-]+)?(?:\\?.*$)?)");
+
+	private volatile AMBackwardsCompatibilityHtmlContentTransformerConfiguration
+		_amBackwardsCompatibilityHtmlContentTransformerConfiguration;
 
 	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;

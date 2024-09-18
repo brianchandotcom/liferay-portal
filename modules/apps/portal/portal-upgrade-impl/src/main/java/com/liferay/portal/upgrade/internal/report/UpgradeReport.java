@@ -154,18 +154,19 @@ public class UpgradeReport {
 		return messagesPrinters;
 	}
 
-	private List<String> _getPropertiesFilePaths() {
-		List<String> propertiesFilePaths = new ArrayList<>();
+	private List<String> _getPropertiesFilePathStrings() {
+		List<String> propertiesFilePathStrings = new ArrayList<>();
 
 		for (String loadedSource : PropsUtil.getLoadedSources()) {
 			try {
 				URI uri = new URI(loadedSource);
 
 				if (StringUtil.equals("file", uri.getScheme())) {
-					String propertiesFilePath = String.valueOf(Paths.get(uri));
+					String propertiesFilePathString = String.valueOf(
+						Paths.get(uri));
 
-					if (FileUtil.exists(propertiesFilePath)) {
-						propertiesFilePaths.add(propertiesFilePath);
+					if (FileUtil.exists(propertiesFilePathString)) {
+						propertiesFilePathStrings.add(propertiesFilePathString);
 					}
 				}
 			}
@@ -176,13 +177,14 @@ public class UpgradeReport {
 			}
 		}
 
-		return propertiesFilePaths;
+		return propertiesFilePathStrings;
 	}
 
 	private Map<String, Object> _getReportData(
 		UpgradeRecorder upgradeRecorder) {
 
-		List<String> propertiesFilePaths = _getPropertiesFilePaths();
+		List<String> propertiesFilePathStrings =
+			_getPropertiesFilePathStrings();
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"execution.date",
@@ -391,11 +393,13 @@ public class UpgradeReport {
 			() -> {
 				Map<String, String> propertiesMap = new TreeMap<>();
 
-				for (String propertiesFilePath : propertiesFilePaths) {
+				for (String propertiesFilePathString :
+						propertiesFilePathStrings) {
+
 					Properties properties = new Properties();
 
 					try (InputStream inputStream = new FileInputStream(
-							propertiesFilePath)) {
+							propertiesFilePathString)) {
 
 						properties.load(inputStream);
 					}
@@ -403,7 +407,7 @@ public class UpgradeReport {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to load properties file from: " +
-									propertiesFilePath,
+									propertiesFilePathString,
 								ioException);
 						}
 
@@ -445,7 +449,7 @@ public class UpgradeReport {
 				return propertyPrinters;
 			}
 		).put(
-			"properties.files", propertiesFilePaths
+			"properties.files", propertiesFilePathStrings
 		).put(
 			"document.library.storage.size",
 			() -> {

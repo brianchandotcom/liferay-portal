@@ -60,7 +60,7 @@ public class ExceptionMapperTest {
 			).put(
 				"liferay.oauth2", false
 			).put(
-				"osgi.jaxrs.application.base", _APPLICATION_BASE
+				"osgi.jaxrs.application.base", "/test-vulcan"
 			).put(
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"
@@ -78,22 +78,16 @@ public class ExceptionMapperTest {
 
 		Assert.assertEquals(
 			HTTPTestUtil.invokeToHttpCode(
-				null,
-				_APPLICATION_BASE + _ENDPOINT_NO_SUCH_MODEL_EXCEPTION_PATH,
-				Http.Method.GET),
+				null, "/test-vulcan/testNoSuchModelException", Http.Method.GET),
 			HTTPTestUtil.invokeToHttpCode(
-				null, _APPLICATION_BASE + _ENDPOINT_PRINCIPAL_EXCEPTION_PATH,
-				Http.Method.GET));
+				null, "/test-vulcan/testPrincipalException", Http.Method.GET));
 
 		Assert.assertEquals(
 			HTTPTestUtil.invokeToJSONObject(
-				null,
-				_APPLICATION_BASE + _ENDPOINT_NO_SUCH_MODEL_EXCEPTION_PATH,
-				Http.Method.GET
+				null, "/test-vulcan/testNoSuchModelException", Http.Method.GET
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
-				null, _APPLICATION_BASE + _ENDPOINT_PRINCIPAL_EXCEPTION_PATH,
-				Http.Method.GET
+				null, "/test-vulcan/testPrincipalException", Http.Method.GET
 			).toString());
 	}
 
@@ -105,28 +99,20 @@ public class ExceptionMapperTest {
 		}
 
 		@GET
-		@Path(_ENDPOINT_NO_SUCH_MODEL_EXCEPTION_PATH)
+		@Path("/testNoSuchModelException")
 		@Produces("application/json")
 		public String testNoSuchModelException() throws NoSuchModelException {
 			throw new NoSuchModelException("Object cannot be found");
 		}
 
 		@GET
-		@Path(_ENDPOINT_PRINCIPAL_EXCEPTION_PATH)
+		@Path("/testPrincipalException")
 		@Produces("application/json")
 		public String testPrincipalException() throws PrincipalException {
 			throw new PrincipalException("User needs permissions to object");
 		}
 
 	}
-
-	private static final String _APPLICATION_BASE = "/test-vulcan";
-
-	private static final String _ENDPOINT_NO_SUCH_MODEL_EXCEPTION_PATH =
-		"/testNoSuchModelException";
-
-	private static final String _ENDPOINT_PRINCIPAL_EXCEPTION_PATH =
-		"/testPrincipalException";
 
 	private ServiceRegistration<Application> _serviceRegistration;
 

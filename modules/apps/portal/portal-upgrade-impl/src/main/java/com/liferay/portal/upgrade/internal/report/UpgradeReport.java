@@ -732,6 +732,13 @@ public class UpgradeReport {
 				"Final Rows");
 		}
 
+		if (key.endsWith(".sqls")) {
+			return StringUtil.replace(
+				StringUtil.upperCaseFirstLetter(
+					StringUtil.replaceLast(key, "sql", "SQL")),
+				'.', ' ');
+		}
+
 		return StringUtil.replace(
 			StringUtil.upperCaseFirstLetter(key), '.', ' ');
 	}

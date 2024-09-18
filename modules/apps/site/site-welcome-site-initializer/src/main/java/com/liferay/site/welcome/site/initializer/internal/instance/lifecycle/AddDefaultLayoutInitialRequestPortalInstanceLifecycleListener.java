@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -236,6 +237,7 @@ public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 		themeDisplay.setLayoutSet(controlPanelLayout.getLayoutSet());
 		themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)controlPanelLayout.getLayoutType());
+		themeDisplay.setLayouts(ListUtil.fromArray(controlPanelLayout));
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 
 		String themeId = _prefsProps.getString(

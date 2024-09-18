@@ -11,11 +11,12 @@ import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
 } from '../../ViewsContext';
+import getCellColumnClassName from '../../utils/getCellColumnClassName';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import TableContext from './TableContext';
+import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 
 const Cell = ({
 	children,
@@ -118,7 +119,11 @@ const Cell = ({
 
 	return (
 		<div
-			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
+			className={classNames(
+				heading ? 'dnd-th' : 'dnd-td',
+				getCellColumnClassName(columnName),
+				className
+			)}
 			ref={cellRef}
 			style={{
 				width: width ?? defaultWidth,

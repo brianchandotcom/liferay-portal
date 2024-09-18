@@ -34,6 +34,7 @@ import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
 } from '../ViewsContext';
+import getCellColumnClassName from '../utils/getCellColumnClassName';
 
 // @ts-ignore
 
@@ -187,6 +188,7 @@ export function ClayTable({
 
 						return (
 							<Cell
+								className="cell-select-item"
 								key="select"
 								scope="col"
 								textValue={title}
@@ -222,6 +224,7 @@ export function ClayTable({
 
 					return (
 						<HeadCellResizer
+							className={getCellColumnClassName(field.fieldName)}
 							columnName={field.fieldName}
 							key={field.fieldName}
 							sortable={(field as any).sortable}
@@ -254,10 +257,15 @@ export function ClayTable({
 							key={id}
 						>
 							{(cell) => {
+								const cellColumnName = getCellColumnClassName(
+									cell.fieldName
+								);
+
 								switch (cell.fieldName) {
 									case 'actions': {
 										return (
 											<Cell
+												className="cell-select-item"
 												key={`${id}:actions`}
 												textValue={Liferay.Language.get(
 													'select-item'
@@ -285,6 +293,7 @@ export function ClayTable({
 									case 'select':
 										return (
 											<Cell
+												className="cell-select-item"
 												key={`${id}:select`}
 												textValue={Liferay.Language.get(
 													'select-item'
@@ -348,6 +357,7 @@ export function ClayTable({
 
 											return (
 												<Cell
+													className={cellColumnName}
 													key={`${id}:${cell.fieldName}`}
 												>
 													{InputRenderer ? (
@@ -391,6 +401,7 @@ export function ClayTable({
 
 										return (
 											<Cell
+												className={cellColumnName}
 												key={`${id}:${cell.fieldName}`}
 											>
 												<CellRenderer

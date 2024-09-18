@@ -50,6 +50,13 @@ public interface QuestionsConfiguration {
 	public boolean useTopicNamesInURL();
 
 	@Meta.AD(
+		deflt = "",
+		description = "specify-the-message-boards-category-external-reference-code-that-acts-as-the-root-topic",
+		name = "root-topic-external-reference-code", required = false
+	)
+	public String rootTopicExternalReferenceCode();
+
+	@Meta.AD(
 		deflt = "0",
 		description = "specify-the-message-boards-category-id-that-acts-as-the-root-topic",
 		name = "root-topic-id", required = false

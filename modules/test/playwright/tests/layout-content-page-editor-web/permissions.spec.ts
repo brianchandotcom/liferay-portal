@@ -12,7 +12,6 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -60,12 +59,6 @@ test(
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
 		await apiHelpers.headlessAdminUser.assignUserToRole(
 			role.externalReferenceCode,
 			user.id
@@ -83,15 +76,9 @@ test(
 			title: getRandomString(),
 		});
 
-		// Logout and Login with the new user
-
-		await performLogout(page);
-
-		await performLogin(page, user.alternateName);
-
 		// Go to edit mode
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath, user.id);
 
 		// Assert configuration is present in general tab
 
@@ -148,12 +135,6 @@ test(
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
 		await apiHelpers.headlessAdminUser.assignUserToRole(
 			role.externalReferenceCode,
 			user.id
@@ -171,15 +152,9 @@ test(
 			title: getRandomString(),
 		});
 
-		// Logout and Login with the new user
-
-		await performLogout(page);
-
-		await performLogin(page, user.alternateName);
-
 		// Go to edit mode
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath, user.id);
 
 		// Assert configuration is present in general tab
 

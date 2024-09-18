@@ -13,7 +13,7 @@ import RequiredMark from '../../../components/RequiredMark';
 import ValidationFeedback from '../../../components/ValidationFeedback';
 import {IField} from '../../../utils/types';
 
-const AddFieldModalContent = ({
+const AddCustomFieldModalContent = ({
 	closeModal,
 	namespace,
 	onSaveButtonClick,
@@ -94,4 +94,4 @@ const AddFieldModalContent = ({
 	);
 };
 
-export default AddFieldModalContent;
+export default AddCustomFieldModalContent;

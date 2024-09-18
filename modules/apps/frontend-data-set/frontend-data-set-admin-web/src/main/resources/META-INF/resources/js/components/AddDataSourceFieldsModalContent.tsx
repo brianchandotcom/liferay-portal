@@ -158,7 +158,7 @@ const Highlight = ({query, text}: {query?: string; text?: string}) => {
 	return <>{text}</>;
 };
 
-const FieldSelectModalContent = ({
+const AddDataSourceFieldsModalContent = ({
 	closeModal,
 	fieldTreeItems,
 	onSaveButtonClick,
@@ -405,4 +405,4 @@ const FieldSelectModalContent = ({
 	);
 };
 
-export default FieldSelectModalContent;
+export default AddDataSourceFieldsModalContent;

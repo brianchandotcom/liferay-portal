@@ -79,35 +79,35 @@ export class VisualizationModesPage {
 		await this.dataSetPage.selectTab('Visualization Modes');
 	}
 
-	async openAddFieldsFromDataSourceModal() {
+	async openAddDataSourceFieldsModal() {
 		await this.addFieldsButton.click();
 
-		const assignFromDataSourceButton = await this.page.getByRole(
+		const assignDataSourceFieldsButton = await this.page.getByRole(
 			'menuitem',
 			{name: 'Assign from Data Source'}
 		);
 
-		await assignFromDataSourceButton.waitFor();
-		await assignFromDataSourceButton.click();
+		await assignDataSourceFieldsButton.waitFor();
+		await assignDataSourceFieldsButton.click();
 
 		await this.fieldSelectModalPage.addFieldsDialog.fields
 			.first()
 			.waitFor();
 	}
 
-	async openAddFieldsFromTextModal() {
+	async openAddCustomFieldModal() {
 		await this.addFieldsButton.click();
 
-		const assignFromTextSourceButton = await this.page.getByRole(
+		const assignCustomFieldButton = await this.page.getByRole(
 			'menuitem',
 			{name: 'Assign Field Manually'}
 		);
 
-		await assignFromTextSourceButton.waitFor();
-		await assignFromTextSourceButton.click();
+		await assignCustomFieldButton.waitFor();
+		await assignCustomFieldButton.click();
 	}
 
-	async openAssignFieldFromDataSourceModal({
+	async openAssignDataSourceFieldsModal({
 		container,
 		sectionLabel,
 	}: {
@@ -120,16 +120,16 @@ export class VisualizationModesPage {
 			.getByTitle('Assign Field')
 			.click();
 
-		const assignFromDataSourceButton = await this.page.getByRole(
+		const assignDataSourceFieldsButton = await this.page.getByRole(
 			'menuitem',
 			{name: 'Assign from Data Source'}
 		);
 
-		await assignFromDataSourceButton.waitFor();
-		await assignFromDataSourceButton.click();
+		await assignDataSourceFieldsButton.waitFor();
+		await assignDataSourceFieldsButton.click();
 	}
 
-	async openAssignFieldFromTextModal({
+	async openAssignCustomFieldModal({
 		container,
 		sectionLabel,
 	}: {
@@ -142,16 +142,16 @@ export class VisualizationModesPage {
 			.getByTitle('Assign Field')
 			.click();
 
-		const assignFromTextSourceButton = await this.page.getByRole(
+		const assignCustomFieldButton = await this.page.getByRole(
 			'menuitem',
 			{name: 'Assign Field Manually'}
 		);
 
-		await assignFromTextSourceButton.waitFor();
-		await assignFromTextSourceButton.click();
+		await assignCustomFieldButton.waitFor();
+		await assignCustomFieldButton.click();
 	}
 
-	async openChangeFieldFromDataSourceModal({
+	async openChangeDataSourceFieldsModal({
 		container,
 		sectionLabel,
 	}: {
@@ -176,7 +176,7 @@ export class VisualizationModesPage {
 			.waitFor();
 	}
 
-	async openChangeFieldFromTextModal({
+	async openChangeCustomFieldModal({
 		container,
 		sectionLabel,
 	}: {

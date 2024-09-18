@@ -22,7 +22,7 @@ import React, {useEffect, useState} from 'react';
 
 import FieldSelectModalContent, {
 	visit,
-} from '../../../components/FieldSelectModalContent';
+} from '../../../components/AddDataSourceFieldsModalContent';
 import OrderableTable from '../../../components/OrderableTable';
 import {
 	API_URL,

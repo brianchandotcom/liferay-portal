@@ -9,7 +9,7 @@ import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {visit} from '../../components/FieldSelectModalContent';
+import {visit} from '../../components/AddDataSourceFieldsModalContent';
 import {
 	API_URL,
 	DEFAULT_FETCH_HEADERS,

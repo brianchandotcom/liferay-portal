@@ -12,7 +12,7 @@ import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import '../../../../css/CardsVisualizationMode.scss';
-import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
+import AddDataSourceFieldsModalContent from '../../../components/AddDataSourceFieldsModalContent';
 import {
 	API_URL,
 	DEFAULT_FETCH_HEADERS,
@@ -22,7 +22,7 @@ import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField, IFieldTreeItem} from '../../../utils/types';
 import {IDataSetSectionProps} from '../../DataSet';
-import AddFieldModalContent from '../components/AddFieldModalContent';
+import AddCustomFieldModalContent from '../components/AddCustomFieldModalContent';
 import FieldAssignmentControls from '../components/FieldAssignmentControls';
 
 interface IFDSCardsSection {
@@ -303,10 +303,10 @@ function CardsSection({
 }: ICardsSectionProps) {
 	const {field, fieldTreeItems, label} = cardsSection;
 
-	const openAddFieldModal = () => {
+	const openAddCustomFieldModal = () => {
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFieldModalContent
+				<AddCustomFieldModalContent
 					{...modalProps}
 					closeModal={closeModal}
 					onSaveButtonClick={(selectedField: IField) => {
@@ -320,11 +320,11 @@ function CardsSection({
 		});
 	};
 
-	const openSelectFieldModal = () => {
+	const openAddDataSourceFieldsModal = () => {
 		openModal({
 			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<FieldSelectModalContent
+				<AddDataSourceFieldsModalContent
 					{...modalProps}
 					closeModal={closeModal}
 					fieldTreeItems={fieldTreeItems}
@@ -372,8 +372,8 @@ function CardsSection({
 							field={field}
 							label={label}
 							onClearSelection={onClearSelection}
-							openAddFieldModal={openAddFieldModal}
-							openSelectFieldModal={openSelectFieldModal}
+							openAddCustomFieldModal={openAddCustomFieldModal}
+							openAddDataSourceFieldsModal={openAddDataSourceFieldsModal}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

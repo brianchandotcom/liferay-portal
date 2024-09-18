@@ -14,16 +14,16 @@ interface IFieldAssignmentControlsProps {
 	field?: IField;
 	label: string;
 	onClearSelection: () => void;
-	openAddFieldModal: () => void;
-	openSelectFieldModal: () => void;
+	openAddCustomFieldModal: () => void;
+	openAddDataSourceFieldsModal: () => void;
 }
 
 function FieldAssignmentControls({
 	field,
 	label,
 	onClearSelection,
-	openAddFieldModal,
-	openSelectFieldModal,
+	openAddCustomFieldModal,
+	openAddDataSourceFieldsModal,
 }: IFieldAssignmentControlsProps) {
 	return field ? (
 		<ClayDropDownWithItems
@@ -32,12 +32,12 @@ function FieldAssignmentControls({
 					label: Liferay.Language.get(
 						'change-field-from-data-source'
 					),
-					onClick: openSelectFieldModal,
+					onClick: openAddDataSourceFieldsModal,
 					symbolLeft: 'fieldset',
 				},
 				{
 					label: Liferay.Language.get('change-field-manually'),
-					onClick: openAddFieldModal,
+					onClick: openAddCustomFieldModal	,
 					symbolLeft: 'custom-field',
 				},
 				{
@@ -64,12 +64,12 @@ function FieldAssignmentControls({
 			items={[
 				{
 					label: Liferay.Language.get('assign-from-data-source'),
-					onClick: openSelectFieldModal,
+					onClick: openAddDataSourceFieldsModal,
 					symbolLeft: 'fieldset',
 				},
 				{
 					label: Liferay.Language.get('assign-field-manually'),
-					onClick: openAddFieldModal,
+					onClick: openAddCustomFieldModal,
 					symbolLeft: 'custom-field',
 				},
 			]}

@@ -12,7 +12,7 @@ import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import '../../../../css/ListVisualizationMode.scss';
-import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
+import FieldSelectModalContent from '../../../components/AddDataSourceFieldsModalContent';
 import {
 	API_URL,
 	DEFAULT_FETCH_HEADERS,
@@ -22,7 +22,7 @@ import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField, IFieldTreeItem} from '../../../utils/types';
 import {IDataSetSectionProps} from '../../DataSet';
-import AddFieldModalContent from '../components/AddFieldModalContent';
+import AddCustomFieldModalContent from '../components/AddCustomFieldModalContent';
 import FieldAssignmentControls from '../components/FieldAssignmentControls';
 
 interface IFDSListSection {
@@ -304,10 +304,10 @@ function ListSection({
 }: IListSectionProps) {
 	const {field, fieldTreeItems, label} = listSection;
 
-	const openAddFieldModal = () => {
+	const openAddCustomFieldModal = () => {
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFieldModalContent
+				<AddCustomFieldModalContent
 					{...modalProps}
 					closeModal={closeModal}
 					onSaveButtonClick={(selectedField: IField) => {
@@ -321,7 +321,7 @@ function ListSection({
 		});
 	};
 
-	const openSelectFieldModal = () => {
+	const openAddDataSourceFieldsModal = () => {
 		openModal({
 			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
@@ -373,8 +373,8 @@ function ListSection({
 							field={field}
 							label={label}
 							onClearSelection={onClearSelection}
-							openAddFieldModal={openAddFieldModal}
-							openSelectFieldModal={openSelectFieldModal}
+							openAddCustomFieldModal={openAddCustomFieldModal}
+							openAddDataSourceFieldsModal={openAddDataSourceFieldsModal}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

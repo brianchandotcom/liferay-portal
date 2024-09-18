@@ -13,7 +13,7 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {openModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
+import AddDataSourceFieldsModalContent from '../../../components/AddDataSourceFieldsModalContent';
 import RequiredMark from '../../../components/RequiredMark';
 import ValidationFeedback from '../../../components/ValidationFeedback';
 import {IField, IFilter} from '../../../utils/types';
@@ -104,11 +104,11 @@ function Configuration({
 		);
 	};
 
-	const openSelectFieldModal = () => {
+	const openDataSourceFieldsModal = () => {
 		openModal({
 			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<FieldSelectModalContent
+				<AddDataSourceFieldsModalContent
 					closeModal={closeModal}
 					fieldTreeItems={fields}
 					onSaveButtonClick={({
@@ -196,7 +196,7 @@ function Configuration({
 							<ClayButton
 								disabled={!!filter}
 								displayType="secondary"
-								onClick={openSelectFieldModal}
+								onClick={openDataSourceFieldsModal}
 								type="submit"
 							>
 								{Liferay.Language.get('select')}

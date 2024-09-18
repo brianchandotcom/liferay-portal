@@ -185,7 +185,7 @@ const ProjectSelection = () => {
 				{`${i18n.translate('not-seeing-a-specific-project')} `}
 				<a
 					className="font-weight-bold project-selection-page-link"
-					href={properties.contactSupportUrl}
+					href={properties.contactSupportURL}
 					target="_blank"
 				>
 					{i18n.translate('contact-support')}

@@ -295,8 +295,9 @@ type Channel = {
 };
 
 type DefaultProperties = {
+	analyticsCloudURL: string;
 	cloudBaseURL: string;
-	contactSupportUrl: string;
+	contactSupportURL: string;
 	eulaBaseURL: string;
 	featureFlags: string[];
 	featurePreviews: ['use-product-id-for-specification'];

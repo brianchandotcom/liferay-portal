@@ -18,12 +18,12 @@ import {
 	updateUserPassword,
 } from '../../utils/api';
 import {createPassword} from '../../utils/createPassword';
+import {getSiteURL} from '../../utils/site';
 import {Avatar} from '../Avatar/Avatar';
 import {DetailedCard} from '../DetailedCard/DetailedCard';
 import {
 	addAdditionalInfo,
 	getAccountRolesOnAPI,
-	getSiteURL,
 	sendRoleAccountUser,
 } from '../InviteMemberModal/services';
 

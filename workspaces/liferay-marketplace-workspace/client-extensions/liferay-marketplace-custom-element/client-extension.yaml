@@ -10,8 +10,9 @@ liferay-marketplace-custom-element:
     name: Liferay Marketplace
     portletCategoryName: category.client-extensions
     properties:
+        analyticsCloudURL: https://analytics-internal.liferay.com
         cloudBaseURL: https://console.liferay.cloud
-        contactSupportUrl: https://www.liferay.com/contact-us
+        contactSupportURL: https://www.liferay.com/contact-us
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
         featureFlags: LPD-20220,LPD-20229,LPD-21582
         featurePreviews: use-product-id-for-specification

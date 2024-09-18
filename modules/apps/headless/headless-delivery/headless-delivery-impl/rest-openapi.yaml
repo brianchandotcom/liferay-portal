@@ -6778,6 +6778,32 @@ paths:
                                     $ref: "#/components/schemas/DocumentMetadataSet"
                                 type: array
             tags: ["DocumentMetadataSet"]
+        post:
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentMetadataSet"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentMetadataSet"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentMetadataSet"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentMetadataSet"
+            tags: ["DocumentMetadataSet"]
     "/asset-libraries/{assetLibraryId}/document-shortcuts":
         get:
             operationId: getAssetLibraryDocumentShortcutsPage
@@ -13413,6 +13439,32 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DocumentMetadataSet"
                                 type: array
+            tags: ["DocumentMetadataSet"]
+        post:
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentMetadataSet"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentMetadataSet"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentMetadataSet"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentMetadataSet"
             tags: ["DocumentMetadataSet"]
     "/sites/{siteId}/document-shortcuts":
         get:

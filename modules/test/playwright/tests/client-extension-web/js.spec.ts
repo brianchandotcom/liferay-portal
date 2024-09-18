@@ -77,9 +77,7 @@ export const testInstanceScoped = mergeTests(
 testInstanceScoped(
 	'Assert that the instance scoped client extensions are injected into site pages, site control panel pages, and instance control panel pages',
 	async ({clientExtensionsPage, page, styleBooksPage}) => {
-		const scriptLocator = page.locator(
-			`script[src="${SAMPLES[2].url}"]`
-		);
+		const scriptLocator = page.locator(`script[src="${SAMPLES[2].url}"]`);
 
 		await testInstanceScoped.step(
 			'Assert that the client extension is imported into a site page',
@@ -91,7 +89,7 @@ testInstanceScoped(
 		);
 
 		await testInstanceScoped.step(
-			"Assert that the client extension is imported into an instance control panel page",
+			'Assert that the client extension is imported into an instance control panel page',
 			async () => {
 				await clientExtensionsPage.goto();
 
@@ -100,7 +98,7 @@ testInstanceScoped(
 		);
 
 		await testInstanceScoped.step(
-			"Assert that the client extension is imported into a site control panel page",
+			'Assert that the client extension is imported into a site control panel page',
 			async () => {
 				await styleBooksPage.goto();
 

@@ -153,9 +153,7 @@ function Select({
 						}
 					}}
 					placeholder={placeholder}
-					selectedKey={
-						selectedItem === null ? 'chooseAnOption' : selectedItem
-					}
+					selectedKey={selectedItem ?? 'chooseAnOption'}
 				>
 					{(group) => (
 						<DropDown.Group

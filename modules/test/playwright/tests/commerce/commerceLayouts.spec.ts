@@ -162,10 +162,6 @@ test('LPD-33439 Default order display page template is accessible via friendly U
 			'Feature Flags',
 			'Developer'
 		);
-
-		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
-			await page.getByLabel('COMMERCE-9410').click();
-		}
 	}
 });
 
@@ -327,6 +323,119 @@ test('LPD-32227 Order info box fragment configuration', async ({
 		await expect(page.getByText(account.name)).toBeVisible();
 		await expect(page.getByText(String(account.id))).toBeVisible();
 		await expect(commerceLayoutsPage.infoBoxButton('PON')).toBeHidden();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-32236 Order Step Tracker fragment configuration', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		await page.getByLabel('COMMERCE-9410').click();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Step Tracker', 'Order');
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForSuccessAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Pending')
+		).toHaveClass(/active/);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Processing')
+		).not.toHaveClass(/active/);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Shipped')
+		).not.toHaveClass(/active/);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Completed')
+		).not.toHaveClass(/active/);
 	}
 	finally {
 		await systemSettingsPage.goToSystemSetting(

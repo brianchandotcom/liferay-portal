@@ -56,6 +56,7 @@ export class CommerceLayoutsPage {
 	readonly showLabelInput: Locator;
 	readonly siteBuilderMenuItem: Locator;
 	readonly siteHomePageLink: Locator;
+	readonly stepTrackerItem: (name: string) => Locator;
 	readonly widgetPageTemplateButton: Locator;
 
 	constructor(page: Page) {
@@ -193,6 +194,8 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Home',
 		});
+		this.stepTrackerItem = (name: string) =>
+			page.locator('li').filter({hasText: name});
 		this.widgetPageTemplateButton = page
 			.getByTestId('cardPageItemDirectory')
 			.getByRole('button', {

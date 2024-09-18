@@ -108,8 +108,9 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 	);
 });
 
-test('LPD-29693 Assert silence context change popover behavior', async ({
+test('LPD-29693, LPD-29294 Assert silence context change popover behavior', async ({
 	apiHelpers,
+	changeTrackingPage,
 	journalPage,
 	page,
 }) => {
@@ -119,7 +120,9 @@ test('LPD-29693 Assert silence context change popover behavior', async ({
 
 	await journalPage.goto(site1.friendlyUrlPath);
 
-	await page.getByLabel('Do not show this message').click();
+	const popoverCheckbox = page.getByLabel('Do not show this message');
+
+	await popoverCheckbox.check();
 
 	await page
 		.getByTitle('hideContextChangeWarningDuration')
@@ -135,7 +138,49 @@ test('LPD-29693 Assert silence context change popover behavior', async ({
 
 	await journalPage.goto(site2.friendlyUrlPath);
 
+	const popoverTitle = page.getByText('Keep working in this publication?', {
+		exact: true,
+	});
+
+	await expect(popoverTitle).toBeHidden();
+
+	await changeTrackingPage.goto();
+
+	const optionsDropdown = page.getByLabel('Options');
+
+	await optionsDropdown.click();
+
+	const notificationsOption = page.getByRole('menuitem', {
+		name: 'Notifications',
+	});
+
+	await notificationsOption.click();
+
 	await expect(
-		page.getByText('Keep working in this publication?', {exact: true})
-	).toBeHidden();
+		page.getByRole('heading', {name: 'Notifications'})
+	).toBeVisible();
+
+	await page.getByRole('button', {name: 'Cancel'}).click();
+
+	await optionsDropdown.click();
+
+	await notificationsOption.click();
+
+	await page.getByLabel('Hide warning when changing').uncheck();
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await page.reload();
+
+	await journalPage.goto(site1.friendlyUrlPath);
+
+	await expect(popoverCheckbox).toBeVisible();
+
+	await popoverCheckbox.check();
+
+	await page.getByTestId('applicationsMenu').click();
+
+	await journalPage.goto(site2.friendlyUrlPath);
+
+	await expect(popoverTitle).toBeHidden();
 });

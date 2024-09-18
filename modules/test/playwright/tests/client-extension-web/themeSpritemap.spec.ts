@@ -23,7 +23,7 @@ const SAMPLES = [
 	{
 		erc: 'LXC:liferay-sample-theme-spritemap-2',
 		name: 'Liferay Sample Theme Spritemap 2',
-		url: '/o/liferay-sample-theme-spritemap-2/spritemap.60a35738d5217bbca1ba8470eba2fd8440ab368d.svg',
+		url: '/o/liferay-sample-theme-spritemap-2/spritemap.87f79d7e10ac5f96ecc168234ba026ccf2ecf451.svg',
 	},
 ];
 

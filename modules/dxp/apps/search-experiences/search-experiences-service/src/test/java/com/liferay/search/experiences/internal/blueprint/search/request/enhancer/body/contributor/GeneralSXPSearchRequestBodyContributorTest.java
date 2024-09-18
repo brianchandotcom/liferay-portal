@@ -52,11 +52,11 @@ public class GeneralSXPSearchRequestBodyContributorTest {
 	}
 
 	private Configuration _setUpConfiguration(String[] entryClassNameArray) {
+		Configuration configuration = new Configuration();
+
 		GeneralConfiguration generalConfiguration = new GeneralConfiguration();
 
 		generalConfiguration.setSearchableAssetTypes(entryClassNameArray);
-
-		Configuration configuration = new Configuration();
 
 		configuration.setGeneralConfiguration(generalConfiguration);
 

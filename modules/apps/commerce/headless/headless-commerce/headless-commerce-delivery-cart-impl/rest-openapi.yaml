@@ -155,6 +155,9 @@ components:
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
+                friendlyURLSeparator:
+                    readOnly: true
+                    type: string
                 id:
                     format: int64
                     readOnly: true

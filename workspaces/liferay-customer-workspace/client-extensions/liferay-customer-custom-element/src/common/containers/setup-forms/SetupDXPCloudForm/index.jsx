@@ -13,15 +13,23 @@ import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import NotificationQueueService from '~/common/services/actions/notificationAction';
 import {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	addContactRoleLiferay,
 	addContactRoleRaysource,
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	removeContactRoleLiferay,
 	removeContactRoleRaysource,
 	updateLiferayContact,
-	updateRaysourceContact
+	updateRaysourceContact,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import {useOnboarding} from '~/routes/onboarding/context';
+import {useCustomerPortal} from '../../../../routes/customer-portal/context';
+import {
+	STATUS_CODE,
+	STATUS_TAG_TYPE_NAMES,
+} from '../../../../routes/customer-portal/utils/constants';
+import i18n from '../../../I18n';
+import {Button, Input, Select} from '../../../components';
+import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
@@ -30,18 +38,10 @@ import {
 	getListTypeDefinitions,
 	updateAccountSubscriptionGroups,
 } from '../../../services/liferay/graphql/queries';
-import {isLowercaseAndNumbers} from '../../../utils/validations.form';
-import {useCustomerPortal} from '../../../../routes/customer-portal/context';
-import {
-	STATUS_CODE,
-	STATUS_TAG_TYPE_NAMES,
-} from '../../../../routes/customer-portal/utils/constants';
-import i18n from '../../../I18n';
-import {Button, Input, Select} from '../../../components';
 
-import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import getKebabCase from '../../../utils/getKebabCase';
+import {isLowercaseAndNumbers} from '../../../utils/validations.form';
 import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
 
@@ -150,6 +150,7 @@ const SetupDXPCloudPage = ({
 				);
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
@@ -173,8 +174,9 @@ const SetupDXPCloudPage = ({
 			});
 
 			if (dxpCloudEnvironmentData) {
-				const status = !!dxpCloudEnvironmentData.c?.dXPCloudEnvironments
-					?.items?.length;
+				const status =
+					!!dxpCloudEnvironmentData.c?.dXPCloudEnvironments?.items
+						?.length;
 
 				return status;
 			}
@@ -255,30 +257,39 @@ const SetupDXPCloudPage = ({
 			});
 
 			if (featureFlags.includes('LPS-187767')) {
-				const notificationTemplateService = new NotificationQueueService(
-					client
-				);
+				const notificationTemplateService =
+					new NotificationQueueService(client);
 
 				try {
+					const adminInfo = dxp?.admins?.map(
+						({email, firstName, github, lastName}) => {
+							return `
+							<strong>Email Address - </strong> ${email}<br>
+							<strong>First Name - </strong>${firstName}<br>
+							<strong>Last Name - </strong>${lastName}<br>
+							<strong>GitHub ID - </strong>${github}<br><br>`;
+						}
+					);
+
 					await notificationTemplateService.send(
 						'SETUP-DXP-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
 						{
-							'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
+							'[%DATE_AND_TIME_SUBMITTED%]':
+								new Date().toUTCString(),
 							'[%PROJECT_CODE%]': project.code,
 							'[%PROJECT_DATA_CENTER_REGION%]':
 								dxp?.dataCenterRegion,
-							'[%PROJECT_DISASTER_CENTER_REGION%]': dxp?.disasterDataCenterRegion
-								? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
-								: '',
+							'[%PROJECT_DISASTER_CENTER_REGION%]':
+								dxp?.disasterDataCenterRegion
+									? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
+									: '',
 							'[%PROJECT_ID%]': dxp?.projectId,
-							'[%PROJECT_VERSION%]': dxpVersion,
-							'[%USER_EMAIL%]': dxp?.admins[0]?.email,
-							'[%USER_FIRST_NAME%]': dxp?.admins[0]?.firstName,
-							'[%USER_GITHUB]': dxp?.admins[0]?.github,
-							'[%USER_LAST_NAME%]': dxp?.admins[0]?.lastName,
+							'[%PROJECT_VERSION%]': selectedVersion,
+							'[%PROJECT_ADMIN_INFO%]': adminInfo.join(''),
 						}
 					);
-				} catch (error) {
+				}
+				catch (error) {
 					console.error(error);
 				}
 			}
@@ -347,7 +358,8 @@ const SetupDXPCloudPage = ({
 	const handleButtonClick = () => {
 		if (step === 1) {
 			handlePage(false);
-		} else {
+		}
+		else {
 			handlePreviousStep();
 		}
 	};
@@ -414,7 +426,7 @@ const SetupDXPCloudPage = ({
 													? project.name.substring(
 															0,
 															MAXIMUM_NUMBER_OF_CHARACTERS
-													  ) + '...'
+														) + '...'
 													: project.name}
 											</strong>
 										</p>
@@ -609,7 +621,7 @@ const SetupDXPCloudPage = ({
 											? project.name.substring(
 													0,
 													MAXIMUM_NUMBER_OF_CHARACTERS
-											  ) + '...'
+												) + '...'
 											: project.name}
 									</strong>
 								</p>

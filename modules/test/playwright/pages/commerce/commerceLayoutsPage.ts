@@ -37,6 +37,7 @@ export class CommerceLayoutsPage {
 	readonly infoBoxFieldSelect: Locator;
 	readonly infoBoxLabelInput: Locator;
 	readonly infoBoxShippingMethodAlert: Locator;
+	readonly infoBoxShippingMethodSelect: Locator;
 	readonly infoBoxReadOnlyToggle: Locator;
 	readonly infoBoxValue: (name: string) => Locator;
 	readonly inputTextbox: (name: string) => Locator;
@@ -144,6 +145,7 @@ export class CommerceLayoutsPage {
 		this.infoBoxFieldSelect = page.getByLabel('Field');
 		this.infoBoxLabelInput = page.getByLabel('Label');
 		this.infoBoxShippingMethodAlert = page.getByText('are no available');
+		this.infoBoxShippingMethodSelect = page.getByLabel('Choose Courier');
 		this.infoBoxReadOnlyToggle = page.getByLabel('Read Only');
 		this.infoBoxValue = (name: string) => page.getByText(name);
 		this.inputTextbox = (name: string) =>

@@ -22,6 +22,7 @@ const InfoBoxModalShippingMethodInput = ({
 	spritemap,
 }) => {
 	const [hasShippingMethods, setHasShippingMethods] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
 	const [shippingMethodEngine, setShippingMethodEngine] = useState(
 		inputValue ? inputValue.split('#').shift() : null
@@ -82,102 +83,113 @@ const InfoBoxModalShippingMethodInput = ({
 						),
 					type: 'danger',
 				});
+			})
+			.finally(() => {
+				setLoading(false);
 			});
 	}, [orderId, setIsValid]);
 
 	return (
 		<>
-			{hasShippingMethods ? (
+			{!loading && (
 				<>
-					<label htmlFor="infoBoxModalShippingMethodInput">
-						{Liferay.Language.get('choose-courier')}{' '}
-
-						<span className="ml-1 reference-mark text-warning">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
-
-					<ClaySelect
-						data-qa-id="infoBoxModalShippingMethodInput"
-						id="infoBoxModalShippingMethodInput"
-						onChange={(event) => {
-							setInputValue('#');
-							setShippingMethodEngine(event.target.value);
-						}}
-						value={shippingMethodEngine || ''}
-					>
-						<ClaySelect.Option label="" value="" />
-
-						{shippingMethods
-							.filter(
-								(shippingMethod) =>
-									shippingMethod.shippingOptions.length
-							)
-							.map((shippingMethod) => (
-								<ClaySelect.Option
-									key={shippingMethod.id}
-									label={shippingMethod.name}
-									value={shippingMethod.engineKey}
-								/>
-							))}
-					</ClaySelect>
-
-					{selectedShippingMethod ? (
+					{hasShippingMethods ? (
 						<>
-							<label
-								className="mt-4"
-								htmlFor="infoBoxModalShippingOptionInput"
-							>
-								{Liferay.Language.get('carrier-options')}{' '}
+							<label htmlFor="infoBoxModalShippingMethodInput">
+								{Liferay.Language.get('choose-courier')}{' '}
 
 								<span className="ml-1 reference-mark text-warning">
 									<ClayIcon symbol="asterisk" />
 								</span>
 							</label>
 
-							<ClayRadioGroup
-								defaultValue={inputValue}
-								id="infoBoxModalShippingOptionInput"
-								onChange={(value) => {
-									setInputValue(value);
+							<ClaySelect
+								data-qa-id="infoBoxModalShippingMethodInput"
+								id="infoBoxModalShippingMethodInput"
+								onChange={(event) => {
+									setInputValue('#');
+									setShippingMethodEngine(event.target.value);
 								}}
+								value={shippingMethodEngine || ''}
 							>
-								{selectedShippingMethod.shippingOptions.map(
-									(shippingOption) => (
-										<ClayRadio
-											containerProps={{
-												className: 'shippingOptionItem',
-											}}
-											key={
-												selectedShippingMethod.id +
-												shippingOption.name
-											}
-											label={
-												shippingOption.label +
-												' (' +
-												shippingOption.amountFormatted +
-												')'
-											}
-											value={
-												selectedShippingMethod.engineKey +
-												'#' +
-												shippingOption.name
-											}
-										/>
+								<ClaySelect.Option label="" value="" />
+
+								{shippingMethods
+									.filter(
+										(shippingMethod) =>
+											shippingMethod.shippingOptions
+												.length
 									)
-								)}
-							</ClayRadioGroup>
+									.map((shippingMethod) => (
+										<ClaySelect.Option
+											key={shippingMethod.id}
+											label={shippingMethod.name}
+											value={shippingMethod.engineKey}
+										/>
+									))}
+							</ClaySelect>
+
+							{selectedShippingMethod ? (
+								<>
+									<label
+										className="mt-4"
+										htmlFor="infoBoxModalShippingOptionInput"
+									>
+										{Liferay.Language.get(
+											'carrier-options'
+										)}{' '}
+
+										<span className="ml-1 reference-mark text-warning">
+											<ClayIcon symbol="asterisk" />
+										</span>
+									</label>
+
+									<ClayRadioGroup
+										defaultValue={inputValue}
+										id="infoBoxModalShippingOptionInput"
+										onChange={(value) => {
+											setInputValue(value);
+										}}
+									>
+										{selectedShippingMethod.shippingOptions.map(
+											(shippingOption) => (
+												<ClayRadio
+													containerProps={{
+														className:
+															'shippingOptionItem',
+													}}
+													key={
+														selectedShippingMethod.id +
+														shippingOption.name
+													}
+													label={
+														shippingOption.label +
+														' (' +
+														shippingOption.amountFormatted +
+														')'
+													}
+													value={
+														selectedShippingMethod.engineKey +
+														'#' +
+														shippingOption.name
+													}
+												/>
+											)
+										)}
+									</ClayRadioGroup>
+								</>
+							) : (
+								<></>
+							)}
 						</>
 					) : (
-						<></>
+						<ClayAlert displayType="info" spritemap={spritemap}>
+							{Liferay.Language.get(
+								'there-are-no-available-shipping-methods'
+							)}
+						</ClayAlert>
 					)}
 				</>
-			) : (
-				<ClayAlert displayType="info" spritemap={spritemap}>
-					{Liferay.Language.get(
-						'there-are-no-available-shipping-methods'
-					)}
-				</ClayAlert>
 			)}
 		</>
 	);

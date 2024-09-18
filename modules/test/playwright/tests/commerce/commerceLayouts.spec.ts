@@ -640,6 +640,17 @@ test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
 		).toBeVisible();
 
 		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(shippingOptions[0])
+		).toHaveCount(0);
+
+		await commerceLayoutsPage.infoBoxShippingMethodSelect.selectOption('Flat Rate');
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(shippingOptions[0])
+		).toBeVisible();
+
 		await commerceLayoutsPage.infoBoxValue(shippingOptions[0]).click();
 		await commerceLayoutsPage.saveButton.click();
 

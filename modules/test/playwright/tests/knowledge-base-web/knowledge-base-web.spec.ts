@@ -18,222 +18,207 @@ import {performLogout} from '../../utils/performLogin';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {KnowledgeBaseUrls} from './utils/knowledgeBaseUrls';
 
-const baseTest = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	knowledgeBasePages,
+	featureFlagsTest({
+		'LPD-11003': true,
+	}),
 	loginTest()
 );
 
-const testFeatureFlagsDisabled = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-11003': false,
-	})
-);
-const testFeatureFlagsEnabled = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-11003': true,
-	})
-);
+test('LPD-27537: Article should be shown to guest users', async ({
+	apiHelpers,
+	page,
+	site,
+}) => {
+	const content = getRandomString();
+	const title = getRandomString();
 
-baseTest(
-	'LPD-27537: Article should be shown to guest users',
-	async ({apiHelpers, page, site}) => {
-		const content = getRandomString();
-		const title = getRandomString();
+	const knowledgeBaseArticle =
+		await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+			articleBody: content,
+			siteId: site.id,
+			title,
+		});
 
-		const knowledgeBaseArticle =
-			await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
-				articleBody: content,
-				siteId: site.id,
-				title,
-			});
+	await performLogout(page);
 
-		await performLogout(page);
+	await page.goto(
+		liferayConfig.environment.baseUrl +
+			'/c/knowledge_base/find_kb_article?resourcePrimKey=' +
+			knowledgeBaseArticle.id
+	);
 
-		await page.goto(
-			liferayConfig.environment.baseUrl +
-				'/c/knowledge_base/find_kb_article?resourcePrimKey=' +
-				knowledgeBaseArticle.id
+	await expect(
+		page.getByText('Error:Your request failed to complete.')
+	).toBeHidden();
+
+	await expect(page.getByText('Knowledge Base Article')).toBeVisible();
+});
+
+test('LPD-23801 error message is shown when an admin user tries to publish an article that an admin is currently editing', async ({
+	apiHelpers,
+	browser,
+	knowledgeBaseEditArticlePage,
+	page,
+	site,
+}) => {
+	const content = getRandomString();
+	const title = getRandomString();
+
+	const knowledgeBaseArticle =
+		await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+			articleBody: content,
+			siteId: site.id,
+			title,
+		});
+	const knowledgeBaseUrls = new KnowledgeBaseUrls(site.friendlyUrlPath);
+
+	await page.goto(
+		knowledgeBaseUrls.getEditKBArticleUrl(knowledgeBaseArticle.id)
+	);
+
+	await expect(page.getByPlaceholder('Untitled Article')).toHaveValue(title);
+
+	const browserContext = await browser.newContext();
+
+	try {
+		const otherUserPage = await getLoggedInPage(
+			browserContext,
+			'demo.company.admin'
+		);
+
+		await otherUserPage.goto(
+			knowledgeBaseUrls.getEditKBArticleUrl(
+				knowledgeBaseArticle.id,
+				true,
+				knowledgeBaseUrls.home
+			)
 		);
 
 		await expect(
-			page.getByText('Error:Your request failed to complete.')
-		).toBeHidden();
+			otherUserPage.getByPlaceholder('Untitled Article')
+		).toHaveValue(title);
 
-		await expect(page.getByText('Knowledge Base Article')).toBeVisible();
-	}
-);
-
-testFeatureFlagsEnabled(
-	'LPD-23801 error message is shown when an admin user tries to publish an article that an admin is currently editing',
-	async ({apiHelpers, browser, knowledgeBaseEditArticlePage, page, site}) => {
-		const content = getRandomString();
-		const title = getRandomString();
-
-		const knowledgeBaseArticle =
-			await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
-				articleBody: content,
-				siteId: site.id,
-				title,
-			});
-		const knowledgeBaseUrls = new KnowledgeBaseUrls(site.friendlyUrlPath);
-
-		await page.goto(
-			knowledgeBaseUrls.getEditKBArticleUrl(knowledgeBaseArticle.id)
+		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
+			`${content} test`,
+			`${title} test`
 		);
 
-		await expect(page.getByPlaceholder('Untitled Article')).toHaveValue(
-			title
-		);
+		await expect(
+			page.getByText('Your changes cannot be saved.')
+		).toBeVisible();
 
-		const browserContext = await browser.newContext();
+		const otherUserKnowledgeBaseEditArticlePage =
+			new KnowledgeBaseEditArticlePage(otherUserPage);
 
-		try {
-			const otherUserPage = await getLoggedInPage(
-				browserContext,
-				'demo.company.admin'
-			);
-
-			await otherUserPage.goto(
-				knowledgeBaseUrls.getEditKBArticleUrl(
-					knowledgeBaseArticle.id,
-					true,
-					knowledgeBaseUrls.home
-				)
-			);
-
-			await expect(
-				otherUserPage.getByPlaceholder('Untitled Article')
-			).toHaveValue(title);
-
-			await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
-				`${content} test`,
-				`${title} test`
-			);
-
-			await expect(
-				page.getByText('Your changes cannot be saved.')
-			).toBeVisible();
-
-			const otherUserKnowledgeBaseEditArticlePage =
-				new KnowledgeBaseEditArticlePage(otherUserPage);
-
-			await otherUserKnowledgeBaseEditArticlePage.cancel();
-		}
-		finally {
-			await browserContext.close();
-		}
+		await otherUserKnowledgeBaseEditArticlePage.cancel();
 	}
-);
+	finally {
+		await browserContext.close();
+	}
+});
 
-baseTest(
-	'can publish and delete an article with scheduling enabled',
-	async ({
-		knowledgeBaseEditArticlePage,
-		knowledgeBaseViewArticlePage,
+test('can publish and delete an article', async ({
+	knowledgeBaseEditArticlePage,
+	knowledgeBaseViewArticlePage,
+	page,
+	site,
+}) => {
+	const content = getRandomString();
+	const title = getRandomString();
+
+	const kbArticle = page.getByRole('link', {name: title});
+
+	await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
+	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
+		content,
+		title
+	);
+
+	await waitForSuccessAlert(
 		page,
-		site,
-	}) => {
-		const content = getRandomString();
-		const title = getRandomString();
+		`Success:${title} was successfully published.`
+	);
 
-		const kbArticle = page.getByRole('link', {name: title});
+	await expect(kbArticle).toBeVisible();
+	await expect(page.locator('.workflow-status-approved')).toBeVisible();
 
-		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
-			content,
-			title
-		);
+	await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
+	await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle();
 
-		await waitForSuccessAlert(
-			page,
-			`Success:${title} was successfully published.`
-		);
+	await expect(
+		page.locator(
+			'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
+		)
+	).toBeVisible();
+	await expect(kbArticle).toBeHidden();
+});
 
-		await expect(kbArticle).toBeVisible();
-		await expect(page.locator('.workflow-status-approved')).toBeVisible();
+test('can delete all articles (recycle bin enabled)', async ({
+	knowledgeBaseEditArticlePage,
+	knowledgeBasePage,
+	page,
+	site,
+}) => {
+	await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
 
-		await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
-		await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle();
+	const title = getRandomString();
 
-		await expect(
-			page.locator(
-				'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
-			)
-		).toBeVisible();
-		await expect(kbArticle).toBeHidden();
-	}
-);
+	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
+		getRandomString(),
+		title
+	);
 
-testFeatureFlagsEnabled(
-	'can delete all articles with a recycle bin enabled',
-	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {
-		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-
-		const title = getRandomString();
-
-		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
-			getRandomString(),
-			title
-		);
-
-		await waitForSuccessAlert(
-			page,
-			`Success:${title} was successfully published.`
-		);
-
-		await knowledgeBasePage.goto(site.friendlyUrlPath);
-		await knowledgeBasePage.deleteAll(true);
-
-		await expect(
-			page.locator(
-				'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
-			)
-		).toBeVisible();
-		await expect(
-			page.getByRole('heading', {name: 'Knowledge base is empty.'})
-		).toBeVisible();
-	}
-);
-
-baseTest(
-	'can schedule and delete an article with scheduling enabled',
-	async ({
-		knowledgeBaseEditArticlePage,
-		knowledgeBaseViewArticlePage,
+	await waitForSuccessAlert(
 		page,
-		site,
-	}) => {
-		const title = getRandomString();
+		`Success:${title} was successfully published.`
+	);
 
-		const kbArticle = page.getByRole('link', {name: title});
+	await knowledgeBasePage.goto(site.friendlyUrlPath);
+	await knowledgeBasePage.deleteAll(true);
 
-		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-		await knowledgeBaseEditArticlePage.scheduleNewKnowledgeBaseArticle(
-			getRandomString(),
-			`${new Date().getFullYear() + 1}-01-01 00:00`,
-			title
-		);
+	await expect(
+		page.locator(
+			'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
+		)
+	).toBeVisible();
+	await expect(
+		page.getByRole('heading', {name: 'Knowledge base is empty.'})
+	).toBeVisible();
+});
 
-		await waitForSuccessAlert(
-			page,
-			`Success:${title} will be published on`
-		);
+test('can schedule and delete an article', async ({
+	knowledgeBaseEditArticlePage,
+	knowledgeBaseViewArticlePage,
+	page,
+	site,
+}) => {
+	const title = getRandomString();
 
-		await expect(kbArticle).toBeVisible();
-		await expect(page.locator('.workflow-status-scheduled')).toBeVisible();
+	const kbArticle = page.getByRole('link', {name: title});
 
-		await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
-		await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle();
+	await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
+	await knowledgeBaseEditArticlePage.scheduleNewKnowledgeBaseArticle(
+		getRandomString(),
+		`${new Date().getFullYear() + 1}-01-01 00:00`,
+		title
+	);
 
-		await expect(
-			page.locator(
-				'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
-			)
-		).toBeVisible();
-		await expect(kbArticle).toBeHidden();
-	}
-);
+	await waitForSuccessAlert(page, `Success:${title} will be published on`);
+
+	await expect(kbArticle).toBeVisible();
+	await expect(page.locator('.workflow-status-scheduled')).toBeVisible();
+
+	await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
+	await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle();
+
+	await expect(
+		page.locator(
+			'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
+		)
+	).toBeVisible();
+	await expect(kbArticle).toBeHidden();
+});

@@ -23,7 +23,8 @@ export function getStepperChild(
 			continue;
 		}
 
-		const fragment = fragmentEntryLinks?.[child.config.fragmentEntryLinkId];
+		const fragment =
+			fragmentEntryLinks?.[child.config.fragmentEntryLinkId!];
 
 		if (fragment.fieldTypes?.includes('stepper')) {
 			return child;

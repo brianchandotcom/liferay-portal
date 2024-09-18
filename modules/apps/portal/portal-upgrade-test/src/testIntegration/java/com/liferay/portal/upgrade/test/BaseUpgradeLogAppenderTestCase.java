@@ -586,7 +586,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_assertLogContextContains(
 			"upgrade.report.properties",
-			"my.environment.property:my environment property value");
+			"my.environment.property=my environment property value");
 
 		_assertReport("my.environment.property=my environment property value");
 	}
@@ -619,7 +619,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertLogContextContains(
 				"upgrade.report.properties.files", file.getAbsolutePath());
 			_assertLogContextContains(
-				"upgrade.report.properties", "my.property:my property value");
+				"upgrade.report.properties", "my.property=my property value");
 			_assertReport(file.getAbsolutePath());
 			_assertReport("my.property=my property value");
 		}

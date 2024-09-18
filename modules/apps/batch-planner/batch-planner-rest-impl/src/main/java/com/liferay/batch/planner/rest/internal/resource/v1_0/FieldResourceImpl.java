@@ -63,6 +63,7 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 		return new Field() {
 			{
+				setAnyOfGroup(vulcanField::getAnyOfGroup);
 				setDescription(vulcanField::getDescription);
 				setName(vulcanField::getName);
 				setRequired(vulcanField::isRequired);

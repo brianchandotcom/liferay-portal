@@ -164,7 +164,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		if (userId != 0) {
 			User user = _userLocalService.getUserById(userId);
 
-			if (!user.isPasswordReset() && !passwordPolicy.isChangeable()) {
+			if (!passwordPolicy.isChangeable() && !user.isPasswordReset()) {
 				throw new UserPasswordException.MustNotBeChanged(userId);
 			}
 		}

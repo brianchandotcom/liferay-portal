@@ -76,7 +76,7 @@ public class UserServiceWhenPasswordPolicyConflictsWithUserStateTest {
 	}
 
 	@Test
-	public void testAuthenticateWhenUserMustPasswordReset() throws Exception {
+	public void testAuthenticateWhenUserMustResetPassword() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		Assert.assertEquals(_defaultPasswordPolicy, _user.getPasswordPolicy());

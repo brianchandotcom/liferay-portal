@@ -276,7 +276,7 @@ describe('ShortcutManager', () => {
 		);
 	});
 
-	it('sets the item Id and calls deleteItem to be cut when pressing ctrl + X', () => {
+	it('sets the item Id and calls deleteItem to be cut when pressing shift + ctrl + X', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		const setCopiedItemIds = useSetCopiedItemIds();
@@ -289,6 +289,7 @@ describe('ShortcutManager', () => {
 			new KeyboardEvent('keydown', {
 				code: 'KeyX',
 				ctrlKey: true,
+				shiftKey: true,
 			})
 		);
 
@@ -303,7 +304,7 @@ describe('ShortcutManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('sets the item id to be copied when pressing ctrl + C', () => {
+	it('sets the item id to be copied when pressing shift + ctrl + C', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		const setCopiedItemIds = useSetCopiedItemIds();
@@ -316,6 +317,7 @@ describe('ShortcutManager', () => {
 			new KeyboardEvent('keydown', {
 				code: 'KeyC',
 				ctrlKey: true,
+				shiftKey: true,
 			})
 		);
 
@@ -324,7 +326,7 @@ describe('ShortcutManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('calls pasteItem when pressing ctrl + V', () => {
+	it('calls pasteItem when pressing shift + ctrl + V', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		renderComponent({
@@ -335,6 +337,7 @@ describe('ShortcutManager', () => {
 			new KeyboardEvent('keydown', {
 				code: 'KeyV',
 				ctrlKey: true,
+				shiftKey: true,
 			})
 		);
 
@@ -359,6 +362,7 @@ describe('ShortcutManager', () => {
 			new KeyboardEvent('keydown', {
 				code: 'KeyV',
 				ctrlKey: true,
+				shiftKey: true,
 			})
 		);
 
@@ -383,6 +387,7 @@ describe('ShortcutManager', () => {
 			new KeyboardEvent('keydown', {
 				code: 'KeyV',
 				ctrlKey: true,
+				shiftKey: true,
 			})
 		);
 

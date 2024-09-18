@@ -99,12 +99,12 @@ public class FriendlyURLEntryUpgradeProcessTest {
 		friendlyURLEntry1 = _friendlyURLEntryLocalService.getFriendlyURLEntry(
 			friendlyURLEntry1.getFriendlyURLEntryId());
 
+		Assert.assertEquals(
+			company.getGroupId(), friendlyURLEntry1.getGroupId());
+
 		friendlyURLEntryLocalization1 =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
 				friendlyURLEntry1.getFriendlyURLEntryId(), "en_US");
-
-		Assert.assertEquals(
-			company.getGroupId(), friendlyURLEntry1.getGroupId());
 
 		Assert.assertEquals(
 			company.getGroupId(), friendlyURLEntryLocalization1.getGroupId());
@@ -112,12 +112,12 @@ public class FriendlyURLEntryUpgradeProcessTest {
 		friendlyURLEntry2 = _friendlyURLEntryLocalService.getFriendlyURLEntry(
 			friendlyURLEntry2.getFriendlyURLEntryId());
 
+		Assert.assertEquals(
+			company.getGroupId(), friendlyURLEntry2.getGroupId());
+
 		friendlyURLEntryLocalization2 =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
 				friendlyURLEntry2.getFriendlyURLEntryId(), "en_US");
-
-		Assert.assertEquals(
-			company.getGroupId(), friendlyURLEntry2.getGroupId());
 
 		Assert.assertEquals(
 			company.getGroupId(), friendlyURLEntryLocalization2.getGroupId());

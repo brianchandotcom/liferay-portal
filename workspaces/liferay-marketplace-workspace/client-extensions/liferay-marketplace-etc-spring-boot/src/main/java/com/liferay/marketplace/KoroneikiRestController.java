@@ -63,15 +63,15 @@ public class KoroneikiRestController extends BaseRestController {
 		OrderItemResource orderItemResource =
 			_marketplaceService.getOrderItemResource();
 
-		ProductPurchaseViewResource productPurchaseViewResource =
-			_koroneikiService.getProductPurchaseViewResource();
-
 		for (OrderItem orderItem :
 				orderItemResource.getOrderIdOrderItemsPage(
 					orderId,
 					com.liferay.headless.commerce.admin.order.client.pagination.
 						Pagination.of(1, 10)
 				).getItems()) {
+
+			ProductPurchaseViewResource productPurchaseViewResource =
+				_koroneikiService.getProductPurchaseViewResource();
 
 			ProductPurchaseView productPurchaseView =
 				productPurchaseViewResource.
@@ -183,9 +183,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 		Product product = _marketplaceService.getProduct(productId);
 
-		ProductResource productResource =
-			_koroneikiService.getProductResource();
-
 		SkuResource skuResource = _marketplaceService.getSkuResource();
 
 		for (Sku sku :
@@ -209,6 +206,9 @@ public class KoroneikiRestController extends BaseRestController {
 
 				continue;
 			}
+
+			ProductResource productResource =
+				_koroneikiService.getProductResource();
 
 			String productName = product.getName(
 			).get(

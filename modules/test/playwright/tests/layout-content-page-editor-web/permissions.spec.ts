@@ -13,6 +13,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import getContainerDefinition from './utils/getContainerDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
@@ -72,8 +73,12 @@ test(
 
 		// Create page
 
+		const containerId = getRandomString();
+
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition(),
+			pageDefinition: getPageDefinition([
+				getContainerDefinition({id: containerId}),
+			]),
 			siteId: site.id,
 			title: getRandomString(),
 		});
@@ -88,15 +93,9 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Add a Container
-
-		await pageEditorPage.addFragment('Layout Elements', 'Container');
-
-		const containerId = await pageEditorPage.getFragmentId('Container');
+		// Assert configuration is present in general tab
 
 		await pageEditorPage.selectFragment(containerId);
-
-		// Assert configuration is present in general tab
 
 		await expect(page.getByLabel('Width', {exact: true})).toBeAttached();
 
@@ -163,8 +162,12 @@ test(
 
 		// Create page
 
+		const containerId = getRandomString();
+
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition(),
+			pageDefinition: getPageDefinition([
+				getContainerDefinition({id: containerId}),
+			]),
 			siteId: site.id,
 			title: getRandomString(),
 		});
@@ -179,15 +182,9 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Add a Container
-
-		await pageEditorPage.addFragment('Layout Elements', 'Container');
-
-		const containerId = await pageEditorPage.getFragmentId('Container');
+		// Assert configuration is present in general tab
 
 		await pageEditorPage.selectFragment(containerId);
-
-		// Assert configuration is present in general tab
 
 		await expect(page.getByLabel('Width', {exact: true})).toBeAttached();
 

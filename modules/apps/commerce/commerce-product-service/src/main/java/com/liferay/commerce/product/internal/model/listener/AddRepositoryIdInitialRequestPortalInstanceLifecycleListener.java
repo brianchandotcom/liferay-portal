@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -62,8 +63,10 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		String principalName = PrincipalThreadLocal.getName();
 
 		PermissionThreadLocal.setPermissionChecker(null);
+		PrincipalThreadLocal.setName(null);
 
 		try {
 			List<CommerceCatalog> commerceCatalogs =
@@ -136,6 +139,7 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PrincipalThreadLocal.setName(principalName);
 		}
 	}
 

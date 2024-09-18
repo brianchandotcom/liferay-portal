@@ -22,7 +22,13 @@ definition {
 		CKEditor.addContent(content = ${kbChildArticleContent});
 
 		if (${submitForWorkflow} == "true") {
-			PortletEntry.submitForWorkflow();
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+				value1 = "Submit for Workflow");
+
+			AssertClick(
+				locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_PUBLISH_BUTTON",
+				value1 = "Publish");
 		}
 		else if (${saveAsDraft} == "true") {
 			PortletEntry.saveAsDraft();
@@ -70,7 +76,13 @@ definition {
 			Button.clickCancel();
 		}
 		else if (${submitForWorkflow} == "true") {
-			PortletEntry.submitForWorkflow();
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+				value1 = "Submit for Workflow");
+
+			AssertClick(
+				locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_PUBLISH_BUTTON",
+				value1 = "Publish");
 		}
 		else if (${saveAsDraft} == "true") {
 			PortletEntry.saveAsDraft();

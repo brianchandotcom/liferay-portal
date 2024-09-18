@@ -133,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_PUBLISH_BUTTON</td>
+	<td>//*[@id='_com_liferay_knowledge_base_web_portlet_AdminPortlet_publishItem']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -336,6 +336,10 @@ definition {
 			AssertClick(
 				locator1 = "Button#SUBMIT_FOR_WORKFLOW",
 				value1 = "Submit for Workflow");
+
+			AssertClick(
+				locator1 = "KnowledgeBaseArticle#WORKFLOW_PUBLISH_BUTTON",
+				value1 = "Publish");
 		}
 		else if (${saveAsDraft} == "true") {
 			Button.clickSaveAsDraft();

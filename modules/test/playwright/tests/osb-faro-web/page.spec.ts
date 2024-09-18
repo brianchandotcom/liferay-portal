@@ -17,7 +17,7 @@ import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {createChannel, switchChannel} from './utils/channel';
+import {switchChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {
@@ -26,11 +26,7 @@ import {
 	navigateToACPageViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
-import {
-	createSitePage,
-	navigateToDXPandDeleteSite,
-	navigateToSitePage,
-} from './utils/portal';
+import {createSitePage, navigateToSitePage} from './utils/portal';
 import {
 	addSegmentField,
 	addStaticMember,
@@ -98,7 +94,7 @@ test.beforeEach(async ({apiHelpers, page}) => {
 
 	await createSitePage({
 		apiHelpers,
-		pageTitle: pageTitle,
+		pageTitle,
 		siteName,
 	});
 
@@ -127,6 +123,14 @@ test.afterEach(async ({apiHelpers, page}) => {
 		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
+
+test(
+	'Assert clicking on a page in the pages lists navigates to the page profile',
+	{
+		tag: '@LRAC-8112 Legacy',
+	},
+
+	async ({page}) => {
 		await test.step('Go to My Page', async () => {
 			await navigateToSitePage({
 				page,
@@ -225,17 +229,6 @@ test.afterEach(async ({apiHelpers, page}) => {
 				).toBeVisible();
 			});
 		}
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
-
-		await test.step('delete site on DXP side', async () => {
-			await navigateToDXPandDeleteSite({apiHelpers, page, site});
-		});
 	}
 );
 
@@ -246,26 +239,8 @@ test(
 	},
 
 	async ({apiHelpers, assetPublisherPage, page, pageEditorPage}) => {
-		const channelName = 'My Property ' + getRandomString();
-
-		const siteName = 'My Site ' + getRandomString();
-
-		const blogName = 'My Blog ' + getRandomString();
-
-		const pageName = 'My Blog Page ' + getRandomString();
-
-		const site = await apiHelpers.headlessSite.createSite({
-			name: siteName,
-		});
-
-		await test.step('Connect the DXP to AC', async () => {
-			await syncAnalyticsCloud({
-				apiHelpers,
-				channelName,
-				page,
-				siteName,
-			});
-		});
+		const blogTitle = 'My Blog ' + randomString;
+		const blogPageTitle = 'My Blog Page ' + randomString;
 
 		await test.step('Create a page with an Asset Publisher Widget and access to the configuration of the widget from the page editor', async () => {
 			const widgetId = getRandomString();
@@ -279,12 +254,12 @@ test(
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
 				pageDefinition: getPageDefinition([widgetDefinition]),
 				siteId: site.id,
-				title: pageName,
+				title: blogPageTitle,
 			});
 
 			await navigateToSitePage({
 				page,
-				pageName,
+				pageName: blogPageTitle,
 				siteName,
 			});
 
@@ -303,7 +278,7 @@ test(
 
 		await test.step('Create a Blog', async () => {
 			await apiHelpers.headlessDelivery.postBlog(site.id, {
-				headline: blogName,
+				headline: blogTitle,
 			});
 			await page.waitForTimeout(3000);
 		});
@@ -311,11 +286,15 @@ test(
 		await test.step('Go to My Blog Page', async () => {
 			await navigateToSitePage({
 				page,
-				pageName,
+				pageName: blogPageTitle,
 				siteName,
 			});
 
-			await page.locator('.asset-title').getByText(blogName).click();
+			await page.locator('.asset-title').getByText(blogTitle).click();
+
+			await page.waitForTimeout(3000);
+
+			await page.reload();
 
 			await page.waitForTimeout(10000);
 		});
@@ -340,12 +319,14 @@ test(
 				page,
 				timeFilterPeriod: 'Last 24 hours',
 			});
+
+			await page.reload();
 		});
 
 		await test.step('Access one of the pages on the list', async () => {
 			await navigateTo({
 				page,
-				pageName: blogName,
+				pageName: blogTitle,
 			});
 		});
 
@@ -363,10 +344,6 @@ test(
 					.nth(1)
 			).toBeVisible();
 		});
-
-		await test.step('Delete site on DXP side', async () => {
-			await navigateToDXPandDeleteSite({apiHelpers, page, site});
-		});
 	}
 );
 
@@ -376,12 +353,6 @@ test(
 		tag: '@LPD-27586',
 	},
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const individualName = 'user1';
 		const individuals = [
 			generateIndividual({
@@ -397,7 +368,6 @@ test(
 		});
 
 		const date1 = new Date();
-		const pageName = 'Liferay - AC Page';
 
 		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
 			const events = individuals.map((individual) => ({
@@ -406,7 +376,7 @@ test(
 				channelId: channel.id,
 				eventDate: date1.toISOString(),
 				eventId: 'pageViewed',
-				title: pageName,
+				title: pageTitle,
 				userId: individual.id,
 			}));
 
@@ -433,7 +403,7 @@ test(
 				canonicalUrl: 'https://www.liferay.com',
 				channelId: channel.id,
 				eventDate: date2.toISOString(),
-				title: pageName,
+				title: pageTitle,
 				userId: individual.id,
 				views: 1,
 			}));
@@ -535,7 +505,7 @@ test(
 		await test.step('Access one of the pages on the list', async () => {
 			await navigateTo({
 				page,
-				pageName,
+				pageName: pageTitle,
 			});
 		});
 
@@ -603,7 +573,7 @@ test(
 		await test.step('Access one of the pages on the list', async () => {
 			await navigateTo({
 				page,
-				pageName,
+				pageName: pageTitle,
 			});
 		});
 
@@ -626,13 +596,6 @@ test(
 				page.locator('.audience-report-chart-bar li')
 			).toBeHidden();
 		});
-
-		await test.step('Delete the property that was used during automation execution', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -644,24 +607,17 @@ test(
 
 	async ({apiHelpers, page}) => {
 		const pageTitle = 'Snúið Vinsælar þú';
-		const sitePage = await createSitePage({
+		await createSitePage({
 			apiHelpers,
 			pageTitle,
-		});
-
-		const channelName = 'My Property - ' + getRandomString();
-		await test.step('Connect the DXP to AC', async () => {
-			await syncAnalyticsCloud({
-				apiHelpers,
-				channelName,
-				page,
-			});
+			siteName,
 		});
 
 		await test.step('Go to Snúið Vinsælar þú Page', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
+				siteName,
 			});
 			await page.waitForTimeout(10000);
 		});
@@ -704,14 +660,6 @@ test(
 				page.getByText('Snúið Vinsælar ...', {exact: true}).first()
 			).toBeVisible();
 		});
-
-		await test.step('Delete pages created in DXP during automation execution', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
-
-			await apiHelpers.jsonWebServicesLayout.deleteLayout(
-				String(sitePage.id)
-			);
-		});
 	}
 );
 
@@ -722,12 +670,6 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const firstIndividual = 'user1';
 		const secondIndividual = 'user2';
 		const thirdIndividual = 'user3';
@@ -841,13 +783,6 @@ test(
 				page,
 			});
 		});
-
-		await test.step('Delete the property that was used during automation execution', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -858,34 +793,16 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const randomString = getRandomString();
-		const channelName = 'My Property ' + randomString;
-		const siteName = 'My Site ' + randomString;
-		const pageTitle = 'My Page ' + randomString;
-
-		const site = await apiHelpers.headlessSite.createSite({
-			name: siteName,
-		});
-
-		await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName,
-		});
-
-		const {channel, project} = await syncAnalyticsCloud({
-			apiHelpers,
-			channelName,
-			page,
-			siteName,
-		});
-
 		await test.step('Go to My Page', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
 				siteName,
 			});
+			await page.waitForTimeout(3000);
+
+			await page.reload();
+
 			await page.waitForTimeout(10000);
 
 			await closeSessions(apiHelpers, page);
@@ -935,17 +852,6 @@ test(
 				'100%'
 			);
 		});
-
-		await test.step('Delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
-
-		await test.step('Delete site on DXP side', async () => {
-			await navigateToDXPandDeleteSite({apiHelpers, page, site});
-		});
 	}
 );
 
@@ -955,27 +861,12 @@ test(
 		tag: '@LRAC-14827',
 	},
 
-	async ({apiHelpers, page}) => {
-		const pageTitle = 'My Page';
-		const sitePage = await createSitePage({
-			apiHelpers,
-			pageTitle,
-		});
-
-		const channelName = 'My Property - ' + getRandomString();
-		await test.step('Connect the DXP to AC', async () => {
-			await syncAnalyticsCloud({
-				apiHelpers,
-				channelName,
-				page,
-			});
-		});
-
+	async ({page}) => {
 		await test.step('Access the DXP Home Page using Google Page as a reference page', async () => {
 			await goToWithReferrer({
 				page,
 				referrer: 'https://www.google.com',
-				url: liferayConfig.environment.baseUrl,
+				url: `${liferayConfig.environment.baseUrl}/web/${siteName}`,
 			});
 
 			await page.waitForTimeout(10000);
@@ -1011,7 +902,7 @@ test(
 		await test.step('Access one of the pages on the list > Go to Path Tab', async () => {
 			await navigateTo({
 				page,
-				pageName: 'Home - Liferay DXP',
+				pageName: pageTitle,
 			});
 			await navigateTo({
 				page,
@@ -1020,43 +911,27 @@ test(
 		});
 
 		await test.step('Check that Google Page appears the referral pages and the number of views', async () => {
-			await expect(page.getByText('https://www.goo...')).toBeVisible({
-				timeout: 100 * 1000,
-			});
+			await expect(page.getByText('https://www.goo...')).toBeVisible();
 
 			await expect(
 				page.getByText('1', {exact: true}).first()
-			).toBeVisible({
-				timeout: 100 * 1000,
-			});
+			).toBeVisible();
 		});
 
 		await test.step('Check that Home Page appears with one view', async () => {
-			await expect(page.getByText('1', {exact: true}).nth(1)).toBeVisible(
-				{
-					timeout: 100 * 1000,
-				}
-			);
+			await expect(
+				page.getByText('1', {exact: true}).nth(1)
+			).toBeVisible();
 		});
 
 		await test.step('Check that My Page appears as exit pages and the number of views', async () => {
-			await expect(page.getByText('My Page - Lifer...')).toBeVisible({
-				timeout: 100 * 1000,
-			});
-
-			await expect(page.getByText('1', {exact: true}).nth(2)).toBeVisible(
-				{
-					timeout: 100 * 1000,
-				}
+			await expect(page.getByTitle('Go to Dashboard Page')).toContainText(
+				pageTitle
 			);
-		});
 
-		await test.step('Delete pages created in DXP during automation execution', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
-
-			await apiHelpers.jsonWebServicesLayout.deleteLayout(
-				String(sitePage.id)
-			);
+			await expect(
+				page.getByText('1', {exact: true}).nth(2)
+			).toBeVisible();
 		});
 	}
 );
@@ -1068,42 +943,33 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const pageTitle1 = 'My Page 1';
-		const sitePage1 = await createSitePage({
-			apiHelpers,
-			pageTitle: pageTitle1,
-		});
+		const pageTitle1 = 'My Page';
 		const pageTitle2 = 'My Page 2';
-		const sitePage2 = await createSitePage({
+
+		await createSitePage({
 			apiHelpers,
 			pageTitle: pageTitle2,
-		});
-
-		const channelName = 'My Property - ' + getRandomString();
-		await test.step('Connect the DXP to AC', async () => {
-			await syncAnalyticsCloud({
-				apiHelpers,
-				channelName,
-				page,
-			});
+			siteName,
 		});
 
 		await test.step('Go to My Page 1', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle1,
+				siteName,
 			});
 			await page.waitForTimeout(10000);
 		});
 
 		await test.step('Go to My Page 2', async () => {
-			await page.getByText(pageTitle2).first().click();
+			await page.getByText(pageTitle2, {exact: true}).click();
 			await page.waitForTimeout(10000);
 		});
 
 		await test.step('Go to My Page 1', async () => {
-			await page.getByText(pageTitle1).first().click();
+			await page.getByText(pageTitle1, {exact: true}).click();
 			await page.waitForTimeout(10000);
+			await closeSessions(apiHelpers, page);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -1131,7 +997,7 @@ test(
 		await test.step('Access one of the pages on the list > Go to Path Tab', async () => {
 			await navigateTo({
 				page,
-				pageName: 'My Page 1 - Liferay DXP',
+				pageName: pageTitle1,
 			});
 			await navigateTo({
 				page,
@@ -1140,38 +1006,15 @@ test(
 		});
 
 		await test.step('Check that My Page 2 and Direct Traffic appear as referral pages', async () => {
-			await expect(
-				page.getByText('My Page 2 - Lif...', {exact: true}).first()
-			).toBeVisible({
-				timeout: 100 * 1000,
-			});
+			await expect(page.getByText(pageTitle2).first()).toBeVisible();
 
-			await expect(page.getByText('Direct Traffic')).toBeVisible({
-				timeout: 100 * 1000,
-			});
+			await expect(page.getByText('Direct Traffic')).toBeVisible();
 		});
 
 		await test.step('Check that My Page 2 and Drop Offs appear as exit pages', async () => {
-			await expect(
-				page.getByText('My Page 2 - Lif...', {exact: true}).nth(1)
-			).toBeVisible({
-				timeout: 100 * 1000,
-			});
+			await expect(page.getByText(pageTitle2).first()).toBeVisible();
 
-			await expect(page.getByText('Drop Offs')).toBeVisible({
-				timeout: 100 * 1000,
-			});
-		});
-
-		await test.step('Delete pages created in DXP during automation execution', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
-
-			await apiHelpers.jsonWebServicesLayout.deleteLayout(
-				String(sitePage1.id)
-			);
-			await apiHelpers.jsonWebServicesLayout.deleteLayout(
-				String(sitePage2.id)
-			);
+			await expect(page.getByText('Drop Offs')).toBeVisible();
 		});
 	}
 );

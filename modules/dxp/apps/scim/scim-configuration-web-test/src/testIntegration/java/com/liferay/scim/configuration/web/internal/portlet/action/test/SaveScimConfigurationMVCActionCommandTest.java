@@ -59,7 +59,9 @@ public class SaveScimConfigurationMVCActionCommandTest {
 	}
 
 	@Test
-	public void testOAuth2TokenIsIssuedToCurrentUser() throws Exception {
+	public void testOAuth2TokenIsIssuedToClientCredentialUser()
+		throws Exception {
+
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 

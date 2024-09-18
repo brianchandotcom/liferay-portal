@@ -8,14 +8,24 @@ import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import {Button} from '~/common/components';
 
+interface IProps {
+	buttonText: string;
+	onDropAccepted: Function;
+	showDocumentIcon?: boolean;
+	title: string;
+}
+
 const DropzoneUpload = ({
 	buttonText,
-	onHandleUpload,
+	onDropAccepted,
 	showDocumentIcon = true,
 	title,
-}) => {
+}: IProps) => {
 	return (
-		<Dropzone onDropAccepted={(file) => onHandleUpload(file)}>
+		<Dropzone
+			maxFiles={1}
+			onDropAccepted={(files) => onDropAccepted(files[0])}
+		>
 			{({getRootProps, isDragActive}) => (
 				<div
 					className={classnames('dropzone-upload-container my-4', {

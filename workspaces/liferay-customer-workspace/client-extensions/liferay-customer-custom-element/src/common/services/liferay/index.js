@@ -9,6 +9,13 @@ export const Liferay = window.Liferay || {
 		TABLET: 0,
 	},
 	FeatureFlags: {},
+	OAuth2Client: {
+		FromUserAgentApplication: (_userAgentApplicationId) => {
+			return {
+				fetch: (_url, _options = {}) => typeof fetch,
+			};
+		},
+	},
 	ThemeDisplay: {
 		getBCP47LanguageId: () => 'en-US',
 		getCanonicalURL: () => window.location.href,

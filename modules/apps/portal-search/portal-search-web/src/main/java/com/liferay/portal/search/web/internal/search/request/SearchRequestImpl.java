@@ -59,9 +59,6 @@ public class SearchRequestImpl {
 		SearchContainer<Document> searchContainer = _buildSearchContainer(
 			searchSettingsImpl);
 
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setStart(searchContainer.getStart());
-
 		SearchResponse searchResponse = _searcher.search(
 			searchRequestBuilder.build());
 

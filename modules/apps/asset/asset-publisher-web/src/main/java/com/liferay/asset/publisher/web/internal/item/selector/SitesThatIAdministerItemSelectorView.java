@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.publisher.web.internal;
+package com.liferay.asset.publisher.web.internal.item.selector;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.SitesThatIAdministerItemSelectorViewDisplayContext;
-import com.liferay.asset.publisher.web.internal.item.selector.SitesItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;

@@ -3,18 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.publisher.web.internal;
+package com.liferay.asset.publisher.web.internal.item.selector;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.internal.display.context.ChildSitesItemSelectorViewDisplayContext;
-import com.liferay.asset.publisher.web.internal.item.selector.SitesItemSelectorViewDescriptor;
+import com.liferay.asset.publisher.web.internal.display.context.ParentSitesItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -42,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "item.selector.view.order:Integer=100",
 	service = ItemSelectorView.class
 )
-public class ChildSitesItemSelectorView
+public class ParentSitesItemSelectorView
 	implements ItemSelectorView<GroupItemSelectorCriterion> {
 
 	@Override
@@ -58,7 +56,7 @@ public class ChildSitesItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "child-sites");
+			_portal.getResourceBundle(locale), "parent-sites");
 	}
 
 	@Override
@@ -66,24 +64,19 @@ public class ChildSitesItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (!groupItemSelectorCriterion.isIncludeChildSites()) {
+		if (!groupItemSelectorCriterion.isIncludeParentSites()) {
 			return false;
 		}
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if (siteGroup.isLayoutPrototype() || siteGroup.isLayoutSetPrototype()) {
+		if (siteGroup.isLayoutPrototype() || siteGroup.isLayoutSetPrototype() ||
+			siteGroup.isRoot()) {
+
 			return false;
 		}
 
-		int groupsCount = _groupLocalService.getGroupsCount(
-			themeDisplay.getCompanyId(), siteGroup.getGroupId(), Boolean.TRUE);
-
-		if (groupsCount > 0) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	@Override
@@ -93,9 +86,9 @@ public class ChildSitesItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ChildSitesItemSelectorViewDisplayContext
-			childSitesItemSelectorViewDisplayContext =
-				new ChildSitesItemSelectorViewDisplayContext(
+		ParentSitesItemSelectorViewDisplayContext
+			parentSitesItemSelectorViewDisplayContext =
+				new ParentSitesItemSelectorViewDisplayContext(
 					groupItemSelectorCriterion,
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
 					portletURL);
@@ -105,7 +98,7 @@ public class ChildSitesItemSelectorView
 			portletURL, itemSelectedEventName, search,
 			new SitesItemSelectorViewDescriptor(
 				(HttpServletRequest)servletRequest,
-				childSitesItemSelectorViewDisplayContext));
+				parentSitesItemSelectorViewDisplayContext));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -114,9 +107,6 @@ public class ChildSitesItemSelectorView
 
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<GroupItemSelectorCriterion>

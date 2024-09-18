@@ -17,6 +17,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -433,6 +434,7 @@ public class StructuredContentResourceTest
 		_testGetStructuredContentWithDifferentFolder();
 		_testGetStructuredContentWithDifferentLocale();
 		_testGetStructuredContentWithDifferentTimeZone();
+		_testGetStructuredContentWithInvalidImage();
 		_testGetStructuredContentWithRadioField();
 		_testGetStructuredContentWithRoleAdministrator();
 		_testGetStructuredContentWithRoleOwner();
@@ -1992,6 +1994,28 @@ public class StructuredContentResourceTest
 		finally {
 			_userLocalService.deleteUser(user);
 		}
+	}
+
+	private void _testGetStructuredContentWithInvalidImage() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(testGroup.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContent(
+					_journalFolder.getFolderId(),
+					_randomCompleteStructuredContent(
+						dlFileEntry.getFileEntryId(), true));
+
+		DLFileEntryLocalServiceUtil.deleteFileEntry(dlFileEntry);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		assertValid(getStructuredContent);
 	}
 
 	private void _testGetStructuredContentWithRadioField() throws Exception {

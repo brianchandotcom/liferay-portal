@@ -9,7 +9,7 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
-	property testray.main.component.name = "Sharepoint";
+	property testray.main.component.name = "External Document Repositories";
 
 	setUp {
 		TestCase.setUpPortalInstance(authenticationMethod = "By Screen Name");

@@ -10,12 +10,11 @@ import com.liferay.change.tracking.mapping.CTMappingTableInfo;
 import com.liferay.change.tracking.on.demand.user.ticket.generator.CTOnDemandUserTicketGenerator;
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTCollectionEntityModel;
-import com.liferay.change.tracking.rest.internal.util.v1_0.PublishUtil;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
+import com.liferay.change.tracking.scheduler.PublishScheduler;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTPreferencesService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
@@ -25,8 +24,6 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -430,15 +427,11 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
 		if (ctCollection.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-			PublishUtil.unschedulePublish(
-				ctCollectionId, _ctCollectionLocalService,
-				_schedulerEngineHelper);
+			_publishScheduler.unschedulePublish(ctCollectionId);
 		}
 
-		PublishUtil.schedulePublish(
-			ctCollectionId, _ctCollectionLocalService,
-			_ctPreferencesLocalService, _schedulerEngineHelper, publishDate,
-			_triggerFactory, contextUser.getUserId());
+		_publishScheduler.schedulePublish(
+			ctCollectionId, contextUser.getUserId(), publishDate);
 	}
 
 	private CTCollection _toCTCollection(
@@ -507,15 +500,9 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	private CTOnDemandUserTicketGenerator _ctOnDemandUserTicketGenerator;
 
 	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Reference
 	private CTPreferencesService _ctPreferencesService;
 
 	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
+	private PublishScheduler _publishScheduler;
 
 }

@@ -6,9 +6,9 @@
 import ClayButton from '@clayui/button';
 import {useOutletContext} from 'react-router-dom';
 
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {getSiteURL} from '../../../utils/site';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 

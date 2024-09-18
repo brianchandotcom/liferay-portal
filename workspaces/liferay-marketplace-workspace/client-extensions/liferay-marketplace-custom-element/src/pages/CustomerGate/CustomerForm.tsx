@@ -17,9 +17,9 @@ import {z} from 'zod';
 
 import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
-import {Liferay} from '../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {updateMyUserAccount, updateUserImage} from '../../utils/api';
+import {getSiteURL} from '../../utils/site';
 
 type Steps = {
 	page: 'onboarding' | 'customerGateForm';
@@ -88,16 +88,6 @@ const CreateCustomerAccountForm: React.FC<CreateCustomerAccountForm> = ({
 	setStep,
 	user,
 }) => {
-	const getSiteURL = () => {
-		const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
-
-		if (layoutRelativeURL.includes('web')) {
-			return layoutRelativeURL.split('/').slice(0, 3).join('/');
-		}
-
-		return '';
-	};
-
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const {

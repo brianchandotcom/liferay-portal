@@ -9,16 +9,6 @@ import ClayAlert from '@clayui/alert';
 
 import {Liferay} from '../../liferay/liferay';
 
-const getSiteURL = () => {
-	const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
-
-	if (layoutRelativeURL.includes('web')) {
-		return layoutRelativeURL.split('/').slice(0, 3).join('/');
-	}
-
-	return '';
-};
-
 export async function getAccountRolesOnAPI(accountId: number) {
 	const accountRoles = await fetch(
 		`/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles`,
@@ -182,5 +172,3 @@ export async function addAdminRegularRole(userID: number) {
 		);
 	}
 }
-
-export {getSiteURL};

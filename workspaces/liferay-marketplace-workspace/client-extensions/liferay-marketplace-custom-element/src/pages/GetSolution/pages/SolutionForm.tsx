@@ -13,13 +13,13 @@ import {
 import {z} from 'zod';
 
 import {Header} from '../../../components/Header/Header';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import Loading from '../../../components/Loading';
 import MarketoForm from '../../../components/MarketoForm';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
+import {getSiteURL} from '../../../utils/site';
 import {usePurchasedOrders} from '../../CustomerDashboard/usePurchasedOrders';
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;

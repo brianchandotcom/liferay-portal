@@ -6,9 +6,9 @@
 import ClayButton from '@clayui/button';
 
 import {Header} from '../../../components/Header/Header';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {getSiteURL} from '../../../utils/site';
 import {StepType} from './PublisherGateSteps';
 
 type PublisherGateSummaryProps = {

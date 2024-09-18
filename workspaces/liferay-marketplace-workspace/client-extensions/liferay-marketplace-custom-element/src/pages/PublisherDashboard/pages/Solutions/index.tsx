@@ -11,13 +11,13 @@ import {useNavigate, useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {DashboardTable} from '../../../../components/DashboardTable/DashboardTable';
-import {getSiteURL} from '../../../../components/InviteMemberModal/services';
 import Page from '../../../../components/Page';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {useAccount} from '../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import {getSiteURL} from '../../../../utils/site';
 import PublishedSolutionsTable from './PublishedSolutionsTable';
 
 const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';

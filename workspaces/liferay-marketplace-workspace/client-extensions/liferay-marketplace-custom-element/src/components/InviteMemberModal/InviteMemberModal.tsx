@@ -19,6 +19,7 @@ import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {createPassword} from '../../utils/createPassword';
+import {getSiteURL} from '../../utils/site';
 import BaseWarning from '../Input/base/BaseWarning';
 import BaseWrapper from '../Input/base/BaseWrapper';
 import {
@@ -27,7 +28,6 @@ import {
 	addExistentUserIntoAccount,
 	createNewUser,
 	getAccountRolesOnAPI,
-	getSiteURL,
 	getUserByEmail,
 	sendRoleAccountUser,
 } from './services';

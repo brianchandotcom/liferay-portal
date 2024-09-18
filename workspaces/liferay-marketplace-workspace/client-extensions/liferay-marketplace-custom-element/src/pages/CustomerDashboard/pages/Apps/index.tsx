@@ -10,9 +10,9 @@ import {useOutletContext} from 'react-router-dom';
 
 import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
-import {getSiteURL} from '../../../../components/InviteMemberModal/services';
 import Page from '../../../../components/Page';
 import {Liferay} from '../../../../liferay/liferay';
+import {getSiteURL} from '../../../../utils/site';
 import PurchasedAppsTable from '../../components/PurchasedAppsTable';
 import {usePurchasedOrders} from '../../usePurchasedOrders';
 

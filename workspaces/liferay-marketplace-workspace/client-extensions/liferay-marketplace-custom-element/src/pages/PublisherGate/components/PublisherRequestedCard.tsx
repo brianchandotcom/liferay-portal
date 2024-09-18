@@ -8,9 +8,9 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 
 import createdProjectIcon from '../../../assets/images/add_user.svg';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {getSiteURL} from '../../../utils/site';
 
 const PubliserhRequestedCard = () => (
 	<div className="d-flex flex-column pb-8 publisher-gate-page-body">

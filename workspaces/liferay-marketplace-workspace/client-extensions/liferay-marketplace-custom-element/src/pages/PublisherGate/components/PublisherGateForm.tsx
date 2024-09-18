@@ -13,11 +13,11 @@ import {useNavigate} from 'react-router-dom';
 
 import {Header} from '../../../components/Header/Header';
 import FormInput from '../../../components/Input/formInput';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import {Tooltip} from '../../../components/Tooltip/Tooltip';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {phones} from '../../../utils/phones';
+import {getSiteURL} from '../../../utils/site';
 import {PublisherForm, StepType} from './PublisherGateSteps';
 
 type PublisherGateFormProps = {

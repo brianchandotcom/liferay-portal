@@ -14,9 +14,9 @@ import './PublisherGatePage.scss';
 
 import {useNavigate} from 'react-router-dom';
 
-import {getSiteURL} from '../../components/InviteMemberModal/services';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
+import {getSiteURL} from '../../utils/site';
 
 export function PublisherGatePage() {
 	const navigate = useNavigate();

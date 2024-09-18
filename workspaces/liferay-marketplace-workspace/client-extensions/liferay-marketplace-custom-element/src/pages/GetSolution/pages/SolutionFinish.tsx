@@ -8,8 +8,8 @@ import ClayIcon from '@clayui/icon';
 import {useLocation} from 'react-router-dom';
 
 import createdProjectIcon from '../../../assets/images/created_project.svg';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import {Liferay} from '../../../liferay/liferay';
+import {getSiteURL} from '../../../utils/site';
 
 type GetSolutionFinishProps = {
 	product: DeliveryProduct;

@@ -8,10 +8,10 @@ import {Dispatch, useLayoutEffect} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import AccountSelection from '../../../components/Checkout/AccountSelection';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {getSiteURL} from '../../../utils/site';
 
 const GetSolutionAccount = () => {
 	const {accounts, selectedAccount, setSelectedAccount} = useOutletContext<{

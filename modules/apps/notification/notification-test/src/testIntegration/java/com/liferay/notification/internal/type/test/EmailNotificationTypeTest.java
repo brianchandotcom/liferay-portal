@@ -38,6 +38,7 @@ import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.contributor.TermValuesContributor;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationTemplate;
@@ -1435,9 +1436,23 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			infoItemFieldValues =
 				infoItemFieldValuesProvider.getInfoItemFieldValues(
 					persistedModel);
+
+			_termValuesContributor.contribute(termValues);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		Map<String, Object> formattedTermValues = new HashMap<>();
+
+		for (Map.Entry<String, Object> entry : termValues.entrySet()) {
+			String termName = entry.getKey();
+
+			if (termName.equals("locale") || termName.equals("portalURL")) {
+				termName = "${" + termName + "}";
+			}
+
+			formattedTermValues.put(termName, entry.getValue());
 		}
 
 		for (InfoFieldValue<Object> infoFieldValue :
@@ -1467,19 +1482,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					(Date)termValue);
 			}
 
-			termValues.put(termName, termValue);
+			formattedTermValues.put(termName, termValue);
 		}
 
 		return HashMapBuilder.<String, Object>putAll(
-			termValues
+			formattedTermValues
 		).put(
 			"${key1}", "value1"
 		).put(
 			"${key2}", "value2"
-		).put(
-			"${portalURL}",
-			_portal.getPortalURL(
-				ObjectActionThreadLocal.getHttpServletRequest())
 		).build();
 	}
 
@@ -1831,6 +1842,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private TermValuesContributor _termValuesContributor;
 
 	@DeleteAfterTestRun
 	private User _user;

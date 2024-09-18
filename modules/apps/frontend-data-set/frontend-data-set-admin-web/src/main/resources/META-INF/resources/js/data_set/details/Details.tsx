@@ -10,7 +10,7 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {LearnMessage} from 'frontend-js-components-web';
-import {fetch, navigate} from 'frontend-js-web';
+import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {IDataSet} from '../../DataSets';
@@ -273,8 +273,11 @@ const Details = ({
 							defaultValue={dataSet.additionalAPIURLParameters}
 							id={`${namespace}dataSetParametersInput`}
 							onChange={handleKeyUpParameters}
-							placeholder={Liferay.Language.get(
-								'data-set-parameters-placeholder'
+							placeholder={sub(
+								Liferay.Language.get(
+									'data-set-parameters-placeholder'
+								),
+								'filter=dateCreated le 2012-05-29T00:00:00.000Z&flatten=true&sort=name'
 							)}
 							ref={parametersRef}
 							type="text"

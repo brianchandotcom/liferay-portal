@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -79,9 +78,9 @@ public class FrontendTokenDefinitionRegistryTest {
 		_layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_group.getGroupId(), false);
 
-		_layoutSet.setThemeId("testfrontendtokendefinition");
+		_layoutSet.setThemeId(_THEME_ID);
 
-		_addThemeCSSCET("theme-cet-1");
+		_addThemeCSSCET(_CET_THEME_ID);
 	}
 
 	@After
@@ -91,23 +90,19 @@ public class FrontendTokenDefinitionRegistryTest {
 
 	@Test
 	public void testGetFrontendTokenDefinitions() {
-		List<FrontendTokenDefinition> frontendTokenDefinitions =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
-				_layoutSet.getCompanyId());
-
-		Predicate<FrontendTokenDefinition> hasSameThemeId =
-			item -> Objects.equals(item.getThemeId(), "theme-cet-1");
-
 		Assert.assertTrue(
-			ListUtil.exists(frontendTokenDefinitions, hasSameThemeId));
+			ListUtil.exists(
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
+					_layoutSet.getCompanyId()),
+				item -> Objects.equals(item.getThemeId(), _CET_THEME_ID)));
 	}
 
 	@Test
-	public void testGetThemeCSSCETFrontendTokenDefinition() throws Exception {
+	public void testGetThemeCSSCETFrontendTokenDefinition() {
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet),
-			"theme-cet-1");
+			_CET_THEME_ID);
 	}
 
 	@Test
@@ -117,7 +112,7 @@ public class FrontendTokenDefinitionRegistryTest {
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet),
-			"testfrontendtokendefinition");
+			_THEME_ID);
 	}
 
 	private void _addThemeCSSCET(String externalReferenceCode)
@@ -217,6 +212,10 @@ public class FrontendTokenDefinitionRegistryTest {
 		_clientExtensionEntryLocalService.deleteClientExtensionEntry(
 			_clientExtensionEntry);
 	}
+
+	private static final String _CET_THEME_ID = RandomTestUtil.randomString();
+
+	private static final String _THEME_ID = "testfrontendtokendefinition";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

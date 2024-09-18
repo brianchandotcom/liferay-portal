@@ -704,11 +704,10 @@ public class UpgradeReport {
 		File reportFile = null;
 
 		if (diagnostics) {
-			reportFile = new File(
-				reportsDir, "upgrade_report_diagnostics.info");
+			reportFile = new File(reportsDir, "upgrade-report-diagnostics.txt");
 		}
 		else {
-			reportFile = new File(reportsDir, "upgrade_report.info");
+			reportFile = new File(reportsDir, "upgrade-report.txt");
 		}
 
 		if (reportFile.exists()) {

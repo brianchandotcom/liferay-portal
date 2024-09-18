@@ -421,7 +421,7 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Create new experience and remove the fragment
+		// Create new experience and add the fragment
 
 		await pageEditorPage.createExperience('E1');
 
@@ -429,7 +429,7 @@ test(
 
 		await expect(page.getByText('You are signed in')).toBeVisible();
 
-		// Change to Default experience again and check the fragment is present
+		// Change to Default experience again and check we can add the fragment again
 
 		await pageEditorPage.switchExperience('Default');
 

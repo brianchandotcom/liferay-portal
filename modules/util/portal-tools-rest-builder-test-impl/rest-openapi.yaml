@@ -137,7 +137,7 @@ info:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
     title: ""
-    version: "1.0.0"
+    version: "v1.0"
 openapi: "3.0.1"
 paths:
     /reserved-word:

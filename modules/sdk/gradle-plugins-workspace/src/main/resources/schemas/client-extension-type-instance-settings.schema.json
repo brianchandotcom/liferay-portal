@@ -3715,6 +3715,11 @@
 				"pid": {
 					"const": "com.liferay.site.internal.configuration.SitemapCompanyConfiguration",
 					"title": "XML Sitemap"
+				},
+				"xmlSitemapIndexEnabled": {
+					"default": true,
+					"title": "XML Sitemap Index Enabled",
+					"type": "boolean"
 				}
 			},
 			"required": [

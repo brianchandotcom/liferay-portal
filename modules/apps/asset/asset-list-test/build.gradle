@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
 	testImplementation project(":apps:asset:asset-api")
 	testImplementation project(":apps:asset:asset-list-api")
@@ -9,21 +9,17 @@ dependencies {
 	testImplementation project(":apps:segments:segments-api")
 
 	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
-	testIntegrationImplementation project(":apps:asset:asset-list-api")
-	testIntegrationImplementation project(":apps:asset:asset-list-service")
 	testIntegrationImplementation project(":apps:asset:asset-publisher-api")
 	testIntegrationImplementation project(":apps:asset:asset-test-util")
 	testIntegrationImplementation project(":apps:blogs:blogs-api")
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
-	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationImplementation project(":apps:info:info-api")
 	testIntegrationImplementation project(":apps:journal:journal-api")
 	testIntegrationImplementation project(":apps:journal:journal-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":apps:portal:portal-upgrade-test-util")
-	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:segments:segments-test-util")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")

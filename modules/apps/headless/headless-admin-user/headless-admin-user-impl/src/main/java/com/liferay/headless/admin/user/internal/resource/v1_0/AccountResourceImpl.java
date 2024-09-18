@@ -337,7 +337,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		long[] organizationIds = _getOrganizationIds(account);
 
-		if (!ArrayUtil.isEmpty(organizationIds)) {
+		if (organizationIds != null) {
 			_accountEntryOrganizationRelLocalService.
 				setAccountEntryOrganizationRels(accountId, organizationIds);
 		}
@@ -467,7 +467,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		long[] organizationIds = _getOrganizationIds(account);
 
-		if (!ArrayUtil.isEmpty(organizationIds)) {
+		if (organizationIds != null) {
 			_accountEntryOrganizationRelLocalService.
 				setAccountEntryOrganizationRels(
 					accountEntry.getAccountEntryId(), organizationIds);
@@ -555,7 +555,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		long[] organizationIds = _getOrganizationIds(account);
 
-		if (!ArrayUtil.isEmpty(organizationIds)) {
+		if (organizationIds != null) {
 			_accountEntryOrganizationRelLocalService.
 				setAccountEntryOrganizationRels(accountId, organizationIds);
 		}
@@ -658,7 +658,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		long[] organizationIds = _getOrganizationIds(account);
 
-		if (!ArrayUtil.isEmpty(organizationIds)) {
+		if (organizationIds != null) {
 			_accountEntryOrganizationRelLocalService.
 				setAccountEntryOrganizationRels(
 					accountEntry.getAccountEntryId(), organizationIds);
@@ -1054,37 +1054,42 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	private long[] _getOrganizationIds(Account account) {
+		String[] organizationExternalReferenceCodes =
+			account.getOrganizationExternalReferenceCodes();
 		Long[] organizationIds = account.getOrganizationIds();
+
+		if ((organizationExternalReferenceCodes == null) &&
+			(organizationIds == null)) {
+
+			return null;
+		}
 
 		if (!ArrayUtil.isEmpty(organizationIds)) {
 			return ArrayUtil.toArray(organizationIds);
 		}
 
-		String[] organizationExternalReferenceCodes =
-			account.getOrganizationExternalReferenceCodes();
+		if (!ArrayUtil.isEmpty(organizationExternalReferenceCodes)) {
+			organizationIds = transformToArray(
+				Arrays.asList(organizationExternalReferenceCodes),
+				externalReferenceCode -> {
+					com.liferay.portal.kernel.model.Organization organization =
+						_organizationService.
+							fetchOrganizationByExternalReferenceCode(
+								externalReferenceCode,
+								contextCompany.getCompanyId());
 
-		if (ArrayUtil.isEmpty(organizationExternalReferenceCodes)) {
-			return new long[0];
+					if (organization == null) {
+						return null;
+					}
+
+					return organization.getOrganizationId();
+				},
+				Long.class);
+
+			return ArrayUtil.toArray(organizationIds);
 		}
 
-		organizationIds = transformToArray(
-			Arrays.asList(organizationExternalReferenceCodes),
-			externalReferenceCode -> {
-				com.liferay.portal.kernel.model.Organization organization =
-					_organizationService.
-						fetchOrganizationByExternalReferenceCode(
-							externalReferenceCode,
-							contextCompany.getCompanyId());
-
-				if (organization == null) {
-					return null;
-				}
-
-				return organization.getOrganizationId();
-			},
-			Long.class);
-
-		return ArrayUtil.toArray(organizationIds);
+		return new long[0];
 	}
 
 	private long _getParentAccountId(

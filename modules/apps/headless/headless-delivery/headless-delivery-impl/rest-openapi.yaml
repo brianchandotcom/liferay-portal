@@ -1745,6 +1745,10 @@ components:
                         $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField"
                     readOnly: true
                     type: array
+                dataLayout:
+                    $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout"
+                    description:
+                        The layout of the document data definition type fields.
                 dateCreated:
                     description:
                         The Document Metadata Set's creation date.

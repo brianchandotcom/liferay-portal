@@ -464,7 +464,9 @@ public class JournalTransformer {
 
 		Map<String, String> attributes = new HashMap<>();
 
-		if (type.equals(DDMFormFieldTypeConstants.IMAGE)) {
+		if (type.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY) ||
+			type.equals(DDMFormFieldTypeConstants.IMAGE)) {
+
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
 			Iterator<String> iterator = dataJSONObject.keys();

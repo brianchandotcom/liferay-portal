@@ -117,7 +117,14 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DataSetCardsSection", "/data-set-admin/cards-sections"
 		).put(
+			"DataSetClientExtensionFilter",
+			"/data-set-admin/client-extension-filters"
+		).put(
+			"DataSetDateFilter", "/data-set-admin/date-filters"
+		).put(
 			"DataSetListSection", "/data-set-admin/list-sections"
+		).put(
+			"DataSetSelectionFilter", "/data-set-admin/selection-filters"
 		).put(
 			"DataSetTableSection", "/data-set-admin/table-sections"
 		).put(

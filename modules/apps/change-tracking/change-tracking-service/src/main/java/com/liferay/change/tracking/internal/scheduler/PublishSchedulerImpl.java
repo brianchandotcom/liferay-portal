@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -154,6 +155,7 @@ public class PublishSchedulerImpl implements PublishScheduler {
 			CTActionKeys.PUBLISH);
 
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
+		ctCollection.setStatusByUserId(UserConstants.USER_ID_DEFAULT);
 
 		_ctCollectionLocalService.updateCTCollection(ctCollection);
 
@@ -190,6 +192,7 @@ public class PublishSchedulerImpl implements PublishScheduler {
 			CTActionKeys.PUBLISH);
 
 		ctCollection.setStatus(WorkflowConstants.STATUS_SCHEDULED);
+		ctCollection.setStatusByUserId(userId);
 
 		ctCollection = _ctCollectionLocalService.updateCTCollection(
 			ctCollection);

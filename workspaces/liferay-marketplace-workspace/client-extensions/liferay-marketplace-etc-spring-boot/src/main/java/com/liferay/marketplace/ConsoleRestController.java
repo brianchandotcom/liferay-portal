@@ -51,20 +51,7 @@ public class ConsoleRestController extends BaseRestController {
 				));
 		}
 
-		String finalEmailAddress = emailAddress;
-
-		return _consoleService.getWebClient(
-		).get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"/admin/user-projects-plan-usage"
-			).queryParam(
-				"userEmail", finalEmailAddress
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+		return _consoleService.getProjectsUsage(emailAddress);
 	}
 
 	@GetMapping("subscriptions/{orderId}")

@@ -80,17 +80,8 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_group
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			_contentTransformer,
-			"_amBackwardsCompatibilityHtmlContentTransformerConfiguration",
-			new AMBackwardsCompatibilityHtmlContentTransformerConfiguration() {
+		_enableContentTransformer(true);
 
-				@Override
-				public boolean enabled() {
-					return true;
-				}
-
-			});
 		ReflectionTestUtil.setFieldValue(
 			_contentTransformer, "_amImageHTMLTagFactory",
 			_amImageHTMLTagFactory);
@@ -104,6 +95,15 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_fileEntryFriendlyURLResolver);
 		ReflectionTestUtil.setFieldValue(
 			_contentTransformer, "_groupLocalService", _groupLocalService);
+	}
+
+	@Test
+	public void testDoesNothingWhenDisabled() throws Exception {
+		_enableContentTransformer(false);
+
+		Assert.assertEquals(
+			_CONTENT_WITH_IMAGE_FRIENDLY_URL,
+			_contentTransformer.transform(_CONTENT_WITH_IMAGE_FRIENDLY_URL));
 	}
 
 	@Test
@@ -204,6 +204,20 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 		Assert.assertEquals(
 			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
 			_contentTransformer.transform(_CONTENT_WITH_IMAGE_AND_NEWLINES));
+	}
+
+	private void _enableContentTransformer(boolean enabled) {
+		ReflectionTestUtil.setFieldValue(
+			_contentTransformer,
+			"_amBackwardsCompatibilityHtmlContentTransformerConfiguration",
+			new AMBackwardsCompatibilityHtmlContentTransformerConfiguration() {
+
+				@Override
+				public boolean enabled() {
+					return enabled;
+				}
+
+			});
 	}
 
 	private static final String _CONTENT_PREFIX = "<p>Prefix";

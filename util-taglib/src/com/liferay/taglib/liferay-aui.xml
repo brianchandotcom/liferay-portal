@@ -884,52 +884,43 @@
 		</attributes>
 	</component>
 	<component dynamicAttributes="false" name="Link" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
-		<description></description>
 		<attributes>
 			<attribute>
-				<description></description>
 				<name>crossOrigin</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>href</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>integrity</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>rel</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>senna</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>type</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1286,43 +1277,36 @@
 		<description>Creates a script component in which to write JavaScript that facilitates using AlloyUI modules.</description>
 		<attributes>
 			<attribute>
-				<description></description>
 				<name>async</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>blocking</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>crossOrigin</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>defer</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>fetchPriority</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>integrity</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1336,7 +1320,6 @@
 				<settable>false</settable>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>referrerPolicy</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1352,19 +1335,16 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>senna</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>src</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>type</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1569,16 +1549,13 @@
 		</attributes>
 	</component>
 	<component dynamicAttributes="false" name="Style" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
-		<description></description>
 		<attributes>
 			<attribute>
-				<description></description>
 				<name>senna</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description></description>
 				<name>type</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

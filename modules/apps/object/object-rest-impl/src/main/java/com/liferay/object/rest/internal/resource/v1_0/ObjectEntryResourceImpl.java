@@ -54,6 +54,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		DTOConverterRegistry dtoConverterRegistry,
 		EntityModelProvider entityModelProvider,
 		ObjectDefinition objectDefinition,
+		Map<Long, ObjectDefinition> objectDefinitions,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
@@ -66,6 +67,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_entityModelProvider = entityModelProvider;
 		_objectDefinition = objectDefinition;
+		_objectDefinitions = objectDefinitions;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -184,7 +186,18 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		return _entityModelProvider.getEntityModel(_objectDefinition);
+		if (_objectDefinition != null) {
+			return _entityModelProvider.getEntityModel(_objectDefinition);
+		}
+
+		if (contextCompany != null) {
+			return _entityModelProvider.getEntityModel(
+				_objectDefinitions.get(contextCompany.getCompanyId()));
+		}
+
+		return _entityModelProvider.getEntityModel(
+			_objectDefinitions.get(
+				GetterUtil.getLong(multivaluedMap.get("companyId"))));
 	}
 
 	@Override
@@ -636,6 +649,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	private ObjectDefinition _objectDefinition;
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final Map<Long, ObjectDefinition> _objectDefinitions;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;

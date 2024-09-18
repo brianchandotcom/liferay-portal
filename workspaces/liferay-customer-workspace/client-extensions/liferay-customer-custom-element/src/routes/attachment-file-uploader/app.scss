@@ -1,8 +1,21 @@
-@import '../../common/styles/global';
-@import './components/AttachmentUploader/attachment-uploader';
+@import './components/DropzoneUpload/dropzone-uploader';
+@import './components/FileList/file-list';
 
-.container-attach {
-	align-items: center;
-	display: flex;
-	justify-content: center;
+.attachment-uploader {
+	width: 37.5rem;
+
+	&-support-text {
+		font-size: 0.813rem;
+	}
+
+	.attach-input ::placeholder {
+		color: var(--color-neutral-4);
+		font-size: 1rem;
+	}
+
+	.attachment-uploader-support-text .custom-control-label {
+		color: var(--color-neutral-10);
+		font-size: 0.813rem;
+		font-weight: 400;
+	}
 }

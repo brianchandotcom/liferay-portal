@@ -4,9 +4,13 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import {ClayRadio, ClayRadioGroup, ClaySelect} from '@clayui/form';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
 import React, {useEffect, useState} from 'react';
+
+import '../../../css/index.scss';
+
+import ClayIcon from '@clayui/icon';
 
 const InfoBoxModalShippingMethodInput = ({
 	inputValue,
@@ -18,6 +22,10 @@ const InfoBoxModalShippingMethodInput = ({
 	spritemap,
 }) => {
 	const [hasShippingMethods, setHasShippingMethods] = useState(false);
+	const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
+	const [shippingMethodEngine, setShippingMethodEngine] = useState(
+		inputValue ? inputValue.split('#').shift() : null
+	);
 	const [shippingMethods, setShippingMethods] = useState([]);
 
 	useEffect(() => {
@@ -37,6 +45,19 @@ const InfoBoxModalShippingMethodInput = ({
 	}, []);
 
 	useEffect(() => {
+		setSelectedShippingMethod(
+			shippingMethods.find(
+				(shippingMethod) =>
+					shippingMethod.engineKey === shippingMethodEngine
+			)
+		);
+	}, [shippingMethodEngine, shippingMethods]);
+
+	useEffect(() => {
+		setIsValid(inputValue && inputValue !== '#');
+	}, [inputValue, setIsValid]);
+
+	useEffect(() => {
 		CommerceServiceProvider.DeliveryCartAPI('v1')
 			.getCartShippingMethodsPage(orderId)
 			.then(({items}) => {
@@ -45,7 +66,6 @@ const InfoBoxModalShippingMethodInput = ({
 				);
 
 				setHasShippingMethods(shippingMethodsAvailable !== undefined);
-				setIsValid(shippingMethodsAvailable !== undefined);
 				setShippingMethods(items);
 			})
 			.catch((error) => {
@@ -68,36 +88,90 @@ const InfoBoxModalShippingMethodInput = ({
 	return (
 		<>
 			{hasShippingMethods ? (
-				<ClayRadioGroup
-					defaultValue={inputValue}
-					id="infoBoxModalShippingMethodInput"
-					onChange={(value) => {
-						setInputValue(value);
-					}}
-				>
-					{shippingMethods.map((shippingMethod) => {
-						return shippingMethod.shippingOptions.map(
-							(shippingOption) => (
-								<ClayRadio
-									key={
-										shippingMethod.id + shippingOption.name
-									}
-									label={
-										shippingOption.label +
-										' (' +
-										shippingOption.amountFormatted +
-										')'
-									}
-									value={
-										shippingMethod.engineKey +
-										'#' +
-										shippingOption.name
-									}
-								/>
+				<>
+					<label htmlFor="infoBoxModalShippingMethodInput">
+						{Liferay.Language.get('choose-courier')}{' '}
+
+						<span className="ml-1 reference-mark text-warning">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
+
+					<ClaySelect
+						data-qa-id="infoBoxModalShippingMethodInput"
+						id="infoBoxModalShippingMethodInput"
+						onChange={(event) => {
+							setInputValue('#');
+							setShippingMethodEngine(event.target.value);
+						}}
+						value={shippingMethodEngine || ''}
+					>
+						<ClaySelect.Option label="" value="" />
+
+						{shippingMethods
+							.filter(
+								(shippingMethod) =>
+									shippingMethod.shippingOptions.length
 							)
-						);
-					})}
-				</ClayRadioGroup>
+							.map((shippingMethod) => (
+								<ClaySelect.Option
+									key={shippingMethod.id}
+									label={shippingMethod.name}
+									value={shippingMethod.engineKey}
+								/>
+							))}
+					</ClaySelect>
+
+					{selectedShippingMethod ? (
+						<>
+							<label
+								className="mt-4"
+								htmlFor="infoBoxModalShippingOptionInput"
+							>
+								{Liferay.Language.get('carrier-options')}{' '}
+
+								<span className="ml-1 reference-mark text-warning">
+									<ClayIcon symbol="asterisk" />
+								</span>
+							</label>
+
+							<ClayRadioGroup
+								defaultValue={inputValue}
+								id="infoBoxModalShippingOptionInput"
+								onChange={(value) => {
+									setInputValue(value);
+								}}
+							>
+								{selectedShippingMethod.shippingOptions.map(
+									(shippingOption) => (
+										<ClayRadio
+											containerProps={{
+												className: 'shippingOptionItem',
+											}}
+											key={
+												selectedShippingMethod.id +
+												shippingOption.name
+											}
+											label={
+												shippingOption.label +
+												' (' +
+												shippingOption.amountFormatted +
+												')'
+											}
+											value={
+												selectedShippingMethod.engineKey +
+												'#' +
+												shippingOption.name
+											}
+										/>
+									)
+								)}
+							</ClayRadioGroup>
+						</>
+					) : (
+						<></>
+					)}
+				</>
 			) : (
 				<ClayAlert displayType="info" spritemap={spritemap}>
 					{Liferay.Language.get(

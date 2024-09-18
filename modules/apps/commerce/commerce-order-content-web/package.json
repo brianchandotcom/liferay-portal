@@ -3,6 +3,7 @@
 		"@clayui/alert": "3.111.0",
 		"@clayui/button": "3.116.0",
 		"@clayui/form": "3.119.0",
+		"@clayui/icon": "3.111.0",
 		"@clayui/label": "3.111.0",
 		"@clayui/modal": "3.119.0",
 		"commerce-frontend-js": "*",

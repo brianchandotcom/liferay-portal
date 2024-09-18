@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 								"enableAnonymousRead",
 								"showCardsForTopicNavigation",
 								"historyRouterBasePath", "useTopicNamesInURL",
-								"rootTopicId"
+								"rootTopicExternalReferenceCode", "rootTopicId"
 							}
 						)
 					}

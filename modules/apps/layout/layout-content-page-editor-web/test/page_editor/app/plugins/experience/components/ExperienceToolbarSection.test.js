@@ -259,26 +259,30 @@ describe('ExperienceToolbarSection', () => {
 
 		await findByRole('list');
 
-		const experienceItems = getAllByRole('listitem');
+		const experiences = getAllByRole('listitem');
+
+		const defaultExperience = experiences.find((element) =>
+			element.textContent.includes('Default')
+		);
 
 		expect(
-			within(experienceItems[2]).queryByTitle('prioritize-experience')
+			within(defaultExperience).queryByTitle('prioritize-experience')
 		).not.toBeInTheDocument();
 
 		expect(
-			within(experienceItems[2]).queryByTitle('deprioritize-experience')
+			within(defaultExperience).queryByTitle('deprioritize-experience')
 		).not.toBeInTheDocument();
 
 		expect(
-			within(experienceItems[2]).queryByTitle('edit-experience')
+			within(defaultExperience).queryByTitle('edit-experience')
 		).not.toBeInTheDocument();
 
 		expect(
-			within(experienceItems[2]).queryByTitle('duplicate-experience')
+			within(defaultExperience).queryByTitle('duplicate-experience')
 		).not.toBeInTheDocument();
 
 		expect(
-			within(experienceItems[2]).queryByTitle('delete-experience')
+			within(defaultExperience).queryByTitle('delete-experience')
 		).not.toBeInTheDocument();
 	});
 

@@ -24,7 +24,6 @@ import com.azure.storage.blob.batch.BlobBatchClientBuilder;
 import com.azure.storage.blob.models.BlobItem;
 import com.azure.storage.blob.models.BlobProperties;
 import com.azure.storage.blob.models.ListBlobsOptions;
-import com.azure.storage.common.Utility;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
@@ -78,7 +77,7 @@ public class AzureStore implements Store {
 		throws PortalException {
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
-			_getBlobItemName(companyId, repositoryId, fileName, versionLabel));
+			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 
 		File tempFile = null;
 
@@ -158,7 +157,7 @@ public class AzureStore implements Store {
 		String versionLabel) {
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
-			_getBlobItemName(companyId, repositoryId, fileName, versionLabel));
+			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 
 		if (blobClient.exists()) {
 			blobClient.delete();
@@ -177,7 +176,7 @@ public class AzureStore implements Store {
 		}
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
-			_getBlobItemName(companyId, repositoryId, fileName, versionLabel));
+			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 
 		if (!blobClient.exists()) {
 			throw new NoSuchFileException(
@@ -220,7 +219,7 @@ public class AzureStore implements Store {
 		}
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
-			_getBlobItemName(companyId, repositoryId, fileName, versionLabel));
+			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 
 		if (!blobClient.exists()) {
 			throw new NoSuchFileException(
@@ -281,7 +280,7 @@ public class AzureStore implements Store {
 		}
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
-			_getBlobItemName(companyId, repositoryId, fileName, versionLabel));
+			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 
 		return blobClient.exists();
 	}
@@ -373,14 +372,6 @@ public class AzureStore implements Store {
 		}
 
 		return sb.toString();
-	}
-
-	private String _getBlobItemName(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel) {
-
-		return Utility.urlEncode(
-			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 	}
 
 	private String _getFileName(

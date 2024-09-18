@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
+import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.node.task.ExecuteNodeTask;
@@ -377,6 +379,23 @@ public class ClientExtensionProjectConfigurator
 							exception);
 					}
 				});
+
+			GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
+
+			TaskContainer taskContainer = project.getTasks();
+
+			TaskProvider<BuildLangTask> buildTaskProvider = taskContainer.named(
+				"buildLang", BuildLangTask.class,
+				(buildLangTask) -> {
+					buildLangTask.setLangDir(project.file("lang"));
+					buildLangTask.setLangFileName("Language");
+				}
+			);
+
+			generateLanguageBatchConfigTaskProvider.configure(
+				generateLanguageBatchConfigTask ->
+					generateLanguageBatchConfigTask.dependsOn(buildTaskProvider)
+			);
 
 			assembleClientExtensionTaskProvider.configure(
 				assembleClientExtensionTask -> assembleClientExtensionTask.from(
@@ -1186,7 +1205,7 @@ public class ClientExtensionProjectConfigurator
 		if (Objects.equals(rootDir.toPath(), dirPath.getParent()) &&
 			dirPath.endsWith(Paths.get("language")) &&
 			Files.exists(
-				Paths.get(dirPath.toString(), "Language.properties"))) {
+				Paths.get(dirPath.toString(), "lang", "Language.properties"))) {
 
 			return true;
 		}

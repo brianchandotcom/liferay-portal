@@ -10,7 +10,10 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import getRandomString from '../../utils/getRandomString';
+import {LEMON_OBJECT_ERC} from '../setup/page-management-site/constants';
+import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 import getWidgetDefinition from './utils/getWidgetDefinition';
 
@@ -21,7 +24,8 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	pageManagementSiteTest
 );
 
 test('Allows accessing the widget configuration easily', async ({
@@ -61,6 +65,77 @@ test('Allows accessing the widget configuration easily', async ({
 
 	await expect(
 		page.getByRole('menuitem', {exact: true, name: 'Configuration'})
+	).toBeVisible();
+});
+
+test('It is not possible to drag a widget inside a Form Container', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	pageManagementSite,
+}) => {
+
+	// Get the id of Lemon object from the site initializer
+
+	const {id: objectDefinitionId} =
+		await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			LEMON_OBJECT_ERC
+		);
+
+	// Create page with Search Bar widget and a Form container
+
+	const widgetId = getRandomString();
+
+	const widgetDefinition = getWidgetDefinition({
+		id: widgetId,
+		widgetName:
+			'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
+	});
+
+	const formId = getRandomString();
+
+	const formDefinition = getFormContainerDefinition({
+		id: formId,
+		objectDefinitionId,
+		pageElements: [],
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([widgetDefinition, formDefinition]),
+		siteId: pageManagementSite.id,
+		title: getRandomString(),
+	});
+
+	// Go to page editor
+
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+	// Check it's not possible to drag the widget inside the form from topper
+
+	const formDropzone = page.locator(
+		'.page-editor__form .page-editor__container .page-editor__no-fragments-state__message'
+	);
+
+	await pageEditorPage.selectFragment(widgetId);
+
+	await page.locator('.page-editor__topper__drag-icon').dragTo(formDropzone);
+
+	const alert = page.locator('.alert');
+
+	await expect(
+		alert.getByText('Widgets cannot be placed inside a form container')
+	).toBeVisible();
+
+	await alert.getByLabel('Close').click();
+
+	// Check it's not possible to drag the widget inside the form from the widget itself
+
+	const widget = pageEditorPage.getFragment(widgetId);
+
+	await widget.dragTo(formDropzone);
+
+	await expect(
+		alert.getByText('Widgets cannot be placed inside a form container')
 	).toBeVisible();
 });
 

@@ -56,11 +56,15 @@ export class PageEditorPage {
 		this.undoHistory = page.locator('.page-editor__undo-history');
 	}
 
-	async goto(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
+	async goto(
+		layout: Layout,
+		siteUrl?: Site['friendlyUrlPath'],
+		doAsUserId?: string
+	) {
 		await this.page.goto('/');
 
 		await this.page.goto(
-			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit`
+			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit${doAsUserId ? '&doAsUserId=' + doAsUserId : null}`
 		);
 	}
 

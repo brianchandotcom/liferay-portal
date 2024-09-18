@@ -3235,7 +3235,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							<isset property="skip.portal.dist" />
 						</not>
 						<then>
-							<fail message="The portal environment is not available" />
+							<fail message="The portal environment is not available." />
 						</then>
 					</if>
 

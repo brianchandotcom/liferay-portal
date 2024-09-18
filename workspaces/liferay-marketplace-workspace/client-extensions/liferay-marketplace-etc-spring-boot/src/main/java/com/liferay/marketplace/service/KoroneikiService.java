@@ -53,6 +53,15 @@ public class KoroneikiService {
 		).build();
 	}
 
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
+		throws Exception {
+
+		ProductPurchaseResource productPurchaseResource =
+			getProductPurchaseResource();
+
+		return productPurchaseResource.getProductPurchase(productPurchaseKey);
+	}
+
 	public ProductPurchaseResource getProductPurchaseResource()
 		throws Exception {
 
@@ -132,8 +141,11 @@ public class KoroneikiService {
 		productPurchase.setStartDate(Date.from(zonedDateTime.toInstant()));
 		productPurchase.setStatus(ProductPurchase.Status.APPROVED);
 
+		ProductPurchaseResource productPurchaseResource =
+			getProductPurchaseResource();
+
 		productPurchase =
-			getProductPurchaseResource().postAccountAccountKeyProductPurchase(
+			productPurchaseResource.postAccountAccountKeyProductPurchase(
 				jwt.getClaim("username"), jwt.getClaim("sub"),
 				account.getExternalReferenceCode(), productPurchase);
 

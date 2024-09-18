@@ -6,7 +6,6 @@
 package com.liferay.marketplace;
 
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
-import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
 
@@ -72,10 +71,7 @@ public class ConsoleRestController extends BaseRestController {
 	public String getSubscriptions(@PathVariable("orderId") long orderId)
 		throws Exception {
 
-		Order order = _marketplaceService.getOrderResource(
-		).getOrder(
-			orderId
-		);
+		Order order = _marketplaceService.getOrder(orderId);
 
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
@@ -89,9 +85,7 @@ public class ConsoleRestController extends BaseRestController {
 			@PathVariable("orderId") long orderId, @RequestBody String json)
 		throws Exception {
 
-		OrderResource orderResource = _marketplaceService.getOrderResource();
-
-		Order order = orderResource.getOrder(orderId);
+		Order order = _marketplaceService.getOrder(orderId);
 
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
@@ -132,7 +126,8 @@ public class ConsoleRestController extends BaseRestController {
 		customFields.put(
 			"cloud-provisioning", cloudProvisioningJSONArray.toString());
 
-		orderResource.patchOrder(orderId, order);
+		_marketplaceService.updateOrder(
+			customFields, orderId, order.getOrderStatus());
 	}
 
 	@PostMapping("uninstall-app/{orderId}")
@@ -140,21 +135,16 @@ public class ConsoleRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			_marketplaceService.getOrderResource(
-			).getOrder(
-				orderId
-			);
-
 			_consoleService.uninstallApp(orderId);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("App uninstalled");
+				_log.info("Uninstalled app for order " + orderId);
 			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
-			_log.error("Unable to uninstall app, order " + orderId);
+			_log.error("Unable to uninstall app for order " + orderId);
 		}
 	}
 

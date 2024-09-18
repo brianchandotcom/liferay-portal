@@ -5,7 +5,6 @@
 
 package com.liferay.marketplace;
 
-import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
@@ -59,10 +58,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 		JSONArray jsonArray = new JSONArray();
 
-		Order order = _marketplaceService.getOrderResource(
-		).getOrder(
-			orderId
-		);
+		Order order = _marketplaceService.getOrder(orderId);
 
 		OrderItemResource orderItemResource =
 			_marketplaceService.getOrderItemResource();
@@ -164,7 +160,8 @@ public class KoroneikiRestController extends BaseRestController {
 				).put(
 					"purchasedCount", orderItem.getQuantity()
 				).put(
-					"productVersion", _getProductVersion(orderItem.getSkuId())
+					"productVersion",
+					_marketplaceService.getProductVersion(orderItem.getSkuId())
 				).put(
 					"startDate",
 					ZonedDateTime.ofInstant(
@@ -184,10 +181,7 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("productId") long productId)
 		throws Exception {
 
-		Product product = _marketplaceService.getProductResource(
-		).getProduct(
-			productId
-		);
+		Product product = _marketplaceService.getProduct(productId);
 
 		ProductResource productResource =
 			_koroneikiService.getProductResource();
@@ -264,35 +258,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 			skuResource.patchSku(sku.getId(), sku);
 		}
-	}
-
-	private String _getProductVersion(Long skuId) {
-		String version = "1.0.0";
-
-		try {
-			Sku sku = _marketplaceService.getSkuResource(
-			).getSku(
-				skuId
-			);
-
-			for (com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.
-					CustomField customField : sku.getCustomFields()) {
-
-				if (Objects.equals(customField.getName(), "Version")) {
-					version = customField.getCustomValue(
-					).getData(
-					).toString();
-
-					break;
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to get product version " + exception.getMessage());
-		}
-
-		return version;
 	}
 
 	private static final Log _log = LogFactory.getLog(

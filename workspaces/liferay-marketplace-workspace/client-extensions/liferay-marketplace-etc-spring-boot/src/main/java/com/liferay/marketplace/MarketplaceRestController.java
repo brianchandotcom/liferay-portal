@@ -7,16 +7,14 @@ package com.liferay.marketplace;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -68,10 +66,8 @@ public class MarketplaceRestController extends BaseRestController {
 			return;
 		}
 
-		Order order = _marketplaceService.getOrderResource(
-		).getOrder(
-			commerceOrderJSONObject.getLong("id")
-		);
+		Order order = _marketplaceService.getOrder(
+			commerceOrderJSONObject.getLong("id"));
 
 		_marketplaceService.updateOrder(
 			null, order.getId(), _COMMERCE_ORDER_STATUS_PROCESSING);
@@ -95,25 +91,6 @@ public class MarketplaceRestController extends BaseRestController {
 
 			_setUpDxpProductPurchase(jwt, order, orderItemPage);
 		}
-	}
-
-	private Map<String, String> _getProductSpecificationsMap(
-		Collection<ProductSpecification> productSpecifications) {
-
-		Map<String, String> map = new HashMap<>();
-
-		for (ProductSpecification productSpecification :
-				productSpecifications) {
-
-			map.put(
-				productSpecification.getSpecificationKey(),
-				productSpecification.getValue(
-				).get(
-					"en_US"
-				));
-		}
-
-		return map;
 	}
 
 	private void _setUpCloudProductPurchase(
@@ -153,17 +130,14 @@ public class MarketplaceRestController extends BaseRestController {
 			Jwt jwt, Order order, Page<OrderItem> orderItemPage)
 		throws Exception {
 
+		SkuResource skuResource = _marketplaceService.getSkuResource();
+
 		Map<String, String> productSpecificationsMap =
-			_getProductSpecificationsMap(
-				_marketplaceService.getProductSpecificationResource(
-				).getProductIdProductSpecificationsPage(
-					_marketplaceService.getSkuResource(
-					).getSku(
-						orderItemPage.fetchFirstItem(
-						).getSkuId()
-					).getProductId(),
-					Pagination.of(1, 20)
-				).getItems());
+			_marketplaceService.getProductSpecificationsMap(
+				skuResource.getSku(
+					orderItemPage.fetchFirstItem(
+					).getSkuId()
+				).getProductId());
 
 		if (Objects.equals(
 				productSpecificationsMap.get("price-model"), "Free")) {

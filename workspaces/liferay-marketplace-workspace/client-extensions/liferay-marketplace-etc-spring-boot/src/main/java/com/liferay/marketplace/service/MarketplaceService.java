@@ -8,7 +8,12 @@ package com.liferay.marketplace.service;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
@@ -20,6 +25,8 @@ import com.liferay.petra.string.StringBundler;
 
 import java.net.URL;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -51,20 +58,14 @@ public class MarketplaceService extends BaseRestController {
 		).build();
 	}
 
-	public OrderItemResource getOrderItemResource() throws Exception {
-		return OrderItemResource.builder(
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
-		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-		).build();
+	public Order getOrder(Long id) throws Exception {
+		OrderResource orderResource = _getOrderResource();
+
+		return orderResource.getOrder(id);
 	}
 
-	public OrderResource getOrderResource() throws Exception {
-		return OrderResource.builder(
+	public OrderItemResource getOrderItemResource() throws Exception {
+		return OrderItemResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -87,6 +88,12 @@ public class MarketplaceService extends BaseRestController {
 		).build();
 	}
 
+	public Product getProduct(Long id) throws Exception {
+		ProductResource productResource = getProductResource();
+
+		return productResource.getProduct(id);
+	}
+
 	public ProductResource getProductResource() throws Exception {
 		return ProductResource.builder(
 		).header(
@@ -99,18 +106,57 @@ public class MarketplaceService extends BaseRestController {
 		).build();
 	}
 
-	public ProductSpecificationResource getProductSpecificationResource()
+	public Map<String, String> getProductSpecificationsMap(long productId)
 		throws Exception {
 
-		return ProductSpecificationResource.builder(
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
-		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-		).build();
+		ProductSpecificationResource productSpecificationResource =
+			_getProductSpecificationResource();
+
+		Collection<ProductSpecification> productSpecifications =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				productId, Pagination.of(1, 50)
+			).getItems();
+
+		Map<String, String> map = new HashMap<>();
+
+		for (ProductSpecification productSpecification :
+				productSpecifications) {
+
+			map.put(
+				productSpecification.getSpecificationKey(),
+				productSpecification.getValue(
+				).get(
+					"en_US"
+				));
+		}
+
+		return map;
+	}
+
+	public String getProductVersion(Long skuId) {
+		String version = "1.0.0";
+
+		try {
+			SkuResource skuResource = getSkuResource();
+
+			Sku sku = skuResource.getSku(skuId);
+
+			for (CustomField customField : sku.getCustomFields()) {
+				if (Objects.equals(customField.getName(), "Version")) {
+					version = customField.getCustomValue(
+					).getData(
+					).toString();
+
+					break;
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get product version " + exception.getMessage());
+		}
+
+		return version;
 	}
 
 	public String getSkuOptionValue(String key, SkuOption[] skuOptions) {
@@ -177,7 +223,35 @@ public class MarketplaceService extends BaseRestController {
 		order.setCustomFields(() -> customFields);
 		order.setOrderStatus(() -> orderStatus);
 
-		getOrderResource().patchOrder(orderId, order);
+		OrderResource orderResource = _getOrderResource();
+
+		orderResource.patchOrder(orderId, order);
+	}
+
+	private OrderResource _getOrderResource() throws Exception {
+		return OrderResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+	}
+
+	private ProductSpecificationResource _getProductSpecificationResource()
+		throws Exception {
+
+		return ProductSpecificationResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
 	}
 
 	private static final Log _log = LogFactory.getLog(MarketplaceService.class);

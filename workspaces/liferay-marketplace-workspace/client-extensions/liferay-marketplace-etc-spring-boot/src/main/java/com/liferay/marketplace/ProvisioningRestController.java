@@ -55,7 +55,10 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id)
 		throws Exception {
 
-		_getAppLicenseKeyResource().putAppLicenseKeyDeactivate(
+		AppLicenseKeyResource appLicenseKeyResource =
+			_getAppLicenseKeyResource();
+
+		appLicenseKeyResource.putAppLicenseKeyDeactivate(
 			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
 
 		if (_log.isInfoEnabled()) {
@@ -64,10 +67,13 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	@GetMapping("license-keys/{id}")
-	public AppLicenseKey getLicenseKeys(@PathVariable("id") String id)
+	public AppLicenseKey getLicenseKeys(@PathVariable("id") long id)
 		throws Exception {
 
-		return _getAppLicenseKeyResource().getAppLicenseKey(Long.valueOf(id));
+		AppLicenseKeyResource appLicenseKeyResource =
+			_getAppLicenseKeyResource();
+
+		return appLicenseKeyResource.getAppLicenseKey(id);
 	}
 
 	@GetMapping("license-keys/{id}/download")
@@ -121,7 +127,10 @@ public class ProvisioningRestController extends BaseRestController {
 			@RequestParam(defaultValue = "20", required = false) int pageSize)
 		throws Exception {
 
-		return _getAppLicenseKeyResource().getAppLicenseKeysPage(
+		AppLicenseKeyResource appLicenseKeyResource =
+			_getAppLicenseKeyResource();
+
+		return appLicenseKeyResource.getAppLicenseKeysPage(
 			"", "active eq true and orderId eq '" + orderId + "'",
 			Pagination.of(page, pageSize), "");
 	}
@@ -141,11 +150,8 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setActive(true);
 		appLicenseKey.setCreateDate(new Date());
 
-		ProductPurchase productPurchase =
-			_koroneikiService.getProductPurchaseResource(
-			).getProductPurchase(
-				appLicenseKey.getProductPurchaseKey()
-			);
+		ProductPurchase productPurchase = _koroneikiService.getProductPurchase(
+			appLicenseKey.getProductPurchaseKey());
 
 		Date expirationDate = productPurchase.getEndDate();
 
@@ -185,7 +191,10 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setUserName((String)jwt.getClaim("username"));
 		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
 
-		appLicenseKey = _getAppLicenseKeyResource().postAppLicenseKey(
+		AppLicenseKeyResource appLicenseKeyResource =
+			_getAppLicenseKeyResource();
+
+		appLicenseKey = appLicenseKeyResource.postAppLicenseKey(
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
 
 		if (_log.isInfoEnabled()) {

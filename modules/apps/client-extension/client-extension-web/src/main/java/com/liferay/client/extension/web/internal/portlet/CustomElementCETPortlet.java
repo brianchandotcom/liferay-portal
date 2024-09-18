@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,11 +40,12 @@ import javax.portlet.RenderResponse;
 public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 	public CustomElementCETPortlet(
-		CustomElementCET customElementCET, String portletId) {
+		CustomElementCET customElementCET, String portletId, Portal portal) {
 
 		super(customElementCET);
 
 		_portletId = portletId;
+		_portal = portal;
 	}
 
 	@Override
@@ -150,6 +152,8 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 	}
 
 	private String[] _prepareURLs(long lastModified, String[] urls) {
+		String pathContext = _portal.getPathContext();
+
 		for (int i = 0; i < urls.length; i++) {
 			if (!FeatureFlagManagerUtil.isEnabled(
 					cet.getCompanyId(), "LPS-202104") &&
@@ -157,6 +161,10 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 				urls[i] = HttpComponentsUtil.addParameter(
 					urls[i], "t", lastModified);
+			}
+
+			if (urls[i].contains(pathContext + "/o/")) {
+				urls[i] = urls[i].replace(pathContext + "/o/", "/o/");
 			}
 
 			if (!urls[i].startsWith("module:")) {
@@ -170,6 +178,7 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomElementCETPortlet.class);
 
+	private final Portal _portal;
 	private final String _portletId;
 
 }

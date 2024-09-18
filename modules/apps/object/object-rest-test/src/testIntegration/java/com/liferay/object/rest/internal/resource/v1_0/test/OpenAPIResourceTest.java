@@ -17,11 +17,17 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -267,6 +273,48 @@ public class OpenAPIResourceTest {
 			"expected_openapi_actions_object_action.json", _objectDefinition);
 	}
 
+	@Test
+	public void testOpenAPIWithSystemObjectRelationship() throws Exception {
+		_user = TestPropsValues.getUser();
+
+		_userSystemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		_userSystemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				_userSystemObjectDefinitionManager.getName());
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+				null, _user.getUserId(),
+				_userSystemObjectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"relation1", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		String endpoint = StringBundler.concat(
+			jaxRsApplicationDescriptor.getApplicationPath(), StringPool.SLASH,
+			jaxRsApplicationDescriptor.getVersion(), "/openapi.json");
+
+		_assertOpenAPI(
+			"expected_openapi_SystemObject_relationship.json", endpoint);
+
+		ObjectRelationshipLocalServiceUtil.
+			deleteObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				_userSystemObjectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId());
+
+		ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+			objectRelationship);
+	}
+
 	private void _assertOpenAPI(
 			String fileName, ObjectDefinition objectDefinition)
 		throws Exception {
@@ -277,6 +325,18 @@ public class OpenAPIResourceTest {
 			HTTPTestUtil.invokeToJSONObject(
 				null, objectDefinition.getRESTContextPath() + "/openapi.json",
 				Http.Method.GET
+			).toString(),
+			JSONCompareMode.STRICT);
+	}
+
+	private void _assertOpenAPI(String fileName, String endpoint)
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			new String(
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
+			HTTPTestUtil.invokeToJSONObject(
+				null, endpoint, Http.Method.GET
 			).toString(),
 			JSONCompareMode.STRICT);
 	}
@@ -295,5 +355,16 @@ public class OpenAPIResourceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
+
+	private User _user;
+	private ObjectDefinition _userSystemObjectDefinition;
+	private SystemObjectDefinitionManager _userSystemObjectDefinitionManager;
+
+	@DeleteAfterTestRun
+	private ObjectField _userSystemObjectField;
 
 }

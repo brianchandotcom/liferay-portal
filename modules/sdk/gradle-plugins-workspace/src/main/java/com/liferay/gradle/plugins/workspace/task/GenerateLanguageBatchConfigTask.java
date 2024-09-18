@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -84,6 +85,10 @@ public class GenerateLanguageBatchConfigTask extends DefaultTask {
 				name = name.replace(".properties", "");
 
 				String languageId = name.replace("Language_", "");
+
+				if (Objects.equals(languageId, "en")) {
+					languageId = "en_US";
+				}
 
 				Properties properties = new Properties();
 

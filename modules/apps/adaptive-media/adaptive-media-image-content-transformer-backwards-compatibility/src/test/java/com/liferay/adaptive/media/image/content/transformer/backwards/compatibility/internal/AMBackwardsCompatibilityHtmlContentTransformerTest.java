@@ -5,6 +5,7 @@
 
 package com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal;
 
+import com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal.configuration.AMBackwardsCompatibilityHtmlContentTransformerConfiguration;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -79,6 +80,17 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_group
 		);
 
+		ReflectionTestUtil.setFieldValue(
+			_contentTransformer,
+			"_amBackwardsCompatibilityHtmlContentTransformerConfiguration",
+			new AMBackwardsCompatibilityHtmlContentTransformerConfiguration() {
+
+				@Override
+				public boolean enabled() {
+					return true;
+				}
+
+			});
 		ReflectionTestUtil.setFieldValue(
 			_contentTransformer, "_amImageHTMLTagFactory",
 			_amImageHTMLTagFactory);

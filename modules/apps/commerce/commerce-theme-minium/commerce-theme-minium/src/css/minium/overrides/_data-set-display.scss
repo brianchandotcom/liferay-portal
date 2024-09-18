@@ -86,4 +86,35 @@
 	.table-style-stacked {
 		border: none;
 	}
+
+	/* ---------- Custom minium fds cell customization ---------- */
+
+	.dnd-table {
+		.dnd-td,
+		.dnd-th {
+			&.cell-externalReferenceCode {
+				min-width: 150px;
+			}
+
+			&.cell-promoPrice {
+				max-width: 132px;
+			}
+
+			&.cell-purchaseOrderNumber {
+				max-width: 175px;
+			}
+
+			&.cell-name {
+				min-width: 150px;
+			}
+
+			&.cell-shippedQuantity {
+				max-width: 150px;
+			}
+
+			&.cell-sku {
+				min-width: 100px;
+			}
+		}
+	}
 }

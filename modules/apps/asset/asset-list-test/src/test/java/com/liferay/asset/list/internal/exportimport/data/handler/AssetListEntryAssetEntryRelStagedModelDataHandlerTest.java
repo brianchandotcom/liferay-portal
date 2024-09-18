@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,12 +29,6 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandlerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_assetListEntryAssetEntryRelStagedModelDataHandler =
-			new AssetListEntryAssetEntryRelStagedModelDataHandler();
-	}
 
 	@Test
 	public void testDoImportStagedModelHandlesNullStagedModelCorrectly()
@@ -62,16 +55,16 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandlerTest {
 			AssetListEntryAssetEntryRel.class);
 
 		Mockito.doReturn(
-			RandomTestUtil.randomLong()
-		).when(
-			assetListEntryAssetEntryRel
-		).getAssetListEntryId();
-
-		Mockito.doReturn(
 			assetListEntryAssetEntryRel
 		).when(
 			assetListEntryAssetEntryRel
 		).clone();
+
+		Mockito.doReturn(
+			RandomTestUtil.randomLong()
+		).when(
+			assetListEntryAssetEntryRel
+		).getAssetListEntryId();
 
 		return assetListEntryAssetEntryRel;
 	}
@@ -80,10 +73,6 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandlerTest {
 		GroupLocalService groupLocalService = Mockito.mock(
 			GroupLocalService.class);
 
-		ReflectionTestUtil.setFieldValue(
-			_assetListEntryAssetEntryRelStagedModelDataHandler,
-			"_groupLocalService", groupLocalService);
-
 		Mockito.doReturn(
 			Mockito.mock(Group.class)
 		).when(
@@ -91,15 +80,23 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandlerTest {
 		).fetchGroup(
 			Mockito.anyLong()
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			_assetListEntryAssetEntryRelStagedModelDataHandler,
+			"_groupLocalService", groupLocalService);
 	}
 
 	private void _setUpStagedModel() throws Exception {
 		StagedModelRepository<AssetListEntryAssetEntryRel>
 			stagedModelRepository = Mockito.mock(StagedModelRepository.class);
 
-		ReflectionTestUtil.setFieldValue(
-			_assetListEntryAssetEntryRelStagedModelDataHandler,
-			"_stagedModelRepository", stagedModelRepository);
+		Mockito.doReturn(
+			null
+		).when(
+			stagedModelRepository
+		).addStagedModel(
+			Mockito.any(), Mockito.any()
+		);
 
 		Mockito.doReturn(
 			null
@@ -109,16 +106,13 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandlerTest {
 			Mockito.anyString(), Mockito.anyLong()
 		);
 
-		Mockito.doReturn(
-			null
-		).when(
-			stagedModelRepository
-		).addStagedModel(
-			Mockito.any(), Mockito.any()
-		);
+		ReflectionTestUtil.setFieldValue(
+			_assetListEntryAssetEntryRelStagedModelDataHandler,
+			"_stagedModelRepository", stagedModelRepository);
 	}
 
-	private AssetListEntryAssetEntryRelStagedModelDataHandler
-		_assetListEntryAssetEntryRelStagedModelDataHandler;
+	private final AssetListEntryAssetEntryRelStagedModelDataHandler
+		_assetListEntryAssetEntryRelStagedModelDataHandler =
+			new AssetListEntryAssetEntryRelStagedModelDataHandler();
 
 }

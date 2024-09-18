@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,14 +28,8 @@ public class AssetListEntryExportImportContentProcessorTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_assetListEntryExportImportContentProcessor =
-			new AssetListEntryExportImportContentProcessor();
-	}
-
 	@Test
-	public void testAddGroupMappingsElementWithInexistentGroup() {
+	public void testAddGroupMappingsElementWithNonexistentGroup() {
 		PortletDataContext portletDataContext = Mockito.mock(
 			PortletDataContext.class);
 
@@ -89,7 +82,8 @@ public class AssetListEntryExportImportContentProcessorTest {
 		);
 	}
 
-	private AssetListEntryExportImportContentProcessor
-		_assetListEntryExportImportContentProcessor;
+	private final AssetListEntryExportImportContentProcessor
+		_assetListEntryExportImportContentProcessor =
+			new AssetListEntryExportImportContentProcessor();
 
 }

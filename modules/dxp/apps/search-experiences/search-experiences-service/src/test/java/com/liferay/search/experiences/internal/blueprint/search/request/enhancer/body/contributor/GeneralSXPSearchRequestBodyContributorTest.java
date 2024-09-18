@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer.body.contributor;
 
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -16,9 +17,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,75 +34,98 @@ public class GeneralSXPSearchRequestBodyContributorTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() throws Exception {
-		_generalSXPSearchRequestBodyContributor =
-			new GeneralSXPSearchRequestBodyContributor();
+	@Test
+	public void testContributeEmptySearchableAssetTypes() {
+		List<String> entryClassNames = new ArrayList<>();
 
-		SearchRequestBuilderFactory searchRequestBuilderFactory =
-			new SearchRequestBuilderFactoryImpl();
-
-		_searchRequestBuilder = searchRequestBuilderFactory.builder();
+		_testContribute(entryClassNames, entryClassNames, new String[0]);
 	}
 
 	@Test
-	public void testIgnoreSearchableAssetTypesIfEmpty() {
+	public void testContributeEmptySearchableAssetTypesDontOverrideEntryClassNames() {
 		List<String> entryClassNames = new ArrayList<>();
 
 		entryClassNames.add("com.liferay.journal.model.JournalArticle");
 
-		_searchRequestBuilder.withSearchContext(
+		_testContribute(
+			entryClassNames, new ArrayList<>(), new String[0],
 			searchContext -> searchContext.setEntryClassNames(
 				entryClassNames.toArray(new String[1])));
-
-		GeneralConfiguration generalConfiguration = new GeneralConfiguration();
-
-		generalConfiguration.setSearchableAssetTypes(new String[0]);
-
-		Configuration configuration = new Configuration();
-
-		configuration.setGeneralConfiguration(generalConfiguration);
-
-		_generalSXPSearchRequestBodyContributor.contribute(
-			configuration, _searchRequestBuilder, null);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
-
-		Assert.assertEquals(
-			entryClassNames, searchRequest.getEntryClassNames());
-		Assert.assertTrue(
-			searchRequest.getModelIndexerClassNames(
-			).isEmpty());
 	}
 
 	@Test
-	public void testSearchableAssetTypes() {
-		List<String> searchableAssetTypes = new ArrayList<>();
+	public void testContributeSearchableAssetType() {
+		List<String> entryClassNames = new ArrayList<>();
 
-		searchableAssetTypes.add("com.liferay.journal.model.JournalArticle");
+		entryClassNames.add("com.liferay.journal.model.JournalArticle");
 
+		_testContribute(
+			entryClassNames, entryClassNames,
+			entryClassNames.toArray(new String[1]));
+	}
+
+	private Configuration _setUpConfiguration(String[] entryClassNameArray) {
 		GeneralConfiguration generalConfiguration = new GeneralConfiguration();
 
-		generalConfiguration.setSearchableAssetTypes(
-			searchableAssetTypes.toArray(new String[1]));
+		generalConfiguration.setSearchableAssetTypes(entryClassNameArray);
 
 		Configuration configuration = new Configuration();
 
 		configuration.setGeneralConfiguration(generalConfiguration);
 
-		_generalSXPSearchRequestBodyContributor.contribute(
-			configuration, _searchRequestBuilder, null);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
-
-		Assert.assertEquals(
-			searchableAssetTypes, searchRequest.getEntryClassNames());
-		Assert.assertEquals(
-			searchableAssetTypes, searchRequest.getModelIndexerClassNames());
+		return configuration;
 	}
 
-	private GeneralSXPSearchRequestBodyContributor
-		_generalSXPSearchRequestBodyContributor;
-	private SearchRequestBuilder _searchRequestBuilder;
+	private SearchRequestBuilder _setUpSearchRequestBuilder(
+		Consumer<SearchContext> searchContextConsumer) {
+
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			new SearchRequestBuilderFactoryImpl();
+
+		SearchRequestBuilder searchRequestBuilder =
+			searchRequestBuilderFactory.builder();
+
+		searchRequestBuilder.withSearchContext(searchContextConsumer);
+
+		return searchRequestBuilder;
+	}
+
+	private void _testContribute(
+		List<String> expectedEntryClassNames,
+		List<String> expectedModelIndexerClassNames,
+		String[] entryClassNameArray) {
+
+		_testContribute(
+			expectedEntryClassNames, expectedModelIndexerClassNames,
+			entryClassNameArray,
+			searchContext -> {
+			});
+	}
+
+	private void _testContribute(
+		List<String> expectedEntryClassNames,
+		List<String> expectedModelIndexerClassNames,
+		String[] searchableAssetTypes,
+		Consumer<SearchContext> searchContextConsumer) {
+
+		GeneralSXPSearchRequestBodyContributor
+			generalSXPSearchRequestBodyContributor =
+				new GeneralSXPSearchRequestBodyContributor();
+
+		SearchRequestBuilder searchRequestBuilder = _setUpSearchRequestBuilder(
+			searchContextConsumer);
+
+		generalSXPSearchRequestBodyContributor.contribute(
+			_setUpConfiguration(searchableAssetTypes), searchRequestBuilder,
+			null);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		Assert.assertEquals(
+			expectedEntryClassNames, searchRequest.getEntryClassNames());
+		Assert.assertEquals(
+			expectedModelIndexerClassNames,
+			searchRequest.getModelIndexerClassNames());
+	}
 
 }

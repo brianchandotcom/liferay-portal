@@ -73,7 +73,7 @@ public class SitesThatIAdministerItemSelectorView
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if (siteGroup.isLayoutPrototype() || siteGroup.isLayoutSetPrototype()) {
+		if (siteGroup.isLayoutSetPrototype()) {
 			return false;
 		}
 

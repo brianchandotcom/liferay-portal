@@ -75,9 +75,6 @@ public class FrontendTokenDefinitionRegistryImpl
 	public List<FrontendTokenDefinition> getFrontendTokenDefinitions(
 		long companyId) {
 
-		List<FrontendTokenDefinition> themesFrontendTokenDefinitions =
-			new ArrayList<>(_themeFrontendTokenDefinitions.values());
-
 		Map<String, FrontendTokenDefinition>
 			companyCETFrontendTokenDefinitions =
 				_cetFrontendTokenDefinitions.get(companyId);
@@ -86,7 +83,8 @@ public class FrontendTokenDefinitionRegistryImpl
 			new ArrayList<>(companyCETFrontendTokenDefinitions.values());
 
 		return ListUtil.concat(
-			themesFrontendTokenDefinitions, cetFrontendTokenDefinitions);
+			cetFrontendTokenDefinitions,
+			new ArrayList<>(_themeFrontendTokenDefinitions.values()));
 	}
 
 	@Activate

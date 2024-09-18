@@ -49,12 +49,6 @@ export class KnowledgeBaseEditArticlePage {
 		await this.cancelButton.click();
 	}
 
-	async publishNewKnowledgeBaseArticle(content: string, title: string) {
-		await this.titlePlaceholder.fill(title);
-		await this.contentTextBox.fill(content);
-		await this.publishButton.click();
-	}
-
 	async publishNewKnowledgeBaseArticleWithSchedule(
 		content: string,
 		title: string

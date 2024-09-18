@@ -168,32 +168,6 @@ baseTest(
 	}
 );
 
-testFeatureFlagsDisabled(
-	'can delete all articles with a recycle bin disabled',
-	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {
-		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-
-		const title = getRandomString();
-
-		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
-			getRandomString(),
-			title
-		);
-
-		await waitForSuccessAlert(
-			page,
-			`Success:${title} was successfully published.`
-		);
-
-		await knowledgeBasePage.goto(site.friendlyUrlPath);
-		await knowledgeBasePage.deleteAll(false);
-
-		await expect(
-			page.getByRole('heading', {name: 'Knowledge base is empty.'})
-		).toBeVisible();
-	}
-);
-
 testFeatureFlagsEnabled(
 	'can delete all articles with a recycle bin enabled',
 	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {

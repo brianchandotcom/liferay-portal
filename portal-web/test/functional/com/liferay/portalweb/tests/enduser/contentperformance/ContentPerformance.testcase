@@ -155,7 +155,7 @@ definition {
 	@description = "LPS-126047: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
 	@priority = 3
 	test ChangeLanguageInWidgetPage {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

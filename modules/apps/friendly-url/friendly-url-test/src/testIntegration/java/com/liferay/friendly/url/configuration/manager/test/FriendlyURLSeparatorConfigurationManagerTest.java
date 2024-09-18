@@ -15,6 +15,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,7 +53,15 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_companyId = RandomTestUtil.randomInt();
+		_companyId = RandomTestUtil.randomLong();
+		_originalCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(_companyId);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		CompanyThreadLocal.setCompanyId(_originalCompanyId);
 	}
 
 	@Test
@@ -127,7 +137,7 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
-	private int _companyId;
+	private long _companyId;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;
@@ -138,5 +148,7 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private long _originalCompanyId;
 
 }

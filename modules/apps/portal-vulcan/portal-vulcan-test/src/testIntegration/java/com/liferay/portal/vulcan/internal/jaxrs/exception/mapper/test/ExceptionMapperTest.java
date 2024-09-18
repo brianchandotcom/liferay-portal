@@ -7,6 +7,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -73,21 +75,30 @@ public class ExceptionMapperTest {
 	}
 
 	@Test
-	public void testNoSuchModelExceptionAndPrincipalExceptionReturnTheSame()
+	public void testNoSuchModelExceptionAndPrincipalExceptionReturnNotFound()
 		throws Exception {
 
 		Assert.assertEquals(
+			404,
 			HTTPTestUtil.invokeToHttpCode(
-				null, "/test-vulcan/testNoSuchModelException", Http.Method.GET),
+				null, "/test-vulcan/testNoSuchModelException",
+				Http.Method.GET));
+		Assert.assertEquals(
+			404,
 			HTTPTestUtil.invokeToHttpCode(
 				null, "/test-vulcan/testPrincipalException", Http.Method.GET));
 
+		JSONObject expectedJSONObject = JSONUtil.put("status", "NOT_FOUND");
+
 		Assert.assertEquals(
-			HTTPTestUtil.invokeToJSONObject(
-				null, "/test-vulcan/testNoSuchModelException", Http.Method.GET
-			).toString(),
+			expectedJSONObject.toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null, "/test-vulcan/testPrincipalException", Http.Method.GET
+			).toString());
+		Assert.assertEquals(
+			expectedJSONObject.toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, "/test-vulcan/testNoSuchModelException", Http.Method.GET
 			).toString());
 	}
 

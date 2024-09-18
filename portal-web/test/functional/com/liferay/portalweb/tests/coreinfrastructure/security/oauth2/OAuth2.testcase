@@ -583,6 +583,8 @@ definition {
 		task ("Get clientId") {
 			WaitForSPARefresh();
 
+			WaitForElementPresent(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+
 			var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 			var portalURL = PropsUtil.get("portal.url");
 		}

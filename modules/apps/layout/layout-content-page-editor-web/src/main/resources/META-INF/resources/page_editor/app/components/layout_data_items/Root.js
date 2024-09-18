@@ -12,6 +12,7 @@ import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import isItemEmpty from '../../utils/isItemEmpty';
 import TopperEmpty from '../topper/TopperEmpty';
+import getParentHeight from './getParentHeight';
 
 const Root = React.forwardRef(({children, item}, ref) => {
 	const isEmpty = useSelectorCallback(
@@ -21,26 +22,6 @@ const Root = React.forwardRef(({children, item}, ref) => {
 	);
 
 	const [setRef, itemElement] = useSetRef(ref);
-
-	const hasHeight = (item) =>
-		item?.config?.styles?.height &&
-		['form', 'form-step-container', 'fragment'].includes(item.type);
-
-	const getParentHeight = (item, layoutData) => {
-		if (!item) {
-			return null;
-		}
-
-		const parentItem = layoutData.items[item.parentId];
-
-		if (!parentItem) {
-			return null;
-		}
-
-		return hasHeight(parentItem)
-			? parentItem.config.styles.height
-			: getParentHeight(parentItem, layoutData);
-	};
 
 	const layoutData = useSelector((state) => state.layoutData);
 

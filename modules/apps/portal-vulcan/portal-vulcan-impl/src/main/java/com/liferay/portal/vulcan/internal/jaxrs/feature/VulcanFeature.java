@@ -71,6 +71,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterce
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.EntityExtensionWriterInterceptor;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.PageEntityExtensionWriterInterceptor;
+import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.ProblemWriterInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 import com.liferay.portal.vulcan.pagination.provider.PaginationProvider;
 
@@ -139,6 +140,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(ObjectMapperContextResolver.class);
 		featureContext.register(PageEntityExtensionWriterInterceptor.class);
 		featureContext.register(PrincipalExceptionMapper.class);
+		featureContext.register(ProblemWriterInterceptor.class);
 		featureContext.register(RestrictFieldsQueryParamContextProvider.class);
 		featureContext.register(
 			SQLIntegrityConstraintViolationExceptionMapper.class);

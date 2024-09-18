@@ -25,6 +25,10 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 	public Response toResponse(T exception) {
 		Problem problem = getProblem(exception);
 
+		if (problem.getThrowable() == null) {
+			problem.setThrowable(exception);
+		}
+
 		String type = problem.getType();
 
 		if (type != null) {

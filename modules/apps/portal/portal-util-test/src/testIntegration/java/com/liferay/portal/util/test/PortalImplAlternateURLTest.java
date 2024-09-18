@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -112,6 +113,52 @@ public class PortalImplAlternateURLTest {
 		TestPropsUtil.set(
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 			GetterUtil.getString(_defaultPrependStyle));
+	}
+
+	@Test
+	public void testAlternateURLDoesNotHaveLocaleInHomeLayout()
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		Collection<Locale> availableLocales = Arrays.asList(
+			LocaleUtil.BRAZIL, LocaleUtil.US);
+		Locale defaultLocale = LocaleUtil.US;
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), availableLocales, defaultLocale);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, "Inicio"
+			).put(
+				LocaleUtil.US, "Home"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL,
+				StringPool.SLASH.concat(
+					FriendlyURLNormalizerUtil.normalize(
+						RandomTestUtil.randomString(
+							LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+			).put(
+				LocaleUtil.US,
+				StringPool.SLASH.concat(
+					FriendlyURLNormalizerUtil.normalize(
+						RandomTestUtil.randomString(
+							LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+			).build());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(_group, layout);
+
+		_testAlternateURLWithHomeLayout(
+			availableLocales, defaultLocale, themeDisplay, 0);
+		_testAlternateURLWithHomeLayout(
+			availableLocales, defaultLocale, themeDisplay, 1);
+		_testAlternateURLWithHomeLayout(
+			availableLocales, defaultLocale, themeDisplay, 2);
+		_testAlternateURLWithHomeLayout(
+			availableLocales, defaultLocale, themeDisplay, 3);
 	}
 
 	@Test
@@ -358,6 +405,20 @@ public class PortalImplAlternateURLTest {
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 			Portal.FRIENDLY_URL_SEPARATOR, "asset_publisher", groupFriendlyURL,
 			"/content/content-title");
+	}
+
+	private String _generateHomeLayoutURL(
+		Locale defaultLocale, Locale locale, String portalURL,
+		PortletPreferences portletPreferences) {
+
+		String i18nPath = _getI18nPath(
+			defaultLocale, locale, portletPreferences);
+
+		if (Validator.isNull(i18nPath)) {
+			return portalURL;
+		}
+
+		return StringBundler.concat(portalURL, i18nPath, StringPool.SLASH);
 	}
 
 	private String _generateLayoutURL(
@@ -700,6 +761,43 @@ public class PortalImplAlternateURLTest {
 				canonicalAssetPublisherContentURL,
 				_getThemeDisplay(_group, canonicalAssetPublisherContentURL),
 				alternateLocale, layout));
+	}
+
+	private void _testAlternateURLWithHomeLayout(
+			Collection<Locale> availableLocales, Locale defaultLocale,
+			ThemeDisplay themeDisplay, int prependFriendlyURLStyle)
+		throws Exception {
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			themeDisplay.getCompanyId());
+
+		try {
+			portletPreferences.setValue(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+				String.valueOf(prependFriendlyURLStyle));
+
+			portletPreferences.store();
+
+			String canonicalURL = _generateHomeLayoutURL(
+				defaultLocale, defaultLocale, themeDisplay.getPortalURL(),
+				portletPreferences);
+
+			for (Locale alternateLocale : availableLocales) {
+				String expectedAlternateURL = _generateHomeLayoutURL(
+					defaultLocale, alternateLocale, themeDisplay.getPortalURL(),
+					portletPreferences);
+
+				Assert.assertEquals(
+					expectedAlternateURL,
+					_portal.getAlternateURL(
+						canonicalURL, themeDisplay, alternateLocale,
+						themeDisplay.getLayout()));
+			}
+		}
+		finally {
+			portletPreferences.reset(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+		}
 	}
 
 	private void _testAlternateURLWithLayout(

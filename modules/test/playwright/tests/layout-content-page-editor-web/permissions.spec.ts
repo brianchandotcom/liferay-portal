@@ -103,11 +103,10 @@ test(
 
 		await pageEditorPage.goToConfigurationTab('Styles');
 
-		await expect(
-			page
-				.getByLabel('Background ColorImage')
-				.getByLabel('Color', {exact: true})
-		).toBeAttached();
+		await expect(page.getByText('Background')).not.toBeAttached();
+		await expect(page.getByText('Borders')).not.toBeAttached();
+		await expect(page.getByText('Effects')).not.toBeAttached();
+		await expect(page.getByText('Text')).not.toBeAttached();
 
 		// Assert in advanced tab
 

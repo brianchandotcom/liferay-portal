@@ -298,6 +298,16 @@ export function FormInputGeneralPanel({item}) {
 			);
 		}
 
+		if (
+			!Liferay.FeatureFlags['LPD-10727'] &&
+			fragmentEntryLinkRef.current?.fragmentEntryKey ===
+				'INPUTS-submit-button'
+		) {
+			return fieldSetsWithoutLabel.filter(
+				(field) => field.name !== 'type'
+			);
+		}
+
 		if (isSpecialInput) {
 			return fieldSetsWithoutLabel;
 		}

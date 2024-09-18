@@ -33,9 +33,12 @@ export class CommerceLayoutsPage {
 	readonly editMenuItem: Locator;
 	readonly firstFragment: Locator;
 	readonly infoBoxButton: (label: string) => Locator;
+	readonly infoBoxCancelButton: Locator;
 	readonly infoBoxFieldSelect: Locator;
 	readonly infoBoxLabelInput: Locator;
+	readonly infoBoxShippingMethodAlert: Locator;
 	readonly infoBoxReadOnlyToggle: Locator;
+	readonly infoBoxValue: (name: string) => Locator;
 	readonly inputTextbox: (name: string) => Locator;
 	readonly markAsDefaultMenuItem: Locator;
 	readonly moreActionsButton: Locator;
@@ -134,9 +137,15 @@ export class CommerceLayoutsPage {
 		this.firstFragment = page.locator('#page-editor div').nth(2);
 		this.infoBoxButton = (label: string) =>
 			page.getByTestId(label + '-infoBoxButton');
+		this.infoBoxCancelButton = page.getByRole('button', {
+			exact: true,
+			name: 'Cancel',
+		});
 		this.infoBoxFieldSelect = page.getByLabel('Field');
 		this.infoBoxLabelInput = page.getByLabel('Label');
+		this.infoBoxShippingMethodAlert = page.getByText('are no available');
 		this.infoBoxReadOnlyToggle = page.getByLabel('Read Only');
+		this.infoBoxValue = (name: string) => page.getByText(name);
 		this.inputTextbox = (name: string) =>
 			page.getByRole('textbox', {exact: true, name});
 		this.markAsDefaultMenuItem = page.getByRole('menuitem', {
@@ -173,6 +182,7 @@ export class CommerceLayoutsPage {
 		this.selectOtherItemDropdownItem = page.getByTestId(
 			'selectOtherItemDropdownItem'
 		);
+
 		this.showLabelInput = page.getByLabel('Show Label', {exact: true});
 		this.siteBuilderMenuItem = page
 			.getByTestId('appGroup')

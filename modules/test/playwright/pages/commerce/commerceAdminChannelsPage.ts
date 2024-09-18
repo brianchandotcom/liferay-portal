@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
@@ -23,6 +23,15 @@ export class CommerceAdminChannelsPage {
 	readonly headerActions: Locator;
 	readonly headerActionsSaveButton: Locator;
 	readonly page: Page;
+	readonly shippingMethodActiveField: Locator;
+	readonly shippingMethodOptionsAddButton: Locator;
+	readonly shippingMethodOptionsLink: Locator;
+	readonly shippingMethodSaveButton: Locator;
+	readonly shippingMethodsPanel: FrameLocator;
+	readonly shippingOptionKeyField: Locator;
+	readonly shippingOptionNameField: Locator;
+	readonly shippingOptionSaveButton: Locator;
+	readonly shippingOptionsPanel: FrameLocator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -65,6 +74,32 @@ export class CommerceAdminChannelsPage {
 		this.headerActions = page.locator('.header-actions');
 		this.headerActionsSaveButton = this.headerActions.getByText('Save');
 		this.page = page;
+		this.shippingMethodsPanel = page.frameLocator('iframe').nth(2);
+
+		this.shippingMethodActiveField =
+			this.shippingMethodsPanel.getByLabel('Active');
+		this.shippingMethodOptionsAddButton = this.shippingMethodsPanel
+			.getByTestId('management-toolbar')
+			.locator('[data-testid="fdsCreationActionButton"]');
+		this.shippingMethodOptionsLink = this.shippingMethodsPanel.getByRole(
+			'link',
+			{name: 'Shipping Options'}
+		);
+		this.shippingMethodSaveButton = this.shippingMethodsPanel.getByRole(
+			'button',
+			{exact: true, name: 'Save'}
+		);
+		this.shippingOptionsPanel =
+			this.shippingMethodsPanel.frameLocator('iframe');
+
+		this.shippingOptionKeyField =
+			this.shippingOptionsPanel.getByLabel('Key');
+		this.shippingOptionNameField =
+			this.shippingOptionsPanel.getByLabel('Name');
+		this.shippingOptionSaveButton = this.shippingOptionsPanel.getByRole(
+			'button',
+			{exact: true, name: 'Save'}
+		);
 	}
 
 	async goto() {
@@ -94,5 +129,32 @@ export class CommerceAdminChannelsPage {
 		await this.commerceSiteType.selectOption({label: siteType});
 		await this.headerActionsSaveButton.click();
 		await this.page.waitForTimeout(200);
+	}
+
+	async setupCommerceChannelShippingMethod(
+		channelName: string,
+		shippingMethodName: string,
+		shippingOptions: string[]
+	) {
+		await this.goto();
+
+		await (await this.channelsTableRowLink(channelName)).click();
+
+		await this.page
+			.getByRole('link', {exact: true, name: shippingMethodName})
+			.click();
+		await this.shippingMethodActiveField.check();
+		await this.shippingMethodSaveButton.click();
+		await this.shippingMethodOptionsLink.click();
+		await this.shippingMethodOptionsAddButton.click();
+
+		for (const shippingOption of shippingOptions) {
+			await this.shippingOptionNameField.fill(shippingOption);
+			await this.shippingOptionKeyField.fill(shippingOption);
+			await this.shippingOptionSaveButton.click();
+			await expect(
+				this.shippingMethodsPanel.getByText(shippingOption)
+			).toBeVisible();
+		}
 	}
 }

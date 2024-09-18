@@ -488,3 +488,201 @@ test('LPD-32232 Edit Requested Delivery Date in Open Order Details', async ({
 		}
 	}
 });
+
+test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	test.setTimeout(180000);
+
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		const featureFlagEnabled = await page
+			.getByLabel('COMMERCE-9410')
+			.isChecked();
+
+		if (!featureFlagEnabled) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.uncheck();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'shippingMethod'
+		);
+		await commerceLayoutsPage.infoBoxLabelInput.fill('Shipping Method');
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForSuccessAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+			`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxShippingMethodAlert
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxCancelButton.click();
+
+		const shippingOptions = [getRandomString(), getRandomString()];
+
+		await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
+			channel.name,
+			'Flat Rate',
+			shippingOptions
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+			`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+		await commerceLayoutsPage.infoBoxValue(shippingOptions[0]).click();
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(
+				'Flat Rate - ' + shippingOptions[0]
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+		await commerceLayoutsPage.infoBoxValue(shippingOptions[1]).click();
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(
+				'Flat Rate - ' + shippingOptions[1]
+			)
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(
+				'Flat Rate - ' + shippingOptions[1]
+			)
+		).toBeVisible();
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Method')
+		).toBeHidden();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});

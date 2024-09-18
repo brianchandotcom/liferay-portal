@@ -37,7 +37,7 @@ function FieldAssignmentControls({
 				},
 				{
 					label: Liferay.Language.get('change-field-manually'),
-					onClick: openAddCustomFieldModal	,
+					onClick: openAddCustomFieldModal,
 					symbolLeft: 'custom-field',
 				},
 				{

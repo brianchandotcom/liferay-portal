@@ -26,7 +26,7 @@ const AddCustomFieldModalContent = ({
 	const [
 		requiredFieldNameValidationError,
 		setRequiredFieldNameValidationError,
-	] = useState<boolean>();
+	] = useState<boolean>(false);
 
 	return (
 		<>

@@ -173,9 +173,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await page.getByPlaceholder('Type Field Here.').waitFor();
+			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await page.getByPlaceholder('Type Field Here.').fill(fieldName);
+			await visualizationModesPage.addCustomFieldInput.fill(fieldName);
 
 			await saveFromModal({
 				page,
@@ -203,9 +203,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await page.getByPlaceholder('Type Field Here.').waitFor();
+			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await page.getByPlaceholder('Type Field Here.').fill(newFieldName);
+			await visualizationModesPage.addCustomFieldInput.fill(newFieldName);
 
 			await saveFromModal({
 				page,
@@ -326,9 +326,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await page.getByPlaceholder('Type Field Here.').waitFor();
+			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await page.getByPlaceholder('Type Field Here.').fill(fieldName);
+			await visualizationModesPage.addCustomFieldInput.fill(fieldName);
 
 			await saveFromModal({
 				page,
@@ -356,9 +356,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await page.getByPlaceholder('Type Field Here.').waitFor();
+			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await page.getByPlaceholder('Type Field Here.').fill(newFieldName);
+			await visualizationModesPage.addCustomFieldInput.fill(newFieldName);
 
 			await saveFromModal({
 				page,
@@ -421,11 +421,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Add fields from text input', async () => {
 			await visualizationModesPage.openAddCustomFieldModal();
 
-			await page.getByPlaceholder('Type Field Here.').waitFor();
+			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await page
-				.getByPlaceholder('Type Field Here.')
-				.fill(sampleScalarFieldName);
+			await visualizationModesPage.addCustomFieldInput.fill(
+				sampleScalarFieldName
+			);
 
 			await saveFromModal({
 				page,

@@ -374,7 +374,9 @@ function ListSection({
 							label={label}
 							onClearSelection={onClearSelection}
 							openAddCustomFieldModal={openAddCustomFieldModal}
-							openAddDataSourceFieldsModal={openAddDataSourceFieldsModal}
+							openAddDataSourceFieldsModal={
+								openAddDataSourceFieldsModal
+							}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

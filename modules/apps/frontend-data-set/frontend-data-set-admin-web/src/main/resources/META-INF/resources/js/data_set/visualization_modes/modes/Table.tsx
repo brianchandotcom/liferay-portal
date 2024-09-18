@@ -98,7 +98,7 @@ const NewFieldModalContent = ({
 	const [
 		requiredFieldNameValidationError,
 		setRequiredFieldNameValidationError,
-	] = useState<boolean>();
+	] = useState<boolean>(false);
 
 	return (
 		<>

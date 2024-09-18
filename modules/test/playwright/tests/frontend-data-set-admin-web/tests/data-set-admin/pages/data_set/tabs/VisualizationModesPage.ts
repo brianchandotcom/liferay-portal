@@ -9,6 +9,7 @@ import {FieldSelectModalPage} from '../../components/FieldSelectModalPage';
 import {DataSetPage} from '../DataSetPage';
 
 export class VisualizationModesPage {
+	readonly addCustomFieldInput: Locator;
 	private readonly addFieldsButton: Locator;
 	readonly cardsVisualizationModeContainer: Locator;
 	private readonly container: Locator;
@@ -19,6 +20,7 @@ export class VisualizationModesPage {
 	readonly tableVisualizationModeContainer: Locator;
 
 	constructor(page: Page) {
+		this.addCustomFieldInput = page.getByPlaceholder('Type Field Here.');
 		this.addFieldsButton = page
 			.getByRole('tabpanel')
 			.getByRole('list')
@@ -98,10 +100,9 @@ export class VisualizationModesPage {
 	async openAddCustomFieldModal() {
 		await this.addFieldsButton.click();
 
-		const assignCustomFieldButton = await this.page.getByRole(
-			'menuitem',
-			{name: 'Assign Field Manually'}
-		);
+		const assignCustomFieldButton = await this.page.getByRole('menuitem', {
+			name: 'Assign Field Manually',
+		});
 
 		await assignCustomFieldButton.waitFor();
 		await assignCustomFieldButton.click();
@@ -142,10 +143,9 @@ export class VisualizationModesPage {
 			.getByTitle('Assign Field')
 			.click();
 
-		const assignCustomFieldButton = await this.page.getByRole(
-			'menuitem',
-			{name: 'Assign Field Manually'}
-		);
+		const assignCustomFieldButton = await this.page.getByRole('menuitem', {
+			name: 'Assign Field Manually',
+		});
 
 		await assignCustomFieldButton.waitFor();
 		await assignCustomFieldButton.click();

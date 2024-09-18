@@ -1042,12 +1042,10 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectRelationshipLocalService.getObjectRelationship(
 					edge.getObjectRelationshipId());
 
+			objectRelationship.setEdge(false);
+
 			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getExternalReferenceCode(),
-				objectRelationship.getObjectRelationshipId(),
-				objectRelationship.getParameterObjectFieldId(),
-				objectRelationship.getDeletionType(), false,
-				objectRelationship.getLabelMap(), null);
+				objectRelationship);
 		}
 	}
 

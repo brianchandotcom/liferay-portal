@@ -157,11 +157,17 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				</div>
 
 				<div class="align-items-end col-auto d-flex">
-					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<portlet:namespace />removeSku();" type="button">
+					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" type="button">
 						<clay:icon
 							symbol="trash"
 						/>
 					</button>
+
+					<aui:script>
+						document.getElementById('remove-sku-button').onclick = function () {
+							<portlet:namespace />removeSku();
+						};
+					</aui:script>
 				</div>
 			</div>
 		</div>

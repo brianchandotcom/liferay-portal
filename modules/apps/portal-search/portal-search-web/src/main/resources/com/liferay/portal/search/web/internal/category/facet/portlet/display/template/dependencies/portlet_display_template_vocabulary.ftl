@@ -10,13 +10,15 @@
 >
 	<li class="treeview-item" role="none">
 		<#if name?has_content>
+			<#assign divRandomId = stringUtil.randomId() />
+
 			<div
 				aria-controls="${(termDisplayContexts?has_content)?then(namespace + 'treeItem' + id, '')}"
 				aria-expanded="true"
 				class="treeview-link ${cssClassTreeItem}"
 				data-target="#${namespace}treeItem${id}"
 				data-toggle="collapse"
-				onClick="${namespace}toggleTreeItem('${namespace}treeItem${id}');"
+				id="${divRandomId}"
 				onKeyPress="${namespace}toggleTreeItemKeypress(event);"
 				role="treeitem"
 				tabindex="${(termDisplayContexts?has_content)?then(0, -1)}"
@@ -101,6 +103,12 @@
 					</span>
 				</span>
 			</div>
+
+			<@liferay_aui.script>
+				document.getElementById('${divRandomId}').onclick = function() {
+					${namespace}toggleTreeItem('${namespace}treeItem${id}');
+				}
+			</@liferay_aui.script>
 		</#if>
 
 		<#if termDisplayContexts?has_content>

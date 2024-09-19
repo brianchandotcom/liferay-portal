@@ -6,11 +6,13 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseATag;
@@ -34,6 +36,13 @@ import javax.servlet.jsp.JspWriter;
  */
 @Deprecated
 public class ATag extends BaseATag {
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_randomId = StringUtil.randomId();
+	}
 
 	@Override
 	protected int processEndTag() throws Exception {
@@ -76,6 +85,30 @@ public class ATag extends BaseATag {
 			jspWriter.write("</span>");
 		}
 
+		String onClick = getOnClick();
+
+		if (Validator.isNotNull(onClick)) {
+			jspWriter.write("<script");
+			jspWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					getRequest()));
+			jspWriter.write(">document.getElementById('");
+
+			String id = getId();
+
+			if (Validator.isNotNull(id)) {
+				jspWriter.write(_getNamespace());
+				jspWriter.write(id);
+			}
+			else {
+				jspWriter.write(_randomId);
+			}
+
+			jspWriter.write("').onclick=function() {");
+			jspWriter.write(onClick);
+			jspWriter.write("}</script>");
+		}
+
 		return EVAL_PAGE;
 	}
 
@@ -92,7 +125,6 @@ public class ATag extends BaseATag {
 		String iconCssClass = getIconCssClass();
 		String label = getLabel();
 		String lang = getLang();
-		String onClick = getOnClick();
 		String title = getTitle();
 
 		if (Validator.isNotNull(href)) {
@@ -132,16 +164,15 @@ public class ATag extends BaseATag {
 			jspWriter.write(id);
 			jspWriter.write("\" ");
 		}
+		else {
+			jspWriter.write("id=\"");
+			jspWriter.write(_randomId);
+			jspWriter.write("\" ");
+		}
 
 		if (Validator.isNotNull(lang)) {
 			jspWriter.write("lang=\"");
 			jspWriter.write(lang);
-			jspWriter.write("\" ");
-		}
-
-		if (Validator.isNotNull(onClick)) {
-			jspWriter.write("onClick=\"");
-			jspWriter.write(HtmlUtil.escapeAttribute(onClick));
 			jspWriter.write("\" ");
 		}
 
@@ -224,5 +255,7 @@ public class ATag extends BaseATag {
 			jspWriter.write(dynamicAttributesString);
 		}
 	}
+
+	private String _randomId = StringUtil.randomId();
 
 }

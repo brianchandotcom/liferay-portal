@@ -310,8 +310,6 @@ baseTest(
 
 		await expect(page.getByText(`${title}`)).toBeVisible();
 
-		await journalPage.changeView('table');
-
 		await page.getByLabel(`${title}`).check();
 
 		await journalPage.moveToFolder(folder.name);

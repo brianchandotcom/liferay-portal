@@ -7831,10 +7831,6 @@ public class PortalImpl implements Portal {
 					url.substring(position), actualParams, requestContext);
 			}
 
-			Set<String> actualKeySet = actualParams.keySet();
-
-			actualKeySet.removeAll(params.keySet());
-
 			String actualParamsString = HttpComponentsUtil.parameterMapToString(
 				actualParams, false);
 

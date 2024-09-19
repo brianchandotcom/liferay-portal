@@ -7,8 +7,10 @@ package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletResponse;
@@ -38,7 +40,7 @@ public class EmptyOnClickRowChecker extends RowChecker {
 		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("<div class=\"custom-checkbox custom-control\"><label>");
 		sb.append("<input ");
@@ -64,22 +66,32 @@ public class EmptyOnClickRowChecker extends RowChecker {
 			sb.append("disabled ");
 		}
 
-		sb.append("name=\"");
+		String id = StringUtil.randomId();
+
+		sb.append("id=\"");
+		sb.append(id);
+		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
 		sb.append(LanguageUtil.get(httpServletRequest.getLocale(), "select"));
 		sb.append("\" type=\"checkbox\" value=\"");
 		sb.append(HtmlUtil.escapeAttribute(value));
-		sb.append("\" ");
+		sb.append("\"><span class=\"custom-control-label\"></span></label>");
+		sb.append("</div>");
 
 		if (Validator.isNotNull(getAllRowIds())) {
+			sb.append("<script");
+			sb.append(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					httpServletRequest));
+			sb.append(">document.getElementById('");
+			sb.append(id);
+			sb.append("').onclick=function() {");
 			sb.append(
 				getOnClick(
 					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick));
+			sb.append("}</script>");
 		}
-
-		sb.append("><span class=\"custom-control-label\"></span></label>");
-		sb.append("</div>");
 
 		return sb.toString();
 	}

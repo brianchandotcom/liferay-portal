@@ -5,8 +5,9 @@
 
 package com.liferay.taglib.search;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Writer;
 
@@ -33,10 +34,23 @@ public class ButtonSearchEntry extends TextSearchEntry {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		String id = StringUtil.randomId();
+
+		writer.write("<input id=\"");
+		writer.write(id);
+		writer.write("\" type=\"button\" value=\"");
+		writer.write(getName());
+		writer.write("\">");
+
+		writer.write("<script");
 		writer.write(
-			StringBundler.concat(
-				"<input type=\"button\" value=\"", getName(), "\" onClick=\"",
-				getHref(), "\">"));
+			ContentSecurityPolicyNonceProviderUtil.getNonce(
+				httpServletRequest));
+		writer.write(">document.getElementById('");
+		writer.write(id);
+		writer.write("').onclick=function() {");
+		writer.write(getHref());
+		writer.write("}</script>");
 	}
 
 }

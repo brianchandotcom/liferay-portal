@@ -79,8 +79,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						boolean canSubscribe = !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() && discussionPermission.hasSubscribePermission(discussionRequestHelper.getPermissionChecker(), company.getCompanyId(), siteGroup.getGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionTaglibHelper.getSubscriptionClassName(), discussionTaglibHelper.getClassPK());
-
-						String subscriptionOnClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
 						<clay:content-row
@@ -97,18 +95,29 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 							<clay:content-col>
 								<c:if test="<%= canSubscribe %>">
+
+									<%
+									String id = StringUtil.randomId();
+									%>
+
 									<c:choose>
 										<c:when test="<%= subscribed %>">
-											<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+											<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" id="<%= id %>" type="button">
 												<liferay-ui:message key="unsubscribe" />
 											</button>
 										</c:when>
 										<c:otherwise>
-											<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+											<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" id="<%= id %>" type="button">
 												<liferay-ui:message key="subscribe" />
 											</button>
 										</c:otherwise>
 									</c:choose>
+
+									<aui:script>
+										document.getElementById('<%= id %>').onclick = function () {
+											<%= randomNamespace %>subscribeToComments(<%= !subscribed %>);
+										};
+									</aui:script>
 								</c:if>
 							</clay:content-col>
 						</clay:content-row>

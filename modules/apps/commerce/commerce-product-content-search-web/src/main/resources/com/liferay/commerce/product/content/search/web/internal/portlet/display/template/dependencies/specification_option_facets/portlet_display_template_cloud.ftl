@@ -24,13 +24,21 @@
 			<#if entries?has_content>
 				<#list entries as entry>
 					<span class="facet-value">
+						<#assign id = stringUtil.randomId() />
+
 						<button
 							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} tag-popularity-${entry.getPopularity()} term-name"
 							data-term-id="${entry.getDisplayName()}"
-							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+							id="${id}"
 						>
 							${htmlUtil.escape(entry.getDisplayName())}
 						</button>
+
+						<@liferay_aui.script>
+							document.getElementById('${id}').onclick = function() {
+								Liferay.Search.FacetUtil.changeSelection(event);
+							}
+						</@liferay_aui.script>
 					</span>
 				</#list>
 			</#if>

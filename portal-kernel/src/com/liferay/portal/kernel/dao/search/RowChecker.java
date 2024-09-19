@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -191,13 +192,31 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		return StringBundler.concat(
-			"<label><input name=\"", name, "\" title=\"",
-			LanguageUtil.get(getLocale(httpServletRequest), "select-all"),
-			"\" type=\"checkbox\" ", HtmlUtil.buildData(_data),
-			"onClick=\"Liferay.Util.checkAll(AUI().one(this).ancestor(",
-			"'.table'), ", checkBoxRowIds,
-			", this, 'tr:not(.d-none)');\"></label>");
+		StringBundler sb = new StringBundler(17);
+		String id = StringUtil.randomId();
+
+		sb.append("<label><input id=\"");
+		sb.append(id);
+		sb.append("\" name=\"");
+		sb.append(name);
+		sb.append("\" title=\"");
+		sb.append(
+			LanguageUtil.get(getLocale(httpServletRequest), "select-all"));
+		sb.append("\" type=\"checkbox\" ");
+		sb.append(HtmlUtil.buildData(_data));
+		sb.append("></label><script");
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		sb.append(">document.getElementById('");
+		sb.append(id);
+		sb.append("').onclick=function(){");
+		sb.append("Liferay.Util.checkAll(AUI().one(this).ancestor('.table'), ");
+		sb.append(checkBoxRowIds);
+		sb.append(", this, 'tr:not(.d-none)');");
+		sb.append("}</script>");
+
+		return sb.toString();
 	}
 
 	protected Locale getLocale(HttpServletRequest httpServletRequest) {
@@ -237,11 +256,11 @@ public class RowChecker {
 		String checkBoxRowIds, String checkBoxAllRowIds,
 		String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
-		sb.append("onClick=\"Liferay.Util.rowCheckerCheckAllBox(AUI().");
-		sb.append("one(this).ancestor('.table'), AUI().one(this).");
-		sb.append("ancestor('tr:not(.d-none)'), ");
+		sb.append("Liferay.Util.rowCheckerCheckAllBox(AUI().one(this).");
+		sb.append("ancestor('.table'), AUI().one(this).ancestor('tr:not(.");
+		sb.append("d-none)'), ");
 		sb.append(checkBoxRowIds);
 		sb.append(", ");
 		sb.append(checkBoxAllRowIds);
@@ -251,8 +270,6 @@ public class RowChecker {
 			sb.append(checkBoxPostOnClick);
 		}
 
-		sb.append("\"");
-
 		return sb.toString();
 	}
 
@@ -261,7 +278,7 @@ public class RowChecker {
 		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(24);
 
 		sb.append("<label><input ");
 
@@ -285,21 +302,31 @@ public class RowChecker {
 			sb.append("disabled ");
 		}
 
+		String id = StringUtil.randomId();
+
+		sb.append("\" id=\"");
+		sb.append(id);
 		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
 		sb.append(LanguageUtil.get(httpServletRequest.getLocale(), "select"));
 		sb.append("\" type=\"checkbox\" value=\"");
 		sb.append(HtmlUtil.escapeAttribute(value));
-		sb.append("\" ");
+		sb.append("\"></label>");
 
 		if (Validator.isNotNull(_allRowIds)) {
+			sb.append("<script");
+			sb.append(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					httpServletRequest));
+			sb.append(">document.getElementById('");
+			sb.append(id);
+			sb.append("').onclick=function() {");
 			sb.append(
 				getOnClick(
 					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick));
+			sb.append("}</script>");
 		}
-
-		sb.append("></label>");
 
 		return sb.toString();
 	}

@@ -23,10 +23,12 @@
 		<#if entries?has_content>
 			<div class="label-container">
 				<#list entries as entry>
+					<#assign id = stringUtil.randomId() />
+
 					<button
 						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
 						data-term-id="${entry.getDisplayName()}"
-						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						id="${id}"
 						type="button"
 					>
 						<span class="label-item label-item-expand">
@@ -37,6 +39,12 @@
 							</#if>
 						</span>
 					</button>
+
+					<@liferay_aui.script>
+						document.getElementById('${id}').onclick = function() {
+							Liferay.Search.FacetUtil.changeSelection(event);
+						}
+					</@liferay_aui.script>
 				</#list>
 			</div>
 		</#if>

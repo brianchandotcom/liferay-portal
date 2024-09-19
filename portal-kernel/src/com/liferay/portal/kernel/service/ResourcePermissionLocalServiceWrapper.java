@@ -355,6 +355,11 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteResourcePermissions(String name) {
+		_resourcePermissionLocalService.deleteResourcePermissions(name);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _resourcePermissionLocalService.dslQuery(dslQuery);
 	}

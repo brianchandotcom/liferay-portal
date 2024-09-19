@@ -322,6 +322,8 @@ public interface ResourcePermissionLocalService
 			long companyId, String name, int scope, String primKey)
 		throws PortalException;
 
+	public void deleteResourcePermissions(String name);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 

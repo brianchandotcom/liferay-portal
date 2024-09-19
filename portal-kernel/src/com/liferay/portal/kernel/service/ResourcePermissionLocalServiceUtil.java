@@ -335,6 +335,10 @@ public class ResourcePermissionLocalServiceUtil {
 		getService().deleteResourcePermissions(companyId, name, scope, primKey);
 	}
 
+	public static void deleteResourcePermissions(String name) {
+		getService().deleteResourcePermissions(name);
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

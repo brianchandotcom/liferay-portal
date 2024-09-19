@@ -1275,7 +1275,9 @@ ${runtimeInstance}
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
 
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 
 			WebContent.addCP(
 				webContentContent = "Web Contenido Contenido 1",

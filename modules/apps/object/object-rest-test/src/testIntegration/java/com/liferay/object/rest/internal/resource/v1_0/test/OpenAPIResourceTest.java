@@ -274,7 +274,7 @@ public class OpenAPIResourceTest {
 	}
 
 	@Test
-	public void testOpenAPIWithSystemObjectRelationship() throws Exception {
+	public void testGetOpenAPIWithSystemObjectRelationship() throws Exception {
 		_user = TestPropsValues.getUser();
 
 		_userSystemObjectDefinitionManager =

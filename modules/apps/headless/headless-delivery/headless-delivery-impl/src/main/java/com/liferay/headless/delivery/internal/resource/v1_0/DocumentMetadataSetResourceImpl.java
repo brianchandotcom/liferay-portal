@@ -5,6 +5,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -23,8 +25,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -108,6 +112,68 @@ public class DocumentMetadataSetResourceImpl
 					DLConstants.RESOURCE_NAME, siteId)
 			).build(),
 			siteId, pagination);
+	}
+
+	@Override
+	public DocumentMetadataSet postAssetLibraryDocumentMetadataSet(
+			Long assetLibraryId, DocumentMetadataSet documentMetadataSet)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return postSiteDocumentMetadataSet(assetLibraryId, documentMetadataSet);
+	}
+
+	@Override
+	public DocumentMetadataSet postSiteDocumentMetadataSet(
+			Long siteId, DocumentMetadataSet documentMetadataSet)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DataDefinitionResource.Builder builder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource = builder.user(
+			contextUser
+		).build();
+
+		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			documentMetadataSet.getDescription(),
+			documentMetadataSet.getDescription_i18n());
+		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			documentMetadataSet.getName(), documentMetadataSet.getName_i18n());
+
+		DataDefinition dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				siteId, "document-library",
+				new DataDefinition() {
+					{
+						setAvailableLanguageIds(
+							documentMetadataSet::getAvailableLanguages);
+						setDataDefinitionFields(
+							documentMetadataSet::getDataDefinitionFields);
+						setDefaultDataLayout(
+							documentMetadataSet::getDataLayout);
+						setDescription(
+							() -> LocalizedValueUtil.toStringObjectMap(
+								descriptionMap));
+						setName(
+							() -> LocalizedValueUtil.toStringObjectMap(
+								nameMap));
+						setSiteId(() -> siteId);
+						setUserId(contextUser::getUserId);
+					}
+				});
+
+		return _toDocumentMetadataSet(
+			_ddmStructureService.getStructure(dataDefinition.getId()));
 	}
 
 	private Page<DocumentMetadataSet> _getPage(

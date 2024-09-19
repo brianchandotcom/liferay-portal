@@ -167,6 +167,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		ListTypeDefinition listTypeDefinition = randomListTypeDefinition();
 
+		listTypeDefinition.setDefaultLanguageId(regex);
 		listTypeDefinition.setExternalReferenceCode(regex);
 		listTypeDefinition.setName(regex);
 
@@ -176,6 +177,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		listTypeDefinition = ListTypeDefinitionSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, listTypeDefinition.getDefaultLanguageId());
 		Assert.assertEquals(
 			regex, listTypeDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, listTypeDefinition.getName());
@@ -1317,6 +1319,16 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (listTypeDefinition.getDefaultLanguageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (listTypeDefinition.getExternalReferenceCode() == null) {
@@ -1505,6 +1517,19 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						listTypeDefinition1.getDateModified(),
 						listTypeDefinition2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						listTypeDefinition1.getDefaultLanguageId(),
+						listTypeDefinition2.getDefaultLanguageId())) {
 
 					return false;
 				}
@@ -1757,6 +1782,52 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("defaultLanguageId")) {
+			Object object = listTypeDefinition.getDefaultLanguageId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = listTypeDefinition.getExternalReferenceCode();
 
@@ -1916,6 +1987,8 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				defaultLanguageId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

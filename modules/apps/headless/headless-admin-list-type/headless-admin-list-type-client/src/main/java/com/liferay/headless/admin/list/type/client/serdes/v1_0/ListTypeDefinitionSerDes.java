@@ -95,6 +95,20 @@ public class ListTypeDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (listTypeDefinition.getDefaultLanguageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultLanguageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(listTypeDefinition.getDefaultLanguageId()));
+
+			sb.append("\"");
+		}
+
 		if (listTypeDefinition.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +241,15 @@ public class ListTypeDefinitionSerDes {
 					listTypeDefinition.getDateModified()));
 		}
 
+		if (listTypeDefinition.getDefaultLanguageId() == null) {
+			map.put("defaultLanguageId", null);
+		}
+		else {
+			map.put(
+				"defaultLanguageId",
+				String.valueOf(listTypeDefinition.getDefaultLanguageId()));
+		}
+
 		if (listTypeDefinition.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -301,6 +324,9 @@ public class ListTypeDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -346,6 +372,12 @@ public class ListTypeDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setDefaultLanguageId(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

@@ -11,6 +11,12 @@ export enum BuildStatuses {
 	DEACTIVATED = 'DEACTIVATED',
 }
 
+export enum BuildImportStatuses {
+	PENDING = 'PENDING',
+	INPROGRESS = 'INPROGRESS',
+	DONE = 'DONE',
+}
+
 export enum CaseResultStatuses {
 	BLOCKED = 'BLOCKED',
 	DID_NOT_RUN = 'DIDNOTRUN',

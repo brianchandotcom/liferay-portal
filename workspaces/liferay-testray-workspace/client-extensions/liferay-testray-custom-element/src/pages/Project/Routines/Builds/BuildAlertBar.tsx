@@ -11,59 +11,55 @@ import {useNavigate} from 'react-router-dom';
 import {useObjectPermission} from '~/hooks/data/useObjectPermission';
 
 import i18n from '../../../../i18n';
-import {TestrayTask} from '../../../../services/rest';
-import {TaskStatuses} from '../../../../util/statuses';
-
-type AlertProperties = {
-	[key: string]: {
-		color: string;
-		displayType: string;
-		label: string;
-		text: string;
-	};
-};
+import {TestrayBuild, TestrayTask} from '../../../../services/rest';
+import {
+	testrayBuildAlertProperties,
+	testrayTaskAlertProperties,
+} from '../../../../util/constants';
+import {BuildImportStatuses} from '../../../../util/statuses';
 
 type BuildAlertBarProps = {
+	testrayBuild: TestrayBuild;
 	testrayTask: TestrayTask;
 };
 
-const alertProperties: AlertProperties = {
-	[TaskStatuses.ABANDONED]: {
-		color: 'label-secondary',
-		displayType: 'secondary',
-		label: i18n.translate('abandoned'),
-		text: i18n.translate('this-builds-task-has-been-abandoned'),
-	},
-	[TaskStatuses.COMPLETE]: {
-		color: 'label-primary',
-		displayType: 'primary',
-		label: i18n.translate('complete'),
-		text: i18n.translate('this-build-has-been-analyzed'),
-	},
-	[TaskStatuses.IN_ANALYSIS]: {
-		color: 'label-chart-in-analysis',
-		displayType: 'warning',
-		label: i18n.translate('in-analysis'),
-		text: i18n.translate('this-build-is-currently-in-analysis'),
-	},
-	[TaskStatuses.OPEN]: {
-		color: 'label-secondary',
-		displayType: 'secondary',
-		label: i18n.translate('open'),
-		text: i18n.translate('this-build-is-currently-in-open'),
-	},
-	[TaskStatuses.PROCESSING]: {
-		color: 'label-info',
-		displayType: 'info',
-		label: i18n.translate('processing'),
-		text: i18n.translate('this-build-is-currently-in-processing'),
-	},
-};
-
-const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
+const BuildAlertBar: React.FC<BuildAlertBarProps> = ({
+	testrayBuild,
+	testrayTask,
+}) => {
 	const navigate = useNavigate();
 
 	const taskPermission = useObjectPermission('/tasks');
+
+	if (testrayBuild.dueStatus.key !== BuildImportStatuses.DONE) {
+		const testrayBuildAlertProperty =
+			testrayBuildAlertProperties[testrayBuild.dueStatus.key];
+
+		return (
+			<ClayAlert
+				className="build-alert-bar w-100"
+				displayType={
+					testrayBuildAlertProperty.displayType as AlertDisplayType
+				}
+				title={
+					(
+						<>
+							<ClayLabel
+								displayType={
+									testrayBuildAlertProperty.displayType as AlertDisplayType
+								}
+							>
+								{testrayBuildAlertProperty.label}
+							</ClayLabel>
+
+							{testrayBuildAlertProperty.text}
+						</>
+					) as unknown as string
+				}
+				variant="inline"
+			/>
+		);
+	}
 
 	if (!testrayTask && taskPermission.canCreate) {
 		return (
@@ -76,7 +72,8 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 		);
 	}
 
-	const alertProperty = alertProperties[testrayTask?.dueStatus?.key];
+	const alertProperty =
+		testrayTaskAlertProperties[testrayTask?.dueStatus?.key];
 
 	if (!alertProperty) {
 		return null;

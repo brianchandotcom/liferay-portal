@@ -48,7 +48,10 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 	return (
 		<>
-			<BuildAlertBar testrayTask={testrayTask} />
+			<BuildAlertBar
+				testrayBuild={testrayBuild}
+				testrayTask={testrayTask}
+			/>
 
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable

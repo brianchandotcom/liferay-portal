@@ -2,6 +2,10 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import i18n from '../i18n';
+import {BuildImportStatuses, TaskStatuses} from './statuses';
+
 export enum CaseResultStatuses {
 	BLOCKED = 'caseResultBlocked',
 	FAILED = 'caseResultFailed',
@@ -80,4 +84,67 @@ export const PAGINATION = {
 export const ACTIONS = {
 	CREATE: 'CREATE',
 	UPDATE: 'UPDATE',
+};
+
+type AlertProperties = {
+	[key: string]: {
+		color: string;
+		displayType: string;
+		label: string;
+		text: string;
+	};
+};
+
+export const testrayBuildAlertProperties: AlertProperties = {
+	[BuildImportStatuses.PENDING]: {
+		color: 'label-chart open',
+		displayType: 'secondary',
+		label: i18n.translate('pending'),
+		text: i18n.translate('test-results-are-queued-to-be-imported'),
+	},
+	[BuildImportStatuses.INPROGRESS]: {
+		color: 'label-chart-in-analysis',
+		displayType: 'warning',
+		label: i18n.translate('in-progress'),
+		text: i18n.translate('test-results-are-being-imported-into-this-build'),
+	},
+	[BuildImportStatuses.DONE]: {
+		color: 'label-chart passed',
+		displayType: 'success',
+		label: i18n.translate('done'),
+		text: i18n.translate('this-build-has-finished-it-import-process'),
+	},
+};
+
+export const testrayTaskAlertProperties: AlertProperties = {
+	[TaskStatuses.ABANDONED]: {
+		color: 'label-secondary',
+		displayType: 'secondary',
+		label: i18n.translate('abandoned'),
+		text: i18n.translate('this-builds-task-has-been-abandoned'),
+	},
+	[TaskStatuses.COMPLETE]: {
+		color: 'label-primary',
+		displayType: 'primary',
+		label: i18n.translate('complete'),
+		text: i18n.translate('this-build-has-been-analyzed'),
+	},
+	[TaskStatuses.IN_ANALYSIS]: {
+		color: 'label-chart-in-analysis',
+		displayType: 'warning',
+		label: i18n.translate('in-analysis'),
+		text: i18n.translate('this-build-is-currently-in-analysis'),
+	},
+	[TaskStatuses.OPEN]: {
+		color: 'label-secondary',
+		displayType: 'secondary',
+		label: i18n.translate('open'),
+		text: i18n.translate('this-build-is-currently-in-open'),
+	},
+	[TaskStatuses.PROCESSING]: {
+		color: 'label-info',
+		displayType: 'info',
+		label: i18n.translate('processing'),
+		text: i18n.translate('this-build-is-currently-in-processing'),
+	},
 };

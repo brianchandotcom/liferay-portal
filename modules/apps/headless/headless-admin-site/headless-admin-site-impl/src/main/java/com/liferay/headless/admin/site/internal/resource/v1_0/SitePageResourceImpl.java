@@ -74,7 +74,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return _toSitePage(
 			_layoutService.addLayout(
-				null, group.getGroupId(), false,
+				sitePage.getExternalReferenceCode(), group.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()),
 				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,

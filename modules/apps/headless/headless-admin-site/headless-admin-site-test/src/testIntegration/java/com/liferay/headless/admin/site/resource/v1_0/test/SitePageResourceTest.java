@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -28,6 +31,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Collections;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -112,11 +116,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		super.testPatchSiteSiteByExternalReferenceCodeSitePage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostByExternalReferenceCodeSitePage() throws Exception {
 		super.testPostByExternalReferenceCodeSitePage();
+
+		_testPostByExternalReferenceCodeSitePageWidgetPage();
 	}
 
 	@Ignore
@@ -248,6 +253,34 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		return sitePage;
 	}
+
+	private void _testPostByExternalReferenceCodeSitePageWidgetPage()
+		throws Exception {
+
+		SitePage postSitePage =
+			sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), randomSitePage());
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			postSitePage.getExternalReferenceCode(), testGroup.getGroupId());
+
+		Assert.assertFalse(layout.isHidden());
+		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			"1_column",
+			typeSettingsUnicodeProperties.getProperty(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+	}
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

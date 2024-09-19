@@ -48,6 +48,10 @@
 								"value": "orderType"
 							},
 							{
+								"label": "printed-note",
+								"value": "printedNote"
+							},
+							{
 								"label": "purchase-order-number",
 								"value": "purchaseOrderNumber"
 							},

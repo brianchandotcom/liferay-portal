@@ -262,7 +262,10 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getEditableFieldValueType(String field) {
-		if (field.equals("requestedDeliveryDate")) {
+		if (field.equals("printedNote")) {
+			return "textarea";
+		}
+		else if (field.equals("requestedDeliveryDate")) {
 			return "date";
 		}
 
@@ -343,6 +346,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				locale);
 
 			return dateFormat.format(commerceOrder.getOrderDate());
+		}
+		else if (field.equals("printedNote")) {
+			return commerceOrder.getPrintedNote();
 		}
 		else if (field.equals("orderType")) {
 			CommerceOrderType commerceOrderType =

@@ -6,25 +6,21 @@
 import ClayIcon from '@clayui/icon';
 import {useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
-import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
+import {useNavigate, useOutletContext} from 'react-router-dom';
+import {z} from 'zod';
 
 import FooterButtons from '../../../../../../components/FooterButtons';
 import Loading from '../../../../../../components/Loading';
+import useMarketplaceSpringBootOAuth2 from '../../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
+import zodSchema, {zodResolver} from '../../../../../../schema/zod';
 import ProductCard from '../../../../../GetApp/components/ProductCard/ProductCard';
 import {convertMegabyteToGigabyte} from '../../../../../GetApp/hooks/useGetResourceInfo';
 import {InstallCloudAppOutlet} from './InstallCloudAppOutlet';
-import {
-	ExtendBannerProps,
-	StepCloudInstallation,
-	StepsInformation,
-} from './Types';
+import {ExtendBannerProps, StepCloudInstallation} from './Types';
 import EnvironmentRadio from './components/EnvironmentRadio';
 import ProjectRadio from './components/ProjectRadio';
-import useMarketplaceSpringBootOAuth2 from '../../../../../../hooks/useMarketplaceSpringBootOAuth2';
-import zodSchema, {zodResolver} from '../../../../../../schema/zod';
-import {z} from 'zod';
 
 type UserForm = z.infer<typeof zodSchema.installProductSchema>;
 
@@ -89,7 +85,7 @@ const CloudProductInstallation = () => {
 					};
 				}
 			) ?? [],
-		[resourceRequest?.resourceRequest?.userProjects]
+		[resourceRequest?.resourceRequest?.userProjects, productRequirements]
 	);
 
 	const {setValue, watch} = useForm<UserForm>({
@@ -102,18 +98,9 @@ const CloudProductInstallation = () => {
 		resolver: zodResolver(zodSchema.installProductSchema),
 	});
 
-	const {step, orderItemId, project, environment} = watch();
-
-	const form = {step, orderItemId, project, environment};
+	const {environment, orderItemId, project, step} = watch();
 
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-
-	const _onSubmit = async (form: any) => {
-		await marketplaceSpringBootOAuth2.provisioningCloudApp(placedOrder.id, {
-			orderItemId: form.orderItemId,
-			projectId: form.environment,
-		});
-	};
 
 	useEffect(() => {
 		setValue('orderItemId', placedOrder.placedOrderItems[0].id);
@@ -122,7 +109,7 @@ const CloudProductInstallation = () => {
 			setValue('project', userProjects[0]);
 			setValue('step', StepCloudInstallation.ENVIRONMENT);
 		}
-	}, [userProjects]);
+	}, [userProjects, placedOrder.placedOrderItems, setValue]);
 
 	const stepsInformation: any = {
 		[StepCloudInstallation.ENVIRONMENT]: {
@@ -233,9 +220,16 @@ const CloudProductInstallation = () => {
 	};
 
 	const buttonsInfo = useMemo(() => {
-		const isFinalStep =
-			step === StepCloudInstallation.INSTALLATION ||
-			step === StepCloudInstallation.SUCCESS;
+		const isFinalStep = step === StepCloudInstallation.INSTALLATION;
+		const _onSubmit = async () => {
+			await marketplaceSpringBootOAuth2.provisioningCloudApp(
+				placedOrder.id,
+				{
+					orderItemId,
+					projectId: environment,
+				}
+			);
+		};
 
 		const handleNextStep = () => {
 			switch (step) {
@@ -243,13 +237,19 @@ const CloudProductInstallation = () => {
 					setValue('step', StepCloudInstallation.ENVIRONMENT);
 					break;
 				case StepCloudInstallation.ENVIRONMENT:
-					_onSubmit(form);
+					_onSubmit();
 
 					setValue('step', StepCloudInstallation.INSTALLATION);
 
 					setTimeout(() => {
 						setValue('step', StepCloudInstallation.SUCCESS);
 					}, 5000);
+					break;
+				case StepCloudInstallation.SUCCESS:
+					window.open(
+						`https://console.marketplace.liferay.sh/projects/${environment}/services`
+					);
+
 					break;
 				default:
 					break;
@@ -260,13 +260,23 @@ const CloudProductInstallation = () => {
 			cancelButton: {
 				displayType: 'unstyled',
 				onClick: () => navigate('..'),
-				show: !isFinalStep,
+				show:
+					step !== StepCloudInstallation.INSTALLATION &&
+					step !== StepCloudInstallation.SUCCESS,
 			},
 			customizedButton: {
 				displayType: 'secondary',
-				onClick: () => setValue('step', StepCloudInstallation.PROJECT),
-				show: step === StepCloudInstallation.ENVIRONMENT,
-				text: 'Back',
+				onClick: () =>
+					step === StepCloudInstallation.ENVIRONMENT
+						? setValue('step', StepCloudInstallation.PROJECT)
+						: navigate('..'),
+				show:
+					step === StepCloudInstallation.ENVIRONMENT ||
+					step === StepCloudInstallation.SUCCESS,
+				text:
+					step === StepCloudInstallation.ENVIRONMENT
+						? 'Back'
+						: 'Go to My Apps',
 			},
 			nextButton: {
 				className: 'ml-6',
@@ -278,10 +288,22 @@ const CloudProductInstallation = () => {
 				displayType: 'primary',
 				onClick: handleNextStep,
 				show: !isFinalStep,
-				text: 'Install',
+				text:
+					step === StepCloudInstallation.ENVIRONMENT
+						? 'Install'
+						: 'View app in Cloud',
 			},
 		};
-	}, [project, navigate, step, environment]);
+	}, [
+		environment,
+		marketplaceSpringBootOAuth2,
+		navigate,
+		orderItemId,
+		placedOrder.id,
+		project,
+		setValue,
+		step,
+	]);
 
 	return (
 		<div className="align-items-center d-flex flex-column mb-6 mkt-create-license mt-6">

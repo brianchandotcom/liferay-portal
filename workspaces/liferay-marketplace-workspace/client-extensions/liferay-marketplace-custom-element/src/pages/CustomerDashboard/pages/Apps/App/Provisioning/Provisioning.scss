@@ -1,27 +1,27 @@
 .provisioning {
 	.project-selection-page-info-button {
 		align-items: center;
-		justify-content: center;
-		padding: 0px;
-		box-sizing: border-box;
-		display: flex;
-		width: 22px !important;
-		height: 22px;
 		background-color: #e6ebf5;
 		border: none;
+		box-sizing: border-box;
+		display: flex;
+		height: 22px;
+		justify-content: center;
+		padding: 0;
+		width: 22px !important;
 
 		svg {
+			fill: #2e5aac;
+			height: 10px;
 			position: relative;
 			top: 1px;
 			width: 10px;
-			height: 10px;
-			fill: #2e5aac;
 		}
 	}
 
 	&-pill {
-		padding: 0 8px 0 8px;
-		border-radius: 30px;
 		background-color: var(--btn-primary-border-color, #0b5fff);
+		border-radius: 30px;
+		padding: 0 8px;
 	}
 }

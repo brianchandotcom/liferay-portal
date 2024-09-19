@@ -47,7 +47,7 @@ const FooterButtons = ({className, dataButtons}: FooterButtonsProps) => {
 					</ClayButton>
 				)}
 
-				<div className="d-flex justify-content-end">
+				<div className="d-flex justify-content-end w-100">
 					{customizedButton?.show && (
 						<ClayButton
 							className={customizedButton?.className}

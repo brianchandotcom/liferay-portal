@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
-import {isCloudProduct} from '../../../../../../../utils/productUtils';
-import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
-import {InstallStatus} from '../components/InstallStatus';
-import {CUSTON_FIELKEYS, LICENSE_TYPE_KEY} from '../Types';
 import {addDays} from 'date-fns';
-import {safeJSONParse} from '../../../../../../../utils/util';
+import {useMemo} from 'react';
+
+import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../../i18n';
+import {isCloudProduct} from '../../../../../../../utils/productUtils';
+import {safeJSONParse} from '../../../../../../../utils/util';
+import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
+import {CUSTON_FIELKEYS, LICENSE_TYPE_KEY} from '../Types';
+import {InstallStatus} from '../components/InstallStatus';
 
 const useProvisioningData = (orderId: string) => {
 	const {data} = useGetProductByOrderId(orderId);
@@ -37,12 +38,6 @@ const useProvisioningData = (orderId: string) => {
 		? order.customFields[CUSTON_FIELKEYS.PROJECT_NAME]
 		: i18n.translate('not-installed');
 
-	const produtctLicenseType =
-		data?.product?.productSpecifications.filter(
-			(specification) =>
-				specification.specificationKey === LICENSE_TYPE_KEY
-		) || [];
-
 	const getExpirationDate = (createdDate: Date, licenseType: string) => {
 		if (licenseType === 'Perpetual') {
 			return i18n.translate('never-expires');
@@ -52,26 +47,35 @@ const useProvisioningData = (orderId: string) => {
 	};
 
 	const provisioningTableData = useMemo(() => {
-		const items = orderItems?.map((item: PlacedOrderItems) => {
-			return {
-				environment: notIstalledPlaceHolder,
-				expirationDate: getExpirationDate(
-					order.createDate,
-					produtctLicenseType[0]?.value
-				),
-				host: notIstalledPlaceHolder,
-				id: cloudProvisioning.orderItemId,
-				project: notIstalledPlaceHolder,
-				startDate: order.createDate,
-				status: isIstalled
-					? InstallStatus.INSTALLED
-					: InstallStatus.READY_TO_INSTALL,
-				type: produtctLicenseType[0]?.value,
-			};
-		});
+		const produtctLicenseType =
+			data?.product?.productSpecifications.filter(
+				(specification) =>
+					specification.specificationKey === LICENSE_TYPE_KEY
+			) || [];
 
-		return items;
-	}, []);
+		return orderItems?.map(() => ({
+			environment: notIstalledPlaceHolder,
+			expirationDate: getExpirationDate(
+				order.createDate,
+				produtctLicenseType[0]?.value
+			),
+			host: notIstalledPlaceHolder,
+			id: cloudProvisioning.orderItemId,
+			project: notIstalledPlaceHolder,
+			startDate: order.createDate,
+			status: isIstalled
+				? InstallStatus.INSTALLED
+				: InstallStatus.READY_TO_INSTALL,
+			type: produtctLicenseType[0]?.value,
+		}));
+	}, [
+		cloudProvisioning.orderItemId,
+		data?.product?.productSpecifications,
+		isIstalled,
+		notIstalledPlaceHolder,
+		order.createDate,
+		orderItems,
+	]);
 
 	return {
 		order,

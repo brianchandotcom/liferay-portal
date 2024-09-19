@@ -17,6 +17,7 @@ public class WebUrlUtil {
 	public static WebUrl toWebUrl(Website website) throws Exception {
 		return new WebUrl() {
 			{
+				setExternalReferenceCode(website::getExternalReferenceCode);
 				setId(website::getWebsiteId);
 				setPrimary(website::isPrimary);
 				setUrl(website::getUrl);

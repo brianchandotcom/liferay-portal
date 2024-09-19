@@ -179,6 +179,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					setType(Type.WIDGET_PAGE_SETTINGS);
 				}
 			});
+		sitePage.setSiteExternalReferenceCode(
+			testGroup.getExternalReferenceCode());
 		sitePage.setType(SitePage.Type.WIDGET_PAGE);
 
 		return sitePage;

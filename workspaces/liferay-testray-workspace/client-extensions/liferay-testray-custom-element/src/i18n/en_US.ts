@@ -81,6 +81,7 @@ export default {
 	'build-b-successfully-added': 'Build B, successfully added',
 	'build-history': 'Build History',
 	'build-name': 'Build Name',
+	'build-status': 'Build Status',
 	'builds': 'Builds',
 	'builds-ordered-by-date': 'Builds (Ordered by Date)',
 	'cancel': 'Cancel',
@@ -201,6 +202,7 @@ export default {
 	'hide': 'Hide',
 	'history': 'History',
 	'import-jira-issues': 'Import JIRA Issues',
+	'import-status': 'Import Status',
 	'in-analysis': 'In Analysis',
 	'in-progress': 'In Progress',
 	'issue': 'Issue',
@@ -402,6 +404,10 @@ export default {
 	'test-history': 'Test History',
 	'test-lead-should-only-have-access-to-builds-test-plans-test-suites-and-test-cases-.-this-role-will-be-responsible-for-creating-builds-and-for-creating-test-plans-test-runs-the-people-assigned-to-these-would-be-our-current-product-leads':
 		'Test Lead should only have access to Builds, Test Plans, Test Suites and Test Cases. This role will be responsible for creating Builds and for creating Test Plans/Test Runs. The people assigned to these would be our current product leads.',
+	'test-results-are-being-imported-into-this-build':
+		'Test results are being imported into this build',
+	'test-results-are-queued-to-be-imported':
+		'Test results are queued to be imported',
 	'test-type': 'Test Type',
 	'testers-carry-permissions-to-analyze-test-results-by-workflowing-results-or-collaborating-on-tasks':
 		'Testers carry permissions to analyze test results by workflowing results or collaborating on tasks',
@@ -424,6 +430,8 @@ export default {
 	'there-are-no-linked-users': 'There are no linked users.',
 	'there-are-no-matching-results': 'There are no matching results.',
 	'this-build-has-been-analyzed': 'This build has been analyzed.',
+	'this-build-has-finished-the-import-process':
+		'This build has finished the import process',
 	'this-build-is-currently-in-analysis':
 		'This build is currently in analysis.',
 	'this-build-is-currently-in-open': 'This build is currently in open.',

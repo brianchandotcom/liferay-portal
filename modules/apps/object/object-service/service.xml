@@ -668,6 +668,10 @@
 			<finder-column name="objectDefinitionId1" />
 			<finder-column name="reverse" />
 		</finder>
+		<finder name="ODI2_E" return-type="ObjectRelationship">
+			<finder-column name="objectDefinitionId2" />
+			<finder-column name="edge" />
+		</finder>
 		<finder name="ODI2_R" return-type="Collection">
 			<finder-column name="objectDefinitionId2" />
 			<finder-column name="reverse" />

@@ -5,8 +5,8 @@ liferay-sample-global-js-2:
     name: Liferay Sample Global JS 2
     scriptElementAttributes:
         async: true
-        data-attribute: "value"
-        data-senna-track: "permanent"
-        fetchpriority: "low"
+        data-attribute: value
+        data-senna-track: permanent
+        fetchpriority: low
     type: globalJS
     url: global.*.js

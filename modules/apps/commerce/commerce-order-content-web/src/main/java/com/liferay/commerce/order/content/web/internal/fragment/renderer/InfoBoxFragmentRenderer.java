@@ -446,6 +446,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 			return dateFormat.format(commerceOrder.getOrderDate());
 		}
+		else if (field.equals("notes")) {
+			return StringPool.BLANK;
+		}
 		else if (field.equals("orderSummary")) {
 			return StringPool.BLANK;
 		}

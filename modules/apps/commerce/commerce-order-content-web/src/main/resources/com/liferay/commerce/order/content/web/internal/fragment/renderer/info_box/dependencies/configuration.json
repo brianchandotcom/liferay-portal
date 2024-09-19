@@ -44,6 +44,10 @@
 								"value": "channelName"
 							},
 							{
+								"label": "notes",
+								"value": "notes"
+							},
+							{
 								"label": "order-date",
 								"value": "orderDate"
 							},

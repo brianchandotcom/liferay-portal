@@ -7,6 +7,7 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,86 +41,93 @@ public class ViewTimelineHistoryDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/change-tracking-rest/v1.0/ct-entries/history";
+		long classNameId = ParamUtil.getLong(_renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(_renderRequest, "classPK");
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("?classNameId=");
+		sb.append(classNameId);
+
+		if (classPK != 0) {
+			sb.append("&classPK=");
+			sb.append(classPK);
+		}
+
+		return "/o/change-tracking-rest/v1.0/ct-entries/history" + sb;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		FDSActionDropdownItem discardDropdownItem = new FDSActionDropdownItem(
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/view_discard"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionId", "{ctCollectionId}"
-			).setParameter(
-				"modelClassNameId", "{modelClassNameId}"
-			).setParameter(
-				"modelClassPK", "{modelClassPK}"
-			).buildString(),
-			"times-circle", "view-discard",
-			_language.get(_httpServletRequest, "discard"), "get",
-			"view-discard", null);
-
-		String checkoutCTCollectionURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/change_tracking/checkout_ct_collection"
-		).setRedirect(
-			ParamUtil.getString(_renderRequest, "redirect")
-		).setParameter(
-			"ctCollectionId", "{ctCollectionId}"
-		).buildString();
-
-		FDSActionDropdownItem editDropdownItem = new FDSActionDropdownItem(
-			"javascript:window.open('" + checkoutCTCollectionURL +
-				"', '_top');",
-			"pencil", "edit",
-			_language.format(
-				_httpServletRequest, "edit-in-x",
-				_language.get(_httpServletRequest, "publication")),
-			"post", "checkout", null);
-
-		FDSActionDropdownItem moveDropdownItem = new FDSActionDropdownItem(
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/view_move_changes"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionId", "{ctCollectionId}"
-			).setParameter(
-				"modelClassNameId", "{modelClassNameId}"
-			).setParameter(
-				"modelClassPK", "{modelClassPK}"
-			).buildString(),
-			"move-folder", "move-changes",
-			_language.get(_httpServletRequest, "move-changes"), "post",
-			"move-changes", null);
-
-		FDSActionDropdownItem viewDropdownItem = new FDSActionDropdownItem(
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/view_change"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionId", "{ctCollectionId}"
-			).setParameter(
-				"modelClassNameId", "{modelClassNameId}"
-			).setParameter(
-				"modelClassPK", "{modelClassPK}"
-			).buildString(),
-			"list-ul", "view-change",
-			_language.get(_httpServletRequest, "review-change"), "get", "get",
-			null);
-
 		return ListUtil.fromArray(
-			discardDropdownItem, editDropdownItem, moveDropdownItem,
-			viewDropdownItem);
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_discard"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"modelClassNameId", "{modelClassNameId}"
+				).setParameter(
+					"modelClassPK", "{modelClassPK}"
+				).buildString(),
+				"times-circle", "view-discard",
+				_language.get(_httpServletRequest, "discard"), "get",
+				"view-discard", null),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"javascript:window.open('",
+					PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setActionName(
+						"/change_tracking/checkout_ct_collection"
+					).setRedirect(
+						ParamUtil.getString(_renderRequest, "redirect")
+					).setParameter(
+						"ctCollectionId", "{ctCollectionId}"
+					).buildString(),
+					"', '_top');"),
+				"pencil", "edit",
+				_language.format(
+					_httpServletRequest, "edit-in-x",
+					_language.get(_httpServletRequest, "publication")),
+				"post", "checkout", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_move_changes"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"modelClassNameId", "{modelClassNameId}"
+				).setParameter(
+					"modelClassPK", "{modelClassPK}"
+				).buildString(),
+				"move-folder", "move-changes",
+				_language.get(_httpServletRequest, "move-changes"), "post",
+				"move-changes", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_change"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"modelClassNameId", "{modelClassNameId}"
+				).setParameter(
+					"modelClassPK", "{modelClassPK}"
+				).buildString(),
+				"list-ul", "view-change",
+				_language.get(_httpServletRequest, "review-change"), "get",
+				"get", null));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

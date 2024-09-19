@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -72,6 +73,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
 
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			group.getGroupId(), contextHttpServletRequest,
+			sitePage.getViewableByAsString()
+		).build();
+
+		serviceContext.setUuid(sitePage.getUuid());
+
 		return _toSitePage(
 			_layoutService.addLayout(
 				sitePage.getExternalReferenceCode(), group.getGroupId(), false,
@@ -90,11 +98,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				false,
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),
-				0,
-				ServiceContextBuilder.create(
-					group.getGroupId(), contextHttpServletRequest,
-					sitePage.getViewableByAsString()
-				).build()));
+				0, serviceContext));
 	}
 
 	private SitePage _toSitePage(Layout layout) throws Exception {

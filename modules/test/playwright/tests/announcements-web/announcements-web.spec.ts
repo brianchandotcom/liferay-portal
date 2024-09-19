@@ -35,5 +35,9 @@ test('LPD-27067 Content field is required', async ({
 }) => {
 	await announcementsPage.goToCreateNewAnnouncement();
 
-	await expect(page.getByText('Content *')).toBeVisible();
+	const requiredField = page.locator(
+		'#_com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet_contentEditorContainer svg.lexicon-icon-asterisk'
+	);
+
+	await expect(requiredField).toBeVisible();
 });

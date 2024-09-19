@@ -224,8 +224,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCopyConfiguration() throws Exception {
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> {
+		for (long companyId : COMPANY_IDS) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
 				int rowCount = -1;
 
 				try (PreparedStatement preparedStatement =

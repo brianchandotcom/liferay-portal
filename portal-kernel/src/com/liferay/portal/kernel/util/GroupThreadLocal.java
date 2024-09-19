@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -46,13 +47,17 @@ public class GroupThreadLocal {
 		}
 	}
 
+	public static SafeCloseable setWithSafeCloseable(long groupId) {
+		return _groupId.setWithSafeCloseable(groupId);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupThreadLocal.class);
 
 	private static final ThreadLocal<Boolean> _deleteInProcess =
 		new CentralizedThreadLocal<>(
 			GroupThreadLocal.class + "._deleteInProcess", () -> Boolean.FALSE);
-	private static final ThreadLocal<Long> _groupId =
+	private static final CentralizedThreadLocal<Long> _groupId =
 		new CentralizedThreadLocal<>(
 			GroupThreadLocal.class + "._groupId",
 			() -> GroupConstants.DEFAULT_LIVE_GROUP_ID);

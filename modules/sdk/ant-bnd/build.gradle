@@ -12,7 +12,7 @@ dependencies {
 	api group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
 
 	testImplementation project(":core:petra:petra-io")
 	testImplementation project(":core:petra:petra-string")

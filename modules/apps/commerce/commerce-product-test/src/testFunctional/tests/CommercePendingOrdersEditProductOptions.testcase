@@ -398,7 +398,7 @@ definition {
 				productOptions = "Value2,2023-01-01,20,Value4,Text Content Edit",
 				productQuantity = 1,
 				productSku = "VALUE2VALUE4",
-				productTotalPrice = "20.00");
+				productTotalPrice = "$ 20.00");
 		}
 	}
 

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_ACTIVE_STATUS</td>
-	<td>//div[@class='dnd-td' and contains(.,'${key_termsAndConditionsActiveStatus}')]</td>
+	<td>//*[contains(@class,'dnd-td') and contains(.,'${key_termsAndConditionsActiveStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,12 +27,12 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_PRIORITY</td>
-	<td>//div[@class='dnd-td' and contains(.,'${key_valuePosition}')]</td>
+	<td>//*[contains(@class,'dnd-td') and contains(.,'${key_valuePosition}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_TYPE</td>
-	<td>//div[@class='dnd-td' and contains(.,'${key_termsAndConditionsType}')]</td>
+	<td>//*[contains(@class,'dnd-td') and contains(.,'${key_termsAndConditionsType}')]</td>
 	<td></td>
 </tr>
 </tbody>

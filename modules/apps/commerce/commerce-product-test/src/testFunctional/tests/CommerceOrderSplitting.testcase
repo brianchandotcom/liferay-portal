@@ -2383,8 +2383,8 @@ definition {
 		task ("And the admin goes inside a supplier order (e.g. the one containing the product from the Master catalog)") {
 			CommerceOrders.openOrdersAdmin();
 
-			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 25.00')]//..//div[(@class='dnd-td')][1]");
-			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 64.00')]//..//div[(@class='dnd-td')][1]");
+			var supplierOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//*[contains(@class,'dnd-td')][2]");
+			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 64.00')]//..//*[contains(@class,'dnd-td')][2]");
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 25.00");
 		}
@@ -3323,7 +3323,7 @@ definition {
 
 			for (var rowIndex : list "1,2,3") {
 				AssertTextEquals(
-					key_columnIndex = 4,
+					key_columnIndex = 5,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "Minium Portal");
@@ -3427,9 +3427,9 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 64.00')]//..//div[(@class='dnd-td')][1]");
-			var supplierOrderId1 = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 24.00')]//..//div[(@class='dnd-td')][1]");
-			var supplierOrderId2 = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 25.00')]//..//div[(@class='dnd-td')][1]");
+			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 64.00')]//..//*[contains(@class,'dnd-td')][2]");
+			var supplierOrderId1 = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 24.00')]//..//*[contains(@class,'dnd-td')][2]");
+			var supplierOrderId2 = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//*[contains(@class,'dnd-td')][2]");
 		}
 
 		task ("When the admin navigates to Commerce -> Inventory -> SKU (e.g. the one relating to the product from the Minium catalog) -> On Order tab") {

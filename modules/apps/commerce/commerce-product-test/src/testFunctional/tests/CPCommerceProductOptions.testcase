@@ -290,7 +290,7 @@ definition {
 				productPrice = "20.00",
 				productQuantity = 1,
 				productSku = "MIN93015",
-				productTotalPrice = "20.00");
+				productTotalPrice = "$ 20.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "20.00",
@@ -299,7 +299,7 @@ definition {
 				productPrice = "20.00",
 				productQuantity = 1,
 				productSku = "BLUE",
-				productTotalPrice = "20.00");
+				productTotalPrice = "$ 20.00");
 
 			CommerceOrders.viewOrderSummary(
 				deliveryValue = "$ 15.00",
@@ -497,7 +497,7 @@ definition {
 				productPrice = "20.00",
 				productQuantity = 1,
 				productSku = "MIN93015",
-				productTotalPrice = "20.00");
+				productTotalPrice = "$ 20.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "20.00",
@@ -506,7 +506,7 @@ definition {
 				productPrice = "20.00",
 				productQuantity = 1,
 				productSku = "BLUE",
-				productTotalPrice = "20.00");
+				productTotalPrice = "$ 20.00");
 
 			CommerceOrders.viewOrderPrices(
 				deliveryPrice = "15.00",

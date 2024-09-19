@@ -500,7 +500,7 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 1,
 				productSku = "MIN93015",
-				productTotalPrice = "50.00");
+				productTotalPrice = "$ 50.00");
 		}
 	}
 

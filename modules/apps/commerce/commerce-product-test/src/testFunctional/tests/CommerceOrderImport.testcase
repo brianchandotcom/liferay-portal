@@ -415,7 +415,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 
 		task ("When the buyer deletes an entry from the order") {
@@ -480,7 +480,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 
 		task ("When the buyer edits an entry from the order") {
@@ -504,7 +504,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 		}
 	}
 

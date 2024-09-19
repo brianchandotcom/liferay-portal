@@ -235,7 +235,7 @@ definition {
 		var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy");
 
 		if (${warehouseWithLink} == "false") {
-			AssertElementPresent(locator1 = "//div[@class='dnd-td' and contains(.,'${warehouse}')]/following-sibling::div[1][contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}')]");
+			AssertElementPresent(locator1 = "//*[contains(@class,'dnd-td') and contains(.,'${warehouse}')]/following-sibling::div[1][contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}')]");
 
 			AssertElementPresent(
 				key_columnNumber = 2,

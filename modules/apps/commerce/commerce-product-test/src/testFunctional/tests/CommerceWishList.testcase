@@ -120,14 +120,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
 				productQuantity = 1,
 				productSku = "MIN55859",
-				productTotalPrice = "34.00");
+				productTotalPrice = "$ 34.00");
 
 			CommerceOrders.viewOrderPrices(
 				deliveryPrice = "0.00",
@@ -296,7 +296,7 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 1,
 				productSku = "MIN93015",
-				productTotalPrice = "50.00");
+				productTotalPrice = "$ 50.00");
 
 			CommerceOrders.viewOrderPrices(
 				deliveryPrice = "0.00",
@@ -420,7 +420,7 @@ definition {
 				productName = "Engine Mount",
 				productQuantity = 1,
 				productSku = "MIN00675",
-				productTotalPrice = "120.00");
+				productTotalPrice = "$ 120.00");
 
 			AssertNotVisible(
 				key_productName = "U-Joint",
@@ -551,21 +551,21 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
 				productQuantity = 2,
 				productSku = "MIN55859",
-				productTotalPrice = "68.00");
+				productTotalPrice = "$ 68.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "120.00",
 				productName = "Engine Mount",
 				productQuantity = 1,
 				productSku = "MIN00675",
-				productTotalPrice = "120.00");
+				productTotalPrice = "$ 120.00");
 
 			CommerceOrders.viewOrderPrices(
 				deliveryPrice = "0.00",
@@ -729,7 +729,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productDiscount = "20.00",
@@ -737,14 +737,14 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 2,
 				productSku = "MIN93015",
-				productTotalPrice = "80.00");
+				productTotalPrice = "$ 80.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
 				productQuantity = 2,
 				productSku = "MIN55859",
-				productTotalPrice = "68.00");
+				productTotalPrice = "$ 68.00");
 
 			CommerceOrders.viewOrderPrices(
 				deliveryPrice = "0.00",
@@ -957,21 +957,21 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
 				productQuantity = 2,
 				productSku = "MIN93015",
-				productTotalPrice = "100.00");
+				productTotalPrice = "$ 100.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
 				productQuantity = 2,
 				productSku = "MIN55859",
-				productTotalPrice = "68.00");
+				productTotalPrice = "$ 68.00");
 		}
 
 		task ("And when the user complete the order") {
@@ -1007,21 +1007,21 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
 				productQuantity = 2,
 				productSku = "MIN93015",
-				productTotalPrice = "100.00");
+				productTotalPrice = "$ 100.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
 				productQuantity = 2,
 				productSku = "MIN55859",
-				productTotalPrice = "68.00");
+				productTotalPrice = "$ 68.00");
 
 			AssertTextEquals.assertPartialText(
 				key_priceName = "Subtotal",
@@ -1127,28 +1127,28 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
 				productQuantity = 4,
 				productSku = "MIN93015",
-				productTotalPrice = "200.00");
+				productTotalPrice = "$ 200.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "15.00",
 				productName = "Transmission Cooler Line Assembly",
 				productQuantity = 1,
 				productSku = "MIN55860",
-				productTotalPrice = "15.00");
+				productTotalPrice = "$ 15.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
 				productQuantity = 1,
 				productSku = "MIN55859",
-				productTotalPrice = "34.00");
+				productTotalPrice = "$ 34.00");
 		}
 	}
 

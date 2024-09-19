@@ -103,14 +103,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
 
@@ -217,7 +217,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
@@ -225,7 +225,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
 
@@ -678,7 +678,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 2,
 				productSku = "MIN55861",
-				productTotalPrice = "48.00");
+				productTotalPrice = "$ 48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
@@ -686,7 +686,7 @@ definition {
 				productPrice = "24.00",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 	}
 

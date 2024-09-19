@@ -309,7 +309,7 @@ definition {
 				AssertTextEquals(
 					key_cellName1 = ${sku},
 					key_cellName2 = ${orderId},
-					key_columnNumber = 3,
+					key_columnNumber = 4,
 					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 					value1 = ${outstandingQuantity});
 
@@ -1253,6 +1253,10 @@ definition {
 	@summary = "Default summary"
 	macro viewOrdersDetails(shippingAddressCity = null, productOptions = null, billingAddressCity = null, productTotalPrice = null, shippingAddressName = null, billingAddressName = null, billingAddressZipCode = null, productListPrice = null, productName = null, shippingAddressAddress = null, shippingAddressZipCode = null, productSku = null, productQuantity = null, productDiscount = null, billingAddressAddress = null) {
 		if (isSet(productSku)) {
+			ScrollWebElementIntoView(
+				key_rowNumber = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER");
+
 			AssertElementPresent(
 				key_productSku = ${productSku},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU");
@@ -1287,14 +1291,18 @@ definition {
 
 		if (isSet(productQuantity)) {
 			AssertElementPresent(
-				key_productQuantity = ${productQuantity},
-				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+				key_entryTitle = ${productSku},
+				key_index = 9,
+				key_value = ${productQuantity},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
 
 		if (isSet(productTotalPrice)) {
 			AssertElementPresent(
-				key_productTotalPrice = ${productTotalPrice},
-				locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE");
+				key_entryTitle = ${productSku},
+				key_index = 11,
+				key_value = ${productTotalPrice},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
 
 		if (isSet(shippingAddressName)) {

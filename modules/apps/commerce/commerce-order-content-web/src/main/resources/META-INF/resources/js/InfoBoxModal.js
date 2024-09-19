@@ -9,6 +9,7 @@ import ClayModal from '@clayui/modal';
 import React from 'react';
 
 import InfoBoxModalDateInput from './info_box/modal/InfoBoxModalDateInput';
+import InfoBoxModalTextAreaInput from './info_box/modal/InfoBoxModalTextAreaInput';
 import InfoBoxModalTextInput from './info_box/modal/InfoBoxModalTextInput';
 
 const InfoBoxModal = ({
@@ -47,6 +48,14 @@ const InfoBoxModal = ({
 
 								{fieldValueType === 'text' && (
 									<InfoBoxModalTextInput
+										inputValue={inputValue}
+										label={label}
+										setInputValue={setInputValue}
+									/>
+								)}
+
+								{fieldValueType === 'textarea' && (
+									<InfoBoxModalTextAreaInput
 										inputValue={inputValue}
 										label={label}
 										setInputValue={setInputValue}

@@ -146,7 +146,10 @@ public class GroupTestUtil {
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
 			type, manualMembership, membershipRestriction, friendlyURL, site,
-			active, ServiceContextTestUtil.getServiceContext());
+			active,
+			ServiceContextTestUtil.getServiceContext(
+				GroupLocalServiceUtil.getGroup(companyId, GroupConstants.GUEST),
+				userId));
 	}
 
 	public static Group addGroup(

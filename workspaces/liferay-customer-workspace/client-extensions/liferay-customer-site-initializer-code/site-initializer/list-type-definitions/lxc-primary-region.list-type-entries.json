@@ -22,6 +22,17 @@
 		"type": "string"
 	},
 	{
+		"key": "saudiArabia",
+		"name": "Saudi Arabia",
+		"name_i18n": {
+			"en-US": "Saudi Arabia",
+			"es_ES": "Arabia Saudí",
+			"ja_JP": "サウジアラビア",
+			"pt_BR": "Arábia Saudita"
+		},
+		"type": "string"
+	},
+	{
 		"key": "southAmerica",
 		"name": "South America",
 		"name_i18n": {

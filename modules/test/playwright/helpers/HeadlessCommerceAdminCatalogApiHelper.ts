@@ -79,6 +79,10 @@ export type TProduct = {
 	productStatus?: number;
 	productType?: string;
 	productVirtualSettings?: TProductVirtualSettings;
+	shippingConfiguration?: {
+		freeShipping?: boolean;
+		shippable?: boolean;
+	};
 	shortDescription?: {
 		[key: string]: string;
 	};

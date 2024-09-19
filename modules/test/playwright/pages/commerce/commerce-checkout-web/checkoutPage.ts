@@ -29,6 +29,7 @@ export class CheckoutPage {
 	readonly regionInput: Locator;
 	readonly shippingAddress: Locator;
 	readonly shippingAddressSelect: Locator;
+	readonly shippingCost: Locator;
 	readonly zipInput: Locator;
 
 	constructor(page: Page) {
@@ -77,6 +78,7 @@ export class CheckoutPage {
 		this.regionInput = page.getByTitle('Region');
 		this.shippingAddress = page.getByTestId('commerceShippingAddress');
 		this.shippingAddressSelect = page.getByText('Choose Shipping Address');
+		this.shippingCost = page.locator('.shipping-cost');
 		this.zipInput = page.getByPlaceholder('Zip', {exact: true});
 	}
 

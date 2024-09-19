@@ -100,7 +100,11 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			<liferay-ui:message key="<%= placeholder %>" />
 
 			<c:if test="<%= required %>">
-				<clay:icon cssClass="reference-mark text-warning" symbol="asterisk" />
+				<clay:icon
+					cssClass="reference-mark text-warning"
+					symbol="asterisk"
+				/>
+
 				<span class="hide-accessible sr-only"><liferay-ui:message key="required" /></span>
 			</c:if>
 		</label>

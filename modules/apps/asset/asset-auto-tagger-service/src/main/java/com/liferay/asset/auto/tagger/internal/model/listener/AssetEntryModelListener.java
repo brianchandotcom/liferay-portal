@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -91,7 +93,12 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 					Message message = new Message();
 
-					message.setPayload(assetEntry);
+					message.setValues(
+						HashMapBuilder.<String, Object>put(
+							"assetEntry", assetEntry
+						).put(
+							"groupId", _getGroupId(assetEntry)
+						).build());
 
 					_messageBus.sendMessage(
 						AssetAutoTaggerDestinationNames.ASSET_AUTO_TAGGER,
@@ -130,6 +137,23 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 		return _assetAutoTaggerConfigurationFactory.
 			getGroupAssetAutoTaggerConfiguration(
 				_groupLocalService.getGroup(assetEntry.getGroupId()));
+	}
+
+	private long _getGroupId(AssetEntry assetEntry) {
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if ((groupId != null) && (groupId != 0)) {
+			return groupId;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getScopeGroupId();
+		}
+
+		return assetEntry.getGroupId();
 	}
 
 	private boolean _isUpdateAutoTags() {

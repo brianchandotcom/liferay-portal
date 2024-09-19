@@ -8,9 +8,11 @@ package com.liferay.asset.auto.tagger.internal.messaging;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,9 +28,12 @@ public class AssetAutoTaggerMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		AssetEntry assetEntry = (AssetEntry)message.getPayload();
+		try (SafeCloseable safeCloseable =
+				GroupThreadLocal.setWithSafeCloseable(
+					message.getLong("groupId"))) {
 
-		_assetAutoTagger.tag(assetEntry);
+			_assetAutoTagger.tag((AssetEntry)message.get("assetEntry"));
+		}
 	}
 
 	@Reference

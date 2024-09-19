@@ -45,6 +45,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("infoJSON", getInfoJSON());
+		attributes.put("metadataCacheInMillis", getMetadataCacheInMillis());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
@@ -120,6 +121,13 @@ public class OAuthClientEntryWrapper
 
 		if (infoJSON != null) {
 			setInfoJSON(infoJSON);
+		}
+
+		Long metadataCacheInMillis = (Long)attributes.get(
+			"metadataCacheInMillis");
+
+		if (metadataCacheInMillis != null) {
+			setMetadataCacheInMillis(metadataCacheInMillis);
 		}
 
 		String oidcUserInfoMapperJSON = (String)attributes.get(
@@ -200,6 +208,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public String getInfoJSON() {
 		return model.getInfoJSON();
+	}
+
+	/**
+	 * Returns the metadata cache in millis of this o auth client entry.
+	 *
+	 * @return the metadata cache in millis of this o auth client entry
+	 */
+	@Override
+	public long getMetadataCacheInMillis() {
+		return model.getMetadataCacheInMillis();
 	}
 
 	/**
@@ -355,6 +373,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void setInfoJSON(String infoJSON) {
 		model.setInfoJSON(infoJSON);
+	}
+
+	/**
+	 * Sets the metadata cache in millis of this o auth client entry.
+	 *
+	 * @param metadataCacheInMillis the metadata cache in millis of this o auth client entry
+	 */
+	@Override
+	public void setMetadataCacheInMillis(long metadataCacheInMillis) {
+		model.setMetadataCacheInMillis(metadataCacheInMillis);
 	}
 
 	/**

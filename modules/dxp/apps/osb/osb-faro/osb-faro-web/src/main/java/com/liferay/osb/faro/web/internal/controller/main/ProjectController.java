@@ -913,9 +913,14 @@ public class ProjectController extends BaseFaroController {
 		faroProject.setWeDeployKey(
 			contactsEngineClient.addProject(faroProject) + ".lfr.cloud");
 
-		return new ProjectDisplay(
-			_faroProjectLocalService.updateFaroProject(faroProject),
-			friendlyURL);
+		faroProject = _faroProjectLocalService.updateFaroProject(faroProject);
+
+		if (_shouldSendCreatedWorkspaceEmail(faroProject)) {
+			_faroProjectLocalService.sendCreatedWorkspaceEmail(
+				faroProject.getWeDeployKey());
+		}
+
+		return new ProjectDisplay(faroProject, friendlyURL);
 	}
 
 	private String _getDeletionFailedErrorMessage(User user) {

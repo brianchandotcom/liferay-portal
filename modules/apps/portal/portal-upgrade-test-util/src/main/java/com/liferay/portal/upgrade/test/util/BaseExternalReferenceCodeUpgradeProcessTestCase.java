@@ -10,8 +10,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -91,9 +93,11 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 			List<IndexMetadata> indexMetadatas = _dropIndexes(tableName);
 
+			boolean hasGroupIdColumn = _hasColumn(tableName, "groupId");
+
 			try {
 				_prepareDatabaseForUpgradeProcess(
-					externalReferenceCodeModels, tableName);
+					externalReferenceCodeModels, hasGroupIdColumn, tableName);
 
 				_runUpgrade();
 
@@ -111,19 +115,27 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 		throws PortalException;
 
 	protected void assertExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
+			String[] externalReferenceCodes, boolean hasGroupIdColumn,
+			String tableName)
 		throws Exception {
+
+		String query = StringBundler.concat(
+			"select 1 from ", tableName, " where externalReferenceCode in ('",
+			ArrayUtil.toString(
+				externalReferenceCodes, StringPool.BLANK, "', '"),
+			"')");
+
+		if (hasGroupIdColumn) {
+			query = query + " AND groupId = ?";
+		}
 
 		try (Connection connection = dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from ", tableName,
-					" where externalReferenceCode in ('",
-					ArrayUtil.toString(
-						externalReferenceCodes, StringPool.BLANK, "', '"),
-					"') AND groupId = ?"))) {
+				query)) {
 
-			preparedStatement.setLong(1, group.getGroupId());
+			if (hasGroupIdColumn) {
+				preparedStatement.setLong(1, group.getGroupId());
+			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertFalse(resultSet.next());
@@ -165,17 +177,23 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 	protected abstract Version getVersion();
 
 	protected void updateExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
+			String[] externalReferenceCodes, boolean hasGroupIdColumn,
+			String tableName)
 		throws Exception {
 
-		db.runSQL(
-			StringBundler.concat(
-				"update ", tableName,
-				" set externalReferenceCode = null where ",
-				"externalReferenceCode in ('",
-				ArrayUtil.toString(
-					externalReferenceCodes, StringPool.BLANK, "', '"),
-				"') and groupId =", group.getGroupId()));
+		String query = StringBundler.concat(
+			"update ", tableName, " set externalReferenceCode = null where ",
+			"externalReferenceCode in ('",
+			ArrayUtil.toString(
+				externalReferenceCodes, StringPool.BLANK, "', '"),
+			"')");
+
+		if (hasGroupIdColumn) {
+			query = StringBundler.concat(
+				query, " and groupId =", group.getGroupId());
+		}
+
+		db.runSQL(query);
 
 		entityCache.clearCache();
 		multiVMPool.clear();
@@ -238,18 +256,30 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 		}
 	}
 
+	private boolean _hasColumn(String tableName, String columnName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasColumn(tableName, columnName);
+		}
+	}
+
 	private void _prepareDatabaseForUpgradeProcess(
 			ExternalReferenceCodeModel[] externalReferenceCodeModels,
-			String tableName)
+			boolean hasGroupIdColumn, String tableName)
 		throws Exception {
 
 		String[] externalReferenceCodes = TransformUtil.transform(
 			externalReferenceCodeModels,
 			ExternalReferenceCodeModel::getExternalReferenceCode, String.class);
 
-		updateExternalReferenceCode(externalReferenceCodes, tableName);
+		updateExternalReferenceCode(
+			externalReferenceCodes, hasGroupIdColumn, tableName);
 
-		assertExternalReferenceCode(externalReferenceCodes, tableName);
+		assertExternalReferenceCode(
+			externalReferenceCodes, hasGroupIdColumn, tableName);
 	}
 
 	private void _runUpgrade() throws Exception {

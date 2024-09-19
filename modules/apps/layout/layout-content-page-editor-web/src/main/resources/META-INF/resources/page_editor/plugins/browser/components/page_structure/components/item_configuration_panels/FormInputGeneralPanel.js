@@ -27,11 +27,10 @@ import selectFragmentEntryLink from '../../../../../../app/selectors/selectFragm
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import FormService from '../../../../../../app/services/FormService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
-import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
+import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import getMappedRelationship from '../../../../../../app/utils/editable_value/getMappedRelationship';
 import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
-import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
@@ -327,31 +326,40 @@ export function FormInputGeneralPanel({item}) {
 	]);
 
 	const handleValueSelect = (key, value) => {
-		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];
+		let configurationValues =
+			fragmentEntryLinkRef.current?.editableValues?.[
+				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+			] ?? DEFAULT_CONFIGURATION_VALUES;
 
 		const localizable =
 			configFields.find((field) => field.name === key)?.localizable ||
 			false;
 
 		if (localizable) {
-			keyPath.push(languageId);
+			const nextValue = configurationValues[key] ?? {};
+
+			nextValue[languageId] = value;
+
+			configurationValues = {
+				...configurationValues,
+				[key]: nextValue,
+			};
+		}
+		else {
+			configurationValues = {
+				...configurationValues,
+				[key]: value,
+			};
 		}
 
-		let editableValues = fragmentEntryLinkRef.current.editableValues;
-
 		if (key === FIELD_ID_CONFIGURATION_KEY) {
-			editableValues = setIn(
-				fragmentEntryLinkRef.current.editableValues,
-				[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR],
-				DEFAULT_CONFIGURATION_VALUES
-			);
+			configurationValues = {[key]: value};
 		}
 
 		return dispatch(
-			updateEditableValues({
-				editableValues: setIn(editableValues, keyPath, value),
-				fragmentEntryLinkId:
-					fragmentEntryLinkRef.current.fragmentEntryLinkId,
+			updateFragmentConfiguration({
+				configurationValues,
+				fragmentEntryLink: fragmentEntryLinkRef.current,
 			})
 		);
 	};

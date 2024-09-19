@@ -259,7 +259,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testDLRootDir() throws Exception {
+	public void testDLRootDirAndStorageImpl() throws Exception {
 		String rootDir = "Undefined";
 
 		if (StringUtil.equals(
@@ -286,23 +286,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_appender.stop();
 
 		_assertLogContextContains(
-			"upgrade.report.document.library.root.dir", rootDir);
-
-		_assertReport("Document library root dir: " + rootDir);
-	}
-
-	@Test
-	public void testDLStorageImpl() throws Exception {
-		_appender.start();
-
-		_appender.stop();
-
+			"upgrade.report.document.library.root.directory", rootDir);
 		_assertLogContextContains(
-			"upgrade.report.document.library.storage.impl",
+			"upgrade.report.document.library.storage.implementation",
 			PropsValues.DL_STORE_IMPL);
 
+		_assertReport("Document library root directory: " + rootDir);
 		_assertReport(
-			"Document library storage impl: " + PropsValues.DL_STORE_IMPL);
+			"Document library storage implementation: " +
+				PropsValues.DL_STORE_IMPL);
 	}
 
 	@Test

@@ -21,6 +21,8 @@ public class EmailAddressUtil {
 		return new EmailAddress() {
 			{
 				setEmailAddress(serviceBuilderEmailAddress::getAddress);
+				setExternalReferenceCode(
+					serviceBuilderEmailAddress::getExternalReferenceCode);
 				setId(serviceBuilderEmailAddress::getEmailAddressId);
 				setPrimary(serviceBuilderEmailAddress::isPrimary);
 				setType(

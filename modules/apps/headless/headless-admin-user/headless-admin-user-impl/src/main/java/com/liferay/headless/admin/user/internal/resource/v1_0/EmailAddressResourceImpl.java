@@ -13,11 +13,16 @@ import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
+import com.liferay.portal.kernel.exception.NoSuchEmailAddressException;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -34,6 +39,27 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = EmailAddressResource.class
 )
 public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
+
+	@Override
+	public void deleteEmailAddress(Long emailAddressId) throws Exception {
+		_emailAddressService.deleteEmailAddress(emailAddressId);
+	}
+
+	@Override
+	public void deleteEmailAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
+			_emailAddressService.fetchEmailAddressByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (serviceEmailAddress == null) {
+			throw new NoSuchEmailAddressException();
+		}
+
+		deleteEmailAddress(serviceEmailAddress.getEmailAddressId());
+	}
 
 	@Override
 	public Page<EmailAddress>
@@ -65,6 +91,22 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception {
 		return EmailAddressUtil.toEmailAddress(
 			_emailAddressService.getEmailAddress(emailAddressId));
+	}
+
+	@Override
+	public EmailAddress getEmailAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
+			_emailAddressService.fetchEmailAddressByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (serviceEmailAddress == null) {
+			throw new NoSuchEmailAddressException();
+		}
+
+		return getEmailAddress(serviceEmailAddress.getEmailAddressId());
 	}
 
 	@Override
@@ -120,6 +162,68 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 				EmailAddressUtil::toEmailAddress));
 	}
 
+	@Override
+	public EmailAddress patchEmailAddress(
+			Long emailAddressId, EmailAddress emailAddress)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
+			_emailAddressService.getEmailAddress(emailAddressId);
+
+		return EmailAddressUtil.toEmailAddress(
+			_updateEmailAddress(serviceEmailAddress, emailAddress));
+	}
+
+	@Override
+	public EmailAddress patchEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
+			_emailAddressService.fetchEmailAddressByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (serviceEmailAddress == null) {
+			throw new NoSuchEmailAddressException();
+		}
+
+		return EmailAddressUtil.toEmailAddress(
+			_updateEmailAddress(serviceEmailAddress, emailAddress));
+	}
+
+	private Long _getListTypeId(String className, String name) {
+		ListType listType = _listTypeService.getListType(
+			contextCompany.getCompanyId(), name,
+			className + ListTypeConstants.EMAIL_ADDRESS);
+
+		if (listType == null) {
+			return null;
+		}
+
+		return listType.getListTypeId();
+	}
+
+	private com.liferay.portal.kernel.model.EmailAddress _updateEmailAddress(
+			com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress,
+			EmailAddress emailAddress)
+		throws Exception {
+
+		return _emailAddressService.updateEmailAddress(
+			GetterUtil.getString(
+				emailAddress.getExternalReferenceCode(),
+				serviceEmailAddress.getExternalReferenceCode()),
+			serviceEmailAddress.getEmailAddressId(),
+			GetterUtil.getString(
+				emailAddress.getEmailAddress(),
+				serviceEmailAddress.getAddress()),
+			GetterUtil.getLong(
+				_getListTypeId(
+					serviceEmailAddress.getClassName(), emailAddress.getType()),
+				serviceEmailAddress.getListTypeId()),
+			GetterUtil.getBoolean(
+				emailAddress.getPrimary(), serviceEmailAddress.isPrimary()));
+	}
+
 	@Reference
 	private AccountEntryService _accountEntryService;
 
@@ -128,6 +232,9 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 
 	@Reference
 	private EmailAddressService _emailAddressService;
+
+	@Reference
+	private ListTypeService _listTypeService;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

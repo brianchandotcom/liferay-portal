@@ -74,9 +74,30 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		return new EmailAddress() {
 			{
 				emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+				externalReferenceCode = RandomTestUtil.randomString();
 				primary = false;
+				type = "email-address-3";
 			}
 		};
+	}
+
+	@Override
+	protected EmailAddress testDeleteEmailAddress_addEmailAddress()
+		throws Exception {
+
+		return _addEmailAddress(
+			randomEmailAddress(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
+	}
+
+	@Override
+	protected EmailAddress
+			testDeleteEmailAddressByExternalReferenceCode_addEmailAddress()
+		throws Exception {
+
+		return _addEmailAddress(
+			randomEmailAddress(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
 	}
 
 	@Override
@@ -118,6 +139,16 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 
 	@Override
 	protected EmailAddress testGetEmailAddress_addEmailAddress()
+		throws Exception {
+
+		return _addEmailAddress(
+			randomEmailAddress(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
+	}
+
+	@Override
+	protected EmailAddress
+			testGetEmailAddressByExternalReferenceCode_addEmailAddress()
 		throws Exception {
 
 		return _addEmailAddress(
@@ -203,6 +234,25 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		return testGetEmailAddress_addEmailAddress();
 	}
 
+	@Override
+	protected EmailAddress testPatchEmailAddress_addEmailAddress()
+		throws Exception {
+
+		return _addEmailAddress(
+			randomEmailAddress(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
+	}
+
+	@Override
+	protected EmailAddress
+			testPatchEmailAddressByExternalReferenceCode_addEmailAddress()
+		throws Exception {
+
+		return _addEmailAddress(
+			randomEmailAddress(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
+	}
+
 	private EmailAddress _addEmailAddress(
 			EmailAddress emailAddress, String className, long classPK,
 			String listTypeId)
@@ -210,9 +260,10 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 
 		return _toEmailAddress(
 			EmailAddressLocalServiceUtil.addEmailAddress(
-				null, _user.getUserId(), className, classPK,
-				emailAddress.getEmailAddress(), _getListTypeId(listTypeId),
-				emailAddress.getPrimary(), new ServiceContext()));
+				emailAddress.getExternalReferenceCode(), _user.getUserId(),
+				className, classPK, emailAddress.getEmailAddress(),
+				_getListTypeId(listTypeId), emailAddress.getPrimary(),
+				new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {
@@ -231,6 +282,8 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		return new EmailAddress() {
 			{
 				emailAddress = serviceBuilderEmailAddress.getAddress();
+				externalReferenceCode =
+					serviceBuilderEmailAddress.getExternalReferenceCode();
 				id = serviceBuilderEmailAddress.getEmailAddressId();
 				primary = serviceBuilderEmailAddress.isPrimary();
 			}

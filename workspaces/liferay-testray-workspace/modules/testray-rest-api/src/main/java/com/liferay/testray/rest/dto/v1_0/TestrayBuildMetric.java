@@ -210,6 +210,48 @@ public class TestrayBuildMetric implements Serializable {
 	private Supplier<Long> _testrayBuildIdSupplier;
 
 	@Schema
+	public String getTestrayBuildImportStatus() {
+		if (_testrayBuildImportStatusSupplier != null) {
+			testrayBuildImportStatus = _testrayBuildImportStatusSupplier.get();
+
+			_testrayBuildImportStatusSupplier = null;
+		}
+
+		return testrayBuildImportStatus;
+	}
+
+	public void setTestrayBuildImportStatus(String testrayBuildImportStatus) {
+		this.testrayBuildImportStatus = testrayBuildImportStatus;
+
+		_testrayBuildImportStatusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTestrayBuildImportStatus(
+		UnsafeSupplier<String, Exception>
+			testrayBuildImportStatusUnsafeSupplier) {
+
+		_testrayBuildImportStatusSupplier = () -> {
+			try {
+				return testrayBuildImportStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String testrayBuildImportStatus;
+
+	@JsonIgnore
+	private Supplier<String> _testrayBuildImportStatusSupplier;
+
+	@Schema
 	public String getTestrayBuildName() {
 		if (_testrayBuildNameSupplier != null) {
 			testrayBuildName = _testrayBuildNameSupplier.get();
@@ -504,6 +546,22 @@ public class TestrayBuildMetric implements Serializable {
 			sb.append("\"testrayBuildId\": ");
 
 			sb.append(testrayBuildId);
+		}
+
+		String testrayBuildImportStatus = getTestrayBuildImportStatus();
+
+		if (testrayBuildImportStatus != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"testrayBuildImportStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(testrayBuildImportStatus));
+
+			sb.append("\"");
 		}
 
 		String testrayBuildName = getTestrayBuildName();

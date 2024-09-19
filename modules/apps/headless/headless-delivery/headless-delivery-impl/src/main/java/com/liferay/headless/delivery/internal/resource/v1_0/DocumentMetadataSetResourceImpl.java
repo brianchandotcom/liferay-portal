@@ -5,10 +5,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.headless.delivery.dto.v1_0.DocumentMetadataSet;
 import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
@@ -50,13 +50,18 @@ public class DocumentMetadataSetResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		_ddmStructureLinkLocalService.deleteStructureStructureLinks(
-			documentMetadataSetId);
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.user(
+				contextUser
+			).build();
+
+		dataDefinitionResource.deleteDataDefinition(documentMetadataSetId);
 
 		_dlFileEntryMetadataLocalService.
 			deleteFileEntryMetadataByDDMStructureId(documentMetadataSetId);
-
-		_ddmStructureLocalService.deleteStructure(documentMetadataSetId);
 	}
 
 	@Override
@@ -159,7 +164,7 @@ public class DocumentMetadataSetResourceImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

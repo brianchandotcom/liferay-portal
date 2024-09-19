@@ -10,7 +10,7 @@ import {debounce, sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {
-	useMovementSource,
+	useMovementSources,
 	useMovementTarget,
 	useMovementTargetPosition,
 } from '../../contexts/KeyboardMovementContext';
@@ -103,7 +103,7 @@ export default function KeyboardMovementPreview() {
 	const {itemId} = useMovementTarget();
 	const position = useMovementTargetPosition();
 
-	const sources = useMovementSource();
+	const sources = useMovementSources();
 
 	const [style, setStyle] = useState(INITIAL_STYLE);
 
@@ -134,7 +134,7 @@ export default function KeyboardMovementPreview() {
 		document
 	);
 
-	if (!itemId || !sources) {
+	if (!itemId || !sources.length) {
 		return null;
 	}
 

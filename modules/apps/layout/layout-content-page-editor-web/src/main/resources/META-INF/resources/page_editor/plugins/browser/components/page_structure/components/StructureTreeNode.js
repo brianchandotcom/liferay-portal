@@ -29,9 +29,9 @@ import {
 } from '../../../../../app/contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
-	useMovementSource,
+	useMovementSources,
 	useMovementTarget,
-	useSetMovementSource,
+	useSetMovementSources,
 	useSetMovementText,
 } from '../../../../../app/contexts/KeyboardMovementContext';
 import {
@@ -252,9 +252,9 @@ function StructureTreeNodeContent({
 
 	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
-	const keyboardMovementSource = useMovementSource();
+	const keyboardMovementSources = useMovementSources();
 	const lastSource =
-		keyboardMovementSource[keyboardMovementSource.length - 1];
+		keyboardMovementSources[keyboardMovementSources.length - 1];
 
 	const isDraggingSource =
 		itemIsDraggingSource || lastSource?.itemId === item.itemId;
@@ -562,7 +562,7 @@ const MoveButton = ({
 	onKeyDown,
 	selectedViewportSize,
 }) => {
-	const setMovementSource = useSetMovementSource();
+	const setMovementSources = useSetMovementSources();
 	const disableMovement = useDisableKeyboardMovement();
 
 	const isWidget = useSelectorCallback(
@@ -604,7 +604,7 @@ const MoveButton = ({
 			displayType="unstyled"
 			onBlur={(event) => event.stopPropagation()}
 			onClick={() =>
-				setMovementSource([
+				setMovementSources([
 					{
 						fieldTypes,
 						fragmentEntryType,

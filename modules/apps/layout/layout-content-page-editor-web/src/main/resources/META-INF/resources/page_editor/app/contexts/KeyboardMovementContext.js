@@ -10,10 +10,10 @@ import isItemContainerFlex from '../utils/isItemContainerFlex';
 import {useSelectorRef} from './StoreContext';
 
 const INITIAL_STATE = {
-	setSource: () => {},
+	setSources: () => {},
 	setTarget: () => {},
 	setText: () => {},
-	source: null,
+	sources: [],
 	target: {
 		itemId: null,
 		position: null,
@@ -24,7 +24,7 @@ const INITIAL_STATE = {
 const KeyboardMovementContext = React.createContext(INITIAL_STATE);
 
 function KeyboardMovementContextProvider({children}) {
-	const [source, setSource] = useState(null);
+	const [sources, setSources] = useState([]);
 	const [target, setTarget] = useState({
 		itemId: null,
 		position: null,
@@ -34,10 +34,10 @@ function KeyboardMovementContextProvider({children}) {
 	return (
 		<KeyboardMovementContext.Provider
 			value={{
-				setSource,
+				setSources,
 				setTarget,
 				setText,
-				source,
+				sources,
 				target,
 				text,
 			}}
@@ -48,19 +48,19 @@ function KeyboardMovementContextProvider({children}) {
 }
 
 function useDisableKeyboardMovement() {
-	const {setSource, setTarget} = useContext(KeyboardMovementContext);
+	const {setSources, setTarget} = useContext(KeyboardMovementContext);
 
 	return useCallback(() => {
-		setSource(null);
+		setSources([]);
 		setTarget({
 			itemId: null,
 			position: null,
 		});
-	}, [setSource, setTarget]);
+	}, [setSources, setTarget]);
 }
 
-function useMovementSource() {
-	return useContext(KeyboardMovementContext).source;
+function useMovementSources() {
+	return useContext(KeyboardMovementContext).sources;
 }
 
 function useMovementTarget() {
@@ -87,8 +87,8 @@ function useMovementText() {
 	return useContext(KeyboardMovementContext).text;
 }
 
-function useSetMovementSource() {
-	return useContext(KeyboardMovementContext).setSource;
+function useSetMovementSources() {
+	return useContext(KeyboardMovementContext).setSources;
 }
 
 function useSetMovementTarget() {
@@ -102,11 +102,11 @@ function useSetMovementText() {
 export {
 	KeyboardMovementContextProvider,
 	useDisableKeyboardMovement,
-	useMovementSource,
+	useMovementSources,
 	useMovementTarget,
 	useMovementTargetPosition,
 	useMovementText,
-	useSetMovementSource,
+	useSetMovementSources,
 	useSetMovementTarget,
 	useSetMovementText,
 };

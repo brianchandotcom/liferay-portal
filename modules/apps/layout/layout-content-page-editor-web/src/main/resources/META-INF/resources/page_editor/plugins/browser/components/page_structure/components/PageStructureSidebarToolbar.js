@@ -14,7 +14,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layout
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
 import {useSetCopiedItemIds} from '../../../../../app/contexts/ClipboardContext';
 import {useSelectMultipleItems} from '../../../../../app/contexts/ControlsContext';
-import {useSetMovementSource} from '../../../../../app/contexts/KeyboardMovementContext';
+import {useSetMovementSources} from '../../../../../app/contexts/KeyboardMovementContext';
 import {
 	useDispatch,
 	useSelector,
@@ -39,7 +39,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 	);
 	const selectItems = useSelectMultipleItems();
 	const setCopiedItemIds = useSetCopiedItemIds();
-	const setMovementSource = useSetMovementSource();
+	const setMovementSources = useSetMovementSources();
 	const widgets = useSelector((state) => state.widgets);
 
 	const layoutData = layoutDataRef.current;
@@ -151,7 +151,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 					};
 				});
 
-				setMovementSource(sources);
+				setMovementSources(sources);
 			},
 			symbolLeft: 'move',
 		},

@@ -14,7 +14,7 @@ import {
 	ClipboardContextProvider,
 	useSetCopiedItemIds,
 } from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
-import {useSetMovementSource} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
+import {useSetMovementSources} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
 import deleteItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import duplicateItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem';
 import updateItemStyle from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
@@ -53,10 +53,10 @@ jest.mock(
 jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext',
 	() => {
-		const setMovementSource = jest.fn();
+		const setMovementSources = jest.fn();
 
 		return {
-			useSetMovementSource: () => setMovementSource,
+			useSetMovementSources: () => setMovementSources,
 		};
 	}
 );
@@ -192,14 +192,14 @@ describe('PageStructureSidebarToolbar', () => {
 		);
 	});
 
-	it('calls useSetMovementSource when Move x Items action is pressed', () => {
+	it('calls useSetMovementSources when Move x Items action is pressed', () => {
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
 		});
 
 		userEvent.click(screen.getByText('move-2-items'));
 
-		expect(useSetMovementSource()).toBeCalledWith([
+		expect(useSetMovementSources()).toBeCalledWith([
 			{isWidget: false, itemId: 'fragment01', type: 'fragment'},
 			{isWidget: false, itemId: 'fragment02', type: 'fragment'},
 		]);

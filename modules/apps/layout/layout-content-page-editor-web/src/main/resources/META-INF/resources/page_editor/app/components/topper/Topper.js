@@ -27,7 +27,7 @@ import {
 } from '../../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
 import {
-	useMovementSource,
+	useMovementSources,
 	useMovementTarget,
 	useMovementTargetPosition,
 } from '../../contexts/KeyboardMovementContext';
@@ -182,9 +182,9 @@ function TopperContent({
 	const {handlerRef: topperRef, isDraggingSource: draggingTopper} =
 		useDragItem(dragSources, onDragEnd, onDragBegin);
 
-	const keyboardMovementSource = useMovementSource();
+	const keyboardMovementSources = useMovementSources();
 	const lastSource =
-		keyboardMovementSource[keyboardMovementSource.length - 1];
+		keyboardMovementSources[keyboardMovementSources.length - 1];
 
 	const isDraggingSource =
 		draggingItem || draggingTopper || lastSource?.itemId === item.itemId;

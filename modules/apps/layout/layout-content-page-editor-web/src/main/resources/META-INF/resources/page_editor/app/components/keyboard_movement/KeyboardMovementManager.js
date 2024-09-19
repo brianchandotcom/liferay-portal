@@ -23,7 +23,7 @@ import {
 } from '../../contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
-	useMovementSource,
+	useMovementSources,
 	useMovementTarget,
 	useSetMovementTarget,
 	useSetMovementText,
@@ -56,7 +56,7 @@ const ACTION_TYPES = {
 };
 
 export default function KeyboardMovementManager() {
-	const sources = useMovementSource();
+	const sources = useMovementSources();
 	const target = useMovementTarget();
 
 	const lastSource = sources[sources.length - 1];

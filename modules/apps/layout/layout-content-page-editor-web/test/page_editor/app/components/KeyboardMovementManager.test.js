@@ -12,7 +12,7 @@ import KeyboardMovementManager, {
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {
 	useDisableKeyboardMovement,
-	useMovementSource,
+	useMovementSources,
 	useSetMovementTarget,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
 import moveItems from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/moveItems';
@@ -43,7 +43,7 @@ jest.mock(
 
 		return {
 			useDisableKeyboardMovement: () => disableMovement,
-			useMovementSource: jest.fn(() => sources),
+			useMovementSources: jest.fn(() => sources),
 			useMovementTarget: () => initialTarget,
 			useSetMovementTarget: () => setTarget,
 			useSetMovementText: () => setText,
@@ -211,7 +211,7 @@ describe('KeyboardMovementManager', () => {
 			}
 		});
 
-		useMovementSource.mockImplementation(() => [
+		useMovementSources.mockImplementation(() => [
 			{
 				fieldTypes: [],
 				fragmentEntryType: 'component',
@@ -254,7 +254,7 @@ describe('KeyboardMovementManager', () => {
 			}
 		});
 
-		useMovementSource.mockImplementation(() => [
+		useMovementSources.mockImplementation(() => [
 			{
 				fieldTypes: [],
 				fragmentEntryType: 'component',

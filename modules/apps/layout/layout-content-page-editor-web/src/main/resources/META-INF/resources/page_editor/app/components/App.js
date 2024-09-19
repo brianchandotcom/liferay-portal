@@ -20,7 +20,7 @@ import {FormValidationContextProvider} from '../contexts/FormValidationContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {
 	KeyboardMovementContextProvider,
-	useMovementSource,
+	useMovementSources,
 } from '../contexts/KeyboardMovementContext';
 import {LayoutKeyboardContextProvider} from '../contexts/LayoutKeyboardContext';
 import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
@@ -119,9 +119,9 @@ App.propTypes = {
 };
 
 function KeyboardManager() {
-	const movementSource = useMovementSource();
+	const movementSources = useMovementSources();
 
-	return movementSource ? (
+	return movementSources.length ? (
 		<KeyboardMovementManager />
 	) : (
 		<>

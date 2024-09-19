@@ -556,6 +556,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_TRANSLATED</td>
+	<td>//div[@role='group']//ul[@class='tbar-nav']//button[@role='combobox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAKE_DEFAULT</td>
 	<td>//button[contains(.,'Make Default') and contains(@data-value,'${key_language}')]</td>
 	<td></td>

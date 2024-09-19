@@ -1122,7 +1122,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUntranslatedStatus(locale = null) {
+	macro viewUntranslatedStatus(locale = null, translated = null) {
 		Click.clickNoMouseOver(
 			key_currentLocale = StringUtil.lowerCase("en-US"),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
@@ -1138,11 +1138,21 @@ definition {
 				value1 = "Not Translated");
 		}
 		else {
-			AssertTextEquals(
-				key_localizedLanguage = ${locale},
-				key_portlet = ${portletName},
-				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
-				value1 = "Not Translated");
+			if (isSet(translated)) {
+				var key_localizedLanguage = StringUtil.replace(${locale}, "-", "_");
+
+				AssertTextEquals(
+					key_localizedLanguage = ${key_localizedLanguage},
+					locator1 = "Translation#TRANSLATION_STATUS_LABEL_TRANSLATED",
+					value1 = "Not Translated");
+			}
+			else {
+				AssertTextEquals(
+					key_localizedLanguage = ${locale},
+					key_portlet = ${portletName},
+					locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+					value1 = "Not Translated");
+			}
 		}
 	}
 

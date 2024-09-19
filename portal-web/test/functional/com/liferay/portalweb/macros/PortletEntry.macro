@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro changeLocale(fieldName = null, locale = null) {
+	macro changeLocale(fieldName = null, locale = null, translated = null) {
 		Portlet.waitForForm();
 
 		if (isSet(fieldName)) {
@@ -15,6 +15,9 @@ definition {
 		else if (isSet(modal)) {
 			Click(locator1 = "Modal#LOCALIZATION_DROPDOWN_TOGGLE");
 		}
+		else if (isSet(translated)) {
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_TRANSLATED");
+		}
 		else {
 			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 		}
@@ -26,6 +29,13 @@ definition {
 			Click(
 				key_locale = ${locale},
 				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+		else if (isSet(translated)) {
+			var keyLocale = StringUtil.replace(${locale}, "-", "_");
+
+			Click(
+				key_locale = ${keyLocale},
+				locator1 = "Translation#LOCALIZATION_NAME_TRANSLATED");
 		}
 		else {
 			Click(

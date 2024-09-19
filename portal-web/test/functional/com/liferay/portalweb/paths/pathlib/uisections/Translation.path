@@ -147,6 +147,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_STATUS_LABEL_TRANSLATED</td>
+	<td>//button[contains(@id,'${key_localizedLanguage}')]//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRANSLATION_STATUS_TITLE_PAGE</td>
 	<td>//div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_localizedLanguage}')]//span[contains(@class,'label-item')]</td>
 	<td></td>
@@ -164,6 +169,11 @@
 <tr>
 	<td>LOCALIZATION_NAME_METATAGS</td>
 	<td>//div[contains(@class,'menu-open')]//a[@data-languageid]//span[normalize-space(text())='${key_locale}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_NAME_TRANSLATED</td>
+	<td>//button[@id='${key_locale}']</td>
 	<td></td>
 </tr>
 </tbody>

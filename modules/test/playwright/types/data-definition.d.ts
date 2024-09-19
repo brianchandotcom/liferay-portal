@@ -19,6 +19,7 @@ type DefinitionField = {
 		dataType: 'string';
 		displayStyle: 'singleline' | 'multiline';
 		fieldReference: string;
+		options?: Options;
 	};
 	defaultValue: {[keys: string]: string};
 	fieldType: 'text' | 'select';
@@ -49,4 +50,14 @@ type DataLayout = {
 	];
 	name: {[keys: string]: string};
 	paginationMode: 'single-page';
+};
+
+type Option = {
+	label: string;
+	reference: string;
+	value: string;
+};
+
+type Options = {
+	[key: string]: Option[];
 };

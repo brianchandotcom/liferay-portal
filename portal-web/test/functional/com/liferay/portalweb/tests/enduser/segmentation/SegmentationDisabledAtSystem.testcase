@@ -87,6 +87,7 @@ definition {
 	@description = "LPS-152542: Add breadcrumbs to Instance Settings alerts"
 	@priority = 3
 	test ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -134,6 +135,7 @@ definition {
 	@description = "LPS-152542: Add breadcrumbs to Instance Settings alerts"
 	@priority = 3
 	test ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

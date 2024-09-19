@@ -665,6 +665,7 @@ definition {
 	@priority = 3
 	@uitest
 	test EnableAssignRolesNoWarningMessage {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

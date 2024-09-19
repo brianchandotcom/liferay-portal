@@ -64,7 +64,7 @@ export class PageEditorPage {
 		await this.page.goto('/');
 
 		await this.page.goto(
-			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit${doAsUserId ? '&doAsUserId=' + doAsUserId : null}`
+			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit${doAsUserId ? '&doAsUserId=' + doAsUserId : ''}`
 		);
 	}
 

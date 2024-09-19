@@ -238,11 +238,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					}
 				}
 
-				if (PortalInstancePool.getDefaultCompanyId() == companyId) {
-					Assert.assertTrue(rowCount > 0);
+				if (ArrayUtil.contains(COMPANY_IDS, companyId)) {
+					Assert.assertEquals(0, rowCount);
 				}
 				else {
-					Assert.assertEquals(0, rowCount);
+					Assert.assertTrue(rowCount > 0);
 				}
 			});
 	}

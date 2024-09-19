@@ -1736,14 +1736,12 @@ components:
                         The list of languages the navigation menu item has a translation for.
                     items:
                         type: string
-                    readOnly: true
                     type: array
                 dataDefinitionFields:
                     description:
                         The list of fields that store the structured content's information.
                     items:
                         $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField"
-                    readOnly: true
                     type: array
                 dataLayout:
                     $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout"
@@ -1796,6 +1794,11 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+            required:
+                - availableLanguages
+                - dataDefinitionFields
+                - dataLayout
+                - name
             type: object
         DocumentShortcut:
             description:

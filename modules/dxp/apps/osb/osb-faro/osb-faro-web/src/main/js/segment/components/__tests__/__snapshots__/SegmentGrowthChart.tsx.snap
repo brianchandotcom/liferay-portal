@@ -1,0 +1,746 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentGrowthChart should render chart and display the tooltip on mouse over 1`] = `
+<div>
+  <div
+    class="composed-chart-with-empty-state"
+  >
+    <div
+      class="recharts-responsive-container"
+      style="width: 800px; height: 350px; min-width: 0;"
+    >
+      <div
+        class="recharts-wrapper"
+        role="region"
+        style="position: relative; cursor: default; width: 800px; height: 350px;"
+      >
+        <svg
+          class="recharts-surface"
+          height="350"
+          viewBox="0 0 800 350"
+          width="800"
+        >
+          <title />
+          <desc />
+          <defs>
+            <clippath
+              id="recharts1-clip"
+            >
+              <rect
+                height="280"
+                width="759"
+                x="35"
+                y="35"
+              />
+            </clippath>
+          </defs>
+          <g
+            class="recharts-cartesian-grid"
+          >
+            <g
+              class="recharts-cartesian-grid-horizontal"
+            >
+              <line
+                fill="none"
+                height="280"
+                stroke="#E7E7ED"
+                stroke-dasharray="3 3"
+                width="759"
+                x="35"
+                x1="35"
+                x2="794"
+                y="35"
+                y1="315"
+                y2="315"
+              />
+              <line
+                fill="none"
+                height="280"
+                stroke="#E7E7ED"
+                stroke-dasharray="3 3"
+                width="759"
+                x="35"
+                x1="35"
+                x2="794"
+                y="35"
+                y1="259"
+                y2="259"
+              />
+              <line
+                fill="none"
+                height="280"
+                stroke="#E7E7ED"
+                stroke-dasharray="3 3"
+                width="759"
+                x="35"
+                x1="35"
+                x2="794"
+                y="35"
+                y1="203"
+                y2="203"
+              />
+              <line
+                fill="none"
+                height="280"
+                stroke="#E7E7ED"
+                stroke-dasharray="3 3"
+                width="759"
+                x="35"
+                x1="35"
+                x2="794"
+                y="35"
+                y1="147"
+                y2="147"
+              />
+              <line
+                fill="none"
+                height="280"
+                stroke="#E7E7ED"
+                stroke-dasharray="3 3"
+                width="759"
+                x="35"
+                x1="35"
+                x2="794"
+                y="35"
+                y1="90.99999999999999"
+                y2="90.99999999999999"
+              />
+              <line
+                fill="none"
+                height="280"
+                stroke="#E7E7ED"
+                stroke-dasharray="3 3"
+                width="759"
+                x="35"
+                x1="35"
+                x2="794"
+                y="35"
+                y1="35"
+                y2="35"
+              />
+            </g>
+          </g>
+          <g
+            class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"
+          >
+            <line
+              class="recharts-cartesian-axis-line"
+              fill="none"
+              height="30"
+              orientation="bottom"
+              stroke="#E7E7ED"
+              width="759"
+              x="35"
+              x1="35"
+              x2="794"
+              y="315"
+              y1="315"
+              y2="315"
+            />
+            <g
+              class="recharts-cartesian-axis-ticks"
+            >
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="middle"
+                  x="174.83333333333334"
+                  y="333"
+                >
+                  <tspan
+                    dy="0em"
+                    x="174.83333333333334"
+                  >
+                    Aug 25
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="middle"
+                  x="342.6"
+                  y="333"
+                >
+                  <tspan
+                    dy="0em"
+                    x="342.6"
+                  >
+                    Sep 1
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="middle"
+                  x="510.3666666666667"
+                  y="333"
+                >
+                  <tspan
+                    dy="0em"
+                    x="510.3666666666667"
+                  >
+                    Sep 8
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="middle"
+                  x="678.1333333333334"
+                  y="333"
+                >
+                  <tspan
+                    dy="0em"
+                    x="678.1333333333334"
+                  >
+                    Sep 15
+                  </tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+          <g
+            class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"
+          >
+            <line
+              class="recharts-cartesian-axis-line"
+              fill="none"
+              height="30"
+              orientation="top"
+              stroke="#E7E7ED"
+              width="759"
+              x="35"
+              x1="35"
+              x2="794"
+              y="5"
+              y1="35"
+              y2="35"
+            />
+            <g
+              class="recharts-cartesian-axis-ticks"
+            />
+          </g>
+          <g
+            class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis"
+          >
+            <line
+              class="recharts-cartesian-axis-line"
+              fill="none"
+              height="280"
+              name="Membership"
+              orientation="left"
+              stroke="#E7E7ED"
+              width="30"
+              x="5"
+              x1="35"
+              x2="35"
+              y="35"
+              y1="35"
+              y2="315"
+            />
+            <g
+              class="recharts-cartesian-axis-ticks"
+            >
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="end"
+                  x="27"
+                  y="315"
+                >
+                  <tspan
+                    dy="0em"
+                    x="27"
+                  >
+                    0
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="end"
+                  x="27"
+                  y="259"
+                >
+                  <tspan
+                    dy="0em"
+                    x="27"
+                  >
+                    1
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="end"
+                  x="27"
+                  y="203"
+                >
+                  <tspan
+                    dy="0em"
+                    x="27"
+                  >
+                    2
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="end"
+                  x="27"
+                  y="147"
+                >
+                  <tspan
+                    dy="0em"
+                    x="27"
+                  >
+                    3
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="end"
+                  x="27"
+                  y="90.99999999999999"
+                >
+                  <tspan
+                    dy="0em"
+                    x="27"
+                  >
+                    4
+                  </tspan>
+                </text>
+              </g>
+              <g
+                class="recharts-layer recharts-cartesian-axis-tick"
+              >
+                <text
+                  class="recharts-text"
+                  fill="#808080"
+                  style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                  text-anchor="end"
+                  x="27"
+                  y="35"
+                >
+                  <tspan
+                    dy="0em"
+                    x="27"
+                  >
+                    5
+                  </tspan>
+                </text>
+              </g>
+            </g>
+            <text
+              class="recharts-text"
+              fill="#6B6C7E"
+              text-anchor="start"
+              x="5"
+              y="15"
+            >
+              <tspan
+                dy="0em"
+                x="5"
+              >
+                Membership
+              </tspan>
+            </text>
+          </g>
+          <g
+            class="recharts-layer recharts-reference-dot"
+          >
+            <circle
+              class="recharts-dot recharts-reference-dot-dot"
+              cx="78.96666666666667"
+              cy="315"
+              fill="#4B9BFF"
+              fill-opacity="1"
+              r="4"
+              stroke="none"
+              stroke-width="1"
+              x="1724198400000"
+              y="0"
+            />
+          </g>
+          <g
+            class="recharts-layer recharts-reference-dot"
+          >
+            <circle
+              class="recharts-dot recharts-reference-dot-dot"
+              cx="78.96666666666667"
+              cy="315"
+              fill="#FFB46E"
+              fill-opacity="1"
+              r="4"
+              stroke="none"
+              stroke-width="1"
+              x="1724198400000"
+              y="0"
+            />
+          </g>
+          <g
+            class="recharts-layer recharts-area"
+          >
+            <g
+              class="recharts-layer"
+            >
+              <path
+                class="recharts-curve recharts-area-area"
+                d="M55,315L78.96666666666667,315L102.93333333333334,315L126.9,315L150.86666666666667,315L174.83333333333334,315L198.8,315L222.76666666666665,315L246.73333333333335,315L270.7,315L294.6666666666667,315L318.63333333333327,315L342.6,315L366.5666666666667,315L390.5333333333333,315L414.5,315L438.4666666666667,315L462.4333333333333,315L486.4,315L510.3666666666667,315L534.3333333333334,315L558.3,315L582.2666666666665,315L606.2333333333335,315L630.2,315L654.1666666666666,315L678.1333333333334,315L702.1,315L726.0666666666666,315L750.0333333333334,315L774,315L774,315L750.0333333333334,315L726.0666666666666,315L702.1,315L678.1333333333334,315L654.1666666666666,315L630.2,315L606.2333333333335,315L582.2666666666665,315L558.3,315L534.3333333333334,315L510.3666666666667,315L486.4,315L462.4333333333333,315L438.4666666666667,315L414.5,315L390.5333333333333,315L366.5666666666667,315L342.6,315L318.63333333333327,315L294.6666666666667,315L270.7,315L246.73333333333335,315L222.76666666666665,315L198.8,315L174.83333333333334,315L150.86666666666667,315L126.9,315L102.93333333333334,315L78.96666666666667,315L55,315Z"
+                fill="#4B9BFF"
+                fill-opacity="0.2"
+                height="280"
+                name="Known Members"
+                stroke="none"
+                stroke-opacity="1"
+                width="759"
+              />
+              <path
+                class="recharts-curve recharts-area-curve"
+                d="M55,315L78.96666666666667,315L102.93333333333334,315L126.9,315L150.86666666666667,315L174.83333333333334,315L198.8,315L222.76666666666665,315L246.73333333333335,315L270.7,315L294.6666666666667,315L318.63333333333327,315L342.6,315L366.5666666666667,315L390.5333333333333,315L414.5,315L438.4666666666667,315L462.4333333333333,315L486.4,315L510.3666666666667,315L534.3333333333334,315L558.3,315L582.2666666666665,315L606.2333333333335,315L630.2,315L654.1666666666666,315L678.1333333333334,315L702.1,315L726.0666666666666,315L750.0333333333334,315L774,315"
+                fill="none"
+                fill-opacity="0.2"
+                height="280"
+                name="Known Members"
+                stroke="#4B9BFF"
+                stroke-opacity="1"
+                width="759"
+              />
+            </g>
+          </g>
+          <g
+            class="recharts-layer recharts-area"
+          >
+            <g
+              class="recharts-layer"
+            >
+              <path
+                class="recharts-curve recharts-area-area"
+                d="M55,315L78.96666666666667,315L102.93333333333334,315L126.9,315L150.86666666666667,315L174.83333333333334,315L198.8,315L222.76666666666665,315L246.73333333333335,315L270.7,315L294.6666666666667,315L318.63333333333327,315L342.6,315L366.5666666666667,315L390.5333333333333,315L414.5,315L438.4666666666667,315L462.4333333333333,315L486.4,315L510.3666666666667,315L534.3333333333334,315L558.3,315L582.2666666666665,315L606.2333333333335,315L630.2,315L654.1666666666666,315L678.1333333333334,315L702.1,315L726.0666666666666,315L750.0333333333334,315L774,315L774,315L750.0333333333334,315L726.0666666666666,315L702.1,315L678.1333333333334,315L654.1666666666666,315L630.2,315L606.2333333333335,315L582.2666666666665,315L558.3,315L534.3333333333334,315L510.3666666666667,315L486.4,315L462.4333333333333,315L438.4666666666667,315L414.5,315L390.5333333333333,315L366.5666666666667,315L342.6,315L318.63333333333327,315L294.6666666666667,315L270.7,315L246.73333333333335,315L222.76666666666665,315L198.8,315L174.83333333333334,315L150.86666666666667,315L126.9,315L102.93333333333334,315L78.96666666666667,315L55,315Z"
+                fill="#FFB46E"
+                fill-opacity="0.2"
+                height="280"
+                name="Anonymous Members"
+                stroke="none"
+                stroke-opacity="1"
+                width="759"
+              />
+              <path
+                class="recharts-curve recharts-area-curve"
+                d="M55,315L78.96666666666667,315L102.93333333333334,315L126.9,315L150.86666666666667,315L174.83333333333334,315L198.8,315L222.76666666666665,315L246.73333333333335,315L270.7,315L294.6666666666667,315L318.63333333333327,315L342.6,315L366.5666666666667,315L390.5333333333333,315L414.5,315L438.4666666666667,315L462.4333333333333,315L486.4,315L510.3666666666667,315L534.3333333333334,315L558.3,315L582.2666666666665,315L606.2333333333335,315L630.2,315L654.1666666666666,315L678.1333333333334,315L702.1,315L726.0666666666666,315L750.0333333333334,315L774,315"
+                fill="none"
+                fill-opacity="0.2"
+                height="280"
+                name="Anonymous Members"
+                stroke="#FFB46E"
+                stroke-opacity="1"
+                width="759"
+              />
+            </g>
+          </g>
+        </svg>
+        <div
+          class="recharts-legend-wrapper"
+          style="position: absolute; width: 790px; height: auto; left: 5px; top: 5px; color: rgb(107, 108, 126); font-size: 14px; line-height: 21px; padding-bottom: 22px;"
+        >
+          <ul
+            class="recharts-default-legend"
+            style="padding: 0px; margin: 0px; text-align: left;"
+          >
+            <li
+              class="recharts-legend-item legend-item-0"
+              style="display: inline-block; margin-right: 10px;"
+            >
+              <svg
+                class="recharts-surface"
+                height="8"
+                style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+                viewBox="0 0 32 32"
+                width="8"
+              >
+                <title />
+                <desc />
+                <path
+                  class="recharts-symbols"
+                  cx="16"
+                  cy="16"
+                  d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
+                  fill="#4B9BFF"
+                  transform="translate(16, 16)"
+                />
+              </svg>
+              <span
+                class="recharts-legend-item-text"
+                style="color: rgb(75, 155, 255);"
+              >
+                <span
+                  class="legend-text-color"
+                >
+                  Known Members:
+                  <b
+                    class="ml-1"
+                  >
+                    0
+                  </b>
+                </span>
+              </span>
+            </li>
+            <li
+              class="recharts-legend-item legend-item-1"
+              style="display: inline-block; margin-right: 10px;"
+            >
+              <svg
+                class="recharts-surface"
+                height="8"
+                style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+                viewBox="0 0 32 32"
+                width="8"
+              >
+                <title />
+                <desc />
+                <path
+                  class="recharts-symbols"
+                  cx="16"
+                  cy="16"
+                  d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
+                  fill="#FFB46E"
+                  transform="translate(16, 16)"
+                />
+              </svg>
+              <span
+                class="recharts-legend-item-text"
+                style="color: rgb(255, 180, 110);"
+              >
+                <span
+                  class="legend-text-color"
+                >
+                  Anonymous Members:
+                  <b
+                    class="ml-1"
+                  >
+                    0
+                  </b>
+                </span>
+              </span>
+            </li>
+            <li
+              class="recharts-legend-item legend-item-2"
+              style="display: inline-block; margin-right: 10px;"
+            >
+              <svg
+                class="recharts-surface"
+                height="8"
+                style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+                viewBox="0 0 32 32"
+                width="8"
+              >
+                <title />
+                <desc />
+                <path
+                  class="recharts-symbols"
+                  cx="16"
+                  cy="16"
+                  d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
+                  fill="#000000"
+                  transform="translate(16, 16)"
+                />
+              </svg>
+              <span
+                class="recharts-legend-item-text"
+                style="color: rgb(0, 0, 0);"
+              >
+                <span
+                  class="legend-text-color"
+                >
+                  Total Members:
+                  <b
+                    class="ml-1"
+                  >
+                    0
+                  </b>
+                </span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="recharts-tooltip-wrapper"
+          role="dialog"
+          style="transition: transform 400ms ease; transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px; left: 0px;"
+          tabindex="-1"
+        >
+          <div
+            class="bb-tooltip-container"
+            style="position: static;"
+          >
+            <table
+              class="analytics-tooltip-chart"
+            >
+              <thead
+                class="analytics-tooltip-chart-header"
+              >
+                <tr
+                  class="analytics-tooltip-chart-row"
+                >
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+                    >
+                      As of 
+                      Aug 21, 2024
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="analytics-tooltip-chart-row"
+                >
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column pb-0 text-left font-weight-normal"
+                    >
+                      <span
+                        class="text-secondary"
+                      >
+                        <b
+                          class="mr-1"
+                        >
+                          0
+                        </b>
+                         Total Members
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="analytics-tooltip-chart-row"
+                >
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column pb-0 text-left font-weight-normal"
+                    >
+                      <span
+                        class="text-secondary"
+                      >
+                        <b
+                          class="mr-1"
+                        >
+                          0
+                        </b>
+                         Anonymous Members
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="analytics-tooltip-chart-row"
+                >
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+                    >
+                      <span
+                        class="text-secondary"
+                      >
+                        <b
+                          class="mr-1"
+                        >
+                          0
+                        </b>
+                         Known Members
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </thead>
+              <tbody
+                class="analytics-tooltip-chart-body"
+              >
+                <tr
+                  class="analytics-tooltip-chart-row"
+                >
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column pb-0 text-left font-weight-normal"
+                    >
+                      Added
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column pb-0 text-right font-weight-semibold"
+                    >
+                      0
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="analytics-tooltip-chart-row"
+                >
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+                    >
+                      Removed
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-semibold"
+                    >
+                      0
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

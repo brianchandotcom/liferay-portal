@@ -6,74 +6,30 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {useModal} from '@clayui/modal';
+import {useNavigate} from 'react-router-dom';
 
-import Modal from '../../../../../../components/Modal';
-import OrderStatus from '../../../../../../components/OrderStatus';
-import Table from '../../../../../../components/Table/Table';
-import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
-import i18n from '../../../../../../i18n';
+import Modal from '../../../../../../../components/Modal';
+import Table from '../../../../../../../components/Table/Table';
+import i18n from '../../../../../../../i18n';
+import {Liferay} from '../../../../../../../liferay/liferay';
 
-type ProvisioningTableProps = {
-	orderInfo: ReturnType<typeof useGetProductByOrderId>;
-};
+type ProvisioningTableProps = ReturnType<typeof useProvisioningData>;
 
-const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
-	const order = orderInfo.data?.placedOrder;
-
+const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
+	order,
+	provisioningTableData,
+	resourceRequirements,
+}) => {
+	const navigate = useNavigate();
 	const modal = useModal();
 
-	const provisioningRows = [
-		{
-			environment: '',
-			expirationDate: new Date().toDateString(),
-			host: '',
-			id: 0,
-			project: '',
-			startDate: order?.createDate,
-			status: 'installed',
-			type: 'Standard License',
-		},
-		{
-			environment: 'UAT',
-			expirationDate: new Date().toDateString(),
-			host: 'PLPRIWS318.Hourglass-portal.com',
-			id: 1,
-			project: 'Klabindw',
-			startDate: new Date().toDateString(),
-			status: 'installed',
-			type: 'Standard License',
-		},
-		{
-			environment: 'UAT',
-			expirationDate: new Date().toDateString(),
-			host: 'PLPRIWS318.Hourglass-portal.com',
-			id: 2,
-			project: 'Klabindw',
-			startDate: new Date().toDateString(),
-			status: 'installed',
-			type: 'Standard License',
-		},
-		{
-			environment: 'UAT',
-			expirationDate: new Date().toDateString(),
-			host: 'PLPRIWS318.Hourglass-portal.com',
-			id: 3,
-			project: 'Klabindw',
-			startDate: new Date().toDateString(),
-			status: 'installed',
-			type: 'Standard License',
-		},
-		{
-			environment: 'UAT',
-			expirationDate: new Date().toDateString(),
-			host: 'PLPRIWS318.Hourglass-portal.com',
-			id: 4,
-			project: 'Klabindw',
-			startDate: new Date().toDateString(),
-			status: 'installed',
-			type: 'Standard License',
-		},
-	];
+	const install = (requirements: any) => {
+		if (!requirements.resourceRequest?.userProjects?.length) {
+			return modal.onOpenChange(true);
+		}
+
+		navigate(`/order/${order?.id}/install`);
+	};
 
 	return (
 		<>
@@ -88,17 +44,20 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 									{type}
 								</div>
 								<div className="dashboard-table-row-type">
-									{provisioning.host || 'Not Installed'}
+									{provisioning.host}
 								</div>
 							</>
 						),
 						title: (
 							<>
-								<div className="text-dark">Type</div>
-								<div className="text-black-50">Host Name</div>
+								<div className="text-dark">
+									{i18n.translate('type')}
+								</div>
+								<div className="text-black-50">
+									{i18n.translate('host-name')}
+								</div>
 							</>
 						),
-						width: '500px',
 					},
 					{
 						key: 'startDate',
@@ -114,19 +73,27 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 						),
 						title: (
 							<>
-								<div className="text-dark">Start Date -</div>
-								<div className="text-dark">Exp. Date</div>
+								<div className="text-dark">
+									{i18n.translate('start-date')}
+								</div>
+								<div className="text-dark">
+									{i18n.translate('exp-date')}
+								</div>
 							</>
 						),
 					},
 					{
 						key: 'status',
-						render: (status: any) => (
-							<OrderStatus orderStatus="pending">
+						render: (status: string) => (
+							<InstallationStatus status={status}>
 								{status}
-							</OrderStatus>
+							</InstallationStatus>
 						),
-						title: <div className="text-dark">Status</div>,
+						title: (
+							<div className="text-dark">
+								{i18n.translate('status')}
+							</div>
+						),
 					},
 					{
 						key: 'project',
@@ -146,13 +113,17 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 						},
 						title: (
 							<>
-								<div className="text-dark">Project</div>
-								<div className="text-black-50">Exp. Date</div>
+								<div className="text-dark">
+									{i18n.translate('project')}
+								</div>
+								<div className="text-black-50">
+									{i18n.translate('environment')}
+								</div>
 							</>
 						),
 					},
 					{
-						key: 'project',
+						key: 'dropdown',
 						render: () => (
 							<div
 								className="d-flex justify-content-end"
@@ -169,10 +140,18 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 									}
 								>
 									<ClayDropDown.ItemList>
-										<ClayDropDown.Item onClick={() => {}}>
+										<ClayDropDown.Item
+											disabled
+											onClick={() => {}}
+										>
 											{i18n.translate('view-details')}
 										</ClayDropDown.Item>
-										<ClayDropDown.Item onClick={() => {}}>
+
+										<ClayDropDown.Item
+											onClick={() =>
+												install(resourceRequirements)
+											}
+										>
 											{i18n.translate('install')}
 										</ClayDropDown.Item>
 									</ClayDropDown.ItemList>
@@ -181,7 +160,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 						),
 					},
 				]}
-				rows={provisioningRows}
+				rows={provisioningTableData}
 			/>
 
 			<Modal
@@ -196,9 +175,11 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 				}
 				last={
 					<ClayButton
-						className="ml-2"
+						className="ml-2 rounded-lg"
 						displayType="primary"
-						onClick={() => {}}
+						onClick={() =>
+							Liferay.Util.navigate('/c/portal/logout')
+						}
 						size="sm"
 					>
 						{i18n.translate('sign-in-with-a-different-account')}

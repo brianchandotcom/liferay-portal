@@ -5,14 +5,21 @@
 
 import {useParams} from 'react-router-dom';
 
-import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
-import ProvisioningTable from './ProvisioningTable';
+import ProvisioningTable from './components/ProvisioningTable';
+import useProvisioningData from './hooks/useProvisioningData';
 
 const Provisioning = () => {
 	const {orderId} = useParams();
-	const orderInfo = useGetProductByOrderId(orderId as string);
+	const {order, provisioningTableData, resourceRequirements} =
+		useProvisioningData(orderId as string);
 
-	return <ProvisioningTable orderInfo={orderInfo} />;
+	return (
+		<ProvisioningTable
+			order={order}
+			provisioningTableData={provisioningTableData || []}
+			resourceRequirements={resourceRequirements}
+		/>
+	);
 };
 
 export default Provisioning;

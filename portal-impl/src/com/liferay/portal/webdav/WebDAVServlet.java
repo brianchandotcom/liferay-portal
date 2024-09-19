@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
@@ -34,6 +35,7 @@ import com.liferay.portal.webdav.methods.MethodFactoryUtil;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -95,6 +97,10 @@ public class WebDAVServlet extends HttpServlet {
 				permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+				HttpSession httpSession = httpServletRequest.getSession();
+
+				httpSession.setAttribute(WebKeys.USER, user);
 			}
 
 			// Get the method instance

@@ -27,4 +27,7 @@ public class PublicationsFDSNames {
 	public static final String PUBLICATIONS_SCHEDULED =
 		CTPortletKeys.PUBLICATIONS + "-publicationsScheduled";
 
+	public static final String PUBLICATIONS_TIMELINE_HISTORY =
+		CTPortletKeys.PUBLICATIONS + "-publicationsTimelineHistory";
+
 }

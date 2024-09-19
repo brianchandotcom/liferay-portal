@@ -1,6 +1,6 @@
 <#if entries?has_content>
 	<@liferay_util["html-top"]>
-		<style>
+		<style ${nonceAttribute}>
 			.breadcrumb-arrows li {
 				background-color: #EFEFEF;
 				margin-bottom: 3px;

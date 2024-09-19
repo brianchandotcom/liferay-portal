@@ -1,6 +1,6 @@
 <#assign rssPortletInstanceConfiguration = rssDisplayContext.getRSSPortletInstanceConfiguration() />
 
-<style>
+<style ${nonceAttribute}>
 	.portlet-rss .feed-entry-content {
 		margin-bottom: 20px;
 		padding-left: 0;

@@ -1,5 +1,5 @@
 <#if entries?has_content>
-	<style>
+	<style ${nonceAttribute}>
 		#<@portlet.namespace />carousel .carousel-item {
 			background-color: #000;
 			height: 250px;

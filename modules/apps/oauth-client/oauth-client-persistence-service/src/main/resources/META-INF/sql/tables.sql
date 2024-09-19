@@ -22,6 +22,7 @@ create table OAuthClientEntry (
 	authServerWellKnownURI VARCHAR(256) null,
 	clientId VARCHAR(256) null,
 	infoJSON TEXT null,
+	metadataCacheInMillis LONG,
 	oidcUserInfoMapperJSON VARCHAR(3999) null,
 	tokenRequestParametersJSON VARCHAR(3999) null
 );

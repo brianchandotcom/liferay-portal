@@ -113,8 +113,14 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void createControlTable(String tableName)
 		throws Exception {
 
-		db.runSQL(
-			"create table " + tableName + " (testColumn bigint primary key)");
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			db.runSQL(
+				"create table " + tableName +
+					" (testColumn bigint primary key)");
+		}
 
 		if (_controlTableNames == null) {
 			_controlTableNames = ReflectionTestUtil.getFieldValue(
@@ -158,7 +164,12 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void dropControlTable(String tableName) throws Exception {
-		dropTable(tableName);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			dropTable(tableName);
+		}
 
 		if (_controlTableNames != null) {
 			_controlTableNames.remove(StringUtil.toLowerCase(tableName));

@@ -10,7 +10,9 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.RenderRequest;
@@ -36,12 +38,25 @@ public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		MBCategory category = null;
 		long categoryId = ParamUtil.getLong(renderRequest, "mbCategoryId");
+		String mbCategoryExternalReferenceCode = ParamUtil.getString(
+			renderRequest, "mbCategoryExternalReferenceCode");
 
 		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			MBCategory category = _mbCategoryLocalService.fetchMBCategory(
-				categoryId);
+			category = _mbCategoryLocalService.fetchMBCategory(categoryId);
+		}
+		else if (!Validator.isBlank(mbCategoryExternalReferenceCode)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
+			category =
+				_mbCategoryLocalService.fetchMBCategoryByExternalReferenceCode(
+					mbCategoryExternalReferenceCode,
+					themeDisplay.getScopeGroupId());
+		}
+
+		if (category != null) {
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_CATEGORY, category);
 		}

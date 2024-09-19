@@ -29,13 +29,16 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceActionLocalServiceBaseImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -256,45 +259,56 @@ public class ResourceActionLocalServiceImpl
 	@Override
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
 		String name = resourceAction.getName();
-		long bitwiseValue = resourceAction.getBitwiseValue();
 
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			dynamicQuery -> {
-				Property nameProperty = PropertyFactoryUtil.forName("name");
+		Set<String> names = BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+			ResourcePermissionLocalService.class.getName(), HashSet::new);
 
-				dynamicQuery.add(nameProperty.eq(name));
-			};
+		if (names == null) {
+			long bitwiseValue = resourceAction.getBitwiseValue();
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				ActionableDynamicQuery actionableDynamicQuery =
-					_resourcePermissionLocalService.getActionableDynamicQuery();
+			ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+				dynamicQuery -> {
+					Property nameProperty = PropertyFactoryUtil.forName("name");
 
-				actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
-				actionableDynamicQuery.setCompanyId(companyId);
-				actionableDynamicQuery.setPerformActionMethod(
-					(ResourcePermission resourcePermission) -> {
-						long actionIds = resourcePermission.getActionIds();
+					dynamicQuery.add(nameProperty.eq(name));
+				};
 
-						if ((actionIds & bitwiseValue) != 0) {
-							actionIds &= ~bitwiseValue;
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					ActionableDynamicQuery actionableDynamicQuery =
+						_resourcePermissionLocalService.
+							getActionableDynamicQuery();
 
-							resourcePermission.setActionIds(actionIds);
-							resourcePermission.setViewActionId(
-								(actionIds % 2) == 1);
+					actionableDynamicQuery.setAddCriteriaMethod(
+						addCriteriaMethod);
+					actionableDynamicQuery.setCompanyId(companyId);
+					actionableDynamicQuery.setPerformActionMethod(
+						(ResourcePermission resourcePermission) -> {
+							long actionIds = resourcePermission.getActionIds();
 
-							_resourcePermissionPersistence.update(
-								resourcePermission);
-						}
-					});
+							if ((actionIds & bitwiseValue) != 0) {
+								actionIds &= ~bitwiseValue;
 
-				try {
-					actionableDynamicQuery.performActions();
-				}
-				catch (PortalException portalException) {
-					throw new SystemException(portalException);
-				}
-			});
+								resourcePermission.setActionIds(actionIds);
+								resourcePermission.setViewActionId(
+									(actionIds % 2) == 1);
+
+								_resourcePermissionPersistence.update(
+									resourcePermission);
+							}
+						});
+
+					try {
+						actionableDynamicQuery.performActions();
+					}
+					catch (PortalException portalException) {
+						throw new SystemException(portalException);
+					}
+				});
+		}
+		else {
+			names.add(name);
+		}
 
 		resourceActionPersistence.remove(resourceAction);
 

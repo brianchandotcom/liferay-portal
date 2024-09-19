@@ -123,6 +123,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -142,12 +143,14 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -622,6 +625,15 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		objectDefinitionPersistence.remove(objectDefinition);
+
+		Set<String> names = BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+			ResourcePermissionLocalService.class.getName(), HashSet::new);
+
+		if (names != null) {
+			for (String name : names) {
+				_resourcePermissionLocalService.deleteResourcePermissions(name);
+			}
+		}
 
 		return objectDefinition;
 	}

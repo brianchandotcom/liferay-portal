@@ -30,7 +30,7 @@ type DefinitionField = {
 	showLabel: boolean;
 };
 
-type DataLayouRow = {
+type DataLayoutRow = {
 	dataLayoutColumns: [
 		{
 			columnSize: number;
@@ -42,7 +42,7 @@ type DataLayouRow = {
 type DataLayout = {
 	dataLayoutPages: [
 		{
-			dataLayoutRows: DataLayouRow[];
+			dataLayoutRows: DataLayoutRow[];
 			description: {[keys: string]: string};
 			title: {[keys: string]: string};
 		},

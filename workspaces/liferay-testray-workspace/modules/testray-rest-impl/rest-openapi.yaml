@@ -80,6 +80,8 @@ components:
                 testrayBuildId:
                     format: int64
                     type: integer
+                testrayBuildImportStatus:
+                    type: string
                 testrayBuildName:
                     type: string
                 testrayBuildProductVersion:

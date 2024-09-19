@@ -77,7 +77,7 @@ const ProductCard = ({
 	product,
 	showExtendBanner = false,
 }: ProductCardProps) => (
-	<div className="pb-3 product-banner pt-5 px-5">
+	<div className="pb-5 product-banner pt-5 px-5">
 		<div className="d-flex flex-row justify-content-between">
 			<div className="d-flex flex-row">
 				<img

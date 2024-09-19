@@ -260,7 +260,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testDLRootDir() throws Exception {
-		String rootDir = null;
+		String rootDir = "Undefined";
 
 		if (StringUtil.equals(
 				PropsValues.DL_STORE_IMPL,

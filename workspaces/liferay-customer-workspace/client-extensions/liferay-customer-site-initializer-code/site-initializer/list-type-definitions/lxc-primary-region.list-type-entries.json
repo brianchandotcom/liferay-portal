@@ -3,7 +3,10 @@
 		"key": "europe",
 		"name": "Europe",
 		"name_i18n": {
-			"en-US": "Europe"
+			"en-US": "Europe",
+			"es_ES": "Europa",
+			"ja_JP": "欧州",
+			"pt_BR": "Europa"
 		},
 		"type": "string"
 	},
@@ -11,7 +14,10 @@
 		"key": "northAmerica",
 		"name": "North America",
 		"name_i18n": {
-			"en-US": "North America"
+			"en-US": "North America",
+			"es_ES": "América del Norte",
+			"ja_JP": "北米",
+			"pt_BR": "América do Norte"
 		},
 		"type": "string"
 	},
@@ -19,7 +25,10 @@
 		"key": "southAmerica",
 		"name": "South America",
 		"name_i18n": {
-			"en-US": "South America"
+			"en-US": "South America",
+			"es_ES": "América del Sur",
+			"ja_JP": "南米",
+			"pt_BR": "América do Sul"
 		},
 		"type": "string"
 	}

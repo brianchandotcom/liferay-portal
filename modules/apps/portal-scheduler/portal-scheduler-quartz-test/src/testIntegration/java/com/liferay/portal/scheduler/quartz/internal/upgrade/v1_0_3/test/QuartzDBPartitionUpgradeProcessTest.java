@@ -6,6 +6,7 @@
 package com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -13,7 +14,9 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
@@ -50,10 +53,15 @@ public class QuartzDBPartitionUpgradeProcessTest
 	}
 
 	private void _assertHasAllQuartzIndexes() throws Exception {
-		for (Index index : _QUARTZ_INDEXES) {
-			Assert.assertTrue(
-				_dbInspector.hasIndex(
-					index.getTableName(), index.getIndexName()));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					PortalUtil.getDefaultCompanyId())) {
+
+			for (Index index : _QUARTZ_INDEXES) {
+				Assert.assertTrue(
+					_dbInspector.hasIndex(
+						index.getTableName(), index.getIndexName()));
+			}
 		}
 	}
 

@@ -647,6 +647,16 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().updateObjectEntry(objectEntry);
 	}
 
+	public static void updateRootObjectEntryIds(
+			com.liferay.object.model.ObjectDefinition objectDefinition1,
+			com.liferay.object.model.ObjectRelationship objectRelationship,
+			com.liferay.object.model.ObjectDefinition oldObjectDefinition2)
+		throws PortalException {
+
+		getService().updateRootObjectEntryIds(
+			objectDefinition1, objectRelationship, oldObjectDefinition2);
+	}
+
 	public static ObjectEntry updateStatus(
 			long userId, long objectEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

@@ -90,9 +90,6 @@ public class GroupTestUtil {
 			return group;
 		}
 
-		Group guestGroup = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.GUEST);
-
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), name
 		).build();
@@ -115,7 +112,8 @@ public class GroupTestUtil {
 			type, manualMembership, membershipRestriction, friendlyURL, site,
 			active,
 			ServiceContextTestUtil.getServiceContext(
-				companyId, guestGroup.getGroupId(), userId));
+				GroupLocalServiceUtil.getGroup(companyId, GroupConstants.GUEST),
+				userId));
 	}
 
 	public static Group addGroup(

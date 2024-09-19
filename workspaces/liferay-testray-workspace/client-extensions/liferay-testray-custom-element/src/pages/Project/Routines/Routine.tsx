@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DisplayType as AlertDisplayType} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import {useParams} from 'react-router-dom';
 import Container from '~/components/Layout/Container';
@@ -11,6 +13,7 @@ import ListView from '~/components/ListView';
 import ProgressBar from '~/components/ProgressBar';
 import i18n from '~/i18n';
 import {TestrayBuild} from '~/services/rest';
+import {testrayBuildAlertProperties} from '~/util/constants';
 import dayjs from '~/util/date';
 import {filterStatuses} from '~/util/statuses';
 
@@ -86,7 +89,7 @@ const Routine = () => {
 									)}
 								</>
 							),
-							value: i18n.translate('status'),
+							value: i18n.translate('build-status'),
 						},
 						{
 							clickable: true,
@@ -114,6 +117,35 @@ const Routine = () => {
 							key: 'testrayBuildName',
 							selectable: true,
 							value: i18n.translate('build'),
+						},
+						{
+							key: 'testrayBuildImportStatus',
+							render: (
+								_,
+								{testrayBuildImportStatus}: TestrayBuild
+							) => (
+								<>
+									{testrayBuildImportStatus && (
+										<>
+											<ClayLabel
+												displayType={
+													testrayBuildAlertProperties[
+														testrayBuildImportStatus
+													]
+														.displayType as AlertDisplayType
+												}
+											>
+												{
+													testrayBuildAlertProperties[
+														testrayBuildImportStatus
+													].label
+												}
+											</ClayLabel>
+										</>
+									)}
+								</>
+							),
+							value: i18n.translate('import-status'),
 						},
 						{
 							clickable: true,

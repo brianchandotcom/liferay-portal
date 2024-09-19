@@ -298,27 +298,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testFailedSQLStatements() throws Exception {
-		_appender.start();
-
-		UpgradeProcess upgradeProcess = UpgradeProcessFactory.runSQL(
-			"update NonexistingTable");
-
-		try {
-			upgradeProcess.upgrade();
-		}
-		catch (UpgradeException upgradeException) {
-		}
-
-		_appender.stop();
-
-		_assertLogContextContains(
-			"upgrade.report.failed.sqls", "SQL: update NonexistingTable;");
-		_assertReport("SQL: update NonexistingTable;");
-	}
-
-	@Test
-	public void testGetDLStorageSizeAfterTimeout() throws Exception {
+	public void testDLStorageSizeAfterTimeout() throws Exception {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
@@ -357,7 +337,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageSizeDisabled() throws Exception {
+	public void testDLStorageSizeDisabled() throws Exception {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
@@ -372,7 +352,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageSizeInGb() throws Exception {
+	public void testDLStorageSizeInGb() throws Exception {
 		_appender.start();
 
 		Object upgradeReport = ReflectionTestUtil.getFieldValue(
@@ -400,7 +380,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageSizeInMb() throws Exception {
+	public void testDLStorageSizeInMb() throws Exception {
 		_appender.start();
 
 		Object upgradeReport = ReflectionTestUtil.getFieldValue(
@@ -425,6 +405,26 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertLogContextContains(
 			"upgrade.report.document.library.storage.size", size);
 		_assertReport("Document library storage size: " + size);
+	}
+
+	@Test
+	public void testFailedSQLStatements() throws Exception {
+		_appender.start();
+
+		UpgradeProcess upgradeProcess = UpgradeProcessFactory.runSQL(
+			"update NonexistingTable");
+
+		try {
+			upgradeProcess.upgrade();
+		}
+		catch (UpgradeException upgradeException) {
+		}
+
+		_appender.stop();
+
+		_assertLogContextContains(
+			"upgrade.report.failed.sqls", "SQL: update NonexistingTable;");
+		_assertReport("SQL: update NonexistingTable;");
 	}
 
 	@Test

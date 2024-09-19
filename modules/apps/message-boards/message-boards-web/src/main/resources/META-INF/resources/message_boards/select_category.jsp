@@ -16,11 +16,13 @@ long excludedCategoryId = ParamUtil.getLong(request, "excludedMBCategoryId");
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 
+String categoryExternalReferenceCode = "";
 String categoryName = null;
 
 MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
 if (category != null) {
+	categoryExternalReferenceCode = category.getExternalReferenceCode();
 	categoryName = category.getName();
 }
 else {
@@ -102,6 +104,8 @@ else {
 						cssClass="selector-button"
 						data='<%=
 							HashMapBuilder.<String, Object>put(
+								"resourceexternalreferencecode", curCategory.getExternalReferenceCode()
+							).put(
 								"resourceid", curCategory.getCategoryId()
 							).put(
 								"resourcename", curCategory.getName()
@@ -117,6 +121,8 @@ else {
 					cssClass="selector-button"
 					data='<%=
 						HashMapBuilder.<String, Object>put(
+							"resourceexternalreferencecode", categoryExternalReferenceCode
+						).put(
 							"resourceid", categoryId
 						).put(
 							"resourcename", categoryName

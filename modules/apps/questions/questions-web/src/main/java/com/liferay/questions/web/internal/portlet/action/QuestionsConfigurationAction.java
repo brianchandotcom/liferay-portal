@@ -54,10 +54,11 @@ public class QuestionsConfigurationAction
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		String rootTopicId = ParamUtil.getString(
-			actionRequest, "preferences--rootTopicId--");
+		String rootTopicExternalReferenceCode = ParamUtil.getString(
+			actionRequest, "preferences--rootTopicExternalReferenceCode--");
 
-		modifiableSettings.setValue("rootTopicId", rootTopicId);
+		modifiableSettings.setValue(
+			"rootTopicExternalReferenceCode", rootTopicExternalReferenceCode);
 
 		String showCardsForTopicNavigation = ParamUtil.getString(
 			actionRequest, "preferences--showCardsForTopicNavigation--");

@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
@@ -26,7 +27,8 @@ export const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	journalPagesTest
 );
 
 test('Create, edit and delete editor config contributor client extension @LPS-186870', async ({
@@ -142,5 +144,49 @@ test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
 				'Insert Video'
 			)
 		).toBeInViewport();
+	});
+});
+
+test('CKEditor is still usable after deploying Client Extension @LPD-31017', async ({
+	editEditorConfigContributorPage: newEditorConfigContributorPage,
+	journalEditArticlePage,
+	page,
+}) => {
+	await test.step('Create client extension for rich_text editors', async () => {
+		await newEditorConfigContributorPage.goto();
+
+		const nameField = page.getByLabel('Name Required', {exact: true});
+		const urlField = page.getByLabel('JavaScript URL Required', {
+			exact: true,
+		});
+		const editorConfigKeyField = page.getByLabel('Editor Config Key', {
+			exact: true,
+		});
+
+		await nameField.click();
+		await nameField.fill(getRandomString());
+
+		await urlField.click();
+		await urlField.fill(getRandomString());
+
+		await editorConfigKeyField.click();
+		await editorConfigKeyField.fill('rich_text');
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+	});
+
+	await test.step('Try to create a new Web Content Article after CX has been applied', async () => {
+		await journalEditArticlePage.goto();
+
+		const editorTextBox = page
+			.frameLocator(
+				'internal:role=textbox[name="Content"i] >> iframe[title="editor"]'
+			)
+			.getByRole('textbox');
+
+		await editorTextBox.click();
+		await editorTextBox.fill('LPD-31017');
+
+		await expect(editorTextBox).toHaveText('LPD-31017');
 	});
 });

@@ -71,15 +71,15 @@ create index IX_9D1A2542 on ObjectLayoutTab (uuid_[$COLUMN_LENGTH:75$]);
 create index IX_9FD90360 on ObjectRelationship (externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_97E37468 on ObjectRelationship (objectDefinitionId1, edge);
 create index IX_A71785B6 on ObjectRelationship (objectDefinitionId1, name[$COLUMN_LENGTH:75$]);
+create index IX_C44DA840 on ObjectRelationship (objectDefinitionId1, objectDefinitionId2, reverse, type_[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:75$]);
 create index IX_FE6B0156 on ObjectRelationship (objectDefinitionId1, objectDefinitionId2, type_[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:75$]);
 create index IX_6FD91117 on ObjectRelationship (objectDefinitionId1, reverse, deletionType[$COLUMN_LENGTH:75$]);
-create index IX_FD4C495A on ObjectRelationship (objectDefinitionId1, reverse, objectDefinitionId2, type_[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:75$]);
 create index IX_EA05FD3A on ObjectRelationship (objectDefinitionId1, reverse, type_[$COLUMN_LENGTH:75$]);
-create index IX_DE3EBEF8 on ObjectRelationship (objectDefinitionId2);
+create index IX_2C27E369 on ObjectRelationship (objectDefinitionId2, edge);
+create index IX_B7B05EFB on ObjectRelationship (objectDefinitionId2, reverse, type_[$COLUMN_LENGTH:75$]);
 create index IX_F1DC092D on ObjectRelationship (objectFieldId2);
 create index IX_820C98BE on ObjectRelationship (parameterObjectFieldId);
 create index IX_8B817F36 on ObjectRelationship (reverse, dbTableName[$COLUMN_LENGTH:75$]);
-create index IX_B81C5B95 on ObjectRelationship (reverse, objectDefinitionId2, type_[$COLUMN_LENGTH:75$]);
 create index IX_E95FE5D7 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_C34F0F9E on ObjectState (listTypeEntryId, objectStateFlowId);

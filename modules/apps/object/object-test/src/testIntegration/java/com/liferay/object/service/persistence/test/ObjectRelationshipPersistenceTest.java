@@ -302,6 +302,14 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI2_E() throws Exception {
+		_persistence.countByODI2_E(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI2_E(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByODI2_R() throws Exception {
 		_persistence.countByODI2_R(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
@@ -714,6 +722,17 @@ public class ObjectRelationshipPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				objectRelationship, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "objectFieldId2"));
+
+		Assert.assertEquals(
+			Long.valueOf(objectRelationship.getObjectDefinitionId2()),
+			ReflectionTestUtil.<Long>invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "objectDefinitionId2"));
+		Assert.assertEquals(
+			Boolean.valueOf(objectRelationship.getEdge()),
+			ReflectionTestUtil.<Boolean>invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "edge"));
 
 		Assert.assertEquals(
 			objectRelationship.getDBTableName(),

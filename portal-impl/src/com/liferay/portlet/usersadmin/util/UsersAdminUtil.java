@@ -1598,22 +1598,22 @@ public class UsersAdminUtil {
 		Set<Long> websiteIds = new HashSet<>();
 
 		for (Website website : websites) {
+			String externalReferenceCode = website.getExternalReferenceCode();
 			long websiteId = website.getWebsiteId();
-
 			String url = website.getUrl();
 			long listTypeId = website.getListTypeId();
 			boolean primary = website.isPrimary();
 
 			if (websiteId <= 0) {
 				website = WebsiteServiceUtil.addWebsite(
-					className, classPK, url, listTypeId, primary,
-					new ServiceContext());
+					externalReferenceCode, className, classPK, url, listTypeId,
+					primary, new ServiceContext());
 
 				websiteId = website.getWebsiteId();
 			}
 			else {
 				WebsiteServiceUtil.updateWebsite(
-					websiteId, url, listTypeId, primary);
+					externalReferenceCode, websiteId, url, listTypeId, primary);
 			}
 
 			websiteIds.add(websiteId);

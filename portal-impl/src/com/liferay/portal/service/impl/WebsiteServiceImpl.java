@@ -23,8 +23,9 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 
 	@Override
 	public Website addWebsite(
-			String className, long classPK, String url, long typeId,
-			boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String url, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		String actionId = ActionKeys.UPDATE;
@@ -39,8 +40,8 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 			getPermissionChecker(), className, classPK, actionId);
 
 		return websiteLocalService.addWebsite(
-			getUserId(), className, classPK, url, typeId, primary,
-			serviceContext);
+			externalReferenceCode, getUserId(), className, classPK, url, typeId,
+			primary, serviceContext);
 	}
 
 	@Override
@@ -61,6 +62,24 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 			website.getClassPK(), actionId);
 
 		websiteLocalService.deleteWebsite(website);
+	}
+
+	@Override
+	public Website fetchWebsiteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Website website =
+			websiteLocalService.fetchWebsiteByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (website != null) {
+			CommonPermissionUtil.check(
+				getPermissionChecker(), website.getClassNameId(),
+				website.getClassPK(), ActionKeys.VIEW);
+		}
+
+		return website;
 	}
 
 	@Override
@@ -89,7 +108,8 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 
 	@Override
 	public Website updateWebsite(
-			long websiteId, String url, long typeId, boolean primary)
+			String externalReferenceCode, long websiteId, String url,
+			long typeId, boolean primary)
 		throws PortalException {
 
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
@@ -108,7 +128,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 			website.getClassPK(), actionId);
 
 		return websiteLocalService.updateWebsite(
-			websiteId, url, typeId, primary);
+			externalReferenceCode, websiteId, url, typeId, primary);
 	}
 
 }

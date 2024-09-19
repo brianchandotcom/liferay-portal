@@ -244,6 +244,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return sitePage;
 	}
 
+	@Override
+	protected SitePage testPostByExternalReferenceCodeSitePage_addSitePage(
+			SitePage sitePage)
+		throws Exception {
+
+		return sitePageResource.postByExternalReferenceCodeSitePage(
+			sitePage.getSiteExternalReferenceCode(), sitePage);
+	}
+
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 

@@ -7,6 +7,9 @@ package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
@@ -25,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AuthorizationServerMetadataResolver {
 
 	public OIDCProviderMetadata resolveOIDCProviderMetadata(
-			String authServerWellKnownURI)
+			String clientId, String authServerWellKnownURI,
+			int metadataCacheInSecs)
 		throws Exception {
 
 		if (authServerWellKnownURI.endsWith("local")) {
@@ -35,6 +39,13 @@ public class AuthorizationServerMetadataResolver {
 
 			return OIDCProviderMetadata.parse(
 				oAuthClientASLocalMetadata.getMetadataJSON());
+		}
+
+		OIDCProviderMetadata oidcProviderMetadata =
+			_oidcProviderMetadataPortalCache.get(clientId);
+
+		if (oidcProviderMetadata != null) {
+			return oidcProviderMetadata;
 		}
 
 		HTTPRequest httpRequest = new HTTPRequest(
@@ -47,11 +58,22 @@ public class AuthorizationServerMetadataResolver {
 				httpResponse.getStatusMessage());
 		}
 
-		return OIDCProviderMetadata.parse(httpResponse.getContent());
+		oidcProviderMetadata = OIDCProviderMetadata.parse(
+			httpResponse.getContent());
+
+		_oidcProviderMetadataPortalCache.put(
+			clientId, oidcProviderMetadata, metadataCacheInSecs);
+
+		return oidcProviderMetadata;
 	}
 
 	@Reference
 	private OAuthClientASLocalMetadataLocalService
 		_oAuthClientASLocalMetadataLocalService;
+
+	private final PortalCache<String, OIDCProviderMetadata>
+		_oidcProviderMetadataPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			AuthorizationServerMetadataResolver.class.getName());
 
 }

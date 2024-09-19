@@ -201,8 +201,9 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 
 		return _toWebUrl(
 			WebsiteLocalServiceUtil.addWebsite(
-				_user.getUserId(), className, classPK, webUrl.getUrl(),
-				_getListTypeId(listTypeId), false, new ServiceContext()));
+				RandomTestUtil.randomString(), _user.getUserId(), className,
+				classPK, webUrl.getUrl(), _getListTypeId(listTypeId), false,
+				new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {

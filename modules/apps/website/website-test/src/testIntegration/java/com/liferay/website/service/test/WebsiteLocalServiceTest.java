@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -54,8 +55,9 @@ public class WebsiteLocalServiceTest {
 	@Test
 	public void testAddWebsite() throws Exception {
 		_website = _websiteLocalService.addWebsite(
-			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
-			_VALID_URL, _listType.getListTypeId(), true,
+			RandomTestUtil.randomString(), _user.getUserId(),
+			Contact.class.getName(), _user.getContactId(), _VALID_URL,
+			_listType.getListTypeId(), true,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertNotNull(_website);
@@ -66,21 +68,23 @@ public class WebsiteLocalServiceTest {
 	@Test(expected = WebsiteURLException.class)
 	public void testAddWebsiteInvalidURL() throws Exception {
 		_website = _websiteLocalService.addWebsite(
-			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
-			_INVALID_URL, _listType.getListTypeId(), true,
+			RandomTestUtil.randomString(), _user.getUserId(),
+			Contact.class.getName(), _user.getContactId(), _INVALID_URL,
+			_listType.getListTypeId(), true,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test
 	public void testUpdateWebsite() throws Exception {
 		_website = _websiteLocalService.addWebsite(
-			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
-			_VALID_URL, _listType.getListTypeId(), true,
+			RandomTestUtil.randomString(), _user.getUserId(),
+			Contact.class.getName(), _user.getContactId(), _VALID_URL,
+			_listType.getListTypeId(), true,
 			ServiceContextTestUtil.getServiceContext());
 
 		_website = _websiteLocalService.updateWebsite(
-			_website.getWebsiteId(), _website.getUrl(),
-			_website.getListTypeId(), false);
+			_website.getExternalReferenceCode(), _website.getWebsiteId(),
+			_website.getUrl(), _website.getListTypeId(), false);
 
 		Assert.assertFalse(_website.isPrimary());
 	}
@@ -88,13 +92,14 @@ public class WebsiteLocalServiceTest {
 	@Test(expected = WebsiteURLException.class)
 	public void testUpdateWebsiteInvalidURL() throws Exception {
 		_website = _websiteLocalService.addWebsite(
-			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
-			_VALID_URL, _listType.getListTypeId(), true,
+			RandomTestUtil.randomString(), _user.getUserId(),
+			Contact.class.getName(), _user.getContactId(), _VALID_URL,
+			_listType.getListTypeId(), true,
 			ServiceContextTestUtil.getServiceContext());
 
 		_websiteLocalService.updateWebsite(
-			_website.getWebsiteId(), _INVALID_URL, _website.getListTypeId(),
-			_website.isPrimary());
+			_website.getExternalReferenceCode(), _website.getWebsiteId(),
+			_INVALID_URL, _website.getListTypeId(), _website.isPrimary());
 	}
 
 	private static final String _INVALID_URL = "http://www,invalid.com";

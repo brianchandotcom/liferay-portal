@@ -149,7 +149,7 @@ export default {
 		segmentsExperienceId: string;
 	}) {
 		return draftServiceFetch<LayoutData>(
-			config.moveItemURL,
+			config.moveItemsURL,
 			{
 				body: {
 					itemIds,

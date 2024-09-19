@@ -40,12 +40,12 @@ import javax.portlet.RenderResponse;
 public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 	public CustomElementCETPortlet(
-		CustomElementCET customElementCET, String portletId, Portal portal) {
+		CustomElementCET customElementCET, Portal portal, String portletId) {
 
 		super(customElementCET);
 
-		_portletId = portletId;
 		_portal = portal;
+		_portletId = portletId;
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 	}
 
 	private String[] _prepareURLs(long lastModified, String[] urls) {
-		String pathContext = _portal.getPathContext();
+		String contextPath = _portal.getPathContext();
 
 		for (int i = 0; i < urls.length; i++) {
 			if (!FeatureFlagManagerUtil.isEnabled(
@@ -163,8 +163,8 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 					urls[i], "t", lastModified);
 			}
 
-			if (urls[i].contains(pathContext + "/o/")) {
-				urls[i] = urls[i].replace(pathContext + "/o/", "/o/");
+			if (urls[i].contains(contextPath + "/o/")) {
+				urls[i] = urls[i].replace(contextPath + "/o/", "/o/");
 			}
 
 			if (!urls[i].startsWith("module:")) {

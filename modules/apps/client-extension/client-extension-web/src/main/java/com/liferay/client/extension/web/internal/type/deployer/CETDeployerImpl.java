@@ -165,7 +165,7 @@ public class CETDeployerImpl implements CETDeployer {
 			_register(
 				Portlet.class,
 				new CustomElementCETPortlet(
-					customElementCET, portletId, _portal)));
+					customElementCET, _portal, portletId)));
 
 		return serviceRegistrations;
 	}

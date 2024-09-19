@@ -367,9 +367,6 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void setUpClass() throws Exception {
-		CompanyThreadLocal.setCompanyId(
-			PortalInstancePool.getDefaultCompanyId());
-
 		connection = DataAccess.getConnection();
 
 		dbInspector = new DBInspector(connection);

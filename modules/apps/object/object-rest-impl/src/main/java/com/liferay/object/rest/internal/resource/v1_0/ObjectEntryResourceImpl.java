@@ -197,7 +197,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _entityModelProvider.getEntityModel(
 			_objectDefinitions.get(
-				GetterUtil.getLong(multivaluedMap.get("companyId"))));
+				GetterUtil.getLong(multivaluedMap.getFirst("companyId"))));
 	}
 
 	@Override

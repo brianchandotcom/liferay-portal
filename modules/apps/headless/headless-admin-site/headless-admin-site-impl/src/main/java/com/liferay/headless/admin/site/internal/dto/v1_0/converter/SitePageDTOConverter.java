@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -53,6 +54,12 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layout.getNameMap()));
 				setPageSettings(() -> _toPageSettings(layout));
+				setSiteExternalReferenceCode(
+					() -> {
+						Group group = layout.getGroup();
+
+						return group.getExternalReferenceCode();
+					});
 				setType(() -> _toType(layout));
 				setUuid(layout::getUuid);
 			}

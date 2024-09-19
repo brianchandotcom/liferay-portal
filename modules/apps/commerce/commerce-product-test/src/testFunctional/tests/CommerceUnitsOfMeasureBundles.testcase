@@ -391,6 +391,13 @@ definition {
 	test CanAssertDecimalUOMPricesAreConvertedInProductBundles {
 		property portal.acceptance = "true";
 
+		task ("Minimum Order Quantity is set to 0.1 and Multiple Order Quantity is set to 0.1 for ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				minOrderQuantity = "0.1",
+				multipleOrderQuantity = "0.1",
+				productName = "ABS Sensor");
+		}
+
 		task ("Given 2 UOMs are created to MIN93015(base price: $30, incremental: 0.6 for UOM1; base price: $50, promo price: $40, incremental: 1.5 for UOM2)") {
 			CommerceJSONSKUsAPI._addCommerceUOM(
 				basePrice = 30,
@@ -455,10 +462,18 @@ definition {
 				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
 				var sku = StringUtil.extractLast(${optionValueList}, ":");
 
+				if (${optionValueName} == "Blue") {
+					var quantity = "0.6";
+				}
+				else {
+					var quantity = "1.5";
+				}
+
 				CommerceNavigator.gotoEntry(entryName = "Color");
 
 				CommerceProductOptions.editOptionValue(
 					optionValue = ${optionValueName},
+					quantity = ${quantity},
 					sku = ${sku});
 			}
 		}
@@ -487,13 +502,13 @@ definition {
 		}
 
 		task ("Then assert that the prices for each SKU/UOM are converted to 1 quantity in the bundled product") {
-			for (var optionValueAndPrice : list "Blue:50.00,White:33.33") {
+			for (var optionValueAndPrice : list "Blue:30.00,White:40.00") {
 				var optionValue = StringUtil.extractFirst(${optionValueAndPrice}, ":");
 				var price = StringUtil.extractLast(${optionValueAndPrice}, ":");
 				var sku = StringUtil.toUpperCase(${optionValue});
 
 				if (${optionValue} == "White") {
-					var optionValue = "${optionValue} - $ 23.00";
+					var optionValue = "${optionValue} + $ 10.00";
 				}
 
 				FrontStore.selectAssociatedFSOptionsValue(
@@ -514,7 +529,7 @@ definition {
 					FrontStore.assertProductDetails(
 						productListPriceInactive = ${price},
 						productName = "Bundled Product",
-						productSalePrice = "26.67",
+						productSalePrice = "40.00",
 						productSKU = ${sku});
 				}
 
@@ -528,19 +543,19 @@ definition {
 
 		task ("Then assert the prices are the same as in the product detail") {
 			FrontStore.viewMiniCartItem(
-				bundledItems = "1 × ABS Sensor UOM1KEY",
+				bundledItems = "0.6 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
 				cartItemOption = "blue",
-				cartItemPriceValue = "50.00",
+				cartItemPriceValue = "30.00",
 				cartItemQuantity = 1,
 				cartItemSku = "BLUE",
 				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "1 × ABS Sensor UOM2KEY",
+				bundledItems = "1.5 × ABS Sensor UOM2KEY",
 				cartItemName = "Bundled Product",
 				cartItemOption = "white",
-				cartItemPromoPriceValue = "26.67",
+				cartItemPromoPriceValue = "40.00",
 				cartItemQuantity = 1,
 				cartItemSku = "WHITE",
 				optionName = "Color");

@@ -396,6 +396,31 @@ public class ServletDataImpl implements ServletData {
 							EmailAddressResourceImpl.class,
 							"postAccountEmailAddressesPageExportBatch"));
 					put(
+						"mutation#deleteEmailAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"deleteEmailAddressByExternalReferenceCode"));
+					put(
+						"mutation#patchEmailAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"patchEmailAddressByExternalReferenceCode"));
+					put(
+						"mutation#deleteEmailAddress",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"deleteEmailAddress"));
+					put(
+						"mutation#deleteEmailAddressBatch",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"deleteEmailAddressBatch"));
+					put(
+						"mutation#patchEmailAddress",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"patchEmailAddress"));
+					put(
 						"mutation#createOrganizationEmailAddressesPageExportBatch",
 						new ObjectValuePair<>(
 							EmailAddressResourceImpl.class,
@@ -971,6 +996,11 @@ public class ServletDataImpl implements ServletData {
 							EmailAddressResourceImpl.class,
 							"getAccountEmailAddressesPage"));
 					put(
+						"query#emailAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"getEmailAddressByExternalReferenceCode"));
+					put(
 						"query#emailAddress",
 						new ObjectValuePair<>(
 							EmailAddressResourceImpl.class, "getEmailAddress"));
@@ -1410,6 +1440,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,
 							"getOrganizationByExternalReferenceCodePostalAddressesPage"));
+					put(
+						"query#Account.emailAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"getEmailAddressByExternalReferenceCode"));
 					put(
 						"query#Subscription.site",
 						new ObjectValuePair<>(

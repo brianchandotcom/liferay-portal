@@ -60,7 +60,28 @@ public interface EmailAddressResource {
 			String fieldNames)
 		throws Exception;
 
+	public void deleteEmailAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public EmailAddress getEmailAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public EmailAddress patchEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception;
+
+	public void deleteEmailAddress(Long emailAddressId) throws Exception;
+
+	public Response deleteEmailAddressBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception;
+
+	public EmailAddress patchEmailAddress(
+			Long emailAddressId, EmailAddress emailAddress)
+		throws Exception;
 
 	public Page<EmailAddress>
 			getOrganizationByExternalReferenceCodeEmailAddressesPage(

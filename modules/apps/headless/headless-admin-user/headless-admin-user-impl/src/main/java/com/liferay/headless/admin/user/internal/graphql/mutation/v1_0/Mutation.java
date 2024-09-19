@@ -8,6 +8,7 @@ package com.liferay.headless.admin.user.internal.graphql.mutation.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
@@ -993,6 +994,80 @@ public class Mutation {
 			emailAddressResource ->
 				emailAddressResource.postAccountEmailAddressesPageExportBatch(
 					accountId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Deletes an email address.")
+	public boolean deleteEmailAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource ->
+				emailAddressResource.deleteEmailAddressByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the email address with the information sent in the request body. Fields not present in the request body are left unchanged."
+	)
+	public EmailAddress patchEmailAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("emailAddress") EmailAddress emailAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource ->
+				emailAddressResource.patchEmailAddressByExternalReferenceCode(
+					externalReferenceCode, emailAddress));
+	}
+
+	@GraphQLField(description = "Deletes an email address.")
+	public boolean deleteEmailAddress(
+			@GraphQLName("emailAddressId") Long emailAddressId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource -> emailAddressResource.deleteEmailAddress(
+				emailAddressId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteEmailAddressBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource ->
+				emailAddressResource.deleteEmailAddressBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Updates the email address with the information sent in the request body. Fields not present in the request body are left unchanged."
+	)
+	public EmailAddress patchEmailAddress(
+			@GraphQLName("emailAddressId") Long emailAddressId,
+			@GraphQLName("emailAddress") EmailAddress emailAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource -> emailAddressResource.patchEmailAddress(
+				emailAddressId, emailAddress));
 	}
 
 	@GraphQLField

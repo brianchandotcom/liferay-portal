@@ -607,7 +607,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {emailAddress(emailAddressId: ___){emailAddress, id, primary, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {emailAddressByExternalReferenceCode(externalReferenceCode: ___){emailAddress, externalReferenceCode, id, primary, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the email address.")
+	public EmailAddress emailAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource ->
+				emailAddressResource.getEmailAddressByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {emailAddress(emailAddressId: ___){emailAddress, externalReferenceCode, id, primary, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the email address.")
 	public EmailAddress emailAddress(
@@ -2608,6 +2626,31 @@ public class Query {
 					postalAddressResource.
 						getOrganizationByExternalReferenceCodePostalAddressesPage(
 							_account.getExternalReferenceCode())));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetEmailAddressByExternalReferenceCodeTypeExtension {
+
+		public GetEmailAddressByExternalReferenceCodeTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the email address.")
+		public EmailAddress emailAddressByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_emailAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				emailAddressResource ->
+					emailAddressResource.getEmailAddressByExternalReferenceCode(
+						_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;

@@ -407,6 +407,10 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
+		AssertElementPresent(
+			key_assetTitle = "Test Web Content",
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
+
 		var key_assetTitle = "Test Web Content";
 		var assetScoreBoosted = selenium.getText("Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
 

@@ -42,11 +42,17 @@ public interface WebsiteService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the website remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WebsiteServiceUtil} if injection and service tracking are not available.
 	 */
 	public Website addWebsite(
-			String className, long classPK, String url, long typeId,
-			boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String url, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteWebsite(long websiteId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website fetchWebsiteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -63,7 +69,8 @@ public interface WebsiteService extends BaseService {
 		throws PortalException;
 
 	public Website updateWebsite(
-			long websiteId, String url, long typeId, boolean primary)
+			String externalReferenceCode, long websiteId, String url,
+			long typeId, boolean primary)
 		throws PortalException;
 
 }

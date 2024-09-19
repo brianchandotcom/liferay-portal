@@ -12,11 +12,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateWebsiteExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchWebsiteException;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
 import com.liferay.portal.kernel.service.persistence.WebsiteUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -116,6 +119,8 @@ public class WebsitePersistenceTest {
 
 		newWebsite.setUuid(RandomTestUtil.randomString());
 
+		newWebsite.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newWebsite.setCompanyId(RandomTestUtil.nextLong());
 
 		newWebsite.setUserId(RandomTestUtil.nextLong());
@@ -147,6 +152,9 @@ public class WebsitePersistenceTest {
 			existingWebsite.getMvccVersion(), newWebsite.getMvccVersion());
 		Assert.assertEquals(existingWebsite.getUuid(), newWebsite.getUuid());
 		Assert.assertEquals(
+			existingWebsite.getExternalReferenceCode(),
+			newWebsite.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingWebsite.getWebsiteId(), newWebsite.getWebsiteId());
 		Assert.assertEquals(
 			existingWebsite.getCompanyId(), newWebsite.getCompanyId());
@@ -172,6 +180,25 @@ public class WebsitePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingWebsite.getLastPublishDate()),
 			Time.getShortTimestamp(newWebsite.getLastPublishDate()));
+	}
+
+	@Test(expected = DuplicateWebsiteExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		Website website = addWebsite();
+
+		Website newWebsite = addWebsite();
+
+		newWebsite.setCompanyId(website.getCompanyId());
+
+		newWebsite = _persistence.update(newWebsite);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newWebsite);
+
+		newWebsite.setExternalReferenceCode(website.getExternalReferenceCode());
+
+		_persistence.update(newWebsite);
 	}
 
 	@Test
@@ -233,6 +260,15 @@ public class WebsitePersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Website newWebsite = addWebsite();
 
@@ -257,11 +293,11 @@ public class WebsitePersistenceTest {
 
 	protected OrderByComparator<Website> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Website", "mvccVersion", true, "uuid", true, "websiteId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"url", true, "listTypeId", true, "primary", true, "lastPublishDate",
-			true);
+			"Website", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "websiteId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true, "url",
+			true, "listTypeId", true, "primary", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -467,6 +503,67 @@ public class WebsitePersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		Website newWebsite = addWebsite();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newWebsite.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Website newWebsite = addWebsite();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Website.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("websiteId", newWebsite.getWebsiteId()));
+
+		List<Website> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Website website) {
+		Assert.assertEquals(
+			website.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				website, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(website.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				website, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+	}
+
 	protected Website addWebsite() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -475,6 +572,8 @@ public class WebsitePersistenceTest {
 		website.setMvccVersion(RandomTestUtil.nextLong());
 
 		website.setUuid(RandomTestUtil.randomString());
+
+		website.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		website.setCompanyId(RandomTestUtil.nextLong());
 

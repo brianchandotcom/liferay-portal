@@ -1116,6 +1116,56 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 		long companyId, long classNameId, long classPK, boolean primary);
 
 	/**
+	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchWebsiteException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching website
+	 * @throws NoSuchWebsiteException if a matching website could not be found
+	 */
+	public Website findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchWebsiteException;
+
+	/**
+	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching website, or <code>null</code> if a matching website could not be found
+	 */
+	public Website fetchByERC_C(String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching website, or <code>null</code> if a matching website could not be found
+	 */
+	public Website fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the website where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the website that was removed
+	 */
+	public Website removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchWebsiteException;
+
+	/**
+	 * Returns the number of websites where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching websites
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
+
+	/**
 	 * Caches the website in the entity cache if it is enabled.
 	 *
 	 * @param website the website

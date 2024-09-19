@@ -36,13 +36,14 @@ public class WebsiteLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Website addWebsite(
-			long userId, String className, long classPK, String url,
-			long listTypeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String url, long listTypeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addWebsite(
-			userId, className, classPK, url, listTypeId, primary,
-			serviceContext);
+			externalReferenceCode, userId, className, classPK, url, listTypeId,
+			primary, serviceContext);
 	}
 
 	/**
@@ -213,6 +214,13 @@ public class WebsiteLocalServiceUtil {
 		return getService().fetchWebsite(websiteId);
 	}
 
+	public static Website fetchWebsiteByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchWebsiteByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the website with the matching UUID and company.
 	 *
@@ -276,6 +284,14 @@ public class WebsiteLocalServiceUtil {
 		return getService().getWebsite(websiteId);
 	}
 
+	public static Website getWebsiteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getWebsiteByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the website with the matching UUID and company.
 	 *
@@ -326,10 +342,12 @@ public class WebsiteLocalServiceUtil {
 	}
 
 	public static Website updateWebsite(
-			long websiteId, String url, long listTypeId, boolean primary)
+			String externalReferenceCode, long websiteId, String url,
+			long listTypeId, boolean primary)
 		throws PortalException {
 
-		return getService().updateWebsite(websiteId, url, listTypeId, primary);
+		return getService().updateWebsite(
+			externalReferenceCode, websiteId, url, listTypeId, primary);
 	}
 
 	/**

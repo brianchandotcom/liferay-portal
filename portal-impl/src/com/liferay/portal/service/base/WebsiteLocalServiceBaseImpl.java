@@ -249,6 +249,22 @@ public abstract class WebsiteLocalServiceBaseImpl
 		return websitePersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
+	@Override
+	public Website fetchWebsiteByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return websitePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Website getWebsiteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return websitePersistence.findByERC_C(externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the website with the primary key.
 	 *

@@ -67,12 +67,14 @@ public class WebsiteCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", websiteId=");
 		sb.append(websiteId);
 		sb.append(", companyId=");
@@ -113,6 +115,13 @@ public class WebsiteCacheModel
 		}
 		else {
 			websiteImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			websiteImpl.setExternalReferenceCode("");
+		}
+		else {
+			websiteImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		websiteImpl.setWebsiteId(websiteId);
@@ -169,6 +178,7 @@ public class WebsiteCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		websiteId = objectInput.readLong();
 
@@ -199,6 +209,13 @@ public class WebsiteCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(websiteId);
@@ -236,6 +253,7 @@ public class WebsiteCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long websiteId;
 	public long companyId;
 	public long userId;

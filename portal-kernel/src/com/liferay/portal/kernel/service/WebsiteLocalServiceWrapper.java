@@ -27,13 +27,14 @@ public class WebsiteLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Website addWebsite(
-			long userId, String className, long classPK, String url,
-			long listTypeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String url, long listTypeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteLocalService.addWebsite(
-			userId, className, classPK, url, listTypeId, primary,
-			serviceContext);
+			externalReferenceCode, userId, className, classPK, url, listTypeId,
+			primary, serviceContext);
 	}
 
 	/**
@@ -236,6 +237,15 @@ public class WebsiteLocalServiceWrapper
 		return _websiteLocalService.fetchWebsite(websiteId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Website
+		fetchWebsiteByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _websiteLocalService.fetchWebsiteByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the website with the matching UUID and company.
 	 *
@@ -310,6 +320,16 @@ public class WebsiteLocalServiceWrapper
 		return _websiteLocalService.getWebsite(websiteId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Website
+			getWebsiteByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _websiteLocalService.getWebsiteByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the website with the matching UUID and company.
 	 *
@@ -371,11 +391,12 @@ public class WebsiteLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Website updateWebsite(
-			long websiteId, String url, long listTypeId, boolean primary)
+			String externalReferenceCode, long websiteId, String url,
+			long listTypeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteLocalService.updateWebsite(
-			websiteId, url, listTypeId, primary);
+			externalReferenceCode, websiteId, url, listTypeId, primary);
 	}
 
 	/**

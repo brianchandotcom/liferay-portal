@@ -48,11 +48,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -75,6 +77,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -895,8 +898,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testPostUserAccount() throws Exception {
 		super.testPostUserAccount();
 
+		_testPostUserAccountWithApprovalWorkflow();
 		_testPostUserAccountWithImageExternalReferenceCode();
-
 		_testPostUserAccountWithSAPEntry();
 	}
 
@@ -1996,6 +1999,32 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
+	private void _testPostUserAccountWithApprovalWorkflow() throws Exception {
+		UserAccount postUserAccount = userAccountResource.postUserAccount(
+			randomUserAccount());
+
+		User user = _userLocalService.getUser(postUserAccount.getId());
+
+		Assert.assertEquals(
+			user.getStatus(), WorkflowConstants.STATUS_APPROVED);
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				GroupConstants.DEFAULT_LIVE_GROUP_ID, User.class.getName(), 0,
+				0, "Single Approver", 1);
+
+		postUserAccount = userAccountResource.postUserAccount(
+			randomUserAccount());
+
+		user = _userLocalService.getUser(postUserAccount.getId());
+
+		Assert.assertEquals(user.getStatus(), WorkflowConstants.STATUS_PENDING);
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
+	}
+
 	private void _testPostUserAccountWithImageExternalReferenceCode()
 		throws Exception {
 
@@ -2180,6 +2209,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Inject
 	private UserService _userService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	private class TestSimpleCaptchaImpl extends SimpleCaptchaImpl {
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<request />
+	<dynamic-element index-type="keyword" name="text" repeatable="true" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[content 1 EN]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" name="text" repeatable="true" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[content 2 EN]]></dynamic-content>
+	</dynamic-element>
+</root>

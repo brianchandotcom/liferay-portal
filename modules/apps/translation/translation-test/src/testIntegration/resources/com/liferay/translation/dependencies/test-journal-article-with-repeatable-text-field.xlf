@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="es-ES" version="2.0">
+    <file id="com.liferay.journal.model.JournalArticle:[$JOURNAL_ARTICLE_ID$]">
+		<unit id="JournalArticle_title">
+			<segment>
+				<source><![CDATA[title example]]></source>
+				<target><![CDATA[title example ES]]></target>
+			</segment>
+		</unit>
+		<unit id="JournalArticle_description">
+			<segment>
+				<source><![CDATA[]]></source>
+				<target><![CDATA[]]></target>
+			</segment>
+		</unit>
+		<unit id="DDMStructure_text">
+			<segment>
+				<source><![CDATA[content 1 EN]]></source>
+				<target><![CDATA[content 1 ES]]></target>
+			</segment>
+			<segment>
+				<source><![CDATA[content 2 EN]]></source>
+				<target><![CDATA[content 2 ES]]></target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

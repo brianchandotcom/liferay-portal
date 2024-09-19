@@ -9,6 +9,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,21 +36,29 @@ public class TextHTMLDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				return StringUtil.replace(
-					_HTML,
-					new String[] {"[$DDM_FORM_FIELD_VALUE$]", "[$PREVIEW$]"},
-					new String[] {
-						HtmlUtil.escapeJS(value.getString(locale)),
-						LanguageUtil.get(locale, "preview")
-					});
+				StringBundler sb = new StringBundler(13);
+				String id = StringUtil.randomId();
+
+				sb.append("<a href=\"javascript:void(0);\" id=\"");
+				sb.append(id);
+				sb.append("\">(");
+				sb.append(LanguageUtil.get(locale, "preview"));
+				sb.append(")</a><script");
+				sb.append(
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+						null));
+				sb.append(">document.getElementById('");
+				sb.append(id);
+				sb.append("').onclick=function() {Liferay.DDLUtil.");
+				sb.append("openPreviewDialog('");
+				sb.append(HtmlUtil.escapeJS(value.getString(locale)));
+				sb.append("');");
+				sb.append("}</script>");
+
+				return sb.toString();
 			}
 
 		};
 	}
-
-	private static final String _HTML =
-		"<a href=\"javascript:void(0);\" onclick=\"Liferay.DDLUtil." +
-			"openPreviewDialog('[$DDM_FORM_FIELD_VALUE$]');\">([$PREVIEW$])" +
-				"</a>";
 
 }

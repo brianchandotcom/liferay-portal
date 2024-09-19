@@ -14,7 +14,18 @@ renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE
 %>
 
 <div class="alert alert-info portlet-configuration">
-	<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
+
+	<%
+	String id = StringUtil.randomId();
+	%>
+
+	<a href="<%= portletDisplay.getURLConfiguration() %>" id="<%= id %>">
 		<liferay-ui:message key="please-configure-this-portlet-to-make-it-visible-to-all-users" />
 	</a>
+
+	<aui:script>
+		document.getElementById('<%= id %>').onclick = function() {
+			<%= portletDisplay.getURLConfigurationJS() %>
+		}
+	</aui:script>
 </div>

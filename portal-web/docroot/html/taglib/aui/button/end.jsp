@@ -17,16 +17,19 @@
 			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 			href="<%= escapedHREF %>"
 			id="<%= id %>"
-
-			<c:if test="<%= Validator.isNotNull(onClick) %>">
-				onClick="<%= onClick %>"
-			</c:if>
-
 			role="button"
 
 			<%= AUIUtil.buildData(data) %>
 			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
 		>
+
+		<c:if test="<%= Validator.isNotNull(onClick) %>">
+			<aui:script>
+				document.getElementById('<%= id %>').onclick = function() {
+					<%= onClick %>
+				}
+			</aui:script>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<button
@@ -42,21 +45,32 @@
 				name="<%= namespace %><%= name %>"
 			</c:if>
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(onClick) %>">
-					onClick="<%= onClick %>"
-				</c:when>
-				<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
-					data-href="<%= escapedHREF %>"
-					onClick="Liferay.Util.navigate(this.dataset.href)"
-				</c:when>
-			</c:choose>
+			<c:if test="<%= Validator.isNotNull(escapedHREF) %>">
+				data-href="<%= escapedHREF %>"
+			</c:if>
 
 			type="<%= type.equals("cancel") ? "button" : type %>"
 
 			<%= AUIUtil.buildData(data) %>
 			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
 		>
+
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(onClick) %>">
+				<aui:script>
+					document.getElementById('<%= id %>').onclick = function() {
+						<%= onClick %>
+					}
+				</aui:script>
+			</c:when>
+			<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
+				<aui:script>
+					document.getElementById('<%= id %>').onclick = function() {
+						Liferay.Util.navigate(this.dataset.href);
+					}
+				</aui:script>
+			</c:when>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

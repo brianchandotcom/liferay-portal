@@ -328,11 +328,19 @@ if (portletTitleBasedNavigation) {
 						).setParameter(
 							"title", originalPage.getTitle()
 						).buildPortletURL();
+
+						String id = StringUtil.randomId();
 						%>
 
-						<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
+						<div class="page-redirect" id="<%= id %>">
 							(<liferay-ui:message arguments="<%= originalPage.getTitle() %>" key="redirected-from-x" translateArguments="<%= false %>" />)
 						</div>
+
+						<aui:script>
+							document.getElementById('<%= id %>').onclick = function () {
+								location.href = '<%= originalViewPageURL.toString() %>';
+							};
+						</aui:script>
 					</c:if>
 
 					<c:if test="<%= !wikiPage.isHead() %>">

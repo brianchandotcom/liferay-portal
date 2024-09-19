@@ -162,8 +162,10 @@ export default {
 	'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities':
 		'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
 	'environment': 'Environment',
+	'environment-selection': 'Environment Selection',
 	'environment-type': 'Environment Type',
 	'exit': 'Exit',
+	'exp-date': 'Exp. Date',
 	'expiration-date': 'Expiration Date',
 	'expired': 'Expired',
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
@@ -202,6 +204,8 @@ export default {
 	'insert-text-here': 'Insert text here',
 	'install': 'Install',
 	'installation': 'Installation',
+	'installation-in-progress': 'Installation in Progress',
+	'installation-success': 'Installation Success',
 	'instance-size': 'Instance Size',
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
 	'intl-code': 'Intl. code',
@@ -245,6 +249,7 @@ export default {
 	'move-to-top': 'Move to Top',
 	'move-up': 'Move Up',
 	'name': 'Name',
+	'never-expires': 'Never Expires',
 	'no': 'No',
 	'no-apps-yet': 'No Apps Yet',
 	'no-become-a-publisher-request': 'No become a publisher request',
@@ -252,6 +257,7 @@ export default {
 	'no-licenses-yet': 'No Licenses yet',
 	'no-orders-yet': 'No Orders Yet',
 	'no-results-found': 'No results found',
+	'not-installed': 'Not Installed',
 	'not-seeing-a-specific-project': 'Not seeing a specific Project?',
 	'number-of-cpus': 'Number of CPUs',
 	'on-hold': 'On Hold',
@@ -276,6 +282,8 @@ export default {
 	'privacy-policy': 'Privacy Policy',
 	'product': 'Product',
 	'profile': 'Profile',
+	'project': 'Project',
+	'project-selection': 'Project Selection',
 	'provide-app-build': 'Provide app build',
 	'provide-company-profile-details': 'Provide company profile details',
 	'provide-contact-us-details': 'Provide contact us details',
@@ -330,6 +338,7 @@ export default {
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
 	'select-the-versions-of-liferay-that-your-app-is-compatible-with':
 		'Select the versions of Liferay that your app is compatible with.',
+	'selected-project': 'Selected Project',
 	'self-managed': 'Self-Managed',
 	'send-request': 'Send Request',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
@@ -378,6 +387,8 @@ export default {
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud':
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay Self Hosted.',
+	'the-installation-process-is-underway-and-should-be-completed-shortly':
+		'The installation process is underway and should be completed shortly...',
 	'the-liferay-marketplace-gives-you-the-opportunity-to-monetize-your-app-or-solutions-from-a-single-use-case-to-many-while-engaging-with-new-customer-opportunities-and-generating-ongoing-revenue':
 		'The Liferay Marketplace gives you the opportunity to monetize your app or solutions from a single use case to many, while engaging with new customer opportunities and generating ongoing revenue.',
 	'the-liferay-marketplace-is-the-premier-place-for-liferay-customers-to-find-pre-built-pre-approved-app-extensions-to-quickly-extend-the-liferay-platform-to-new-and-legacy-technologies':
@@ -455,6 +466,8 @@ export default {
 		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',
+	'you-can-view-your-app-in-cloud-console-or-go-back-to-my-apps':
+		'You can view your app in Cloud Console or go back to My Apps.',
 	'you-cannot-upload-more-than-x-files':
 		'You cannot upload more than {0} files.',
 	'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project':

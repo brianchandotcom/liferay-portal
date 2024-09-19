@@ -10,6 +10,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTEntryEntityModel;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
@@ -209,6 +210,23 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
 			HashMapBuilder.put(
+				"checkout",
+				() -> {
+					CTCollection ctCollection =
+						_ctCollectionLocalService.getCTCollection(
+							ctEntry.getCtCollectionId());
+
+					if (ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
+						"getCTEntry", _ctCollectionModelResourcePermission);
+				}
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, ctEntry.getCtCollectionId(), "getCTEntry",
@@ -260,6 +278,9 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 	@Reference
 	private CTCollectionHistoryProviderRegistry
 		_ctCollectionHistoryProviderRegistry;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

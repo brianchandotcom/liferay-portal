@@ -179,7 +179,7 @@ public class OrganizationTestUtil {
 		throws Exception {
 
 		return WebsiteLocalServiceUtil.addWebsite(
-			organization.getUserId(), organization.getModelClassName(),
+			null, organization.getUserId(), organization.getModelClassName(),
 			organization.getOrganizationId(), "http://www.test.com",
 			_getListTypeId(
 				organization.getCompanyId(),

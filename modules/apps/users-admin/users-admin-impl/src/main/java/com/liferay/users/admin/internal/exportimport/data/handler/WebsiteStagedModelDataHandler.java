@@ -91,7 +91,7 @@ public class WebsiteStagedModelDataHandler
 
 		Website existingWebsite =
 			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
-				website.getUuid(), portletDataContext.getCompanyGroupId());
+				website.getUuid(), portletDataContext.getCompanyId());
 
 		Website importedWebsite = null;
 
@@ -99,12 +99,13 @@ public class WebsiteStagedModelDataHandler
 			serviceContext.setUuid(website.getUuid());
 
 			importedWebsite = _websiteLocalService.addWebsite(
-				userId, website.getClassName(), website.getClassPK(),
-				website.getUrl(), website.getListTypeId(), website.isPrimary(),
-				serviceContext);
+				website.getExternalReferenceCode(), userId,
+				website.getClassName(), website.getClassPK(), website.getUrl(),
+				website.getListTypeId(), website.isPrimary(), serviceContext);
 		}
 		else {
 			importedWebsite = _websiteLocalService.updateWebsite(
+				website.getExternalReferenceCode(),
 				existingWebsite.getWebsiteId(), website.getUrl(),
 				website.getListTypeId(), website.isPrimary());
 		}

@@ -869,7 +869,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				CaptchaUtil.check(contextHttpServletRequest);
 			}
 
-			user = _userService.addUser(
+			user = _userService.addUserWithWorkflow(
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
 				userAccount.getEmailAddress(), _getLocale(userAccount),
@@ -899,7 +899,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				_getWebsites(null, userAccount));
 		}
 		else {
-			user = _userService.addUser(
+			user = _userService.addUserWithWorkflow(
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
 				userAccount.getEmailAddress(), _getLocale(userAccount),

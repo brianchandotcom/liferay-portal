@@ -37,6 +37,8 @@ import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,6 +65,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -97,6 +100,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -478,6 +482,15 @@ public class EmailNotificationType extends BaseNotificationType {
 				_objectDefinitionLocalService, _objectFieldLocalService,
 				_organizationLocalService, _roleLocalService,
 				_userGroupRoleLocalService, _userLocalService));
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, TemplateContextContributor.class,
+			"(type=" + TemplateContextContributor.TYPE_GLOBAL + ")");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	private void _addFileAttachments(
@@ -535,6 +548,12 @@ public class EmailNotificationType extends BaseNotificationType {
 					notificationTemplate.getNotificationTemplateId(),
 				body),
 			!PropsValues.NOTIFICATION_EMAIL_TEMPLATE_ENABLED);
+
+		for (TemplateContextContributor templateContextContributor :
+				_serviceTrackerList) {
+
+			templateContextContributor.prepare(template, null);
+		}
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -751,6 +770,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private volatile ServiceTrackerList<TemplateContextContributor>
+		_serviceTrackerList;
 
 	@Reference
 	private TemplateNodeFactory _templateNodeFactory;

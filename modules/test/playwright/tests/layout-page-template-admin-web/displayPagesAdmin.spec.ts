@@ -12,6 +12,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
@@ -72,6 +73,33 @@ async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 	await waitForSuccessAlert(
 		page,
 		`Success:${journalArticleTitle} was updated successfully.`
+	);
+}
+
+async function addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+	apiHelpers: ApiHelpers,
+	contentStructureId: string,
+	displayPageTemplateName: string,
+	site: Site
+) {
+	const className = await apiHelpers.jsonWebServicesClassName.fetchClassName(
+		'com.liferay.journal.model.JournalArticle'
+	);
+
+	const displayPage =
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+			{
+				classNameId: className.classNameId,
+				classTypeId: contentStructureId,
+				groupId: site.id,
+				name: displayPageTemplateName,
+			}
+		);
+
+	await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+		{
+			layoutPageTemplateEntryId: displayPage.layoutPageTemplateEntryId,
+		}
 	);
 }
 
@@ -184,6 +212,95 @@ testInfoPanel.describe('InfoPanel', () => {
 			).toContainText('Modified');
 		}
 	);
+});
+
+test.describe('SEO configuration', () => {
+	test('User can map a web content to SEO meta tags in a display page', async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+
+		// Create a display page template for Basic Web Content and mark as default
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const displayPageTemplateName = getRandomString();
+
+		await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+			apiHelpers,
+			String(contentStructureId),
+			displayPageTemplateName,
+			site
+		);
+
+		// Go to configuration
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		await displayPageTemplatesPage.clickMoreActions(
+			displayPageTemplateName,
+			'Edit'
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Configure'}),
+			trigger: page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		await page
+			.locator('.portlet-body li', {has: page.getByText('SEO')})
+			.click();
+
+		// Map HTML Title
+
+		await page.getByLabel('HTML Title', {exact: true}).fill('');
+
+		await displayPageTemplatesPage.mapConfiguration('Title', 'HTML Title');
+
+		await expect(page.getByLabel('HTML Title', {exact: true})).toHaveValue(
+			'${title:Title}'
+		);
+
+		await expect(page.getByLabel('Description', {exact: true})).toHaveValue(
+			'${description}'
+		);
+
+		await page.getByTitle(`Go to ${displayPageTemplateName}`).click();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		// Create a Basic Web Content
+
+		const journalArticleTitle = getRandomString();
+
+		await apiHelpers.headlessDelivery.postStructuredContent({
+			contentStructureId,
+			datePublished: null,
+			siteId: site.id,
+			title: journalArticleTitle,
+			viewableBy: 'Anyone',
+		});
+
+		// Assert SEO HTML Title
+
+		await performLogout(page);
+
+		await page.goto(`web${site.friendlyUrlPath}/w/${journalArticleTitle}`);
+
+		await expect(
+			page.locator(
+				`meta[property="og:title"][content="${journalArticleTitle}"]`
+			)
+		).toBeAttached();
+	});
 });
 
 test.describe('UI', () => {

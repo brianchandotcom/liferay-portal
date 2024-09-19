@@ -14,6 +14,7 @@ import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
+import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
@@ -2708,6 +2709,75 @@ public class Mutation {
 			webUrlResource ->
 				webUrlResource.postUserAccountWebUrlsPageExportBatch(
 					userAccountId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Deletes the web URL by external reference code."
+	)
+	public boolean deleteWebUrlByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource ->
+				webUrlResource.deleteWebUrlByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the web URL by external reference code."
+	)
+	public WebUrl patchWebUrlByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("webUrl") WebUrl webUrl)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> webUrlResource.patchWebUrlByExternalReferenceCode(
+				externalReferenceCode, webUrl));
+	}
+
+	@GraphQLField(description = "Deletes the web URL.")
+	public boolean deleteWebUrl(@GraphQLName("webUrlId") Long webUrlId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> webUrlResource.deleteWebUrl(webUrlId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWebUrlBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> webUrlResource.deleteWebUrlBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField(description = "Updates the web URL.")
+	public WebUrl patchWebUrl(
+			@GraphQLName("webUrlId") Long webUrlId,
+			@GraphQLName("webUrl") WebUrl webUrl)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> webUrlResource.patchWebUrl(webUrlId, webUrl));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

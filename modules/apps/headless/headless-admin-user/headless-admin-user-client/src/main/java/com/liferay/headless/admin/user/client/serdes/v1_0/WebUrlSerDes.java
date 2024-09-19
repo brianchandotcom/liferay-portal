@@ -44,6 +44,20 @@ public class WebUrlSerDes {
 
 		sb.append("{");
 
+		if (webUrl.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(webUrl.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (webUrl.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -110,6 +124,15 @@ public class WebUrlSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (webUrl.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(webUrl.getExternalReferenceCode()));
+		}
+
 		if (webUrl.getId() == null) {
 			map.put("id", null);
 		}
@@ -155,7 +178,10 @@ public class WebUrlSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "primary")) {
@@ -176,7 +202,13 @@ public class WebUrlSerDes {
 			WebUrl webUrl, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					webUrl.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					webUrl.setId(Long.valueOf((String)jsonParserFieldValue));
 				}

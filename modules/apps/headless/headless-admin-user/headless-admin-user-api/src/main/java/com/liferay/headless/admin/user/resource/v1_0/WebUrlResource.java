@@ -82,7 +82,25 @@ public interface WebUrlResource {
 			String fieldNames)
 		throws Exception;
 
+	public void deleteWebUrlByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public WebUrl getWebUrlByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public WebUrl patchWebUrlByExternalReferenceCode(
+			String externalReferenceCode, WebUrl webUrl)
+		throws Exception;
+
+	public void deleteWebUrl(Long webUrlId) throws Exception;
+
+	public Response deleteWebUrlBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public WebUrl getWebUrl(Long webUrlId) throws Exception;
+
+	public WebUrl patchWebUrl(Long webUrlId, WebUrl webUrl) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

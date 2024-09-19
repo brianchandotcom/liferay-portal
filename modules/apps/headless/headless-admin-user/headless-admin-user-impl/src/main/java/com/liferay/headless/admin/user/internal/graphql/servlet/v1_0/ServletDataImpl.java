@@ -912,6 +912,28 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WebUrlResourceImpl.class,
 							"postUserAccountWebUrlsPageExportBatch"));
+					put(
+						"mutation#deleteWebUrlByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"deleteWebUrlByExternalReferenceCode"));
+					put(
+						"mutation#patchWebUrlByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"patchWebUrlByExternalReferenceCode"));
+					put(
+						"mutation#deleteWebUrl",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class, "deleteWebUrl"));
+					put(
+						"mutation#deleteWebUrlBatch",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class, "deleteWebUrlBatch"));
+					put(
+						"mutation#patchWebUrl",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class, "patchWebUrl"));
 
 					put(
 						"query#accountGroupByExternalReferenceCodeAccounts",
@@ -1317,6 +1339,11 @@ public class ServletDataImpl implements ServletData {
 							WebUrlResourceImpl.class,
 							"getUserAccountWebUrlsPage"));
 					put(
+						"query#webUrlByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"getWebUrlByExternalReferenceCode"));
+					put(
 						"query#webUrl",
 						new ObjectValuePair<>(
 							WebUrlResourceImpl.class, "getWebUrl"));
@@ -1508,6 +1535,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,
 							"getPostalAddressByExternalReferenceCode"));
+					put(
+						"query#Account.webUrlByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"getWebUrlByExternalReferenceCode"));
 					put(
 						"query#Account.roleByExternalReferenceCode",
 						new ObjectValuePair<>(

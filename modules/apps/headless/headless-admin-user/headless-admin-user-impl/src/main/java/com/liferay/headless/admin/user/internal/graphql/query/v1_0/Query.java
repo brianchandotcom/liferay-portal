@@ -1949,7 +1949,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {webUrl(webUrlId: ___){id, primary, url, urlType}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {webUrlByExternalReferenceCode(externalReferenceCode: ___){externalReferenceCode, id, primary, url, urlType}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the web URL by external reference code."
+	)
+	public WebUrl webUrlByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> webUrlResource.getWebUrlByExternalReferenceCode(
+				externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {webUrl(webUrlId: ___){externalReferenceCode, id, primary, url, urlType}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the web URL.")
 	public WebUrl webUrl(@GraphQLName("webUrlId") Long webUrlId)
@@ -2986,6 +3005,29 @@ public class Query {
 					postalAddressResource.
 						getPostalAddressByExternalReferenceCode(
 							_account.getExternalReferenceCode()));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetWebUrlByExternalReferenceCodeTypeExtension {
+
+		public GetWebUrlByExternalReferenceCodeTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the web URL by external reference code."
+		)
+		public WebUrl webUrlByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_webUrlResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				webUrlResource ->
+					webUrlResource.getWebUrlByExternalReferenceCode(
+						_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;

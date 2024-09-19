@@ -58,7 +58,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage postSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage postByExternalReferenceCodeSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception {
 

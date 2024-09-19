@@ -230,7 +230,7 @@ definition {
 		}
 
 		task ("Check the Document Library Store is present") {
-			if (!(contains(${reportFileContent}, "Property dl.store.impl: com.liferay.portal.store.file.system.FileSystemStore"))) {
+			if (!(contains(${reportFileContent}, "Document library storage impl: com.liferay.portal.store.file.system.FileSystemStore"))) {
 				echo(${reportFileContent});
 
 				fail("Document library store is not present in upgrade report.");
@@ -328,8 +328,8 @@ definition {
 				fail("upgrade.report.document.library.storage.size is not present in portal log.");
 			}
 
-			if (!(contains(${logContent}, "upgrade.report.property.dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
-				fail("upgrade.report.property.dl.store.impl is not present in portal log.");
+			if (!(contains(${logContent}, "upgrade.report.document.library.storage.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
+				fail("upgrade.report.document.library.storage.impl is not present in portal log.");
 			}
 
 			if (!(contains(${logContent}, "upgrade.report.longest.upgrade.processes=["))) {

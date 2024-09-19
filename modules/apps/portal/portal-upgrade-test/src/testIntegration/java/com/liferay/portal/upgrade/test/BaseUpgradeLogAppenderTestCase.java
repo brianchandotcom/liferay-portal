@@ -259,7 +259,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testDLRootDirAndStorageImpl() throws Exception {
+	public void testDLAndLiferayHome() throws Exception {
 		String rootDir = "Undefined";
 
 		if (StringUtil.equals(
@@ -290,11 +290,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertLogContextContains(
 			"upgrade.report.document.library.storage.implementation",
 			PropsValues.DL_STORE_IMPL);
+		_assertLogContextContains(
+			"upgrade.report.liferay.home", PropsValues.LIFERAY_HOME);
 
 		_assertReport("Document library root directory: " + rootDir);
 		_assertReport(
 			"Document library storage implementation: " +
 				PropsValues.DL_STORE_IMPL);
+		_assertReport("Liferay home: " + PropsValues.LIFERAY_HOME);
 	}
 
 	@Test
@@ -477,18 +480,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"upgrade.report.jvm.arguments", inputArguments.get(0));
 
 		_assertReport(inputArguments.get(0));
-	}
-
-	@Test
-	public void testLiferayHome() throws Exception {
-		_appender.start();
-
-		_appender.stop();
-
-		_assertLogContextContains(
-			"upgrade.report.liferay.home", PropsValues.LIFERAY_HOME);
-
-		_assertReport("Liferay home: " + PropsValues.LIFERAY_HOME);
 	}
 
 	@Test

@@ -9,9 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.concurrent.ExecutorService;
@@ -43,7 +43,7 @@ public class BaseUpgradeCallableTest {
 			protected void doUpgrade() throws Exception {
 				try (SafeCloseable safeCloseable =
 						CompanyThreadLocal.setWithSafeCloseable(
-							PortalUtil.getDefaultCompanyId())) {
+							TestPropsValues.getCompanyId())) {
 
 					ExecutorService executorService =
 						Executors.newFixedThreadPool(1);

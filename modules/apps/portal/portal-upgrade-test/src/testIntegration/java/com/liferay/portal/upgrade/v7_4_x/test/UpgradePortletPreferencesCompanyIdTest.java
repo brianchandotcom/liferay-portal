@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,14 +92,14 @@ public class UpgradePortletPreferencesCompanyIdTest {
 					portletPreferences.getPortletPreferencesId());
 
 			Assert.assertEquals(
-				TestPropsValues.getCompanyId(),
+				PortalUtil.getDefaultCompanyId(),
 				portletPreferences.getCompanyId());
 
 			portletPreferenceValues = _getPortletPreferenceValues(
 				portletPreferences.getPortletPreferencesId());
 
 			assertCompanyIds(
-				TestPropsValues.getCompanyId(), portletPreferenceValues);
+				PortalUtil.getDefaultCompanyId(), portletPreferenceValues);
 		}
 	}
 

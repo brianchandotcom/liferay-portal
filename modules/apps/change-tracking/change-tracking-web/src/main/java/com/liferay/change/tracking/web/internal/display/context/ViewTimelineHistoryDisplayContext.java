@@ -7,6 +7,7 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,7 +41,20 @@ public class ViewTimelineHistoryDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/change-tracking-rest/v1.0/ct-entries/history";
+		long classNameId = ParamUtil.getLong(_renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(_renderRequest, "classPK");
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("?classNameId=");
+		sb.append(classNameId);
+
+		if (classPK != 0) {
+			sb.append("&classPK=");
+			sb.append(classPK);
+		}
+
+		return "/o/change-tracking-rest/v1.0/ct-entries/history" + sb;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

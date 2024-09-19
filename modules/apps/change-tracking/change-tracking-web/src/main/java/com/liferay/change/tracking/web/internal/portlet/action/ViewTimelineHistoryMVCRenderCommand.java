@@ -44,7 +44,7 @@ public class ViewTimelineHistoryMVCRenderCommand implements MVCRenderCommand {
 			CTWebKeys.VIEW_TIMELINE_HISTORY_DISPLAY_CONTEXT,
 			viewTimelineHistoryDisplayContext);
 
-		return "/publications/view_timeline_history_modal.jsp";
+		return "/publications/view_timeline_history.jsp";
 	}
 
 	@Reference

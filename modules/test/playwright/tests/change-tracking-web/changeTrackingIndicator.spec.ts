@@ -9,8 +9,13 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {featureFlagPagesTest} from '../feature-flag-web/fixtures/featureFlagPagesTest';
 
-export const test = mergeTests(apiHelpersTest, loginTest());
+export const test = mergeTests(
+	apiHelpersTest,
+	featureFlagPagesTest,
+	loginTest()
+);
 
 test('LPD-31710 Publication bar disappears when trying to select a publication', async ({
 	apiHelpers,
@@ -64,6 +69,56 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 	await expect(
 		page.locator('li').filter({hasText: ctCollection.name})
 	).toBeVisible();
+
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+});
+
+test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', async ({
+	apiHelpers,
+	featureFlagsInstanceSettingsPage,
+	page,
+}) => {
+	const ctCollection =
+		await apiHelpers.headlessChangeTracking.createCTCollection(
+			getRandomString()
+		);
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+		ctCollection.id
+	);
+
+	await featureFlagsInstanceSettingsPage.goto();
+
+	await featureFlagsInstanceSettingsPage.searchFor('LPD-20131');
+
+	await featureFlagsInstanceSettingsPage.updateFeatureFlag('LPD-20131', true);
+
+	const changeTrackingIndicatorButton = page.locator(
+		'.change-tracking-indicator-button'
+	);
+
+	await changeTrackingIndicatorButton.click();
+
+	const selectPublicationMenuItem = page.getByRole('menuitem', {
+		name: 'Select a Publication',
+	});
+
+	await expect(selectPublicationMenuItem).toBeVisible();
+
+	await selectPublicationMenuItem.click();
+
+	await expect(
+		page.locator('li').filter({hasText: ctCollection.name})
+	).toBeVisible();
+
+	await featureFlagsInstanceSettingsPage.goto();
+
+	await featureFlagsInstanceSettingsPage.searchFor('LPD-20131');
+
+	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
+		'LPD-20131',
+		false
+	);
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
 });

@@ -7529,7 +7529,7 @@ paths:
             # @review
             description:
                 Adds a new site page
-            operationId: postSiteSiteByExternalReferenceCodeSitePage
+            operationId: postByExternalReferenceCodeSitePage
             parameters:
                 - in: path
                   name: siteExternalReferenceCode

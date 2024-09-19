@@ -286,6 +286,45 @@ baseTest(
 );
 
 baseTest(
+	'Move web content to another folder via management toolbar',
+	{
+		tag: '@LPD-36955',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const folder = await apiHelpers.jsonWebServicesJournal.addFolder({
+			groupId: site.id,
+		});
+
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const title = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByText(`${title}`)).toBeVisible();
+
+		await journalPage.changeView('table');
+
+		await page.getByLabel(`${title}`).check();
+
+		await journalPage.moveToFolder(folder.name);
+
+		await expect(page.getByText(`${title}`)).toBeHidden();
+
+		await page.getByRole('link', {name: `${folder.name}`}).click();
+
+		await expect(page.getByText(`${title}`)).toBeVisible();
+	}
+);
+
+baseTest(
 	'LPD-19384: Select articles to move across multiple pages',
 	async ({apiHelpers, journalPage, page, site}) => {
 		const contentStructureId =

@@ -7,6 +7,7 @@ package com.liferay.on.demand.admin.ticket.generator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
@@ -95,11 +96,17 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 				return;
 			}
 
-			Ticket ticket = _onDemandAdminTicketGenerator.generate(
-				companyLocalService.getCompany(targetCompanyId), null, user);
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-			Assert.assertNotNull(ticket);
-			Assert.assertNotEquals(user.getCompanyId(), ticket.getCompanyId());
+				Ticket ticket = _onDemandAdminTicketGenerator.generate(
+					companyLocalService.getCompany(targetCompanyId), null,
+					user);
+
+				Assert.assertNotNull(ticket);
+				Assert.assertNotEquals(
+					user.getCompanyId(), ticket.getCompanyId());
+			}
 		}
 	}
 

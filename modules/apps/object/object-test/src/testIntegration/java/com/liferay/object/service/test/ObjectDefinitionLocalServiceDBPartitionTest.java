@@ -47,8 +47,13 @@ public class ObjectDefinitionLocalServiceDBPartitionTest
 
 	@Test
 	public void testPublishObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
+		ObjectDefinition objectDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					TestPropsValues.getCompanyId())) {
+
+			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -58,6 +63,7 @@ public class ObjectDefinitionLocalServiceDBPartitionTest
 					).build()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				TestPropsValues.getUserId());
+		}
 
 		_assertResourceActionsCount(
 			TestPropsValues.getCompanyId(), objectDefinition, 4);

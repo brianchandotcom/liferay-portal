@@ -401,6 +401,7 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		}
 	}
 
+	@Override
 	protected void testGetCTEntriesHistoryPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer<EntityField, CTEntry, CTEntry, Exception>

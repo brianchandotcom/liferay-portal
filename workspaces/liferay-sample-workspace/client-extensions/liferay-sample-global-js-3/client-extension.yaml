@@ -3,7 +3,7 @@ assemble:
       into: static
 liferay-sample-global-js-3:
     name: Liferay Sample Global JS 3
-    scope: "instance"
-    scriptLocation: "head"
+    scope: instance
+    scriptLocation: head
     type: globalJS
     url: global.*.js

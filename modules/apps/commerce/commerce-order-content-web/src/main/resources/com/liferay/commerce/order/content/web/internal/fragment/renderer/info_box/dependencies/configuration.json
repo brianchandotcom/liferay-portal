@@ -48,6 +48,10 @@
 								"value": "orderType"
 							},
 							{
+								"label": "payment-method",
+								"value": "paymentMethod"
+							},
+							{
 								"label": "purchase-order-number",
 								"value": "purchaseOrderNumber"
 							},

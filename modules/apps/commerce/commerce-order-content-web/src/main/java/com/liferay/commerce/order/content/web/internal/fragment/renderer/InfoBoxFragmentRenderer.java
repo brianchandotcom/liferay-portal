@@ -10,6 +10,10 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
+import com.liferay.commerce.payment.method.CommercePaymentMethod;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -263,28 +267,54 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			CommerceOrder commerceOrder, String field)
 		throws PortalException {
 
-		if (!field.equals("shippingMethod")) {
-			return Collections.emptyMap();
-		}
+		if (field.equals("paymentMethod")) {
+			CommercePaymentMethod commercePaymentMethod =
+				_commercePaymentMethodRegistry.getCommercePaymentMethod(
+					commerceOrder.getCommercePaymentMethodKey());
 
-		CommerceShippingMethod commerceShippingMethod =
-			commerceOrder.getCommerceShippingMethod();
-
-		if (commerceShippingMethod == null) {
-			return Collections.emptyMap();
-		}
-
-		return HashMapBuilder.<String, Object>put(
-			"value",
-			() -> {
-				if (Validator.isNull(commerceOrder.getShippingOptionName())) {
-					return commerceShippingMethod.getEngineKey();
-				}
-
-				return commerceShippingMethod.getEngineKey() + "#" +
-					commerceOrder.getShippingOptionName();
+			if (commercePaymentMethod != null) {
+				return HashMapBuilder.<String, Object>put(
+					"value", commercePaymentMethod.getKey()
+				).build();
 			}
-		).build();
+
+			CommercePaymentIntegration commercePaymentIntegration =
+				_commercePaymentIntegrationRegistry.
+					getCommercePaymentIntegration(
+						commerceOrder.getCommercePaymentMethodKey());
+
+			if (commercePaymentIntegration != null) {
+				return HashMapBuilder.<String, Object>put(
+					"value", commercePaymentIntegration.getKey()
+				).build();
+			}
+
+			return Collections.emptyMap();
+		}
+		else if (field.equals("shippingMethod")) {
+			CommerceShippingMethod commerceShippingMethod =
+				commerceOrder.getCommerceShippingMethod();
+
+			if (commerceShippingMethod == null) {
+				return Collections.emptyMap();
+			}
+
+			return HashMapBuilder.<String, Object>put(
+				"value",
+				() -> {
+					if (Validator.isNull(
+							commerceOrder.getShippingOptionName())) {
+
+						return commerceShippingMethod.getEngineKey();
+					}
+
+					return commerceShippingMethod.getEngineKey() + "#" +
+						commerceOrder.getShippingOptionName();
+				}
+			).build();
+		}
+
+		return Collections.emptyMap();
 	}
 
 	private String _getConfigurationValue(
@@ -390,6 +420,24 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				return commerceOrderType.getName(locale);
 			}
 		}
+		else if (field.equals("paymentMethod")) {
+			CommercePaymentMethod commercePaymentMethod =
+				_commercePaymentMethodRegistry.getCommercePaymentMethod(
+					commerceOrder.getCommercePaymentMethodKey());
+
+			if (commercePaymentMethod != null) {
+				return commercePaymentMethod.getName(locale);
+			}
+
+			CommercePaymentIntegration commercePaymentIntegration =
+				_commercePaymentIntegrationRegistry.
+					getCommercePaymentIntegration(
+						commerceOrder.getCommercePaymentMethodKey());
+
+			if (commercePaymentIntegration != null) {
+				return commercePaymentIntegration.getName(locale);
+			}
+		}
 		else if (field.equals("purchaseOrderNumber")) {
 			return commerceOrder.getPurchaseOrderNumber();
 		}
@@ -486,6 +534,13 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
+
+	@Reference
+	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;

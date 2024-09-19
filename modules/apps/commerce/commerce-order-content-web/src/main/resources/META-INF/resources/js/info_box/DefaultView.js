@@ -24,7 +24,9 @@ const formatValue = (value, type) => {
 
 const isEditable = (field, isOpen) => {
 	if (
-		['requestedDeliveryDate', 'shippingMethod'].indexOf(field) >= 0 &&
+		['paymentMethod', 'requestedDeliveryDate', 'shippingMethod'].indexOf(
+			field
+		) >= 0 &&
 		!isOpen
 	) {
 		return false;

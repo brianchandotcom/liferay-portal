@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -34,19 +33,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import java.util.HashMap;
 
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -122,24 +115,6 @@ public class DLFileEntryMetadataExternalReferenceCodeUpgradeProcessTest
 	}
 
 	@Override
-	protected void assertExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
-		throws Exception {
-
-		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from ", tableName,
-					" where externalReferenceCode in ('",
-					StringUtil.merge(externalReferenceCodes, "', '"), "')"))) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				Assert.assertFalse(resultSet.next());
-			}
-		}
-	}
-
-	@Override
 	protected ExternalReferenceCodeModel fetchExternalReferenceCodeModel(
 			ExternalReferenceCodeModel externalReferenceCodeModel,
 			String tableName)
@@ -195,22 +170,6 @@ public class DLFileEntryMetadataExternalReferenceCodeUpgradeProcessTest
 	@Override
 	protected Version getVersion() {
 		return null;
-	}
-
-	@Override
-	protected void updateExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
-		throws Exception {
-
-		db.runSQL(
-			StringBundler.concat(
-				"update ", tableName,
-				" set externalReferenceCode = null where ",
-				"externalReferenceCode in ('",
-				StringUtil.merge(externalReferenceCodes, "', '"), "')"));
-
-		entityCache.clearCache();
-		multiVMPool.clear();
 	}
 
 	@Inject

@@ -138,6 +138,8 @@ public class OAuthClientEntryPersistenceTest {
 
 		newOAuthClientEntry.setInfoJSON(RandomTestUtil.randomString());
 
+		newOAuthClientEntry.setMetadataCacheInMillis(RandomTestUtil.nextLong());
+
 		newOAuthClientEntry.setOIDCUserInfoMapperJSON(
 			RandomTestUtil.randomString());
 
@@ -182,6 +184,9 @@ public class OAuthClientEntryPersistenceTest {
 		Assert.assertEquals(
 			existingOAuthClientEntry.getInfoJSON(),
 			newOAuthClientEntry.getInfoJSON());
+		Assert.assertEquals(
+			existingOAuthClientEntry.getMetadataCacheInMillis(),
+			newOAuthClientEntry.getMetadataCacheInMillis());
 		Assert.assertEquals(
 			existingOAuthClientEntry.getOIDCUserInfoMapperJSON(),
 			newOAuthClientEntry.getOIDCUserInfoMapperJSON());
@@ -251,7 +256,8 @@ public class OAuthClientEntryPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "authRequestParametersJSON", true,
 			"authServerWellKnownURI", true, "clientId", true,
-			"oidcUserInfoMapperJSON", true, "tokenRequestParametersJSON", true);
+			"metadataCacheInMillis", true, "oidcUserInfoMapperJSON", true,
+			"tokenRequestParametersJSON", true);
 	}
 
 	@Test
@@ -566,6 +572,8 @@ public class OAuthClientEntryPersistenceTest {
 		oAuthClientEntry.setClientId(RandomTestUtil.randomString());
 
 		oAuthClientEntry.setInfoJSON(RandomTestUtil.randomString());
+
+		oAuthClientEntry.setMetadataCacheInMillis(RandomTestUtil.nextLong());
 
 		oAuthClientEntry.setOIDCUserInfoMapperJSON(
 			RandomTestUtil.randomString());

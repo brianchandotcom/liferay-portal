@@ -82,7 +82,7 @@ if (editorOptions != null) {
 		<liferay-ui:message key="<%= placeholder %>" />
 
 		<c:if test="<%= Boolean.parseBoolean(required) %>">
-			<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+			<clay:icon cssClass="reference-mark text-warning" symbol="asterisk" />
 		</c:if>
 	</div>
 

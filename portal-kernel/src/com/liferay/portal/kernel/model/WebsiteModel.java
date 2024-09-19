@@ -24,8 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface WebsiteModel
-	extends AttachedModel, BaseModel<Website>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<Website>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -79,6 +79,23 @@ public interface WebsiteModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this website.
+	 *
+	 * @return the external reference code of this website
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this website.
+	 *
+	 * @param externalReferenceCode the external reference code of this website
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the website ID of this website.

@@ -59,8 +59,9 @@ public interface WebsiteLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the website local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WebsiteLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public Website addWebsite(
-			long userId, String className, long classPK, String url,
-			long listTypeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String url, long listTypeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -206,6 +207,10 @@ public interface WebsiteLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Website fetchWebsite(long websiteId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website fetchWebsiteByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the website with the matching UUID and company.
 	 *
@@ -251,6 +256,11 @@ public interface WebsiteLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Website getWebsite(long websiteId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website getWebsiteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the website with the matching UUID and company.
 	 *
@@ -293,7 +303,8 @@ public interface WebsiteLocalService
 	public int getWebsitesCount();
 
 	public Website updateWebsite(
-			long websiteId, String url, long listTypeId, boolean primary)
+			String externalReferenceCode, long websiteId, String url,
+			long listTypeId, boolean primary)
 		throws PortalException;
 
 	/**

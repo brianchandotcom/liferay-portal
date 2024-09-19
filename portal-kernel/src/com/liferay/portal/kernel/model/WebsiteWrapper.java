@@ -35,6 +35,7 @@ public class WebsiteWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("websiteId", getWebsiteId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -63,6 +64,13 @@ public class WebsiteWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long websiteId = (Long)attributes.get("websiteId");
@@ -191,6 +199,16 @@ public class WebsiteWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the external reference code of this website.
+	 *
+	 * @return the external reference code of this website
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -378,6 +396,16 @@ public class WebsiteWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the external reference code of this website.
+	 *
+	 * @param externalReferenceCode the external reference code of this website
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

@@ -15,17 +15,24 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateWebsiteExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchWebsiteException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.model.WebsiteTable;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
 import com.liferay.portal.kernel.service.persistence.WebsiteUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -3901,6 +3908,257 @@ public class WebsitePersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 =
 		"website.primary = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchWebsiteException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching website
+	 * @throws NoSuchWebsiteException if a matching website could not be found
+	 */
+	@Override
+	public Website findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchWebsiteException {
+
+		Website website = fetchByERC_C(externalReferenceCode, companyId);
+
+		if (website == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchWebsiteException(sb.toString());
+		}
+
+		return website;
+	}
+
+	/**
+	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching website, or <code>null</code> if a matching website could not be found
+	 */
+	@Override
+	public Website fetchByERC_C(String externalReferenceCode, long companyId) {
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching website, or <code>null</code> if a matching website could not be found
+	 */
+	@Override
+	public Website fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof Website) {
+			Website website = (Website)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					website.getExternalReferenceCode()) ||
+				(companyId != website.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_WEBSITE_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<Website> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					Website website = list.get(0);
+
+					result = website;
+
+					cacheResult(website);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Website)result;
+		}
+	}
+
+	/**
+	 * Removes the website where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the website that was removed
+	 */
+	@Override
+	public Website removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchWebsiteException {
+
+		Website website = findByERC_C(externalReferenceCode, companyId);
+
+		return remove(website);
+	}
+
+	/**
+	 * Returns the number of websites where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching websites
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C;
+
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_WEBSITE_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"website.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(website.externalReferenceCode IS NULL OR website.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"website.companyId = ?";
+
 	public WebsitePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3926,6 +4184,13 @@ public class WebsitePersistenceImpl
 	public void cacheResult(Website website) {
 		EntityCacheUtil.putResult(
 			WebsiteImpl.class, website.getPrimaryKey(), website);
+
+		FinderCacheUtil.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				website.getExternalReferenceCode(), website.getCompanyId()
+			},
+			website);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -3993,6 +4258,18 @@ public class WebsitePersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			EntityCacheUtil.removeResult(WebsiteImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(WebsiteModelImpl websiteModelImpl) {
+		Object[] args = new Object[] {
+			websiteModelImpl.getExternalReferenceCode(),
+			websiteModelImpl.getCompanyId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByERC_C, args, Long.valueOf(1));
+		FinderCacheUtil.putResult(
+			_finderPathFetchByERC_C, args, websiteModelImpl);
 	}
 
 	/**
@@ -4128,6 +4405,66 @@ public class WebsitePersistenceImpl
 			website.setUuid(uuid);
 		}
 
+		if (Validator.isNull(website.getExternalReferenceCode())) {
+			website.setExternalReferenceCode(website.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					websiteModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					website.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = website.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = website.getPrimaryKey();
+					}
+
+					try {
+						website.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								Website.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								website.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			Website ercWebsite = fetchByERC_C(
+				website.getExternalReferenceCode(), website.getCompanyId());
+
+			if (isNew) {
+				if (ercWebsite != null) {
+					throw new DuplicateWebsiteExternalReferenceCodeException(
+						"Duplicate website with external reference code " +
+							website.getExternalReferenceCode() +
+								" and company " + website.getCompanyId());
+				}
+			}
+			else {
+				if ((ercWebsite != null) &&
+					(website.getWebsiteId() != ercWebsite.getWebsiteId())) {
+
+					throw new DuplicateWebsiteExternalReferenceCodeException(
+						"Duplicate website with external reference code " +
+							website.getExternalReferenceCode() +
+								" and company " + website.getCompanyId());
+				}
+			}
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -4172,6 +4509,8 @@ public class WebsitePersistenceImpl
 
 		EntityCacheUtil.putResult(
 			WebsiteImpl.class, websiteModelImpl, false, true);
+
+		cacheUniqueFindersCache(websiteModelImpl);
 
 		if (isNew) {
 			website.setNew(false);
@@ -4597,6 +4936,16 @@ public class WebsitePersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK", "primary_"},
 			false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		WebsiteUtil.setPersistence(this);
 	}

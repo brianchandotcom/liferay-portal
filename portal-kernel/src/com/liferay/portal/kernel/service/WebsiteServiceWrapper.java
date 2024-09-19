@@ -25,12 +25,14 @@ public class WebsiteServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Website addWebsite(
-			java.lang.String className, long classPK, java.lang.String url,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			java.lang.String externalReferenceCode, java.lang.String className,
+			long classPK, java.lang.String url, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteService.addWebsite(
-			className, classPK, url, typeId, primary, serviceContext);
+			externalReferenceCode, className, classPK, url, typeId, primary,
+			serviceContext);
 	}
 
 	@Override
@@ -38,6 +40,16 @@ public class WebsiteServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_websiteService.deleteWebsite(websiteId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Website
+			fetchWebsiteByExternalReferenceCode(
+				java.lang.String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _websiteService.fetchWebsiteByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -67,10 +79,12 @@ public class WebsiteServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Website updateWebsite(
-			long websiteId, java.lang.String url, long typeId, boolean primary)
+			java.lang.String externalReferenceCode, long websiteId,
+			java.lang.String url, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _websiteService.updateWebsite(websiteId, url, typeId, primary);
+		return _websiteService.updateWebsite(
+			externalReferenceCode, websiteId, url, typeId, primary);
 	}
 
 	@Override

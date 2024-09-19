@@ -194,14 +194,16 @@ public class UpdateLanguageAction implements Action {
 			PortletLocalServiceUtil.getFriendlyURLMappers();
 
 		for (FriendlyURLMapper friendlyURLMapper : friendlyURLMappers) {
-			if (!friendlyURLMapper.isCheckMappingWithPrefix()) {
-				int mappingIndex = layoutURL.indexOf(
-					friendlyURLMapper.getMapping());
+			if (friendlyURLMapper.isCheckMappingWithPrefix()) {
+				continue;
+			}
 
-				if (mappingIndex != -1) {
-					mappingPart =
-						StringPool.SLASH + layoutURL.substring(mappingIndex);
-				}
+			int mappingIndex = layoutURL.indexOf(
+				friendlyURLMapper.getMapping());
+
+			if (mappingIndex != -1) {
+				mappingPart =
+					StringPool.SLASH + layoutURL.substring(mappingIndex);
 			}
 		}
 

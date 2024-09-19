@@ -17,6 +17,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
+import com.liferay.object.rest.internal.util.ObjectEntryFieldNameUtil;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.ObjectEntryOpenAPIContributor;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
@@ -25,7 +26,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -130,9 +130,10 @@ public class ObjectEntryOpenAPIResourceImpl
 					_objectDefinitionLocalService.getObjectDefinition(
 						objectRelationship.getObjectDefinitionId1());
 
-				String objectRelationshipIdFieldName = StringBundler.concat(
-					"r_", objectRelationship.getName(), "_",
-					parentObjectDefinition.getPKObjectFieldName());
+				String objectRelationshipIdFieldName =
+					ObjectEntryFieldNameUtil.getObjectRelationshipIdFieldName(
+						objectRelationship.getName(),
+						parentObjectDefinition.getPKObjectFieldName());
 
 				if (Objects.equals(
 						objectRelationship.getName(), propertyName) ||

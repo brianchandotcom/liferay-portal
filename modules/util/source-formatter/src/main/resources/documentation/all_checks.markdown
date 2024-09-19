@@ -41,6 +41,7 @@ BNDWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | 
 CDNCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | | Checks the URL in `artifact.properties` files. |
 CIMergeAndGitRepoFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .gitrepo or ci-merge | Checks that `ci-merge` and `.gitrepo` files can not be added or modified. |
 CQLKeywordCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .cql | Checks that Cassandra keywords are upper case. |
+CSPComplianceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .ftl, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks code to prevent common CSP related pitfalls. |
 CSSCommentsCheck | [Styling](styling_checks.markdown#styling-checks) | .css or .scss | Validates comments in `.css` files. |
 CSSImportsCheck | [Styling](styling_checks.markdown#styling-checks) | .css or .scss | Sorts and groups imports in `.css` files. |
 CSSPropertiesOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .css or .scss | Sorts properties in `.css` files. |
@@ -157,7 +158,6 @@ JSPExpressionTagCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp
 [JSPFunctionNameCheck](check/jsp_function_name_check.markdown#jspfunctionnamecheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check if the names of functions in `.jsp` files follow naming conventions. |
 JSPGetStaticResourceURLCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`. |
 [JSPIllegalSyntaxCheck](check/jsp_illegal_syntax_check.markdown#jspillegalsyntaxcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `System.out.print`, `console.log` or `debugger.*` in `.jsp` files. |
-JSPIllegalTagsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain tags. |
 [JSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Sorts and groups imports in `.jsp` files. |
 [JSPIncludeCheck](check/jsp_include_check.markdown#jspincludecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates values of `include` in `.jsp` files. |
 JSPIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect indentation in `.jsp` files. |

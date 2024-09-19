@@ -7,6 +7,7 @@ AppendCheck | [Styling](styling_checks.markdown#styling-checks) | Checks instanc
 [ArrayTypeStyleCheck](https://checkstyle.sourceforge.io/checks/misc/arraytypestyle.html) | [Styling](styling_checks.markdown#styling-checks) | Checks the style of array type definitions. |
 ArrayUtilCheck | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `ArrayUtil`. |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/checks/blocks/avoidnestedblocks.html) | [Styling](styling_checks.markdown#styling-checks) | Finds nested blocks (blocks that are used freely in the code). |
+CSPComplianceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks code to prevent common CSP related pitfalls. |
 [CamelCaseNameCheck](check/camel_case_name_check.markdown#camelcasenamecheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks variable names for correct use of `CamelCase`. |
 ChainingCheck | [Styling](styling_checks.markdown#styling-checks) | Checks that method chaining can be used when possible. |
 [CompanyIterationCheck](check/company_iteration_check.markdown#companyiterationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |
@@ -37,7 +38,6 @@ JSPExpressionTagCheck | [Styling](styling_checks.markdown#styling-checks) | Appl
 [JSPFunctionNameCheck](check/jsp_function_name_check.markdown#jspfunctionnamecheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Check if the names of functions in `.jsp` files follow naming conventions. |
 JSPGetStaticResourceURLCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`. |
 [JSPIllegalSyntaxCheck](check/jsp_illegal_syntax_check.markdown#jspillegalsyntaxcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds incorrect use of `System.out.print`, `console.log` or `debugger.*` in `.jsp` files. |
-JSPIllegalTagsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases of incorrect use of certain tags. |
 [JSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.jsp` files. |
 [JSPIncludeCheck](check/jsp_include_check.markdown#jspincludecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates values of `include` in `.jsp` files. |
 JSPIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect indentation in `.jsp` files. |

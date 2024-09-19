@@ -217,6 +217,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="FTLSourceProcessor">
+		<check name="CSPComplianceCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks code to prevent common CSP related pitfalls." />
+		</check>
 		<check name="FTLEmptyLinesCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
@@ -1079,6 +1083,10 @@
 			<category name="Performance" />
 			<description name="Checks if performance can be improved by using different methods that can be used by collections." />
 		</check>
+		<check name="CSPComplianceCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks code to prevent common CSP related pitfalls." />
+		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />
 			<description name="Checks that there are no calls to `Collections.EMPTY_LIST`, `Collections.EMPTY_MAP` or `Collections.EMPTY_SET`." />
@@ -1253,10 +1261,6 @@
 		<check name="JSPFunctionNameCheck">
 			<category name="Naming Conventions" />
 			<description name="Check if the names of functions in `.jsp` files follow naming conventions." />
-		</check>
-		<check name="JSPIllegalTagsCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds cases of incorrect use of certain tags." />
 		</check>
 		<check name="JSPLanguageKeysCheck">
 			<category name="Bug Prevention" />

@@ -8,14 +8,14 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
 /**
- * @author Alan Huang
+ * @author Iván Zaera Avellón
  */
-public class JSPIllegalTagsCheck extends BaseFileCheck {
+public class CSPComplianceCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -24,6 +24,43 @@ public class JSPIllegalTagsCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
+		String fileName, String absolutePath, String content) {
+
+		return _checkIllegalTags(fileName, absolutePath, content);
+	}
+
+	private void _checkAttributePresent(
+		String attribute, String content, String fileName,
+		List<String> illegalTagNames) {
+
+		for (String illegalTagName : illegalTagNames) {
+			int searchIndex = 0;
+
+			while (true) {
+				TagOccurrence tagOccurrence = _getNextTagOccurrence(
+					illegalTagName, content, searchIndex);
+
+				if (tagOccurrence == null) {
+					break;
+				}
+
+				String tag = tagOccurrence.tag;
+
+				if (!tag.contains(attribute)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Tag <", illegalTagName, "> is missing attribute '",
+							attribute, "', see LPD-18227"),
+						getLineNumber(content, tagOccurrence.searchIndex));
+				}
+
+				searchIndex += tagOccurrence.searchIndex + tag.length();
+			}
+		}
+	}
+
+	private String _checkIllegalTags(
 		String fileName, String absolutePath, String content) {
 
 		String lowerCaseFileName = StringUtil.lowerCase(fileName);
@@ -61,46 +98,15 @@ public class JSPIllegalTagsCheck extends BaseFileCheck {
 			}
 		}
 		else if (lowerCaseFileName.endsWith(".ftl")) {
-			_checkAttribute(
+			_checkAttributePresent(
 				"${nonceAttribute}", content, fileName, illegalTagNames);
 		}
 		else if (lowerCaseFileName.endsWith(".vm")) {
-			_checkAttribute(
+			_checkAttributePresent(
 				"$nonceAttribute", content, fileName, illegalTagNames);
 		}
 
 		return content;
-	}
-
-	private void _checkAttribute(
-		String attribute, String content, String fileName,
-		List<String> illegalTagNames) {
-
-		for (String illegalTagName : illegalTagNames) {
-			int searchIndex = 0;
-
-			while (true) {
-				TagOccurrence tagOccurrence = _getNextTagOccurrence(
-					illegalTagName, content, searchIndex);
-
-				if (tagOccurrence == null) {
-					break;
-				}
-
-				String tag = tagOccurrence.tag;
-
-				if (!tag.contains(attribute)) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Tag <", illegalTagName, "> is missing attribute '",
-							attribute, "', see LPD-18227"),
-						getLineNumber(content, tagOccurrence.searchIndex));
-				}
-
-				searchIndex += tagOccurrence.searchIndex + tag.length();
-			}
-		}
 	}
 
 	private TagOccurrence _getNextTagOccurrence(

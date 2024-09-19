@@ -545,3 +545,54 @@ autoSaveTest(
 		).toBeVisible();
 	}
 );
+
+autoSaveTest(
+	'Empty option restores in Select from List when using undo/redo',
+	{
+		tag: '@LPD-35631',
+	},
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const fieldName = 'SelectFromList';
+		const structureName = 'Structure 1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [
+				{
+					fieldType: 'select',
+					name: fieldName,
+					options: {
+						en_US: [
+							{
+								label: 'option1',
+								reference: 'option1',
+								value: 'option1',
+							},
+							{
+								label: 'option2',
+								reference: 'option2',
+								value: 'option2',
+							},
+						],
+					},
+				},
+			],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await page.getByLabel(fieldName).click();
+
+		await page.getByRole('option', {name: 'option1'}).click();
+
+		await journalEditArticlePage.undoButton.click();
+
+		await expect(page.getByLabel(fieldName)).toHaveText('Choose an Option');
+	}
+);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -357,10 +357,16 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		await page.getByText('picklistField').click();
 
+		const newTabPagePromise = new Promise<Page>((resolve) =>
+			page.once('popup', resolve)
+		);
+
 		await modelBuilderRightSidebarPage.managePicklistsButton.click();
 
+		const newTabPage = await newTabPagePromise;
+
 		await expect(
-			page.getByRole('heading', {name: 'Picklists'})
+			newTabPage.getByRole('heading', {level: 1, name: 'Picklists'})
 		).toBeVisible();
 	});
 

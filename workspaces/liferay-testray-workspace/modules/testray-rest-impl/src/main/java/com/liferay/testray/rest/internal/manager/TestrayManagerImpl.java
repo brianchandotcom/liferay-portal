@@ -295,7 +295,10 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		List<Facet.FacetValue> facetValues = facet.getFacetValues();
 
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Serializable> map =
+			HashMapBuilder.<String, Serializable>put(
+				"importStatus", "DONE"
+			).build();
 
 		for (Facet.FacetValue facetValue : facetValues) {
 			String key = facetValue.getTerm();
@@ -798,6 +801,18 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayCache, userId);
 
 		if (testrayBuildId != 0) {
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				testrayBuildId);
+
+			objectEntry.getValues(
+			).put(
+				"importStatus", "INPROGRESS"
+			);
+
+			_objectEntryLocalService.updateObjectEntry(
+				userId, objectEntry.getObjectEntryId(), objectEntry.getValues(),
+				new ServiceContext());
+
 			return testrayBuildId;
 		}
 
@@ -819,6 +834,8 @@ public class TestrayManagerImpl implements TestrayManager {
 				"gitHash", propertiesMap.get("git.id")
 			).put(
 				"githubCompareURLs", propertiesMap.get("liferay.compare.urls")
+			).put(
+				"importStatus", "INPROGRESS"
 			).put(
 				"name", testrayBuildName
 			).put(

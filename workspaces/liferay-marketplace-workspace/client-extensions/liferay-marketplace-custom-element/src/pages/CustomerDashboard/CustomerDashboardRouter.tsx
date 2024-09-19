@@ -14,6 +14,8 @@ import AppOutlet from './pages/Apps/App/AppOutlet';
 import Download from './pages/Apps/App/Download/Download';
 import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
+import CloudProductInstallation from './pages/Apps/App/Provisioning/CloudProductInstallation';
+import InstallCloudAppOutlet from './pages/Apps/App/Provisioning/InstallCloudAppOutlet';
 import Provisioning from './pages/Apps/App/Provisioning/Provisioning';
 import Members from './pages/Members';
 import Solutions from './pages/Solutions';
@@ -65,6 +67,13 @@ const CustomerDashboardRouter = () => {
 					element={<CreateLicense />}
 					path="order/:orderId/create-license"
 				/>
+
+				<Route element={<InstallCloudAppOutlet />}>
+					<Route
+						element={<CloudProductInstallation />}
+						path="order/:orderId/install"
+					/>
+				</Route>
 			</Routes>
 		</HashRouter>
 	);

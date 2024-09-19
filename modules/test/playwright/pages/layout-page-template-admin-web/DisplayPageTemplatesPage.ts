@@ -88,6 +88,31 @@ export class DisplayPageTemplatesPage {
 		});
 	}
 
+	async mapConfiguration(field: string, text: string) {
+		await this.page
+			.locator('.form-group')
+			.filter({hasText: text})
+			.first()
+			.getByTitle('Map', {exact: true})
+			.click();
+
+		await this.page.getByLabel('Field', {exact: true}).selectOption(field);
+
+		await this.page
+			.locator('.dpt-mapping-panel')
+			.getByRole('button')
+			.click();
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The page was updated successfully.'
+		);
+	}
+
 	async markAsDefault(name: string) {
 		this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});

@@ -249,41 +249,27 @@ definition {
 
 	@summary = "Default summary"
 	macro viewDefaultMappedField(description = null, portlet = null, title = null) {
-		if (${portlet} == "Open Graph") {
-			AssertAttributeValue(
-				key_mappedField = "Title",
-				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "value",
-				value2 = ${title});
+		AssertAttributeValue(
+			key_mappedField = "Title",
+			locator1 = "TextInput#SEO_MAPPED_FIELD",
+			value1 = "value",
+			value2 = ${title});
 
-			AssertTextEquals(
-				key_mappedField = "Description",
-				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = ${description});
+		AssertTextEquals(
+			key_mappedField = "Description",
+			locator1 = "TextInput#SEO_MAPPED_FIELD",
+			value1 = ${description});
 
-			AssertAttributeValue(
-				key_mappedField = "Image",
-				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "value",
-				value2 = "-- Unmapped --");
+		AssertAttributeValue(
+			key_mappedField = "Image",
+			locator1 = "TextInput#SEO_MAPPED_FIELD",
+			value1 = "value",
+			value2 = "-- Unmapped --");
 
-			AssertTextEquals(
-				key_mappedField = "ImageAlt",
-				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "");
-		}
-
-		if (${portlet} == "SEO") {
-			AssertElementPresent(
-				key_text = "Title",
-				locator1 = "TextInput#ANY",
-				mappedFieldValue = "title");
-
-			AssertElementPresent(
-				key_mappedField = "description",
-				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				mappedFieldValue = "description");
-		}
+		AssertTextEquals(
+			key_mappedField = "ImageAlt",
+			locator1 = "TextInput#SEO_MAPPED_FIELD",
+			value1 = "");
 	}
 
 	@summary = "Default summary"

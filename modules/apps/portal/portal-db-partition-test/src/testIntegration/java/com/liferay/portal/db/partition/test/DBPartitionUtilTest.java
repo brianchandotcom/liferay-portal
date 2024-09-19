@@ -118,7 +118,11 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testAddDBPartition() throws Exception {
 		addDBPartitions();
 
-		try (Statement statement = connection.createStatement()) {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId());
+			Statement statement = connection.createStatement()) {
+
 			for (long companyId : COMPANY_IDS) {
 				statement.execute(
 					"select 1 from " + getPartitionName(companyId) +
@@ -143,7 +147,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();
 
-		try {
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
 			CurrentConnection currentConnection = dataSource -> connection;
 
 			ReflectionTestUtil.setFieldValue(
@@ -159,7 +166,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			String testObjectTableNamePrefix = dbInspector.normalizeName(
 				"TestObjectTable_x_");
 
-			try (SafeCloseable safeCloseable =
+			try (SafeCloseable safeCloseable2 =
 					CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
 
 				createAndPopulateTable(

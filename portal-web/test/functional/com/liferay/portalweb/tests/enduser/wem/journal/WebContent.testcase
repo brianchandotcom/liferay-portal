@@ -2332,19 +2332,27 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc");
 
-				PortletEntry.changeLocale(locale = "zh-CN");
+				PortletEntry.changeLocale(
+					locale = "zh-CN",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-				PortletEntry.changeLocale(locale = "ja-JP");
+				PortletEntry.changeLocale(
+					locale = "ja-JP",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
-				PortletEntry.changeLocale(locale = "de-DE");
+				PortletEntry.changeLocale(
+					locale = "de-DE",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
 
-				PortletEntry.changeLocale(locale = "es-ES");
+				PortletEntry.changeLocale(
+					locale = "es-ES",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
@@ -2394,11 +2402,15 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
-			PortletEntry.changeLocale(locale = "zh-CN");
+			PortletEntry.changeLocale(
+				locale = "zh-CN",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-			PortletEntry.changeLocale(locale = "ja-JP");
+			PortletEntry.changeLocale(
+				locale = "ja-JP",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
@@ -2426,7 +2438,9 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
-			PortletEntry.changeLocale(locale = "de-DE");
+			PortletEntry.changeLocale(
+				locale = "de-DE",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
 
@@ -2454,7 +2468,9 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
@@ -2513,11 +2529,15 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc2");
 
-				PortletEntry.changeLocale(locale = "zh-CN");
+				PortletEntry.changeLocale(
+					locale = "zh-CN",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-				PortletEntry.changeLocale(locale = "ja-JP");
+				PortletEntry.changeLocale(
+					locale = "ja-JP",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
@@ -2540,15 +2560,21 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc3");
 
-				PortletEntry.changeLocale(locale = "de-DE");
+				PortletEntry.changeLocale(
+					locale = "de-DE",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
 
-				PortletEntry.changeLocale(locale = "fr-FR");
+				PortletEntry.changeLocale(
+					locale = "fr-FR",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-fr");
 
-				PortletEntry.changeLocale(locale = "es-ES");
+				PortletEntry.changeLocale(
+					locale = "es-ES",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
@@ -2571,11 +2597,15 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc");
 
-				PortletEntry.changeLocale(locale = "zh-CN");
+				PortletEntry.changeLocale(
+					locale = "zh-CN",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-				PortletEntry.changeLocale(locale = "de-DE");
+				PortletEntry.changeLocale(
+					locale = "de-DE",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
 			}
@@ -2606,19 +2636,27 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-			PortletEntry.changeLocale(locale = "ja-JP");
+			PortletEntry.changeLocale(
+				locale = "ja-JP",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
-			PortletEntry.changeLocale(locale = "zh-CN");
+			PortletEntry.changeLocale(
+				locale = "zh-CN",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "");
 
-			PortletEntry.changeLocale(locale = "fr-FR");
+			PortletEntry.changeLocale(
+				locale = "fr-FR",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-fr");
 
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
@@ -2660,11 +2698,15 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc");
 
-				PortletEntry.changeLocale(locale = "zh-CN");
+				PortletEntry.changeLocale(
+					locale = "zh-CN",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-				PortletEntry.changeLocale(locale = "ja-JP");
+				PortletEntry.changeLocale(
+					locale = "ja-JP",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
@@ -2682,11 +2724,15 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc2");
 
-				PortletEntry.changeLocale(locale = "de-DE");
+				PortletEntry.changeLocale(
+					locale = "de-DE",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
 
-				PortletEntry.changeLocale(locale = "es-ES");
+				PortletEntry.changeLocale(
+					locale = "es-ES",
+					translated = "true");
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
@@ -2735,11 +2781,15 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
-			PortletEntry.changeLocale(locale = "zh-CN");
+			PortletEntry.changeLocale(
+				locale = "zh-CN",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-			PortletEntry.changeLocale(locale = "ja-JP");
+			PortletEntry.changeLocale(
+				locale = "ja-JP",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
@@ -2773,15 +2823,21 @@ definition {
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc3");
 
-			PortletEntry.changeLocale(locale = "zh-CN");
+			PortletEntry.changeLocale(
+				locale = "zh-CN",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
 
-			PortletEntry.changeLocale(locale = "ja-JP");
+			PortletEntry.changeLocale(
+				locale = "ja-JP",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
-			PortletEntry.changeLocale(locale = "de-DE");
+			PortletEntry.changeLocale(
+				locale = "de-DE",
+				translated = "true");
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
 

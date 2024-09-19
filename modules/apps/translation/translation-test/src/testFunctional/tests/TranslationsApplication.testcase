@@ -121,7 +121,9 @@ definition {
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Contenido",
@@ -198,7 +200,9 @@ definition {
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Contenido editar",
@@ -275,14 +279,18 @@ definition {
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Contenido",
 			webContentDescription = "WC WebContent Descripción",
 			webContentTitle = "WC WebContent Título");
 
-		PortletEntry.changeLocale(locale = "ja-JP");
+		PortletEntry.changeLocale(
+			locale = "ja-JP",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "wc webcontentコンテンツ",

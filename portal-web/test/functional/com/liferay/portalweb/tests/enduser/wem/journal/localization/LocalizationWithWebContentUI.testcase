@@ -87,7 +87,9 @@ definition {
 				menuItem = "Edit Web Content",
 				webContentTitle = "Basic S.P.A.C.E. Banner");
 
-			PortletEntry.changeLocale(locale = "ja-JP");
+			PortletEntry.changeLocale(
+				locale = "ja-JP",
+				translated = "true");
 
 			WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner (Japanese Translation)");
 
@@ -152,7 +154,9 @@ definition {
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 
 			WebContent.addCP(
 				webContentContent = "Web Contenido Contenido",
@@ -184,7 +188,9 @@ definition {
 				menuItem = "Editar contenido web",
 				webContentTitle = "Web Contenido Titulo");
 
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 		}
 
 		task ("The the site designer could view the web content in Spanish") {
@@ -262,7 +268,9 @@ definition {
 					webContentText = "Web Content Text",
 					webContentTitle = "Web Content Title");
 
-				PortletEntry.changeLocale(locale = "fr-FR");
+				PortletEntry.changeLocale(
+					locale = "fr-FR",
+					translated = "true");
 
 				WebContent.addWithStructureCP(
 					webContentText = "Contenu de Contenu Web",
@@ -305,7 +313,9 @@ definition {
 				menuItem = "Modifier le contenu de Web",
 				webContentTitle = "Titre du contenu Web");
 
-			PortletEntry.changeLocale(locale = "fr-FR");
+			PortletEntry.changeLocale(
+				locale = "fr-FR",
+				translated = "true");
 		}
 
 		task ("Then the site designer could view the French translations") {

@@ -607,7 +607,7 @@ test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart.id}`
+				`/web/${site.name}/order/${cart.id}`
 		);
 
 		await expect(
@@ -632,7 +632,7 @@ test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart.id}`
+				`/web/${site.name}/order/${cart.id}`
 		);
 
 		await expect(
@@ -645,7 +645,9 @@ test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
 			commerceLayoutsPage.infoBoxValue(shippingOptions[0])
 		).toHaveCount(0);
 
-		await commerceLayoutsPage.infoBoxShippingMethodSelect.selectOption('Flat Rate');
+		await commerceLayoutsPage.infoBoxShippingMethodSelect.selectOption(
+			'Flat Rate'
+		);
 
 		await expect(
 			commerceLayoutsPage.infoBoxValue(shippingOptions[0])

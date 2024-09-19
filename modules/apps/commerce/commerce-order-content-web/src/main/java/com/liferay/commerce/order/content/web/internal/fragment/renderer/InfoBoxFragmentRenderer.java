@@ -201,8 +201,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:additionalProps",
-				_getAdditionalProps(
-					commerceOrder, field));
+				_getAdditionalProps(commerceOrder, field));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:commerceOrderId",
 				commerceOrder.getCommerceOrderId());
@@ -398,7 +397,8 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			}
 
 			return String.valueOf(commerceOrder.getRequestedDeliveryDate());
-		} else if (field.equals("shippingMethod")) {
+		}
+		else if (field.equals("shippingMethod")) {
 			CommerceShippingMethod commerceShippingMethod =
 				commerceOrder.getCommerceShippingMethod();
 

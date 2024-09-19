@@ -1274,6 +1274,59 @@ public interface ObjectRelationshipPersistence
 	public int countByODI1_R(long objectDefinitionId1, boolean reverse);
 
 	/**
+	 * Returns the object relationship where objectDefinitionId2 = &#63; and edge = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public ObjectRelationship findByODI2_E(
+			long objectDefinitionId2, boolean edge)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the object relationship where objectDefinitionId2 = &#63; and edge = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByODI2_E(
+		long objectDefinitionId2, boolean edge);
+
+	/**
+	 * Returns the object relationship where objectDefinitionId2 = &#63; and edge = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByODI2_E(
+		long objectDefinitionId2, boolean edge, boolean useFinderCache);
+
+	/**
+	 * Removes the object relationship where objectDefinitionId2 = &#63; and edge = &#63; from the database.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the object relationship that was removed
+	 */
+	public ObjectRelationship removeByODI2_E(
+			long objectDefinitionId2, boolean edge)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the number of matching object relationships
+	 */
+	public int countByODI2_E(long objectDefinitionId2, boolean edge);
+
+	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
 	 *
 	 * @param objectDefinitionId2 the object definition id2

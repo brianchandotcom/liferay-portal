@@ -1629,6 +1629,74 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
+	 * Returns the object relationship where objectDefinitionId2 = &#63; and edge = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByODI2_E(
+			long objectDefinitionId2, boolean edge)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByODI2_E(objectDefinitionId2, edge);
+	}
+
+	/**
+	 * Returns the object relationship where objectDefinitionId2 = &#63; and edge = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByODI2_E(
+		long objectDefinitionId2, boolean edge) {
+
+		return getPersistence().fetchByODI2_E(objectDefinitionId2, edge);
+	}
+
+	/**
+	 * Returns the object relationship where objectDefinitionId2 = &#63; and edge = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByODI2_E(
+		long objectDefinitionId2, boolean edge, boolean useFinderCache) {
+
+		return getPersistence().fetchByODI2_E(
+			objectDefinitionId2, edge, useFinderCache);
+	}
+
+	/**
+	 * Removes the object relationship where objectDefinitionId2 = &#63; and edge = &#63; from the database.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the object relationship that was removed
+	 */
+	public static ObjectRelationship removeByODI2_E(
+			long objectDefinitionId2, boolean edge)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().removeByODI2_E(objectDefinitionId2, edge);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param edge the edge
+	 * @return the number of matching object relationships
+	 */
+	public static int countByODI2_E(long objectDefinitionId2, boolean edge) {
+		return getPersistence().countByODI2_E(objectDefinitionId2, edge);
+	}
+
+	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
 	 *
 	 * @param objectDefinitionId2 the object definition id2

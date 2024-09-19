@@ -12,16 +12,20 @@ import Modal from '../../../../../../../components/Modal';
 import Table from '../../../../../../../components/Table/Table';
 import i18n from '../../../../../../../i18n';
 import {Liferay} from '../../../../../../../liferay/liferay';
+import useProvisioningData from '../hooks/useProvisioningData';
+import InstallationStatus, {InstallStatus} from './InstallStatus';
 
 type ProvisioningTableProps = ReturnType<typeof useProvisioningData>;
 
 const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
+	mutateOrder,
 	order,
 	provisioningTableData,
 	resourceRequirements,
 }) => {
 	const navigate = useNavigate();
 	const modal = useModal();
+	const unInstallModal = useModal();
 
 	const install = (requirements: any) => {
 		if (!requirements.resourceRequest?.userProjects?.length) {
@@ -29,6 +33,27 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 		}
 
 		navigate(`/order/${order?.id}/install`);
+	};
+
+	const uninstall = () => {
+		try {
+			mutateOrder((items) => items, {revalidate: true});
+
+			Liferay.Util.openToast({
+				message: i18n.translate('an-unexpected-error-occurred'),
+				type: 'success',
+			});
+
+			unInstallModal.onClose();
+		}
+		catch (error: any) {
+			console.warn(error);
+
+			Liferay.Util.openToast({
+				message: i18n.translate('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		}
 	};
 
 	return (
@@ -124,40 +149,63 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					},
 					{
 						key: 'dropdown',
-						render: () => (
-							<div
-								className="d-flex justify-content-end"
-								onClick={(event) => event.stopPropagation()}
-							>
-								<ClayDropDown
-									trigger={
-										<ClayButtonWithIcon
-											aria-label="Kebab Button"
-											displayType={null}
-											symbol="ellipsis-v"
-											title="Kebab Button"
-										/>
-									}
-								>
-									<ClayDropDown.ItemList>
-										<ClayDropDown.Item
-											disabled
-											onClick={() => {}}
-										>
-											{i18n.translate('view-details')}
-										</ClayDropDown.Item>
+						render: (_, orderItem) => {
+							const isInstalled =
+								orderItem.status === InstallStatus.INSTALLED;
 
-										<ClayDropDown.Item
-											onClick={() =>
-												install(resourceRequirements)
-											}
-										>
-											{i18n.translate('install')}
-										</ClayDropDown.Item>
-									</ClayDropDown.ItemList>
-								</ClayDropDown>
-							</div>
-						),
+							return (
+								<div
+									className="d-flex justify-content-end"
+									onClick={(event) => event.stopPropagation()}
+								>
+									<ClayDropDown
+										trigger={
+											<ClayButtonWithIcon
+												aria-label="Kebab Button"
+												displayType={null}
+												symbol="ellipsis-v"
+												title="Kebab Button"
+											/>
+										}
+									>
+										<ClayDropDown.ItemList>
+											<ClayDropDown.Item
+												disabled
+												onClick={() => {}}
+											>
+												{i18n.translate('view-details')}
+											</ClayDropDown.Item>
+
+											{!isInstalled && (
+												<ClayDropDown.Item
+													onClick={() =>
+														install(
+															resourceRequirements
+														)
+													}
+												>
+													{i18n.translate('install')}
+												</ClayDropDown.Item>
+											)}
+
+											{!isInstalled && (
+												<ClayDropDown.Item
+													onClick={() =>
+														unInstallModal.onOpenChange(
+															true
+														)
+													}
+												>
+													{i18n.translate(
+														'uninstall'
+													)}
+												</ClayDropDown.Item>
+											)}
+										</ClayDropDown.ItemList>
+									</ClayDropDown>
+								</div>
+							);
+						},
 					},
 				]}
 				rows={provisioningTableData}
@@ -193,6 +241,43 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 				{i18n.translate(
 					'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project'
 				)}
+			</Modal>
+
+			<Modal
+				first={
+					<ClayButton
+						className="rounded-lg"
+						displayType="secondary"
+						onClick={unInstallModal.onClose}
+						size="sm"
+					>
+						{i18n.translate('cancel')}
+					</ClayButton>
+				}
+				last={
+					<ClayButton
+						className="ml-2 rounded-lg"
+						displayType="danger"
+						onClick={() => uninstall()}
+						size="sm"
+					>
+						{i18n.translate('confirm-uninstall')}
+					</ClayButton>
+				}
+				observer={unInstallModal.observer}
+				size={'md' as any}
+				title="Confirm Unstallation Terms"
+				visible={unInstallModal.open}
+			>
+				<p>
+					{i18n.translate(
+						'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license'
+					)}
+				</p>
+				<p>
+					A request to uninstall the license will be processed, and it
+					will no longer be visible in your account.
+				</p>
 			</Modal>
 		</>
 	);

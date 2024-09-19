@@ -7,7 +7,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 export enum InstallStatus {
-	INSTALLED = 'completed',
+	INSTALLED = 'installed',
 	READY_TO_INSTALL = 'ready to install',
 	EXPIRED = 'expired',
 }

@@ -148,7 +148,7 @@ const CloudProductInstallation = () => {
 					</div>
 
 					<div className="col-7 mt-8 text-center">
-						<p>
+						<p className="mb-0">
 							{i18n.translate(
 								'the-installation-process-is-underway-and-should-be-completed-shortly'
 							)}
@@ -242,7 +242,9 @@ const CloudProductInstallation = () => {
 					setValue('step', StepCloudInstallation.INSTALLATION);
 
 					setTimeout(() => {
-						setValue('step', StepCloudInstallation.SUCCESS);
+
+						// setValue('step', StepCloudInstallation.SUCCESS);
+
 					}, 5000);
 					break;
 				case StepCloudInstallation.SUCCESS:
@@ -338,7 +340,7 @@ const CloudProductInstallation = () => {
 				<div>{stepsInformation[step].footerHelper}</div>
 
 				<FooterButtons
-					className="d-flex justify-content-between mt-6"
+					className="d-flex justify-content-between"
 					dataButtons={buttonsInfo}
 				/>
 			</div>

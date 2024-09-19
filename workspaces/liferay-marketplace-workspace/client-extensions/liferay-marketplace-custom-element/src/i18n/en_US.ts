@@ -7,6 +7,8 @@ export default {
 	'a-cloud-app-is-a-client-extension-delivered-as-a-deployed-service-to-liferay-saas-and-liferay-paas-customers-dxp-apps-include-jar-based-collection-meant-to-run-within-liferay-dxp-fragments-client-extensions-that-do-not-require-dedicated-resources':
 		'A Cloud App is a client extension  delivered as a deployed service to Liferay SaaS and Liferay PaaS customers. DXP apps include JAR based collection meant to run within Liferay DXP, Fragments & Client Extensions that do not require dedicated resources.',
 	'a-liferay-cloud-app-is-a-collection-of-1-to-n-client-extension-artifacts-made-available-via-the-liferay-marketplace-it-is-installed-and-managed-as-a-single-atomic-unit-in-liferay-experience-cloud-a-dxp-app-is-a-jar-based-collection-meant-to-run-within-liferay-dxp-it-is-only-supported-on-self-hosted-or-self-managed-liferay-cloud-instances': `A Liferay Cloud App is a collection of 1 to N client extension artifacts made available via the Liferay Marketplace. It is installed and managed as a single atomic unit in Liferay SaaS. A DXP App is a JAR based collection meant to run within Liferay DXP.  It is only supported on Self Hosted or Self Managed Liferay Cloud instances.`,
+	'a-request-to-uninstall-the-license-will-be-processed-and-it-will-no-longer-be-visible-in-your-account':
+		'A request to uninstall the license will be processed, and it will no longer be visible in your account.',
 	'a-request-will-be-sent-to-deactivate-the-selected-activation-key-from-now-on-it-will-be-hidden-and-no-longer-be-visible':
 		'A request will be sent to deactivate the selected activation key. From now on It will be hidden and no longer be visible.',
 	'access-console': 'Access Console',
@@ -54,6 +56,7 @@ export default {
 	'approve': 'Approve',
 	'approved': 'Approved',
 	'apps': 'Apps',
+
 	'available': 'Available',
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
@@ -85,6 +88,7 @@ export default {
 	'confirm': 'Confirm',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
+	'confirm-uninstall': 'Confirm & Uninstall',
 	'contact-publisher': 'Contact Publisher',
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',
@@ -185,6 +189,9 @@ export default {
 	'go-to-trial': 'Go to Trial',
 	'header': 'Header',
 	'host-name': 'Host Name',
+
+	'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license':
+		'I certify that all Liferay software running on instances activated with the selected license has been shut down. There are no active Liferay installations or deployments associated with this license.',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'id': 'ID',
@@ -421,6 +428,7 @@ export default {
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
 	'under-review': 'Under Review',
+	'uninstall': 'Uninstall',
 	'upload-at-least-one-image-or-add-a-video-url':
 		'Upload at least one image, or add a video url',
 	'upload-image': 'Upload image',

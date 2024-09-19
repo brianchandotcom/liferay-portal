@@ -10,11 +10,12 @@ import useProvisioningData from './hooks/useProvisioningData';
 
 const Provisioning = () => {
 	const {orderId} = useParams();
-	const {order, provisioningTableData, resourceRequirements} =
+	const {mutateOrder, order, provisioningTableData, resourceRequirements} =
 		useProvisioningData(orderId as string);
 
 	return (
 		<ProvisioningTable
+			mutateOrder={mutateOrder}
 			order={order}
 			provisioningTableData={provisioningTableData || []}
 			resourceRequirements={resourceRequirements}

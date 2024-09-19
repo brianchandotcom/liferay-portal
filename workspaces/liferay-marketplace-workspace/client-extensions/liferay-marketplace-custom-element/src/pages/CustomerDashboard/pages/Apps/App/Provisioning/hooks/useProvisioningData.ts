@@ -15,7 +15,7 @@ import {CUSTON_FIELKEYS, LICENSE_TYPE_KEY} from '../Types';
 import {InstallStatus} from '../components/InstallStatus';
 
 const useProvisioningData = (orderId: string) => {
-	const {data} = useGetProductByOrderId(orderId);
+	const {data, mutate: mutateOrder} = useGetProductByOrderId(orderId);
 
 	const order = data?.placedOrder;
 	const orderItems = order.placedOrderItems;
@@ -78,6 +78,7 @@ const useProvisioningData = (orderId: string) => {
 	]);
 
 	return {
+		mutateOrder,
 		order,
 		provisioningTableData,
 		resourceRequirements,

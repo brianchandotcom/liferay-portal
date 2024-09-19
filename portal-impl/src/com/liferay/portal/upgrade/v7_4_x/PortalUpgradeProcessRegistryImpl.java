@@ -471,6 +471,10 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(31, 8, 0),
 			new EmailAddressExternalReferenceCodeUpgradeProcess());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 9, 0),
+			new WebsiteExternalReferenceCodeUpgradeProcess());
 	}
 
 }

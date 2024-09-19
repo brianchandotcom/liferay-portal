@@ -79,11 +79,8 @@ public class FrontendTokenDefinitionRegistryImpl
 			companyCETFrontendTokenDefinitions =
 				_cetFrontendTokenDefinitions.get(companyId);
 
-		List<FrontendTokenDefinition> cetFrontendTokenDefinitions =
-			new ArrayList<>(companyCETFrontendTokenDefinitions.values());
-
 		return ListUtil.concat(
-			cetFrontendTokenDefinitions,
+			new ArrayList<>(companyCETFrontendTokenDefinitions.values()),
 			new ArrayList<>(_themeFrontendTokenDefinitions.values()));
 	}
 

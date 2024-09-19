@@ -14,8 +14,8 @@ import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -45,7 +45,7 @@ public class UpgradeVirtualHostTest extends BaseCTUpgradeProcessTestCase {
 	protected CTModel<?> addCTModel() throws Exception {
 		List<VirtualHost> virtualHosts =
 			_virtualHostLocalService.updateVirtualHosts(
-				TestPropsValues.getCompanyId(), 0,
+				PortalUtil.getDefaultCompanyId(), 0,
 				TreeMapBuilder.put(
 					"localhost", StringPool.BLANK
 				).build());

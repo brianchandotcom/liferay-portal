@@ -114,12 +114,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		super.testPatchSiteSiteByExternalReferenceCodeSitePage();
 	}
 
-	@Override
-	@Test
-	public void testPostByExternalReferenceCodeSitePage() throws Exception {
-		super.testPostByExternalReferenceCodeSitePage();
-	}
-
 	@Ignore
 	@Override
 	@Test

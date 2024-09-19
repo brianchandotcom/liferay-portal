@@ -514,19 +514,19 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("failed, b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, b.c_buildId_, ");
-		sb.append("b.dueDate_, b.gitHash_, b.name_, b.promoted_, ");
-		sb.append("b.archived_, pv.name_ as productVersionName, (select ");
-		sb.append("dueStatus_ from O_[%COMPANY_ID%]_Task t where ");
+		sb.append("b.dueDate_, bx.importStatus_, b.gitHash_, b.name_, ");
+		sb.append("b.promoted_, b.archived_, pv.name_ as productVersionName, ");
+		sb.append("(select dueStatus_ from O_[%COMPANY_ID%]_Task t where ");
 		sb.append("t.r_buildToTasks_c_buildId = b.c_buildId_) as taskStatus ");
-		sb.append("from O_[%COMPANY_ID%]_Build b, ");
-		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
+		sb.append("from O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_Build_x ");
+		sb.append("bx, O_[%COMPANY_ID%]_ProductVersion pv ");
 
 		if (Validator.isNotNull(testrayTaskStatus)) {
 			sb.append(", O_[%COMPANY_ID%]_Task t ");
 		}
 
 		sb.append("where b.r_routineToBuilds_c_routineId = ? and ");
-		sb.append("pv.c_productVersionId_ = ");
+		sb.append("bx.c_buildid_ = b.c_buildid_ and pv.c_productVersionId_ = ");
 		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
 		sb.append("b.template_ = false and b.archived_ = false ");
 
@@ -551,8 +551,8 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		sb.append("group by b.c_buildId_, pv.name_ order by b.c_buildId_ ");
-		sb.append("desc limit ? offset ?");
+		sb.append("group by b.c_buildId_, bx.importstatus_, pv.name_ order ");
+		sb.append("by b.c_buildId_ desc limit ? offset ?");
 
 		sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",
@@ -575,6 +575,8 @@ public class TestrayStatusMetricResourceImpl
 							value.get("githash_"));
 						testrayBuildId = GetterUtil.getLong(
 							value.get("c_buildid_"));
+						testrayBuildImportStatus = GetterUtil.getString(
+							value.get("importstatus_"));
 						testrayBuildName = GetterUtil.getString(
 							value.get("name_"));
 						testrayBuildProductVersion = GetterUtil.getString(

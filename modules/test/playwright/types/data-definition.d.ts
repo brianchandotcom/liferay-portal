@@ -28,6 +28,7 @@ type DefinitionField = {
 	localizable: boolean;
 	name: string;
 	repeatable: boolean;
+	required?: boolean;
 	showLabel: boolean;
 };
 

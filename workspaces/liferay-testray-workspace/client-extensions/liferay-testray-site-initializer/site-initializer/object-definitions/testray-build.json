@@ -122,6 +122,19 @@
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
+				"en_US": "Import Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Build Import Statuses$]",
+			"name": "importStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
 				"en_US": "Due Status"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Build Statuses$]",

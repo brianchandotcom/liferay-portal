@@ -697,6 +697,11 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	@Override
+	public void deleteResourcePermissions(String name) {
+		resourcePermissionPersistence.removeByName(name);
+	}
+
+	@Override
 	public ResourcePermission fetchResourcePermission(
 		long companyId, String name, int scope, String primKey, long roleId) {
 

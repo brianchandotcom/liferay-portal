@@ -31,7 +31,7 @@ public class ConsoleService extends BaseRestController {
 	public void deleteProject(String projectId) throws Exception {
 		String projectName = _consoleProjectPrefix + "-ext" + projectId;
 
-		delete(getAccessToken(), null, "/projects/" + projectName);
+		delete(getAuthorization(), null, "/projects/" + projectName);
 	}
 
 	public JSONObject deployApp(
@@ -40,7 +40,7 @@ public class ConsoleService extends BaseRestController {
 
 		JSONObject jsonObject = new JSONObject(
 			post(
-				getAccessToken(),
+				getAuthorization(),
 				new JSONObject(
 				).put(
 					"orderId", orderId
@@ -56,7 +56,7 @@ public class ConsoleService extends BaseRestController {
 		return jsonObject;
 	}
 
-	public String getAccessToken() throws Exception {
+	public String getAuthorization() throws Exception {
 		if ((_accessToken != null) &&
 			(System.currentTimeMillis() < (_tokenExpirationMillis - 30000))) {
 
@@ -77,20 +77,22 @@ public class ConsoleService extends BaseRestController {
 			throw new Exception("Unable to get authorization");
 		}
 
-		_accessToken = new JSONObject(
+		String token = new JSONObject(
 			json
 		).getString(
 			"token"
 		);
 
+		_accessToken = "Bearer " + token;
+
 		_tokenExpirationMillis = System.currentTimeMillis() + 900000;
 
-		return "Bearer " + _accessToken;
+		return _accessToken;
 	}
 
 	public String getProjectsUsage(String userEmail) throws Exception {
 		return get(
-			getAccessToken(),
+			getAuthorization(),
 			_defaultUriBuilderFactory.builder(
 			).path(
 				"/admin/user-projects-plan-usage"
@@ -117,7 +119,7 @@ public class ConsoleService extends BaseRestController {
 	}
 
 	public void uninstallApp(long orderId) throws Exception {
-		delete(getAccessToken(), null, "/apps/" + orderId);
+		delete(getAuthorization(), null, "/apps/" + orderId);
 	}
 
 	@Override
@@ -147,7 +149,7 @@ public class ConsoleService extends BaseRestController {
 		throws Exception {
 
 		post(
-			getAccessToken(),
+			getAuthorization(),
 			new JSONObject(
 			).put(
 				"email", emailAddress
@@ -168,7 +170,7 @@ public class ConsoleService extends BaseRestController {
 		throws Exception {
 
 		post(
-			getAccessToken(),
+			getAuthorization(),
 			new JSONObject(
 			).put(
 				"dxpProjectUid", _consoleProjectUid
@@ -190,7 +192,7 @@ public class ConsoleService extends BaseRestController {
 	private JSONObject _postProject(String projectId) throws Exception {
 		JSONObject jsonObject = new JSONObject(
 			post(
-				getAccessToken(),
+				getAuthorization(),
 				new JSONObject(
 				).put(
 					"cluster", _consoleCluster

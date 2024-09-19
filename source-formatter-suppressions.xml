@@ -72,6 +72,12 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="CDNCheck" files="test\.properties" />
+		<suppress checks="CSPComplianceCheck" files="modules/apps/frontend-editor/frontend-editor-ckeditor-sample-web/src/main/resources/META-INF/resources/view_xss\.jsp" />
+		<suppress checks="CSPComplianceCheck" files="modules/apps/site-initializer/.*\.ftl" />
+		<suppress checks="CSPComplianceCheck" files="modules/dxp/apps/osb/osb-site-initializer/.*\.ftl" />
+		<suppress checks="CSPComplianceCheck" files="portal-impl/src/com/liferay/portal/tools/propertiesdoc/dependencies/properties\.ftl" />
+		<suppress checks="CSPComplianceCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies/adt_media_gallery_carousel\.ftl" />
+		<suppress checks="CSPComplianceCheck" files="workspaces/.*" />
 		<suppress checks="GetterUtilCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/GetterUtilTest\.java" />
 		<suppress checks="GradleDependencyConfigurationCheck" files="workspaces/.*" />
 		<suppress checks="GradleMissingDependenciesForUpgradeJava21Check" files="workspaces/.*" />

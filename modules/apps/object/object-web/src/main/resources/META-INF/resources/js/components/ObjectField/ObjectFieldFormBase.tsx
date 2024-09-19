@@ -40,6 +40,7 @@ import './ObjectFieldFormBase.scss';
 
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 
 interface ObjectFieldFormBaseProps {
 	baseResourceURL: string;
@@ -570,14 +571,22 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-				<div className="lfr-objects__object-field-form-base-picklist">
+				<div className="form-group lfr-objects__object-field-form-base-picklist-container">
 					{reloadPicklistSingleSelect ? (
 						<ClayLoadingIndicator
 							displayType="secondary"
 							size="sm"
 						/>
 					) : (
-						<div className="lfr-objects__object-field-form-base-picklist-container">
+						<div
+							className={classNames(
+								'lfr-objects__object-field-form-base-picklist-single-select',
+								{
+									'lfr-objects__object-field-form-base-picklist-single-select-error':
+										errors.listTypeDefinitionId,
+								}
+							)}
+						>
 							<SingleSelect
 								className="lfr-objects__object-field-form-base-picklist-select-field"
 								disabled={disabled}

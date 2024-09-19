@@ -22,34 +22,36 @@
 	}
 
 	&-picklist {
-		.lfr-objects__object-field-form-base-picklist-container {
-			align-items: center;
+		&-container {
 			display: flex;
-			width: 100%;
-		}
-
-		.lfr-objects__object-field-form-base-picklist-manage-button {
-			margin-bottom: 1.5rem;
+			flex-direction: column;
+			gap: 1rem;
 		}
 
 		&-manage-button {
-			margin-top: 5px;
-			max-height: 40px;
-			min-width: 210px;
-
-			> span {
-				margin-right: 5px;
-			}
-		}
-
-		&-reload-button {
-			margin: 15px 10px 0;
-			min-width: 40px;
+			align-items: center;
+			display: flex;
+			gap: 0.5rem;
+			width: max-content;
 		}
 
 		&-select-field {
-			margin-bottom: 5px;
+			margin-bottom: unset;
 			width: 100%;
+
+			&:not(.has-error) div:first-child {
+				margin-top: unset;
+			}
+		}
+
+		&-single-select {
+			align-items: end;
+			display: flex;
+			gap: 1rem;
+
+			&-error {
+				align-items: center;
+			}
 		}
 	}
 }

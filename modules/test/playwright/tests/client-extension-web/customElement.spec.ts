@@ -64,6 +64,10 @@ for (const sample of SAMPLES) {
 		await test.step(`${sample.name} is visible and configured from Workspace`, async () => {
 			await clientExtensionsPage.goto();
 
+			await page.getByPlaceholder('Search').fill(sample.name);
+
+			await page.getByRole('button', {name: 'Search'}).click();
+
 			await clientExtensionsPage.assertName(sample.name);
 
 			await clientExtensionsPage.assertIsConfiguredFrom(

@@ -113,14 +113,14 @@ public class ExceptionMapperTest {
 		@Path("/testNoSuchModelException")
 		@Produces("application/json")
 		public String testNoSuchModelException() throws NoSuchModelException {
-			throw new NoSuchModelException("Object cannot be found");
+			throw new NoSuchModelException();
 		}
 
 		@GET
 		@Path("/testPrincipalException")
 		@Produces("application/json")
 		public String testPrincipalException() throws PrincipalException {
-			throw new PrincipalException("User needs permissions to object");
+			throw new PrincipalException();
 		}
 
 	}

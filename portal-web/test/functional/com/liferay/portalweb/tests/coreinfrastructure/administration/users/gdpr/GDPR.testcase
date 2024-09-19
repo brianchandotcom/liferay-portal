@@ -1893,9 +1893,32 @@ definition {
 					Click(locator1 = "Pagination#NEXT_LINK");
 
 					if (IsElementPresent(key_rowEntry = "com.liferay.portal.tools.service.builder.test.uad", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
-						Pagination.viewResults(results = "Showing 9 to 10 of 10 entries.");
+						Pagination.viewResults(results = "Showing 9 to 11 of 11 entries.");
 
 						for (var listedEntries : list "com.liferay.portal.tools.service.builder.test.uad,Wiki") {
+							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
+						}
+
+						for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
+							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
+						}
+
+						Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+						Pagination.viewResults(results = "Showing 5 to 8 of 11 entries.");
+
+						for (var listedEntries : list "Documents and Media,Forms,Web Content,Message Boards") {
+							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
+						}
+
+						for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,com.liferay.portal.tools.service.builder.test.uad,Wiki") {
+							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
+						}
+					}
+					else {
+						Pagination.viewResults(results = "Showing 9 to 10 of 10 entries.");
+
+						for (var listedEntries : list "Wiki") {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 
@@ -1911,14 +1934,16 @@ definition {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 
-						for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,com.liferay.portal.tools.service.builder.test.uad,Wiki") {
+						for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Wiki") {
 							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
 						}
 					}
-					else {
-						Pagination.viewResults(results = "Showing 9 to 9 of 9 entries.");
+				}
+				else if (${listEntries} == 8) {
+					if (IsElementPresent(key_rowEntry = "com.liferay.portal.tools.service.builder.test.uad", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+						Pagination.viewResults(results = "Showing 9 to 11 of 11 entries.");
 
-						for (var listedEntries : list "Wiki") {
+						for (var listedEntries : list "com.liferay.portal.tools.service.builder.test.uad,Wiki") {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 
@@ -1928,22 +1953,20 @@ definition {
 
 						Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-						Pagination.viewResults(results = "Showing 5 to 8 of 9 entries.");
+						Pagination.viewResults(results = "Showing 1 to 8 of 11 entries.");
 
-						for (var listedEntries : list "Documents and Media,Forms,Web Content,Message Boards") {
+						for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 
-						for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Wiki") {
+						for (var unlistedEntries : list "com.liferay.portal.tools.service.builder.test.uad,Wiki") {
 							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
 						}
 					}
-				}
-				else if (${listEntries} == 8) {
-					if (IsElementPresent(key_rowEntry = "com.liferay.portal.tools.service.builder.test.uad", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+					else {
 						Pagination.viewResults(results = "Showing 9 to 10 of 10 entries.");
 
-						for (var listedEntries : list "com.liferay.portal.tools.service.builder.test.uad,Wiki") {
+						for (var listedEntries : list "Wiki") {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 
@@ -1959,29 +1982,6 @@ definition {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 
-						for (var unlistedEntries : list "com.liferay.portal.tools.service.builder.test.uad,Wiki") {
-							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
-						}
-					}
-					else {
-						Pagination.viewResults(results = "Showing 9 to 9 of 9 entries.");
-
-						for (var listedEntries : list "Wiki") {
-							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
-						}
-
-						for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
-							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
-						}
-
-						Click(locator1 = "Pagination#PREVIOUS_LINK");
-
-						Pagination.viewResults(results = "Showing 1 to 8 of 9 entries.");
-
-						for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
-							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
-						}
-
 						for (var unlistedEntries : list "Wiki") {
 							LexiconEntry.viewNoEntry(rowEntry = ${unlistedEntries});
 						}
@@ -1989,14 +1989,14 @@ definition {
 				}
 				else {
 					if (IsElementPresent(key_rowEntry = "com.liferay.portal.tools.service.builder.test.uad", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
-						Pagination.viewResults(results = "Showing 1 to 10 of 10 entries.");
+						Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
 
 						for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,com.liferay.portal.tools.service.builder.test.uad,Wiki") {
 							LexiconEntry.viewEntryName(rowEntry = ${listedEntries});
 						}
 					}
 					else if (IsElementNotPresent(key_rowEntry = "com.liferay.portal.tools.service.builder.test.uad", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
-						Pagination.viewResults(results = "Showing 1 to 9 of 9 entries.");
+						Pagination.viewResults(results = "Showing 1 to 10 of 10 entries.");
 
 						for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,Wiki") {
 							LexiconEntry.viewEntryName(rowEntry = ${unlistedEntries});

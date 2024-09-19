@@ -10,8 +10,10 @@ interface Props {
 }
 
 interface Field {
+	fieldType?: 'text' | 'select';
 	localizable?: boolean;
 	name: string;
+	options?: Options;
 	repeatable?: boolean;
 	required?: boolean;
 }
@@ -25,8 +27,10 @@ export default function getDataStructureDefinition({
 		availableLanguageIds: [defaultLanguageId],
 		dataDefinitionFields: fields.map(
 			({
+				fieldType = 'text',
 				localizable = true,
 				name: fieldName,
+				options,
 				repeatable = false,
 				required = false,
 			}) => {
@@ -35,9 +39,10 @@ export default function getDataStructureDefinition({
 						dataType: 'string',
 						displayStyle: 'singleline',
 						fieldReference: fieldName,
+						options,
 					},
 					defaultValue: {},
-					fieldType: 'text',
+					fieldType,
 					indexType: 'keyword',
 					label: {
 						[defaultLanguageId]: fieldName,

@@ -153,6 +153,28 @@ export class JournalPage {
 		});
 	}
 
+	async moveToFolder(folderName: String) {
+		await this.page.getByRole('button', {name: 'Move'}).click();
+
+		await this.page.getByRole('button', {name: 'Select'}).click();
+
+		await this.page
+			.frameLocator('iframe[title="Select Folder"]')
+			.getByRole('button')
+			.click();
+
+		await this.page
+			.frameLocator('iframe[title="Select Folder"]')
+			.getByText(`${folderName}`)
+			.click();
+
+		await this.page.getByRole('button', {name: 'Move'}).click();
+
+		await expect(
+			this.page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+	}
+
 	async publishArticle() {
 		await this.publishButton.click();
 

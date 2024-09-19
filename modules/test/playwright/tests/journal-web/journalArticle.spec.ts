@@ -275,25 +275,7 @@ baseTest(
 
 		await page.getByLabel(`${childFolder.name}`).check();
 
-		await page.getByRole('button', {name: 'Move'}).click();
-
-		await page.getByRole('button', {name: 'Select'}).click();
-
-		await page
-			.frameLocator('iframe[title="Select Folder"]')
-			.getByRole('button')
-			.click();
-
-		await page
-			.frameLocator('iframe[title="Select Folder"]')
-			.getByText(`${parentFolder.name}`)
-			.click();
-
-		await page.getByRole('button', {name: 'Move'}).click();
-
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+		await journalPage.moveToFolder(parentFolder.name);
 
 		await expect(page.getByText(`${childFolder.name}`)).toBeHidden();
 

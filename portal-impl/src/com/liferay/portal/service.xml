@@ -3064,7 +3064,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="Website" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="Website" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

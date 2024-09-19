@@ -144,17 +144,14 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testGetRedirect() throws Exception {
-		_testGetRedirectWithPortletFriendlyURL(null);
-		_testGetRedirectWithPortletFriendlyURL(_sourceLocale);
-
 		_testGetRedirectWithControlPanelURL(false);
 		_testGetRedirectWithControlPanelURL(true);
-
 		_testGetRedirectWithFriendlyURL(false);
 		_testGetRedirectWithFriendlyURL(true);
-
-		_testGetRedirectWithPortletURLMapping(null);
+		_testGetRedirectWithPortletFriendlyURL(_sourceLocale);
+		_testGetRedirectWithPortletFriendlyURL(null);
 		_testGetRedirectWithPortletURLMapping(_sourceLocale);
+		_testGetRedirectWithPortletURLMapping(null);
 	}
 
 	@Test

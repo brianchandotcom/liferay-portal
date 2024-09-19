@@ -1,0 +1,26 @@
+[
+	{
+		"key": "PENDING",
+		"name": "PENDING",
+		"name_i18n": {
+			"en-US": "PENDING"
+		},
+		"type": "string"
+	},
+	{
+		"key": "INPROGRESS",
+		"name": "IN PROGRESS",
+		"name_i18n": {
+			"en-US": "IN PROGRESS"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DONE",
+		"name": "DONE",
+		"name_i18n": {
+			"en-US": "DONE"
+		},
+		"type": "string"
+	}
+]

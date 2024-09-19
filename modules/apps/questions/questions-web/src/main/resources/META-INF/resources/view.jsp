@@ -13,6 +13,14 @@
 
 	<%
 	QuestionsConfiguration questionsConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(QuestionsConfiguration.class, themeDisplay);
+
+	long categoryId = 0;
+
+	if (!Validator.isBlank(questionsConfiguration.rootTopicExternalReferenceCode())) {
+		MBCategory mbCategory = MBCategoryLocalServiceUtil.getMBCategoryByExternalReferenceCode(questionsConfiguration.rootTopicExternalReferenceCode(), themeDisplay.getScopeGroupId());
+
+		categoryId = mbCategory.getCategoryId();
+	}
 	%>
 
 	<react:component
@@ -49,7 +57,7 @@
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
 			).put(
-				"rootTopicId", questionsConfiguration.rootTopicId()
+				"rootTopicId", categoryId
 			).put(
 				"showCardsForTopicNavigation", questionsConfiguration.showCardsForTopicNavigation()
 			).put(

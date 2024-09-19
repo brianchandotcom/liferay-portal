@@ -30,6 +30,7 @@ import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
@@ -146,7 +147,7 @@ public class RelatedObjectEntryOpenAPIContributor
 			_getIdParameterTemplate(schemaName), StringPool.SLASH,
 			systemObjectRelationship.getName());
 
-		Schema parameterSchema = null;
+		Schema idSchema = new StringSchema();
 
 		PathItem pathItem = paths.get(
 			StringBundler.concat(
@@ -157,25 +158,18 @@ public class RelatedObjectEntryOpenAPIContributor
 		Operation getOperation = (pathItem != null) ? pathItem.getGet() : null;
 
 		if ((getOperation != null) && (getOperation.getParameters() != null)) {
-			for (Parameter parameter : getOperation.getParameters()) {
-				if ((parameter != null) &&
-					Objects.equals(
-						_getIdParameterName(schemaName), parameter.getName())) {
+			String idParameterName = _getIdParameterName(schemaName);
 
-					parameterSchema = parameter.getSchema();
+			for (Parameter parameter : getOperation.getParameters()) {
+				if (Objects.equals(idParameterName, parameter.getName())) {
+					idSchema = parameter.getSchema();
 
 					break;
 				}
 			}
 		}
 
-		if (parameterSchema == null) {
-			parameterSchema = new Schema<>().type(
-				"string"
-			);
-		}
-
-		Schema finalParameterSchema = parameterSchema;
+		Schema finalIdSchema = idSchema;
 
 		paths.addPathItem(
 			name,
@@ -183,8 +177,8 @@ public class RelatedObjectEntryOpenAPIContributor
 				{
 					get(
 						_getGetOperation(
-							systemObjectRelationship, relatedSchemaName,
-							schemaName, finalParameterSchema));
+							finalIdSchema, systemObjectRelationship,
+							relatedSchemaName, schemaName));
 				}
 			});
 		paths.addPathItem(
@@ -196,12 +190,12 @@ public class RelatedObjectEntryOpenAPIContributor
 				{
 					delete(
 						_getDeleteOperation(
-							systemObjectRelationship, relatedSchemaName,
-							schemaName, finalParameterSchema));
+							finalIdSchema, systemObjectRelationship,
+							relatedSchemaName, schemaName));
 					put(
 						_getPutOperation(
-							systemObjectRelationship, relatedSchemaName,
-							schemaName, finalParameterSchema));
+							finalIdSchema, systemObjectRelationship,
+							relatedSchemaName, schemaName));
 				}
 			});
 	}
@@ -226,8 +220,8 @@ public class RelatedObjectEntryOpenAPIContributor
 	}
 
 	private Operation _getDeleteOperation(
-		ObjectRelationship objectRelationship, String relatedSchemaName,
-		String schemaName, Schema finalParameterSchema) {
+		Schema idSchema, ObjectRelationship objectRelationship,
+		String relatedSchemaName, String schemaName) {
 
 		return new Operation() {
 			{
@@ -241,7 +235,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								in("path");
 								name(_getIdParameterName(schemaName));
 								required(true);
-								schema(finalParameterSchema);
+								schema(idSchema);
 							}
 						},
 						new Parameter() {
@@ -249,7 +243,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								in("path");
 								name(_getIdParameterName(relatedSchemaName));
 								required(true);
-								schema(finalParameterSchema);
+								schema(idSchema);
 							}
 						}));
 				responses(
@@ -270,8 +264,8 @@ public class RelatedObjectEntryOpenAPIContributor
 	}
 
 	private Operation _getGetOperation(
-		ObjectRelationship objectRelationship, String relatedSchemaName,
-		String schemaName, Schema finalParameterSchema) {
+		Schema idSchema, ObjectRelationship objectRelationship,
+		String relatedSchemaName, String schemaName) {
 
 		String parameterName = _getIdParameterName(schemaName);
 
@@ -287,7 +281,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								in("path");
 								name(parameterName);
 								required(true);
-								schema(finalParameterSchema);
+								schema(idSchema);
 							}
 						}));
 				responses(
@@ -336,8 +330,8 @@ public class RelatedObjectEntryOpenAPIContributor
 	}
 
 	private Operation _getPutOperation(
-		ObjectRelationship objectRelationship, String relatedSchemaName,
-		String schemaName, Schema finalParameterSchema) {
+		Schema idSchema, ObjectRelationship objectRelationship,
+		String relatedSchemaName, String schemaName) {
 
 		return new Operation() {
 			{
@@ -351,7 +345,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								in("path");
 								name(_getIdParameterName(schemaName));
 								required(true);
-								schema(finalParameterSchema);
+								schema(idSchema);
 							}
 						},
 						new Parameter() {
@@ -359,7 +353,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								in("path");
 								name(_getIdParameterName(relatedSchemaName));
 								required(true);
-								schema(finalParameterSchema);
+								schema(idSchema);
 							}
 						}));
 				responses(

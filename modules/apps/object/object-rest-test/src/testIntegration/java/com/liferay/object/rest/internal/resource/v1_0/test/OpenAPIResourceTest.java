@@ -302,8 +302,16 @@ public class OpenAPIResourceTest {
 			jaxRsApplicationDescriptor.getApplicationPath(), StringPool.SLASH,
 			jaxRsApplicationDescriptor.getVersion(), "/openapi.json");
 
-		_assertOpenAPI(
-			"expected_openapi_SystemObject_relationship.json", endpoint);
+		JSONAssert.assertEquals(
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies" +
+						"/expected_openapi_system_object_relationship.json")),
+			HTTPTestUtil.invokeToJSONObject(
+				null, endpoint, Http.Method.GET
+			).toString(),
+			JSONCompareMode.STRICT);
 
 		ObjectRelationshipLocalServiceUtil.
 			deleteObjectRelationshipMappingTableValues(
@@ -325,18 +333,6 @@ public class OpenAPIResourceTest {
 			HTTPTestUtil.invokeToJSONObject(
 				null, objectDefinition.getRESTContextPath() + "/openapi.json",
 				Http.Method.GET
-			).toString(),
-			JSONCompareMode.STRICT);
-	}
-
-	private void _assertOpenAPI(String fileName, String endpoint)
-		throws Exception {
-
-		JSONAssert.assertEquals(
-			new String(
-				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
-			HTTPTestUtil.invokeToJSONObject(
-				null, endpoint, Http.Method.GET
 			).toString(),
 			JSONCompareMode.STRICT);
 	}

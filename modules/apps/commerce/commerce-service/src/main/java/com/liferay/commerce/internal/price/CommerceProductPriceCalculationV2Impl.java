@@ -189,8 +189,7 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		BigDecimal baseQuantity = quantity.divide(
-			unitOfMeasureIncrementalOrderQuantity,
-			unitOfMeasureIncrementalOrderQuantity.scale(),
+			unitOfMeasureIncrementalOrderQuantity, _SCALE,
 			RoundingMode.HALF_UP);
 
 		if (discountsTargetNetPrice) {

@@ -17,6 +17,8 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                defaultLanguageId:
+                    type: string
                 externalReferenceCode:
                     type: string
                 id:

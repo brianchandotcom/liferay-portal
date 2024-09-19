@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.log.LogCapture;
@@ -93,11 +94,11 @@ public class ProblemWriterInterceptorTest {
 
 			Throwable throwable = logEntry.getThrowable();
 
-			Assert.assertEquals("Test Error", throwable.getMessage());
+			Assert.assertEquals(_MESSAGE, throwable.getMessage());
 		}
 	}
 
-	public static class TestApplication extends Application {
+	public class TestApplication extends Application {
 
 		@Override
 		public Set<Object> getSingletons() {
@@ -108,10 +109,12 @@ public class ProblemWriterInterceptorTest {
 		@Path("/test")
 		@Produces("application/json")
 		public String test() throws Exception {
-			throw new NotFoundException("Test Error");
+			throw new NotFoundException(_MESSAGE);
 		}
 
 	}
+
+	private static final String _MESSAGE = RandomTestUtil.randomString();
 
 	private ServiceRegistration<Application> _serviceRegistration;
 

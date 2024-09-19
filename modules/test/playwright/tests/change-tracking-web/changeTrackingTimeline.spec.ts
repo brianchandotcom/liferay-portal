@@ -268,3 +268,94 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 
 	await expect(timelineActionsButton).toBeVisible({visible: false});
 });
+
+test('LPD-26155 Conflict warning is visible when content is edited in more than one publication', async ({
+	apiHelpers,
+	changeTrackingPage,
+	documentLibraryEditFilePage,
+	documentLibraryPage,
+	page,
+	site,
+}) => {
+	const ctCollection2 =
+		await apiHelpers.headlessChangeTracking.createCTCollection(
+			getRandomString()
+		);
+
+	await changeTrackingPage.workOnPublication(ctCollection2);
+
+	await documentLibraryPage.goto(site.friendlyUrlPath);
+
+	const title3 = getRandomString();
+
+	await documentLibraryPage.editFileEntry(title1);
+
+	await documentLibraryEditFilePage.titleSelector.fill(title3);
+
+	await documentLibraryEditFilePage.publishButton.click();
+
+	await waitForSuccessAlert(
+		page,
+		'Success:Your request completed successfully.'
+	);
+
+	const timelineButton = page.locator('.change-tracking-timeline-button svg');
+
+	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
+
+	await timelineButton.click();
+
+	const conflictWarning = page.locator(
+		'.publication-timeline .alert-warning'
+	);
+
+	await expect(conflictWarning).toBeVisible();
+
+	const conflictIcon = page.locator(
+		'.publication-timeline .change-tracking-conflict-icon-warning'
+	);
+
+	await expect(conflictIcon).toHaveCount(2);
+
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection2.id
+	);
+});
+
+test('LPD-26155 Production conflict info is visible when new changes have been made to production', async ({
+	changeTrackingPage,
+	ctCollection,
+	documentLibraryEditFilePage,
+	documentLibraryPage,
+	page,
+	site,
+}) => {
+	await changeTrackingPage.workOnProduction();
+
+	await documentLibraryPage.goto(site.friendlyUrlPath);
+
+	const title3 = getRandomString();
+
+	await documentLibraryPage.editFileEntry(title1);
+
+	await documentLibraryEditFilePage.titleSelector.fill(title3);
+
+	await documentLibraryEditFilePage.publishButton.click();
+
+	await waitForSuccessAlert(
+		page,
+		'Success:Your request completed successfully.'
+	);
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	const prodConflictIcon = page.locator(
+		'.change-tracking-conflict-icon-danger'
+	);
+
+	await expect(prodConflictIcon).toBeVisible();
+
+	await prodConflictIcon.click();
+
+	await expect(page.getByText('Production Conflict')).toBeVisible();
+});

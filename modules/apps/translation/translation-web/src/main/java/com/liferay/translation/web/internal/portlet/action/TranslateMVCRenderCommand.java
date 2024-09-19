@@ -150,11 +150,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "targetLanguageId",
 				_getDefaultTargetLanguageId(availableTargetLanguageIds));
 
-			InfoItemFieldValues targetInfoItemFieldValues =
-				_getTargetInfoItemFieldValues(
-					className, classPK, sourceInfoItemFieldValues,
-					targetLanguageId);
-
 			renderRequest.setAttribute(
 				TranslateDisplayContext.class.getName(),
 				new TranslateDisplayContext(
@@ -165,7 +160,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
 					segmentsExperienceId, sourceInfoItemFieldValues,
-					sourceLanguageId, targetInfoItemFieldValues,
+					sourceLanguageId,
+					_getTargetInfoItemFieldValues(
+						className, classPK, sourceInfoItemFieldValues,
+						targetLanguageId),
 					targetLanguageId, _translationInfoFieldChecker));
 
 			return "/translate.jsp";

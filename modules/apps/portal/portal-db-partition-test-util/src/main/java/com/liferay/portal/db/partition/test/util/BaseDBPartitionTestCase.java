@@ -407,7 +407,11 @@ public abstract class BaseDBPartitionTestCase {
 
 		createControlTable(tableName);
 
-		try (Statement statement = connection.createStatement()) {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId());
+			Statement statement = connection.createStatement()) {
+
 			statement.execute("insert into " + tableName + " values (1)");
 		}
 	}

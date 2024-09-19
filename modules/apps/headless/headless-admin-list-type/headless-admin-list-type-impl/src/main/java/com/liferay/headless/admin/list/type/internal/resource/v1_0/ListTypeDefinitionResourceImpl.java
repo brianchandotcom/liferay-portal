@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -31,6 +32,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -130,11 +132,20 @@ public class ListTypeDefinitionResourceImpl
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
+		Map<Locale, String> localizedMap = LocalizedMapUtil.getLocalizedMap(
+			listTypeDefinition.getName_i18n());
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			listTypeDefinition.getDefaultLanguageId());
+
+		if (localizedMap.containsKey(defaultLocale)) {
+			localizedMap.putIfAbsent(
+				LocaleUtil.getSiteDefault(), localizedMap.get(defaultLocale));
+		}
+
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.addListTypeDefinition(
-				listTypeDefinition.getExternalReferenceCode(),
-				LocalizedMapUtil.getLocalizedMap(
-					listTypeDefinition.getName_i18n()),
+				listTypeDefinition.getExternalReferenceCode(), localizedMap,
 				GetterUtil.getBoolean(listTypeDefinition.getSystem()),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),

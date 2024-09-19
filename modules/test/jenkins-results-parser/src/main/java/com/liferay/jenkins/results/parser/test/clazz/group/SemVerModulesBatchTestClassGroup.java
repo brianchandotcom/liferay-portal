@@ -100,6 +100,9 @@ public class SemVerModulesBatchTestClassGroup
 			List<File> semVerMarkerFiles = JenkinsResultsParserUtil.findFiles(
 				portalModulesBaseDir, "\\.lfrbuild-semantic-versioning");
 
+			semVerMarkerFiles = JenkinsResultsParserUtil.getIncludedFiles(
+				excludesPathMatchers, includesPathMatchers, semVerMarkerFiles);
+
 			for (File semVerMarkerFile : semVerMarkerFiles) {
 				moduleDirsList.add(semVerMarkerFile.getParentFile());
 			}

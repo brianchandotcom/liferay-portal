@@ -37,7 +37,7 @@ import * as undoChangeMasterLayout from './undoChangeMasterLayout';
 import * as undoDeleteItem from './undoDeleteItem';
 import * as undoDeleteRule from './undoDeleteRule';
 import * as undoDuplicateItem from './undoDuplicateItem';
-import * as undoMoveItem from './undoMoveItem';
+import * as undoMoveItems from './undoMoveItems';
 import * as undoPasteItem from './undoPasteItem';
 import * as undoSelectExperience from './undoSelectExperience';
 import * as undoStepperAction from './undoStepperAction';
@@ -63,7 +63,7 @@ const UNDO_ACTIONS = {
 	[DELETE_ITEM]: undoDeleteItem,
 	[DELETE_RULE]: undoDeleteRule,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
-	[MOVE_ITEM]: undoMoveItem,
+	[MOVE_ITEM]: undoMoveItems,
 	[MOVE_STEPPER]: undoStepperAction,
 	[PASTE_ITEM]: undoPasteItem,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,

@@ -63,22 +63,20 @@ public class SaveScimConfigurationMVCActionCommandTest {
 
 		_user = UserTestUtil.addCompanyAdminUser(company);
 
-		String pid = "";
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "TEST Scim client"
+			).put(
+				"userId", _user.getUserId()
+			).build());
 
 		try {
-			pid = ConfigurationTestUtil.createFactoryConfiguration(
-				"com.liferay.scim.rest.internal.configuration." +
-					"ScimClientOAuth2ApplicationConfiguration",
-				HashMapDictionaryBuilder.<String, Object>put(
-					"companyId", TestPropsValues.getCompanyId()
-				).put(
-					"matcherField", "email"
-				).put(
-					"oAuth2ApplicationName", "TEST Scim client"
-				).put(
-					"userId", _user.getUserId()
-				).build());
-
 			String scimClientId = ScimClientUtil.generateScimClientId(
 				"TEST Scim client");
 

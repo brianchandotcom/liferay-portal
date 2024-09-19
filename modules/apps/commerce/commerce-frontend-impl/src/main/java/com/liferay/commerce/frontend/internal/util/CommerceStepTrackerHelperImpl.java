@@ -13,7 +13,7 @@ import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -127,7 +127,7 @@ public class CommerceStepTrackerHelperImpl
 				workflowStatus);
 
 			step.setId(workflowStatusLabel);
-			step.setLabel(LanguageUtil.get(locale, workflowStatusLabel));
+			step.setLabel(_language.get(locale, workflowStatusLabel));
 
 			if (commerceOrder.getStatus() == workflowStatus) {
 				step.setState("active");
@@ -150,5 +150,8 @@ public class CommerceStepTrackerHelperImpl
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+
+	@Reference
+	private Language _language;
 
 }

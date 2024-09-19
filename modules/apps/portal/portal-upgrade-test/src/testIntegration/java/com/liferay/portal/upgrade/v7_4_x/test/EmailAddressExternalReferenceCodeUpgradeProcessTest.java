@@ -6,8 +6,6 @@
 package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -21,20 +19,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
 import com.liferay.portal.upgrade.v7_4_x.EmailAddressExternalReferenceCodeUpgradeProcess;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -58,26 +50,6 @@ public class EmailAddressExternalReferenceCodeUpgradeProcessTest
 			new ServiceContext());
 
 		return new ExternalReferenceCodeModel[] {emailAddress};
-	}
-
-	@Override
-	protected void assertExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
-		throws Exception {
-
-		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from ", tableName,
-					" where externalReferenceCode in ('",
-					ArrayUtil.toString(
-						externalReferenceCodes, StringPool.BLANK, "', '"),
-					"')"))) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				Assert.assertFalse(resultSet.next());
-			}
-		}
 	}
 
 	@Override
@@ -112,24 +84,6 @@ public class EmailAddressExternalReferenceCodeUpgradeProcessTest
 	@Override
 	protected Version getVersion() {
 		return null;
-	}
-
-	@Override
-	protected void updateExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
-		throws Exception {
-
-		db.runSQL(
-			StringBundler.concat(
-				"update ", tableName,
-				" set externalReferenceCode = null where ",
-				"externalReferenceCode in ('",
-				ArrayUtil.toString(
-					externalReferenceCodes, StringPool.BLANK, "', '"),
-				"')"));
-
-		entityCache.clearCache();
-		multiVMPool.clear();
 	}
 
 	private long _getListTypeId(String listTypeId) throws PortalException {

@@ -585,7 +585,7 @@ public class ContentPageEditorDisplayContext {
 				"maxNumberOfItemsInEditMode",
 				_pageEditorConfiguration.maxNumberOfItemsInEditMode()
 			).put(
-				"moveItemURL",
+				"moveItemsURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/move_fragment_entry_link")
 			).put(

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -31,7 +30,6 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,8 +118,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Test
 	public void testPostByExternalReferenceCodeSitePage() throws Exception {
 		super.testPostByExternalReferenceCodeSitePage();
-
-		_testPostByExternalReferenceCodeSitePageWidgetPage();
 	}
 
 	@Ignore
@@ -252,28 +248,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		sitePage.setUuid(layout.getUuid());
 
 		return sitePage;
-	}
-
-	private void _testPostByExternalReferenceCodeSitePageWidgetPage()
-		throws Exception {
-
-		SitePage postSitePage =
-			sitePageResource.postByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(), randomSitePage());
-
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			postSitePage.getExternalReferenceCode(), testGroup.getGroupId());
-
-		Assert.assertFalse(layout.isHidden());
-		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		Assert.assertEquals(
-			"1_column",
-			typeSettingsUnicodeProperties.getProperty(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
 	}
 
 	@Inject

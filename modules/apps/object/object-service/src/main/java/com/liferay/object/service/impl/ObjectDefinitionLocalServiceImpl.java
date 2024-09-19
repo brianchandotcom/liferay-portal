@@ -1727,6 +1727,27 @@ public class ObjectDefinitionLocalServiceImpl
 			false, null);
 	}
 
+	private ObjectDefinition _completeBinding(ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.fetchByODI2_E(
+				objectDefinition.getObjectDefinitionId(), true);
+
+		if (objectRelationship == null) {
+			return objectDefinition;
+		}
+
+		ObjectDefinition objectDefinition1 =
+			objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		objectDefinition.setRootObjectDefinitionId(
+			objectDefinition1.getRootObjectDefinitionId());
+
+		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
 	private void _createLocalizationTable(
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable) {
@@ -1986,6 +2007,8 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		objectDefinition = _completeBinding(objectDefinition);
 
 		_createLocalizationTable(
 			DynamicObjectDefinitionLocalizationTableFactory.create(

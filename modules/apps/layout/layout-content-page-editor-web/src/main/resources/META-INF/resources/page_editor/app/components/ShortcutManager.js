@@ -229,7 +229,7 @@ export default function ShortcutManager() {
 		if (activeItemIds?.length > 1) {
 			openToast({
 				message: Liferay.Language.get(
-					'it-is-not-possible-to-paste-on-two-destinations-at-the-same-time-try-again-with-only-one-destination-selected'
+					'it-is-not-possible-to-paste-on-two-destinations-at-the-same-time'
 				),
 				type: 'danger',
 			});

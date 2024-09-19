@@ -633,22 +633,18 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteSiteByExternalReferenceCodeSitePage()
-		throws Exception {
-
+	public void testPostByExternalReferenceCodeSitePage() throws Exception {
 		SitePage randomSitePage = randomSitePage();
 
 		SitePage postSitePage =
-			testPostSiteSiteByExternalReferenceCodeSitePage_addSitePage(
-				randomSitePage);
+			testPostByExternalReferenceCodeSitePage_addSitePage(randomSitePage);
 
 		assertEquals(randomSitePage, postSitePage);
 		assertValid(postSitePage);
 	}
 
-	protected SitePage
-			testPostSiteSiteByExternalReferenceCodeSitePage_addSitePage(
-				SitePage sitePage)
+	protected SitePage testPostByExternalReferenceCodeSitePage_addSitePage(
+			SitePage sitePage)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

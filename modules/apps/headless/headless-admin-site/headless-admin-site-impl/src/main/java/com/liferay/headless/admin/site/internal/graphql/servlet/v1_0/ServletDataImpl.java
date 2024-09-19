@@ -484,10 +484,10 @@ public class ServletDataImpl implements ServletData {
 							PageTemplateSetResourceImpl.class,
 							"putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeSitePage",
+						"mutation#createByExternalReferenceCodeSitePage",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeSitePage"));
+							"postByExternalReferenceCodeSitePage"));
 					put(
 						"mutation#updateSiteSiteByExternalReferenceCodeSitePagePermissionsPage",
 						new ObjectValuePair<>(

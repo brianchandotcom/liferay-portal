@@ -54,7 +54,7 @@ public interface SitePageResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public SitePage postSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage postByExternalReferenceCodeSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception;
 

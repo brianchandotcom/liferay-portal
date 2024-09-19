@@ -52,12 +52,12 @@ public interface SitePageResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public SitePage postSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage postByExternalReferenceCodeSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSiteSiteByExternalReferenceCodeSitePageHttpResponse(
+			postByExternalReferenceCodeSitePageHttpResponse(
 				String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception;
 
@@ -402,12 +402,12 @@ public interface SitePageResource {
 			return httpInvoker.invoke();
 		}
 
-		public SitePage postSiteSiteByExternalReferenceCodeSitePage(
+		public SitePage postByExternalReferenceCodeSitePage(
 				String siteExternalReferenceCode, SitePage sitePage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteSiteByExternalReferenceCodeSitePageHttpResponse(
+				postByExternalReferenceCodeSitePageHttpResponse(
 					siteExternalReferenceCode, sitePage);
 
 			String content = httpResponse.getContent();
@@ -470,7 +470,7 @@ public interface SitePageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteSiteByExternalReferenceCodeSitePageHttpResponse(
+				postByExternalReferenceCodeSitePageHttpResponse(
 					String siteExternalReferenceCode, SitePage sitePage)
 			throws Exception {
 

@@ -1587,7 +1587,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Adds a new site page")
-	public SitePage createSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage createByExternalReferenceCodeSitePage(
 			@GraphQLName("siteExternalReferenceCode") String
 				siteExternalReferenceCode,
 			@GraphQLName("sitePage") SitePage sitePage)
@@ -1597,7 +1597,7 @@ public class Mutation {
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sitePageResource ->
-				sitePageResource.postSiteSiteByExternalReferenceCodeSitePage(
+				sitePageResource.postByExternalReferenceCodeSitePage(
 					siteExternalReferenceCode, sitePage));
 	}
 

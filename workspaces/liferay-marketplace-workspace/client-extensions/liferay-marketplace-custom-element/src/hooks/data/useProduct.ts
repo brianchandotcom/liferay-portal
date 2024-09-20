@@ -17,7 +17,8 @@ const useDeliveryProduct = (productId: string) => {
 				'accountId': '-1',
 				'attachments.accountId': '-1',
 				'images.accountId': '-1',
-				'nestedFields': 'attachments,images,productSpecifications,skus',
+				'nestedFields':
+					'attachments,categories,images,productSpecifications,skus',
 				'skus.accountId': '-1',
 			})
 		)

@@ -20,6 +20,9 @@ const lazyRoutes = {
 		() => import('./pages/LicenseAgreementPage')
 	),
 	'next-steps': React.lazy(() => import('./pages/NextSteps')),
+	'product-purchase': React.lazy(
+		() => import('./pages/ProductPurchase/ProductPurchaseRouter')
+	),
 	'published-apps': React.lazy(
 		() => import('./pages/PublisherDashboard/PublisherDashboardRouter')
 	),
@@ -28,9 +31,6 @@ const lazyRoutes = {
 	),
 	'purchased-apps': React.lazy(
 		() => import('./pages/CustomerDashboard/CustomerDashboardRouter')
-	),
-	'purchased-solutions': React.lazy(
-		() => import('./pages/GetSolution/GetSolutionRouter')
 	),
 } as const;
 

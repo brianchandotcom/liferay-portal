@@ -7,7 +7,7 @@ export function getRandomID() {
 	try {
 		return crypto.randomUUID();
 	}
-	catch (error) {
+	catch {
 		return `liferay-${Math.random()}`.replace('.', '-');
 	}
 }

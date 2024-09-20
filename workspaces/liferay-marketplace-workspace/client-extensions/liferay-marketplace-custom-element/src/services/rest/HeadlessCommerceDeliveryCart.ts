@@ -34,7 +34,7 @@ class HeadlessCommerceDeliveryCart {
 		return response.text();
 	}
 
-	async updateCart(id: number | string, data: unknown) {
+	async updateCart(id: number | string, data: Partial<Cart>) {
 		return fetcher.patch(
 			`/o/headless-commerce-delivery-cart/v1.0/carts/${id}`,
 			data

@@ -79,6 +79,27 @@ public class ListTypeDefinitionResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostListTypeDefinition() throws Exception {
+		super.testPostListTypeDefinition();
+
+		ListTypeDefinition randomListTypeDefinition =
+			randomListTypeDefinition();
+
+		randomListTypeDefinition.setDefaultLanguageId("pt_BR");
+		randomListTypeDefinition.setName_i18n(
+			Collections.singletonMap("pt_BR", RandomTestUtil.randomString()));
+		randomListTypeDefinition.setSystem(true);
+
+		ListTypeDefinition postListTypeDefinition =
+			testPostListTypeDefinition_addListTypeDefinition(
+				randomListTypeDefinition);
+
+		assertEquals(randomListTypeDefinition, postListTypeDefinition);
+		assertValid(postListTypeDefinition);
+	}
+
+	@Override
 	protected ListTypeDefinition randomListTypeDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition =
 			super.randomListTypeDefinition();

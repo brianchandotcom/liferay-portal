@@ -199,7 +199,7 @@ if (layout != null) {
 	// ]]>
 </aui:script>
 
-<c:if test="<%= layout != null %>">
+<c:if test="<%= (layout != null) && !layout.isTypeControlPanel() %>">
 
 	<%-- User Inputted Layout and LayoutSet JavaScript --%>
 
@@ -219,17 +219,30 @@ if (layout != null) {
 	UnicodeProperties layoutSetSettingsUnicodeProperties = layoutSet.getSettingsProperties();
 
 	UnicodeProperties layoutTypeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
+
+	List<String> snippets = new ArrayList<String>();
+
+	snippets.add(GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript")));
+
+	snippets.add(GetterUtil.getString(masterLayoutTypeSettingsUnicodeProperties.getProperty("javascript")));
+
+	snippets.add(GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript")));
+
+	for (String snippet : snippets) {
 	%>
 
-	<aui:script type="text/javascript">
-		// <![CDATA[
-			<c:if test="<%= !layout.isTypeControlPanel() %>">
-				<%= GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript")) %>
+		<c:if test="<%= Validator.isNotNull(snippet) %>">
+			<aui:script type="text/javascript">
+				// <![CDATA[
+					(function() {
+						<%= snippet %>
+					})();
+				// ]]>
+			</aui:script>
+		</c:if>
 
-				<%= GetterUtil.getString(masterLayoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
+	<%
+	}
+	%>
 
-				<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
-			</c:if>
-		// ]]>
-	</aui:script>
 </c:if>

@@ -29,70 +29,11 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		List<String> illegalTagNamesData = getAttributeValues(
 			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
 
-		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
-			fileName.endsWith(".jspx")) {
-
-			for (String illegalTagNameData : illegalTagNamesData) {
-				String[] tagNameParts = StringUtil.split(
-					illegalTagNameData, StringPool.COLON);
-
-				illegalTagNameData = tagNameParts[0];
-
-				String requiredAttribute = null;
-
-				if (tagNameParts.length == 2) {
-					requiredAttribute = tagNameParts[1];
-				}
-
-				int x = -1;
-
-				while (true) {
-					x = content.indexOf("<" + illegalTagNameData, x + 1);
-
-					if (x == -1) {
-						break;
-					}
-
-					String tagString = getTag(content, x);
-
-					if (Validator.isNull(tagString) ||
-						((requiredAttribute != null) &&
-						 !tagString.contains(requiredAttribute))) {
-
-						continue;
-					}
-
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Do not use <", illegalTagNameData, "> tag (use ",
-							"<aui:", illegalTagNameData, "> instead), see ",
-							"LPD-18227"),
-						getLineNumber(content, x));
-				}
-			}
-		}
-		else if (fileName.endsWith(".ftl")) {
-			_checkMissingAttribute(
-				"${nonceAttribute}", content, fileName, illegalTagNamesData);
-		}
-		else if (fileName.endsWith(".vm")) {
-			_checkMissingAttribute(
-				"$nonceAttribute", content, fileName, illegalTagNamesData);
-		}
-
-		return content;
-	}
-
-	private void _checkMissingAttribute(
-		String attribute, String content, String fileName,
-		List<String> illegalTagNamesData) {
-
 		for (String illegalTagNameData : illegalTagNamesData) {
 			String[] parts = StringUtil.split(
 				illegalTagNameData, StringPool.COLON);
 
-			String illegalTagName = parts[0];
+			String tagName = parts[0];
 
 			String requiredAttribute = null;
 
@@ -103,7 +44,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			int x = -1;
 
 			while (true) {
-				x = content.indexOf("<" + illegalTagName, x + 1);
+				x = content.indexOf("<" + tagName, x + 1);
 
 				if (x == -1) {
 					break;
@@ -118,15 +59,45 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					continue;
 				}
 
-				if (!tagString.contains(attribute)) {
+				int lineNumber = getLineNumber(content, x);
+
+				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
+					fileName.endsWith(".jspx")) {
+
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Tag <", illegalTagName, "> is missing attribute '",
-							attribute, "', see LPD-18227"),
-						getLineNumber(content, x));
+							"Do not use <", tagName, "> tag (use ", "<aui:",
+							tagName, "> instead), see ", "LPD-18227"),
+						lineNumber);
+				}
+				else if (fileName.endsWith(".ftl")) {
+					_checkMissingAttribute(
+						fileName, tagName, "${nonceAttribute}", tagString,
+						lineNumber);
+				}
+				else if (fileName.endsWith(".vm")) {
+					_checkMissingAttribute(
+						fileName, tagName, "$nonceAttribute", tagString,
+						lineNumber);
 				}
 			}
+		}
+
+		return content;
+	}
+
+	private void _checkMissingAttribute(
+		String fileName, String tagName, String attribute, String tagString,
+		int lineNumber) {
+
+		if (!tagString.contains(attribute)) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Tag <", tagName, "> is missing attribute '", attribute,
+					"', see LPD-18227"),
+				lineNumber);
 		}
 	}
 

@@ -116,6 +116,7 @@ const AnalyticsProvisioning = () => {
 	return (
 		<ProductPurchase.Shell
 			footerProps={{
+				backButtonProps: {onClick: () => navigate('../')},
 				continueButtonProps: {
 					children: 'Finish Setup',
 					disabled: formState.isSubmitting,

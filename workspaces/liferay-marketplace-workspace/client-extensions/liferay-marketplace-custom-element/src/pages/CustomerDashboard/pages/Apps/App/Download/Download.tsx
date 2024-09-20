@@ -22,7 +22,12 @@ const Download = () => {
 	const [search, setSearch] = useState('');
 
 	const channel = marketplaceContext.channel;
-	const virtualProducts = outletContext?.placedOrder.placedOrderItems;
+
+	const virtualProducts = useMemo(
+		() => outletContext?.placedOrder.placedOrderItems || [],
+		[outletContext?.placedOrder.placedOrderItems]
+	);
+
 	const hasVersionSpecification =
 		outletContext?.product.productSpecifications.find(
 			(specification) =>
@@ -49,7 +54,7 @@ const Download = () => {
 	);
 
 	const virualItems = useMemo(() => {
-		const hasSkuVersion = skus[0]?.customFields.find(
+		const hasSkuVersion = (skus as any)[0]?.customFields.find(
 			(customField: CustomField) =>
 				customField.name === 'Version' && customField.customValue.data
 		);

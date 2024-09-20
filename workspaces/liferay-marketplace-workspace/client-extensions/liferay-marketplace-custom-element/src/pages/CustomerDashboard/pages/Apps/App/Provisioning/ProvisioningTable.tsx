@@ -29,7 +29,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 			host: '',
 			id: 0,
 			project: '',
-			startDate: order.createDate,
+			startDate: order?.createDate,
 			status: 'installed',
 			type: 'Standard License',
 		},

@@ -145,6 +145,12 @@ public class AssetEntryLocalServiceUtil {
 		getService().deleteAssetTagAssetEntry(tagId, entryId);
 	}
 
+	public static void deleteEntries(long companyId, String className)
+		throws PortalException {
+
+		getService().deleteEntries(companyId, className);
+	}
+
 	public static AssetEntry deleteEntry(AssetEntry entry)
 		throws PortalException {
 

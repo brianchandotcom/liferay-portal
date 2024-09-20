@@ -152,6 +152,13 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteEntries(long companyId, String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetEntryLocalService.deleteEntries(companyId, className);
+	}
+
+	@Override
 	public AssetEntry deleteEntry(AssetEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

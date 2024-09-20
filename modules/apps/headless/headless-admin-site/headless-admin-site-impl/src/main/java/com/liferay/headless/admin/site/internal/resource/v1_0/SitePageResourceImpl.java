@@ -40,6 +40,23 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Override
+	public void deleteSiteSiteByExternalReferenceCodeSitePage(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		_layoutService.deleteLayout(
+			sitePageExternalReferenceCode, group.getGroupId());
+	}
+
+	@Override
 	public SitePage getSiteSiteByExternalReferenceCodeSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode)

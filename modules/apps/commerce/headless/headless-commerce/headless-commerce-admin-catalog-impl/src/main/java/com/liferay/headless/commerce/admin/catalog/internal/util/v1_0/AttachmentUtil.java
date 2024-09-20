@@ -307,7 +307,9 @@ public class AttachmentUtil {
 					attachment, uniqueFileNameProvider,
 					dlFileEntryCloneServiceContext);
 
-				fileEntryId = fileEntry.getFileEntryId();
+				if (fileEntry != null) {
+					fileEntryId = fileEntry.getFileEntryId();
+				}
 			}
 			else {
 				Group group =

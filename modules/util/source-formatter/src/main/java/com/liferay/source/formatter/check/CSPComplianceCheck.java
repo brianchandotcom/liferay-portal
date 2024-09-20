@@ -67,8 +67,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Do not use <", tagName, "> tag (use ", "<aui:",
-							tagName, "> instead), see ", "LPD-18227"),
+							"Use <aui:", tagName, "> tag instead of <", tagName,
+							">, see LPD-18227"),
 						lineNumber);
 				}
 				else if (fileName.endsWith(".ftl")) {
@@ -95,8 +95,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Tag <", tagName, "> is missing attribute '", attribute,
-					"', see LPD-18227"),
+					"Missing attribute '", attribute, "' in <", tagName,
+					"> tag, see LPD-18227"),
 				lineNumber);
 		}
 	}

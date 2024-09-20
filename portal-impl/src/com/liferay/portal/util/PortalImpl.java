@@ -15,6 +15,7 @@ import com.liferay.layout.utility.page.kernel.StatusLayoutUtilityPageEntryReques
 import com.liferay.layout.utility.page.kernel.request.contributor.StatusLayoutUtilityPageEntryRequestContributor;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -7820,15 +7821,19 @@ public class PortalImpl implements Portal {
 					PortletQNameUtil.getPublicRenderParameterName(qName));
 			}
 
-			FriendlyURLMapperThreadLocal.setPRPIdentifiers(prpIdentifiers);
+			try (SafeCloseable safeCloseable =
+					FriendlyURLMapperThreadLocal.
+						setPRPIdentifiersWithSafeCloseable(prpIdentifiers)) {
 
-			if (friendlyURLMapper.isCheckMappingWithPrefix()) {
-				friendlyURLMapper.populateParams(
-					url.substring(position + 2), actualParams, requestContext);
-			}
-			else {
-				friendlyURLMapper.populateParams(
-					url.substring(position), actualParams, requestContext);
+				if (friendlyURLMapper.isCheckMappingWithPrefix()) {
+					friendlyURLMapper.populateParams(
+						url.substring(position + 2), actualParams,
+						requestContext);
+				}
+				else {
+					friendlyURLMapper.populateParams(
+						url.substring(position), actualParams, requestContext);
+				}
 			}
 
 			String actualParamsString = HttpComponentsUtil.parameterMapToString(

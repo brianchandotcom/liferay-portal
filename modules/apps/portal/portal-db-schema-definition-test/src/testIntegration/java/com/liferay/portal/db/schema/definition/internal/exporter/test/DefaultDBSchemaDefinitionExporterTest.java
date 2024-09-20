@@ -20,6 +20,7 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -50,6 +51,11 @@ public class DefaultDBSchemaDefinitionExporterTest
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		setUpClassBaseDBSchemaDefinitionExporterTestCase();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		tearDownClassBaseDBSchemaDefinitionExporterTestCase();
 	}
 
 	@Test

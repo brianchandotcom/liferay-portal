@@ -39,6 +39,7 @@ import javax.sql.DataSource;
 
 import org.apache.felix.cm.PersistenceManager;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -91,6 +92,15 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 				ObjectRelationshipLocalServiceUtil.getService(),
 				_objectDBPartitionDefinition1, _objectDBPartitionDefinition2,
 				adminUser.getUserId());
+		}
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		tearDownClassBaseDBSchemaDefinitionExporterTestCase();
+
+		if (_company != null) {
+			_companyLocalService.deleteCompany(_company);
 		}
 	}
 

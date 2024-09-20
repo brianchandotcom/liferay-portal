@@ -14,6 +14,7 @@ import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -31,7 +32,8 @@ const test = mergeTests(
 	pageEditorPagesTest,
 	pageSelectorPagesTest,
 	pagesAdminPagesTest,
-	pagesPagesTest
+	pagesPagesTest,
+	systemSettingsPageTest
 );
 
 const deleteClientExtension = async (apiHelpers, clientExtension) => {
@@ -363,6 +365,60 @@ test.describe('Page types configuration', () => {
 });
 
 test.describe('SEO configuration', () => {
+	test('Can disable open graph', async ({
+		apiHelpers,
+		page,
+		pagesAdminPage,
+		site,
+		systemSettingsPage,
+	}) => {
+
+		// Create page
+
+		const pageName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: pageName,
+		});
+
+		// Disable open graph
+
+		await systemSettingsPage.goToSystemSetting('Pages', 'SEO');
+
+		await page.getByLabel('Enable Open Graph').check();
+
+		// Assert open graph section is not present
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.clickOnAction('Configure', pageName);
+
+		await expect(
+			page.locator('.portlet-body li', {
+				has: page.getByText('Open Graph'),
+			})
+		).not.toBeAttached();
+
+		// Enable open graph
+
+		await systemSettingsPage.goToSystemSetting('Pages', 'SEO');
+
+		await page.getByLabel('Enable Open Graph').uncheck();
+
+		// Assert open graph section is present
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.clickOnAction('Configure', pageName);
+
+		await expect(
+			page.locator('.portlet-body li', {
+				has: page.getByText('Open Graph'),
+			})
+		).toBeAttached();
+	});
+
 	test('Checks page SEO HTML title is not shown in edit mode', async ({
 		apiHelpers,
 		page,

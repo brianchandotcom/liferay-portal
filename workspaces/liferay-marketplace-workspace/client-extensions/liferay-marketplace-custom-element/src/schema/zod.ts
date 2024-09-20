@@ -7,6 +7,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 
 import i18n from '../i18n';
+import {Liferay} from '../liferay/liferay';
 import {removeHTMLTags} from '../utils/string';
 
 const baseContentSchema = z.object({
@@ -57,6 +58,20 @@ const zodSchema = {
 		phoneNumber: z
 			.string()
 			.min(1, {message: 'Please enter a phone number to continue.'}),
+	}),
+	analyticsProvisioning: z.object({
+		_refAllowedEmailDomains: z.array(z.any()),
+		_refIncidentReportContacts: z.array(z.any()),
+		allowedEmailDomains: z.array(z.string()).min(1),
+		dataCenterLocation: z.string(),
+		friendlyWorkspaceURL: z.string().min(3),
+		incidentReportContacts: z.array(z.string().email()).min(1),
+		region: z.string(),
+		timezone: z.string(),
+		workspaceName: z.string().min(3),
+		workspaceOwnerEmail: z
+			.string()
+			.default(Liferay.ThemeDisplay.getUserEmailAddress()),
 	}),
 	appPublishing: {
 		build: z.object({
@@ -204,6 +219,6 @@ const zodSchema = {
 	},
 };
 
-export {zodResolver};
+export {z, zodResolver};
 
 export default zodSchema;

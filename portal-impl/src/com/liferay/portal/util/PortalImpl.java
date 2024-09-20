@@ -7821,7 +7821,10 @@ public class PortalImpl implements Portal {
 					PortletQNameUtil.getPublicRenderParameterName(qName));
 			}
 
-			try (SafeCloseable safeCloseable =
+			try (SafeCloseable safeCloseable1 =
+					FriendlyURLMapperThreadLocal.
+						setParentParametersWithSafeCloseable(params);
+				SafeCloseable safeCloseable2 =
 					FriendlyURLMapperThreadLocal.
 						setPRPIdentifiersWithSafeCloseable(prpIdentifiers)) {
 

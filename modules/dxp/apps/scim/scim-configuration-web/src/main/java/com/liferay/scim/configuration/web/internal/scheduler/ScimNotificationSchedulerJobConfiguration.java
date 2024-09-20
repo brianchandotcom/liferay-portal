@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 
 import java.io.IOException;
@@ -55,7 +56,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ScimNotificationSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
-	public static final int[] NOTIFICATION_DAYS = {30, 10, 1, -1};
+	public static final long[] NOTIFICATION_DURATION_MILLIS = {
+		30 * Time.DAY, 10 * Time.DAY, Time.DAY, 0
+	};
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
@@ -78,19 +81,17 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		long currentTime = System.currentTimeMillis();
 
-		long daysUntilExpiry = java.util.concurrent.TimeUnit.DAYS.convert(
-			oAuth2AccessTokenExpirationDate.getTime() - currentTime,
-			java.util.concurrent.TimeUnit.MILLISECONDS);
+		long millisUntilExpiry =
+			oAuth2AccessTokenExpirationDate.getTime() - currentTime;
 
-		long daysSinceLastNotification =
-			java.util.concurrent.TimeUnit.DAYS.convert(
-				oAuth2AccessTokenExpirationDate.getTime() -
-					lastNotificationDate.getTime(),
-				java.util.concurrent.TimeUnit.MILLISECONDS);
+		long millisToExpiryAtLastNotification =
+			oAuth2AccessTokenExpirationDate.getTime() -
+				lastNotificationDate.getTime();
 
-		for (int notificationDay : NOTIFICATION_DAYS) {
-			if ((notificationDay >= daysUntilExpiry) &&
-				(daysSinceLastNotification > notificationDay)) {
+		for (long notificationDurationMillis : NOTIFICATION_DURATION_MILLIS) {
+			if ((notificationDurationMillis >= millisUntilExpiry) &&
+				(millisToExpiryAtLastNotification >
+					notificationDurationMillis)) {
 
 				return true;
 			}

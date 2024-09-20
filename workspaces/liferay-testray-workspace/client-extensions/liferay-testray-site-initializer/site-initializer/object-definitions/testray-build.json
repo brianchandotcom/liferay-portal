@@ -119,6 +119,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"defaultValue": "PENDING",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {

@@ -22,8 +22,6 @@ jest.mock(
 	})
 );
 
-const EMPTY_REF = {current: {}};
-
 const IDS = {
 	container: 'container',
 	form: 'form-id',
@@ -123,13 +121,9 @@ describe('checkAllowedChild', () => {
 			const grid = getGrid();
 			const form = getForm({formType: 'multistep'});
 
-			expect(
-				checkAllowedChild(container, form, EMPTY_REF, EMPTY_REF)
-			).toBe(false);
+			expect(checkAllowedChild(container, form, {}, {})).toBe(false);
 
-			expect(checkAllowedChild(grid, form, EMPTY_REF, EMPTY_REF)).toBe(
-				false
-			);
+			expect(checkAllowedChild(grid, form, {}, {})).toBe(false);
 		});
 
 		it('it is not possible to add standard fragments and inputs to a form if it is multistep', () => {
@@ -137,13 +131,9 @@ describe('checkAllowedChild', () => {
 			const input = getFragment({fragmentEntryType: 'input'});
 			const form = getForm({formType: 'multistep'});
 
-			expect(
-				checkAllowedChild(fragment, form, EMPTY_REF, EMPTY_REF)
-			).toBe(false);
+			expect(checkAllowedChild(fragment, form, {}, {})).toBe(false);
 
-			expect(checkAllowedChild(input, form, EMPTY_REF, EMPTY_REF)).toBe(
-				false
-			);
+			expect(checkAllowedChild(input, form, {}, {})).toBe(false);
 		});
 
 		it('it is possible to add standard fragments and inputs to a form step', () => {
@@ -162,11 +152,11 @@ describe('checkAllowedChild', () => {
 			};
 
 			expect(
-				checkAllowedChild(fragment, formStep, layoutDataRef, EMPTY_REF)
+				checkAllowedChild(fragment, formStep, layoutDataRef.current, {})
 			).toBe(true);
 
 			expect(
-				checkAllowedChild(input, formStep, layoutDataRef, EMPTY_REF)
+				checkAllowedChild(input, formStep, layoutDataRef.current, {})
 			).toBe(true);
 		});
 
@@ -174,18 +164,14 @@ describe('checkAllowedChild', () => {
 			const fragment = getFragment();
 			const form = getForm();
 
-			expect(
-				checkAllowedChild(fragment, form, EMPTY_REF, EMPTY_REF)
-			).toBe(true);
+			expect(checkAllowedChild(fragment, form, {}, {})).toBe(true);
 		});
 
 		it('it is not possible to add widgets to a form', () => {
 			const widget = getFragment({isWidget: true});
 			const form = getForm();
 
-			expect(checkAllowedChild(widget, form, EMPTY_REF, EMPTY_REF)).toBe(
-				false
-			);
+			expect(checkAllowedChild(widget, form, {}, {})).toBe(false);
 		});
 	});
 
@@ -197,9 +183,7 @@ describe('checkAllowedChild', () => {
 
 			const container = getContainer();
 
-			expect(
-				checkAllowedChild(input, container, EMPTY_REF, EMPTY_REF)
-			).toBe(false);
+			expect(checkAllowedChild(input, container, {}, {})).toBe(false);
 		});
 
 		it('it is possible to add inputs inside a form', () => {
@@ -209,9 +193,7 @@ describe('checkAllowedChild', () => {
 
 			const form = getForm();
 
-			expect(checkAllowedChild(input, form, EMPTY_REF, EMPTY_REF)).toBe(
-				true
-			);
+			expect(checkAllowedChild(input, form, {}, {})).toBe(true);
 		});
 	});
 
@@ -246,15 +228,15 @@ describe('checkAllowedChild', () => {
 			};
 
 			expect(
-				checkAllowedChild(stepper, form, layoutDataRef, EMPTY_REF)
+				checkAllowedChild(stepper, form, layoutDataRef.current, {})
 			).toBe(true);
 
 			expect(
 				checkAllowedChild(
 					stepper,
 					multistepForm,
-					layoutDataRefWithMultistep,
-					EMPTY_REF
+					layoutDataRefWithMultistep.current,
+					{}
 				)
 			).toBe(true);
 		});
@@ -278,7 +260,7 @@ describe('checkAllowedChild', () => {
 			};
 
 			expect(
-				checkAllowedChild(stepper, formStep, layoutDataRef, EMPTY_REF)
+				checkAllowedChild(stepper, formStep, layoutDataRef.current, {})
 			).toBe(false);
 		});
 
@@ -290,9 +272,7 @@ describe('checkAllowedChild', () => {
 
 			const container = getContainer();
 
-			expect(
-				checkAllowedChild(stepper, container, EMPTY_REF, EMPTY_REF)
-			).toBe(false);
+			expect(checkAllowedChild(stepper, container, {}, {})).toBe(false);
 		});
 
 		it('it is not possible to add a stepper inside a form that already has a stepper', () => {
@@ -337,8 +317,8 @@ describe('checkAllowedChild', () => {
 				checkAllowedChild(
 					stepper,
 					form,
-					layoutDataRef,
-					fragmentEntryLinksRef
+					layoutDataRef.current,
+					fragmentEntryLinksRef.current
 				)
 			).toBe(false);
 		});

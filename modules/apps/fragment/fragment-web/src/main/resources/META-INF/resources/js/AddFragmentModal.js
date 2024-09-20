@@ -21,7 +21,7 @@ function getFieldName(namespace, fieldName) {
 
 export default function AddFragmentModal({
 	addFragmentEntryURL,
-	fieldTypes,
+	fieldTypes: initialFieldTypes,
 	fragmentTypes,
 	namespace,
 }) {
@@ -35,6 +35,11 @@ export default function AddFragmentModal({
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
+
+	const fieldTypes = initialFieldTypes.filter(
+		(fieldType) =>
+			fieldType.key !== 'stepper' || Liferay.FeatureFlags['LPD-10727']
+	);
 
 	return (
 		visible && (

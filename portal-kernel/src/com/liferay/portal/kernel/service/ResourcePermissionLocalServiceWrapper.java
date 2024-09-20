@@ -294,6 +294,15 @@ public class ResourcePermissionLocalServiceWrapper
 			resourcePermission);
 	}
 
+	@Override
+	public void deleteResourcePermissions(
+			long companyId, String name, int scope)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_resourcePermissionLocalService.deleteResourcePermissions(
+			companyId, name, scope);
+	}
+
 	/**
 	 * Deletes all resource permissions at the scope to resources of the type.
 	 * This method should not be confused with any of the

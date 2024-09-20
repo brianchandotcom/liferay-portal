@@ -279,6 +279,13 @@ public class ResourcePermissionLocalServiceUtil {
 		return getService().deleteResourcePermission(resourcePermission);
 	}
 
+	public static void deleteResourcePermissions(
+			long companyId, String name, int scope)
+		throws PortalException {
+
+		getService().deleteResourcePermissions(companyId, name, scope);
+	}
+
 	/**
 	 * Deletes all resource permissions at the scope to resources of the type.
 	 * This method should not be confused with any of the

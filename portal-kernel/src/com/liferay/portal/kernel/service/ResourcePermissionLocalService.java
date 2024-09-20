@@ -272,6 +272,10 @@ public interface ResourcePermissionLocalService
 	public ResourcePermission deleteResourcePermission(
 		ResourcePermission resourcePermission);
 
+	public void deleteResourcePermissions(
+			long companyId, String name, int scope)
+		throws PortalException;
+
 	/**
 	 * Deletes all resource permissions at the scope to resources of the type.
 	 * This method should not be confused with any of the

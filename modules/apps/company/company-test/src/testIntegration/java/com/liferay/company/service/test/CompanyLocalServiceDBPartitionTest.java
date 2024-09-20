@@ -118,21 +118,25 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testAddCompanyUsesVirtualHostCounter() throws Exception {
-		long counter = _counterLocalService.increment();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
 
-		_company1 = CompanyTestUtil.addCompany();
+			long counter = _counterLocalService.increment();
 
-		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
-			_company1.getVirtualHostname());
+			_company1 = CompanyTestUtil.addCompany();
 
-		Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
+			VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
+				_company1.getVirtualHostname());
 
-		_company2 = CompanyTestUtil.addCompany();
+			Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
 
-		virtualHost = _virtualHostLocalService.getVirtualHost(
-			_company2.getVirtualHostname());
+			_company2 = CompanyTestUtil.addCompany();
 
-		Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
+			virtualHost = _virtualHostLocalService.getVirtualHost(
+				_company2.getVirtualHostname());
+
+			Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
+		}
 	}
 
 	@Test

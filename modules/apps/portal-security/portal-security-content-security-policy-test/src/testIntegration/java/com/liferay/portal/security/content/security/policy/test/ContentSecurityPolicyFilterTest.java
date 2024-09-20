@@ -157,11 +157,11 @@ public class ContentSecurityPolicyFilterTest {
 			String content = _getContent(httpURLConnection);
 
 			Assert.assertTrue(
-				content.contains("<link nonce=\"" + nonce + "\""));
+				content.matches(".*<link [^>]*nonce=\"" + nonce + "\".*"));
 			Assert.assertTrue(
-				content.contains("<script nonce=\"" + nonce + "\""));
+				content.matches(".*<script [^>]*nonce=\"" + nonce + "\".*"));
 			Assert.assertTrue(
-				content.contains("<style nonce=\"" + nonce + "\""));
+				content.matches(".*<style [^>]*nonce=\"" + nonce + "\".*"));
 
 			httpURLConnection.disconnect();
 		}

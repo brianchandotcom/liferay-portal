@@ -177,6 +177,7 @@ export class HeadlessDeliveryApiHelper {
 		categoryIds,
 		contentStructureId,
 		datePublished,
+		description = '',
 		siteId,
 		tags,
 		title,
@@ -185,6 +186,7 @@ export class HeadlessDeliveryApiHelper {
 		categoryIds?: number[];
 		contentStructureId: number;
 		datePublished: string;
+		description?: string;
 		siteId: string;
 		tags?: string[];
 		title: string;
@@ -196,6 +198,7 @@ export class HeadlessDeliveryApiHelper {
 				data: {
 					contentStructureId,
 					datePublished,
+					description,
 					keywords: tags,
 					taxonomyCategoryIds: categoryIds,
 					title,

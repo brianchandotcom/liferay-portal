@@ -194,6 +194,43 @@ public class MeasurementUnitResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutMeasurementUnitByExternalReferenceCode()
+		throws Exception {
+
+		MeasurementUnit measurementUnit = _postMeasurementUnit(
+			randomMeasurementUnit());
+
+		String oldExternalReferenceCode =
+			measurementUnit.getExternalReferenceCode();
+
+		measurementUnit.setExternalReferenceCode("externalReferenceCode1");
+		measurementUnit.setPriority(Double.valueOf("9.0"));
+		measurementUnit.setRate(Double.valueOf("1.0"));
+
+		measurementUnitResource.putMeasurementUnitByExternalReferenceCode(
+			oldExternalReferenceCode, measurementUnit);
+
+		MeasurementUnit getMeasurementUnit =
+			measurementUnitResource.getMeasurementUnit(measurementUnit.getId());
+
+		Assert.assertTrue(equals(measurementUnit, getMeasurementUnit));
+
+		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
+
+		randomMeasurementUnit.setRate(Double.valueOf("1.0"));
+		randomMeasurementUnit.setType("Unit");
+
+		MeasurementUnit postMeasurementUnit =
+			measurementUnitResource.putMeasurementUnitByExternalReferenceCode(
+				randomMeasurementUnit.getExternalReferenceCode(),
+				randomMeasurementUnit);
+
+		assertEquals(randomMeasurementUnit, postMeasurementUnit);
+		assertValid(postMeasurementUnit);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"companyId", "externalReferenceCode", "key", "name", "priority",
@@ -333,6 +370,14 @@ public class MeasurementUnitResourceTest
 		throws Exception {
 
 		return _postMeasurementUnit(measurementUnit);
+	}
+
+	@Override
+	protected MeasurementUnit
+			testPutMeasurementUnitByExternalReferenceCode_addMeasurementUnit()
+		throws Exception {
+
+		return _postMeasurementUnit(randomMeasurementUnit());
 	}
 
 	private MeasurementUnit _postMeasurementUnit(

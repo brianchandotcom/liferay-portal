@@ -45,20 +45,26 @@ export default async function () {
 	 * Filter out projects that do not have `node-scripts test`
 	 */
 	for (const projectPath of projects) {
-		if (!projectPath.includes(process.env.INIT_CWD)) {
-			continue;
-		}
 
-		const packageJson = path.join(projectPath, 'package.json');
-		const pkgJsonContents = await fs.readFile(packageJson, 'utf8');
+		// Check if deeply nested passed a project root
+		// or
+		// Check if shallowly nested before several project roots
 
-		if (pkgJsonContents.includes('node-scripts test')) {
-			const pkgJson = JSON.parse(pkgJsonContents);
+		if (
+			cwd.includes(projectPath) ||
+			projectPath.includes(process.env.INIT_CWD)
+		) {
+			const packageJson = path.join(projectPath, 'package.json');
+			const pkgJsonContents = await fs.readFile(packageJson, 'utf8');
 
-			testableProjectsMap.set(
-				projectPath,
-				getEnvVars(pkgJson.scripts.test)
-			);
+			if (pkgJsonContents.includes('node-scripts test')) {
+				const pkgJson = JSON.parse(pkgJsonContents);
+
+				testableProjectsMap.set(
+					projectPath,
+					getEnvVars(pkgJson.scripts.test)
+				);
+			}
 		}
 	}
 

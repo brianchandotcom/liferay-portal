@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 
 import java.io.Serializable;
 
@@ -44,6 +45,10 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	public Object before(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
+
+		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+			return null;
+		}
 
 		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
@@ -80,6 +85,10 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
 		throws Throwable {
+
+		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+			return;
+		}
 
 		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
@@ -145,6 +154,10 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	@Override
 	protected void duringFinally(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
+
+		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+			return;
+		}
 
 		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 

@@ -24,11 +24,11 @@ services:
             database:
                 condition: service_healthy
         env_file: liferay.env
-        image: liferay/dxp:2024.q2.6
+        image: liferay/dxp:2024.q2.7
         ports:
             - 8080:8080
         volumes:
-            - ../build/docker/client-extensions:/opt/liferay/osgi/client-extensions
+            - ./liferay:/mnt/liferay
     mail:
         container_name: liferay-customer-workspace-mail
         image: maildev/maildev

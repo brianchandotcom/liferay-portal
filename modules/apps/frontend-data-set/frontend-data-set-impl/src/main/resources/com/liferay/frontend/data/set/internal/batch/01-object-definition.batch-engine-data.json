@@ -91,14 +91,14 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "FIELD_NAME",
+					"externalReferenceCode": "CLIENT_EXTENSION_ENTRY_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Field Name"
+						"en_US": "Client Extension Entry ERC"
 					},
 					"localized": false,
-					"name": "fieldName",
+					"name": "clientExtensionEntryERC",
 					"required": true,
 					"state": false,
 					"system": true,
@@ -107,14 +107,14 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "FILTER_CLIENT_EXTENSION_ERC",
+					"externalReferenceCode": "FIELD_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Filter Client Extension ERC"
+						"en_US": "Field Name"
 					},
 					"localized": false,
-					"name": "filterClientExtensionERC",
+					"name": "fieldName",
 					"required": true,
 					"state": false,
 					"system": true,

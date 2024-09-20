@@ -215,6 +215,139 @@ testInfoPanel.describe('InfoPanel', () => {
 });
 
 test.describe('SEO configuration', () => {
+	test('User can map a web content to open graph meta tags in a display page', async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+
+		// Create a display page template for Basic Web Content and mark as default
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const displayPageTemplateName = getRandomString();
+
+		await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+			apiHelpers,
+			String(contentStructureId),
+			displayPageTemplateName,
+			site
+		);
+
+		// Go to configuration
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		await displayPageTemplatesPage.clickMoreActions(
+			displayPageTemplateName,
+			'Edit'
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Configure'}),
+			trigger: page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		await page
+			.locator('.portlet-body li', {has: page.getByText('Open Graph')})
+			.click();
+
+		// Map HTML Title
+
+		await page.getByLabel('Title', {exact: true}).fill('');
+
+		await displayPageTemplatesPage.mapConfiguration('Title', 'Title');
+
+		await expect(page.getByLabel('Title', {exact: true})).toHaveValue(
+			'${title:Title}'
+		);
+
+		await page.getByLabel('Description', {exact: true}).fill('');
+
+		await displayPageTemplatesPage.mapConfiguration(
+			'Description',
+			'Description'
+		);
+
+		await expect(page.getByLabel('Description', {exact: true})).toHaveValue(
+			'${description:Description}'
+		);
+
+		await displayPageTemplatesPage.mapConfiguration(
+			'Author Profile Image',
+			'Image'
+		);
+
+		await expect(page.getByLabel('Image', {exact: true})).toHaveValue(
+			'Basic Web Content: Author Profile Image'
+		);
+
+		await displayPageTemplatesPage.mapConfiguration(
+			'Title',
+			'Image Alt Description'
+		);
+
+		await expect(
+			page.getByLabel('Image Alt Description', {exact: true})
+		).toHaveValue('${title:Title}');
+
+		await page.getByTitle(`Go to ${displayPageTemplateName}`).click();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		// Create a Basic Web Content
+
+		const journalArticleTitle = getRandomString();
+
+		const journalArticleDescription = getRandomString();
+
+		await apiHelpers.headlessDelivery.postStructuredContent({
+			contentStructureId,
+			datePublished: null,
+			description: journalArticleDescription,
+			siteId: site.id,
+			title: journalArticleTitle,
+			viewableBy: 'Anyone',
+		});
+
+		// Assert open graph title
+
+		await performLogout(page);
+
+		await page.goto(`web${site.friendlyUrlPath}/w/${journalArticleTitle}`);
+
+		await expect(
+			page.locator(
+				`meta[property="og:title"][content="${journalArticleTitle}"]`
+			)
+		).toBeAttached();
+
+		await expect(
+			page.locator(
+				`meta[property="og:description"][content="${journalArticleDescription}"]`
+			)
+		).toBeAttached();
+
+		await expect(
+			page.locator(
+				`meta[property="og:image"][content*="/image/user_portrait"]`
+			)
+		).toBeAttached();
+
+		await expect(
+			page.locator(
+				`meta[property="og:image:alt"][content="${journalArticleTitle}"]`
+			)
+		).toBeAttached();
+	});
+
 	test('User can map a web content to SEO meta tags in a display page', async ({
 		apiHelpers,
 		displayPageTemplatesPage,

@@ -58,6 +58,9 @@ components:
                 total:
                     format: double
                     type: number
+                totalValue:
+                    format: double
+                    type: number
         Metric:
             properties:
                 metricType:

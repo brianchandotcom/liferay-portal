@@ -52,7 +52,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
 				new Date(currentTimeMillis + (Time.DAY * 30)),
-				new Date(currentTimeMillis - (Time.DAY * 20000)));
+				new Date(0));
 
 		Assert.assertTrue(notification);
 	}
@@ -68,7 +68,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
 				new Date(currentTimeMillis + (Time.DAY * 50)),
-				new Date(currentTimeMillis - (Time.DAY * 20000)));
+				new Date(0));
 
 		Assert.assertFalse(notification);
 	}
@@ -100,7 +100,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
 				new Date(currentTimeMillis + (Time.DAY * 28)),
-				new Date(currentTimeMillis - (Time.DAY * 20000)));
+				new Date(0));
 
 		Assert.assertTrue(notification);
 	}
@@ -116,7 +116,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
 				new Date(currentTimeMillis - Time.DAY),
-				new Date(currentTimeMillis - (Time.DAY * 20000)));
+				new Date(0));
 
 		Assert.assertTrue(notification);
 	}

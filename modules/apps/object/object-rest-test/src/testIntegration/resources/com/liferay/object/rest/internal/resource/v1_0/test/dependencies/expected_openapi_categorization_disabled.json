@@ -149,30 +149,24 @@
 							},
 							"type": "object"
 						},
-						"extensions": {
-							"x-batch-unsupported-formats": "CSV"
-						},
 						"readOnly": true,
-						"type": "object"
+						"type": "object",
+						"x-batch-unsupported-formats": "CSV"
 					},
 					"auditEvents": {
 						"description": "Optional field with the audit events associated with this object entry, can be embedded with nestedFields",
-						"extensions": {
-							"x-batch-unsupported-formats": "CSV"
-						},
 						"items": {
 							"$ref": "#/components/schemas/AuditEvent"
 						},
 						"readOnly": true,
-						"type": "array"
+						"type": "array",
+						"x-batch-unsupported-formats": "CSV"
 					},
 					"creator": {
-						"extensions": {
-							"x-batch-unsupported-formats": "CSV",
-							"x-parent-map": "properties"
-						},
 						"readOnly": true,
-						"type": "string"
+						"type": "string",
+						"x-batch-unsupported-formats": "CSV",
+						"x-parent-map": "properties"
 					},
 					"dateCreated": {
 						"format": "date-time",
@@ -185,26 +179,20 @@
 						"type": "string"
 					},
 					"externalReferenceCode": {
-						"extensions": {
-							"x-parent-map": "properties"
-						},
 						"readOnly": false,
-						"type": "string"
+						"type": "string",
+						"x-parent-map": "properties"
 					},
 					"field": {
-						"extensions": {
-							"x-parent-map": "properties"
-						},
 						"readOnly": false,
-						"type": "string"
+						"type": "string",
+						"x-parent-map": "properties"
 					},
 					"id": {
-						"extensions": {
-							"x-parent-map": "properties"
-						},
 						"format": "int64",
 						"readOnly": true,
-						"type": "integer"
+						"type": "integer",
+						"x-parent-map": "properties"
 					},
 					"permissions": {
 						"items": {
@@ -217,12 +205,10 @@
 						"type": "string"
 					},
 					"status": {
-						"extensions": {
-							"x-batch-unsupported-formats": "CSV",
-							"x-parent-map": "properties"
-						},
 						"readOnly": true,
-						"type": "string"
+						"type": "string",
+						"x-batch-unsupported-formats": "CSV",
+						"x-parent-map": "properties"
 					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -258,8 +244,6 @@
 						"type": "array"
 					},
 					"items": {
-						"extensions": {
-						},
 						"items": {
 							"$ref": "#/components/schemas/Object4"
 						},

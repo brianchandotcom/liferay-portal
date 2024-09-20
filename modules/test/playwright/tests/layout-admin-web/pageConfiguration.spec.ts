@@ -18,6 +18,7 @@ import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {performLogout} from '../../utils/performLogin';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
@@ -462,6 +463,118 @@ test.describe('SEO configuration', () => {
 			`${pageName} - ${site.name} - Liferay DXP (Editing)`
 		);
 	});
+
+	test(
+		'User can customize open graph tags',
+		{
+			tag: '@LPS-134658',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create page
+
+			const pageName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: pageName,
+			});
+
+			// Configure open graph tags
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(pageName, 'Open Graph');
+
+			// Configure image
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await page.getByLabel('Select Image', {exact: true}).click();
+
+			const iframe = page.frameLocator('iframe[title="Select Image"]');
+
+			await expect(
+				iframe.getByText('Drag & Drop Your Images or Browse to Upload')
+			).toBeVisible();
+
+			await iframe
+				.getByText('Drag & Drop Your Images or Browse to Upload')
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/thumbnail.jpg')
+			);
+
+			await iframe
+				.getByRole('button', {exact: true, name: 'Add'})
+				.click();
+
+			// Configure image alt description
+
+			const imageAltDescription = getRandomString();
+
+			await page
+				.getByLabel('Image Alt Description')
+				.fill(imageAltDescription);
+
+			// Configure title
+
+			await page.getByLabel('Use Custom Title').check();
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('Title', {exact: true}).fill(title);
+
+			// Configure description
+
+			await page.getByLabel('Use Custom Description').check();
+
+			const description = getRandomString();
+
+			await page
+				.getByPlaceholder('Description', {exact: true})
+				.fill(description);
+
+			await pageConfigurationPage.save();
+
+			// Assert open graph tags
+
+			await performLogout(page);
+
+			await page.goto(`/web${site.friendlyUrlPath}/${pageName}`);
+
+			await expect(
+				page.locator(`meta[property="og:title"][content="${title}"]`)
+			).toBeAttached();
+
+			await expect(
+				page.locator(
+					`meta[property="og:description"][content="${description}"]`
+				)
+			).toBeAttached();
+
+			await expect(
+				page.locator(
+					`meta[property="og:image"][content*="thumbnail.jpg"]`
+				)
+			).toBeAttached();
+
+			await expect(
+				page.locator(
+					`meta[property="og:image:alt"][content="${imageAltDescription}"]`
+				)
+			).toBeAttached();
+		}
+	);
 });
 
 test.describe('Utility Page', () => {

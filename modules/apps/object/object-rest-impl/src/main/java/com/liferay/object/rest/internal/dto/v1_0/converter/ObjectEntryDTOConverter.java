@@ -484,46 +484,40 @@ public class ObjectEntryDTOConverter
 		fileEntry.setExternalReferenceCode(
 			dlFileEntry::getExternalReferenceCode);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPS-174455")) {
+		fileEntry.setFileBase64(
+			() -> (String)NestedFieldsSupplier.supply(
+				objectFieldName + ".fileBase64",
+				fieldName -> Base64.encode(
+					_file.getBytes(dlFileEntry.getContentStream()))));
+		fileEntry.setFolder(
+			() -> (Folder)NestedFieldsSupplier.supply(
+				objectFieldName + ".folder",
+				fieldName -> {
+					if (!Objects.equals(
+							ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+								objectField))) {
 
-			fileEntry.setFileBase64(
-				() -> (String)NestedFieldsSupplier.supply(
-					objectFieldName + ".fileBase64",
-					fieldName -> Base64.encode(
-						_file.getBytes(dlFileEntry.getContentStream()))));
-			fileEntry.setFolder(
-				() -> (Folder)NestedFieldsSupplier.supply(
-					objectFieldName + ".folder",
-					fieldName -> {
-						if (!Objects.equals(
-								ObjectFieldSettingConstants.
-									VALUE_DOCS_AND_MEDIA,
-								ObjectFieldSettingUtil.getValue(
-									ObjectFieldSettingConstants.
-										NAME_FILE_SOURCE,
-									objectField))) {
+						return null;
+					}
 
-							return null;
-						}
+					Folder folder = new Folder();
 
-						Folder folder = new Folder();
+					folder.setExternalReferenceCode(
+						() -> {
+							if (dlFileEntry.getFolderId() == 0) {
+								return null;
+							}
 
-						folder.setExternalReferenceCode(
-							() -> {
-								if (dlFileEntry.getFolderId() == 0) {
-									return null;
-								}
+							DLFolder dlFolder = dlFileEntry.getFolder();
 
-								DLFolder dlFolder = dlFileEntry.getFolder();
+							return dlFolder.getExternalReferenceCode();
+						});
+					folder.setSiteId(dlFileEntry::getGroupId);
 
-								return dlFolder.getExternalReferenceCode();
-							});
-						folder.setSiteId(dlFileEntry::getGroupId);
-
-						return folder;
-					}));
-		}
+					return folder;
+				}));
 
 		fileEntry.setId(dlFileEntry::getFileEntryId);
 		fileEntry.setLink(

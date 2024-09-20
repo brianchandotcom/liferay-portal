@@ -15,7 +15,6 @@ export const test = mergeTests(
 	dataMigrationCenterPagesTest,
 	featureFlagsTest({
 		'COMMERCE-8087': true,
-		'LPS-174455': true,
 	}),
 	loginTest()
 );

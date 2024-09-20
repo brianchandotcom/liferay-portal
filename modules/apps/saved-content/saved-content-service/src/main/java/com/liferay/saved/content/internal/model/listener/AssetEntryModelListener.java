@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.saved.content.service.SavedContentEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,13 +25,9 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 		throws ModelListenerException {
 
 		_savedContentEntryLocalService.deleteSavedContentEntries(
-			assetEntry.getGroupId(),
-			_classNameLocalService.getClassNameId(assetEntry.getClassName()),
+			assetEntry.getGroupId(), assetEntry.getClassNameId(),
 			assetEntry.getClassPK());
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private SavedContentEntryLocalService _savedContentEntryLocalService;

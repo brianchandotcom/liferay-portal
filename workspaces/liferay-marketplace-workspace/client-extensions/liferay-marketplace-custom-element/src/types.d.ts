@@ -347,9 +347,9 @@ type DefaultProperties = {
 	featureFlags: string[];
 	featurePreviews: ['use-product-id-for-specification'];
 	marketoFormId: string;
+	productId: string;
 	trialAccountCheck: 'false' | 'true';
 	trialEulaURL: string;
-	trialProductId: string;
 };
 
 interface CommerceAccount extends Omit<Account, 'description'> {

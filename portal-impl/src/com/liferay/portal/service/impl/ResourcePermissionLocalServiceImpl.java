@@ -1328,11 +1328,6 @@ public class ResourcePermissionLocalServiceImpl
 			portlet.getCompanyId(), portlet.getRootPortletId(), guestRole,
 			ownerRole, siteMemberRole, guestPortletActions,
 			ownerPortletActionIds, groupPortletActionIds);
-
-		initDefaultModelResourcePermissions(
-			portlet.getCompanyId(),
-			ResourceActionsUtil.getPortletModelResources(
-				portlet.getRootPortletId()));
 	}
 
 	/**

@@ -30,7 +30,10 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Zsolt Berentey
@@ -226,17 +229,25 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			return stagedModel.getUuid();
 		}
 
+		Class<?> modelClass = classedModel.getClass();
+
+		String className = modelClass.getName();
+
+		if (_noUUIDClassNames.contains(className)) {
+			return StringPool.BLANK;
+		}
+
 		Method getUuidMethod = null;
 
 		try {
-			Class<?> modelClass = classedModel.getClass();
-
 			getUuidMethod = modelClass.getMethod("getUuid", new Class<?>[0]);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+
+			_noUUIDClassNames.add(className);
 
 			return StringPool.BLANK;
 		}
@@ -319,5 +330,8 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemEventAdvice.class);
+
+	private final Set<String> _noUUIDClassNames = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
 
 }

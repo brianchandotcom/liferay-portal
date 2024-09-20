@@ -5,8 +5,6 @@
 
 package com.liferay.portal.security.content.security.policy.internal.servlet.filter;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,9 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -106,77 +101,11 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 			httpServletResponse.setHeader("Content-Security-Policy", policy);
 
-			PrintWriter printWriter = httpServletResponse.getWriter();
-
-			ContentSecurityPolicyHttpServletResponse
-				contentSecurityPolicyHttpServletResponse =
-					new ContentSecurityPolicyHttpServletResponse(
-						httpServletResponse);
-
-			filterChain.doFilter(
-				httpServletRequest, contentSecurityPolicyHttpServletResponse);
-
-			String content = updateContent(
-				contentSecurityPolicyHttpServletResponse.getContent(), nonce);
-
-			printWriter.write(content);
-
-			printWriter.close();
-
-			httpServletResponse.setContentLength(content.length());
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}
 		finally {
 			_contentSecurityPolicyNonceManager.cleanUpNonce(httpServletRequest);
 		}
-	}
-
-	protected String updateContent(String content, String nonce) {
-		String nonceAttribute = "nonce=\"" + nonce + "\"";
-		String escapedNonceAttribute = "nonce=\\\"" + nonce + "\\\"";
-
-		Pattern pattern = Pattern.compile(
-			"\\{.*nonce=\".{" + nonce.length() + "}\".*\\}");
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String matcherGroup = matcher.group();
-
-			String[] matcherArray = StringUtil.split(
-				matcherGroup, nonceAttribute);
-
-			StringBundler sb = new StringBundler((matcherArray.length * 2) - 1);
-
-			int open = 0;
-			boolean overwrite = false;
-
-			for (int i = 0; i < (matcherArray.length - 1); i++) {
-				open += StringUtil.count(
-					matcherArray[i], CharPool.OPEN_CURLY_BRACE);
-				open -= StringUtil.count(
-					matcherArray[i], CharPool.CLOSE_CURLY_BRACE);
-
-				sb.append(matcherArray[i]);
-
-				if (open > 0) {
-					overwrite = true;
-
-					sb.append(escapedNonceAttribute);
-				}
-				else {
-					sb.append(nonceAttribute);
-				}
-			}
-
-			if (overwrite) {
-				sb.append(matcherArray[matcherArray.length - 1]);
-
-				content = StringUtil.replace(
-					content, matcherGroup, sb.toString());
-			}
-		}
-
-		return content;
 	}
 
 	private boolean _isExcludedURIPath(

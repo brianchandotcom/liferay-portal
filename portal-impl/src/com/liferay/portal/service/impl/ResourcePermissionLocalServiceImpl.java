@@ -1295,7 +1295,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			filterOwnerActions(modelResource, ownerModelActionIds);
 
-			_initPortletDefaultPermissions(
+			_initDefaultPermissions(
 				companyId, modelResource, guestRole, ownerRole, siteMemberRole,
 				guestModelActionIds, ownerModelActionIds, groupModelActionIds);
 		}
@@ -1324,7 +1324,7 @@ public class ResourcePermissionLocalServiceImpl
 			ResourceActionsUtil.getPortletResourceGroupDefaultActions(
 				portlet.getRootPortletId());
 
-		_initPortletDefaultPermissions(
+		_initDefaultPermissions(
 			portlet.getCompanyId(), portlet.getRootPortletId(), guestRole,
 			ownerRole, siteMemberRole, guestPortletActions,
 			ownerPortletActionIds, groupPortletActionIds);
@@ -2144,7 +2144,7 @@ public class ResourcePermissionLocalServiceImpl
 		return resourcePermissionsMap;
 	}
 
-	private void _initPortletDefaultPermissions(
+	private void _initDefaultPermissions(
 			long companyId, String name, Role guestRole, Role ownerRole,
 			Role siteMemberRole, List<String> guestActionIds,
 			List<String> ownerActionIds, List<String> groupActionIds)

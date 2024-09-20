@@ -373,8 +373,8 @@ export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 		const canDropInRoot = checkAllowedChild(
 			source,
 			root,
-			layoutDataRef,
-			fragmentEntryLinksRef
+			layoutDataRef.current,
+			fragmentEntryLinksRef.current
 		);
 
 		// Check root children to see if someone is targetable
@@ -487,8 +487,8 @@ function getNextTarget(
 				!checkAllowedChild(
 					source,
 					nextTargetParent,
-					layoutDataRef,
-					fragmentEntryLinksRef
+					layoutDataRef.current,
+					fragmentEntryLinksRef.current
 				)
 			) {
 				return getNextTarget(
@@ -507,8 +507,8 @@ function getNextTarget(
 				!checkAllowedChild(
 					source,
 					nextTargetParent,
-					layoutDataRef,
-					fragmentEntryLinksRef
+					layoutDataRef.current,
+					fragmentEntryLinksRef.current
 				)
 			) {
 				return getNextTarget(
@@ -527,8 +527,8 @@ function getNextTarget(
 				!checkAllowedChild(
 					source,
 					nextTargetItem,
-					layoutDataRef,
-					fragmentEntryLinksRef
+					layoutDataRef.current,
+					fragmentEntryLinksRef.current
 				)
 			) {
 				return getNextTarget(

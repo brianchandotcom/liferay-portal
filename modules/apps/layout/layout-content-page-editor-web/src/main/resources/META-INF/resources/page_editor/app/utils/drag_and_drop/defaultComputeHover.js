@@ -112,8 +112,8 @@ export default function defaultComputeHover({
 			droppable: checkAllowedChild(
 				sourceItem,
 				targetItem,
-				layoutDataRef,
-				fragmentEntryLinksRef
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
 			),
 			elevate: null,
 			targetPositionWithMiddle,
@@ -141,8 +141,8 @@ export default function defaultComputeHover({
 			droppable: checkAllowedChild(
 				sourceItem,
 				targetItem,
-				layoutDataRef,
-				fragmentEntryLinksRef
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
 			),
 			elevate: true,
 			targetPositionWithMiddle,

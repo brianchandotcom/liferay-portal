@@ -87,8 +87,8 @@ export default function canBeCopied(
 	const isChildAllowed = checkAllowedChild(
 		source,
 		parent,
-		{current: layoutData},
-		{current: fragmentEntryLinks}
+		layoutData,
+		fragmentEntryLinks
 	);
 	if (!isChildAllowed || isUnmappedCollection(target)) {
 		let error = Liferay.Language.get(

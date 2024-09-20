@@ -199,7 +199,7 @@ components:
                 testrayStatusMetric:
                     $ref: "#/components/schemas/TestrayStatusMetric"
             type: object
-        TestrayDurationReport:
+        TestrayRoutineDurationReport:
             properties:
                 testrayCaseFlaky:
                     type: boolean
@@ -619,7 +619,7 @@ paths:
             tags: ["TestrayCaseResult"]
     "/testray-routine-duration-report/{testrayRoutineId}":
         get:
-            operationId: getTestrayRoutineDurationReportTestrayRoutinePage
+            operationId: getTestrayRoutineDurationReportsTestrayRoutinePage
             parameters:
                 - in: path
                   name: testrayRoutineId
@@ -665,14 +665,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/TestrayDurationReport"
+                                    $ref: "#/components/schemas/TestrayRoutineDurationReport"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/TestrayDurationReport"
+                                    $ref: "#/components/schemas/TestrayRoutineDurationReport"
                                 type: array
-            tags: ["TestrayDurationReport"]
+            tags: ["TestrayRoutineDurationReport"]
     "/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}":
         get:
             operationId: getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine

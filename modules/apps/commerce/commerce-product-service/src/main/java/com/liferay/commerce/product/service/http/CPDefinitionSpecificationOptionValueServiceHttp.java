@@ -44,9 +44,9 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 	public static
 		com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue
 				addCPDefinitionSpecificationOptionValue(
-					HttpPrincipal httpPrincipal, long cpDefinitionId,
-					long cpSpecificationOptionId, long cpOptionCategoryId,
-					double priority,
+					HttpPrincipal httpPrincipal, String externalReferenceCode,
+					long cpDefinitionId, long cpSpecificationOptionId,
+					long cpOptionCategoryId, double priority,
 					java.util.Map<java.util.Locale, String> valueMap,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
@@ -59,8 +59,9 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 				_addCPDefinitionSpecificationOptionValueParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, cpSpecificationOptionId,
-				cpOptionCategoryId, priority, valueMap, serviceContext);
+				methodKey, externalReferenceCode, cpDefinitionId,
+				cpSpecificationOptionId, cpOptionCategoryId, priority, valueMap,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -213,6 +214,51 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 
 	public static
 		com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue
+				fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+					HttpPrincipal httpPrincipal, String externalReferenceCode,
+					long companyId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionSpecificationOptionValueServiceUtil.class,
+				"fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode",
+				_fetchCPDefinitionSpecificationOptionValueByExternalReferenceCodeParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.
+				CPDefinitionSpecificationOptionValue)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue
 				getCPDefinitionSpecificationOptionValue(
 					HttpPrincipal httpPrincipal,
 					long cpDefinitionSpecificationOptionValueId)
@@ -222,10 +268,55 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionSpecificationOptionValueServiceUtil.class,
 				"getCPDefinitionSpecificationOptionValue",
-				_getCPDefinitionSpecificationOptionValueParameterTypes4);
+				_getCPDefinitionSpecificationOptionValueParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionSpecificationOptionValueId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.
+				CPDefinitionSpecificationOptionValue)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue
+				getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+					HttpPrincipal httpPrincipal, String externalReferenceCode,
+					long companyId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionSpecificationOptionValueServiceUtil.class,
+				"getCPDefinitionSpecificationOptionValueByExternalReferenceCode",
+				_getCPDefinitionSpecificationOptionValueByExternalReferenceCodeParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -272,7 +363,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionSpecificationOptionValueServiceUtil.class,
 				"getCPDefinitionSpecificationOptionValues",
-				_getCPDefinitionSpecificationOptionValuesParameterTypes5);
+				_getCPDefinitionSpecificationOptionValuesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, start, end, orderByComparator);
@@ -319,7 +410,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionSpecificationOptionValueServiceUtil.class,
 				"getCPDefinitionSpecificationOptionValues",
-				_getCPDefinitionSpecificationOptionValuesParameterTypes6);
+				_getCPDefinitionSpecificationOptionValuesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, cpOptionCategoryId);
@@ -362,7 +453,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionSpecificationOptionValueServiceUtil.class,
 				"getCPDefinitionSpecificationOptionValuesCount",
-				_getCPDefinitionSpecificationOptionValuesCountParameterTypes7);
+				_getCPDefinitionSpecificationOptionValuesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -410,7 +501,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionSpecificationOptionValueServiceUtil.class,
 				"updateCPDefinitionSpecificationOptionValue",
-				_updateCPDefinitionSpecificationOptionValueParameterTypes8);
+				_updateCPDefinitionSpecificationOptionValueParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode,
@@ -451,7 +542,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 
 	private static final Class<?>[]
 		_addCPDefinitionSpecificationOptionValueParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, double.class,
+			String.class, long.class, long.class, long.class, double.class,
 			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -465,23 +556,29 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 		_fetchCPDefinitionSpecificationOptionValueParameterTypes3 =
 			new Class[] {long.class};
 	private static final Class<?>[]
-		_getCPDefinitionSpecificationOptionValueParameterTypes4 = new Class[] {
+		_fetchCPDefinitionSpecificationOptionValueByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_getCPDefinitionSpecificationOptionValueParameterTypes5 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCPDefinitionSpecificationOptionValuesParameterTypes5 = new Class[] {
+		_getCPDefinitionSpecificationOptionValueByExternalReferenceCodeParameterTypes6 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_getCPDefinitionSpecificationOptionValuesParameterTypes7 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCPDefinitionSpecificationOptionValuesParameterTypes6 = new Class[] {
+		_getCPDefinitionSpecificationOptionValuesParameterTypes8 = new Class[] {
 			long.class, long.class
 		};
 	private static final Class<?>[]
-		_getCPDefinitionSpecificationOptionValuesCountParameterTypes7 =
+		_getCPDefinitionSpecificationOptionValuesCountParameterTypes9 =
 			new Class[] {long.class};
 	private static final Class<?>[]
-		_updateCPDefinitionSpecificationOptionValueParameterTypes8 =
+		_updateCPDefinitionSpecificationOptionValueParameterTypes10 =
 			new Class[] {
 				String.class, long.class, long.class, String.class,
 				double.class, java.util.Map.class,

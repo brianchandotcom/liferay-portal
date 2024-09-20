@@ -34,6 +34,10 @@ public class CPDefinitionSpecificationOptionValueTable
 	public final Column<CPDefinitionSpecificationOptionValueTable, String>
 		uuid = createColumn(
 			"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionSpecificationOptionValueTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionSpecificationOptionValueTable, Long>
 		CPDefinitionSpecificationOptionValueId = createColumn(
 			"CPDSpecificationOptionValueId", Long.class, Types.BIGINT,

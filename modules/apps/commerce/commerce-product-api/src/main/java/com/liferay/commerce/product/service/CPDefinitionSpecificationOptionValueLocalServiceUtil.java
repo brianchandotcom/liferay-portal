@@ -59,15 +59,15 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 
 	public static CPDefinitionSpecificationOptionValue
 			addCPDefinitionSpecificationOptionValue(
-				long cpDefinitionId, long cpSpecificationOptionId,
-				long cpOptionCategoryId, double priority,
-				Map<java.util.Locale, String> valueMap,
+				String externalReferenceCode, long cpDefinitionId,
+				long cpSpecificationOptionId, long cpOptionCategoryId,
+				double priority, Map<java.util.Locale, String> valueMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPDefinitionSpecificationOptionValue(
-			cpDefinitionId, cpSpecificationOptionId, cpOptionCategoryId,
-			priority, valueMap, serviceContext);
+			externalReferenceCode, cpDefinitionId, cpSpecificationOptionId,
+			cpOptionCategoryId, priority, valueMap, serviceContext);
 	}
 
 	/**
@@ -289,6 +289,15 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 			cpDefinitionId, key);
 	}
 
+	public static CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().
+			fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the cp definition specification option value matching the UUID and group.
 	 *
@@ -325,6 +334,16 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 
 		return getService().getCPDefinitionSpecificationOptionValue(
 			CPDefinitionSpecificationOptionValueId);
+	}
+
+	public static CPDefinitionSpecificationOptionValue
+			getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	/**

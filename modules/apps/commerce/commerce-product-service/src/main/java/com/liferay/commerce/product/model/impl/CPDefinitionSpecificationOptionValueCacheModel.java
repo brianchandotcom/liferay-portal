@@ -75,7 +75,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -83,6 +83,8 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", CPDefinitionSpecificationOptionValueId=");
 		sb.append(CPDefinitionSpecificationOptionValueId);
 		sb.append(", groupId=");
@@ -131,6 +133,15 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		}
 		else {
 			cpDefinitionSpecificationOptionValueImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			cpDefinitionSpecificationOptionValueImpl.setExternalReferenceCode(
+				"");
+		}
+		else {
+			cpDefinitionSpecificationOptionValueImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		cpDefinitionSpecificationOptionValueImpl.
@@ -205,6 +216,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		CPDefinitionSpecificationOptionValueId = objectInput.readLong();
 
@@ -240,6 +252,13 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(CPDefinitionSpecificationOptionValueId);
@@ -288,6 +307,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long CPDefinitionSpecificationOptionValueId;
 	public long groupId;
 	public long companyId;

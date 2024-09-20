@@ -533,21 +533,21 @@ test.describe('Usages', () => {
 
 			// Create a display page template for Basic Web Content and mark as default
 
-			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
 
 			const defaultDisplayPageTemplateName = getRandomString();
 
-			await displayPageTemplatesPage.createTemplate({
-				contentSubtype: 'Basic Web Content',
-				contentType: 'Web Content Article',
-				name: defaultDisplayPageTemplateName,
-			});
-
-			await displayPageTemplatesPage.markAsDefault(
-				defaultDisplayPageTemplateName
+			await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+				apiHelpers,
+				String(contentStructureId),
+				defaultDisplayPageTemplateName,
+				site
 			);
 
 			// Create a display page template for Basic Web Content
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 			const displayPageTemplateName =
 				'basicWebContentDpt' + getRandomInt();
@@ -798,7 +798,7 @@ test.describe('View', () => {
 				'@LPS-150919',
 			],
 		},
-		async ({apiHelpers, displayPageTemplatesPage, page, site}) => {
+		async ({apiHelpers, page, site}) => {
 
 			// Create a content page
 
@@ -809,27 +809,22 @@ test.describe('View', () => {
 
 			// Create a display page template for Basic Web Content
 
-			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
 
 			const displayPageTemplateName =
 				'basicWebContentDpt' + getRandomInt();
 
-			await displayPageTemplatesPage.createTemplate({
-				contentSubtype: 'Basic Web Content',
-				contentType: 'Web Content Article',
-				name: displayPageTemplateName,
-			});
-
-			await displayPageTemplatesPage.markAsDefault(
-				displayPageTemplateName
+			await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+				apiHelpers,
+				String(contentStructureId),
+				displayPageTemplateName,
+				site
 			);
 
 			// Create a Basic Web Content
 
 			const journalArticleTitle = getRandomString();
-
-			const contentStructureId =
-				await getBasicWebContentStructureId(apiHelpers);
 
 			await apiHelpers.headlessDelivery.postStructuredContent({
 				contentStructureId,

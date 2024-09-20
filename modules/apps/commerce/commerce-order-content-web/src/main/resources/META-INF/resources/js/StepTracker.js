@@ -6,16 +6,16 @@
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React from 'react';
 
-const StepTracker = ({steps}) => {
+const StepTracker = ({stepModels}) => {
 	return (
 		<ClayMultiStepNav indicatorLabel="top">
-			{steps.map(({label, state}, i) => {
+			{stepModels.map(({label, state}, i) => {
 				const complete = state === 'completed';
 
 				return (
 					<ClayMultiStepNav.Item
 						active={state === 'active'}
-						expand={i + 1 !== steps.length}
+						expand={i + 1 !== stepModels.length}
 						key={i}
 						state={complete ? 'complete' : undefined}
 					>

@@ -162,6 +162,10 @@ test('LPD-33439 Default order display page template is accessible via friendly U
 			'Feature Flags',
 			'Developer'
 		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
 	}
 });
 

@@ -12,7 +12,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
-import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
+import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -98,12 +98,12 @@ public class CommerceOrderEditDisplayContext {
 			PortletResourcePermission commerceOrderPortletResourcePermission,
 			CommerceOrderService commerceOrderService,
 			CommerceOrderStatusRegistry commerceOrderStatusRegistry,
+			CommerceOrderStepTrackerHelper commerceOrderStepTrackerHelper,
 			CommerceOrderTypeService commerceOrderTypeService,
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
 			CommercePriceFormatter commercePriceFormatter,
 			CommerceShipmentService commerceShipmentService,
-			CommerceStepTrackerHelper commerceStepTrackerHelper,
 			CommerceTermEntryLocalService commerceTermEntryLocalService,
 			CPMeasurementUnitService cpMeasurementUnitService,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
@@ -124,12 +124,12 @@ public class CommerceOrderEditDisplayContext {
 			commerceOrderPortletResourcePermission;
 		_commerceOrderService = commerceOrderService;
 		_commerceOrderStatusRegistry = commerceOrderStatusRegistry;
+		_commerceOrderStepTrackerHelper = commerceOrderStepTrackerHelper;
 		_commerceOrderTypeService = commerceOrderTypeService;
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShipmentService = commerceShipmentService;
-		_commerceStepTrackerHelper = commerceStepTrackerHelper;
 		_commerceTermEntryLocalService = commerceTermEntryLocalService;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 		_modelResourcePermission = modelResourcePermission;
@@ -629,7 +629,7 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public List<StepModel> getOrderSteps() throws PortalException {
-		return _commerceStepTrackerHelper.getOrderSteps(
+		return _commerceOrderStepTrackerHelper.getCommerceOrderSteps(
 			_commerceOrder, _commerceOrderRequestHelper.getLocale());
 	}
 
@@ -737,13 +737,14 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+	private final CommerceOrderStepTrackerHelper
+		_commerceOrderStepTrackerHelper;
 	private final CommerceOrderTypeService _commerceOrderTypeService;
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
-	private final CommerceStepTrackerHelper _commerceStepTrackerHelper;
 	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private final ModelResourcePermission<CommerceOrder>

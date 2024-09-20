@@ -7,7 +7,7 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
+import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
@@ -74,13 +74,14 @@ public class OpenCommerceOrderContentConfigurationAction
 						_commerceOrderImporterTypeRegistry,
 						_commerceOrderNoteService,
 						_commerceOrderPriceCalculation, _commerceOrderService,
-						_commerceOrderStatusRegistry, _commerceOrderTypeService,
+						_commerceOrderStatusRegistry,
+						_commerceOrderStepTrackerHelper,
+						_commerceOrderTypeService,
 						_commercePaymentIntegrationRegistry,
 						_commercePaymentMethodGroupRelServiceService,
 						_commercePaymentMethodRegistry,
-						_commerceStepTrackerHelper, _commerceTermEntryService,
-						_configurationProvider, _dlAppLocalService,
-						httpServletRequest, _itemSelector,
+						_commerceTermEntryService, _configurationProvider,
+						_dlAppLocalService, httpServletRequest, _itemSelector,
 						_modelResourcePermission, _percentageFormatter,
 						_portletResourcePermission);
 
@@ -127,6 +128,9 @@ public class OpenCommerceOrderContentConfigurationAction
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
+	private CommerceOrderStepTrackerHelper _commerceOrderStepTrackerHelper;
+
+	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
@@ -139,9 +143,6 @@ public class OpenCommerceOrderContentConfigurationAction
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-
-	@Reference
-	private CommerceStepTrackerHelper _commerceStepTrackerHelper;
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;

@@ -16,5 +16,5 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 <liferay-theme:defineObjects />
 
 <%
-List<StepModel> steps = (List<StepModel>)request.getAttribute("liferay-commerce:step-tracker:step-list");
+List<StepModel> stepModels = (List<StepModel>)request.getAttribute("liferay-commerce:step-tracker:commerce-order-steps");
 %>

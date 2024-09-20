@@ -7,7 +7,7 @@ package com.liferay.commerce.frontend.internal.util;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.frontend.model.StepModel;
-import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
+import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
@@ -27,24 +27,24 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Sbarra
  */
-@Component(service = CommerceStepTrackerHelper.class)
-public class CommerceStepTrackerHelperImpl
-	implements CommerceStepTrackerHelper {
+@Component(service = CommerceOrderStepTrackerHelper.class)
+public class CommerceOrderStepTrackerHelperImpl
+	implements CommerceOrderStepTrackerHelper {
 
 	@Override
-	public List<StepModel> getOrderSteps(
+	public List<StepModel> getCommerceOrderSteps(
 			CommerceOrder commerceOrder, Locale locale)
 		throws PortalException {
 
-		List<StepModel> steps = new ArrayList<>();
+		List<StepModel> stepModels = new ArrayList<>();
 
 		CommerceOrderStatus currentCommerceOrderStatus =
 			_commerceOrderEngine.getCurrentCommerceOrderStatus(commerceOrder);
 
-		if ((commerceOrder == null) || (currentCommerceOrderStatus == null) ||
+		if ((currentCommerceOrderStatus == null) ||
 			(currentCommerceOrderStatus.getPriority() == -1)) {
 
-			return steps;
+			return stepModels;
 		}
 
 		if ((currentCommerceOrderStatus != null) &&
@@ -57,7 +57,7 @@ public class CommerceStepTrackerHelperImpl
 				CommerceOrderConstants.ORDER_STATUSES_OPEN,
 				commerceOrder.getOrderStatus())) {
 
-			return steps;
+			return stepModels;
 		}
 
 		List<CommerceOrderStatus> commerceOrderStatuses =
@@ -78,12 +78,12 @@ public class CommerceStepTrackerHelperImpl
 				continue;
 			}
 
-			StepModel step = new StepModel();
+			StepModel stepModel = new StepModel();
 
-			step.setId(
+			stepModel.setId(
 				CommerceOrderConstants.getOrderStatusLabel(
 					commerceOrderStatus.getKey()));
-			step.setLabel(commerceOrderStatus.getLabel(locale));
+			stepModel.setLabel(commerceOrderStatus.getLabel(locale));
 
 			if (commerceOrderStatus.equals(currentCommerceOrderStatus) &&
 				(commerceOrderStatus.getKey() !=
@@ -91,29 +91,29 @@ public class CommerceStepTrackerHelperImpl
 				(commerceOrderStatus.getKey() !=
 					CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED)) {
 
-				step.setState("active");
+				stepModel.setState("active");
 			}
 			else if ((currentCommerceOrderStatus != null) &&
 					 (commerceOrderStatus.getPriority() <=
 						 currentCommerceOrderStatus.getPriority()) &&
 					 commerceOrderStatus.isComplete(commerceOrder)) {
 
-				step.setState("completed");
+				stepModel.setState("completed");
 			}
 			else {
-				step.setState("inactive");
+				stepModel.setState("inactive");
 			}
 
-			steps.add(step);
+			stepModels.add(stepModel);
 		}
 
-		return steps;
+		return stepModels;
 	}
 
 	private List<StepModel> _getWorkflowSteps(
 		CommerceOrder commerceOrder, Locale locale) {
 
-		List<StepModel> steps = new ArrayList<>();
+		List<StepModel> stepModels = new ArrayList<>();
 
 		int[] workflowStatuses = {
 			WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING,
@@ -121,28 +121,28 @@ public class CommerceStepTrackerHelperImpl
 		};
 
 		for (int workflowStatus : workflowStatuses) {
-			StepModel step = new StepModel();
+			StepModel stepModel = new StepModel();
 
 			String workflowStatusLabel = WorkflowConstants.getStatusLabel(
 				workflowStatus);
 
-			step.setId(workflowStatusLabel);
-			step.setLabel(_language.get(locale, workflowStatusLabel));
+			stepModel.setId(workflowStatusLabel);
+			stepModel.setLabel(_language.get(locale, workflowStatusLabel));
 
 			if (commerceOrder.getStatus() == workflowStatus) {
-				step.setState("active");
+				stepModel.setState("active");
 			}
 			else if (commerceOrder.getStatus() < workflowStatus) {
-				step.setState("completed");
+				stepModel.setState("completed");
 			}
 			else {
-				step.setState("inactive");
+				stepModel.setState("inactive");
 			}
 
-			steps.add(step);
+			stepModels.add(stepModel);
 		}
 
-		return steps;
+		return stepModels;
 	}
 
 	@Reference

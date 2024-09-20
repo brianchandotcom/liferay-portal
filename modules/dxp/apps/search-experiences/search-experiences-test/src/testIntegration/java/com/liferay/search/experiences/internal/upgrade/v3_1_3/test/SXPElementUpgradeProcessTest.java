@@ -10,8 +10,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -20,6 +23,8 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,9 +52,24 @@ public class SXPElementUpgradeProcessTest {
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
 
-		sxpElement.setElementDefinitionJSON("{old value");
+		if (sxpElement != null) {
+			sxpElement.setElementDefinitionJSON("{old value");
 
-		_sxpElementLocalService.updateSXPElement(sxpElement);
+			sxpElement = _sxpElementLocalService.updateSXPElement(sxpElement);
+		}
+		else {
+			_sxpElementLocalService.addSXPElement(
+				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, true, StringPool.BLANK,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				0,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		}
 
 		_runUpgrade("v3_1_3.SXPElementUpgradeProcess");
 

@@ -127,7 +127,7 @@ portletDisplay.setURLBack(backURL);
 						<div class="col-6">
 							<commerce-ui:info-box
 								elementClasses="py-3"
-								title='<%= LanguageUtil.get(request, "total-amount") %>'
+								title='<%= LanguageUtil.get(request, "payments-total-amount") %>'
 							>
 								<p class="mb-0"><%= commercePaymentEntryDisplayContext.getTotalAmountFormatted() %></p>
 							</commerce-ui:info-box>

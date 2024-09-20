@@ -14,6 +14,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -47,28 +48,29 @@ public class ObjectDefinitionLocalServiceDBPartitionTest
 
 	@Test
 	public void testPublishObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition = null;
+		_objectDefinition = null;
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(
 					TestPropsValues.getCompanyId())) {
 
-			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						"a" + RandomTestUtil.randomString()
-					).build()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				TestPropsValues.getUserId());
+			_objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						new TextObjectFieldBuilder(
+						).labelMap(
+							RandomTestUtil.randomLocaleStringMap()
+						).name(
+							"a" + RandomTestUtil.randomString()
+						).build()),
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					TestPropsValues.getUserId());
 		}
 
 		_assertResourceActionsCount(
-			TestPropsValues.getCompanyId(), objectDefinition, 4);
-		_assertResourceActionsCount(COMPANY_IDS[0], objectDefinition, 0);
-		_assertResourceActionsCount(COMPANY_IDS[1], objectDefinition, 0);
+			TestPropsValues.getCompanyId(), _objectDefinition, 4);
+		_assertResourceActionsCount(COMPANY_IDS[0], _objectDefinition, 0);
+		_assertResourceActionsCount(COMPANY_IDS[1], _objectDefinition, 0);
 	}
 
 	private void _assertResourceActionsCount(
@@ -84,6 +86,9 @@ public class ObjectDefinitionLocalServiceDBPartitionTest
 					objectDefinition.getClassName()));
 		}
 	}
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

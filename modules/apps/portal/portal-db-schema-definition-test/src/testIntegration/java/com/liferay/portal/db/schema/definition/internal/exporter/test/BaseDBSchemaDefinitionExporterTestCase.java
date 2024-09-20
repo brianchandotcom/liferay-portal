@@ -35,7 +35,6 @@ import javax.sql.DataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.cm.PersistenceManager;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 
@@ -45,28 +44,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Mariano Álvaro Sáiz
  */
 public abstract class BaseDBSchemaDefinitionExporterTestCase {
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(PID));
-
-		FileUtil.deltree(folder);
-
-		if (_objectRelationship != null) {
-			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
-				_objectRelationship.getObjectRelationshipId());
-		}
-
-		if (_objectDefinition1 != null) {
-			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-				_objectDefinition1.getObjectDefinitionId());
-		}
-
-		if (_objectDefinition2 != null) {
-			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-				_objectDefinition2.getObjectDefinitionId());
-		}
-	}
 
 	protected static void assumeDB() {
 		DBType dbType = DBManagerUtil.getDBType();
@@ -89,6 +66,29 @@ public abstract class BaseDBSchemaDefinitionExporterTestCase {
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			ObjectRelationshipLocalServiceUtil.getService(), _objectDefinition1,
 			_objectDefinition2);
+	}
+
+	protected static void tearDownClassBaseDBSchemaDefinitionExporterTestCase()
+		throws Exception {
+
+		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(PID));
+
+		FileUtil.deltree(folder);
+
+		if (_objectRelationship != null) {
+			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+				_objectRelationship.getObjectRelationshipId());
+		}
+
+		if (_objectDefinition1 != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition1.getObjectDefinitionId());
+		}
+
+		if (_objectDefinition2 != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition2.getObjectDefinitionId());
+		}
 	}
 
 	protected void assertIndexes(

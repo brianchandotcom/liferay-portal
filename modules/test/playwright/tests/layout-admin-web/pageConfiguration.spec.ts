@@ -464,6 +464,77 @@ test.describe('SEO configuration', () => {
 		);
 	});
 
+	test('SEO preview', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create page and go to SEO
+
+		const pageName = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: pageName,
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+		await pageConfigurationPage.goToSection(pageName, 'SEO');
+
+		// Change SEO HTML title and description in default language
+
+		const defaultLanguageHTMLTitle = getRandomString();
+
+		await page.getByLabel('HTML Title').fill(defaultLanguageHTMLTitle);
+
+		const defaultLanguageDescription = getRandomString();
+
+		await page.getByLabel('Description').fill(defaultLanguageDescription);
+
+		// Assert preview
+
+		await expect(page.locator('.preview-seo-title')).toContainText(
+			`${defaultLanguageHTMLTitle} - ${site.name}`
+		);
+
+		await expect(page.locator('.preview-seo-description')).toContainText(
+			defaultLanguageDescription
+		);
+
+		// Switch language
+
+		await page
+			.getByRole('button')
+			.filter({hasText: 'en-US'})
+			.first()
+			.click();
+
+		await page.getByRole('menuitem').filter({hasText: 'es-ES'}).click();
+
+		// Change SEO HTML title and description in spanish
+
+		const spanishLanguageHTMLTitle = getRandomString();
+
+		await page.getByLabel('HTML Title').fill(spanishLanguageHTMLTitle);
+
+		const spanishLanguageDescription = getRandomString();
+
+		await page.getByLabel('Description').fill(spanishLanguageDescription);
+
+		// Assert preview
+
+		await expect(page.locator('.preview-seo-title')).toContainText(
+			`${spanishLanguageHTMLTitle} - ${site.name}`
+		);
+
+		await expect(page.locator('.preview-seo-description')).toContainText(
+			spanishLanguageDescription
+		);
+	});
+
 	test(
 		'User can customize open graph tags',
 		{

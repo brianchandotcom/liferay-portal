@@ -278,7 +278,7 @@ test(
 test(
 	'Can select default fragment for form button type',
 	{
-		tag: '@LPD-31703',
+		tag: '@LPD-10727',
 	},
 	async ({fragmentEditorPage, fragmentsPage, page, site}) => {
 

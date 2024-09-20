@@ -5,24 +5,24 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import {useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import classNames from 'classnames';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
+import classNames from 'classnames';
+import {useEffect, useMemo, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext} from 'react-router-dom';
+import {z} from 'zod';
 
+import {Input} from '../../../../components/Input/Input';
 import Loading from '../../../../components/Loading';
+import ProductPurchase from '../../../../components/ProductPurchase';
+import Select from '../../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
-import regions from '../../constants/regions';
-import {Input} from '../../../../components/Input/Input';
-import Select from '../../../../components/Select/Select';
-import ProductPurchase from '../../../../components/ProductPurchase';
-import ProductPurchaseAnalytics from '../../services/ProductPurchaseAnalytics';
 import {ProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
+import regions from '../../constants/regions';
+import ProductPurchaseAnalytics from '../../services/ProductPurchaseAnalytics';
 
 type MultiSelectValue = {
 	key: string;
@@ -41,7 +41,7 @@ const countries = [...new Set([...regions.map(({country}) => country)])].sort();
 
 const AnalyticsProvisioning = () => {
 	const navigate = useNavigate();
-	const {selectedAccount, product} =
+	const {product, selectedAccount} =
 		useOutletContext<ProductPurchaseOutletContext>();
 	const {channel, properties} = useMarketplaceContext();
 	const [allowedEmailDomainsText, setAllowedEmailDomainsText] = useState('');
@@ -55,8 +55,8 @@ const AnalyticsProvisioning = () => {
 			_refAllowedEmailDomains: [],
 			_refIncidentReportContacts: [],
 			allowedEmailDomains: [],
-			incidentReportContacts: [],
 			dataCenterLocation: DATA_CENTER_OPTIONS[0].key,
+			incidentReportContacts: [],
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 		},
 		mode: 'all',
@@ -67,12 +67,16 @@ const AnalyticsProvisioning = () => {
 	const _refIncidentReportContacts = watch('_refIncidentReportContacts');
 	const timezone = watch('timezone');
 
-	const regionOptions = regions
-		.filter((region) => region.country === timezone)
-		.map((region) => ({
-			key: region.timeZoneId,
-			name: region.displayTimeZone,
-		}));
+	const regionOptions = useMemo(
+		() =>
+			regions
+				.filter((region) => region.country === timezone)
+				.map((region) => ({
+					key: region.timeZoneId,
+					name: region.displayTimeZone,
+				})),
+		[timezone]
+	);
 
 	const onSubmit = async (
 		form: z.infer<typeof zodSchema.analyticsProvisioning>
@@ -107,19 +111,19 @@ const AnalyticsProvisioning = () => {
 		if (timezone && regionOptions.length) {
 			setValue('region', regionOptions[0].key);
 		}
-	}, [timezone]);
+	}, [regionOptions, timezone, setValue]);
 
 	return (
 		<ProductPurchase.Shell
-			title="Create an Analytics Cloud Workspace"
 			footerProps={{
 				continueButtonProps: {
-					onClick: handleSubmit(onSubmit),
 					children: 'Finish Setup',
 					disabled: formState.isSubmitting,
+					onClick: handleSubmit(onSubmit),
 					type: 'submit',
 				},
 			}}
+			title="Create an Analytics Cloud Workspace"
 		>
 			{formState.isSubmitting && (
 				<Loading.FullScreen>
@@ -165,8 +169,8 @@ const AnalyticsProvisioning = () => {
 					<div className="col-3">
 						<Select
 							{...register('timezone')}
-							id="timezone"
 							defaultValue="UTC"
+							id="timezone"
 							options={countries.map((country) => ({
 								key: country,
 								name: country,

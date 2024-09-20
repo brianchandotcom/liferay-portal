@@ -124,8 +124,6 @@ const AccountForm = () => {
 				}
 			/>
 
-			<button onClick={onSubmit}>Create</button>
-
 			<MarketoForm
 				footerElement={(buttonElement: HTMLButtonElement) => {
 					const backButton = document.createElement('button');

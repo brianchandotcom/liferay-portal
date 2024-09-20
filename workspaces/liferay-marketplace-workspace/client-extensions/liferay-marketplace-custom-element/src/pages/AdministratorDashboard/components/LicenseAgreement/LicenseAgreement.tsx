@@ -12,7 +12,7 @@ import {getSiteName} from '../../../../utils/site';
 
 import './LicenseAgreement.scss';
 
-const LicenseAgreementpath = Liferay.ThemeDisplay.getLayoutURL().replace(
+const LicenseAgreementPath = Liferay.ThemeDisplay.getLayoutURL().replace(
 	'publisher-dashboard',
 	'license-agreement'
 );
@@ -69,7 +69,7 @@ const LicenseAgreement = () => (
 		<small>
 			By clicking on the button &quot;continue&quot; below, I confirm that
 			I have read and agree to be bound by the&nbsp;
-			<a href={LicenseAgreementpath} target="_blank">
+			<a href={LicenseAgreementPath} target="_blank">
 				<strong>Liferay Publisher Program License Agreement.</strong>
 			</a>
 			&nbsp; I also confirm that I am of the legal age of majority in the

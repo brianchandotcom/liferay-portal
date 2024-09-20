@@ -226,22 +226,25 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 		}
 		else {
 			commerceInventoryWarehouse =
-				_commerceInventoryWarehouseService.updateCommerceInventoryWarehouse(
-					commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-					LanguageUtils.getLocalizedMap(warehouse.getName()),
-					LanguageUtils.getLocalizedMap(warehouse.getDescription()),
-					GetterUtil.getBoolean(warehouse.getActive()),
-					GetterUtil.getString(warehouse.getStreet1()),
-					GetterUtil.getString(warehouse.getStreet2()),
-					GetterUtil.getString(warehouse.getStreet3()),
-					GetterUtil.getString(warehouse.getCity()),
-					GetterUtil.getString(warehouse.getZip()),
-					GetterUtil.getString(warehouse.getRegionISOCode()),
-					GetterUtil.getString(warehouse.getCountryISOCode()),
-					GetterUtil.getDouble(warehouse.getLatitude()),
-					GetterUtil.getDouble(warehouse.getLongitude()),
-					commerceInventoryWarehouse.getMvccVersion(),
-					_serviceContextHelper.getServiceContext());
+				_commerceInventoryWarehouseService.
+					updateCommerceInventoryWarehouse(
+						commerceInventoryWarehouse.
+							getCommerceInventoryWarehouseId(),
+						LanguageUtils.getLocalizedMap(warehouse.getName()),
+						LanguageUtils.getLocalizedMap(
+							warehouse.getDescription()),
+						GetterUtil.getBoolean(warehouse.getActive()),
+						GetterUtil.getString(warehouse.getStreet1()),
+						GetterUtil.getString(warehouse.getStreet2()),
+						GetterUtil.getString(warehouse.getStreet3()),
+						GetterUtil.getString(warehouse.getCity()),
+						GetterUtil.getString(warehouse.getZip()),
+						GetterUtil.getString(warehouse.getRegionISOCode()),
+						GetterUtil.getString(warehouse.getCountryISOCode()),
+						GetterUtil.getDouble(warehouse.getLatitude()),
+						GetterUtil.getDouble(warehouse.getLongitude()),
+						commerceInventoryWarehouse.getMvccVersion(),
+						_serviceContextHelper.getServiceContext());
 		}
 
 		// Update nested resources

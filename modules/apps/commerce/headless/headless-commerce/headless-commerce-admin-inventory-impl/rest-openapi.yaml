@@ -1939,8 +1939,8 @@ paths:
                     description:
                         "Unexpected error"
             security:
-                - BasicAuth: [ ]
-                - BearerAuth: [ ]
+                - BasicAuth: []
+                - BearerAuth: []
                 - OAuth2:
                       - CommerceOpenApiAdmin.write
             summary: "Creates or updates a Warehouse."

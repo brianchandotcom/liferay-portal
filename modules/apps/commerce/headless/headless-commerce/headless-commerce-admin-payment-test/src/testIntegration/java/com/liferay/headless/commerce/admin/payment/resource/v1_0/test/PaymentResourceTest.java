@@ -30,7 +30,6 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

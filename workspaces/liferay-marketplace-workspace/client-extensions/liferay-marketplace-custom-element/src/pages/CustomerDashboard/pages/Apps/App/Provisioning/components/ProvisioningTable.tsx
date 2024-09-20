@@ -25,7 +25,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 }) => {
 	const navigate = useNavigate();
 	const modal = useModal();
-	const unInstallModal = useModal();
+	const uninstallModal = useModal();
 
 	const install = (requirements: any) => {
 		if (!requirements.resourceRequest?.userProjects?.length) {
@@ -44,7 +44,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 				type: 'success',
 			});
 
-			unInstallModal.onClose();
+			uninstallModal.onClose();
 		}
 		catch (error: any) {
 			console.warn(error);
@@ -191,7 +191,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 											{!isInstalled && (
 												<ClayDropDown.Item
 													onClick={() =>
-														unInstallModal.onOpenChange(
+														uninstallModal.onOpenChange(
 															true
 														)
 													}
@@ -248,7 +248,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					<ClayButton
 						className="rounded-lg"
 						displayType="secondary"
-						onClick={unInstallModal.onClose}
+						onClick={uninstallModal.onClose}
 						size="sm"
 					>
 						{i18n.translate('cancel')}
@@ -264,10 +264,10 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 						{i18n.translate('confirm-uninstall')}
 					</ClayButton>
 				}
-				observer={unInstallModal.observer}
+				observer={uninstallModal.observer}
 				size={'md' as any}
 				title="Confirm Unstallation Terms"
-				visible={unInstallModal.open}
+				visible={uninstallModal.open}
 			>
 				<p>
 					{i18n.translate(

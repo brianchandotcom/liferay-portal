@@ -34,6 +34,18 @@ const contentMediaTypeVideo = z.object({
 	headerVideoUrl: z.string().url().min(1),
 });
 
+const resources = z.object({
+	free: z.number(),
+	limit: z.number(),
+	used: z.number(),
+});
+
+const rootProjectPlanUsage = z.object({
+	cpu: resources,
+	instance: resources,
+	memory: resources,
+});
+
 const zodSchema = {
 	accountCreator: z.object({
 		accounts: z.any().array().optional(),
@@ -152,7 +164,7 @@ const zodSchema = {
 			availabilityToProduct: z.boolean(),
 			environments: z.array(z.string()),
 			rootProjectId: z.string(),
-			rootProjectPlanUsage: z.any(),
+			rootProjectPlanUsage,
 		}),
 		step: z.string(),
 	}),

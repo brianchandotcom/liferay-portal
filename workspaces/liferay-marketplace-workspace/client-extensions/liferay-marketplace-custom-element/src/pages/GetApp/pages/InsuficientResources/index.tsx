@@ -30,7 +30,7 @@ const getProductRequirements = (product: DeliveryProduct) => {
 		ram: 0,
 	};
 
-	for (const requirement of ['ram', 'cpu']) {
+	for (const requirement in requirements) {
 		const currentSpecification = product?.productSpecifications.find(
 			(specification) => specification.specificationKey === requirement
 		);

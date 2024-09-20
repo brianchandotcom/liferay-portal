@@ -40,7 +40,7 @@ const InstallCloudAppOutlet = () => {
 			ram: 0,
 		};
 
-		for (const requirement of ['ram', 'cpu']) {
+		for (const requirement in requirements) {
 			const currentSpecification = product?.productSpecifications.find(
 				(specification) =>
 					specification.specificationKey === requirement
@@ -71,11 +71,12 @@ const InstallCloudAppOutlet = () => {
 	);
 };
 
-export type InstallCloudAppOutlet = {
+export type InstallCloudAppOutletContext = {
 	accountsSearch: ReturnType<typeof useAccounts>;
 	orderInfo: ReturnType<typeof useGetProductByOrderId>;
 	productRequirements: Requirements;
 	resourceResponse: ReturnType<typeof useGetResourceInfo>;
 	selectedAccount: ReturnType<typeof useAccount>;
 };
+
 export default InstallCloudAppOutlet;

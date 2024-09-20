@@ -56,7 +56,6 @@ export default {
 	'approve': 'Approve',
 	'approved': 'Approved',
 	'apps': 'Apps',
-
 	'available': 'Available',
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
@@ -189,7 +188,6 @@ export default {
 	'go-to-trial': 'Go to Trial',
 	'header': 'Header',
 	'host-name': 'Host Name',
-
 	'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license':
 		'I certify that all Liferay software running on instances activated with the selected license has been shut down. There are no active Liferay installations or deployments associated with this license.',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':

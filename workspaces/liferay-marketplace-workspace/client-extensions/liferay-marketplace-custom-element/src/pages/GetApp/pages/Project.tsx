@@ -7,9 +7,6 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useContext, useMemo} from 'react';
-
-import './index.scss';
-
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import RadioCardList from '../../../components/RadioCardList/RadioCardList';
@@ -21,6 +18,8 @@ import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import Container from '../containers/Container';
 import {convertMegabyteToGigabyte} from '../hooks/useGetResourceInfo';
+
+import './index.scss';
 
 const getCardContent = (project: ConsoleUserProject) => {
 	const cpu =

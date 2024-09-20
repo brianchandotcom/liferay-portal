@@ -20,7 +20,6 @@ interface RadioCardProps {
 	fullTitle?: boolean;
 	imageURL?: string;
 	index?: number;
-	key?: number | string;
 	label?: string;
 	leftRadio?: boolean;
 	selectRadio: () => void;
@@ -35,7 +34,6 @@ const NewRadioCard = ({
 	fullTitle = false,
 	imageURL,
 	index,
-	key,
 	label,
 	leftRadio,
 	selectRadio,
@@ -52,7 +50,7 @@ const NewRadioCard = ({
 					'radio-selected': activeRadio,
 				}
 			)}
-			key={index || key}
+			key={index}
 			onClick={() => selectRadio()}
 		>
 			<div className="col">

@@ -6,9 +6,9 @@
 import {ReactNode} from 'react';
 
 export enum StepCloudInstallation {
-	PROJECT = 'project',
 	ENVIRONMENT = 'environment',
 	INSTALLATION = 'installation',
+	PROJECT = 'project',
 	SUCCESS = 'success',
 }
 
@@ -41,8 +41,6 @@ export type ExtendBannerProps = {
 	project: any;
 };
 
-export const LICENSE_TYPE_KEY = 'license-type';
-
 export const CUSTON_FIELKEYS = {
 	CLOUD_PROVISIONING: 'cloud-provisioning',
 	GITHUB_USERNAME: 'Github Username',
@@ -51,4 +49,27 @@ export const CUSTON_FIELKEYS = {
 	TRIAL_END_DATE: 'trial-end-date',
 	TRIAL_START_DATE: 'trial-start-date',
 	TRIAL_VIRTUALHOST: 'trial-virtualhost',
+};
+
+export type UserProject = {
+	availabilityToProduct: boolean;
+	environments: string[];
+	rootProjectId: string;
+	rootProjectPlanUsage: {
+		cpu: {
+			free: number;
+			limit: number;
+			used: number;
+		};
+		instance: {
+			free: number;
+			limit: number;
+			used: number;
+		};
+		memory: {
+			free: number;
+			limit: number;
+			used: number;
+		};
+	};
 };

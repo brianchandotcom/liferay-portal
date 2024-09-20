@@ -14,13 +14,14 @@ export type ConsoleUserProject = {
 	environments: string[];
 	rootProjectId: string;
 	rootProjectPlanUsage: {
-		cpu: ConsoleCPU;
-		instance: ConsoleCPU;
-		memory: ConsoleCPU;
+		cpu: Resource;
+		instance: Resource;
+		memory: Resource;
 	};
 };
 
-type ConsoleCPU = {
+export type Resource = {
+	free: number;
 	limit: number;
 	used: number;
 };

@@ -11,8 +11,10 @@ import i18n from '../../../../../../../i18n';
 import {isCloudProduct} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
-import {CUSTON_FIELKEYS, LICENSE_TYPE_KEY} from '../Types';
+import {CUSTON_FIELKEYS} from '../Types';
 import {InstallStatus} from '../components/InstallStatus';
+
+export const LICENSE_TYPE_KEY = 'license-type';
 
 const useProvisioningData = (orderId: string) => {
 	const {data, mutate: mutateOrder} = useGetProductByOrderId(orderId);

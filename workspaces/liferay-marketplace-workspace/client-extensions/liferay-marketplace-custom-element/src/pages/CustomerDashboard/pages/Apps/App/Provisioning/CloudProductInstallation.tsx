@@ -17,8 +17,8 @@ import {Liferay} from '../../../../../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../../../../../schema/zod';
 import ProductCard from '../../../../../GetApp/components/ProductCard/ProductCard';
 import {convertMegabyteToGigabyte} from '../../../../../GetApp/hooks/useGetResourceInfo';
-import {InstallCloudAppOutlet} from './InstallCloudAppOutlet';
-import {ExtendBannerProps, StepCloudInstallation} from './Types';
+import {InstallCloudAppOutletContext} from './InstallCloudAppOutlet';
+import {ExtendBannerProps, StepCloudInstallation, UserProject} from './Types';
 import EnvironmentRadio from './components/EnvironmentRadio';
 import ProjectRadio from './components/ProjectRadio';
 
@@ -50,7 +50,7 @@ const ExtendBanner: React.FC<ExtendBannerProps> = ({project}) => (
 
 const CloudProductInstallation = () => {
 	const navigate = useNavigate();
-	const context = useOutletContext<InstallCloudAppOutlet>();
+	const context = useOutletContext<InstallCloudAppOutletContext>();
 
 	const orderInfo = context?.orderInfo.data;
 	const placedOrder = orderInfo?.placedOrder;
@@ -72,7 +72,7 @@ const CloudProductInstallation = () => {
 		);
 	};
 
-	const userProjects = useMemo(
+	const userProjects: UserProject[] = useMemo(
 		() =>
 			resourceRequest?.resourceRequest?.userProjects.map(
 				(userProject) => {
@@ -161,7 +161,6 @@ const CloudProductInstallation = () => {
 			backStep: StepCloudInstallation.PROJECT,
 			cardContent: (
 				<ProjectRadio
-					productRequirements={productRequirements}
 					projects={userProjects}
 					selectedProject={project}
 					setValue={setValue}
@@ -232,29 +231,24 @@ const CloudProductInstallation = () => {
 		};
 
 		const handleNextStep = () => {
-			switch (step) {
-				case StepCloudInstallation.PROJECT:
-					setValue('step', StepCloudInstallation.ENVIRONMENT);
-					break;
-				case StepCloudInstallation.ENVIRONMENT:
-					_onSubmit();
+			if (step === StepCloudInstallation.PROJECT) {
+				return setValue('step', StepCloudInstallation.ENVIRONMENT);
+			}
 
-					setValue('step', StepCloudInstallation.INSTALLATION);
+			if (step === StepCloudInstallation.ENVIRONMENT) {
+				_onSubmit();
 
-					setTimeout(() => {
+				setValue('step', StepCloudInstallation.INSTALLATION);
 
-						// setValue('step', StepCloudInstallation.SUCCESS);
+				setTimeout(() => {
+					setValue('step', StepCloudInstallation.SUCCESS);
+				}, 7000);
+			}
 
-					}, 5000);
-					break;
-				case StepCloudInstallation.SUCCESS:
-					window.open(
-						`https://console.marketplace.liferay.sh/projects/${environment}/services`
-					);
-
-					break;
-				default:
-					break;
+			if (step === StepCloudInstallation.SUCCESS) {
+				window.open(
+					`https://console.marketplace.liferay.sh/projects/${environment}/services`
+				);
 			}
 		};
 

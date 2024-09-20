@@ -7,6 +7,7 @@ package com.liferay.blogs.internal.util;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -261,9 +262,6 @@ public class PingbackMethodImpl implements Method {
 
 		Map<String, String[]> params = new HashMap<>();
 
-		FriendlyURLMapperThreadLocal.setPRPIdentifiers(
-			new HashMap<String, String>());
-
 		Portlet portlet = _portletLocalService.getPortletById(
 			_getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW));
@@ -282,7 +280,13 @@ public class PingbackMethodImpl implements Method {
 
 		Map<String, Object> requestContext = new HashMap<>();
 
-		friendlyURLMapper.populateParams(friendlyURL, params, requestContext);
+		try (SafeCloseable safeCloseable =
+				FriendlyURLMapperThreadLocal.setPRPIdentifiersWithSafeCloseable(
+					new HashMap<>())) {
+
+			friendlyURLMapper.populateParams(
+				friendlyURL, params, requestContext);
+		}
 
 		String param = _getParam(params, "entryId");
 

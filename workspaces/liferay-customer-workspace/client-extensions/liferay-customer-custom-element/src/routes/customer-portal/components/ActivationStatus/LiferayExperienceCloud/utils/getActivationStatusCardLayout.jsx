@@ -58,21 +58,23 @@ export default function getActivationStatusCardLayout(
 						<ClayIcon className="ml-1" symbol="order-arrow-right" />
 					</a>
 
-					<a
-						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-						href={`https://analytics.liferay.com/workspace/${project.acWorkspaceGroupId}/sites`}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						<PopoverIcon
-							symbol="question-circle-full"
-							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
-						/>
+					{project?.acWorkspaceGroupId && (
+						<a
+							className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
+							href={`https://analytics.liferay.com/workspace/${project.acWorkspaceGroupId}/sites`}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							<PopoverIcon
+								symbol="question-circle-full"
+								title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+							/>
 
-						{i18n.translate('go-to-analytics-cloud-workspace')}
+							{i18n.translate('go-to-analytics-cloud-workspace')}
 
-						<ClayIcon className="ml-1" symbol="order-arrow-right" />
-					</a>
+							<ClayIcon className="ml-1" symbol="order-arrow-right" />
+						</a>
+					)}
 				</div>
 			),
 			id: STATUS_TAG_TYPES.active,

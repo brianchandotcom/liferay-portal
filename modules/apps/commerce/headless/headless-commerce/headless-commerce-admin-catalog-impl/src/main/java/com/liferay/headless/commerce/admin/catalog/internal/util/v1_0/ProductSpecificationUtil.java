@@ -51,6 +51,8 @@ public class ProductSpecificationUtil {
 
 		return cpDefinitionSpecificationOptionValueService.
 			addCPDefinitionSpecificationOptionValue(
+				GetterUtil.getString(
+					productSpecification.getExternalReferenceCode()),
 				cpDefinitionId,
 				_getCPSpecificationOptionId(
 					cpOptionCategoryService, cpSpecificationOption,
@@ -84,6 +86,10 @@ public class ProductSpecificationUtil {
 
 		return cpDefinitionSpecificationOptionValueService.
 			updateCPDefinitionSpecificationOptionValue(
+				GetterUtil.getString(
+					productSpecification.getExternalReferenceCode(),
+					cpDefinitionSpecificationOptionValue.
+						getExternalReferenceCode()),
 				cpDefinitionSpecificationOptionValue.
 					getCPDefinitionSpecificationOptionValueId(),
 				_getCPOptionCategoryId(

@@ -6,7 +6,6 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -20,9 +19,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpe
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -60,6 +57,22 @@ public class ProductSpecificationResourceImpl
 			deleteCPDefinitionSpecificationOptionValue(
 				cpDefinitionSpecificationOptionValue.
 					getCPDefinitionSpecificationOptionValueId());
+	}
+
+	@Override
+	public void deleteProductSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId());
+
+		deleteProductSpecification(
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId());
 	}
 
 	@Override
@@ -132,6 +145,22 @@ public class ProductSpecificationResourceImpl
 	}
 
 	@Override
+	public ProductSpecification getProductSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId());
+
+		return getProductSpecification(
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId());
+	}
+
+	@Override
 	public ProductSpecification patchProductSpecification(
 			Long id, ProductSpecification productSpecification)
 		throws Exception {
@@ -143,6 +172,25 @@ public class ProductSpecificationResourceImpl
 		return _toProductSpecification(
 			cpDefinitionSpecificationOptionValue.
 				getCPDefinitionSpecificationOptionValueId());
+	}
+
+	@Override
+	public ProductSpecification
+			patchProductSpecificationByExternalReferenceCode(
+				String externalReferenceCode,
+				ProductSpecification productSpecification)
+		throws Exception {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId());
+
+		return patchProductSpecification(
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId(),
+			productSpecification);
 	}
 
 	@Override
@@ -172,38 +220,6 @@ public class ProductSpecificationResourceImpl
 			Long id, ProductSpecification productSpecification)
 		throws Exception {
 
-		return _addOrUpdateProductSpecification(id, productSpecification);
-	}
-
-	private ProductSpecification _addOrUpdateProductSpecification(
-			Long id, ProductSpecification productSpecification)
-		throws Exception {
-
-		Long productSpecificationId = productSpecification.getId();
-
-		if (productSpecificationId != null) {
-			try {
-				CPDefinitionSpecificationOptionValue
-					cpDefinitionSpecificationOptionValue =
-						_updateProductSpecification(
-							productSpecificationId, productSpecification);
-
-				return _toProductSpecification(
-					cpDefinitionSpecificationOptionValue.
-						getCPDefinitionSpecificationOptionValueId());
-			}
-			catch (NoSuchCPDefinitionSpecificationOptionValueException
-						noSuchCPDefinitionSpecificationOptionValueException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to find productSpecification with ID: " +
-							productSpecificationId,
-						noSuchCPDefinitionSpecificationOptionValueException);
-				}
-			}
-		}
-
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
 
@@ -212,14 +228,50 @@ public class ProductSpecificationResourceImpl
 				"Unable to find product with ID " + id);
 		}
 
+		return _addOrUpdateProductSpecification(
+			cpDefinition.getCPDefinitionId(), productSpecification);
+	}
+
+	private ProductSpecification _addOrUpdateProductSpecification(
+			Long id, ProductSpecification productSpecification)
+		throws Exception {
+
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+						GetterUtil.getString(
+							productSpecification.getExternalReferenceCode()),
+						contextCompany.getCompanyId());
+
+		if (cpDefinitionSpecificationOptionValue == null) {
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					fetchCPDefinitionSpecificationOptionValue(
+						GetterUtil.getLong(productSpecification.getId()));
+		}
+
+		if (cpDefinitionSpecificationOptionValue == null) {
+			return _toProductSpecification(
 				ProductSpecificationUtil.
 					addCPDefinitionSpecificationOptionValue(
 						_cpDefinitionSpecificationOptionValueService,
 						_cpOptionCategoryService, _cpSpecificationOptionService,
-						cpDefinition.getCPDefinitionId(), productSpecification,
-						_serviceContextHelper.getServiceContext());
+						id, productSpecification,
+						_serviceContextHelper.getServiceContext()));
+		}
+
+		return _toProductSpecification(
+			_updateProductSpecification(
+				cpDefinitionSpecificationOptionValue.
+					getCPSpecificationOptionId(),
+				productSpecification));
+	}
+
+	private ProductSpecification _toProductSpecification(
+			CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue)
+		throws Exception {
 
 		return _toProductSpecification(
 			cpDefinitionSpecificationOptionValue.
@@ -253,7 +305,7 @@ public class ProductSpecificationResourceImpl
 
 	private CPDefinitionSpecificationOptionValue _updateProductSpecification(
 			Long id, ProductSpecification productSpecification)
-		throws PortalException {
+		throws Exception {
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
@@ -267,9 +319,6 @@ public class ProductSpecificationResourceImpl
 				_cpSpecificationOptionService, productSpecification,
 				_serviceContextHelper.getServiceContext());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductSpecificationResourceImpl.class);
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

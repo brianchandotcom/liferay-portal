@@ -92,13 +92,16 @@ public class ProductSpecificationResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"priority", "specificationKey", "value"};
+		return new String[] {
+			"externalReferenceCode", "priority", "specificationKey", "value"
+		};
 	}
 
 	@Override
 	protected ProductSpecification randomProductSpecification() {
 		return new ProductSpecification() {
 			{
+				externalReferenceCode = RandomTestUtil.randomString();
 				optionCategoryExternalReferenceCode =
 					_cpOptionCategory.getExternalReferenceCode();
 				priority = RandomTestUtil.randomDouble();
@@ -114,6 +117,7 @@ public class ProductSpecificationResourceTest
 
 		return new ProductSpecification() {
 			{
+				externalReferenceCode = RandomTestUtil.randomString();
 				optionCategoryExternalReferenceCode =
 					_cpOptionCategory.getExternalReferenceCode();
 				priority = RandomTestUtil.randomDouble();
@@ -128,6 +132,15 @@ public class ProductSpecificationResourceTest
 	@Override
 	protected ProductSpecification
 			testDeleteProductSpecification_addProductSpecification()
+		throws Exception {
+
+		return productSpecificationResource.postProductIdProductSpecification(
+			_cpDefinition.getCProductId(), randomProductSpecification());
+	}
+
+	@Override
+	protected ProductSpecification
+			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification()
 		throws Exception {
 
 		return productSpecificationResource.postProductIdProductSpecification(
@@ -182,6 +195,15 @@ public class ProductSpecificationResourceTest
 
 	@Override
 	protected ProductSpecification
+			testGetProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		return productSpecificationResource.postProductIdProductSpecification(
+			_cpDefinition.getCProductId(), randomProductSpecification());
+	}
+
+	@Override
+	protected ProductSpecification
 			testGraphQLDeleteProductSpecification_addProductSpecification()
 		throws Exception {
 
@@ -210,6 +232,15 @@ public class ProductSpecificationResourceTest
 	@Override
 	protected ProductSpecification
 			testPatchProductSpecification_addProductSpecification()
+		throws Exception {
+
+		return productSpecificationResource.postProductIdProductSpecification(
+			_cpDefinition.getCProductId(), randomProductSpecification());
+	}
+
+	@Override
+	protected ProductSpecification
+			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification()
 		throws Exception {
 
 		return productSpecificationResource.postProductIdProductSpecification(

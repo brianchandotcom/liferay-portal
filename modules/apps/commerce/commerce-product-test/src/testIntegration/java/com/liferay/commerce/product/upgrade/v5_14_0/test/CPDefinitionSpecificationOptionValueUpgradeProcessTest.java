@@ -87,6 +87,7 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 			cpDefinitionSpecificationOptionValue1 =
 				_cpDefinitionSpecificationOptionValueLocalService.
 					addCPDefinitionSpecificationOptionValue(
+						RandomTestUtil.randomString(),
 						cpDefinition.getCPDefinitionId(),
 						cpSpecificationOption.getCPSpecificationOptionId(),
 						cpOptionCategory.getCPOptionCategoryId(),
@@ -103,6 +104,7 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 			cpDefinitionSpecificationOptionValue2 =
 				_cpDefinitionSpecificationOptionValueLocalService.
 					addCPDefinitionSpecificationOptionValue(
+						RandomTestUtil.randomString(),
 						cpDefinition.getCPDefinitionId(),
 						cpSpecificationOption.getCPSpecificationOptionId(),
 						cpOptionCategory.getCPOptionCategoryId(),

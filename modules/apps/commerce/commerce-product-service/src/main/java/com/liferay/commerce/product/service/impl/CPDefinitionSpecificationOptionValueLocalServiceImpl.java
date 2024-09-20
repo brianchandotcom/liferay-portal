@@ -47,9 +47,10 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	@Override
 	public CPDefinitionSpecificationOptionValue
 			addCPDefinitionSpecificationOptionValue(
-				long cpDefinitionId, long cpSpecificationOptionId,
-				long cpOptionCategoryId, double priority,
-				Map<Locale, String> valueMap, ServiceContext serviceContext)
+				String externalReferenceCode, long cpDefinitionId,
+				long cpSpecificationOptionId, long cpOptionCategoryId,
+				double priority, Map<Locale, String> valueMap,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
@@ -74,6 +75,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			cpDefinitionId = cpDefinition.getCPDefinitionId();
 		}
 
+		cpDefinitionSpecificationOptionValue.setExternalReferenceCode(
+			externalReferenceCode);
 		cpDefinitionSpecificationOptionValue.setGroupId(
 			cpDefinition.getGroupId());
 		cpDefinitionSpecificationOptionValue.setCompanyId(user.getCompanyId());
@@ -325,6 +328,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	@Override
 	public CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
+				String externalReferenceCode,
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, String key, double priority,
 				Map<Locale, String> valueMap, ServiceContext serviceContext)
@@ -356,6 +360,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 						getCPDefinitionSpecificationOptionValueId());
 		}
 
+		cpDefinitionSpecificationOptionValue.setExternalReferenceCode(
+			externalReferenceCode);
 		cpDefinitionSpecificationOptionValue.setCPOptionCategoryId(
 			cpOptionCategoryId);
 		cpDefinitionSpecificationOptionValue.setKey(key);

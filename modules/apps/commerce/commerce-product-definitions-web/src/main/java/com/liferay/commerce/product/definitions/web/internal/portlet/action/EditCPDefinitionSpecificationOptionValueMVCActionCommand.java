@@ -14,6 +14,7 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -129,7 +130,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 
 			_cpDefinitionSpecificationOptionValueService.
 				addCPDefinitionSpecificationOptionValue(
-					cpDefinitionId, cpSpecificationOptionId,
+					StringPool.BLANK, cpDefinitionId, cpSpecificationOptionId,
 					cpSpecificationOption.getCPOptionCategoryId(), i, null,
 					serviceContext);
 		}
@@ -212,8 +213,15 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 			CPDefinitionSpecificationOptionValue.class.getName(),
 			actionRequest);
 
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValueId);
+
 		return _cpDefinitionSpecificationOptionValueService.
 			updateCPDefinitionSpecificationOptionValue(
+				cpDefinitionSpecificationOptionValue.getExternalReferenceCode(),
 				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
 				priority, valueMap, serviceContext);
 	}

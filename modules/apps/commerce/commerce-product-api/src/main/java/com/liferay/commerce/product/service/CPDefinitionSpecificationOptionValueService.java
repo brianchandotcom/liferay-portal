@@ -103,6 +103,7 @@ public interface CPDefinitionSpecificationOptionValueService
 
 	public CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
+				String externalReferenceCode,
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, String key, double priority,
 				Map<Locale, String> valueMap, ServiceContext serviceContext)

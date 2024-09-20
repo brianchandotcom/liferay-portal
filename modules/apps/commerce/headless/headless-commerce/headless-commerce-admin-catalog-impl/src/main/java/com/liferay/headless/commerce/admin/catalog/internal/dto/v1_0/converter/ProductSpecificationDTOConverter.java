@@ -49,6 +49,9 @@ public class ProductSpecificationDTOConverter
 
 		return new ProductSpecification() {
 			{
+				setExternalReferenceCode(
+					cpDefinitionSpecificationOptionValue::
+						getExternalReferenceCode);
 				setId(
 					cpDefinitionSpecificationOptionValue::
 						getCPDefinitionSpecificationOptionValueId);

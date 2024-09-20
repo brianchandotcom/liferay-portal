@@ -398,7 +398,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 	public static
 		com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue
 				updateCPDefinitionSpecificationOptionValue(
-					HttpPrincipal httpPrincipal,
+					HttpPrincipal httpPrincipal, String externalReferenceCode,
 					long cpDefinitionSpecificationOptionValueId,
 					long cpOptionCategoryId, String key, double priority,
 					java.util.Map<java.util.Locale, String> valueMap,
@@ -413,8 +413,9 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 				_updateCPDefinitionSpecificationOptionValueParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionSpecificationOptionValueId,
-				cpOptionCategoryId, key, priority, valueMap, serviceContext);
+				methodKey, externalReferenceCode,
+				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
+				priority, valueMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -482,8 +483,8 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 	private static final Class<?>[]
 		_updateCPDefinitionSpecificationOptionValueParameterTypes8 =
 			new Class[] {
-				long.class, long.class, String.class, double.class,
-				java.util.Map.class,
+				String.class, long.class, long.class, String.class,
+				double.class, java.util.Map.class,
 				com.liferay.portal.kernel.service.ServiceContext.class
 			};
 

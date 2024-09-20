@@ -489,6 +489,22 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CPInstanceUOM", "pricingQuantity BIGDECIMAL"));
 
+		registry.register(
+			"5.19.0", "5.20.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{
+							"CPDSpecificationOptionValue",
+							"CPDSpecificationOptionValueId"
+						}
+					};
+				}
+
+			});
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

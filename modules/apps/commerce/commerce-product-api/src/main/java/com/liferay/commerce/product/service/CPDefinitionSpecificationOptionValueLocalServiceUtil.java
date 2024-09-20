@@ -518,6 +518,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 
 	public static CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
+				String externalReferenceCode,
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, String key, double priority,
 				Map<java.util.Locale, String> valueMap,
@@ -525,8 +526,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateCPDefinitionSpecificationOptionValue(
-			cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
-			priority, valueMap, serviceContext);
+			externalReferenceCode, cpDefinitionSpecificationOptionValueId,
+			cpOptionCategoryId, key, priority, valueMap, serviceContext);
 	}
 
 	public static CPDefinitionSpecificationOptionValue updateCPOptionCategoryId(

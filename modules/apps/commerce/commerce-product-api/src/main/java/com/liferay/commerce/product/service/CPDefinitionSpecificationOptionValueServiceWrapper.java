@@ -133,6 +133,7 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 	@Override
 	public CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
+				String externalReferenceCode,
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, String key, double priority,
 				java.util.Map<java.util.Locale, String> valueMap,
@@ -141,8 +142,8 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 
 		return _cpDefinitionSpecificationOptionValueService.
 			updateCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
-				priority, valueMap, serviceContext);
+				externalReferenceCode, cpDefinitionSpecificationOptionValueId,
+				cpOptionCategoryId, key, priority, valueMap, serviceContext);
 	}
 
 	@Override

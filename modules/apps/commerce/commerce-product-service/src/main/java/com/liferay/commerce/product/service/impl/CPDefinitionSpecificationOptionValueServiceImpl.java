@@ -44,17 +44,18 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 	@Override
 	public CPDefinitionSpecificationOptionValue
 			addCPDefinitionSpecificationOptionValue(
-				long cpDefinitionId, long cpSpecificationOptionId,
-				long cpOptionCategoryId, double priority,
-				Map<Locale, String> valueMap, ServiceContext serviceContext)
+				String externalReferenceCode, long cpDefinitionId,
+				long cpSpecificationOptionId, long cpOptionCategoryId,
+				double priority, Map<Locale, String> valueMap,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(
-				cpDefinitionId, cpSpecificationOptionId, cpOptionCategoryId,
-				priority, valueMap, serviceContext);
+				externalReferenceCode, cpDefinitionId, cpSpecificationOptionId,
+				cpOptionCategoryId, priority, valueMap, serviceContext);
 	}
 
 	@Override
@@ -98,9 +99,32 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 					fetchCPDefinitionSpecificationOptionValue(
 						cpDefinitionSpecificationOptionValueId);
 
-		_checkCommerceCatalog(
-			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
-			ActionKeys.VIEW);
+		if (cpDefinitionSpecificationOptionValue != null) {
+			_checkCommerceCatalog(
+				cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
+				ActionKeys.VIEW);
+		}
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValueLocalService.
+					fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+						externalReferenceCode, companyId);
+
+		if (cpDefinitionSpecificationOptionValue != null) {
+			_checkCommerceCatalog(
+				cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
+				ActionKeys.VIEW);
+		}
 
 		return cpDefinitionSpecificationOptionValue;
 	}
@@ -116,6 +140,25 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 				cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValue(
 						cpDefinitionSpecificationOptionValueId);
+
+		_checkCommerceCatalog(
+			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
+			ActionKeys.VIEW);
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValueLocalService.
+					getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+						externalReferenceCode, companyId);
 
 		_checkCommerceCatalog(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
@@ -166,6 +209,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 	@Override
 	public CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
+				String externalReferenceCode,
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, String key, double priority,
 				Map<Locale, String> valueMap, ServiceContext serviceContext)
@@ -183,8 +227,8 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			updateCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
-				priority, valueMap, serviceContext);
+				externalReferenceCode, cpDefinitionSpecificationOptionValueId,
+				cpOptionCategoryId, key, priority, valueMap, serviceContext);
 	}
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)

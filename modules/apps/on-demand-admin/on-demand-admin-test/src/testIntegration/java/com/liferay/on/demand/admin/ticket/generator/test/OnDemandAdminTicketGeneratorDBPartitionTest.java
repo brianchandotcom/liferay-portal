@@ -38,10 +38,16 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 		BaseDBPartitionTestCase.setUpClass();
 
 		BaseDBPartitionTestCase.setUpDBPartitions();
+
+		_currentCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(portal.getDefaultCompanyId());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(_currentCompanyId);
+
 		BaseDBPartitionTestCase.tearDownDBPartitions();
 	}
 
@@ -113,6 +119,8 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 	private void _assertCompanyId(long companyId) {
 		Assert.assertEquals(companyId, (long)CompanyThreadLocal.getCompanyId());
 	}
+
+	private static long _currentCompanyId;
 
 	@Inject
 	private OnDemandAdminTicketGenerator _onDemandAdminTicketGenerator;

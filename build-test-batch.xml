@@ -2798,6 +2798,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute default="" name="test.sql.zip.url" />
 
 		<sequential>
+			<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+			<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+
+			<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
+
 			<run-batch-test>
 				<test-action>
 					<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -2821,6 +2827,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 										<env key="LIFERAY_HOME" value="${liferay.home}" />
 										<env key="LIFERAY_PORTAL_URL" value="http://${env.NODE_NAME}:8080" />
 										<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+										<env key="JAVA_HOME" value="${java.jdk.home}" />
 									</exec>
 
 									<start-docker-playwright />

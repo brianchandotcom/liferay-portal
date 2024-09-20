@@ -108,20 +108,20 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 export default function checkAllowedChild(
 	child: DragAndDropItem,
 	parent: DragAndDropItem,
-	layoutDataRef: React.RefObject<LayoutData>,
-	fragmentEntryLinksRef: React.RefObject<FragmentEntryLinkMap>
+	layoutData: LayoutData,
+	fragmentEntryLinks: FragmentEntryLinkMap
 ) {
 	if (isUnmappedCollection(parent) || isUnmappedForm(parent)) {
 		return false;
 	}
 
 	const isStepper = child.fieldTypes?.includes('stepper');
-	const formParent = getFormParent(parent, layoutDataRef.current);
+	const formParent = getFormParent(parent, layoutData);
 
 	if (
 		!isStepper &&
 		isMultistepForm(formParent) &&
-		!hasFormStepParent(parent, layoutDataRef.current)
+		!hasFormStepParent(parent, layoutData)
 	) {
 		return false;
 	}
@@ -134,8 +134,8 @@ export default function checkAllowedChild(
 
 			const existingStepper = getStepperChild(
 				parent,
-				layoutDataRef.current,
-				fragmentEntryLinksRef.current
+				layoutData,
+				fragmentEntryLinks
 			);
 
 			if (existingStepper && existingStepper.itemId !== child.itemId) {

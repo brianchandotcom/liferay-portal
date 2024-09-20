@@ -61,6 +61,7 @@ export class SystemSettingsPage {
 				exact: true,
 				name: configurationName,
 			})
+			.first()
 			.click();
 	}
 }

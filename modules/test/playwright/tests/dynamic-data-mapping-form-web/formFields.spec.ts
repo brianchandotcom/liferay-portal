@@ -8,23 +8,14 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 
 test.afterEach(async ({formsPage, page}) => {
 	await formsPage.goTo();
 
-	await page.waitForTimeout(1000);
-
-	if (await formsPage.managementToolbarSelectAllItems.isEnabled()) {
-		await formsPage.managementToolbarSelectAllItems.click();
-
-		page.once('dialog', (dialog) => {
-			dialog.accept();
-		});
-
-		await formsPage.managementToolbarDeleteButton.click();
-	}
+	await deleteItems(formsPage, page);
 });
 
 test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and Text field types', () => {

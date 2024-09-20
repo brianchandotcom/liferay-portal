@@ -12,6 +12,24 @@ import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 
+let hasDataProvider: boolean = false;
+
+test.afterEach(async ({formsPage, page}) => {
+	await formsPage.goTo();
+
+	await deleteItems(formsPage, page);
+
+	if (hasDataProvider) {
+		await page.waitForLoadState();
+
+		await formsPage.dataProvidersTab.click();
+
+		await deleteItems(formsPage, page);
+
+		hasDataProvider = false;
+	}
+});
+
 test.describe('Manage forms through submission page', () => {
 	test('can submit manual entry while using data provider autofill rule', async ({
 		context,
@@ -19,6 +37,8 @@ test.describe('Manage forms through submission page', () => {
 		formsPage,
 		page,
 	}) => {
+		hasDataProvider = true;
+
 		await formsPage.goTo();
 
 		await formsPage.importForm(

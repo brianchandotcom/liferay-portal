@@ -15,13 +15,13 @@ const SAMPLES = [
 		bareSpecifier: 'jquery',
 		erc: 'LXC:liferay-sample-js-import-maps-entry',
 		name: 'Liferay Sample JS Import Maps Entry',
-		url: '/o/liferay-sample-js-import-maps-entry/jquery.db7c7063a8b5d1298dbc.js',
+		url: '/o/liferay-sample-js-import-maps-entry/jquery.62d686ddc1e428e249ff.js',
 	},
 	{
 		bareSpecifier: 'my-utils',
 		erc: 'LXC:liferay-sample-etc-frontend-js-import-maps-entry',
 		name: 'Liferay Sample Etc Frontend JS Import Maps Entry',
-		url: '/o/liferay-sample-etc-frontend/my-utils.2db3acbc64ea700ac5b4.js',
+		url: '/o/liferay-sample-etc-frontend/my-utils.41642c66e4920076a271.js',
 	},
 ];
 

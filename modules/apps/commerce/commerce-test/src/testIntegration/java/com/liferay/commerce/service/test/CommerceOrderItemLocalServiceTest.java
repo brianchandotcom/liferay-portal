@@ -564,14 +564,21 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertTrue(
 			BigDecimalUtil.eq(quantity, bundleOrderItem.getQuantity()));
 
-		Assert.assertEquals(option2Price, bundleOrderItem.getFinalPrice());
+		BigDecimal bundleOrderItemFinalPrice = bundleOrderItem.getFinalPrice();
+
+		Assert.assertEquals(
+			option2Price,
+			BigDecimalUtil.stripTrailingZeros(bundleOrderItemFinalPrice));
 
 		CommerceOrder retrievedOrder =
 			_commerceOrderLocalService.getCommerceOrder(
 				commerceOrder.getCommerceOrderId());
 
+		BigDecimal retrievedOrderTotal = retrievedOrder.getTotal();
+
 		Assert.assertEquals(
-			bundleOrderItem.getFinalPrice(), retrievedOrder.getTotal());
+			BigDecimalUtil.stripTrailingZeros(bundleOrderItemFinalPrice),
+			BigDecimalUtil.stripTrailingZeros(retrievedOrderTotal));
 	}
 
 	@Test

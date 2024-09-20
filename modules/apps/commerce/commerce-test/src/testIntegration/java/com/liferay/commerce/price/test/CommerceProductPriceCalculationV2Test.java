@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -1739,8 +1740,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
 		CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
 
-		Assert.assertEquals(BigDecimal.valueOf(13), unitPrice.getPrice());
-		Assert.assertEquals(BigDecimal.valueOf(13), finalPrice.getPrice());
+		Assert.assertEquals(
+			BigDecimal.valueOf(13),
+			BigDecimalUtil.stripTrailingZeros(unitPrice.getPrice()));
+		Assert.assertEquals(
+			BigDecimal.valueOf(13),
+			BigDecimalUtil.stripTrailingZeros(finalPrice.getPrice()));
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
@@ -1752,8 +1757,12 @@ public class CommerceProductPriceCalculationV2Test {
 		unitPrice = commerceProductPrice.getUnitPrice();
 		finalPrice = commerceProductPrice.getFinalPrice();
 
-		Assert.assertEquals(BigDecimal.valueOf(13), unitPrice.getPrice());
-		Assert.assertEquals(BigDecimal.valueOf(26), finalPrice.getPrice());
+		Assert.assertEquals(
+			BigDecimal.valueOf(13),
+			BigDecimalUtil.stripTrailingZeros(unitPrice.getPrice()));
+		Assert.assertEquals(
+			BigDecimal.valueOf(26),
+			BigDecimalUtil.stripTrailingZeros(finalPrice.getPrice()));
 	}
 
 	@Test
@@ -1937,7 +1946,9 @@ public class CommerceProductPriceCalculationV2Test {
 			commerceProductPrice.getFinalPrice();
 
 		Assert.assertEquals(
-			cpInstancePrice, finalPriceCommerceMoney.getPrice());
+			cpInstancePrice,
+			BigDecimalUtil.stripTrailingZeros(
+				finalPriceCommerceMoney.getPrice()));
 	}
 
 	@Rule

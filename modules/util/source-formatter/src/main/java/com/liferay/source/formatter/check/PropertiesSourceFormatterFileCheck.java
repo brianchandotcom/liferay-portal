@@ -72,12 +72,21 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	private void _checkPropertiesGroupAndOrder(
 		String fileName, String prefix, String content) {
 
+		String previousLine = StringPool.BLANK;
 		String previousPropertyKey = StringPool.BLANK;
 
 		for (String line : content.split("\n")) {
+			if ((previousLine != null) && previousLine.endsWith("\\")) {
+				previousLine = line;
+
+				continue;
+			}
+
 			String propertyKey = _getPropertyKey(line);
 
 			if (propertyKey == null) {
+				previousLine = line;
+
 				continue;
 			}
 
@@ -103,6 +112,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				return;
 			}
 
+			previousLine = line;
 			previousPropertyKey = propertyKey;
 		}
 	}
@@ -130,18 +140,29 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 		int previousPropertyPosition = -1;
 		String propertyKey = null;
+		String previousLine = null;
 		String previousPropertyKey = null;
 
 		for (String line : content.split("\n")) {
+			if ((previousLine != null) && previousLine.endsWith("\\")) {
+				previousLine = line;
+
+				continue;
+			}
+
 			propertyKey = _getPropertyKey(line);
 
 			if (propertyKey == null) {
+				previousLine = line;
+
 				continue;
 			}
 
 			pos = sourceFormatterProperties.indexOf(propertyKey);
 
 			if (pos == -1) {
+				previousLine = line;
+
 				continue;
 			}
 
@@ -159,6 +180,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				return;
 			}
 
+			previousLine = line;
 			previousPropertyKey = propertyKey;
 			previousPropertyPosition = pos;
 		}
@@ -405,14 +427,26 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 		_sourceFormatterProperties = new ArrayList<>();
 
+		String previousLine = null;
+
 		for (String line : content.split("\n")) {
+			if ((previousLine != null) && previousLine.endsWith("\\")) {
+				previousLine = line;
+
+				continue;
+			}
+
 			String propertyKey = _getPropertyKey(line);
 
 			if (propertyKey == null) {
+				previousLine = line;
+
 				continue;
 			}
 
 			_sourceFormatterProperties.add(propertyKey);
+
+			previousLine = line;
 		}
 
 		return _sourceFormatterProperties;

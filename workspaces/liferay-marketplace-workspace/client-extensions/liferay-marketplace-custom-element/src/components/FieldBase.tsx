@@ -131,6 +131,12 @@ export function FieldBase({
 
 			{children}
 
+			{errorMessage && (
+				<div className="field-base-feedback text-danger">
+					{errorMessage}
+				</div>
+			)}
+
 			{!hideFeedback && helpMessage && (
 				<div className="field-base-feedback">{helpMessage}</div>
 			)}

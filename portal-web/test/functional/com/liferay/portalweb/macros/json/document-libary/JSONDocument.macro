@@ -339,6 +339,7 @@ definition {
 			var targetFolderId = 0;
 		}
 
+		var externalReferenceCode = StringUtil.randomString(12);
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 		var targetGroupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${targetGroupName},
@@ -347,6 +348,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileshortcut/add-file-shortcut  \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode=${externalReferenceCode} \
 				-d groupId=${targetGroupId} \
 				-d repositoryId=${targetRepositoryId} \
 				-d folderId=${targetFolderId} \

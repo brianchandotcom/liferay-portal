@@ -9,12 +9,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +29,23 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
-	@Ignore
 	@Override
 	@Test
 	public void testDeleteSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		super.testDeleteSiteSiteByExternalReferenceCodeSitePage();
+		SitePage postSitePage =
+			testGetSiteSiteByExternalReferenceCodeSitePagesPage_addSitePage(
+				testGroup.getExternalReferenceCode(), randomSitePage());
+
+		sitePageResource.deleteSiteSiteByExternalReferenceCodeSitePage(
+			testGroup.getExternalReferenceCode(),
+			postSitePage.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				postSitePage.getExternalReferenceCode(),
+				testGroup.getGroupId()));
 	}
 
 	@Override
@@ -188,5 +201,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return sitePageResource.postByExternalReferenceCodeSitePage(
 			sitePage.getSiteExternalReferenceCode(), sitePage);
 	}
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 }

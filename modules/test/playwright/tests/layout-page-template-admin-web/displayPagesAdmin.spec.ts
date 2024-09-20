@@ -317,7 +317,7 @@ test.describe('SEO configuration', () => {
 			viewableBy: 'Anyone',
 		});
 
-		// Assert open graph title
+		// Assert open graph tags
 
 		await performLogout(page);
 

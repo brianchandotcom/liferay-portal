@@ -503,11 +503,10 @@ test.describe('Multistep', () => {
 				key: 'BASIC_COMPONENT-heading',
 			});
 
+			const formButtonNextId = getRandomString();
+
 			const formButtonNext = getFragmentDefinition({
-				fragmentConfig: {
-					type: 'next',
-				},
-				id: getRandomString(),
+				id: formButtonNextId,
 				key: 'INPUTS-submit-button',
 			});
 
@@ -524,12 +523,17 @@ test.describe('Multistep', () => {
 				key: 'INPUTS-submit-button',
 			});
 
+			const formButtonSubmit = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
 				objectDefinitionId,
 				steps: [
 					[headingDefinition, formButtonNext],
-					[buttonDefinition, formButtonPrevious],
+					[buttonDefinition, formButtonPrevious, formButtonSubmit],
 				],
 			});
 
@@ -575,19 +579,32 @@ test.describe('Multistep', () => {
 				await expect(button).not.toBeVisible();
 			};
 
-			// Check in view mode
-
-			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
-
-			await checkFormButtonsBehavior();
-
 			// Check in edit mode
 
 			await pageEditorPage.goto(
 				layout,
 				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Type',
+				fragmentId: formButtonNextId,
+				tab: 'General',
+				value: 'Next',
+			});
+
+			await expect(
+				page.locator('.component-button').getByText('Next')
+			).toBeVisible();
+
+			await checkFormButtonsBehavior();
+
+			await pageEditorPage.publishPage();
+
+			// Check in view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
 			await checkFormButtonsBehavior();

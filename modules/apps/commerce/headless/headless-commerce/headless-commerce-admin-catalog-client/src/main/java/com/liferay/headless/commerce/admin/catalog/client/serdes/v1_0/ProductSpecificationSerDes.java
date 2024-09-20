@@ -46,6 +46,20 @@ public class ProductSpecificationSerDes {
 
 		sb.append("{");
 
+		if (productSpecification.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productSpecification.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (productSpecification.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -213,6 +227,16 @@ public class ProductSpecificationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (productSpecification.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					productSpecification.getExternalReferenceCode()));
+		}
+
 		if (productSpecification.getId() == null) {
 			map.put("id", null);
 		}
@@ -339,7 +363,10 @@ public class ProductSpecificationSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {
@@ -392,7 +419,13 @@ public class ProductSpecificationSerDes {
 			ProductSpecification productSpecification,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					productSpecification.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					productSpecification.setId(
 						Long.valueOf((String)jsonParserFieldValue));

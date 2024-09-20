@@ -167,6 +167,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		ProductSpecification productSpecification =
 			randomProductSpecification();
 
+		productSpecification.setExternalReferenceCode(regex);
 		productSpecification.setKey(regex);
 		productSpecification.setOptionCategoryExternalReferenceCode(regex);
 		productSpecification.setSpecificationExternalReferenceCode(regex);
@@ -178,6 +179,8 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		productSpecification = ProductSpecificationSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, productSpecification.getExternalReferenceCode());
 		Assert.assertEquals(regex, productSpecification.getKey());
 		Assert.assertEquals(
 			regex,
@@ -186,6 +189,220 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			regex,
 			productSpecification.getSpecificationExternalReferenceCode());
 		Assert.assertEquals(regex, productSpecification.getSpecificationKey());
+	}
+
+	@Test
+	public void testDeleteProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductSpecification productSpecification =
+			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		assertHttpResponseStatusCode(
+			204,
+			productSpecificationResource.
+				deleteProductSpecificationByExternalReferenceCodeHttpResponse(
+					productSpecification.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCodeHttpResponse(
+					productSpecification.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCodeHttpResponse(
+					productSpecification.getExternalReferenceCode()));
+	}
+
+	protected ProductSpecification
+			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		ProductSpecification postProductSpecification =
+			testGetProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		ProductSpecification getProductSpecification =
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCode(
+					postProductSpecification.getExternalReferenceCode());
+
+		assertEquals(postProductSpecification, getProductSpecification);
+		assertValid(getProductSpecification);
+	}
+
+	protected ProductSpecification
+			testGetProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		ProductSpecification productSpecification =
+			testGraphQLGetProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productSpecification,
+				ProductSpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productSpecificationByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												productSpecification.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productSpecificationByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productSpecification,
+				ProductSpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productSpecificationByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													productSpecification.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productSpecificationByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductSpecificationByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productSpecificationByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productSpecificationByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductSpecification
+			testGraphQLGetProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		return testGraphQLProductSpecification_addProductSpecification();
+	}
+
+	@Test
+	public void testPatchProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		ProductSpecification postProductSpecification =
+			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		ProductSpecification randomPatchProductSpecification =
+			randomPatchProductSpecification();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductSpecification patchProductSpecification =
+			productSpecificationResource.
+				patchProductSpecificationByExternalReferenceCode(
+					postProductSpecification.getExternalReferenceCode(),
+					randomPatchProductSpecification);
+
+		ProductSpecification expectedPatchProductSpecification =
+			postProductSpecification.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchProductSpecification, expectedPatchProductSpecification);
+
+		ProductSpecification getProductSpecification =
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCode(
+					patchProductSpecification.getExternalReferenceCode());
+
+		assertEquals(
+			expectedPatchProductSpecification, getProductSpecification);
+		assertValid(getProductSpecification);
+	}
+
+	protected ProductSpecification
+			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1027,6 +1244,16 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (productSpecification.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (productSpecification.getKey() == null) {
 					valid = false;
@@ -1247,6 +1474,19 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSpecification1.getExternalReferenceCode(),
+						productSpecification2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1499,6 +1739,52 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = productSpecification.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
 
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
@@ -1777,6 +2063,8 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		return new ProductSpecification() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				optionCategoryExternalReferenceCode = StringUtil.toLowerCase(

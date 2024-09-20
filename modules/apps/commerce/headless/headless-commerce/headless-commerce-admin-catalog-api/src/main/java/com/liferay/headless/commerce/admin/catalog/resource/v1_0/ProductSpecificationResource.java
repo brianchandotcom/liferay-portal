@@ -48,6 +48,20 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductSpecificationResource {
 
+	public void deleteProductSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ProductSpecification getProductSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ProductSpecification
+			patchProductSpecificationByExternalReferenceCode(
+				String externalReferenceCode,
+				ProductSpecification productSpecification)
+		throws Exception;
+
 	public void deleteProductSpecification(Long id) throws Exception;
 
 	public Response deleteProductSpecificationBatch(

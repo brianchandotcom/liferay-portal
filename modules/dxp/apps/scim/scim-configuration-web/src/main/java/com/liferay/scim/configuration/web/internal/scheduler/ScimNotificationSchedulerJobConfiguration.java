@@ -79,7 +79,20 @@ public class ScimNotificationSchedulerJobConfiguration
 	public boolean hasToSendNotification(
 		Date oAuth2AccessTokenExpirationDate, Date lastNotificationDate) {
 
-		long currentTime = System.currentTimeMillis();
+		return hasToSendNotification(
+			oAuth2AccessTokenExpirationDate, lastNotificationDate,
+			System.currentTimeMillis());
+	}
+
+	protected ClassLoader getClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
+	protected boolean hasToSendNotification(
+		Date oAuth2AccessTokenExpirationDate, Date lastNotificationDate,
+		long currentTime) {
 
 		long millisUntilExpiry =
 			oAuth2AccessTokenExpirationDate.getTime() - currentTime;
@@ -98,12 +111,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		}
 
 		return false;
-	}
-
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
 	}
 
 	private String _generateBody(String strAccessTokenExpirationDate) {

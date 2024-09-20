@@ -217,4 +217,30 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		Assert.assertTrue(notification);
 	}
 
+	@Test
+	public void testSendNotificationPrecision() {
+		ScimNotificationSchedulerJobConfiguration
+			scimNotificationSchedulerJobConfiguration =
+			new ScimNotificationSchedulerJobConfiguration();
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		Assert.assertTrue(
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis),
+				new Date(currentTimeMillis - 1),
+				currentTimeMillis));
+
+		Assert.assertFalse(
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis),
+				new Date(currentTimeMillis),
+				currentTimeMillis));
+
+		Assert.assertFalse(
+			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				new Date(currentTimeMillis),
+				new Date(currentTimeMillis + 1),
+				currentTimeMillis));
+	}
 }

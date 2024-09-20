@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class FormsPage {
 	readonly emptyResultNewFormButton: Locator;
@@ -53,8 +53,10 @@ export class FormsPage {
 		await this.managementToolbarNewButton.click();
 	}
 
-	async goTo() {
-		await this.productMenuPage.openProductMenuIfClosed();
-		await this.productMenuPage.goToForms();
+	async goTo(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.forms}`,
+			{waitUntil: 'load'}
+		);
 	}
 }

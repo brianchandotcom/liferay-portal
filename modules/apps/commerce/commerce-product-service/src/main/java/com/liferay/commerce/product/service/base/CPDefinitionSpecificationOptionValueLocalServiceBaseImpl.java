@@ -286,6 +286,25 @@ public abstract class CPDefinitionSpecificationOptionValueLocalServiceBaseImpl
 			uuid, groupId);
 	}
 
+	@Override
+	public CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return cpDefinitionSpecificationOptionValuePersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the cp definition specification option value with the primary key.
 	 *

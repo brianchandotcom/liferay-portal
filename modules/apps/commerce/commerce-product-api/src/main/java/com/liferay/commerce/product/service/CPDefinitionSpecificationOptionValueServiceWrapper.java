@@ -34,16 +34,17 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 	@Override
 	public CPDefinitionSpecificationOptionValue
 			addCPDefinitionSpecificationOptionValue(
-				long cpDefinitionId, long cpSpecificationOptionId,
-				long cpOptionCategoryId, double priority,
+				String externalReferenceCode, long cpDefinitionId,
+				long cpSpecificationOptionId, long cpOptionCategoryId,
+				double priority,
 				java.util.Map<java.util.Locale, String> valueMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionSpecificationOptionValueService.
 			addCPDefinitionSpecificationOptionValue(
-				cpDefinitionId, cpSpecificationOptionId, cpOptionCategoryId,
-				priority, valueMap, serviceContext);
+				externalReferenceCode, cpDefinitionId, cpSpecificationOptionId,
+				cpOptionCategoryId, priority, valueMap, serviceContext);
 	}
 
 	@Override
@@ -77,6 +78,17 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 
 	@Override
 	public CPDefinitionSpecificationOptionValue
+			fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionSpecificationOptionValueService.
+			fetchCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
 			getCPDefinitionSpecificationOptionValue(
 				long cpDefinitionSpecificationOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -84,6 +96,17 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 		return _cpDefinitionSpecificationOptionValueService.
 			getCPDefinitionSpecificationOptionValue(
 				cpDefinitionSpecificationOptionValueId);
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionSpecificationOptionValueService.
+			getCPDefinitionSpecificationOptionValueByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override

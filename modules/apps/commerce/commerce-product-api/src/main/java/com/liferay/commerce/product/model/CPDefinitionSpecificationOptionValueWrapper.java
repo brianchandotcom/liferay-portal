@@ -43,6 +43,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"CPDefinitionSpecificationOptionValueId",
 			getCPDefinitionSpecificationOptionValueId());
@@ -81,6 +82,13 @@ public class CPDefinitionSpecificationOptionValueWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long CPDefinitionSpecificationOptionValueId = (Long)attributes.get(
@@ -275,6 +283,16 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the external reference code of this cp definition specification option value.
+	 *
+	 * @return the external reference code of this cp definition specification option value
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -554,6 +572,16 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the external reference code of this cp definition specification option value.
+	 *
+	 * @param externalReferenceCode the external reference code of this cp definition specification option value
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

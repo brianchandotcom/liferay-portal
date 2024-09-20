@@ -1,6 +1,6 @@
 assemble:
     - fromTask: bootJar
-liferay-customer-etc-spring-boot-oauth-application-headless-server:
+liferay-customer-etc-spring-boot-oahs:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay Customer Etc Spring Boot OAuth Application Headless Server
@@ -8,7 +8,7 @@ liferay-customer-etc-spring-boot-oauth-application-headless-server:
         - Liferay.Headless.Admin.User.everything
         - c_ticketattachment.everything
     type: oAuthApplicationHeadlessServer
-liferay-customer-etc-spring-boot-oauth-application-user-agent:
+liferay-customer-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay Customer Etc Spring Boot OAuth Application User Agent

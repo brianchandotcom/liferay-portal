@@ -4,7 +4,7 @@ liferay-customer-site-initializer-quickstart:
     siteExternalReferenceCode: LIFERAY_CUSTOMER
     siteName: Liferay Customer
     type: siteInitializer
-liferay-customer-site-initializer-quickstart-oauth-application-headless-server:
+liferay-customer-site-initializer-quickstart-oahs:
     .serviceAddress: localhost:8080
     .serviceScheme: http
     name: Liferay Customer Site Initializer Quickstart OAuth Application Headless Server

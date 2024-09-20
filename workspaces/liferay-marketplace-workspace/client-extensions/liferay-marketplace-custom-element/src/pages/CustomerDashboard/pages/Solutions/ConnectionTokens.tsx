@@ -29,15 +29,21 @@ const ConnectionTokens = () => (
 			</div>
 
 			<div className="mt-2 py-3">
-				<label htmlFor="">
+				<label htmlFor="token">
 					Copy this token to your Liferay DXP Instance
 				</label>
 
-				<ClayInput disabled readOnly value={getRandomID()} />
+				<ClayInput
+					disabled
+					id="token"
+					name="token"
+					readOnly
+					value={getRandomID()}
+				/>
 			</div>
 
 			<a
-				href="https://analytics.liferay.com"
+				href="https://learn.liferay.com/en/w/analytics-cloud/getting-started/connecting-liferay-dxp-to-analytics-cloud"
 				rel="noopener norefeerer"
 				target="_blank"
 			>

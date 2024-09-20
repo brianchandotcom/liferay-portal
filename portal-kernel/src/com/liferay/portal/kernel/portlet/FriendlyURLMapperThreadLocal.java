@@ -15,8 +15,18 @@ import java.util.Map;
  */
 public class FriendlyURLMapperThreadLocal {
 
+	public static Map<String, String[]> getParentParameters() {
+		return _parentParameters.get();
+	}
+
 	public static Map<String, String> getPRPIdentifiers() {
 		return _prpIdentifiers.get();
+	}
+
+	public static SafeCloseable setParentParametersWithSafeCloseable(
+		Map<String, String[]> parentParameters) {
+
+		return _parentParameters.setWithSafeCloseable(parentParameters);
 	}
 
 	public static SafeCloseable setPRPIdentifiersWithSafeCloseable(
@@ -25,6 +35,9 @@ public class FriendlyURLMapperThreadLocal {
 		return _prpIdentifiers.setWithSafeCloseable(prpIdentifiers);
 	}
 
+	private static final CentralizedThreadLocal<Map<String, String[]>>
+		_parentParameters = new CentralizedThreadLocal<>(
+			FriendlyURLMapperThreadLocal.class + "._parentParameters");
 	private static final CentralizedThreadLocal<Map<String, String>>
 		_prpIdentifiers = new CentralizedThreadLocal<>(
 			FriendlyURLMapperThreadLocal.class + "._prpIdentifiers");

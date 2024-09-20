@@ -31,9 +31,9 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({
 
 	const taskPermission = useObjectPermission('/tasks');
 
-	if (testrayBuild.dueStatus.key !== BuildImportStatuses.DONE) {
+	if (testrayBuild.importStatus.key !== BuildImportStatuses.DONE) {
 		const testrayBuildAlertProperty =
-			testrayBuildAlertProperties[testrayBuild.dueStatus.key];
+			testrayBuildAlertProperties[testrayBuild.importStatus.key];
 
 		return (
 			<ClayAlert

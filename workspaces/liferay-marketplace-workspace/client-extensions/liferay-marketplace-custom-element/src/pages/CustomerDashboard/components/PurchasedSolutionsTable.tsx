@@ -11,12 +11,18 @@ import {useNavigate} from 'react-router-dom';
 import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
+import {ORDER_CUSTOM_FIELDS, ORDER_TYPES} from '../../../enums/Order';
 import i18n from '../../../i18n';
-import {TRIAL_CUSTOM_FIELDS} from '../pages/Solutions/Solution';
 
 type PurchasedSolutionsTableProps = {
 	items: PlacedOrder[];
 };
+
+const orderTypeLabel = {
+	[ORDER_TYPES.ADDONS]: {duration: null, label: 'Add-ons'},
+	[ORDER_TYPES.SOLUTIONS30]: {duration: 30, label: '30-day Trial'},
+	[ORDER_TYPES.SOLUTIONS7]: {duration: 7, label: '7-day Trial'},
+} as const;
 
 const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 	items,
@@ -84,28 +90,32 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 				},
 				{
 					key: 'orderTypeExternalReferenceCode',
-					render: (orderTypeExternalReferenceCode) => (
+					render: (orderTypeExternalReferenceCode: ORDER_TYPES) => (
 						<span className="label label-info">
-							{orderTypeExternalReferenceCode.includes('7')
-								? '7-day Trial'
-								: '30-day Trial'}
+							{(orderTypeLabel as any)[
+								orderTypeExternalReferenceCode
+							]?.label || 'None'}
 						</span>
 					),
-					title: 'App Type',
+					title: i18n.translate('type'),
 					width: '2%',
 				},
 				{
 					key: 'createDate',
-					render: (createDate, {orderTypeExternalReferenceCode}) =>
-						format(
-							addDays(
-								new Date(createDate),
-								orderTypeExternalReferenceCode.includes('7')
-									? 7
-									: 30
-							),
-							'dd MMM, yyyy'
-						).toString(),
+					render: (createDate, {orderTypeExternalReferenceCode}) => {
+						const duration = (orderTypeLabel as any)[
+							orderTypeExternalReferenceCode
+						]?.duration;
+
+						if (typeof duration === 'number') {
+							return format(
+								addDays(new Date(createDate), duration),
+								'dd MMM, yyyy'
+							).toString();
+						}
+
+						return 'DNE';
+					},
 					title: 'End Date',
 					width: '2%',
 				},
@@ -116,14 +126,14 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 							{orderStatusInfo?.label}
 						</OrderStatus>
 					),
-					title: 'Provisioning',
+					title: 'Status',
 				},
 				{
 					align: 'center',
 					key: 'status',
 					render: (_, {customFields, id}) => {
 						const virtualHost =
-							customFields[TRIAL_CUSTOM_FIELDS.VIRTUAL_HOST];
+							customFields[ORDER_CUSTOM_FIELDS.VIRTUAL_HOST];
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>

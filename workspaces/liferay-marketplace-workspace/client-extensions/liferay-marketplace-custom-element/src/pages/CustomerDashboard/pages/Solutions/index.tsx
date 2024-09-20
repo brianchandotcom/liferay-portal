@@ -8,7 +8,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import Page from '../../../../components/Page';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
+import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 import PurchasedSolutionsTable from '../../components/PurchasedSolutionsTable';
 import {usePurchasedOrders} from '../../usePurchasedOrders';
 
@@ -29,7 +29,11 @@ const Solutions = () => {
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id,
 		channelId: channel?.id,
-		orderTypeExternalReferenceCodes: ['SOLUTION30', 'SOLUTIONS7'],
+		orderTypeExternalReferenceCodes: [
+			ORDER_TYPES.SOLUTIONS7,
+			ORDER_TYPES.SOLUTIONS30,
+			ORDER_TYPES.ADDONS,
+		],
 		page: 1,
 		pageSize: 20,
 		swrConfig: {refreshInterval},

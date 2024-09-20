@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectActionExternalReferenceCodeException;
 import com.liferay.object.exception.LockedObjectActionException;
+import com.liferay.object.exception.ObjectActionActiveException;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
@@ -353,12 +354,14 @@ public class ObjectActionLocalServiceImpl
 			externalReferenceCode, objectAction.getObjectActionId(),
 			objectAction.getCompanyId(), objectAction.getObjectDefinitionId());
 
-		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
-		_validateLabel(labelMap);
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectAction.getObjectDefinitionId());
+
+		_validateActive(active, objectAction, objectDefinition);
+
+		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
+		_validateLabel(labelMap);
 
 		_validateObjectActionExecutorKey(
 			objectActionExecutorKey, objectDefinition);
@@ -463,6 +466,29 @@ public class ObjectActionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _validateActive(
+			boolean active, ObjectAction objectAction,
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+			objectDefinition.isRootNode()) {
+
+			return;
+		}
+
+		if (active &&
+			StringUtil.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE)) {
+
+			throw new ObjectActionActiveException(
+				"Cannot activate object action if trigger is " +
+					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE +
+						" but object definition is not a root node");
+		}
 	}
 
 	private void _validateErrorMessage(

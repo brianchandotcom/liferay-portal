@@ -286,5 +286,13 @@
 		"facetable": true,
 		"key": "solution-header-video-url",
 		"title": "Solution Header Video URL"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-TYPE",
+		"description": "Solution header title",
+		"facetable": false,
+		"key": "solution-type",
+		"title": "Solution Type"
 	}
 ]

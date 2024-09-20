@@ -2,6 +2,18 @@
 	{
 		"active": true,
 		"description": {
+			"en_US": "Designates that the order is an Add-On"
+		},
+		"displayOrder": 0,
+		"externalReferenceCode": "ADDONS",
+		"name": {
+			"en_US": "Add-Ons"
+		},
+		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
 			"en_US": "Designates that the order contains a free or paid Cloud app."
 		},
 		"displayOrder": 0,

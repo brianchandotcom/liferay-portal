@@ -66,6 +66,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			(Long)dtoConverterContext.getId());
+
 		CommerceShippingMethod commerceShippingMethod =
 			commerceOrder.getCommerceShippingMethod();
 

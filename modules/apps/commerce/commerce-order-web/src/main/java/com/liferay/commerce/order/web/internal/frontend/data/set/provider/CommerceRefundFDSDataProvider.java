@@ -6,7 +6,9 @@
 package com.liferay.commerce.order.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
@@ -17,7 +19,6 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -70,14 +73,6 @@ public class CommerceRefundFDSDataProvider implements FDSDataProvider<Refund> {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		String amount = StringPool.BLANK;
-
-		CommerceMoney totalCommerceMoney = commerceOrder.getTotalMoney();
-
-		if (totalCommerceMoney != null) {
-			amount = totalCommerceMoney.format(themeDisplay.getLocale());
-		}
-
 		for (CommercePaymentEntry commercePaymentEntry :
 				_commercePaymentEntryLocalService.
 					getRefundCommercePaymentEntries(
@@ -89,7 +84,9 @@ public class CommerceRefundFDSDataProvider implements FDSDataProvider<Refund> {
 
 			refunds.add(
 				new Refund(
-					amount,
+					_formatCommercePaymentEntryAmount(
+						commerceOrder.getCommerceCurrency(),
+						commercePaymentEntry.getAmount(), themeDisplay),
 					dateTimeFormat.format(commercePaymentEntry.getCreateDate()),
 					commercePaymentEntry.getExternalReferenceCode(),
 					commercePaymentEntry.getCommercePaymentEntryId(),
@@ -125,6 +122,17 @@ public class CommerceRefundFDSDataProvider implements FDSDataProvider<Refund> {
 				commerceOrder.getCompanyId(),
 				_classNameLocalService.getClassNameId(CommerceOrder.class),
 				commerceOrder.getCommerceOrderId());
+	}
+
+	private String _formatCommercePaymentEntryAmount(
+			CommerceCurrency commerceCurrency, BigDecimal amount,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		CommerceMoney commerceMoney = CommerceMoneyFactoryUtil.create(
+			commerceCurrency, amount);
+
+		return commerceMoney.format(themeDisplay.getLocale());
 	}
 
 	@Reference

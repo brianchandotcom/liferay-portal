@@ -1566,8 +1566,11 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"scope_group_ids",
-					new Long[] {groupA.getGroupId(), groupB.getGroupId()}
+					"scope_group_external_reference_codes",
+					new String[] {
+						groupA.getExternalReferenceCode(),
+						groupB.getExternalReferenceCode()
+					}
 				).build()
 			},
 			new String[] {"Limit Search to These Sites"});

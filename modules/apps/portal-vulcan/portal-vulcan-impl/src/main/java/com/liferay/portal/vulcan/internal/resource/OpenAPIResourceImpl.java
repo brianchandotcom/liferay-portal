@@ -39,7 +39,6 @@ import io.swagger.v3.core.filter.AbstractSpecFilter;
 import io.swagger.v3.core.filter.OpenAPISpecFilter;
 import io.swagger.v3.core.filter.SpecFilter;
 import io.swagger.v3.core.model.ApiDescription;
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.oas.integration.GenericOpenApiContext;
@@ -1359,7 +1358,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		return Response.status(
 			Response.Status.OK
 		).entity(
-			Json.pretty(openAPI)
+			openAPI
 		).type(
 			MediaType.APPLICATION_JSON_TYPE
 		).build();

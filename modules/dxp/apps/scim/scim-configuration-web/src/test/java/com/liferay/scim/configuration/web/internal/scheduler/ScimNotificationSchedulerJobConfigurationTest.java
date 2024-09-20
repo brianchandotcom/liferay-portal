@@ -147,4 +147,51 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 				new Date(currentTimeMillis + 1),
 				currentTimeMillis));
 	}
+
+	@Test
+	public void testNotifications() {
+		Date tokenExpiryDate = new Date(System.currentTimeMillis() + Time.YEAR);
+
+		_testNotificationDuration(
+			tokenExpiryDate, tokenExpiryDate.getTime() - (Time.DAY * 30));
+
+		_testNotificationDuration(
+			tokenExpiryDate, tokenExpiryDate.getTime() - (Time.DAY * 10));
+
+		_testNotificationDuration(
+			tokenExpiryDate, tokenExpiryDate.getTime() - Time.DAY);
+
+		_testNotificationDuration(tokenExpiryDate, tokenExpiryDate.getTime());
+	}
+
+	private void _testNotificationDuration(
+		Date tokenExpiryDate, long notificationDurationMillis) {
+
+		Assert.assertTrue(
+			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				tokenExpiryDate, _NO_NOTIFICATION_YET,
+				notificationDurationMillis));
+
+		Assert.assertTrue(
+			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				tokenExpiryDate, new Date(notificationDurationMillis - 1),
+				notificationDurationMillis));
+
+		Assert.assertFalse(
+			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				tokenExpiryDate, new Date(notificationDurationMillis),
+				notificationDurationMillis));
+
+		Assert.assertFalse(
+			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
+				tokenExpiryDate, new Date(notificationDurationMillis + 1),
+				notificationDurationMillis));
+	}
+
+	private static final Date _NO_NOTIFICATION_YET = new Date(0);
+
+	private final ScimNotificationSchedulerJobConfiguration
+		_scimNotificationSchedulerJobConfiguration =
+			new ScimNotificationSchedulerJobConfiguration();
+
 }

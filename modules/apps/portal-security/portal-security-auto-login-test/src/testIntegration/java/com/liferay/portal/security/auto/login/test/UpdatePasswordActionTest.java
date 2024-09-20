@@ -103,34 +103,12 @@ public class UpdatePasswordActionTest {
 
 		mockHttpServletRequest.addParameter(Constants.CMD, "update");
 
-		Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
-
-		Ticket ticket = _ticketLocalService.addDistinctTicket(
-			_user.getCompanyId(), User.class.getName(), _user.getUserId(),
-			TicketConstants.TYPE_PASSWORD, null, expirationDate,
-			new ServiceContext());
-
-		mockHttpServletRequest.setParameter(
-			"ticketId", String.valueOf(ticket.getTicketId()));
-		mockHttpServletRequest.setParameter("ticketKey", ticket.getKey());
-
-		mockHttpServletRequest.setMethod("POST");
-
-		ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
-
-		_ticketLocalService.updateTicket(ticket);
-
 		String password = RandomTestUtil.randomString();
 
 		mockHttpServletRequest.addParameter("password1", password);
 		mockHttpServletRequest.addParameter("password2", password);
 
 		mockHttpServletRequest.addParameter("p_auth", "test");
-
-		HttpSession httpSession = mockHttpServletRequest.getSession();
-
-		httpSession.setAttribute(
-			"LIFERAY_SHARED_AUTHENTICATION_TOKEN#CSRF", "test");
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(1);
 
@@ -148,6 +126,28 @@ public class UpdatePasswordActionTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setMethod("POST");
+
+		Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
+
+		Ticket ticket = _ticketLocalService.addDistinctTicket(
+			_user.getCompanyId(), User.class.getName(), _user.getUserId(),
+			TicketConstants.TYPE_PASSWORD, null, expirationDate,
+			new ServiceContext());
+
+		mockHttpServletRequest.setParameter(
+			"ticketId", String.valueOf(ticket.getTicketId()));
+		mockHttpServletRequest.setParameter("ticketKey", ticket.getKey());
+
+		ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
+
+		_ticketLocalService.updateTicket(ticket);
+
+		HttpSession httpSession = mockHttpServletRequest.getSession();
+
+		httpSession.setAttribute(
+			"LIFERAY_SHARED_AUTHENTICATION_TOKEN#CSRF", "test");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			mockHttpServletRequest);

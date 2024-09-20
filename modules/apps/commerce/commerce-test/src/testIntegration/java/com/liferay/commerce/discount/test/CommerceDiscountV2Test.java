@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1463,7 +1464,12 @@ public class CommerceDiscountV2Test {
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
 
-		Assert.assertEquals(price, finalPriceCommerceMoney.getPrice());
+		BigDecimal finalPriceCommerceMoneyPrice =
+			finalPriceCommerceMoney.getPrice();
+
+		Assert.assertEquals(
+			price,
+			BigDecimalUtil.stripTrailingZeros(finalPriceCommerceMoneyPrice));
 	}
 
 	@Test

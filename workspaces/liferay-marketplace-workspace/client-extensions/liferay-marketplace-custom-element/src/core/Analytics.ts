@@ -22,6 +22,7 @@ export const AnalyticsKeys = {
 	DEACTIVATE_LICENSE_KEY: 'Deactivate License Key',
 	DOWNLOAD_APP: 'Download App',
 	DOWNLOAD_LICENSE_KEY: 'Download License Key',
+	ORDER_CREATION: 'Order Creation',
 	TRIAL_CREATION: 'Trial Creation',
 	VIRTUAL_URL_NOT_FOUND: 'Virtual URL not found',
 } as const;

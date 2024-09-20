@@ -12,6 +12,8 @@ export default {
 	'access-console': 'Access Console',
 	'account': 'Account',
 	'account-name': 'Account Name',
+	'account-selected': 'Account Selected',
+	'account-selection': 'Account Selection',
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
 	'active': 'Active',
@@ -29,6 +31,7 @@ export default {
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the solution will be lost unless you save the solution as a draft, Do you still want to exit?',
 	'all-published-apps': 'All Published Apps',
+	'allowed-email-domains': 'Allowed Email Domains',
 	'amount': 'Amount',
 	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
 		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email',
@@ -111,6 +114,7 @@ export default {
 	'customize-storefront-solutions-details':
 		'Customize storefront solutions details',
 	'dashboard': 'Dashboard',
+	'data-center-location': 'Data Center Location',
 	'deactivate': 'Deactivate',
 	'deactivated': 'Deactivated',
 	'decline': 'Decline',
@@ -193,6 +197,7 @@ export default {
 		'In the future, you will be able to submit your app directly from Liferay SaaS projects.',
 	'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay':
 		'In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay.',
+	'incident-report-contacts': 'Incident Report Contacts',
 	'income': 'Income',
 	'insert-text-here': 'Insert text here',
 	'install': 'Install',
@@ -341,6 +346,7 @@ export default {
 	'status': 'Status',
 	'submit': 'Submit',
 	'submit-solution': 'Submit Solution',
+	'subscription-type': 'Subscription Type',
 	'subtotal': 'Subtotal',
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'success',
@@ -389,6 +395,7 @@ export default {
 		'This order must be completed before downloading this app.',
 	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated':
 		'This submission is currently under review by Liferay. Once the process is complete the solution will be published automatically to the Marketplace. Meanwhile, any information or data from this solution submission cannot be updated.',
+	'timezone': 'Timezone',
 	'title': 'Title',
 	'total': 'Total',
 	'trial': 'Trial',
@@ -432,6 +439,10 @@ export default {
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
 	'website': 'Website',
+	'workspace-friendly-url': 'Workspace Friendly URL',
+	'workspace-info': 'Workspace Info',
+	'workspace-name': 'Workspace Name',
+	'workspace-owner-email': 'Workspace Owner Email',
 	'x-is-required': '{0} is required',
 	'x-saved-as-a-draft-successfully':
 		'<b>{0}</b> saved as a <b>draft</b> successfully',

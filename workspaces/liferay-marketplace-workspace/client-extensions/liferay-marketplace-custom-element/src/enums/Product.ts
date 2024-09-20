@@ -5,6 +5,16 @@
 
 import i18n from '../i18n';
 
+export enum PRODUCT_TYPE_VOCABULARY {
+	APP = 'App',
+	SOLUTION = 'Solution',
+}
+
+export enum SOLUTION_TYPES {
+	ANALYTICS = 'analytics',
+	PRE_BUILT_TRIAL = 'pre-built-trial',
+}
+
 export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_APP_CATEGORY = 'marketplace-app-category',
 	MARKETPLACE_APP_TAGS = 'marketplace-app-tags',
@@ -33,6 +43,7 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	APP_VERSION = 'latest-version',
 	APP_VERSION_NOTES = 'product-notes',
 	SOLUTION_COMPANY_DESCRIPTION = 'solution-company-description',
+	SOLUTION_TYPE = 'solution-type',
 	SOLUTION_COMPANY_EMAIL = 'solution-company-email',
 	SOLUTION_COMPANY_PHONE = 'solution-company-phone',
 	SOLUTION_COMPANY_WEBSITE = 'solution-company-website',

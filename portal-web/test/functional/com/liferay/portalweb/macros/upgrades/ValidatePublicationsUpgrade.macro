@@ -73,7 +73,25 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
-		AssertVisible(locator1 = "Publications#REVIEW_CHANGES_BUTTON");
+		Click(
+			key_publicationName = "Publication 1 Name",
+			locator1 = "Publications#PUBLICATION_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Edit",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertElementNotPresent(
+			key_menuItem = "Revert",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertElementPresent(
+			key_menuItem = "Review Changes",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertElementPresent(
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

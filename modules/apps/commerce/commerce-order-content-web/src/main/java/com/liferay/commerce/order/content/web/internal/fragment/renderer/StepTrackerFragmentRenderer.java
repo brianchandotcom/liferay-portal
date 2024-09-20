@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
-import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
+import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -117,8 +117,8 @@ public class StepTrackerFragmentRenderer implements FragmentRenderer {
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
-				"liferay-commerce:step-tracker:step-list",
-				_commerceStepTrackerHelper.getOrderSteps(
+				"liferay-commerce:step-tracker:commerce-order-steps",
+				_commerceOrderStepTrackerHelper.getCommerceOrderSteps(
 					commerceOrder, themeDisplay.getLocale()));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -177,7 +177,7 @@ public class StepTrackerFragmentRenderer implements FragmentRenderer {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommerceStepTrackerHelper _commerceStepTrackerHelper;
+	private CommerceOrderStepTrackerHelper _commerceOrderStepTrackerHelper;
 
 	@Reference
 	private Language _language;

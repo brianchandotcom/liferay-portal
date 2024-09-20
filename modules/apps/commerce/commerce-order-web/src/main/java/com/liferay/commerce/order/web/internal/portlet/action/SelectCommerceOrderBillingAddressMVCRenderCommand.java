@@ -9,7 +9,7 @@ import com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfig
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.NoSuchOrderException;
-import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
+import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
@@ -75,9 +75,9 @@ public class SelectCommerceOrderBillingAddressMVCRenderCommand
 					_commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,
 					_commercePriceFormatter, _commerceShipmentService,
-					_commerceStepTrackerHelper, _commerceTermEntryLocalService,
-					_cpMeasurementUnitService, _modelResourcePermission,
-					renderRequest);
+					_commerceOrderStepTrackerHelper,
+					_commerceTermEntryLocalService, _cpMeasurementUnitService,
+					_modelResourcePermission, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -137,6 +137,9 @@ public class SelectCommerceOrderBillingAddressMVCRenderCommand
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
+	private CommerceOrderStepTrackerHelper _commerceOrderStepTrackerHelper;
+
+	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
@@ -148,9 +151,6 @@ public class SelectCommerceOrderBillingAddressMVCRenderCommand
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
-
-	@Reference
-	private CommerceStepTrackerHelper _commerceStepTrackerHelper;
 
 	@Reference
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;

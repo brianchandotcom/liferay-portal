@@ -18,7 +18,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
-import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
+import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -143,7 +143,7 @@ public class CommerceOrderContentDisplayContext {
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
 			CommercePaymentMethodRegistry commercePaymentMethodRegistry,
-			CommerceStepTrackerHelper commerceStepTrackerHelper,
+			CommerceOrderStepTrackerHelper commerceOrderStepTrackerHelper,
 			CommerceTermEntryService commerceTermEntryService,
 			ConfigurationProvider configurationProvider,
 			DLAppLocalService dlAppLocalService,
@@ -168,7 +168,7 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
-		_commerceStepTrackerHelper = commerceStepTrackerHelper;
+		_commerceOrderStepTrackerHelper = commerceOrderStepTrackerHelper;
 		_commerceTermEntryService = commerceTermEntryService;
 		_configurationProvider = configurationProvider;
 		_dlAppLocalService = dlAppLocalService;
@@ -879,7 +879,7 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public List<StepModel> getOrderSteps() throws PortalException {
-		return _commerceStepTrackerHelper.getOrderSteps(
+		return _commerceOrderStepTrackerHelper.getCommerceOrderSteps(
 			getCommerceOrder(), _cpRequestHelper.getLocale());
 	}
 
@@ -1389,6 +1389,8 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+	private final CommerceOrderStepTrackerHelper
+		_commerceOrderStepTrackerHelper;
 	private final Format _commerceOrderTimeFormat;
 	private final CommerceOrderTypeService _commerceOrderTypeService;
 	private final CommercePaymentIntegrationRegistry
@@ -1396,7 +1398,6 @@ public class CommerceOrderContentDisplayContext {
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-	private final CommerceStepTrackerHelper _commerceStepTrackerHelper;
 	private final CommerceTermEntryService _commerceTermEntryService;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPRequestHelper _cpRequestHelper;

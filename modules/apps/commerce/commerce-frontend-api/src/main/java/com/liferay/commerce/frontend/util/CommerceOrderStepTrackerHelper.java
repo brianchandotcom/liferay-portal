@@ -15,9 +15,9 @@ import java.util.Locale;
 /**
  * @author Andrea Sbarra
  */
-public interface CommerceStepTrackerHelper {
+public interface CommerceOrderStepTrackerHelper {
 
-	public List<StepModel> getOrderSteps(
+	public List<StepModel> getCommerceOrderSteps(
 			CommerceOrder commerceOrder, Locale locale)
 		throws PortalException;
 

@@ -11,7 +11,7 @@
 	module="{StepTracker} from commerce-order-content-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"steps", steps
+			"stepModels", stepModels
 		).build()
 	%>'
 />

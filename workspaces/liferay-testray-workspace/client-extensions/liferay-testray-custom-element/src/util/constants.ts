@@ -96,11 +96,11 @@ type AlertProperties = {
 };
 
 export const testrayBuildAlertProperties: AlertProperties = {
-	[BuildImportStatuses.PENDING]: {
-		color: 'label-chart open',
-		displayType: 'secondary',
-		label: i18n.translate('pending'),
-		text: i18n.translate('test-results-are-queued-to-be-imported'),
+	[BuildImportStatuses.DONE]: {
+		color: 'label-chart passed',
+		displayType: 'success',
+		label: i18n.translate('done'),
+		text: i18n.translate('this-build-has-finished-it-import-process'),
 	},
 	[BuildImportStatuses.INPROGRESS]: {
 		color: 'label-chart-in-analysis',
@@ -108,11 +108,11 @@ export const testrayBuildAlertProperties: AlertProperties = {
 		label: i18n.translate('in-progress'),
 		text: i18n.translate('test-results-are-being-imported-into-this-build'),
 	},
-	[BuildImportStatuses.DONE]: {
-		color: 'label-chart passed',
-		displayType: 'success',
-		label: i18n.translate('done'),
-		text: i18n.translate('this-build-has-finished-it-import-process'),
+	[BuildImportStatuses.PENDING]: {
+		color: 'label-chart open',
+		displayType: 'secondary',
+		label: i18n.translate('pending'),
+		text: i18n.translate('test-results-are-queued-to-be-imported'),
 	},
 };
 

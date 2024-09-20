@@ -12,9 +12,9 @@ export enum BuildStatuses {
 }
 
 export enum BuildImportStatuses {
-	PENDING = 'PENDING',
-	INPROGRESS = 'INPROGRESS',
 	DONE = 'DONE',
+	INPROGRESS = 'INPROGRESS',
+	PENDING = 'PENDING',
 }
 
 export enum CaseResultStatuses {

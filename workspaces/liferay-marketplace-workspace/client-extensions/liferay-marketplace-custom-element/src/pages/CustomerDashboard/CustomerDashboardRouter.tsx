@@ -17,6 +17,7 @@ import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Provisioning from './pages/Apps/App/Provisioning/Provisioning';
 import Members from './pages/Members';
 import Solutions from './pages/Solutions';
+import ConnectionTokens from './pages/Solutions/ConnectionTokens';
 import Solution from './pages/Solutions/Solution';
 import SolutionOutlet from './pages/Solutions/SolutionOutlet';
 
@@ -51,6 +52,11 @@ const CustomerDashboardRouter = () => {
 						element={<SolutionOutlet />}
 						path="solutions/:orderId"
 					>
+						<Route
+							element={<ConnectionTokens />}
+							path="connection-tokens"
+						/>
+
 						<Route element={<Solution />} index />
 					</Route>
 				</Route>

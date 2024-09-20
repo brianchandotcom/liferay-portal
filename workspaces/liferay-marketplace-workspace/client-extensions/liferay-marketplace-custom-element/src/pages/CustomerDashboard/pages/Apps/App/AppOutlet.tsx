@@ -17,11 +17,18 @@ import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel'
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';
+import {getSpecificationByKey} from '../../../../../utils/productUtils';
+
+type ProductAndOrderPayload = NonNullable<
+	ReturnType<typeof useGetProductByOrderId>['data']
+>;
 
 type BaseOutletProps = {
 	backTitle: string;
 	backURL?: string;
-	routes: NavbarProps['routes'] | ((data: any) => NavbarProps['routes']);
+	routes:
+		| NavbarProps['routes']
+		| ((data: ProductAndOrderPayload) => NavbarProps['routes']);
 };
 
 const BaseOutlet: React.FC<BaseOutletProps> = ({
@@ -32,43 +39,46 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 	const navigate = useNavigate();
 	const {orderId} = useParams();
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
-	const product = data?.product;
 
 	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
 	const productCreatorAccountName = data?.product?.catalogName || '';
 
 	return (
-		<PageRenderer error={error} isLoading={isLoading}>
-			<div className="app-details-header d-flex flex-column w-100">
-				<Link
-					className="align-items-center d-flex text-dark"
-					onClick={() => navigate('..')}
-					to={backURL}
-				>
-					<ClayIcon className="mr-2" symbol="order-arrow-left" />
+		<PageRenderer
+			className="app-details-header d-flex flex-column w-100"
+			error={error}
+			isLoading={isLoading}
+		>
+			<Link
+				className="align-items-center d-flex text-dark"
+				onClick={() => navigate('..')}
+				to={backURL}
+			>
+				<ClayIcon className="mr-2" symbol="order-arrow-left" />
 
-					<span className="h5 mt-1">{backTitle}</span>
-				</Link>
+				<span className="h5 mt-1">{backTitle}</span>
+			</Link>
 
-				<OrderDetailsHeader
-					className="d-flex flex-row justify-content-between pb-3 pt-5"
-					hasOrderDetails
-					image={placedOrderItems[0]?.thumbnail}
-					name={data?.product?.name}
-					order={data?.placedOrder}
-					productOwner={productCreatorAccountName}
-				/>
+			<OrderDetailsHeader
+				className="d-flex flex-row justify-content-between pb-3 pt-5"
+				hasOrderDetails
+				image={placedOrderItems[0]?.thumbnail}
+				name={data?.product?.name}
+				order={data?.placedOrder as unknown as Cart}
+				productOwner={productCreatorAccountName}
+			/>
 
-				<Navbar
-					routes={
-						typeof routes === 'function'
-							? routes({data, placedOrderItems, product})
-							: routes
-					}
-				/>
+			<Navbar
+				routes={
+					typeof routes === 'function'
+						? data
+							? routes(data as ProductAndOrderPayload)
+							: []
+						: routes
+				}
+			/>
 
-				<Outlet context={data} />
-			</div>
+			<Outlet context={data} />
 		</PageRenderer>
 	);
 };
@@ -79,18 +89,18 @@ const AppOutlet = () => {
 	return (
 		<BaseOutlet
 			backTitle={i18n.translate('back-to-my-apps')}
-			routes={({data, placedOrderItems, product}: any) => {
+			routes={({placedOrder, product}) => {
 				const {isPaidApp} = getProductPriceModel(product);
 
-				const productType = product?.productSpecifications?.find(
-					(speficication: ProductSpecification) =>
-						speficication?.specificationKey === 'type'
+				const productType = getSpecificationByKey(
+					'type',
+					product
 				)?.value;
 
 				const isCompletedOrderWithVirtualItems =
-					data?.placedOrder.workflowStatusInfo.code ===
+					placedOrder.workflowStatusInfo.code ===
 						ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
-					placedOrderItems.some(
+					placedOrder.placedOrderItems.some(
 						(item: PlacedOrderItems) => item.virtualItems?.length
 					);
 

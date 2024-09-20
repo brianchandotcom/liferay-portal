@@ -12,12 +12,14 @@ import Loading from './Loading';
 
 export type PageRendererProps = {
 	children: any;
+	className?: string;
 	error?: FetcherError;
 	isLoading: boolean;
 };
 
 const PageRenderer: React.FC<PageRendererProps> = ({
 	children,
+	className,
 	error,
 	isLoading,
 }) => {
@@ -35,7 +37,7 @@ const PageRenderer: React.FC<PageRendererProps> = ({
 		);
 	}
 
-	return children;
+	return <div className={className}>{children}</div>;
 };
 
 type PageProps = {

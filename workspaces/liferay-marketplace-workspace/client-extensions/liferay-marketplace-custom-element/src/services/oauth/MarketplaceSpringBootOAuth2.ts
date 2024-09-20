@@ -84,6 +84,14 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		);
 	}
 
+	async getAnalyticsProject(projectId: string): Promise<AnalyticsProject> {
+		const response = await this.oAuth2Client.fetch(
+			`/analytics/project/${projectId}`
+		);
+
+		return response.json() as Promise<AnalyticsProject>;
+	}
+
 	async getAnalyticsPages(
 		searchParams: URLSearchParams = new URLSearchParams()
 	): Promise<AnalyticsViews> {
@@ -92,6 +100,21 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		);
 
 		return response.json() as Promise<AnalyticsViews>;
+	}
+
+	async provisioningAnalyticsCloud(
+		orderId: number,
+		data: unknown
+	): Promise<{groupId: number}> {
+		const response = await this.oAuth2Client.fetch(
+			`/analytics/provisioning/${orderId}`,
+			{
+				body: JSON.stringify(data),
+				method: 'POST',
+			}
+		);
+
+		return response.json();
 	}
 
 	async provisioningCloudApp(

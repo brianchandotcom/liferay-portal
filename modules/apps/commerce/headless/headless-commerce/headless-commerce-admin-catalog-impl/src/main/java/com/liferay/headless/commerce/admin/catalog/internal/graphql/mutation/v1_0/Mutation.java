@@ -2150,6 +2150,40 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteProductSpecificationByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productSpecificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productSpecificationResource ->
+				productSpecificationResource.
+					deleteProductSpecificationByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public ProductSpecification
+			patchProductSpecificationByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("productSpecification") ProductSpecification
+					productSpecification)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productSpecificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productSpecificationResource ->
+				productSpecificationResource.
+					patchProductSpecificationByExternalReferenceCode(
+						externalReferenceCode, productSpecification));
+	}
+
+	@GraphQLField
 	public boolean deleteProductSpecification(@GraphQLName("id") Long id)
 		throws Exception {
 

@@ -900,6 +900,16 @@ public class ServletDataImpl implements ServletData {
 							ProductShippingConfigurationResourceImpl.class,
 							"patchProductIdShippingConfiguration"));
 					put(
+						"mutation#deleteProductSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"deleteProductSpecificationByExternalReferenceCode"));
+					put(
+						"mutation#patchProductSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"patchProductSpecificationByExternalReferenceCode"));
+					put(
 						"mutation#deleteProductSpecification",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -1431,6 +1441,11 @@ public class ServletDataImpl implements ServletData {
 							ProductShippingConfigurationResourceImpl.class,
 							"getProductIdShippingConfiguration"));
 					put(
+						"query#productSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"getProductSpecificationByExternalReferenceCode"));
+					put(
 						"query#productSpecification",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -1671,6 +1686,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductShippingConfigurationResourceImpl.class,
 							"getProductByExternalReferenceCodeShippingConfiguration"));
+					put(
+						"query#Attachment.productSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"getProductSpecificationByExternalReferenceCode"));
 					put(
 						"query#Attachment.skuByExternalReferenceCode",
 						new ObjectValuePair<>(

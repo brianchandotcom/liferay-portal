@@ -1605,7 +1605,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productSpecification(id: ___){id, key, label, optionCategoryExternalReferenceCode, optionCategoryId, priority, productId, specificationExternalReferenceCode, specificationId, specificationKey, specificationPriority, value}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productSpecificationByExternalReferenceCode(externalReferenceCode: ___){externalReferenceCode, id, key, label, optionCategoryExternalReferenceCode, optionCategoryId, priority, productId, specificationExternalReferenceCode, specificationId, specificationKey, specificationPriority, value}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ProductSpecification productSpecificationByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productSpecificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productSpecificationResource ->
+				productSpecificationResource.
+					getProductSpecificationByExternalReferenceCode(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productSpecification(id: ___){externalReferenceCode, id, key, label, optionCategoryExternalReferenceCode, optionCategoryId, priority, productId, specificationExternalReferenceCode, specificationId, specificationKey, specificationPriority, value}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ProductSpecification productSpecification(@GraphQLName("id") Long id)
@@ -2679,6 +2698,33 @@ public class Query {
 				productShippingConfigurationResource ->
 					productShippingConfigurationResource.
 						getProductByExternalReferenceCodeShippingConfiguration(
+							_attachment.getExternalReferenceCode()));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductSpecificationByExternalReferenceCodeTypeExtension {
+
+		public GetProductSpecificationByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductSpecification
+				productSpecificationByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productSpecificationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productSpecificationResource ->
+					productSpecificationResource.
+						getProductSpecificationByExternalReferenceCode(
 							_attachment.getExternalReferenceCode()));
 		}
 

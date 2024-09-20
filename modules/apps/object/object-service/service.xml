@@ -1032,6 +1032,7 @@
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>DuplicateObjectRelationshipExternalReferenceCode</exception>
 		<exception>LockedObjectAction</exception>
+		<exception>ObjectActionActive</exception>
 		<exception>ObjectActionConditionExpression</exception>
 		<exception>ObjectActionErrorMessage</exception>
 		<exception>ObjectActionExecutorKey</exception>

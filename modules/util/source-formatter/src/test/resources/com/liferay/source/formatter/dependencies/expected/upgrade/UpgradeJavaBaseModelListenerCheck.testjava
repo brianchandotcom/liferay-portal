@@ -8,8 +8,42 @@ package com.liferay.source.formatter.dependencies.upgrade;
 public class UpgradeJavaBaseModelListenerCheck extends BaseModelListener<t> {
 
 	@Override
+	public void onAfterCreate(t model) {
+		super.onAfterCreate(model);
+	}
+
+	@Override
+	public void onAfterCreate(t model) {
+		t originalModel = (t)model.clone();
+
+		super.onAfterUpdate(originalModel, model);
+	}
+
+	@Override
+	public void onAfterRemove(t model) {
+		super.onAfterRemove(model);
+	}
+
+	@Override
+	public void onAfterRemove(t model) {
+		t originalModel = (t)model.clone();
+
+		super.onBeforeUpdate(originalModel, model);
+	}
+
+	@Override
+	public void onAfterUpdate(t originalModel, t model) {
+		super.onAfterCreate(model);
+	}
+
+	@Override
 	public void onAfterUpdate(t originalModel, t model) {
 		super.onAfterUpdate(originalModel, model);
+	}
+
+	@Override
+	public void onBeforeUpdate(t originalModel, t model) {
+		super.onAfterRemove(model);
 	}
 
 	@Override

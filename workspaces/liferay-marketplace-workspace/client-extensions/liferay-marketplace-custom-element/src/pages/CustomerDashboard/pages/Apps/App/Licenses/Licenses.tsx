@@ -84,7 +84,7 @@ const Licenses = () => {
 					})
 				);
 			}
-			catch (error) {
+			catch {
 				return {
 					items: [],
 					totalCount: 0,

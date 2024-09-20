@@ -13,6 +13,24 @@ type Sidebar = {
 	items: any[];
 };
 
+const getIcon = ({
+	checked,
+	selected,
+}: {
+	checked: boolean;
+	selected: boolean;
+}) => {
+	if (checked) {
+		return 'check';
+	}
+
+	if (selected) {
+		return 'radio-button';
+	}
+
+	return 'circle';
+};
+
 const Sidebar: React.FC<Sidebar> = ({activeIndex, items}) => (
 	<ul className="app-flow-list-container app-flow-list-ul pt-6">
 		{items.map(({hide, label}, index) => {
@@ -23,26 +41,10 @@ const Sidebar: React.FC<Sidebar> = ({activeIndex, items}) => (
 			const checked = index < activeIndex;
 			const selected = activeIndex === index;
 
-			const getIcon = () => {
-				if (checked) {
-					return 'check';
-				}
-
-				if (selected) {
-					return 'radio-button';
-				}
-
-				return 'circle';
-			};
-
 			return (
 				<div className="app-flow-list-item-container" key={index}>
 					<ClayIcon
-						aria-label={
-							'check fill' ?? selected
-								? 'radio selected'
-								: 'circle fill'
-						}
+						aria-label={selected ? 'radio selected' : 'circle fill'}
 						className={classNames(
 							'app-flow-list-item-icon text-muted',
 							{
@@ -50,7 +52,7 @@ const Sidebar: React.FC<Sidebar> = ({activeIndex, items}) => (
 								'app-flow-list-item-icon-selected': selected,
 							}
 						)}
-						symbol={getIcon()}
+						symbol={getIcon({checked, selected})}
 					/>
 
 					<li

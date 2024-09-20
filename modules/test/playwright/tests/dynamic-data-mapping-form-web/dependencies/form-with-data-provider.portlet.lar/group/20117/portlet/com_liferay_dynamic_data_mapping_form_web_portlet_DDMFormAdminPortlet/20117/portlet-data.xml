@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<DDMFormAdminPortletDataHandler self-path="/group/20117/portlet/com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet/20117/portlet-data.xml">
+	<DDMDataProviderInstance>
+		<staged-model group-id="20117" uuid="6167053c-f280-f411-a5f4-674111f6d558" path="/group/20117/com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance/35152.xml" user-uuid="f7e59e0b-5e58-a6a2-9cf4-968fa16a701c" asset-entry-priority="0.0"/>
+	</DDMDataProviderInstance>
+	<DDMFormInstance>
+		<staged-model group-id="20117" uuid="f35ca609-e7a8-6653-84bd-4a5f95e4d429" settings-ddm-form-values-path="/group/20117/com.liferay.dynamic.data.mapping.model.DDMFormInstance/35158/settings-ddm-form-values.json" path="/group/20117/com.liferay.dynamic.data.mapping.model.DDMFormInstance/35158.xml" user-uuid="f7e59e0b-5e58-a6a2-9cf4-968fa16a701c" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="35153" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMFormInstance" group-id="20117" group-key="Guest" live-group-id="20117" type="strong" uuid="b31414d0-1c50-67ad-2266-1e1887c7c2d2" company-id="75987013140939" preloaded="false" referenced-class-name="com.liferay.dynamic.data.mapping.model.DDMFormInstance" structure-key="34065" missing="false"/>
+			</references>
+		</staged-model>
+	</DDMFormInstance>
+	<DDMStructure>
+		<staged-model group-id="20117" uuid="b31414d0-1c50-67ad-2266-1e1887c7c2d2" ddm-form-path="/group/20117/com.liferay.dynamic.data.mapping.model.DDMStructure/35153/ddm-form.json" ddm-data-provider-instance-ids="35152" ddm-form-layout-path="/group/20117/com.liferay.dynamic.data.mapping.model.DDMStructure/35153/ddm-form-layout.json" path="/group/20117/com.liferay.dynamic.data.mapping.model.DDMStructure/35153.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMFormInstance" user-uuid="f7e59e0b-5e58-a6a2-9cf4-968fa16a701c" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance" class-pk="35152" group-id="20117" group-key="Guest" live-group-id="20117" type="strong" uuid="6167053c-f280-f411-a5f4-674111f6d558" company-id="75987013140939" missing="false"/>
+			</references>
+		</staged-model>
+	</DDMStructure>
+</DDMFormAdminPortletDataHandler>

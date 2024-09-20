@@ -360,6 +360,14 @@ export class PageEditorPage {
 			.waitFor({state: 'hidden'});
 	}
 
+	async copyFragment(fragmentId: string) {
+		await this.selectFragment(fragmentId);
+
+		await this.page.keyboard.press('Shift+Control+C');
+
+		await this.waitForChangesSaved();
+	}
+
 	async createExperience(name: string) {
 		await this.openExperienceSelector();
 
@@ -384,6 +392,14 @@ export class PageEditorPage {
 			'Success:The experience was created successfully.',
 			{autoClose: false}
 		);
+	}
+
+	async cutFragment(fragmentId: string) {
+		await this.selectFragment(fragmentId);
+
+		await this.page.keyboard.press('Shift+Control+X');
+
+		await this.waitForChangesSaved();
 	}
 
 	async deleteExperience(name: string) {
@@ -780,6 +796,14 @@ export class PageEditorPage {
 		await this.page
 			.getByRole('menuitem', {exact: true, name: 'Configuration'})
 			.click();
+	}
+
+	async pasteFragment(fragmentId: string) {
+		await this.selectFragment(fragmentId);
+
+		await this.page.keyboard.press('Shift+Control+V');
+
+		await this.waitForChangesSaved();
 	}
 
 	async publishPage() {

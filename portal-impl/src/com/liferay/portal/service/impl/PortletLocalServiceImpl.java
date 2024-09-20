@@ -192,10 +192,37 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	public void checkPortlet(Portlet portlet) throws PortalException {
 		_resourcePermissionLocalService.initPortletDefaultPermissions(portlet);
-		_resourcePermissionLocalService.initDefaultModelResourcePermissions(
-			portlet.getCompanyId(),
+
+		List<String> modelResources =
 			ResourceActionsUtil.getPortletModelResources(
-				portlet.getRootPortletId()));
+				portlet.getRootPortletId());
+
+		if (!modelResources.isEmpty()) {
+			_companyDefaultModelResources.compute(
+				portlet.getCompanyId(),
+				(key, value) -> {
+					if (value == null) {
+						value = new HashSet<>();
+					}
+
+					Set<String> intersect = SetUtil.intersect(
+						modelResources, value);
+
+					if (!intersect.isEmpty()) {
+						modelResources.removeAll(intersect);
+					}
+
+					value.addAll(modelResources);
+
+					return value;
+				});
+
+			if (!modelResources.isEmpty()) {
+				_resourcePermissionLocalService.
+					initDefaultModelResourcePermissions(
+						portlet.getCompanyId(), modelResources);
+			}
+		}
 
 		initPortletAddToPagePermissions(portlet);
 	}
@@ -2870,6 +2897,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private static final Map<String, Portlet> _portletsMap =
 		new ConcurrentHashMap<>();
 	private static final Map<Long, Map<String, Portlet>> _portletsMaps =
+		new ConcurrentHashMap<>();
+
+	private final Map<Long, Set<String>> _companyDefaultModelResources =
 		new ConcurrentHashMap<>();
 
 	@BeanReference(type = CompanyLocalService.class)

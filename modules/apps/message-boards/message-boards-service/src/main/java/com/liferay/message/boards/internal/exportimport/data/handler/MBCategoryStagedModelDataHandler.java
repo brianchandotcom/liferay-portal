@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -152,15 +151,8 @@ public class MBCategoryStagedModelDataHandler
 		MBCategory importedCategory = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			MBCategory existingCategory =
-				_fetchMBCategoryByExternalReferenceCode(
-					category.getExternalReferenceCode(),
-					portletDataContext.getScopeGroupId());
-
-			if (existingCategory == null) {
-				existingCategory = fetchStagedModelByUuidAndGroupId(
-					category.getUuid(), portletDataContext.getScopeGroupId());
-			}
+			MBCategory existingCategory = _fetchStagedModel(
+				category, portletDataContext.getScopeGroupId());
 
 			if (existingCategory == null) {
 				serviceContext.setUuid(category.getUuid());
@@ -221,31 +213,18 @@ public class MBCategoryStagedModelDataHandler
 		}
 	}
 
-	private MBCategory _fetchMBCategoryByExternalReferenceCode(
-		String externalReferenceCode, long groupId) {
-
-		MBCategory mbCategory =
-			_mbCategoryLocalService.fetchMBCategoryByExternalReferenceCode(
-				externalReferenceCode, groupId);
-
-		if (mbCategory == null) {
+	private MBCategory _fetchStagedModel(MBCategory category, long groupId) {
+		try {
+			return _mbCategoryLocalService.getMBCategoryByExternalReferenceCode(
+				category.getExternalReferenceCode(), groupId);
+		}
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("No MBCategory exists with the key {");
-				sb.append("externalReferenceCode=");
-				sb.append(externalReferenceCode);
-				sb.append(", groupId=");
-				sb.append(groupId);
-				sb.append("}");
-
-				_log.debug(sb.toString());
+				_log.debug(portalException);
 			}
-
-			return null;
 		}
 
-		return mbCategory;
+		return fetchStagedModelByUuidAndGroupId(category.getUuid(), groupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -701,8 +701,8 @@ function computeHover({
 			droppable: checkAllowedChild(
 				sourceItem,
 				targetItem,
-				layoutDataRef,
-				fragmentEntryLinksRef
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
 			),
 			elevate: null,
 			targetPositionWithMiddle,
@@ -722,8 +722,8 @@ function computeHover({
 			droppable: checkAllowedChild(
 				sourceItem,
 				targetItem,
-				layoutDataRef,
-				fragmentEntryLinksRef
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
 			),
 			elevate: true,
 			targetPositionWithMiddle,

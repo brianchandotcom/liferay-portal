@@ -42,6 +42,7 @@ import {CardSelectors, SegmentConditions} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
 import {
+	searchByTerm,
 	viewNameNotPresentOnTableList,
 	viewNameOnTableList,
 } from './utils/utils';
@@ -1105,6 +1106,68 @@ test(
 			await expect(page.getByText(pageTitle2).first()).toBeVisible();
 
 			await expect(page.getByText('Drop Offs')).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Search for a Page in Pages list by its canonical URL',
+	{
+		tag: '@LRAC-14794',
+	},
+
+	async ({apiHelpers, page}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await test.step('Sign in with the new user to visit the site pages', async () => {
+			await performLogout(page);
+			await performLogin(page, user.alternateName);
+
+			const siteNameURL = siteName.replace(/ /g, '-').toLowerCase();
+
+			await page.goto(
+				`${liferayConfig.environment.baseUrl}/web/${siteNameURL}`
+			);
+			await page.reload();
+			await page.waitForTimeout(10000);
+		});
+
+		const href = page.url();
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Assert the page list', async () => {
+			await searchByTerm({page, searchTerm: href});
+
+			await expect(
+				page.getByRole('link', {name: `${pageTitle} - ${siteName}`})
+			).toBeVisible();
 		});
 	}
 );

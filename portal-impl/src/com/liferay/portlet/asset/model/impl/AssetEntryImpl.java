@@ -31,7 +31,7 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 	@Override
 	public AssetRenderer<?> getAssetRenderer() {
 		if (DeletedAssetObjectThreadLocal.isDeletedAssetObject(
-				getClassName(), getClassPK())) {
+				getClassNameId(), getClassPK())) {
 
 			return null;
 		}

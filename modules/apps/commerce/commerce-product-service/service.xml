@@ -633,7 +633,7 @@
 			<finder-column name="preselected" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPDefinitionSpecificationOptionValue" remote-service="true" table="CPDSpecificationOptionValue" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="CPDefinitionSpecificationOptionValue" remote-service="true" table="CPDSpecificationOptionValue" uuid="true">
 
 		<!-- PK fields -->
 

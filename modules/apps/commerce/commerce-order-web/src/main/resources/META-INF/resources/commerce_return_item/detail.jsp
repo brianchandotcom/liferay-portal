@@ -17,6 +17,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 
 <aui:form name="commerceReturnItemsFm" onSubmit="event.preventDefault();">
 	<aui:input name="commerceReturnItemId" type="hidden" value="<%= commerceReturnEditDisplayContext.getCommerceReturnItemId() %>" />
+	<aui:input name="commerceReturnStatus" type="hidden" value="<%= commerceReturn.getReturnStatus() %>" />
 
 	<commerce-ui:panel
 		title='<%= LanguageUtil.get(request, "details") %>'
@@ -193,7 +194,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 	</commerce-ui:panel>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" disabled="<%= ArrayUtil.contains(CommerceReturnConstants.RETURN_STATUSES_LATEST, commerceReturn.getReturnStatus()) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" type="submit" value="save" />
+		<aui:button cssClass="btn-lg" type="submit" value="save" />
 
 		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>

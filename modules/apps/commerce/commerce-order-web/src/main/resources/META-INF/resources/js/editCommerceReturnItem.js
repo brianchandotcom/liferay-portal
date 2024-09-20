@@ -42,6 +42,9 @@ export default function ({
 		const returnResolutionMethod = form.querySelector(
 			`#${namespace}returnResolutionMethod`
 		).value;
+		const commerceReturnStatus = form.querySelector(
+			`#${namespace}commerceReturnStatus`
+		).value;
 
 		const returnItemData = {
 			authorizeReturnWithoutReturningProducts,
@@ -61,6 +64,22 @@ export default function ({
 						'an-unexpected-error-occurred'
 					),
 					type: 'danger',
+				});
+
+				return;
+			}
+
+			if (
+				commerceReturnStatus === 'completed' ||
+				commerceReturnStatus === 'rejected'
+			) {
+				window.location.reload();
+
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
 				});
 
 				return;
@@ -115,7 +134,10 @@ export default function ({
 				updateReturnItem
 			);
 		}
-		else {
+		else if (
+			commerceReturnStatus !== 'completed' &&
+			commerceReturnStatus !== 'rejected'
+		) {
 			CommerceReturnItemResource.updateItemById(
 				commerceReturnItemId,
 				returnItemData

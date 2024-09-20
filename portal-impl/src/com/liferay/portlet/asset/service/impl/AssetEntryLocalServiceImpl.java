@@ -151,7 +151,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 				try (SafeCloseable safeCloseable =
 						DeletedAssetObjectThreadLocal.setWithSafeCloseable(
-							assetEntry.getClassName(),
+							assetEntry.getClassNameId(),
 							assetEntry.getClassPK())) {
 
 					assetEntryLocalService.deleteEntry(assetEntry);

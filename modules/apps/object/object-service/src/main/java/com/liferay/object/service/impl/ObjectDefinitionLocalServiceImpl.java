@@ -15,6 +15,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.deployer.InactiveObjectDefinitionDeployer;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -93,6 +94,7 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -142,6 +144,8 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.sql.PreparedStatement;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -152,6 +156,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -551,11 +556,42 @@ public class ObjectDefinitionLocalServiceImpl
 							objectDefinition.getObjectDefinitionId()));
 				});
 
-			actionableDynamicQuery.setPerformActionMethod(
-				(ObjectEntry objectEntry) ->
-					_objectEntryLocalService.deleteObjectEntry(objectEntry));
+			AtomicBoolean deletedMarker = new AtomicBoolean();
 
-			actionableDynamicQuery.performActions();
+			actionableDynamicQuery.setPerformActionMethod(
+				(ObjectEntry objectEntry) -> {
+					deletedMarker.set(true);
+
+					_objectEntryLocalService.deleteObjectEntry(objectEntry);
+				});
+
+			try (SafeCloseable safeCloseable =
+					ObjectDefinitionThreadLocal.setDeleteObjectDefinitionId(
+						objectDefinition.getObjectDefinitionId())) {
+
+				actionableDynamicQuery.performActions();
+
+				if (deletedMarker.get()) {
+					_resourcePermissionLocalService.deleteResourcePermissions(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getClassName(),
+						ResourceConstants.SCOPE_INDIVIDUAL);
+
+					_assetEntryLocalService.deleteEntries(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getClassName());
+
+					_deleteFromTable(objectDefinition.getDBTableName());
+
+					_deleteFromTable(
+						objectDefinition.getExtensionDBTableName());
+
+					if (objectDefinition.isEnableLocalization()) {
+						_deleteFromTable(
+							objectDefinition.getLocalizationDBTableName());
+					}
+				}
+			}
 		}
 
 		for (ObjectRelationship objectRelationship :
@@ -1713,6 +1749,27 @@ public class ObjectDefinitionLocalServiceImpl
 				dynamicObjectDefinitionTable.getTableName(), false,
 				objectField.getDBColumnName());
 		}
+	}
+
+	private void _deleteFromTable(String dbTableName) throws PortalException {
+		Session session = objectDefinitionPersistence.openSession();
+
+		try {
+			session.apply(
+				connection -> {
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(
+								"delete from " + dbTableName)) {
+
+						preparedStatement.executeUpdate();
+					}
+				});
+		}
+		finally {
+			objectDefinitionPersistence.closeSession(session);
+		}
+
+		FinderCacheUtil.clearDSLQueryCache(dbTableName);
 	}
 
 	private void _deleteObjectDefinitionPLOEntries(

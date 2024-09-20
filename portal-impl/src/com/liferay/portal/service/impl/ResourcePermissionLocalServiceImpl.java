@@ -74,6 +74,8 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.lang.reflect.Field;
 
+import java.sql.PreparedStatement;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -592,6 +594,37 @@ public class ResourcePermissionLocalServiceImpl
 				sourceResourcePermission.isViewActionId());
 
 			resourcePermissionPersistence.update(targetResourcePermission);
+		}
+	}
+
+	@Override
+	public void deleteResourcePermissions(
+			long companyId, String name, int scope)
+		throws PortalException {
+
+		Session session = resourcePermissionPersistence.openSession();
+
+		try {
+			session.apply(
+				connection -> {
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(_DELETE_BY_C_N_S)) {
+
+						preparedStatement.setLong(1, companyId);
+						preparedStatement.setString(2, name);
+						preparedStatement.setInt(3, scope);
+
+						int results = preparedStatement.executeUpdate();
+
+						if (results > 0) {
+							resourcePermissionPersistence.clearCache();
+							PermissionCacheUtil.clearCache();
+						}
+					}
+				});
+		}
+		finally {
+			resourcePermissionPersistence.closeSession(session);
 		}
 	}
 
@@ -2424,6 +2457,10 @@ public class ResourcePermissionLocalServiceImpl
 
 		return null;
 	}
+
+	private static final String _DELETE_BY_C_N_S =
+		"delete from " + ResourcePermissionModelImpl.TABLE_NAME +
+			" where companyId = ? and name = ? and scope = ?";
 
 	private static final String _FIND_MISSING_RESOURCE_PERMISSIONS =
 		ResourcePermissionLocalServiceImpl.class.getName() +

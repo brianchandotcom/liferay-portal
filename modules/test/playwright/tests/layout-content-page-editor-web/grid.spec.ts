@@ -20,6 +20,7 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-18221': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),
@@ -293,4 +294,55 @@ test('Can resize a grid', async ({
 	// Check correct size is applied
 
 	await expect(page.locator('.page-editor__col.col-12')).toBeVisible();
+});
+
+test('Can cut and paste a grid inside a container', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	pageManagementSite,
+}) => {
+
+	// Create a container with a grid inside
+
+	const gridId = getRandomString();
+
+	const grid = getGridDefinition({
+		id: gridId,
+	});
+
+	const containerId = getRandomString();
+
+	const container = getContainerDefinition({
+		id: containerId,
+		pageElements: [grid],
+	});
+
+	// Create page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([container]),
+		siteId: pageManagementSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+	// Cut grid and check if on paste is added properly inside the container
+
+	await expect(
+		page.locator(`.lfr-layout-structure-item-${gridId}`)
+	).toBeVisible();
+
+	await pageEditorPage.cutFragment(gridId);
+
+	await expect(
+		page.locator(`.lfr-layout-structure-item-${gridId}`)
+	).not.toBeVisible();
+
+	await pageEditorPage.pasteFragment(containerId);
+
+	const containerTopper = pageEditorPage.getTopper(containerId);
+
+	await expect(containerTopper.locator('.page-editor__row')).toHaveCount(1);
 });

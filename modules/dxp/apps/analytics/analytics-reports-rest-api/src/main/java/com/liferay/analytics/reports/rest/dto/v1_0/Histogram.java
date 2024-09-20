@@ -174,6 +174,47 @@ public class Histogram implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _totalSupplier;
 
+	@Schema
+	public Double getTotalValue() {
+		if (_totalValueSupplier != null) {
+			totalValue = _totalValueSupplier.get();
+
+			_totalValueSupplier = null;
+		}
+
+		return totalValue;
+	}
+
+	public void setTotalValue(Double totalValue) {
+		this.totalValue = totalValue;
+
+		_totalValueSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTotalValue(
+		UnsafeSupplier<Double, Exception> totalValueUnsafeSupplier) {
+
+		_totalValueSupplier = () -> {
+			try {
+				return totalValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double totalValue;
+
+	@JsonIgnore
+	private Supplier<Double> _totalValueSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -249,6 +290,18 @@ public class Histogram implements Serializable {
 			sb.append("\"total\": ");
 
 			sb.append(total);
+		}
+
+		Double totalValue = getTotalValue();
+
+		if (totalValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalValue\": ");
+
+			sb.append(totalValue);
 		}
 
 		sb.append("}");

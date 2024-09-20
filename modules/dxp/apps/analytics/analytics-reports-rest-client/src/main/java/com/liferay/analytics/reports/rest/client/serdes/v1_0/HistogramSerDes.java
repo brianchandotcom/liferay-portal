@@ -89,6 +89,16 @@ public class HistogramSerDes {
 			sb.append(histogram.getTotal());
 		}
 
+		if (histogram.getTotalValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalValue\": ");
+
+			sb.append(histogram.getTotalValue());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -128,6 +138,13 @@ public class HistogramSerDes {
 			map.put("total", String.valueOf(histogram.getTotal()));
 		}
 
+		if (histogram.getTotalValue() == null) {
+			map.put("totalValue", null);
+		}
+		else {
+			map.put("totalValue", String.valueOf(histogram.getTotalValue()));
+		}
+
 		return map;
 	}
 
@@ -152,6 +169,9 @@ public class HistogramSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "total")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalValue")) {
 				return false;
 			}
 
@@ -187,6 +207,12 @@ public class HistogramSerDes {
 			else if (Objects.equals(jsonParserFieldName, "total")) {
 				if (jsonParserFieldValue != null) {
 					histogram.setTotal(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalValue")) {
+				if (jsonParserFieldValue != null) {
+					histogram.setTotalValue(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}

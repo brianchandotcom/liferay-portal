@@ -88,6 +88,27 @@ public class Histogram implements Cloneable, Serializable {
 
 	protected Double total;
 
+	public Double getTotalValue() {
+		return totalValue;
+	}
+
+	public void setTotalValue(Double totalValue) {
+		this.totalValue = totalValue;
+	}
+
+	public void setTotalValue(
+		UnsafeSupplier<Double, Exception> totalValueUnsafeSupplier) {
+
+		try {
+			totalValue = totalValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double totalValue;
+
 	@Override
 	public Histogram clone() throws CloneNotSupportedException {
 		return (Histogram)super.clone();

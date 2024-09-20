@@ -6,19 +6,29 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	loginTest(),
-	fragmentsPagesTest
+	fragmentsPagesTest,
+	pageEditorPagesTest,
+	pageManagementSiteTest
 );
 
 async function checkBackButtonTitle(page: Page, title: string) {
@@ -280,11 +290,18 @@ test(
 	{
 		tag: '@LPD-10727',
 	},
-	async ({fragmentEditorPage, fragmentsPage, page, site}) => {
+	async ({
+		apiHelpers,
+		fragmentEditorPage,
+		fragmentsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
 		// Go to fragment administration
 
-		await fragmentsPage.goto(site.friendlyUrlPath);
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
 		// Create a form button fragment
 
@@ -300,6 +317,12 @@ test(
 			'form',
 			['Form Button']
 		);
+
+		await fragmentEditorPage.addHTML(` 
+			<button class="btn btn-sm" data-lfr-editable-id="submit-button-text" data-lfr-editable-type="text" id="fragment-submit-button" type="submit">
+				Custom Submit
+			</button>	
+		`);
 
 		await fragmentEditorPage.publish();
 
@@ -325,7 +348,7 @@ test(
 
 		const siteLink = frameLocator
 			.locator('.nav-link')
-			.filter({hasText: site.name});
+			.filter({hasText: pageManagementSite.name});
 
 		const fragmentSetCard = frameLocator
 			.locator('.card-horizontal')
@@ -362,5 +385,30 @@ test(
 			.locator('input');
 
 		await expect(fragmentInput).toHaveValue(fragmentName);
+
+		// Create a page
+
+		const formId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFormContainerDefinition({
+					id: formId,
+				}),
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Check that the custom button is used
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+			'Lemon Size',
+			'Lemon Basket to Lemons',
+		]);
+
+		await expect(page.getByText('Custom Submit')).toBeVisible();
 	}
 );

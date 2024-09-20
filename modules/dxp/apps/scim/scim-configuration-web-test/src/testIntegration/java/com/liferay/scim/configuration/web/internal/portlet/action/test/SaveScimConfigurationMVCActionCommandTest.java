@@ -59,9 +59,11 @@ public class SaveScimConfigurationMVCActionCommandTest {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
+		_user = UserTestUtil.addCompanyAdminUser(company);
+
 		User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
 
-		_user = UserTestUtil.addCompanyAdminUser(company);
+		String oAuth2ApplicationName = RandomTestUtil.randomString();
 
 		String pid = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.scim.rest.internal.configuration." +
@@ -71,14 +73,14 @@ public class SaveScimConfigurationMVCActionCommandTest {
 			).put(
 				"matcherField", "email"
 			).put(
-				"oAuth2ApplicationName", "TEST Scim client"
+				"oAuth2ApplicationName", oAuth2ApplicationName
 			).put(
 				"userId", _user.getUserId()
 			).build());
 
 		try {
 			String scimClientId = ScimClientUtil.generateScimClientId(
-				"TEST Scim client");
+				oAuth2ApplicationName);
 
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
@@ -95,9 +97,8 @@ public class SaveScimConfigurationMVCActionCommandTest {
 
 			mockLiferayPortletActionRequest.addParameter(
 				Constants.CMD, "generate");
-
 			mockLiferayPortletActionRequest.addParameter(
-				"oAuth2ApplicationName", "TEST Scim client");
+				"oAuth2ApplicationName", oAuth2ApplicationName);
 
 			ThemeDisplay themeDisplay = new ThemeDisplay();
 

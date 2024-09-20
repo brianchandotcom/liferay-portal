@@ -14,6 +14,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -110,14 +111,12 @@ test.beforeEach(async ({apiHelpers, page}) => {
 });
 
 test.afterEach(async ({apiHelpers, page}) => {
-	await test.step('Delete channel', async () => {
+	await test.step('Delete channel and delete site on de DXP side', async () => {
 		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 			`[${channel.id}]`,
 			project.groupId
 		);
-	});
 
-	await test.step('Delete site on DXP side', async () => {
 		await page.goto(liferayConfig.environment.baseUrl);
 
 		await apiHelpers.headlessSite.deleteSite(String(site.id));
@@ -342,6 +341,97 @@ test(
 					.locator('[id="container\\.report\\.audienceCard"]')
 					.getByText('1')
 					.nth(1)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Assert the pages list shows a list of pages',
+	{
+		tag: '@Legacy',
+	},
+
+	async ({apiHelpers, page}) => {
+		const pageTitle1 = 'My Page 1';
+		const pageTitle2 = 'My Page 2';
+
+		await createSitePage({
+			apiHelpers,
+			pageTitle: pageTitle1,
+			siteName,
+		});
+
+		await createSitePage({
+			apiHelpers,
+			pageTitle: pageTitle2,
+			siteName,
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const pageTitle3 = 'My Page';
+
+		await test.step('Sign in with the new user to visit the site pages', async () => {
+			await performLogout(page);
+			await performLogin(page, user.alternateName);
+
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle3,
+				siteName,
+			});
+			await page.reload();
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to My Page 2', async () => {
+			await page.getByText(pageTitle1, {exact: true}).click();
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to My Page 3', async () => {
+			await page.getByText(pageTitle2, {exact: true}).click();
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Assert the page list', async () => {
+			await expect(
+				page.getByRole('link', {name: `${pageTitle3} - ${siteName}`})
+			).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: `${pageTitle1} - ${siteName}`})
+			).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: `${pageTitle2} - ${siteName}`})
 			).toBeVisible();
 		});
 	}

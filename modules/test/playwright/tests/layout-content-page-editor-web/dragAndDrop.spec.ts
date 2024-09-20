@@ -20,6 +20,7 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-18221': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),
@@ -141,3 +142,65 @@ test('checks that the drag target and drop target have the correct classes when 
 
 	expect(dropTarget.locator('[data-name="Heading"]')).toBeVisible();
 });
+
+test(
+	'Check that multiple items can be dragged at once',
+	{
+		tag: '@LPD-30901',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const buttonId = getRandomString();
+		const buttonDefinition = getFragmentDefinition({
+			id: buttonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const containerDefinition = getContainerDefinition({
+			id: getRandomString(),
+			pageElements: [],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				buttonDefinition,
+				headingDefinition,
+				containerDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode of page and select multiple fragments
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectFragment(headingId);
+
+		await page.keyboard.down('Control');
+
+		await pageEditorPage.selectFragment(buttonId);
+
+		await page.keyboard.up('Control');
+
+		// Move multiple fragments into the container
+
+		const dropTarget = page.locator('[data-name="Container"]');
+
+		await dragAndDropElement({
+			dragTarget: page.locator('[data-name="Button"]'),
+			dropTarget,
+			page,
+		});
+
+		// Check that the fragment have been moved
+
+		expect(dropTarget.locator('[data-name="Heading"]')).toBeVisible();
+		expect(dropTarget.locator('[data-name="Button"]')).toBeVisible();
+	}
+);

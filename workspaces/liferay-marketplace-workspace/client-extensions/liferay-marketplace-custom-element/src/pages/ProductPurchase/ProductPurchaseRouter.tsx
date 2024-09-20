@@ -5,6 +5,7 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {
 	PRODUCT_SPECIFICATION_KEY,
 	PRODUCT_TYPE_VOCABULARY,
@@ -19,10 +20,6 @@ import ProductPurchaseOutlet from './ProductPurchaseOutlet';
 import ProductPurchaseAccountSelection from './steps/AccountSelection';
 import SolutionProvisioningForm from './steps/Solution';
 import ThankYou from './steps/ThankYou';
-
-const productId = new URLSearchParams(window.location.search).get(
-	'productId'
-) as unknown as string;
 
 const productTypeRoutes = {
 	[PRODUCT_TYPE_VOCABULARY.SOLUTION]: [
@@ -43,6 +40,19 @@ const productTypeRoutes = {
 };
 
 const ProductPurchaseRouter = () => {
+	const {
+		properties: {productId: pageProductId},
+	} = useMarketplaceContext();
+
+	// The productId that comes from the property can be used to hide the productId
+	// search param is some places
+
+	const productId =
+		pageProductId ||
+		(new URLSearchParams(window.location.search).get(
+			'productId'
+		) as unknown as string);
+
 	const {data: product, isLoading} = useDeliveryProduct(productId);
 
 	if (isLoading) {

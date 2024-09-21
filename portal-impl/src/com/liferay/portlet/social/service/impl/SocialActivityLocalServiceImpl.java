@@ -49,6 +49,7 @@ import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersis
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -1178,11 +1179,10 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		String className = PortalUtil.getClassName(classNameId);
-
-		if (!className.equals(User.class.getName()) &&
-			!DeletedAssetEntryThreadLocal.isDeletedAssetEntry(
-				classNameId, classPK)) {
+		if (!DeletedAssetEntryThreadLocal.isDeletedAssetEntry(
+				classNameId, classPK) &&
+			!Objects.equals(
+				User.class.getName(), PortalUtil.getClassName(classNameId))) {
 
 			_socialActivityCounterLocalService.deleteActivityCounters(
 				classNameId, classPK);

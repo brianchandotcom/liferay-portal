@@ -548,6 +548,61 @@ test(
 );
 
 test(
+	'Preview current experience in a new tab',
+	{
+		tag: '@LPS-153367',
+	},
+	async ({apiHelpers, context, page, pageEditorPage, site}) => {
+
+		// Create a page with a Heading fragment and go to edit mode
+
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Create new experience and check it's the last one and inactive
+
+		await pageEditorPage.createExperience('E1');
+
+		// Edit heading text in E1 experience
+
+		await pageEditorPage.editTextEditable(
+			headingId,
+			'element-text',
+			'E1 Text'
+		);
+
+		// Preview experience in a new tab
+
+		const pagePromise = context.waitForEvent('page');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Preview in a New Tab',
+			}),
+			trigger: page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		const newPage = await pagePromise;
+
+		await expect(newPage.getByText('E1 Text')).toBeAttached();
+	}
+);
+
+test(
 	'Users without edit segments entry permissions cannot create new segments',
 	{
 		tag: '@LPS-90588',

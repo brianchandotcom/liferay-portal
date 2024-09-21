@@ -15,6 +15,7 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstanceResource;
 import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.util.MarketplaceConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
@@ -83,12 +84,14 @@ public class TrialRestController extends BaseRestController {
 
 	@PostMapping("expire/{orderId}")
 	public void postExpire(@PathVariable long orderId) throws Exception {
-		_marketplaceService.updateOrder(null, orderId, _ORDER_STATUS_PENDING);
+		_marketplaceService.updateOrder(
+			null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
 
 		_marketplaceService.updateOrder(
-			null, orderId, _ORDER_STATUS_PROCESSING);
+			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
-		_marketplaceService.updateOrder(null, orderId, _ORDER_STATUS_COMPLETED);
+		_marketplaceService.updateOrder(
+			null, orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED);
 
 		delete(orderId);
 
@@ -155,7 +158,7 @@ public class TrialRestController extends BaseRestController {
 			_log.error("Order is on hold");
 
 			_marketplaceService.updateOrder(
-				null, orderId, _ORDER_STATUS_ON_HOLD);
+				null, orderId, MarketplaceConstants.ORDER_STATUS_ON_HOLD);
 
 			return;
 		}
@@ -164,14 +167,14 @@ public class TrialRestController extends BaseRestController {
 			"modelDTOOrder");
 
 		if (modelDTOOrderJSONObject.getInt("orderStatus") ==
-				_ORDER_STATUS_OPEN) {
+				MarketplaceConstants.ORDER_STATUS_OPEN) {
 
 			_marketplaceService.updateOrder(
-				null, orderId, _ORDER_STATUS_PENDING);
+				null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
 		}
 
 		_marketplaceService.updateOrder(
-			null, orderId, _ORDER_STATUS_PROCESSING);
+			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
@@ -200,7 +203,7 @@ public class TrialRestController extends BaseRestController {
 				).put(
 					"trial-virtualhost", portalInstance.getVirtualHost()
 				).build(),
-				orderId, _ORDER_STATUS_CANCELLED);
+				orderId, MarketplaceConstants.ORDER_STATUS_CANCELLED);
 
 			return;
 		}
@@ -223,7 +226,7 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"trial-virtualhost", portalInstance.getVirtualHost()
 			).build(),
-			orderId, _ORDER_STATUS_IN_PROGRESS);
+			orderId, MarketplaceConstants.ORDER_STATUS_IN_PROGRESS);
 
 		_postNotificationQueueEntry(
 			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
@@ -474,20 +477,6 @@ public class TrialRestController extends BaseRestController {
 
 		return string;
 	}
-
-	private static final int _ORDER_STATUS_CANCELLED = 8;
-
-	private static final int _ORDER_STATUS_COMPLETED = 0;
-
-	private static final int _ORDER_STATUS_IN_PROGRESS = 6;
-
-	private static final int _ORDER_STATUS_ON_HOLD = 20;
-
-	private static final int _ORDER_STATUS_OPEN = 2;
-
-	private static final int _ORDER_STATUS_PENDING = 1;
-
-	private static final int _ORDER_STATUS_PROCESSING = 10;
 
 	private static final int _TRIAL_MAX_INSTANCES = GetterUtil.getInteger(
 		System.getenv(

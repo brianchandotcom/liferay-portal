@@ -14,6 +14,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.util.MarketplaceConstants;
 
 import java.util.Map;
 import java.util.Objects;
@@ -54,7 +55,7 @@ public class MarketplaceRestController extends BaseRestController {
 			"commerceOrder");
 
 		if (commerceOrderJSONObject.getInt("paymentStatus") !=
-				_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED) {
+				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -70,7 +71,7 @@ public class MarketplaceRestController extends BaseRestController {
 			commerceOrderJSONObject.getLong("id"));
 
 		_marketplaceService.updateOrder(
-			null, order.getId(), _COMMERCE_ORDER_STATUS_PROCESSING);
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
 		Page<OrderItem> orderItemPage =
 			_marketplaceService.getOrderItemResource(
@@ -123,7 +124,8 @@ public class MarketplaceRestController extends BaseRestController {
 		customFields.put("cloud-provisioning", jsonArray.toString());
 
 		_marketplaceService.updateOrder(
-			customFields, order.getId(), _COMMERCE_ORDER_STATUS_COMPLETED);
+			customFields, order.getId(),
+			MarketplaceConstants.ORDER_STATUS_COMPLETED);
 	}
 
 	private void _setUpDxpProductPurchase(
@@ -143,7 +145,8 @@ public class MarketplaceRestController extends BaseRestController {
 				productSpecificationsMap.get("price-model"), "Free")) {
 
 			_marketplaceService.updateOrder(
-				null, order.getId(), _COMMERCE_ORDER_STATUS_COMPLETED);
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 
 			return;
 		}
@@ -176,18 +179,13 @@ public class MarketplaceRestController extends BaseRestController {
 			}
 
 			_marketplaceService.updateOrder(
-				null, order.getId(), _COMMERCE_ORDER_STATUS_COMPLETED);
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to create account product purchase", exception);
 		}
 	}
-
-	private static final int _COMMERCE_ORDER_STATUS_COMPLETED = 0;
-
-	private static final int _COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED = 0;
-
-	private static final int _COMMERCE_ORDER_STATUS_PROCESSING = 10;
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceRestController.class);

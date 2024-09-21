@@ -24,7 +24,7 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("test.properties")) {
+		if (!fileName.endsWith("/test.properties")) {
 			return content;
 		}
 

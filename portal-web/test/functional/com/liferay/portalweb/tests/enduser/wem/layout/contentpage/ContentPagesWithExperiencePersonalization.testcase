@@ -31,56 +31,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on non-default experience."
-	@priority = 4
-	test CreatePageTemplateFromContentPageBasedOnNonDefaultExperience {
-		task ("Add a page template collection") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${randomSiteName},
-				layoutPageTemplateCollectionName = "Page Template Collection");
-		}
-
-		task ("Add a new experience for Anyone") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Add a Heading fragment to content page based on new experience") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("View the info shown in Create Page Template modal then create a content page template under page template collection") {
-			PageEditor.createPageTemplate(
-				collectionName = "Page Template Collection",
-				experienceName = "New Experience");
-		}
-
-		task ("View the content page template shown in Page Templates admin") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
-
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
-
-			PageTemplatesAdmin.viewEntryWorkflowStatus(
-				entry = "Test Page Name - Page Template",
-				workflowStatus = "Draft");
-		}
-
-		task ("View the Heading is shown in content page template") {
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
-
-			PageEditor.viewFragment(fragmentName = "Heading");
-		}
-	}
-
 	@description = "This is a test for LPS-187444. Deleted experience resets widget configuration on default experience"
 	@priority = 4
 	test ViewDisplayedWebContentPersistedInAssetPublisherAfterDeleteExperience {

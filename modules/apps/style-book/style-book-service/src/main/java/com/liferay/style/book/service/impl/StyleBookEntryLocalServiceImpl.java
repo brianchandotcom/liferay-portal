@@ -52,7 +52,7 @@ public class StyleBookEntryLocalServiceImpl
 			String externalReferenceCode, long userId, long groupId,
 			boolean defaultStyleBookEntry, String frontendTokensValues,
 			String name, String styleBookEntryKey,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, String themeId)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

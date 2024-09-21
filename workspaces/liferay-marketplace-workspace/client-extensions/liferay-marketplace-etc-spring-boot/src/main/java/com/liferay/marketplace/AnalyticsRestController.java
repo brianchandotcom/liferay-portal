@@ -6,9 +6,19 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.util.MarketplaceConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Objects;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -70,11 +80,34 @@ public class AnalyticsRestController extends BaseRestController {
 			"/o/faro/main/project/" + projectId);
 	}
 
-	@PostMapping("provisioning")
-	public String postProvisioning(@RequestBody String json) throws Exception {
+	@GetMapping("project/{projectId}/data-sources")
+	public String getProjectDataSources(
+			@RequestParam(defaultValue = "1", required = false) int cur,
+			@RequestParam(defaultValue = "20", required = false) int delta,
+			@PathVariable String projectId)
+		throws Exception {
+
+		return get(
+			"Basic " + _analyticsAuthBasic,
+			_defaultUriBuilderFactory.builder(
+			).path(
+				"/o/faro/contacts/" + projectId + "/data_source"
+			).queryParam(
+				"cur", cur
+			).queryParam(
+				"delta", delta
+			).build(
+			).toString());
+	}
+
+	@PostMapping("provisioning/{orderId}")
+	public String postProvisioning(
+			@PathVariable("orderId") long orderId, @RequestBody String json)
+		throws Exception {
+
 		JSONObject jsonObject = new JSONObject(json);
 
-		return WebClient.builder(
+		String project = WebClient.builder(
 		).baseUrl(
 			_analyticsAuthUrl
 		).defaultHeader(
@@ -119,12 +152,46 @@ public class AnalyticsRestController extends BaseRestController {
 		).bodyToMono(
 			String.class
 		).block();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Analytics project created for order " + orderId);
+		}
+
+		Order order = _marketplaceService.getOrder(orderId);
+
+		if (Objects.equals(
+				order.getOrderStatus(),
+				MarketplaceConstants.ORDER_STATUS_OPEN)) {
+
+			_marketplaceService.updateOrder(
+				null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
+		}
+
+		_marketplaceService.updateOrder(
+			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
+
+		_marketplaceService.updateOrder(
+			HashMapBuilder.put(
+				"analytics-group-id",
+				String.valueOf(
+					new JSONObject(
+						project
+					).getLong(
+						"groupId"
+					))
+			).build(),
+			orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED);
+
+		return project;
 	}
 
 	@Override
 	protected String getLXCDXPURL() {
 		return _analyticsAuthUrl;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		AnalyticsRestController.class);
 
 	@Value("${liferay.marketplace.analytics.auth.basic}")
 	private String _analyticsAuthBasic;
@@ -137,5 +204,8 @@ public class AnalyticsRestController extends BaseRestController {
 
 	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
 		new DefaultUriBuilderFactory();
+
+	@Autowired
+	private MarketplaceService _marketplaceService;
 
 }

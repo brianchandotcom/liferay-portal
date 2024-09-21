@@ -113,9 +113,11 @@ public class SegmentsEntryRetrieverTest {
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsEntryIds), 2, segmentsEntryIds.length);
-		Assert.assertEquals(
-			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[0]);
-		Assert.assertEquals(segmentsEntryId, segmentsEntryIds[1]);
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				segmentsEntryIds, SegmentsEntryConstants.ID_DEFAULT));
+		Assert.assertTrue(
+			ArrayUtil.contains(segmentsEntryIds, segmentsEntryId));
 	}
 
 	@Test

@@ -7,7 +7,10 @@ package com.liferay.layout.seo.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -58,6 +62,36 @@ public class EditSEOMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+	}
+
+	@Test
+	public void testCanonicalURLWithMoreThan75Characters() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_setUpMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"canonicalURLEnabled", Boolean.TRUE.toString());
+		mockLiferayPortletActionRequest.addParameter(
+			"canonicalURL_" +
+				_language.getLanguageId(LocaleUtil.getSiteDefault()),
+			"http://mycustomizedcharactersurl.com" +
+				"/mydesiredmorethan75charactersurlfortest");
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doProcessAction",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				_layout.getGroupId(), _layout.isPrivateLayout(),
+				_layout.getLayoutId());
+
+		Assert.assertEquals(
+			"http://mycustomizedcharactersurl.com" +
+				"/mydesiredmorethan75charactersurlfortest",
+			layoutSEOEntry.getCanonicalURL(LocaleUtil.getSiteDefault()));
 	}
 
 	@Test
@@ -202,10 +236,16 @@ public class EditSEOMVCActionCommandTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private Language _language;
+
 	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout/edit_seo")
 	private MVCActionCommand _mvcActionCommand;

@@ -96,6 +96,7 @@ export default {
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
 	'continue-to-install': 'Continue to Install',
+	'copied-x-to-the-clipboard': 'Copied {0} to the clipboard',
 	'coupon-code': 'Coupon Code',
 	'create': 'Create',
 	'create-a-cloud-app-to-be-delivered-as-a-live-service':

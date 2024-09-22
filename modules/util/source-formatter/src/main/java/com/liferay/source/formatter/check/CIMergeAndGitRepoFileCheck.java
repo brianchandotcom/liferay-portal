@@ -5,8 +5,11 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.processor.SourceProcessor;
+
+import java.util.List;
 
 /**
  * @author Alan Huang
@@ -15,19 +18,45 @@ public class CIMergeAndGitRepoFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (!isSubrepository()) {
+			return content;
+		}
 
 		SourceProcessor sourceProcessor = getSourceProcessor();
 
-		SourceFormatterArgs sourceFormatterArgs =
-			sourceProcessor.getSourceFormatterArgs();
+		List<String> currentBranchFileNames = _getCurrentBranchFileNames(
+			sourceProcessor.getSourceFormatterArgs());
 
-		if (sourceFormatterArgs.isFormatCurrentBranch()) {
-			addMessage(
-				fileName, "Do not add/modify ci-merge and .gitrepo files");
+		for (String currentBranchFileName : currentBranchFileNames) {
+			if (absolutePath.endsWith(currentBranchFileName)) {
+				addMessage(
+					fileName, "Do not add/modify ci-merge and .gitrepo files");
+
+				return content;
+			}
 		}
 
 		return content;
 	}
+
+	private synchronized List<String> _getCurrentBranchFileNames(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchFileNames != null) {
+			return _currentBranchFileNames;
+		}
+
+		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchFileNames;
+	}
+
+	private static List<String> _currentBranchFileNames;
 
 }

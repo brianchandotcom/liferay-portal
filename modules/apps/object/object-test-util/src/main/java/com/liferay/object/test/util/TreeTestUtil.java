@@ -104,11 +104,13 @@ public class TreeTestUtil {
 					ObjectDefinitionTestUtil.addCustomObjectDefinition("AB"))));
 
 		return treeFactory.createObjectDefinitionTree(
-			objectDefinitionA.getObjectDefinitionId());
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionLocalService::getObjectDefinition);
 	}
 
 	public static Tree createObjectEntryTree(
 			String externalReferenceCodeSuffix,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectFieldLocalService objectFieldLocalService,
 			long rootObjectDefinitionId,
@@ -117,7 +119,8 @@ public class TreeTestUtil {
 		throws PortalException {
 
 		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
-			rootObjectDefinitionId);
+			rootObjectDefinitionId,
+			objectDefinitionLocalService::getObjectDefinition);
 
 		Iterator<Node> iterator = objectDefinitionTree.iterator();
 

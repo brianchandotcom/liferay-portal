@@ -425,8 +425,8 @@ public class ObjectEntryServiceTest {
 		Node objectDefinitionRootNode = _tree.getRootNode();
 
 		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
-			"1", _objectEntryLocalService, _objectFieldLocalService,
-			objectDefinitionRootNode.getPrimaryKey(),
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, objectDefinitionRootNode.getPrimaryKey(),
 			_objectRelationshipLocalService, _treeFactory);
 
 		_setUser(_user);
@@ -480,8 +480,8 @@ public class ObjectEntryServiceTest {
 		// Root individual permissions must be inherited
 
 		objectEntryTree = TreeTestUtil.createObjectEntryTree(
-			"1", _objectEntryLocalService, _objectFieldLocalService,
-			objectDefinitionRootNode.getPrimaryKey(),
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, objectDefinitionRootNode.getPrimaryKey(),
 			_objectRelationshipLocalService, _treeFactory);
 
 		Node objectEntryRootNode = objectEntryTree.getRootNode();
@@ -506,7 +506,8 @@ public class ObjectEntryServiceTest {
 		_setUser(_adminUser);
 
 		objectEntryTree = TreeTestUtil.createObjectEntryTree(
-			"1", _objectEntryLocalService, _objectFieldLocalService,
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService,
 			_rootObjectDefinition.getRootObjectDefinitionId(),
 			_objectRelationshipLocalService, _treeFactory);
 
@@ -620,8 +621,8 @@ public class ObjectEntryServiceTest {
 		Node objectDefinitionRootNode = _tree.getRootNode();
 
 		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
-			"1", _objectEntryLocalService, _objectFieldLocalService,
-			objectDefinitionRootNode.getPrimaryKey(),
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, objectDefinitionRootNode.getPrimaryKey(),
 			_objectRelationshipLocalService, _treeFactory);
 
 		_setUser(_user);

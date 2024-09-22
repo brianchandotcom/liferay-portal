@@ -1920,8 +1920,8 @@ public class ObjectEntryLocalServiceTest {
 			rootObjectDefinitionNode.getPrimaryKey());
 
 		Tree objectEntryTree1 = TreeTestUtil.createObjectEntryTree(
-			"1", _objectEntryLocalService, _objectFieldLocalService,
-			rootObjectDefinitionNode.getPrimaryKey(),
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, rootObjectDefinitionNode.getPrimaryKey(),
 			_objectRelationshipLocalService, _treeFactory);
 
 		TreeTestUtil.assertObjectEntryTree(
@@ -1939,8 +1939,8 @@ public class ObjectEntryLocalServiceTest {
 			objectEntryTree1, _objectEntryLocalService);
 
 		Tree objectEntryTree2 = TreeTestUtil.createObjectEntryTree(
-			"2", _objectEntryLocalService, _objectFieldLocalService,
-			rootObjectDefinitionNode.getPrimaryKey(),
+			"2", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, rootObjectDefinitionNode.getPrimaryKey(),
 			_objectRelationshipLocalService, _treeFactory);
 
 		TreeTestUtil.assertObjectEntryTree(

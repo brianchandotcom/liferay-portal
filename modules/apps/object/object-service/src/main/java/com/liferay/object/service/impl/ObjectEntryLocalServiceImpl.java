@@ -4278,7 +4278,8 @@ public class ObjectEntryLocalServiceImpl
 		TreeFactory treeFactory = _treeFactorySnapshot.get();
 
 		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
-			objectDefinition.getRootObjectDefinitionId());
+			objectDefinition.getRootObjectDefinitionId(),
+			_objectDefinitionPersistence::findByPrimaryKey);
 
 		Node objectDefinitionNode = objectDefinitionTree.getNode(
 			objectDefinition.getObjectDefinitionId());

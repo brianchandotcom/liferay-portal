@@ -8,10 +8,8 @@ package com.liferay.object.internal.tree;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.service.impl.ObjectRelationshipLocalServiceImpl;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
@@ -20,7 +18,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -38,15 +35,14 @@ import org.osgi.service.component.annotations.Reference;
 public class TreeFactoryImpl implements TreeFactory {
 
 	@Override
-	public Tree createObjectDefinitionTree(long objectDefinitionId)
+	public Tree createObjectDefinitionTree(
+			long objectDefinitionId,
+			UnsafeFunction<Long, ObjectDefinition, PortalException>
+				objectDefinitionLookupUnsafeFunction)
 		throws PortalException {
 
-		ObjectDefinitionLocalService objectDefinitionLocalService =
-			_objectDefinitionLocalServiceSnapshot.get();
-
 		ObjectDefinition rootObjectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
+			objectDefinitionLookupUnsafeFunction.apply(objectDefinitionId);
 
 		return _create(
 			objectDefinitionId,
@@ -55,7 +51,7 @@ public class TreeFactoryImpl implements TreeFactory {
 					node.getPrimaryKey(), true),
 				objectRelationship -> {
 					ObjectDefinition objectDefinition2 =
-						objectDefinitionLocalService.getObjectDefinition(
+						objectDefinitionLookupUnsafeFunction.apply(
 							objectRelationship.getObjectDefinitionId2());
 
 					if (rootObjectDefinition.isApproved() !=
@@ -131,11 +127,6 @@ public class TreeFactoryImpl implements TreeFactory {
 
 		return new Tree(rootNode);
 	}
-
-	private static final Snapshot<ObjectDefinitionLocalService>
-		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
-			ObjectRelationshipLocalServiceImpl.class,
-			ObjectDefinitionLocalService.class, null, true);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

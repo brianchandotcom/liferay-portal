@@ -5,6 +5,8 @@
 
 package com.liferay.object.tree;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -12,7 +14,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface TreeFactory {
 
-	public Tree createObjectDefinitionTree(long objectDefinitionId)
+	public Tree createObjectDefinitionTree(
+			long objectDefinitionId,
+			UnsafeFunction<Long, ObjectDefinition, PortalException>
+				objectDefinitionLookupUnsafeFunction)
 		throws PortalException;
 
 	public Tree createObjectEntryTree(long objectEntryId)

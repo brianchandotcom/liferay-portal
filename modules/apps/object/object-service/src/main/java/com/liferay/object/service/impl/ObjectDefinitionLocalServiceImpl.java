@@ -948,7 +948,8 @@ public class ObjectDefinitionLocalServiceImpl
 					"are ineligible for publication");
 		}
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(objectDefinitionId);
+		Tree tree = _treeFactory.createObjectDefinitionTree(
+			objectDefinitionId, objectDefinitionPersistence::findByPrimaryKey);
 
 		Iterator<Node> iterator = tree.iterator();
 
@@ -1109,7 +1110,8 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinitionId);
 
 		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition.getObjectDefinitionId());
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinitionPersistence::findByPrimaryKey);
 
 		Iterator<Node> iterator = tree.iterator(
 			objectDefinition.getObjectDefinitionId());

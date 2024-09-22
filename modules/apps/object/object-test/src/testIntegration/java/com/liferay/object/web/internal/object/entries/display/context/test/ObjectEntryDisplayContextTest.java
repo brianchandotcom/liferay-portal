@@ -72,9 +72,9 @@ public class ObjectEntryDisplayContextTest {
 				TestPropsValues.getUserId(), nodeA.getPrimaryKey());
 
 		TreeTestUtil.createObjectEntryTree(
-			"1", _objectEntryLocalService, _objectFieldLocalService,
-			nodeA.getPrimaryKey(), _objectRelationshipLocalService,
-			_treeFactory);
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, nodeA.getPrimaryKey(),
+			_objectRelationshipLocalService, _treeFactory);
 
 		ObjectDefinition objectDefinitionAA =
 			_objectDefinitionLocalService.getObjectDefinition(

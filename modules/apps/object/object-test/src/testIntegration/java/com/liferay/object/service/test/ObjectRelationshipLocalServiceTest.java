@@ -461,14 +461,16 @@ public class ObjectRelationshipLocalServiceTest {
 						"A", new String[0]
 					).build(),
 					_treeFactory.createObjectDefinitionTree(
-						objectDefinition1.getObjectDefinitionId()),
+						objectDefinition1.getObjectDefinitionId(),
+						_objectDefinitionLocalService::getObjectDefinition),
 					_objectDefinitionLocalService);
 				TreeTestUtil.assertObjectDefinitionTree(
 					LinkedHashMapBuilder.put(
 						"AA", new String[0]
 					).build(),
 					_treeFactory.createObjectDefinitionTree(
-						objectDefinition2.getObjectDefinitionId()),
+						objectDefinition2.getObjectDefinitionId(),
+						_objectDefinitionLocalService::getObjectDefinition),
 					_objectDefinitionLocalService);
 			});
 	}
@@ -486,7 +488,8 @@ public class ObjectRelationshipLocalServiceTest {
 						"AA", new String[0]
 					).build(),
 					_treeFactory.createObjectDefinitionTree(
-						objectDefinition1.getObjectDefinitionId()),
+						objectDefinition1.getObjectDefinitionId(),
+						_objectDefinitionLocalService::getObjectDefinition),
 					_objectDefinitionLocalService));
 	}
 
@@ -512,7 +515,8 @@ public class ObjectRelationshipLocalServiceTest {
 						"AA", new String[0]
 					).build(),
 					_treeFactory.createObjectDefinitionTree(
-						objectDefinition1.getObjectDefinitionId()),
+						objectDefinition1.getObjectDefinitionId(),
+						_objectDefinitionLocalService::getObjectDefinition),
 					_objectDefinitionLocalService));
 	}
 

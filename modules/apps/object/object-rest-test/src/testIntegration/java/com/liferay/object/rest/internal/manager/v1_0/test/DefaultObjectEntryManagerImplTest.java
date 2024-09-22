@@ -4892,8 +4892,8 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		Tree tree = TreeTestUtil.createObjectEntryTree(
-			externalReferenceCodeSuffix, _objectEntryLocalService,
-			objectFieldLocalService,
+			externalReferenceCodeSuffix, objectDefinitionLocalService,
+			_objectEntryLocalService, objectFieldLocalService,
 			_rootObjectDefinition.getObjectDefinitionId(),
 			_objectRelationshipLocalService, _treeFactory);
 

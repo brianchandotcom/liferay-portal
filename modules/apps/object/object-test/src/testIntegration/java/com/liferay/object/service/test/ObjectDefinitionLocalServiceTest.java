@@ -1901,7 +1901,8 @@ public class ObjectDefinitionLocalServiceTest {
 				"AB", new String[0]
 			).build(),
 			_treeFactory.createObjectDefinitionTree(
-				objectDefinition.getRootObjectDefinitionId()),
+				objectDefinition.getRootObjectDefinitionId(),
+				_objectDefinitionLocalService::getObjectDefinition),
 			_objectDefinitionLocalService);
 
 		// Unbind object definition leaf node
@@ -1913,7 +1914,8 @@ public class ObjectDefinitionLocalServiceTest {
 				"A", new String[0]
 			).build(),
 			_treeFactory.createObjectDefinitionTree(
-				objectDefinition.getRootObjectDefinitionId()),
+				objectDefinition.getRootObjectDefinitionId(),
+				_objectDefinitionLocalService::getObjectDefinition),
 			_objectDefinitionLocalService);
 
 		// Unbind object definition root node
@@ -2680,7 +2682,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.assertObjectDefinitionTree(
 			expectedMap,
-			_treeFactory.createObjectDefinitionTree(rootObjectDefinitionId),
+			_treeFactory.createObjectDefinitionTree(
+				rootObjectDefinitionId,
+				_objectDefinitionLocalService::getObjectDefinition),
 			_objectDefinitionLocalService);
 	}
 

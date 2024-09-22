@@ -146,7 +146,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 		int weight = _INITIAL_WEIGHT;
 
 		Tree tree = treeFactory.createObjectDefinitionTree(
-			rootNodeObjectDefinition.getObjectDefinitionId());
+			rootNodeObjectDefinition.getObjectDefinitionId(),
+			objectDefinitionPersistence::findByPrimaryKey);
 
 		Iterator<Node> iterator = tree.iterator();
 

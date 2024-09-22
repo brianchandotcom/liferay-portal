@@ -624,7 +624,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition.getRootObjectDefinitionId());
+			objectDefinition.getRootObjectDefinitionId(),
+			_objectDefinitionPersistence::findByPrimaryKey);
 
 		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
 

@@ -1256,6 +1256,18 @@ public class DBPartitionUtil {
 
 		String partitionName = getPartitionName(companyId);
 
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			if (!dbInspector.hasTable(tableName)) {
+				statement.executeUpdate(
+					_dbPartitionDB.getCreateViewSQL(
+						_defaultPartitionName, partitionName, tableName));
+
+				return;
+			}
+		}
+
 		if (dbInspector.hasColumn(tableName, "companyId")) {
 			_moveCompanyData(
 				companyId, partitionName, _defaultPartitionName, tableName,

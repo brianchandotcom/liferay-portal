@@ -10,9 +10,8 @@ import {KeyedMutator} from 'swr';
 import {Analytics} from '../../../../../../core/Analytics';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
-import MarketplaceSpringBootOAuth2, {
-	LicenseKey,
-} from '../../../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import MarketplaceSpringBootOAuth2 from '../../../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import {LicenseKey} from '../../../../../../services/oauth/types';
 
 type Props = {
 	deactivateLicenseModal: ReturnType<typeof useModal>;

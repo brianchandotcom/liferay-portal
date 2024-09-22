@@ -14,8 +14,8 @@ import {
 import Form from '../../../../../../components/MarketplaceForm';
 import {TextImageBlock} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
+import {swapImageElements} from '../../../../../../utils/array';
 import {getRandomID} from '../../../../../../utils/string';
-import {swapImageElements} from '../../../../constants';
 import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../../constants';
 import {BlockTypeProps} from './BlockPropsType';

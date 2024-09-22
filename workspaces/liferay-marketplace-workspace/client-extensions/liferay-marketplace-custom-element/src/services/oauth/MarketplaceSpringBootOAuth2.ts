@@ -4,79 +4,13 @@
  */
 
 import OAuth2Client from './OAuth2Client';
-
-export type ConsoleProjectsUsage = {
-	userEmail: string;
-	userProjects: ConsoleUserProject[];
-};
-
-export type ConsoleUserProject = {
-	environments: string[];
-	rootProjectId: string;
-	rootProjectPlanUsage: {
-		cpu: Resource;
-		instance: Resource;
-		memory: Resource;
-	};
-};
-
-export type Resource = {
-	free: number;
-	limit: number;
-	used: number;
-};
-
-export type LicenseKey = {
-	active: boolean;
-	complimentary: boolean;
-	createDate: string;
-	description: string;
-	expirationDate: string;
-	hostName: string;
-	id: number;
-	ipAddresses: string;
-	key: string;
-	keyType: string;
-	licenseType: string;
-	macAddresses: string;
-	modifiedDate: string;
-	modifiedUserName: string;
-	modifiedUserUuid: string;
-	orderId: string;
-	owner: string;
-	productId: string;
-	productName: string;
-	productVersion: string;
-	startDate: string;
-	userName: string;
-	userUuid: string;
-};
-
-type LicenseTypePayload = {
-	licenseEntry: {
-		description: string;
-		hostName: string;
-		ipAddresses: string;
-		macAddresses: string;
-		orderId: string;
-		productId?: string;
-		productPurchaseKey: string;
-		productVersion: string;
-	};
-	skuId: number;
-	type: string;
-};
-
-export type SubscriptionsType = {
-	endDate?: string;
-	name: string;
-	perpetual: boolean;
-	productPurchasedKey: string;
-	productVersion: string;
-	provisionedCount: number;
-	purchasedCount: number;
-	startDate: string;
-};
+import {
+	ConsoleProjectsUsage,
+	LicenseKey,
+	LicenseTypePayload,
+	ProjectDataSource,
+	SubscriptionsType,
+} from './types';
 
 export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 	constructor() {
@@ -91,6 +25,22 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		);
 
 		return response.json() as Promise<AnalyticsProject>;
+	}
+
+	async getAnalyticsProjectDataSourceToken(projectId: string) {
+		const response = await this.oAuth2Client.fetch(
+			`/analytics/project/${projectId}/data-source/token`
+		);
+
+		return response.text() as Promise<string>;
+	}
+
+	async getAnalyticsProjectDataSource(projectId: string) {
+		const response = await this.oAuth2Client.fetch(
+			`/analytics/project/${projectId}/data-source`
+		);
+
+		return response.json() as Promise<ProjectDataSource>;
 	}
 
 	async getAnalyticsPages(

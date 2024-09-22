@@ -6,16 +6,38 @@
 import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {initialAdministratorDashboardNavigationItems} from './AdministratorDashboardPageUtil';
+import i18n from '../../i18n';
+
+export const dashboardNavigationItems = [
+	{
+		itemTitle: i18n.translate('dashboard'),
+		items: [],
+		path: '/',
+		symbol: 'polls',
+	},
+	{
+		itemTitle: i18n.translate('apps'),
+		path: '/apps',
+		symbol: 'grid',
+	},
+	{
+		itemTitle: i18n.translate('trials'),
+		path: '/trial',
+		symbol: 'squares-clock',
+	},
+	{
+		itemTitle: i18n.translate('publisher-requests'),
+		path: '/publisher-request',
+		symbol: 'envelope-closed',
+	},
+];
 
 const AdministratorDashboardOutlet = () => (
 	<div className="d-flex">
 		<div className="d-flex dashboard-navigation-container">
 			<div className="dashboard-navigation-body">
 				<DashboardNavigation
-					dashboardNavigationItems={
-						initialAdministratorDashboardNavigationItems
-					}
+					dashboardNavigationItems={dashboardNavigationItems}
 				/>
 			</div>
 		</div>

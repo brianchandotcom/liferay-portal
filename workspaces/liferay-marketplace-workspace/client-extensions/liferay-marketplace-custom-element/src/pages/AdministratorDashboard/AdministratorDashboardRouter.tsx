@@ -5,15 +5,15 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
-
-import './index.scss';
 import withProviders from '../../hoc/withProviders';
 import App from '../PublisherDashboard/pages/Apps/App';
+import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 import Apps from './pages/Apps';
 import Metrics from './pages/Metrics';
 import PublisherRequest from './pages/PublisherRequest';
 import Trial from './pages/Trial';
+
+import './index.scss';
 
 const AdministratorDashboardRouter = () => (
 	<HashRouter>

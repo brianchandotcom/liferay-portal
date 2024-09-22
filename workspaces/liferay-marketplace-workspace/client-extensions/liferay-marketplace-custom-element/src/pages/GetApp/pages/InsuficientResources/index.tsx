@@ -14,7 +14,7 @@ import {Outlet, useLocation} from 'react-router-dom';
 import hourglass from '../../../../assets/icons/hourglass_icon.svg';
 import {AccountAndAppCard} from '../../../../components/Card/AccountAndAppCard';
 import {useDeliveryProduct} from '../../../../hooks/data/useProduct';
-import {ConsoleUserProject} from '../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import {ConsoleUserProject} from '../../../../services/oauth/types';
 import {baseURL} from '../../../../utils/api';
 import {getUrlParam} from '../../../../utils/getUrlParam';
 import {

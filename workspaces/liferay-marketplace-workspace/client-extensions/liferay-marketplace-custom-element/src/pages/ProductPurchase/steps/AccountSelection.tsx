@@ -9,6 +9,7 @@ import AccountSelection from '../../../components/Checkout/AccountSelection';
 import ProductPurchase from '../../../components/ProductPurchase';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
+import {scrollToTop} from '../../../utils/browser';
 import {ProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
 
 const ProductPurchaseAccountSelection = () => {
@@ -23,7 +24,11 @@ const ProductPurchaseAccountSelection = () => {
 				backButtonProps: {className: 'd-none'},
 				continueButtonProps: {
 					disabled: !selectedAccount,
-					onClick: () => navigate('form'),
+					onClick: () => {
+						scrollToTop();
+
+						navigate('form');
+					},
 				},
 			}}
 			title={i18n.translate('account-selection')}

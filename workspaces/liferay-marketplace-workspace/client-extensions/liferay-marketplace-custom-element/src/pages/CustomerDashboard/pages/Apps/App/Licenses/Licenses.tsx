@@ -28,7 +28,7 @@ import {useMarketplaceContext} from '../../../../../../context/MarketplaceContex
 import {OrderType} from '../../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
 import useMarketplaceSpringBootOAuth2 from '../../../../../../hooks/useMarketplaceSpringBootOAuth2';
-import {LicenseKey} from '../../../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import {LicenseKey} from '../../../../../../services/oauth/types';
 import DeactivateKeysModal from '../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import LicenseDetailsModalHeader from '../../../../components/LicenseDetailsModalHeader';
 import LicenceKeyModalContent from '../../../../components/LicenseModalContent';

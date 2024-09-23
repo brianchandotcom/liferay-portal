@@ -32,7 +32,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 			return modal.onOpenChange(true);
 		}
 
-		navigate(`/order/${order?.id}/install`);
+		navigate(`/order/${order?.id}/cloud-provisioning/install`);
 	};
 
 	const uninstall = () => {

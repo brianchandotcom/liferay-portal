@@ -6,20 +6,19 @@
 import {addDays} from 'date-fns';
 import {useMemo} from 'react';
 
+import {ORDER_CUSTOM_FIELDS} from '../../../../../../../enums/Order';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../../i18n';
 import {isCloudProduct} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
-import {CUSTON_FIELKEYS} from '../Types';
 import {InstallStatus} from '../components/InstallStatus';
-
-export const LICENSE_TYPE_KEY = 'license-type';
 
 const useProvisioningData = (orderId: string) => {
 	const {data, mutate: mutateOrder} = useGetProductByOrderId(orderId);
 
-	const order = data?.placedOrder;
+	const order = data?.placedOrder || ({} as PlacedOrder);
 	const orderItems = order.placedOrderItems;
 	const isCloudApp = isCloudProduct(data?.product);
 
@@ -30,14 +29,14 @@ const useProvisioningData = (orderId: string) => {
 	});
 
 	const [cloudProvisioning] = safeJSONParse(
-		order.customFields[CUSTON_FIELKEYS.CLOUD_PROVISIONING],
+		order.customFields[ORDER_CUSTOM_FIELDS.CLOUD_PROVISIONING],
 		{deployments: []}
 	);
 
 	const isIstalled = cloudProvisioning?.deployments?.lenght;
 
 	const notIstalledPlaceHolder = isIstalled
-		? order.customFields[CUSTON_FIELKEYS.PROJECT_NAME]
+		? order.customFields[ORDER_CUSTOM_FIELDS.PROJECT_NAME]
 		: i18n.translate('not-installed');
 
 	const getExpirationDate = (createdDate: Date, licenseType: string) => {
@@ -52,13 +51,14 @@ const useProvisioningData = (orderId: string) => {
 		const produtctLicenseType =
 			data?.product?.productSpecifications.filter(
 				(specification) =>
-					specification.specificationKey === LICENSE_TYPE_KEY
+					specification.specificationKey ===
+					PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE
 			) || [];
 
 		return orderItems?.map(() => ({
 			environment: notIstalledPlaceHolder,
 			expirationDate: getExpirationDate(
-				order.createDate,
+				new Date(order.createDate),
 				produtctLicenseType[0]?.value
 			),
 			host: notIstalledPlaceHolder,

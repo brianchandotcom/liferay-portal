@@ -11,12 +11,14 @@ import CustomerDashboardOutlet from './CustomerDashboardOutlet';
 import Apps from './pages/Apps';
 import App from './pages/Apps/App/App';
 import AppOutlet from './pages/Apps/App/AppOutlet';
+import Provisioning from './pages/Apps/App/CloudProvisioning';
+import CloudProvisioningOutlet from './pages/Apps/App/CloudProvisioning/pages/CloudProvisioningOutlet';
+import EnvironmentSelection from './pages/Apps/App/CloudProvisioning/pages/EnvironmentSelection';
+import CloudProvisioningInstallation from './pages/Apps/App/CloudProvisioning/pages/Installation';
+import ProjectSelection from './pages/Apps/App/CloudProvisioning/pages/ProjectSelection';
 import Download from './pages/Apps/App/Download/Download';
 import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
-import CloudProductInstallation from './pages/Apps/App/Provisioning/CloudProductInstallation';
-import InstallCloudAppOutlet from './pages/Apps/App/Provisioning/InstallCloudAppOutlet';
-import Provisioning from './pages/Apps/App/Provisioning/Provisioning';
 import Members from './pages/Members';
 import Solutions from './pages/Solutions';
 import ConnectionTokens from './pages/Solutions/ConnectionTokens';
@@ -68,10 +70,19 @@ const CustomerDashboardRouter = () => {
 					path="order/:orderId/create-license"
 				/>
 
-				<Route element={<InstallCloudAppOutlet />}>
+				<Route
+					element={<CloudProvisioningOutlet />}
+					path="order/:orderId/cloud-provisioning/install"
+				>
+					<Route element={<ProjectSelection />} index />
+
 					<Route
-						element={<CloudProductInstallation />}
-						path="order/:orderId/install"
+						element={<EnvironmentSelection />}
+						path="environment"
+					/>
+					<Route
+						element={<CloudProvisioningInstallation />}
+						path="installation"
 					/>
 				</Route>
 			</Routes>

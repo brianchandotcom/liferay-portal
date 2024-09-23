@@ -20,7 +20,7 @@ test.describe('Customer Site', () => {
 		await homePage.goto();
 
 		await expect(homePage.heading).toBeVisible();
-		await expect(homePage.projectCard).toBeVisible();
+		await expect(homePage.projectCard.first()).toBeVisible();
 		await expect(homePage.searchBar).toBeVisible();
 	});
 });

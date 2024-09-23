@@ -6,11 +6,31 @@
 import {test} from '@playwright/test';
 
 import {HomePage} from '../pages/HomePage';
+import { ProjectAttachmentsPage } from '../pages/ProjectAttachmentsPage';
+import { ProjectOverviewPage } from '../pages/ProjectOverviewPage';
+import { ProjectPaaSPage } from '../pages/projectPaaSPage';
+import { ProjectTeamMembersPage } from '../pages/ProjectTeamMembersPage';
 
 export const customerPagesTest = test.extend<{
 	homePage: HomePage;
+	projectAttachmentsPage: ProjectAttachmentsPage;
+	projectOverviewPage: ProjectOverviewPage;
+	projectPaaSPage: ProjectPaaSPage;
+	projectTeamMembersPage: ProjectTeamMembersPage;
 }>({
 	homePage: async ({page}, use) => {
 		await use(new HomePage(page));
+	},
+	projectAttachmentsPage: async ({page}, use) => {
+		await use(new ProjectAttachmentsPage(page));
+	},
+	projectOverviewPage: async ({page}, use) => {
+		await use(new ProjectOverviewPage(page));
+	},
+	projectPaaSPage: async ({page}, use) => {
+		await use(new ProjectPaaSPage(page));
+	},
+	projectTeamMembersPage: async ({page}, use) => {
+		await use(new ProjectTeamMembersPage(page));
 	},
 });

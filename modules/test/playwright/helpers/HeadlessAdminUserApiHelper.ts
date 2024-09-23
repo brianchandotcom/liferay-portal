@@ -253,6 +253,25 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async patchUserAccount(
+		userAccount?: TUserAccount,
+		patchedUserAccount?: DataObject
+	): Promise<TUserAccount> {
+		userAccount = await this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccount.id}`,
+			patchedUserAccount
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: userAccount.id,
+				type: 'userAccount',
+			});
+		}
+
+		return userAccount;
+	}
+
 	async postAccount(account?: TAccount): Promise<TAccount> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,

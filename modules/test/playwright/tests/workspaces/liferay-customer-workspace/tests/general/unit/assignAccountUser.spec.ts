@@ -9,18 +9,38 @@ import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../../utils/getRandomString';
 import {customerApiHelpersTest} from '../../../fixtures/customerApiHelpersTest';
-import {CUSTOMER_SITE_FRIENLY_URL_PATH} from '../../../utils/constants';
+import { customerPagesTest } from '../../../fixtures/customerPagesTest';
 import {mockOktaApiSession} from '../../../utils/oktaUtil';
 import {mockProvisioningApiAssignUser} from '../../../utils/provisioningUtil';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	customerApiHelpersTest,
+	customerPagesTest,
 	loginTest()
 );
 
 const accountExternalReferenceCode = 'ERC-001';
 let userEmailAddress: string;
+
+test.afterEach(async ({apiHelpers}) => {
+	const account =
+		await apiHelpers.headlessAdminUser.getAccountByExternalReferenceCode(
+			accountExternalReferenceCode
+		);
+
+	await apiHelpers.headlessAdminUser.deleteUserFromAccountByEmailAddress(
+		account.id,
+		'test@liferay.com'
+	);
+
+	const userAccount =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			userEmailAddress
+		);
+
+	await apiHelpers.headlessAdminUser.deleteUserAccount(userAccount.id);
+});
 
 test.beforeEach(async ({apiHelpers, page}) => {
 	await mockOktaApiSession(page);
@@ -54,12 +74,10 @@ test.beforeEach(async ({apiHelpers, page}) => {
 test('Account admin can assign new user to account', async ({
 	customerApiHelpers,
 	page,
+	projectOverviewPage,
+	projectTeamMembersPage,
 }) => {
-	await page.goto(
-		CUSTOMER_SITE_FRIENLY_URL_PATH +
-			'/project/#/' +
-			accountExternalReferenceCode
-	);
+	await projectOverviewPage.goto(accountExternalReferenceCode);
 
 	const accountFlag = await customerApiHelpers.getAccountFlag(
 		accountExternalReferenceCode
@@ -71,61 +89,27 @@ test('Account admin can assign new user to account', async ({
 		).toBeVisible();
 	}
 
-	await page.goto(
-		CUSTOMER_SITE_FRIENLY_URL_PATH +
-			'/project/#/' +
-			accountExternalReferenceCode +
-			'/team-members'
-	);
+	await projectTeamMembersPage.goto(accountExternalReferenceCode);
 
-	await page.getByRole('button', {name: 'invite'}).click();
+	await projectTeamMembersPage.inviteButton.click();
 
-	await page.getByLabel('First Name').fill('testfirst');
-	await page.getByLabel('Last Name').fill('testlast');
+    await projectTeamMembersPage.firstNameField.fill('testfirst');
 
-	userEmailAddress = getRandomString() + '@liferay.com';
+    await projectTeamMembersPage.lastNameField.fill('testlast');
 
-	await page.getByLabel('Email').fill(userEmailAddress);
+    userEmailAddress = getRandomString() + '@liferay.com';
 
-	await page
-		.locator('div.role-selector-container')
-		.getByRole('button')
-		.click({force: true});
+    await projectTeamMembersPage.emailField.fill(userEmailAddress);
 
-	await page
-		.locator('div.dropdown-menu')
-		.getByText('User', {exact: true})
-		.click();
+    await projectTeamMembersPage.roleSelect.click({force: true});
 
-	await page.getByRole('button', {name: 'Apply'}).click();
+    await projectTeamMembersPage.userRoleOption.click();
 
-	await page.getByRole('button', {name: 'Send Invitations'}).click();
+    await projectTeamMembersPage.applyButton.click();
 
-	await page.goto(
-		CUSTOMER_SITE_FRIENLY_URL_PATH +
-			'/project/#/' +
-			accountExternalReferenceCode +
-			'/team-members'
-	);
+    await projectTeamMembersPage.sendInvitationsButton.click();
 
-	await expect(page.getByText(userEmailAddress)).toBeVisible();
-});
+    await projectTeamMembersPage.goto(accountExternalReferenceCode);
 
-test.afterEach(async ({apiHelpers}) => {
-	const userAccount =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			userEmailAddress
-		);
-
-	await apiHelpers.headlessAdminUser.deleteUserAccount(userAccount.id);
-
-	const account =
-		await apiHelpers.headlessAdminUser.getAccountByExternalReferenceCode(
-			accountExternalReferenceCode
-		);
-
-	await apiHelpers.headlessAdminUser.deleteUserFromAccountByEmailAddress(
-		account.id,
-		'test@liferay.com'
-	);
+    await expect(page.getByText(userEmailAddress)).toBeVisible();
 });

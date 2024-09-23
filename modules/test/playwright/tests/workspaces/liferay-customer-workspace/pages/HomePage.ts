@@ -8,18 +8,22 @@ import {Locator, Page} from '@playwright/test';
 import {CUSTOMER_SITE_FRIENLY_URL_PATH} from '../utils/constants';
 
 export class HomePage {
+	readonly accountMenu: Locator;
 	readonly heading: Locator;
 	readonly page: Page;
 	readonly projectCard: Locator;
 	readonly searchBar: Locator;
+	readonly signOutButton: Locator;
 
 	constructor(page: Page) {
+		this.accountMenu = page.locator('#account-menu-id img');
 		this.heading = page.getByRole('link', {
 			name: 'Customer Portal',
 		});
 		this.page = page;
-		this.projectCard = page.locator('.card-body').first();
+		this.projectCard = page.locator('.card-body');
 		this.searchBar = page.getByPlaceholder('Find a project');
+		this.signOutButton = page.locator('a').filter({ hasText: 'Sign Out' });
 	}
 
 	async goto() {

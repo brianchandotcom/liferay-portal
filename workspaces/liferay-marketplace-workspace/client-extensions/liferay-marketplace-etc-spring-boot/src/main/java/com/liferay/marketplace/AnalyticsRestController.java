@@ -80,8 +80,8 @@ public class AnalyticsRestController extends BaseRestController {
 			"/o/faro/main/project/" + projectId);
 	}
 
-	@GetMapping("project/{projectId}/data-sources")
-	public String getProjectDataSources(
+	@GetMapping("project/{projectId}/data-source")
+	public String getProjectDataSource(
 			@RequestParam(defaultValue = "1", required = false) int cur,
 			@RequestParam(defaultValue = "20", required = false) int delta,
 			@PathVariable String projectId)
@@ -98,6 +98,25 @@ public class AnalyticsRestController extends BaseRestController {
 				"delta", delta
 			).build(
 			).toString());
+	}
+
+	@GetMapping("project/{projectId}/data-source/token")
+	public String getProjectDataSourceToken(@PathVariable String projectId)
+		throws Exception {
+
+		return WebClient.builder(
+		).baseUrl(
+			_analyticsAuthUrl
+		).defaultHeader(
+			HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic
+		).build(
+		).get(
+		).uri(
+			"/o/faro/contacts/" + projectId + "/data_source/token"
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
 	}
 
 	@PostMapping("provisioning/{orderId}")

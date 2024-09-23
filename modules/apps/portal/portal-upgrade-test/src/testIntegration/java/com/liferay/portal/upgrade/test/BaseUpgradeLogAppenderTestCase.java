@@ -838,7 +838,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			File reportFile = _getReportFile("upgrade_report.info", false);
+			File reportFile = _getReportFile("upgrade_report.info");
 
 			Assert.assertTrue(reportFile.exists());
 

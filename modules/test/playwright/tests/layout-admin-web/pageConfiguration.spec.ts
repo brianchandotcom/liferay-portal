@@ -20,6 +20,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
@@ -387,7 +388,13 @@ test.describe('SEO configuration', () => {
 
 		await systemSettingsPage.goToSystemSetting('Pages', 'SEO');
 
-		await page.getByLabel('Enable Open Graph').check();
+		const openGraphCheckInput = page.getByLabel('Enable Open Graph');
+
+		await openGraphCheckInput.uncheck();
+
+		await page.getByText('Update', {exact: true}).click();
+
+		await waitForSuccessAlert(page);
 
 		// Assert open graph section is not present
 
@@ -405,7 +412,11 @@ test.describe('SEO configuration', () => {
 
 		await systemSettingsPage.goToSystemSetting('Pages', 'SEO');
 
-		await page.getByLabel('Enable Open Graph').uncheck();
+		await openGraphCheckInput.check();
+
+		await page.getByText('Update', {exact: true}).click();
+
+		await waitForSuccessAlert(page);
 
 		// Assert open graph section is present
 

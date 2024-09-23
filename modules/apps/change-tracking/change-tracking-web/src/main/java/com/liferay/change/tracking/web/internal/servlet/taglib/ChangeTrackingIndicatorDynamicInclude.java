@@ -677,7 +677,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				"timelineItemsURL",
 				StringBundler.concat(
 					_portal.getPortalURL(themeDisplay),
-					"/o/change-tracking-rest/v1.0/ct-collections/history?",
+					"/o/change-tracking-rest/v1.0/ct-entries/history?",
 					"classNameId=", classNameId, "&classPK=", classPK));
 
 			CTDisplayRenderer<?> ctDisplayRenderer =

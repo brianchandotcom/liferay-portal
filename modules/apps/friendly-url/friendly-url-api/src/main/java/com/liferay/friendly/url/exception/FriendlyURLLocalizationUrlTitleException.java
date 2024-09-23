@@ -16,7 +16,7 @@ public class FriendlyURLLocalizationUrlTitleException extends PortalException {
 		extends FriendlyURLLocalizationUrlTitleException {
 
 		public MustNotHaveTrailingSlash() {
-			super("The FriendlyURL cannot end with a /");
+			super("The friendly URL must not have a trailing /");
 		}
 
 	}

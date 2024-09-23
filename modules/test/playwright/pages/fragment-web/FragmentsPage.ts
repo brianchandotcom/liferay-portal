@@ -5,6 +5,7 @@
 
 import {Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
@@ -79,10 +80,13 @@ export class FragmentsPage {
 	}
 
 	async clickAction(action: string, title: string) {
-		const actionsPath = '//p[@title="' + title + '"]/../..';
-
-		await this.page.locator(actionsPath).getByLabel('More actions').click();
-		await this.page.getByRole('menuitem', {name: action}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: this.page
+				.locator(`//p[@title="${title}"]/../..`)
+				.getByLabel('More actions'),
+		});
 	}
 
 	async createFragmentSet(name: string) {

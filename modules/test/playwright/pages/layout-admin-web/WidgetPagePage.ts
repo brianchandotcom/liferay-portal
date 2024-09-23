@@ -25,7 +25,6 @@ export class WidgetPagePage {
 				exact: true,
 				name: 'Add',
 			});
-		this.addPanelBody = page.locator('.add-content-menu');
 		this.contentTab = page.getByText('Content', {
 			exact: true,
 		});
@@ -67,15 +66,18 @@ export class WidgetPagePage {
 			.fill(portletName);
 
 		if (category) {
-			const categoryPanel = this.addPanelBody.locator('.panel').filter({
-				has: this.page.locator(
-					`xpath=//span[@class='panel-title' and contains(.,'${category}')]`
-				),
-			});
+			const categoryPanel = this.page.locator(
+				'.add-content-menu .panel',
+				{
+					has: this.page
+						.locator('.panel-header')
+						.getByText(category, {exact: true}),
+				}
+			);
 
-			await categoryPanel.getByText(portletName).click();
-
-			await categoryPanel
+			categoryPanel
+				.locator('.panel-body')
+				.filter({hasText: portletName})
 				.getByRole('button', {name: 'Add Content'})
 				.click();
 		}

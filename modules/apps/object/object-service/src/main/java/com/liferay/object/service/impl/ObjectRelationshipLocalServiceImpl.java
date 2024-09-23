@@ -119,8 +119,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 		return _addObjectRelationship(
 			externalReferenceCode, userId, objectDefinitionId1,
-			objectDefinitionId2, parameterObjectFieldId, deletionType, labelMap,
-			name, false, system, type, objectField);
+			objectDefinitionId2, parameterObjectFieldId, deletionType, edge,
+			labelMap, name, false, system, type, objectField);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -140,7 +140,7 @@ public class ObjectRelationshipLocalServiceImpl
 			externalReferenceCode, user,
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1),
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2),
-			0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap(externalReferenceCode),
 			externalReferenceCode, false, false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, objectField);
@@ -630,7 +630,10 @@ public class ObjectRelationshipLocalServiceImpl
 			return objectRelationship;
 		}
 
-		_validateEdge(true, objectRelationship);
+		_validateEdge(
+			true, objectDefinition1, objectDefinition2,
+			objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getType());
 
 		objectRelationship.setEdge(true);
 
@@ -957,7 +960,18 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectDefinitionId2()),
 			parameterObjectFieldId, objectRelationship.getType());
 		_validateDeletionType(deletionType, edge, objectRelationship);
-		_validateEdge(edge, objectRelationship);
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		_validateEdge(
+			edge, objectDefinition1, objectDefinition2,
+			objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getType());
 
 		if (objectRelationship.compareType(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
@@ -1157,8 +1171,8 @@ public class ObjectRelationshipLocalServiceImpl
 	private ObjectRelationship _addObjectRelationship(
 			String externalReferenceCode, long userId, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
-			String deletionType, Map<Locale, String> labelMap, String name,
-			boolean reverse, boolean system, String type,
+			String deletionType, boolean edge, Map<Locale, String> labelMap,
+			String name, boolean reverse, boolean system, String type,
 			ObjectField objectField)
 		throws PortalException {
 
@@ -1176,6 +1190,7 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
 
+		_validateEdge(edge, objectDefinition1, objectDefinition2, 0L, type);
 		_validateName(objectDefinition1, objectDefinition2, name);
 		_validateType(
 			objectDefinition1, objectDefinition2, name, parameterObjectFieldId,
@@ -1183,7 +1198,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		return _addObjectRelationship(
 			externalReferenceCode, user, objectDefinition1, objectDefinition2,
-			parameterObjectFieldId, deletionType, labelMap, name, reverse,
+			parameterObjectFieldId, deletionType, edge, labelMap, name, reverse,
 			system, type, objectField);
 	}
 
@@ -1191,8 +1206,8 @@ public class ObjectRelationshipLocalServiceImpl
 			String externalReferenceCode, User user,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, long parameterObjectFieldId,
-			String deletionType, Map<Locale, String> labelMap, String name,
-			boolean reverse, boolean system, String type,
+			String deletionType, boolean edge, Map<Locale, String> labelMap,
+			String name, boolean reverse, boolean system, String type,
 			ObjectField objectField)
 		throws PortalException {
 
@@ -1213,6 +1228,7 @@ public class ObjectRelationshipLocalServiceImpl
 			GetterUtil.getString(
 				deletionType,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT));
+		objectRelationship.setEdge(edge);
 		objectRelationship.setLabelMap(labelMap);
 		objectRelationship.setName(name);
 		objectRelationship.setReverse(reverse);
@@ -1267,8 +1283,8 @@ public class ObjectRelationshipLocalServiceImpl
 				null, user.getUserId(),
 				objectDefinition2.getObjectDefinitionId(),
 				objectDefinition1.getObjectDefinitionId(),
-				parameterObjectFieldId, deletionType, labelMap, name, true,
-				system, type, objectField);
+				parameterObjectFieldId, deletionType, false, labelMap, name,
+				true, system, type, objectField);
 
 			return objectRelationshipLocalService.
 				createManyToManyObjectRelationshipTable(
@@ -1277,6 +1293,13 @@ public class ObjectRelationshipLocalServiceImpl
 
 		_registerRelatedInfoItemCollectionProvider(
 			objectDefinition1, objectDefinition2, objectRelationship);
+
+		if (edge &&
+			FeatureFlagManagerUtil.isEnabled(
+				objectRelationship.getCompanyId(), "LPS-187142")) {
+
+			_bindObjectDefinitions(objectRelationship);
+		}
 
 		return objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship);
@@ -1335,7 +1358,9 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinitionLocalService.deployObjectDefinition(
 					objectDefinition1);
 
-				if (objectDefinition2.isApproved()) {
+				if (!objectRelationship.isNew() &&
+					objectDefinition2.isApproved()) {
+
 					_objectEntryLocalService.updateRootObjectEntryIds(
 						objectDefinition1, objectRelationship,
 						objectDefinition2);
@@ -1529,40 +1554,33 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	private void _validateEdge(
-			boolean edge, ObjectRelationship objectRelationship)
+			boolean edge, ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, long objectRelationshipId,
+			String type)
 		throws PortalException {
 
 		if (!edge ||
 			!FeatureFlagManagerUtil.isEnabled(
-				objectRelationship.getCompanyId(), "LPS-187142")) {
+				objectDefinition1.getCompanyId(), "LPS-187142")) {
 
 			return;
 		}
 
 		if (!Objects.equals(
-				objectRelationship.getType(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			throw new ObjectRelationshipEdgeException(
 				"Object relationship must be one to many to be an edge of a " +
 					"root context");
 		}
 
-		if (objectRelationship.isSelf()) {
+		if (objectDefinition1.getObjectDefinitionId() ==
+				objectDefinition2.getObjectDefinitionId()) {
+
 			throw new ObjectRelationshipEdgeException(
 				"Object relationship must not be a self-relationship to be " +
 					"an edge of a root context");
 		}
-
-		ObjectDefinitionLocalService objectDefinitionLocalService =
-			_objectDefinitionLocalServiceSnapshot.get();
-
-		ObjectDefinition objectDefinition1 =
-			objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		ObjectDefinition objectDefinition2 =
-			objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2());
 
 		if (objectDefinition1.isUnmodifiableSystemObject() ||
 			objectDefinition2.isUnmodifiableSystemObject()) {
@@ -1602,7 +1620,7 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		_validateObjectEntries(
-			objectDefinition1, objectDefinition2, objectRelationship);
+			objectDefinition1, objectDefinition2, objectRelationshipId);
 	}
 
 	private void _validateExternalReferenceCode(
@@ -1729,11 +1747,10 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private void _validateObjectEntries(
 			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2,
-			ObjectRelationship objectRelationship)
+			ObjectDefinition objectDefinition2, long objectRelationshipId)
 		throws PortalException {
 
-		if (!objectDefinition1.isApproved() ||
+		if ((objectRelationshipId == 0) || !objectDefinition1.isApproved() ||
 			!objectDefinition2.isApproved()) {
 
 			return;
@@ -1741,8 +1758,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		int oneToManyObjectEntriesCount =
 			_objectEntryLocalService.getOneToManyObjectEntriesCount(
-				0, objectRelationship.getObjectRelationshipId(), 0L, false,
-				null);
+				0, objectRelationshipId, 0L, false, null);
 
 		if (oneToManyObjectEntriesCount > 0) {
 			throw new ObjectRelationshipEdgeException(

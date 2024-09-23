@@ -8,17 +8,20 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../../utils/getRandomString';
+import performLogin from '../../../../../../utils/performLogin';
 import {customerApiHelpersTest} from '../../../fixtures/customerApiHelpersTest';
 import {customerPagesTest} from '../../../fixtures/customerPagesTest';
+import {
+	customerPerformLogout,
+	customerPerformUserSwitch,
+} from '../../../utils/customerLogin';
 import {mockOktaApiSession} from '../../../utils/oktaUtil';
 import {mockProvisioningApiAssignUser} from '../../../utils/provisioningUtil';
-import performLogin from '../../../../../../utils/performLogin';
-import { customerPerformLogout, customerPerformUserSwitch } from '../../../utils/customerLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	customerApiHelpersTest,
-    customerPagesTest,
+	customerPagesTest,
 	loginTest()
 );
 
@@ -74,109 +77,114 @@ test.beforeEach(async ({apiHelpers, page}) => {
 });
 
 test.describe('Project User Permission', () => {
-    test('User can only see things related to User role', async ({
-        apiHelpers,
-        customerApiHelpers,
-        homePage,
-        page,
-        projectAttachmentsPage,
-        projectOverviewPage,
-        projectPaaSPage,
-        projectTeamMembersPage
-    }) => {
-        await projectOverviewPage.goto(accountExternalReferenceCode);
+	test('User can only see things related to User role', async ({
+		apiHelpers,
+		customerApiHelpers,
+		homePage,
+		page,
+		projectAttachmentsPage,
+		projectOverviewPage,
+		projectPaaSPage,
+		projectTeamMembersPage,
+	}) => {
+		await projectOverviewPage.goto(accountExternalReferenceCode);
 
-        const accountFlag = await customerApiHelpers.getAccountFlag(
-            accountExternalReferenceCode
-        );
-
-        if (accountFlag === undefined) {
-            await expect(
-                page.getByRole('button', {name: 'Start Project Setup'})
-            ).toBeVisible();
-        }
-
-        await projectTeamMembersPage.goto(accountExternalReferenceCode);
-
-        await projectTeamMembersPage.inviteButton.click();
-
-        await projectTeamMembersPage.firstNameField.fill('testfirst');
-
-        await projectTeamMembersPage.lastNameField.fill('testlast');
-
-        userEmailAddress = getRandomString() + '@liferay.com';
-
-        await projectTeamMembersPage.emailField.fill(userEmailAddress);
-
-        await projectTeamMembersPage.roleSelect.click({force: true});
-
-        await projectTeamMembersPage.userRoleOption.click();
-
-        await projectTeamMembersPage.applyButton.click();
-
-        await projectTeamMembersPage.sendInvitationsButton.click();
-
-        await projectTeamMembersPage.goto(accountExternalReferenceCode);
-
-        await expect(page.getByText(userEmailAddress)).toBeVisible();
-
-        let userAccount =
-            await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-                userEmailAddress
-            );
-
-        await apiHelpers.headlessAdminUser.patchUserAccount(
-            userAccount,
-			{
-                'currentPassword': 'test',
-                'password': 'test'
-            }
+		const accountFlag = await customerApiHelpers.getAccountFlag(
+			accountExternalReferenceCode
 		);
 
-        await customerPerformUserSwitch(page, userEmailAddress);
+		if (accountFlag === undefined) {
+			await expect(
+				page.getByRole('button', {name: 'Start Project Setup'})
+			).toBeVisible();
+		}
 
-        await expect(
-            page.getByRole('heading', { name: 'Test Account Liferay PaaS' })
-        ).toBeVisible();
+		await projectTeamMembersPage.goto(accountExternalReferenceCode);
 
-        expect((await homePage.projectCard.all()).length).toBe(1);
+		await projectTeamMembersPage.inviteButton.click();
 
-        await projectOverviewPage.goto(accountExternalReferenceCode);
+		await projectTeamMembersPage.firstNameField.fill('testfirst');
 
-        await expect(projectOverviewPage.heading).toBeVisible();
+		await projectTeamMembersPage.lastNameField.fill('testlast');
 
-        await expect(projectOverviewPage.paasHeading).toBeVisible();
+		userEmailAddress = getRandomString() + '@liferay.com';
 
-        await expect(projectOverviewPage.subscriptionCard).toBeVisible();
+		await projectTeamMembersPage.emailField.fill(userEmailAddress);
 
-        await projectPaaSPage.goto(accountExternalReferenceCode);
+		await projectTeamMembersPage.roleSelect.click({force: true});
 
-        await expect(projectPaaSPage.heading).toBeVisible();
+		await projectTeamMembersPage.userRoleOption.click();
 
-        await expect(projectPaaSPage.projectName).toBeVisible();
+		await projectTeamMembersPage.applyButton.click();
 
-        if(projectPaaSPage.projectNotActivatedTag){
-            await expect(projectPaaSPage.finishActivationButton).not.toBeVisible();
-        }
+		await projectTeamMembersPage.sendInvitationsButton.click();
 
-        await expect(page.getByRole('button', { name: 'Product Activation' })).toBeDisabled();
+		await projectTeamMembersPage.goto(accountExternalReferenceCode);
 
-        await projectAttachmentsPage.goto(accountExternalReferenceCode);
+		await expect(page.getByText(userEmailAddress)).toBeVisible();
 
-        await expect(projectAttachmentsPage.heading).toBeVisible();
+		const userAccount =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				userEmailAddress
+			);
 
-        await expect(projectAttachmentsPage.attachmentIconContainer).toBeVisible();
+		await apiHelpers.headlessAdminUser.patchUserAccount(userAccount, {
+			currentPassword: 'test',
+			password: 'test',
+		});
 
-        await projectTeamMembersPage.goto(accountExternalReferenceCode);
+		await customerPerformUserSwitch(page, userEmailAddress);
 
-        await expect(page.getByText(userEmailAddress)).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: 'Test Account Liferay PaaS'})
+		).toBeVisible();
 
-        await expect(projectTeamMembersPage.inviteButton).not.toBeVisible();
+		expect((await homePage.projectCard.all()).length).toBe(1);
 
-        await expect(projectTeamMembersPage.userActionColumnHeader).not.toBeVisible();
+		await projectOverviewPage.goto(accountExternalReferenceCode);
 
-        await customerPerformLogout(page);
+		await expect(projectOverviewPage.heading).toBeVisible();
 
-        await performLogin(page, 'test');
-    });
+		await expect(projectOverviewPage.paasHeading).toBeVisible();
+
+		await expect(projectOverviewPage.subscriptionCard).toBeVisible();
+
+		await projectPaaSPage.goto(accountExternalReferenceCode);
+
+		await expect(projectPaaSPage.heading).toBeVisible();
+
+		await expect(projectPaaSPage.projectName).toBeVisible();
+
+		if (projectPaaSPage.projectNotActivatedTag) {
+			await expect(
+				projectPaaSPage.finishActivationButton
+			).not.toBeVisible();
+		}
+
+		await expect(
+			page.getByRole('button', {name: 'Product Activation'})
+		).toBeDisabled();
+
+		await projectAttachmentsPage.goto(accountExternalReferenceCode);
+
+		await expect(projectAttachmentsPage.heading).toBeVisible();
+
+		await expect(
+			projectAttachmentsPage.attachmentIconContainer
+		).toBeVisible();
+
+		await projectTeamMembersPage.goto(accountExternalReferenceCode);
+
+		await expect(page.getByText(userEmailAddress)).toBeVisible();
+
+		await expect(projectTeamMembersPage.inviteButton).not.toBeVisible();
+
+		await expect(
+			projectTeamMembersPage.userActionColumnHeader
+		).not.toBeVisible();
+
+		await customerPerformLogout(page);
+
+		await performLogin(page, 'test');
+	});
 });

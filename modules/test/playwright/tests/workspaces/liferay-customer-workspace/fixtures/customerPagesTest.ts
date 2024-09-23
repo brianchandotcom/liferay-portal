@@ -6,10 +6,10 @@
 import {test} from '@playwright/test';
 
 import {HomePage} from '../pages/HomePage';
-import { ProjectAttachmentsPage } from '../pages/ProjectAttachmentsPage';
-import { ProjectOverviewPage } from '../pages/ProjectOverviewPage';
-import { ProjectPaaSPage } from '../pages/projectPaaSPage';
-import { ProjectTeamMembersPage } from '../pages/ProjectTeamMembersPage';
+import {ProjectAttachmentsPage} from '../pages/ProjectAttachmentsPage';
+import {ProjectOverviewPage} from '../pages/ProjectOverviewPage';
+import {ProjectTeamMembersPage} from '../pages/ProjectTeamMembersPage';
+import {ProjectPaaSPage} from '../pages/projectPaaSPage';
 
 export const customerPagesTest = test.extend<{
 	homePage: HomePage;

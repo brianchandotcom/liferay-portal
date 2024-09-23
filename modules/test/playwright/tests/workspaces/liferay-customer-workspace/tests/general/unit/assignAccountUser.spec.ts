@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../../utils/getRandomString';
 import {customerApiHelpersTest} from '../../../fixtures/customerApiHelpersTest';
-import { customerPagesTest } from '../../../fixtures/customerPagesTest';
+import {customerPagesTest} from '../../../fixtures/customerPagesTest';
 import {mockOktaApiSession} from '../../../utils/oktaUtil';
 import {mockProvisioningApiAssignUser} from '../../../utils/provisioningUtil';
 
@@ -93,23 +93,23 @@ test('Account admin can assign new user to account', async ({
 
 	await projectTeamMembersPage.inviteButton.click();
 
-    await projectTeamMembersPage.firstNameField.fill('testfirst');
+	await projectTeamMembersPage.firstNameField.fill('testfirst');
 
-    await projectTeamMembersPage.lastNameField.fill('testlast');
+	await projectTeamMembersPage.lastNameField.fill('testlast');
 
-    userEmailAddress = getRandomString() + '@liferay.com';
+	userEmailAddress = getRandomString() + '@liferay.com';
 
-    await projectTeamMembersPage.emailField.fill(userEmailAddress);
+	await projectTeamMembersPage.emailField.fill(userEmailAddress);
 
-    await projectTeamMembersPage.roleSelect.click({force: true});
+	await projectTeamMembersPage.roleSelect.click({force: true});
 
-    await projectTeamMembersPage.userRoleOption.click();
+	await projectTeamMembersPage.userRoleOption.click();
 
-    await projectTeamMembersPage.applyButton.click();
+	await projectTeamMembersPage.applyButton.click();
 
-    await projectTeamMembersPage.sendInvitationsButton.click();
+	await projectTeamMembersPage.sendInvitationsButton.click();
 
-    await projectTeamMembersPage.goto(accountExternalReferenceCode);
+	await projectTeamMembersPage.goto(accountExternalReferenceCode);
 
-    await expect(page.getByText(userEmailAddress)).toBeVisible();
+	await expect(page.getByText(userEmailAddress)).toBeVisible();
 });

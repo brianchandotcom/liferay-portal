@@ -18,6 +18,6 @@ export class LoginPage {
 		this.page = page;
 		this.passwordField = page.getByLabel('Password');
 		this.rememberMeCheckBox = page.getByLabel('Remember Me');
-		this.signInButton = page.getByRole('button', { name: 'Sign In' });
+		this.signInButton = page.getByRole('button', {name: 'Sign In'});
 	}
 }

@@ -23,7 +23,7 @@ export class HomePage {
 		this.page = page;
 		this.projectCard = page.locator('.card-body');
 		this.searchBar = page.getByPlaceholder('Find a project');
-		this.signOutButton = page.locator('a').filter({ hasText: 'Sign Out' });
+		this.signOutButton = page.locator('a').filter({hasText: 'Sign Out'});
 	}
 
 	async goto() {

@@ -16,27 +16,31 @@ export class ProjectTeamMembersPage {
 	readonly page: Page;
 	readonly roleSelect: Locator;
 	readonly sendInvitationsButton: Locator;
-    readonly userActionColumnHeader: Locator;
+	readonly userActionColumnHeader: Locator;
 	readonly userRoleOption: Locator;
 
 	constructor(page: Page) {
-        this.applyButton = page.getByRole('button', {name: 'Apply'});
-        this.emailField = page.getByLabel('Email');
-        this.firstNameField = page.getByLabel('First Name');
-        this.inviteButton = page.getByRole('button', {name: 'invite'});
-        this.lastNameField = page.getByLabel('Last Name');
+		this.applyButton = page.getByRole('button', {name: 'Apply'});
+		this.emailField = page.getByLabel('Email');
+		this.firstNameField = page.getByLabel('First Name');
+		this.inviteButton = page.getByRole('button', {name: 'invite'});
+		this.lastNameField = page.getByLabel('Last Name');
 		this.page = page;
-        this.roleSelect = page
-            .locator('div.role-selector-container')
-            .getByRole('button');
-        this.sendInvitationsButton = page.getByRole('button', {name: 'Send Invitations'});
-        this.userActionColumnHeader = page.locator('th:nth-child(6)');
-        this.userRoleOption = page
-            .locator('div.dropdown-menu')
-            .getByText('User', {exact: true});
+		this.roleSelect = page
+			.locator('div.role-selector-container')
+			.getByRole('button');
+		this.sendInvitationsButton = page.getByRole('button', {
+			name: 'Send Invitations',
+		});
+		this.userActionColumnHeader = page.locator('th:nth-child(6)');
+		this.userRoleOption = page
+			.locator('div.dropdown-menu')
+			.getByText('User', {exact: true});
 	}
 
 	async goto(accountExternalReferenceCode: String) {
-		await this.page.goto(`${CUSTOMER_SITE_FRIENLY_URL_PATH}/project/#/${accountExternalReferenceCode}/team-members`);
+		await this.page.goto(
+			`${CUSTOMER_SITE_FRIENLY_URL_PATH}/project/#/${accountExternalReferenceCode}/team-members`
+		);
 	}
 }

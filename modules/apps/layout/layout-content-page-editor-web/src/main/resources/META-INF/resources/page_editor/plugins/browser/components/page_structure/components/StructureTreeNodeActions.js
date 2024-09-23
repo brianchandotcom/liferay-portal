@@ -8,6 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
@@ -114,6 +115,7 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 				containerProps={{
 					className: 'cadmin',
 				}}
+				hasLeftSymbols
 				onActiveChange={updateActive}
 				ref={dropdownRef}
 			>
@@ -213,7 +215,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (items.length) {
 			items.push({
-				type: 'separator',
+				type: 'divider',
 			});
 		}
 
@@ -233,6 +235,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					setText(Liferay.Language.get('item-was-cut'));
 				},
 				icon: 'cut',
+				isBetaFeature: true,
 				label: Liferay.Language.get('cut'),
 			});
 		}
@@ -248,6 +251,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					setText(Liferay.Language.get('item-copied'));
 				},
 				icon: 'copy',
+				isBetaFeature: true,
 				label: Liferay.Language.get('copy'),
 			});
 		}
@@ -287,6 +291,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				},
 				disabled: !copiedItemIds?.length,
 				icon: 'paste',
+				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
 			});
 		}
@@ -301,7 +306,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		}
 
 		items.push({
-			type: 'separator',
+			type: 'divider',
 		});
 
 		if (canBeRemoved(item, layoutData)) {
@@ -343,33 +348,31 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	return (
 		<FocusScope>
 			<div>
-				<ClayDropDown.ItemList>
-					{dropdownItems.map((dropdownItem, index, array) =>
-						dropdownItem.type === 'separator' ? (
-							index !== array.length - 1 && (
-								<ClayDropDown.Divider key={index} />
-							)
+				<ClayDropDown.ItemList items={dropdownItems}>
+					{(item) =>
+						item.type === 'divider' ? (
+							<ClayDropDown.Divider />
 						) : (
-							<React.Fragment key={index}>
-								<ClayDropDown.Item
-									aria-label={Liferay.Language.get(
-										dropdownItem.label
-									)}
-									disabled={dropdownItem.disabled}
-									onClick={() => {
-										setActive(false);
+							<ClayDropDown.Item
+								aria-label={Liferay.Language.get(item.label)}
+								disabled={item.disabled}
+								onClick={() => {
+									setActive(false);
 
-										dropdownItem.action();
-									}}
-									symbolLeft={dropdownItem.icon}
-								>
-									<p className="d-inline-block m-0 ml-4">
-										{dropdownItem.label}
-									</p>
-								</ClayDropDown.Item>
-							</React.Fragment>
+									item.action();
+								}}
+								symbolLeft={item.icon}
+							>
+								{item.label}
+
+								{item.isBetaFeature ? (
+									<span className="ml-2">
+										<FeatureIndicator type="beta" />
+									</span>
+								) : null}
+							</ClayDropDown.Item>
 						)
-					)}
+					}
 				</ClayDropDown.ItemList>
 			</div>
 		</FocusScope>

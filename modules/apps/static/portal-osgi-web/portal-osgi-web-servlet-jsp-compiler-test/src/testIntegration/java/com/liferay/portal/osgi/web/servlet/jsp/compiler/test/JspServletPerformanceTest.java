@@ -10,12 +10,15 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.performance.PerformanceTimer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
@@ -117,10 +120,23 @@ public class JspServletPerformanceTest {
 
 		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP, 1);
 
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(5000)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.mail.messaging.internal.MailMessageListener",
+				LoggerTestUtil.OFF)) {
+
+			long startTime = System.currentTimeMillis();
+
 			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"testElExpressionWithUndefinedScopedVariablesJsp ",
+						"completed in: ",
+						System.currentTimeMillis() - startTime, " ms"));
+			}
 		}
 	}
 
@@ -128,10 +144,22 @@ public class JspServletPerformanceTest {
 	public void testElExpressionWithUndefinedVariablesJsp() throws Exception {
 		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP, 1);
 
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(1000)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.mail.messaging.internal.MailMessageListener",
+				LoggerTestUtil.OFF)) {
+
+			long startTime = System.currentTimeMillis();
+
 			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"testElExpressionWithUndefinedVariablesJsp completed in: " +
+						String.valueOf(System.currentTimeMillis() - startTime) +
+							" ms");
+			}
 		}
 	}
 
@@ -139,8 +167,20 @@ public class JspServletPerformanceTest {
 	public void testJsp() throws Exception {
 		_test(_FILE_NAME_TEST_JSP, 1);
 
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(1000)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.mail.messaging.internal.MailMessageListener",
+				LoggerTestUtil.OFF)) {
+
+			long startTime = System.currentTimeMillis();
+
 			_test(_FILE_NAME_TEST_JSP, _NUMBER_OF_REQUESTS);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"testJsp completed in: " +
+						String.valueOf(System.currentTimeMillis() - startTime) +
+							" ms");
+			}
 		}
 	}
 
@@ -262,6 +302,9 @@ public class JspServletPerformanceTest {
 
 	private static final String _WEB_CONTEXT_PATH =
 		"/test-jsp-servlet-performance";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JspServletPerformanceTest.class);
 
 	private static Bundle _bundle;
 	private static ExecutorService _executorService;

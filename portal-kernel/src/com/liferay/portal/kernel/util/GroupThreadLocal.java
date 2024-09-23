@@ -47,7 +47,7 @@ public class GroupThreadLocal {
 		}
 	}
 
-	public static SafeCloseable setWithSafeCloseable(long groupId) {
+	public static SafeCloseable setGroupIdWithSafeCloseable(long groupId) {
 		return _groupId.setWithSafeCloseable(groupId);
 	}
 

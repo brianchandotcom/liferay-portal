@@ -29,7 +29,7 @@ public class AssetAutoTaggerMessageListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		try (SafeCloseable safeCloseable =
-				GroupThreadLocal.setWithSafeCloseable(
+				GroupThreadLocal.setGroupIdWithSafeCloseable(
 					message.getLong("groupId"))) {
 
 			_assetAutoTagger.tag((AssetEntry)message.get("assetEntry"));

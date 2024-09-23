@@ -3,12 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useOutletContext, useParams} from 'react-router-dom';
-
-import './App.scss';
-
 import classNames from 'classnames';
 import {ReactNode} from 'react';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 import i18n from '../../../../../i18n';
@@ -17,6 +14,8 @@ import {isCloudProduct} from '../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../utils/util';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 import {formatDate} from '../../../../PublisherDashboard/PublisherDashboardPageUtil';
+
+import './App.scss';
 
 const App = () => {
 	const {orderId} = useParams();
@@ -77,6 +76,7 @@ const App = () => {
 						</p>
 					</div>
 				</DetailedCard>
+
 				<DetailedCard
 					cardIconAltText="Summary Icon"
 					cardTitle={i18n.translate('summary')}
@@ -142,6 +142,7 @@ const App = () => {
 							)}
 						</div>
 					</div>
+
 					<div className="justify-content-between mb-2 row">
 						<div className="col h5">
 							{i18n.translate('subtotal')}
@@ -188,6 +189,7 @@ const App = () => {
 						</p>
 					</div>
 				</DetailedCard>
+
 				{placedOrder.placedOrderBillingAddress && (
 					<DetailedCard
 						cardIconAltText="Location Icon"

@@ -15,6 +15,7 @@ import OrderStatus, {
 import Table from '../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {Analytics} from '../../../core/Analytics';
+import {ORDER_TYPES} from '../../../enums/Order';
 import {OrderType} from '../../../enums/OrderType';
 import i18n from '../../../i18n';
 import {safeJSONParse} from '../../../utils/util';
@@ -158,6 +159,14 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 										/>
 									}
 								>
+									<ClayDropDown.Item
+										onClick={() => {
+											navigate(`order/${id}`);
+										}}
+									>
+										{i18n.translate('view-details')}
+									</ClayDropDown.Item>
+
 									<ClayDropDown.ItemList>
 										{orderTypeExternalReferenceCode ===
 											OrderType.DXP &&
@@ -204,24 +213,16 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 											)}
 
 										{orderTypeExternalReferenceCode ===
-											OrderType.CLOUD && (
+											ORDER_TYPES.CLOUDAPP && (
 											<ClayDropDown.Item
 												onClick={() => {
-													Analytics.track(
-														'ACCCESS_CONSOLE_BUTTON',
-														{
-															account,
-															productName: name,
-														}
-													);
-
-													window.open(
-														properties.cloudBaseURL
+													navigate(
+														`order/${id}/cloud-provisioning`
 													);
 												}}
 											>
 												{i18n.translate(
-													'access-console'
+													'cloud-provisioning'
 												)}
 											</ClayDropDown.Item>
 										)}

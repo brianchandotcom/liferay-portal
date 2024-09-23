@@ -62,13 +62,14 @@ const useGetResourceInfo = ({
 
 	if (project && selectedProject) {
 		validateRamAndCpu = ['ram', 'cpu']
-			.map((requirement) =>
-				product?.productSpecifications.find(
-					(specification: ProductSpecification) =>
-						specification.specificationKey === requirement
-				)
+			.map(
+				(requirement) =>
+					product?.productSpecifications.find(
+						(specification: ProductSpecification) =>
+							specification.specificationKey === requirement
+					) || {}
 			)
-			.some((requirement: any) => {
+			.some((requirement) => {
 				if (requirement.specificationKey === 'ram') {
 					return compareResource(
 						convertMegabyteToGigabyte({

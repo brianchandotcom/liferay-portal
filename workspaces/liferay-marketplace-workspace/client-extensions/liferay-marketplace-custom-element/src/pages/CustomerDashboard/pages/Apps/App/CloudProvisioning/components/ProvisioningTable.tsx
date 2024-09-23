@@ -188,7 +188,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 												</ClayDropDown.Item>
 											)}
 
-											{!isInstalled && (
+											{isInstalled && (
 												<ClayDropDown.Item
 													onClick={() =>
 														uninstallModal.onOpenChange(

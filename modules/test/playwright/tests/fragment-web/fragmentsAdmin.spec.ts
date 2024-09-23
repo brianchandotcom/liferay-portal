@@ -19,6 +19,7 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {LEMON_OBJECT_ERC} from '../setup/page-management-site/constants';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -435,13 +436,26 @@ test(
 
 		// Create custom basic fragment
 
-		const fragmentEntryName = getRandomString();
+		const basicFragmentEntryName = getRandomString();
 
 		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
 			fragmentCollectionId,
 			groupId: pageManagementSite.id,
 			html: '<div class="fragment-name">Fragment Example</div>',
-			name: fragmentEntryName,
+			name: basicFragmentEntryName,
+		});
+
+		// Create custom input fragment
+
+		const inputFragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId,
+			groupId: pageManagementSite.id,
+			html: '<div class="fragment-name">Fragment Example</div>',
+			name: inputFragmentEntryName,
+			type: 'input',
+			typeOptions: {fieldTypes: ['long-text', 'text']},
 		});
 
 		// Assert view usages is disabled
@@ -458,34 +472,65 @@ test(
 			autoClick: false,
 			target: viewUsagesAction,
 			trigger: page
-				.locator(`//p[@title="${fragmentEntryName}"]/../..`)
+				.locator(`//p[@title="${basicFragmentEntryName}"]/../..`)
 				.getByLabel('More actions'),
 		});
 
 		await expect(viewUsagesAction).toHaveAttribute('disabled');
 
-		// Create a content page with custom fragment
+		// Create a content page with custom basic fragment and custom input fragment
 
-		const fragmentDefinition = getFragmentDefinition({
+		const basicFragmentDefinition = getFragmentDefinition({
 			id: getRandomString(),
-			key: fragmentEntryName,
+			key: basicFragmentEntryName,
+		});
+
+		const {id: objectDefinitionId} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				LEMON_OBJECT_ERC
+			);
+
+		const inputFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: inputFragmentEntryName,
+		});
+
+		const formDefinition = getFormContainerDefinition({
+			id: getRandomString(),
+			objectDefinitionId,
+			pageElements: [inputFragmentDefinition],
 		});
 
 		const layoutTitle = getRandomString();
 
 		await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([fragmentDefinition]),
+			pageDefinition: getPageDefinition([
+				basicFragmentDefinition,
+				formDefinition,
+			]),
 			siteId: pageManagementSite.id,
 			title: layoutTitle,
 		});
 
-		// Assert view usages
+		// Assert basic fragment view usages
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
 		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
 
-		await fragmentsPage.clickAction('View Usages', fragmentEntryName);
+		await fragmentsPage.clickAction('View Usages', basicFragmentEntryName);
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Pages (2)'})
+		).toBeAttached();
+
+		// Assert input fragment view usages
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		await fragmentsPage.clickAction('View Usages', inputFragmentEntryName);
 
 		await expect(
 			page.getByRole('menuitem', {name: 'Pages (2)'})

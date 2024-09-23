@@ -104,5 +104,8 @@ test('@LPD-26285 Safari Submit Button', async ({
 		);
 
 		await expect(capturedFormButtonElement).toHaveText('Button B');
+
+		// Dispose context once it's no longer needed. 
+		await context.close();
 	});
 });

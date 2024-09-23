@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.Objects;
@@ -75,20 +74,16 @@ public class CTNotificationsPortletConfigurationIcon
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(portletRequest);
 
-		String hideContextChangeWarningExpiryTime = portalPreferences.getValue(
-			CTPortletKeys.PUBLICATIONS, "hideContextChangeWarningExpiryTime");
+		long hideContextChangeWarningExpiryTime = GetterUtil.getLong(
+			portalPreferences.getValue(
+				CTPortletKeys.PUBLICATIONS,
+				"hideContextChangeWarningExpiryTime"));
 
-		if (Validator.isNull(hideContextChangeWarningExpiryTime)) {
-			return false;
-		}
-
-		if (Objects.equals(hideContextChangeWarningExpiryTime, "-1")) {
+		if (Objects.equals(hideContextChangeWarningExpiryTime, -1L)) {
 			return true;
 		}
 
-		if (GetterUtil.getLong(hideContextChangeWarningExpiryTime) <=
-				System.currentTimeMillis()) {
-
+		if (hideContextChangeWarningExpiryTime <= System.currentTimeMillis()) {
 			return false;
 		}
 

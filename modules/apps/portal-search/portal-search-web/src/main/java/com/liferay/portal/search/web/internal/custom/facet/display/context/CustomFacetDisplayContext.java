@@ -5,40 +5,63 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Wade Cao
+ * @author Petteri Karttunen
  */
 public class CustomFacetDisplayContext implements FacetDisplayContext {
 
-	public CustomFacetDisplayContext(HttpServletRequest httpServletRequest)
-		throws ConfigurationException {
+	public CustomFacetDisplayContext(
+		String aggregationType,
+		List<BucketDisplayContext> bucketDisplayContexts,
+		CustomFacetCalendarDisplayContext customFacetCalendarDisplayContext,
+		CustomFacetPortletInstanceConfiguration
+			customFacetPortletInstanceConfiguration,
+		BucketDisplayContext customRangeBucketDisplayContext,
+		String displayCaption, long displayStyleGroupId, String from,
+		boolean nothingSelected, String paginationStartParameterName,
+		String parameterName, String parameterValue,
+		List<String> parameterValues, boolean renderNothing,
+		boolean showInputRange, String to) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_themeDisplay = themeDisplay;
-
+		_aggregationType = aggregationType;
+		_bucketDisplayContexts = bucketDisplayContexts;
+		_customFacetCalendarDisplayContext = customFacetCalendarDisplayContext;
 		_customFacetPortletInstanceConfiguration =
-			ConfigurationProviderUtil.getPortletInstanceConfiguration(
-				CustomFacetPortletInstanceConfiguration.class, themeDisplay);
+			customFacetPortletInstanceConfiguration;
+		_customRangeBucketDisplayContext = customRangeBucketDisplayContext;
+		_displayCaption = displayCaption;
+		_displayStyleGroupId = displayStyleGroupId;
+		_from = from;
+		_nothingSelected = nothingSelected;
+		_paginationStartParameterName = paginationStartParameterName;
+		_parameterName = parameterName;
+		_parameterValue = parameterValue;
+		_parameterValues = parameterValues;
+		_renderNothing = renderNothing;
+		_showInputRange = showInputRange;
+		_to = to;
+	}
+
+	public String getAggregationType() {
+		return _aggregationType;
 	}
 
 	@Override
 	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;
+	}
+
+	public CustomFacetCalendarDisplayContext
+		getCustomFacetCalendarDisplayContext() {
+
+		return _customFacetCalendarDisplayContext;
 	}
 
 	public CustomFacetPortletInstanceConfiguration
@@ -47,24 +70,21 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 		return _customFacetPortletInstanceConfiguration;
 	}
 
+	public BucketDisplayContext getCustomRangeBucketDisplayContext() {
+		return _customRangeBucketDisplayContext;
+	}
+
 	public String getDisplayCaption() {
 		return _displayCaption;
 	}
 
 	@Override
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
-		}
-
-		_displayStyleGroupId =
-			_customFacetPortletInstanceConfiguration.displayStyleGroupId();
-
-		if (_displayStyleGroupId <= 0) {
-			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
-		}
-
 		return _displayStyleGroupId;
+	}
+
+	public String getFromParameterValue() {
+		return _from;
 	}
 
 	@Override
@@ -87,6 +107,10 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 		return _parameterValues;
 	}
 
+	public String getToParameterValue() {
+		return _to;
+	}
+
 	@Override
 	public boolean isNothingSelected() {
 		return _nothingSelected;
@@ -97,60 +121,27 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 		return _renderNothing;
 	}
 
-	@Override
-	public void setBucketDisplayContexts(
-		List<BucketDisplayContext> bucketDisplayContexts) {
-
-		_bucketDisplayContexts = bucketDisplayContexts;
+	public boolean isShowInputRange() {
+		return _showInputRange;
 	}
 
-	public void setDisplayCaption(String displayCaption) {
-		_displayCaption = displayCaption;
-	}
-
-	@Override
-	public void setNothingSelected(boolean nothingSelected) {
-		_nothingSelected = nothingSelected;
-	}
-
-	@Override
-	public void setPaginationStartParameterName(
-		String paginationStartParameterName) {
-
-		_paginationStartParameterName = paginationStartParameterName;
-	}
-
-	@Override
-	public void setParameterName(String paramName) {
-		_parameterName = paramName;
-	}
-
-	@Override
-	public void setParameterValue(String paramValue) {
-		_parameterValue = paramValue;
-	}
-
-	@Override
-	public void setParameterValues(List<String> paramValues) {
-		_parameterValues = paramValues;
-	}
-
-	@Override
-	public void setRenderNothing(boolean renderNothing) {
-		_renderNothing = renderNothing;
-	}
-
-	private List<BucketDisplayContext> _bucketDisplayContexts;
+	private final String _aggregationType;
+	private final List<BucketDisplayContext> _bucketDisplayContexts;
+	private final CustomFacetCalendarDisplayContext
+		_customFacetCalendarDisplayContext;
 	private final CustomFacetPortletInstanceConfiguration
 		_customFacetPortletInstanceConfiguration;
-	private String _displayCaption;
-	private long _displayStyleGroupId;
-	private boolean _nothingSelected;
-	private String _paginationStartParameterName;
-	private String _parameterName;
-	private String _parameterValue;
-	private List<String> _parameterValues;
-	private boolean _renderNothing;
-	private final ThemeDisplay _themeDisplay;
+	private final BucketDisplayContext _customRangeBucketDisplayContext;
+	private final String _displayCaption;
+	private final long _displayStyleGroupId;
+	private final String _from;
+	private final boolean _nothingSelected;
+	private final String _paginationStartParameterName;
+	private final String _parameterName;
+	private final String _parameterValue;
+	private final List<String> _parameterValues;
+	private final boolean _renderNothing;
+	private final boolean _showInputRange;
+	private final String _to;
 
 }

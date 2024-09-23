@@ -7,15 +7,19 @@ import {ComponentProps} from 'react';
 
 import i18n from '../../../i18n';
 import AccountEmailInfo from '../../../pages/CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
-import {ProductCardRevamp} from '../../../pages/GetApp/components/ProductCard/ProductCard';
+import {ProductCardRevamp as ProductCard} from '../../../pages/GetApp/components/ProductCard/ProductCard';
+import {normalizeURLProtocol} from '../../../utils/string';
 
-type ProductPurchaseHeaderProps = {
+type ProductPurchaseHeaderAccountProps = {
 	account: Account;
-	productCardProps: ComponentProps<typeof ProductCardRevamp>;
 };
 
+type ProductPurchaseHeaderProps = {
+	product: DeliveryProduct;
+} & Partial<ComponentProps<typeof ProductCard>>;
+
 const ProductPurchaseHeaderAccount: React.FC<
-	Pick<ProductPurchaseHeaderProps, 'account'>
+	ProductPurchaseHeaderAccountProps
 > = ({account}) => {
 	if (!account) {
 		return null;
@@ -42,12 +46,17 @@ const ProductPurchaseHeaderAccount: React.FC<
 };
 
 const ProductPurchaseHeader: React.FC<ProductPurchaseHeaderProps> = ({
-	account,
-	productCardProps,
+	product,
+	...props
 }) => (
-	<ProductCardRevamp {...productCardProps}>
-		<ProductPurchaseHeaderAccount account={account} />
-	</ProductCardRevamp>
+	<ProductCard
+		icon={normalizeURLProtocol(product.urlImage)}
+		subtitle={product.catalogName}
+		title={product.name}
+		{...props}
+	/>
 );
+
+export {ProductPurchaseHeaderAccount};
 
 export default ProductPurchaseHeader;

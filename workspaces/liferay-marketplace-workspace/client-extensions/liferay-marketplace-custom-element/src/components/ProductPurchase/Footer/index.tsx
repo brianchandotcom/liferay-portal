@@ -29,12 +29,12 @@ const ProductPurchaseFooter: React.FC<ProductPurchaseFooterProps> = ({
 				onClick={() => Liferay.Util.navigate(getSiteURL())}
 				{...cancelButtonProps}
 			>
-				{i18n.translate('cancel')}
+				{cancelButtonProps?.children || i18n.translate('cancel')}
 			</ClayButton>
 
 			<div>
 				<ClayButton displayType="secondary" {...backButtonProps}>
-					{i18n.translate('back')}
+					{backButtonProps?.children || i18n.translate('back')}
 				</ClayButton>
 
 				<ClayButton className="ml-4" {...continueButtonProps}>

@@ -8,15 +8,18 @@ import {ReactNode} from 'react';
 import Body from './Body';
 import Feedback from './Feedback';
 import Footer from './Footer';
-import Header from './Header';
+import Header, {ProductPurchaseHeaderAccount as HeaderAccount} from './Header';
 import Shell from './Shell';
 import Steps from './Steps';
+
+import './index.scss';
 
 type ProductPurchaseChildrens = {
 	Body: typeof Body;
 	Feedback: typeof Feedback;
 	Footer: typeof Footer;
 	Header: typeof Header;
+	HeaderAccount: typeof HeaderAccount;
 	Shell: typeof Shell;
 	Steps: typeof Steps;
 };
@@ -24,7 +27,7 @@ type ProductPurchaseChildrens = {
 const ProductPurchase: React.FC<{children: ReactNode}> &
 	ProductPurchaseChildrens = ({children}) => {
 	return (
-		<div className="container my-7" style={{width: 600}}>
+		<div className="container my-7" style={{width: 630}}>
 			{children}
 		</div>
 	);
@@ -34,7 +37,8 @@ ProductPurchase.Body = Body;
 ProductPurchase.Feedback = Feedback;
 ProductPurchase.Footer = Footer;
 ProductPurchase.Header = Header;
-ProductPurchase.Steps = Steps;
+ProductPurchase.HeaderAccount = HeaderAccount;
 ProductPurchase.Shell = Shell;
+ProductPurchase.Steps = Steps;
 
 export default ProductPurchase;

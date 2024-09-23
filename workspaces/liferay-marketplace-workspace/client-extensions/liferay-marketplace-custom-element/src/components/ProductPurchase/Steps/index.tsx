@@ -25,7 +25,12 @@ const ProductPurchaseSteps: React.FC<ProductPurchaseStepsProps> = ({
 	onClickIndicator = () => null,
 	steps,
 }) => (
-	<ClayMultiStepNav className={classNames('mx-6', className)}>
+	<ClayMultiStepNav
+		className={classNames(
+			'mx-6 product-purchase--multi-step-nav',
+			className
+		)}
+	>
 		{steps.map((step, i) => {
 			const {key, subTitle, title} = step;
 

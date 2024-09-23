@@ -4,8 +4,8 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {ManagementToolbar} from 'frontend-js-components-web';
+import ClayDropDown from '@clayui/drop-down';
+import {FeatureIndicator, ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -90,6 +90,13 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			type: 'divider',
 		},
 		{
+			isBetaFeature: true,
+			label: Liferay.Language.get('copy'),
+			onClick: () => setCopiedItemIds(activeItemIds),
+			symbolLeft: 'copy',
+		},
+		{
+			isBetaFeature: true,
 			label: Liferay.Language.get('cut'),
 			onClick: () => {
 				if (itemsCanBeDeleted()) {
@@ -105,11 +112,6 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			symbolLeft: 'cut',
 		},
 		{
-			label: Liferay.Language.get('copy'),
-			onClick: () => setCopiedItemIds(activeItemIds),
-			symbolLeft: 'copy',
-		},
-		{
 			label: Liferay.Language.get('duplicate'),
 			onClick: () => {
 				if (itemsCanBeDuplicated()) {
@@ -122,6 +124,9 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 				}
 			},
 			symbolLeft: 'copy',
+		},
+		{
+			type: 'divider',
 		},
 		{
 			label: Liferay.Language.get('delete'),
@@ -150,8 +155,9 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			)}
 
 			{selectedViewportSize === VIEWPORT_SIZES.desktop ? (
-				<ClayDropDownWithItems
-					items={dropdownItems}
+				<ClayDropDown
+					closeOnClick
+					hasLeftSymbols
 					trigger={
 						<ClayButtonWithIcon
 							aria-label={sub(
@@ -165,7 +171,28 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 							title={Liferay.Language.get('actions')}
 						/>
 					}
-				/>
+				>
+					<ClayDropDown.ItemList items={dropdownItems}>
+						{(item) =>
+							item.type === 'divider' ? (
+								<ClayDropDown.Divider />
+							) : (
+								<ClayDropDown.Item
+									onClick={() => item.onClick()}
+									symbolLeft={item.symbolLeft}
+								>
+									{item.label}
+
+									{item.isBetaFeature ? (
+										<span className="ml-2">
+											<FeatureIndicator type="beta" />
+										</span>
+									) : null}
+								</ClayDropDown.Item>
+							)
+						}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
 			) : null}
 		</ManagementToolbar.Container>
 	);

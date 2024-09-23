@@ -836,17 +836,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.start();
 
-			_appender.stop();
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+					LoggerTestUtil.INFO)) {
 
-			File reportFile = _getReportFile("upgrade_report.info");
+				_appender.stop();
 
-			Assert.assertTrue(reportFile.exists());
+				File reportFile = _getReportFile("upgrade_report.info");
 
-			Assert.assertTrue(
-				reportFile.getAbsolutePath(
-				).contains(
-					_upgradeReportDir
-				));
+				Assert.assertTrue(reportFile.exists());
+
+				String reportFileAbsolutePath = reportFile.getAbsolutePath();
+
+				Assert.assertTrue(
+					reportFileAbsolutePath.contains(_upgradeReportDir));
+
+				Assert.assertTrue(
+					StringUtil.contains(
+						String.valueOf(logCapture.getLogEntries()),
+						"Upgrade report generated in " + reportFileAbsolutePath,
+						StringPool.BLANK));
+			}
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

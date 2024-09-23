@@ -17,6 +17,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
 const test = mergeTests(
@@ -410,5 +411,84 @@ test(
 		]);
 
 		await expect(page.getByText('Custom Submit')).toBeVisible();
+	}
+);
+
+test(
+	'Can view usages',
+	{
+		tag: '@LPS-168163',
+	},
+	async ({apiHelpers, fragmentsPage, page, pageManagementSite}) => {
+
+		// Create new fragment collection
+
+		const fragmentCollectionName = getRandomString();
+
+		const {fragmentCollectionId} =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: pageManagementSite.id,
+					name: fragmentCollectionName,
+				}
+			);
+
+		// Create custom basic fragment
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId,
+			groupId: pageManagementSite.id,
+			html: '<div class="fragment-name">Fragment Example</div>',
+			name: fragmentEntryName,
+		});
+
+		// Assert view usages is disabled
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		const viewUsagesAction = page.getByRole('menuitem', {
+			name: 'View Usages',
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: viewUsagesAction,
+			trigger: page
+				.locator(`//p[@title="${fragmentEntryName}"]/../..`)
+				.getByLabel('More actions'),
+		});
+
+		await expect(viewUsagesAction).toHaveAttribute('disabled');
+
+		// Create a content page with custom fragment
+
+		const fragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: fragmentEntryName,
+		});
+
+		const layoutTitle = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			siteId: pageManagementSite.id,
+			title: layoutTitle,
+		});
+
+		// Assert view usages
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		await fragmentsPage.clickAction('View Usages', fragmentEntryName);
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Pages (2)'})
+		).toBeAttached();
 	}
 );

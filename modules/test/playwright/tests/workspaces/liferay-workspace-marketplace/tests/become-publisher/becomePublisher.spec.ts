@@ -39,6 +39,8 @@ test.describe('Customers can become a publisher', () => {
 		await becomePublisherPage.phone.fill('11111111111');
 		await becomePublisherPage.description.fill('This is my last dance.');
 
+		await page.keyboard.press('Tab');
+
 		await expect(becomePublisherPage.continueButton).toBeEnabled();
 
 		await clickAndExpectToBeVisible({

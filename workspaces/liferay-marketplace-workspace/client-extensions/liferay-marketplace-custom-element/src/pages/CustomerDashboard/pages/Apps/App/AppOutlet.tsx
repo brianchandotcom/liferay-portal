@@ -95,7 +95,7 @@ const AppOutlet = () => {
 				const productType = getSpecificationByKey(
 					'type',
 					product
-				)?.value;
+				)?.value?.toLowerCase();
 
 				const isCompletedOrderWithVirtualItems =
 					placedOrder.workflowStatusInfo.code ===

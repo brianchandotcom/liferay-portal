@@ -193,7 +193,10 @@ export default function fieldChange({
 				setTimeout(
 					() =>
 						Liferay.fire('journal:storeState', {
-							fieldName: fieldInstance.label,
+							fieldName:
+								Liferay.Language.get('edit') +
+								' ' +
+								fieldInstance.label,
 						}),
 					0
 				);

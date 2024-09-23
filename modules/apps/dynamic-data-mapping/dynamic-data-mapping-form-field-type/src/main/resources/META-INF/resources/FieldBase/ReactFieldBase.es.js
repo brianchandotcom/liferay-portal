@@ -596,7 +596,9 @@ export default function FieldBase({
 								});
 
 								Liferay.fire('journal:storeState', {
-									fieldName: 'Repeatable Removed',
+									fieldName: Liferay.Language.get(
+										'remove-repeatable-field'
+									),
 								});
 							}}
 							small
@@ -628,7 +630,9 @@ export default function FieldBase({
 							});
 
 							Liferay.fire('journal:storeState', {
-								fieldName: 'Repeatable Added',
+								fieldName: Liferay.Language.get(
+									'add-repeatable-field'
+								),
 							});
 						}}
 						small

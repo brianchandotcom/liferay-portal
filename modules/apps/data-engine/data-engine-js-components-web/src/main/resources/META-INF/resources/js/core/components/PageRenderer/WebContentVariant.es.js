@@ -203,7 +203,9 @@ function Placeholder({field, index, nestedFieldIndex}) {
 				type: EVENT_TYPES.FORM_VIEW.REPEATABLE_FIELD.CHANGE_ORDER,
 			});
 
-			Liferay.fire('journal:storeState', {fieldName: 'Repeatable Moved'});
+			Liferay.fire('journal:storeState', {
+				fieldName: Liferay.Language.get('move-repeatable-field'),
+			});
 
 			item.index = targetIndex;
 		},

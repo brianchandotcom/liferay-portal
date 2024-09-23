@@ -43,7 +43,12 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 						if (edited && Liferay.FeatureFlags['LPD-11228']) {
 							edited = false;
 
-							Liferay.fire('journal:storeState', {fieldName: "<%= inputEditorName %>"});
+							var inputLocalized = Liferay.component('<%= namespace + HtmlUtil.escapeJS(fieldName) %>');
+
+							var label = document.querySelector("label[for='"+inputLocalized.get('namespace')+inputLocalized.get('id')+"']").textContent
+
+							Liferay.fire('journal:storeState', {fieldName: Liferay.Language.get('edit') +
+							' ' + label});
 						}
 					}
 

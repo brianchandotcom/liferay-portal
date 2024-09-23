@@ -342,7 +342,6 @@ export default function UndoRedo({
 
 	const localeChangeHandler = useCallback(
 		(event) => {
-			const fieldName = 'Locale Change';
 			const selectedLanguageId = event.item.getAttribute('data-value');
 			const selectedLanguageIdInput = document.getElementById(
 				`${portletNamespace}languageId`
@@ -350,7 +349,9 @@ export default function UndoRedo({
 
 			selectedLanguageIdInput.value = selectedLanguageId;
 
-			Liferay.fire('journal:storeState', {fieldName});
+			Liferay.fire('journal:storeState', {
+				fieldName: Liferay.Language.get('change-language'),
+			});
 		},
 		[portletNamespace]
 	);
@@ -511,8 +512,6 @@ export default function UndoRedo({
 														: ''
 												}
 											>
-												{Liferay.Language.get('edit')}{' '}
-
 												{METADATA_FIELD_NAME_HISTORY[
 													item.name
 												] || item.name}

@@ -41,7 +41,7 @@ public class ModifiedFacetPortletSharedSearchContributorTest {
 		List<String> selectedRangeStrings =
 			testModifiedFacetPortletSharedSearchContributor.
 				getSelectedRangeStrings(
-					_PARAMETER_NAME, portletSharedSearchSettings,
+					"dateRange", _PARAMETER_NAME, portletSharedSearchSettings,
 					JSONUtil.put(
 						JSONUtil.put(
 							"label", "past-hour"
@@ -78,12 +78,13 @@ public class ModifiedFacetPortletSharedSearchContributorTest {
 
 		@Override
 		public List<String> getSelectedRangeStrings(
-			String parameterName,
+			String aggregationType, String parameterName,
 			PortletSharedSearchSettings portletSharedSearchSettings,
 			JSONArray rangesJSONArray) {
 
 			return super.getSelectedRangeStrings(
-				parameterName, portletSharedSearchSettings, rangesJSONArray);
+				aggregationType, parameterName, portletSharedSearchSettings,
+				rangesJSONArray);
 		}
 
 	}

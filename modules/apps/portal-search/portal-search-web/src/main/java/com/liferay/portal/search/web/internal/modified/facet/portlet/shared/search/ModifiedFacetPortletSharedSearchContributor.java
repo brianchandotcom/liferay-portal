@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
-import com.liferay.portal.search.web.internal.date.range.BaseDateRangeFacetPortletSharedSearchContributor;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.range.BaseRangeFacetPortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletSharedSearchContributor.class
 )
 public class ModifiedFacetPortletSharedSearchContributor
-	extends BaseDateRangeFacetPortletSharedSearchContributor
+	extends BaseRangeFacetPortletSharedSearchContributor
 	implements PortletSharedSearchContributor {
 
 	@Override
@@ -46,16 +46,16 @@ public class ModifiedFacetPortletSharedSearchContributor
 			new ModifiedFacetPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferences());
 
-		JSONArray rangesJSONArray = getRangesJSONArray(
+		JSONArray rangesJSONArray = getDateRangesJSONArray(
 			CalendarFactoryUtil.getCalendar(),
 			modifiedFacetPortletPreferences.getRangesJSONArray());
 
 		List<String> selectedRangeStrings = getSelectedRangeStrings(
-			modifiedFacetPortletPreferences.getParameterName(),
+			"dateRange", modifiedFacetPortletPreferences.getParameterName(),
 			portletSharedSearchSettings, rangesJSONArray);
 
 		String selectedCustomRangeString = getSelectedCustomRangeString(
-			modifiedFacetPortletPreferences.getParameterName(),
+			"dateRange", modifiedFacetPortletPreferences.getParameterName(),
 			portletSharedSearchSettings);
 
 		if (!Validator.isBlank(selectedCustomRangeString)) {

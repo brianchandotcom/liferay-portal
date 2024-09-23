@@ -647,6 +647,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testUpgradeReportDisabled() throws Exception {
+		boolean originalUpgradeEnable = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED", false);
+
+		try {
+			_appender.start();
+
+			_appender.stop();
+
+			File reportFile = _getReportFile("upgrade_report.info", false);
+
+			Assert.assertFalse(reportFile.exists());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_ENABLED",
+				originalUpgradeEnable);
+		}
+	}
+
+	@Test
 	public void testRenameUpgradeReport() throws Exception {
 		_appender.start();
 

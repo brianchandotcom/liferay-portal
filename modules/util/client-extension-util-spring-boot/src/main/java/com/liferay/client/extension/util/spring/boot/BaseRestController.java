@@ -40,9 +40,7 @@ public abstract class BaseRestController {
 		).method(
 			HttpMethod.DELETE
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).header(
 			HttpHeaders.AUTHORIZATION, authorization
 		).bodyValue(
@@ -56,9 +54,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).get(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).header(
 			HttpHeaders.AUTHORIZATION, authorization
 		).exchangeToMono(
@@ -72,9 +68,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).patch(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).bodyValue(
 			body
 		).header(
@@ -90,9 +84,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).post(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).bodyValue(
 			body
 		).header(
@@ -108,9 +100,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).put(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).header(
 			HttpHeaders.AUTHORIZATION, authorization
 		).bodyValue(
@@ -125,9 +115,7 @@ public abstract class BaseRestController {
 		).method(
 			HttpMethod.DELETE
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).header(
 			HttpHeaders.AUTHORIZATION, authorization
 		).bodyValue(
@@ -141,9 +129,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).get(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).header(
 			HttpHeaders.AUTHORIZATION, authorization
 		).exchangeToMono(
@@ -198,9 +184,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).patch(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).bodyValue(
 			body
 		).header(
@@ -214,9 +198,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).post(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).bodyValue(
 			body
 		).header(
@@ -230,9 +212,7 @@ public abstract class BaseRestController {
 		return _getWebClient(
 		).put(
 		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
+			path
 		).header(
 			HttpHeaders.AUTHORIZATION, authorization
 		).bodyValue(

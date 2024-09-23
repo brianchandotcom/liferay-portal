@@ -217,10 +217,6 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			HashMapBuilder.put(
 				"checkout",
 				() -> {
-					CTCollection ctCollection =
-						_ctCollectionLocalService.getCTCollection(
-							ctEntry.getCtCollectionId());
-
 					if (ctCollection.getStatus() !=
 							WorkflowConstants.STATUS_DRAFT) {
 
@@ -256,14 +252,19 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 					}
 
 					return addAction(
-						ActionKeys.VIEW, ctEntry.getCtCollectionId(),
+						ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
 						"getCTEntry", _ctCollectionModelResourcePermission);
 				}
 			).put(
+				"update",
+				addAction(
+					ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
+					"getCTEntry", _ctCollectionModelResourcePermission)
+			).put(
 				"view-discard",
 				addAction(
-					ActionKeys.VIEW, ctEntry.getCtCollectionId(), "getCTEntry",
-					_ctCollectionModelResourcePermission)
+					ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
+					"getCTEntry", _ctCollectionModelResourcePermission)
 			).build(),
 			null, contextHttpServletRequest, ctEntry.getCtCollectionId(),
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

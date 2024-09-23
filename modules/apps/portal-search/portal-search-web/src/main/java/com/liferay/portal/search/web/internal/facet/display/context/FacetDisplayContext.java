@@ -28,20 +28,4 @@ public interface FacetDisplayContext {
 
 	public boolean isRenderNothing();
 
-	public void setBucketDisplayContexts(
-		List<BucketDisplayContext> bucketDisplayContexts);
-
-	public void setNothingSelected(boolean nothingSelected);
-
-	public void setPaginationStartParameterName(
-		String paginationStartParameterName);
-
-	public void setParameterName(String parameterName);
-
-	public void setParameterValue(String paramValue);
-
-	public void setParameterValues(List<String> parameterValues);
-
-	public void setRenderNothing(boolean renderNothing);
-
 }

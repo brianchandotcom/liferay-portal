@@ -848,31 +848,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testUpgradeReportDirectory() throws Exception {
+	public void testUpgradeReportInCustomDirectory() throws Exception {
 		String originalUpgradeReportDir =
 			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_DIR", "./test_reports");
+				PropsValues.class, "UPGRADE_REPORT_DIR", "./custom_reports");
 
 		try {
 			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
 
 			_appender.start();
 
-			LogEvent logEvent = Log4jLogEvent.newBuilder(
-			).setLoggerName(
-				"Warn"
-			).setLevel(
-				Level.WARN
-			).setMessage(
-				new SimpleMessage(
-					"Upgrade report generated in " + _upgradeReportDir)
-			).build();
-
-			_appender.append(logEvent);
-
 			_appender.stop();
 
-			_assertReport("Upgrade report generated in " + _upgradeReportDir);
+			File reportFile = _getReportFile("upgrade_report.info", false);
+
+			Assert.assertTrue(reportFile.exists());
+
+			Assert.assertTrue(
+				reportFile.getAbsolutePath(
+				).contains(
+					_upgradeReportDir
+				));
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

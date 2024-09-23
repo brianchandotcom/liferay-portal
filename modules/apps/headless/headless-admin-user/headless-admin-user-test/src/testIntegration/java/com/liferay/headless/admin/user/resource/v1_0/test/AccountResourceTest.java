@@ -203,6 +203,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testPatchAccount();
 
 		_testPatchAccountWithContactInformation();
+		_testPatchAccountWithEmptyOrganizationExternalReferenceCodes();
+		_testPatchAccountWithEmptyOrganizationIds();
 		_testPatchAccountWithMoreExternalReferenceCodes();
 		_testPatchAccountWithPostalAddressPhoneNumber();
 	}
@@ -392,6 +394,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testPutAccount();
 
 		_testPutAccountWithContactInformation();
+		_testPutAccountWithEmptyOrganizationExternalReferenceCodes();
+		_testPutAccountWithEmptyOrganizationIds();
 		_testPutAccountWithMoreExternalReferenceCodes();
 		_testPutAccountWithPostalAddressPhoneNumber();
 	}
@@ -987,6 +991,97 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			patchAccount.getAccountContactInformation());
 	}
 
+	private void _testPatchAccountWithEmptyOrganizationExternalReferenceCodes()
+		throws Exception {
+
+		Account randomAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		String[] organizationExternalReferenceCodes = {
+			organization1.getExternalReferenceCode(),
+			organization2.getExternalReferenceCode()
+		};
+
+		Arrays.sort(organizationExternalReferenceCodes);
+
+		randomAccount.setOrganizationExternalReferenceCodes(
+			organizationExternalReferenceCodes);
+
+		Account postAccount = _postAccount(randomAccount);
+
+		Arrays.sort(postAccount.getOrganizationExternalReferenceCodes());
+
+		Assert.assertArrayEquals(
+			organizationExternalReferenceCodes,
+			postAccount.getOrganizationExternalReferenceCodes());
+
+		postAccount.setOrganizationExternalReferenceCodes(() -> null);
+		postAccount.setOrganizationIds(() -> null);
+
+		Account patchAccount = accountResource.patchAccount(
+			postAccount.getId(), postAccount);
+
+		Arrays.sort(patchAccount.getOrganizationExternalReferenceCodes());
+
+		Assert.assertArrayEquals(
+			organizationExternalReferenceCodes,
+			patchAccount.getOrganizationExternalReferenceCodes());
+
+		postAccount.setOrganizationExternalReferenceCodes(new String[0]);
+		postAccount.setOrganizationIds(new Long[0]);
+
+		patchAccount = accountResource.patchAccount(
+			postAccount.getId(), postAccount);
+
+		Assert.assertArrayEquals(
+			new String[0],
+			patchAccount.getOrganizationExternalReferenceCodes());
+	}
+
+	private void _testPatchAccountWithEmptyOrganizationIds() throws Exception {
+		Account randomAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Long[] organizationIds = {
+			organization1.getOrganizationId(), organization2.getOrganizationId()
+		};
+
+		Arrays.sort(organizationIds);
+
+		randomAccount.setOrganizationIds(organizationIds);
+
+		Account postAccount = _postAccount(randomAccount);
+
+		Arrays.sort(postAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			organizationIds, postAccount.getOrganizationIds());
+
+		postAccount.setOrganizationExternalReferenceCodes(() -> null);
+		postAccount.setOrganizationIds(() -> null);
+
+		Account patchAccount = accountResource.patchAccount(
+			postAccount.getId(), postAccount);
+
+		Arrays.sort(patchAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			organizationIds, patchAccount.getOrganizationIds());
+
+		postAccount.setOrganizationExternalReferenceCodes(new String[0]);
+		postAccount.setOrganizationIds(new Long[0]);
+
+		patchAccount = accountResource.patchAccount(
+			postAccount.getId(), postAccount);
+
+		Assert.assertArrayEquals(
+			new Long[0], patchAccount.getOrganizationIds());
+	}
+
 	private void _testPatchAccountWithMoreExternalReferenceCodes()
 		throws Exception {
 
@@ -1328,6 +1423,72 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		_assertEquals(
 			accountContactInformation,
 			putAccount.getAccountContactInformation());
+	}
+
+	private void _testPutAccountWithEmptyOrganizationExternalReferenceCodes()
+		throws Exception {
+
+		Account randomAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		String[] organizationExternalReferenceCodes = {
+			organization1.getExternalReferenceCode(),
+			organization2.getExternalReferenceCode()
+		};
+
+		Arrays.sort(organizationExternalReferenceCodes);
+
+		randomAccount.setOrganizationExternalReferenceCodes(
+			organizationExternalReferenceCodes);
+
+		Account postAccount = _postAccount(randomAccount);
+
+		Arrays.sort(postAccount.getOrganizationExternalReferenceCodes());
+
+		Assert.assertArrayEquals(
+			organizationExternalReferenceCodes,
+			postAccount.getOrganizationExternalReferenceCodes());
+
+		postAccount.setOrganizationExternalReferenceCodes(new String[0]);
+		postAccount.setOrganizationIds(new Long[0]);
+
+		Account putAccount = accountResource.putAccount(
+			postAccount.getId(), postAccount);
+
+		Assert.assertArrayEquals(
+			new String[0], putAccount.getOrganizationExternalReferenceCodes());
+	}
+
+	private void _testPutAccountWithEmptyOrganizationIds() throws Exception {
+		Account randomAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Long[] organizationIds = {
+			organization1.getOrganizationId(), organization2.getOrganizationId()
+		};
+
+		Arrays.sort(organizationIds);
+
+		randomAccount.setOrganizationIds(organizationIds);
+
+		Account postAccount = _postAccount(randomAccount);
+
+		Arrays.sort(postAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			organizationIds, postAccount.getOrganizationIds());
+
+		postAccount.setOrganizationExternalReferenceCodes(new String[0]);
+		postAccount.setOrganizationIds(new Long[0]);
+
+		Account putAccount = accountResource.putAccount(
+			postAccount.getId(), postAccount);
+
+		Assert.assertArrayEquals(new Long[0], putAccount.getOrganizationIds());
 	}
 
 	private void _testPutAccountWithMoreExternalReferenceCodes()

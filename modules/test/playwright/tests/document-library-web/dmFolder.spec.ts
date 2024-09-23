@@ -11,29 +11,35 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export const test = mergeTests(loginTest(), documentLibraryPagesTest);
 
-test('LPD-27271 Can create DM folder in French language', async ({page}) => {
-	const folderTitle = 'DM Folder FR';
+test(
+	'Can create DM folder in French language',
+	{
+		tag: '@LPD-27271',
+	},
+	async ({page}) => {
+		const folderTitle = 'DM Folder FR';
 
-	await page.goto(`/fr/group/guest${PORTLET_URLS.documentLibrary}`);
-	await page.getByRole('button', {name: 'Nouveau'}).click();
+		await page.goto(`/fr/group/guest${PORTLET_URLS.documentLibrary}`);
+		await page.getByRole('button', {name: 'Nouveau'}).click();
 
-	await page
-		.getByRole('menuitem', {
-			name: 'Répertoire',
-		})
-		.click();
+		await page
+			.getByRole('menuitem', {
+				name: 'Répertoire',
+			})
+			.click();
 
-	await page.getByRole('textbox').first().fill(folderTitle);
-	await page.getByRole('button', {name: 'Enregistrer'}).click();
+		await page.getByRole('textbox').first().fill(folderTitle);
+		await page.getByRole('button', {name: 'Enregistrer'}).click();
 
-	await expect(page.getByRole('link', {name: folderTitle})).toBeVisible();
+		await expect(page.getByRole('link', {name: folderTitle})).toBeVisible();
 
-	await page
-		.getByRole('checkbox', {name: `${folderTitle} More actions`})
-		.check();
-	await page.getByRole('button', {name: 'Effacer'}).nth(1).click();
+		await page
+			.getByRole('checkbox', {name: `${folderTitle} More actions`})
+			.check();
+		await page.getByRole('button', {name: 'Effacer'}).nth(1).click();
 
-	// change back to english language
+		// change back to english language
 
-	await page.goto('/en');
-});
+		await page.goto('/en');
+	}
+);

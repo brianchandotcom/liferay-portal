@@ -190,7 +190,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 		if (hasGroupIdColumn) {
 			sql = StringBundler.concat(
-				sql, " and groupId =", group.getGroupId());
+				sql, " and groupId = ", group.getGroupId());
 		}
 
 		db.runSQL(sql);

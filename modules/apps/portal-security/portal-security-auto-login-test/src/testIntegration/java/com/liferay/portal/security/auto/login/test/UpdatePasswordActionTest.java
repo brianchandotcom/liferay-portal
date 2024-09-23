@@ -8,8 +8,6 @@ package com.liferay.portal.security.auto.login.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.UpdatePasswordAction;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,7 +39,6 @@ import java.util.Date;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,39 +58,31 @@ public class UpdatePasswordActionTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		try {
-			_user = UserTestUtil.addUser();
-
-			_user.setLastLoginDate(null);
-
-			_user = UserLocalServiceUtil.updateUser(_user);
-
-			_company = CompanyLocalServiceUtil.getCompany(_user.getCompanyId());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Error getting user ", exception);
-			}
-		}
-	}
-
 	@Test
 	public void testUpdatePasswordSetLastLogin() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		user.setLastLoginDate(null);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			user.getCompanyId());
+
 		MockHttpServletRequest mockHttpServletRequest =
-			_prepareHttpServletRequestWithTicket();
+			_prepareHttpServletRequestWithTicket(user, company);
 
 		_updatePasswordAction.execute(
 			null, mockHttpServletRequest, new MockHttpServletResponse());
 
 		User setPasswordUser = UserLocalServiceUtil.getUserByEmailAddress(
-			_company.getCompanyId(), _user.getEmailAddress());
+			company.getCompanyId(), user.getEmailAddress());
 
 		Assert.assertNotNull(setPasswordUser.getLastLoginDate());
 	}
 
-	private MockHttpServletRequest _prepareHttpServletRequestWithTicket()
+	private MockHttpServletRequest _prepareHttpServletRequestWithTicket(
+			User user, Company company)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -114,7 +103,7 @@ public class UpdatePasswordActionTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(company);
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 
@@ -122,7 +111,7 @@ public class UpdatePasswordActionTest {
 
 		themeDisplay.setSiteGroupId(group.getGroupId());
 
-		themeDisplay.setUser(_user);
+		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -132,7 +121,7 @@ public class UpdatePasswordActionTest {
 		Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
 
 		Ticket ticket = _ticketLocalService.addDistinctTicket(
-			_user.getCompanyId(), User.class.getName(), _user.getUserId(),
+			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_PASSWORD, null, expirationDate,
 			new ServiceContext());
 
@@ -156,12 +145,6 @@ public class UpdatePasswordActionTest {
 
 		return mockHttpServletRequest;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdatePasswordActionTest.class);
-
-	private static Company _company;
-	private static User _user;
 
 	@Inject
 	private TicketLocalService _ticketLocalService;

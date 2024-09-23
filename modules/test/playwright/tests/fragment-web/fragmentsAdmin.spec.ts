@@ -541,3 +541,80 @@ test(
 		await checkBackButtonTitle(page, 'Go to Fragments');
 	}
 );
+
+test(
+	'Form fragment configuration should show input fragment of same type',
+	{
+		tag: '@LPS-180331',
+	},
+	async ({apiHelpers, fragmentsPage, page, pageManagementSite}) => {
+
+		// Create new fragment collection
+
+		const fragmentCollectionName = getRandomString();
+
+		const {fragmentCollectionId} =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: pageManagementSite.id,
+					name: fragmentCollectionName,
+				}
+			);
+
+		// Create custom input fragment
+
+		const inputFragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId,
+			groupId: pageManagementSite.id,
+			html: '<div class="fragment-name">Fragment Example</div>',
+			name: inputFragmentEntryName,
+			type: 'input',
+			typeOptions: {fieldTypes: ['long-text', 'text']},
+		});
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId,
+			groupId: pageManagementSite.id,
+			html: '<div class="fragment-name">Fragment Example</div>',
+			name: getRandomString(),
+			type: 'input',
+			typeOptions: {fieldTypes: ['boolean']},
+		});
+
+		// Go to fragment set
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		// Assert new input fragment is not present under checkbox type
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoSelectFragmentConfiguration(
+			fragmentCollectionName,
+			pageManagementSite.name,
+			'Checkbox'
+		);
+
+		await expect(
+			fragmentsPage.selectFragmentIFrame.getByText(inputFragmentEntryName)
+		).not.toBeAttached();
+
+		// Assert new input fragment is present under long text type
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoSelectFragmentConfiguration(
+			fragmentCollectionName,
+			pageManagementSite.name,
+			'Textarea'
+		);
+
+		await expect(
+			fragmentsPage.selectFragmentIFrame.getByText(inputFragmentEntryName)
+		).toBeAttached();
+	}
+);

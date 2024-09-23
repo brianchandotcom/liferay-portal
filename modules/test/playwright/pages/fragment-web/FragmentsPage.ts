@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {FrameLocator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
@@ -13,8 +13,13 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 export class FragmentsPage {
 	readonly page: Page;
 
+	readonly selectFragmentIFrame: FrameLocator;
+
 	constructor(page: Page) {
 		this.page = page;
+		this.selectFragmentIFrame = page.frameLocator(
+			'iframe[title="Select Fragment"]'
+		);
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -35,6 +40,32 @@ export class FragmentsPage {
 			.locator('.sheet-title')
 			.getByText(name, {exact: true})
 			.waitFor();
+	}
+
+	async gotoSelectFragmentConfiguration(
+		fragmentCollectionName: string,
+		siteName: string,
+		type: string
+	) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Configuration'}),
+			trigger: this.page.getByLabel('Options'),
+		});
+
+		await this.page
+			.getByRole('cell', {name: type})
+			.getByRole('button')
+			.click();
+
+		await this.selectFragmentIFrame
+			.locator('.nav-link')
+			.filter({hasText: siteName})
+			.click();
+
+		await this.selectFragmentIFrame
+			.getByRole('link', {exact: true, name: fragmentCollectionName})
+			.click();
 	}
 
 	async copyFragment(title: string) {

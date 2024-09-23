@@ -37,7 +37,7 @@ const PageRenderer: React.FC<PageRendererProps> = ({
 		);
 	}
 
-	return <div className={className}>{children}</div>;
+	return className ? <div className={className}>{children}</div> : children;
 };
 
 type PageProps = {

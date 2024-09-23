@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Liferay} from '../liferay/liferay';
+
 export default {
 	'a-cloud-app-is-a-client-extension-delivered-as-a-deployed-service-to-liferay-saas-and-liferay-paas-customers-dxp-apps-include-jar-based-collection-meant-to-run-within-liferay-dxp-fragments-client-extensions-that-do-not-require-dedicated-resources':
 		'A Cloud App is a client extension  delivered as a deployed service to Liferay SaaS and Liferay PaaS customers. DXP apps include JAR based collection meant to run within Liferay DXP, Fragments & Client Extensions that do not require dedicated resources.',
@@ -168,6 +170,7 @@ export default {
 	'environment': 'Environment',
 	'environment-selection': 'Environment Selection',
 	'environment-type': 'Environment Type',
+	'environments': 'Environments',
 	'exit': 'Exit',
 	'exp-date': 'Exp. Date',
 	'expiration-date': 'Expiration Date',
@@ -210,6 +213,7 @@ export default {
 	'insert-text-here': 'Insert text here',
 	'install': 'Install',
 	'installation': 'Installation',
+	'installation-failed': 'Installation Failed',
 	'installation-in-progress': 'Installation in Progress',
 	'installation-success': 'Installation Success',
 	'instance-size': 'Instance Size',
@@ -290,6 +294,7 @@ export default {
 	'profile': 'Profile',
 	'project': 'Project',
 	'project-selection': 'Project Selection',
+	'projects': 'Projects',
 	'provide-app-build': 'Provide app build',
 	'provide-company-profile-details': 'Provide company profile details',
 	'provide-contact-us-details': 'Provide contact us details',
@@ -461,6 +466,7 @@ export default {
 	'workspace-info': 'Workspace Info',
 	'workspace-name': 'Workspace Name',
 	'workspace-owner-email': 'Workspace Owner Email',
+	'x-available-for-you': `{0} available for <b>${Liferay.ThemeDisplay.getUserEmailAddress()}</b> (you)`,
 	'x-is-required': '{0} is required',
 	'x-saved-as-a-draft-successfully':
 		'<b>{0}</b> saved as a <b>draft</b> successfully',

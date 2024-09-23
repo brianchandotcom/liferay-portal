@@ -5,8 +5,10 @@
 
 export enum ORDER_CUSTOM_FIELDS {
 	ANALYTICS_GROUP_ID = 'analytics-group-id',
-	START_DATE = 'trial-start-date',
+	CLOUD_PROVISIONING = 'cloud-provisioning',
 	END_DATE = 'trial-end-date',
+	PROJECT_NAME = 'project-name',
+	START_DATE = 'trial-start-date',
 	VIRTUAL_HOST = 'trial-virtualhost',
 }
 

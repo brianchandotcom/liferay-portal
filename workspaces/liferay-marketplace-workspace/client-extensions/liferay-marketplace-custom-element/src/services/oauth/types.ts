@@ -9,7 +9,7 @@ export type ConsoleProjectsUsage = {
 };
 
 export type ConsoleUserProject = {
-	environments: string[];
+	environments: {isExtensionEnvironment: boolean; projectId: string}[];
 	rootProjectId: string;
 	rootProjectPlanUsage: {
 		cpu: ConsoleCPU;
@@ -19,6 +19,7 @@ export type ConsoleUserProject = {
 };
 
 type ConsoleCPU = {
+	free: number;
 	limit: number;
 	used: number;
 };

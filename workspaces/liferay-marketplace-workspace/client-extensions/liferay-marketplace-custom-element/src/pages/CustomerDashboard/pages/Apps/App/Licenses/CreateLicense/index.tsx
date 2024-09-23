@@ -25,7 +25,7 @@ import {formatDate} from '../../../../../../PublisherDashboard/PublisherDashboar
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
-import {CreateLicenseForm, StepCreateLicense, StepsInformation} from './Types';
+import {CreateLicenseForm, StepCreateLicense, StepsInformation} from './types';
 
 type ExtendBannerProps = {
 	subscription: {

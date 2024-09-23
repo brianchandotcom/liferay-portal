@@ -9,14 +9,6 @@ import ProductPurchase from '../../components/ProductPurchase';
 import {SOLUTION_TYPES} from '../../enums/Product';
 import useAccounts from './hooks/useAccounts';
 
-const getIcon = (image = '') => {
-	if (window.location.href.startsWith('https')) {
-		return image;
-	}
-
-	return image.replace('https', 'http');
-};
-
 type ProductPurchaseOutletProps = {
 	product: DeliveryProduct;
 	routes: any[];
@@ -44,14 +36,9 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 	return (
 		<ProductPurchase>
-			<ProductPurchase.Header
-				account={selectedAccount}
-				productCardProps={{
-					icon: getIcon(product?.urlImage),
-					subtitle: product?.catalogName,
-					title: product.name,
-				}}
-			/>
+			<ProductPurchase.Header product={product}>
+				<ProductPurchase.HeaderAccount account={selectedAccount} />
+			</ProductPurchase.Header>
 
 			<ProductPurchase.Steps
 				activeKey={pathname}

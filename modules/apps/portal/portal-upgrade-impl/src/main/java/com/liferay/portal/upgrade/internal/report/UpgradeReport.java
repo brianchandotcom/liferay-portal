@@ -65,9 +65,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
@@ -154,8 +156,8 @@ public class UpgradeReport {
 		return messagesPrinters;
 	}
 
-	private List<String> _getPropertiesFilePathStrings() {
-		List<String> propertiesFilePathStrings = new ArrayList<>();
+	private Set<String> _getPropertiesFilePathStrings() {
+		Set<String> propertiesFilePathStrings = new HashSet<>();
 
 		for (String loadedSource : PropsUtil.getLoadedSources()) {
 			try {
@@ -183,8 +185,7 @@ public class UpgradeReport {
 	private Map<String, Object> _getReportData(
 		UpgradeRecorder upgradeRecorder) {
 
-		List<String> propertiesFilePathStrings =
-			_getPropertiesFilePathStrings();
+		Set<String> propertiesFilePathStrings = _getPropertiesFilePathStrings();
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"execution.date",

@@ -68,7 +68,6 @@ public class AssetTagsSearchFacetDisplayContext implements FacetDisplayContext {
 		return _renderNothing;
 	}
 
-	@Override
 	public void setBucketDisplayContexts(
 		List<BucketDisplayContext> bucketDisplayContexts) {
 
@@ -87,34 +86,28 @@ public class AssetTagsSearchFacetDisplayContext implements FacetDisplayContext {
 		_facetLabel = facetLabel;
 	}
 
-	@Override
 	public void setNothingSelected(boolean nothingSelected) {
 		_nothingSelected = nothingSelected;
 	}
 
-	@Override
 	public void setPaginationStartParameterName(
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
-	@Override
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
 
-	@Override
 	public void setParameterValue(String parameterValue) {
 		_parameterValue = parameterValue;
 	}
 
-	@Override
 	public void setParameterValues(List<String> parameterValues) {
 		_parameterValues = parameterValues;
 	}
 
-	@Override
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
 	}

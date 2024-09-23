@@ -120,7 +120,6 @@ public class AssetCategoriesSearchFacetDisplayContext
 		return _renderNothing;
 	}
 
-	@Override
 	public void setBucketDisplayContexts(
 		List<BucketDisplayContext> bucketDisplayContexts) {
 
@@ -137,34 +136,28 @@ public class AssetCategoriesSearchFacetDisplayContext
 		_cloud = cloud;
 	}
 
-	@Override
 	public void setNothingSelected(boolean nothingSelected) {
 		_nothingSelected = nothingSelected;
 	}
 
-	@Override
 	public void setPaginationStartParameterName(
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
-	@Override
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
 
-	@Override
 	public void setParameterValue(String paramValue) {
 		_parameterValue = paramValue;
 	}
 
-	@Override
 	public void setParameterValues(List<String> parameterValues) {
 		_parameterValues = parameterValues;
 	}
 
-	@Override
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
 	}

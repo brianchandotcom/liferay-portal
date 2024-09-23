@@ -32,4 +32,8 @@ test('LPD-27271 Can create DM folder in French language', async ({page}) => {
 		.getByRole('checkbox', {name: `${folderTitle} More actions`})
 		.check();
 	await page.getByRole('button', {name: 'Effacer'}).nth(1).click();
+
+	// change back to english language
+
+	await page.goto('/en');
 });

@@ -333,18 +333,40 @@ function CategorySelectorInput({
 		// be the start of the category tree, in which the children of the
 		// vocabulary get added on as the tree gets expanded (in modal).
 
-		fetch(FETCH_URLS.getSites(), {
-			headers: DEFAULT_HEADERS,
-			method: 'GET',
+		fetch(`/api/jsonws/invoke`, {
+			body: new URLSearchParams({
+				cmd: JSON.stringify({
+					'/group/get-user-sites-groups': {},
+				}),
+				p_auth: Liferay.authToken,
+			}),
+			headers: new Headers({
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type':
+					'application/x-www-form-urlencoded;charset=UTF-8',
+			}),
+			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({items}) => {
-				const itemsWithGlobalSite = items.some(
+			.then((items) => {
+
+				// Filter out results that are not a site and convert groupId to id (number).
+
+				const itemsFilteredForSites = items
+					.filter(({site}) => !!site)
+					.map((item) => ({
+						...item,
+						id: Number(item.groupId),
+					}));
+
+				// Add global site to the list of sites if it is not already included.
+
+				const itemsWithGlobalSite = itemsFilteredForSites.some(
 					({id}) =>
 						id.toString() ===
 						Liferay.ThemeDisplay.getCompanyGroupId().toString()
 				)
-					? items
+					? itemsFilteredForSites
 					: [
 							{
 								descriptiveName: Liferay.Language.get('global'),
@@ -352,7 +374,7 @@ function CategorySelectorInput({
 									Liferay.ThemeDisplay.getCompanyGroupId()
 								),
 							},
-							...items,
+							...itemsFilteredForSites,
 						];
 
 				const tree = [];
@@ -403,6 +425,8 @@ function CategorySelectorInput({
 										})
 									),
 								descriptiveName: site.descriptiveName,
+								externalReferenceCode:
+									site.externalReferenceCode,
 								id: JSON.stringify(site.id),
 								name: site.name,
 							};
@@ -410,6 +434,8 @@ function CategorySelectorInput({
 						.catch(() => {
 							tree[siteIndex] = {
 								descriptiveName: site.descriptiveName,
+								externalReferenceCode:
+									site.externalReferenceCode,
 								id: JSON.stringify(site.id),
 								name: site.name,
 							};

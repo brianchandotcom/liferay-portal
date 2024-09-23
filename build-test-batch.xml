@@ -4773,10 +4773,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57-jdk8-quarantine">
-		<antcall target="functional-tomcat90-mysql57-jdk8" />
-	</target>
-
 	<target name="functional-tomcat90-mysql57-jdk8_redhat">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
@@ -6382,10 +6378,6 @@ ${output.content}</echo>
 		/>
 	</target>
 
-	<target name="plugins-functional-tomcat90-mysql57-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
-	</target>
-
 	<target name="plugins-gulp-jdk8">
 		<fail message="Please set the property ${test.base.dir.name}" unless="test.base.dir.name" />
 
@@ -7600,10 +7592,6 @@ information. Make sure to commit in all build services results.
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
 		<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="compileJava" />
-	</target>
-
-	<target name="subrepository-functional-tomcat90-mysql57-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
 	<target name="subrepository-integration-mysql57-jdk8">

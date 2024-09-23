@@ -1,10 +1,10 @@
 @import '../../common/styles/global';
 
-@import './components/ProjectBreadcrumb/project-breadcrumb';
-@import './components/ProjectErrorMessage/project-error-message';
-@import './layouts/BaseLayout/base-layout';
+@import './components/ProjectBreadcrumb/project_breadcrumb';
+@import './components/ProjectErrorMessage/project_error_message';
+@import './layouts/BaseLayout/base_layout';
 
 @import './pages/Project/Attachments/attachments';
 @import './pages/Project/Overview/overview';
-@import './pages/Project/RenewTable/renew-table';
-@import './pages/Project/TeamMembers/team-members';
+@import './pages/Project/RenewTable/renew_table';
+@import './pages/Project/TeamMembers/team_members';

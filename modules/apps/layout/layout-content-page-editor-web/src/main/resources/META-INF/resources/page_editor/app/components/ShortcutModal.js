@@ -54,26 +54,26 @@ export default function ShortcutModal({onCloseModal}) {
 					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'R']}
 				/>
 
-				{Liferay.FeatureFlags['LPD-18221'] && (
+				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
 						description={Liferay.Language.get('cut')}
 						keyCombinations={[KEY_LABEL, 'X']}
 					/>
-				)}
+				) : null}
 
-				{Liferay.FeatureFlags['LPD-18221'] && (
+				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
 						description={Liferay.Language.get('copy')}
 						keyCombinations={[KEY_LABEL, 'C']}
 					/>
-				)}
+				) : null}
 
-				{Liferay.FeatureFlags['LPD-18221'] && (
+				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
 						description={Liferay.Language.get('paste')}
 						keyCombinations={[KEY_LABEL, 'V']}
 					/>
-				)}
+				) : null}
 
 				<p className="sheet-subtitle text-secondary">
 					{Liferay.Language.get('selection')}
@@ -83,6 +83,26 @@ export default function ShortcutModal({onCloseModal}) {
 					description={Liferay.Language.get('select-parent')}
 					keyCombinations={['⇧', 'Enter']}
 				/>
+
+				{Liferay.FeatureFlags['LPD-18221'] ? (
+					<>
+						<KeyboardShorcut
+							description={Liferay.Language.get(
+								'range-selection'
+							)}
+							keyCombinations={['⇧', 'Arrows']}
+						/>
+					</>
+				) : null}
+
+				{Liferay.FeatureFlags['LPD-18221'] ? (
+					<KeyboardShorcut
+						description={Liferay.Language.get(
+							'non-continuous-selection'
+						)}
+						keyCombinations={[KEY_LABEL, 'Enter']}
+					/>
+				) : null}
 
 				<p className="sheet-subtitle text-secondary">
 					{Liferay.Language.get('view')}

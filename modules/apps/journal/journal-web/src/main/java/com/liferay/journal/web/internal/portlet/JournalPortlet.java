@@ -51,6 +51,7 @@ import com.liferay.journal.exception.MaxAddMenuFavItemsException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
@@ -81,6 +82,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
@@ -284,6 +286,13 @@ public class JournalPortlet extends MVCPortlet {
 
 				ActionUtil.getArticle(
 					_portal.getHttpServletRequest(renderRequest));
+			}
+			else if (Validator.isNull(path)) {
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(renderRequest);
+
+				httpServletRequest.setAttribute(
+					CTTimelineKeys.CLASS_NAME, JournalArticle.class.getName());
 			}
 			else {
 				_getFolder(_portal.getHttpServletRequest(renderRequest));

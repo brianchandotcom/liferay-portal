@@ -1,6 +1,6 @@
 liferay-customer-site-initializer-quickstart:
     name: Liferay Customer Site Initializer Quickstart
-    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-quickstart-oauth-application
+    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-quickstart-oahs
     siteExternalReferenceCode: LIFERAY_CUSTOMER
     siteName: Liferay Customer
     type: siteInitializer

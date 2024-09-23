@@ -526,6 +526,19 @@ public class CommerceChannelDisplayContext
 		return commerceOrderCheckoutConfiguration.hideShippingPriceZero();
 	}
 
+	public boolean isMultiShippingEnabled() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.multiShippingEnabled();
+	}
+
 	public boolean isRequestQuoteEnabled() throws PortalException {
 		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
 			_getCommerceOrderFieldsConfiguration();

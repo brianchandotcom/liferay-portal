@@ -805,31 +805,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testUpgradeReportDisabled() throws Exception {
-		boolean originalUpgradeEnable = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_ENABLED", false);
-
-		try {
-			_appender.start();
-
-			_appender.stop();
-
-			File reportFile = _getReportFile("upgrade_report.info", false);
-
-			Assert.assertFalse(reportFile.exists());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_ENABLED",
-				originalUpgradeEnable);
-		}
-	}
-
-	@Test
-	public void testUpgradeReportInCustomDirectory() throws Exception {
+	public void testUpgradeReportDirectory() throws Exception {
 		String originalUpgradeReportDir =
 			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_DIR", "./custom_reports");
+				PropsValues.class, "UPGRADE_REPORT_DIR", "./test_reports");
 
 		try {
 			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
@@ -862,6 +841,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			ReflectionTestUtil.setFieldValue(
 				PropsValues.class, "UPGRADE_REPORT_DIR",
 				originalUpgradeReportDir);
+		}
+	}
+
+	@Test
+	public void testUpgradeReportDisabled() throws Exception {
+		boolean originalUpgradeEnable = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED", false);
+
+		try {
+			_appender.start();
+
+			_appender.stop();
+
+			File reportFile = _getReportFile("upgrade_report.info");
+
+			Assert.assertFalse(reportFile.exists());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_ENABLED",
+				originalUpgradeEnable);
 		}
 	}
 
@@ -1014,12 +1014,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private File _getReportFile(String fileName) throws Exception {
-		return _getReportFile(fileName, true);
-	}
-
-	private File _getReportFile(String fileName, boolean validate)
-		throws Exception {
-
 		File reportsDir = null;
 
 		if (Validator.isBlank(_upgradeReportDir)) {
@@ -1029,7 +1023,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			reportsDir = new File(_upgradeReportDir);
 		}
 
-		if (validate) {
+		if (PropsValues.UPGRADE_REPORT_ENABLED) {
 			Assert.assertTrue(reportsDir.exists());
 		}
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -69,7 +70,10 @@ public class CallFunction
 				DDMDataProviderRequest.Builder.newBuilder();
 
 			builder = builder.withDDMDataProviderId(
-				ddmDataProviderInstanceUUID);
+				ddmDataProviderInstanceUUID
+			).withCompanyId(
+				CompanyThreadLocal.getCompanyId()
+			);
 
 			Map<String, String> parameterMap = _extractParameters(
 				paramsExpression);

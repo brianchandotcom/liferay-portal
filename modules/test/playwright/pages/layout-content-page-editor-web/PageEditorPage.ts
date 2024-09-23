@@ -34,7 +34,6 @@ export class PageEditorPage {
 	readonly redoButton: Locator;
 	readonly segmentEditorPage: SegmentEditorPage;
 	readonly selectItemMappingButton: Locator;
-	readonly submitForWorkflowButton: Locator;
 	readonly undoButton: Locator;
 	readonly undoHistory: Locator;
 
@@ -46,16 +45,17 @@ export class PageEditorPage {
 			'.page-editor__experience-selector'
 		);
 		this.languageSelector = page.getByLabel('Select a language');
-		this.publishButton = page.getByLabel('Publish', {exact: true});
+		this.publishButton = page.getByLabel('Publish', {exact: true}).or(
+			page.getByLabel('Submit for Workflow', {
+				exact: true,
+			})
+		);
 		this.publishMasterButton = page.getByLabel('Publish Master', {
 			exact: true,
 		});
 		this.redoButton = page.getByTitle('Redo');
 		this.segmentEditorPage = new SegmentEditorPage(page);
 		this.selectItemMappingButton = page.getByLabel('Select Item');
-		this.submitForWorkflowButton = page.getByLabel('Submit for Workflow', {
-			exact: true,
-		});
 		this.undoButton = page.getByTitle('Undo');
 		this.undoHistory = page.locator('.page-editor__undo-history');
 	}
@@ -818,11 +818,7 @@ export class PageEditorPage {
 	async publishPage() {
 		const isMaster = await this.isMaster();
 
-		const button = isMaster
-			? this.publishMasterButton
-			: this.submitForWorkflowButton
-				? this.submitForWorkflowButton
-				: this.publishButton;
+		const button = isMaster ? this.publishMasterButton : this.publishButton;
 		const successMessage = isMaster
 			? 'Success:The master page was published successfully.'
 			: 'Success:The page was published successfully.';

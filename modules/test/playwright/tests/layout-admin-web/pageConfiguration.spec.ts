@@ -392,7 +392,7 @@ test.describe('SEO configuration', () => {
 
 		await openGraphCheckInput.uncheck();
 
-		await page.getByText('Update', {exact: true}).click();
+		await page.locator('.btn-primary').click();
 
 		await waitForSuccessAlert(page);
 
@@ -414,7 +414,7 @@ test.describe('SEO configuration', () => {
 
 		await openGraphCheckInput.check();
 
-		await page.getByText('Update', {exact: true}).click();
+		await page.locator('.btn-primary').click();
 
 		await waitForSuccessAlert(page);
 

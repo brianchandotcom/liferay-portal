@@ -51,7 +51,7 @@ public class ObjectRelationshipLocalServiceWrapper
 	public com.liferay.object.model.ObjectRelationship addObjectRelationship(
 			String externalReferenceCode, long userId, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
-			String deletionType,
+			String deletionType, boolean edge,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean system, String type,
 			com.liferay.object.model.ObjectField objectField)
@@ -59,8 +59,8 @@ public class ObjectRelationshipLocalServiceWrapper
 
 		return _objectRelationshipLocalService.addObjectRelationship(
 			externalReferenceCode, userId, objectDefinitionId1,
-			objectDefinitionId2, parameterObjectFieldId, deletionType, labelMap,
-			name, system, type, objectField);
+			objectDefinitionId2, parameterObjectFieldId, deletionType, edge,
+			labelMap, name, system, type, objectField);
 	}
 
 	@Override

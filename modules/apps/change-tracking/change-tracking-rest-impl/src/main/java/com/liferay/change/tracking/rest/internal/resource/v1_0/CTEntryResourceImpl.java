@@ -212,6 +212,9 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 				com.liferay.change.tracking.model.CTEntry ctEntry)
 		throws Exception {
 
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctEntry.getCtCollectionId());
+
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
 			HashMapBuilder.put(
@@ -246,7 +249,11 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 					if ((model == null) ||
 						_ctDisplayRendererRegistry.isHideable(
-							model, ctEntry.getModelClassNameId())) {
+							model, ctEntry.getModelClassNameId()) ||
+						(ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) ||
+						(ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_EXPIRED)) {
 
 						return null;
 					}
@@ -257,14 +264,30 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 				}
 			).put(
 				"update",
-				addAction(
-					ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
-					"getCTEntry", _ctCollectionModelResourcePermission)
+				() -> {
+					if (ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
+						"getCTEntry", _ctCollectionModelResourcePermission);
+				}
 			).put(
 				"view-discard",
-				addAction(
-					ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
-					"getCTEntry", _ctCollectionModelResourcePermission)
+				() -> {
+					if (ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
+						"getCTEntry", _ctCollectionModelResourcePermission);
+				}
 			).build(),
 			null, contextHttpServletRequest, ctEntry.getCtCollectionId(),
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

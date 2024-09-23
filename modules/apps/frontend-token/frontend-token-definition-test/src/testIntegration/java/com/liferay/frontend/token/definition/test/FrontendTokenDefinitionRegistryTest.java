@@ -78,9 +78,9 @@ public class FrontendTokenDefinitionRegistryTest {
 		_layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_group.getGroupId(), false);
 
-		_layoutSet.setThemeId(_THEME_ID);
+		_layoutSet.setThemeId(_THEME_ID_LAYOUT_SET);
 
-		_addThemeCSSCET(_CET_THEME_ID);
+		_addThemeCSSCET(_THEME_ID_CLIENT_EXTENSION_ENTRY);
 	}
 
 	@After
@@ -94,7 +94,7 @@ public class FrontendTokenDefinitionRegistryTest {
 			ListUtil.exists(
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					_layoutSet.getCompanyId()),
-				item -> Objects.equals(item.getThemeId(), _CET_THEME_ID)));
+				item -> Objects.equals(item.getThemeId(), _THEME_ID_CLIENT_EXTENSION_ENTRY)));
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class FrontendTokenDefinitionRegistryTest {
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet),
-			_CET_THEME_ID);
+			_THEME_ID_CLIENT_EXTENSION_ENTRY);
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class FrontendTokenDefinitionRegistryTest {
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet),
-			_THEME_ID);
+			_THEME_ID_LAYOUT_SET);
 	}
 
 	private void _addThemeCSSCET(String externalReferenceCode)
@@ -213,9 +213,9 @@ public class FrontendTokenDefinitionRegistryTest {
 			_clientExtensionEntry);
 	}
 
-	private static final String _CET_THEME_ID = RandomTestUtil.randomString();
+	private static final String _THEME_ID_CLIENT_EXTENSION_ENTRY = RandomTestUtil.randomString();
 
-	private static final String _THEME_ID = "testfrontendtokendefinition";
+	private static final String _THEME_ID_LAYOUT_SET = "testfrontendtokendefinition";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

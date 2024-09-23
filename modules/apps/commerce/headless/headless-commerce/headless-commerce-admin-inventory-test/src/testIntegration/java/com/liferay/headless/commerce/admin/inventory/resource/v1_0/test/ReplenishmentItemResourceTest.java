@@ -298,7 +298,7 @@ public class ReplenishmentItemResourceTest
 	private CommerceInventoryReplenishmentItem _addReplenishmentItem()
 		throws Exception {
 
-		_addWarehouseItem();
+		_addCommerceInventoryWarehouseItem();
 
 		if (_commerceInventoryReplenishmentItem != null) {
 			return _commerceInventoryReplenishmentItem;
@@ -317,7 +317,7 @@ public class ReplenishmentItemResourceTest
 		return _commerceInventoryReplenishmentItem;
 	}
 
-	private CommerceInventoryWarehouseItem _addWarehouseItem()
+	private CommerceInventoryWarehouseItem _addCommerceInventoryWarehouseItem()
 		throws Exception {
 
 		if (_commerceInventoryWarehouseItem != null) {

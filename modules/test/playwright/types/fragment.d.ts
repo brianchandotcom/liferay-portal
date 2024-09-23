@@ -23,6 +23,10 @@ type FragmentConfigurationField = {
 	};
 };
 
+type FragmentFieldTypes = {
+	fieldTypes: string[];
+};
+
 type FragmentConfigurationFieldSet = {
 	fields: FragmentConfigurationField[];
 };

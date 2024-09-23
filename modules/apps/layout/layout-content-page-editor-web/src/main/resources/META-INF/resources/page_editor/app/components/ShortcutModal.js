@@ -81,7 +81,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				<KeyboardShorcut
 					description={Liferay.Language.get('select-parent')}
-					keyCombinations={['⇧', OPTION_KEY_LABEL, 'Enter']}
+					keyCombinations={['⇧', 'Enter']}
 				/>
 
 				<p className="sheet-subtitle text-secondary">

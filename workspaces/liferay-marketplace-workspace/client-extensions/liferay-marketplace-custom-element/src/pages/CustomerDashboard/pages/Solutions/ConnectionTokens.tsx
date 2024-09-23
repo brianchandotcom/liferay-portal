@@ -12,6 +12,7 @@ import {useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
 import EmptyState from '../../../../components/EmptyState';
+import Loading from '../../../../components/Loading';
 import Table from '../../../../components/Table/Table';
 import {ORDER_CUSTOM_FIELDS} from '../../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../../hooks/useMarketplaceSpringBootOAuth2';
@@ -33,6 +34,7 @@ const DataSources: React.FC<DataSourcesProps> = ({analyticsGroupId}) => {
 
 	const {
 		data: projectDataSources,
+		isLoading,
 		isValidating,
 		mutate,
 	} = useSWR(`/analytics/project/group-${analyticsGroupId}/data-source`, () =>
@@ -42,6 +44,10 @@ const DataSources: React.FC<DataSourcesProps> = ({analyticsGroupId}) => {
 	);
 
 	const {items = [], total} = projectDataSources || {};
+
+	if (isLoading) {
+		return <Loading className="my-6" shape="circle" size="md" />;
+	}
 
 	if (total === 0) {
 		return (
@@ -113,7 +119,7 @@ const ConnectionTokens = () => {
 	const analyticsGroupId =
 		placedOrder.customFields[ORDER_CUSTOM_FIELDS.ANALYTICS_GROUP_ID];
 
-	const {data: projectDataSourceToken = ''} = useSWR(
+	const {data: projectDataSourceToken = '', isValidating: isLoading} = useSWR(
 		`/analytics/project/group-${analyticsGroupId}/data-source/token`,
 		() =>
 			marketplaceSpringBootOAuth2.getAnalyticsProjectDataSourceToken(
@@ -153,32 +159,51 @@ const ConnectionTokens = () => {
 							readOnly
 							style={{paddingRight: 20}}
 							value={
-								projectDataSourceToken
-									? `${projectDataSourceToken.substring(0, 50)}...`
-									: ''
+								isLoading
+									? 'Requesting your token...'
+									: projectDataSourceToken
+										? `${projectDataSourceToken.substring(0, 50)}...`
+										: ''
 							}
 						/>
 
-						<ClayIcon
-							color="gray"
-							onClick={() => {
-								copyToClipboard(projectDataSourceToken);
+						{isLoading ? (
+							<Loading
+								shape="circle"
+								size="sm"
+								style={{
+									marginBottom: 0,
+									marginLeft: -30,
+									marginRight: 0,
+									marginTop: 0,
+								}}
+							></Loading>
+						) : (
+							<ClayIcon
+								color="gray"
+								onClick={() => {
+									if (isLoading) {
+										return;
+									}
 
-								Liferay.Util.openToast({
-									message: i18n.sub(
-										'copied-x-to-the-clipboard',
-										'token'
-									),
-									title: i18n.translate('success'),
-								});
-							}}
-							style={{
-								backgroundColor: 'white',
-								cursor: 'pointer',
-								marginLeft: -30,
-							}}
-							symbol="copy"
-						/>
+									copyToClipboard(projectDataSourceToken);
+
+									Liferay.Util.openToast({
+										message: i18n.sub(
+											'copied-x-to-the-clipboard',
+											'token'
+										),
+										title: i18n.translate('success'),
+									});
+								}}
+								style={{
+									backgroundColor: 'white',
+									cursor: 'pointer',
+									marginLeft: -30,
+								}}
+								symbol="copy"
+							/>
+						)}
 					</div>
 				</div>
 

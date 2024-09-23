@@ -1314,67 +1314,75 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition2.getObjectDefinitionId(),
-			objectDefinitionLocalService::getObjectDefinition);
+		if (objectDefinition1.isApproved() == objectDefinition2.isApproved()) {
+			Tree tree = _treeFactory.createObjectDefinitionTree(
+				objectDefinition2.getObjectDefinitionId(),
+				objectDefinitionLocalService::getObjectDefinition);
 
-		Iterator<Node> iterator = tree.iterator();
+			Iterator<Node> iterator = tree.iterator();
 
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
+			while (iterator.hasNext()) {
+				Node node = iterator.next();
 
-			ObjectDefinition nodeObjectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
-					node.getPrimaryKey());
+				ObjectDefinition nodeObjectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						node.getPrimaryKey());
 
-			String objectDefinitionPreviousRESTContextPath =
-				nodeObjectDefinition.getRESTContextPath();
-
-			if (nodeObjectDefinition.isApproved() ==
-					objectDefinition1.isApproved()) {
+				String objectDefinitionPreviousRESTContextPath =
+					nodeObjectDefinition.getRESTContextPath();
 
 				nodeObjectDefinition.setRootObjectDefinitionId(
 					objectDefinition1.getRootObjectDefinitionId());
+				nodeObjectDefinition.setPortlet(false);
+
+				nodeObjectDefinition =
+					objectDefinitionLocalService.updateObjectDefinition(
+						nodeObjectDefinition);
+
+				if (nodeObjectDefinition.isApproved() &&
+					objectDefinition1.isApproved()) {
+
+					nodeObjectDefinition.setPreviousRESTContextPath(
+						objectDefinitionPreviousRESTContextPath);
+
+					objectDefinitionLocalService.deployObjectDefinition(
+						nodeObjectDefinition);
+				}
 			}
 
-			nodeObjectDefinition.setPortlet(false);
-
-			if (!objectDefinition1.isApproved() &&
-				nodeObjectDefinition.isRootNode()) {
-
-				nodeObjectDefinition.setPortlet(true);
-			}
-
-			nodeObjectDefinition =
-				objectDefinitionLocalService.updateObjectDefinition(
-					nodeObjectDefinition);
-
-			if (nodeObjectDefinition.isApproved() &&
-				objectDefinition1.isApproved()) {
-
-				nodeObjectDefinition.setPreviousRESTContextPath(
-					objectDefinitionPreviousRESTContextPath);
+			if (objectDefinition1.isApproved()) {
+				objectDefinition1.setPreviousRESTContextPath(
+					objectDefinition1PreviousRESTContextPath);
 
 				objectDefinitionLocalService.deployObjectDefinition(
-					nodeObjectDefinition);
+					objectDefinition1);
+			}
+
+			if (!objectDefinition1.isRootNode()) {
+				ObjectDefinition rootObjectDefinition1 =
+					_objectDefinitionPersistence.findByPrimaryKey(
+						objectDefinition1.getRootObjectDefinitionId());
+
+				objectDefinitionLocalService.deployObjectDefinition(
+					rootObjectDefinition1);
 			}
 		}
+		else {
+			if (objectDefinition2.isRootNode()) {
+				return;
+			}
 
-		if (objectDefinition1.isApproved()) {
-			objectDefinition1.setPreviousRESTContextPath(
-				objectDefinition1PreviousRESTContextPath);
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition2.getObjectDefinitionId());
 
-			objectDefinitionLocalService.deployObjectDefinition(
-				objectDefinition1);
-		}
+			objectDefinition2 =
+				objectDefinitionLocalService.updateObjectDefinition(
+					objectDefinition2);
 
-		if (!objectDefinition1.isRootNode()) {
-			ObjectDefinition rootObjectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectDefinition1.getRootObjectDefinitionId());
-
-			objectDefinitionLocalService.deployObjectDefinition(
-				rootObjectDefinition1);
+			if (objectDefinition2.isApproved()) {
+				objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition2);
+			}
 		}
 	}
 

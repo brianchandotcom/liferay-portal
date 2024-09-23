@@ -32,6 +32,20 @@ definition {
 		}
 	}
 
+	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."
+	@priority = 3
+	test LogOutputReturnsUnmarkedWithoutCustomLog4j {
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.log.context.enabled=true";
+		property log.context.enabled = "false";
+
+		task ("Verify that mark related to upgrades/verifiers are not present") {
+			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=");
+		}
+
+		task ("Verify that no log context is printed") {
+			Log.viewLogFileContentNotPresent(logContent = "{}");
+		}
+	}
 
 	@description = "LPS-158743: Upgrade report is generated in the console using log context format"
 	@priority = 4
@@ -118,21 +132,6 @@ definition {
 			if (${reportFileExists} != "true") {
 				fail("Upgrade report not found in ${liferayHome}/reports");
 			}
-		}
-	}
-
-	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."
-	@priority = 3
-	test LogOutputReturnsUnmarkedWithoutCustomLog4j {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.log.context.enabled=true";
-		property log.context.enabled = "false";
-
-		task ("Verify that mark related to upgrades/verifiers are not present") {
-			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=");
-		}
-
-		task ("Verify that no log context is printed") {
-			Log.viewLogFileContentNotPresent(logContent = "{}");
 		}
 	}
 

@@ -9,6 +9,8 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,9 +64,14 @@ public class DDMDataProviderInvokeCommand
 
 	@Override
 	protected DDMDataProviderResponse run() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_ddmDataProviderRequest.getCompanyId())) {
 
-		return _ddmDataProvider.getData(_ddmDataProviderRequest);
+			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
+			return _ddmDataProvider.getData(_ddmDataProviderRequest);
+		}
 	}
 
 	private static int _getTimeout(

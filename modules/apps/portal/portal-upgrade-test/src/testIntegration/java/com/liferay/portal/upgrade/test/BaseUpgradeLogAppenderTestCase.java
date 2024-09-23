@@ -1009,6 +1009,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private File _getReportFile(String fileName) throws Exception {
+		return _getReportFile(fileName,true);
+	}
+
+	private File _getReportFile(String fileName, boolean validate) throws Exception {
 		File reportsDir = null;
 
 		if (Validator.isBlank(_upgradeReportDir)) {
@@ -1018,8 +1022,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			reportsDir = new File(_upgradeReportDir);
 		}
 
-		Assert.assertTrue(reportsDir.exists());
-
+		if(validate){
+			Assert.assertTrue(reportsDir.exists());
+		}
 		return new File(reportsDir, fileName);
 	}
 

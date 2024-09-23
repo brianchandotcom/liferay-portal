@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
@@ -38,7 +39,6 @@ import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
 
 export default function TopperItemActions({disabled, item}) {
-	const [active, setActive] = useState(false);
 	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
@@ -100,7 +100,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		if (items.length) {
 			items.push({
-				type: 'separator',
+				type: 'divider',
 			});
 		}
 
@@ -119,6 +119,7 @@ export default function TopperItemActions({disabled, item}) {
 					);
 				},
 				icon: 'cut',
+				isBetaFeature: true,
 				label: Liferay.Language.get('cut'),
 			});
 
@@ -143,12 +144,13 @@ export default function TopperItemActions({disabled, item}) {
 						})
 					),
 				icon: 'copy',
+				isBetaFeature: true,
 				label: Liferay.Language.get('duplicate'),
 			});
 
 			if (!Liferay.FeatureFlags['LPD-18221']) {
 				items.push({
-					type: 'separator',
+					type: 'divider',
 				});
 			}
 		}
@@ -168,11 +170,12 @@ export default function TopperItemActions({disabled, item}) {
 					),
 				disabled: !copiedItemIds?.length,
 				icon: 'paste',
+				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
 			});
 
 			items.push({
-				type: 'separator',
+				type: 'divider',
 			});
 		}
 
@@ -211,14 +214,13 @@ export default function TopperItemActions({disabled, item}) {
 	return (
 		<>
 			<ClayDropDown
-				active={active}
 				alignmentPosition={Align.BottomRight}
+				hasLeftSymbols
 				menuElementAttrs={{
 					containerProps: {
 						className: 'cadmin',
 					},
 				}}
-				onActiveChange={setActive}
 				trigger={
 					<ClayButton
 						aria-label={Liferay.Language.get('options')}
@@ -235,32 +237,30 @@ export default function TopperItemActions({disabled, item}) {
 					</ClayButton>
 				}
 			>
-				<ClayDropDown.ItemList>
-					{dropdownItems.map((dropdownItem, index, array) =>
-						dropdownItem.type === 'separator' ? (
-							index !== array.length - 1 && (
-								<ClayDropDown.Divider key={index} />
-							)
+				<ClayDropDown.ItemList items={dropdownItems}>
+					{(item) =>
+						item.type === 'divider' ? (
+							<ClayDropDown.Divider />
 						) : (
-							<React.Fragment key={index}>
-								<ClayDropDown.Item
-									disabled={dropdownItem.disabled}
-									onClick={(event) => {
-										event.stopPropagation();
+							<ClayDropDown.Item
+								disabled={item.disabled}
+								onClick={(event) => {
+									event.stopPropagation();
 
-										setActive(false);
+									item.action();
+								}}
+								symbolLeft={item.icon}
+							>
+								{item.label}
 
-										dropdownItem.action();
-									}}
-									symbolLeft={dropdownItem.icon}
-								>
-									<p className="d-inline-block m-0 ml-4">
-										{dropdownItem.label}
-									</p>
-								</ClayDropDown.Item>
-							</React.Fragment>
+								{item.isBetaFeature ? (
+									<span className="ml-2">
+										<FeatureIndicator type="beta" />
+									</span>
+								) : null}
+							</ClayDropDown.Item>
 						)
-					)}
+					}
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 

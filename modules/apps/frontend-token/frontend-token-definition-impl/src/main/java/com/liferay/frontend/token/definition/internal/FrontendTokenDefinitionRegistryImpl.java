@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -75,13 +74,15 @@ public class FrontendTokenDefinitionRegistryImpl
 	public List<FrontendTokenDefinition> getFrontendTokenDefinitions(
 		long companyId) {
 
-		Map<String, FrontendTokenDefinition>
-			companyCETFrontendTokenDefinitions =
-				_cetFrontendTokenDefinitions.get(companyId);
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
+			_frontendTokenDefinitionsMap.get(companyId);
 
-		return ListUtil.concat(
-			new ArrayList<>(companyCETFrontendTokenDefinitions.values()),
-			new ArrayList<>(_themeFrontendTokenDefinitions.values()));
+		List<FrontendTokenDefinition> frontendTokenDefinitionsList =
+			new ArrayList<>(frontendTokenDefinitions.values());
+
+		frontendTokenDefinitionsList.addAll(_frontendTokenDefinitions.values());
+
+		return frontendTokenDefinitionsList;
 	}
 
 	@Activate
@@ -239,7 +240,7 @@ public class FrontendTokenDefinitionRegistryImpl
 				themeCSSCET.getFrontendTokenDefinitionJSON());
 
 			Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
-				_cetFrontendTokenDefinitions.computeIfAbsent(
+				_frontendTokenDefinitionsMap.computeIfAbsent(
 					themeCSSCET.getCompanyId(),
 					entry -> new ConcurrentHashMap<>());
 
@@ -288,15 +289,15 @@ public class FrontendTokenDefinitionRegistryImpl
 			}
 		}
 
-		Map<String, FrontendTokenDefinition> frontendTokenDefinitionImpls =
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
 			_frontendTokenDefinitionsDCLSingleton.getSingleton(
 				() -> {
 					_bundleTracker.open();
 
-					return _themeFrontendTokenDefinitions;
+					return _frontendTokenDefinitions;
 				});
 
-		return frontendTokenDefinitionImpls.get(themeId);
+		return frontendTokenDefinitions.get(themeId);
 	}
 
 	private String _getFrontendTokenDefinitionJSON(Bundle bundle) {
@@ -319,7 +320,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	private Map<String, FrontendTokenDefinition> _getFrontendTokenDefinitions(
 		long companyId) {
 
-		return _cetFrontendTokenDefinitions.getOrDefault(
+		return _frontendTokenDefinitionsMap.getOrDefault(
 			companyId, new ConcurrentHashMap<>());
 	}
 
@@ -352,7 +353,7 @@ public class FrontendTokenDefinitionRegistryImpl
 					if ((frontendTokenDefinitionImpl != null) &&
 						(frontendTokenDefinitionImpl.getThemeId() != null)) {
 
-						_themeFrontendTokenDefinitions.put(
+						_frontendTokenDefinitions.put(
 							frontendTokenDefinitionImpl.getThemeId(),
 							frontendTokenDefinitionImpl);
 
@@ -373,14 +374,11 @@ public class FrontendTokenDefinitionRegistryImpl
 					Bundle bundle, BundleEvent bundleEvent,
 					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
 
-					_themeFrontendTokenDefinitions.remove(
+					_frontendTokenDefinitions.remove(
 						frontendTokenDefinitionImpl.getThemeId());
 				}
 
 			};
-
-	private final Map<Long, Map<String, FrontendTokenDefinition>>
-		_cetFrontendTokenDefinitions = new ConcurrentHashMap<>();
 
 	@Reference
 	private ClientExtensionEntryRelLocalService
@@ -389,14 +387,16 @@ public class FrontendTokenDefinitionRegistryImpl
 	private final FrontendTokenDefinitionJSONValidator
 		_frontendTokenDefinitionJSONValidator =
 			new FrontendTokenDefinitionJSONValidator();
+	private final Map<String, FrontendTokenDefinition>
+		_frontendTokenDefinitions = new ConcurrentHashMap<>();
 	private final DCLSingleton<Map<String, FrontendTokenDefinition>>
 		_frontendTokenDefinitionsDCLSingleton = new DCLSingleton<>();
+	private final Map<Long, Map<String, FrontendTokenDefinition>>
+		_frontendTokenDefinitionsMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private Portal _portal;
 
 	private ServiceTracker<ThemeCSSCET, ThemeCSSCET> _serviceTracker;
-	private final Map<String, FrontendTokenDefinition>
-		_themeFrontendTokenDefinitions = new ConcurrentHashMap<>();
 
 }

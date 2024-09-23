@@ -94,7 +94,7 @@ public class FrontendTokenDefinitionRegistryTest {
 			ListUtil.exists(
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					_layoutSet.getCompanyId()),
-				item -> Objects.equals(item.getThemeId(), _THEME_ID_CLIENT_EXTENSION_ENTRY)));
+				frontendTokenDefinition -> Objects.equals(frontendTokenDefinition.getThemeId(), _THEME_ID_CLIENT_EXTENSION_ENTRY)));
 	}
 
 	@Test

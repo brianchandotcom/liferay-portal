@@ -62,17 +62,11 @@ public class DateRangeFacetProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			String label = rangeJSONObject.getString("label");
-
-			if (Validator.isBlank(label)) {
-				label = rangeJSONObject.getString("range");
-			}
+			String range = rangeJSONObject.getString("range");
 
 			dateRangeAggregationBuilder.ranges(
 				_createDateRangeExpression(
-					label,
-					RangeParserUtil.parserRange(
-						rangeJSONObject.getString("range"))));
+					range, RangeParserUtil.parserRange(range)));
 		}
 
 		return aggregationBuilder.dateRange(

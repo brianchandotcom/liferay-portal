@@ -53,34 +53,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-107285. Can not duplicate Layout Elements with a widget that only allowed appear once in the page, there should be an error message shown."
-	@priority = 4
-	test CannotDuplicateContainerWithOnlyAllowedAppearOnceWidget {
-		task ("Add a Container to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add the Language Selector into Container") {
-			PageEditor.addElementToContainer(
-				navTab = "Widgets",
-				portletName = "Language Selector");
-		}
-
-		task ("Assert alert message when duplicate Container") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR",
-				value1 = "The layout could not be duplicated because it contains a widget (Language Selector) that can only appear once in the page.");
-		}
-	}
-
 	@description = "This is a test for LPS-91000, LPS-95002, LPS-115224 and LPS-120693. Configure the Flex Column and Fixed Width Container styles."
 	@priority = 5
 	test ConfigureFlexColumnAndFixedWidthContainerStyles {

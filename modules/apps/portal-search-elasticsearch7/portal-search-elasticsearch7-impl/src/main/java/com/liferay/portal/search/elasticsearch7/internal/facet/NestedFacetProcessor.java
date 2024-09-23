@@ -8,10 +8,12 @@ package com.liferay.portal.search.elasticsearch7.internal.facet;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
+import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -22,6 +24,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,6 +91,9 @@ public class NestedFacetProcessor
 			return _getDateRangeAggregationBuilder(
 				(DateRangeAggregation)aggregation);
 		}
+		else if (aggregation instanceof RangeAggregation) {
+			return _getRangeAggregationBuilder((RangeAggregation)aggregation);
+		}
 
 		Class<?> clazz = aggregation.getClass();
 
@@ -111,6 +117,27 @@ public class NestedFacetProcessor
 		}
 
 		return dateRangeAggregationBuilder;
+	}
+
+	private AggregationBuilder _getRangeAggregationBuilder(
+		RangeAggregation rangeAggregation) {
+
+		RangeAggregationBuilder rangeAggregationBuilder =
+			AggregationBuilders.range(rangeAggregation.getName());
+
+		rangeAggregationBuilder.field(rangeAggregation.getField());
+
+		if (!Validator.isBlank(rangeAggregation.getFormat())) {
+			rangeAggregationBuilder.format(rangeAggregation.getFormat());
+		}
+
+		for (Range range : rangeAggregation.getRanges()) {
+			rangeAggregationBuilder.addRange(
+				range.getKey(), GetterUtil.getDouble(range.getFromAsString()),
+				GetterUtil.getDouble(range.getToAsString()));
+		}
+
+		return rangeAggregationBuilder;
 	}
 
 	private TermsAggregationBuilder _getTermsAggregationBuilder(

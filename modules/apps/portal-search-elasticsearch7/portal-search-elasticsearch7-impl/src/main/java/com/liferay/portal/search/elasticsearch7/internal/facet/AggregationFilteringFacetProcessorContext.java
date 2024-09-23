@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
+import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.ArrayList;
@@ -69,6 +70,19 @@ public class AggregationFilteringFacetProcessorContext
 				boolQueryBuilder.must(
 					_rangeQuery(
 						fieldName, dateRangeAggregation.getFormat(),
+						RangeParserUtil.parserRange(value)));
+			}
+		}
+		else if (nestedFacet.getChildAggregation() instanceof
+					RangeAggregation) {
+
+			for (String value : nestedFacet.getSelections()) {
+				RangeAggregation rangeAggregation =
+					(RangeAggregation)nestedFacet.getChildAggregation();
+
+				boolQueryBuilder.must(
+					_rangeQuery(
+						fieldName, rangeAggregation.getFormat(),
 						RangeParserUtil.parserRange(value)));
 			}
 		}

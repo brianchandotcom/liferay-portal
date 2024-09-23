@@ -8,16 +8,20 @@ package com.liferay.portal.search.opensearch2.internal.facet;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
+import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
+import com.liferay.portal.search.opensearch2.internal.util.OpenSearchStringUtil;
 
 import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.aggregations.Aggregation.Builder.ContainerBuilder;
 import org.opensearch.client.opensearch._types.aggregations.AggregationBuilders;
+import org.opensearch.client.opensearch._types.aggregations.AggregationRange;
 import org.opensearch.client.opensearch._types.aggregations.DateRangeExpression;
 import org.opensearch.client.opensearch._types.aggregations.TermsAggregation;
 import org.opensearch.client.opensearch.core.SearchRequest;
@@ -97,11 +101,34 @@ public class NestedFacetProcessor
 		return nestedAggregationContainerBuilder;
 	}
 
+	private AggregationRange _createAggregationRange(
+		String from, String key, String to) {
+
+		AggregationRange.Builder builder = new AggregationRange.Builder();
+
+		if (!Validator.isBlank(from)) {
+			builder.from(from);
+		}
+
+		if (!Validator.isBlank(key)) {
+			builder.key(key);
+		}
+
+		if (!Validator.isBlank(to)) {
+			builder.to(to);
+		}
+
+		return builder.build();
+	}
+
 	private org.opensearch.client.opensearch._types.aggregations.Aggregation
 		_getChildAggregation(Aggregation aggregation) {
 
 		if (aggregation instanceof DateRangeAggregation) {
 			return _getDateRangeAggregation((DateRangeAggregation)aggregation);
+		}
+		else if (aggregation instanceof RangeAggregation) {
+			return _getRangeAggregationBuilder((RangeAggregation)aggregation);
 		}
 
 		Class<?> clazz = aggregation.getClass();
@@ -134,6 +161,28 @@ public class NestedFacetProcessor
 							range.getToAsString(), range.getTo())
 					)));
 		}
+
+		return new org.opensearch.client.opensearch._types.aggregations.
+			Aggregation(builder.build());
+	}
+
+	private org.opensearch.client.opensearch._types.aggregations.Aggregation
+		_getRangeAggregationBuilder(RangeAggregation rangeAggregation) {
+
+		org.opensearch.client.opensearch._types.aggregations.RangeAggregation.
+			Builder builder = AggregationBuilders.range();
+
+		builder.field(rangeAggregation.getField());
+
+		ListUtil.isNotEmptyForEach(
+			rangeAggregation.getRanges(),
+			range -> builder.ranges(
+				_createAggregationRange(
+					OpenSearchStringUtil.getFirstStringValue(
+						range::getFromAsString, range::getFrom),
+					range.getKey(),
+					OpenSearchStringUtil.getFirstStringValue(
+						range::getToAsString, range::getTo))));
 
 		return new org.opensearch.client.opensearch._types.aggregations.
 			Aggregation(builder.build());

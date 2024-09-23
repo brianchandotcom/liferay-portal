@@ -261,8 +261,7 @@
 						"type": "string"
 					},
 					"attachmentProperty": {
-						"$ref": "#/components/schemas/FileEntry",
-						"description": "attachmentProperty description"
+						"$ref": "#/components/schemas/FileEntry"
 					},
 					"booleanProperty": {
 						"description": "booleanProperty description",
@@ -305,8 +304,7 @@
 						"type": "array"
 					},
 					"picklistProperty": {
-						"$ref": "#/components/schemas/ListEntry",
-						"description": "picklistProperty description"
+						"$ref": "#/components/schemas/ListEntry"
 					},
 					"precisionDecimalProperty": {
 						"description": "precisionDecimalProperty description",

@@ -55,6 +55,13 @@ public interface OAuthClientEntryLocalService
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String infoJSON,
+			long metadataCacheInMillis, String oidcUserInfoMapperJSON,
+			String tokenRequestParametersJSON)
+		throws PortalException;
+
+	public OAuthClientEntry addOAuthClientEntry(
+			long userId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
 			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
 		throws PortalException;
 
@@ -277,6 +284,13 @@ public interface OAuthClientEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuthClientEntry> getUserOAuthClientEntries(long userId);
+
+	public OAuthClientEntry updateOAuthClientEntry(
+			long oAuthClientEntryId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
+			long metadataCacheInMillis, String oidcUserInfoMapperJSON,
+			String tokenRequestParametersJSON)
+		throws PortalException;
 
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authRequestParametersJSON,

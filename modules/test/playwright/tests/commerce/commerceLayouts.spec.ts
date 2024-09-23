@@ -699,3 +699,214 @@ test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
 		}
 	}
 });
+
+test('LPD-33809 Edit Payment Method in Open Order Details', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	test.setTimeout(180000);
+
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		const featureFlagEnabled = await page
+			.getByLabel('COMMERCE-9410')
+			.isChecked();
+
+		if (!featureFlagEnabled) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.uncheck();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'paymentMethod'
+		);
+		await commerceLayoutsPage.infoBoxLabelInput.fill('Payment Method');
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForSuccessAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Payment Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Method').click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxShippingMethodAlert
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxCancelButton.click();
+
+		const paymentMethod1 = 'Money Order';
+		const paymentMethod2 = 'PayPal';
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			paymentMethod1,
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				paymentMethod1
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			paymentMethod2,
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				paymentMethod2
+			)
+		).click();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Payment Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Method').click();
+		await commerceLayoutsPage.infoBoxValue(paymentMethod1).click();
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(paymentMethod1)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Method').click();
+		await commerceLayoutsPage.infoBoxValue(paymentMethod2).click();
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(paymentMethod2)
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(paymentMethod2)
+		).toBeVisible();
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Payment Method')
+		).toBeHidden();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});

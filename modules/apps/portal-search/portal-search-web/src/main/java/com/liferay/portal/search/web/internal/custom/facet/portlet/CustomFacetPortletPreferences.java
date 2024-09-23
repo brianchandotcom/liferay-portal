@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
+import com.liferay.portal.kernel.json.JSONArray;
+
 /**
  * @author Wade Cao
  */
@@ -12,6 +14,9 @@ public interface CustomFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_AGGREGATION_FIELD =
 		"aggregationField";
+
+	public static final String PREFERENCE_KEY_AGGREGATION_TYPE =
+		"aggregationType";
 
 	public static final String PREFERENCE_KEY_CUSTOM_HEADING = "customHeading";
 
@@ -30,7 +35,14 @@ public interface CustomFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
 
+	public static final String PREFERENCE_KEY_RANGES = "ranges";
+
+	public static final String PREFERENCE_KEY_SHOW_INPUT_RANGE =
+		"showInputRange";
+
 	public String getAggregationField();
+
+	public String getAggregationType();
 
 	public String getCustomHeading();
 
@@ -44,6 +56,12 @@ public interface CustomFacetPortletPreferences {
 
 	public String getParameterName();
 
+	public JSONArray getRangesJSONArray();
+
+	public String getRangesString();
+
 	public boolean isFrequenciesVisible();
+
+	public boolean isShowInputRange();
 
 }

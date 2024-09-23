@@ -2,6 +2,8 @@ components:
     schemas:
         AppearsOnHistogram:
             properties:
+                canonicalUrl:
+                    type: string
                 metrics:
                     items:
                         $ref: "#/components/schemas/Metric"
@@ -9,6 +11,9 @@ components:
                 pageTitle:
                     type: string
                 total:
+                    format: double
+                    type: number
+                totalValue:
                     format: double
                     type: number
         AssetAppearsOnHistogram:

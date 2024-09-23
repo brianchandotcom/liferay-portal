@@ -80,7 +80,7 @@ public class FrontendTokenDefinitionRegistryTest {
 
 		_layoutSet.setThemeId(_THEME_ID_LAYOUT_SET);
 
-		_addThemeCSSCET(_THEME_ID_CLIENT_EXTENSION_ENTRY);
+		_addThemeCSSCET();
 	}
 
 	@After
@@ -115,14 +115,12 @@ public class FrontendTokenDefinitionRegistryTest {
 			_THEME_ID_LAYOUT_SET);
 	}
 
-	private void _addThemeCSSCET(String externalReferenceCode)
-		throws Exception {
-
+	private void _addThemeCSSCET() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				externalReferenceCode, user.getUserId(), StringPool.BLANK,
+				_THEME_ID_CLIENT_EXTENSION_ENTRY, user.getUserId(), StringPool.BLANK,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),

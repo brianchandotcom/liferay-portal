@@ -42,33 +42,37 @@ const ProductCardRevamp = ({
 	rightNode,
 	subtitle,
 	title,
-}: ProductCardPropsRevamp) => (
-	<div className="pb-3 product-banner pt-5 px-5">
-		<div className="d-flex flex-row justify-content-between">
-			<div className="d-flex flex-row">
-				<img
-					alt="App Icon"
-					className="object-fit-cover rounded"
-					height="64px"
-					src={icon}
-					width="64px"
-				/>
+}: ProductCardPropsRevamp) => {
+	const HeadingComponent = title.length > 30 ? 'h3' : 'h1';
 
-				<div className="align-items-center ml-4">
-					<h1 className="product-banner-title text-weight-bold">
-						{title}
-					</h1>
+	return (
+		<div className="pb-3 product-banner pt-5 px-5">
+			<div className="d-flex flex-row justify-content-between">
+				<div className="d-flex flex-row">
+					<img
+						alt="App Icon"
+						className="object-fit-cover rounded"
+						height="64px"
+						src={icon}
+						width="64px"
+					/>
 
-					<div className="sub-text">{subtitle}</div>
+					<div className="align-items-center ml-4">
+						<HeadingComponent className="product-banner-title text-weight-bold">
+							{title}
+						</HeadingComponent>
+
+						<span className="sub-text">{subtitle}</span>
+					</div>
 				</div>
+
+				{rightNode}
 			</div>
 
-			{rightNode}
+			{children}
 		</div>
-
-		{children}
-	</div>
-);
+	);
+};
 
 const ProductCard = ({
 	ExtendBanner,

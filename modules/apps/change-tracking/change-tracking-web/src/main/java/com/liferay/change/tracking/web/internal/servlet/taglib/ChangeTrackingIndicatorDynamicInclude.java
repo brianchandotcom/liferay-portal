@@ -625,7 +625,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		long classPK = GetterUtil.getLong(
 			httpServletRequest.getAttribute(CTTimelineKeys.CLASS_PK));
 
-		if ((className == null) || (classPK == 0)) {
+		if ((className == null) && (classPK == 0)) {
 			Layout layout = themeDisplay.getLayout();
 
 			if (!layout.isTypeControlPanel()) {
@@ -634,7 +634,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 
-		if ((className != null) && (classPK != 0)) {
+		if (className != null) {
 			long classNameId = _portal.getClassNameId(className);
 
 			if (currentCTCollection != null) {

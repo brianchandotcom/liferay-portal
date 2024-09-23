@@ -78,12 +78,20 @@ const PublicationTimeline = ({
 			<ClayDropDown.Item key={timelineItem.id}>
 				<ClayLayout.ContentRow className="c-mb-1">
 					<ClayLayout.ContentCol expand>
+						{timelineClassPK === 0 ? (
+							<div className="text-weight-bold">
+								{timelineItem.title}
+							</div>
+						) : null}
+
 						<div className="align-items-center d-flex">
-							<span className="c-pr-2">{timelineItem.name}</span>
+							<span className="c-pr-2">
+								{timelineItem.ctCollectionName}
+							</span>
 
 							{Liferay.FeatureFlags['LPD-20556'] &&
 							!!warningIcon &&
-							timelineItem.status.code ===
+							timelineItem.ctCollectionStatus.code ===
 								WORKFLOW_STATUS_DRAFT ? (
 								<ClayIcon
 									className={warningIcon.conflictIconClass}
@@ -93,17 +101,17 @@ const PublicationTimeline = ({
 							) : null}
 
 							<WorkflowStatusLabel
-								workflowStatus={timelineItem.status.code}
+								workflowStatus={
+									timelineItem.ctCollectionStatus.code
+								}
 							/>
 						</div>
 
-						<div className="text-secondary">
-							{timelineItem.description}
-						</div>
-
-						<div className="text-secondary">
-							{timelineItem.statusMessage}
-						</div>
+						{timelineItem.statusMessage ? (
+							<div className="text-secondary">
+								{timelineItem.statusMessage}
+							</div>
+						) : null}
 					</ClayLayout.ContentCol>
 
 					<ClayLayout.ContentCol>
@@ -130,7 +138,9 @@ const PublicationTimeline = ({
 											timelineClassNameId={
 												timelineClassNameId
 											}
-											timelineClassPK={timelineClassPK}
+											timelineClassPK={
+												timelineItem.modelClassPK
+											}
 											timelineEditURL={timelineEditURL}
 											timelineItem={timelineItem}
 										/>

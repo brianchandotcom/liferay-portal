@@ -11,6 +11,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailu
 import com.liferay.jenkins.results.parser.failure.message.generator.NodeSourceFormatFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.RelevantRuleValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
 import java.util.Objects;
@@ -220,6 +221,7 @@ public class SourceFormatBuild
 			new FormatFailureMessageGenerator(),
 			new PoshiValidationFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
+			new RelevantRuleValidationFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),
 			//
 			new GenericFailureMessageGenerator()

@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.JenkinsSourc
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiTestFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.RelevantRuleValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 
 import java.io.File;
@@ -2405,6 +2406,7 @@ public abstract class BaseTopLevelBuild
 			new InvalidGitCommitSHAFailureMessageGenerator(),
 			new InvalidSenderSHAFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
+			new RelevantRuleValidationFailureMessageGenerator(),
 			//
 			new PoshiValidationFailureMessageGenerator(),
 			new PoshiTestFailureMessageGenerator(),

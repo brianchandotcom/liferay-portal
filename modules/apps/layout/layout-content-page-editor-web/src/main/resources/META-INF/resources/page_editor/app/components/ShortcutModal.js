@@ -104,7 +104,7 @@ export default function ShortcutModal({onCloseModal}) {
 					<KeyboardShorcut
 						betaFeatureIndicator
 						description={Liferay.Language.get(
-							'non-continuous-selection'
+							'noncontinuous-selection'
 						)}
 						keyCombinations={[KEY_LABEL, 'Enter']}
 					/>

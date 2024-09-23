@@ -417,7 +417,7 @@ test(
 test(
 	'Can view usages',
 	{
-		tag: '@LPS-168163',
+		tag: ['@LPS-168163', '@LPS-177682'],
 	},
 	async ({apiHelpers, fragmentsPage, page, pageManagementSite}) => {
 
@@ -490,5 +490,9 @@ test(
 		await expect(
 			page.getByRole('menuitem', {name: 'Pages (2)'})
 		).toBeAttached();
+
+		// Assert tooltip of back button
+
+		await checkBackButtonTitle(page, 'Go to Fragments');
 	}
 );

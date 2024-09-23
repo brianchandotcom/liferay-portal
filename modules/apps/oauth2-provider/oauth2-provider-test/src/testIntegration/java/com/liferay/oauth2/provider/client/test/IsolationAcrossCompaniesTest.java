@@ -31,7 +31,6 @@ import org.osgi.framework.BundleActivator;
 /**
  * @author Carlos Sierra Andrés
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 

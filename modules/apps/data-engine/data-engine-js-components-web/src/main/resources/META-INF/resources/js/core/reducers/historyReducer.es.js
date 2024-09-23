@@ -23,7 +23,10 @@ export default function historyReducer(state, action) {
 			};
 		case EVENT_TYPES.HISTORY.BLUR:
 			if (state.history.edited) {
-				Liferay.fire('journal:storeState', {fieldName: action.payload});
+				Liferay.fire('journal:storeState', {
+					fieldName:
+						Liferay.Language.get('edit') + ' ' + action.payload,
+				});
 			}
 
 			return {

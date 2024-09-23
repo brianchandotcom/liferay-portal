@@ -119,19 +119,19 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			String tableName)
 		throws Exception {
 
-		String query = StringBundler.concat(
+		String sql = StringBundler.concat(
 			"select 1 from ", tableName, " where externalReferenceCode in ('",
 			ArrayUtil.toString(
 				externalReferenceCodes, StringPool.BLANK, "', '"),
 			"')");
 
 		if (hasGroupIdColumn) {
-			query = query + " AND groupId = ?";
+			sql = sql + " AND groupId = ?";
 		}
 
 		try (Connection connection = dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				query)) {
+				sql)) {
 
 			if (hasGroupIdColumn) {
 				preparedStatement.setLong(1, group.getGroupId());
@@ -181,7 +181,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			String tableName)
 		throws Exception {
 
-		String query = StringBundler.concat(
+		String sql = StringBundler.concat(
 			"update ", tableName, " set externalReferenceCode = null where ",
 			"externalReferenceCode in ('",
 			ArrayUtil.toString(
@@ -189,11 +189,11 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			"')");
 
 		if (hasGroupIdColumn) {
-			query = StringBundler.concat(
-				query, " and groupId =", group.getGroupId());
+			sql = StringBundler.concat(
+				sql, " and groupId =", group.getGroupId());
 		}
 
-		db.runSQL(query);
+		db.runSQL(sql);
 
 		entityCache.clearCache();
 		multiVMPool.clear();

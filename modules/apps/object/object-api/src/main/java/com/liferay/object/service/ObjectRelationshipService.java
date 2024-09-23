@@ -49,8 +49,8 @@ public interface ObjectRelationshipService extends BaseService {
 	public ObjectRelationship addObjectRelationship(
 			String externalReferenceCode, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
-			String deletionType, Map<Locale, String> labelMap, String name,
-			boolean system, String type, ObjectField objectField)
+			String deletionType, boolean edge, Map<Locale, String> labelMap,
+			String name, boolean system, String type, ObjectField objectField)
 		throws PortalException;
 
 	public void addObjectRelationshipMappingTableValues(

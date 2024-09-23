@@ -45,7 +45,7 @@ public class ObjectRelationshipServiceHttp {
 			addObjectRelationship(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long objectDefinitionId1, long objectDefinitionId2,
-				long parameterObjectFieldId, String deletionType,
+				long parameterObjectFieldId, String deletionType, boolean edge,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				boolean system, String type,
 				com.liferay.object.model.ObjectField objectField)
@@ -58,7 +58,7 @@ public class ObjectRelationshipServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectDefinitionId1,
-				objectDefinitionId2, parameterObjectFieldId, deletionType,
+				objectDefinitionId2, parameterObjectFieldId, deletionType, edge,
 				labelMap, name, system, type, objectField);
 
 			Object returnObj = null;
@@ -393,8 +393,8 @@ public class ObjectRelationshipServiceHttp {
 	private static final Class<?>[] _addObjectRelationshipParameterTypes0 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, String.class,
-			java.util.Map.class, String.class, boolean.class, String.class,
-			com.liferay.object.model.ObjectField.class
+			boolean.class, java.util.Map.class, String.class, boolean.class,
+			String.class, com.liferay.object.model.ObjectField.class
 		};
 	private static final Class<?>[]
 		_addObjectRelationshipMappingTableValuesParameterTypes1 = new Class[] {

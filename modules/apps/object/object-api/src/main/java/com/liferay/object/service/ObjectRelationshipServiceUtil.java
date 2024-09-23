@@ -34,15 +34,15 @@ public class ObjectRelationshipServiceUtil {
 	public static ObjectRelationship addObjectRelationship(
 			String externalReferenceCode, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
-			String deletionType, Map<java.util.Locale, String> labelMap,
-			String name, boolean system, String type,
-			com.liferay.object.model.ObjectField objectField)
+			String deletionType, boolean edge,
+			Map<java.util.Locale, String> labelMap, String name, boolean system,
+			String type, com.liferay.object.model.ObjectField objectField)
 		throws PortalException {
 
 		return getService().addObjectRelationship(
 			externalReferenceCode, objectDefinitionId1, objectDefinitionId2,
-			parameterObjectFieldId, deletionType, labelMap, name, system, type,
-			objectField);
+			parameterObjectFieldId, deletionType, edge, labelMap, name, system,
+			type, objectField);
 	}
 
 	public static void addObjectRelationshipMappingTableValues(

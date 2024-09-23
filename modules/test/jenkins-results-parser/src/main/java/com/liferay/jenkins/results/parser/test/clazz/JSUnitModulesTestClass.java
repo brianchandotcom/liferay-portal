@@ -81,16 +81,13 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 			if (JenkinsResultsParserUtil.isNullOrEmpty(
 					testrayMainComponentName)) {
 
-				String parentFilePath = _testPropertiesFile.getParentFile(
-				).getParentFile(
-				).toString();
+				File parentFile = _testPropertiesFile.getParentFile();
 
-				File parentTestPropertiesFile = new File(
-					parentFilePath + "/test.properties");
+				parentFile = parentFile.getParentFile();
 
 				testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
 					JenkinsResultsParserUtil.getProperties(
-						parentTestPropertiesFile),
+						new File(parentFile + "/test.properties")),
 					"testray.main.component.name");
 			}
 

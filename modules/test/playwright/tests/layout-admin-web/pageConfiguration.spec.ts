@@ -403,7 +403,7 @@ test.describe('SEO configuration', () => {
 		await pagesAdminPage.clickOnAction('Configure', pageName);
 
 		await expect(
-			page.locator('.portlet-body li', {
+			page.locator('nav.menubar', {
 				has: page.getByText('Open Graph'),
 			})
 		).not.toBeAttached();
@@ -425,7 +425,7 @@ test.describe('SEO configuration', () => {
 		await pagesAdminPage.clickOnAction('Configure', pageName);
 
 		await expect(
-			page.locator('.portlet-body li', {
+			page.locator('nav.menubar', {
 				has: page.getByText('Open Graph'),
 			})
 		).toBeAttached();

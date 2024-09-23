@@ -11,7 +11,7 @@ import RadioCard from '../../../../../../../components/RadioCardList/components/
 import zodSchema from '../../../../../../../schema/zod';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
 
-type EnvironmentRadio = {
+type EnvironmentRadioProps = {
 	selectedEnvironment?: z.infer<
 		typeof zodSchema.installProductSchema
 	>['environment'];
@@ -19,7 +19,7 @@ type EnvironmentRadio = {
 	setValue: UseFormSetValue<z.infer<typeof zodSchema.installProductSchema>>;
 };
 
-const EnvironmentRadio: React.FC<EnvironmentRadio> = ({
+const EnvironmentRadio: React.FC<EnvironmentRadioProps> = ({
 	selectedEnvironment,
 	selectedProject,
 	setValue,
@@ -28,41 +28,45 @@ const EnvironmentRadio: React.FC<EnvironmentRadio> = ({
 		setValue('environment', selectedRadio.value);
 	};
 
-	return selectedProject?.environments?.map((projectEnvironment, index) => {
-		const [projectName = '', environment = ''] =
-			projectEnvironment.projectId.split('-');
+	return (
+		<>
+			{selectedProject?.environments?.map((projectEnvironment, index) => {
+				const [projectName = '', environment = ''] =
+					projectEnvironment.projectId.split('-');
 
-		return (
-			<RadioCard
-				activeRadio={
-					projectEnvironment.projectId ===
-					selectedEnvironment?.projectId
-				}
-				key={index}
-				leftRadio
-				selectRadio={() =>
-					handleSelectRadio({
-						index,
-						value: projectEnvironment,
-					})
-				}
-				title={
-					<>
-						<span className="h5 mr-3">
-							{projectName.toUpperCase()}
-						</span>
+				return (
+					<RadioCard
+						activeRadio={
+							projectEnvironment.projectId ===
+							selectedEnvironment?.projectId
+						}
+						key={index}
+						leftRadio
+						selectRadio={() =>
+							handleSelectRadio({
+								index,
+								value: projectEnvironment,
+							})
+						}
+						title={
+							<>
+								<span className="h5 mr-3">
+									{projectName.toUpperCase()}
+								</span>
 
-						<ClayBadge
-							className="text-uppercase"
-							label={environment}
-						>
-							{environment}
-						</ClayBadge>
-					</>
-				}
-			/>
-		);
-	});
+								<ClayBadge
+									className="text-uppercase"
+									label={environment}
+								>
+									{environment}
+								</ClayBadge>
+							</>
+						}
+					/>
+				);
+			})}
+		</>
+	);
 };
 
 export default EnvironmentRadio;

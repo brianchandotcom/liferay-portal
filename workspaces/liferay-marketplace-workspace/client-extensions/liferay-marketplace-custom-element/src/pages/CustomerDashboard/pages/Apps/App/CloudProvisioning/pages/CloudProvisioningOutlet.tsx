@@ -139,13 +139,12 @@ const CloudProvisioningOutlet = () => {
 
 	const onSubmit = async ({
 		environment,
-		project,
 	}: z.infer<typeof zodSchema.installProductSchema>) => {
 		navigate('installation');
 
 		await marketplaceSpringBootOAuth2.provisioningCloudApp(placedOrder.id, {
 			orderItemId: placedOrder.placedOrderItems[0].id,
-			projectId: `${project.rootProjectId}-${environment}`,
+			projectId: environment.projectId,
 		});
 	};
 

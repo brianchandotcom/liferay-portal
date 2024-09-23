@@ -157,44 +157,46 @@ public class ScimNotificationSchedulerJobConfiguration
 				_oAuth2ApplicationLocalService.getOAuth2Applications(companyId);
 
 			for (OAuth2Application oAuth2Application : oAuth2Applications) {
-				if (oAuth2Application.getClientId(
+				if (!oAuth2Application.getClientId(
 					).startsWith(
 						_SCIM_CLIENT_ID_PREFIX
 					)) {
 
-					List<OAuth2Authorization> applicationOAuth2Authorizations =
-						_oAuth2AuthorizationLocalService.
-							getOAuth2Authorizations(
-								oAuth2Application.getOAuth2ApplicationId(),
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-								getOrderByComparator());
+					continue;
+				}
 
-					if ((applicationOAuth2Authorizations != null) &&
-						!applicationOAuth2Authorizations.isEmpty()) {
+				List<OAuth2Authorization> applicationOAuth2Authorizations =
+					_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+						oAuth2Application.getOAuth2ApplicationId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						getOrderByComparator());
 
-						OAuth2Authorization applicationOAuth2Authorization =
-							applicationOAuth2Authorizations.get(0);
+				if ((applicationOAuth2Authorizations == null) ||
+					applicationOAuth2Authorizations.isEmpty()) {
 
-						Date accessTokenExpirationDate =
-							applicationOAuth2Authorization.
-								getAccessTokenExpirationDate();
+					continue;
+				}
 
-						ExpandoBridge expandoBridge =
-							applicationOAuth2Authorization.getExpandoBridge();
+				OAuth2Authorization applicationOAuth2Authorization =
+					applicationOAuth2Authorizations.get(0);
 
-						if (hasToSendNotification(
-								accessTokenExpirationDate,
-								(Date)expandoBridge.getAttribute(
-									"lastSuccessfulNotificationDate", false))) {
+				Date accessTokenExpirationDate =
+					applicationOAuth2Authorization.
+						getAccessTokenExpirationDate();
 
-							_sendNotificationExpirationToken(
-								companyId, accessTokenExpirationDate);
+				ExpandoBridge expandoBridge =
+					applicationOAuth2Authorization.getExpandoBridge();
 
-							expandoBridge.setAttribute(
-								"lastSuccessfulNotificationDate", new Date(),
-								false);
-						}
-					}
+				if (hasToSendNotification(
+						accessTokenExpirationDate,
+						(Date)expandoBridge.getAttribute(
+							"lastSuccessfulNotificationDate", false))) {
+
+					_sendNotificationExpirationToken(
+						companyId, accessTokenExpirationDate);
+
+					expandoBridge.setAttribute(
+						"lastSuccessfulNotificationDate", new Date(), false);
 				}
 			}
 		}

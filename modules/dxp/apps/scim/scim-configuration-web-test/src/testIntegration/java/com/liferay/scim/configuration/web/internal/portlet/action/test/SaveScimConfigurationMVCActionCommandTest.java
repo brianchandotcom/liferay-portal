@@ -60,9 +60,11 @@ public class SaveScimConfigurationMVCActionCommandTest {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
+		User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
+
 		_user = UserTestUtil.addCompanyAdminUser(company);
 
-		User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
+		Assert.assertNotEquals(adminUser, _user);
 
 		String oAuth2ApplicationName = RandomTestUtil.randomString();
 

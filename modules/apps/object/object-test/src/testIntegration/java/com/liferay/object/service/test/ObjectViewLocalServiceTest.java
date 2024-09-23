@@ -529,7 +529,7 @@ public class ObjectViewLocalServiceTest {
 		return _objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(), objectDefinitionId1,
 			objectDefinitionId2, 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);

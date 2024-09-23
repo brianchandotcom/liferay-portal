@@ -111,10 +111,10 @@ public class ObjectRelationshipLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectRelationship addObjectRelationship(
-		String externalReferenceCode, long userId, long objectDefinitionId1,
-		long objectDefinitionId2, long parameterObjectFieldId,
-		String deletionType, boolean edge, Map<Locale, String> labelMap, String name,
-		boolean system, String type, ObjectField objectField)
+			String externalReferenceCode, long userId, long objectDefinitionId1,
+			long objectDefinitionId2, long parameterObjectFieldId,
+			String deletionType, boolean edge, Map<Locale, String> labelMap,
+			String name, boolean system, String type, ObjectField objectField)
 		throws PortalException {
 
 		return _addObjectRelationship(

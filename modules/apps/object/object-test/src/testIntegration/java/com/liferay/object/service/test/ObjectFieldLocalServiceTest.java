@@ -369,7 +369,7 @@ public class ObjectFieldLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectRelationshipName, false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -419,7 +419,7 @@ public class ObjectFieldLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectRelationshipName, false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
@@ -913,7 +913,7 @@ public class ObjectFieldLocalServiceTest {
 			null, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			relatedObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"oneToManyRelationshipName", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -937,7 +937,7 @@ public class ObjectFieldLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
 				relatedObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"relationship", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -1998,7 +1998,7 @@ public class ObjectFieldLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -2684,7 +2684,7 @@ public class ObjectFieldLocalServiceTest {
 			null, TestPropsValues.getUserId(),
 			objectDefinition1.getObjectDefinitionId(),
 			objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"oneToManyRelationshipName", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);

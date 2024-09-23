@@ -88,7 +88,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinitionAAA.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -168,7 +168,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinitionA.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -205,7 +205,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinitionBBB.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -276,7 +276,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);

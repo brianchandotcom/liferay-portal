@@ -685,7 +685,7 @@ public class ObjectEntryServiceTest {
 				null, TestPropsValues.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
 				_objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"relationship", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);

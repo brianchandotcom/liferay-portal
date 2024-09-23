@@ -180,7 +180,7 @@ public class ObjectRelationshipResourceImpl
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(),
 				objectRelationship.getParameterObjectFieldId(),
-				objectRelationship.getDeletionTypeAsString(),
+				objectRelationship.getDeletionTypeAsString(), false,
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
 				GetterUtil.getBoolean(objectRelationship.getSystem()),
@@ -210,7 +210,7 @@ public class ObjectRelationshipResourceImpl
 				objectDefinitionId, objectDefinitionId2,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
-				objectRelationship.getDeletionTypeAsString(),
+				objectRelationship.getDeletionTypeAsString(), false,
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
 				GetterUtil.getBoolean(objectRelationship.getSystem()),

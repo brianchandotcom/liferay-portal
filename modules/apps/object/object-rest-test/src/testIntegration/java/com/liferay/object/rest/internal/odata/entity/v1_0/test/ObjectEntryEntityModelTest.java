@@ -165,7 +165,7 @@ public class ObjectEntryEntityModelTest {
 				null, TestPropsValues.getUserId(),
 				relatedObjectDefinition.getObjectDefinitionId(),
 				objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);

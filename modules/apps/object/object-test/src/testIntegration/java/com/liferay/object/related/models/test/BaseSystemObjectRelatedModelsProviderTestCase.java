@@ -409,6 +409,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0, deletionType,
+				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false, relationshipType, null);
 

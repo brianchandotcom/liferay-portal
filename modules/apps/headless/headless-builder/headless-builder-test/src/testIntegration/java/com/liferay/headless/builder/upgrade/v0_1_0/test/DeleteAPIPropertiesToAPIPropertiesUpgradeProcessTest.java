@@ -74,7 +74,7 @@ public class DeleteAPIPropertiesToAPIPropertiesUpgradeProcessTest
 			"L_API_PROPERTIES_TO_API_PROPERTIES", TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			objectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);

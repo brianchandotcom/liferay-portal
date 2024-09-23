@@ -467,7 +467,7 @@ public class ObjectDefinitionResourceTest
 				serviceBuilderAccountEntryObjectDefinition.
 					getObjectDefinitionId(),
 				postObjectDefinition.getId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"a" + RandomTestUtil.randomString(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));

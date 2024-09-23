@@ -96,7 +96,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 				null, TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId(),
 				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);

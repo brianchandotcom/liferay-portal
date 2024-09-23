@@ -88,15 +88,22 @@ export class DisplayPageTemplatesPage {
 		});
 	}
 
-	async mapConfiguration(field: string, text: string) {
+	async mapConfiguration({
+		field,
+		mappingField,
+	}: {
+		field: string;
+		mappingField: string;
+	}) {
 		await this.page
 			.locator('.form-group')
-			.filter({hasText: text})
-			.first()
+			.filter({has: this.page.getByLabel(field, {exact: true})})
 			.getByTitle('Map', {exact: true})
 			.click();
 
-		await this.page.getByLabel('Field', {exact: true}).selectOption(field);
+		await this.page
+			.getByLabel('Field', {exact: true})
+			.selectOption(mappingField);
 
 		await this.page
 			.locator('.dpt-mapping-panel')

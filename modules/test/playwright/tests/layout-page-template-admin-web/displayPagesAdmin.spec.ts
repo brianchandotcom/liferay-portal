@@ -263,7 +263,10 @@ test.describe('SEO configuration', () => {
 
 		await page.getByLabel('Title', {exact: true}).fill('');
 
-		await displayPageTemplatesPage.mapConfiguration('Title', 'Title');
+		await displayPageTemplatesPage.mapConfiguration({
+			field: 'Title',
+			mappingField: 'Title',
+		});
 
 		await expect(page.getByLabel('Title', {exact: true})).toHaveValue(
 			'${title:Title}'
@@ -271,28 +274,28 @@ test.describe('SEO configuration', () => {
 
 		await page.getByLabel('Description', {exact: true}).fill('');
 
-		await displayPageTemplatesPage.mapConfiguration(
-			'Description',
-			'Description'
-		);
+		await displayPageTemplatesPage.mapConfiguration({
+			field: 'Description',
+			mappingField: 'Description',
+		});
 
 		await expect(page.getByLabel('Description', {exact: true})).toHaveValue(
 			'${description:Description}'
 		);
 
-		await displayPageTemplatesPage.mapConfiguration(
-			'Author Profile Image',
-			'Image'
-		);
+		await displayPageTemplatesPage.mapConfiguration({
+			field: 'Image',
+			mappingField: 'Author Profile Image',
+		});
 
 		await expect(page.getByLabel('Image', {exact: true})).toHaveValue(
 			'Basic Web Content: Author Profile Image'
 		);
 
-		await displayPageTemplatesPage.mapConfiguration(
-			'Title',
-			'Image Alt Description'
-		);
+		await displayPageTemplatesPage.mapConfiguration({
+			field: 'Image Alt Description',
+			mappingField: 'Title',
+		});
 
 		await expect(
 			page.getByLabel('Image Alt Description', {exact: true})
@@ -396,7 +399,10 @@ test.describe('SEO configuration', () => {
 
 		await page.getByLabel('HTML Title', {exact: true}).fill('');
 
-		await displayPageTemplatesPage.mapConfiguration('Title', 'HTML Title');
+		await displayPageTemplatesPage.mapConfiguration({
+			field: 'HTML Title',
+			mappingField: 'Title',
+		});
 
 		await expect(page.getByLabel('HTML Title', {exact: true})).toHaveValue(
 			'${title:Title}'

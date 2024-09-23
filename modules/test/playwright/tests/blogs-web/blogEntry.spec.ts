@@ -320,15 +320,7 @@ test(
 
 		// change back to english language
 
-		await page
-			.locator('.alert-info', {
-				hasText: 'Información: This page is displayed in Spanish',
-			})
-			.waitFor();
-
-		await page
-			.getByRole('link', {name: 'Display the page in English'})
-			.click();
+		await page.goto('/en');
 	}
 );
 

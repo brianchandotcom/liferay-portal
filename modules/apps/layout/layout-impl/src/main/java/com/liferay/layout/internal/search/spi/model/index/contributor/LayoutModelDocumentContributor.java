@@ -40,9 +40,7 @@ public class LayoutModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, Layout layout) {
-		if (layout.isSystem() ||
-			(layout.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
+		if (layout.isSystem()) {
 			return;
 		}
 

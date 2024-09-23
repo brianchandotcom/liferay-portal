@@ -391,9 +391,7 @@ test.describe('SEO configuration', () => {
 				.getByLabel('Options', {exact: true}),
 		});
 
-		await page
-			.locator('.portlet-body li', {has: page.getByText('SEO')})
-			.click();
+		await page.locator('nav.menubar', {has: page.getByText('SEO')}).click();
 
 		// Map HTML Title
 

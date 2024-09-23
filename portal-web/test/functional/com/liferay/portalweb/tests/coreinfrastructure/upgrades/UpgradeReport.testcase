@@ -49,4 +49,5 @@ definition {
 			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-write-protected-directory");
 		}
 	}
+
 }

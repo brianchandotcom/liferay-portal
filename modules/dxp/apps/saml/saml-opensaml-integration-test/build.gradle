@@ -1,0 +1,4 @@
+dependencies {
+	testIntegrationImplementation project(":dxp:apps:saml:saml-opensaml-integration")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

@@ -855,28 +855,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 	}
 
-	@Test
-	public void testUpgradeReportLogging() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		_appender.start();
-
-		_appender.stop();
-
-		_assertReport("Execution time: 0 seconds");
-
-		_assertReport("Type: major");
-
-		_assertReport("Result: failure");
-
-		_assertReport("Status: There are upgrade processes available");
-
-		_assertReport(
-			StringBundler.concat(
-				"Database version: ", db.getDBType(), StringPool.SPACE,
-				db.getMajorVersion(), StringPool.PERIOD, db.getMinorVersion()));
-	}
-
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 

@@ -7,7 +7,6 @@ package com.liferay.layout.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -54,10 +53,6 @@ public class LayoutModelIndexerWriterContributor
 
 	@Override
 	public IndexerWriterMode getIndexerWriterMode(Layout layout) {
-		if (layout.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			return IndexerWriterMode.SKIP;
-		}
-
 		return IndexerWriterMode.UPDATE;
 	}
 

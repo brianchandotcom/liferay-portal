@@ -220,14 +220,39 @@ public class ReplenishmentItemResourceImpl
 		throws Exception {
 
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			_fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
-				externalReferenceCode);
+			_commerceInventoryReplenishmentItemService.
+				fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceInventoryReplenishmentItem == null) {
+			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+				_commerceInventoryWarehouseItemService.
+					getCommerceInventoryWarehouseItem(
+						replenishmentItem.getWarehouseId(),
+						replenishmentItem.getSku(), StringPool.BLANK);
+
+			return _toReplenishmentItem(
+				_commerceInventoryReplenishmentItemService.
+					addCommerceInventoryReplenishmentItem(
+						externalReferenceCode,
+						commerceInventoryWarehouseItem.
+							getCommerceInventoryWarehouseId(),
+						GetterUtil.getDate(
+							replenishmentItem.getAvailabilityDate(),
+							DateFormatFactoryUtil.getDate(
+								contextAcceptLanguage.getPreferredLocale(),
+								contextUser.getTimeZone())),
+						BigDecimal.valueOf(
+							GetterUtil.getInteger(
+								replenishmentItem.getQuantity())),
+						commerceInventoryWarehouseItem.getSku(),
+						StringPool.BLANK));
+		}
 
 		return _toReplenishmentItem(
 			_commerceInventoryReplenishmentItemService.
 				updateCommerceInventoryReplenishmentItem(
-					commerceInventoryReplenishmentItem.
-						getExternalReferenceCode(),
+					replenishmentItem.getExternalReferenceCode(),
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryReplenishmentItemId(),
 					GetterUtil.getDate(

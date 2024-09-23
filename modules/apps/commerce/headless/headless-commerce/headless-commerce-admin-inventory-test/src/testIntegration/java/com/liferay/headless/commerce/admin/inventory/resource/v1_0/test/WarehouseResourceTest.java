@@ -137,37 +137,6 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 	}
 
 	@Override
-	@Test
-	public void testPutWarehouseByExternalReferenceCode() throws Exception {
-		Warehouse postWarehouse = _addWarehouse();
-
-		postWarehouse.setName(
-			Collections.singletonMap(
-				"en_US", "testPutWarehouseByExternalReferenceCode"));
-
-		warehouseResource.putWarehouseByExternalReferenceCode(
-			postWarehouse.getExternalReferenceCode(), postWarehouse);
-
-		Warehouse putWarehouse =
-			warehouseResource.getWarehouseByExternalReferenceCode(
-				postWarehouse.getExternalReferenceCode());
-
-		assertEquals(postWarehouse, putWarehouse);
-
-		postWarehouse = randomWarehouse();
-
-		postWarehouse.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		warehouseResource.putWarehouseByExternalReferenceCode(
-			postWarehouse.getExternalReferenceCode(), postWarehouse);
-
-		putWarehouse = warehouseResource.getWarehouseByExternalReferenceCode(
-			postWarehouse.getExternalReferenceCode());
-
-		assertEquals(postWarehouse, putWarehouse);
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"city", "name"};
 	}
@@ -184,6 +153,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				city = "Milano";
 				countryISOCode = "IT";
+				externalReferenceCode = RandomTestUtil.randomString();
 				latitude = RandomTestUtil.randomDouble();
 				longitude = RandomTestUtil.randomDouble();
 				name = LanguageUtils.getLanguageIdMap(
@@ -240,6 +210,13 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 		throws Exception {
 
 		return _addWarehouse(warehouse);
+	}
+
+	@Override
+	protected Warehouse testPutWarehouseByExternalReferenceCode_addWarehouse()
+		throws Exception {
+
+		return _addWarehouse(randomWarehouse());
 	}
 
 	private Warehouse _addWarehouse() throws Exception {

@@ -8,7 +8,9 @@ package com.liferay.headless.commerce.admin.inventory.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -97,31 +99,6 @@ public class ReplenishmentItemResourceTest
 		replenishmentItem.setQuantity(BigDecimal.valueOf(25));
 
 		replenishmentItemResource.patchReplenishmentItemByExternalReferenceCode(
-			externalReferenceCode, replenishmentItem);
-
-		ReplenishmentItem patchReplenishmentItem =
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCode(
-					replenishmentItem.getExternalReferenceCode());
-
-		Assert.assertTrue(equals(replenishmentItem, patchReplenishmentItem));
-	}
-
-	@Override
-	@Test
-	public void testPutReplenishmentItemByExternalReferenceCode()
-		throws Exception {
-
-		ReplenishmentItem replenishmentItem =
-			testGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
-
-		String externalReferenceCode =
-			replenishmentItem.getExternalReferenceCode();
-
-		replenishmentItem.setAvailabilityDate(_dateFormat.parse("2022-09-24"));
-		replenishmentItem.setQuantity(BigDecimal.valueOf(25));
-
-		replenishmentItemResource.putReplenishmentItemByExternalReferenceCode(
 			externalReferenceCode, replenishmentItem);
 
 		ReplenishmentItem patchReplenishmentItem =
@@ -285,6 +262,14 @@ public class ReplenishmentItemResourceTest
 		return _toReplenishmentItem(_addReplenishmentItem());
 	}
 
+	@Override
+	protected ReplenishmentItem
+			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem()
+		throws Exception {
+
+		return randomReplenishmentItem();
+	}
+
 	private CommerceInventoryWarehouse _addCommerceInventoryWarehouse()
 		throws Exception {
 
@@ -313,6 +298,8 @@ public class ReplenishmentItemResourceTest
 	private CommerceInventoryReplenishmentItem _addReplenishmentItem()
 		throws Exception {
 
+		_addWarehouseItem();
+
 		if (_commerceInventoryReplenishmentItem != null) {
 			return _commerceInventoryReplenishmentItem;
 		}
@@ -328,6 +315,24 @@ public class ReplenishmentItemResourceTest
 					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK);
 
 		return _commerceInventoryReplenishmentItem;
+	}
+
+	private CommerceInventoryWarehouseItem _addWarehouseItem()
+		throws Exception {
+
+		if (_commerceInventoryWarehouseItem != null) {
+			return _commerceInventoryWarehouseItem;
+		}
+
+		_commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemLocalService.
+				addCommerceInventoryWarehouseItem(
+					RandomTestUtil.randomString(), _user.getUserId(),
+					_getCommerceInventoryWarehouseId(),
+					BigDecimal.valueOf(RandomTestUtil.nextInt()),
+					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK);
+
+		return _commerceInventoryWarehouseItem;
 	}
 
 	private long _getCommerceInventoryWarehouseId() throws Exception {
@@ -371,6 +376,13 @@ public class ReplenishmentItemResourceTest
 
 	@DeleteAfterTestRun
 	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
+
+	@DeleteAfterTestRun
+	private CommerceInventoryWarehouseItem _commerceInventoryWarehouseItem;
+
+	@Inject
+	private CommerceInventoryWarehouseItemLocalService
+		_commerceInventoryWarehouseItemLocalService;
 
 	@Inject
 	private CommerceInventoryWarehouseLocalService

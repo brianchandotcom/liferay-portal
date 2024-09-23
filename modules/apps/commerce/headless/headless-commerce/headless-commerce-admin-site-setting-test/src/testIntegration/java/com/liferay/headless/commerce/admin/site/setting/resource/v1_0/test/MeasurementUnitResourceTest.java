@@ -179,58 +179,6 @@ public class MeasurementUnitResourceTest
 	}
 
 	@Override
-	@Test
-	public void testPostMeasurementUnit() throws Exception {
-		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
-
-		randomMeasurementUnit.setRate(Double.valueOf("1.0"));
-		randomMeasurementUnit.setType("Unit");
-
-		MeasurementUnit postMeasurementUnit = _postMeasurementUnit(
-			randomMeasurementUnit);
-
-		assertEquals(randomMeasurementUnit, postMeasurementUnit);
-		assertValid(postMeasurementUnit);
-	}
-
-	@Override
-	@Test
-	public void testPutMeasurementUnitByExternalReferenceCode()
-		throws Exception {
-
-		MeasurementUnit measurementUnit = _postMeasurementUnit(
-			randomMeasurementUnit());
-
-		String oldExternalReferenceCode =
-			measurementUnit.getExternalReferenceCode();
-
-		measurementUnit.setExternalReferenceCode("externalReferenceCode1");
-		measurementUnit.setPriority(Double.valueOf("9.0"));
-		measurementUnit.setRate(Double.valueOf("1.0"));
-
-		measurementUnitResource.putMeasurementUnitByExternalReferenceCode(
-			oldExternalReferenceCode, measurementUnit);
-
-		MeasurementUnit getMeasurementUnit =
-			measurementUnitResource.getMeasurementUnit(measurementUnit.getId());
-
-		Assert.assertTrue(equals(measurementUnit, getMeasurementUnit));
-
-		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
-
-		randomMeasurementUnit.setRate(Double.valueOf("1.0"));
-		randomMeasurementUnit.setType("Unit");
-
-		MeasurementUnit postMeasurementUnit =
-			measurementUnitResource.putMeasurementUnitByExternalReferenceCode(
-				randomMeasurementUnit.getExternalReferenceCode(),
-				randomMeasurementUnit);
-
-		assertEquals(randomMeasurementUnit, postMeasurementUnit);
-		assertValid(postMeasurementUnit);
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"companyId", "externalReferenceCode", "key", "name", "priority",
@@ -249,9 +197,9 @@ public class MeasurementUnitResourceTest
 				name = HashMapBuilder.put(
 					LocaleUtil.US.toString(), RandomTestUtil.randomString()
 				).build();
-				primary = RandomTestUtil.randomBoolean();
+				primary = true;
 				priority = RandomTestUtil.randomDouble();
-				rate = RandomTestUtil.randomDouble();
+				rate = Double.valueOf("1.0");
 				type = _types.get(
 					RandomTestUtil.randomInt(0, _types.size() - 1));
 			}
@@ -380,6 +328,14 @@ public class MeasurementUnitResourceTest
 		return _postMeasurementUnit(randomMeasurementUnit());
 	}
 
+	@Override
+	protected MeasurementUnit
+			testPutMeasurementUnitByExternalReferenceCode_createMeasurementUnit()
+		throws Exception {
+
+		return randomMeasurementUnit();
+	}
+
 	private MeasurementUnit _postMeasurementUnit(
 			MeasurementUnit randomMeasurementUnit)
 		throws Exception {
@@ -389,6 +345,6 @@ public class MeasurementUnitResourceTest
 	}
 
 	private static final List<String> _types = Collections.unmodifiableList(
-		ListUtil.fromArray("0", "1", "2", "Dimensions", "Unit", "Weight"));
+		ListUtil.fromArray("Dimensions", "Unit", "Weight"));
 
 }

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -71,11 +73,14 @@ public class EditSEOMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter(
 			"canonicalURLEnabled", Boolean.TRUE.toString());
+
+		String url = RandomTestUtil.randomString(
+			76, LayoutFriendlyURLRandomizerBumper.INSTANCE);
+
 		mockLiferayPortletActionRequest.addParameter(
 			"canonicalURL_" +
 				_language.getLanguageId(LocaleUtil.getSiteDefault()),
-			"http://mycustomizedcharactersurl.com" +
-				"/mydesiredmorethan75charactersurlfortest");
+			url);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
@@ -89,9 +94,7 @@ public class EditSEOMVCActionCommandTest {
 				_layout.getLayoutId());
 
 		Assert.assertEquals(
-			"http://mycustomizedcharactersurl.com" +
-				"/mydesiredmorethan75charactersurlfortest",
-			layoutSEOEntry.getCanonicalURL(LocaleUtil.getSiteDefault()));
+			url, layoutSEOEntry.getCanonicalURL(LocaleUtil.getSiteDefault()));
 	}
 
 	@Test

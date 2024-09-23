@@ -4,6 +4,7 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import React from 'react';
 
 const KEY_LABEL = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
@@ -56,6 +57,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
+						betaFeatureIndicator
 						description={Liferay.Language.get('cut')}
 						keyCombinations={[KEY_LABEL, 'X']}
 					/>
@@ -63,6 +65,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
+						betaFeatureIndicator
 						description={Liferay.Language.get('copy')}
 						keyCombinations={[KEY_LABEL, 'C']}
 					/>
@@ -70,6 +73,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
+						betaFeatureIndicator
 						description={Liferay.Language.get('paste')}
 						keyCombinations={[KEY_LABEL, 'V']}
 					/>
@@ -87,6 +91,7 @@ export default function ShortcutModal({onCloseModal}) {
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<>
 						<KeyboardShorcut
+							betaFeatureIndicator
 							description={Liferay.Language.get(
 								'range-selection'
 							)}
@@ -97,6 +102,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShorcut
+						betaFeatureIndicator
 						description={Liferay.Language.get(
 							'non-continuous-selection'
 						)}
@@ -117,24 +123,32 @@ export default function ShortcutModal({onCloseModal}) {
 	);
 }
 
-function KeyboardShorcut({description, keyCombinations}) {
+function KeyboardShorcut({
+	betaFeatureIndicator = false,
+	description,
+	keyCombinations,
+}) {
 	return (
 		<div className="align-items-center d-flex mb-3">
 			<div className="page-editor__shorcut-modal__shorcut text-right">
-				<kbd className="c-kbd text-secondary">
+				<kbd className="c-kbd c-kbd-light">
 					{keyCombinations.map((key, index) => (
 						<React.Fragment key={index}>
 							{key}
 
-							{index < keyCombinations.length - 1 ? <>+</> : null}
+							{index < keyCombinations.length - 1 ? (
+								<span className="c-kbd-separator">+</span>
+							) : null}
 						</React.Fragment>
 					))}
 				</kbd>
 			</div>
 
-			<p className="mb-0 ml-3 page-editor__shorcut-modal__shorcut-description text-3 text-weight-semi-bold">
+			<p className="mb-0 ml-3 mr-2 page-editor__shorcut-modal__shorcut-description text-3 text-weight-semi-bold">
 				{description}
 			</p>
+
+			{betaFeatureIndicator ? <FeatureIndicator type="beta" /> : null}
 		</div>
 	);
 }

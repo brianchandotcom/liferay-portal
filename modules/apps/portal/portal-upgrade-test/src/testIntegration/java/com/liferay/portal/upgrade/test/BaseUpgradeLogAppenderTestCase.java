@@ -83,6 +83,7 @@ import org.apache.logging.log4j.message.SimpleMessage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -862,6 +863,45 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			ReflectionTestUtil.setFieldValue(
 				PropsValues.class, "UPGRADE_REPORT_ENABLED",
 				originalUpgradeEnable);
+		}
+	}
+
+	@Test
+	public void testUpgradeReportWriteProtectedDirectory() throws Exception {
+		File reportsDir = new File("/");
+
+		Assume.assumeFalse(reportsDir.canWrite());
+
+		String originalUpgradeReportDir =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DIR", "/");
+
+		try {
+			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
+
+			_appender.start();
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+					LoggerTestUtil.INFO)) {
+
+				_appender.stop();
+
+				File reportFile = new File(reportsDir, "upgrade_report.info");
+
+				Assert.assertFalse(reportFile.exists());
+
+				_upgradeReportDir = "";
+
+				reportFile = _getReportFile("upgrade_report.info");
+
+				Assert.assertTrue(reportFile.exists());
+			}
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DIR",
+				originalUpgradeReportDir);
 		}
 	}
 

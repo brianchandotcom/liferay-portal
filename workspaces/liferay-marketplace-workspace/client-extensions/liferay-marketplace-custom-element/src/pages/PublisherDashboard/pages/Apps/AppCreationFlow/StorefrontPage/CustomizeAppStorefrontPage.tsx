@@ -31,7 +31,7 @@ import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import fetcher from '../../../../../../services/fetcher';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
-import {swapImageElements} from '../../../../../../utils/array';
+import {swapElements} from '../../../../../../utils/array';
 import {getRandomID} from '../../../../../../utils/string';
 import {submitBase64EncodedFile} from '../../../../../../utils/util';
 
@@ -111,7 +111,7 @@ export function CustomizeAppStorefrontPage({
 	const handleArrowClick = (index: number, direction: string) => {
 		const newIndex = direction === 'up' ? index - 1 : index + 1;
 
-		const files = swapImageElements(appStorefrontImages, index, newIndex);
+		const files = swapElements(appStorefrontImages, index, newIndex);
 
 		files[index].changed = true;
 		files[newIndex].changed = true;

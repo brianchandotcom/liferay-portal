@@ -13,7 +13,7 @@ import {
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
 import i18n from '../../../../../i18n';
-import {swapImageElements} from '../../../../../utils/array';
+import {swapElements} from '../../../../../utils/array';
 import {getRandomID} from '../../../../../utils/string';
 import {ACCEPT_FILE_TYPES} from '../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../constants';
@@ -57,7 +57,7 @@ const Storefront = () => {
 	const handleArrowClick = (index: number, direction: string) => {
 		const newIndex = direction === 'up' ? index - 1 : index + 1;
 
-		const _images = swapImageElements(images, index, newIndex);
+		const _images = swapElements(images, index, newIndex);
 
 		_images[index].changed = true;
 		_images[newIndex].changed = true;

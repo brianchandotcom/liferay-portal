@@ -14,7 +14,7 @@ import {
 import Form from '../../../../../../components/MarketplaceForm';
 import {TextImageBlock} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
-import {swapImageElements} from '../../../../../../utils/array';
+import {swapElements} from '../../../../../../utils/array';
 import {getRandomID} from '../../../../../../utils/string';
 import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../../constants';
@@ -81,7 +81,7 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 							const newIndex =
 								direction === 'up' ? index - 1 : index + 1;
 
-							const files = swapImageElements(
+							const files = swapElements(
 								content?.files,
 								index,
 								newIndex

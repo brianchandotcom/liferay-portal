@@ -12,6 +12,14 @@ export function getRandomID() {
 	}
 }
 
+export function normalizeURLProtocol(url = '') {
+	if (window.location.href.startsWith('https')) {
+		return url;
+	}
+
+	return url.replace('https', 'http');
+}
+
 export function removeUnnecessaryURLString(str: string) {
 	const index = str.indexOf('/o');
 

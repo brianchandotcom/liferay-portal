@@ -861,22 +861,97 @@ public class ObjectRelationshipLocalServiceTest {
 
 		// Bind two published object definitions
 
+		ObjectDefinition objectDefinitionB =
+			_addAndPublishCustomObjectDefinition("B");
+		ObjectDefinition objectDefinitionBB =
+			_addAndPublishCustomObjectDefinition("BB");
+
 		_testBindObjectDefinitions(
-			_addAndPublishCustomObjectDefinition("A"),
-			_addAndPublishCustomObjectDefinition("AA"),
+			objectDefinitionB, objectDefinitionBB,
 			(objectDefinition1, objectDefinition2) ->
 				TreeTestUtil.assertObjectDefinitionTree(
 					LinkedHashMapBuilder.put(
-						"A", new String[] {"AA"}
+						"B", new String[] {"BB"}
 					).put(
-						"AA", new String[0]
+						"BB", new String[0]
 					).build(),
 					_objectDefinitionTreeFactory.create(
 						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
 
+		// Unable to bind the object definitions because the object relationship
+		// must not create a circular reference in a root context
+
+		ObjectDefinition objectDefinitionBBB =
+			_addAndPublishCustomObjectDefinition("BBB");
+
+		_bindObjectDefinitions(
+			objectDefinitionBB.getObjectDefinitionId(),
+			objectDefinitionBBB.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"The object relationship must not create a circular reference in " +
+				"a root context",
+			() -> _bindObjectDefinitions(
+				objectDefinitionBBB.getObjectDefinitionId(),
+				objectDefinitionB.getObjectDefinitionId()));
+
+		// Unable to bind the object definitions when the child object
+		// definition is bound to another object definition
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Unable to bind the object definitions when the child object " +
+				"definition is bound to another object definition",
+			() -> _bindObjectDefinitions(
+				objectDefinitionB.getObjectDefinitionId(),
+				objectDefinitionBBB.getObjectDefinitionId()));
+
+		ObjectDefinition objectDefinitionC =
+			_addAndPublishCustomObjectDefinition("C");
+		ObjectDefinition objectDefinitionCC =
+			_addAndPublishCustomObjectDefinition("CC");
+
+		_bindObjectDefinitions(
+			objectDefinitionC.getObjectDefinitionId(),
+			objectDefinitionCC.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Unable to bind the object definitions when the child object " +
+				"definition is bound to another object definition",
+			() -> _bindObjectDefinitions(
+				objectDefinitionB.getObjectDefinitionId(),
+				objectDefinitionCC.getObjectDefinitionId()));
+
+		// Unable to bind the object definitions when they have different scopes
+
+		ObjectDefinition siteObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Unable to bind the object definitions when they have different " +
+				"scopes",
+			() -> _bindObjectDefinitions(
+				objectDefinitionB.getObjectDefinitionId(),
+				siteObjectDefinition.getObjectDefinitionId()));
+
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_AA", "C_A"},
+			_objectDefinitionLocalService,
+			new String[] {"C_BBB", "C_BB", "C_B"}, _objectEntryLocalService);
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_CC", "C_C"},
 			_objectEntryLocalService);
 	}
 
@@ -885,25 +960,9 @@ public class ObjectRelationshipLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(),
-						"a" + RandomTestUtil.randomString())),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+			_addAndPublishCustomObjectDefinition("AA");
 		ObjectDefinition objectDefinitionAAA =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(),
-						"a" + RandomTestUtil.randomString())),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+			_addAndPublishCustomObjectDefinition("AAA");
 
 		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -915,54 +974,61 @@ public class ObjectRelationshipLocalServiceTest {
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			0, objectDefinitionAA.getObjectDefinitionId(),
-			Collections.emptyMap());
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			0, objectDefinitionAAA.getObjectDefinitionId(),
-			Collections.emptyMap());
+		ObjectEntry objectDefinitionAAObjectEntry1 =
+			ObjectEntryTestUtil.addObjectEntry(
+				0, objectDefinitionAA.getObjectDefinitionId(),
+				Collections.emptyMap());
+		ObjectEntry objectDefinitionAAAObjectEntry1 =
+			ObjectEntryTestUtil.addObjectEntry(
+				0, objectDefinitionAAA.getObjectDefinitionId(),
+				Collections.emptyMap());
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			"There must not exist unrelated entries",
-			() -> _bindObjectRelationship(objectRelationship1));
+			StringBundler.concat(
+				"There must be no unrelated object entries when both object ",
+				"definitions are published so that the object relationship ",
+				"can be an edge to a root context"),
+			() -> _bindObjectDefinitions(objectRelationship1));
 
 		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
 			objectRelationship1.getObjectFieldId2());
 
-		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
-			objectEntry2.getUserId(), objectEntry2.getObjectEntryId(),
-			Collections.singletonMap(
-				objectField1.getName(), objectEntry1.getObjectEntryId()),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(0, objectEntry1.getRootObjectEntryId());
-		Assert.assertEquals(0, objectEntry2.getRootObjectEntryId());
-
-		_bindObjectRelationship(objectRelationship1);
-
-		objectEntry1 = _objectEntryLocalService.getObjectEntry(
-			objectEntry1.getObjectEntryId());
-		objectEntry2 = _objectEntryLocalService.getObjectEntry(
-			objectEntry2.getObjectEntryId());
-
-		long expectedRootObjectEntryId = objectEntry1.getRootObjectEntryId();
+		objectDefinitionAAAObjectEntry1 =
+			_objectEntryLocalService.updateObjectEntry(
+				objectDefinitionAAAObjectEntry1.getUserId(),
+				objectDefinitionAAAObjectEntry1.getObjectEntryId(),
+				Collections.singletonMap(
+					objectField1.getName(),
+					objectDefinitionAAObjectEntry1.getObjectEntryId()),
+				ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
-			expectedRootObjectEntryId, objectEntry1.getRootObjectEntryId());
+			0, objectDefinitionAAObjectEntry1.getRootObjectEntryId());
 		Assert.assertEquals(
-			expectedRootObjectEntryId, objectEntry2.getRootObjectEntryId());
+			0, objectDefinitionAAAObjectEntry1.getRootObjectEntryId());
+
+		_bindObjectDefinitions(objectRelationship1);
+
+		objectDefinitionAAObjectEntry1 =
+			_objectEntryLocalService.getObjectEntry(
+				objectDefinitionAAObjectEntry1.getObjectEntryId());
+		objectDefinitionAAAObjectEntry1 =
+			_objectEntryLocalService.getObjectEntry(
+				objectDefinitionAAAObjectEntry1.getObjectEntryId());
+
+		long expectedRootObjectEntryId =
+			objectDefinitionAAObjectEntry1.getRootObjectEntryId();
+
+		Assert.assertEquals(
+			expectedRootObjectEntryId,
+			objectDefinitionAAObjectEntry1.getRootObjectEntryId());
+		Assert.assertEquals(
+			expectedRootObjectEntryId,
+			objectDefinitionAAAObjectEntry1.getRootObjectEntryId());
 
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(),
-						"a" + RandomTestUtil.randomString())),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+			_addAndPublishCustomObjectDefinition("A");
 
 		ObjectRelationship objectRelationship2 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -977,35 +1043,45 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
 			objectRelationship2.getObjectFieldId2());
 
-		ObjectEntry rootObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			0, objectDefinitionA.getObjectDefinitionId(),
-			Collections.emptyMap());
+		ObjectEntry objectDefinitionAObjectEntry1 =
+			ObjectEntryTestUtil.addObjectEntry(
+				0, objectDefinitionA.getObjectDefinitionId(),
+				Collections.emptyMap());
 
 		_objectEntryLocalService.updateObjectEntry(
-			objectEntry1.getUserId(), objectEntry1.getObjectEntryId(),
+			objectDefinitionAAObjectEntry1.getUserId(),
+			objectDefinitionAAObjectEntry1.getObjectEntryId(),
 			Collections.singletonMap(
-				objectField2.getName(), rootObjectEntry.getObjectEntryId()),
+				objectField2.getName(),
+				objectDefinitionAObjectEntry1.getObjectEntryId()),
 			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(0, rootObjectEntry.getRootObjectEntryId());
+		Assert.assertEquals(
+			0, objectDefinitionAObjectEntry1.getRootObjectEntryId());
 
-		_bindObjectRelationship(objectRelationship2);
+		_bindObjectDefinitions(objectRelationship2);
 
-		rootObjectEntry = _objectEntryLocalService.getObjectEntry(
-			rootObjectEntry.getObjectEntryId());
-		objectEntry1 = _objectEntryLocalService.getObjectEntry(
-			objectEntry1.getObjectEntryId());
-		objectEntry2 = _objectEntryLocalService.getObjectEntry(
-			objectEntry2.getObjectEntryId());
+		objectDefinitionAObjectEntry1 = _objectEntryLocalService.getObjectEntry(
+			objectDefinitionAObjectEntry1.getObjectEntryId());
+		objectDefinitionAAObjectEntry1 =
+			_objectEntryLocalService.getObjectEntry(
+				objectDefinitionAAObjectEntry1.getObjectEntryId());
+		objectDefinitionAAAObjectEntry1 =
+			_objectEntryLocalService.getObjectEntry(
+				objectDefinitionAAAObjectEntry1.getObjectEntryId());
 
-		expectedRootObjectEntryId = rootObjectEntry.getRootObjectEntryId();
+		expectedRootObjectEntryId =
+			objectDefinitionAObjectEntry1.getRootObjectEntryId();
 
 		Assert.assertEquals(
-			expectedRootObjectEntryId, rootObjectEntry.getRootObjectEntryId());
+			expectedRootObjectEntryId,
+			objectDefinitionAObjectEntry1.getRootObjectEntryId());
 		Assert.assertEquals(
-			expectedRootObjectEntryId, objectEntry1.getRootObjectEntryId());
+			expectedRootObjectEntryId,
+			objectDefinitionAAObjectEntry1.getRootObjectEntryId());
 		Assert.assertEquals(
-			expectedRootObjectEntryId, objectEntry2.getRootObjectEntryId());
+			expectedRootObjectEntryId,
+			objectDefinitionAAAObjectEntry1.getRootObjectEntryId());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -1028,7 +1104,7 @@ public class ObjectRelationshipLocalServiceTest {
 						_objectDefinition2);
 
 				_objectRelationshipLocalService.deleteObjectRelationship(
-					_bindObjectRelationship(objectRelationship));
+					_bindObjectDefinitions(objectRelationship));
 			});
 		AssertUtils.assertFailure(
 			ObjectRelationshipReverseException.class,
@@ -1260,7 +1336,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipEdgeException.class,
 			"Object relationship must be one to many to be an edge of a root " +
 				"context",
-			() -> _bindObjectRelationship(objectRelationship3));
+			() -> _bindObjectDefinitions(objectRelationship3));
 
 		ObjectRelationship objectRelationship4 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -1275,7 +1351,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipEdgeException.class,
 			"Object relationship must not be a self-relationship to be an " +
 				"edge of a root context",
-			() -> _bindObjectRelationship(objectRelationship4));
+			() -> _bindObjectDefinitions(objectRelationship4));
 
 		ObjectRelationship objectRelationship5 =
 			_addObjectRelationshipSystemObjectDefinition();
@@ -1481,23 +1557,16 @@ public class ObjectRelationshipLocalServiceTest {
 			long objectDefinitionId1, long objectDefinitionId2)
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				StringUtil.randomId(), TestPropsValues.getUserId(),
-				objectDefinitionId1, objectDefinitionId2, 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		return _objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationship.getExternalReferenceCode(),
-			objectRelationship.getObjectRelationshipId(), 0,
-			objectRelationship.getDeletionType(), true,
-			objectRelationship.getLabelMap(), null);
+		return _objectRelationshipLocalService.addObjectRelationship(
+			StringUtil.randomId(), TestPropsValues.getUserId(),
+			objectDefinitionId1, objectDefinitionId2, 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
-	private ObjectRelationship _bindObjectRelationship(
+	private ObjectRelationship _bindObjectDefinitions(
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 

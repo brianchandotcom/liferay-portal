@@ -336,7 +336,11 @@ export function FormInputGeneralPanel({item}) {
 			false;
 
 		if (localizable) {
-			const nextValue = configurationValues[key] ?? {};
+			let nextValue = configurationValues[key];
+
+			if (!nextValue || typeof nextValue !== 'object') {
+				nextValue = {};
+			}
 
 			nextValue[languageId] = value;
 

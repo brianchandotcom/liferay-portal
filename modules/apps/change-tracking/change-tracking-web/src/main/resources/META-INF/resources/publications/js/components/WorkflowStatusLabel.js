@@ -12,6 +12,7 @@ export const WORKFLOW_STATUS_DRAFT = 2;
 export const WORKFLOW_STATUS_EXPIRED = 3;
 export const WORKFLOW_STATUS_IN_TRASH = 8;
 export const WORKFLOW_STATUS_PENDING = 1;
+export const WORKFLOW_STATUS_SCHEDULED = 7;
 
 export function WorkflowStatusLabel({workflowStatus}) {
 	let displayType = null;
@@ -36,6 +37,10 @@ export function WorkflowStatusLabel({workflowStatus}) {
 	else if (workflowStatus === WORKFLOW_STATUS_PENDING) {
 		displayType = 'info';
 		label = Liferay.Language.get('pending');
+	}
+	else if (workflowStatus === WORKFLOW_STATUS_SCHEDULED) {
+		displayType = 'info';
+		label = Liferay.Language.get('scheduled');
 	}
 
 	return displayType && label ? (

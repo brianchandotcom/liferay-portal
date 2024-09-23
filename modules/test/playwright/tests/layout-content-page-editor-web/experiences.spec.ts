@@ -315,7 +315,7 @@ test(
 test(
 	'Allows creating experiences with different fragments mapped to different content',
 	{
-		tag: ['@LPS-142290', '@LPS-113248'],
+		tag: ['@LPS-113248', '@LPS-142290'],
 	},
 	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 

@@ -29,6 +29,11 @@ public class PropertyNameComparator extends NaturalOrderStringComparator {
 		char c1 = s1.charAt(x);
 		char c2 = s2.charAt(x);
 
+		if (Character.isLetterOrDigit(c1) && c2 == CharPool.STAR ||
+				Character.isLetterOrDigit(c2) && c1 == CharPool.STAR) {
+			return -value;
+
+		}
 		for (char[] array : _REVERSE_ORDER_CHARACTERS) {
 			if (ArrayUtil.contains(array, c1) &&
 				ArrayUtil.contains(array, c2)) {

@@ -42,12 +42,13 @@ public class StyleBookEntryServiceUtil {
 	public static StyleBookEntry addStyleBookEntry(
 			String externalReferenceCode, long groupId,
 			String frontendTokensValues, String name, String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			String themeId)
 		throws PortalException {
 
 		return getService().addStyleBookEntry(
 			externalReferenceCode, groupId, frontendTokensValues, name,
-			styleBookEntryKey, serviceContext);
+			styleBookEntryKey, serviceContext, themeId);
 	}
 
 	public static StyleBookEntry copyStyleBookEntry(

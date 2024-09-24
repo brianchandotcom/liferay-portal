@@ -53,7 +53,8 @@ public class StyleBookEntryServiceTest {
 			_styleBookEntryService.addStyleBookEntry(
 				null, _group.getGroupId(), RandomTestUtil.randomString(),
 				"STYLE_BOOK_ENTRY_KEY",
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()),
+				RandomTestUtil.randomString());
 
 		StyleBookEntry targetStyleBookEntry =
 			_styleBookEntryService.copyStyleBookEntry(

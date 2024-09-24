@@ -63,7 +63,8 @@ public class StyleBookEntryServiceTest {
 
 			_styleBookEntryService.addStyleBookEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext,
+				RandomTestUtil.randomString());
 
 			Assert.fail();
 		}
@@ -81,7 +82,8 @@ public class StyleBookEntryServiceTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryService.addStyleBookEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext,
+				RandomTestUtil.randomString());
 
 		_styleBookEntryService.deleteStyleBookEntry(
 			styleBookEntry.getExternalReferenceCode(),
@@ -99,7 +101,8 @@ public class StyleBookEntryServiceTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryService.addStyleBookEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext,
+				RandomTestUtil.randomString());
 
 		try {
 			UserTestUtil.setUser(
@@ -125,7 +128,8 @@ public class StyleBookEntryServiceTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryService.addStyleBookEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext,
+				RandomTestUtil.randomString());
 
 		StyleBookEntry curStyleBookEntry =
 			_styleBookEntryService.getStyleBookEntryByExternalReferenceCode(
@@ -144,7 +148,8 @@ public class StyleBookEntryServiceTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryService.addStyleBookEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext,
+				RandomTestUtil.randomString());
 
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, StyleBookEntry.class.getName(),

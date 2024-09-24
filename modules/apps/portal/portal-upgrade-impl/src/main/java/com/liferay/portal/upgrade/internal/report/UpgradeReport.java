@@ -64,13 +64,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -156,7 +157,7 @@ public class UpgradeReport {
 	}
 
 	private Set<String> _getPropertiesFilePathStrings() {
-		Set<String> propertiesFilePathStrings = new HashSet<>();
+		SortedSet<String> propertiesFilePathStrings = new TreeSet<>();
 
 		for (String loadedSource : PropsUtil.getLoadedSources()) {
 			try {

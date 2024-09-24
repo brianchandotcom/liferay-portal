@@ -68,6 +68,12 @@ export default function Cart(basePath) {
 		deleteCartById: (cartId) =>
 			AJAX.DELETE(resolveCartsPath(basePath, cartId)),
 
+		executeCartTransitionsById: (cartId, json) =>
+			AJAX.POST(
+				resolveCartsPath(basePath, cartId) + '/cart-transitions',
+				json
+			),
+
 		getCartById: (cartId) => AJAX.GET(resolveCartsPath(basePath, cartId)),
 
 		getCartByIdWithItems: (cartId) =>
@@ -80,6 +86,9 @@ export default function Cart(basePath) {
 
 		getCartShippingMethodsPage: (cartId) =>
 			AJAX.GET(resolveCartsPath(basePath, cartId) + '/shipping-methods'),
+
+		getCartTransitionsById: (cartId) =>
+			AJAX.GET(resolveCartsPath(basePath, cartId) + '/cart-transitions'),
 
 		getCartsByAccountIdAndChannelId: (accountId, channelId, searchParams) =>
 			AJAX.GET(

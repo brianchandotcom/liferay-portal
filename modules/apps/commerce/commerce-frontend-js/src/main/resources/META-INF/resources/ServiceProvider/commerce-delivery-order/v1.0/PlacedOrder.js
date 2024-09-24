@@ -43,6 +43,19 @@ function resolvePlacedOrdersByAccountIdAndChannelIdPath(
 
 export default function PlacedOrder(basePath) {
 	return {
+		executeOrderTransitionsById: (placedOrderId, json) =>
+			AJAX.POST(
+				resolvePlacedOrdersPath(basePath, placedOrderId) +
+					'/order-transitions',
+				json
+			),
+
+		getOrderTransitionsById: (placedOrderId) =>
+			AJAX.GET(
+				resolvePlacedOrdersPath(basePath, placedOrderId) +
+					'/order-transitions'
+			),
+
 		getPlacedOrderById: (placedOrderId) =>
 			AJAX.GET(resolvePlacedOrdersPath(basePath, placedOrderId)),
 
@@ -53,11 +66,11 @@ export default function PlacedOrder(basePath) {
 				channelId
 			),
 
-		updatePlacedOrderById: (placedOrderId, jsonProps) =>
+		updatePlacedOrderById: (placedOrderId, json) =>
 			AJAX.PATCH(
 				resolvePlacedOrdersPath(basePath, placedOrderId) +
 					'?nestedFields=placedOrderItems',
-				jsonProps
+				json
 			),
 	};
 }

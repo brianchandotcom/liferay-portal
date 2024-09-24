@@ -222,6 +222,14 @@ test.describe('Fragments Panel', () => {
 		await expect(page.getByText('Apple')).toBeVisible();
 
 		await expect(page.getByText(unpublishedFragmentName)).not.toBeVisible();
+
+		// Delete unpublished fragment
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet('Page Management Fragments');
+
+		await fragmentsPage.deleteFragment(unpublishedFragmentName);
 	});
 
 	test('Can remove search text when pressing backspace', async ({

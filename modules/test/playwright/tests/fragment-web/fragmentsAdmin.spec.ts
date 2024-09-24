@@ -504,7 +504,7 @@ test(
 
 		const layoutTitle = getRandomString();
 
-		await apiHelpers.headlessDelivery.createSitePage({
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
 				basicFragmentDefinition,
 				formDefinition,
@@ -540,11 +540,19 @@ test(
 		// Assert tooltip of back button
 
 		await checkBackButtonTitle(page, 'Go to Fragments');
+
+		// Delete data
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			fragmentCollectionId
+		);
 	}
 );
 
 test(
-	'Form fragment configuration link',
+	'Draft form fragments are not present in configuration and do not have form config link',
 	{
 		tag: '@LPS-180331',
 	},
@@ -616,6 +624,12 @@ test(
 				siteName: pageManagementSite.name,
 			});
 		}).not.toPass();
+
+		// Delete data
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			fragmentCollectionId
+		);
 	}
 );
 
@@ -747,5 +761,15 @@ test(
 				siteName: pageManagementSite.name,
 			});
 		}).toPass();
+
+		// Delete data
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			globalFragmentCollection.fragmentCollectionId
+		);
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			fragmentCollectionId
+		);
 	}
 );

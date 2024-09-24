@@ -36,10 +36,6 @@ public class EmailAddressLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		User user = _userPersistence.findByPrimaryKey(userId);
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
@@ -119,10 +115,6 @@ public class EmailAddressLocalServiceImpl
 			String externalReferenceCode, long emailAddressId, String address,
 			long listTypeId, boolean primary)
 		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		validate(emailAddressId, 0, 0, 0, address, listTypeId, primary);
 

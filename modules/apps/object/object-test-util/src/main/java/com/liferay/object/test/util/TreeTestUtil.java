@@ -76,6 +76,21 @@ public class TreeTestUtil {
 				ObjectRelationship::getObjectRelationshipId));
 	}
 
+	public static void bind(
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			List<ObjectRelationship> objectRelationships)
+		throws PortalException {
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), true,
+				objectRelationship.getLabelMap(), null);
+		}
+	}
+
 	public static Tree createObjectDefinitionTree(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService)

@@ -46,7 +46,7 @@ export class StyleBooksPage {
 	}
 
 	async delete(styleBookName: string) {
-		await this.searchFor(styleBookName);
+		await this.search(styleBookName);
 
 		await this.page.getByLabel('More actions').click();
 
@@ -56,7 +56,7 @@ export class StyleBooksPage {
 	}
 
 	async edit(styleBookName: string) {
-		await this.searchFor(styleBookName);
+		await this.search(styleBookName);
 
 		await this.page.getByLabel('More actions').click();
 
@@ -74,7 +74,7 @@ export class StyleBooksPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async searchFor(styleBookName: string) {
+	async search(styleBookName: string) {
 		await this.searchInput.fill(styleBookName);
 
 		await this.searchButton.click();

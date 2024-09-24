@@ -48,7 +48,7 @@ test('Back buttons have correct title in different sections', async ({
 
 	await styleBooksPage.goto(site.friendlyUrlPath);
 
-	await styleBooksPage.createStyleBook(styleBookName);
+	await styleBooksPage.create(styleBookName);
 
 	await checkBackButtonTitle(page, 'Go to Style Books');
 

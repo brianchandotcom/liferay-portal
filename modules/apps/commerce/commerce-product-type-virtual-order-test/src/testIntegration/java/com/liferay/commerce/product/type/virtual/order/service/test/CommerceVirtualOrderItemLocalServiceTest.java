@@ -23,13 +23,19 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.commerce.product.type.virtual.order.util.CommerceVirtualOrderItemChecker;
+import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.type.virtual.test.util.VirtualCPTypeTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -273,6 +279,97 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 			Assert.assertTrue(commerceOrderItem.isSubscription());
 		}
+	}
+
+	@Test
+	public void testDeleteCPDVirtualFileEntryWithOrder() throws Exception {
+		frutillaRule.scenario(
+			"Add a virtual order item"
+		).given(
+			"An order item"
+		).when(
+			"An order is paid"
+		).and(
+			"I try to delete the Virtual File Entry"
+		).then(
+			"The File Entry does not get deleted"
+		).and(
+			"the order has still access to the file entry"
+		);
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
+
+		_commerceOrders.add(commerceOrder);
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(
+			_commerceCatalog.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME);
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
+				_commerceCatalog.getGroupId(), cpDefinition.getModelClassName(),
+				cpDefinition.getCPDefinitionId(), dlFileEntry.getFileEntryId(),
+				1, 0, 0, 0);
+
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
+				cpDefinition.getGroupId());
+
+		for (CPInstance cpInstance : cpDefinition.getCPInstances()) {
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				null, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
+				false, BigDecimal.ZERO, null,
+				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
+
+			CommerceTestUtil.addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
+		}
+
+		commerceOrder = _setCommerceOrderStatuses(
+			_commerceOrderLocalService.getCommerceOrder(
+				commerceOrder.getCommerceOrderId()),
+			CommerceOrderPaymentConstants.STATUS_COMPLETED,
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
+
+		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
+			commerceOrder.getCommerceOrderId());
+
+		List<CommerceVirtualOrderItem> commerceVirtualOrderItems =
+			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
+				_commerceChannel.getGroupId(),
+				commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			commerceVirtualOrderItems.get(0);
+
+		List<CommerceVirtualOrderItemFileEntry>
+			commerceVirtualOrderItemFileEntries =
+				commerceVirtualOrderItem.
+					getCommerceVirtualOrderItemFileEntries();
+
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
+			commerceVirtualOrderItemFileEntries.get(0);
+
+		Assert.assertNotNull(commerceVirtualOrderItemFileEntry.getFileEntry());
+
+		CPDVirtualSettingFileEntryLocalServiceUtil.
+			deleteCPDVirtualSettingFileEntries(
+				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId());
+
+		Assert.assertNotNull(commerceVirtualOrderItemFileEntry.getFileEntry());
 	}
 
 	@Rule

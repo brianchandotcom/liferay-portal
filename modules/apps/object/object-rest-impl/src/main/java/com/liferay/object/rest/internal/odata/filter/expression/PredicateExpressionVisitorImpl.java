@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -705,7 +706,9 @@ public class PredicateExpressionVisitorImpl
 
 			Object value = objectFieldBusinessType.getValue(
 				objectField, PrincipalThreadLocal.getUserId(),
-				Collections.singletonMap(entityFieldName, right));
+				HashMapBuilder.<String, Object>put(
+					entityFieldName, right
+				).build());
 
 			if (value == null) {
 				value = right;
@@ -826,9 +829,10 @@ public class PredicateExpressionVisitorImpl
 			new PredicateExpressionVisitorImpl(
 				_getObjectDefinitionEntityModel(objectDefinition),
 				_entityModelProvider,
-				Collections.singletonMap(
+				HashMapBuilder.put(
 					lambdaFunctionExpression.getVariableName(),
-					collectionPropertyExpression.getName()),
+					collectionPropertyExpression.getName()
+				).build(),
 				objectDefinition, _objectFieldBusinessTypeRegistry,
 				_objectFieldLocalService,
 				_objectRelatedModelsPredicateProviderRegistry,

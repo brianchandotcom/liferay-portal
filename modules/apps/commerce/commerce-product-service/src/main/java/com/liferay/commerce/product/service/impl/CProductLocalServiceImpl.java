@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.exception.DuplicateCProductExternalReferenceCodeException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,12 +41,6 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		_validate(externalReferenceCode, user.getCompanyId());
 
 		CProduct cProduct = cProductLocalService.createCProduct(
 			counterLocalService.increment());
@@ -116,8 +108,6 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			return cProduct;
 		}
 
-		_validate(externalReferenceCode, cProduct.getCompanyId());
-
 		cProduct.setExternalReferenceCode(externalReferenceCode);
 
 		cProduct = cProductPersistence.update(cProduct);
@@ -161,23 +151,6 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			CPDefinition.class);
 
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
-	}
-
-	private void _validate(String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CProduct cProduct = cProductPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (cProduct != null) {
-			throw new DuplicateCProductExternalReferenceCodeException(
-				"There is another commerce product with external reference " +
-					"code " + externalReferenceCode);
-		}
 	}
 
 	@Reference

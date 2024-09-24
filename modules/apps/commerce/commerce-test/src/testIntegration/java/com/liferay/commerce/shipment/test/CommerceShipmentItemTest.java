@@ -13,7 +13,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
-import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentItemExternalReferenceCodeException;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
@@ -283,7 +283,9 @@ public class CommerceShipmentItemTest {
 		_resetCommerceShipment();
 	}
 
-	@Test(expected = DuplicateCommerceShipmentItemException.class)
+	@Test(
+		expected = DuplicateCommerceShipmentItemExternalReferenceCodeException.class
+	)
 	public void testUpdateCommerceShipmentItem() throws Exception {
 		frutillaRule.scenario(
 			"It should not be possible to update the ERC field with a value " +

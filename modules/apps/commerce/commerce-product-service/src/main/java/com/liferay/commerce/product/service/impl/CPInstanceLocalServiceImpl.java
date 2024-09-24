@@ -21,7 +21,6 @@ import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUui
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.CPInstanceWeightException;
 import com.liferay.commerce.product.exception.CPInstanceWidthException;
-import com.liferay.commerce.product.exception.DuplicateCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
@@ -100,6 +99,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -144,8 +144,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws PortalException {
 
 		_validate(cost, depth, height, price, promoPrice, weight, width);
-		_validateExternalReferenceCode(
-			0, serviceContext.getCompanyId(), externalReferenceCode);
 		_validateSku(cpDefinitionId, 0, sku);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
@@ -329,10 +327,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
+		if (Validator.isNotNull(externalReferenceCode)) {
 			CPInstance cpInstance = cpInstancePersistence.fetchByERC_C(
 				externalReferenceCode, serviceContext.getCompanyId());
 
@@ -1048,8 +1043,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws PortalException {
 
 		_validate(cost, depth, height, price, promoPrice, weight, width);
-		_validateExternalReferenceCode(
-			cpInstanceId, serviceContext.getCompanyId(), externalReferenceCode);
 
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
@@ -1212,9 +1205,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		_validateExternalReferenceCode(
-			cpInstance.getCPInstanceId(), cpInstance.getCompanyId(),
-			externalReferenceCode);
+		if (Objects.equals(
+				cpInstance.getExternalReferenceCode(), externalReferenceCode)) {
+
+			return cpInstance;
+		}
 
 		cpInstance.setExternalReferenceCode(externalReferenceCode);
 
@@ -2036,28 +2031,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return null;
-	}
-
-	private void _validateExternalReferenceCode(
-			long cpInstanceId, long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CPInstance cpInstance = cpInstancePersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (cpInstance == null) {
-			return;
-		}
-
-		if (cpInstance.getCPInstanceId() != cpInstanceId) {
-			throw new DuplicateCPInstanceException(
-				"There is another commerce product instance with external " +
-					"reference code " + externalReferenceCode);
-		}
 	}
 
 	private void _validateReplacementCPInstance(

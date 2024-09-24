@@ -9,6 +9,7 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException;
 import com.liferay.commerce.price.list.exception.CommercePriceListMinPriceValueException;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
+import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryExternalReferenceCodeException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -127,7 +128,9 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchCPInstanceException ||
+			if (exception instanceof
+					DuplicateCommercePriceEntryExternalReferenceCodeException ||
+				exception instanceof NoSuchCPInstanceException ||
 				exception instanceof NoSuchPriceEntryException ||
 				exception instanceof NoSuchPriceListException ||
 				exception instanceof PrincipalException) {

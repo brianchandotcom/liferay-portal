@@ -106,10 +106,6 @@ public class CommercePriceListServiceImpl
 			}
 		}
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		if (Validator.isNotNull(externalReferenceCode)) {
 			CommercePriceList commercePriceList =
 				commercePriceListPersistence.fetchByERC_C(

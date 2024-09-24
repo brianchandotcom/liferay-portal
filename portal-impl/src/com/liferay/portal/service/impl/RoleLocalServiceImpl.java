@@ -136,10 +136,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		// Role
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		User user = _userPersistence.findByPrimaryKey(userId);
 
 		className = GetterUtil.getString(className);

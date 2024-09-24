@@ -9,7 +9,6 @@ import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.exception.CommerceShipmentInactiveWarehouseException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
-import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
@@ -74,13 +73,6 @@ public class CommerceShipmentItemLocalServiceImpl
 		// Commerce shipment item
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		_validateExternalReferenceCode(
-			0, serviceContext.getCompanyId(), externalReferenceCode);
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.getCommerceOrderItem(
@@ -179,10 +171,6 @@ public class CommerceShipmentItemLocalServiceImpl
 			BigDecimal quantity, String unitOfMeasureKey,
 			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		CommerceShipmentItem commerceShipmentItem = null;
 
@@ -432,10 +420,6 @@ public class CommerceShipmentItemLocalServiceImpl
 			return commerceShipmentItem;
 		}
 
-		_validateExternalReferenceCode(
-			commerceShipmentItemId, commerceShipmentItem.getCompanyId(),
-			externalReferenceCode);
-
 		commerceShipmentItem.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceShipmentItemPersistence.update(commerceShipmentItem);
@@ -597,32 +581,6 @@ public class CommerceShipmentItemLocalServiceImpl
 				newQuantity, commerceInventoryWarehouseQuantity)) {
 
 			throw new CommerceShipmentItemQuantityException();
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			long commerceShipmentItemId, long companyId,
-			String externalReferenceCode)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CommerceShipmentItem commerceShipmentItem =
-			commerceShipmentItemPersistence.fetchByERC_C(
-				externalReferenceCode, companyId);
-
-		if (commerceShipmentItem == null) {
-			return;
-		}
-
-		if (commerceShipmentItem.getCommerceShipmentItemId() !=
-				commerceShipmentItemId) {
-
-			throw new DuplicateCommerceShipmentItemException(
-				"There is another commerce shipment item with external " +
-					"reference code " + externalReferenceCode);
 		}
 	}
 

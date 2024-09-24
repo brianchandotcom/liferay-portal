@@ -79,10 +79,6 @@ public class CommerceOrderTypeLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		_validate(nameMap);
 
 		long commerceOrderTypeId = counterLocalService.increment();

@@ -138,13 +138,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		_validateCommercePriceEntryId(
 			0, commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		_validateExternalReferenceCode(
-			externalReferenceCode, serviceContext.getCompanyId());
-
 		Date expirationDate = null;
 		Date date = new Date();
 
@@ -305,10 +298,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 						noSuchTierPriceEntryException);
 				}
 			}
-		}
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
 		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
@@ -521,10 +510,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Override
 	public CommerceTierPriceEntry fetchByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		return commerceTierPriceEntryPersistence.fetchByERC_C(
 			externalReferenceCode, companyId);
@@ -757,10 +742,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			CommerceTierPriceEntry commerceTierPriceEntry,
 			String externalReferenceCode)
 		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 
@@ -1055,25 +1036,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				commerceTierPriceEntryId)) {
 
 			throw new DuplicateCommerceTierPriceEntryException();
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CommerceTierPriceEntry commerceTierPriceEntry =
-			commerceTierPriceEntryPersistence.fetchByERC_C(
-				externalReferenceCode, companyId);
-
-		if (commerceTierPriceEntry != null) {
-			throw new DuplicateCommerceTierPriceEntryException(
-				"There is another commerce tier price entry with external " +
-					"reference code " + externalReferenceCode);
 		}
 	}
 

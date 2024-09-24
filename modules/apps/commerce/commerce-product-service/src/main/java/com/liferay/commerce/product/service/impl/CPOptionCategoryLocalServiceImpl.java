@@ -74,10 +74,6 @@ public class CPOptionCategoryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		key = _friendlyURLNormalizer.normalize(key);
 
 		_validate(0, user.getCompanyId(), key);
@@ -113,10 +109,7 @@ public class CPOptionCategoryLocalServiceImpl
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
+		if (Validator.isNotNull(externalReferenceCode)) {
 			CPOptionCategory cpOptionCategory =
 				cpOptionCategoryPersistence.fetchByERC_C(
 					externalReferenceCode, serviceContext.getCompanyId());
@@ -257,10 +250,6 @@ public class CPOptionCategoryLocalServiceImpl
 
 		CPOptionCategory cpOptionCategory =
 			cpOptionCategoryPersistence.findByPrimaryKey(cpOptionCategoryId);
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		key = _friendlyURLNormalizer.normalize(key);
 

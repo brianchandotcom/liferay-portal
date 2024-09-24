@@ -8,6 +8,7 @@ package com.liferay.commerce.pricing.web.internal.portlet.action;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryMinQuantityException;
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
+import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryExternalReferenceCodeException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -102,7 +103,9 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchTierPriceEntryException ||
+			if (exception instanceof
+					DuplicateCommerceTierPriceEntryExternalReferenceCodeException ||
+				exception instanceof NoSuchTierPriceEntryException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

@@ -79,10 +79,6 @@ public class CommerceCatalogLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		long commerceCatalogId = counterLocalService.increment();
 
 		CommerceCatalog commerceCatalog = commerceCatalogPersistence.create(

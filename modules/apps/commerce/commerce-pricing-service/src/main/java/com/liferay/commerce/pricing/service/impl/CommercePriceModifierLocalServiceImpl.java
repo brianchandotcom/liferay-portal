@@ -120,10 +120,6 @@ public class CommercePriceModifierLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		// Commerce price modifier
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());

@@ -288,10 +288,6 @@ public class CommerceDiscountLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		// Commerce discount
 
 		User user = _userLocalService.getUser(userId);

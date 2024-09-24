@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 
 import java.util.Dictionary;
 
@@ -59,6 +60,12 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 					}
 				}
 			}
+		}
+
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate(
+				"update OAuthClientEntry set metadataCacheInMillis = 360000 " +
+					"where metadataCacheInMillis = null");
 		}
 	}
 

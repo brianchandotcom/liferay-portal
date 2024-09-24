@@ -7,8 +7,8 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -24,22 +24,19 @@ test('Form fields should not be wrapped in a tablist role @LPD-35819', async ({
 	site,
 }) => {
 	await test.step('Create a web content folder and access to edit it', async () => {
-		const webContentFolder = await apiHelpers.jsonWebServicesJournal.addFolder({
-			groupId: site.id,
-		});
+		const webContentFolder =
+			await apiHelpers.jsonWebServicesJournal.addFolder({
+				groupId: site.id,
+			});
 
 		await journalPage.goto(site.friendlyUrlPath);
 
-		//await page.locator('[data-title=`${webContentFolder.name}`]').getByLabel('More actions').click();
-		
 		await page
 			.locator(`.card-body:has-text('${webContentFolder.name}')`)
 			.getByLabel('More actions')
 			.click();
-		
-			await page.getByRole('menuitem', {name: 'Edit'}).click();
-	  
-		//await journalPage.goToJournalArticleAction('Edit', `${webContentFolder.name}`);
+
+		await page.getByRole('menuitem', {name: 'Edit'}).click();
 	});
 
 	await test.step('Edit Web Content Folder and check form', async () => {

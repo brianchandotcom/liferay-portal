@@ -377,14 +377,6 @@ export default function ObjectFieldFormBase({
 		}
 	};
 
-	const applyFeatureFlag = () => {
-		return objectFieldBusinessTypesInfo.filter(
-			(objectFieldBusinessTypeInfo) => {
-				return objectFieldBusinessTypeInfo.businessType !== 'Formula';
-			}
-		);
-	};
-
 	useEffect(() => {
 		const makeFetch = async () => {
 			await getObjectFieldSettingsByBusinessType(
@@ -445,11 +437,7 @@ export default function ObjectFieldFormBase({
 				className={className}
 				disabled={disabled}
 				error={errors.businessType}
-				items={
-					!Liferay.FeatureFlags['LPS-164948']
-						? applyFeatureFlag()
-						: objectFieldBusinessTypesInfo
-				}
+				items={objectFieldBusinessTypesInfo}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {
 					handleTypeChange(value as string);

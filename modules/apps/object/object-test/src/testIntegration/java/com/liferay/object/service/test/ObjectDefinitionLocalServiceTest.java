@@ -1418,7 +1418,7 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testCompleteBindingDraftObjectDefinition() throws Exception {
+	public void testCompleteBindingAsChild() throws Exception {
 		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
 
@@ -1461,6 +1461,59 @@ public class ObjectDefinitionLocalServiceTest {
 			_treeFactory.createObjectDefinitionTree(
 				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService);
+	}
+
+	@Test
+	public void testCompleteBindingAsParent() throws Exception {
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinitionAA.getObjectDefinitionId());
+
+		ObjectRelationship objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinitionA,
+				objectDefinitionAA);
+
+		_objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationshipA_AA.getExternalReferenceCode(),
+			objectRelationshipA_AA.getObjectRelationshipId(), 0,
+			objectRelationshipA_AA.getDeletionType(), true,
+			objectRelationshipA_AA.getLabelMap(), null);
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinitionA.getObjectDefinitionId());
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService);
 	}
 
 	@Test

@@ -29,6 +29,14 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeOAuthClientEntriesWithOIDCProviderConfiguration();
+
+		_upgradeOAuthClientEntriesWithoutOIDCProviderConfiguration();
+	}
+
+	private void _upgradeOAuthClientEntriesWithOIDCProviderConfiguration()
+		throws Exception {
+
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			"(service.factoryPid=com.liferay.portal.security.sso.openid." +
 				"connect.internal.configuration." +
@@ -61,6 +69,10 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	private void _upgradeOAuthClientEntriesWithoutOIDCProviderConfiguration()
+		throws Exception {
 
 		try (Statement statement = connection.createStatement()) {
 			statement.executeUpdate(

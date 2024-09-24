@@ -541,10 +541,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the user is able to add formula fields when managing System Objects"
+	@description = "Verify that the user is able to add formula fields when managing System Objects"
 	@priority = 5
 	test CanCreateFormulaFieldOnCustomObject {
-		property custom.properties = "feature.flag.LPS-164948=true";
 		property portal.acceptance = "true";
 
 		task ("Given a Custom Object)") {
@@ -574,10 +573,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the user is able to add formula fields when managing System Objects"
+	@description = "Verify that the user is able to add formula fields when managing System Objects"
 	@priority = 5
 	test CanCreateFormulaFieldOnSystemObject {
-		property custom.properties = "feature.flag.LPS-164948=true";
 		property portal.acceptance = "true";
 
 		task ("Given a System Object") {
@@ -949,11 +947,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify the Formula Field can be edited in a Custom Object"
+	@description = "Verify the Formula Field can be edited in a Custom Object"
 	@priority = 4
 	test CanEditFormulaFieldOnCustomObject {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a Custom Obejct with Formula Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176842",
@@ -1003,11 +999,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify the Formula Field can be edited in a System Object"
+	@description = "Verify the Formula Field can be edited in a System Object"
 	@priority = 4
 	test CanEditFormulaFieldOnSystemObject {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a System Object with a formula field") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Formula",
@@ -1227,10 +1221,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the user can use Formula Field with Email Notification"
+	@description = "Verify that the user can use Formula Field with Email Notification"
 	@priority = 4
 	test CanFormulaFieldBeUsedWithEmailNotification {
-		property custom.properties = "feature.flag.LPS-164948=true";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template related to Custom Object that contains a Notification action") {
@@ -1380,10 +1373,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the user is able to add the Formula Field when managing Custom Action with Groovy Script"
+	@description = "Verify that the user is able to add the Formula Field when managing Custom Action with Groovy Script"
 	@priority = 4
 	test CanManageFormulaFieldWithCustomAction {
-		property custom.properties = "feature.flag.LPS-164948=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1459,11 +1451,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the user is able to add the Formula Field when managing Custom Layout"
+	@description = "Verify that the user is able to add the Formula Field when managing Custom Layout"
 	@priority = 4
 	test CanManageFormulaFieldWithLayout {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a custom object with a formula field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176844",
@@ -1542,11 +1532,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the user is able to add the Formula Field when managing Custom View"
+	@description = "Verify that the user is able to add the Formula Field when managing Custom View"
 	@priority = 4
 	test CanManageFormulaFieldWithView {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a Custom Object with a Formula Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 177428",
@@ -1619,11 +1607,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that formula fields can be mapped on the page builder framework"
+	@description = "Verify that formula fields can be mapped on the page builder framework"
 	@priority = 4
 	test CanMappedFormulaFieldOnPages {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a Custom Object with a Formula Field and show widget actived") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176851",
@@ -2263,8 +2249,6 @@ definition {
 	@description = "LPS-176828 - Verify that the Formula Builder has same structure as Expression Builder and contains only the principal math operations"
 	@priority = 5
 	test CanSeeAllOperations {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a custom object with a formula field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176828",
@@ -2418,11 +2402,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that there is help text on Formula Builder"
+	@description = "Verify that there is help text on Formula Builder"
 	@priority = 2
 	test CanSeeHelpTextOnFormulaBuilder {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a System Object") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -2674,11 +2656,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that is possible to use Formula Field on System Object related with Custom Object"
+	@description = "Verify that is possible to use Formula Field on System Object related with Custom Object"
 	@priority = 4
 	test CanSystemAndCustomObjectRelatedWithFormulaField {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given add a custom object with a custom field, and create a one-to-many relationship with the User object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176852",
@@ -3086,10 +3066,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify the user can validate Formula Fields with a Custom Validation"
+	@description = "Verify the user can validate Formula Fields with a Custom Validation"
 	@priority = 4
 	test CanValidateFormulaField {
-		property custom.properties = "feature.flag.LPS-164948=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -3687,11 +3666,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that the Formula Field is not searchable"
+	@description = "Verify that the Formula Field is not searchable"
 	@priority = 3
 	test FormulaFieldIsNotSearchable {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given a custom object with two fields") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176845",
@@ -3737,11 +3714,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify that Formula fields can't be required"
+	@description = "Verify that Formula fields can't be required"
 	@priority = 4
 	test FormulaFieldsIsNotMandatory {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given an Object with formula field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176829 ",
@@ -4195,11 +4170,9 @@ definition {
 			value1 = "An unexpected error occurred while uploading your file.");
 	}
 
-	@description = "LPS-164948 - Verify that the Output Field on Formula Field is required"
+	@description = "Verify that the Output Field on Formula Field is required"
 	@priority = 4
 	test OutputFieldIsRequiredOnFormulaField {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
 		task ("Given an Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176823",

@@ -9,7 +9,7 @@ import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class PlacedOrdersPage extends CommerceDNDTablePage {
-	readonly billingAddress: Locator;
+	readonly commerceBillingAddress: Locator;
 	readonly configurationIFrame: FrameLocator;
 	readonly configurationIFrameSaveButton: Locator;
 	readonly configurationIFrameShowFullAddressToggle: Locator;
@@ -26,7 +26,7 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 	readonly panelList: Locator;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
-	readonly shippingAddress: Locator;
+	readonly commerceShippingAddress: Locator;
 	readonly viewButton: Locator;
 
 	constructor(page: Page) {
@@ -35,7 +35,9 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .dnd-table'
 		);
 
-		this.billingAddress = page.getByTestId('commerceBillingAddress');
+		this.commerceBillingAddress = page.getByTestId(
+			'commerceBillingAddress'
+		);
 		this.configurationIFrame = page.frameLocator(
 			'iframe[id="modalIframe"]'
 		);
@@ -78,7 +80,9 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 			.getByRole('button');
 		this.searchButton = page.getByRole('button', {name: 'Search'});
 		this.searchInput = page.getByPlaceholder('Search');
-		this.shippingAddress = page.getByTestId('commerceShippingAddress');
+		this.commerceShippingAddress = page.getByTestId(
+			'commerceShippingAddress'
+		);
 		this.viewButton = page.getByLabel('View');
 	}
 

@@ -107,12 +107,22 @@ test('LPD-25860 Checkout widget configuration to display full addresses and phon
 
 	await checkoutPage.continueButton.click();
 
-	await expect(checkoutPage.billingAddress).not.toContainText(phoneNumber);
-	await expect(checkoutPage.billingAddress).not.toContainText(region);
-	await expect(checkoutPage.billingAddress).not.toContainText(zipCode);
-	await expect(checkoutPage.shippingAddress).not.toContainText(phoneNumber);
-	await expect(checkoutPage.shippingAddress).not.toContainText(region);
-	await expect(checkoutPage.shippingAddress).not.toContainText(zipCode);
+	await expect(checkoutPage.commerceBillingAddress).not.toContainText(
+		phoneNumber
+	);
+	await expect(checkoutPage.commerceBillingAddress).not.toContainText(region);
+	await expect(checkoutPage.commerceBillingAddress).not.toContainText(
+		zipCode
+	);
+	await expect(checkoutPage.commerceShippingAddress).not.toContainText(
+		phoneNumber
+	);
+	await expect(checkoutPage.commerceShippingAddress).not.toContainText(
+		region
+	);
+	await expect(checkoutPage.commerceShippingAddress).not.toContainText(
+		zipCode
+	);
 
 	await checkoutPage.optionsButton.click();
 	await checkoutPage.configurationMenuItem.click();
@@ -124,12 +134,16 @@ test('LPD-25860 Checkout widget configuration to display full addresses and phon
 
 	await page.reload();
 
-	await expect(checkoutPage.billingAddress).toContainText(phoneNumber);
-	await expect(checkoutPage.billingAddress).toContainText(region);
-	await expect(checkoutPage.billingAddress).toContainText(zipCode);
-	await expect(checkoutPage.shippingAddress).toContainText(phoneNumber);
-	await expect(checkoutPage.shippingAddress).toContainText(region);
-	await expect(checkoutPage.shippingAddress).toContainText(zipCode);
+	await expect(checkoutPage.commerceBillingAddress).toContainText(
+		phoneNumber
+	);
+	await expect(checkoutPage.commerceBillingAddress).toContainText(region);
+	await expect(checkoutPage.commerceBillingAddress).toContainText(zipCode);
+	await expect(checkoutPage.commerceShippingAddress).toContainText(
+		phoneNumber
+	);
+	await expect(checkoutPage.commerceShippingAddress).toContainText(region);
+	await expect(checkoutPage.commerceShippingAddress).toContainText(zipCode);
 });
 
 test('LPP-55128 Payment Term is reset correctly', async ({

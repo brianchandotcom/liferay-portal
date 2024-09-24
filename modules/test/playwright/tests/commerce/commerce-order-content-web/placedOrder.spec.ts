@@ -108,18 +108,22 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 
 	await placedOrdersPage.viewButton.click();
 
-	await expect(placedOrdersPage.billingAddress).not.toContainText(
+	await expect(placedOrdersPage.commerceBillingAddress).not.toContainText(
 		'United States'
 	);
-	await expect(placedOrdersPage.billingAddress).not.toContainText('Alabama');
-	await expect(placedOrdersPage.billingAddress).not.toContainText(
+	await expect(placedOrdersPage.commerceBillingAddress).not.toContainText(
+		'Alabama'
+	);
+	await expect(placedOrdersPage.commerceBillingAddress).not.toContainText(
 		phoneNumber
 	);
-	await expect(placedOrdersPage.shippingAddress).not.toContainText(
+	await expect(placedOrdersPage.commerceShippingAddress).not.toContainText(
 		'United States'
 	);
-	await expect(placedOrdersPage.shippingAddress).not.toContainText('Alabama');
-	await expect(placedOrdersPage.shippingAddress).not.toContainText(
+	await expect(placedOrdersPage.commerceShippingAddress).not.toContainText(
+		'Alabama'
+	);
+	await expect(placedOrdersPage.commerceShippingAddress).not.toContainText(
 		phoneNumber
 	);
 
@@ -136,16 +140,24 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 
 	await placedOrdersPage.viewButton.click();
 
-	await expect(placedOrdersPage.billingAddress).toContainText(
+	await expect(placedOrdersPage.commerceBillingAddress).toContainText(
 		'United States'
 	);
-	await expect(placedOrdersPage.billingAddress).toContainText('Alabama');
-	await expect(placedOrdersPage.billingAddress).toContainText(phoneNumber);
-	await expect(placedOrdersPage.shippingAddress).toContainText(
+	await expect(placedOrdersPage.commerceBillingAddress).toContainText(
+		'Alabama'
+	);
+	await expect(placedOrdersPage.commerceBillingAddress).toContainText(
+		phoneNumber
+	);
+	await expect(placedOrdersPage.commerceShippingAddress).toContainText(
 		'United States'
 	);
-	await expect(placedOrdersPage.shippingAddress).toContainText('Alabama');
-	await expect(placedOrdersPage.shippingAddress).toContainText(phoneNumber);
+	await expect(placedOrdersPage.commerceShippingAddress).toContainText(
+		'Alabama'
+	);
+	await expect(placedOrdersPage.commerceShippingAddress).toContainText(
+		phoneNumber
+	);
 });
 
 test('LPD-26643 Reorder from placed orders details page', async ({

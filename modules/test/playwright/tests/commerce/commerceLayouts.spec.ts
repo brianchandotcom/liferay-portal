@@ -15,6 +15,7 @@ import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {liferayConfig} from '../../liferay.config';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout} from '../../utils/performLogin';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export const test = mergeTests(
@@ -86,7 +87,9 @@ test('LPD-33439 Default order display page template is accessible via friendly U
 			'Developer'
 		);
 
-		await page.getByLabel('COMMERCE-9410').click();
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -183,7 +186,9 @@ test('LPD-32227 Order info box fragment configuration', async ({
 			'Developer'
 		);
 
-		await page.getByLabel('COMMERCE-9410').click();
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -467,7 +472,9 @@ test('LPD-32232 Edit Requested Delivery Date in Open Order Details', async ({
 			'Developer'
 		);
 
-		await page.getByLabel('COMMERCE-9410').click();
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -619,11 +626,7 @@ test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
 			'Developer'
 		);
 
-		const featureFlagEnabled = await page
-			.getByLabel('COMMERCE-9410')
-			.isChecked();
-
-		if (!featureFlagEnabled) {
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
 			await page.getByLabel('COMMERCE-9410').click();
 		}
 
@@ -831,11 +834,7 @@ test('LPD-33809 Edit Payment Method in Open Order Details', async ({
 			'Developer'
 		);
 
-		const featureFlagEnabled = await page
-			.getByLabel('COMMERCE-9410')
-			.isChecked();
-
-		if (!featureFlagEnabled) {
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
 			await page.getByLabel('COMMERCE-9410').click();
 		}
 
@@ -1167,6 +1166,357 @@ test('LPD-35558 Order Details - Order Summary', async ({
 		await expect(page.getByText('$ 16.20')).toBeVisible();
 	}
 	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-32237 Order actions and redirect fragments', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	checkoutPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	test.setTimeout(180000);
+
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['demo.unprivileged@liferay.com']
+		);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			user.emailAddress
+		);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Heading');
+
+		await page.getByText('Heading Example', {exact: true}).dblclick();
+		await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
+
+		await commerceLayoutsPage.addFragment('Order Actions', 'Order');
+
+		await expect(
+			page.getByText('The order actions component will be shown here.')
+		).toBeVisible();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForSuccessAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.fixCommerceChannelIssue(
+			['Checkout'],
+			channel.name
+		);
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B',
+			true
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		const cart1 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart1.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart1.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Checkout').click();
+
+		await checkoutPage.performCheckout({
+			shippingAddress: {
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: user.name,
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			},
+		});
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart1.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart1.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
+			'Single Approver (Version 1)',
+			channel.name
+		);
+		await commerceAdminChannelsPage.changeCommerceChannelSellerOrderAcceptanceWorkflow(
+			'Single Approver (Version 1)',
+			channel.name,
+			true
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		const cart2 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({submitCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Submit').click();
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({});
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({
+			approveCount: 1,
+			rejectCount: 1,
+		});
+		await commerceLayoutsPage.orderActionsButton('Approve').click();
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Checkout').click();
+
+		await checkoutPage.performCheckout(
+			{
+				shippingAddress: {
+					city: 'testCity',
+					countryLabel: 'United States',
+					name: user.name,
+					regionLabel: 'California',
+					street: 'testStreet',
+					zip: '12345',
+				},
+			},
+			async (activeStep: string) => {
+				if (activeStep.includes('Order Confirmation')) {
+					await page.waitForTimeout(1000);
+				}
+			}
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({
+			approveCount: 1,
+			rejectCount: 1,
+			reorderCount: 1,
+		});
+		await commerceLayoutsPage.orderActionsButton('Approve').click();
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Reorder').click();
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)})
+		).toHaveCount(0);
+
+		await commerceLayoutsPage.expectOrderActionButtons({submitCount: 1});
+	}
+	finally {
+		await page.goto('/');
+
+		if (await page.getByRole('button', {name: 'Sign In'}).isHidden()) {
+			await performLogout(page);
+		}
+
+		await performLogin(page, 'test');
+
 		await systemSettingsPage.goToSystemSetting(
 			'Feature Flags',
 			'Developer'

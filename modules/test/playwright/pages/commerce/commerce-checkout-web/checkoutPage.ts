@@ -3,14 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
+type TAddress = {
+	city: string;
+	countryLabel: string;
+	name: string;
+	phoneNumber?: string;
+	regionLabel?: string;
+	street: string;
+	useAsBilling?: boolean | true;
+	zip: string;
+};
+
 export class CheckoutPage {
+	readonly activeCheckoutStep: Locator;
 	readonly addressInput: Locator;
-	readonly billingAddress: Locator;
 	readonly cityInput: Locator;
+	readonly commerceBillingAddress: Locator;
+	readonly commerceShippingAddress: Locator;
 	readonly configurationIFrame: FrameLocator;
 	readonly configurationIFrameSaveButton: Locator;
 	readonly configurationIFrameShowFullAddressToggle: Locator;
@@ -27,15 +40,20 @@ export class CheckoutPage {
 	readonly phoneNumberInput: Locator;
 	readonly previousButton: Locator;
 	readonly regionInput: Locator;
-	readonly shippingAddress: Locator;
 	readonly shippingAddressSelect: Locator;
 	readonly shippingCost: Locator;
+	readonly useAsBillingCheckbox: Locator;
 	readonly zipInput: Locator;
 
 	constructor(page: Page) {
+		this.activeCheckoutStep = page.locator(
+			'.multi-step-item.active .multi-step-indicator-label'
+		);
 		this.addressInput = page.getByPlaceholder('Address', {exact: true});
-		this.billingAddress = page.getByTestId('commerceBillingAddress');
 		this.cityInput = page.getByPlaceholder('City', {exact: true});
+		this.commerceBillingAddress = page.getByTestId(
+			'commerceBillingAddress'
+		);
 		this.configurationIFrame = page.frameLocator(
 			'iframe[id="modalIframe"]'
 		);
@@ -76,10 +94,31 @@ export class CheckoutPage {
 		});
 		this.previousButton = page.getByRole('button', {name: 'Previous'});
 		this.regionInput = page.getByTitle('Region');
-		this.shippingAddress = page.getByTestId('commerceShippingAddress');
+		this.commerceShippingAddress = page.getByTestId(
+			'commerceShippingAddress'
+		);
 		this.shippingAddressSelect = page.getByText('Choose Shipping Address');
 		this.shippingCost = page.locator('.shipping-cost');
+		this.useAsBillingCheckbox = page.getByLabel(
+			'Use shipping address as billing address'
+		);
 		this.zipInput = page.getByPlaceholder('Zip', {exact: true});
+	}
+
+	async addAddress({
+		phoneNumber = '',
+		regionLabel = '',
+		useAsBilling = true,
+		...address
+	}: TAddress) {
+		await this.cityInput.fill(address.city);
+		await this.countryInput.selectOption({label: address.countryLabel});
+		await this.nameInput.fill(address.name);
+		await this.phoneNumberInput.fill(phoneNumber);
+		await this.regionInput.selectOption({label: regionLabel});
+		await this.addressInput.fill(address.street);
+		await this.useAsBillingCheckbox.setChecked(useAsBilling);
+		await this.zipInput.fill(address.zip);
 	}
 
 	async addCheckoutWidget() {
@@ -89,5 +128,54 @@ export class CheckoutPage {
 	async chooseShippingAddress(index) {
 		this.shippingAddressSelect.selectOption(index);
 		this.continueButton.click();
+	}
+
+	async performCheckout(
+		{
+			billingAddress,
+			shippingAddress,
+		}: {
+			billingAddress?: TAddress;
+			shippingAddress: TAddress;
+		},
+		callback: (activeStep: string) => Promise<void> = () =>
+			Promise.resolve(),
+		checkSuccess: boolean = true
+	) {
+		let currentStep = await this.activeCheckoutStep.textContent();
+
+		if (currentStep.includes('Shipping Address')) {
+			await this.addAddress(shippingAddress);
+
+			await callback(currentStep);
+
+			await this.continueButton.click();
+		}
+
+		currentStep = await this.activeCheckoutStep.textContent();
+
+		if (currentStep.includes('Billing Address')) {
+			await this.addAddress(billingAddress);
+
+			await callback(currentStep);
+
+			await this.continueButton.click();
+		}
+
+		currentStep = await this.activeCheckoutStep.textContent();
+
+		if (currentStep.includes('Order Summary')) {
+			await callback(currentStep);
+
+			await this.continueButton.click();
+		}
+
+		currentStep = await this.activeCheckoutStep.textContent();
+
+		if (currentStep.includes('Order Confirmation') && checkSuccess) {
+			await callback(currentStep);
+
+			await expect(this.orderSuccessMessage).toBeVisible();
+		}
 	}
 }

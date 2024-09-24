@@ -43,6 +43,7 @@ export class CommerceLayoutsPage {
 	readonly inputTextbox: (name: string) => Locator;
 	readonly markAsDefaultMenuItem: Locator;
 	readonly moreActionsButton: Locator;
+	readonly orderActionsButton: (orderActionName: string) => Locator;
 	readonly openProductMenuButton: Locator;
 	readonly page: Page;
 	readonly pagesMenuItem: Locator;
@@ -156,6 +157,8 @@ export class CommerceLayoutsPage {
 			name: 'Mark as Default',
 		});
 		this.moreActionsButton = page.getByLabel('More actions');
+		this.orderActionsButton = (orderActionName: string) =>
+			page.getByRole('button', {name: orderActionName});
 		this.openProductMenuButton = page.getByRole('tab', {
 			exact: true,
 			name: 'Open Product Menu',
@@ -414,6 +417,34 @@ export class CommerceLayoutsPage {
 						)
 			),
 		]);
+	}
+
+	async expectOrderActionButtons({
+		approveCount = 0,
+		checkoutCount = 0,
+		rejectCount = 0,
+		reorderCount = 0,
+		requestQuoteCount = 0,
+		submitCount = 0,
+	}) {
+		await expect(this.orderActionsButton('Approve')).toHaveCount(
+			approveCount
+		);
+		await expect(this.orderActionsButton('Checkout')).toHaveCount(
+			checkoutCount
+		);
+		await expect(this.orderActionsButton('Reject')).toHaveCount(
+			rejectCount
+		);
+		await expect(this.orderActionsButton('Reorder')).toHaveCount(
+			reorderCount
+		);
+		await expect(this.orderActionsButton('Request Quote')).toHaveCount(
+			requestQuoteCount
+		);
+		await expect(this.orderActionsButton('Submit')).toHaveCount(
+			submitCount
+		);
 	}
 
 	async goto() {

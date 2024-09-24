@@ -20,9 +20,11 @@ export class CommerceAdminChannelsPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly channelsTableRowLink: (channelName: string) => Promise<Locator>;
 	readonly commerceSiteType: Locator;
+	readonly healthCheckAction: (actionName: string) => Locator;
 	readonly headerActions: Locator;
 	readonly headerActionsSaveButton: Locator;
 	readonly page: Page;
+	readonly sellerOrderAcceptanceWorkflow: Locator;
 	readonly shippingMethodActiveField: Locator;
 	readonly shippingMethodOptionsAddButton: Locator;
 	readonly shippingMethodOptionsLink: Locator;
@@ -71,9 +73,17 @@ export class CommerceAdminChannelsPage {
 			);
 		};
 		this.commerceSiteType = page.getByLabel('Commerce Site Type');
+		this.healthCheckAction = (actionName: string) =>
+			page
+				.locator('.dnd-tr')
+				.filter({has: page.getByText(actionName, {exact: true})})
+				.locator('.item-actions .btn');
 		this.headerActions = page.locator('.header-actions');
 		this.headerActionsSaveButton = this.headerActions.getByText('Save');
 		this.page = page;
+		this.sellerOrderAcceptanceWorkflow = page.getByLabel(
+			'Seller Order Acceptance Workflow'
+		);
 		this.shippingMethodsPanel = page.frameLocator('iframe').nth(2);
 
 		this.shippingMethodActiveField =
@@ -108,27 +118,76 @@ export class CommerceAdminChannelsPage {
 
 	async changeCommerceChannelBuyerOrderApprovalWorkflow(
 		buyerOrderApprovalWorkflow: string,
-		channelName: string
+		channelName: string,
+		skipNavigation: boolean = false
 	) {
-		await this.goto();
+		if (!skipNavigation) {
+			await this.goto();
 
-		await (await this.channelsTableRowLink(channelName)).click();
+			await (await this.channelsTableRowLink(channelName)).click();
+		}
 
 		await this.buyerOrderApprovalWorkflow.selectOption({
 			label: buyerOrderApprovalWorkflow,
 		});
 		await this.headerActionsSaveButton.click();
+
 		await waitForSuccessAlert(this.page);
 	}
 
-	async changeCommerceChannelSiteType(channelName: string, siteType: string) {
-		await this.goto();
+	async changeCommerceChannelSellerOrderAcceptanceWorkflow(
+		sellerOrderAcceptanceWorkflow: string,
+		channelName: string,
+		skipNavigation: boolean = false
+	) {
+		if (!skipNavigation) {
+			await this.goto();
 
-		await (await this.channelsTableRowLink(channelName)).click();
+			await (await this.channelsTableRowLink(channelName)).click();
+		}
+
+		await this.sellerOrderAcceptanceWorkflow.selectOption({
+			label: sellerOrderAcceptanceWorkflow,
+		});
+		await this.headerActionsSaveButton.click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
+	async changeCommerceChannelSiteType(
+		channelName: string,
+		siteType: string,
+		skipNavigation: boolean = false
+	) {
+		if (!skipNavigation) {
+			await this.goto();
+
+			await (await this.channelsTableRowLink(channelName)).click();
+		}
 
 		await this.commerceSiteType.selectOption({label: siteType});
 		await this.headerActionsSaveButton.click();
 		await this.page.waitForTimeout(200);
+	}
+
+	async fixCommerceChannelIssue(
+		actionNames: [string],
+		channelName,
+		skipNavigation: boolean = false
+	) {
+		if (!skipNavigation) {
+			await this.goto();
+
+			await (await this.channelsTableRowLink(channelName)).click();
+		}
+
+		return Promise.all(
+			actionNames.map((actionName) => {
+				this.healthCheckAction(actionName).click();
+
+				this.page.waitForTimeout(200);
+			})
+		);
 	}
 
 	async setupCommerceChannelShippingMethod(

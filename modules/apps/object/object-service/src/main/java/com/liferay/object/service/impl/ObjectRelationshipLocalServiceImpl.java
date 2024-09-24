@@ -1572,6 +1572,18 @@ public class ObjectRelationshipLocalServiceImpl
 					"object definitions to be an edge of a root context");
 		}
 
+		long objectDefinition2RootObjectDefinitionId =
+			objectDefinition2.getRootObjectDefinitionId();
+
+		if ((objectDefinition2RootObjectDefinitionId != 0) &&
+			(objectDefinition2RootObjectDefinitionId !=
+				objectDefinition2.getObjectDefinitionId())) {
+
+			throw new ObjectRelationshipEdgeException(
+				"Unable to bind the object definitions when the child object " +
+					"definition is bound to another object definition");
+		}
+
 		_validateObjectEntries(
 			objectDefinition1, objectDefinition2, objectRelationship);
 	}

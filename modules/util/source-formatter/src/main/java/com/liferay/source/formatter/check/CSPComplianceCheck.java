@@ -5,11 +5,14 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,6 +32,128 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		List<String> illegalTagNamesData = getAttributeValues(
 			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
 
+		content = _checkIllegalTags(fileName, content, illegalTagNamesData);
+
+		List<String> illegalAttributeNames = getAttributeValues(
+			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
+
+		return _checkIllegalAttributes(
+			fileName, content, illegalAttributeNames);
+	}
+
+	protected String getEnclosingTagStart(String content, int x) {
+		boolean inJavaCode = false;
+
+		int startIndex;
+
+		for (startIndex = x; startIndex >= 0; startIndex--) {
+			if (inJavaCode) {
+				if ((content.charAt(startIndex) == CharPool.LESS_THAN) &&
+					(content.charAt(startIndex + 1) == CharPool.PERCENT)) {
+
+					inJavaCode = false;
+				}
+			}
+			else if ((content.charAt(startIndex) == CharPool.GREATER_THAN) &&
+					 (content.charAt(startIndex - 1) == CharPool.PERCENT)) {
+
+				inJavaCode = true;
+			}
+			else if ((content.charAt(startIndex) == CharPool.LESS_THAN) &&
+					 !StringUtil.equals(
+						 content.substring(startIndex, startIndex + 18),
+						 "<portlet:namespace")) {
+
+				break;
+			}
+		}
+
+		if (startIndex < 0) {
+			return null;
+		}
+
+		return content.substring(startIndex, x);
+	}
+
+	private String _checkIllegalAttributes(
+		String fileName, String content, List<String> illegalAttributeNames) {
+
+		String lowercaseContent = StringUtil.toLowerCase(content);
+		String lowercaseFileName = StringUtil.toLowerCase(fileName);
+
+		for (String illegalAttributeName : illegalAttributeNames) {
+			int x = -1;
+
+			while (true) {
+				x = lowercaseContent.indexOf(
+					illegalAttributeName + StringPool.EQUAL, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (x == 0) {
+					continue;
+				}
+
+				char previousChar = content.charAt(x - 1);
+
+				if ((previousChar != CharPool.NEW_LINE) &&
+					(previousChar != CharPool.SPACE) &&
+					(previousChar != CharPool.TAB)) {
+
+					continue;
+				}
+
+				String tagString = getEnclosingTagStart(content, x);
+
+				if (tagString == null) {
+					continue;
+				}
+
+				List<String> ignoredTagPrefixes = Collections.emptyList();
+
+				if (lowercaseFileName.endsWith(".ftl")) {
+					ignoredTagPrefixes = _ignoredFTLTagPrefixes;
+				}
+				else if (lowercaseFileName.endsWith(".jsp") ||
+						 lowercaseFileName.endsWith(".jspf") ||
+						 lowercaseFileName.endsWith(".jspx")) {
+
+					ignoredTagPrefixes = _ignoredJSPTagPrefixes;
+				}
+
+				boolean skip = false;
+
+				for (String ignoredTagPrefix : ignoredTagPrefixes) {
+					if (tagString.startsWith(ignoredTagPrefix)) {
+						skip = true;
+
+						break;
+					}
+				}
+
+				if (skip) {
+					continue;
+				}
+
+				addMessage(
+					fileName,
+					"Tag attribute '" + illegalAttributeName +
+						"' is not allowed, see LPD-18227",
+					getLineNumber(content, x));
+			}
+		}
+
+		return content;
+	}
+
+	private String _checkIllegalTags(
+		String fileName, String content, List<String> illegalTagNamesData) {
+
+		String lowercaseContent = StringUtil.toLowerCase(content);
+		String lowercaseFileName = StringUtil.toLowerCase(fileName);
+
 		for (String illegalTagNameData : illegalTagNamesData) {
 			String[] parts = StringUtil.split(
 				illegalTagNameData, StringPool.COLON);
@@ -44,7 +169,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			int x = -1;
 
 			while (true) {
-				x = content.indexOf("<" + tagName, x + 1);
+				x = lowercaseContent.indexOf("<" + tagName, x + 1);
 
 				if (x == -1) {
 					break;
@@ -61,8 +186,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				int lineNumber = getLineNumber(content, x);
 
-				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
-					fileName.endsWith(".jspx")) {
+				if (lowercaseFileName.endsWith(".jsp") ||
+					lowercaseFileName.endsWith(".jspf") ||
+					lowercaseFileName.endsWith(".jspx")) {
 
 					addMessage(
 						fileName,
@@ -71,12 +197,12 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 							">, see LPD-18227"),
 						lineNumber);
 				}
-				else if (fileName.endsWith(".ftl")) {
+				else if (lowercaseFileName.endsWith(".ftl")) {
 					_checkMissingAttribute(
 						fileName, tagName, "${nonceAttribute}", tagString,
 						lineNumber);
 				}
-				else if (fileName.endsWith(".vm")) {
+				else if (lowercaseFileName.endsWith(".vm")) {
 					_checkMissingAttribute(
 						fileName, tagName, "$nonceAttribute", tagString,
 						lineNumber);
@@ -101,7 +227,17 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		}
 	}
 
+	private static final String _ILLEGAL_ATTRIBUTE_NAMES_KEY =
+		"illegalAttributeNames";
+
 	private static final String _ILLEGAL_TAG_NAMES_DATA_KEY =
 		"illegalTagNamesData";
+
+	private static final List<String> _ignoredFTLTagPrefixes = Arrays.asList(
+		"<@clay.", "<@clay[", "<@liferay_aui.", "<@liferay_aui[",
+		"<@liferay_frontend.", "<@liferay_frontend[", "<@liferay_ui.",
+		"<@liferay_ui[");
+	private static final List<String> _ignoredJSPTagPrefixes = Arrays.asList(
+		"<aui:", "<clay:", "<liferay-frontend:", "<liferay-ui:");
 
 }

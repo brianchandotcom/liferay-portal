@@ -125,6 +125,8 @@ const RichText = ({
 			newEditingLocale = {localeId};
 		}
 
+		const newValue = convertStringToObject(contents, localeId);
+
 		setCurrentEditingLocale({
 			...newEditingLocale,
 			icon: normalizeLocaleId(newEditingLocale.localeId),
@@ -134,9 +136,11 @@ const RichText = ({
 				defaultLocale,
 				editingLocale: newEditingLocale,
 				fieldName,
-				value: convertStringToObject(contents, localeId),
+				value: newValue,
 			})
 		);
+
+		setCurrentValue(newValue);
 	};
 
 	const handleContentChange = (content) => {

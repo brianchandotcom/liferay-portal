@@ -302,6 +302,18 @@ public class OpenAPIResourceTest {
 
 		_objectRelationships.add(relation1ToM);
 
+		ObjectRelationship relationMTo1 =
+			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+				null, _user.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
+				_userSystemObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"relationMTo1", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		_objectRelationships.add(relationMTo1);
+
 		ObjectRelationship relationMToM =
 			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 				null, _user.getUserId(),

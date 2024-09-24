@@ -5,14 +5,23 @@
 
 package com.liferay.commerce.internal.order.status;
 
+import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Locale;
@@ -47,10 +56,16 @@ public class QuoteRequestedCommerceOrderStatusImpl
 
 		commerceOrder.setOrderStatus(KEY);
 
-		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder);
+		if (secure) {
+			commerceOrder = _commerceOrderService.updateCommerceOrder(
+				commerceOrder);
+		}
+		else {
+			commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+				commerceOrder);
+		}
 
-		return _commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+		return commerceOrder;
 	}
 
 	@Override
@@ -93,12 +108,37 @@ public class QuoteRequestedCommerceOrderStatusImpl
 			(currentCommerceOrderStatus.getKey() ==
 				CommerceOrderConstants.ORDER_STATUS_OPEN)) {
 
-			return _commerceOrderValidatorRegistry.isValid(
-				LocaleUtil.getSiteDefault(), commerceOrder);
+			if (!_commerceOrderValidatorRegistry.isValid(
+					LocaleUtil.getSiteDefault(), commerceOrder)) {
+
+				return false;
+			}
+
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+					commerceOrder.getGroupId());
+
+			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderFieldsConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceChannel.getGroupId(),
+						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+			if (commerceOrderFieldsConfiguration.requestQuoteEnabled()) {
+				return true;
+			}
+
+			return ListUtil.exists(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItemModel::isPriceOnApplication);
 		}
 
 		return false;
 	}
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
@@ -106,11 +146,20 @@ public class QuoteRequestedCommerceOrderStatusImpl
 	)
 	private volatile CommerceOrderLocalService _commerceOrderLocalService;
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceOrderService _commerceOrderService;
+
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

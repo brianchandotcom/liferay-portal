@@ -118,11 +118,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testAddDBPartition() throws Exception {
 		addDBPartitions();
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					PortalInstancePool.getDefaultCompanyId());
-			Statement statement = connection.createStatement()) {
-
+		try (Statement statement = connection.createStatement()) {
 			for (long companyId : COMPANY_IDS) {
 				statement.execute(
 					"select 1 from " + getPartitionName(companyId) +

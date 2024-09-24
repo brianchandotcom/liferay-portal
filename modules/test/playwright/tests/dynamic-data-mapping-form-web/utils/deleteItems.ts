@@ -10,7 +10,7 @@ import {FormsPage} from '../../../pages/dynamic-data-mapping-form-web/FormsPage'
 export async function deleteItems(formsPage: FormsPage, page: Page) {
 	await page.waitForTimeout(1000);
 
-	if (formsPage.managementToolbarSelectAllItems.isEnabled()) {
+	if (await formsPage.managementToolbarSelectAllItems.isEnabled()) {
 		await formsPage.managementToolbarSelectAllItems.click();
 
 		page.once('dialog', (dialog) => {

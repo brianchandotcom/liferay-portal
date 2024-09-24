@@ -114,8 +114,8 @@ function getValidFields({
 			}
 
 			field.sortable =
-				type !== 'object' &&
-				type !== 'array' &&
+				field.type !== 'object' &&
+				field.type !== 'array' &&
 				!contextPath.includes(FDS_NESTED_FIELD_NAME_DELIMITER) &&
 				!contextPath.includes(FDS_ARRAY_FIELD_NAME_DELIMITER);
 

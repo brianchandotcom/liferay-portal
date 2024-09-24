@@ -9,7 +9,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -249,9 +248,7 @@ public class ObjectCodeEditorUtil {
 			List<Map<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
-				if (StringUtil.equals(ddmExpressionFunction._key, "power") &&
-					!FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
-
+				if (StringUtil.equals(ddmExpressionFunction._key, "power")) {
 					continue;
 				}
 

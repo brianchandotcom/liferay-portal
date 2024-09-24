@@ -125,12 +125,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			};
 
-		actionableDynamicQuery.setBaseLocalService(this);
-		actionableDynamicQuery.setClassLoader(getClassLoader());
-		actionableDynamicQuery.setModelClass(AssetEntry.class);
-
-		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
-
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property companyIdProperty = PropertyFactoryUtil.forName(
@@ -143,7 +137,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 				dynamicQuery.add(classNameIdProperty.eq(classNameId));
 			});
-
+		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(AssetEntry.class);
 		actionableDynamicQuery.setPerformActionMethod(
 			(AssetEntry assetEntry) -> {
 
@@ -157,6 +153,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 					assetEntryLocalService.deleteEntry(assetEntry);
 				}
 			});
+		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
 
 		try (SafeCloseable safeCloseable1 =
 				_removeFunctionThreadLocal.setWithSafeCloseable(

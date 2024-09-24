@@ -539,13 +539,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 				};
 
-			actionableDynamicQuery.setBaseLocalService(
-				_objectEntryLocalService);
-			actionableDynamicQuery.setClassLoader(getClassLoader());
-			actionableDynamicQuery.setModelClass(ObjectEntry.class);
-
-			actionableDynamicQuery.setPrimaryKeyPropertyName("objectEntryId");
-
 			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
 					Property nameProperty = PropertyFactoryUtil.forName(
@@ -555,6 +548,10 @@ public class ObjectDefinitionLocalServiceImpl
 						nameProperty.eq(
 							objectDefinition.getObjectDefinitionId()));
 				});
+			actionableDynamicQuery.setBaseLocalService(
+				_objectEntryLocalService);
+			actionableDynamicQuery.setClassLoader(getClassLoader());
+			actionableDynamicQuery.setModelClass(ObjectEntry.class);
 
 			AtomicBoolean deletedMarker = new AtomicBoolean();
 
@@ -564,6 +561,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 					_objectEntryLocalService.deleteObjectEntry(objectEntry);
 				});
+
+			actionableDynamicQuery.setPrimaryKeyPropertyName("objectEntryId");
 
 			try (SafeCloseable safeCloseable =
 					ObjectDefinitionThreadLocal.setDeleteObjectDefinitionId(

@@ -668,7 +668,19 @@ test(
 
 		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
 
-		// Assert new input fragment is not present under checkbox type
+		// Assert form configuration link is present in fragment configuration for published fragments
+
+		await fragmentsPage.clickAction('Edit', inputFragmentEntryName);
+
+		await page.getByRole('tab', {name: 'Configuration'}).click();
+
+		await expect(
+			page.getByRole('link', {
+				name: 'Define the default form fragments for this site.',
+			})
+		).toBeVisible();
+
+        // Assert new input fragment is not present under checkbox type
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 

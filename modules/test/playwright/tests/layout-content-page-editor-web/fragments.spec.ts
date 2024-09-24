@@ -893,6 +893,16 @@ test.describe('HTML Fragment', () => {
 			});
 
 			await expect(page.getByText('test html')).toBeAttached();
+
+			// Remove the page
+
+			await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+
+			// Delete data
+
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollectionId
+			);
 		}
 	);
 

@@ -225,24 +225,34 @@ function StructureTreeNodeContent({
 		deepEqual
 	);
 
+	const onDragEnd = (parentItemId, position) => {
+		const thunk = fieldTypes?.includes('stepper')
+			? moveStepper({
+					itemId: node.id,
+					parentItemId,
+					position,
+				})
+			: moveItems({
+					itemIds: dragItems.map((item) => item.itemId),
+					parentItemIds: [parentItemId],
+					positions: [position],
+				});
+
+		dispatch(thunk);
+	};
+
+	const onDragBegin = () => {
+		if (!isActive) {
+			selectItem(item.itemId, {
+				origin: ITEM_ACTIVATION_ORIGINS.layout,
+			});
+		}
+	};
+
 	const {handlerRef, isDraggingSource: itemIsDraggingSource} = useDragItem(
 		dragItems,
-		(parentItemId, position) => {
-			const thunk = fieldTypes?.includes('stepper')
-				? moveStepper({
-						itemId: node.id,
-						parentItemId,
-						position,
-					})
-				: moveItems({
-						itemIds: dragItems.map((item) => item.itemId),
-						parentItemIds: [parentItemId],
-						positions: [position],
-					});
-
-			dispatch(thunk);
-		},
-		() => {}
+		onDragEnd,
+		onDragBegin
 	);
 
 	const {

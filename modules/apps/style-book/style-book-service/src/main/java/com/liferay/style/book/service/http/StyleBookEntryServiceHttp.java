@@ -44,7 +44,8 @@ public class StyleBookEntryServiceHttp {
 	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long groupId, String name, String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			String themeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -54,7 +55,7 @@ public class StyleBookEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, name,
-				styleBookEntryKey, serviceContext);
+				styleBookEntryKey, serviceContext, themeId);
 
 			Object returnObj = null;
 
@@ -635,7 +636,7 @@ public class StyleBookEntryServiceHttp {
 	private static final Class<?>[] _addStyleBookEntryParameterTypes0 =
 		new Class[] {
 			String.class, long.class, String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class, String.class
 		};
 	private static final Class<?>[] _addStyleBookEntryParameterTypes1 =
 		new Class[] {

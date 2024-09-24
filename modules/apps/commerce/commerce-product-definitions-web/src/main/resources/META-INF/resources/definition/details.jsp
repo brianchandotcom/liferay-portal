@@ -183,73 +183,28 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 		</div>
 
 		<c:if test="<%= cpDefinition != null %>">
-			<c:choose>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21636") %>'>
-					<div class="col-12">
-						<commerce-ui:panel
-							bodyClasses="p-0"
-							title='<%= LanguageUtil.get(request, "specifications") %>'
-						>
-							<frontend-data-set:classic-display
-								contextParams='<%=
-									HashMapBuilder.<String, String>put(
-										"cpDefinitionId", String.valueOf(cpDefinitionId)
-									).build()
-								%>'
-								creationMenu="<%= cpDefinitionsDisplayContext.getCPDefinitionSpecificationOptionValueCreationMenu() %>"
-								dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
-								formName="fm"
-								id="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
-								itemsPerPage="<%= 10 %>"
-								selectedItemsKey="cpdefinitionSpecificationOptionValueId"
-								showManagementBar="<%= true %>"
-								showSearch="<%= true %>"
-							/>
-						</commerce-ui:panel>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="col-12">
-						<div id="item-finder-root"></div>
-
-						<liferay-frontend:component
-							context='<%=
-								HashMapBuilder.<String, Object>put(
-									"portletId", portletDisplay.getRootPortletId()
-								).put(
-									"productDefinitonSpecifications", CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS
-								).put(
-									"productId", cpDefinition.getCProductId()
-								).put(
-									"spritemap", themeDisplay.getPathThemeSpritemap()
-								).build()
-							%>'
-							module="{detailsItemFinder} from commerce-product-definitions-web"
-						/>
-					</div>
-
-					<div class="col-12">
-						<commerce-ui:panel
-							bodyClasses="p-0"
-							title='<%= LanguageUtil.get(request, "specifications") %>'
-						>
-							<frontend-data-set:classic-display
-								contextParams='<%=
-									HashMapBuilder.<String, String>put(
-										"cpDefinitionId", String.valueOf(cpDefinitionId)
-									).build()
-								%>'
-								dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
-								formName="fm"
-								id="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
-								itemsPerPage="<%= 10 %>"
-								selectedItemsKey="cpdefinitionSpecificationOptionValueId"
-								showManagementBar="<%= false %>"
-							/>
-						</commerce-ui:panel>
-					</div>
-				</c:otherwise>
-			</c:choose>
+			<div class="col-12">
+				<commerce-ui:panel
+					bodyClasses="p-0"
+					title='<%= LanguageUtil.get(request, "specifications") %>'
+				>
+					<frontend-data-set:classic-display
+						contextParams='<%=
+							HashMapBuilder.<String, String>put(
+								"cpDefinitionId", String.valueOf(cpDefinitionId)
+							).build()
+						%>'
+						creationMenu="<%= cpDefinitionsDisplayContext.getCPDefinitionSpecificationOptionValueCreationMenu() %>"
+						dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
+						formName="fm"
+						id="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
+						itemsPerPage="<%= 10 %>"
+						selectedItemsKey="cpdefinitionSpecificationOptionValueId"
+						showManagementBar="<%= true %>"
+						showSearch="<%= true %>"
+					/>
+				</commerce-ui:panel>
+			</div>
 		</c:if>
 	</div>
 </aui:form>

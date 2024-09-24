@@ -186,6 +186,7 @@ public interface DLFileEntryTypeLocalService
 	public void deleteDLFolderDLFileEntryTypes(
 		long folderId, long[] fileEntryTypeIds);
 
+	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE

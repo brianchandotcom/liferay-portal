@@ -183,21 +183,6 @@ const zodSchema = {
 		lastName: z.string().min(3, 'Last name is required'),
 		roles: z.string().array().min(5, 'Please select at least one role'),
 	}),
-	newCustomer: z.object({
-		accountBriefs: z.any().optional(),
-		alternateName: z.string().optional(),
-		currentPassword: z.string().optional(),
-		emailAddress: z.string().email(),
-		familyName: z.string(),
-		givenName: z.string(),
-		id: z.number().optional(),
-		image: z.string().optional(),
-		imageBlob: z.any().optional(),
-		isCustomerAccount: z.boolean().optional(),
-		isPublisherAccount: z.boolean().optional(),
-		newsSubscription: z.boolean(),
-		password: z.string().optional(),
-	}),
 	solutionPublishing: {
 		company: z
 			.object({

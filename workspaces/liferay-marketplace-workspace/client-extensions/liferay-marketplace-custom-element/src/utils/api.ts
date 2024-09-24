@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {z} from 'zod';
-
 import {Liferay} from '../liferay/liferay';
-import zodSchema from '../schema/zod';
 import fetcher from '../services/fetcher';
 import {axios} from './axios';
 
@@ -14,8 +11,6 @@ const headers = {
 	'Content-Type': 'application/json',
 	'X-CSRF-Token': Liferay.authToken,
 };
-
-type UserForm = z.infer<typeof zodSchema.newCustomer>;
 
 export const baseURL =
 	window.location.origin + Liferay.ThemeDisplay.getPathContext();
@@ -104,6 +99,9 @@ export async function getTierPrice(
 	return tierPrices;
 }
 
+/**
+ * @deprecated We will remove this object definition soon
+ */
 export async function getLicenseDescription() {
 	const response = await fetch(`${baseURL}/o/c/licensetypesdescriptions/`, {
 		headers,
@@ -280,30 +278,6 @@ export async function getAccountAddressesFromCommerce(accountId: number) {
 	return (await response.json()) as {items: BillingAddress[]};
 }
 
-export async function getAccounts() {
-	const response = await fetch(
-		`${baseURL}/o/headless-admin-user/v1.0/accounts?pageSize=-1`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return (await response.json()) as {items: Account[]};
-}
-
-export async function getAccountPostalAddressesByAccountId(accountId: number) {
-	const response = await fetch(
-		`${baseURL}/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return (await response.json()) as {items: AccountPostalAddresses[]};
-}
-
 export async function createCart({
 	accountId,
 	channelId,
@@ -353,17 +327,6 @@ export async function getCartItems(cartId: number | string) {
 	);
 
 	return await cartResponse.json();
-}
-
-export async function getCatalogs() {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs`,
-		{headers, method: 'GET'}
-	);
-
-	const {items} = (await response.json()) as {items: Catalog[]};
-
-	return items;
 }
 
 export async function getCategories({vocabId}: {vocabId: number}) {
@@ -523,32 +486,6 @@ export async function getPriceListIdPriceEntries(priceListId: number) {
 	return await response.json();
 }
 
-export async function getSpecifications() {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return await response.json();
-}
-
-// HeadlessAdminUser.getUserAccounts
-
-export async function getUserAccounts() {
-	const response = await fetch(
-		`${baseURL}/o/headless-admin-user/v1.0/user-accounts`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return await response.json();
-}
-
 export async function getVocabularies() {
 	const response = await fetch(
 		`${baseURL}/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`,
@@ -639,7 +576,7 @@ export async function postCheckoutCart({
 		}
 	);
 
-	return (await await response.json()) as PostCheckoutCartResponse;
+	return (await response.json()) as PostCheckoutCartResponse;
 }
 
 export async function postOptionValue(optionBody: any, optionId: number) {
@@ -657,19 +594,6 @@ export async function postOptionValue(optionBody: any, optionId: number) {
 
 		return id;
 	}
-}
-
-export async function postOrder(order: Order) {
-	const response = await fetch(
-		'/o/headless-commerce-admin-order/v1.0/orders',
-		{
-			body: JSON.stringify(order),
-			headers,
-			method: 'POST',
-		}
-	);
-
-	return (await response.json()) as Order;
 }
 
 export async function patchPriceEntry(priceEntry: any, priceEntryId: number) {
@@ -699,19 +623,6 @@ export async function postPriceEntryIdTierPrice(
 	);
 
 	return await response.json();
-}
-
-export async function postProduct(product: any) {
-	const response = await fetch(
-		'/o/headless-commerce-admin-catalog/v1.0/products',
-		{
-			body: JSON.stringify(product),
-			headers,
-			method: 'POST',
-		}
-	);
-
-	return (await response.json()) as Product;
 }
 
 export async function postOption(optionBody: any) {
@@ -787,100 +698,6 @@ export async function updateProductSpecification({
 			method: 'PATCH',
 		}
 	);
-
-	return await response.json();
-}
-export async function updateUserAdditionalInfos(body: Object, id: number) {
-	const response = await fetch(
-		`${baseURL}/o/c/useradditionalinfos/${id}/?filter=contains(sendType,'shipping')`,
-		{
-			body: JSON.stringify(body),
-			headers,
-			method: 'PATCH',
-		}
-	);
-
-	return await response.json();
-}
-
-export async function getMyUserAditionalInfos(userId: number) {
-	const userAdditionalInfos = await fetch(
-		`${baseURL}/o/c/useradditionalinfos/?filter=r_userToUserAddInfo_userId eq '${userId}' and contains(sendType,'shipping')`,
-		{headers}
-	);
-
-	return await userAdditionalInfos.json();
-}
-
-// HeadlessAdminUser.updateUserAccount
-
-export async function updateUserPassword(password: string, id: number) {
-	const response = await fetch(
-		`/o/headless-admin-user/v1.0/user-accounts/${id}`,
-		{
-			body: JSON.stringify({password}),
-			headers,
-			method: 'PATCH',
-		}
-	);
-
-	return response.json();
-}
-
-// HeadlessAdminUser.sendRoleAccountUser
-
-export async function sendRoleAccountUser(
-	accountId: number,
-	roleId: number,
-	userId: number
-) {
-	await fetch(
-		`/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
-		{
-			headers: {
-				...headers,
-				accept: 'application/json',
-			},
-			method: 'POST',
-		}
-	);
-}
-
-export async function updateUserImage(userId: number, formData: FormData) {
-	await fetch(
-		`${baseURL}/o/headless-admin-user/v1.0/user-accounts/${userId}/image`,
-		{
-			body: formData,
-			headers: {
-				'X-CSRF-Token': headers['X-CSRF-Token'],
-			},
-			method: 'POST',
-		}
-	);
-}
-
-export async function updateMyUserAccount(
-	userId: number,
-	formData: UserForm
-): Promise<UserAccount> {
-	const response = await fetch(
-		`${baseURL}/o/headless-admin-user/v1.0/user-accounts/${userId}`,
-		{
-			body: JSON.stringify(formData),
-			headers,
-			method: 'PATCH',
-		}
-	);
-
-	const accountBriefs = formData.accountBriefs || [];
-
-	for (const account of accountBriefs) {
-		account.roleBriefs.forEach(async (roleBrief: RoleBrief) => {
-			if (roleBrief.name === 'Invited Member') {
-				await sendRoleAccountUser(account.id, roleBrief.id, userId);
-			}
-		});
-	}
 
 	return await response.json();
 }

@@ -167,7 +167,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					</div>
 
 					<div class="col-lg-6">
-						<aui:input checked="<%= commerceChannelDisplayContext.isMultishippingEnabled() %>" helpMessage="configures-whether-a-buyer-can-initiate-from-an-order-shipments-to-multiple-delivery-groups" label="allow-multishipping" labelOff="disabled" labelOn="enabled" name="settings--multishippingEnabled--" type="toggle-switch" />
+						<aui:input checked="<%= commerceChannelDisplayContext.isQuickCheckoutEnabled() %>" helpMessage="allow-customers-to-complete-purchases-with-a-single-click-if-all-required-information-is-provided-in-the-order-streamlining-the-checkout-process-it-cannot-be-used-in-case-of-custom-checkout-steps" label="quick-checkout" labelOff="disabled" labelOn="enabled" name="settings--quickCheckoutEnabled--" type="toggle-switch" />
 					</div>
 				</div>
 
@@ -183,6 +183,16 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 						<aui:input label="order-importer-date-format" labelOff="disabled" labelOn="enabled" name="format--orderImporterDateFormat--" type="text" value="<%= commerceChannelDisplayContext.getOrderImporterDateFormat() %>" />
 					</div>
 
+					<div class="col-lg-6">
+						<aui:input checked="<%= commerceChannelDisplayContext.isMultishippingEnabled() %>" helpMessage="configures-whether-a-buyer-can-initiate-from-an-order-shipments-to-multiple-delivery-groups" label="allow-multishipping" labelOff="disabled" labelOn="enabled" name="settings--multishippingEnabled--" type="toggle-switch" />
+					</div>
+
+					<div class="col-lg-6">
+						<aui:input checked="<%= commerceChannelDisplayContext.isShowSeparateOrderItems() %>" helpMessage="show-separate-order-items-help" label="show-separate-order-items" labelOff="disabled" labelOn="enabled" name="settings--showSeparateOrderItems--" type="toggle-switch" />
+					</div>
+				</div>
+
+				<div class="row">
 					<div class="col-lg-6">
 
 						<%
@@ -215,10 +225,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 								</span>
 							</p>
 						</div>
-					</div>
-
-					<div class="col-lg-6">
-						<aui:input checked="<%= commerceChannelDisplayContext.isShowSeparateOrderItems() %>" helpMessage="show-separate-order-items-help" label="show-separate-order-items" labelOff="disabled" labelOn="enabled" name="settings--showSeparateOrderItems--" type="toggle-switch" />
 					</div>
 				</div>
 			</commerce-ui:panel>

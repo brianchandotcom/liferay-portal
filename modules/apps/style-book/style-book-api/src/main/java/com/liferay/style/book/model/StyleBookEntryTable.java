@@ -73,6 +73,8 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 		createColumn(
 			"styleBookEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryTable, String> themeId = createColumn(
+		"themeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private StyleBookEntryTable() {
 		super("StyleBookEntry", StyleBookEntryTable::new);

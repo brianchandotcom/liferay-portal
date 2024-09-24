@@ -9697,6 +9697,7 @@ public class StyleBookEntryPersistenceImpl
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("previewFileEntryId");
 		ctStrictColumnNames.add("styleBookEntryKey");
+		ctStrictColumnNames.add("themeId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

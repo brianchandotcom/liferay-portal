@@ -21,6 +21,7 @@
 		<field name="name" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="styleBookEntryKey" type="String" />
+		<field name="themeId" type="String" />
 	</model>
 	<model name="com.liferay.style.book.model.StyleBookEntryVersion">
 		<field name="mvccVersion" type="long" />
@@ -43,5 +44,6 @@
 		<field name="name" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="styleBookEntryKey" type="String" />
+		<field name="themeId" type="String" />
 	</model>
 </model-hints>

@@ -358,6 +358,21 @@ public interface StyleBookEntryVersionModel
 	 */
 	public void setStyleBookEntryKey(String styleBookEntryKey);
 
+	/**
+	 * Returns the theme ID of this style book entry version.
+	 *
+	 * @return the theme ID of this style book entry version
+	 */
+	@AutoEscape
+	public String getThemeId();
+
+	/**
+	 * Sets the theme ID of this style book entry version.
+	 *
+	 * @param themeId the theme ID of this style book entry version
+	 */
+	public void setThemeId(String themeId);
+
 	@Override
 	public StyleBookEntryVersion cloneWithOriginalValues();
 

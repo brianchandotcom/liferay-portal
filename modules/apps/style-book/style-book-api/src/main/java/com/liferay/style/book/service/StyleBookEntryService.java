@@ -51,7 +51,7 @@ public interface StyleBookEntryService extends BaseService {
 	public StyleBookEntry addStyleBookEntry(
 			String externalReferenceCode, long groupId,
 			String frontendTokensValues, String name, String styleBookEntryKey,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, String themeId)
 		throws PortalException;
 
 	public StyleBookEntry copyStyleBookEntry(

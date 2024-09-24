@@ -37,12 +37,14 @@ public class StyleBookEntryLocalServiceWrapper
 			String externalReferenceCode, long userId, long groupId,
 			boolean defaultStyleBookEntry, String frontendTokensValues,
 			String name, String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			String themeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.addStyleBookEntry(
 			externalReferenceCode, userId, groupId, defaultStyleBookEntry,
-			frontendTokensValues, name, styleBookEntryKey, serviceContext);
+			frontendTokensValues, name, styleBookEntryKey, serviceContext,
+			themeId);
 	}
 
 	/**

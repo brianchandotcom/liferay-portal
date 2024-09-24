@@ -155,6 +155,8 @@ public class StyleBookEntryVersionPersistenceTest {
 		newStyleBookEntryVersion.setStyleBookEntryKey(
 			RandomTestUtil.randomString());
 
+		newStyleBookEntryVersion.setThemeId(RandomTestUtil.randomString());
+
 		_styleBookEntryVersions.add(
 			_persistence.update(newStyleBookEntryVersion));
 
@@ -218,6 +220,9 @@ public class StyleBookEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingStyleBookEntryVersion.getStyleBookEntryKey(),
 			newStyleBookEntryVersion.getStyleBookEntryKey());
+		Assert.assertEquals(
+			existingStyleBookEntryVersion.getThemeId(),
+			newStyleBookEntryVersion.getThemeId());
 	}
 
 	@Test
@@ -395,7 +400,7 @@ public class StyleBookEntryVersionPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
 			"defaultStyleBookEntry", true, "name", true, "previewFileEntryId",
-			true, "styleBookEntryKey", true);
+			true, "styleBookEntryKey", true, "themeId", true);
 	}
 
 	@Test
@@ -752,6 +757,8 @@ public class StyleBookEntryVersionPersistenceTest {
 
 		styleBookEntryVersion.setStyleBookEntryKey(
 			RandomTestUtil.randomString());
+
+		styleBookEntryVersion.setThemeId(RandomTestUtil.randomString());
 
 		_styleBookEntryVersions.add(_persistence.update(styleBookEntryVersion));
 

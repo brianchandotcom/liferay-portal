@@ -82,6 +82,9 @@ public class StyleBookEntryVersionTable
 		createColumn(
 			"styleBookEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryVersionTable, String> themeId =
+		createColumn(
+			"themeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private StyleBookEntryVersionTable() {
 		super("StyleBookEntryVersion", StyleBookEntryVersionTable::new);

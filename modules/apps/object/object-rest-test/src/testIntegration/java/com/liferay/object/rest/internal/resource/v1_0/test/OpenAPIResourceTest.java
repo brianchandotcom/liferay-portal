@@ -313,10 +313,6 @@ public class OpenAPIResourceTest {
 			"relationMToM", false,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
-		String endpoint = StringBundler.concat(
-			jaxRsApplicationDescriptor.getApplicationPath(), StringPool.SLASH,
-			jaxRsApplicationDescriptor.getVersion(), "/openapi.json");
-
 		JSONAssert.assertEquals(
 			new String(
 				FileUtil.getBytes(
@@ -324,7 +320,12 @@ public class OpenAPIResourceTest {
 					"dependencies" +
 						"/expected_openapi_system_object_relationship.json")),
 			HTTPTestUtil.invokeToJSONObject(
-				null, endpoint, Http.Method.GET
+				null,
+				StringBundler.concat(
+					jaxRsApplicationDescriptor.getApplicationPath(),
+					StringPool.SLASH, jaxRsApplicationDescriptor.getVersion(),
+					"/openapi.json"),
+				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
 	}

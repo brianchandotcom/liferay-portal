@@ -386,8 +386,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		executeNotificationObjectAction(
 			0,
 			_addNotificationTemplate(
-				"${templateComponent}",
-				NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+				"${name}", NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 				Collections.singletonMap(
 					LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]"),
 				false,
@@ -401,6 +400,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			currentNotificationQueueEntries.toString(),
 			initialNotificationQueueEntries.size() + 1,
 			currentNotificationQueueEntries.size());
+
+		NotificationQueueEntry entry = currentNotificationQueueEntries.get(0);
+
+		Assert.assertEquals(entry.toString(), "value", entry.getBody());
 	}
 
 	@Test

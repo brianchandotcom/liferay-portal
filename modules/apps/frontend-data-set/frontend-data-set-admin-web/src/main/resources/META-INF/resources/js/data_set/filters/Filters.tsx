@@ -467,7 +467,7 @@ function Filters({
 	};
 
 	return (
-		<ClayLayout.ContainerFluid>
+		<ClayLayout.ContainerFluid className="filter-form-wrapper">
 			<ClayBreadcrumb className="my-2" items={getBreadcrumbItems()} />
 
 			{activeMode === FILTER_MODE.CREATION && (

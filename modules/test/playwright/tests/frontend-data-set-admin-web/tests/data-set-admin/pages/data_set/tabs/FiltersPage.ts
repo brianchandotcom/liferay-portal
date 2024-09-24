@@ -84,11 +84,15 @@ export class FiltersPage {
 			}),
 			filterByDropdown: page.locator('.fds-field-name-dropdown-menu'),
 			filterBySelect: page.getByLabel('Filter By'),
-			filterBySelectButton: page.getByRole('button', {name: 'Select'}),
+			filterBySelectButton: page
+				.getByRole('button', {name: 'Select'})
+				.first(),
 			formFeedback: page.locator('.form-feedback-item'),
 			modalBody: page.locator('.modal-body'),
 			nameInput: page.getByPlaceholder('Add a name'),
-			saveButton: page.getByRole('button', {name: 'Save'}),
+			saveButton: page
+				.locator('.filter-form-wrapper')
+				.getByRole('button', {name: 'Save'}),
 		};
 		this.newClientExtensionFilterForm = {
 			...this.newFilterForm,

@@ -17,7 +17,9 @@ export class FieldSelectModalPage {
 
 	constructor(page: Page) {
 		this.addFieldsDialog = {
-			cancelButton: page.getByRole('button', {name: 'Cancel'}),
+			cancelButton: page
+				.locator('.liferay-modal')
+				.getByRole('button', {name: 'Cancel'}),
 			fields: page.locator('.treeview-item'),
 			fieldsTreeview: page.locator('.treeview'),
 			saveButton: page.locator('.liferay-modal').getByRole('button', {
@@ -89,7 +91,7 @@ export class FieldSelectModalPage {
 
 		await this.page
 			.locator(`[data-id$=",${path}"]`)
-			.getByText(selectedFieldName, {exact: true})
+			.getByRole('checkbox')
 			.check();
 	}
 

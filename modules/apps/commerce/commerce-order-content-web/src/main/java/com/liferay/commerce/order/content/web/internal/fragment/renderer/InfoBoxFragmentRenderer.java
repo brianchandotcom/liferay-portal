@@ -186,7 +186,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			Object infoItem = httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM);
 
-			if ((infoItem == null) || !(infoItem instanceof CommerceOrder)) {
+			if (!(infoItem instanceof CommerceOrder)) {
 				if (_isEditMode(httpServletRequest)) {
 					httpServletRequest.setAttribute(
 						"liferay-commerce:info-box:fieldValue",

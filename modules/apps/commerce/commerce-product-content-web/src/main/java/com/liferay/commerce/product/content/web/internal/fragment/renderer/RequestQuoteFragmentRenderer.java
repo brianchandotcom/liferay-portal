@@ -64,7 +64,7 @@ public class RequestQuoteFragmentRenderer implements FragmentRenderer {
 		Object infoItem = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 
-		if ((infoItem == null) || !(infoItem instanceof CPDefinition)) {
+		if (!(infoItem instanceof CPDefinition)) {
 			if (_isEditMode(httpServletRequest)) {
 				_printPortletMessageInfo(
 					httpServletRequest, httpServletResponse);

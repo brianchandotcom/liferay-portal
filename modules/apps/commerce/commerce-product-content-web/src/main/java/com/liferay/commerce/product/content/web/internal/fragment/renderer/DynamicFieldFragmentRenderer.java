@@ -147,7 +147,7 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 			InfoDisplayWebKeys.INFO_ITEM);
 
 		try {
-			if ((infoItem == null) || !(infoItem instanceof CPDefinition)) {
+			if (!(infoItem instanceof CPDefinition)) {
 				if (_isEditMode(httpServletRequest)) {
 					httpServletRequest.setAttribute(
 						"liferay-commerce:dynamic-field:fieldValue",

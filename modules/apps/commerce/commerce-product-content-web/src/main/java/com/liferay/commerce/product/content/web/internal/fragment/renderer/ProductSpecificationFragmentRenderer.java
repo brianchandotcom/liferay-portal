@@ -111,7 +111,7 @@ public class ProductSpecificationFragmentRenderer implements FragmentRenderer {
 			InfoDisplayWebKeys.INFO_ITEM);
 
 		try {
-			if ((infoItem == null) || !(infoItem instanceof CPDefinition)) {
+			if (!(infoItem instanceof CPDefinition)) {
 				if (_isEditMode(httpServletRequest)) {
 					_printPortletMessageInfo(
 						httpServletRequest, httpServletResponse,

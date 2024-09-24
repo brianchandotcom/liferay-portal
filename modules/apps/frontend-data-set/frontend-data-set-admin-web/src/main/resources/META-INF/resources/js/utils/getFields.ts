@@ -25,10 +25,10 @@ const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 
 interface IProperty {
 	$ref?: string;
-	extensions?: any;
 	format?: EFieldFormat;
 	items?: any;
 	type?: EFieldType;
+	['x-parent-map']?: string;
 }
 
 interface IProperties {
@@ -97,10 +97,7 @@ function getValidFields({
 				field.type = type ? type : 'object';
 				targetSchemaName = propertyValue.$ref.replace(/^.*\//, '');
 			}
-			else if (
-				propertyValue.extensions &&
-				propertyValue.extensions['x-parent-map'] === 'properties'
-			) {
+			else if (propertyValue['x-parent-map'] === 'properties') {
 				const schemaNames = Object.keys(schemas);
 				const parentSchemaName = schemaNames.find((schemaName) => {
 					return (

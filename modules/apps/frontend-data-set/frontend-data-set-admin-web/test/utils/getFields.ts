@@ -20,17 +20,14 @@ const nestedSchemas: ISchemas = {
 	A: {
 		properties: {
 			a_b: {
-				$ref: '#/components/schemas/B',
-				extensions: {
-					'x-parent-map': 'properties',
-				},
-				type: 'object',
+				'$ref': '#/components/schemas/B',
+
+				'type': 'object',
+				'x-parent-map': 'properties',
 			},
 			c: {
-				extensions: {
-					'x-parent-map': 'properties',
-				},
-				type: 'string',
+				'type': 'string',
+				'x-parent-map': 'properties',
 			},
 		},
 		type: 'object',

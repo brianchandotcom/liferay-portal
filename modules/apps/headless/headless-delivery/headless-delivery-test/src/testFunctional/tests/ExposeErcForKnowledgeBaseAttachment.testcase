@@ -197,11 +197,9 @@ definition {
 				kBArticleErc = "KBAErc",
 				kBAttachmentErc = "KBAtErc");
 
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.status");
-
-			TestUtils.assertPartialEquals(
-				actual = ${actualValue},
-				expected = "NOT_FOUND");
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = ${response});
 		}
 	}
 
@@ -239,11 +237,9 @@ definition {
 				kBArticleErc = "KBFAErc",
 				kBAttachmentErc = "KBFAtErc");
 
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.status");
-
-			TestUtils.assertPartialEquals(
-				actual = ${actualValue},
-				expected = "NOT_FOUND");
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = ${response});
 		}
 	}
 

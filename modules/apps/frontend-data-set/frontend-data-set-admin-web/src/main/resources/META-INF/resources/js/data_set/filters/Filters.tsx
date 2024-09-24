@@ -71,7 +71,8 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 	[EFilterType.SELECTION]: {
 		Component: SelectionFilterFormContent,
 		availableFieldsFilter: (item: IField) =>
-			item.type === EFieldType.STRING && !item.format,
+			(item.type === EFieldType.STRING && !item.format) ||
+			item.type === EFieldType.INTEGER,
 		displayType: Liferay.Language.get('dynamic-filter'),
 		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER,
 		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID,

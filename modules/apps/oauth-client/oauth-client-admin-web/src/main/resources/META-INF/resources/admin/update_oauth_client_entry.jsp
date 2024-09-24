@@ -57,6 +57,8 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
 
+				<aui:input helpMessage="metadata-cache-help" label="metadata-cache-in-millis" name="metadataCacheInMillis" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getMetadataCacheInMillis() : OAuthClientEntryConstants.METADATA_CACHE_IN_MILLIS_DEFAULT %>" />
+
 				<aui:input
 					helpMessage="oauth-client-info-json-help"
 					label="oauth-client-info-json"

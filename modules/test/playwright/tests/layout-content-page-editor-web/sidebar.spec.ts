@@ -191,12 +191,16 @@ test.describe('Fragments Panel', () => {
 		pageManagementSite,
 	}) => {
 
-		// Create unpublished fragment inside Imported fragment set
+		// Create unpublished fragment inside Page Management fragment set
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
 		const unpublishedFragmentName = getRandomString();
-		await fragmentsPage.createFragment('Imported', unpublishedFragmentName);
+
+		await fragmentsPage.createFragment(
+			'Page Management Fragments',
+			unpublishedFragmentName
+		);
 
 		// Create content page and go to edit mode
 
@@ -215,7 +219,7 @@ test.describe('Fragments Panel', () => {
 		await page
 			.getByRole('menuitem', {
 				exact: true,
-				name: 'Imported',
+				name: 'Page Management Fragments',
 			})
 			.click();
 

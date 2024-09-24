@@ -208,7 +208,7 @@
 				{
 					"DBType": "Date",
 					"businessType": "Date",
-					"externalReferenceCode": "DATE",
+					"externalReferenceCode": "TO",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {

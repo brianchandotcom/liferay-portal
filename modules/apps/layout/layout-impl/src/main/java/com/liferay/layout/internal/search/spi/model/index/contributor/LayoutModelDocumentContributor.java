@@ -36,8 +36,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelDocumentContributor
 	implements ModelDocumentContributor<Layout> {
 
-	public static final String CLASS_NAME = Layout.class.getName();
-
 	@Override
 	public void contribute(Document document, Layout layout) {
 		if (layout.isSystem()) {

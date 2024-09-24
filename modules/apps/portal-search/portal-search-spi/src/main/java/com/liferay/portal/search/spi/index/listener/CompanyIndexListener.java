@@ -11,9 +11,8 @@ package com.liferay.portal.search.spi.index.listener;
 public interface CompanyIndexListener {
 
 	/**
-	 * This method is called after a company index is created. Override 
-	 * this method to implement specific logic to be executed after 
-	 * index creation.
+	 * This method is called after a company index is created. Override this
+	 * method to implement specific logic to be executed after index creation.
 	 *
 	 * @param indexName The name of the newly created company index.
 	 */
@@ -21,9 +20,8 @@ public interface CompanyIndexListener {
 	}
 
 	/**
-	 * This method is called before a company index is deleted. Override 
-	 * this method to implement specific logic to be executed before index 
-	 * deletion.
+	 * This method is called before a company index is deleted. Override this
+	 * method to implement specific logic to be executed before index deletion.
 	 *
 	 * @param indexName The name of the company index to delete.
 	 */

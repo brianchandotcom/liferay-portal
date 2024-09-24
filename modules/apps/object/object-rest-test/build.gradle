@@ -7,7 +7,7 @@ dependencies {
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-core", version: "3.5.9"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
-	testIntegrationImplementation group: "org.yaml", name: "snakeyaml", version: "2.2"
+	testIntegrationImplementation group: "org.yaml", name: "snakeyaml", version: "2.3"
 	testIntegrationImplementation project(":apps:account:account-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")

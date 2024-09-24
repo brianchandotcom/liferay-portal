@@ -22,7 +22,8 @@ class WebComponent extends HTMLElement {
 					properties={{
 						analyticsCloudURL:
 							this.getAttribute('analyticsCloudURL') || '',
-						cloudBaseURL: this.getAttribute('cloudBaseURL') || '',
+						cloudConsoleURL:
+							this.getAttribute('cloudConsoleURL') || '',
 						contactSupportURL:
 							this.getAttribute('contactSupportURL') || '',
 						eulaBaseURL: this.getAttribute('eulaBaseURL') || '',

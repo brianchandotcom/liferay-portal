@@ -341,7 +341,7 @@ type Channel = {
 
 type DefaultProperties = {
 	analyticsCloudURL: string;
-	cloudBaseURL: string;
+	cloudConsoleURL: string;
 	contactSupportURL: string;
 	eulaBaseURL: string;
 	featureFlags: string[];

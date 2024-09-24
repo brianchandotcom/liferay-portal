@@ -1,5 +1,6 @@
 liferay-marketplace-custom-element:
     properties:
+        cloudConsoleURL: https://console.marketplace.liferay.sh
         featureFlags: LPD-20220,LPD-20229,LPD-21582
     urls:
         - http://localhost:5173/@vite/client

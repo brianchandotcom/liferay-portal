@@ -1083,7 +1083,8 @@ public class SourceFormatter {
 		_allFileNames = SourceFormatterUtil.scanForFileNames(
 			_sourceFormatterArgs.getBaseDirName(), new String[0],
 			new String[] {
-				"**/*.*", "**/CODEOWNERS", "**/Dockerfile", "**/packageinfo"
+				"**/*.*", "**/CODEOWNERS", "**/Dockerfile", "**/ci-merge",
+				"**/packageinfo"
 			},
 			_sourceFormatterExcludes,
 			_sourceFormatterArgs.isIncludeSubrepositories());

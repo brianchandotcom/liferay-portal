@@ -219,7 +219,7 @@ test.describe('Advanced Configuration', () => {
 		pageManagementSite,
 	}) => {
 
-		// Create a content page with Wem Site's Apple fragment
+		// Create a content page with Page Management Site's Apple fragment
 
 		const fragmentDefinition = getFragmentDefinition({
 			fragmentConfig: {

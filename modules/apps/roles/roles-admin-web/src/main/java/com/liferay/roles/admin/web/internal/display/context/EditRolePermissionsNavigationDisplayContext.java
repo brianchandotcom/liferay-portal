@@ -20,7 +20,6 @@ import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -396,20 +395,16 @@ public class EditRolePermissionsNavigationDisplayContext {
 						navigationItem.setInitialExpanded(true);
 					}));
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-19843")) {
-				List<NavigationItem> navigationItems =
-					_getObjectsNavigationItems();
+			List<NavigationItem> navigationItems = _getObjectsNavigationItems();
 
-				if (!navigationItems.isEmpty()) {
-					topLevelNavigationItem.addNavigationItems(
-						NavigationItem.create(
-							LanguageUtil.get(_locale, "objects"),
-							navigationItem -> {
-								navigationItem.addNavigationItems(
-									navigationItems);
-								navigationItem.setInitialExpanded(true);
-							}));
-				}
+			if (!navigationItems.isEmpty()) {
+				topLevelNavigationItem.addNavigationItems(
+					NavigationItem.create(
+						LanguageUtil.get(_locale, "objects"),
+						navigationItem -> {
+							navigationItem.addNavigationItems(navigationItems);
+							navigationItem.setInitialExpanded(true);
+						}));
 			}
 		}
 

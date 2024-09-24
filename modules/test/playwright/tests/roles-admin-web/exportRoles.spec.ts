@@ -14,7 +14,6 @@ import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-19843': true,
 		'LPS-187142': true,
 	}),
 	loginTest(),

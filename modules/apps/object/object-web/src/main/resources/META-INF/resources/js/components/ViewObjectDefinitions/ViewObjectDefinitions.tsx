@@ -5,6 +5,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import type {IItemsActions} from '@liferay/frontend-data-set-web';
 import {API, Card, stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -58,8 +59,8 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 		primaryItems?: any[];
 		secondaryItems?: any[];
 	};
-	objectDefinitionsFDSActionDropdownItems: any[];
-	objectDefinitionsFDSName: any;
+	objectDefinitionsFDSActionDropdownItems: IItemsActions[];
+	objectDefinitionsFDSName: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderPermissionsURL: string;
 	portletNamespace: string;
@@ -173,18 +174,20 @@ export default function ViewObjectDefinitions({
 	useEffect(() => {
 		if (objectFoldersRequestInfo?.items.length > 1) {
 			const itemsActions = [...objectDefinitionsFDSActionDropdownItems];
+
 			itemsActions.push({
 				data: {
 					id: 'moveObjectDefinition',
-					method: 'update',
+					method: 'patch',
 					permissionKey: 'update',
 				},
-				href: null,
+				href: undefined,
 				icon: 'move-folder',
 				label: 'Move',
-				target: null,
+				target: undefined,
 				type: 'item',
 			});
+
 			setUpdatedFDSItemsActions(itemsActions);
 		}
 

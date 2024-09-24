@@ -1727,7 +1727,8 @@ public class ObjectDefinitionLocalServiceImpl
 			false, null);
 	}
 
-	private ObjectDefinition _completeBinding(ObjectDefinition objectDefinition)
+	private ObjectDefinition _completeBindingAsChild(
+			ObjectDefinition objectDefinition)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -1746,6 +1747,58 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition1.getRootObjectDefinitionId());
 
 		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
+	private ObjectDefinition _completeBindingAsParent(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipPersistence.findByODI1_E(
+				objectDefinition.getObjectDefinitionId(), true);
+
+		if (objectRelationships.isEmpty()) {
+			return objectDefinition;
+		}
+
+		objectDefinition.setRootObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId());
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition2 =
+				objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (!objectDefinition2.isApproved()) {
+				continue;
+			}
+
+			Tree tree = _treeFactory.createObjectDefinitionTree(
+				objectRelationship.getObjectDefinitionId2());
+
+			Iterator<Node> iterator = tree.iterator();
+
+			while (iterator.hasNext()) {
+				Node node = iterator.next();
+
+				ObjectDefinition nodeObjectDefinition =
+					objectDefinitionLocalService.getObjectDefinition(
+						node.getPrimaryKey());
+
+				nodeObjectDefinition.setRootObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId());
+				nodeObjectDefinition.setPortlet(false);
+				nodeObjectDefinition.setPreviousRESTContextPath(
+					nodeObjectDefinition.getRESTContextPath());
+
+				deployObjectDefinition(
+					objectDefinitionPersistence.update(nodeObjectDefinition));
+			}
+		}
+
+		return objectDefinition;
 	}
 
 	private void _createLocalizationTable(
@@ -2008,7 +2061,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		objectDefinition = _completeBinding(objectDefinition);
+		objectDefinition = _completeBindingAsChild(objectDefinition);
+
+		objectDefinition = _completeBindingAsParent(objectDefinition);
 
 		_createLocalizationTable(
 			DynamicObjectDefinitionLocalizationTableFactory.create(

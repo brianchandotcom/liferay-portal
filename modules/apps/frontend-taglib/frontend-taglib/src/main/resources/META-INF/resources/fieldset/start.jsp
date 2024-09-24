@@ -47,7 +47,11 @@ else if (collapsible) {
 
 			<c:choose>
 				<c:when test="<%= collapsible %>">
-					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" id="<%= id %>Toggle">
+					<legend class="sr-only">
+						<%= header %>
+					</legend>
+
+					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
 						<span>
 							<%= header %>
 						</span>
@@ -71,5 +75,5 @@ else if (collapsible) {
 		</c:otherwise>
 	</c:choose>
 
-	<div aria-labelledby="<%= id %>Toggle" class="<%= !collapsed ? "show" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row" : StringPool.BLANK %>" id="<%= id %>Content" role="tabpanel">
+	<div class="<%= !collapsed ? "show" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row" : StringPool.BLANK %>" id="<%= id %>Content" role="presentation">
 		<div class="<%= collapsible ? "panel-body" : StringPool.BLANK %>">

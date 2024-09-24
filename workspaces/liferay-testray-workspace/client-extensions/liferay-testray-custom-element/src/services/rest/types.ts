@@ -210,6 +210,7 @@ export type TestrayCaseResult = {
 	key: string;
 	mbMessageId: number;
 	mbThreadId: number;
+	priority?: number;
 	r_buildToCaseResult_c_build?: TestrayBuild;
 	r_buildToCaseResult_c_buildId?: number;
 	r_caseToCaseResult_c_case?: TestrayCase;

@@ -2000,7 +2000,7 @@
 			<finder-column comparator="&lt;=" name="expirationDate" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="Repository" remote-service="true" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="group" local-service="true" name="Repository" remote-service="true" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal" uuid="true">
 
 		<!-- PK fields -->
 

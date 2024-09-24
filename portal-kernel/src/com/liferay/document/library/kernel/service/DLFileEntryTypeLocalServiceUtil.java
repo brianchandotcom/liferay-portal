@@ -212,10 +212,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().deleteDLFolderDLFileEntryTypes(folderId, fileEntryTypeIds);
 	}
 
-	public static void deleteFileEntryType(DLFileEntryType dlFileEntryType)
+	public static DLFileEntryType deleteFileEntryType(
+			DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
-		getService().deleteFileEntryType(dlFileEntryType);
+		return getService().deleteFileEntryType(dlFileEntryType);
 	}
 
 	public static void deleteFileEntryType(long fileEntryTypeId)

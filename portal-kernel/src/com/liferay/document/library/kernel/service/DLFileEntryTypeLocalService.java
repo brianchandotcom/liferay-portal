@@ -191,7 +191,7 @@ public interface DLFileEntryTypeLocalService
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
-	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
+	public DLFileEntryType deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException;
 
 	public void deleteFileEntryType(long fileEntryTypeId)

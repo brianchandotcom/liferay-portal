@@ -741,7 +741,7 @@ definition {
 		task ("Assert that the global category is present when searching in the text field") {
 			Type(
 				key_elementName = "Hide Contents in a Category",
-				key_fieldLabel = "Asset Category Name (ID)",
+				key_fieldLabel = "Asset Category External Reference Codes",
 				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 				value1 = "Test");
 
@@ -2606,7 +2606,7 @@ definition {
 
 		Type(
 			key_elementName = "Boost Contents in a Category for User Segments",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = ${categoryId});
 
@@ -5392,7 +5392,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category");
 
@@ -5402,7 +5402,7 @@ definition {
 
 		AssertValue(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category (ID: ${categoryId})");
 
@@ -5418,7 +5418,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "");
 
@@ -5426,7 +5426,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test");
 
@@ -5436,7 +5436,7 @@ definition {
 
 		AssertValue(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category (ID: ${categoryId})");
 
@@ -5452,7 +5452,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "");
 
@@ -5475,7 +5475,7 @@ definition {
 
 		AssertValue(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category (ID: ${categoryId})");
 
@@ -5495,7 +5495,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category Name (ID)",
+			key_fieldLabel = "Asset Category External Reference Codes",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category");
 

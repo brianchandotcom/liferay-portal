@@ -14,6 +14,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
@@ -662,6 +663,31 @@ test(
 			typeOptions: {fieldTypes: ['boolean']},
 		});
 
+		// Create custom input fragment in global site
+
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+		const globalFragmentCollectionName = getRandomString();
+
+		const globalFragmentCollection =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: globalSiteId,
+					name: globalFragmentCollectionName,
+				}
+			);
+
+		const globalInputFragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId: globalFragmentCollection.fragmentCollectionId,
+			groupId: globalSiteId,
+			html: '<div class="fragment-name">Fragment Example</div>',
+			name: globalInputFragmentEntryName,
+			type: 'input',
+			typeOptions: {fieldTypes: ['boolean']},
+		});
+
 		// Go to fragment set
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
@@ -680,7 +706,7 @@ test(
 			})
 		).toBeVisible();
 
-        // Assert new input fragment is not present under checkbox type
+		// Assert new input fragment is not present under checkbox type
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
@@ -693,6 +719,22 @@ test(
 		await expect(
 			fragmentsPage.selectFragmentIFrame.getByText(inputFragmentEntryName)
 		).not.toBeAttached();
+
+		// Assert global input fragment is present under checkbox type
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoSelectFragmentConfiguration(
+			globalFragmentCollectionName,
+			'Global',
+			'Checkbox'
+		);
+
+		await expect(
+			fragmentsPage.selectFragmentIFrame.getByText(
+				globalInputFragmentEntryName
+			)
+		).toBeAttached();
 
 		// Assert new input fragment is present under long text type
 

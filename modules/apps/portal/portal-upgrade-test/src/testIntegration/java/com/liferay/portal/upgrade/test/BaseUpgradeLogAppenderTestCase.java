@@ -593,7 +593,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testPropertiesSetByUserWithEnvVariable() throws Exception {
+	public void testPropertiesEnvVariable() throws Exception {
 		_setEnv(
 			"LIFERAY_MY_PERIOD_ENVIRONMENT_PERIOD_PROPERTY",
 			"my environment property value");
@@ -610,7 +610,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testPropertiesSetByUserWithFile() throws Exception {
+	public void testPropertiesFile() throws Exception {
 		List<String> loadedSources = PropsUtil.getLoadedSources();
 
 		File file = temporaryFolder.newFile("test.properties");

@@ -166,11 +166,12 @@ baseTest(
 
 baseTest(
 	'LPD-16313 Show icon in the content admin and content editor',
-	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
 		const title = getRandomString();
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
-			title
+			title,
+			site.friendlyUrlPath
 		);
 
 		await documentLibraryPage.changeView('cards');
@@ -184,8 +185,6 @@ baseTest(
 		await page.getByRole('link', {name: title}).click();
 
 		await documentLibraryPage.assertPrivateFileIcon();
-
-		await documentLibraryPage.deleteFileEntry(title);
 	}
 );
 

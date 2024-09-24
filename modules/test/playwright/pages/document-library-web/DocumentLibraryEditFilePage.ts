@@ -151,8 +151,11 @@ export class DocumentLibraryEditFilePage {
 		});
 	}
 
-	async publishNewFileWithoutGuestViewPermission(title: string) {
-		await this.goto();
+	async publishNewFileWithoutGuestViewPermission(
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 
 		await this.titleSelector.fill(title);
 		if (await this.permissionViewSelector.isVisible()) {

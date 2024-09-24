@@ -307,7 +307,7 @@ test('can export as JSON with all field types mapped', async ({
 			},
 		});
 
-	await apiHelpers.objectEntry.postObjectEntry(
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			customAttachment: {
 				fileBase64:
@@ -374,13 +374,17 @@ test('can export as JSON with all field types mapped', async ({
 		},
 	]);
 
+	await apiHelpers.delete(
+		`o/headless-delivery/v1.0/documents/${objectEntry.customAttachment.id}`
+	);
+
 	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
 		objectDefinitionId: objectDefinition.id,
 	});
 
-	await apiHelpers.delete(`/o/headless-admin-list-definitions/`, {
-		listTypeDefinitionId: picklist.id,
-	});
+	await apiHelpers.delete(
+		`o/headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}`
+	);
 });
 
 test('can export as JSONL with excluded fields', async ({

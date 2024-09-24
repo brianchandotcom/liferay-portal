@@ -15,6 +15,8 @@ import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {
+	ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE,
+	ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES,
 	ASSET_CATEGORY_ID,
 	ASSET_CATEGORY_IDS,
 	GROUP_EXTERNAL_REFERENCE_CODE,
@@ -202,7 +204,12 @@ function SXPElement({
 					/>
 				);
 			case INPUT_TYPES.MULTISELECT:
-				if (config.name === ASSET_CATEGORY_IDS) {
+				if (
+					config.name.includes(ASSET_CATEGORY_IDS) ||
+					config.name.includes(
+						ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES
+					)
+				) {
 					return (
 						<CategorySelectorInput
 							disabled={disabled}
@@ -247,7 +254,7 @@ function SXPElement({
 					/>
 				);
 			case INPUT_TYPES.NUMBER:
-				if (config.name === ASSET_CATEGORY_ID) {
+				if (config.name.includes(ASSET_CATEGORY_ID)) {
 					return (
 						<CategorySelectorInput
 							disabled={disabled}
@@ -346,6 +353,23 @@ function SXPElement({
 					/>
 				);
 			default:
+				if (
+					config.name.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE)
+				) {
+					return (
+						<CategorySelectorInput
+							disabled={disabled}
+							id={inputId}
+							label={config.labelLocalized || config.label}
+							multiple={false}
+							name={inputName}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							value={uiConfigurationValues[config.name]}
+						/>
+					);
+				}
+
 				if (config.name.includes(GROUP_EXTERNAL_REFERENCE_CODE)) {
 					return (
 						<SiteSelectorInput

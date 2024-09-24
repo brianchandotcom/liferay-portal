@@ -12,9 +12,14 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useDebounceCallback from '../../../hooks/useDebounceCallback';
+import {
+	ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE,
+	ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES,
+} from '../../../utils/constants';
 import {DEFAULT_HEADERS} from '../../../utils/fetch/fetch_data';
 import removeDuplicates from '../../../utils/functions/remove_duplicates';
 import toNumber from '../../../utils/functions/to_number';
+import {IDENTIFIER_TYPES} from '../../../utils/types/identifierTypes';
 import CategorySelectorModal from './CategorySelectorModal';
 
 export const FETCH_URLS = {
@@ -30,16 +35,19 @@ export const FETCH_URLS = {
 };
 
 /**
- * Returns the name of the site by matching the siteId to the site inside
- * categoryTree.
+ * Returns the name and ERC of the site by matching the siteId to the
+ * site inside categoryTree.
  * @param {String} siteId Site ID to get the name of
  * @param {Object} categoryTree Contains the names and IDs of sites
- * @returns {String}
+ * @returns {Object}
  */
-function getSiteName(siteId, categoryTree) {
+function getSiteInfo(siteId, categoryTree) {
 	const site = categoryTree.find((site) => siteId === site.id);
 
-	return site.descriptiveName || site.name;
+	return {
+		externalReferenceCode: site.externalReferenceCode,
+		name: site.descriptiveName || site.name,
+	};
 }
 
 function CategoryMenu({locator, onItemClick = () => {}, sourceItems}) {
@@ -69,15 +77,26 @@ function CategoryMenu({locator, onItemClick = () => {}, sourceItems}) {
 
 /**
  * CategorySelectorInput uses APIs in order for the user to quickly find
- * asset categories. Type into the input for the autocomplete dropdown
- * to appear, or click on the 'select' button to open a modal with
- * the category tree.
+ * asset categories. Click on the 'select' button to open a modal with
+ * the category tree, or type in the input to enable autocomplete.
  *
- * The category selector is by default a text input. When formatted into the
- * 'View Element JSON', the category is shown as a single string ID. If
- * the typeOption 'format' is set to 'array', the category selector input is a
- * multiselect, in which the IDs are formatted as an array for the 'View Element
- * JSON'.
+ * For ERCs, manual entry is not allowed. ERCs are formatted as
+ * `${siteERC}&&${categoryERC}`.
+ *
+ * The category selector renders automatically when:
+ *
+ * - The field has the 'number' type and its name contains 'asset_category_id'.
+ *   For this case, the ID is formatted as a number for 'View Element JSON'.
+ *
+ * - The field has the 'text' type and its name contains
+ *   'asset_category_external_reference_code'.
+ *   For this case, the ERC is formatted as string for 'View Element JSON'.
+ *
+ * - The field has the 'multiselect' type and its name contains 'asset_category_ids'
+ *   or 'asset_category_external_reference_codes'.
+ *   For this case, the IDs/ERCs are formatted as an array of stringified values for
+ *   'View Element JSON'.
+ *
  */
 function CategorySelectorInput({
 	disabled,
@@ -97,6 +116,12 @@ function CategorySelectorInput({
 	const [matchingCategories, setMatchingCategories] = useState([]);
 	const [autocompleteDropdownActive, setAutocompleteDropdownActive] =
 		useState(false);
+
+	const _getIdentifierType = () =>
+		id.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE) ||
+		id.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES)
+			? IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+			: IDENTIFIER_TYPES.ID;
 
 	const _handleSetMatchingCategories = (inputValue, categoryTree) => {
 		const categories = [];
@@ -129,24 +154,47 @@ function CategorySelectorInput({
 		})
 			.then((response) => response.json())
 			.then((responseContent) => {
-				responseContent.forEach(({categoryId, groupId, name, path}) => {
+				responseContent.forEach(
+					({
+						categoryId,
+						externalReferenceCode,
+						groupId,
+						name,
+						path,
+					}) => {
 
-					// Collects id, name, and a description of any categories
-					// that match the query. Description has the names of the
-					// category's site and vocabulary.
+						// Collects id/erc, name, and a description of any categories
+						// that match the query. Description has the names of the
+						// category's site and vocabulary.
 
-					categories.push({
-						description: `${getSiteName(groupId, categoryTree)} - ${
-							path.split(' > ')?.[0]
-						}`, // First word in path is vocabulary name
-						label: `${name} (ID: ${categoryId})`,
-						value: categoryId,
-					});
-				});
+						const siteInfo = getSiteInfo(groupId, categoryTree);
+						let label = `${name} (ID: ${categoryId})`;
+						let value = categoryId;
+
+						if (
+							_getIdentifierType() ===
+							IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+						) {
+							label = `${name} (ERC: ${externalReferenceCode})`;
+							value = `${siteInfo.externalReferenceCode}&&${externalReferenceCode}`;
+						}
+
+						categories.push({
+							description: `${siteInfo.name} - ${
+								path.split(' > ')?.[0]
+							}`, // First word in path is vocabulary name
+							label,
+							value,
+						});
+					}
+				);
 			})
 			.catch(() => {}) // Catches response.json() parsing error from 404
 			.finally(() => {
-				if (typeof toNumber(inputValue) === 'number') {
+				if (
+					typeof toNumber(inputValue) === 'number' &&
+					_getIdentifierType() === IDENTIFIER_TYPES.ID
+				) {
 
 					// If inputValue is a number, check if it is associated to a
 					// category and add it to the list of `matchingCategories`.
@@ -191,10 +239,12 @@ function CategorySelectorInput({
 
 					setMatchingCategories([
 						{
-							description: `${getSiteName(
-								JSON.stringify(siteId), // Site ID is a number
-								categoryTree
-							)} - ${parentTaxonomyVocabulary.name}`,
+							description: `${
+								getSiteInfo(
+									JSON.stringify(siteId), // Site ID is a number
+									categoryTree
+								).name
+							} - ${parentTaxonomyVocabulary.name}`,
 							label: `${name} (ID: ${id})`,
 							value: id,
 						},
@@ -241,12 +291,17 @@ function CategorySelectorInput({
 		if (newValue.trim()) {
 			handleSetMatchingCategoriesDebounced(newValue.trim(), categoryTree);
 
-			const newValueNumber = toNumber(newValue);
+			if (_getIdentifierType() === IDENTIFIER_TYPES.ID) {
+				const newValueNumber = toNumber(newValue);
 
-			setFieldValue(
-				name,
-				typeof newValueNumber === 'number' ? newValueNumber : ''
-			);
+				setFieldValue(
+					name,
+					typeof newValueNumber === 'number' ? newValueNumber : ''
+				);
+			}
+			else {
+				setFieldValue(name, '');
+			}
 		}
 		else {
 			setMatchingCategories([]);
@@ -255,8 +310,14 @@ function CategorySelectorInput({
 	};
 
 	const _handleSingleItemChange = (item) => {
-		setFieldValue(name, {label: item.label, value: item.value});
-		setInputValue(item.label);
+		if (_getIdentifierType() === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
+			setFieldValue(name, item.value);
+			setInputValue(item.value);
+		}
+		else {
+			setFieldValue(name, {label: item.label, value: item.value});
+			setInputValue(item.label);
+		}
 		setMatchingCategories([]);
 	};
 
@@ -272,6 +333,48 @@ function CategorySelectorInput({
 	};
 
 	const _handleMultiItemsChange = (items) => {
+		if (_getIdentifierType() === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
+			setFieldValue(name, _filterMultiItemsByERC(items));
+		}
+		else {
+			setFieldValue(name, _filterMultiItemsByID(items));
+		}
+	};
+
+	const _filterMultiItemsByERC = (items) => {
+		const uniqueArray = [];
+
+		removeDuplicates(items, 'value').map(({label, value}) => {
+			if (value !== label) {
+
+				// Case: External Reference Code was chosen through selector or
+				// autocomplete list and already has a proper name.
+
+				uniqueArray.push({label, value});
+			}
+			else {
+
+				// Case: User might be selecting the first item from matchingCategories
+				// instead. Add if available and not already added.
+
+				if (
+					!!matchingCategories[0] &&
+					!uniqueArray.some(
+						(item) => matchingCategories[0].value === item.value
+					)
+				) {
+					uniqueArray.push({
+						label: matchingCategories[0].label,
+						value: matchingCategories[0].value,
+					});
+				}
+			}
+		});
+
+		return uniqueArray;
+	};
+
+	const _filterMultiItemsByID = (items) => {
 		const uniqueArray = [];
 
 		removeDuplicates(items, 'value').map(({label, value}) => {
@@ -323,7 +426,7 @@ function CategorySelectorInput({
 			}
 		});
 
-		setFieldValue(name, uniqueArray);
+		return uniqueArray;
 	};
 
 	useEffect(() => {
@@ -516,6 +619,7 @@ function CategorySelectorInput({
 
 			<ClayInput.GroupItem shrink>
 				<CategorySelectorModal
+					identifierType={_getIdentifierType()}
 					multiple={multiple}
 					onChangeTree={setCategoryTree}
 					onChangeValue={_handleFieldValueChange}

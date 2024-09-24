@@ -10,6 +10,11 @@ export const INACTIVE = Liferay.Language.get('inactive');
 export const ASCENDING = Liferay.Language.get('ascending');
 export const DESCENDING = Liferay.Language.get('descending');
 
+export const ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE =
+	'asset_category_external_reference_code';
+export const ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES =
+	'asset_category_external_reference_codes';
+
 export const ASSET_CATEGORY_ID = 'asset_category_id';
 export const ASSET_CATEGORY_IDS = 'asset_category_ids';
 

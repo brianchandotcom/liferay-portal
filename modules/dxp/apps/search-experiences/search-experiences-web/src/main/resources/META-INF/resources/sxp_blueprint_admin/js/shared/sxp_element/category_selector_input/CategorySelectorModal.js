@@ -9,10 +9,13 @@ import {ClayCheckbox, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import getCN from 'classnames';
-import React, {useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 
 import fetchData from '../../../utils/fetch/fetch_data';
+import {IDENTIFIER_TYPES} from '../../../utils/types/identifierTypes';
 import {FETCH_URLS} from './index';
+
+export const IdentifierTypeContext = createContext({identifierType: {}});
 
 /**
  * Checks whether the contents of two arrays are the same, by seeing if each object
@@ -70,6 +73,7 @@ const getUpdatedTree = (tree, index, properties) => {
 
 function TreeViewLink({
 	depth,
+	externalReferenceCode,
 	hasSubItems,
 	id,
 	isExpanded = false,
@@ -80,6 +84,8 @@ function TreeViewLink({
 	onSelect,
 }) {
 	const {icon, showSelect} = getTreeLevelInfo(depth);
+
+	const {identifierType} = useContext(IdentifierTypeContext);
 
 	return (
 		<div
@@ -136,7 +142,12 @@ function TreeViewLink({
 						<span className="component-text">
 							<span className="text-truncate-inline">
 								<span className="text-truncate">
-									{showSelect ? `${name} (ID: ${id})` : name}
+									{showSelect
+										? identifierType ===
+											IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+											? `${name} (ERC: ${externalReferenceCode})`
+											: `${name} (ID: ${id})`
+										: name}
 								</span>
 							</span>
 						</span>
@@ -175,7 +186,13 @@ function TreeViewGroup({
 				onChangeItems(
 					getUpdatedTree(items, index, {
 						children: responseContent.items.map(
-							({id, name, numberOfTaxonomyCategories}) => ({
+							({
+								externalReferenceCode,
+								id,
+								name,
+								numberOfTaxonomyCategories,
+							}) => ({
+								externalReferenceCode,
 								id,
 								name,
 								numberOfTaxonomyCategories,
@@ -205,6 +222,7 @@ function TreeViewGroup({
 				<li className="treeview-item" key={item.id} role="none">
 					<TreeViewLink
 						depth={depth}
+						externalReferenceCode={item.externalReferenceCode}
 						hasSubItems={item.numberOfTaxonomyCategories > 0}
 						id={item.id}
 						isExpanded={item.expand}
@@ -246,15 +264,33 @@ function CategorySelectorModal({
 	observer,
 	value,
 }) {
-	const [currentSite, setCurrentSite] = useState({id: ''});
+	const [currentSite, setCurrentSite] = useState({
+		externalReferenceCode: '',
+		id: '',
+	});
 	const [selected, setSelected] = useState(multiple ? value : []);
+
+	const {identifierType} = useContext(IdentifierTypeContext);
+
+	const _getLabel = (item) =>
+		identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+			? `${item.name} (ERC: ${item.externalReferenceCode})`
+			: `${item.name} (ID: ${item.id})`;
+	const _getValue = (item, site) =>
+		identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+			? `${site.externalReferenceCode}&&${item.externalReferenceCode}`
+			: item.id;
 
 	const _handleChangeCurrentSite = (event) => {
 		const currentSiteIndex = tree.findIndex(
 			(site) => site.id === event.target.value
 		);
 
-		setCurrentSite({id: event.target.value, index: currentSiteIndex});
+		setCurrentSite({
+			externalReferenceCode: tree[currentSiteIndex].externalReferenceCode,
+			id: event.target.value,
+			index: currentSiteIndex,
+		});
 	};
 
 	const _handleChangeSiteChildren = (children) => {
@@ -271,34 +307,40 @@ function CategorySelectorModal({
 		onClose();
 	};
 
-	const _handleSelect = (item) => {
+	const _handleSelect = (item, site) => {
 		if (multiple) {
-			if (_isItemSelected(item)) {
+			if (_isItemSelected(item, site)) {
 				setSelected(
 					selected.filter(
-						(selectedItem) => selectedItem.value !== item.id
+						(selectedItem) =>
+							selectedItem.value !== _getValue(item, site)
 					)
 				);
 			}
 			else {
 				setSelected([
 					...selected,
-					{label: `${item.name} (ID: ${item.id})`, value: item.id},
+					{
+						label: _getLabel(item),
+						value: _getValue(item, site),
+					},
 				]);
 			}
 		}
 		else {
 			onChangeValue({
-				label: `${item.name} (ID: ${item.id})`,
-				value: item.id,
+				label: _getLabel(item),
+				value: _getValue(item, site),
 			});
 
 			onClose();
 		}
 	};
 
-	const _isItemSelected = ({id}) =>
-		selected.some((item) => item.value === id);
+	const _isItemSelected = (item, site) =>
+		selected.some(
+			(selectedItem) => selectedItem.value === _getValue(item, site)
+		);
 
 	return (
 		<ClayModal
@@ -357,13 +399,17 @@ function CategorySelectorModal({
 							>
 								<TreeViewGroup
 									depth={0}
-									isSelected={_isItemSelected}
+									isSelected={(item) =>
+										_isItemSelected(item, currentSite)
+									}
 									items={
 										tree[currentSite.index].children || []
 									}
 									multiple={multiple}
 									onChangeItems={_handleChangeSiteChildren}
-									onSelect={_handleSelect}
+									onSelect={(item) =>
+										_handleSelect(item, currentSite)
+									}
 								/>
 							</ul>
 						)}
@@ -398,6 +444,7 @@ function CategorySelectorModal({
 
 export default function ({
 	children,
+	identifierType,
 	multiple,
 	onChangeTree,
 	onChangeValue,
@@ -408,19 +455,21 @@ export default function ({
 
 	return (
 		<>
-			<div onClick={() => onOpenChange(true)}>{children}</div>
+			<IdentifierTypeContext.Provider value={{identifierType}}>
+				<div onClick={() => onOpenChange(true)}>{children}</div>
 
-			{open && (
-				<CategorySelectorModal
-					multiple={multiple}
-					observer={observer}
-					onChangeTree={onChangeTree}
-					onChangeValue={onChangeValue}
-					onClose={() => onOpenChange(false)}
-					tree={tree}
-					value={value}
-				/>
-			)}
+				{open && (
+					<CategorySelectorModal
+						multiple={multiple}
+						observer={observer}
+						onChangeTree={onChangeTree}
+						onChangeValue={onChangeValue}
+						onClose={() => onOpenChange(false)}
+						tree={tree}
+						value={value}
+					/>
+				)}
+			</IdentifierTypeContext.Provider>
 		</>
 	);
 }

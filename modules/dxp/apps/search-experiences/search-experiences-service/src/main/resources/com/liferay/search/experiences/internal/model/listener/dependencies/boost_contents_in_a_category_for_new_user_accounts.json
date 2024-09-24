@@ -13,11 +13,9 @@
 								"context": "query",
 								"occur": "should",
 								"query": {
-									"term": {
-										"assetCategoryIds": {
-											"boost": "${configuration.boost}",
-											"value": "${configuration.asset_category_id}"
-										}
+									"terms": {
+										"boost": "${configuration.boost}",
+										"groupAssetCategoryExternalReferenceCodes": "${configuration.group_asset_category_external_reference_codes}"
 									}
 								}
 							}
@@ -40,9 +38,9 @@
 				{
 					"fields": [
 						{
-							"label": "asset-category-name-id",
-							"name": "asset_category_id",
-							"type": "number"
+							"label": "asset-category-external-reference-codes",
+							"name": "group_asset_category_external_reference_codes",
+							"type": "multiselect"
 						},
 						{
 							"defaultValue": 30,

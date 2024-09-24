@@ -28,6 +28,12 @@ class HeadlessAdminUser {
 		return fetcher(`/o/headless-admin-user/v1.0/user-accounts`);
 	}
 
+	async getAccountPostalAddresses(accountId: string | number) {
+		return fetcher<APIResponse<AccountPostalAddresses>>(
+			`/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`
+		);
+	}
+
 	async getUserAccountById(accountId: string | number) {
 		return fetcher(
 			`/o/headless-admin-user/v1.0/user-accounts/${accountId}`

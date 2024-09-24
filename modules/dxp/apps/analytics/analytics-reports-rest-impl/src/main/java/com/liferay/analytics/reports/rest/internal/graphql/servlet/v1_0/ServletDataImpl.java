@@ -8,9 +8,11 @@ package com.liferay.analytics.reports.rest.internal.graphql.servlet.v1_0;
 import com.liferay.analytics.reports.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.analytics.reports.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.analytics.reports.rest.internal.resource.v1_0.AssetAppearsOnHistogramMetricResourceImpl;
+import com.liferay.analytics.reports.rest.internal.resource.v1_0.AssetDeviceMetricResourceImpl;
 import com.liferay.analytics.reports.rest.internal.resource.v1_0.AssetHistogramMetricResourceImpl;
 import com.liferay.analytics.reports.rest.internal.resource.v1_0.AssetMetricResourceImpl;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetAppearsOnHistogramMetricResource;
+import com.liferay.analytics.reports.rest.resource.v1_0.AssetDeviceMetricResource;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetHistogramMetricResource;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -40,6 +42,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Query.setAssetAppearsOnHistogramMetricResourceComponentServiceObjects(
 			_assetAppearsOnHistogramMetricResourceComponentServiceObjects);
+		Query.setAssetDeviceMetricResourceComponentServiceObjects(
+			_assetDeviceMetricResourceComponentServiceObjects);
 		Query.setAssetHistogramMetricResourceComponentServiceObjects(
 			_assetHistogramMetricResourceComponentServiceObjects);
 		Query.setAssetMetricResourceComponentServiceObjects(
@@ -86,6 +90,11 @@ public class ServletDataImpl implements ServletData {
 							AssetAppearsOnHistogramMetricResourceImpl.class,
 							"getGroupAssetMetricAssetTypeAppearsOnHistogram"));
 					put(
+						"query#groupAssetMetricAssetTypeDevice",
+						new ObjectValuePair<>(
+							AssetDeviceMetricResourceImpl.class,
+							"getGroupAssetMetricAssetTypeDevice"));
+					put(
 						"query#groupAssetMetricAssetTypeHistogram",
 						new ObjectValuePair<>(
 							AssetHistogramMetricResourceImpl.class,
@@ -101,6 +110,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssetAppearsOnHistogramMetricResource>
 		_assetAppearsOnHistogramMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AssetDeviceMetricResource>
+		_assetDeviceMetricResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssetHistogramMetricResource>

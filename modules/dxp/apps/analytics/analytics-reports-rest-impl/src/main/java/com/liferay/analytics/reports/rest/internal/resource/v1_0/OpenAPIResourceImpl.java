@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AssetAppearsOnHistogramMetricResourceImpl.class);
 
+			add(AssetDeviceMetricResourceImpl.class);
+
 			add(AssetHistogramMetricResourceImpl.class);
 
 			add(AssetMetricResourceImpl.class);

@@ -6,9 +6,11 @@
 package com.liferay.analytics.reports.rest.internal.graphql.query.v1_0;
 
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetAppearsOnHistogramMetric;
+import com.liferay.analytics.reports.rest.dto.v1_0.AssetDeviceMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetHistogramMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetAppearsOnHistogramMetricResource;
+import com.liferay.analytics.reports.rest.resource.v1_0.AssetDeviceMetricResource;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetHistogramMetricResource;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -50,6 +52,14 @@ public class Query {
 			assetAppearsOnHistogramMetricResourceComponentServiceObjects;
 	}
 
+	public static void setAssetDeviceMetricResourceComponentServiceObjects(
+		ComponentServiceObjects<AssetDeviceMetricResource>
+			assetDeviceMetricResourceComponentServiceObjects) {
+
+		_assetDeviceMetricResourceComponentServiceObjects =
+			assetDeviceMetricResourceComponentServiceObjects;
+	}
+
 	public static void setAssetHistogramMetricResourceComponentServiceObjects(
 		ComponentServiceObjects<AssetHistogramMetricResource>
 			assetHistogramMetricResourceComponentServiceObjects) {
@@ -88,6 +98,28 @@ public class Query {
 				assetAppearsOnHistogramMetricResource.
 					getGroupAssetMetricAssetTypeAppearsOnHistogram(
 						groupId, assetType, assetId, identityType, rangeKey));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {groupAssetMetricAssetTypeDevice(assetId: ___, assetType: ___, groupId: ___, identityType: ___, rangeKey: ___){deviceMetrics}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AssetDeviceMetric groupAssetMetricAssetTypeDevice(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("assetType") String assetType,
+			@GraphQLName("assetId") String assetId,
+			@GraphQLName("identityType") String identityType,
+			@GraphQLName("rangeKey") Integer rangeKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_assetDeviceMetricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			assetDeviceMetricResource ->
+				assetDeviceMetricResource.getGroupAssetMetricAssetTypeDevice(
+					groupId, assetType, assetId, identityType, rangeKey));
 	}
 
 	/**
@@ -156,6 +188,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<AssetAppearsOnHistogramMetric> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AssetDeviceMetricPage")
+	public class AssetDeviceMetricPage {
+
+		public AssetDeviceMetricPage(Page assetDeviceMetricPage) {
+			actions = assetDeviceMetricPage.getActions();
+
+			items = assetDeviceMetricPage.getItems();
+			lastPage = assetDeviceMetricPage.getLastPage();
+			page = assetDeviceMetricPage.getPage();
+			pageSize = assetDeviceMetricPage.getPageSize();
+			totalCount = assetDeviceMetricPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AssetDeviceMetric> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -277,6 +342,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			AssetDeviceMetricResource assetDeviceMetricResource)
+		throws Exception {
+
+		assetDeviceMetricResource.setContextAcceptLanguage(_acceptLanguage);
+		assetDeviceMetricResource.setContextCompany(_company);
+		assetDeviceMetricResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		assetDeviceMetricResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		assetDeviceMetricResource.setContextUriInfo(_uriInfo);
+		assetDeviceMetricResource.setContextUser(_user);
+		assetDeviceMetricResource.setGroupLocalService(_groupLocalService);
+		assetDeviceMetricResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			AssetHistogramMetricResource assetHistogramMetricResource)
 		throws Exception {
 
@@ -309,6 +390,8 @@ public class Query {
 	private static ComponentServiceObjects
 		<AssetAppearsOnHistogramMetricResource>
 			_assetAppearsOnHistogramMetricResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AssetDeviceMetricResource>
+		_assetDeviceMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetHistogramMetricResource>
 		_assetHistogramMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetMetricResource>

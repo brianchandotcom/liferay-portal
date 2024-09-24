@@ -1564,85 +1564,145 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!asm-analysis.jar</file-name>
-				<version>4.1</version>
-				<project-name>ASM static code analysis framework</project-name>
-				<project-url>http://asm.objectweb.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-ext-attributes.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java extension for attributes</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!asm-tree.jar</file-name>
-				<version>4.1</version>
-				<project-name>ASM Tree class visitor</project-name>
-				<project-url>http://asm.objectweb.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-ast.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java ast utilities</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!asm-util.jar</file-name>
-				<version>4.1</version>
-				<project-name>ASM Utilities</project-name>
-				<project-url>http://asm.objectweb.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-builder.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java builder utilities</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!asm.jar</file-name>
-				<version>4.1</version>
-				<project-name>ASM Core</project-name>
-				<project-url>http://asm.objectweb.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-collection.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java collection utilities</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!org.parboiled.jar</file-name>
-				<version>1.1.6.LIFERAY-PATCHED-1</version>
-				<project-name>org.parboiled.java</project-name>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-data.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java data utilities</project-name>
 				<licenses>
 					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!parboiled-core.jar</file-name>
-				<version>1.1.6</version>
-				<project-name>org.parboiled.core</project-name>
-				<project-url>http://parboiled.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-dependency.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java dependency utilities</project-name>
 				<licenses>
 					<license>
-						<license-name>Apache 2</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!pegdown.jar</file-name>
-				<version>1.1.0</version>
-				<project-name>pegdown</project-name>
-				<project-url>http://www.pegdown.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-format.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java format utilities</project-name>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-html.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java html utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-misc.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java misc utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-options.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java options utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-sequence.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java sequence utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark-util-visitor.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java visitor utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!flexmark.jar</file-name>
+				<version>0.62.2</version>
+				<project-name>flexmark-java core</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD 2-Clause License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-2-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2383,7 +2443,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!snakeyaml.jar</file-name>
-				<version>2.2</version>
+				<version>2.3</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
 				<licenses>
@@ -2704,7 +2764,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-cbor.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.17.2</version>
 				<project-name>Jackson dataformat: CBOR</project-name>
 				<project-url>https://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>
@@ -2716,7 +2776,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-smile.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.17.2</version>
 				<project-name>Jackson dataformat: Smile</project-name>
 				<project-url>https://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>
@@ -2728,7 +2788,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-yaml.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.17.2</version>
 				<project-name>Jackson-dataformat-YAML</project-name>
 				<project-url>https://github.com/FasterXML/jackson-dataformats-text</project-url>
 				<licenses>
@@ -2740,12 +2800,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jts-core.jar</file-name>
-				<version>1.15.0</version>
+				<version>1.20.0</version>
 				<project-name>jts-core</project-name>
 				<licenses>
 					<license>
-						<license-name>Eclipse Publish License, Version 1.0</license-name>
-						<license-url>https://github.com/locationtech/jts/blob/master/LICENSE_EPLv1.txt</license-url>
+						<license-name>Eclipse Public License, Version 2.0</license-name>
+						<license-url>https://github.com/locationtech/jts/blob/master/LICENSE_EPLv2.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2912,7 +2972,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!snakeyaml.jar</file-name>
-				<version>2.2</version>
+				<version>2.3</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
 				<licenses>
@@ -2924,7 +2984,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!spatial4j.jar</file-name>
-				<version>0.7</version>
+				<version>0.8</version>
 				<project-name>Spatial4J</project-name>
 				<project-url>https://projects.eclipse.org/projects/locationtech.spatial4j</project-url>
 				<licenses>
@@ -4137,7 +4197,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.api.jar!snakeyaml.jar</file-name>
-				<version>2.2</version>
+				<version>2.3</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
 				<licenses>
@@ -4364,7 +4424,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!snakeyaml.jar</file-name>
-				<version>2.2</version>
+				<version>2.3</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
 				<licenses>

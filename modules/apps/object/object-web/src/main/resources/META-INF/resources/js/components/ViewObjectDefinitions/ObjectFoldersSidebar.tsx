@@ -29,7 +29,7 @@ interface ObjectFoldersSidebarProps {
 	setSelectedObjectFolder: (
 		value: SetStateAction<Partial<ObjectFolder>>
 	) => void;
-	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
+	setShowModal: (value: SetStateAction<ShowObjectDefinitionsModals>) => void;
 }
 
 export default function ObjectFoldersSideBar({
@@ -75,7 +75,7 @@ export default function ObjectFoldersSideBar({
 					modalImportKey: 'objectFolder',
 				});
 
-				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+				setShowModal((previousState: ShowObjectDefinitionsModals) => ({
 					...previousState,
 					importModal: true,
 				}));
@@ -101,7 +101,7 @@ export default function ObjectFoldersSideBar({
 						onClick={() =>
 							setShowModal(
 								(
-									previousState: ViewObjectDefinitionsModals
+									previousState: ShowObjectDefinitionsModals
 								) => ({
 									...previousState,
 									addObjectFolder: true,

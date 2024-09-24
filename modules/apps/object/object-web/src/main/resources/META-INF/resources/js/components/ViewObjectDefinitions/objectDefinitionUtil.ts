@@ -354,7 +354,7 @@ interface GetObjectFolderActionsProps {
 	setModalImportProperties: (
 		value: SetStateAction<ModalImportProperties>
 	) => void;
-	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
+	setShowModal: (value: SetStateAction<ShowObjectDefinitionsModals>) => void;
 }
 
 export function getObjectFolderActions({
@@ -375,7 +375,7 @@ export function getObjectFolderActions({
 		kebabOptions.unshift({
 			label: Liferay.Language.get('edit-label-and-erc'),
 			onClick: () =>
-				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+				setShowModal((previousState: ShowObjectDefinitionsModals) => ({
 					...previousState,
 					editObjectFolder: true,
 				})),
@@ -418,7 +418,7 @@ export function getObjectFolderActions({
 					modalImportKey: 'objectDefinition',
 				});
 
-				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+				setShowModal((previousState: ShowObjectDefinitionsModals) => ({
 					...previousState,
 					importModal: true,
 				}));
@@ -448,7 +448,7 @@ export function getObjectFolderActions({
 		kebabOptions.push({
 			label: Liferay.Language.get('delete-object-folder'),
 			onClick: () =>
-				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+				setShowModal((previousState: ShowObjectDefinitionsModals) => ({
 					...previousState,
 					deleteObjectFolder: true,
 				})),

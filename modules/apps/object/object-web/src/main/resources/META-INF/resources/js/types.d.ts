@@ -505,7 +505,7 @@ type TFilterOperators = {
 	picklistOperators: LabelValueObject[];
 };
 
-interface ViewObjectDefinitionsModals {
+interface ShowObjectDefinitionsModals {
 	addObjectDefinition: boolean;
 	addObjectField: boolean;
 	addObjectFolder: boolean;

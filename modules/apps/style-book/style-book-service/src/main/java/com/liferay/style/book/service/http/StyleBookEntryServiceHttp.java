@@ -88,7 +88,8 @@ public class StyleBookEntryServiceHttp {
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long groupId, String frontendTokensValues, String name,
 			String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			String themeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -98,7 +99,7 @@ public class StyleBookEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, frontendTokensValues,
-				name, styleBookEntryKey, serviceContext);
+				name, styleBookEntryKey, serviceContext, themeId);
 
 			Object returnObj = null;
 
@@ -639,7 +640,7 @@ public class StyleBookEntryServiceHttp {
 	private static final Class<?>[] _addStyleBookEntryParameterTypes1 =
 		new Class[] {
 			String.class, long.class, String.class, String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class, String.class
 		};
 	private static final Class<?>[] _copyStyleBookEntryParameterTypes2 =
 		new Class[] {

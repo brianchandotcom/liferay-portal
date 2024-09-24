@@ -896,6 +896,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 			publishedStyleBookEntry.getPreviewFileEntryId());
 		draftStyleBookEntry.setStyleBookEntryKey(
 			publishedStyleBookEntry.getStyleBookEntryKey());
+		draftStyleBookEntry.setThemeId(publishedStyleBookEntry.getThemeId());
 
 		draftStyleBookEntry.resetOriginalValues();
 

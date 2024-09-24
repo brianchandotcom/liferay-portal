@@ -55,6 +55,7 @@ public class StyleBookEntryVersionWrapper
 		attributes.put("name", getName());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
+		attributes.put("themeId", getThemeId());
 
 		return attributes;
 	}
@@ -171,6 +172,12 @@ public class StyleBookEntryVersionWrapper
 
 		if (styleBookEntryKey != null) {
 			setStyleBookEntryKey(styleBookEntryKey);
+		}
+
+		String themeId = (String)attributes.get("themeId");
+
+		if (themeId != null) {
+			setThemeId(themeId);
 		}
 	}
 
@@ -327,6 +334,16 @@ public class StyleBookEntryVersionWrapper
 	@Override
 	public long getStyleBookEntryVersionId() {
 		return model.getStyleBookEntryVersionId();
+	}
+
+	/**
+	 * Returns the theme ID of this style book entry version.
+	 *
+	 * @return the theme ID of this style book entry version
+	 */
+	@Override
+	public String getThemeId() {
+		return model.getThemeId();
 	}
 
 	/**
@@ -537,6 +554,16 @@ public class StyleBookEntryVersionWrapper
 	@Override
 	public void setStyleBookEntryVersionId(long styleBookEntryVersionId) {
 		model.setStyleBookEntryVersionId(styleBookEntryVersionId);
+	}
+
+	/**
+	 * Sets the theme ID of this style book entry version.
+	 *
+	 * @param themeId the theme ID of this style book entry version
+	 */
+	@Override
+	public void setThemeId(String themeId) {
+		model.setThemeId(themeId);
 	}
 
 	/**

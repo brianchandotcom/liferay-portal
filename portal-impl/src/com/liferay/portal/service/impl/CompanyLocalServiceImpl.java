@@ -1536,11 +1536,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					PortalInstances.removeCompany(company.getCompanyId());
+					try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+							PortalInstancePool.getDefaultCompanyId())) {
 
-					unregisterCompany(company);
+						PortalInstances.removeCompany(company.getCompanyId());
 
-					return null;
+						unregisterCompany(company);
+
+						return null;
+					}
 				});
 
 			DBPartitionUtil.removeDBPartition(companyId);

@@ -44,12 +44,14 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -68,6 +70,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -79,6 +82,8 @@ import com.liferay.portal.kernel.util.comparator.UserLastLoginDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
+import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
+import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -87,6 +92,7 @@ import com.liferay.portal.util.DigesterImpl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -182,6 +188,125 @@ public class UserLocalServiceTest {
 				TestPropsValues.getUserId()));
 
 		Assert.assertTrue(Validator.isNotNull(user.getPassword()));
+	}
+
+	@Test
+	public void testAddUserWithWorkflowForLDAPUserWithLDAPPasswordPolicy()
+		throws Exception {
+
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyLocalService.getDefaultPasswordPolicy(
+				TestPropsValues.getCompanyId());
+
+		passwordPolicy.setChangeRequired(true);
+		passwordPolicy.setCheckSyntax(true);
+
+		passwordPolicy = _passwordPolicyLocalService.updatePasswordPolicy(
+			passwordPolicy);
+
+		boolean ldapPasswordPolicyEnabled = _updateLDAPPasswordPolicyEnabled(
+			true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute("ldapServerId", 1);
+
+		try {
+			User user = _attemptUserCreation(_INVALID_PASSWORD, true);
+
+			Assert.assertEquals(
+				"User was created with incorrect LDAP Server Id", 1,
+				user.getLdapServerId());
+			Assert.assertFalse(
+				"During creation, LDAP user had portal password policy applied",
+				user.isPasswordReset());
+			Assert.assertNull(
+				"LDAP user is not bypassing portal password policy",
+				user.getPasswordPolicy());
+		}
+		catch (Throwable throwable) {
+			if (throwable instanceof UserPasswordException) {
+				throw new Exception(
+					"Exception relate to password policy was thrown",
+					throwable);
+			}
+
+			throw new Exception(
+				"Exception unrelated to password policy was thrown", throwable);
+		}
+		finally {
+			passwordPolicy.setChangeRequired(false);
+			passwordPolicy.setCheckSyntax(false);
+
+			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+			_updateLDAPPasswordPolicyEnabled(ldapPasswordPolicyEnabled);
+		}
+	}
+
+	@Test
+	public void testAddUserWithWorkflowForLDAPUserWithoutLDAPPasswordPolicy()
+		throws Exception {
+
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyLocalService.getDefaultPasswordPolicy(
+				TestPropsValues.getCompanyId());
+
+		passwordPolicy.setChangeRequired(true);
+		passwordPolicy.setCheckSyntax(true);
+
+		passwordPolicy = _passwordPolicyLocalService.updatePasswordPolicy(
+			passwordPolicy);
+
+		boolean ldapPasswordPolicyEnabled = _updateLDAPPasswordPolicyEnabled(
+			false);
+
+		try {
+			_assertUserPasswordException(_INVALID_PASSWORD, true);
+
+			_assertUserCreatedWithPasswordPolicy(_VALID_PASSWORD, true);
+		}
+		finally {
+			passwordPolicy.setChangeRequired(false);
+			passwordPolicy.setCheckSyntax(false);
+
+			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+			_updateLDAPPasswordPolicyEnabled(ldapPasswordPolicyEnabled);
+		}
+	}
+
+	@Test
+	public void testAddUserWithWorkflowForPortalUserWithLDAPPasswordPolicy()
+		throws Exception {
+
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyLocalService.getDefaultPasswordPolicy(
+				TestPropsValues.getCompanyId());
+
+		passwordPolicy.setChangeRequired(true);
+		passwordPolicy.setCheckSyntax(true);
+
+		passwordPolicy = _passwordPolicyLocalService.updatePasswordPolicy(
+			passwordPolicy);
+
+		boolean ldapPasswordPolicyEnabled = _updateLDAPPasswordPolicyEnabled(
+			true);
+
+		try {
+			_assertUserPasswordException(_INVALID_PASSWORD, false);
+
+			_assertUserCreatedWithPasswordPolicy(_VALID_PASSWORD, false);
+		}
+		finally {
+			passwordPolicy.setChangeRequired(false);
+			passwordPolicy.setCheckSyntax(false);
+
+			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+			_updateLDAPPasswordPolicyEnabled(ldapPasswordPolicyEnabled);
+		}
 	}
 
 	@Test
@@ -1221,6 +1346,93 @@ public class UserLocalServiceTest {
 		return user;
 	}
 
+	private void _assertUserCreatedWithPasswordPolicy(
+			String password, boolean ldapUser)
+		throws Exception {
+
+		try {
+			User user = _attemptUserCreation(password, ldapUser);
+
+			Assert.assertEquals(
+				"User was created with incorrect LDAP Server Id",
+				ldapUser ? 1 : -1, user.getLdapServerId());
+			Assert.assertTrue(
+				"During creation, user did not have password policy applied",
+				user.isPasswordReset());
+			Assert.assertNotNull(
+				"User is bypassing portal password policy",
+				user.getPasswordPolicy());
+		}
+		catch (Throwable throwable) {
+			throw new Exception("Unable to create user", throwable);
+		}
+	}
+
+	private void _assertUserPasswordException(String password, boolean ldapUser)
+		throws Exception {
+
+		try {
+			_attemptUserCreation(password, ldapUser);
+
+			Assert.fail("Password policy is not being applied to user");
+		}
+		catch (Throwable throwable) {
+			if (!(throwable instanceof UserPasswordException)) {
+				throw new Exception(
+					"Exception unrelated to password policy was thrown",
+					throwable);
+			}
+		}
+	}
+
+	private User _attemptUserCreation(String password, boolean ldapUser)
+		throws Exception {
+
+		long ldapServerId = -1;
+
+		if (ldapUser) {
+			ldapServerId = 1;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute("ldapServerId", ldapServerId);
+
+		return UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password,
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com",
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			new long[] {TestPropsValues.getGroupId()}, serviceContext);
+	}
+
+	private boolean _updateLDAPPasswordPolicyEnabled(
+			boolean passwordPolicyEnabled)
+		throws PortalException {
+
+		Dictionary<String, Object> configurations =
+			_ldapAuthConfigurationProvider.getConfigurationProperties(
+				TestPropsValues.getCompanyId());
+
+		boolean existingValue = GetterUtil.getBoolean(
+			configurations.put("passwordPolicyEnabled", passwordPolicyEnabled));
+
+		_ldapAuthConfigurationProvider.updateProperties(
+			TestPropsValues.getCompanyId(), configurations);
+
+		return existingValue;
+	}
+
+	private static final String _INVALID_PASSWORD = "abc";
+
+	private static final String _VALID_PASSWORD = "Liferay123";
+
 	private static Company _company;
 
 	@Inject
@@ -1238,6 +1450,12 @@ public class UserLocalServiceTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject(
+		filter = "factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration"
+	)
+	private ConfigurationProvider<LDAPAuthConfiguration>
+		_ldapAuthConfigurationProvider;
 
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;

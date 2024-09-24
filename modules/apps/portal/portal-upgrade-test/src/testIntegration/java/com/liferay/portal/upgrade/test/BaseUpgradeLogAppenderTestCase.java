@@ -846,6 +846,58 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testUpgradeReportDirectoryWriteProtected() throws Exception {
+		File reportsDir = new File("/");
+
+		Assume.assumeFalse(reportsDir.canWrite());
+
+		String originalUpgradeReportDir =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DIR", "/");
+
+		try {
+			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
+
+			_appender.start();
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+					LoggerTestUtil.ALL)) {
+
+				_appender.stop();
+
+				File reportFile = new File(reportsDir, "upgrade_report.info");
+
+				Assert.assertFalse(reportFile.exists());
+
+				Assert.assertTrue(
+					StringUtil.contains(
+						String.valueOf(logCapture.getLogEntries()),
+						"Unable to generate the upgrade report at /",
+						StringPool.BLANK));
+
+				_upgradeReportDir = "";
+
+				reportFile = _getReportFile("upgrade_report.info");
+
+				Assert.assertTrue(reportFile.exists());
+
+				Assert.assertTrue(
+					StringUtil.contains(
+						String.valueOf(logCapture.getLogEntries()),
+						"Upgrade report generated in " +
+							reportFile.getAbsolutePath(),
+						StringPool.BLANK));
+			}
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DIR",
+				originalUpgradeReportDir);
+		}
+	}
+
+	@Test
 	public void testUpgradeReportDisabled() throws Exception {
 		boolean originalUpgradeEnable = ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "UPGRADE_REPORT_ENABLED", false);
@@ -863,45 +915,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			ReflectionTestUtil.setFieldValue(
 				PropsValues.class, "UPGRADE_REPORT_ENABLED",
 				originalUpgradeEnable);
-		}
-	}
-
-	@Test
-	public void testUpgradeReportWriteProtectedDirectory() throws Exception {
-		File reportsDir = new File("/");
-
-		Assume.assumeFalse(reportsDir.canWrite());
-
-		String originalUpgradeReportDir =
-			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_DIR", "/");
-
-		try {
-			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
-
-			_appender.start();
-
-			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.upgrade.internal.report.UpgradeReport",
-					LoggerTestUtil.INFO)) {
-
-				_appender.stop();
-
-				File reportFile = new File(reportsDir, "upgrade_report.info");
-
-				Assert.assertFalse(reportFile.exists());
-
-				_upgradeReportDir = "";
-
-				reportFile = _getReportFile("upgrade_report.info");
-
-				Assert.assertTrue(reportFile.exists());
-			}
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_DIR",
-				originalUpgradeReportDir);
 		}
 	}
 

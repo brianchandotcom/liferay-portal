@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.language-entry-long-text {
 		display: inline-block;
 		padding: 0 0.5em;

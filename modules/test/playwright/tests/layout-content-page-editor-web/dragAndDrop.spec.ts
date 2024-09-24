@@ -16,6 +16,7 @@ import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getGridDefinition from './utils/getGridDefinition';
 import getPageDefinition from './utils/getPageDefinition';
+import getWidgetDefinition from './utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -204,3 +205,61 @@ test(
 		expect(dropTarget.locator('[data-name="Button"]')).toBeVisible();
 	}
 );
+
+test('Check drag and drop from Page Structure Tree', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const gridId = getRandomString();
+
+	const grid = getGridDefinition({
+		id: gridId,
+	});
+
+	const assetPublisherId = getRandomString();
+
+	const assetPublisher = getWidgetDefinition({
+		id: assetPublisherId,
+		widgetName:
+			'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([grid, assetPublisher]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	// Go to edit mode
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Go to the page structure tree and drag the Asset Publisher into the first column of the Grid
+
+	await pageEditorPage.goToSidebarTab('Browser');
+
+	await pageEditorPage.selectFragment(gridId);
+
+	const assetPublisherNode = page.locator(
+		`.treeview-link[data-id$="${assetPublisherId}"]`
+	);
+
+	const moduleNode = page
+		.locator('.treeview-link')
+		.filter({hasText: 'Module'})
+		.first();
+
+	await dragAndDropElement({
+		dragTarget: assetPublisherNode,
+		dropTarget: moduleNode,
+		page,
+	});
+
+	expect(
+		page
+			.locator('[data-name="Grid"]')
+			.locator('[data-name="Asset Publisher"]')
+	).toBeVisible();
+});

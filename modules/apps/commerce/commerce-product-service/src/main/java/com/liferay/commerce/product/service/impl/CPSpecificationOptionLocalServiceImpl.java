@@ -81,10 +81,6 @@ public class CPSpecificationOptionLocalServiceImpl
 			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		User user = _userLocalService.getUser(userId);
 
 		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
@@ -242,17 +238,12 @@ public class CPSpecificationOptionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		CPSpecificationOption cpSpecificationOption =
 			cpSpecificationOptionPersistence.findByPrimaryKey(
 				cpSpecificationOptionId);
 
-		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
-
-		key = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(key);
+		key = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+			StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH));
 
 		_validate(
 			cpSpecificationOption.getCPSpecificationOptionId(),

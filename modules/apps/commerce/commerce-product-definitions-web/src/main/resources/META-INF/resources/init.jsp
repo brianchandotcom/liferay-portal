@@ -79,6 +79,7 @@ page import="com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureIncre
 page import="com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureRateException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPInstanceException" %><%@
+page import="com.liferay.commerce.product.exception.DuplicateCPInstanceExternalReferenceCodeException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPInstanceUnitOfMeasureKeyException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCProductExternalReferenceCodeException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@

@@ -152,10 +152,6 @@ public class CommercePaymentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		CommercePaymentEntry commercePaymentEntry = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
@@ -381,10 +377,6 @@ public class CommercePaymentEntryLocalServiceImpl
 			int paymentStatus, String reasonKey, String redirectURL,
 			String transactionCode, int type)
 		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		CommercePaymentEntry commercePaymentEntry =
 			commercePaymentEntryLocalService.getCommercePaymentEntry(

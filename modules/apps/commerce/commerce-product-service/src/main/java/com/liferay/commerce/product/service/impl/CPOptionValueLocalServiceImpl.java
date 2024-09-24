@@ -92,10 +92,6 @@ public class CPOptionValueLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		key = _friendlyURLNormalizer.normalize(key);
 
 		_validateKey(_cpOptionPersistence.findByPrimaryKey(cpOptionId), 0, key);
@@ -131,10 +127,7 @@ public class CPOptionValueLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
+		if (Validator.isNotNull(externalReferenceCode)) {
 			CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByERC_C(
 				externalReferenceCode, serviceContext.getCompanyId());
 

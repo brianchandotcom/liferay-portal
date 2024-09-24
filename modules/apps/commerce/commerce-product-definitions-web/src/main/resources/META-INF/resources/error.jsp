@@ -10,6 +10,7 @@
 <liferay-ui:error-header />
 
 <liferay-ui:error exception="<%= CPDefinitionProductTypeNameException.class %>" message="please-select-a-valid-type" />
+<liferay-ui:error exception="<%= DuplicateCPInstanceExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 <liferay-ui:error exception="<%= DuplicateCProductExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 <liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="the-attachment-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchCPDefinitionException.class %>" message="the-product-could-not-be-found" />

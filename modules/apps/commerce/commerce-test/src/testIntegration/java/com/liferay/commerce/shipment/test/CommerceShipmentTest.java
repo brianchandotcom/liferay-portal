@@ -16,7 +16,7 @@ import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceShipmentInactiveWarehouseException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
-import com.liferay.commerce.exception.DuplicateCommerceShipmentException;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.exception.NoSuchShipmentItemException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
@@ -913,7 +913,9 @@ public class CommerceShipmentTest {
 			commerceShippingMethod.getName(LocaleUtil.JAPAN));
 	}
 
-	@Test(expected = DuplicateCommerceShipmentException.class)
+	@Test(
+		expected = DuplicateCommerceShipmentExternalReferenceCodeException.class
+	)
 	public void testUpdateOrderShipment() throws Exception {
 		frutillaRule.scenario(
 			"It should not be possible to update the ERC field with a value " +

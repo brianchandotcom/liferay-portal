@@ -11,7 +11,6 @@ import com.liferay.commerce.exception.CommerceShipmentExpectedDateException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentShippingDateException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
-import com.liferay.commerce.exception.DuplicateCommerceShipmentException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -157,13 +155,6 @@ public class CommerceShipmentLocalServiceImpl
 		throws PortalException {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		_validateExternalReferenceCode(
-			0, serviceContext.getCompanyId(), externalReferenceCode);
 
 		long commerceShipmentId = counterLocalService.increment();
 
@@ -635,10 +626,6 @@ public class CommerceShipmentLocalServiceImpl
 			return commerceShipment;
 		}
 
-		_validateExternalReferenceCode(
-			commerceShipmentId, commerceShipment.getCompanyId(),
-			externalReferenceCode);
-
 		commerceShipment.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceShipmentPersistence.update(commerceShipment);
@@ -870,30 +857,6 @@ public class CommerceShipmentLocalServiceImpl
 			phoneNumber,
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
 			serviceContext);
-	}
-
-	private void _validateExternalReferenceCode(
-			long commerceShipmentId, long companyId,
-			String externalReferenceCode)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CommerceShipment commerceShipment =
-			commerceShipmentPersistence.fetchByERC_C(
-				externalReferenceCode, companyId);
-
-		if (commerceShipment == null) {
-			return;
-		}
-
-		if (commerceShipment.getCommerceShipmentId() != commerceShipmentId) {
-			throw new DuplicateCommerceShipmentException(
-				"There is another commerce shipment with external reference " +
-					"code " + externalReferenceCode);
-		}
 	}
 
 	private void _validateStatus(int status, int oldStatus)

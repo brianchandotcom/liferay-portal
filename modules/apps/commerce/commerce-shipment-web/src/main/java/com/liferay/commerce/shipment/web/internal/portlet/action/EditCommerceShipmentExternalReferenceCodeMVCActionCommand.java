@@ -7,12 +7,14 @@ package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.DuplicateCommerceShipmentException;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -51,8 +53,16 @@ public class EditCommerceShipmentExternalReferenceCodeMVCActionCommand
 				commerceShipmentId, externalReferenceCode);
 		}
 		catch (Exception exception) {
-			if (exception instanceof DuplicateCommerceShipmentException ||
-				exception instanceof NoSuchShipmentException) {
+			if (exception instanceof
+					DuplicateCommerceShipmentExternalReferenceCodeException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (exception instanceof DuplicateCommerceShipmentException ||
+					 exception instanceof NoSuchShipmentException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

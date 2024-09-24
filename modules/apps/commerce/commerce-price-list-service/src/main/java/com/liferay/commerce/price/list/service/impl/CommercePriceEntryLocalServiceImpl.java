@@ -11,7 +11,6 @@ import com.liferay.commerce.price.list.exception.CommercePriceEntryExpirationDat
 import com.liferay.commerce.price.list.exception.CommercePriceEntryUnitOfMeasureKeyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException;
 import com.liferay.commerce.price.list.exception.CommercePriceListMinPriceValueException;
-import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
@@ -130,13 +129,6 @@ public class CommercePriceEntryLocalServiceImpl
 		throws PortalException {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		_validateExternalReferenceCode(
-			externalReferenceCode, serviceContext.getCompanyId());
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cProductId, cpInstanceUuid);
@@ -259,11 +251,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 		CommercePriceEntry commercePriceEntry = null;
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		if (!Validator.isBlank(externalReferenceCode)) {
+		if (Validator.isNotNull(externalReferenceCode)) {
 			commercePriceEntry = commercePriceEntryPersistence.fetchByERC_C(
 				externalReferenceCode, serviceContext.getCompanyId());
 		}
@@ -769,10 +757,6 @@ public class CommercePriceEntryLocalServiceImpl
 			String externalReferenceCode, CommercePriceEntry commercePriceEntry)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
@@ -1137,25 +1121,6 @@ public class CommercePriceEntryLocalServiceImpl
 			CommercePriceEntry.class.getName(),
 			commercePriceEntry.getCommercePriceEntryId(), commercePriceEntry,
 			serviceContext, workflowContext);
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryPersistence.fetchByERC_C(
-				externalReferenceCode, companyId);
-
-		if (commercePriceEntry != null) {
-			throw new DuplicateCommercePriceEntryException(
-				"There is another commerce price entry with external " +
-					"reference code " + externalReferenceCode);
-		}
 	}
 
 	private void _validatePrice(

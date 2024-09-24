@@ -9,6 +9,8 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= DuplicateCommerceShipmentExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
+<liferay-ui:error exception="<%= DuplicateCommerceShipmentItemExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 <liferay-ui:error exception="<%= NoSuchShipmentException.class %>" message="the-shipment-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchShipmentItemException.class %>" message="the-shipment-item-could-not-be-found" />
 

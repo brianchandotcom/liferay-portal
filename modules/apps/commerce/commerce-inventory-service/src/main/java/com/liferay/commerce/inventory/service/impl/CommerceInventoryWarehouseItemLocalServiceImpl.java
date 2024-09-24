@@ -87,10 +87,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		_validateSku(commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 		_validateUnitOfMeasureKey(user.getCompanyId(), sku, unitOfMeasureKey);
 
@@ -128,8 +124,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = null;
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
+		if (Validator.isNull(externalReferenceCode)) {
 			commerceInventoryWarehouseItem =
 				commerceInventoryWarehouseItemPersistence.fetchByCIWI_S_U(
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);

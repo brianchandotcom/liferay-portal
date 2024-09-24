@@ -67,10 +67,6 @@ public class AccountRoleLocalServiceImpl
 			Map<Locale, String> descriptionMap)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		Role role = _roleLocalService.addRole(
 			externalReferenceCode, userId, AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name, titleMap,

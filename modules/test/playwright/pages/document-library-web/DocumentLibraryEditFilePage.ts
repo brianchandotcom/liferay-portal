@@ -14,7 +14,6 @@ import {DocumentLibraryPage} from './DocumentLibraryPage';
 export class DocumentLibraryEditFilePage {
 	readonly page: Page;
 
-	readonly backButton: Locator;
 	readonly descriptionInput: Locator;
 	readonly documentLibraryPage: DocumentLibraryPage;
 	readonly permissionViewSelector: Locator;
@@ -28,7 +27,6 @@ export class DocumentLibraryEditFilePage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.backButton = page.getByRole('link', {name: 'Back'});
 		this.descriptionInput = page.locator(
 			'#_com_liferay_document_library_web_portlet_DLAdminPortlet_description'
 		);
@@ -68,10 +66,6 @@ export class DocumentLibraryEditFilePage {
 				'Select View, Currently Selected: '
 			),
 		});
-	}
-
-	async goBack() {
-		await this.backButton.click();
 	}
 
 	async goToNewFileDifferentType(type: string) {

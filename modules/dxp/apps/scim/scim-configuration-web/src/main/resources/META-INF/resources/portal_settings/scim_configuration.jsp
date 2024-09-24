@@ -68,7 +68,7 @@ long oauthTokenExpirationDays = GetterUtil.getLong(request.getAttribute(ScimWebK
 		</c:choose>
 	</c:if>
 
-	<label for="<portlet:namespace />genetareAccessToken">
+	<label for="<portlet:namespace />generateAccessToken">
 		<liferay-ui:message key="scim-generate-access-token" />
 
 		<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">

@@ -260,7 +260,7 @@ public class ResourceActionLocalServiceImpl
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
 		String name = resourceAction.getName();
 
-		Set<String> names = MassDeleteCacheThreadLocal.getBulkDeleteCache(
+		Set<String> names = MassDeleteCacheThreadLocal.getMassDeleteCache(
 			ResourcePermissionLocalService.class.getName(), HashSet::new);
 
 		if (names == null) {

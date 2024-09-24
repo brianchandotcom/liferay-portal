@@ -188,7 +188,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	@Override
 	public void deleteLinks(long entryId) {
 		Map<Long, List<AssetLink>> leftPartitionAssetLinks =
-			MassDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getMassDeleteCache(
 				StringBundler.concat(
 					AssetLinkLocalServiceImpl.class.getName(),
 					".deleteLinks#left#", entryId),
@@ -225,7 +225,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			});
 
 		Map<Long, List<AssetLink>> rightPartitionAssetLinks =
-			MassDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getMassDeleteCache(
 				StringBundler.concat(
 					AssetLinkLocalServiceImpl.class.getName(),
 					".deleteLinks#right#", entryId),

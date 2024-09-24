@@ -128,7 +128,7 @@ public class ObjectDefinitionResourceImpl
 
 		try (SafeCloseable safeCloseable1 = SearchContext.openBatchMode();
 			SafeCloseable safeCloseable2 =
-				MassDeleteCacheThreadLocal.openBulkDeleteMode()) {
+				MassDeleteCacheThreadLocal.openMassDeleteMode()) {
 
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,

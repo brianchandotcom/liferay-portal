@@ -1151,7 +1151,7 @@ public class SocialActivityLocalServiceImpl
 		throws PortalException {
 
 		Map<Long, List<SocialActivity>> partitionSocialActivities =
-			MassDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getMassDeleteCache(
 				SocialActivityLocalServiceImpl.class.getName() +
 					".deleteActivities#" + classNameId,
 				() -> MapUtil.toPartitionMap(

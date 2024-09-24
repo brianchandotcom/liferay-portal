@@ -46,7 +46,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
-		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isMassDeleteMode()) {
 			return null;
 		}
 
@@ -86,7 +86,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			Object result)
 		throws Throwable {
 
-		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isMassDeleteMode()) {
 			return;
 		}
 
@@ -155,7 +155,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	protected void duringFinally(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
-		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isMassDeleteMode()) {
 			return;
 		}
 

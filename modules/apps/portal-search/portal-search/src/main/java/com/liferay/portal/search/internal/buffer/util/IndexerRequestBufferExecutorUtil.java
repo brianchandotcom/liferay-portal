@@ -46,7 +46,7 @@ public class IndexerRequestBufferExecutorUtil {
 			return;
 		}
 
-		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isMassDeleteMode()) {
 			_execute(indexerRequestBuffer, numRequests, false);
 
 			return;

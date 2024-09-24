@@ -150,7 +150,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 		Map<Long, List<AssetListEntryAssetEntryRel>>
 			partitionAssetListEntryAssetEntryRels =
-				MassDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getMassDeleteCache(
 					ownerName,
 					() -> MapUtil.toPartitionMap(
 						assetListEntryAssetEntryRelPersistence.findAll(),

@@ -66,7 +66,7 @@ public class ViewCountEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK) {
 
 		Map<Long, List<ViewCountEntry>> partitionViewCountEntries =
-			MassDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getMassDeleteCache(
 				StringBundler.concat(
 					ViewCountEntryLocalServiceImpl.class.getName(),
 					".deleteViewCount#", companyId, classNameId),

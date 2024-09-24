@@ -1331,7 +1331,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Tags
 
 		Map<Long, List<Object[]>> partitionAssetEntryAssetTagIds =
-			MassDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getMassDeleteCache(
 				AssetEntryLocalServiceImpl.class.getName() + ".deleteEntry",
 				() -> MapUtil.toPartitionMap(
 					dslQuery(

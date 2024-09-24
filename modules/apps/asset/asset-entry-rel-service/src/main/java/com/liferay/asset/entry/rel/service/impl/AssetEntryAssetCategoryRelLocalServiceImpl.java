@@ -108,7 +108,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 		Map<Long, List<AssetEntryAssetCategoryRel>>
 			partitionAssetEntryAssetCategoryRels =
-				MassDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getMassDeleteCache(
 					AssetEntryAssetCategoryRelLocalServiceImpl.class.getName() +
 						".deleteAssetEntryAssetCategoryRelByAssetEntry",
 					() -> MapUtil.toPartitionMap(

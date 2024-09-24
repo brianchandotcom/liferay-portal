@@ -125,7 +125,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		Map<Long, List<AssetDisplayPageEntry>>
 			partitionAssetDisplayPageEntries =
-				MassDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getMassDeleteCache(
 					StringBundler.concat(
 						AssetDisplayPageEntryLocalServiceImpl.class.getName(),
 						".fetchAssetDisplayPageEntry#", groupId, classNameId),

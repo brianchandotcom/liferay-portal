@@ -17,38 +17,38 @@ import java.util.function.Supplier;
  */
 public class MassDeleteCacheThreadLocal {
 
-	public static <T> T getBulkDeleteCache(
+	public static <T> T getMassDeleteCache(
 		String ownerName, Supplier<T> supplier) {
 
-		Map<String, Object> bulkDeleteCacheMap =
-			_bulkDeleteCacheThreadLocal.get();
+		Map<String, Object> massDeleteCacheMap =
+			_massDeleteCacheThreadLocal.get();
 
-		if (bulkDeleteCacheMap == null) {
+		if (massDeleteCacheMap == null) {
 			return null;
 		}
 
-		return (T)bulkDeleteCacheMap.computeIfAbsent(
+		return (T)massDeleteCacheMap.computeIfAbsent(
 			ownerName, key -> supplier.get());
 	}
 
-	public static boolean isBulkDeleteMode() {
-		Map<String, Object> bulkDeleteCacheMap =
-			_bulkDeleteCacheThreadLocal.get();
+	public static boolean isMassDeleteMode() {
+		Map<String, Object> massDeleteCacheMap =
+			_massDeleteCacheThreadLocal.get();
 
-		if (bulkDeleteCacheMap == null) {
+		if (massDeleteCacheMap == null) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public static SafeCloseable openBulkDeleteMode() {
-		return _bulkDeleteCacheThreadLocal.setWithSafeCloseable(
+	public static SafeCloseable openMassDeleteMode() {
+		return _massDeleteCacheThreadLocal.setWithSafeCloseable(
 			new HashMap<>());
 	}
 
 	private static final CentralizedThreadLocal<Map<String, Object>>
-		_bulkDeleteCacheThreadLocal = new CentralizedThreadLocal<>(
-			MassDeleteCacheThreadLocal.class + "._bulkDeleteCacheThreadLocal");
+		_massDeleteCacheThreadLocal = new CentralizedThreadLocal<>(
+			MassDeleteCacheThreadLocal.class + "._massDeleteCacheThreadLocal");
 
 }

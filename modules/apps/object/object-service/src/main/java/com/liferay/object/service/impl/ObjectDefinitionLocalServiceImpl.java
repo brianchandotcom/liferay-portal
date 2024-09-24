@@ -661,7 +661,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinitionPersistence.remove(objectDefinition);
 
-		Set<String> names = MassDeleteCacheThreadLocal.getBulkDeleteCache(
+		Set<String> names = MassDeleteCacheThreadLocal.getMassDeleteCache(
 			ResourcePermissionLocalService.class.getName(), HashSet::new);
 
 		if (names != null) {

@@ -100,7 +100,7 @@ public class SavedContentEntryLocalServiceImpl
 		long groupId, long classNameId, long classPK) {
 
 		Map<Long, List<SavedContentEntry>> partitionSavedContentEntries =
-			MassDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getMassDeleteCache(
 				StringBundler.concat(
 					SavedContentEntryLocalServiceImpl.class.getName(),
 					".deleteSavedContentEntries#", groupId, classNameId),

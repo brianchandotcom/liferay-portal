@@ -82,7 +82,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	public void deleteLayoutClassedModelUsages(long classNameId, long classPK) {
 		Map<Long, List<LayoutClassedModelUsage>>
 			partitionLayoutClassedModelUsages =
-				MassDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getMassDeleteCache(
 					LayoutClassedModelUsageLocalServiceImpl.class.getName() +
 						".deleteLayoutClassedModelUsages#" + classNameId,
 					() -> MapUtil.toPartitionMap(

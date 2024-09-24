@@ -253,7 +253,6 @@ function Body({
 			<ClayLayout.SheetSection>
 				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
-					fieldNames={usedFieldNames}
 					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}

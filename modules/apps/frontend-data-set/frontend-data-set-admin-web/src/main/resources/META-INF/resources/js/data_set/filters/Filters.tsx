@@ -315,39 +315,24 @@ function Filters({
 	const onCreationButtonClick = (filterType: EFilterType) => {
 		let availableFieldsListLength = 0;
 
-		if (Liferay.FeatureFlags['LPD-25905']) {
-			const availableFilterTypeFields = JSON.parse(
-				JSON.stringify(fields)
-			);
+		const availableFilterTypeFields = JSON.parse(JSON.stringify(fields));
 
-			visit(availableFilterTypeFields, (field: IFieldTreeItem) => {
-				if (
-					!FILTER_TYPES[
-						filterType as EFilterType
-					].availableFieldsFilter(field)
-				) {
-					field.disabled = true;
-				}
-				else {
-					availableFieldsListLength++;
-
-					field.disabled = false;
-				}
-			});
-
-			setAvailableFields(availableFilterTypeFields);
-		}
-		else {
-			const availableFieldsList = fields.filter((item) =>
-				FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
-					item
+		visit(availableFilterTypeFields, (field: IFieldTreeItem) => {
+			if (
+				!FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
+					field
 				)
-			);
+			) {
+				field.disabled = true;
+			}
+			else {
+				availableFieldsListLength++;
 
-			availableFieldsListLength = availableFieldsList.length;
+				field.disabled = false;
+			}
+		});
 
-			setAvailableFields(availableFieldsList);
-		}
+		setAvailableFields(availableFilterTypeFields);
 
 		if (!availableFieldsListLength) {
 			openModal({

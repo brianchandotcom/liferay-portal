@@ -16,18 +16,10 @@ const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	filtersPageTest,
 	featureFlagsTest({
-		'LPD-25905': false,
 		'LPS-178052': true,
 	}),
 	loginTest(),
 	dataSetManagerSetupTest
-);
-
-const modalFieldTest = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-25905': true,
-	})
 );
 
 let dataSetERC: string;
@@ -100,9 +92,13 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 				2
 			);
 
-			await filtersPage.newClientExtensionFilterForm.filterBySelect.click();
-			await page.getByRole('option', {name: DATE_FIELD_NAME}).click();
-			await filtersPage.saveAddFilterForm();
+			await filtersPage.newClientExtensionFilterForm.filterBySelectButton.click();
+
+			await filtersPage.fieldSelectModalPage.selectField({
+				fieldName: DATE_FIELD_NAME,
+			});
+
+			await filtersPage.fieldSelectModalPage.saveAddFieldsModal();
 
 			await expect(page.getByText('This field is required.')).toHaveCount(
 				1
@@ -171,31 +167,3 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 		});
 	});
 });
-
-modalFieldTest(
-	'Can create a Client Extension Filter in DSM using field selection modal',
-	{tag: '@LPD-25905'},
-	async ({filtersPage, page}) => {
-		const filterLabel = getRandomString();
-
-		await test.step('Create a client extension filter', async () => {
-			await filtersPage.createClientExtensionFilter({
-				clientExtension: clientExtensionName,
-				filterBy: DATE_FIELD_NAME,
-				name: filterLabel,
-				useFieldSelectionModal: true,
-			});
-
-			await filtersPage.saveAddFilterForm();
-		});
-
-		await test.step('Check that the client extension filter is in the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: DATE_FIELD_NAME,
-				})
-			).toBeVisible();
-		});
-	}
-);

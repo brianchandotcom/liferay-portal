@@ -25,20 +25,12 @@ const PICKLIST_VALUE_NAME = getRandomString();
 const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPD-25905': false,
 		'LPS-178052': true,
 	}),
 	filtersPageTest,
 	loginTest(),
 	picklistApiHelpersTest,
 	dataSetManagerSetupTest
-);
-
-const modalFieldTest = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-25905': true,
-	})
 );
 
 let dataSetERC: string;
@@ -323,45 +315,45 @@ test('Preselected filter values are checked in the multiSelect', async ({
 	});
 });
 
-modalFieldTest(
-	'Can create and edit a selection filter with API Headless source using the field selection modal',
+test(
+	'Can create and edit a selection filter with API Headless source using composed/complex fields',
 	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
-		await modalFieldTest.step(
-			'Create a selection filter from API Headless source',
-			async () => {
-				await filtersPage.createSelectionFilterApiHeadless({
-					filterBy: 'externalReferenceCode',
-					filterMode: 'Include',
-					itemKey: 'id',
-					itemLabel: 'label',
+		const composedFieldName = 'fdsViewFDSFieldRelationship.description';
+
+		await test.step('Create a selection filter from API Headless source', async () => {
+			await filtersPage.createSelectionFilterApiHeadless({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				itemKey: 'id',
+				itemLabel: 'label',
+				name: SELECTION_API_HEADLESS_FILTER_NAME,
+				preselectedValues: [dataSetLabel],
+				restApplication: '/data-set-manager/data-sets',
+				restEndpoint: '/',
+				restSchema: 'FDSView',
+				selectionType: 'Single',
+				sourceType: 'API REST Application',
+			});
+
+			await filtersPage.newSelectionFilterForm.filterBySelectButton.click();
+			await filtersPage.fieldSelectModalPage.searchAndSelectField(
+				composedFieldName
+			);
+			await filtersPage.fieldSelectModalPage.saveAddFieldsModal();
+			await filtersPage.saveAddFilterForm();
+		});
+
+		await test.step('Check that the selection filter is in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
 					name: SELECTION_API_HEADLESS_FILTER_NAME,
-					preselectedValues: [dataSetLabel],
-					restApplication: '/data-set-manager/data-sets',
-					restEndpoint: '/',
-					restSchema: 'FDSView',
-					selectionType: 'Single',
-					sourceType: 'API REST Application',
-					useFieldSelectionModal: true,
-				});
+				})
+			).toBeVisible();
+		});
 
-				await filtersPage.saveAddFilterForm();
-			}
-		);
-
-		await modalFieldTest.step(
-			'Check that the selection filter is in the list',
-			async () => {
-				await expect(
-					page.getByRole('cell', {
-						exact: true,
-						name: SELECTION_API_HEADLESS_FILTER_NAME,
-					})
-				).toBeVisible();
-			}
-		);
-
-		await modalFieldTest.step('Open the edit filter form', async () => {
+		await test.step('Open the edit filter form', async () => {
 			const filterActionsButton = page
 				.getByRole('cell', {name: 'Actions'})
 				.getByRole('button');
@@ -387,42 +379,33 @@ modalFieldTest(
 			await expect(dialogFilterOptionsSubtitle).toBeVisible();
 		});
 
-		await modalFieldTest.step('Change the filter name', async () => {
+		await test.step('Change the filter name', async () => {
 			await filtersPage.newSelectionFilterForm.nameInput.clear();
 
 			await filtersPage.saveAddFilterForm();
 		});
 
-		await modalFieldTest.step(
-			'Confirm that a "This field is required." message appears in the form',
-			async () => {
-				await filtersPage.page
-					.getByText('This field is required.')
-					.isVisible();
-			}
-		);
+		await test.step('Confirm that a "This field is required." message appears in the form', async () => {
+			await filtersPage.page
+				.getByText('This field is required.')
+				.isVisible();
+		});
 
-		await modalFieldTest.step(
-			'Save filter form without errors',
-			async () => {
-				await filtersPage.newSelectionFilterForm.nameInput.fill(
-					SELECTION_API_HEADLESS_FILTER_NAME
-				);
+		await test.step('Save filter form without errors', async () => {
+			await filtersPage.newSelectionFilterForm.nameInput.fill(
+				SELECTION_API_HEADLESS_FILTER_NAME
+			);
 
-				await filtersPage.saveAddFilterForm();
-			}
-		);
+			await filtersPage.saveAddFilterForm();
+		});
 
-		await modalFieldTest.step(
-			'Check that the selection filter is in the list',
-			async () => {
-				await expect(
-					page.getByRole('cell', {
-						exact: true,
-						name: SELECTION_API_HEADLESS_FILTER_NAME,
-					})
-				).toBeVisible();
-			}
-		);
+		await test.step('Check that the selection filter is in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_API_HEADLESS_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
 	}
 );

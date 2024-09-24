@@ -1018,15 +1018,12 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
-		ModelPermissions modelPermissions = null;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-28799")) {
-			modelPermissions = ModelPermissionsUtil.toModelPermissions(
+		ModelPermissions modelPermissions =
+			ModelPermissionsUtil.toModelPermissions(
 				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
 				GetterUtil.getLong(objectEntry.getId()),
 				objectDefinition.getClassName(), _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService);
-		}
 
 		return ServiceContextUtil.createServiceContext(
 			dtoConverterContext.getLocale(), modelPermissions, objectEntry,

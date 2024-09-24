@@ -54,7 +54,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -221,13 +220,7 @@ public class ObjectEntryDTOConverter
 							AssetTag.NAME_ACCESSOR);
 					});
 				setPermissions(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-28799")) {
-							return null;
-						}
-
-						return _toPermissions(objectDefinition, objectEntry);
-					});
+					() -> _toPermissions(objectDefinition, objectEntry));
 				setProperties(
 					() -> _toProperties(
 						dtoConverterContext, objectDefinition, objectEntry));

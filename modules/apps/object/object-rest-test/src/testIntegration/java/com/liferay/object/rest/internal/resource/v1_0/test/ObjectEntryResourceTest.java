@@ -191,7 +191,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags({"LPD-28799", "LPS-164801"})
+@FeatureFlags({"LPS-164801"})
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 

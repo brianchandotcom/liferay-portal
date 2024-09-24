@@ -9,19 +9,16 @@ import {useEffect, useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
-import {getAccountPostalAddressesByAccountId} from '../../../../utils/api';
 import {getCustomFieldValue} from '../../../../utils/customFieldUtil';
 import {getAccountImage, removeProtocolURL} from '../../../../utils/util';
 
 import './Accounts.scss';
 import EmptyState from '../../../../components/EmptyState';
-import useMembers from '../../../../components/MembersPage/useMembers';
-import {Liferay} from '../../../../liferay/liferay';
+import HeadlessAdminUserImpl from '../../../../services/rest/HeadlessAdminUser';
 
 type AccountDetailsPageProps = {
 	selectedAccount: Account;
 	totalApps: number;
-	totalMembers: number;
 };
 
 type AccountHeaderButtonProps = {
@@ -66,7 +63,6 @@ const maskDigits = (str: string) => {
 function AccountDetailsPage({
 	selectedAccount,
 	totalApps,
-	totalMembers,
 }: AccountDetailsPageProps) {
 	const navigate = useNavigate();
 	const [selectedAccountAddress, setSelectedAccountAddress] =
@@ -84,9 +80,10 @@ function AccountDetailsPage({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const {items} = await getAccountPostalAddressesByAccountId(
-				selectedAccount.id
-			);
+			const {items} =
+				await HeadlessAdminUserImpl.getAccountPostalAddresses(
+					selectedAccount.id
+				);
 
 			setSelectedAccountAddress(items);
 		};
@@ -125,13 +122,7 @@ function AccountDetailsPage({
 								text="Apps"
 								title="Apps"
 							/>
-							<AccountHeaderButton
-								count={totalMembers as unknown as string}
-								name="members"
-								onClick={() => navigate('/members')}
-								text="Items"
-								title="Members"
-							/>
+
 							<AccountHeaderButton
 								count="0"
 								name="solutions"
@@ -367,18 +358,10 @@ function AccountDetailsPage({
 const Accounts = () => {
 	const {appsTotalCount, selectedAccount} = useOutletContext<any>();
 
-	const {data: members = []} = useMembers({
-		accountId: Liferay.CommerceContext.account?.accountId ?? 0,
-		isCustomerDashboard: false,
-		isPublisherDashboard: true,
-		selectedAccount,
-	});
-
 	return (
 		<AccountDetailsPage
 			selectedAccount={selectedAccount}
 			totalApps={appsTotalCount}
-			totalMembers={members?.length ?? 0}
 		/>
 	);
 };

@@ -30,6 +30,10 @@ public class RepositoryTable extends BaseTable<RepositoryTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<RepositoryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RepositoryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<RepositoryTable, Long> repositoryId = createColumn(
 		"repositoryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<RepositoryTable, Long> groupId = createColumn(

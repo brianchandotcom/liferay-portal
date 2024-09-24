@@ -331,8 +331,10 @@ create unique index IX_8BD6BCA7 on Release_ (servletContextName[$COLUMN_LENGTH:7
 create index IX_D4C6FBCB on RememberMeToken (expirationDate);
 create index IX_291F58D4 on RememberMeToken (userId);
 
+create unique index IX_1F8735E5 on Repository (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_470608AE on Repository (groupId, ctCollectionId, name[$COLUMN_LENGTH:200$], portletId[$COLUMN_LENGTH:200$]);
-create unique index IX_4009E884 on Repository (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+create unique index IX_E9E7CCD8 on Repository (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_74C17B04 on Repository (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_B43A3F67 on RepositoryEntry (repositoryId, ctCollectionId, mappedId[$COLUMN_LENGTH:255$]);
 create unique index IX_239165C6 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);

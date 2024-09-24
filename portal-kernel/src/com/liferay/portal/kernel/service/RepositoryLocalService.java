@@ -227,6 +227,10 @@ public interface RepositoryLocalService
 	public Repository fetchRepository(
 		long groupId, String name, String portletId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository fetchRepositoryByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the repository matching the UUID and group.
 	 *
@@ -330,6 +334,11 @@ public interface RepositoryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Repository getRepository(long groupId, String name, String portletId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository getRepositoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

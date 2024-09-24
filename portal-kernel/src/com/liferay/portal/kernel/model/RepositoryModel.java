@@ -25,7 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RepositoryModel
-	extends BaseModel<Repository>, CTModel<Repository>, MVCCModel, ShardedModel,
+	extends BaseModel<Repository>, CTModel<Repository>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
 			StagedGroupedModel, TypedModel {
 
 	/*
@@ -98,6 +99,23 @@ public interface RepositoryModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this repository.
+	 *
+	 * @return the external reference code of this repository
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this repository.
+	 *
+	 * @param externalReferenceCode the external reference code of this repository
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the repository ID of this repository.

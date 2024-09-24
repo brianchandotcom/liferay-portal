@@ -258,6 +258,23 @@ public abstract class RepositoryLocalServiceBaseImpl
 		return repositoryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public Repository fetchRepositoryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return repositoryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public Repository getRepositoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return repositoryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the repository with the primary key.
 	 *

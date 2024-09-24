@@ -233,6 +233,13 @@ public class RepositoryLocalServiceUtil {
 		return getService().fetchRepository(groupId, name, portletId);
 	}
 
+	public static Repository fetchRepositoryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchRepositoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the repository matching the UUID and group.
 	 *
@@ -368,6 +375,14 @@ public class RepositoryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getRepository(groupId, name, portletId);
+	}
+
+	public static Repository getRepositoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getRepositoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

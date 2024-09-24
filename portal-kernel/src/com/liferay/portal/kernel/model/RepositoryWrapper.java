@@ -38,6 +38,7 @@ public class RepositoryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +75,13 @@ public class RepositoryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");
@@ -234,6 +242,16 @@ public class RepositoryWrapper
 	@Override
 	public long getDlFolderId() {
 		return model.getDlFolderId();
+	}
+
+	/**
+	 * Returns the external reference code of this repository.
+	 *
+	 * @return the external reference code of this repository
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -441,6 +459,16 @@ public class RepositoryWrapper
 	@Override
 	public void setDlFolderId(long dlFolderId) {
 		model.setDlFolderId(dlFolderId);
+	}
+
+	/**
+	 * Sets the external reference code of this repository.
+	 *
+	 * @param externalReferenceCode the external reference code of this repository
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

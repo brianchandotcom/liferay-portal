@@ -68,7 +68,7 @@ public class RepositoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class RepositoryCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", groupId=");
@@ -121,6 +123,13 @@ public class RepositoryCacheModel
 		}
 		else {
 			repositoryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			repositoryImpl.setExternalReferenceCode("");
+		}
+		else {
+			repositoryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		repositoryImpl.setRepositoryId(repositoryId);
@@ -201,6 +210,7 @@ public class RepositoryCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		repositoryId = objectInput.readLong();
 
@@ -234,6 +244,13 @@ public class RepositoryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(repositoryId);
@@ -291,6 +308,7 @@ public class RepositoryCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long repositoryId;
 	public long groupId;
 	public long companyId;

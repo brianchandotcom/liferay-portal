@@ -260,6 +260,14 @@ public class RepositoryLocalServiceWrapper
 			groupId, name, portletId);
 	}
 
+	@Override
+	public Repository fetchRepositoryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _repositoryLocalService.fetchRepositoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the repository matching the UUID and group.
 	 *
@@ -412,6 +420,15 @@ public class RepositoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.getRepository(groupId, name, portletId);
+	}
+
+	@Override
+	public Repository getRepositoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _repositoryLocalService.getRepositoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

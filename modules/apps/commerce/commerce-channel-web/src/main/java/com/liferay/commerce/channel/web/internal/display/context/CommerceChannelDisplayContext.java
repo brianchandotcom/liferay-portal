@@ -526,7 +526,7 @@ public class CommerceChannelDisplayContext
 		return commerceOrderCheckoutConfiguration.hideShippingPriceZero();
 	}
 
-	public boolean isMultiShippingEnabled() throws PortalException {
+	public boolean isMultishippingEnabled() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 
 		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
@@ -536,7 +536,7 @@ public class CommerceChannelDisplayContext
 					commerceChannel.getGroupId(),
 					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
-		return commerceOrderCheckoutConfiguration.multiShippingEnabled();
+		return commerceOrderCheckoutConfiguration.multishippingEnabled();
 	}
 
 	public boolean isRequestQuoteEnabled() throws PortalException {

@@ -1584,6 +1584,14 @@ public class ObjectRelationshipLocalServiceImpl
 					"definition is bound to another object definition");
 		}
 
+		if (!StringUtil.equals(
+				objectDefinition1.getScope(), objectDefinition2.getScope())) {
+
+			throw new ObjectRelationshipEdgeException(
+				"Unable to bind the object definitions when they have " +
+					"different scopes");
+		}
+
 		_validateObjectEntries(
 			objectDefinition1, objectDefinition2, objectRelationship);
 	}

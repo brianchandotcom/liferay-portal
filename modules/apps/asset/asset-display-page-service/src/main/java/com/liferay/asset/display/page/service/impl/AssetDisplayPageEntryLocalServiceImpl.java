@@ -27,6 +27,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -125,7 +125,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		Map<Long, List<AssetDisplayPageEntry>>
 			partitionAssetDisplayPageEntries =
-				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getBulkDeleteCache(
 					StringBundler.concat(
 						AssetDisplayPageEntryLocalServiceImpl.class.getName(),
 						".fetchAssetDisplayPageEntry#", groupId, classNameId),

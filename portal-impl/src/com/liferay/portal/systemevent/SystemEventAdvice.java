@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 
 import java.io.Serializable;
 
@@ -46,7 +46,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
-		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
 			return null;
 		}
 
@@ -86,7 +86,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			Object result)
 		throws Throwable {
 
-		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
 			return;
 		}
 
@@ -155,7 +155,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	protected void duringFinally(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
-		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
 			return;
 		}
 

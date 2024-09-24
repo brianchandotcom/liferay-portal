@@ -10,13 +10,13 @@ import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Date;
@@ -150,7 +150,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 		Map<Long, List<AssetListEntryAssetEntryRel>>
 			partitionAssetListEntryAssetEntryRels =
-				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getBulkDeleteCache(
 					ownerName,
 					() -> MapUtil.toPartitionMap(
 						assetListEntryAssetEntryRelPersistence.findAll(),

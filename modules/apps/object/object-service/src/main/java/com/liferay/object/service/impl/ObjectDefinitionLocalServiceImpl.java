@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -125,7 +126,6 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -661,7 +661,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinitionPersistence.remove(objectDefinition);
 
-		Set<String> names = BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+		Set<String> names = MassDeleteCacheThreadLocal.getBulkDeleteCache(
 			ResourcePermissionLocalService.class.getName(), HashSet::new);
 
 		if (names != null) {

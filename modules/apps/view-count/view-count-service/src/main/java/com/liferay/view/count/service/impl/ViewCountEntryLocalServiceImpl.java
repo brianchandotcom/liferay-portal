@@ -15,6 +15,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,7 +66,7 @@ public class ViewCountEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK) {
 
 		Map<Long, List<ViewCountEntry>> partitionViewCountEntries =
-			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getBulkDeleteCache(
 				StringBundler.concat(
 					ViewCountEntryLocalServiceImpl.class.getName(),
 					".deleteViewCount#", companyId, classNameId),

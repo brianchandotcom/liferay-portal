@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -128,7 +128,7 @@ public class ObjectDefinitionResourceImpl
 
 		try (SafeCloseable safeCloseable1 = SearchContext.openBatchMode();
 			SafeCloseable safeCloseable2 =
-				BulkDeleteCacheThreadLocal.openBulkDeleteMode()) {
+				MassDeleteCacheThreadLocal.openBulkDeleteMode()) {
 
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,

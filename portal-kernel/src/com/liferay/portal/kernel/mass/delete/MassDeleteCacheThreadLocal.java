@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.mass.delete;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 /**
  * @author Shuyang Zhou
  */
-public class BulkDeleteCacheThreadLocal {
+public class MassDeleteCacheThreadLocal {
 
 	public static <T> T getBulkDeleteCache(
 		String ownerName, Supplier<T> supplier) {
@@ -49,6 +49,6 @@ public class BulkDeleteCacheThreadLocal {
 
 	private static final CentralizedThreadLocal<Map<String, Object>>
 		_bulkDeleteCacheThreadLocal = new CentralizedThreadLocal<>(
-			BulkDeleteCacheThreadLocal.class + "._bulkDeleteCacheThreadLocal");
+			MassDeleteCacheThreadLocal.class + "._bulkDeleteCacheThreadLocal");
 
 }

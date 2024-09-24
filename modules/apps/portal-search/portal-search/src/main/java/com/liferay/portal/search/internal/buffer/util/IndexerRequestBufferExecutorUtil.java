@@ -10,13 +10,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
 import com.liferay.portal.search.internal.buffer.IndexerRequest;
 import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
@@ -46,7 +46,7 @@ public class IndexerRequestBufferExecutorUtil {
 			return;
 		}
 
-		if (BulkDeleteCacheThreadLocal.isBulkDeleteMode()) {
+		if (MassDeleteCacheThreadLocal.isBulkDeleteMode()) {
 			_execute(indexerRequestBuffer, numRequests, false);
 
 			return;

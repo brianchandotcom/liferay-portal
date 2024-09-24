@@ -13,13 +13,13 @@ import com.liferay.layout.service.base.LayoutClassedModelUsageLocalServiceBaseIm
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -82,7 +82,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	public void deleteLayoutClassedModelUsages(long classNameId, long classPK) {
 		Map<Long, List<LayoutClassedModelUsage>>
 			partitionLayoutClassedModelUsages =
-				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getBulkDeleteCache(
 					LayoutClassedModelUsageLocalServiceImpl.class.getName() +
 						".deleteLayoutClassedModelUsages#" + classNameId,
 					() -> MapUtil.toPartitionMap(

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.asset.util.DeletedAssetEntryThreadLocal;
@@ -1151,7 +1151,7 @@ public class SocialActivityLocalServiceImpl
 		throws PortalException {
 
 		Map<Long, List<SocialActivity>> partitionSocialActivities =
-			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+			MassDeleteCacheThreadLocal.getBulkDeleteCache(
 				SocialActivityLocalServiceImpl.class.getName() +
 					".deleteActivities#" + classNameId,
 				() -> MapUtil.toPartitionMap(

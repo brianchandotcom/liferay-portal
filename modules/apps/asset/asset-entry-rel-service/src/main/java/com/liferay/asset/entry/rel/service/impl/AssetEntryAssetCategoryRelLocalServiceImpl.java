@@ -17,10 +17,10 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -108,7 +108,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 		Map<Long, List<AssetEntryAssetCategoryRel>>
 			partitionAssetEntryAssetCategoryRels =
-				BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				MassDeleteCacheThreadLocal.getBulkDeleteCache(
 					AssetEntryAssetCategoryRelLocalServiceImpl.class.getName() +
 						".deleteAssetEntryAssetCategoryRelByAssetEntry",
 					() -> MapUtil.toPartitionMap(

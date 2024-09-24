@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceActionLocalServiceBaseImpl;
 
@@ -260,7 +260,7 @@ public class ResourceActionLocalServiceImpl
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
 		String name = resourceAction.getName();
 
-		Set<String> names = BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+		Set<String> names = MassDeleteCacheThreadLocal.getBulkDeleteCache(
 			ResourcePermissionLocalService.class.getName(), HashSet::new);
 
 		if (names == null) {

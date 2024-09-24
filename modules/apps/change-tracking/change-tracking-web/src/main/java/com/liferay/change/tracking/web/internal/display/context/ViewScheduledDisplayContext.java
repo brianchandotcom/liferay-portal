@@ -74,7 +74,7 @@ public class ViewScheduledDisplayContext {
 					"ctCollectionId", "{id}"
 				).buildString(),
 				"time", "unschedule",
-				_language.get(_httpServletRequest, "unschedule"), "get",
+				_language.get(_httpServletRequest, "unschedule"), "post",
 				"schedule", "async"),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(

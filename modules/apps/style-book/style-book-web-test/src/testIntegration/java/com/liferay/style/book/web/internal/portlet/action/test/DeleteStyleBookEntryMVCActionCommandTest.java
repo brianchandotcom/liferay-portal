@@ -99,7 +99,8 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-				StringPool.BLANK, name, StringPool.BLANK, _serviceContext, StringPool.BLANK);
+				StringPool.BLANK, name, StringPool.BLANK, _serviceContext,
+				StringPool.BLANK);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();

@@ -20,7 +20,6 @@ import Apps from './pages/Apps';
 import App from './pages/Apps/App';
 import {AppContextProvider} from './pages/Apps/AppCreationFlow/AppContext/AppManageState';
 import {AppCreationFlow} from './pages/Apps/AppCreationFlow/AppCreationFlow';
-import Members from './pages/Members';
 import PublishAppOutlet from './pages/NewAppFlow/PublishAppOutlet';
 import {Build, Profile as AppProfile} from './pages/NewAppFlow/pages';
 import Licensing from './pages/NewAppFlow/pages/Licensing';
@@ -127,7 +126,6 @@ const PublisherDashboardRouter = () => {
 					</Route>
 
 					<Route element={<Accounts />} path="accounts" />
-					<Route element={<Members />} path="members" />
 					<Route element={<Projects />} path="projects" />
 
 					<Route path="solutions">

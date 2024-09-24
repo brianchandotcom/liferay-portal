@@ -16,7 +16,6 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -218,14 +217,6 @@ public class ObjectFieldUtil {
 
 		if (objectField == null) {
 			return null;
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-164948") &&
-			Objects.equals(
-				objectField.getBusinessTypeAsString(),
-				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
-
-			throw new UnsupportedOperationException();
 		}
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =

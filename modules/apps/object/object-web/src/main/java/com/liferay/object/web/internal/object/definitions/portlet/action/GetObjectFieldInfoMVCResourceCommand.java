@@ -16,7 +16,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -119,8 +118,7 @@ public class GetObjectFieldInfoMVCResourceCommand
 				() -> {
 					if (StringUtil.equals(
 							objectField.getBusinessType(),
-							ObjectFieldConstants.BUSINESS_TYPE_FORMULA) &&
-						FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
+							ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 						return ObjectCodeEditorUtil.getCodeEditorElements(
 							ddmExpressionFunction -> false,

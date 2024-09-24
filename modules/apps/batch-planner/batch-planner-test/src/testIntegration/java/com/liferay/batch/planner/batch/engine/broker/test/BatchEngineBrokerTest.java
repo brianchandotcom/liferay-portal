@@ -176,7 +176,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Matija Petanjek
  */
-@FeatureFlags({"LPS-135430", "LPS-164948", "LPS-187142"})
+@FeatureFlags({"LPS-135430", "LPS-187142"})
 @RunWith(Arquillian.class)
 public class BatchEngineBrokerTest {
 

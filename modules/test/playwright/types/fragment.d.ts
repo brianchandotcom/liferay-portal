@@ -23,7 +23,7 @@ type FragmentConfigurationField = {
 	};
 };
 
-type FragmentFieldTypes = {
+type FragmentTypeOptions = {
 	fieldTypes: string[];
 };
 

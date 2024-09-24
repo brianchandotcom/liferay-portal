@@ -35,7 +35,7 @@ export class JSONWebServicesFragmentEntryApiHelper {
 		js?: string;
 		name: string;
 		type?: FragmentEntryType;
-		typeOptions?: FragmentFieldTypes;
+		typeOptions?: FragmentTypeOptions;
 	}): Promise<FragmentEntry> {
 		const urlSearchParams = new URLSearchParams();
 

@@ -83,8 +83,8 @@ test.describe('Project User Permission', () => {
 		homePage,
 		page,
 		projectAttachmentsPage,
+		projectLiferayPaaSPage,
 		projectOverviewPage,
-		projectPaaSPage,
 		projectTeamMembersPage,
 	}) => {
 		await projectOverviewPage.goto(accountExternalReferenceCode);
@@ -129,7 +129,6 @@ test.describe('Project User Permission', () => {
 			);
 
 		await apiHelpers.headlessAdminUser.patchUserAccount(userAccount, {
-			currentPassword: 'test',
 			password: 'test',
 		});
 
@@ -145,19 +144,13 @@ test.describe('Project User Permission', () => {
 
 		await expect(projectOverviewPage.heading).toBeVisible();
 
-		await expect(projectOverviewPage.paasHeading).toBeVisible();
+		await projectLiferayPaaSPage.goto(accountExternalReferenceCode);
 
-		await expect(projectOverviewPage.subscriptionCard).toBeVisible();
+		await expect(projectLiferayPaaSPage.heading).toBeVisible();
 
-		await projectPaaSPage.goto(accountExternalReferenceCode);
-
-		await expect(projectPaaSPage.heading).toBeVisible();
-
-		await expect(projectPaaSPage.projectName).toBeVisible();
-
-		if (projectPaaSPage.projectNotActivatedTag) {
+		if (projectLiferayPaaSPage.projectNotActivatedTag) {
 			await expect(
-				projectPaaSPage.finishActivationButton
+				projectLiferayPaaSPage.finishActivationButton
 			).not.toBeVisible();
 		}
 

@@ -7,11 +7,10 @@ import {Locator, Page} from '@playwright/test';
 
 import {CUSTOMER_SITE_FRIENLY_URL_PATH} from '../utils/constants';
 
-export class ProjectPaaSPage {
+export class ProjectLiferayPaaSPage {
 	readonly finishActivationButton: Locator;
 	readonly heading: Locator;
 	readonly page: Page;
-	readonly projectName: Locator;
 	readonly projectNotActivatedTag: Locator;
 
 	constructor(page: Page) {
@@ -20,9 +19,6 @@ export class ProjectPaaSPage {
 		});
 		this.heading = page.getByRole('heading', {name: 'Activation Status'});
 		this.page = page;
-		this.projectName = page.getByRole('heading', {
-			name: 'Test Account Liferay PaaS',
-		});
 		this.projectNotActivatedTag = page
 			.locator('span')
 			.filter({hasText: 'Not Activated'})

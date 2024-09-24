@@ -7,15 +7,15 @@ import {test} from '@playwright/test';
 
 import {HomePage} from '../pages/HomePage';
 import {ProjectAttachmentsPage} from '../pages/ProjectAttachmentsPage';
+import {ProjectLiferayPaaSPage} from '../pages/ProjectLiferayPaaSPage';
 import {ProjectOverviewPage} from '../pages/ProjectOverviewPage';
 import {ProjectTeamMembersPage} from '../pages/ProjectTeamMembersPage';
-import {ProjectPaaSPage} from '../pages/projectPaaSPage';
 
 export const customerPagesTest = test.extend<{
 	homePage: HomePage;
 	projectAttachmentsPage: ProjectAttachmentsPage;
+	projectLiferayPaaSPage: ProjectLiferayPaaSPage;
 	projectOverviewPage: ProjectOverviewPage;
-	projectPaaSPage: ProjectPaaSPage;
 	projectTeamMembersPage: ProjectTeamMembersPage;
 }>({
 	homePage: async ({page}, use) => {
@@ -24,11 +24,11 @@ export const customerPagesTest = test.extend<{
 	projectAttachmentsPage: async ({page}, use) => {
 		await use(new ProjectAttachmentsPage(page));
 	},
+	projectLiferayPaaSPage: async ({page}, use) => {
+		await use(new ProjectLiferayPaaSPage(page));
+	},
 	projectOverviewPage: async ({page}, use) => {
 		await use(new ProjectOverviewPage(page));
-	},
-	projectPaaSPage: async ({page}, use) => {
-		await use(new ProjectPaaSPage(page));
 	},
 	projectTeamMembersPage: async ({page}, use) => {
 		await use(new ProjectTeamMembersPage(page));

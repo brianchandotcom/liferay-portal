@@ -1595,20 +1595,18 @@ public class ViewChangesDisplayContext {
 					modelInfo._jsonObject.put("groupId", groupId);
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-10703")) {
-					int changeType = _ctDisplayRendererRegistry.getChangeType(
-						ctEntry, model);
+				int changeType = _ctDisplayRendererRegistry.getChangeType(
+					ctEntry, model);
 
-					if (_ctDisplayRendererRegistry.isWorkflowEnabled(
-							ctEntry, model) &&
-						(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&
-						((Integer)modelAttributes.get("status") !=
-							WorkflowConstants.STATUS_DRAFT)) {
+				if (_ctDisplayRendererRegistry.isWorkflowEnabled(
+						ctEntry, model) &&
+					(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&
+					((Integer)modelAttributes.get("status") !=
+						WorkflowConstants.STATUS_DRAFT)) {
 
-						modelInfo._jsonObject.put(
-							"showWorkflow",
-							!_isWorkflowTasksEmpty(ctEntry, groupId, model));
-					}
+					modelInfo._jsonObject.put(
+						"showWorkflow",
+						!_isWorkflowTasksEmpty(ctEntry, groupId, model));
 				}
 
 				modelInfo._site = _isSite(model);

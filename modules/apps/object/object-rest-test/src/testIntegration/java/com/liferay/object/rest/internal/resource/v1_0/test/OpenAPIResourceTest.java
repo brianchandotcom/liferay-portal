@@ -18,7 +18,6 @@ import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
@@ -50,10 +49,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -290,41 +287,31 @@ public class OpenAPIResourceTest {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
-		ObjectRelationship relation1ToM =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				null, _user.getUserId(),
-				_userSystemObjectDefinition.getObjectDefinitionId(),
-				_objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"relation1ToM", false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, _user.getUserId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"relation1ToM", false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+			null);
 
-		_objectRelationships.add(relation1ToM);
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, _user.getUserId(), _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"relationMTo1", false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+			null);
 
-		ObjectRelationship relationMTo1 =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				null, _user.getUserId(),
-				_objectDefinition.getObjectDefinitionId(),
-				_userSystemObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"relationMTo1", false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		_objectRelationships.add(relationMTo1);
-
-		ObjectRelationship relationMToM =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				null, _user.getUserId(),
-				_userSystemObjectDefinition.getObjectDefinitionId(),
-				_objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"relationMToM", false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
-
-		_objectRelationships.add(relationMToM);
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, _user.getUserId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"relationMToM", false,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 		String endpoint = StringBundler.concat(
 			jaxRsApplicationDescriptor.getApplicationPath(), StringPool.SLASH,
@@ -340,17 +327,6 @@ public class OpenAPIResourceTest {
 				null, endpoint, Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
-
-		for (ObjectRelationship objectRelationship : _objectRelationships) {
-			ObjectRelationshipLocalServiceUtil.
-				deleteObjectRelationshipMappingTableValues(
-					objectRelationship.getObjectRelationshipId(),
-					_userSystemObjectDefinition.getObjectDefinitionId(),
-					_objectDefinition.getObjectDefinitionId());
-
-			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
-				objectRelationship);
-		}
 	}
 
 	private void _assertOpenAPI(
@@ -381,9 +357,6 @@ public class OpenAPIResourceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private final List<ObjectRelationship> _objectRelationships =
-		new ArrayList<>();
 
 	@Inject
 	private SystemObjectDefinitionManagerRegistry

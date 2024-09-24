@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetAppearsOnHistogramMetric;
+import com.liferay.analytics.reports.rest.dto.v1_0.AssetDeviceMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetHistogramMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -46,25 +47,11 @@ public class AnalyticsCloudClient {
 		try {
 			Http.Options options = _getOptions(analyticsConfiguration);
 
-			String url = String.join(
-				StringPool.BLANK,
-				analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-				"/api/1.0/asset-metric/", assetType, "/appears-on/histogram");
-
-			url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
-			url = HttpComponentsUtil.addParameter(
-				url, "channelIds",
-				StringUtil.merge(channelIds, StringPool.COMMA));
-
-			url = HttpComponentsUtil.addParameter(
-				url, "identityType", identityType);
-
-			if (rangeKey != null) {
-				url = HttpComponentsUtil.addParameter(
-					url, "rangeKey", rangeKey);
-			}
-
-			options.setLocation(url);
+			options.setLocation(
+				_getUrl(
+					assetId, assetType, channelIds, identityType,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/appears-on/histogram", rangeKey));
 
 			String content = _http.URLtoString(options);
 
@@ -108,6 +95,60 @@ public class AnalyticsCloudClient {
 		}
 	}
 
+	public AssetDeviceMetric getAssetDeviceMetric(
+			AnalyticsConfiguration analyticsConfiguration, String assetId,
+			String assetType, List<Long> channelIds, String identityType,
+			Integer rangeKey)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.setLocation(
+				_getUrl(
+					assetId, assetType, channelIds, identityType,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/devices", rangeKey));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				AssetDeviceMetric assetDeviceMetric = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							typeFactory.constructType(AssetDeviceMetric.class));
+
+					assetDeviceMetric = objectReader.readValue(jsonNode);
+				}
+
+				return assetDeviceMetric;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException("Unable to get asset histogram metric");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get asset device metric", exception);
+		}
+	}
+
 	public AssetHistogramMetric getAssetHistogramMetric(
 			AnalyticsConfiguration analyticsConfiguration, String assetId,
 			String assetType, List<Long> channelIds, String identityType,
@@ -117,25 +158,11 @@ public class AnalyticsCloudClient {
 		try {
 			Http.Options options = _getOptions(analyticsConfiguration);
 
-			String url = String.join(
-				StringPool.BLANK,
-				analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-				"/api/1.0/asset-metric/", assetType, "/histogram");
-
-			url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
-			url = HttpComponentsUtil.addParameter(
-				url, "channelIds",
-				StringUtil.merge(channelIds, StringPool.COMMA));
-
-			url = HttpComponentsUtil.addParameter(
-				url, "identityType", identityType);
-
-			if (rangeKey != null) {
-				url = HttpComponentsUtil.addParameter(
-					url, "rangeKey", rangeKey);
-			}
-
-			options.setLocation(url);
+			options.setLocation(
+				_getUrl(
+					assetId, assetType, channelIds, identityType,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/histogram", rangeKey));
 
 			String content = _http.URLtoString(options);
 
@@ -186,23 +213,10 @@ public class AnalyticsCloudClient {
 		try {
 			Http.Options options = _getOptions(analyticsConfiguration);
 
-			String url = String.join(
-				StringPool.BLANK,
+			String url = _getUrl(
+				assetId, assetType, channelIds, identityType,
 				analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-				"/api/1.0/asset-metric/", assetType);
-
-			url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
-			url = HttpComponentsUtil.addParameter(
-				url, "channelIds",
-				StringUtil.merge(channelIds, StringPool.COMMA));
-
-			url = HttpComponentsUtil.addParameter(
-				url, "identityType", identityType);
-
-			if (rangeKey != null) {
-				url = HttpComponentsUtil.addParameter(
-					url, "rangeKey", rangeKey);
-			}
+				StringPool.BLANK, rangeKey);
 
 			url = HttpComponentsUtil.addParameter(
 				url, "selectedMetrics",
@@ -263,6 +277,29 @@ public class AnalyticsCloudClient {
 			analyticsConfiguration.liferayAnalyticsProjectId());
 
 		return options;
+	}
+
+	private String _getUrl(
+		String assetId, String assetType, List<Long> channelIds,
+		String identityType, String liferayAnalyticsFaroBackendURL, String path,
+		Integer rangeKey) {
+
+		String url = String.join(
+			StringPool.BLANK, liferayAnalyticsFaroBackendURL,
+			"/api/1.0/asset-metric/", assetType, path);
+
+		url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
+		url = HttpComponentsUtil.addParameter(
+			url, "channelIds", StringUtil.merge(channelIds, StringPool.COMMA));
+
+		url = HttpComponentsUtil.addParameter(
+			url, "identityType", identityType);
+
+		if (rangeKey != null) {
+			url = HttpComponentsUtil.addParameter(url, "rangeKey", rangeKey);
+		}
+
+		return url;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

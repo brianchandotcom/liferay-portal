@@ -9,12 +9,7 @@ import {stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {
-	IFDSTableProps,
-	defaultDataSetProps,
-	fdsItem,
-	formatActionURL,
-} from '../../utils/fds';
+import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import {getObjectFieldBusinessTypeLabel} from '../../utils/getObjectFieldBusinessTypeLabel';
 import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 import LabelRenderer from '../LabelRenderer';
@@ -22,6 +17,8 @@ import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAl
 import {ModalAddObjectField} from './ModalAddObjectField';
 import {ModalDeleteObjectField} from './ModalDeleteObjectField';
 import {handleTriggerDeleteObjectField} from './deleteObjectFieldUtil';
+
+import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 interface ObjectFieldItemData {
 	itemData: ObjectField;
@@ -73,7 +70,7 @@ export default function Fields({
 		itemData,
 		openSidePanel,
 		value,
-	}: fdsItem<ObjectField>) {
+	}: FDSItem<ObjectField>) {
 		return (
 			<LabelRenderer
 				onClick={() => {
@@ -98,8 +95,8 @@ export default function Fields({
 			: Liferay.Language.get('no');
 	}
 
-	const dataSetProps = {
-		...defaultDataSetProps,
+	const frontendDataSetProps = {
+		...defaultFDSDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
@@ -203,7 +200,7 @@ export default function Fields({
 
 	return (
 		<>
-			<FrontendDataSet {...dataSetProps} />
+			<FrontendDataSet {...frontendDataSetProps} />
 
 			{showAddFieldModal && (
 				<ModalAddObjectField

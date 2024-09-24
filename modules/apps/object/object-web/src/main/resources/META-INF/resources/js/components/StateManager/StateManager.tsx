@@ -11,14 +11,11 @@ import {
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-import {
-	IFDSTableProps,
-	defaultDataSetProps,
-	fdsItem,
-	formatActionURL,
-} from '../../utils/fds';
+import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 import LabelRenderer from '../LabelRenderer';
+
+import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 interface ItemData {
 	id: number;
@@ -37,7 +34,7 @@ export default function StateManager({
 		itemData,
 		openSidePanel,
 		value,
-	}: fdsItem<ItemData>) {
+	}: FDSItem<ItemData>) {
 		return (
 			<LabelRenderer
 				onClick={() => {
@@ -50,8 +47,8 @@ export default function StateManager({
 		);
 	}
 
-	const dataSetProps = {
-		...defaultDataSetProps,
+	const frontendDataSetProps = {
+		...defaultFDSDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
@@ -97,5 +94,5 @@ export default function StateManager({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return <FrontendDataSet {...frontendDataSetProps} />;
 }

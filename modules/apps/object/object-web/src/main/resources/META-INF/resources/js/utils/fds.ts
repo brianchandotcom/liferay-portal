@@ -5,7 +5,7 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
-export interface fdsItem<T> {
+export interface FDSItem<T> {
 	action: {id: string};
 	itemData: T;
 	openSidePanel: ({url}: {url: string}) => void;
@@ -27,7 +27,7 @@ export function formatActionURL(url: string, id: number) {
 		.replace(new RegExp('(%7B.*?%7D)', 'mg'), id.toString());
 }
 
-export const defaultDataSetProps = {
+export const defaultFDSDataSetProps = {
 	actionParameterName: '',
 	currentURL: window.location.pathname + window.location.search,
 	customViewsEnabled: false,

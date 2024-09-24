@@ -3,22 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	FrontendDataSet,
-
-	// @ts-ignore
-
-} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
-import {
-	IFDSTableProps,
-	defaultDataSetProps,
-	fdsItem,
-	formatActionURL,
-} from '../../utils/fds';
+import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import LabelRenderer from '../LabelRenderer';
+
+import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 type Status = {
 	code: number;
@@ -93,7 +85,7 @@ export default function Actions({
 		itemData,
 		openSidePanel,
 		value,
-	}: fdsItem<ItemData>) {
+	}: FDSItem<ItemData>) {
 		return (
 			<LabelRenderer
 				onClick={() => {
@@ -106,8 +98,8 @@ export default function Actions({
 		);
 	}
 
-	const dataSetProps = {
-		...defaultDataSetProps,
+	const frontendDataSetProps = {
+		...defaultFDSDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
@@ -178,5 +170,5 @@ export default function Actions({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return <FrontendDataSet {...frontendDataSetProps} />;
 }

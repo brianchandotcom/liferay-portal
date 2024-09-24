@@ -11,13 +11,10 @@ import {
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-import {
-	IFDSTableProps,
-	defaultDataSetProps,
-	fdsItem,
-	formatActionURL,
-} from '../../utils/fds';
+import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import LabelRenderer from '../LabelRenderer';
+
+import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 interface ItemData {
 	defaultObjectView: boolean;
@@ -37,7 +34,7 @@ export default function Views({
 		itemData,
 		openSidePanel,
 		value,
-	}: fdsItem<ItemData>) {
+	}: FDSItem<ItemData>) {
 		return (
 			<LabelRenderer
 				onClick={() => {
@@ -56,8 +53,8 @@ export default function Views({
 			: Liferay.Language.get('no');
 	}
 
-	const dataSetProps = {
-		...defaultDataSetProps,
+	const frontendDataSetProps = {
+		...defaultFDSDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
@@ -102,5 +99,5 @@ export default function Views({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return <FrontendDataSet {...frontendDataSetProps} />;
 }

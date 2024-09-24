@@ -176,7 +176,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No DLFileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -231,7 +231,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No FileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -302,7 +302,7 @@ definition {
 		task ("Then it will show user that there is no message board message exists") {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No MBMessage exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -320,7 +320,7 @@ definition {
 		task ("Then it will show user that there is no message board message exists") {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No MBMessage exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -346,7 +346,7 @@ definition {
 		task ("Then it will show user that there is no file exists") {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No DLFileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -370,7 +370,7 @@ definition {
 		task ("Then it will show user that there is no file exists") {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No DLFileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 

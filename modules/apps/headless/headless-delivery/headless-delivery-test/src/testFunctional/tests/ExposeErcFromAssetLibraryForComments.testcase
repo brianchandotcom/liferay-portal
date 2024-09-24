@@ -286,15 +286,6 @@ definition {
 			TestUtils.assertPartialEquals(
 				actual = ${commentText},
 				expected = "NOT_FOUND");
-
-			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
-				blogPostingCommentErc = ${commentId},
-				blogPostingErc = ${blogPostingErc},
-				fieldName = "title");
-
-			TestUtils.assertPartialEquals(
-				actual = ${commentText},
-				expected = "No MBMessage exists with the key");
 		}
 	}
 

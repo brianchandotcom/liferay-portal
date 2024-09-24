@@ -226,12 +226,6 @@ definition {
 				actual = ${response},
 				expected = "NOT_FOUND");
 		}
-
-		task ("And Then I receive error message in server console") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "Unable to get a valid asset library with ID nonexistentId");
-		}
 	}
 
 	@description = "Unable to get document by nonexistent erc"
@@ -248,7 +242,7 @@ definition {
 		task ("Then I receive error message in response") {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No DLFileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 

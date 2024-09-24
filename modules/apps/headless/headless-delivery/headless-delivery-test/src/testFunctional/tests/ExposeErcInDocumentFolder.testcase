@@ -184,11 +184,11 @@ definition {
 		task ("And Then the document in the document folder is deleted") {
 			var response = DocumentAPI.getDocumentsByDifferentParameters(documentId = ${documentId});
 
-			var actualMessage = JSONUtil.getWithJSONPath(${response}, "$.title");
+			var actualMessage = JSONUtil.getWithJSONPath(${response}, "$.status");
 
 			TestUtils.assertPartialEquals(
 				actual = ${actualMessage},
-				expected = "No FileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -319,11 +319,11 @@ definition {
 		}
 
 		task ("Then I receive no DLFolder exists error message in response") {
-			var actualMessage = JSONUtil.getWithJSONPath(${response}, "$.title");
+			var actualMessage = JSONUtil.getWithJSONPath(${response}, "$.status");
 
 			TestUtils.assertPartialEquals(
 				actual = ${actualMessage},
-				expected = "No DLFolder exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 

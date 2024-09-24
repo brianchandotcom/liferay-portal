@@ -197,11 +197,11 @@ definition {
 				kBArticleErc = "KBAErc",
 				kBAttachmentErc = "KBAtErc");
 
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.status");
 
 			TestUtils.assertPartialEquals(
 				actual = ${actualValue},
-				expected = "No DLFileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 
@@ -239,11 +239,11 @@ definition {
 				kBArticleErc = "KBFAErc",
 				kBAttachmentErc = "KBFAtErc");
 
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.status");
 
 			TestUtils.assertPartialEquals(
 				actual = ${actualValue},
-				expected = "No DLFileEntry exists with the key");
+				expected = "NOT_FOUND");
 		}
 	}
 

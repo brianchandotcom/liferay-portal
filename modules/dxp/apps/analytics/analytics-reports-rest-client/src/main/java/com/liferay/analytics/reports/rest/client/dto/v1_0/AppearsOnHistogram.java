@@ -25,6 +25,27 @@ public class AppearsOnHistogram implements Cloneable, Serializable {
 		return AppearsOnHistogramSerDes.toDTO(json);
 	}
 
+	public String getCanonicalUrl() {
+		return canonicalUrl;
+	}
+
+	public void setCanonicalUrl(String canonicalUrl) {
+		this.canonicalUrl = canonicalUrl;
+	}
+
+	public void setCanonicalUrl(
+		UnsafeSupplier<String, Exception> canonicalUrlUnsafeSupplier) {
+
+		try {
+			canonicalUrl = canonicalUrlUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String canonicalUrl;
+
 	public Metric[] getMetrics() {
 		return metrics;
 	}
@@ -87,6 +108,27 @@ public class AppearsOnHistogram implements Cloneable, Serializable {
 	}
 
 	protected Double total;
+
+	public Double getTotalValue() {
+		return totalValue;
+	}
+
+	public void setTotalValue(Double totalValue) {
+		this.totalValue = totalValue;
+	}
+
+	public void setTotalValue(
+		UnsafeSupplier<Double, Exception> totalValueUnsafeSupplier) {
+
+		try {
+			totalValue = totalValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double totalValue;
 
 	@Override
 	public AppearsOnHistogram clone() throws CloneNotSupportedException {

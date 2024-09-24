@@ -145,7 +145,6 @@ export default function TopperItemActions({disabled, item}) {
 						})
 					),
 				icon: 'copy',
-				isBetaFeature: true,
 				label: Liferay.Language.get('duplicate'),
 			});
 

@@ -141,6 +141,119 @@ test.describe('Form Configuration', () => {
 	);
 });
 
+test.describe('Numeric input field', () => {
+	test('Check the numeric input configuration', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Size" field
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Size']);
+
+		// Check Mark as Required field
+
+		const numericInputId = await pageEditorPage.getFragmentId('Numeric');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Mark as Required',
+			fragmentId: numericInputId,
+			tab: 'General',
+			value: true,
+		});
+
+		const requireIcon = page
+			.locator('label')
+			.filter({hasText: 'Lemon Size'})
+			.locator('svg.reference-mark');
+
+		await expect(requireIcon).toBeAttached();
+
+		// Check Label and Show Label fields
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: numericInputId,
+			tab: 'General',
+			value: 'Lemon size in grams',
+		});
+
+		const label = page
+			.locator('label')
+			.filter({hasText: 'Lemon size in grams'});
+
+		await expect(label).not.toHaveClass(/sr-only/);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Show Label',
+			fragmentId: numericInputId,
+			tab: 'General',
+			value: false,
+		});
+
+		await expect(label).toHaveClass(/sr-only/);
+
+		// Check Help Text and Show Help Text fields
+
+		const helpText = page.getByText('Add your help text here.', {
+			exact: true,
+		});
+
+		await expect(helpText).not.toBeAttached();
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Show Help Text',
+			fragmentId: numericInputId,
+			tab: 'General',
+			value: true,
+		});
+
+		await expect(helpText).toBeVisible();
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Help Text',
+			fragmentId: numericInputId,
+			tab: 'General',
+			value: 'The lemon size must be in grams',
+		});
+
+		await expect(
+			page.getByText('The lemon size must be in grams')
+		).toBeVisible();
+
+		// Check Placeholder field
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Placeholder',
+			fragmentId: numericInputId,
+			tab: 'General',
+			value: 'Lemon size in grams',
+		});
+
+		await expect(
+			page.getByPlaceholder('Lemon size in grams')
+		).toBeVisible();
+	});
+});
+
 test.describe('Picklist input field', () => {
 	test('Shows correct options in picklist field selected as title in related object', async ({
 		apiHelpers,

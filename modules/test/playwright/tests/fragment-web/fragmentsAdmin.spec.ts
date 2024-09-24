@@ -608,17 +608,14 @@ test(
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
-		await fragmentsPage.gotoSelectFragmentConfiguration(
-			fragmentCollectionName,
-			pageManagementSite.name,
-			'Textarea'
-		);
-
-		await expect(
-			fragmentsPage.selectFragmentIFrame.getByText(
-				draftInputFragmentEntryName
-			)
-		).not.toBeVisible();
+		await expect(async () => {
+			await fragmentsPage.selectDefaultFormFragment({
+				fieldType: 'Long Text',
+				fragmentCollectionName,
+				fragmentName: draftInputFragmentEntryName,
+				siteName: pageManagementSite.name,
+			});
+		}).not.toPass();
 	}
 );
 
@@ -710,25 +707,27 @@ test(
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
-		await fragmentsPage.gotoSelectFragmentConfiguration(
-			fragmentCollectionName,
-			pageManagementSite.name,
-			'Checkbox'
-		);
-
-		await expect(
-			fragmentsPage.selectFragmentIFrame.getByText(inputFragmentEntryName)
-		).not.toBeAttached();
+		await expect(async () => {
+			await fragmentsPage.selectDefaultFormFragment({
+				fieldType: 'Boolean',
+				fragmentCollectionName,
+				fragmentName: inputFragmentEntryName,
+				siteName: pageManagementSite.name,
+			});
+		}).not.toPass();
 
 		// Assert global input fragment is present under checkbox type
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
-		await fragmentsPage.gotoSelectFragmentConfiguration(
-			globalFragmentCollectionName,
-			'Global',
-			'Checkbox'
-		);
+		await expect(async () => {
+			await fragmentsPage.selectDefaultFormFragment({
+				fieldType: 'Boolean',
+				fragmentCollectionName: globalFragmentCollectionName,
+				fragmentName: globalInputFragmentEntryName,
+				siteName: 'Global',
+			});
+		}).toPass();
 
 		await expect(
 			fragmentsPage.selectFragmentIFrame.getByText(
@@ -740,14 +739,13 @@ test(
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
-		await fragmentsPage.gotoSelectFragmentConfiguration(
-			fragmentCollectionName,
-			pageManagementSite.name,
-			'Textarea'
-		);
-
-		await expect(
-			fragmentsPage.selectFragmentIFrame.getByText(inputFragmentEntryName)
-		).toBeAttached();
+		await expect(async () => {
+			await fragmentsPage.selectDefaultFormFragment({
+				fieldType: 'Long Text',
+				fragmentCollectionName,
+				fragmentName: inputFragmentEntryName,
+				siteName: pageManagementSite.name,
+			});
+		}).toPass();
 	}
 );

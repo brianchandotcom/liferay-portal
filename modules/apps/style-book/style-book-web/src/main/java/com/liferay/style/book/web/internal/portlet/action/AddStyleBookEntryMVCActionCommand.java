@@ -75,13 +75,14 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		throws PortalException {
 
 		String name = ParamUtil.getString(actionRequest, "name");
+		String themeId = ParamUtil.getString(actionRequest, "themeId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		return _styleBookEntryService.addStyleBookEntry(
 			null, serviceContext.getScopeGroupId(), name, StringPool.BLANK,
-			serviceContext);
+			serviceContext, themeId);
 	}
 
 	private String _getRedirectURL(

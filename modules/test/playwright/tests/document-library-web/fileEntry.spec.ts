@@ -180,7 +180,7 @@ baseTest(
 
 		await documentLibraryPage.assertPrivateFileIcon();
 
-		await documentLibraryEditFilePage.goBack();
+		await documentLibraryPage.goto(site.friendlyUrlPath);
 
 		await page.getByRole('link', {name: title}).click();
 

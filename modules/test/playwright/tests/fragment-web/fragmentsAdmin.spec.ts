@@ -543,6 +543,85 @@ test(
 );
 
 test(
+	'Form fragment configuration link',
+	{
+		tag: '@LPS-180331',
+	},
+	async ({apiHelpers, fragmentsPage, page, pageManagementSite}) => {
+
+		// Create new fragment collection
+
+		const fragmentCollectionName = getRandomString();
+
+		const {fragmentCollectionId} =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: pageManagementSite.id,
+					name: fragmentCollectionName,
+				}
+			);
+
+		// Create custom input fragment
+
+		const publishedInputFragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId,
+			groupId: pageManagementSite.id,
+			html: '<div class="fragment-name">Fragment Example</div>',
+			name: publishedInputFragmentEntryName,
+			type: 'input',
+			typeOptions: {fieldTypes: ['long-text', 'text']},
+		});
+
+		// Go to fragment set
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		// Create custom input fragment
+
+		const draftInputFragmentEntryName = getRandomString();
+
+		await fragmentsPage.createFragment(
+			fragmentCollectionName,
+			draftInputFragmentEntryName,
+			'form',
+			['Long Text']
+		);
+
+		// Go to configuration tab
+
+		await page.getByRole('tab', {name: 'Configuration'}).click();
+
+		// Assert form configuration link is not present in fragment configuration for draft fragments
+
+		await expect(
+			page.getByRole('link', {
+				name: 'Define the default form fragments for this site.',
+			})
+		).not.toBeAttached();
+
+		// Assert draft fragments are not present under form configuration
+
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await fragmentsPage.gotoSelectFragmentConfiguration(
+			fragmentCollectionName,
+			pageManagementSite.name,
+			'Textarea'
+		);
+
+		await expect(
+			fragmentsPage.selectFragmentIFrame.getByText(
+				draftInputFragmentEntryName
+			)
+		).not.toBeVisible();
+	}
+);
+
+test(
 	'Form fragment configuration should show input fragment of same type',
 	{
 		tag: '@LPS-180331',

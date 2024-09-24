@@ -14,7 +14,6 @@ const lazyRoutes = {
 				'./pages/AdministratorDashboard/AdministratorDashboardRouter'
 			)
 	),
-	'customer-gate': React.lazy(() => import('./pages/CustomerGate')),
 	'get-app': React.lazy(() => import('./pages/GetApp/GetAppRouter')),
 	'license-agreement': React.lazy(
 		() => import('./pages/LicenseAgreementPage')
@@ -27,7 +26,7 @@ const lazyRoutes = {
 		() => import('./pages/PublisherDashboard/PublisherDashboardRouter')
 	),
 	'publisher-gate': React.lazy(
-		() => import('./pages/PublisherGate/PublisheGateRouter')
+		() => import('./pages/PublisherGate/PublisherGateRouter')
 	),
 	'purchased-apps': React.lazy(
 		() => import('./pages/CustomerDashboard/CustomerDashboardRouter')

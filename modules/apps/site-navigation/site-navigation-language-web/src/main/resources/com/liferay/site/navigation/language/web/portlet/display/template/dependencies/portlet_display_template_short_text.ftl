@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.language-entry-short-text {
 		padding: 0 0.5em;
 	}

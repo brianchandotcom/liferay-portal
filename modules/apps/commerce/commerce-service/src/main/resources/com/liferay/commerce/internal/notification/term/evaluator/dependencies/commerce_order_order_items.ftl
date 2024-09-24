@@ -1,4 +1,4 @@
-<style type="text/css">
+<style ${nonceAttribute} type="text/css">
 	.order-item-discount-price {
 		color:#FF0000;
 	}

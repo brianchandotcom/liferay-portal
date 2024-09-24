@@ -349,6 +349,25 @@ components:
             required:
                 - skuId
             type: object
+        CartTransition:
+            properties:
+                cartId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                comment:
+                    type: string
+                label:
+                    readOnly: true
+                    type: string
+                name:
+                    type: string
+                open:
+                    readOnly: true
+                    type: boolean
+                workflowTaskId:
+                    format: int64
+                    type: integer
         CouponCode:
             properties:
                 code:
@@ -2598,6 +2617,94 @@ paths:
                     description:
                         Unexpected error
             tags: ["Address"]
+    /carts/{cartId}/cart-transitions:
+        get:
+            description:
+                Retrieve cart transitions of the given Cart.
+            operationId: getCartCartTransitionsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CartTransition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CartTransition"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["CartTransition"]
+        post:
+            operationId: postCartCartTransition
+            parameters:
+                - in: path
+                  name: cartId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CartTransition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CartTransition"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CartTransition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CartTransition"
+            tags: ["CartTransition"]
     /carts/{cartId}/checkout:
         post:
             operationId: postCartCheckout

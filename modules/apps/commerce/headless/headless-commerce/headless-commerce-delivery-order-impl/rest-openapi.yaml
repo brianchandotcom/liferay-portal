@@ -25,6 +25,26 @@ components:
                     readOnly: true
                     type: integer
             type: object
+        OrderTransition:
+            properties:
+                comment:
+                    type: string
+                label:
+                    readOnly: true
+                    type: string
+                name:
+                    type: string
+                orderId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                placedOrderId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                workflowTaskId:
+                    format: int64
+                    type: integer
         PlacedOrder:
             properties:
                 account:
@@ -1675,6 +1695,94 @@ paths:
                         Unexpected error
             summary: Updates a Placed Order.
             tags: ["PlacedOrder"]
+    /placed-orders/{placedOrderId}/order-transitions:
+        get:
+            description:
+                Retrieve order transitions of the given Placed Order.
+            operationId: getPlacedOrderOrderTransitionsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderTransition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderTransition"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["OrderTransition"]
+        post:
+            operationId: postPlacedOrderOrderTransition
+            parameters:
+                - in: path
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderTransition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderTransition"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderTransition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderTransition"
+            tags: ["OrderTransition"]
     /placed-orders/{placedOrderId}/payment-url:
         get:
             operationId: getPlacedOrderPaymentURL

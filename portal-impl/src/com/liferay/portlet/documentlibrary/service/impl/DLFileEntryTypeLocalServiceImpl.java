@@ -228,7 +228,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
-	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
+	public DLFileEntryType deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
 		int count = _dlFileEntryPersistence.countByFileEntryTypeId(
@@ -273,7 +273,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			dlFileEntryType.getFileEntryTypeId());
 
-		dlFileEntryTypePersistence.remove(dlFileEntryType);
+		return dlFileEntryTypePersistence.remove(dlFileEntryType);
 	}
 
 	@Override

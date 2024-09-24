@@ -59,6 +59,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -851,12 +852,12 @@ public class UpgradeReport {
 
 			String key = entry1.getKey();
 
-			if (value instanceof List<?>) {
+			if (value instanceof Collection<?>) {
 				String reportHeader = _getReportHeader(key);
 
 				sb.append(reportHeader);
 
-				List<Object> objects = (List<Object>)value;
+				Collection<Object> objects = (Collection<Object>)value;
 
 				if (objects.isEmpty()) {
 					sb.append(": Nothing registered\n");
@@ -870,7 +871,7 @@ public class UpgradeReport {
 							StringPool.NULL, StringPool.BLANK));
 					sb.append(StringPool.NEW_LINE);
 
-					for (Object object : (List<Object>)value) {
+					for (Object object : (Collection<Object>)value) {
 						sb.append(object.toString());
 						sb.append(StringPool.NEW_LINE);
 					}

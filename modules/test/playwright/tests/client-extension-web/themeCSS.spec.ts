@@ -127,7 +127,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 	await test.step('Create style book', async () => {
 		await styleBooksPage.goto();
 
-		await styleBooksPage.createStyleBook(styleBookName);
+		await styleBooksPage.create(styleBookName);
 	});
 
 	await test.step('Assert that the frontend token set defined in the frontendTokenDefinition.json file is available in the style book', async () => {
@@ -139,7 +139,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 	await test.step('Clean up', async () => {
 		await styleBooksPage.goto();
 
-		await styleBooksPage.deleteStyleBook(styleBookName);
+		await styleBooksPage.delete(styleBookName);
 
 		await clientExtensionsPage.goto();
 

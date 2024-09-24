@@ -50,7 +50,7 @@ test('Checks the correct label for restricted pages in the preview selector', as
 
 	await styleBooksPage.goto(site.friendlyUrlPath);
 
-	await styleBooksPage.createStyleBook(styleBookName);
+	await styleBooksPage.create(styleBookName);
 
 	// Check the restricted page label in the preview selector
 

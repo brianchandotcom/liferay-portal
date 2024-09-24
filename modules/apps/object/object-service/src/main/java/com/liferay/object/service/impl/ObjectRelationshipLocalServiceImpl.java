@@ -1572,6 +1572,15 @@ public class ObjectRelationshipLocalServiceImpl
 					"object definitions to be an edge of a root context");
 		}
 
+		if ((objectDefinition1.getRootObjectDefinitionId() != 0) &&
+			(objectDefinition1.getRootObjectDefinitionId() ==
+				objectDefinition2.getObjectDefinitionId())) {
+
+			throw new ObjectRelationshipEdgeException(
+				"The object relationship must not create a circular " +
+					"reference in a root context");
+		}
+
 		long objectDefinition2RootObjectDefinitionId =
 			objectDefinition2.getRootObjectDefinitionId();
 

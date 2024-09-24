@@ -1,4 +1,6 @@
 workspaces/liferay-customer-workspace/client-extensions/liferay-customer-custom-element
+workspaces/liferay-customer-workspace/client-extensions/liferay-customer-etc-cron
+workspaces/liferay-customer-workspace/client-extensions/liferay-customer-etc-spring-boot
 workspaces/liferay-customer-workspace/client-extensions/liferay-customer-global-css
 workspaces/liferay-customer-workspace/client-extensions/liferay-customer-site-initializer-code
 workspaces/liferay-customer-workspace/client-extensions/liferay-customer-site-initializer-quickstart

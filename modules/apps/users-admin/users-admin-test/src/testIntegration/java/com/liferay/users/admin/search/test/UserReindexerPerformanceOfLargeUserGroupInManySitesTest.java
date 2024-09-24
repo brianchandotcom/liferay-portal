@@ -10,6 +10,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
@@ -150,7 +152,14 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 		// See portal property "database.max.parameters[sqlserver]""
 
-		reindex(TestPropsValues.getCompanyId(), new long[3000]);
+		DBType dbType = DBManagerUtil.getDBType();
+
+		if (dbType == DBType.ORACLE) {
+			reindex(TestPropsValues.getCompanyId(), new long[66000]);
+		}
+		else {
+			reindex(TestPropsValues.getCompanyId(), new long[3000]);
+		}
 	}
 
 	protected Group addGroup() {

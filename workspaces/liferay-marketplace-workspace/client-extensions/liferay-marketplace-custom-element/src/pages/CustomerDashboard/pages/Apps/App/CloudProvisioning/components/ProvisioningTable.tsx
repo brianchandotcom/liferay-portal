@@ -10,8 +10,10 @@ import {useNavigate} from 'react-router-dom';
 
 import Modal from '../../../../../../../components/Modal';
 import Table from '../../../../../../../components/Table/Table';
+import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import i18n from '../../../../../../../i18n';
 import {Liferay} from '../../../../../../../liferay/liferay';
+import {cloudConsoleURLs} from '../../../../../../../utils/link';
 import useProvisioningData from '../hooks/useProvisioningData';
 import InstallationStatus, {InstallStatus} from './InstallStatus';
 
@@ -23,6 +25,9 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 	provisioningTableData,
 	resourceRequirements,
 }) => {
+	const {
+		properties: {cloudConsoleURL},
+	} = useMarketplaceContext();
 	const navigate = useNavigate();
 	const modal = useModal();
 	const uninstallModal = useModal();
@@ -40,7 +45,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 			mutateOrder((items) => items, {revalidate: true});
 
 			Liferay.Util.openToast({
-				message: i18n.translate('an-unexpected-error-occurred'),
+				message: i18n.translate('your-request-completed-successfully'),
 				type: 'success',
 			});
 
@@ -150,6 +155,9 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					{
 						key: 'dropdown',
 						render: (_, orderItem) => {
+							const isExpired =
+								orderItem.status === InstallStatus.EXPIRED;
+
 							const isInstalled =
 								orderItem.status === InstallStatus.INSTALLED;
 
@@ -176,7 +184,24 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 												{i18n.translate('view-details')}
 											</ClayDropDown.Item>
 
-											{!isInstalled && (
+											{isInstalled && !isExpired && (
+												<ClayDropDown.Item
+													onClick={() =>
+														window.open(
+															cloudConsoleURLs.getProjectServices(
+																cloudConsoleURL,
+																`${orderItem.project.toLowerCase()}-${orderItem.environment.toLowerCase()}`
+															)
+														)
+													}
+												>
+													{i18n.translate(
+														'go-to-console'
+													)}
+												</ClayDropDown.Item>
+											)}
+
+											{!isInstalled && !isExpired && (
 												<ClayDropDown.Item
 													onClick={() =>
 														install(

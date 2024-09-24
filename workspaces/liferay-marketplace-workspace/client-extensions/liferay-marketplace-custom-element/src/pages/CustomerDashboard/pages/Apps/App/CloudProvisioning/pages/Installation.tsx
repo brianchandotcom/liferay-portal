@@ -11,6 +11,7 @@ import Loading from '../../../../../../../components/Loading';
 import ProductPurchase from '../../../../../../../components/ProductPurchase';
 import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import i18n from '../../../../../../../i18n';
+import {cloudConsoleURLs} from '../../../../../../../utils/link';
 import {CloudProvisioningOutletContext} from './CloudProvisioningOutlet';
 
 enum Statuses {
@@ -59,11 +60,11 @@ const statuses = {
 
 const CloudProvisioningInstallation = () => {
 	const {
-		properties: {cloudBaseURL},
+		properties: {cloudConsoleURL},
 	} = useMarketplaceContext();
 	const {
 		form: {
-			formState: {isSubmitSuccessful, isSubmitting},
+			formState: {isSubmitSuccessful, isSubmitted, isSubmitting},
 			watch,
 		},
 		navigate,
@@ -71,8 +72,10 @@ const CloudProvisioningInstallation = () => {
 
 	const environment = watch('environment');
 
+	const isLoading = isSubmitting || !isSubmitted;
+
 	const status = useMemo(() => {
-		if (isSubmitting) {
+		if (isLoading) {
 			return statuses[Statuses.LOADING];
 		}
 
@@ -81,7 +84,7 @@ const CloudProvisioningInstallation = () => {
 		}
 
 		return statuses[Statuses.FAILED];
-	}, [isSubmitSuccessful, isSubmitting]);
+	}, [isLoading, isSubmitSuccessful]);
 
 	useEffect(() => {
 		if (!environment) {
@@ -90,7 +93,7 @@ const CloudProvisioningInstallation = () => {
 	}, [navigate, environment]);
 
 	const props = {
-		...(isSubmitting && {className: 'd-none'}),
+		...(isLoading && {className: 'd-none'}),
 	};
 
 	return (
@@ -111,7 +114,13 @@ const CloudProvisioningInstallation = () => {
 				continueButtonProps: {
 					...props,
 					children: 'View App In Cloud',
-					onClick: () => window.open(`${cloudBaseURL}//`),
+					onClick: () =>
+						window.open(
+							cloudConsoleURLs.getProjectServices(
+								cloudConsoleURL,
+								environment.projectId
+							)
+						),
 					...(!isSubmitSuccessful && {className: 'd-none'}),
 				},
 			}}

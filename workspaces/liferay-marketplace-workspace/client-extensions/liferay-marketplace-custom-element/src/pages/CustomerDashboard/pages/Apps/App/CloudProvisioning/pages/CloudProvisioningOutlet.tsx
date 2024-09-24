@@ -26,6 +26,7 @@ import useGetResourceInfo, {
 
 import '../index.scss';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
+import {scrollToTop} from '../../../../../../../utils/browser';
 
 const verifyAvailabilityToInstall = (
 	userProject: any,
@@ -140,6 +141,8 @@ const CloudProvisioningOutlet = () => {
 	const onSubmit = async ({
 		environment,
 	}: z.infer<typeof zodSchema.installProductSchema>) => {
+		scrollToTop();
+
 		navigate('installation');
 
 		await marketplaceSpringBootOAuth2.provisioningCloudApp(placedOrder.id, {

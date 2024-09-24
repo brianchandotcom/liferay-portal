@@ -202,7 +202,7 @@ test('Create parameterized data set', async ({dataSetsPage, page}) => {
 
 test(
 	'Assert endpoint with resolved paramater is available as an option',
-	{tag: '@LPD-25230'},
+	{tag: '@LPD-31177'},
 	async ({dataSetsPage}) => {
 		const cartDataSetConfig = {
 			name: 'Carts',

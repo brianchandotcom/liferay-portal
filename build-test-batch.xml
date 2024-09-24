@@ -9284,7 +9284,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 					</sequential>
 				</for>
 
-				<echo file="build.${user.name}.properties">baseline.jar.report.level=on</echo>
+				<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
 
 				<antcall inheritAll="false" target="compile" />
 

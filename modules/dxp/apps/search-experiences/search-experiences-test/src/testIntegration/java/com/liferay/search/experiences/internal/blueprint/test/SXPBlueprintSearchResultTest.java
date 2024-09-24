@@ -269,12 +269,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_ids",
-					new String[] {
-						String.valueOf(_assetCategory.getCategoryId())
-					}
-				).put(
 					"boost", 100
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).build()
 			},
 			new String[] {"Boost Contents in a Category"});
@@ -303,10 +304,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 100
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"keywords", "Article"
 				).build()
@@ -339,15 +343,18 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 1000
 				).put(
 					"end_date",
 					DateUtil.getDate(
 						new Date(System.currentTimeMillis() + Time.DAY),
 						"yyyyMMdd", LocaleUtil.US)
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"start_date",
 					DateUtil.getDate(
@@ -364,15 +371,18 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 1000
 				).put(
 					"end_date",
 					DateUtil.getDate(
 						new Date(System.currentTimeMillis() - Time.DAY),
 						"yyyyMMdd", LocaleUtil.US)
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"start_date",
 					DateUtil.getDate(
@@ -408,10 +418,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 1000
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"user_segment_ids", segmentsEntry.getSegmentsEntryId()
 				).build()
@@ -448,10 +461,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 100
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).build()
 			},
 			new String[] {"Boost Contents in a Category for Guest Users"});
@@ -488,10 +504,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 1000
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"time_range", "30d"
 				).build()
@@ -545,10 +564,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 100
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"time_of_day", timeOfDays[0]
 				).build()
@@ -562,10 +584,13 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
 					"boost", 100
+				).put(
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).put(
 					"time_of_day", timeOfDays[1]
 				).build()
@@ -1133,8 +1158,11 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).build()
 			},
 			new String[] {"Hide Contents in a Category"});
@@ -1165,8 +1193,11 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
+					"group_asset_category_external_reference_codes",
+					new String[] {
+						_group.getExternalReferenceCode() + "&&" +
+							_assetCategory.getExternalReferenceCode()
+					}
 				).build()
 			},
 			new String[] {"Hide Contents in a Category for Guest Users"});

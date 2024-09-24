@@ -5,17 +5,11 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import type {IItemsActions} from '@liferay/frontend-data-set-web';
 import {API, Card, stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {
-	IFDSTableProps,
-	defaultDataSetProps,
-	fdsItem,
-	formatActionURL,
-} from '../../utils/fds';
+import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
 import ModalImport, {ModalImportKeys} from '../ModalImport/ModalImport';
 import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
@@ -38,6 +32,10 @@ import {
 } from './objectDefinitionUtil';
 
 import './ViewObjectDefinitions.scss';
+
+import type {IItemsActions} from '@liferay/frontend-data-set-web';
+
+import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 export interface ModalImportProperties {
 	JSONInputId: string;
@@ -151,7 +149,7 @@ export default function ViewObjectDefinitions({
 	function objectDefinitionLabelDataRenderer({
 		itemData,
 		value,
-	}: fdsItem<ObjectDefinition>) {
+	}: FDSItem<ObjectDefinition>) {
 		return (
 			<ViewObjectDefinitionsLabelRenderer
 				url={formatActionURL(editObjectDefinitionURL, itemData.id)}
@@ -194,8 +192,8 @@ export default function ViewObjectDefinitions({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFoldersRequestInfo?.items.length]);
 
-	const dataSetProps = {
-		...defaultDataSetProps,
+	const frontendDataSetProps = {
+		...defaultFDSDataSetProps,
 		apiURL: getURL(),
 		creationMenu: objectDefinitionsCreationMenu,
 		customDataRenderers: {
@@ -450,7 +448,7 @@ export default function ViewObjectDefinitions({
 								/>
 							) : (
 								<FrontendDataSet
-									{...dataSetProps}
+									{...frontendDataSetProps}
 									key={
 										selectedObjectFolder.externalReferenceCode
 									}

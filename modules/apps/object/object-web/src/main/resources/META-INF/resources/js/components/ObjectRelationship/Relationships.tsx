@@ -14,17 +14,14 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {
-	IFDSTableProps,
-	defaultDataSetProps,
-	fdsItem,
-	formatActionURL,
-} from '../../utils/fds';
+import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import LabelRenderer from '../LabelRenderer';
 import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import {deleteRelationship} from '../ViewObjectDefinitions/objectDefinitionUtil';
 import {ModalAddObjectRelationship} from './ModalAddObjectRelationship';
 import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
+
+import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 interface ItemData {
 	id: number;
@@ -118,7 +115,7 @@ export default function Relationships({
 		itemData,
 		openSidePanel,
 		value,
-	}: fdsItem<ItemData>) {
+	}: FDSItem<ItemData>) {
 		return (
 			<LabelRenderer
 				onClick={() => {
@@ -131,8 +128,8 @@ export default function Relationships({
 		);
 	}
 
-	const dataSetProps = {
-		...defaultDataSetProps,
+	const frontendDataSetProps = {
+		...defaultFDSDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
@@ -235,7 +232,7 @@ export default function Relationships({
 
 	return (
 		<>
-			<FrontendDataSet {...dataSetProps} />
+			<FrontendDataSet {...frontendDataSetProps} />
 
 			{showAddModal && (
 				<ModalAddObjectRelationship

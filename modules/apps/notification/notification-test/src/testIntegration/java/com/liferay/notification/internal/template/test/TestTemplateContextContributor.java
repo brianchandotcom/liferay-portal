@@ -7,8 +7,6 @@ package com.liferay.notification.internal.template.test;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
-import java.io.Serializable;
-
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +28,7 @@ public class TestTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		contextObjects.put(
-			"templateComponent", new InnerTemplateContextContributor());
-	}
-
-	@Component(property = "type=INNER", service = Serializable.class)
-	public static class InnerTemplateContextContributor
-		implements Serializable {
+		contextObjects.put("name", "value");
 	}
 
 }

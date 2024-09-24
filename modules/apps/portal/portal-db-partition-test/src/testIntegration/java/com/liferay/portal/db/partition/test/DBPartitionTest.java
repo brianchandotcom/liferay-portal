@@ -84,19 +84,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					PortalInstancePool.getDefaultCompanyId())) {
-
-			if (dbInspector.hasIndex(
-					TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME)) {
-
-				dropIndex(TEST_CONTROL_TABLE_NAME);
-			}
-		}
-
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
+				if (dbInspector.hasIndex(
+						TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME)) {
+
+					dropIndex(TEST_CONTROL_TABLE_NAME);
+				}
+
 				dropTable(TEST_TABLE_NAME);
 				_counterLocalService.reset(_CLASS_NAME);
 			});

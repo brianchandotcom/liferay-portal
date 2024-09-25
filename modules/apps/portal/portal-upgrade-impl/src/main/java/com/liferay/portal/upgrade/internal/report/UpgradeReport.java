@@ -106,20 +106,21 @@ public class UpgradeReport {
 
 		_executionDate = _getExecutionDate();
 
-		_executionTime = _getExecutionTime();
+		_executionTime =
+			(DBUpgrader.getUpgradeTime() / Time.SECOND) + " seconds";
 
 		_rootDir = _getRootDir();
 
 		Map<String, Object> reportData = _getReportData(upgradeRecorder);
 
-		Map<String, Object> diagnosticsReportData = _getDiagnosticsReportData(
+		Map<String, Object> reportDataDiagnostics = _getReportDataDiagnostics(
 			upgradeRecorder);
 
 		_printToLogContext(reportData);
-		_printToLogContext(diagnosticsReportData);
+		_printToLogContext(reportDataDiagnostics);
 
 		_writeToFile(reportData);
-		_writeToFile(diagnosticsReportData);
+		_writeToFile(reportDataDiagnostics);
 	}
 
 	private int _getBuildNumber() {
@@ -135,133 +136,6 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private Map<String, Object> _getDiagnosticsReportData(
-		UpgradeRecorder upgradeRecorder) {
-
-		return LinkedHashMapBuilder.<String, Object>put(
-			"diagnostics", true
-		).put(
-			"execution.date", _executionDate
-		).put(
-			"execution.time", _executionTime
-		).put(
-			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
-		).put(
-			"failed.sqls", upgradeRecorder.getFailedSQLs()
-		).put(
-			"longest.upgrade.processes",
-			() -> {
-				Map<String, ArrayList<String>> eventMessages =
-					upgradeRecorder.getUpgradeProcessMessages();
-
-				List<String> messages = eventMessages.get(
-					UpgradeProcess.class.getName());
-
-				if (ListUtil.isEmpty(messages)) {
-					return new ArrayList<>();
-				}
-
-				Map<String, Integer> upgradeProcessDurations = new HashMap<>();
-
-				for (String message : messages) {
-					int startIndex = message.indexOf("com.");
-
-					int endIndex = message.indexOf(
-						StringPool.SPACE, startIndex);
-
-					String className = message.substring(startIndex, endIndex);
-
-					if (className.equals(
-							PortalUpgradeProcess.class.getName())) {
-
-						continue;
-					}
-
-					startIndex = message.indexOf(
-						StringPool.SPACE, endIndex + 1);
-
-					endIndex = message.indexOf(
-						StringPool.SPACE, startIndex + 1);
-
-					upgradeProcessDurations.put(
-						className,
-						GetterUtil.getInteger(
-							message.substring(startIndex, endIndex)));
-				}
-
-				List<RunningUpgradeProcess> longestRunningUpgradeProcesses =
-					new ArrayList<>();
-
-				int count = 0;
-
-				for (Map.Entry<String, Integer> entry :
-						ListUtil.sort(
-							new ArrayList<>(upgradeProcessDurations.entrySet()),
-							Collections.reverseOrder(
-								Map.Entry.comparingByValue(
-									Integer::compare)))) {
-
-					longestRunningUpgradeProcesses.add(
-						new RunningUpgradeProcess(
-							String.valueOf(entry.getValue()), entry.getKey()));
-
-					count++;
-
-					if (count >= _LONGEST_UPGRADE_PROCESSES_COUNT) {
-						break;
-					}
-				}
-
-				return longestRunningUpgradeProcesses;
-			}
-		).put(
-			"longest.running.sqls",
-			() -> {
-				List<RunningSQL> longestRunningSQLs = new ArrayList<>();
-
-				Map<String, Long> sqlExecutionTimes =
-					upgradeRecorder.getSQLExecutionTimes();
-
-				List<Map.Entry<String, Long>> entries = new ArrayList<>(
-					sqlExecutionTimes.entrySet());
-
-				entries.sort(
-					(entry1, entry2) -> Long.compare(
-						entry2.getValue(), entry1.getValue()));
-
-				int count = Math.min(
-					_LONGEST_RUNNING_SQLS_COUNT, entries.size());
-
-				for (int i = 0; i < count; i++) {
-					Map.Entry<String, Long> entry = entries.get(i);
-
-					String key = entry.getKey();
-
-					String sql = key;
-
-					String upgradeProcessClassName = StringPool.BLANK;
-
-					if (key.contains(StringPool.PIPE)) {
-						int index = key.indexOf(StringPool.PIPE);
-
-						upgradeProcessClassName = key.substring(0, index);
-
-						sql = key.substring(index + 1);
-					}
-
-					longestRunningSQLs.add(
-						new RunningSQL(
-							entry.getValue(), sql, upgradeProcessClassName));
-				}
-
-				return longestRunningSQLs;
-			}
-		).put(
-			"warnings",
-			_getMessagesPrinters(upgradeRecorder.getWarningMessages())
-		).build();
-	}
-
 	private String _getExecutionDate() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"EEE, MMM dd, yyyy hh:mm:ss z");
@@ -271,10 +145,6 @@ public class UpgradeReport {
 		Calendar calendar = Calendar.getInstance();
 
 		return simpleDateFormat.format(calendar.getTime());
-	}
-
-	private String _getExecutionTime() {
-		return (DBUpgrader.getUpgradeTime() / Time.SECOND) + " seconds";
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(
@@ -666,6 +536,133 @@ public class UpgradeReport {
 
 				return tablePrinters;
 			}
+		).build();
+	}
+
+	private Map<String, Object> _getReportDataDiagnostics(
+		UpgradeRecorder upgradeRecorder) {
+
+		return LinkedHashMapBuilder.<String, Object>put(
+			"diagnostics", true
+		).put(
+			"execution.date", _executionDate
+		).put(
+			"execution.time", _executionTime
+		).put(
+			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
+		).put(
+			"failed.sqls", upgradeRecorder.getFailedSQLs()
+		).put(
+			"longest.upgrade.processes",
+			() -> {
+				Map<String, ArrayList<String>> eventMessages =
+					upgradeRecorder.getUpgradeProcessMessages();
+
+				List<String> messages = eventMessages.get(
+					UpgradeProcess.class.getName());
+
+				if (ListUtil.isEmpty(messages)) {
+					return new ArrayList<>();
+				}
+
+				Map<String, Integer> upgradeProcessDurations = new HashMap<>();
+
+				for (String message : messages) {
+					int startIndex = message.indexOf("com.");
+
+					int endIndex = message.indexOf(
+						StringPool.SPACE, startIndex);
+
+					String className = message.substring(startIndex, endIndex);
+
+					if (className.equals(
+							PortalUpgradeProcess.class.getName())) {
+
+						continue;
+					}
+
+					startIndex = message.indexOf(
+						StringPool.SPACE, endIndex + 1);
+
+					endIndex = message.indexOf(
+						StringPool.SPACE, startIndex + 1);
+
+					upgradeProcessDurations.put(
+						className,
+						GetterUtil.getInteger(
+							message.substring(startIndex, endIndex)));
+				}
+
+				List<RunningUpgradeProcess> longestRunningUpgradeProcesses =
+					new ArrayList<>();
+
+				int count = 0;
+
+				for (Map.Entry<String, Integer> entry :
+						ListUtil.sort(
+							new ArrayList<>(upgradeProcessDurations.entrySet()),
+							Collections.reverseOrder(
+								Map.Entry.comparingByValue(
+									Integer::compare)))) {
+
+					longestRunningUpgradeProcesses.add(
+						new RunningUpgradeProcess(
+							String.valueOf(entry.getValue()), entry.getKey()));
+
+					count++;
+
+					if (count >= _LONGEST_UPGRADE_PROCESSES_COUNT) {
+						break;
+					}
+				}
+
+				return longestRunningUpgradeProcesses;
+			}
+		).put(
+			"longest.running.sqls",
+			() -> {
+				List<RunningSQL> longestRunningSQLs = new ArrayList<>();
+
+				Map<String, Long> sqlExecutionTimes =
+					upgradeRecorder.getSQLExecutionTimes();
+
+				List<Map.Entry<String, Long>> entries = new ArrayList<>(
+					sqlExecutionTimes.entrySet());
+
+				entries.sort(
+					(entry1, entry2) -> Long.compare(
+						entry2.getValue(), entry1.getValue()));
+
+				int count = Math.min(
+					_LONGEST_RUNNING_SQLS_COUNT, entries.size());
+
+				for (int i = 0; i < count; i++) {
+					Map.Entry<String, Long> entry = entries.get(i);
+
+					String key = entry.getKey();
+
+					String sql = key;
+
+					String upgradeProcessClassName = StringPool.BLANK;
+
+					if (key.contains(StringPool.PIPE)) {
+						int index = key.indexOf(StringPool.PIPE);
+
+						upgradeProcessClassName = key.substring(0, index);
+
+						sql = key.substring(index + 1);
+					}
+
+					longestRunningSQLs.add(
+						new RunningSQL(
+							entry.getValue(), sql, upgradeProcessClassName));
+				}
+
+				return longestRunningSQLs;
+			}
+		).put(
+			"warnings",
+			_getMessagesPrinters(upgradeRecorder.getWarningMessages())
 		).build();
 	}
 

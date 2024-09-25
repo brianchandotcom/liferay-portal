@@ -206,7 +206,8 @@ public class LayoutPageTemplateEntryModelListener
 		}
 
 		try (SafeCloseable safeCloseable =
-				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
+				UpdateLayoutStatusThreadLocal.
+					setUpdateLayoutStatusWithSafeCloseable(false)) {
 
 			return _formItemManager.addFragmentEntryLinks(
 				_jsonFactory.createJSONObject(), formStyledLayoutStructureItem,
@@ -351,7 +352,8 @@ public class LayoutPageTemplateEntryModelListener
 		}
 
 		try (SafeCloseable safeCloseable =
-				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
+				UpdateLayoutStatusThreadLocal.
+					setUpdateLayoutStatusWithSafeCloseable(false)) {
 
 			_fragmentEntryLinkService.updateFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId(),
@@ -386,7 +388,8 @@ public class LayoutPageTemplateEntryModelListener
 			layoutStructure, segmentsExperienceId);
 
 		try (SafeCloseable safeCloseable =
-				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
+				UpdateLayoutStatusThreadLocal.
+					setUpdateLayoutStatusWithSafeCloseable(false)) {
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(

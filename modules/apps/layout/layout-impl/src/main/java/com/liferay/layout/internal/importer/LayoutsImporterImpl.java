@@ -1536,7 +1536,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutPageTemplateEntryType);
 
 		try (SafeCloseable safeCloseable =
-				CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(false)) {
+				CheckUnlockedLayoutThreadLocal.
+					setCheckUnlockedLayoutWithSafeCloseable(false)) {
 
 			if ((layoutPageTemplateEntry != null) &&
 				Objects.equals(

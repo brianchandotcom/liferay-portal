@@ -219,8 +219,8 @@ public class DropZoneFragmentEntryLinkListener
 			}
 
 			try (SafeCloseable safeCloseable =
-					CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(
-						false)) {
+					CheckUnlockedLayoutThreadLocal.
+						setCheckUnlockedLayoutWithSafeCloseable(false)) {
 
 				_layoutPageTemplateStructureLocalService.
 					updateLayoutPageTemplateStructureData(
@@ -419,8 +419,8 @@ public class DropZoneFragmentEntryLinkListener
 
 		if (update) {
 			try (SafeCloseable safeCloseable =
-					CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(
-						false)) {
+					CheckUnlockedLayoutThreadLocal.
+						setCheckUnlockedLayoutWithSafeCloseable(false)) {
 
 				_layoutPageTemplateStructureLocalService.
 					updateLayoutPageTemplateStructureData(

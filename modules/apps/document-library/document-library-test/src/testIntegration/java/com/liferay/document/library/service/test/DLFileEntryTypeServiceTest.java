@@ -29,11 +29,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -173,12 +176,22 @@ public class DLFileEntryTypeServiceTest {
 			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
 				"12345678", _group.getGroupId()));
 
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+
+		searchContext.setEntryClassNames(
+			new String[] {DLFileEntryType.class.getName()});
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		Assert.assertEquals(1, _indexer.searchCount(searchContext));
+
 		_dlFileEntryTypeService.deleteFileEntryTypeByExternalReferenceCode(
 			"12345678", _group.getGroupId());
 
 		Assert.assertNull(
 			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
 				"12345678", _group.getGroupId()));
+
+		Assert.assertEquals(0, _indexer.searchCount(searchContext));
 	}
 
 	@Test
@@ -419,6 +432,11 @@ public class DLFileEntryTypeServiceTest {
 
 	private static final String _TEST_DDM_STRUCTURE =
 		"dependencies/ddmstructure.xml";
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
+	)
+	private static Indexer<DLFileEntryType> _indexer;
 
 	private DLFileEntryType _basicDocumentDLFileEntryType;
 

@@ -92,7 +92,7 @@
 		"classNames": [
 			"HttpServletRequest"
 		],
-		"from": "regex:\t*[a-zA-Z0-9_]+\\.setAttribute\\(InfoDisplayWebKeys\\.INFO_ITEM_FIELD_VALUES_PROVIDER,.*?\\);\n",
+		"from": "regex:\t*\\w+\\.setAttribute\\(InfoDisplayWebKeys\\.INFO_ITEM_FIELD_VALUES_PROVIDER,.*?\\);\n",
 		"issueKey": "LPD-8022",
 		"skipParametersValidation": true,
 		"to": ""

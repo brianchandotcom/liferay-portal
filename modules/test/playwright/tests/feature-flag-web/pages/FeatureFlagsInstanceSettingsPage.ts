@@ -22,9 +22,9 @@ export class FeatureFlagsInstanceSettingsPage {
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 	}
 
-	async getFeatureFlagToggle(key: string, searchFor: boolean = true) {
-		if (searchFor) {
-			await this.searchFor(key);
+	async getFeatureFlagToggle(key: string, search: boolean = true) {
+		if (search) {
+			await this.search(key);
 		}
 
 		return this.page.locator(`#${key}`);
@@ -37,7 +37,7 @@ export class FeatureFlagsInstanceSettingsPage {
 		);
 	}
 
-	async searchFor(string) {
+	async search(string) {
 		await expect(async () => {
 			await expect(this.searchInput).toBeEnabled();
 
@@ -54,16 +54,13 @@ export class FeatureFlagsInstanceSettingsPage {
 	async updateFeatureFlag(
 		key: string,
 		enabled: boolean,
-		searchFor: boolean = true
+		search: boolean = true
 	) {
-		if (searchFor) {
-			await this.searchFor(key);
+		if (search) {
+			await this.search(key);
 		}
 
-		const featureFlagToggle = await this.getFeatureFlagToggle(
-			key,
-			searchFor
-		);
+		const featureFlagToggle = await this.getFeatureFlagToggle(key, search);
 
 		await expect(
 			featureFlagToggle,

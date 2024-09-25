@@ -20,7 +20,9 @@ public class BackgroundTaskInExecutionUtil {
 		return _backgroundTaskIds.contains(backgroundTaskId);
 	}
 
-	public static SafeCloseable setInExecution(long backgroundTaskId) {
+	public static SafeCloseable setInExecutionWithSafeCloseable(
+		long backgroundTaskId) {
+
 		_backgroundTaskIds.add(backgroundTaskId);
 
 		return () -> _backgroundTaskIds.remove(backgroundTaskId);

@@ -124,7 +124,7 @@ public class ConsoleService extends BaseRestController {
 
 	@Override
 	protected ExchangeFilterFunction getExchangeFilterFunction() {
-		return (clientRequest, next) -> next.exchange(
+		return (clientRequest, exchangeFunction) -> exchangeFunction.exchange(
 			clientRequest
 		).retryWhen(
 			Retry.fixedDelay(

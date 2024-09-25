@@ -111,10 +111,20 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 }) => {
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
-	const {data: project, isLoading} = useSWR(
-		`/analytics/project/${analyticsGroupId}`,
-		() => marketplaceSpringBootOAuth2.getAnalyticsProject(analyticsGroupId)
+	const {data = [], isLoading} = useSWR(
+		`/analytics/project/${analyticsGroupId}/`,
+		() =>
+			Promise.all([
+				marketplaceSpringBootOAuth2.getAnalyticsProject(
+					analyticsGroupId
+				),
+				marketplaceSpringBootOAuth2.getAnalyticsProjectEmailAddressDomains(
+					analyticsGroupId
+				),
+			])
 	);
+
+	const [project, emailAddressDomains = []] = data ?? [];
 
 	return (
 		<DetailedCard
@@ -133,6 +143,10 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 				<QATable
 					items={[
 						{
+							title: i18n.translate('workspace-friendly-url'),
+							value: project?.friendlyURL,
+						},
+						{
 							title: i18n.translate('workspace-name'),
 							value: project?.name,
 						},
@@ -148,10 +162,7 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 							title: i18n.translate('timezone'),
 							value: project?.timeZone.country,
 						},
-						{
-							title: i18n.translate('workspace-friendly-url'),
-							value: project?.friendlyURL,
-						},
+
 						{
 							title: i18n.translate('incident-report-contacts'),
 							value: project?.incidentReportEmailAddresses.map(
@@ -159,6 +170,12 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 									<div key={emailAddress}>{emailAddress}</div>
 								)
 							),
+						},
+						{
+							title: i18n.translate('allowed-email-domains'),
+							value: emailAddressDomains.map((emailAddress) => (
+								<div key={emailAddress}>{emailAddress}</div>
+							)),
 						},
 						{
 							title: i18n.translate('subscription-type'),

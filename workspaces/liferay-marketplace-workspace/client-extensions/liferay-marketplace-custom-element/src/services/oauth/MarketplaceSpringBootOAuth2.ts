@@ -27,6 +27,14 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		return response.json() as Promise<AnalyticsProject>;
 	}
 
+	async getAnalyticsProjectEmailAddressDomains(projectId: string) {
+		const response = await this.oAuth2Client.fetch(
+			`/analytics/project/${projectId}/email-address-domains`
+		);
+
+		return response.json() as Promise<string[]>;
+	}
+
 	async getAnalyticsProjectDataSourceToken(projectId: string) {
 		const response = await this.oAuth2Client.fetch(
 			`/analytics/project/${projectId}/data-source/token`

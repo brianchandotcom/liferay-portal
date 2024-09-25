@@ -36,9 +36,9 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Thiago Buarque
  */
-public class GenerateLanguageBatchConfigTask extends DefaultTask {
+public class GenerateLanguageBatchEngineDataTask extends DefaultTask {
 
-	public GenerateLanguageBatchConfigTask() {
+	public GenerateLanguageBatchEngineDataTask() {
 		Project project = getProject();
 
 		ObjectFactory objectFactory = project.getObjects();
@@ -61,9 +61,9 @@ public class GenerateLanguageBatchConfigTask extends DefaultTask {
 	@TaskAction
 	public void convertPropertiesFilesToBatchFiles() throws IOException {
 		JsonNode rootJsonNode = _objectMapper.readTree(
-			GenerateLanguageBatchConfigTask.class.getResourceAsStream(
+			GenerateLanguageBatchEngineDataTask.class.getResourceAsStream(
 				"dependencies/templates/language" +
-					"/language-batch-engine-data.json"));
+					"/language.batch-engine-data.json"));
 
 		ArrayNode itemsArrayNode = (ArrayNode)rootJsonNode.get("items");
 

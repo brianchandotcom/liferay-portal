@@ -8,85 +8,59 @@ runGradleTest {
 	doLast {
 		Project languageProject = project(":language")
 
-		Map<String, Object> expectedConfigEntries = new HashMap<>()
+		JsonSlurper jsonSlurper = new JsonSlurper()
 
-		expectedConfigEntries.put("projectId", "languagebatch")
-		expectedConfigEntries.put("scopes", Arrays.asList(
-				"Liferay.Headless.Admin.Workflow.everything",
-				"Liferay.Headless.Batch.Engine.everything",
-				"Liferay.Message.Admin.REST.everything")
-		)
-		expectedConfigEntries.put("type", "oAuthApplicationHeadlessServer")
-		expectedConfigEntries.put("typeSettings",
-			"scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything")
+		_compareObjects(
+			"language.client-extension-config.json",
+			jsonSlurper.parse(project.file("expected-client-extension-config.json")),
+			jsonSlurper.parse(languageProject.file("build/liferay-client-extension-build/language.client-extension-config.json")),
+			"")
 
-		_assertConfigEntries(expectedConfigEntries, languageProject)
-
-		Map<String, Map<String, Object>> expectedItems = new HashMap<>()
-
-		Map<String, Object> item = new HashMap<>()
-
-		item.put("languageId", "en_US")
-		item.put("value", "Sample Value")
-
-		expectedItems.put("sample-key", item)
-
-		_assertItems(expectedItems, languageProject)
+		_compareObjects(
+			"language.batch-engine-data.json",
+			jsonSlurper.parse(project.file("expected-batch-engine-data.json")),
+			jsonSlurper.parse(languageProject.file("build/liferay-client-extension-build/batch/language.batch-engine-data.json")),
+			"")
 	}
 }
 
-private void _assertItems(Map<String, Map<String, Object>> expectedItems, Project languageProject) {
-	File clientExtensionBuildDir = new File(languageProject.buildDir, "liferay-client-extension-build")
+private void _compareObjects(String fileName, Object object1, Object object2, String path) {
+	if (object1 instanceof Map) {
+		assert object2 instanceof Map
 
-	File languageBatchEngineFile = new File(clientExtensionBuildDir, "/batch/language-batch-engine-data.json")
+		assert object1.size() == object2.size() : "${fileName}: Object sizes do not match at property path ${path}"
 
-	JsonSlurper jsonSlurper = new JsonSlurper()
+		object1.each {
+			key, value1 ->
 
-	Object jsonObject = jsonSlurper.parse(languageBatchEngineFile)
+			assert object2.containsKey(key) : "${fileName}: No key found at property path ${path}"
 
-	Object[] items = jsonObject.get("items")
-
-	assert items.length == expectedItems.size()
-
-	for(Object item : items) {
-		Map<String, Object> expectedItem = expectedItems.get(item.get("key"))
-
-		assert expectedItem != null
-
-		assert Objects.equals(item.get("languageId"), expectedItem.get("languageId"))
-		assert Objects.equals(item.get("value"), expectedItem.get("value"))
-	}
-}
-
-private void _assertConfigEntries(Map<String, Object> expectedEntries, Project languageProject) {
-	File clientExtensionBuildDir = new File(languageProject.buildDir, "liferay-client-extension-build")
-
-	File file = new File(clientExtensionBuildDir, "language.client-extension-config.json")
-
-	assert file.exists()
-
-	JsonSlurper jsonSlurper = new JsonSlurper()
-
-	Object jsonObject = jsonSlurper.parse(file)
-
-	jsonObject = jsonObject.get("com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~liferay-language-batch-oauth-application-headless-server")
-
-	for(String expectedKey : expectedEntries.keySet()) {
-		Object expectedValue = expectedEntries.get(expectedKey)
-
-		if (Objects.equals(expectedKey, "typeSettings")) {
-			String[] typeSettingsArray = (String[])jsonObject.get("typeSettings")
-
-			assert typeSettingsArray.contains(expectedValue)
-		} else if (expectedValue instanceof List) {
-			List<Object> actualValues = (List<Object>)jsonObject.get(expectedKey)
-			List<Object> expectedValues = (List<Object>)expectedValue
-
-			for (int i = 0; i < expectedValues.size(); i++) {
-				assert Objects.equals(expectedValues.get(i), actualValues.get(i))
+			if (key.equals("buildTimestamp")) {
+				return
 			}
-		} else {
-			assert Objects.equals(expectedValue, jsonObject.get(expectedKey))
+
+			_compareObjects(fileName, value1, object2.get(key), "${path}['${key}']")
 		}
+
+		return
 	}
+
+	if (object1 instanceof List) {
+		assert object2 instanceof List
+
+		assert object1.size() == object2.size() : "${fileName}: Array sizes do not match at property path ${path}"
+
+		object1.sort()
+		object2.sort()
+
+		object1.eachWithIndex {
+			item1, i ->
+
+			_compareObjects(fileName, item1, object2[i], "${path}[${i}]")
+		}
+
+		return
+	}
+
+	assert object1 == object2 : "${fileName}: Wrong value at property path ${path}"
 }

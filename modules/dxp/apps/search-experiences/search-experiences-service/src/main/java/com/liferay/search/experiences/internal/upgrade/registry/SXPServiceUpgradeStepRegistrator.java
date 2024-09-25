@@ -109,6 +109,11 @@ public class SXPServiceUpgradeStepRegistrator
 			"3.1.2", "3.1.3",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_3.
 				SXPElementUpgradeProcess());
+
+		registry.register(
+			"3.1.3", "3.1.4",
+			new com.liferay.search.experiences.internal.upgrade.v3_1_4.
+				SXPElementUpgradeProcess());
 	}
 
 	@Reference

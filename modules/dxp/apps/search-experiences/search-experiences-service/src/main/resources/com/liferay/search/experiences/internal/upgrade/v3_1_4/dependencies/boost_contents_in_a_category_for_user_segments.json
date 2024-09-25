@@ -1,0 +1,57 @@
+{
+	"category": "conditional",
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"terms": {
+									"boost": "${configuration.boost}",
+									"groupAssetCategoryExternalReferenceCodes": "${configuration.group_asset_category_external_reference_codes}"
+								}
+							}
+						}
+					],
+					"condition": {
+						"contains": {
+							"parameterName": "user.active_segment_entry_ids",
+							"value": "${configuration.user_segment_ids}"
+						}
+					}
+				}
+			]
+		}
+	},
+	"icon": "thumbs-up",
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"label": "asset-category-external-reference-codes",
+						"name": "group_asset_category_external_reference_codes",
+						"type": "multiselect"
+					},
+					{
+						"label": "user-segment-ids",
+						"name": "user_segment_ids",
+						"type": "multiselect"
+					},
+					{
+						"defaultValue": 20,
+						"label": "boost",
+						"name": "boost",
+						"type": "number",
+						"typeOptions": {
+							"min": 0
+						}
+					}
+				]
+			}
+		]
+	}
+}

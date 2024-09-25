@@ -1,0 +1,42 @@
+{
+	"category": "hide",
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "filter",
+							"query": {
+								"bool": {
+									"must_not": [
+										{
+											"terms": {
+												"groupAssetCategoryExternalReferenceCodes": "${configuration.group_asset_category_external_reference_codes}"
+											}
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"icon": "hidden",
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"label": "asset-category-external-reference-codes",
+						"name": "group_asset_category_external_reference_codes",
+						"type": "multiselect"
+					}
+				]
+			}
+		]
+	}
+}

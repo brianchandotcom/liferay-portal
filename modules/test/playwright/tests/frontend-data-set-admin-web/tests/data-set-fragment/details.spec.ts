@@ -17,7 +17,6 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPD-25230': true,
 		'LPS-164563': true,
 	}),
 	isolatedLayoutTest({publish: false}),

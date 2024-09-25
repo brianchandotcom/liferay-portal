@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -106,7 +107,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -179,10 +179,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			HashMapDictionaryBuilder.put(
 				"type", TemplateContextContributor.TYPE_GLOBAL
 			).build());
+
+		_pushServiceContext();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
+
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
@@ -1046,6 +1050,35 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		PrincipalThreadLocal.setName(originalName);
 	}
 
+	private static void _pushServiceContext() throws Exception {
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest(
+			null, StringPool.BLANK, RandomTestUtil.randomString());
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.US);
+		themeDisplay.setUser(
+			UserLocalServiceUtil.getUser(TestPropsValues.getUserId()));
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setRequest(httpServletRequest);
+
+		themeDisplay = serviceContext.getThemeDisplay();
+
+		themeDisplay.setScopeGroupId(serviceContext.getScopeGroupId());
+		themeDisplay.setSiteGroupId(serviceContext.getScopeGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+	}
+
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
@@ -1394,29 +1427,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
 
-	private void _pushServiceContext() throws PortalException {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest(
-			null, StringPool.BLANK, RandomTestUtil.randomString());
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLocale(LocaleUtil.US);
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setRequest(httpServletRequest);
-
-		themeDisplay = serviceContext.getThemeDisplay();
-
-		themeDisplay.setScopeGroupId(serviceContext.getScopeGroupId());
-		themeDisplay.setSiteGroupId(serviceContext.getScopeGroupId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		return StringUtil.merge(
 			Arrays.asList(
 				LanguageUtil.getLanguageId(LocaleUtil.US),

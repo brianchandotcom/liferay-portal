@@ -701,6 +701,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		DDMFormViewFormInstanceRecordsDisplayContext
 			ddmFormViewFormInstanceRecordsDisplayContext){
 		
+		ddmFormViewFormInstanceRecordsDisplayContext.getFormViewRecordsDisplayContext();
 		ddmFormViewFormInstanceRecordsDisplayContext.getSearch();
 	}
 

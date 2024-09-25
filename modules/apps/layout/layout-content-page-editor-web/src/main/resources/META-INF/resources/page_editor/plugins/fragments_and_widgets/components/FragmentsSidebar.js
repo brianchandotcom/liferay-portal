@@ -79,7 +79,7 @@ const collectionFilter = (collections, searchValue) => {
 		.filter(hasChildren);
 };
 
-const normalizeWidget = (widget) => {
+export function normalizeWidget(widget) {
 	return {
 		data: {
 			portletId: widget.portletId,
@@ -96,7 +96,7 @@ const normalizeWidget = (widget) => {
 		preview: '',
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
-};
+}
 
 const normalizeCollection = (collection) => {
 	const normalizedElement = {

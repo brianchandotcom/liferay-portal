@@ -65,12 +65,6 @@ public interface RepositoryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the repository local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RepositoryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public Repository addRepository(
-			long userId, long groupId, long classNameId, long parentFolderId,
-			String name, String description, String portletId,
-			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Adds the repository to the database. Also notifies the appropriate model listeners.
@@ -84,6 +78,14 @@ public interface RepositoryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Repository addRepository(Repository repository);
+
+	public Repository addRepository(
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long parentFolderId, String name,
+			String description, String portletId,
+			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void checkRepository(long repositoryId);
 

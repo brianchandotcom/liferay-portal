@@ -28,16 +28,18 @@ public class RepositoryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Repository addRepository(
-			long groupId, long classNameId, long parentFolderId, String name,
-			String description, String portletId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long parentFolderId, String name, String description,
+			String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addRepository(
-			groupId, classNameId, parentFolderId, name, description, portletId,
-			typeSettingsUnicodeProperties, serviceContext);
+			externalReferenceCode, groupId, classNameId, parentFolderId, name,
+			description, portletId, typeSettingsUnicodeProperties,
+			serviceContext);
 	}
 
 	public static void checkRepository(long repositoryId)

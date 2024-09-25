@@ -43,9 +43,9 @@ public interface RepositoryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the repository remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RepositoryServiceUtil} if injection and service tracking are not available.
 	 */
 	public Repository addRepository(
-			long groupId, long classNameId, long parentFolderId, String name,
-			String description, String portletId,
-			UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long groupId, long classNameId,
+			long parentFolderId, String name, String description,
+			String portletId, UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 

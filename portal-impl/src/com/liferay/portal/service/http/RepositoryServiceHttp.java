@@ -42,9 +42,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Repository addRepository(
-			HttpPrincipal httpPrincipal, long groupId, long classNameId,
-			long parentFolderId, String name, String description,
-			String portletId,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long groupId, long classNameId, long parentFolderId, String name,
+			String description, String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -56,9 +56,9 @@ public class RepositoryServiceHttp {
 				_addRepositoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, parentFolderId, name,
-				description, portletId, typeSettingsUnicodeProperties,
-				serviceContext);
+				methodKey, externalReferenceCode, groupId, classNameId,
+				parentFolderId, name, description, portletId,
+				typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -323,8 +323,8 @@ public class RepositoryServiceHttp {
 
 	private static final Class<?>[] _addRepositoryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, String.class, String.class,
-			String.class,
+			String.class, long.class, long.class, long.class, String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

@@ -35,18 +35,6 @@ public class RepositoryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static Repository addRepository(
-			long userId, long groupId, long classNameId, long parentFolderId,
-			String name, String description, String portletId,
-			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsUnicodeProperties,
-			boolean hidden, ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addRepository(
-			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsUnicodeProperties, hidden, serviceContext);
-	}
 
 	/**
 	 * Adds the repository to the database. Also notifies the appropriate model listeners.
@@ -60,6 +48,21 @@ public class RepositoryLocalServiceUtil {
 	 */
 	public static Repository addRepository(Repository repository) {
 		return getService().addRepository(repository);
+	}
+
+	public static Repository addRepository(
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long parentFolderId, String name,
+			String description, String portletId,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
+			boolean hidden, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addRepository(
+			externalReferenceCode, userId, groupId, classNameId, parentFolderId,
+			name, description, portletId, typeSettingsUnicodeProperties, hidden,
+			serviceContext);
 	}
 
 	public static void checkRepository(long repositoryId) {

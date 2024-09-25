@@ -27,16 +27,18 @@ public class RepositoryServiceWrapper
 
 	@Override
 	public Repository addRepository(
-			long groupId, long classNameId, long parentFolderId, String name,
-			String description, String portletId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long parentFolderId, String name, String description,
+			String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryService.addRepository(
-			groupId, classNameId, parentFolderId, name, description, portletId,
-			typeSettingsUnicodeProperties, serviceContext);
+			externalReferenceCode, groupId, classNameId, parentFolderId, name,
+			description, portletId, typeSettingsUnicodeProperties,
+			serviceContext);
 	}
 
 	@Override

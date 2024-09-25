@@ -30,20 +30,6 @@ public class RepositoryLocalServiceWrapper
 		_repositoryLocalService = repositoryLocalService;
 	}
 
-	@Override
-	public Repository addRepository(
-			long userId, long groupId, long classNameId, long parentFolderId,
-			String name, String description, String portletId,
-			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsUnicodeProperties,
-			boolean hidden, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _repositoryLocalService.addRepository(
-			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsUnicodeProperties, hidden, serviceContext);
-	}
-
 	/**
 	 * Adds the repository to the database. Also notifies the appropriate model listeners.
 	 *
@@ -57,6 +43,22 @@ public class RepositoryLocalServiceWrapper
 	@Override
 	public Repository addRepository(Repository repository) {
 		return _repositoryLocalService.addRepository(repository);
+	}
+
+	@Override
+	public Repository addRepository(
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long parentFolderId, String name,
+			String description, String portletId,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
+			boolean hidden, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _repositoryLocalService.addRepository(
+			externalReferenceCode, userId, groupId, classNameId, parentFolderId,
+			name, description, portletId, typeSettingsUnicodeProperties, hidden,
+			serviceContext);
 	}
 
 	@Override

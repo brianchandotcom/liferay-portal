@@ -5,12 +5,16 @@
 
 package com.liferay.layout.internal.portlet.category;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.portlet.PortletManager;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -33,11 +37,13 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,8 +53,11 @@ import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.segments.model.SegmentsExperienceModel;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -154,6 +163,36 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		_serviceTrackerMap.close();
 	}
 
+	private Set<String> _getFragmentEntryLinksPortletNames(
+		ThemeDisplay themeDisplay) {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
+			return Collections.emptySet();
+		}
+
+		Set<String> portletIds = new HashSet<>();
+
+		long[] segmentsExperiencesIds = TransformUtil.transformToLongArray(
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid()),
+			SegmentsExperienceModel::getSegmentsExperienceId);
+
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						themeDisplay.getScopeGroupId(), segmentsExperiencesIds,
+						themeDisplay.getPlid(), false)) {
+
+			portletIds.addAll(
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink));
+		}
+
+		return portletIds;
+	}
+
 	private Set<String> _getHighlightedPortletIds(
 		HttpServletRequest httpServletRequest,
 		PortletCategory highlightedPortletCategory) {
@@ -206,6 +245,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		Map<String, JSONObject> portletCategoryJSONObjectsMap =
 			new LinkedHashMap<>();
 
+		Set<String> fragmentEntryLinksPortletNames =
+			_getFragmentEntryLinksPortletNames(themeDisplay);
+
 		Set<String> layoutDecodedPortletNames = _getLayoutDecodedPortletNames(
 			themeDisplay);
 
@@ -235,9 +277,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				portletCategoryJSONObject -> portletCategoryJSONObject);
 
 			JSONArray portletsJSONArray = _getPortletsJSONArray(
-				highlightedPortletIds, httpServletRequest,
-				layoutDecodedPortletNames, currentPortletCategory,
-				themeDisplay);
+				fragmentEntryLinksPortletNames, highlightedPortletIds,
+				httpServletRequest, layoutDecodedPortletNames,
+				currentPortletCategory, themeDisplay);
 
 			if ((childPortletCategoriesJSONArray.length() > 0) ||
 				(portletsJSONArray.length() > 0)) {
@@ -372,6 +414,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 	}
 
 	private JSONArray _getPortletsJSONArray(
+			Set<String> fragmentEntryLinksPortletNames,
 			Set<String> highlightedPortletIds,
 			HttpServletRequest httpServletRequest,
 			Set<String> layoutDecodedPortletNames,
@@ -395,6 +438,29 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		for (Portlet portlet : portlets) {
 			jsonArray.put(
 				JSONUtil.put(
+					"embedded",
+					() -> {
+						if (fragmentEntryLinksPortletNames.contains(
+								portlet.getPortletId())) {
+
+							return false;
+						}
+
+						Layout layout = themeDisplay.getLayout();
+
+						long count1 =
+							_portletPreferencesLocalService.
+								getPortletPreferencesCount(
+									PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+									layout.getPlid(), portlet.getPortletId());
+
+						if (count1 > 0) {
+							return true;
+						}
+
+						return false;
+					}
+				).put(
 					"highlighted",
 					highlightedPortletIds.contains(portlet.getPortletId())
 				).put(
@@ -466,6 +532,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		PortletCategoryManagerImpl.class);
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -482,6 +551,15 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceTrackerMap<String, PortletManager> _serviceTrackerMap;
 

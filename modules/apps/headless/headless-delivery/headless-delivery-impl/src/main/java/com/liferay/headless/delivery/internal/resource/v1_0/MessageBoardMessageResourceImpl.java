@@ -119,11 +119,21 @@ public class MessageBoardMessageResourceImpl
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		long companyId;
+
+		if (contextCompany != null) {
+			companyId = contextCompany.getCompanyId();
+		}
+		else {
+			companyId = GetterUtil.getLong(
+				multivaluedMap.getFirst("companyId"));
+		}
+
 		return new MessageBoardMessageEntityModel(
 			EntityFieldsUtil.getEntityFields(
-				_portal.getClassNameId(MBMessage.class.getName()),
-				contextCompany.getCompanyId(), _expandoBridgeIndexer,
-				_expandoColumnLocalService, _expandoTableLocalService));
+				_portal.getClassNameId(MBMessage.class.getName()), companyId,
+				_expandoBridgeIndexer, _expandoColumnLocalService,
+				_expandoTableLocalService));
 	}
 
 	@Override

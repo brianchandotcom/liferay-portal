@@ -125,11 +125,21 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
+		long companyId;
+
+		if (contextCompany != null) {
+			companyId = contextCompany.getCompanyId();
+		}
+		else {
+			companyId = GetterUtil.getLong(
+				multivaluedMap.getFirst("companyId"));
+		}
+
 		return new OrderItemEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(CommerceOrderItem.class.getName()),
-				contextCompany.getCompanyId(), _expandoBridgeIndexer,
-				_expandoColumnLocalService, _expandoTableLocalService));
+				companyId, _expandoBridgeIndexer, _expandoColumnLocalService,
+				_expandoTableLocalService));
 	}
 
 	@Override

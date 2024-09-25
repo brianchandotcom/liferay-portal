@@ -6,7 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {API, Card, stringUtils} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
@@ -160,57 +160,14 @@ export default function ViewObjectDefinitions({
 		return url;
 	};
 
-	useEffect(() => {
-		if (objectFoldersRequestInfo?.items.length > 1) {
-			const itemsActions = [...objectDefinitionsFDSActionDropdownItems];
-
-			itemsActions.push({
-				data: {
-					id: 'moveObjectDefinition',
-					method: 'patch',
-					permissionKey: 'update',
-				},
-				href: undefined,
-				icon: 'move-folder',
-				label: 'Move',
-				target: undefined,
-				type: 'item',
-			});
-
-			setUpdatedFDSItemsActions(itemsActions);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [objectFoldersRequestInfo?.items.length]);
-
-	const frontendDataSetProps = {
-		...defaultFDSDataSetProps,
-		apiURL: getURL(),
-		creationMenu: objectDefinitionsCreationMenu,
-		customDataRenderers: {
-			objectDefinitionLabelDataRenderer,
-			objectDefinitionModifiedDateDataRenderer,
-			objectDefinitionSystemDataRenderer,
-			statusDataRenderer,
-		},
-		emptyState: {
-			description: Liferay.Language.get(
-				'create-your-first-object-or-import-an-existing-one-to-start-working-with-object-folders'
-			),
-			image: '/states/empty_state.svg',
-			title: Liferay.Language.get('no-objects-created-yet'),
-		},
-		id: objectDefinitionsFDSName,
-		itemsActions: updatedFDSItemsActions,
-		namespace:
-			'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_',
-		onActionDropdownItemClick({
+	const onActionDropdownItemClick = useCallback(
+		({
 			action,
 			itemData,
 		}: {
 			action: {data: {id: string}};
 			itemData: ObjectDefinition;
-		}) {
+		}) => {
 			if (
 				action.data.id === 'bind' &&
 				Liferay.FeatureFlags['LPS-187142']
@@ -255,65 +212,8 @@ export default function ViewObjectDefinitions({
 				}));
 			}
 		},
-		portletId:
-			'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
-		sidePanelId: 'none',
-		style: 'fluid' as 'fluid',
-		views: [
-			{
-				contentRenderer: 'table',
-				label: 'Table',
-				name: 'table',
-				schema: {
-					fields: [
-						{
-							contentRenderer:
-								'objectDefinitionLabelDataRenderer',
-							expand: false,
-							fieldName: 'label',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: true,
-						},
-						{
-							expand: false,
-							fieldName: 'scope',
-							label: Liferay.Language.get('scope'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer:
-								'objectDefinitionSystemDataRenderer',
-							expand: false,
-							fieldName: 'system',
-							label: Liferay.Language.get('system'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer:
-								'objectDefinitionModifiedDateDataRenderer',
-							expand: false,
-							fieldName: 'dateModified',
-							label: Liferay.Language.get('modified-date'),
-							localizeLabel: true,
-							sortable: true,
-						},
-						{
-							contentRenderer: 'statusDataRenderer',
-							expand: false,
-							fieldName: 'status',
-							label: Liferay.Language.get('status'),
-							localizeLabel: true,
-							sortable: false,
-						},
-					],
-				},
-				thumbnail: 'table',
-			},
-		],
-	};
+		[baseResourceURL]
+	);
 
 	const setDefaultToSearchParams = (
 		allObjectFolders: ObjectFoldersRequestInfo,
@@ -325,6 +225,29 @@ export default function ViewObjectDefinitions({
 
 		setSelectedObjectFolder(allObjectFolders.items[0]);
 	};
+
+	useEffect(() => {
+		if (objectFoldersRequestInfo?.items.length > 1) {
+			const itemsActions = [...objectDefinitionsFDSActionDropdownItems];
+
+			itemsActions.push({
+				data: {
+					id: 'moveObjectDefinition',
+					method: 'patch',
+					permissionKey: 'update',
+				},
+				href: undefined,
+				icon: 'move-folder',
+				label: 'Move',
+				target: undefined,
+				type: 'item',
+			});
+
+			setUpdatedFDSItemsActions(itemsActions);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectFoldersRequestInfo?.items.length]);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -439,10 +362,102 @@ export default function ViewObjectDefinitions({
 								/>
 							) : (
 								<FrontendDataSet
-									{...frontendDataSetProps}
+									{...defaultFDSDataSetProps}
+									apiURL={getURL()}
+									creationMenu={objectDefinitionsCreationMenu}
+									customDataRenderers={{
+										objectDefinitionLabelDataRenderer,
+										objectDefinitionModifiedDateDataRenderer,
+										objectDefinitionSystemDataRenderer,
+										statusDataRenderer,
+									}}
+									emptyState={{
+										description: Liferay.Language.get(
+											'create-your-first-object-or-import-an-existing-one-to-start-working-with-object-folders'
+										),
+										image: '/states/empty_state.svg',
+										title: Liferay.Language.get(
+											'no-objects-created-yet'
+										),
+									}}
+									id={objectDefinitionsFDSName}
+									itemsActions={updatedFDSItemsActions}
 									key={
 										selectedObjectFolder.externalReferenceCode
 									}
+									namespace="_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_"
+									onActionDropdownItemClick={
+										onActionDropdownItemClick
+									}
+									portletId="com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet"
+									sidePanelId="none"
+									style="fluid"
+									views={[
+										{
+											contentRenderer: 'table',
+											label: 'Table',
+											name: 'table',
+											schema: {
+												fields: [
+													{
+														contentRenderer:
+															'objectDefinitionLabelDataRenderer',
+														expand: false,
+														fieldName: 'label',
+														label: Liferay.Language.get(
+															'label'
+														),
+														localizeLabel: true,
+														sortable: true,
+													},
+													{
+														expand: false,
+														fieldName: 'scope',
+														label: Liferay.Language.get(
+															'scope'
+														),
+														localizeLabel: true,
+														sortable: false,
+													},
+													{
+														contentRenderer:
+															'objectDefinitionSystemDataRenderer',
+														expand: false,
+														fieldName: 'system',
+														label: Liferay.Language.get(
+															'system'
+														),
+														localizeLabel: true,
+														sortable: false,
+													},
+													{
+														contentRenderer:
+															'objectDefinitionModifiedDateDataRenderer',
+														expand: false,
+														fieldName:
+															'dateModified',
+														label: Liferay.Language.get(
+															'modified-date'
+														),
+														localizeLabel: true,
+														sortable: true,
+													},
+													{
+														contentRenderer:
+															'statusDataRenderer',
+														expand: false,
+														fieldName: 'status',
+														label: Liferay.Language.get(
+															'status'
+														),
+														localizeLabel: true,
+														sortable: false,
+													},
+												],
+											},
+											thumbnail: 'table',
+										},
+									]}
 								/>
 							)}
 						</Card>

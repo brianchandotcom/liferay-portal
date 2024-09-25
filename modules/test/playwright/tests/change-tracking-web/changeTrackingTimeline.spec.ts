@@ -311,11 +311,23 @@ test('LPD-26155 Conflict warning is visible when content is edited in more than 
 
 	await expect(conflictWarning).toBeVisible();
 
-	const conflictIcon = page.locator(
+	let conflictIcon = page.locator(
 		'.publication-timeline .change-tracking-conflict-icon-warning'
 	);
 
 	await expect(conflictIcon).toHaveCount(2);
+
+	await apiHelpers.featureFlag.updateFeatureFlag('LPD-20556', false);
+
+	// Refresh the page after turning off feature flag
+
+	await documentLibraryPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {exact: true, name: title3}).click();
+
+	conflictIcon = page.locator('.change-tracking-conflict-icon-warning');
+
+	await expect(conflictIcon).toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		ctCollection2.id
@@ -323,6 +335,7 @@ test('LPD-26155 Conflict warning is visible when content is edited in more than 
 });
 
 test('LPD-26155 Production conflict info is visible when new changes have been made to production', async ({
+	apiHelpers,
 	changeTrackingPage,
 	ctCollection,
 	documentLibraryEditFilePage,
@@ -358,4 +371,31 @@ test('LPD-26155 Production conflict info is visible when new changes have been m
 	await prodConflictIcon.click();
 
 	await expect(page.getByText('Production Conflict')).toBeVisible();
+
+	await apiHelpers.featureFlag.updateFeatureFlag('LPD-20556', false);
+
+	// Refresh the page after turning off feature flag
+
+	await documentLibraryPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {exact: true, name: title2}).click();
+
+	await expect(prodConflictIcon).toBeVisible();
+});
+
+test('LPD-26155 No conflict icon is visible when there are no conflictsn', async ({
+	apiHelpers,
+	documentLibraryPage,
+	page,
+	site,
+}) => {
+	await apiHelpers.featureFlag.updateFeatureFlag('LPD-20556', false);
+
+	await documentLibraryPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {exact: true, name: title2}).click();
+
+	const noConflictIcon = page.locator('.change-tracking-conflict-icon');
+
+	await expect(noConflictIcon).toBeVisible();
 });

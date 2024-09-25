@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import classNames from 'classnames';
 import {ReactNode} from 'react';
 
 import Body from './Body';
@@ -14,6 +15,10 @@ import Steps from './Steps';
 
 import './index.scss';
 
+type ProductPurchaseProps = {
+	children: ReactNode;
+} & React.HTMLAttributes<HTMLDivElement>;
+
 type ProductPurchaseChildrens = {
 	Body: typeof Body;
 	Feedback: typeof Feedback;
@@ -24,14 +29,16 @@ type ProductPurchaseChildrens = {
 	Steps: typeof Steps;
 };
 
-const ProductPurchase: React.FC<{children: ReactNode}> &
-	ProductPurchaseChildrens = ({children}) => {
-	return (
-		<div className="container my-7" style={{width: 630}}>
-			{children}
-		</div>
-	);
-};
+const ProductPurchase: React.FC<ProductPurchaseProps> &
+	ProductPurchaseChildrens = ({children, className, ...props}) => (
+	<div
+		{...props}
+		className={classNames('container', className)}
+		style={{width: 630}}
+	>
+		{children}
+	</div>
+);
 
 ProductPurchase.Body = Body;
 ProductPurchase.Feedback = Feedback;

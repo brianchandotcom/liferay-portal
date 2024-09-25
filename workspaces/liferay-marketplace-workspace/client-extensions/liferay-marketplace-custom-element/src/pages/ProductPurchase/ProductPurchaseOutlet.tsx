@@ -35,7 +35,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	}));
 
 	return (
-		<ProductPurchase>
+		<ProductPurchase className="my-7">
 			<ProductPurchase.Header product={product}>
 				<ProductPurchase.HeaderAccount account={selectedAccount} />
 			</ProductPurchase.Header>

@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: generateLanguageBatchConfig
+    - fromTask: generateLanguageBatchEngineData
       into: batch
 liferay-language-batch:
     name: Liferay Language Batch

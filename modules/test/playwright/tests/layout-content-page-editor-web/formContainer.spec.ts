@@ -282,7 +282,7 @@ test.describe('Numeric input field', () => {
 
 		await pageEditorPage.publishPage();
 
-		// Go to view mode and check that the input type is numeric
+		// Go to view mode and check that the input type is numeric and has the attributes max and min
 
 		await page.goto(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
@@ -291,6 +291,8 @@ test.describe('Numeric input field', () => {
 		const lemonSizeInput = page.getByLabel('Lemon size');
 
 		expect(lemonSizeInput).toHaveAttribute('type', 'number');
+		expect(lemonSizeInput).toHaveAttribute('max');
+		expect(lemonSizeInput).toHaveAttribute('min');
 
 		// Submit the form with a wrong value
 

@@ -15,28 +15,31 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('LPD-26290 DM Preview page has not a fixed navbar', async ({
-	documentLibraryEditFilePage,
-	documentLibraryPage,
-	page,
-	site,
-}) => {
-	const title = 'DM File Entry title';
+test(
+	'DM Preview page has not a fixed navbar',
+	{tag: '@LPD-26290'},
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
+		const title = 'DM File Entry title';
 
-	await documentLibraryEditFilePage.publishNewBasicFileEntry(
-		title,
-		site.friendlyUrlPath
-	);
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			title,
+			site.friendlyUrlPath
+		);
 
-	await page.getByRole('link', {name: title}).click();
+		await page.getByRole('link', {name: title}).click();
 
-	const navItem = await page.locator('nav.component-tbar.subnav-tbar-light');
+		const navItem = await page.locator(
+			'nav.component-tbar.subnav-tbar-light'
+		);
 
-	const navItemPosition = await navItem.evaluate((element) => {
-		return window.getComputedStyle(element).getPropertyValue('position');
-	});
+		const navItemPosition = await navItem.evaluate((element) => {
+			return window
+				.getComputedStyle(element)
+				.getPropertyValue('position');
+		});
 
-	await expect(navItemPosition).not.toBe('fixed');
+		await expect(navItemPosition).not.toBe('fixed');
 
-	await documentLibraryPage.goto(site.friendlyUrlPath);
-});
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+	}
+);

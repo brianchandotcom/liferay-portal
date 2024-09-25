@@ -107,7 +107,8 @@ test(
 );
 
 test(
-	'LPD-16658 Show a success message after scheduling a new file',
+	'Show a success message after scheduling a new file',
+	{tag: '@LPD-16658'},
 	async ({documentLibraryEditFilePage, page, site}) => {
 		const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
 		const title = getRandomString();
@@ -135,7 +136,8 @@ test(
 );
 
 test(
-	'LPD-16313 Identify at a glance if a Document is visible for guests',
+	'Identify at a glance if a Document is visible for guests',
+	{tag: '@LPD-16313'},
 	async ({documentLibraryEditFilePage, documentLibraryPage, site}) => {
 		const title = getRandomString();
 
@@ -156,7 +158,8 @@ test(
 );
 
 test(
-	'LPD-16313 Show icon in the content admin and content editor',
+	'Show icon in the content admin and content editor',
+	{tag: '@LPD-16313'},
 	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
 		const title = getRandomString();
 
@@ -180,7 +183,8 @@ test(
 );
 
 test(
-	'LPD-16313 Show icon in the DL item selector',
+	'Show icon in the DL item selector',
+	{tag: '@LPD-16313'},
 	async ({
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
@@ -262,7 +266,8 @@ test(
 );
 
 test(
-	'LPD-31694 Search in DL portlet does not show results in card view for LPS-202909',
+	'Search in DL portlet does not show results in card view',
+	{tag: ['@LPD-31694', '@LPD-202909']},
 	async ({
 		apiHelpers,
 		documentLibraryEditFilePage,

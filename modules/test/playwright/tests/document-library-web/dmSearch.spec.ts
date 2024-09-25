@@ -19,12 +19,12 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('LPD-6878 DM Search bar hint', async ({
-	documentLibraryPage,
-	page,
-	site,
-}) => {
-	await documentLibraryPage.goto(site.friendlyUrlPath);
+test(
+	'DM Search bar hint',
+	{tag: '@LPD-6878'},
+	async ({documentLibraryPage, page, site}) => {
+		await documentLibraryPage.goto(site.friendlyUrlPath);
 
-	await expect(page.getByPlaceholder('Search')).toBeVisible();
-});
+		await expect(page.getByPlaceholder('Search')).toBeVisible();
+	}
+);

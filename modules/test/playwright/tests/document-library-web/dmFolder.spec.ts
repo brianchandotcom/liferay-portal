@@ -13,9 +13,7 @@ const test = mergeTests(loginTest(), isolatedSiteTest);
 
 test(
 	'Can create DM folder in French language',
-	{
-		tag: '@LPD-27271',
-	},
+	{tag: '@LPD-27271'},
 	async ({page, site}) => {
 		const folderTitle = 'DM Folder FR';
 

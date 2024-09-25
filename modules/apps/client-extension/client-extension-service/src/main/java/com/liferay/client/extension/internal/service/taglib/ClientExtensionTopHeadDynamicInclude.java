@@ -57,6 +57,10 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 				clientExtensionEntryRel.getCompanyId(),
 				clientExtensionEntryRel.getCETExternalReferenceCode());
 
+			if (globalCSSCET == null) {
+				continue;
+			}
+
 			printWriter.print("<link data-senna-track=\"temporary\" href=\"");
 			printWriter.print(globalCSSCET.getURL());
 			printWriter.print(StringPool.QUOTE);

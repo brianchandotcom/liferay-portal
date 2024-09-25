@@ -22,7 +22,9 @@ public class AccountRolePermissionThreadLocal {
 		_accountEntryId.set(accountEntryId);
 	}
 
-	public static SafeCloseable setWithSafeCloseable(long accountEntryId) {
+	public static SafeCloseable setAccountEntryIdWithSafeCloseable(
+		long accountEntryId) {
+
 		return _accountEntryId.setWithSafeCloseable(accountEntryId);
 	}
 

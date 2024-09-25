@@ -25,7 +25,7 @@ public class AllowEditAccountRoleThreadLocal {
 		return allowEditAccountRole;
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setAllowEditAccountRoleWithSafeCloseable(
 		Boolean allowEditAccountRole) {
 
 		boolean currentAllowEditAccountRole = _allowEditAccountRole.get();

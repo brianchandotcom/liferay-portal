@@ -155,7 +155,7 @@ export async function loadData(
 		);
 	}
 
-	if (Liferay.FeatureFlags['LPD-25230'] && additionalAPIURLParameters) {
+	if (additionalAPIURLParameters) {
 		const additionalAPIURLParametersArray =
 			additionalAPIURLParameters.split('&');
 

@@ -248,67 +248,65 @@ const Details = ({
 				</ClayList>
 			</ClayLayout.SheetSection>
 
-			{Liferay.FeatureFlags['LPD-25230'] && (
-				<ClayLayout.SheetSection className="mb-4">
-					<h3 className="sheet-subtitle">
-						{Liferay.Language.get('advanced-optional-parameters')}
-					</h3>
+			<ClayLayout.SheetSection className="mb-4">
+				<h3 className="sheet-subtitle">
+					{Liferay.Language.get('advanced-optional-parameters')}
+				</h3>
 
-					<ClayForm.Group>
-						<label htmlFor={`${namespace}dataSetParametersInput`}>
-							{Liferay.Language.get('parameters')}
+				<ClayForm.Group>
+					<label htmlFor={`${namespace}dataSetParametersInput`}>
+						{Liferay.Language.get('parameters')}
 
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'data-set-parameters-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</label>
-
-						<ClayInput
-							component="textarea"
-							defaultValue={dataSet.additionalAPIURLParameters}
-							id={`${namespace}dataSetParametersInput`}
-							onChange={handleKeyUpParameters}
-							placeholder={sub(
-								Liferay.Language.get(
-									'data-set-parameters-placeholder'
-								),
-								'filter=dateCreated le 2012-05-29T00:00:00.000Z&flatten=true&sort=name'
+						<span
+							className="label-icon lfr-portal-tooltip ml-2"
+							title={Liferay.Language.get(
+								'data-set-parameters-help'
 							)}
-							ref={parametersRef}
-							type="text"
-						/>
-					</ClayForm.Group>
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</label>
 
-					<ClayForm.Group>
-						<label htmlFor={`${namespace}dataSetURLPreviewInput`}>
-							{Liferay.Language.get('url-preview')}
-
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get('url-preview-help')}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</label>
-
-						<ClayInput
-							id={`${namespace}dataSetURLPreviewInput`}
-							readOnly
-							value={urlPreview}
-						/>
-					</ClayForm.Group>
-
-					<LearnMessage
-						resource="frontend-data-set-admin-web"
-						resourceKey="rest-parameters"
+					<ClayInput
+						component="textarea"
+						defaultValue={dataSet.additionalAPIURLParameters}
+						id={`${namespace}dataSetParametersInput`}
+						onChange={handleKeyUpParameters}
+						placeholder={sub(
+							Liferay.Language.get(
+								'data-set-parameters-placeholder'
+							),
+							'filter=dateCreated le 2012-05-29T00:00:00.000Z&flatten=true&sort=name'
+						)}
+						ref={parametersRef}
+						type="text"
 					/>
-				</ClayLayout.SheetSection>
-			)}
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor={`${namespace}dataSetURLPreviewInput`}>
+						{Liferay.Language.get('url-preview')}
+
+						<span
+							className="label-icon lfr-portal-tooltip ml-2"
+							title={Liferay.Language.get('url-preview-help')}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</label>
+
+					<ClayInput
+						id={`${namespace}dataSetURLPreviewInput`}
+						readOnly
+						value={urlPreview}
+					/>
+				</ClayForm.Group>
+
+				<LearnMessage
+					resource="frontend-data-set-admin-web"
+					resourceKey="rest-parameters"
+				/>
+			</ClayLayout.SheetSection>
 
 			<ClayLayout.SheetFooter>
 				<ClayButton.Group spaced>

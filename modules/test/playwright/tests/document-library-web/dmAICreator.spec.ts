@@ -6,20 +6,27 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 const MOCKED_IMAGE_PATH =
 	'USER_IMAGES_URL_https://images.freeimages.com/images/large-previews/83f/paris-1213603.jpg';
 
-export const test = mergeTests(loginTest(), documentLibraryPagesTest);
+export const test = mergeTests(
+	documentLibraryPagesTest,
+	isolatedSiteTest,
+	loginTest()
+);
 
 test('LPD-6717 Create AI Image option in Management Toolbar without API Key opens an alert', async ({
 	documentLibraryPage,
 	page,
+	site,
 }) => {
-	await documentLibraryPage.goto();
+	await documentLibraryPage.goto(site.friendlyUrlPath);
 	await documentLibraryPage.openCreateAIImage();
+
 	await expect(page.getByText('Configure OpenAI')).toBeVisible();
 });
 
@@ -27,9 +34,10 @@ test('LPD-6717 and LPD-6691 Create AI Image option is hidden when disabled from 
 	aiCreatorInstanceSettingsPage,
 	documentLibraryPage,
 	page,
+	site,
 }) => {
 	await aiCreatorInstanceSettingsPage.disableDalleCreateImages();
-	await documentLibraryPage.goto();
+	await documentLibraryPage.goto(site.friendlyUrlPath);
 	await documentLibraryPage.openNewButton();
 	await expect(
 		page.getByRole('menuitem', {name: 'Create AI Image'})
@@ -43,12 +51,13 @@ test('LPD-6677 Can add images to DM when API Key is provided', async ({
 	documentLibraryPage,
 	gogoShellPage,
 	page,
+	site,
 }) => {
 	await gogoShellPage.addCommand(
 		'scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient'
 	);
 	await aiCreatorInstanceSettingsPage.addApiKey();
-	await documentLibraryPage.goto();
+	await documentLibraryPage.goto(site.friendlyUrlPath);
 	await documentLibraryPage.openCreateAIImage();
 	await expect(page.getByText('Create AI Image')).toBeVisible();
 
@@ -68,7 +77,6 @@ test('LPD-6677 Can add images to DM when API Key is provided', async ({
 		page.getByRole('link').filter({hasText: 'AI-image-'})
 	).toHaveCount(1);
 
-	await documentLibraryPage.deleteAllFileEntries();
 	await aiCreatorInstanceSettingsPage.removeApiKey();
 	await gogoShellPage.addCommand(
 		'scr:disable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient'

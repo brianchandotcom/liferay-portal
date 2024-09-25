@@ -5,21 +5,23 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
-export const test = mergeTests(loginTest(), documentLibraryPagesTest);
+export const test = mergeTests(loginTest(), isolatedSiteTest);
 
 test(
 	'Can create DM folder in French language',
 	{
 		tag: '@LPD-27271',
 	},
-	async ({page}) => {
+	async ({page, site}) => {
 		const folderTitle = 'DM Folder FR';
 
-		await page.goto(`/fr/group/guest${PORTLET_URLS.documentLibrary}`);
+		await page.goto(
+			`/fr/group${site.friendlyUrlPath}${PORTLET_URLS.documentLibrary}`
+		);
 		await page.getByRole('button', {name: 'Nouveau'}).click();
 
 		await page
@@ -32,11 +34,6 @@ test(
 		await page.getByRole('button', {name: 'Enregistrer'}).click();
 
 		await expect(page.getByRole('link', {name: folderTitle})).toBeVisible();
-
-		await page
-			.getByRole('checkbox', {name: `${folderTitle} More actions`})
-			.check();
-		await page.getByRole('button', {name: 'Effacer'}).nth(1).click();
 
 		// change back to english language
 

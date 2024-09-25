@@ -22,13 +22,14 @@ test(
 		fileSizeLimitsInstanceSettingsPage,
 		fileSizeLimitsSiteSettingsPage,
 		page,
+		site,
 	}) => {
 		await fileSizeLimitsInstanceSettingsPage.goto();
 		await fileSizeLimitsInstanceSettingsPage.modifyInputAndSave(
 			'Maximum File Upload Size',
 			'2000'
 		);
-		await fileSizeLimitsSiteSettingsPage.goto();
+		await fileSizeLimitsSiteSettingsPage.goto(site.friendlyUrlPath);
 		await fileSizeLimitsSiteSettingsPage.modifyInputAndSave(
 			'Maximum File Upload Size',
 			'1000'
@@ -38,7 +39,7 @@ test(
 			'Maximum File Upload Size',
 			'2000'
 		);
-		await fileSizeLimitsSiteSettingsPage.goto();
+		await fileSizeLimitsSiteSettingsPage.goto(site.friendlyUrlPath);
 
 		await expect(page.getByLabel('Maximum File Upload Size')).toHaveValue(
 			'1000'

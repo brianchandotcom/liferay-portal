@@ -113,13 +113,14 @@ baseTest(
 
 baseTest(
 	'LPD-16658 Show a success message after scheduling a new file',
-	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
+	async ({documentLibraryEditFilePage, page, site}) => {
 		const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
 		const title = getRandomString();
 
 		await documentLibraryEditFilePage.publishNewFileWithScheduleDate(
 			scheduleDate,
-			title
+			title,
+			site.friendlyUrlPath
 		);
 
 		await expect(page.getByRole('link', {name: title})).toBeVisible();
@@ -135,32 +136,27 @@ baseTest(
 				moment(new Date(scheduleDate)).format('M/D/YY h:mm A') +
 				'.'
 		);
-		await documentLibraryPage.deleteFileEntry(title);
 	}
 );
 
 baseTest(
 	'LPD-16313 Identify at a glance if a Document is visible for guests',
-	async ({documentLibraryEditFilePage, documentLibraryPage}) => {
+	async ({documentLibraryEditFilePage, documentLibraryPage, site}) => {
 		const title = getRandomString();
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
-			title
+			title,
+			site.friendlyUrlPath
 		);
 
 		await documentLibraryPage.changeView('cards');
-
 		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryPage.changeView('table');
-
 		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryPage.changeView('list');
-
 		await documentLibraryPage.assertPrivateFileIcon();
-
-		await documentLibraryPage.deleteFileEntry(title);
 	}
 );
 
@@ -194,12 +190,14 @@ baseTest(
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
 		documentLibraryPage,
+		site,
 	}) => {
 		const dTypeTitle = getRandomString();
 		const title = getRandomString();
 
 		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithUploadField(
-			dTypeTitle
+			dTypeTitle,
+			site.friendlyUrlPath
 		);
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(

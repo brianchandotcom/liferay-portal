@@ -20,8 +20,8 @@ export class DocumentLibraryEditDocumentTypesPage {
 		this.titleSelector = page.getByPlaceholder('Untitled');
 	}
 
-	async goto() {
-		await this.documentLibraryPage.goto();
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.documentLibraryPage.goto(siteUrl);
 		await this.documentLibraryPage.changeTab('Document Types');
 		await this.documentLibraryPage.openNewDLTypeButton();
 	}
@@ -31,15 +31,21 @@ export class DocumentLibraryEditDocumentTypesPage {
 		await this.page.getByTitle(type).dblclick();
 	}
 
-	async createNewDLTypeWithNumericField(title: string) {
-		await this.goto();
+	async createNewDLTypeWithNumericField(
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 		await this.addField('Numeric');
 		await this.titleSelector.fill(title);
 		await this.saveButton.click();
 	}
 
-	async createNewDLTypeWithUploadField(title: string) {
-		await this.goto();
+	async createNewDLTypeWithUploadField(
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 		await this.addField('Upload');
 		await this.titleSelector.fill(title);
 		await this.saveButton.click();

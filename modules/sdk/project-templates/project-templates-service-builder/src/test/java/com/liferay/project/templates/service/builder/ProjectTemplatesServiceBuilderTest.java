@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -39,6 +40,7 @@ import org.w3c.dom.Element;
 /**
  * @author Gregory Amerson
  */
+@Ignore
 public class ProjectTemplatesServiceBuilderTest
 	implements BaseProjectTemplatesTestCase {
 

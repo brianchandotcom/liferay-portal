@@ -224,20 +224,23 @@ export default function UndoRedo({
 
 			const newHistory = {
 				defaultLanguageId: defaultLanguageIdInput.value,
-				descriptionInputValue:
-					descriptionInputComponent.getValue(selectedLanguageId),
+				descriptionInputValue: descriptionInputComponent.getValue(
+					selectedLanguageIdInput.value
+				),
 				descriptionTranslatedLanguages: descriptionInputComponent
 					.get('translatedLanguages')
 					.values(),
-				friendlyURLInputValue:
-					friendlyURLInputComponent.getValue(selectedLanguageId),
+				friendlyURLInputValue: friendlyURLInputComponent.getValue(
+					selectedLanguageIdInput.value
+				),
 				friendlyURLTranslatedLanguages: friendlyURLInputComponent
 					.get('translatedLanguages')
 					.values(),
 				name: fieldName,
 				selectedLanguageId: selectedLanguageIdInput.value,
-				titleInputValue:
-					titleInputComponent.getValue(selectedLanguageId),
+				titleInputValue: titleInputComponent.getValue(
+					selectedLanguageIdInput.value
+				),
 				titleTranslatedLanguages: titleInputComponent
 					.get('translatedLanguages')
 					.values(),
@@ -255,7 +258,6 @@ export default function UndoRedo({
 			friendlyURLInputComponent,
 			history,
 			portletNamespace,
-			selectedLanguageId,
 			step,
 			titleInputComponent,
 		]

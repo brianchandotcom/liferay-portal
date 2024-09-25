@@ -565,8 +565,9 @@ public class ObjectDefinitionLocalServiceImpl
 			actionableDynamicQuery.setPrimaryKeyPropertyName("objectEntryId");
 
 			try (SafeCloseable safeCloseable =
-					ObjectDefinitionThreadLocal.setDeleteObjectDefinitionId(
-						objectDefinition.getObjectDefinitionId())) {
+					ObjectDefinitionThreadLocal.
+						setDeleteObjectDefinitionIdWithSafeCloseable(
+							objectDefinition.getObjectDefinitionId())) {
 
 				actionableDynamicQuery.performActions();
 

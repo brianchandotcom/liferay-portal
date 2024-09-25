@@ -4048,7 +4048,8 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName());
 
 		try (SafeCloseable safeCloseable =
-				StrictObjectReindexThreadLocal.setStrictObjectReindex(true)) {
+				StrictObjectReindexThreadLocal.
+					setStrictObjectReindexWithSafeCloseable(true)) {
 
 			indexer.reindex(objectEntry);
 		}

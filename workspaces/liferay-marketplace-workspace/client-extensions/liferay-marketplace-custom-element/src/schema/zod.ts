@@ -74,6 +74,9 @@ const zodSchema = {
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),
 		_refIncidentReportContacts: z.array(z.any()),
+		acceptTerms: z.boolean().refine((value) => value, {
+			message: 'You must agree with the terms',
+		}),
 		allowedEmailDomains: z.array(z.string()).min(1),
 		dataCenterLocation: z.string(),
 		friendlyWorkspaceURL: z.string().min(3),

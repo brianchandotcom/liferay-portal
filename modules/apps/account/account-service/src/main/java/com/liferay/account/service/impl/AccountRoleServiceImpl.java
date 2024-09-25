@@ -69,8 +69,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 		throws PortalException {
 
 		try (SafeCloseable safeCloseable =
-				AccountRolePermissionThreadLocal.setWithSafeCloseable(
-					accountEntryId)) {
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(accountEntryId)) {
 
 			_accountRoleModelResourcePermission.check(
 				getPermissionChecker(), accountRoleId,
@@ -150,8 +150,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 		throws PortalException {
 
 		try (SafeCloseable safeCloseable =
-				AccountRolePermissionThreadLocal.setWithSafeCloseable(
-					accountEntryId)) {
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(accountEntryId)) {
 
 			for (long accountRoleId : accountRoleIds) {
 				_accountRoleModelResourcePermission.check(
@@ -173,8 +173,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 		throws PortalException {
 
 		try (SafeCloseable safeCloseable =
-				AccountRolePermissionThreadLocal.setWithSafeCloseable(
-					accountEntryId)) {
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(accountEntryId)) {
 
 			_accountRoleModelResourcePermission.check(
 				getPermissionChecker(), accountRoleId,

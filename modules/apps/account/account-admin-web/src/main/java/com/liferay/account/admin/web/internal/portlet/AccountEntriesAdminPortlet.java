@@ -49,7 +49,8 @@ public class AccountEntriesAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try (SafeCloseable safeCloseable =
-				AllowEditAccountRoleThreadLocal.setWithSafeCloseable(true)) {
+				AllowEditAccountRoleThreadLocal.
+					setAllowEditAccountRoleWithSafeCloseable(true)) {
 
 			super.doDispatch(renderRequest, renderResponse);
 		}

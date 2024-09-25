@@ -108,8 +108,8 @@ public class AccountRoleSearchPermissionFilterContributor
 					});
 
 			try (SafeCloseable safeCloseable =
-					AccountRolePermissionThreadLocal.setWithSafeCloseable(
-						accountEntryId)) {
+					AccountRolePermissionThreadLocal.
+						setAccountEntryIdWithSafeCloseable(accountEntryId)) {
 
 				for (AccountRole accountRole : accountRoles) {
 					if (!accountRoleIds.contains(accountRole.getRoleId()) &&

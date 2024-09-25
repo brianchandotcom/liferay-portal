@@ -67,8 +67,9 @@ public class AccountRoleModelResourcePermissionTest {
 		AccountEntry accountEntryB = AccountEntryTestUtil.addAccountEntry();
 
 		try (SafeCloseable safeCloseable =
-				AccountRolePermissionThreadLocal.setWithSafeCloseable(
-					accountEntryB.getAccountEntryId())) {
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(
+						accountEntryB.getAccountEntryId())) {
 
 			_testPermissions(
 				Assert::assertFalse, accountEntry, ownedAccountRole);
@@ -82,8 +83,9 @@ public class AccountRoleModelResourcePermissionTest {
 		_testPermissions(Assert::assertFalse, accountEntry, sharedAccountRole);
 
 		try (SafeCloseable safeCloseable =
-				AccountRolePermissionThreadLocal.setWithSafeCloseable(
-					accountEntry.getAccountEntryId())) {
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(
+						accountEntry.getAccountEntryId())) {
 
 			_testPermissions(
 				Assert::assertTrue, accountEntry, sharedAccountRole);

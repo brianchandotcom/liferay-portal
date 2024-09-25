@@ -164,8 +164,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		}
 
 		try (SafeCloseable safeCloseable =
-				AccountRolePermissionThreadLocal.setWithSafeCloseable(
-					accountId)) {
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(accountId)) {
 
 			return SearchUtil.search(
 				null,

@@ -1,0 +1,77 @@
+{
+	"category": "conditional",
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"terms": {
+									"boost": "${configuration.boost}",
+									"groupAssetCategoryExternalReferenceCodes": "${configuration.group_asset_category_external_reference_codes}"
+								}
+							}
+						}
+					],
+					"condition": {
+						"equals": {
+							"parameterName": "time.time_of_day",
+							"value": "${configuration.time_of_day}"
+						}
+					}
+				}
+			]
+		}
+	},
+	"icon": "thumbs-up",
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"label": "asset-category-external-reference-codes",
+						"name": "group_asset_category_external_reference_codes",
+						"type": "multiselect"
+					},
+					{
+						"label": "time-of-day",
+						"name": "time_of_day",
+						"type": "select",
+						"typeOptions": {
+							"options": [
+								{
+									"label": "Morning (4am - 12pm)",
+									"value": "morning"
+								},
+								{
+									"label": "Afternoon (12pm - 5pm)",
+									"value": "afternoon"
+								},
+								{
+									"label": "Evening (5pm - 8pm)",
+									"value": "evening"
+								},
+								{
+									"label": "Night (8pm - 4am)",
+									"value": "night"
+								}
+							]
+						}
+					},
+					{
+						"defaultValue": 20,
+						"label": "boost",
+						"name": "boost",
+						"type": "number",
+						"typeOptions": {
+							"min": 0
+						}
+					}
+				]
+			}
+		]
+	}
+}

@@ -30,7 +30,7 @@ const AttachmentUploader = () => {
 		try {
 			const response: Response =
 				(await Liferay.OAuth2Client.FromUserAgentApplication(
-					'liferay-customer-etc-spring-boot-oauth-application-user-agent'
+					'liferay-customer-etc-spring-boot-oaua'
 				).fetch(`/ticket-attachments/${ticketId}/complete-upload`, {
 					body: JSON.stringify({
 						zendeskTicketCommentBody: attachment?.comment,
@@ -53,7 +53,7 @@ const AttachmentUploader = () => {
 		try {
 			const response: Response =
 				(await Liferay.OAuth2Client.FromUserAgentApplication(
-					'liferay-customer-etc-spring-boot-oauth-application-user-agent'
+					'liferay-customer-etc-spring-boot-oaua'
 				).fetch('/ticket-attachments/initiate-upload', {
 					body: JSON.stringify({
 						fileName: attachment.file.name,

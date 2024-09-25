@@ -1426,6 +1426,12 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
+		if (!objectDefinition1.isApproved() ||
+			!objectDefinition2.isApproved()) {
+
+			return;
+		}
+
 		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
 			_relatedInfoCollectionProviderFactory.create(
 				objectDefinition1, objectDefinition2, objectRelationship);

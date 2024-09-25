@@ -82,10 +82,8 @@ const collectionFilter = (collections, searchValue) => {
 const normalizeWidget = (widget) => {
 	return {
 		data: {
-			instanceable: widget.instanceable,
 			portletId: widget.portletId,
 			portletItemId: widget.portletItemId || null,
-			used: widget.used,
 		},
 		disabled: !widget.instanceable && (widget.used || widget.embedded),
 		highlighted: widget.highlighted,

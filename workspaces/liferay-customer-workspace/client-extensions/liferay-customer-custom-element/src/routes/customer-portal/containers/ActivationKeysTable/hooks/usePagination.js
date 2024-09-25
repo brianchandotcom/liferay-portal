@@ -5,14 +5,12 @@
 
 import {useEffect, useMemo, useState} from 'react';
 import i18n from '../../../../../common/I18n';
-import {getLicenseKeyPermanentStatus} from '../../GenerateNewKey/utils/licenseKeyPermanentStatus';
 import {ACTIVATION_KEYS_LICENSE_FILTER_TYPES} from '../utils/constants';
 
 export default function usePagination(
 	activationKeys,
-	isRenewTable,
-	setAllActivationKeys,
-	statusFilter
+	statusFilter,
+	setAllActivationKeys = () => {}
 ) {
 	const [activePage, setActivePage] = useState(1);
 	const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -23,6 +21,20 @@ export default function usePagination(
 			setActivePage(1);
 		}
 	}, [statusFilter]);
+
+	const activationKeysFilteredByStatus = useMemo(() => {
+		return (
+			activationKeys?.filter((activationKey) =>
+				ACTIVATION_KEYS_LICENSE_FILTER_TYPES[statusFilter](
+					activationKey
+				)
+			) || []
+		);
+	}, [activationKeys, statusFilter]);
+
+	useEffect(() => {
+		setAllActivationKeys(activationKeysFilteredByStatus);
+	}, [activationKeysFilteredByStatus, setAllActivationKeys]);
 
 	const paginationConfig = useMemo(
 		() => ({
@@ -48,65 +60,18 @@ export default function usePagination(
 	);
 
 	const activationKeysByStatusPaginated = useMemo(() => {
-		const activationKeysFilteredByStatus = activationKeys?.filter(
-			(activationKey) =>
-				ACTIVATION_KEYS_LICENSE_FILTER_TYPES[statusFilter](
-					activationKey
-				)
-		);
+		setCurrentTotalCount(activationKeysFilteredByStatus.length);
 
-		setAllActivationKeys(activationKeysFilteredByStatus);
+		const activationKeysFilteredByStatusPerPage =
+			activationKeysFilteredByStatus.slice(
+				itemsPerPage * activePage - itemsPerPage,
+				itemsPerPage * activePage
+			);
 
-		if (activationKeysFilteredByStatus) {
-			if (isRenewTable) {
-				const activationKeysFilteredbyRenewable =
-					activationKeysFilteredByStatus?.filter((activationKey) => {
-						const isPermanentLicenseKey =
-							getLicenseKeyPermanentStatus(
-								activationKey?.startDate,
-								activationKey?.expirationDate
-							);
-
-						if (!isPermanentLicenseKey) {
-							return activationKey;
-						}
-					});
-
-				setCurrentTotalCount(activationKeysFilteredbyRenewable.length);
-
-				const activationKeysFilteredByRenewablePerPage =
-					activationKeysFilteredbyRenewable.slice(
-						itemsPerPage * activePage - itemsPerPage,
-						itemsPerPage * activePage
-					);
-
-				return activationKeysFilteredByRenewablePerPage?.length
-					? activationKeysFilteredByRenewablePerPage
-					: activationKeysFilteredbyRenewable;
-			}
-
-			setCurrentTotalCount(activationKeysFilteredByStatus.length);
-
-			const activationKeysFilteredByStatusPerPage =
-				activationKeysFilteredByStatus.slice(
-					itemsPerPage * activePage - itemsPerPage,
-					itemsPerPage * activePage
-				);
-
-			return activationKeysFilteredByStatusPerPage?.length
-				? activationKeysFilteredByStatusPerPage
-				: activationKeysFilteredByStatus;
-		}
-
-		return [];
-	}, [
-		activationKeys,
-		activePage,
-		isRenewTable,
-		itemsPerPage,
-		setAllActivationKeys,
-		statusFilter,
-	]);
+		return activationKeysFilteredByStatusPerPage?.length
+			? activationKeysFilteredByStatusPerPage
+			: activationKeysFilteredByStatus;
+	}, [activationKeysFilteredByStatus, activePage, itemsPerPage]);
 
 	return {activationKeysByStatusPaginated, paginationConfig};
 }

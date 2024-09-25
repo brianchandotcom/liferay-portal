@@ -30,6 +30,8 @@ import {
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {SubtaskStatuses} from '../../../util/statuses';
 
+let totalItems: TestrayCaseResult[] = [];
+
 type SubtasksCaseResultsProps = {
 	forceRefetch: number;
 };
@@ -124,6 +126,8 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 			Number(subtaskId),
 			Number(taskId)
 		);
+
+		totalItems = [];
 
 		mutateSubtask(currentSubtask);
 
@@ -261,13 +265,18 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 			{({items}, {dispatch, listViewContext: {selectedRows}, mutate}) => {
 				const alerts = getFloatingBoxAlerts(selectedRows);
 
-				const selectedCaseResults: TestrayCaseResult[] =
-					selectedRows.map((rowId) =>
-						items.find(
-							({testrayCaseResultId}) =>
-								rowId === testrayCaseResultId
-						)
-					);
+				totalItems = totalItems.concat(
+					items.filter(
+						(pageItem) =>
+							!totalItems.some((item) => item.id === pageItem.id)
+					)
+				);
+
+				const selectedCaseResults = selectedRows.map((rowId) =>
+					totalItems.find(
+						({testrayCaseResultId}) => rowId === testrayCaseResultId
+					)
+				);
 
 				return (
 					<FloatingBox
@@ -283,7 +292,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 							onSplitSubtasks(
 								dispatch,
 								mutate,
-								selectedCaseResults
+								selectedCaseResults as TestrayCaseResult[]
 							)
 						}
 						primaryButtonProps={{

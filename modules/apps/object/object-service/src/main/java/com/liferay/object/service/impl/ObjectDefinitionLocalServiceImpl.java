@@ -1719,7 +1719,12 @@ public class ObjectDefinitionLocalServiceImpl
 				objectRelationship.getObjectDefinitionId1());
 
 		objectDefinition.setRootObjectDefinitionId(
-			objectDefinition1.getRootObjectDefinitionId());
+			objectDefinition1.getObjectDefinitionId());
+
+		if (objectDefinition1.getRootObjectDefinitionId() != 0) {
+			objectDefinition.setRootObjectDefinitionId(
+				objectDefinition1.getRootObjectDefinitionId());
+		}
 
 		return objectDefinitionPersistence.update(objectDefinition);
 	}
@@ -1736,10 +1741,20 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinition;
 		}
 
-		objectDefinition.setRootObjectDefinitionId(
-			objectDefinition.getObjectDefinitionId());
+		long rootObjectDefinitionId =
+			objectDefinition.getRootObjectDefinitionId();
 
-		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+		if (rootObjectDefinitionId != 0) {
+			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
+		}
+		else {
+			rootObjectDefinitionId = objectDefinition.getObjectDefinitionId();
+
+			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
+		}
+
+		objectDefinition = objectDefinitionPersistence.update(
+			objectDefinition);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition objectDefinition2 =
@@ -1751,7 +1766,8 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 
 			Tree tree = _treeFactory.createObjectDefinitionTree(
-				objectRelationship.getObjectDefinitionId2());
+				objectRelationship.getObjectDefinitionId2(),
+				objectDefinitionLocalService::getObjectDefinition);
 
 			Iterator<Node> iterator = tree.iterator();
 
@@ -1763,7 +1779,7 @@ public class ObjectDefinitionLocalServiceImpl
 						node.getPrimaryKey());
 
 				nodeObjectDefinition.setRootObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId());
+					rootObjectDefinitionId);
 				nodeObjectDefinition.setPortlet(false);
 				nodeObjectDefinition.setPreviousRESTContextPath(
 					nodeObjectDefinition.getRESTContextPath());

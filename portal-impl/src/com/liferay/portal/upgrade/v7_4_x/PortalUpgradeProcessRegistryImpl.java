@@ -482,6 +482,17 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 10, 0),
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"Repository", "repositoryId"}};
+				}
+
+			});
 	}
 
 }

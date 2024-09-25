@@ -1012,6 +1012,67 @@ translationTest(
 );
 
 translationTest(
+	'Translate the Rich Text field and check if the translation persists after coming back to the page',
+	{
+		tag: '@LPD-37236',
+	},
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalPage.goto();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		const englishContent = 'English Language Text';
+
+		const catalanContent = 'Catalan Language Text';
+
+		await journalEditArticlePage.fillContent(englishContent);
+
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
+
+		await journalEditArticlePage.fillContent(catalanContent);
+
+		await journalEditArticlePage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was created successfully.`
+		);
+
+		await page.getByRole('link', {name: title}).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translating 1/2',
+			}),
+			trigger: translationButton,
+		});
+
+		await expect(
+			page
+				.getByLabel('Content', {exact: true})
+				.locator('iframe[title="editor"]')
+				.contentFrame()
+				.getByText(catalanContent)
+		).toBeVisible();
+	}
+);
+
+translationTest(
 	'LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields',
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text5678';

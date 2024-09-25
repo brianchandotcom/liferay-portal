@@ -119,8 +119,8 @@ public class UpgradeReport {
 		_printToLogContext(reportData);
 		_printToLogContext(reportDataDiagnostics);
 
-		_writeToFile(reportData);
-		_writeToFile(reportDataDiagnostics);
+		_writeToFile(reportData, "upgrade-report.txt");
+		_writeToFile(reportDataDiagnostics, "upgrade-report-diagnostics.txt");
 	}
 
 	private int _getBuildNumber() {
@@ -371,7 +371,7 @@ public class UpgradeReport {
 				}
 			).build()
 		).put(
-				"liferay.home", PropsValues.LIFERAY_HOME
+			"liferay.home", PropsValues.LIFERAY_HOME
 		).put(
 			"jvm.arguments",
 			() -> {
@@ -543,8 +543,6 @@ public class UpgradeReport {
 		UpgradeRecorder upgradeRecorder) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
-			"diagnostics", true
-		).put(
 			"execution.date", _executionDate
 		).put(
 			"execution.time", _executionTime
@@ -666,7 +664,7 @@ public class UpgradeReport {
 		).build();
 	}
 
-	private File _getReportFile(boolean diagnostics) {
+	private File _getReportFile(String reportFileName) {
 		File reportsDir = null;
 
 		if (!Validator.isBlank(PropsValues.UPGRADE_REPORT_DIR)) {
@@ -698,18 +696,9 @@ public class UpgradeReport {
 			}
 		}
 
-		File reportFile = null;
-
-		if (diagnostics) {
-			reportFile = new File(reportsDir, "upgrade-report-diagnostics.txt");
-		}
-		else {
-			reportFile = new File(reportsDir, "upgrade-report.txt");
-		}
+		File reportFile = new File(reportsDir, reportFileName);
 
 		if (reportFile.exists()) {
-			String reportFileName = reportFile.getName();
-
 			reportFile.renameTo(
 				new File(
 					reportsDir,
@@ -875,7 +864,9 @@ public class UpgradeReport {
 		}
 	}
 
-	private void _writeToFile(Map<String, Object> reportData) {
+	private void _writeToFile(
+		Map<String, Object> reportData, String reportFileName) {
+
 		StringBundler sb = new StringBundler();
 
 		for (Map.Entry<String, Object> entry1 : reportData.entrySet()) {
@@ -886,10 +877,6 @@ public class UpgradeReport {
 			}
 
 			String key = entry1.getKey();
-
-			if (StringUtil.equals(key, "diagnostics")) {
-				continue;
-			}
 
 			if (value instanceof Collection<?>) {
 				String reportHeader = _getReportHeader(key);
@@ -938,10 +925,7 @@ public class UpgradeReport {
 		File reportFile = null;
 
 		try {
-			boolean diagnostics = GetterUtil.getBoolean(
-				reportData.get("diagnostics"));
-
-			reportFile = _getReportFile(diagnostics);
+			reportFile = _getReportFile(reportFileName);
 
 			FileUtil.write(
 				reportFile,

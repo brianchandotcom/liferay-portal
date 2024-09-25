@@ -3966,26 +3966,6 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-jboss-mysql56-jdk8">
-		<run-functional-test
-			app.server.type="jboss"
-			database.type="mysql"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
 	<target name="functional-bundle-jboss-mysql57-jdk8">
 		<run-functional-test
 			app.server.type="jboss"
@@ -4076,24 +4056,12 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-marketplaceapp-smoke-jboss-mysql56-jdk8">
-		<antcall target="functional-bundle-jboss-mysql56-jdk8" />
-	</target>
-
 	<target name="functional-bundle-marketplaceapp-smoke-jboss-mysql57-jdk8">
 		<antcall target="functional-bundle-jboss-mysql57-jdk8" />
 	</target>
 
-	<target name="functional-bundle-marketplaceapp-smoke-tomcat-mysql56-jdk8">
-		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
-	</target>
-
 	<target name="functional-bundle-marketplaceapp-smoke-tomcat-mysql57-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
-	</target>
-
-	<target name="functional-bundle-marketplaceapp-smoke-wildfly-mysql56-jdk8">
-		<antcall target="functional-bundle-wildfly-mysql56-jdk8" />
 	</target>
 
 	<target name="functional-bundle-marketplaceapp-smoke-wildfly-mysql57-jdk8">
@@ -4445,25 +4413,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mariadb"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-bundle-tomcat-mysql56-jdk8">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="mysql"
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
@@ -5019,25 +4968,6 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-weblogic141-mysql56-jdk8">
-		<run-functional-test
-			app.server.type="weblogic"
-			database.type="mysql"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
 	<target name="functional-bundle-weblogic141-mysql57-jdk8">
 		<run-functional-test
 			app.server.type="weblogic"
@@ -5120,25 +5050,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test
 			app.server.type="wildfly"
 			database.type="mariadb"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-bundle-wildfly-mysql56-jdk8">
-		<run-functional-test
-			app.server.type="wildfly"
-			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -5358,10 +5269,6 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-smoke-bundle-tomcat-mariadb102-jdk21_zulu">
 		<antcall target="functional-bundle-tomcat-mariadb102-jdk21_zulu" />
-	</target>
-
-	<target name="functional-smoke-bundle-tomcat-mysql56-jdk8">
-		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
 	<target name="functional-smoke-bundle-tomcat-mysql57-jdk8">
@@ -6134,18 +6041,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
-	<target name="functional-upgrade-weblogic121-mysql56-jdk8">
-		<set-app-server-version-number app.server.type="weblogic" app.server.version="12.2.1" />
-
-		<run-functional-test app.server.type="weblogic" database.type="mysql" />
-	</target>
-
-	<target name="functional-upgrade-weblogic141-mysql56-jdk8">
-		<set-app-server-version-number app.server.type="weblogic" app.server.version="14.1.1" />
-
-		<run-functional-test app.server.type="weblogic" database.type="mysql" />
-	</target>
-
 	<target name="functional-upgrade-weblogic141-mysql57-jdk8">
 		<set-app-server-version-number app.server.type="weblogic" app.server.version="14.1.1" />
 
@@ -6448,10 +6343,6 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="legacy-functional-bundle-tomcat-mysql55">
 		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
-	</target>
-
-	<target name="legacy-functional-bundle-tomcat-mysql56">
-		<run-legacy-database-dump database.type="mysql" database.version="5.6" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-mysql57">
@@ -7286,10 +7177,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-modules-integration-test database.type="mariadb" />
 	</target>
 
-	<target name="modules-integration-mysql56-jdk8">
-		<run-modules-integration-test database.type="mysql" />
-	</target>
-
 	<target name="modules-integration-mysql57-jdk8">
 		<run-modules-integration-test database.type="mysql" database.version="5.7" />
 	</target>
@@ -7836,21 +7723,6 @@ ${output.content}</echo>
 				</antcall>
 			</test-set-up>
 		</run-batch-test>
-	</target>
-
-	<target name="plugins-functional-bundle-tomcat-mysql56-jdk8">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="mysql"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
 	</target>
 
 	<target name="plugins-functional-bundle-tomcat-mysql57-jdk8">
@@ -8578,14 +8450,6 @@ ${output.content}</echo>
 		</exec>
 	</target>
 
-	<target name="release-functional-bundle-tomcat-mysql56-jdk8">
-		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
-	</target>
-
-	<target name="release-functional-smoke-bundle-tomcat-mysql56-jdk8">
-		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
-	</target>
-
 	<target name="release-functional-smoke-bundle-tomcat-mysql57-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
 	</target>
@@ -9099,12 +8963,6 @@ information. Make sure to commit in all build services results.
 
 	<target name="subrepository-functional-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
-	</target>
-
-	<target name="subrepository-integration-mysql56-jdk8">
-		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
-
-		<run-modules-integration-test database.type="mysql" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
 	<target name="subrepository-integration-mysql57-jdk8">

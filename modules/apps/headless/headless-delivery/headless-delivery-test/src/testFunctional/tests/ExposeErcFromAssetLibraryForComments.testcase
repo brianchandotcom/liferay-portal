@@ -266,15 +266,16 @@ definition {
 			var response = CommentAPI.createCommentInBlogPosting(
 				blogPostingId = ${staticBlogPostingId},
 				commentText = "CommentOne");
+
+			var commentId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("When I make a GET request by external reference code using comment ID as external reference code") {
-			var repsonse = BlogPostingAPI.getBlogPostings();
+			var response = BlogPostingAPI.getBlogPostings();
 
 			var blogPostingErc = CommentAPI.getFieldValueOfBlogPostingComments(
 				fieldName = "externalReferenceCode",
-				responseToParse = ${repsonse});
-			var commentId = JSONUtil.getWithJSONPath(${response}, "$.id");
+				responseToParse = ${response});
 		}
 
 		task ("Then I receive an error about GET request by external reference code using comment ID as external reference code") {

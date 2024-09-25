@@ -1,7 +1,6 @@
 #if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}))
-import React from 'react';
-import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
-import {useSyncValue} from 'dynamic-data-mapping-form-field-type/hooks/useSyncValue.es';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type';
+import React, {useState} from 'react';
 #elseif (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 import 'dynamic-data-mapping-form-field-type/FieldBase/FieldBase.es';
 import './${artifactId}Register.soy.js';
@@ -15,18 +14,16 @@ import Soy from 'metal-soy';
 #end
 
 #if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}))
-const ${className} = ({name, onChange, predefinedValue, readOnly, value}) =>
-		<input
-			className="ddm-field-${artifactId} form-control ${artifactId}"
-			disabled={readOnly}
-			name={name}
-			onInput={onChange}
-			type="text"
-			value={value ? value : predefinedValue}/>
-
-const Main = ({label, name, onChange, predefinedValue, readOnly, value, ...otherProps}) =>{
-
-	const [currentValue, setCurrentValue] = useSyncValue(
+export default function ${className}({
+								   label,
+								   name,
+								   onChange,
+								   predefinedValue,
+								   readOnly,
+								   value,
+								   ...otherProps
+							   }) {
+	const [currentValue, setCurrentValue] = useState(
 		value ? value : predefinedValue
 	);
 
@@ -36,22 +33,22 @@ const Main = ({label, name, onChange, predefinedValue, readOnly, value, ...other
 			predefinedValue={predefinedValue}
 			{...otherProps}
 		>
-			<${className}
+			<input
+				className="ddm-field-slider form-control ${className}"
+				disabled={readOnly}
+				id="myRange"
+				max={100}
+				min={1}
 				name={name}
-				onChange={(event) => {
+				onInput={(event) => {
 					setCurrentValue(event.target.value);
 					onChange(event);
 				}}
-				predefinedValue={predefinedValue}
-				readOnly={readOnly}
-				value={currentValue}
-			/>
+				type="range"
+				value={currentValue ? currentValue : predefinedValue}
+            />
 		</FieldBase>
 }
-
-Main.displayName = '${className}';
-
-export default Main;
 
 #elseif (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 import templates from './${artifactId}.soy';

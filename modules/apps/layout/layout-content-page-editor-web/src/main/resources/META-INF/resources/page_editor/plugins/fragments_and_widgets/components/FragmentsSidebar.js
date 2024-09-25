@@ -87,7 +87,7 @@ const normalizeWidget = (widget) => {
 			portletItemId: widget.portletItemId || null,
 			used: widget.used,
 		},
-		disabled: !widget.instanceable && widget.used,
+		disabled: !widget.instanceable && (widget.used || widget.embedded),
 		highlighted: widget.highlighted,
 		icon: widget.instanceable ? 'square-hole-multi' : 'square-hole',
 		itemId: widget.portletId,

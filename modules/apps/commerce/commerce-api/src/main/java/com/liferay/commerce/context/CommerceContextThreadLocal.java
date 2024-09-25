@@ -21,7 +21,7 @@ public class CommerceContextThreadLocal {
 		_commerceContext.set(commerceContext);
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setCommerceContextWithSafeCloseable(
 		CommerceContext commerceContext) {
 
 		return _commerceContext.setWithSafeCloseable(commerceContext);

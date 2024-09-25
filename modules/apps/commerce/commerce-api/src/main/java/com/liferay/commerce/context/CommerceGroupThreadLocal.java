@@ -23,7 +23,9 @@ public class CommerceGroupThreadLocal {
 		_commerceGroup.set(group);
 	}
 
-	public static SafeCloseable setWithSafeCloseable(long groupId) {
+	public static SafeCloseable setCommerceGroupWithSafeCloseable(
+		long groupId) {
+
 		return _commerceGroup.setWithSafeCloseable(
 			GroupLocalServiceUtil.fetchGroup(groupId));
 	}

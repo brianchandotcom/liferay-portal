@@ -30,7 +30,7 @@ const ProductPurchaseFeedback: React.FC<ProductPurchaseFeedback> & {
 	<div className="d-flex justify-content-center w-100">
 		<div
 			className={classNames(
-				'align-items-center d-flex flex-column justify-content-center col-4',
+				'align-items-center d-flex flex-column justify-content-center col-3',
 				className
 			)}
 		>

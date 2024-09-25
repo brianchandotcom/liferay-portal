@@ -72,7 +72,7 @@ const ProductPurchaseThankYou: React.FC<ProductPurchaseThankYouProps> = ({
 
 	return (
 		<ProductPurchaseFeedback
-			className="mt-7"
+			className="mt-9"
 			description={labels.body}
 			title={
 				<span>

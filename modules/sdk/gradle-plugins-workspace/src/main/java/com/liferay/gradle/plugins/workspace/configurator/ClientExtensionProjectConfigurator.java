@@ -33,7 +33,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.LanguageBatchUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.copy.HashifyAction;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
-import com.liferay.gradle.plugins.workspace.task.GenerateLanguageBatchConfigTask;
+import com.liferay.gradle.plugins.workspace.task.GenerateLanguageBatchEngineDataTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -110,8 +110,8 @@ public class ClientExtensionProjectConfigurator
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
 
-	public static final String GENERATE_LANGUAGE_BATCH_TASK_NAME =
-		"generateLanguageBatchConfig";
+	public static final String GENERATE_LANGUAGE_BATCH_ENGINE_DATA_TASK_NAME =
+		"generateLanguageBatchEngineData";
 
 	public static final String VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME =
 		"validateClientExtensionIds";
@@ -616,7 +616,7 @@ public class ClientExtensionProjectConfigurator
 
 		if (LanguageBatchUtil.isLanguageProject(project)) {
 			InputStream inputStream =
-				GenerateLanguageBatchConfigTask.class.getResourceAsStream(
+				GenerateLanguageBatchEngineDataTask.class.getResourceAsStream(
 					"dependencies/templates/language/client-extension.yaml");
 
 			try {
@@ -949,14 +949,14 @@ public class ClientExtensionProjectConfigurator
 				buildLangTask.setLangFileName("Language");
 			});
 
-		TaskProvider<GenerateLanguageBatchConfigTask>
-			generateLanguageBatchConfigTaskProvider =
+		TaskProvider<GenerateLanguageBatchEngineDataTask>
+			generateLanguageBatchEngineDataTaskProvider =
 				GradleUtil.addTaskProvider(
-					project, GENERATE_LANGUAGE_BATCH_TASK_NAME,
-					GenerateLanguageBatchConfigTask.class);
+					project, GENERATE_LANGUAGE_BATCH_ENGINE_DATA_TASK_NAME,
+					GenerateLanguageBatchEngineDataTask.class);
 
-		_configureTaskGenerateLanguageBatchConfig(
-			buildLangTaskProvider, generateLanguageBatchConfigTaskProvider);
+		_configureTaskGenerateLanguageBatchEngineData(
+			buildLangTaskProvider, generateLanguageBatchEngineDataTaskProvider);
 	}
 
 	private void _configureLiferayExtension(
@@ -1112,16 +1112,16 @@ public class ClientExtensionProjectConfigurator
 		copy.from(buildClientExtensionZipTaskProvider);
 	}
 
-	private void _configureTaskGenerateLanguageBatchConfig(
+	private void _configureTaskGenerateLanguageBatchEngineData(
 		TaskProvider<BuildLangTask> buildLangTaskProvider,
-		TaskProvider<GenerateLanguageBatchConfigTask>
-			generateLanguageBatchConfigTaskProvider) {
+		TaskProvider<GenerateLanguageBatchEngineDataTask>
+			generateLanguageBatchEngineDataTaskProvider) {
 
-		generateLanguageBatchConfigTaskProvider.configure(
-			generateLanguageBatchConfigTask -> {
-				generateLanguageBatchConfigTask.setGroup("hidden");
+		generateLanguageBatchEngineDataTaskProvider.configure(
+			generateLanguageBatchEngineDataTask -> {
+				generateLanguageBatchEngineDataTask.setGroup("hidden");
 
-				generateLanguageBatchConfigTask.dependsOn(
+				generateLanguageBatchEngineDataTask.dependsOn(
 					buildLangTaskProvider);
 			});
 	}

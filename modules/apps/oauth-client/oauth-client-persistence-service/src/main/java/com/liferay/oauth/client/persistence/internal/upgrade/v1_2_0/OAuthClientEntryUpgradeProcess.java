@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.Dictionary;
@@ -74,10 +75,20 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 	private void _upgradeOAuthClientEntriesWithoutOIDCProviderConfiguration()
 		throws Exception {
 
-		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate(
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select oAuthClientEntryId from OAuthClientEntry where " +
+					"metadataCacheInMillis is null");
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update OAuthClientEntry set metadataCacheInMillis = 360000 " +
-					"where metadataCacheInMillis = null");
+					"where oAuthClientEntryId = ?")) {
+
+			while (resultSet.next()) {
+				preparedStatement.setLong(
+					1, resultSet.getLong("oAuthClientEntryId"));
+
+				preparedStatement.execute();
+			}
 		}
 	}
 

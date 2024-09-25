@@ -79,12 +79,15 @@ public class ConsoleRestController extends BaseRestController {
 
 		JSONObject jsonObject = new JSONObject(json);
 
+		JSONArray cloudProvisioningJSONArray = new JSONArray(
+			customFields.get("cloud-provisioning"));
+
+		_verifyEnoughResourcesToDeploy(
+			cloudProvisioningJSONArray, jsonObject.getLong("orderItemId"));
+
 		JSONObject appJSONObject = _consoleService.deployApp(
 			jwt.getClaimAsString("username"), String.valueOf(orderId),
 			jsonObject.getString("projectId"));
-
-		JSONArray cloudProvisioningJSONArray = new JSONArray(
-			customFields.get("cloud-provisioning"));
 
 		for (int i = 0; i < cloudProvisioningJSONArray.length(); i++) {
 			JSONObject cloudProvisioningJSONObject =
@@ -132,6 +135,23 @@ public class ConsoleRestController extends BaseRestController {
 			_log.error(exception);
 
 			_log.error("Unable to uninstall app for order " + orderId);
+		}
+	}
+
+	private void _verifyEnoughResourcesToDeploy(
+			JSONArray jsonArray, long orderItemId)
+		throws Exception {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if ((orderItemId == jsonObject.getLong("orderItemId")) &&
+				(jsonObject.getLong("shippedQuantity") >= jsonObject.getLong(
+					"quantity"))) {
+
+				throw new Exception(
+					"Unable to install app, not enough resources");
+			}
 		}
 	}
 

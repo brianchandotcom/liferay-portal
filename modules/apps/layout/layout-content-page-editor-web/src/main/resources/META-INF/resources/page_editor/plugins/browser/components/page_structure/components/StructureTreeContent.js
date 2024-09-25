@@ -734,10 +734,11 @@ function visit(
 
 	return {
 		activable:
-			item.type !== LAYOUT_DATA_ITEM_TYPES.formStep &&
-			item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+			(Liferay.FeatureFlags['LPD-18221'] ||
+				(item.type !== LAYOUT_DATA_ITEM_TYPES.formStep &&
+					item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+					item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone)) &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
-			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			canUpdateItemConfiguration,
 		active: activeItemIds.includes(item.itemId),
 		children,

@@ -139,6 +139,10 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				radioTarget.closest('label').classList.toggle('disabled', true);
 			}
 		}
+
+		radioTarget.value = selectTarget.name.substring(
+			selectTarget.name.lastIndexOf('-') + 1
+		);
 	}
 
 	var userAttributeMappings = document.getElementById(

@@ -334,27 +334,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
 
-		Map<String, Object> termValues = _getFreeMarkerTermValues(
-			commerceOrderObjectDefinition, commerceOrder,
-			_getTermNames(
-				commerceOrderObjectDefinition.getObjectDefinitionId(),
-				SetUtil.fromArray(
-					"Basic Information", "Workflow Status Information")));
-
-		String body =
-			StringUtil.merge(termValues.keySet(), StringPool.POUND) +
-				StringPool.POUND;
-
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			body, DestinationNames.COMMERCE_PAYMENT_STATUS,
+			_read("commerce_order_notification_template_body.ftl"),
+			DestinationNames.COMMERCE_PAYMENT_STATUS,
 			commerceOrderObjectDefinition);
 
 		_commerceOrderLocalService.updatePaymentStatus(
 			TestPropsValues.getUserId(), commerceOrder.getCommerceOrderId(),
 			CommerceOrderPaymentConstants.STATUS_PENDING);
 
-		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValues.values()), StringPool.POUND);
+		_assertNotificationQueueEntryBody(
+			_getCommerceOrderExpectedBody(commerceOrder));
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 
@@ -1363,6 +1353,23 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			LocaleUtil.US);
 
 		return dateFormat.format(date);
+	}
+
+	private String _getCommerceOrderExpectedBody(CommerceOrder commerceOrder)
+		throws Exception {
+
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
+
+		return StringUtil.merge(
+			Arrays.asList(
+				String.valueOf(accountEntry.getAccountEntryId()),
+				String.valueOf(commerceOrder.isInactive()),
+				commerceOrder.getName(),
+				_formatDate(commerceOrder.getOrderDate()),
+				String.valueOf(commerceOrder.isPending()),
+				_formatDate(commerceOrder.getRequestedDeliveryDate()),
+				_formatDate(commerceOrder.getStatusDate())),
+			StringPool.NEW_LINE);
 	}
 
 	private Folder _getFolder(NotificationQueueEntry notificationQueueEntry)

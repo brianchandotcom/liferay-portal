@@ -696,9 +696,7 @@ public class ClientExtensionProjectConfigurator
 					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSIONS_TASK_NAME);
 
-				if (!LanguageBatchUtil.isSpecialLanguageProject(
-						createClientExtensionConfigTask.getProject())) {
-
+				if (clientExtensionYamlFile.exists()) {
 					TaskInputs taskInputs =
 						createClientExtensionConfigTask.getInputs();
 
@@ -711,9 +709,7 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
-				if (!LanguageBatchUtil.isSpecialLanguageProject(
-						copy.getProject())) {
-
+				if (clientExtensionYamlFile.exists()) {
 					TaskInputs taskInputs = copy.getInputs();
 
 					taskInputs.file(clientExtensionYamlFile);
@@ -798,9 +794,7 @@ public class ClientExtensionProjectConfigurator
 						"unique among all projects.");
 				task.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 
-				if (!LanguageBatchUtil.isSpecialLanguageProject(
-						task.getProject())) {
-
+				if (clientExtensionYamlFile.exists()) {
 					TaskInputs taskInputs = task.getInputs();
 
 					taskInputs.file(clientExtensionYamlFile);
@@ -861,9 +855,11 @@ public class ClientExtensionProjectConfigurator
 
 		validateClientExtensionTaskProvider.configure(
 			task -> {
-				TaskInputs taskInputs = task.getInputs();
+				if (clientExtensionYamlFile.exists()) {
+					TaskInputs taskInputs = task.getInputs();
 
-				taskInputs.file(clientExtensionYamlFile);
+					taskInputs.file(clientExtensionYamlFile);
+				}
 
 				TaskOutputs taskOutputs = task.getOutputs();
 

@@ -1292,7 +1292,7 @@ definition {
 		if (isSet(productQuantity)) {
 			AssertElementPresent(
 				key_entryTitle = ${productSku},
-				key_index = 9,
+				key_index = 7,
 				key_value = ${productQuantity},
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
@@ -1300,7 +1300,7 @@ definition {
 		if (isSet(productTotalPrice)) {
 			AssertElementPresent(
 				key_entryTitle = ${productSku},
-				key_index = 11,
+				key_index = 9,
 				key_value = ${productTotalPrice},
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}

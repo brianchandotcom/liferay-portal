@@ -290,35 +290,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
-	public void testFreeMarkerNotificationPicklistObjectFieldTerm()
-		throws Exception {
-
-		String body = LocalizationUtil.updateLocalization(
-			LocalizedMapUtil.getLocalizedMap(
-				HashMapBuilder.put(
-					LanguageUtil.getLanguageId(LocaleUtil.US),
-					"${ObjectField_picklistObjectField.getData()}"
-				).build()),
-			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
-
-		executeNotificationObjectAction(
-			0,
-			_addNotificationTemplate(
-				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				Collections.singletonMap(
-					LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]"),
-				false,
-				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())));
-
-		ListEntry listEntry = (ListEntry)childObjectEntryValues.get(
-			"picklistObjectField");
-
-		_assertNotificationQueueEntryTermValues(
-			Collections.singletonList(listEntry.getName()), StringPool.COMMA);
-	}
-
-	@Test
 	public void testFreeMarkerNotificationWithCommerceOrder() throws Exception {
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(

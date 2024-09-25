@@ -88,12 +88,22 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		long companyId;
+
+		if (contextCompany != null) {
+			companyId = contextCompany.getCompanyId();
+		}
+		else {
+			companyId = GetterUtil.getLong(
+				multivaluedMap.getFirst("companyId"));
+		}
+
 		return new WikiPageEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(
 					com.liferay.wiki.model.WikiPage.class.getName()),
-				contextCompany.getCompanyId(), _expandoBridgeIndexer,
-				_expandoColumnLocalService, _expandoTableLocalService));
+				companyId, _expandoBridgeIndexer, _expandoColumnLocalService,
+				_expandoTableLocalService));
 	}
 
 	@Override

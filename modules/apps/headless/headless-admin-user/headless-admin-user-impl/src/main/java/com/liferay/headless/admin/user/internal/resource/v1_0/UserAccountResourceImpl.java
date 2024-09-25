@@ -331,11 +331,21 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		long companyId;
+
+		if (contextCompany != null) {
+			companyId = contextCompany.getCompanyId();
+		}
+		else {
+			companyId = GetterUtil.getLong(
+				multivaluedMap.getFirst("companyId"));
+		}
+
 		return new UserAccountEntityModel(
 			EntityFieldsUtil.getEntityFields(
-				_portal.getClassNameId(User.class.getName()),
-				contextCompany.getCompanyId(), _expandoBridgeIndexer,
-				_expandoColumnLocalService, _expandoTableLocalService));
+				_portal.getClassNameId(User.class.getName()), companyId,
+				_expandoBridgeIndexer, _expandoColumnLocalService,
+				_expandoTableLocalService));
 	}
 
 	@Override

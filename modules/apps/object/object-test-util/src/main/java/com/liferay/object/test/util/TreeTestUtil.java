@@ -32,6 +32,7 @@ import java.io.Serializable;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -88,6 +89,55 @@ public class TreeTestUtil {
 				objectRelationship.getParameterObjectFieldId(),
 				objectRelationship.getDeletionType(), true,
 				objectRelationship.getLabelMap(), null);
+		}
+	}
+
+	public static void createObjectDefinitionTree(
+			Map<String, String[]> treeMap,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			List<String> objectDefinitionNamesToBePublished,
+			ObjectRelationshipLocalService objectRelationshipLocalService)
+		throws Exception {
+
+		for (Map.Entry<String, String[]> entry : treeMap.entrySet()) {
+			ObjectDefinition parentObjectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(), "C_" + entry.getKey());
+
+			if (parentObjectDefinition == null) {
+				parentObjectDefinition =
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
+						entry.getKey());
+			}
+
+			if (objectDefinitionNamesToBePublished.contains(entry.getKey()) &&
+				!parentObjectDefinition.isApproved()) {
+
+				objectDefinitionLocalService.publishCustomObjectDefinition(
+					TestPropsValues.getUserId(),
+					parentObjectDefinition.getObjectDefinitionId());
+			}
+
+			for (String childObjectDefinitionName : entry.getValue()) {
+				ObjectDefinition childObjectDefinition =
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
+						childObjectDefinitionName);
+
+				if (objectDefinitionNamesToBePublished.contains(
+						childObjectDefinitionName)) {
+
+					objectDefinitionLocalService.publishCustomObjectDefinition(
+						TestPropsValues.getUserId(),
+						childObjectDefinition.getObjectDefinitionId());
+				}
+
+				bind(
+					objectRelationshipLocalService,
+					Collections.singletonList(
+						ObjectRelationshipTestUtil.addObjectRelationship(
+							objectRelationshipLocalService,
+							parentObjectDefinition, childObjectDefinition)));
+			}
 		}
 	}
 

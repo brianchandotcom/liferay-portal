@@ -27,7 +27,9 @@ public class ObjectDefinitionThreadLocal {
 		return false;
 	}
 
-	public static SafeCloseable setDeleteObjectDefinitionId(long id) {
+	public static SafeCloseable setDeleteObjectDefinitionIdWithSafeCloseable(
+		long id) {
+
 		return _deleteObjectDefinitionIdThreadLocal.setWithSafeCloseable(id);
 	}
 

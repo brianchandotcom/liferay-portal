@@ -17,7 +17,7 @@ public class StrictObjectReindexThreadLocal {
 		return _strictObjectReindexThreadLocal.get();
 	}
 
-	public static SafeCloseable setStrictObjectReindex(
+	public static SafeCloseable setStrictObjectReindexWithSafeCloseable(
 		boolean strictObjectReindex) {
 
 		return _strictObjectReindexThreadLocal.setWithSafeCloseable(

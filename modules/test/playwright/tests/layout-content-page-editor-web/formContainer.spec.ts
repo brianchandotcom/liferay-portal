@@ -252,6 +252,64 @@ test.describe('Numeric input field', () => {
 			page.getByPlaceholder('Lemon size in grams')
 		).toBeVisible();
 	});
+
+	test('Check the numeric input error', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Size" field
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Size']);
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode and submit the form with a wrong value
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		const lemonSizeInput = page.getByLabel('Lemon size');
+
+		await lemonSizeInput.fill('-1');
+
+		await page.getByText('Submit', {exact: true}).click();
+
+		await expect(
+			page.getByText('The lemon size must be greater than 0')
+		).toBeVisible();
+
+		// Submit the form with a correct value
+
+		await lemonSizeInput.fill('10');
+
+		await page.getByText('Submit', {exact: true}).click();
+
+		await expect(
+			page.getByText(
+				'Thank you. Your information was successfully received.'
+			)
+		).toBeVisible();
+	});
 });
 
 test.describe('Picklist input field', () => {

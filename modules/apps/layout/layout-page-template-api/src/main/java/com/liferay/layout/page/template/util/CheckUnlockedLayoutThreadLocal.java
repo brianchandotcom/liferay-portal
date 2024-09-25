@@ -17,7 +17,7 @@ public class CheckUnlockedLayoutThreadLocal {
 		return _checkUnlockedLayout.get();
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setCheckUnlockedLayoutWithSafeCloseable(
 		Boolean checkUnlockedLayout) {
 
 		boolean currentCheckUnlockedLayout = _checkUnlockedLayout.get();

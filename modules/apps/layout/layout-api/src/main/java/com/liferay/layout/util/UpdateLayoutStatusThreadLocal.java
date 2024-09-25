@@ -17,7 +17,7 @@ public class UpdateLayoutStatusThreadLocal {
 		return _updateLayoutStatus.get();
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setUpdateLayoutStatusWithSafeCloseable(
 		Boolean updateLayoutStatus) {
 
 		boolean currentUpdateLayoutStatus = _updateLayoutStatus.get();

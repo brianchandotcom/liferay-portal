@@ -634,6 +634,73 @@ definition {
 		}
 	}
 
+	@priority = 5
+	test PortalInstanceCreationDeletionUpdatesPortalInstancesPoolWithCluster {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property minimum.slave.ram = "24";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Check current companies count") {
+			User.logoutPG(
+				password = PropsUtil.get("default.admin.password"),
+				userEmailAddress = "test@liferay.com");
+
+			User.loginPG(
+				nodePort = 9080,
+				password = PropsUtil.get("default.admin.password"),
+				userEmailAddress = "test@liferay.com");
+
+			ServerAdministration.openServerAdmin(baseURL = "http://localhost:9080");
+
+			var script = '''
+				import com.liferay.portal.kernel.instance.PortalInstancePool;
+
+				import java.util.List;
+
+				List <Long> companyIds = PortalInstancePool.getCompanyIds();
+
+				out.println(companyIds.size());
+			''';
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = ${script});
+
+			AssertTextEquals(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = 1);
+		}
+
+		task ("Add company and check companies count") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = ${script});
+
+			AssertTextEquals(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = 2);
+		}
+
+		task ("Delete added company and check companies count") {
+			HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = "www.able.com");
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = ${script});
+
+			AssertTextEquals(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = 1);
+		}
+	}
+
 	@priority = 3
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property database.partition.enabled = "true";

@@ -170,8 +170,7 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
 			_emailAddressService.getEmailAddress(emailAddressId);
 
-		return EmailAddressUtil.toEmailAddress(
-			_updateEmailAddress(emailAddress, serviceEmailAddress));
+		return _updateEmailAddress(emailAddress, serviceEmailAddress);
 	}
 
 	@Override
@@ -187,8 +186,7 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 			throw new NoSuchEmailAddressException();
 		}
 
-		return EmailAddressUtil.toEmailAddress(
-			_updateEmailAddress(emailAddress, serviceEmailAddress));
+		return _updateEmailAddress(emailAddress, serviceEmailAddress);
 	}
 
 	private Long _getListTypeId(String className, String name) {
@@ -203,12 +201,12 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 		return listType.getListTypeId();
 	}
 
-	private com.liferay.portal.kernel.model.EmailAddress _updateEmailAddress(
+	private EmailAddress _updateEmailAddress(
 			EmailAddress emailAddress,
 			com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress)
 		throws Exception {
 
-		return _emailAddressService.updateEmailAddress(
+		serviceEmailAddress = _emailAddressService.updateEmailAddress(
 			GetterUtil.getString(
 				emailAddress.getExternalReferenceCode(),
 				serviceEmailAddress.getExternalReferenceCode()),
@@ -222,6 +220,8 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 				serviceEmailAddress.getListTypeId()),
 			GetterUtil.getBoolean(
 				emailAddress.getPrimary(), serviceEmailAddress.isPrimary()));
+
+		return EmailAddressUtil.toEmailAddress(serviceEmailAddress);
 	}
 
 	@Reference

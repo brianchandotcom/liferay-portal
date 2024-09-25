@@ -10,7 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(
+const test = mergeTests(
 	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPD-11313': true,

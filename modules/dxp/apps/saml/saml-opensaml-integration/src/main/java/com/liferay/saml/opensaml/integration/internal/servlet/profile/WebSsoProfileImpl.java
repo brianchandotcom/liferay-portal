@@ -1051,7 +1051,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContexts);
 		}
 
-		if (samlSsoRequestContexts.size() > 9) {
+		if (samlSsoRequestContexts.size() >=
+				_samlConfiguration.getMaxSamlSsoRequestContexts()) {
+
 			String oldestKey = (String)samlSsoRequestContexts.keySet(
 			).toArray()[0];
 

@@ -6,6 +6,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -37,6 +38,8 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.TreeFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -589,6 +592,76 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			systemObjectRelationship);
+	}
+
+	@Test
+	public void testRegisterObjectRelationshipsRelatedInfoCollectionProviders()
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		_objectRelationshipLocalService.
+			registerObjectRelationshipsRelatedInfoCollectionProviders(
+				objectDefinition1, _objectDefinitionLocalService);
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectRelationshipLocalServiceTest.class);
+
+		ServiceTrackerMap<String, RelatedInfoItemCollectionProvider>
+			serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+				bundle.getBundleContext(),
+				RelatedInfoItemCollectionProvider.class, "item.class.name");
+
+		Assert.assertNull(
+			serviceTrackerMap.getService(objectDefinition1.getClassName()));
+		Assert.assertNull(
+			serviceTrackerMap.getService(objectDefinition2.getClassName()));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId());
+
+		Assert.assertNull(
+			serviceTrackerMap.getService(objectDefinition1.getClassName()));
+		Assert.assertNull(
+			serviceTrackerMap.getService(objectDefinition2.getClassName()));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition2.getObjectDefinitionId());
+
+		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
+			serviceTrackerMap.getService(objectDefinition1.getClassName());
+
+		Assert.assertEquals(
+			objectDefinition1.getClassName(),
+			relatedInfoItemCollectionProvider.getSourceItemClassName());
+
+		relatedInfoItemCollectionProvider = serviceTrackerMap.getService(
+			objectDefinition2.getClassName());
+
+		Assert.assertEquals(
+			objectDefinition2.getClassName(),
+			relatedInfoItemCollectionProvider.getSourceItemClassName());
+
+		serviceTrackerMap.close();
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
 	@Test

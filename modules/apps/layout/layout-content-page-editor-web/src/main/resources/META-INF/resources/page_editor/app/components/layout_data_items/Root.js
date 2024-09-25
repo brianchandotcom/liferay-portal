@@ -5,6 +5,7 @@
 
 import React from 'react';
 
+import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
@@ -18,12 +19,15 @@ const Root = React.forwardRef(({children, item}, ref) => {
 		[item]
 	);
 
+	const [setRef, itemElement] = useSetRef(ref);
+
 	return (
 		<TopperEmpty
 			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
 			item={item}
+			itemElement={itemElement}
 		>
-			<div className="page-editor__root" ref={ref}>
+			<div className="page-editor__root" ref={setRef}>
 				{isEmpty && (
 					<div className="page-editor__no-fragments-state">
 						<p className="page-editor__no-fragments-state__message">

@@ -215,7 +215,7 @@ export class DocumentLibraryPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
-	async searchFor(entryTitle: string) {
+	async search(entryTitle: string) {
 		const dlPortlet = this.page.locator('.portlet-document-library');
 
 		await dlPortlet.getByPlaceholder('Search for').first().fill(entryTitle);
@@ -239,7 +239,7 @@ export class DocumentLibraryPage {
 			.getByRole('checkbox');
 
 		if (await fileEntryCheckbox.isHidden()) {
-			await this.searchFor(entryTitle);
+			await this.search(entryTitle);
 
 			await expect(fileEntryCheckbox).toBeVisible();
 		}

@@ -299,7 +299,7 @@ testSearchInDlPortlet(
 
 		await page.goto('/web' + site.friendlyUrlPath);
 
-		await documentLibraryPage.searchFor(title);
+		await documentLibraryPage.search(title);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

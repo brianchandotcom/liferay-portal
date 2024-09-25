@@ -104,7 +104,7 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 	}
 
 	return (
-		<div className="h-100 ml-auto mr-auto w-75">
+		<div className="deactivate-table">
 			<div className="d-flex flex-column">
 				<div className="text-left">
 					<h3>
@@ -141,7 +141,8 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 						<Table
 							checkboxConfig={{
 								checkboxesChecked: activationKeysIdChecked,
-								setCheckboxesChecked: setActivationKeysIdChecked,
+								setCheckboxesChecked:
+									setActivationKeysIdChecked,
 							}}
 							className="border-0 cp-activation-key-table"
 							columns={DEACTIVATE_COLUMNS}

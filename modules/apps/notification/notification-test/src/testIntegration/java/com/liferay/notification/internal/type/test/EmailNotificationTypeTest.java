@@ -26,11 +26,7 @@ import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
@@ -38,7 +34,6 @@ import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
-import com.liferay.notification.contributor.TermValuesContributor;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationTemplate;
@@ -57,25 +52,18 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -98,10 +86,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -112,6 +99,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -120,11 +108,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -133,25 +119,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.io.ByteArrayOutputStream;
-
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -237,17 +217,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			},
 			group.getGroupKey());
 
-		Map<String, Object> termValues = _getFreeMarkerTermValues(
-			childObjectDefinition,
-			_objectEntryLocalService.getPersistedModel(objectEntry.getId()),
-			_getTermNames(
-				childObjectDefinition.getObjectDefinitionId(),
-				SetUtil.fromArray(
-					"Basic Information",
-					childObjectDefinition.getLabel(
-						LanguageUtil.getLanguageId(LocaleUtil.US)))));
-
-		String body = StringUtil.merge(termValues.keySet(), StringPool.POUND);
+		String body = _read("object_entry_notification_template_body.ftl");
 
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
 			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
@@ -258,8 +228,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectEntry.getExternalReferenceCode(), childObjectDefinition,
 			objectEntry, group.getGroupKey());
 
-		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValues.values()), StringPool.POUND);
+		_assertNotificationQueueEntryBody(
+			_getObjectEntryExpectedBody(objectEntry));
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 
@@ -309,18 +279,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			PrincipalThreadLocal.setName(originalName);
 		}
 
-		termValues = _getFreeMarkerTermValues(
-			childObjectDefinition,
-			_objectEntryLocalService.getPersistedModel(objectEntry.getId()),
-			_getTermNames(
-				childObjectDefinition.getObjectDefinitionId(),
-				SetUtil.fromArray(
-					"Basic Information",
-					childObjectDefinition.getLabel(
-						LanguageUtil.getLanguageId(LocaleUtil.US)))));
-
-		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValues.values()), StringPool.POUND);
+		_assertNotificationQueueEntryBody(
+			_getObjectEntryExpectedBody(objectEntry));
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 	}
@@ -1370,8 +1330,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				String.valueOf(notificationRecipientSettingsMap.get("to"))));
 	}
 
-	private void _assertNotificationQueueEntryTermValues(
-			List<Object> expectedTermValues, String delimiter)
+	private void _assertNotificationQueueEntryBody(String expectedBody)
 		throws Exception {
 
 		List<NotificationQueueEntry> notificationQueueEntries =
@@ -1386,14 +1345,24 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntries.get(0);
 
-		assertTermValues(
-			TransformUtil.transform(
-				expectedTermValues, this::parseTermValueToString),
-			Arrays.asList(
-				StringUtil.split(notificationQueueEntry.getBody(), delimiter)));
+		Assert.assertEquals(expectedBody, notificationQueueEntry.getBody());
 
 		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntry);
+	}
+
+	private String _formatDate(Date date) {
+		if (date == null) {
+			return StringPool.BLANK;
+		}
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+				FormatStyle.SHORT, FormatStyle.SHORT, IsoChronology.INSTANCE,
+				LocaleUtil.US),
+			LocaleUtil.US);
+
+		return dateFormat.format(date);
 	}
 
 	private Folder _getFolder(NotificationQueueEntry notificationQueueEntry)
@@ -1412,139 +1381,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationQueueEntry.getNotificationQueueEntryId()));
 	}
 
-	private Map<String, Object> _getFreeMarkerTermValues(
-			ObjectDefinition objectDefinition, PersistedModel persistedModel,
-			Set<String> termNames)
+	private String _getObjectEntryExpectedBody(ObjectEntry objectEntry)
 		throws Exception {
 
-		Map<String, Object> termValues = new HashMap<>();
-
-		for (String termName : termNames) {
-			termValues.put(termName, null);
-		}
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				objectDefinition.getClassName());
-
-		InfoItemFieldValues infoItemFieldValues;
-
-		try {
-			_pushServiceContext();
-
-			infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(
-					persistedModel);
-
-			_termValuesContributor.contribute(termValues);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-
-		Map<String, Object> formattedTermValues = new HashMap<>();
-
-		for (Map.Entry<String, Object> entry : termValues.entrySet()) {
-			String termName = entry.getKey();
-
-			if (termName.equals("locale") || termName.equals("portalURL")) {
-				termName = "${" + termName + "}";
-			}
-
-			formattedTermValues.put(termName, entry.getValue());
-		}
-
-		for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
-
-			InfoField infoField = infoFieldValue.getInfoField();
-
-			String termName = "${" + infoField.getUniqueId() + ".getData()}";
-
-			if (!termNames.contains(termName)) {
-				continue;
-			}
-
-			Object termValue = infoFieldValue.getValue();
-
-			if (Validator.isNull(termValue)) {
-				termValue = StringPool.BLANK;
-			}
-			else if (termValue instanceof Date) {
-				SimpleDateFormat dateInfoFieldSimpleDateFormat =
-					new SimpleDateFormat(
-						DateTimeFormatterBuilder.getLocalizedDateTimePattern(
-							FormatStyle.SHORT, FormatStyle.SHORT,
-							IsoChronology.INSTANCE, LocaleUtil.US));
-
-				termValue = dateInfoFieldSimpleDateFormat.format(
-					(Date)termValue);
-			}
-
-			formattedTermValues.put(termName, termValue);
-		}
-
-		return HashMapBuilder.<String, Object>putAll(
-			formattedTermValues
-		).put(
-			"${key1}", "value1"
-		).put(
-			"${key2}", "value2"
-		).build();
-	}
-
-	private Set<String> _getTermNames(
-			long objectDefinitionId, Set<String> termCategories)
-		throws Exception {
-
-		Set<String> termNames = new HashSet<>();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
-		mockLiferayResourceRequest.addParameter(
-			"objectDefinitionId", String.valueOf(objectDefinitionId));
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		JSONArray ftlTermCategoriesJSONArray = JSONFactoryUtil.createJSONArray(
-			byteArrayOutputStream.toString());
-
-		for (int i = 0; i < ftlTermCategoriesJSONArray.length(); i++) {
-			JSONObject ftlTermCategoryJSONObject =
-				ftlTermCategoriesJSONArray.getJSONObject(i);
-
-			if (!termCategories.contains(
-					ftlTermCategoryJSONObject.getString("label"))) {
-
-				continue;
-			}
-
-			JSONArray itemsJSONArray = ftlTermCategoryJSONObject.getJSONArray(
-				"items");
-
-			for (int j = 0; j < itemsJSONArray.length(); j++) {
-				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(j);
-
-				if (itemJSONObject == null) {
-					continue;
-				}
-
-				termNames.add(itemJSONObject.getString("content"));
-			}
-		}
-
-		return termNames;
-	}
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
 
 	private void _pushServiceContext() throws PortalException {
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest(
@@ -1569,6 +1410,30 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		themeDisplay.setSiteGroupId(serviceContext.getScopeGroupId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		return StringUtil.merge(
+			Arrays.asList(
+				LanguageUtil.getLanguageId(LocaleUtil.US),
+				serviceBuilderObjectEntry.getUserName(),
+				_formatDate(serviceBuilderObjectEntry.getCreateDate()),
+				serviceBuilderObjectEntry.getExternalReferenceCode(),
+				_formatDate(serviceBuilderObjectEntry.getModifiedDate()),
+				String.valueOf(serviceBuilderObjectEntry.getObjectEntryId()),
+				_formatDate(serviceBuilderObjectEntry.getLastPublishDate()),
+				WorkflowConstants.getStatusLabel(
+					serviceBuilderObjectEntry.getStatus()),
+				"true", "9/25/24 12:00 AM", "2024-09-25T00:00",
+				"test@liferay.com", "12345", "123456789",
+				"listTypeEntry1Value,listTypeEntry2Value",
+				"listTypeEntry1Value", "", "textObjectFieldValue",
+				_portal.getPortalURL(
+					ServiceContextThreadLocal.getServiceContext(
+					).getRequest())),
+			StringPool.NEW_LINE);
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private void _setUser(User user) {
@@ -1842,9 +1707,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private TermValuesContributor _termValuesContributor;
 
 	@DeleteAfterTestRun
 	private User _user;

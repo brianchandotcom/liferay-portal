@@ -73,13 +73,15 @@ public class DataEngineDLFileEntryTypeLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
+	public DLFileEntryType deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
-		super.deleteFileEntryType(dlFileEntryType);
+		dlFileEntryType = super.deleteFileEntryType(dlFileEntryType);
 
 		updateDDMStructureLinks(
 			dlFileEntryType.getFileEntryTypeId(), Collections.emptySet());
+
+		return dlFileEntryType;
 	}
 
 	private void _updateDDMStructure(long structureId) {

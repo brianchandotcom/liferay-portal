@@ -24,7 +24,8 @@ public class PLOOriginalTranslationProviderImpl
 	@Override
 	public String get(Locale locale, String key) {
 		try (SafeCloseable safeCloseable =
-				PLOOriginalTranslationThreadLocal.setWithSafeCloseable(true)) {
+				PLOOriginalTranslationThreadLocal.
+					setUseOriginalTranslationWithSafeCloseable(true)) {
 
 			return _language.get(locale, key, null);
 		}

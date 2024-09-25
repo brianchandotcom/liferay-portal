@@ -89,7 +89,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 
 	await featureFlagsInstanceSettingsPage.goto();
 
-	await featureFlagsInstanceSettingsPage.searchFor('LPD-20131');
+	await featureFlagsInstanceSettingsPage.search('LPD-20131');
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag('LPD-20131', true);
 
@@ -113,7 +113,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 
 	await featureFlagsInstanceSettingsPage.goto();
 
-	await featureFlagsInstanceSettingsPage.searchFor('LPD-20131');
+	await featureFlagsInstanceSettingsPage.search('LPD-20131');
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
 		'LPD-20131',

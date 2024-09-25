@@ -54,7 +54,7 @@ test('LPS-167698 - Assert that a feature flag with dependencies can be enabled w
 }) => {
 	await featureFlagsInstanceSettingsPage.goto();
 
-	await featureFlagsInstanceSettingsPage.searchFor('LPD-0000');
+	await featureFlagsInstanceSettingsPage.search('LPD-0000');
 
 	// Enable feature flag dependency
 

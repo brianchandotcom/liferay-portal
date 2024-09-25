@@ -1743,20 +1743,23 @@ app.server.type=@{app.server.type}]]></echo>
 						<if>
 							<and>
 								<or>
-									<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
-									<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
+									<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
+									<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
 								</or>
-								<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
+								<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
+								<contains string="${env.JOB_NAME}" substring="-release" />
 							</and>
 							<then>
+								<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
 								<prepare-release-test-environment
-									app.server.type="${app.server.type}"
+									app.server.type="@{app.server.type}"
 									setup.testable.jboss="@{setup.testable.jboss}"
 									setup.testable.tomcat="@{setup.testable.tomcat}"
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
-									test.plugins.war.zip.url="@{test.plugins.war.zip.url}"
+									test.plugins.war.zip.url="${test.plugins.war.zip.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
 									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
 									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
@@ -2422,7 +2425,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<ant dir="portal-test" inheritAll="false" target="deploy" />
 
-							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
+							<setup-test-batch-testable-tomcat test.portal.bundle.version="${test.portal.bundle.version}" />
 
 							<get-test-batch-app-server-start-executable-arg-line />
 
@@ -2451,10 +2454,10 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 									<if>
 										<and>
 											<or>
-												<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
-												<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
+												<matches pattern="https?://" string="${test.portal.bundle.war.url}" />
+												<matches pattern="https?://" string="${test.portal.bundle.zip.url}" />
 											</or>
-											<matches pattern="https?://" string="@{test.sql.zip.url}" />
+											<matches pattern="https?://" string="${test.sql.zip.url}" />
 										</and>
 										<then>
 											<gradle-execute dir="modules/core" task="deploy">
@@ -2482,14 +2485,17 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 					<if>
 						<and>
 							<or>
-								<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
 							</or>
-							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
+							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
+							<contains string="${env.JOB_NAME}" substring="-release" />
 						</and>
 						<then>
+							<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
 							<prepare-release-test-environment
-								app.server.type="${app.server.type}"
+								app.server.type="@{app.server.type}"
 								setup.testable.tomcat="@{setup.testable.tomcat}"
 								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 								test.fix.pack.base.url="${test.fix.pack.base.url}"
@@ -2901,12 +2907,15 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 					<if>
 						<and>
 							<or>
-								<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
 							</or>
-							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
+							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
+							<contains string="${env.JOB_NAME}" substring="-release" />
 						</and>
 						<then>
+							<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
 							<prepare-release-test-environment
 								app.server.type="@{app.server.type}"
 								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"

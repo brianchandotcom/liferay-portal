@@ -76,7 +76,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1045,10 +1045,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				return;
 			}
 
-			samlSsoRequestContexts = new HashMap<>();
+			samlSsoRequestContexts = new LinkedHashMap<>();
 
 			httpSession.setAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContexts);
+		}
+
+		if (samlSsoRequestContexts.size() > 9) {
+			String oldestKey = (String)samlSsoRequestContexts.keySet(
+			).toArray()[0];
+
+			samlSsoRequestContexts.remove(oldestKey);
 		}
 
 		if (samlSsoRequestContext != null) {

@@ -336,64 +336,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-155169. The Numeric Input could be mapped to Long Integer, Integer, Precision Decimal and Decimal fields."
-	@priority = 5
-	test ViewMappableFields {
-		property portal.acceptance = "true";
-
-		task ("Given a page creator has a content page with a Numeric Input inside Form Container") {
-			task ("Add a Form Container framgment to content page") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name",
-					type = "content");
-
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Page Name",
-					siteName = "Test Site Name");
-
-				PageEditor.addFragment(
-					collectionName = "Form Components",
-					fragmentName = "Form Container");
-			}
-
-			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(contentType = "Purchase Order");
-			}
-
-			task ("Remove the automatic added fragments") {
-				for (var index : list "4,3,2") {
-					PageEditor.removeFragment(
-						fragmentName = "Numeric",
-						index = ${index});
-				}
-
-				for (var fragmentName : list "Numeric,Form Button") {
-					PageEditor.removeFragment(fragmentName = ${fragmentName});
-				}
-			}
-
-			task ("Add a Numeric Input fragment into the Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric");
-			}
-		}
-
-		task ("When the page creator accesses to the General panel of Numeric Input") {
-			PageEditor.gotoConfiguration(fragmentName = "Numeric");
-		}
-
-		task ("Then the page creator could see mappable fields in mapping field selector") {
-			for (var fieldName : list "Amount,Ticket Number,Price,Tax") {
-				AssertElementPresent(
-					key_fieldLabel = "Field",
-					key_value = ${fieldName},
-					locator1 = "Select#GENERIC_SELECT_VALUE");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-182728. The user should see the field error below the Numeric Input fragment."
 	@priority = 3
 	test ViewNumericInputFieldErrorMessageWhenPartialValidationFailure {

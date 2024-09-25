@@ -371,6 +371,8 @@ public class UpgradeReport {
 				}
 			).build()
 		).put(
+				"liferay.home", PropsValues.LIFERAY_HOME
+		).put(
 			"jvm.arguments",
 			() -> {
 				List<String> jvmArguments = new ArrayList<>();
@@ -416,8 +418,6 @@ public class UpgradeReport {
 
 				return ListUtil.sort(jvmArguments);
 			}
-		).put(
-			"liferay.home", PropsValues.LIFERAY_HOME
 		).put(
 			"properties",
 			() -> {

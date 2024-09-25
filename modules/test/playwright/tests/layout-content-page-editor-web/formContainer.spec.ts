@@ -282,13 +282,17 @@ test.describe('Numeric input field', () => {
 
 		await pageEditorPage.publishPage();
 
-		// Go to view mode and submit the form with a wrong value
+		// Go to view mode and check that the input type is numeric
 
 		await page.goto(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
 		const lemonSizeInput = page.getByLabel('Lemon size');
+
+		expect(lemonSizeInput).toHaveAttribute('type', 'number');
+
+		// Submit the form with a wrong value
 
 		await lemonSizeInput.fill('-1');
 

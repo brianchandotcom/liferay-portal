@@ -45,7 +45,7 @@ ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = Co
 
 	<div class="sidebar-body">
 		<c:choose>
-			<c:when test='<%= productMenuDisplayContext.isLayoutsTreeDisabled() || !productMenuDisplayContext.isShowLayoutsTree() || (Objects.equals(productMenuState, "open") && !Objects.equals(pagesTreeState, "open")) %>'>
+			<c:when test='<%= Objects.equals(productMenuState, "open") && (!Objects.equals(pagesTreeState, "open") || productMenuDisplayContext.isLayoutsTreeDisabled() || !productMenuDisplayContext.isShowLayoutsTree()) %>'>
 				<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:when test='<%= Objects.equals(productMenuState, "open") && Objects.equals(pagesTreeState, "open") %>'>

@@ -107,13 +107,11 @@ public class BaseNotificationTypeTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ListTypeEntry listTypeEntry1 = ListTypeEntryUtil.createListTypeEntry(
-			RandomTestUtil.randomString(),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+			"listTypeEntry1Key",
+			Collections.singletonMap(LocaleUtil.US, "listTypeEntry1Value"));
 		ListTypeEntry listTypeEntry2 = ListTypeEntryUtil.createListTypeEntry(
-			RandomTestUtil.randomString(),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+			"listTypeEntry2Key",
+			Collections.singletonMap(LocaleUtil.US, "listTypeEntry2Value"));
 
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
@@ -123,31 +121,17 @@ public class BaseNotificationTypeTest {
 				false, Arrays.asList(listTypeEntry1, listTypeEntry2));
 
 		childObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
-			"booleanObjectField", RandomTestUtil.randomBoolean()
+			"booleanObjectField", "true"
 		).put(
-			"dateObjectField",
-			() -> {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd");
-
-				return simpleDateFormat.format(RandomTestUtil.nextDate());
-			}
+			"dateObjectField", "2024-09-25"
 		).put(
-			"dateTimeObjectField",
-			() -> {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd 00:00:00.0");
-
-				return simpleDateFormat.format(RandomTestUtil.nextDate());
-			}
+			"dateTimeObjectField", "2024-09-25 00:00:00.0"
 		).put(
-			"emailTextObjectField",
-			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-				"@liferay.com"
+			"emailTextObjectField", "test@liferay.com"
 		).put(
-			"integerObjectField", RandomTestUtil.nextInt()
+			"integerObjectField", "12345"
 		).put(
-			"longIntegerObjectField", RandomTestUtil.nextLong()
+			"longIntegerObjectField", "123456789"
 		).put(
 			"multiselectPicklistObjectField",
 			Arrays.asList(
@@ -172,7 +156,7 @@ public class BaseNotificationTypeTest {
 				}
 			}
 		).put(
-			"textObjectField", RandomTestUtil.randomString()
+			"textObjectField", "textObjectFieldValue"
 		).build();
 
 		group = GroupTestUtil.addGroup();
@@ -379,7 +363,7 @@ public class BaseNotificationTypeTest {
 			objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), 0, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				"ParentObjectDefinition", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				false, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
@@ -458,7 +442,7 @@ public class BaseNotificationTypeTest {
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
+				"oneToManyRelationship", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		_childAuthorTermValues = HashMapBuilder.<String, Object>put(

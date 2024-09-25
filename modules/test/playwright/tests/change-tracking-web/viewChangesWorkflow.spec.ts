@@ -8,7 +8,6 @@ import moment from 'moment';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
@@ -16,9 +15,6 @@ import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-10703': true,
-	}),
 	journalPagesTest,
 	changeTrackingPagesTest,
 	workflowPagesTest

@@ -334,6 +334,34 @@ describe('FragmentsSidebar', () => {
 		);
 	});
 
+	it('disables a widget when it is not instanceable and it is embedded', () => {
+		const widget = {
+			embedded: true,
+			instanceable: false,
+			portletId: 'portlet-1',
+			portletItems: [
+				{
+					embedded: true,
+					instanceable: false,
+					portletId: 'template-portlet-1',
+					portletItemId: 'template-portlet-item-id-1',
+					preview: '',
+					title: 'Template Portlet 1',
+					used: false,
+				},
+			],
+			title: 'Portlet 1',
+			used: false,
+		};
+
+		expect(normalizeWidget(widget)).toEqual(
+			expect.objectContaining({
+				disabled: true,
+				portletItems: [expect.objectContaining({disabled: true})],
+			})
+		);
+	});
+
 	it('normalizes collection with portlets items', () => {
 		const widgets = [
 			{

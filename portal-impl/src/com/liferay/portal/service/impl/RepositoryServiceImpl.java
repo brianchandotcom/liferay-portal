@@ -39,9 +39,9 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 	@Override
 	public Repository addRepository(
-			long groupId, long classNameId, long parentFolderId, String name,
-			String description, String portletId,
-			UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long groupId, long classNameId,
+			long parentFolderId, String name, String description,
+			String portletId, UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -52,9 +52,9 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.ADD_REPOSITORY);
 
 		return repositoryLocalService.addRepository(
-			getUserId(), groupId, classNameId, parentFolderId, name,
-			description, portletId, typeSettingsUnicodeProperties, false,
-			serviceContext);
+			externalReferenceCode, getUserId(), groupId, classNameId,
+			parentFolderId, name, description, portletId,
+			typeSettingsUnicodeProperties, false, serviceContext);
 	}
 
 	@Override

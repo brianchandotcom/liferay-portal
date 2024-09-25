@@ -11,32 +11,27 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.Set;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
-import org.gradle.api.file.Directory;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
+import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Thiago Buarque
@@ -44,42 +39,42 @@ import org.gradle.api.tasks.TaskOutputs;
 public class GenerateLanguageBatchConfigTask extends DefaultTask {
 
 	public GenerateLanguageBatchConfigTask() {
-		ProjectLayout projectLayout = _project.getLayout();
+		Project project = getProject();
 
-		Directory projectDirectory = projectLayout.getProjectDirectory();
+		ObjectFactory objectFactory = project.getObjects();
 
-		File projectDir = _project.getProjectDir();
+		_batchEngineDataRegularFileProperty = objectFactory.fileProperty();
 
-		Path buildFilePath = Paths.get(projectDir.getPath(), _OUTPUT_FILE_PATH);
+		ProjectLayout projectLayout = project.getLayout();
 
-		RegularFile regularFile = projectDirectory.file(
-			buildFilePath.toString());
+		DirectoryProperty buildDirectory = projectLayout.getBuildDirectory();
 
-		TaskOutputs taskOutputs = getOutputs();
+		_batchEngineDataRegularFileProperty.convention(
+			buildDirectory.file("language.batch-engine-data.json"));
 
-		taskOutputs.files(regularFile);
+		_languageFilesConfigurableFileTree = objectFactory.fileTree();
 
-		_languageBatchEngineDataFile = regularFile;
+		_languageFilesConfigurableFileTree.include("Language_*.properties");
+		_languageFilesConfigurableFileTree.setDir(project.file("lang"));
 	}
 
 	@TaskAction
 	public void convertPropertiesFilesToBatchFiles() throws IOException {
-		Class<? extends GenerateLanguageBatchConfigTask> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/templates/language/language-batch-engine-data.json");
-
-		JsonNode rootJsonNode = _objectMapper.readTree(inputStream);
+		JsonNode rootJsonNode = _objectMapper.readTree(
+			GenerateLanguageBatchConfigTask.class.getResourceAsStream(
+				"dependencies/templates/language" +
+					"/language-batch-engine-data.json"));
 
 		ArrayNode itemsArrayNode = (ArrayNode)rootJsonNode.get("items");
 
 		try {
-			for (File file : getLanguageFiles()) {
+			ConfigurableFileTree languageFiles = getLanguageFiles();
+
+			for (File file : languageFiles.getFiles()) {
 				String name = file.getName();
 
-				name = name.replace(".properties", "");
-
-				String languageId = name.replace("Language_", "");
+				String languageId = name.substring(
+					"Language_".length(), name.lastIndexOf(".properties"));
 
 				if (Objects.equals(languageId, "en")) {
 					languageId = "en_US";
@@ -106,12 +101,18 @@ public class GenerateLanguageBatchConfigTask extends DefaultTask {
 				}
 			}
 
-			File languageBatchEngineDataFile = getLanguageBatchEngineDataFile();
+			RegularFileProperty batchEngineDataRegularFileProperty =
+				getBatchEngineDataFile();
+
+			RegularFile batchEngineDataRegularFile =
+				batchEngineDataRegularFileProperty.get();
+
+			File batchEngineDataFile = batchEngineDataRegularFile.getAsFile();
 
 			ObjectWriter objectWriter = _objectMapper.writer();
 
 			Files.write(
-				languageBatchEngineDataFile.toPath(),
+				batchEngineDataFile.toPath(),
 				objectWriter.writeValueAsBytes(rootJsonNode));
 		}
 		catch (Exception exception) {
@@ -121,24 +122,17 @@ public class GenerateLanguageBatchConfigTask extends DefaultTask {
 	}
 
 	@OutputFile
-	public File getLanguageBatchEngineDataFile() {
-		return GradleUtil.toFile(_project, _languageBatchEngineDataFile);
+	public RegularFileProperty getBatchEngineDataFile() {
+		return _batchEngineDataRegularFileProperty;
 	}
 
 	@InputFiles
-	public Set<File> getLanguageFiles() {
-		ConfigurableFileTree languageFileTree = _project.fileTree(".");
-
-		languageFileTree.include("**/Language_*.properties");
-
-		return languageFileTree.getFiles();
+	public ConfigurableFileTree getLanguageFiles() {
+		return _languageFilesConfigurableFileTree;
 	}
 
-	private static final String _OUTPUT_FILE_PATH =
-		"build/generated/language-batch-engine-data.json";
-
-	private final Object _languageBatchEngineDataFile;
+	private final RegularFileProperty _batchEngineDataRegularFileProperty;
+	private final ConfigurableFileTree _languageFilesConfigurableFileTree;
 	private final ObjectMapper _objectMapper = new ObjectMapper();
-	private final Project _project = getProject();
 
 }

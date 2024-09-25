@@ -42,6 +42,8 @@ public class MethodNamingCheck extends BaseCheck {
 			_checkSearchMethodName(detailAST, methodName);
 		}
 
+		_checkSetSafeCloseableName(detailAST, methodName);
+
 		if (AnnotationUtil.containsAnnotation(detailAST, "Override")) {
 			return;
 		}
@@ -185,6 +187,25 @@ public class MethodNamingCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkSetSafeCloseableName(
+		DetailAST detailAST, String methodName) {
+
+		String typeName = getTypeName(
+			detailAST.findFirstToken(TokenTypes.TYPE), false);
+
+		if (!typeName.equals("SafeCloseable") ||
+			!methodName.startsWith("set")) {
+
+			return;
+		}
+
+		if (!methodName.matches("set.+WithSafeCloseable\\d*")) {
+			log(
+				detailAST, _MSG_INCORRECT_SET_SAFE_CLOSEABLE_METHOD,
+				methodName);
+		}
+	}
+
 	private void _checkTypeName(DetailAST detailAST, String methodName) {
 		String absolutePath = getAbsolutePath();
 
@@ -246,6 +267,9 @@ public class MethodNamingCheck extends BaseCheck {
 
 	private static final String _MSG_INCORRECT_SEARCH_METHOD =
 		"search.method.incorrect";
+
+	private static final String _MSG_INCORRECT_SET_SAFE_CLOSEABLE_METHOD =
+		"set.safe.closeable.method.incorrect";
 
 	private static final String _MSG_RENAME_METHOD = "method.rename";
 

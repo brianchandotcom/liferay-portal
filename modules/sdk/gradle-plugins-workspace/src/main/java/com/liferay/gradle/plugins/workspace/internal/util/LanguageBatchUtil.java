@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.gradle.plugins.workspace.internal.client.extension.util;
+package com.liferay.gradle.plugins.workspace.internal.util;
 
 import java.io.File;
 
@@ -20,9 +20,7 @@ import org.gradle.api.Project;
  */
 public class LanguageBatchUtil {
 
-	public static boolean isSpecialLanguageProject(
-		File rootDir, File projectDir) {
-
+	public static boolean isLanguageProject(File rootDir, File projectDir) {
 		Path dirPath = projectDir.toPath();
 
 		if (Objects.equals(rootDir.toPath(), dirPath.getParent()) &&
@@ -36,9 +34,8 @@ public class LanguageBatchUtil {
 		return false;
 	}
 
-	public static boolean isSpecialLanguageProject(Project project) {
-		return isSpecialLanguageProject(
-			project.getRootDir(), project.getProjectDir());
+	public static boolean isLanguageProject(Project project) {
+		return isLanguageProject(project.getRootDir(), project.getProjectDir());
 	}
 
 }

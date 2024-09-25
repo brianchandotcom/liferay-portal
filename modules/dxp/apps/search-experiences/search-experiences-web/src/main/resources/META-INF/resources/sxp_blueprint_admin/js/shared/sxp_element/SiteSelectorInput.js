@@ -9,9 +9,13 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
-import {GROUP_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
+import {
+	GROUP_EXTERNAL_REFERENCE_CODE,
+	GROUP_EXTERNAL_REFERENCE_CODES,
+} from '../../utils/constants';
 import removeDuplicates from '../../utils/functions/remove_duplicates';
 import toNumber from '../../utils/functions/to_number';
+import {IDENTIFIER_TYPES} from '../../utils/types/identifierTypes';
 import ThemeContext from '../ThemeContext';
 
 /**
@@ -49,9 +53,16 @@ function SiteSelectorInput({
 	const {namespace} = useContext(ThemeContext);
 	const {selectSitesURL} = useContext(ThemeContext);
 
-	const locator = id.includes(GROUP_EXTERNAL_REFERENCE_CODE)
-		? {label: 'ERC', value: 'groupexternalreferencecode'}
-		: {label: 'ID', value: 'groupid'};
+	const identifierType =
+		id.includes(GROUP_EXTERNAL_REFERENCE_CODE) ||
+		id.includes(GROUP_EXTERNAL_REFERENCE_CODES)
+			? IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+			: IDENTIFIER_TYPES.ID;
+
+	const locator =
+		identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
+			? {label: 'ERC', value: 'groupexternalreferencecode'}
+			: {label: 'ID', value: 'groupid'};
 
 	const _getLabel = (item) =>
 		`${item.groupdescriptivename} (${locator.label}: ${item[locator.value]})`;
@@ -85,7 +96,8 @@ function SiteSelectorInput({
 					}))
 					.filter(
 						({value}) =>
-							id.includes(GROUP_EXTERNAL_REFERENCE_CODE) ||
+							identifierType ===
+								IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE ||
 							typeof toNumber(value) === 'number'
 					),
 				'value'
@@ -99,7 +111,7 @@ function SiteSelectorInput({
 		setInputValue(newValue);
 
 		if (newValue.trim()) {
-			if (!id.includes(GROUP_EXTERNAL_REFERENCE_CODE)) {
+			if (identifierType === IDENTIFIER_TYPES.ID) {
 				const newValueNumber = toNumber(newValue);
 
 				newValue =
@@ -114,7 +126,7 @@ function SiteSelectorInput({
 	};
 
 	const _handleSingleItemChange = (item) => {
-		if (id.includes(GROUP_EXTERNAL_REFERENCE_CODE)) {
+		if (identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
 			setFieldValue(name, item[locator.value]);
 			setInputValue(item[locator.value]);
 		}

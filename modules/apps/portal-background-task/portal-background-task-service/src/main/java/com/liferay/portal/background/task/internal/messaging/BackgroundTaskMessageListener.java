@@ -71,7 +71,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				BackgroundTaskThreadLocal.setBackgroundTaskIdWithSafeCloseable(
 					backgroundTaskId);
 			SafeCloseable safeCloseable2 =
-				BackgroundTaskInExecutionUtil.setInExecution(
+				BackgroundTaskInExecutionUtil.setInExecutionWithSafeCloseable(
 					backgroundTaskId)) {
 
 			ServiceContext serviceContext = new ServiceContext();

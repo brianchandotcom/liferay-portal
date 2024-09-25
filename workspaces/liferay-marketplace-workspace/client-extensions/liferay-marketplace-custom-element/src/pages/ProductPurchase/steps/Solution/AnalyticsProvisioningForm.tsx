@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
@@ -54,6 +54,7 @@ const AnalyticsProvisioning = () => {
 		defaultValues: {
 			_refAllowedEmailDomains: [],
 			_refIncidentReportContacts: [],
+			acceptTerms: false,
 			allowedEmailDomains: [],
 			dataCenterLocation: DATA_CENTER_OPTIONS[0].key,
 			incidentReportContacts: [],
@@ -275,6 +276,40 @@ const AnalyticsProvisioning = () => {
 				<ClayForm.FeedbackItem>
 					{formState.errors.incidentReportContacts?.message}
 				</ClayForm.FeedbackItem>
+			</ClayForm.Group>
+
+			<ClayForm.Group
+				className={classNames('mt-4', {
+					'has-error': formState.errors.acceptTerms?.message,
+				})}
+			>
+				<ClayCheckbox
+					{...({} as any)}
+					{...register('acceptTerms')}
+					id="accept-terms"
+					label="I agree"
+				/>
+
+				<ClayForm.FeedbackItem>
+					{formState.errors.acceptTerms?.message}
+				</ClayForm.FeedbackItem>
+
+				<label className="font-weight-normal" htmlFor="accept-terms">
+					By selecting &quot;I Agree&quot;, you agree to our{' '}
+					<a
+						href="https://www.liferay.com/legal/marketplace-terms-of-service"
+						target="_blank"
+					>
+						Terms and Conditions
+					</a>{' '}
+					including our{' '}
+					<a
+						href="https://www.liferay.com/privacy-policy"
+						target="_blank"
+					>
+						Privacy Policy.
+					</a>
+				</label>
 			</ClayForm.Group>
 		</ProductPurchase.Shell>
 	);

@@ -284,7 +284,7 @@ public class PublicationsDisplayContext {
 			"sharePublicationLink",
 			() -> _publicationHelper.getShareURL(ctCollectionId, _renderRequest)
 		).put(
-			"showShareLinkTab", FeatureFlagManagerUtil.isEnabled("LPS-187436")
+			"showShareLinkTab", true
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(

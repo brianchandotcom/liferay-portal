@@ -126,8 +126,6 @@ definition {
 	@description = "This is a use case for LPS-195716. Can enable and disable share access link."
 	@priority = 3
 	test CanEnableAndDisableShareAccessLink {
-		property custom.properties = "feature.flag.LPS-187436=true";
-
 		task ("Create Web Content and Publication") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -180,8 +178,6 @@ definition {
 	@description = "This is a use case for LPS-195715. Can view Publication with link as Guest user."
 	@priority = 3
 	test CanReviewPublicationWithLinkAsGuest {
-		property custom.properties = "feature.flag.LPS-187436=true";
-
 		task ("Create Web Content and Publication") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -299,8 +295,6 @@ definition {
 	@description = "This is a use case for LPS-195718. Expire link when publication is published."
 	@priority = 3
 	test ExpireLinkWhenPublicationIsPublished {
-		property custom.properties = "feature.flag.LPS-187436=true";
-
 		task ("Create Web Content and Publication") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -356,8 +350,6 @@ definition {
 	@description = "This is a use case for LPS-195717. Expire link when sharing is disabled."
 	@priority = 3
 	test ExpireLinkWhenSharingIsDisabled {
-		property custom.properties = "feature.flag.LPS-187436=true";
-
 		task ("Create Web Content and Publication") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 

@@ -25,7 +25,7 @@ public class PLOOriginalTranslationThreadLocal {
 		return useOriginalTranslation;
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setUseOriginalTranslationWithSafeCloseable(
 		Boolean useOriginalTranslation) {
 
 		return _useOriginalTranslation.setWithSafeCloseable(

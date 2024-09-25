@@ -64,6 +64,10 @@ export class DocumentLibraryPage {
 			target: this.page.getByRole('menuitem', {name: viewName}),
 			trigger: this.page.getByLabel('Select View, Currently Selected: '),
 		});
+
+		await expect(
+			this.page.getByLabel(`Select View, Currently Selected: ${viewName}`)
+		).toBeVisible();
 	}
 
 	async deleteAllFileEntries() {

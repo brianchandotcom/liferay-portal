@@ -68,8 +68,11 @@ export class DocumentLibraryEditFilePage {
 		});
 	}
 
-	async goToNewFileDifferentType(type: string) {
-		await this.documentLibraryPage.goto();
+	async goToNewFileDifferentType(
+		type: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.documentLibraryPage.goto(siteUrl);
 
 		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
 	}
@@ -163,8 +166,12 @@ export class DocumentLibraryEditFilePage {
 		await this.publishButton.click();
 	}
 
-	async publishNewFileWithScheduleDate(scheduleDate: string, title: string) {
-		await this.goto();
+	async publishNewFileWithScheduleDate(
+		scheduleDate: string,
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 
 		await this.titleSelector.fill(title);
 

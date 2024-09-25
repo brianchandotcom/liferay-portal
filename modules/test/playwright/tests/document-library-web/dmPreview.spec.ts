@@ -6,18 +6,27 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(loginTest(), documentLibraryPagesTest);
+export const test = mergeTests(
+	documentLibraryPagesTest,
+	isolatedSiteTest,
+	loginTest()
+);
 
 test('LPD-26290 DM Preview page has not a fixed navbar', async ({
 	documentLibraryEditFilePage,
 	documentLibraryPage,
 	page,
+	site,
 }) => {
 	const title = 'DM File Entry title';
 
-	await documentLibraryEditFilePage.publishNewBasicFileEntry(title);
+	await documentLibraryEditFilePage.publishNewBasicFileEntry(
+		title,
+		site.friendlyUrlPath
+	);
 
 	await page.getByRole('link', {name: title}).click();
 
@@ -29,7 +38,5 @@ test('LPD-26290 DM Preview page has not a fixed navbar', async ({
 
 	await expect(navItemPosition).not.toBe('fixed');
 
-	await documentLibraryPage.goto();
-
-	await documentLibraryPage.deleteAllFileEntries();
+	await documentLibraryPage.goto(site.friendlyUrlPath);
 });

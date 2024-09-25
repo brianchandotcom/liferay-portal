@@ -7,18 +7,24 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
-	loginTest(),
+	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPD-11313': true,
 	}),
-	documentLibraryPagesTest
+	isolatedSiteTest,
+	loginTest()
 );
 
-test('LPD-6878 DM Search bar hint', async ({documentLibraryPage, page}) => {
-	await documentLibraryPage.goto();
+test('LPD-6878 DM Search bar hint', async ({
+	documentLibraryPage,
+	page,
+	site,
+}) => {
+	await documentLibraryPage.goto(site.friendlyUrlPath);
 
 	await expect(page.getByPlaceholder('Search')).toBeVisible();
 });

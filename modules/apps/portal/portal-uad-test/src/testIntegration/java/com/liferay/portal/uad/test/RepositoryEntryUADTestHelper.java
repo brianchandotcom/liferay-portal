@@ -31,7 +31,7 @@ public class RepositoryEntryUADTestHelper {
 
 	public RepositoryEntry addRepositoryEntry(long userId) throws Exception {
 		Repository repository = _repositoryLocalService.addRepository(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			_portal.getClassNameId(LiferayRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

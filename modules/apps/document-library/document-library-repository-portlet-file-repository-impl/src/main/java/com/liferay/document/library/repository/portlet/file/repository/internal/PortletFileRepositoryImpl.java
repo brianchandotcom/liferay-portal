@@ -284,7 +284,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return _run(
 				() -> _repositoryLocalService.addRepository(
-					user.getUserId(), groupId, classNameId,
+					null, user.getUserId(), groupId, classNameId,
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
 					StringPool.BLANK, portletId, typeSettingsUnicodeProperties,
 					true, serviceContext));

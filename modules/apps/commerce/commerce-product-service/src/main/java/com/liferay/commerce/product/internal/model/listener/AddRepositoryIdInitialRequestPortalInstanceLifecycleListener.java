@@ -110,7 +110,7 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 				serviceContext.setUserId(user.getCompanyId());
 
 				Repository repository = _repositoryLocalService.addRepository(
-					user.getUserId(), company.getGroupId(),
+					null, user.getUserId(), company.getGroupId(),
 					_portal.getClassNameId(PortletRepository.class.getName()),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null,

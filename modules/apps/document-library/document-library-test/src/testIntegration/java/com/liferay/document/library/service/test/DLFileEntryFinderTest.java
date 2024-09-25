@@ -85,7 +85,7 @@ public class DLFileEntryFinderTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		_repository = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Repository A",
 			StringPool.BLANK, "Test Portlet", new UnicodeProperties(), true,
 			serviceContext);

@@ -49,7 +49,7 @@ public class RepositoryEntryTableReferenceDefinitionTest
 		super.setUp();
 
 		_repository = _repositoryLocalService.addRepository(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			_portal.getClassNameId(PortletRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RepositoryTableReferenceDefinitionTest.class.getSimpleName(),

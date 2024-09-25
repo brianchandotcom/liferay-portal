@@ -127,7 +127,7 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 
 		com.liferay.portal.kernel.model.Repository repository =
 			_repositoryLocalService.addRepository(
-				user.getUserId(), group.getGroupId(),
+				null, user.getUserId(), group.getGroupId(),
 				_portal.getClassNameId(LiferayRepository.class.getName()),
 				dlFolder.getFolderId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), "Test Portlet",

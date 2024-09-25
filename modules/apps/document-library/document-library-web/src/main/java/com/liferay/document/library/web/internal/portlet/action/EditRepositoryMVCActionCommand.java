@@ -122,8 +122,8 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 				DLFolder.class.getName(), actionRequest);
 
 			_repositoryService.addRepository(
-				themeDisplay.getScopeGroupId(), classNameId, folderId, name,
-				description, portletDisplay.getId(),
+				null, themeDisplay.getScopeGroupId(), classNameId, folderId,
+				name, description, portletDisplay.getId(),
 				typeSettingsUnicodeProperties, serviceContext);
 		}
 		else {

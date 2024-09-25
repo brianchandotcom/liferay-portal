@@ -46,7 +46,7 @@ public class RepositoryExternalReferenceCodeUpgradeProcessTest
 		throws PortalException {
 
 		Repository repository = _repositoryLocalService.addRepository(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			_portal.getClassNameId(LiferayRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

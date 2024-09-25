@@ -464,7 +464,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	protected long addRepositoryEntries() throws Exception {
 		Repository repository = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			PortalUtil.getClassNameId(LiferayRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			PortletKeys.BACKGROUND_TASK, StringPool.BLANK,

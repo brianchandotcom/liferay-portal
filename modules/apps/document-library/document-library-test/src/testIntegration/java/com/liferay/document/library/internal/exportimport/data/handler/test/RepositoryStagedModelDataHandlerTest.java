@@ -70,7 +70,7 @@ public class RepositoryStagedModelDataHandlerTest
 			serviceContext);
 
 		_repository = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			null, TestPropsValues.getUserId(), group.getGroupId(), classNameId,
 			mountFolder.getFolderId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new UnicodeProperties(), false, serviceContext);

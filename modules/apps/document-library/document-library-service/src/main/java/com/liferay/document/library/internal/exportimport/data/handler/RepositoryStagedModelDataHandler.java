@@ -158,7 +158,8 @@ public class RepositoryStagedModelDataHandler
 					serviceContext.setUuid(repository.getUuid());
 
 					importedRepository = _repositoryLocalService.addRepository(
-						userId, portletDataContext.getScopeGroupId(),
+						repository.getExternalReferenceCode(), userId,
+						portletDataContext.getScopeGroupId(),
 						_getRepositoryClassNameId(
 							repositoryElement, repository.getClassNameId()),
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -177,7 +178,8 @@ public class RepositoryStagedModelDataHandler
 			}
 			else if (existingRepository == null) {
 				importedRepository = _repositoryLocalService.addRepository(
-					userId, portletDataContext.getScopeGroupId(),
+					repository.getExternalReferenceCode(), userId,
+					portletDataContext.getScopeGroupId(),
 					_getRepositoryClassNameId(
 						repositoryElement, repository.getClassNameId()),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,

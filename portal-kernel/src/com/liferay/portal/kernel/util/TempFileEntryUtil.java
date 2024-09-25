@@ -209,7 +209,7 @@ public class TempFileEntryUtil {
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			repository = RepositoryLocalServiceUtil.addRepository(
-				user.getUserId(), groupId, classNameId,
+				null, user.getUserId(), groupId, classNameId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				TempFileEntryUtil.class.getName(), StringPool.BLANK,
 				TempFileEntryUtil.class.getName(),

@@ -50,7 +50,7 @@ public class PortletRepositoryTest {
 	@Test
 	public void testAddRepository() throws PortalException {
 		Repository repository = _repositoryLocalService.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(PortletRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,

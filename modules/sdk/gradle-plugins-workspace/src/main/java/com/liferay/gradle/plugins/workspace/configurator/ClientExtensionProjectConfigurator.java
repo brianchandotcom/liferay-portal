@@ -617,6 +617,21 @@ public class ClientExtensionProjectConfigurator
 	private Map<String, JsonNode> _configureClientExtensionJsonNodes(
 		Project project, TaskProvider<?>... taskProviders) {
 
+		if (LanguageBatchUtil.isLanguageProject(project)) {
+			InputStream inputStream =
+				GenerateLanguageBatchConfigTask.class.getResourceAsStream(
+					"dependencies/templates/language/client-extension.yaml");
+
+			try {
+				return Collections.singletonMap(
+					"default", _yamlObjectMapper.readTree(inputStream));
+			}
+			catch (IOException ioException) {
+				throw new GradleException(
+					"Unable to parse lang yaml file", ioException);
+			}
+		}
+
 		File clientExtensionYamlFile = project.file(_CLIENT_EXTENSION_YAML);
 
 		if (!clientExtensionYamlFile.exists()) {
@@ -1239,7 +1254,10 @@ public class ClientExtensionProjectConfigurator
 		ClientExtension clientExtension, Project project) {
 
 		if (Objects.equals(clientExtension.type, "batch")) {
-			_validateRequiredDirectory(clientExtension, project, "batch");
+			if (!LanguageBatchUtil.isLanguageProject(project)) {
+				_validateRequiredDirectory(clientExtension, project, "batch");
+			}
+
 			_validateRequiredTypeSettingsKeys(
 				clientExtension, "oAuthApplicationHeadlessServer");
 		}

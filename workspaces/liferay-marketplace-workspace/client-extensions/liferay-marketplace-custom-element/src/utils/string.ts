@@ -29,3 +29,13 @@ export function removeUnnecessaryURLString(str: string) {
 export function removeHTMLTags(value: string) {
 	return value.replace(/<\/?[^>]+(>|$)/g, '');
 }
+
+export function sanitizeStringForURL(text: string) {
+	return text
+		.toLowerCase()
+		.trim()
+		.replace(/[^a-z0-9\s-]/g, '')
+		.replace(/\s+/g, '-')
+		.replace(/-+/g, '-')
+		.replace(/^-|-$/g, '');
+}

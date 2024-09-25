@@ -6,6 +6,7 @@
 import {ORDER_TYPES} from '../../../enums/Order';
 import zodSchema, {z} from '../../../schema/zod';
 import MarketplaceSpringBootOAuth2 from '../../../services/oauth/MarketplaceSpringBootOAuth2';
+import {sanitizeStringForURL} from '../../../utils/string';
 import ProductPurchase from './ProductPurchase';
 
 export default class ProductPurchaseAnalytics extends ProductPurchase {
@@ -22,7 +23,7 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 				corpProjectName: form.workspaceName,
 				corpProjectUuid: `KOR-${new Date().getTime()}`,
 				emailAddressDomains: form.allowedEmailDomains,
-				friendlyURL: form.friendlyWorkspaceURL,
+				friendlyURL: `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`,
 				incidentReportEmailAddresses: form.incidentReportContacts,
 				name: form.workspaceName,
 				ownerEmailAddress: form.workspaceOwnerEmail,

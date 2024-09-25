@@ -205,11 +205,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 						value = new HashSet<>();
 					}
 
-					Set<String> intersect = SetUtil.intersect(
-						modelResources, value);
+					Set<String> set = SetUtil.intersect(modelResources, value);
 
-					if (!intersect.isEmpty()) {
-						modelResources.removeAll(intersect);
+					if (!set.isEmpty()) {
+						modelResources.removeAll(set);
 					}
 
 					value.addAll(modelResources);

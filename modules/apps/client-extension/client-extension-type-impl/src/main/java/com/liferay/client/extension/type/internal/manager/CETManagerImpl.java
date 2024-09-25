@@ -95,7 +95,17 @@ public class CETManagerImpl implements CETManager {
 
 		Map<String, CET> cetsMap = _getCETsMap(companyId);
 
-		return cetsMap.get(externalReferenceCode);
+		CET cet = cetsMap.get(externalReferenceCode);
+
+		if (cet == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No CET found for external reference code " +
+						externalReferenceCode);
+			}
+		}
+
+		return cet;
 	}
 
 	@Override

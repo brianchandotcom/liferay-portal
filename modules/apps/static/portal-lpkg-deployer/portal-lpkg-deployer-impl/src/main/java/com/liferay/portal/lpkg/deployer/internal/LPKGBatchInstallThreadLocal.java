@@ -17,7 +17,7 @@ public class LPKGBatchInstallThreadLocal {
 		return _batchInstallInProcess.get();
 	}
 
-	public static SafeCloseable setBatchInstallInProcess(
+	public static SafeCloseable setBatchInstallInProcessWithSafeCloseable(
 		boolean batchInstallInProcess) {
 
 		return _batchInstallInProcess.setWithSafeCloseable(

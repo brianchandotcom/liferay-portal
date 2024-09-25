@@ -1703,58 +1703,58 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _completeBindingAsChild(
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition2)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipPersistence.fetchByODI2_E(
-				objectDefinition.getObjectDefinitionId(), true);
+				objectDefinition2.getObjectDefinitionId(), true);
 
 		if (objectRelationship == null) {
-			return objectDefinition;
+			return objectDefinition2;
 		}
 
 		ObjectDefinition objectDefinition1 =
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
-		objectDefinition.setRootObjectDefinitionId(
+		objectDefinition2.setRootObjectDefinitionId(
 			objectDefinition1.getObjectDefinitionId());
 
 		if (objectDefinition1.getRootObjectDefinitionId() != 0) {
-			objectDefinition.setRootObjectDefinitionId(
+			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition1.getRootObjectDefinitionId());
 		}
 
-		return objectDefinitionPersistence.update(objectDefinition);
+		return objectDefinitionPersistence.update(objectDefinition2);
 	}
 
 	private ObjectDefinition _completeBindingAsParent(
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition1)
 		throws PortalException {
 
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipPersistence.findByODI1_E(
-				objectDefinition.getObjectDefinitionId(), true);
+				objectDefinition1.getObjectDefinitionId(), true);
 
 		if (objectRelationships.isEmpty()) {
-			return objectDefinition;
+			return objectDefinition1;
 		}
 
 		long rootObjectDefinitionId =
-			objectDefinition.getRootObjectDefinitionId();
+			objectDefinition1.getRootObjectDefinitionId();
 
 		if (rootObjectDefinitionId != 0) {
-			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
+			objectDefinition1.setRootObjectDefinitionId(rootObjectDefinitionId);
 		}
 		else {
-			rootObjectDefinitionId = objectDefinition.getObjectDefinitionId();
+			rootObjectDefinitionId = objectDefinition1.getObjectDefinitionId();
 
-			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
+			objectDefinition1.setRootObjectDefinitionId(rootObjectDefinitionId);
 		}
 
-		objectDefinition = objectDefinitionPersistence.update(
-			objectDefinition);
+		objectDefinition1 = objectDefinitionPersistence.update(
+			objectDefinition1);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition objectDefinition2 =
@@ -1789,7 +1789,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		return objectDefinition;
+		return objectDefinition1;
 	}
 
 	private void _createLocalizationTable(

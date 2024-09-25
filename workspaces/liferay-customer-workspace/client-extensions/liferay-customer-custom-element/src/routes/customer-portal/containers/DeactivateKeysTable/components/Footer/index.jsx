@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Button as ClayButton} from '@clayui/core';
 import {useCallback, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {Button} from '~/common/components';
 import i18n from '../../../../../../common/I18n';
 import DeactivateButton from '../DeactivateButton';
 
@@ -58,9 +58,12 @@ const DeactivateKeysTableFooter = ({
 	return (
 		<div className="d-flex justify-content-between">
 			<Link to={urlPreviousPage}>
-				<ClayButton className="text-neutral-10" displayType="link">
+				<Button
+					className="btn btn-borderless btn-style-neutral"
+					displayType="secondary"
+				>
 					{i18n.translate('cancel')}
-				</ClayButton>
+				</Button>
 			</Link>
 
 			<DeactivateButton

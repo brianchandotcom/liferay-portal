@@ -6,8 +6,8 @@
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.frontend.helper.ProductHelper;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
-import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;

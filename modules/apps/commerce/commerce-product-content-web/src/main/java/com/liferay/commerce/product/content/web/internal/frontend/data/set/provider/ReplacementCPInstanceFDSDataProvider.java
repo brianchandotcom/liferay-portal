@@ -7,8 +7,8 @@ package com.liferay.commerce.product.content.web.internal.frontend.data.set.prov
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.frontend.helper.ProductHelper;
 import com.liferay.commerce.frontend.model.PriceModel;
-import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.web.internal.constants.CPContentFDSNames;
 import com.liferay.commerce.product.content.web.internal.model.ReplacementSku;

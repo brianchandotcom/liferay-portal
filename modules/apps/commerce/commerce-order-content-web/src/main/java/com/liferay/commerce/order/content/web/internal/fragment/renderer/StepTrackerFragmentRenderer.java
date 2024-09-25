@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
-import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
+import com.liferay.commerce.frontend.helper.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;

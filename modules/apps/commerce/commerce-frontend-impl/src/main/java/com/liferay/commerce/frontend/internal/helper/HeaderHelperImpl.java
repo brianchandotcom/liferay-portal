@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.frontend.internal.util;
+package com.liferay.commerce.frontend.internal.helper;
 
+import com.liferay.commerce.frontend.helper.HeaderHelper;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
-import com.liferay.commerce.frontend.util.HeaderHelper;
 import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

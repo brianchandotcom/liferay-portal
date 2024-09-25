@@ -6,7 +6,7 @@
 package com.liferay.commerce.frontend.taglib.internal.servlet;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.frontend.util.ProductHelper;
+import com.liferay.commerce.frontend.helper.ProductHelper;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.helper.CPContentHelper;

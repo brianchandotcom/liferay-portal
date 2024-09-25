@@ -8,7 +8,7 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
-import com.liferay.commerce.frontend.util.CommerceOrderStepTrackerHelper;
+import com.liferay.commerce.frontend.helper.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;

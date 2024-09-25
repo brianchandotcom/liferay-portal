@@ -9,7 +9,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
-export const test = mergeTests(loginTest(), isolatedSiteTest);
+const test = mergeTests(loginTest(), isolatedSiteTest);
 
 test(
 	'Can create DM folder in French language',

@@ -13,7 +13,7 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 const MOCKED_IMAGE_PATH =
 	'USER_IMAGES_URL_https://images.freeimages.com/images/large-previews/83f/paris-1213603.jpg';
 
-export const test = mergeTests(
+const test = mergeTests(
 	documentLibraryPagesTest,
 	isolatedSiteTest,
 	loginTest()

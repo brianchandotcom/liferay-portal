@@ -21,22 +21,17 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
-const baseTest = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	documentLibraryPagesTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	isolatedSiteTest,
 	loginTest()
 );
 
-export const testSearchInDlPortlet = mergeTests(
-	apiHelpersTest,
-	baseTest,
-	featureFlagsTest({
-		'LPS-178052': true,
-	})
-);
-
-baseTest(
+test(
 	'Check order by Relevance in Search of DL',
 	{
 		tag: '@LPD-32481',
@@ -71,7 +66,7 @@ baseTest(
 	}
 );
 
-baseTest(
+test(
 	'Check if Ordering by Modified Date working, after editing a document',
 	{
 		tag: '@LPD-32483',
@@ -111,7 +106,7 @@ baseTest(
 	}
 );
 
-baseTest(
+test(
 	'LPD-16658 Show a success message after scheduling a new file',
 	async ({documentLibraryEditFilePage, page, site}) => {
 		const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
@@ -139,7 +134,7 @@ baseTest(
 	}
 );
 
-baseTest(
+test(
 	'LPD-16313 Identify at a glance if a Document is visible for guests',
 	async ({documentLibraryEditFilePage, documentLibraryPage, site}) => {
 		const title = getRandomString();
@@ -160,7 +155,7 @@ baseTest(
 	}
 );
 
-baseTest(
+test(
 	'LPD-16313 Show icon in the content admin and content editor',
 	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
 		const title = getRandomString();
@@ -184,7 +179,7 @@ baseTest(
 	}
 );
 
-baseTest(
+test(
 	'LPD-16313 Show icon in the DL item selector',
 	async ({
 		documentLibraryEditDocumentTypesPage,
@@ -236,7 +231,7 @@ baseTest(
 	}
 );
 
-baseTest(
+test(
 	'Error uploading multiples files with custom document type',
 	{
 		tag: '@LPD-29609',
@@ -266,7 +261,7 @@ baseTest(
 	}
 );
 
-testSearchInDlPortlet(
+test(
 	'LPD-31694 Search in DL portlet does not show results in card view for LPS-202909',
 	async ({
 		apiHelpers,
@@ -312,7 +307,7 @@ testSearchInDlPortlet(
 	}
 );
 
-baseTest(
+test(
 	'Replace option does not work on Categories Selector',
 	{
 		tag: '@LPD-27899',

@@ -27,9 +27,9 @@ import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.util.LanguageBatchUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.JsonNodeUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.LanguageBatchUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.copy.HashifyAction;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
@@ -310,7 +310,7 @@ public class ClientExtensionProjectConfigurator
 
 		_configureLiferayRoutes(project, workspaceExtension);
 
-		if (LanguageBatchUtil.isSpecialLanguageProject(project)) {
+		if (LanguageBatchUtil.isLanguageProject(project)) {
 			_configureLanguageProject(
 				assembleClientExtensionTaskProvider,
 				createClientExtensionConfigTaskProvider, project,
@@ -346,7 +346,7 @@ public class ClientExtensionProjectConfigurator
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (LanguageBatchUtil.isSpecialLanguageProject(
+					if (LanguageBatchUtil.isLanguageProject(
 							rootDir, dirPath.toFile())) {
 
 						projectDirs.add(dirPath.toFile());

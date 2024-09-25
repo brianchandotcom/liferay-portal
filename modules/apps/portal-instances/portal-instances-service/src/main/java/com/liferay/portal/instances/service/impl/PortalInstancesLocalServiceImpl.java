@@ -8,6 +8,7 @@ package com.liferay.portal.instances.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -17,6 +18,12 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,18 +58,18 @@ public class PortalInstancesLocalServiceImpl
 			List<Long> removeableCompanyIds = ListUtil.fromArray(
 				initializedCompanyIds);
 
-			_companyLocalService.forEachCompany(
-				company -> {
-					removeableCompanyIds.remove(company.getCompanyId());
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					removeableCompanyIds.remove(companyId);
 
-					if (ArrayUtil.contains(
-							initializedCompanyIds, company.getCompanyId())) {
-
+					if (ArrayUtil.contains(initializedCompanyIds, companyId)) {
 						return;
 					}
 
-					PortalInstances.initCompany(company);
-				});
+					PortalInstances.initCompany(
+						_companyLocalService.getCompany(companyId));
+				},
+				_getCompanyIdsBySQL());
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> PortalInstances.removeCompany(companyId),
@@ -71,6 +78,22 @@ public class PortalInstancesLocalServiceImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private long[] _getCompanyIdsBySQL() throws SQLException {
+		List<Long> companyIds = new ArrayList<>();
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				companyIds.add(resultSet.getLong("companyId"));
+			}
+		}
+
+		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

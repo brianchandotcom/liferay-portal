@@ -23,7 +23,10 @@ const statusReport = {
 
 const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 	const showSLAStatus = Boolean(
-		koroneikiAccount.slaCurrent ||
+	    koroneikiAccount.partnershipCurrent ||
+	        koroneikiAccount.partnershipExpired ||
+	        koroneikiAccount.partnershipFuture ||
+		    koroneikiAccount.slaCurrent ||
 			koroneikiAccount.slaExpired ||
 			koroneikiAccount.slaFuture
 	);
@@ -42,9 +45,9 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 		}
 
 		const displayDate = {
-			[SLA_STATUS_TYPES.active]: koroneikiAccount.slaCurrentEndDate,
-			[SLA_STATUS_TYPES.future]: koroneikiAccount.slaFutureStartDate,
-			[SLA_STATUS_TYPES.expired]: koroneikiAccount.slaExpiredEndDate,
+			[SLA_STATUS_TYPES.active]: koroneikiAccount.slaCurrent ? koroneikiAccount.slaCurrentEndDate : koroneikiAccount.partnershipCurrentEndDate,
+			[SLA_STATUS_TYPES.future]: koroneikiAccount.slaFuture ? koroneikiAccount.slaFutureStartDate : koroneikiAccount.partnershipFutureStartDate,
+			[SLA_STATUS_TYPES.expired]: koroneikiAccount.slaExpired ? koroneikiAccount.slaExpiredEndDate : koroneikiAccount.partnershipExpiredEndDate,
 		};
 
 		return (

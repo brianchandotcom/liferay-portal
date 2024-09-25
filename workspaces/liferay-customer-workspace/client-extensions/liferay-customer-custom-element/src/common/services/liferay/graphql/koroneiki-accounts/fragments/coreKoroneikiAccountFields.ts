@@ -20,6 +20,15 @@ export const CORE_KORONEIKI_ACCOUNT_FIELDS = gql`
 		maxRequestors
 		name
 		partner
+		partnershipCurrent
+		partnershipCurrentEndDate
+		partnershipCurrentStartDate
+		partnershipExpired
+		partnershipExpiredEndDate
+		partnershipExpiredStartDate
+		partnershipFuture
+		partnershipFutureEndDate
+		partnershipFutureStartDate
 		region
 		slaCurrent
 		slaCurrentEndDate

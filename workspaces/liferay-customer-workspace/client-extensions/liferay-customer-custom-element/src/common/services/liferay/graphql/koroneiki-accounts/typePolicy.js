@@ -22,11 +22,17 @@ export const koroneikiAccountsTypePolicy = {
 			},
 			status: {
 				read(_, {readField}) {
-					if (readField('slaCurrent')) {
+					if (
+						readField('partnershipCurrent') ||
+						readField('slaCurrent')
+					) {
 						return SLA_STATUS_TYPES.active;
 					}
 
-					if (readField('slaFuture')) {
+					if (
+						readField('partnershipFuture') ||
+						readField('slaFuture')
+					) {
 						return SLA_STATUS_TYPES.future;
 					}
 

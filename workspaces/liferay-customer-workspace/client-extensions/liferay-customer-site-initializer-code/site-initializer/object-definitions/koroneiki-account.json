@@ -101,6 +101,96 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en-US": "Partnership Current"
+			},
+			"name": "partnershipCurrent",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Current Start Date"
+			},
+			"name": "partnershipCurrentStartDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Current End Date"
+			},
+			"name": "partnershipCurrentEndDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Expired"
+			},
+			"name": "partnershipExpired",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Expired Start Date"
+			},
+			"name": "partnershipExpiredStartDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Expired End Date"
+			},
+			"name": "partnershipExpiredEndDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Future"
+			},
+			"name": "partnershipFuture",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Future Start Date"
+			},
+			"name": "partnershipFutureStartDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partnership Future End Date"
+			},
+			"name": "partnershipFutureEndDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en-US": "Region"
 			},
 			"name": "region",

@@ -12,7 +12,9 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {setIn} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/setIn';
-import FragmentsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/FragmentsSidebar';
+import FragmentsSidebar, {
+	normalizeWidget,
+} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/FragmentsSidebar';
 import TabsPanel from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/TabsPanel';
 
 jest.mock(
@@ -65,10 +67,8 @@ const DEFAULT_WIDGETS = [
 const NORMALIZED_PORTLET_ITEMS = [
 	{
 		data: {
-			instanceable: true,
 			portletId: 'template-portlet-1',
 			portletItemId: '40063',
-			used: false,
 		},
 		disabled: false,
 		icon: 'square-hole-multi',
@@ -135,10 +135,8 @@ const NORMALIZED_TABS = [
 				children: [
 					{
 						data: {
-							instanceable: true,
 							portletId: 'portlet-1',
 							portletItemId: null,
-							used: false,
 						},
 						disabled: false,
 						icon: 'square-hole-multi',
@@ -285,146 +283,54 @@ describe('FragmentsSidebar', () => {
 	});
 
 	it('sets square-hole icon when the widget is not instanceable', () => {
-		const widgets = [
-			{
-				categories: [],
-				path: 'widget-collection-1',
-				portlets: [
-					{
-						instanceable: false,
-						portletId: 'portlet-1',
-						portletItems: [
-							{
-								instanceable: false,
-								portletId: 'template-portlet-1',
-								portletItemId: '40063',
-								preview: '',
-								title: 'Template Portlet 1',
-								used: false,
-							},
-						],
-						title: 'Portlet 1',
-						used: false,
-					},
-				],
-				title: 'Widget Collection 1',
-			},
-		];
+		const widget = {
+			instanceable: false,
+			portletId: 'portlet-1',
+			portletItems: [
+				{
+					instanceable: false,
+					portletId: 'template-portlet-1',
+					portletItemId: '40063',
+					preview: '',
+					title: 'Template Portlet 1',
+					used: false,
+				},
+			],
+			title: 'Portlet 1',
+			used: false,
+		};
 
-		renderComponent(widgets);
-
-		expect(TabsPanel).toHaveBeenCalledWith(
+		expect(normalizeWidget(widget)).toEqual(
 			expect.objectContaining({
-				displayStyle: 'list',
-				tabs: setIn(
-					NORMALIZED_TABS,
-					[1, 'collections', 0, 'children', 0],
-					{
-						data: {
-							instanceable: false,
-							portletId: 'portlet-1',
-							portletItemId: null,
-							used: false,
-						},
-						disabled: false,
-						icon: 'square-hole',
-						itemId: 'portlet-1',
-						label: 'Portlet 1',
-						portletItems: [
-							{
-								data: {
-									instanceable: false,
-									portletId: 'template-portlet-1',
-									portletItemId: '40063',
-									used: false,
-								},
-								disabled: false,
-								icon: 'square-hole',
-								itemId: 'template-portlet-1',
-								label: 'Template Portlet 1',
-								portletItems: null,
-								preview: '',
-								type: 'fragment',
-							},
-						],
-						preview: '',
-						type: 'fragment',
-					}
-				),
-			}),
-			{}
+				icon: 'square-hole',
+				portletItems: [expect.objectContaining({icon: 'square-hole'})],
+			})
 		);
 	});
 
 	it('disables a widget when it is not instanceable and it is used', () => {
-		const widgets = [
-			{
-				categories: [],
-				path: 'widget-collection-1',
-				portlets: [
-					{
-						instanceable: false,
-						portletId: 'portlet-1',
-						portletItems: [
-							{
-								instanceable: false,
-								portletId: 'template-portlet-1',
-								portletItemId: 'template-portlet-item-id-1',
-								preview: '',
-								title: 'Template Portlet 1',
-								used: true,
-							},
-						],
-						title: 'Portlet 1',
-						used: true,
-					},
-				],
-				title: 'Widget Collection 1',
-			},
-		];
+		const widget = {
+			instanceable: false,
+			portletId: 'portlet-1',
+			portletItems: [
+				{
+					instanceable: false,
+					portletId: 'template-portlet-1',
+					portletItemId: 'template-portlet-item-id-1',
+					preview: '',
+					title: 'Template Portlet 1',
+					used: true,
+				},
+			],
+			title: 'Portlet 1',
+			used: true,
+		};
 
-		renderComponent(widgets);
-
-		expect(TabsPanel).toHaveBeenCalledWith(
+		expect(normalizeWidget(widget)).toEqual(
 			expect.objectContaining({
-				displayStyle: 'list',
-				tabs: setIn(
-					NORMALIZED_TABS,
-					[1, 'collections', 0, 'children', 0],
-					{
-						data: {
-							instanceable: false,
-							portletId: 'portlet-1',
-							portletItemId: null,
-							used: true,
-						},
-						disabled: true,
-						icon: 'square-hole',
-						itemId: 'portlet-1',
-						label: 'Portlet 1',
-						portletItems: [
-							{
-								data: {
-									instanceable: false,
-									portletId: 'template-portlet-1',
-									portletItemId: 'template-portlet-item-id-1',
-									used: true,
-								},
-								disabled: true,
-								icon: 'square-hole',
-								itemId: 'template-portlet-1',
-								label: 'Template Portlet 1',
-								portletItems: null,
-								preview: '',
-								type: 'fragment',
-							},
-						],
-						preview: '',
-						type: 'fragment',
-					}
-				),
-			}),
-			{}
+				disabled: true,
+				portletItems: [expect.objectContaining({disabled: true})],
+			})
 		);
 	});
 
@@ -464,10 +370,8 @@ describe('FragmentsSidebar', () => {
 					[
 						{
 							data: {
-								instanceable: true,
 								portletId: 'portlet-item-1',
 								portletItemId: null,
-								used: false,
 							},
 							disabled: false,
 							icon: 'square-hole-multi',
@@ -550,11 +454,9 @@ describe('FragmentsSidebar', () => {
 									children: [
 										{
 											data: {
-												instanceable: true,
 												portletId:
 													'collection-4-portlet',
 												portletItemId: null,
-												used: false,
 											},
 											disabled: false,
 											icon: 'square-hole-multi',

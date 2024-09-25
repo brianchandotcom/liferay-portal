@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -113,6 +114,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -153,6 +155,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -160,6 +163,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -178,6 +186,25 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseNotificationTypeTest.setUpClass();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			EmailNotificationTypeTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			TemplateContextContributor.class,
+			new TestTemplateContextContributor(),
+			HashMapDictionaryBuilder.put(
+				"type", TemplateContextContributor.TYPE_GLOBAL
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Before
@@ -376,34 +403,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_accountEntryLocalService.deleteAccountEntry(
 			_accountEntryLocalService.fetchPersonAccountEntry(
 				TestPropsValues.getUserId()));
-	}
-
-	@Test
-	public void testFreeMarkerNotificationWithCustomService() throws Exception {
-		List<NotificationQueueEntry> initialNotificationQueueEntries =
-			_getNotificationQueueEntries();
-
-		executeNotificationObjectAction(
-			0,
-			_addNotificationTemplate(
-				"${name}", NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				Collections.singletonMap(
-					LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]"),
-				false,
-				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())));
-
-		List<NotificationQueueEntry> currentNotificationQueueEntries =
-			_getNotificationQueueEntries();
-
-		Assert.assertEquals(
-			currentNotificationQueueEntries.toString(),
-			initialNotificationQueueEntries.size() + 1,
-			currentNotificationQueueEntries.size());
-
-		NotificationQueueEntry entry = currentNotificationQueueEntries.get(0);
-
-		Assert.assertEquals(entry.toString(), "value", entry.getBody());
 	}
 
 	@Test
@@ -1339,30 +1338,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			termValues.put(termName, termValue);
 		}
 
-		termValues.put(
+		return HashMapBuilder.<String, Object>putAll(
+			termValues
+		).put(
+			"${key1}", "value1"
+		).put(
+			"${key2}", "value2"
+		).put(
 			"${portalURL}",
 			_portal.getPortalURL(
-				ObjectActionThreadLocal.getHttpServletRequest()));
-
-		return termValues;
-	}
-
-	private List<NotificationQueueEntry> _getNotificationQueueEntries() {
-		return ListUtil.sort(
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT),
-			Comparator.comparing(
-				notificationQueueEntry -> {
-					Map<String, Object> notificationRecipientSettingsMap =
-						NotificationRecipientSettingUtil.
-							getNotificationRecipientSettingsMap(
-								notificationQueueEntry);
-
-					return String.valueOf(
-						notificationRecipientSettingsMap.get(
-							NotificationRecipientSettingConstants.NAME_TO));
-				}));
+				ObjectActionThreadLocal.getHttpServletRequest())
+		).build();
 	}
 
 	private Set<String> _getTermNames(
@@ -1466,8 +1452,21 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]"),
 				singleRecipient, Collections.singletonMap(LocaleUtil.US, to)));
 
-		List<NotificationQueueEntry> notificationQueueEntries =
-			_getNotificationQueueEntries();
+		List<NotificationQueueEntry> notificationQueueEntries = ListUtil.sort(
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT),
+			Comparator.comparing(
+				notificationQueueEntry -> {
+					Map<String, Object> notificationRecipientSettingsMap =
+						NotificationRecipientSettingUtil.
+							getNotificationRecipientSettingsMap(
+								notificationQueueEntry);
+
+					return String.valueOf(
+						notificationRecipientSettingsMap.get(
+							NotificationRecipientSettingConstants.NAME_TO));
+				}));
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(),
@@ -1669,6 +1668,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	@Inject
 	private static Portal _portal;
 
+	private static ServiceRegistration<TemplateContextContributor>
+		_serviceRegistration;
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -1742,5 +1744,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private static class TestTemplateContextContributor
+		implements TemplateContextContributor {
+
+		@Override
+		public void prepare(
+			Map<String, Object> contextObjects,
+			HttpServletRequest httpServletRequest) {
+
+			contextObjects.put("key1", "value1");
+			contextObjects.put("key2", "value2");
+		}
+
+	}
 
 }

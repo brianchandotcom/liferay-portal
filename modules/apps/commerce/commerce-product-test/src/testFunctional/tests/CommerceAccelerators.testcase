@@ -1247,7 +1247,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -1262,7 +1262,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
@@ -1376,7 +1376,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -1391,7 +1391,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 	@description = "COMMERCE-6350. As a buyer, I want to be redirected to Order Details page after clicking 'Review Order' button on mini-cart, if Buyer Order Approval Workflow is active"
@@ -1505,7 +1505,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "SPEED93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -1520,7 +1520,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "SPEED93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 }

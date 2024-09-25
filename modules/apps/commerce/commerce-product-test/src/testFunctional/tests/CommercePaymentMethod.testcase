@@ -270,7 +270,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 
 		task ("When the admin changes the payment method to another offline payment method") {

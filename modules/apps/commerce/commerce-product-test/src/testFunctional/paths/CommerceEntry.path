@@ -892,7 +892,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_STATUS</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
+	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//*[contains(@class,'dnd-td')]/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -907,7 +907,7 @@
 </tr>
 <tr>
 	<td>TABLE_ELIGIBILITY_ENTRY</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div[@class='dnd-td'][contains(.,'${key_entryName}')]</td>
+	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div[contains(@class,'dnd-td')][contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1503,7 +1503,7 @@
 </tr>
 <tr>
 	<td>ON_ORDER_QUANTITY</td>
-	<td>//div[@class="dnd-tr"]//*[text()='${key_reference}']//..//..//..//div[(@class="dnd-td") and (text()='${key_orderQuantity}')]</td>
+	<td>//div[@class="dnd-tr"]//*[text()='${key_reference}']//..//..//..//div[contains(@class,"dnd-td") and (text()='${key_orderQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1609,7 +1609,7 @@
 </tr>
 <tr>
 	<td>WAREHOUSE_ACTIVE_STATUS</td>
-	<td>//div/a[contains(.,'${key_warehouseName}')]//..//..//..//div[(@class='dnd-td') and contains (.,'${key_activeStatus}')]</td>
+	<td>//div/a[contains(.,'${key_warehouseName}')]//..//..//..//div[contains(@class,'dnd-td') and contains (.,'${key_activeStatus}')]</td>
 	<td></td>
 </tr>
 

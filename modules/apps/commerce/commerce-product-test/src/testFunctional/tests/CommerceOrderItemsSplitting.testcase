@@ -64,16 +64,9 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 
 			for (var quantity : list "1,2") {
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
-
-				Type(
-					key_productName = "U-Joint",
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-					value1 = ${quantity});
-
-				Click(
-					key_productName = "U-Joint",
-					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+				FrontStore.addInitializerProductToCart(
+					productName = "U-Joint",
+					productQuantity = ${quantity});
 			}
 		}
 
@@ -147,16 +140,9 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 
 			for (var quantity : list "1,2") {
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
-
-				Type(
-					key_productName = "U-Joint",
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-					value1 = ${quantity});
-
-				Click(
-					key_productName = "U-Joint",
-					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+				FrontStore.addInitializerProductToCart(
+					productName = "U-Joint",
+					productQuantity = ${quantity});
 			}
 		}
 
@@ -585,11 +571,9 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 
 			for (var count : list "1,2") {
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
-
-				Click(
-					key_productName = "U-Joint",
-					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+				FrontStore.addInitializerProductToCart(
+					productName = "U-Joint",
+					productQuantity = 1);
 			}
 		}
 
@@ -647,13 +631,13 @@ definition {
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
 				cartItemPriceValue = "24.00",
-				cartItemQuantity = 2,
+				cartItemQuantity = 1,
 				cartItemSku = "MIN55861");
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
 				cartItemPriceValue = "24.00",
-				cartItemQuantity = 1,
+				cartItemQuantity = 2,
 				cartItemSku = "MIN55861",
 				index = 2);
 		}

@@ -298,7 +298,7 @@ definition {
 				productName = "Simple Product",
 				productQuantity = 1,
 				productSku = "TESTSKU",
-				productTotalPrice = "100.00");
+				productTotalPrice = "$ 100.00");
 		}
 	}
 
@@ -398,8 +398,12 @@ definition {
 		task ("When the admin creates 1 quantity of the shipment in a supplier order with 'Simple Product' and edits the tracking URL for the shipment") {
 			CommerceOrders.openOrdersAdmin();
 
-			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 64.00')]//..//div[(@class='dnd-td')][1]");
-			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 25.00')]//..//div[(@class='dnd-td')][1]");
+			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 64.00')]//..//div[contains(@class,'dnd-td')][2]");
+			var supplierOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//div[contains(@class,'dnd-td')][2]");
+
+			echo("customerOrderId:${customerOrderId}");
+
+			echo("supplierOrderId:${supplierOrderId}");
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 25.00");
 
@@ -1649,21 +1653,21 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 3,
 				productSku = ${skuCombinationName},
-				productTotalPrice = "147.00");
+				productTotalPrice = "$ 147.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
 				productQuantity = 3,
 				productSku = "MIN55861",
-				productTotalPrice = "72.00");
+				productTotalPrice = "$ 72.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "15.00");
+				productTotalPrice = "$ 15.00");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1674,7 +1678,7 @@ definition {
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "15.00");
+				productTotalPrice = "$ 15.00");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1685,14 +1689,14 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 3,
 				productSku = ${skuCombinationName},
-				productTotalPrice = "60.00");
+				productTotalPrice = "$ 60.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
 				productQuantity = 3,
 				productSku = "MIN55861",
-				productTotalPrice = "72.00");
+				productTotalPrice = "$ 72.00");
 		}
 	}
 
@@ -3185,14 +3189,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
 				productQuantity = 1,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -3203,7 +3207,7 @@ definition {
 				productName = "Simple Product",
 				productQuantity = 1,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -3214,7 +3218,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 	}
 

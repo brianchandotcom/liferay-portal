@@ -812,7 +812,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 
 		for (var termType : list "Payment,Delivery") {
 			CommerceOrders.editOrdersEntryTerms(
@@ -831,7 +831,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 	@description = "[Please Update]"
@@ -1123,7 +1123,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 	@description = "[Please Update]"
@@ -1203,7 +1203,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 }

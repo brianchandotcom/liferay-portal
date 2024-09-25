@@ -485,6 +485,8 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 
 			Button.click(button = "View");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then can view the bundled product shown with the correct option values in the placed order") {

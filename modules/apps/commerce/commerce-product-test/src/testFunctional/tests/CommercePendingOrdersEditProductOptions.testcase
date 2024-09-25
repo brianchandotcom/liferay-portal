@@ -189,7 +189,7 @@ definition {
 				productOptions = 48,
 				productQuantity = 1,
 				productSku = "MIN93016B",
-				productTotalPrice = "72.00");
+				productTotalPrice = "$ 72.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "50.00",
@@ -197,21 +197,21 @@ definition {
 				productOptions = "White",
 				productQuantity = 1,
 				productSku = "WHITE",
-				productTotalPrice = "50.00");
+				productTotalPrice = "$ 50.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "30.00",
 				productName = "Brake Rotors",
 				productQuantity = 1,
 				productSku = "MIN93020",
-				productTotalPrice = "30.00");
+				productTotalPrice = "$ 30.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "4.00",
 				productName = "Wheel Seal - Front",
 				productQuantity = 1,
 				productSku = "MIN55858",
-				productTotalPrice = "4.00");
+				productTotalPrice = "$ 4.00");
 		}
 	}
 

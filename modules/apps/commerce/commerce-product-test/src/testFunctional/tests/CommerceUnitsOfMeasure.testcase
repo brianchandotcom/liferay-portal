@@ -1534,7 +1534,7 @@ definition {
 				AssertTextEquals(
 					key_cellName1 = ${sku},
 					key_cellName2 = ${uomKey},
-					key_columnNumber = 3,
+					key_columnNumber = 4,
 					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 					value1 = ${outstandingQuantity});
 			}

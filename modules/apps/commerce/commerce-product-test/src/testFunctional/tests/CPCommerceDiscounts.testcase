@@ -278,7 +278,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "Commerce Account",
 				key_cellName2 = "Buyer User",
-				key_columnNumber = 9,
+				key_columnNumber = 10,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "$ 24.00");
 
@@ -289,7 +289,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "Commerce Account",
 				key_cellName2 = "Buyer User",
-				key_columnNumber = 9,
+				key_columnNumber = 10,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "$ 12.00");
 		}

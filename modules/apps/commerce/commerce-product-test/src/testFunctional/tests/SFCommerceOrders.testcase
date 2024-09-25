@@ -1271,6 +1271,8 @@ definition {
 
 		task ("When the buyer views the order from the Placed Orders page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the order date is shown in yyyy.MM.dd. format") {

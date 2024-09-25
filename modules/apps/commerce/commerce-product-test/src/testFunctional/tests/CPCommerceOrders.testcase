@@ -1374,7 +1374,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = "1 grams",
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 
 		task ("Then the admin edits the UoM by choosing a different one via the opened order item's detail sidebar") {
@@ -1392,7 +1392,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = "1 meters",
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 	}
 
@@ -2262,7 +2262,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = "1.2",
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 		}
 	}
 
@@ -3312,7 +3312,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 4,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
@@ -3377,7 +3377,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 4,
 			productSku = "MIN93015",
-			productTotalPrice = "100.00");
+			productTotalPrice = "$ 100.00");
 	}
 
 	@description = "This is a test for COMMERCE-5980. As an order manager, I want to edit the payment method and payment status of a submitted order"

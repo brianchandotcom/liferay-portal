@@ -75,7 +75,7 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 2,
 				productSku = "MIN93015",
-				productTotalPrice = "100.00");
+				productTotalPrice = "$ 100.00");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -90,7 +90,7 @@ definition {
 				productName = "ABS Sensor",
 				productQuantity = 2,
 				productSku = "MIN93015",
-				productTotalPrice = "100.00");
+				productTotalPrice = "$ 100.00");
 
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",

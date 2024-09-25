@@ -143,8 +143,8 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 44.00')]//..//div[(@class='dnd-td')][1]");
-			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 5.00')]//..//div[(@class='dnd-td')][1]");
+			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 44.00')]//..//*[contains(@class,'dnd-td')][1]");
+			var supplierOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 5.00')]//..//*[contains(@class,'dnd-td')][1]");
 		}
 
 		task ("When the supplier user edits the quantity of 'Simple Product' in the supplier order") {
@@ -166,7 +166,7 @@ definition {
 					productName = "Simple Product",
 					productQuantity = 3,
 					productSku = "TESTSKU",
-					productTotalPrice = "5.00");
+					productTotalPrice = "$ 5.00");
 			}
 		}
 
@@ -182,14 +182,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 		}
 
 		task ("But the quantity of 'Simple product' in the supplier order does not change with the customer order") {
@@ -202,14 +202,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
 				productQuantity = 6,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "supplier@liferay.com",
@@ -224,7 +224,7 @@ definition {
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 		}
 
 		task ("When the supplier user creates 1 quantity of the shipment in a supplier order with 'Simple Product'") {
@@ -1949,7 +1949,7 @@ definition {
 				productOptions = "value2",
 				productQuantity = 1,
 				productSku = "VALUE2",
-				productTotalPrice = "60.00");
+				productTotalPrice = "$ 60.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productDiscount = "0.00",
@@ -1957,7 +1957,7 @@ definition {
 				productName = "Brake Rotors",
 				productQuantity = 1,
 				productSku = "MIN93020",
-				productTotalPrice = "40.00");
+				productTotalPrice = "$ 40.00");
 
 			CommerceOrders.editOrderItemDetails(
 				orderItemDeliveryGroup = "Supplier Delivery Group",
@@ -1978,7 +1978,7 @@ definition {
 				productOptions = "value2",
 				productQuantity = "2 meters",
 				productSku = "VALUE2",
-				productTotalPrice = "50.00");
+				productTotalPrice = "$ 50.00");
 
 			AssertTextEquals(
 				key_columnIndex = 9,
@@ -3425,11 +3425,10 @@ definition {
 		}
 
 		task ("When the supplier user navigates to a catalog details") {
-			Click(
-				key_firstColumnValue = "Minium",
-				key_secondColumnValue = "USD",
-				key_table = "",
-				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+			Click.clickNoMouseOver(
+				key_actionName = "Edit",
+				key_entryName = "Minium",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
 		}
 
 		task ("Then the user is able to edit the catalog fields") {
@@ -3442,11 +3441,17 @@ definition {
 
 			Navigator.gotoBack();
 
-			Click(
-				key_firstColumnValue = "Minium 2",
-				key_secondColumnValue = "EUR",
-				key_table = "",
-				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+			WaitForPageLoad();
+
+			AssertElementPresent(
+				key_actionName = "Edit",
+				key_entryName = "Minium 2",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
+
+			Click.clickNoMouseOver(
+				key_actionName = "Edit",
+				key_entryName = "Minium 2",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
 
 			CommerceEntry.viewCatalogsEntry(
 				catalogBasePriceList = "Test Price List",
@@ -3545,18 +3550,16 @@ definition {
 				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 			AssertElementPresent(
-				key_firstColumnValue = "Supplier Channel 1",
-				key_secondColumnValue = "Site",
-				key_table = "",
-				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+				key_actionName = "Edit",
+				key_entryName = "Supplier Channel 1",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
 		}
 
 		task ("When the supplier user navigates to the channel details") {
 			Click(
-				key_firstColumnValue = "Supplier Channel 1",
-				key_secondColumnValue = "Site",
-				key_table = "",
-				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+				key_actionName = "Edit",
+				key_entryName = "Supplier Channel 1",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
 		}
 
 		task ("Then the user is able to edit the channel fields") {
@@ -4250,7 +4253,7 @@ definition {
 				AssertTextEquals(
 					key_cellName1 = ${productTotalPrice},
 					key_cellName2 = "",
-					key_columnNumber = 4,
+					key_columnNumber = 5,
 					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 					value1 = "Minium Portal");
 			}
@@ -4258,7 +4261,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "$ 5.00",
 				key_cellName2 = "",
-				key_columnNumber = 4,
+				key_columnNumber = 5,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "Supplier Channel");
 
@@ -4275,7 +4278,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "$ 5.00",
 				key_cellName2 = "",
-				key_columnNumber = 4,
+				key_columnNumber = 5,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "Supplier Channel");
 

@@ -9,7 +9,7 @@ import './OrderDetailsHeader.scss';
 import OrderDetailsStatusDescription from './OrderDetailsStatusDescription';
 
 type OrderDetailsProps = {
-	className: string;
+	className?: string;
 	hasOrderDescription?: string;
 	hasOrderDetails?: boolean;
 	image?: string;

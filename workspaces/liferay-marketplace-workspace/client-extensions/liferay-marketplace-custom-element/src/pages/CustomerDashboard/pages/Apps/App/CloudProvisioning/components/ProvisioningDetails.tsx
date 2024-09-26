@@ -89,7 +89,6 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 
 			<div className="d-flex justify-content-between mb-5">
 				<OrderDetailsHeader
-					className=""
 					hasOrderDescription={headerInfo?.licenseType}
 					image={headerInfo?.image}
 					name={headerInfo?.name}

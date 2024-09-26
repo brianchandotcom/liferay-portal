@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 
 import './index.scss';
-
-import ClayIcon from '@clayui/icon';
 
 type AccountInfoProps = {
 	userAccount?: {

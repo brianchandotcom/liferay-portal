@@ -83,9 +83,9 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 		navigate(`/order/${order?.id}/cloud-provisioning/install`);
 	};
 
-	const uninstall = () => {
+	const uninstall = async () => {
 		try {
-			mutateOrder((items) => items, {revalidate: true});
+			await mutateOrder((items) => items, {revalidate: true});
 
 			Liferay.Util.openToast({
 				message: i18n.translate('your-request-completed-successfully'),
@@ -331,7 +331,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					<ClayButton
 						className="ml-2 rounded-lg"
 						displayType="danger"
-						onClick={() => uninstall()}
+						onClick={async () => await uninstall()}
 						size="sm"
 					>
 						{i18n.translate('confirm-uninstall')}
@@ -376,8 +376,8 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 							<ClayButton
 								className="border border-danger ml-2 rounded-lg text-danger"
 								displayType="secondary"
-								onClick={() => {
-									uninstall();
+								onClick={async () => {
+									await uninstall();
 									detailsModal.onClose();
 								}}
 								size="sm"

@@ -35,6 +35,7 @@ export {
 	RequestQuote,
 	StepTracker,
 	Summary,
+	SummaryComponent,
 	TierPrice,
 	UnitOfMeasureSelector,
 } from './components/index';

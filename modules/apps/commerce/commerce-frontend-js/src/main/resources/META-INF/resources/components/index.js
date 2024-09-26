@@ -34,6 +34,7 @@ export {default as QuantitySelector} from './quantity_selector/entry';
 export {default as QuantitySelectorComponent} from './quantity_selector/QuantitySelector';
 export {default as StepTracker} from './step_tracker/entry';
 export {default as Summary} from './summary/entry';
+export {default as SummaryComponent} from './summary/Summary';
 export {default as RequestQuote} from './request_quote/entry';
 export {default as TierPrice} from './tier_price/entry';
 export {default as UnitOfMeasureSelector} from './unit_of_measure_selector/entry';

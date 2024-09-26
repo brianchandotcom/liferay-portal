@@ -63,10 +63,6 @@ export default function DragPreview<T extends DragItem>({
 		return null;
 	}
 
-	const rtl =
-		Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()] ===
-		'rtl';
-
 	const dir =
 		Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()];
 
@@ -77,7 +73,7 @@ export default function DragPreview<T extends DragItem>({
 					className="align-items-center d-flex drag-preview__content p-2 position-absolute text-2"
 					dir={dir}
 					ref={ref}
-					style={getItemStyles(currentOffset, ref, rtl)}
+					style={getItemStyles(currentOffset, ref, dir === 'rtl')}
 				>
 					{icon && (
 						<ClayIcon

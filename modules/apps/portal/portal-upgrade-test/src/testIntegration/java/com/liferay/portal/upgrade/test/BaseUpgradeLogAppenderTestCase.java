@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -48,7 +47,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 
 import java.lang.management.ManagementFactory;
@@ -60,7 +58,6 @@ import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +66,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.felix.cm.PersistenceManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
@@ -267,21 +263,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testDLAndLiferayHome() throws Exception {
-		String rootDir = _getRootDir();
-
 		_appender.start();
 
 		_appender.stop();
 
 		_assertLogContext(
-			"upgrade.report.document.library.root.directory", rootDir);
+			"upgrade.report.document.library.root.directory",
+			PropsValues.LIFERAY_HOME + "/data/document_library");
 		_assertLogContext(
 			"upgrade.report.document.library.storage.implementation",
 			PropsValues.DL_STORE_IMPL);
 		_assertLogContext(
 			"upgrade.report.liferay.home", PropsValues.LIFERAY_HOME);
 
-		_assertReport("Document library root directory: " + rootDir);
+		_assertReport(
+			"Document library root directory: " + PropsValues.LIFERAY_HOME +
+				"/data/document_library");
 		_assertReport(
 			"Document library storage implementation: " +
 				PropsValues.DL_STORE_IMPL);
@@ -1129,55 +1126,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return new File(reportsDir, reportFileName);
 	}
 
-	private String _getRootDir() {
-		String rootDir = null;
-
-		try {
-			PersistenceManager persistenceManager =
-				_persistenceManagerSnapshot.get();
-
-			String dlStoreConfigurationPid = StringPool.BLANK;
-
-			if (StringUtil.equals(
-					PropsValues.DL_STORE_IMPL,
-					"com.liferay.portal.store.file.system." +
-						"AdvancedFileSystemStore")) {
-
-				dlStoreConfigurationPid =
-					_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE;
-			}
-			else if (StringUtil.equals(
-						PropsValues.DL_STORE_IMPL,
-						"com.liferay.portal.store.file.system." +
-							"FileSystemStore")) {
-
-				dlStoreConfigurationPid = _CONFIGURATION_PID_FILE_SYSTEM_STORE;
-			}
-
-			Dictionary<String, String> configurations = persistenceManager.load(
-				dlStoreConfigurationPid);
-
-			if (configurations != null) {
-				rootDir = configurations.get("rootDir");
-			}
-
-			if (rootDir == null) {
-				rootDir = PropsValues.LIFERAY_HOME + "/data/document_library";
-			}
-
-			return rootDir;
-		}
-		catch (IOException ioException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get document library store root dir",
-					ioException);
-			}
-		}
-
-		return "Undefined";
-	}
-
 	private void _setEnv(String key, String value) throws Exception {
 		Map<String, String> env = System.getenv();
 
@@ -1204,17 +1152,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			originalUpgradeReportDLStorageSizeTimeout);
 	}
 
-	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.configuration." +
-			"AdvancedFileSystemStoreConfiguration";
-
-	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.configuration." +
-			"FileSystemStoreConfiguration";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeLogAppenderTestCase.class);
-
 	private static DB _db;
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
@@ -1224,9 +1161,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
-	private static final Snapshot<PersistenceManager>
-		_persistenceManagerSnapshot = new Snapshot<>(
-			BaseUpgradeLogAppenderTestCase.class, PersistenceManager.class);
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",

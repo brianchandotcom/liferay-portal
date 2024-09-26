@@ -269,7 +269,7 @@ public abstract class BasePlacedOrderResourceImpl
 	)
 	@javax.ws.rs.Produces("text/plain")
 	@Override
-	public String getPlacedOrderByExternalReferenceCodePaymentURL(
+	public String getPlacedOrderByExternalReferenceCodePaymentUrl(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -371,7 +371,7 @@ public abstract class BasePlacedOrderResourceImpl
 	@javax.ws.rs.Path("/placed-orders/{placedOrderId}/payment-url")
 	@javax.ws.rs.Produces("text/plain")
 	@Override
-	public String getPlacedOrderPaymentURL(
+	public String getPlacedOrderPaymentUrl(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("placedOrderId")

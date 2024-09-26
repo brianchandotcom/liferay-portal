@@ -70,7 +70,7 @@ public abstract class BasePlacedOrderAddressResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public PlacedOrderAddress
-			getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress(
+			getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("externalReferenceCode")
@@ -108,7 +108,7 @@ public abstract class BasePlacedOrderAddressResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public PlacedOrderAddress
-			getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress(
+			getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("externalReferenceCode")

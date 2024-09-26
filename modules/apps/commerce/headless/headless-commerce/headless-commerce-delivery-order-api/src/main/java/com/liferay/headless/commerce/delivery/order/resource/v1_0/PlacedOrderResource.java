@@ -65,7 +65,7 @@ public interface PlacedOrderResource {
 			String externalReferenceCode, PlacedOrder placedOrder)
 		throws Exception;
 
-	public String getPlacedOrderByExternalReferenceCodePaymentURL(
+	public String getPlacedOrderByExternalReferenceCodePaymentUrl(
 			String externalReferenceCode, String callbackURL)
 		throws Exception;
 
@@ -75,7 +75,7 @@ public interface PlacedOrderResource {
 			Long placedOrderId, PlacedOrder placedOrder)
 		throws Exception;
 
-	public String getPlacedOrderPaymentURL(
+	public String getPlacedOrderPaymentUrl(
 			Long placedOrderId, String callbackURL)
 		throws Exception;
 

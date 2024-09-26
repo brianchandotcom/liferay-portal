@@ -200,7 +200,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public String getCartPaymentURL(Long cartId, String callbackURL)
+	public String getCartPaymentUrl(Long cartId, String callbackURL)
 		throws Exception {
 
 		return _getPaymentURL(
@@ -403,6 +403,19 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
+	public Cart postChannelByExternalReferenceCodeCart(
+			String externalReferenceCode, Cart cart)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postChannelCart(commerceChannel.getCommerceChannelId(), cart);
+	}
+
+	@Override
 	public Cart postChannelCart(Long channelId, Cart cart) throws Exception {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
@@ -413,19 +426,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		_updateOrder(commerceOrder, cart);
 
 		return _toCart(commerceOrder);
-	}
-
-	@Override
-	public Cart postChannelCartByExternalReferenceCode(
-			String externalReferenceCode, Cart cart)
-		throws Exception {
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.
-				getCommerceChannelByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
-
-		return postChannelCart(commerceChannel.getCommerceChannelId(), cart);
 	}
 
 	@Override

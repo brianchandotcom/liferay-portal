@@ -784,7 +784,7 @@ public abstract class BaseCartResourceImpl
 	@javax.ws.rs.Path("/carts/{cartId}/payment-url")
 	@javax.ws.rs.Produces("text/plain")
 	@Override
-	public String getCartPaymentURL(
+	public String getCartPaymentUrl(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("cartId")
@@ -881,7 +881,7 @@ public abstract class BaseCartResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Cart postChannelCartByExternalReferenceCode(
+	public Cart postChannelByExternalReferenceCodeCart(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")

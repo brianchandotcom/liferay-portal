@@ -142,7 +142,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetCartPaymentURL() throws Exception {
+	public void testGetCartPaymentUrl() throws Exception {
 		Cart cart = randomCart();
 
 		String callbackURL = RandomTestUtil.randomString();
@@ -152,7 +152,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 				"http://localhost:8080/o/commerce-payment?groupId=",
 				_commerceChannel.getGroupId(), "&nextStep=", callbackURL,
 				"&uuid=", cart.getOrderUUID()),
-			cartResource.getCartPaymentURL(cart.getId(), callbackURL));
+			cartResource.getCartPaymentUrl(cart.getId(), callbackURL));
 	}
 
 	@Ignore
@@ -179,18 +179,18 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostChannelCart() throws Exception {
-		super.testPostChannelCart();
+	public void testPostChannelByExternalReferenceCodeCart() throws Exception {
+		super.testPostChannelByExternalReferenceCodeCart();
 
-		_testPostChannelCartWithMoreExternalReferenceCodes();
+		_testPostChannelCartByExternalReferenceCodeWithMoreExternalReferenceCodes();
 	}
 
 	@Override
 	@Test
-	public void testPostChannelCartByExternalReferenceCode() throws Exception {
-		super.testPostChannelCartByExternalReferenceCode();
+	public void testPostChannelCart() throws Exception {
+		super.testPostChannelCart();
 
-		_testPostChannelCartByExternalReferenceCodeWithMoreExternalReferenceCodes();
+		_testPostChannelCartWithMoreExternalReferenceCodes();
 	}
 
 	@Override
@@ -402,7 +402,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	}
 
 	@Override
-	protected Cart testPostChannelCartByExternalReferenceCode_addCart(Cart cart)
+	protected Cart testPostChannelByExternalReferenceCodeCart_addCart(Cart cart)
 		throws Exception {
 
 		return cartResource.postCartByExternalReferenceCodeCheckout(
@@ -568,7 +568,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			randomAddress.getExternalReferenceCode());
 		randomCart.setShippingAddressId(0L);
 
-		Cart postCart = cartResource.postChannelCartByExternalReferenceCode(
+		Cart postCart = cartResource.postChannelByExternalReferenceCodeCart(
 			_commerceChannel.getExternalReferenceCode(), randomCart);
 
 		randomCart.setBillingAddressId(randomAddress.getAddressId());

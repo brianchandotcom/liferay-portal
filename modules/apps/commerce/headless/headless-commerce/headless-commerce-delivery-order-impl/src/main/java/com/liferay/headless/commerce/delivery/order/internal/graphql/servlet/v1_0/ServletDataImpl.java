@@ -164,29 +164,29 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCode"));
 					put(
-						"query#placedOrderByExternalReferenceCodePaymentURL",
+						"query#placedOrderByExternalReferenceCodePaymentUrl",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePaymentURL"));
+							"getPlacedOrderByExternalReferenceCodePaymentUrl"));
 					put(
 						"query#placedOrder",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class, "getPlacedOrder"));
 					put(
-						"query#placedOrderPaymentURL",
+						"query#placedOrderPaymentUrl",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
-							"getPlacedOrderPaymentURL"));
+							"getPlacedOrderPaymentUrl"));
 					put(
-						"query#placedOrderByExternalReferenceCodePlacedOrderBillingAddress",
+						"query#placedOrderByExternalReferenceCodePlacedOrderBillingAddres",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress"));
+							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres"));
 					put(
-						"query#placedOrderByExternalReferenceCodePlacedOrderShippingAddress",
+						"query#placedOrderByExternalReferenceCodePlacedOrderShippingAddres",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
+							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres"));
 					put(
 						"query#placedOrderPlacedOrderBillingAddres",
 						new ObjectValuePair<>(
@@ -249,20 +249,25 @@ public class ServletDataImpl implements ServletData {
 							"getPlacedOrderItemPlacedOrderItemShipmentsPage"));
 
 					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddress",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress"));
-					put(
-						"query#PlacedOrder.paymentURL",
+						"query#PlacedOrder.paymentUrl",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
-							"getPlacedOrderPaymentURL"));
+							"getPlacedOrderPaymentUrl"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderShippingAddres",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres"));
 					put(
 						"query#PlacedOrder.placedOrderShippingAddres",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
 							"getPlacedOrderPlacedOrderShippingAddres"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddres",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres"));
 					put(
 						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
 						new ObjectValuePair<>(
@@ -283,10 +288,10 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderCommentResourceImpl.class,
 							"getPlacedOrderCommentByExternalReferenceCode"));
 					put(
-						"query#PlacedOrder.byExternalReferenceCodePaymentURL",
+						"query#PlacedOrder.byExternalReferenceCodePaymentUrl",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePaymentURL"));
+							"getPlacedOrderByExternalReferenceCodePaymentUrl"));
 					put(
 						"query#PlacedOrder.itemByExternalReferenceCodePlacedOrderItemShipments",
 						new ObjectValuePair<>(
@@ -312,11 +317,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCode"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderShippingAddress",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
 				}
 			};
 

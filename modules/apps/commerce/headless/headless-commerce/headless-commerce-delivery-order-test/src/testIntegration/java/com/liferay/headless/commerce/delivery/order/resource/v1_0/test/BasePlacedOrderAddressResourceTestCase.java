@@ -202,16 +202,16 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress()
+	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres()
 		throws Exception {
 
 		PlacedOrderAddress postPlacedOrderAddress =
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_addPlacedOrderAddress();
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_addPlacedOrderAddress();
 
 		PlacedOrderAddress getPlacedOrderAddress =
 			placedOrderAddressResource.
-				getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress(
-					testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+				getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres(
+					testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_getExternalReferenceCode(
 						postPlacedOrderAddress));
 
 		assertEquals(postPlacedOrderAddress, getPlacedOrderAddress);
@@ -219,7 +219,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected String
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_getExternalReferenceCode(
 				PlacedOrderAddress placedOrderAddress)
 		throws Exception {
 
@@ -227,7 +227,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_addPlacedOrderAddress()
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_addPlacedOrderAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -235,11 +235,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress()
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres()
 		throws Exception {
 
 		PlacedOrderAddress placedOrderAddress =
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_addPlacedOrderAddress();
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_addPlacedOrderAddress();
 
 		// No namespace
 
@@ -250,19 +250,19 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"placedOrderByExternalReferenceCodePlacedOrderBillingAddress",
+								"placedOrderByExternalReferenceCodePlacedOrderBillingAddres",
 								new HashMap<String, Object>() {
 									{
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_getExternalReferenceCode(
 													placedOrderAddress) + "\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/placedOrderByExternalReferenceCodePlacedOrderBillingAddress"))));
+						"Object/placedOrderByExternalReferenceCodePlacedOrderBillingAddres"))));
 
 		// Using the namespace headlessCommerceDeliveryOrder_v1_0
 
@@ -275,13 +275,13 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 							new GraphQLField(
 								"headlessCommerceDeliveryOrder_v1_0",
 								new GraphQLField(
-									"placedOrderByExternalReferenceCodePlacedOrderBillingAddress",
+									"placedOrderByExternalReferenceCodePlacedOrderBillingAddres",
 									new HashMap<String, Object>() {
 										{
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_getExternalReferenceCode(
 														placedOrderAddress) +
 															"\"");
 										}
@@ -289,11 +289,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data",
 						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderByExternalReferenceCodePlacedOrderBillingAddress"))));
+						"Object/placedOrderByExternalReferenceCodePlacedOrderBillingAddres"))));
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_getExternalReferenceCode(
 				PlacedOrderAddress placedOrderAddress)
 		throws Exception {
 
@@ -301,7 +301,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddressNotFound()
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddresNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
@@ -314,7 +314,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"placedOrderByExternalReferenceCodePlacedOrderBillingAddress",
+						"placedOrderByExternalReferenceCodePlacedOrderBillingAddres",
 						new HashMap<String, Object>() {
 							{
 								put(
@@ -335,7 +335,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					new GraphQLField(
 						"headlessCommerceDeliveryOrder_v1_0",
 						new GraphQLField(
-							"placedOrderByExternalReferenceCodePlacedOrderBillingAddress",
+							"placedOrderByExternalReferenceCodePlacedOrderBillingAddres",
 							new HashMap<String, Object>() {
 								{
 									put(
@@ -349,23 +349,23 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_addPlacedOrderAddress()
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres_addPlacedOrderAddress()
 		throws Exception {
 
 		return testGraphQLPlacedOrderAddress_addPlacedOrderAddress();
 	}
 
 	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress()
+	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres()
 		throws Exception {
 
 		PlacedOrderAddress postPlacedOrderAddress =
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_addPlacedOrderAddress();
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_addPlacedOrderAddress();
 
 		PlacedOrderAddress getPlacedOrderAddress =
 			placedOrderAddressResource.
-				getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress(
-					testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+				getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres(
+					testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_getExternalReferenceCode(
 						postPlacedOrderAddress));
 
 		assertEquals(postPlacedOrderAddress, getPlacedOrderAddress);
@@ -373,7 +373,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected String
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_getExternalReferenceCode(
 				PlacedOrderAddress placedOrderAddress)
 		throws Exception {
 
@@ -381,7 +381,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_addPlacedOrderAddress()
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_addPlacedOrderAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -389,11 +389,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress()
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres()
 		throws Exception {
 
 		PlacedOrderAddress placedOrderAddress =
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_addPlacedOrderAddress();
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_addPlacedOrderAddress();
 
 		// No namespace
 
@@ -404,19 +404,19 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"placedOrderByExternalReferenceCodePlacedOrderShippingAddress",
+								"placedOrderByExternalReferenceCodePlacedOrderShippingAddres",
 								new HashMap<String, Object>() {
 									{
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_getExternalReferenceCode(
 													placedOrderAddress) + "\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/placedOrderByExternalReferenceCodePlacedOrderShippingAddress"))));
+						"Object/placedOrderByExternalReferenceCodePlacedOrderShippingAddres"))));
 
 		// Using the namespace headlessCommerceDeliveryOrder_v1_0
 
@@ -429,13 +429,13 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 							new GraphQLField(
 								"headlessCommerceDeliveryOrder_v1_0",
 								new GraphQLField(
-									"placedOrderByExternalReferenceCodePlacedOrderShippingAddress",
+									"placedOrderByExternalReferenceCodePlacedOrderShippingAddres",
 									new HashMap<String, Object>() {
 										{
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_getExternalReferenceCode(
 														placedOrderAddress) +
 															"\"");
 										}
@@ -443,11 +443,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data",
 						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderByExternalReferenceCodePlacedOrderShippingAddress"))));
+						"Object/placedOrderByExternalReferenceCodePlacedOrderShippingAddres"))));
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_getExternalReferenceCode(
 				PlacedOrderAddress placedOrderAddress)
 		throws Exception {
 
@@ -455,7 +455,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddressNotFound()
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddresNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
@@ -468,7 +468,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"placedOrderByExternalReferenceCodePlacedOrderShippingAddress",
+						"placedOrderByExternalReferenceCodePlacedOrderShippingAddres",
 						new HashMap<String, Object>() {
 							{
 								put(
@@ -489,7 +489,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					new GraphQLField(
 						"headlessCommerceDeliveryOrder_v1_0",
 						new GraphQLField(
-							"placedOrderByExternalReferenceCodePlacedOrderShippingAddress",
+							"placedOrderByExternalReferenceCodePlacedOrderShippingAddres",
 							new HashMap<String, Object>() {
 								{
 									put(
@@ -503,7 +503,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_addPlacedOrderAddress()
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres_addPlacedOrderAddress()
 		throws Exception {
 
 		return testGraphQLPlacedOrderAddress_addPlacedOrderAddress();

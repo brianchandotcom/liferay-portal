@@ -163,10 +163,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "postCartCouponCode"));
 					put(
-						"mutation#createChannelCartByExternalReferenceCode",
+						"mutation#createChannelByExternalReferenceCodeCart",
 						new ObjectValuePair<>(
 							CartResourceImpl.class,
-							"postChannelCartByExternalReferenceCode"));
+							"postChannelByExternalReferenceCodeCart"));
 					put(
 						"mutation#createChannelCart",
 						new ObjectValuePair<>(
@@ -322,9 +322,9 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "getCart"));
 					put(
-						"query#cartPaymentURL",
+						"query#cartPaymentUrl",
 						new ObjectValuePair<>(
-							CartResourceImpl.class, "getCartPaymentURL"));
+							CartResourceImpl.class, "getCartPaymentUrl"));
 					put(
 						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCarts",
 						new ObjectValuePair<>(
@@ -432,9 +432,9 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "getCart"));
 					put(
-						"query#Cart.paymentURL",
+						"query#Cart.paymentUrl",
 						new ObjectValuePair<>(
-							CartResourceImpl.class, "getCartPaymentURL"));
+							CartResourceImpl.class, "getCartPaymentUrl"));
 					put(
 						"query#Cart.items",
 						new ObjectValuePair<>(

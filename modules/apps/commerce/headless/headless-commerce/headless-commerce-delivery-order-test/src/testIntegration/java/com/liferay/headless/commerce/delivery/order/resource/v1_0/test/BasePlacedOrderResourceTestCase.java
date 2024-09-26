@@ -808,7 +808,7 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePaymentURL()
+	public void testGetPlacedOrderByExternalReferenceCodePaymentUrl()
 		throws Exception {
 
 		Assert.assertTrue(false);
@@ -958,7 +958,7 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderPaymentURL() throws Exception {
+	public void testGetPlacedOrderPaymentUrl() throws Exception {
 		Assert.assertTrue(false);
 	}
 

@@ -227,10 +227,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentURL(callbackURL: ___, cartId: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentUrl(callbackURL: ___, cartId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String cartPaymentURL(
+	public String cartPaymentUrl(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("callbackURL") String callbackURL)
 		throws Exception {
@@ -238,7 +238,7 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_cartResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			cartResource -> cartResource.getCartPaymentURL(
+			cartResource -> cartResource.getCartPaymentUrl(
 				cartId, callbackURL));
 	}
 
@@ -714,20 +714,20 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Cart.class)
-	public class GetCartPaymentURLTypeExtension {
+	public class GetCartPaymentUrlTypeExtension {
 
-		public GetCartPaymentURLTypeExtension(Cart cart) {
+		public GetCartPaymentUrlTypeExtension(Cart cart) {
 			_cart = cart;
 		}
 
 		@GraphQLField
-		public String paymentURL(@GraphQLName("callbackURL") String callbackURL)
+		public String paymentUrl(@GraphQLName("callbackURL") String callbackURL)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
 				_cartResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				cartResource -> cartResource.getCartPaymentURL(
+				cartResource -> cartResource.getCartPaymentUrl(
 					_cart.getId(), callbackURL));
 		}
 

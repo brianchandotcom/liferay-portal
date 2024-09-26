@@ -243,7 +243,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Creates a Cart.")
-	public Cart createChannelCartByExternalReferenceCode(
+	public Cart createChannelByExternalReferenceCodeCart(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("cart") Cart cart)
 		throws Exception {
@@ -251,7 +251,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_cartResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			cartResource -> cartResource.postChannelCartByExternalReferenceCode(
+			cartResource -> cartResource.postChannelByExternalReferenceCodeCart(
 				externalReferenceCode, cart));
 	}
 

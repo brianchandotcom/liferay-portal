@@ -1514,6 +1514,7 @@ paths:
             tags: ["CartItem"]
     /carts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            operationId: deleteCartByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1543,6 +1544,7 @@ paths:
         get:
             description:
                 Retrieve information of the given Cart by external reference code.
+            operationId: getCartByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1594,6 +1596,7 @@ paths:
                         Unexpected error
             tags: ["Cart"]
         patch:
+            operationId: patchCartByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1660,6 +1663,7 @@ paths:
             summary: Updates a Cart by external reference code.
             tags: ["Cart"]
         put:
+            operationId: putCartByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1729,6 +1733,7 @@ paths:
         get:
             description:
                 Retrieve cart billing address.
+            operationId: getCartByExternalReferenceCodeBillingAddres
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1781,6 +1786,7 @@ paths:
             tags: ["Address"]
     /carts/by-externalReferenceCode/{externalReferenceCode}/checkout:
         post:
+            operationId: postCartByExternalReferenceCodeCheckout
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1803,6 +1809,7 @@ paths:
             tags: ["Cart"]
     /carts/by-externalReferenceCode/{externalReferenceCode}/comments:
         get:
+            operationId: getCartByExternalReferenceCodeCommentsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1874,6 +1881,7 @@ paths:
             summary: Gets a list of Comments related to a Cart.
             tags: ["CartComment"]
         post:
+            operationId: postCartByExternalReferenceCodeComment
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1943,6 +1951,7 @@ paths:
         post:
             description:
                 Add a coupon code to a Cart, return the whole Cart updated.
+            operationId: postCartByExternalReferenceCodeCouponCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2008,6 +2017,7 @@ paths:
         get:
             description:
                 Retrieve cart items of a Cart.
+            operationId: getCartByExternalReferenceCodeItemsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2083,6 +2093,7 @@ paths:
         post:
             description:
                 Add new Item to a Cart, return the whole Cart updated.
+            operationId: postCartByExternalReferenceCodeItem
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2148,6 +2159,7 @@ paths:
         get:
             description:
                 Retrieve payment methods available for the Cart.
+            operationId: getCartByExternalReferenceCodePaymentMethodsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2204,6 +2216,7 @@ paths:
             tags: ["PaymentMethod"]
     /carts/by-externalReferenceCode/{externalReferenceCode}/payment-url:
         get:
+            operationId: getCartByExternalReferenceCodePaymentUrl
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2230,6 +2243,7 @@ paths:
         get:
             description:
                 Retrieve cart billing address.
+            operationId: getCartByExternalReferenceCodeShippingAddres
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2284,6 +2298,7 @@ paths:
         get:
             description:
                 Retrieve payment methods available for the Cart.
+            operationId: getCartByExternalReferenceCodeShippingMethodsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -3140,7 +3155,7 @@ paths:
             tags: ["PaymentMethod"]
     /carts/{cartId}/payment-url:
         get:
-            operationId: getCartPaymentURL
+            operationId: getCartPaymentUrl
             parameters:
                 - in: path
                   name: cartId
@@ -3367,7 +3382,7 @@ paths:
         post:
             description:
                 Creates a Cart.
-            operationId: postChannelCartByExternalReferenceCode
+            operationId: postChannelByExternalReferenceCodeCart
             parameters:
                 - in: path
                   explode: false

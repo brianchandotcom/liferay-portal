@@ -768,7 +768,7 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
-	public void testGetCartPaymentURL() throws Exception {
+	public void testGetCartPaymentUrl() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -1012,17 +1012,17 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelCartByExternalReferenceCode() throws Exception {
+	public void testPostChannelByExternalReferenceCodeCart() throws Exception {
 		Cart randomCart = randomCart();
 
-		Cart postCart = testPostChannelCartByExternalReferenceCode_addCart(
+		Cart postCart = testPostChannelByExternalReferenceCodeCart_addCart(
 			randomCart);
 
 		assertEquals(randomCart, postCart);
 		assertValid(postCart);
 	}
 
-	protected Cart testPostChannelCartByExternalReferenceCode_addCart(Cart cart)
+	protected Cart testPostChannelByExternalReferenceCodeCart_addCart(Cart cart)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

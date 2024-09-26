@@ -141,10 +141,10 @@ public interface CartResource {
 			Long cartId, CouponCode couponCode)
 		throws Exception;
 
-	public String getCartPaymentURL(Long cartId, String callbackURL)
+	public String getCartPaymentUrl(Long cartId, String callbackURL)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getCartPaymentURLHttpResponse(
+	public HttpInvoker.HttpResponse getCartPaymentUrlHttpResponse(
 			Long cartId, String callbackURL)
 		throws Exception;
 
@@ -162,12 +162,12 @@ public interface CartResource {
 				Pagination pagination)
 		throws Exception;
 
-	public Cart postChannelCartByExternalReferenceCode(
+	public Cart postChannelByExternalReferenceCodeCart(
 			String externalReferenceCode, Cart cart)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postChannelCartByExternalReferenceCodeHttpResponse(
+			postChannelByExternalReferenceCodeCartHttpResponse(
 				String externalReferenceCode, Cart cart)
 		throws Exception;
 
@@ -1844,11 +1844,11 @@ public interface CartResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getCartPaymentURL(Long cartId, String callbackURL)
+		public String getCartPaymentUrl(Long cartId, String callbackURL)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCartPaymentURLHttpResponse(cartId, callbackURL);
+				getCartPaymentUrlHttpResponse(cartId, callbackURL);
 
 			String content = httpResponse.getContent();
 
@@ -1909,7 +1909,7 @@ public interface CartResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getCartPaymentURLHttpResponse(
+		public HttpInvoker.HttpResponse getCartPaymentUrlHttpResponse(
 				Long cartId, String callbackURL)
 			throws Exception {
 
@@ -2078,12 +2078,12 @@ public interface CartResource {
 			return httpInvoker.invoke();
 		}
 
-		public Cart postChannelCartByExternalReferenceCode(
+		public Cart postChannelByExternalReferenceCodeCart(
 				String externalReferenceCode, Cart cart)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postChannelCartByExternalReferenceCodeHttpResponse(
+				postChannelByExternalReferenceCodeCartHttpResponse(
 					externalReferenceCode, cart);
 
 			String content = httpResponse.getContent();
@@ -2146,7 +2146,7 @@ public interface CartResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postChannelCartByExternalReferenceCodeHttpResponse(
+				postChannelByExternalReferenceCodeCartHttpResponse(
 					String externalReferenceCode, Cart cart)
 			throws Exception {
 

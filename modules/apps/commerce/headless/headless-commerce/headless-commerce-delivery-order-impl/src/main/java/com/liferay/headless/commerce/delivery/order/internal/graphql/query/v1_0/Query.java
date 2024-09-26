@@ -193,10 +193,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodePaymentURL(callbackURL: ___, externalReferenceCode: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodePaymentUrl(callbackURL: ___, externalReferenceCode: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String placedOrderByExternalReferenceCodePaymentURL(
+	public String placedOrderByExternalReferenceCodePaymentUrl(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("callbackURL") String callbackURL)
 		throws Exception {
@@ -206,7 +206,7 @@ public class Query {
 			this::_populateResourceContext,
 			placedOrderResource ->
 				placedOrderResource.
-					getPlacedOrderByExternalReferenceCodePaymentURL(
+					getPlacedOrderByExternalReferenceCodePaymentUrl(
 						externalReferenceCode, callbackURL));
 	}
 
@@ -232,10 +232,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderPaymentURL(callbackURL: ___, placedOrderId: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderPaymentUrl(callbackURL: ___, placedOrderId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String placedOrderPaymentURL(
+	public String placedOrderPaymentUrl(
 			@GraphQLName("placedOrderId") Long placedOrderId,
 			@GraphQLName("callbackURL") String callbackURL)
 		throws Exception {
@@ -243,18 +243,18 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_placedOrderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			placedOrderResource -> placedOrderResource.getPlacedOrderPaymentURL(
+			placedOrderResource -> placedOrderResource.getPlacedOrderPaymentUrl(
 				placedOrderId, callbackURL));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodePlacedOrderBillingAddress(externalReferenceCode: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodePlacedOrderBillingAddres(externalReferenceCode: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve placed order billing address.")
 	public PlacedOrderAddress
-			placedOrderByExternalReferenceCodePlacedOrderBillingAddress(
+			placedOrderByExternalReferenceCodePlacedOrderBillingAddres(
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode)
 		throws Exception {
@@ -264,18 +264,18 @@ public class Query {
 			this::_populateResourceContext,
 			placedOrderAddressResource ->
 				placedOrderAddressResource.
-					getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress(
+					getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres(
 						externalReferenceCode));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodePlacedOrderShippingAddress(externalReferenceCode: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodePlacedOrderShippingAddres(externalReferenceCode: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve placed order shipping address.")
 	public PlacedOrderAddress
-			placedOrderByExternalReferenceCodePlacedOrderShippingAddress(
+			placedOrderByExternalReferenceCodePlacedOrderShippingAddres(
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode)
 		throws Exception {
@@ -285,7 +285,7 @@ public class Query {
 			this::_populateResourceContext,
 			placedOrderAddressResource ->
 				placedOrderAddressResource.
-					getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress(
+					getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres(
 						externalReferenceCode));
 	}
 
@@ -545,27 +545,22 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(PlacedOrder.class)
-	public class
-		GetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddressTypeExtension {
+	public class GetPlacedOrderPaymentUrlTypeExtension {
 
-		public GetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddressTypeExtension(
-			PlacedOrder placedOrder) {
-
+		public GetPlacedOrderPaymentUrlTypeExtension(PlacedOrder placedOrder) {
 			_placedOrder = placedOrder;
 		}
 
-		@GraphQLField(description = "Retrieve placed order billing address.")
-		public PlacedOrderAddress
-				byExternalReferenceCodePlacedOrderBillingAddress()
+		@GraphQLField
+		public String paymentUrl(@GraphQLName("callbackURL") String callbackURL)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_placedOrderAddressResourceComponentServiceObjects,
+				_placedOrderResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				placedOrderAddressResource ->
-					placedOrderAddressResource.
-						getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress(
-							_placedOrder.getExternalReferenceCode()));
+				placedOrderResource ->
+					placedOrderResource.getPlacedOrderPaymentUrl(
+						_placedOrder.getId(), callbackURL));
 		}
 
 		private PlacedOrder _placedOrder;
@@ -573,22 +568,27 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(PlacedOrder.class)
-	public class GetPlacedOrderPaymentURLTypeExtension {
+	public class
+		GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddresTypeExtension {
 
-		public GetPlacedOrderPaymentURLTypeExtension(PlacedOrder placedOrder) {
+		public GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddresTypeExtension(
+			PlacedOrder placedOrder) {
+
 			_placedOrder = placedOrder;
 		}
 
-		@GraphQLField
-		public String paymentURL(@GraphQLName("callbackURL") String callbackURL)
+		@GraphQLField(description = "Retrieve placed order shipping address.")
+		public PlacedOrderAddress
+				byExternalReferenceCodePlacedOrderShippingAddres()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_placedOrderResourceComponentServiceObjects,
+				_placedOrderAddressResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				placedOrderResource ->
-					placedOrderResource.getPlacedOrderPaymentURL(
-						_placedOrder.getId(), callbackURL));
+				placedOrderAddressResource ->
+					placedOrderAddressResource.
+						getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres(
+							_placedOrder.getExternalReferenceCode()));
 		}
 
 		private PlacedOrder _placedOrder;
@@ -613,6 +613,34 @@ public class Query {
 					placedOrderAddressResource.
 						getPlacedOrderPlacedOrderShippingAddres(
 							_placedOrder.getId()));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class
+		GetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddresTypeExtension {
+
+		public GetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddresTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField(description = "Retrieve placed order billing address.")
+		public PlacedOrderAddress
+				byExternalReferenceCodePlacedOrderBillingAddres()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_placedOrderAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				placedOrderAddressResource ->
+					placedOrderAddressResource.
+						getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres(
+							_placedOrder.getExternalReferenceCode()));
 		}
 
 		private PlacedOrder _placedOrder;
@@ -734,16 +762,16 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(PlacedOrder.class)
-	public class GetPlacedOrderByExternalReferenceCodePaymentURLTypeExtension {
+	public class GetPlacedOrderByExternalReferenceCodePaymentUrlTypeExtension {
 
-		public GetPlacedOrderByExternalReferenceCodePaymentURLTypeExtension(
+		public GetPlacedOrderByExternalReferenceCodePaymentUrlTypeExtension(
 			PlacedOrder placedOrder) {
 
 			_placedOrder = placedOrder;
 		}
 
 		@GraphQLField
-		public String byExternalReferenceCodePaymentURL(
+		public String byExternalReferenceCodePaymentUrl(
 				@GraphQLName("callbackURL") String callbackURL)
 			throws Exception {
 
@@ -752,7 +780,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				placedOrderResource ->
 					placedOrderResource.
-						getPlacedOrderByExternalReferenceCodePaymentURL(
+						getPlacedOrderByExternalReferenceCodePaymentUrl(
 							_placedOrder.getExternalReferenceCode(),
 							callbackURL));
 		}
@@ -891,34 +919,6 @@ public class Query {
 		}
 
 		private PlacedOrderComment _placedOrderComment;
-
-	}
-
-	@GraphQLTypeExtension(PlacedOrder.class)
-	public class
-		GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddressTypeExtension {
-
-		public GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddressTypeExtension(
-			PlacedOrder placedOrder) {
-
-			_placedOrder = placedOrder;
-		}
-
-		@GraphQLField(description = "Retrieve placed order shipping address.")
-		public PlacedOrderAddress
-				byExternalReferenceCodePlacedOrderShippingAddress()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_placedOrderAddressResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				placedOrderAddressResource ->
-					placedOrderAddressResource.
-						getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress(
-							_placedOrder.getExternalReferenceCode()));
-		}
-
-		private PlacedOrder _placedOrder;
 
 	}
 

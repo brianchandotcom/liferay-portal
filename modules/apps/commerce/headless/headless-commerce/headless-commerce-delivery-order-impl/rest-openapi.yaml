@@ -700,6 +700,7 @@ paths:
         get:
             description:
                 Retrieves placed orders for specific account in the given channel.
+            operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -771,6 +772,7 @@ paths:
         get:
             description:
                 Retrieves placed orders for specific account in the given channel.
+            operationId: getChannelAccountPlacedOrdersPage
             parameters:
                 - in: path
                   explode: false
@@ -850,6 +852,7 @@ paths:
             tags: ["PlacedOrder"]
     /placed-order-comments/by-externalReferenceCode/{externalReferenceCode}:
         get:
+            operationId: getPlacedOrderCommentByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -904,6 +907,7 @@ paths:
             tags: ["PlacedOrderComment"]
     /placed-order-comments/{placedOrderCommentId}:
         get:
+            operationId: getPlacedOrderComment
             parameters:
                 - in: path
                   explode: false
@@ -965,6 +969,7 @@ paths:
         get:
             description:
                 Retrieve information of the given placed order item.
+            operationId: getPlacedOrderItemByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1015,6 +1020,7 @@ paths:
         get:
             description:
                 Retrieve shipments of the given placed order item.
+            operationId: getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1069,6 +1075,7 @@ paths:
         get:
             description:
                 Retrieve information of the given Placed Order.
+            operationId: getPlacedOrderItem
             parameters:
                 - in: path
                   explode: false
@@ -1124,6 +1131,7 @@ paths:
         get:
             description:
                 Retrieve shipments of the given Placed Order Item.
+            operationId: getPlacedOrderItemPlacedOrderItemShipmentsPage
             parameters:
                 - in: path
                   explode: false
@@ -1299,7 +1307,7 @@ paths:
             tags: ["PlacedOrder"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url:
         get:
-            operationId: getPlacedOrderByExternalReferenceCodePaymentURL
+            operationId: getPlacedOrderByExternalReferenceCodePaymentUrl
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1322,7 +1330,7 @@ paths:
         get:
             description:
                 Retrieve placed order billing address.
-            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1525,7 +1533,7 @@ paths:
         get:
             description:
                 Retrieve placed order shipping address.
-            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1576,6 +1584,7 @@ paths:
         get:
             description:
                 Retrieve information of the given Placed Order.
+            operationId: getPlacedOrder
             parameters:
                 - in: path
                   explode: false
@@ -1785,7 +1794,7 @@ paths:
             tags: ["OrderTransition"]
     /placed-orders/{placedOrderId}/payment-url:
         get:
-            operationId: getPlacedOrderPaymentURL
+            operationId: getPlacedOrderPaymentUrl
             parameters:
                 - in: path
                   name: placedOrderId
@@ -1809,6 +1818,7 @@ paths:
         get:
             description:
                 Retrieve placed order billing address.
+            operationId: getPlacedOrderPlacedOrderBillingAddres
             parameters:
                 - in: path
                   explode: false
@@ -1862,6 +1872,7 @@ paths:
             tags: ["PlacedOrderAddress"]
     /placed-orders/{placedOrderId}/placed-order-comments:
         get:
+            operationId: getPlacedOrderPlacedOrderCommentsPage
             parameters:
                 - in: path
                   explode: false
@@ -1937,6 +1948,7 @@ paths:
         get:
             description:
                 Retrieve placed order items.
+            operationId: getPlacedOrderPlacedOrderItemsPage
             parameters:
                 - in: path
                   explode: false
@@ -2024,6 +2036,7 @@ paths:
         get:
             description:
                 Retrieve placed order shipping address.
+            operationId: getPlacedOrderPlacedOrderShippingAddres
             parameters:
                 - in: path
                   explode: false

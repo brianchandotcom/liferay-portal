@@ -73,12 +73,12 @@ public interface PlacedOrderResource {
 				String externalReferenceCode, PlacedOrder placedOrder)
 		throws Exception;
 
-	public String getPlacedOrderByExternalReferenceCodePaymentURL(
+	public String getPlacedOrderByExternalReferenceCodePaymentUrl(
 			String externalReferenceCode, String callbackURL)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlacedOrderByExternalReferenceCodePaymentURLHttpResponse(
+			getPlacedOrderByExternalReferenceCodePaymentUrlHttpResponse(
 				String externalReferenceCode, String callbackURL)
 		throws Exception;
 
@@ -96,11 +96,11 @@ public interface PlacedOrderResource {
 			Long placedOrderId, PlacedOrder placedOrder)
 		throws Exception;
 
-	public String getPlacedOrderPaymentURL(
+	public String getPlacedOrderPaymentUrl(
 			Long placedOrderId, String callbackURL)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getPlacedOrderPaymentURLHttpResponse(
+	public HttpInvoker.HttpResponse getPlacedOrderPaymentUrlHttpResponse(
 			Long placedOrderId, String callbackURL)
 		throws Exception;
 
@@ -660,12 +660,12 @@ public interface PlacedOrderResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getPlacedOrderByExternalReferenceCodePaymentURL(
+		public String getPlacedOrderByExternalReferenceCodePaymentUrl(
 				String externalReferenceCode, String callbackURL)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlacedOrderByExternalReferenceCodePaymentURLHttpResponse(
+				getPlacedOrderByExternalReferenceCodePaymentUrlHttpResponse(
 					externalReferenceCode, callbackURL);
 
 			String content = httpResponse.getContent();
@@ -728,7 +728,7 @@ public interface PlacedOrderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlacedOrderByExternalReferenceCodePaymentURLHttpResponse(
+				getPlacedOrderByExternalReferenceCodePaymentUrlHttpResponse(
 					String externalReferenceCode, String callbackURL)
 			throws Exception {
 
@@ -978,12 +978,12 @@ public interface PlacedOrderResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getPlacedOrderPaymentURL(
+		public String getPlacedOrderPaymentUrl(
 				Long placedOrderId, String callbackURL)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlacedOrderPaymentURLHttpResponse(
+				getPlacedOrderPaymentUrlHttpResponse(
 					placedOrderId, callbackURL);
 
 			String content = httpResponse.getContent();
@@ -1045,7 +1045,7 @@ public interface PlacedOrderResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPlacedOrderPaymentURLHttpResponse(
+		public HttpInvoker.HttpResponse getPlacedOrderPaymentUrlHttpResponse(
 				Long placedOrderId, String callbackURL)
 			throws Exception {
 

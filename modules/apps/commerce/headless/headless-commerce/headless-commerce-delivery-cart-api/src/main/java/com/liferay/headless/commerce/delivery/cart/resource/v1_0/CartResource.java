@@ -95,7 +95,7 @@ public interface CartResource {
 	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 		throws Exception;
 
-	public String getCartPaymentURL(Long cartId, String callbackURL)
+	public String getCartPaymentUrl(Long cartId, String callbackURL)
 		throws Exception;
 
 	public Page<Cart>
@@ -105,7 +105,7 @@ public interface CartResource {
 				Pagination pagination)
 		throws Exception;
 
-	public Cart postChannelCartByExternalReferenceCode(
+	public Cart postChannelByExternalReferenceCodeCart(
 			String externalReferenceCode, Cart cart)
 		throws Exception;
 

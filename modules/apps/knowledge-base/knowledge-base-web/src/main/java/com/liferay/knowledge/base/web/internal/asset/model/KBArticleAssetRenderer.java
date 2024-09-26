@@ -168,15 +168,19 @@ public class KBArticleAssetRenderer
 			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
 		throws PortalException {
 
-		String friendlyURL =
-			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					getClassName(),
-					new ClassPKInfoItemIdentifier(_kbArticle.getKbArticleId())),
-				themeDisplay);
+		if (_assetDisplayPageFriendlyURLProvider != null) {
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					new InfoItemReference(
+						getClassName(),
+						new ClassPKInfoItemIdentifier(
+							_kbArticle.getKbArticleId())),
+					themeDisplay);
 
-		if (Validator.isNotNull(friendlyURL)) {
-			return friendlyURL;
+			if (Validator.isNotNull(friendlyURL)) {
+				return friendlyURL;
+			}
+		}
 		}
 
 		return KnowledgeBaseUtil.getKBArticleURL(

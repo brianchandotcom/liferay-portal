@@ -44,6 +44,10 @@
 								"value": "orderDate"
 							},
 							{
+								"label": "order-summary",
+								"value": "orderSummary"
+							},
+							{
 								"label": "order-type",
 								"value": "orderType"
 							},

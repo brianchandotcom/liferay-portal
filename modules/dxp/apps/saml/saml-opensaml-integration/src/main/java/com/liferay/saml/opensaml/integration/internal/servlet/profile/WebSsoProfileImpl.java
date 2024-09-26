@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -76,7 +77,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1036,8 +1036,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		String samlMessageId, HttpSession httpSession,
 		SamlSsoRequestContext samlSsoRequestContext) {
 
-		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
-			(Map<String, SamlSsoRequestContext>)httpSession.getAttribute(
+		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			(LRUMap<String, SamlSsoRequestContext>)httpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		if (samlSsoRequestContexts == null) {
@@ -1045,7 +1045,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				return;
 			}
 
-			samlSsoRequestContexts = new LinkedHashMap<>(
+			samlSsoRequestContexts = new LRUMap<>(
 				_samlConfiguration.getMaxSamlSsoRequestContexts());
 
 			httpSession.setAttribute(
@@ -1438,8 +1438,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private SamlSsoRequestContext _getSamlSsoRequestContext(
 		String samlMessageId, HttpSession httpSession) {
 
-		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
-			(Map<String, SamlSsoRequestContext>)httpSession.getAttribute(
+		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			(LRUMap<String, SamlSsoRequestContext>)httpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		if (samlSsoRequestContexts == null) {

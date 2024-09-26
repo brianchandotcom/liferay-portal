@@ -1,15 +1,6 @@
 Bundle-Name: Liferay Source Formatter
 Bundle-SymbolicName: com.liferay.source.formatter
 Bundle-Version: 1.0.1441
-Import-Package:\
-	!javax.portlet,\
-	\
-	!javax.servlet.http,\
-	\
-	!org.apache.maven.plugin,\
-	!org.apache.tools.ant.*,\
-	\
-	*
 Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
 	@biz.aQute.bndlib-[0-9.]*.jar!/aQute/bnd/osgi/Constants.class,\

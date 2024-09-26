@@ -190,7 +190,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertTablesAreSortedByInitialRows(
 			_logContextTablesInitialFinalRowsPattern.matcher(
 				_getLogContextValue(
-					"upgrade.report.tables.initial.final.rows")));
+					"upgrade.report.tables.initial.final.rows", false)));
 		_assertTablesAreSortedByInitialRows(_pattern.matcher(_reportContent));
 	}
 
@@ -243,10 +243,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Assert.assertTrue(table1Exists && table2Exists);
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.tables.initial.final.rows",
 			"UpgradeReportTable1:0:1");
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.tables.initial.final.rows",
 			"UpgradeReportTable2:1:0");
 	}
@@ -273,12 +273,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.document.library.root.directory", rootDir);
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.document.library.storage.implementation",
 			PropsValues.DL_STORE_IMPL);
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.liferay.home", PropsValues.LIFERAY_HOME);
 
 		_assertReport("Document library root directory: " + rootDir);
@@ -320,7 +320,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_getLogContent().contains(
 					"INFO - Unable to determine the document library size. " +
 						"Increase the timeout or check it manually."));
-			_assertLogContextContains(
+			_assertLogContext(
 				"upgrade.report.document.library.storage.size",
 				"Unable to determine");
 			_assertReport("Document library storage size: Unable to determine");
@@ -336,7 +336,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			_assertLogContextContains(
+			_assertLogContext(
 				"upgrade.report.document.library.storage.size", "Disabled");
 			_assertReport("Document library storage size: Disabled");
 		}
@@ -365,8 +365,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		String size = LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US);
 
-		_assertLogContextContains(
-			"upgrade.report.document.library.storage.size", size);
+		_assertLogContext("upgrade.report.document.library.storage.size", size);
 		_assertReport("Document library storage size: " + size);
 	}
 
@@ -393,8 +392,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		String size = LanguageUtil.formatStorageSize(1048576, LocaleUtil.US);
 
-		_assertLogContextContains(
-			"upgrade.report.document.library.storage.size", size);
+		_assertLogContext("upgrade.report.document.library.storage.size", size);
 		_assertReport("Document library storage size: " + size);
 	}
 
@@ -413,9 +411,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertLogContextContains(
+		_assertLogContextDiagnostics(
 			"upgrade.report.failed.sqls", "SQL: update NonexistingTable;");
-		_assertDiagnosticsReport("SQL: update NonexistingTable;");
+		_assertReportDiagnostics("SQL: update NonexistingTable;");
 	}
 
 	@Test
@@ -440,14 +438,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		String diagnosticsreportContent = _getDiagnosticsReportContent();
+		String reportContentDiagnostics = _getReportContentDiagnostics();
 
 		Assert.assertTrue(
-			diagnosticsreportContent.indexOf(slowerUpgradeProcessName) <
-				diagnosticsreportContent.indexOf(fasterUpgradeProcessName));
+			reportContentDiagnostics.indexOf(slowerUpgradeProcessName) <
+				reportContentDiagnostics.indexOf(fasterUpgradeProcessName));
 
 		String longestUpgradeProcessesValue = _getLogContextValue(
-			"upgrade.report.longest.upgrade.processes");
+			"upgrade.report.longest.upgrade.processes", true);
 
 		Assert.assertTrue(
 			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
@@ -464,7 +462,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		List<String> inputArguments = runtimeMXBean.getInputArguments();
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.jvm.arguments", inputArguments.get(0));
 
 		_assertReport(inputArguments.get(0));
@@ -494,13 +492,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertLogContextContains(
+		_assertLogContextDiagnostics(
 			"upgrade.report.longest.upgrade.processes",
 			"com.liferay.portal.UpgradeTest:20401 ms");
-		_assertLogContextContains("upgrade.report.warnings", "2:Warning");
-		_assertDiagnosticsReport(
+		_assertLogContextDiagnostics("upgrade.report.warnings", "2:Warning");
+		_assertReportDiagnostics(
 			"2 occurrences of the following event: Warning");
-		_assertDiagnosticsReport(
+		_assertReportDiagnostics(
 			"com.liferay.portal.UpgradeTest took 20401 ms to complete");
 	}
 
@@ -526,7 +524,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_releaseLocalService.updateRelease(release);
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.status",
 			StringBundler.concat(
 				"There are upgrade processes available for ",
@@ -543,14 +541,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertLogContextContains("upgrade.report.errors", "[]");
-		_assertLogContextContains(
+		_assertLogContextDiagnostics("upgrade.report.errors", "[]");
+		_assertLogContextDiagnostics(
 			"upgrade.report.longest.upgrade.processes", "[]");
-		_assertLogContextContains("upgrade.report.warnings", "[]");
-		_assertDiagnosticsReport("Errors: Nothing registered");
-		_assertDiagnosticsReport(
+		_assertLogContextDiagnostics("upgrade.report.warnings", "[]");
+		_assertReportDiagnostics("Errors: Nothing registered");
+		_assertReportDiagnostics(
 			"Longest upgrade processes: Nothing registered");
-		_assertDiagnosticsReport("Warnings: Nothing registered");
+		_assertReportDiagnostics("Warnings: Nothing registered");
 	}
 
 	@Test
@@ -595,7 +593,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.properties",
 			"my.environment.property=my environment property value");
 
@@ -627,9 +625,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			_assertLogContextContains(
+			_assertLogContext(
 				"upgrade.report.properties.files", file.getAbsolutePath());
-			_assertLogContextContains(
+			_assertLogContext(
 				"upgrade.report.properties", "my.property=my property value");
 			_assertReport(file.getAbsolutePath());
 			_assertReport("my.property=my property value");
@@ -645,25 +643,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		File reportFile1 = _getReportFile("upgrade-report.txt");
-
-		Assert.assertTrue(reportFile1.exists());
-
-		long reportFile1LastModified = reportFile1.lastModified();
-
-		_appender.start();
-
-		_appender.stop();
-
-		File reportFile2 = _getReportFile("upgrade-report.txt");
-
-		Assert.assertTrue(
-			_getReportFile(
-				"upgrade-report.txt." + reportFile1LastModified
-			).exists());
-		Assert.assertTrue(reportFile2.exists());
-		Assert.assertTrue(
-			reportFile2.lastModified() != reportFile1LastModified);
+		_assertRenameUpgradeReport("upgrade-report.txt");
+		_assertRenameUpgradeReport("upgrade-report-diagnostics.txt");
 	}
 
 	@Test
@@ -674,26 +655,25 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.portal.expected.build.number",
 			String.valueOf(ReleaseInfo.getBuildNumber()));
 
 		Version latestSchemaVersion =
 			PortalUpgradeProcess.getLatestSchemaVersion();
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.portal.expected.schema.version",
 			latestSchemaVersion.toString());
 
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.portal.final.build.number",
 			String.valueOf(ReleaseInfo.getBuildNumber()));
-		_assertLogContextContains(
+		_assertLogContext(
 			"upgrade.report.portal.final.schema.version",
 			latestSchemaVersion.toString());
-		_assertLogContextContains(
-			"upgrade.report.portal.initial.build.number", "7100");
-		_assertLogContextContains(
+		_assertLogContext("upgrade.report.portal.initial.build.number", "7100");
+		_assertLogContext(
 			"upgrade.report.portal.initial.schema.version", "1.0.0");
 		_assertReport(
 			StringBundler.concat(
@@ -754,20 +734,20 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_appender.stop();
 
 		for (String upgradeProcessClassName : upgradeProcess1ClassNames) {
-			_assertLogContextContains(
+			_assertLogContextDiagnostics(
 				"upgrade.report.longest.running.sqls",
 				String.format("%s:%s", upgradeProcessClassName, sql1));
-			_assertDiagnosticsReport(
+			_assertReportDiagnostics(
 				String.format(
 					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
 					sql1));
 		}
 
 		for (String upgradeProcessClassName : upgradeProcess2ClassNames) {
-			_assertLogContextContains(
+			_assertLogContextDiagnostics(
 				"upgrade.report.longest.running.sqls",
 				String.format("%s:%s", upgradeProcessClassName, sql2));
-			_assertDiagnosticsReport(
+			_assertReportDiagnostics(
 				String.format(
 					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
 					sql2));
@@ -783,10 +763,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			String[] parts = sql.split("\\|");
 
-			_assertLogContextContains(
+			_assertLogContextDiagnostics(
 				"upgrade.report.longest.running.sqls",
 				String.format("%s:%s:%d ms", parts[0], parts[1], duration));
-			_assertDiagnosticsReport(
+			_assertReportDiagnostics(
 				String.format(
 					"Upgrade Process: %s\nSQL: %s\nDuration: %d ms", parts[0],
 					parts[1], duration));
@@ -810,20 +790,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 				_appender.stop();
 
-				File reportFile = _getReportFile("upgrade_report.info");
-
-				Assert.assertTrue(reportFile.exists());
-
-				String reportFileAbsolutePath = reportFile.getAbsolutePath();
-
-				Assert.assertTrue(
-					reportFileAbsolutePath.contains(_upgradeReportDir));
-
-				Assert.assertTrue(
-					StringUtil.contains(
-						String.valueOf(logCapture.getLogEntries()),
-						"Upgrade report generated in " + reportFileAbsolutePath,
-						StringPool.BLANK));
+				_assertUpgradeReportDirectory(logCapture, "upgrade-report.txt");
+				_assertUpgradeReportDirectory(
+					logCapture, "upgrade-report-diagnostics.txt");
 			}
 		}
 		finally {
@@ -854,28 +823,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 				_appender.stop();
 
-				File reportFile = new File(reportsDir, "upgrade_report.info");
-
-				Assert.assertFalse(reportFile.exists());
-
-				Assert.assertTrue(
-					StringUtil.contains(
-						String.valueOf(logCapture.getLogEntries()),
-						"Unable to generate the upgrade report at /",
-						StringPool.BLANK));
-
-				_upgradeReportDir = "";
-
-				reportFile = _getReportFile("upgrade_report.info");
-
-				Assert.assertTrue(reportFile.exists());
-
-				Assert.assertTrue(
-					StringUtil.contains(
-						String.valueOf(logCapture.getLogEntries()),
-						"Upgrade report generated in " +
-							reportFile.getAbsolutePath(),
-						StringPool.BLANK));
+				_assertUpgradeReportDirectoryWriteProtected(
+					logCapture, reportsDir, "upgrade-report.txt");
+				_assertUpgradeReportDirectoryWriteProtected(
+					logCapture, reportsDir, "upgrade-report-diagnostics.txt");
 			}
 		}
 		finally {
@@ -895,7 +846,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			File reportFile = _getReportFile("upgrade_report.info");
+			File reportFile = _getReportFile("upgrade-report.txt");
+
+			Assert.assertFalse(reportFile.exists());
+
+			reportFile = _getReportFile("upgrade-report-diagnostics.txt");
 
 			Assert.assertFalse(reportFile.exists());
 		}
@@ -966,20 +921,38 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		dclSingleton.destroy(null);
 	}
 
-	private void _assertDiagnosticsReport(String testString) throws Exception {
-		if (_diagnosticsReportContent == null) {
-			_diagnosticsReportContent = _getDiagnosticsReportContent();
-		}
-
-		Assert.assertTrue(
-			StringUtil.contains(
-				_diagnosticsReportContent, testString, StringPool.BLANK));
-	}
-
-	private void _assertLogContextContains(String key, String text) {
+	private void _assertLogContext(String key, String text) {
 		Assert.assertTrue(
 			StringUtil.containsIgnoreCase(
-				_getLogContextValue(key), text, StringPool.BLANK));
+				_getLogContextValue(key, false), text, StringPool.BLANK));
+	}
+
+	private void _assertLogContextDiagnostics(String key, String text) {
+		Assert.assertTrue(
+			StringUtil.containsIgnoreCase(
+				_getLogContextValue(key, true), text, StringPool.BLANK));
+	}
+
+	private void _assertRenameUpgradeReport(String fileName) throws Exception {
+		File reportFile1 = _getReportFile(fileName);
+
+		Assert.assertTrue(reportFile1.exists());
+
+		long reportFile1LastModified = reportFile1.lastModified();
+
+		_appender.start();
+
+		_appender.stop();
+
+		File reportFile2 = _getReportFile(fileName);
+
+		Assert.assertTrue(
+			_getReportFile(
+				fileName + "." + reportFile1LastModified
+			).exists());
+		Assert.assertTrue(reportFile2.exists());
+		Assert.assertTrue(
+			reportFile2.lastModified() != reportFile1LastModified);
 	}
 
 	private void _assertReport(String testString) throws Exception {
@@ -989,6 +962,16 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Assert.assertTrue(
 			StringUtil.contains(_reportContent, testString, StringPool.BLANK));
+	}
+
+	private void _assertReportDiagnostics(String testString) throws Exception {
+		if (_diagnosticsReportContent == null) {
+			_diagnosticsReportContent = _getReportContentDiagnostics();
+		}
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				_diagnosticsReportContent, testString, StringPool.BLANK));
 	}
 
 	private void _assertTablesAreSortedByInitialRows(Matcher matcher) {
@@ -1013,22 +996,64 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 	}
 
-	private String _getDiagnosticsReportContent() throws Exception {
-		File diagnosticsReportFile = _getReportFile(
-			"upgrade-report-diagnostics.txt");
+	private void _assertUpgradeReportDirectory(
+			LogCapture logCapture, String fileName)
+		throws Exception {
 
-		Assert.assertTrue(diagnosticsReportFile.exists());
+		File reportFile = _getReportFile(fileName);
 
-		return FileUtil.read(diagnosticsReportFile);
+		Assert.assertTrue(reportFile.exists());
+
+		String reportFileAbsolutePath = reportFile.getAbsolutePath();
+
+		Assert.assertTrue(reportFileAbsolutePath.contains(_upgradeReportDir));
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				String.valueOf(logCapture.getLogEntries()),
+				"Upgrade report generated in " + reportFileAbsolutePath,
+				StringPool.BLANK));
+	}
+
+	private void _assertUpgradeReportDirectoryWriteProtected(
+			LogCapture logCapture, File reportsDir, String fileName)
+		throws Exception {
+
+		File reportFile = new File(reportsDir, fileName);
+
+		Assert.assertFalse(reportFile.exists());
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				String.valueOf(logCapture.getLogEntries()),
+				"Unable to generate the upgrade report at /",
+				StringPool.BLANK));
+
+		_upgradeReportDir = "";
+
+		reportFile = _getReportFile(fileName);
+
+		Assert.assertTrue(reportFile.exists());
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				String.valueOf(logCapture.getLogEntries()),
+				"Upgrade report generated in " + reportFile.getAbsolutePath(),
+				StringPool.BLANK));
 	}
 
 	private String _getLogContent() {
 		return _unsyncStringWriter.toString();
 	}
 
-	private String _getLogContextValue(String key) {
-		File file = new File(
-			new File(getFilePath(), "reports"), "upgrade-report.txt");
+	private String _getLogContextValue(String key, boolean diagnostics) {
+		String fileName = "upgrade-report.txt";
+
+		if (diagnostics) {
+			fileName = "upgrade-report-diagnostics.txt";
+		}
+
+		File file = new File(new File(getFilePath(), "reports"), fileName);
 
 		Pattern pattern = Pattern.compile(
 			"(?s)INFO - Upgrade report generated in " +
@@ -1073,6 +1098,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return FileUtil.read(reportFile);
 	}
 
+	private String _getReportContentDiagnostics() throws Exception {
+		File diagnosticsReportFile = _getReportFile(
+			"upgrade-report-diagnostics.txt");
+
+		Assert.assertTrue(diagnosticsReportFile.exists());
+
+		return FileUtil.read(diagnosticsReportFile);
+	}
+
 	private File _getReportFile(String fileName) throws Exception {
 		File reportsDir = null;
 
@@ -1091,7 +1125,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private String _getRootDir() {
-		String rootDir = "Undefined";
+		String rootDir = null;
 
 		try {
 			PersistenceManager persistenceManager =
@@ -1136,7 +1170,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			}
 		}
 
-		return null;
+		return "Undefined";
 	}
 
 	private void _setEnv(String key, String value) throws Exception {
@@ -1164,6 +1198,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
 			originalUpgradeReportDLStorageSizeTimeout);
 	}
+
+	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =
+		"com.liferay.portal.store.file.system.configuration." +
+			"AdvancedFileSystemStoreConfiguration";
+
+	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
+		"com.liferay.portal.store.file.system.configuration." +
+			"FileSystemStoreConfiguration";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeLogAppenderTestCase.class);

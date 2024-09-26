@@ -3379,6 +3379,14 @@
 	},
 	{
 		"classNames": [
+			"Organization"
+		],
+		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>getStatus|setStatus)Id",
+		"issueKey": "LPD-36750",
+		"to": "${variableName}.${prefixMethodName}ListTypeId"
+	},
+	{
+		"classNames": [
 			"Address",
 			"EmailAddress",
 			"OrgLabor",
@@ -4075,22 +4083,6 @@
 		"from": "SUBSCRIPTION_STATUS",
 		"issueKey": "LPS-197981",
 		"to": "COMMERCE_SUBSCRIPTION_STATUS"
-	},
-	{
-		"classNames": [
-			"Organization"
-		],
-		"from": "getStatusId",
-		"issueKey": "LPS-197984",
-		"to": "getStatusListTypeId"
-	},
-	{
-		"classNames": [
-			"Organization"
-		],
-		"from": "setStatusId",
-		"issueKey": "LPS-197984",
-		"to": "setStatusListTypeId"
 	},
 	{
 		"classNames": [

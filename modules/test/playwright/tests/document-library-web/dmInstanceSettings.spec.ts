@@ -7,13 +7,9 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {documentLibraryPagesTest} from './fixtures/documentLibraryPagesTest';
+import {dmSettingsPagesTest} from './fixtures/dmSettingsPagesTest';
 
-const test = mergeTests(
-	documentLibraryPagesTest,
-	isolatedSiteTest,
-	loginTest()
-);
+const test = mergeTests(dmSettingsPagesTest, isolatedSiteTest, loginTest());
 
 test(
 	'Updating Maximum File Upload Size at Instance level, not overrides site configuration',

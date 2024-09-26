@@ -135,3 +135,68 @@ test('Date-time filter is displayed in fragment, and applied to data @LPD-10754'
 
 	await assertDataIsFetched();
 });
+
+test('Can create Date-time filter without start and end dates', async ({
+	dataSetManagerApiHelpers,
+	fdsFragmentPage,
+	layout,
+}) => {
+	const fieldLabel = getRandomString();
+	const filterLabel = getRandomString();
+
+	async function assertDataIsFetched() {
+		await test.step('Assert that the data entry is fetched', async () => {
+			await expect(
+				fdsFragmentPage.page.getByText(fieldLabel).first()
+			).toBeVisible();
+		});
+	}
+
+	await test.step('Create a new date-time filter without start nor end dates', async () => {
+		await dataSetManagerApiHelpers.createDataSetDateFilter({
+			dataSetERC,
+			fieldName: DATE_FIELD_NAME,
+			from: '',
+			label_i18n: {en_US: filterLabel},
+			to: '',
+			type: 'date-time',
+		});
+	});
+
+	await test.step('Add a field, so FDS has something to show', async () => {
+		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC,
+			label_i18n: {en_US: fieldLabel},
+			name: 'rendererType',
+			type: 'string',
+		});
+	});
+
+	await test.step('Configure Data Set fragment', async () => {
+		await fdsFragmentPage.configureDataSetFragment({
+			dataSetLabel,
+			layout,
+		});
+	});
+
+	await test.step('Assert that the date filter is in the UI', async () => {
+		await expect(fdsFragmentPage.fdsFilterButton).toBeVisible();
+		await fdsFragmentPage.selectFilter(filterLabel);
+
+		const fromInput = fdsFragmentPage.page.getByLabel('From', {
+			exact: true,
+		});
+
+		await expect(fromInput).toBeVisible();
+		await expect(fromInput).toBeEmpty();
+
+		const toInput = fdsFragmentPage.page.getByLabel('To', {
+			exact: true,
+		});
+
+		await expect(toInput).toBeVisible();
+		await expect(toInput).toBeEmpty();
+	});
+
+	await assertDataIsFetched();
+});

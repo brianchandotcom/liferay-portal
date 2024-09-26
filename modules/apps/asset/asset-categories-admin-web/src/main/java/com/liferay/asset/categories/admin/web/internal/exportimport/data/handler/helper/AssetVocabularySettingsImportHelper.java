@@ -67,7 +67,8 @@ public class AssetVocabularySettingsImportHelper
 
 	private void _fillClassNameIdsAndClassTypePKs(
 		String[] classNameIdsAndClassTypePKs, List<Long> classNameIds,
-		List<Long> classTypePKs, List<Boolean> requireds, boolean required) {
+		List<Long> classTypePKs, List<Boolean> depotRequireds,
+		boolean depotRequired, List<Boolean> requireds, boolean required) {
 
 		for (String classNameIdAndClassTypePK : classNameIdsAndClassTypePKs) {
 			long oldClassNameId = getClassNameId(classNameIdAndClassTypePK);
@@ -86,6 +87,7 @@ public class AssetVocabularySettingsImportHelper
 				_getNewClassTypePK(
 					oldClassNameId, newClassNameId, oldClassTypePK));
 
+			depotRequireds.add(depotRequired);
 			requireds.add(required);
 		}
 	}
@@ -150,19 +152,25 @@ public class AssetVocabularySettingsImportHelper
 	private void _updateSettings() {
 		List<Long> classNameIds = new ArrayList<>();
 		List<Long> classTypePKs = new ArrayList<>();
+		List<Boolean> depotRequireds = new ArrayList<>();
 		List<Boolean> requireds = new ArrayList<>();
 
 		_fillClassNameIdsAndClassTypePKs(
 			getClassNameIdsAndClassTypePKs(), classNameIds, classTypePKs,
-			requireds, false);
+			depotRequireds, false, requireds, false);
+
+		_fillClassNameIdsAndClassTypePKs(
+			getDepotRequiredClassNameIdsAndClassTypePKs(), classNameIds,
+			classTypePKs, depotRequireds, true, requireds, false);
 
 		_fillClassNameIdsAndClassTypePKs(
 			getRequiredClassNameIdsAndClassTypePKs(), classNameIds,
-			classTypePKs, requireds, true);
+			classTypePKs, depotRequireds, false, requireds, true);
 
 		setClassNameIdsAndClassTypePKs(
 			ArrayUtil.toLongArray(classNameIds),
 			ArrayUtil.toLongArray(classTypePKs),
+			ArrayUtil.toBooleanArray(depotRequireds),
 			ArrayUtil.toBooleanArray(requireds));
 	}
 

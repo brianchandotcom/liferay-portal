@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -527,6 +529,39 @@ public class ObjectDefinitionResourceTest
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
+
+		// Default language id
+
+		postObjectDefinition = objectDefinitionResource.postObjectDefinition(
+			randomObjectDefinition());
+
+		String objectDefinitionDefaultLanguageId = "pt_BR";
+
+		String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		Assert.assertNotEquals(
+			objectDefinitionDefaultLanguageId, siteDefaultLanguageId);
+
+		postObjectDefinition.setDefaultLanguageId(
+			objectDefinitionDefaultLanguageId);
+
+		postObjectDefinition.setLabel(
+			MapUtil.fromArray(
+				objectDefinitionDefaultLanguageId,
+				RandomTestUtil.randomString()));
+
+		objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		postObjectDefinition = objectDefinitionResource.getObjectDefinition(
+			postObjectDefinition.getId());
+
+		Map<String, String> labelMap = postObjectDefinition.getLabel();
+
+		Assert.assertEquals(
+			labelMap.get(siteDefaultLanguageId),
+			labelMap.get(objectDefinitionDefaultLanguageId));
 
 		// Draft custom object definition
 

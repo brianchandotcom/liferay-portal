@@ -74,6 +74,68 @@ import org.w3c.dom.NodeList;
 @Component(service = TestrayManager.class)
 public class TestrayManagerImpl implements TestrayManager {
 
+	public int createTestraySubtasks(
+			long companyId, long testrayBuildId, long testrayTaskId,
+			long userId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("select cr.errors_ , sum(c.priority_) as score from ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c ");
+		sb.append("where cr.errors_ is not null and cr.errors_ != '' and ");
+		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ and ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = ? group by cr.errors_ ");
+		sb.append("order by score desc");
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			StringUtil.replace(
+				sb.toString(), "[%COMPANY_ID%]", String.valueOf(companyId)),
+			ListUtil.fromArray(GetterUtil.getLong(testrayBuildId)));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Subtask");
+		int testraySubtasksAmount = 0;
+
+		for (Map<String, Object> value : values) {
+			testraySubtasksAmount++;
+
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				userId, 0, objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"dueStatus", "OPEN"
+				).put(
+					"errors", String.valueOf(value.get("errors_"))
+				).put(
+					"name", "ST-" + testraySubtasksAmount
+				).put(
+					"number", testraySubtasksAmount
+				).put(
+					"r_taskToSubtasks_c_taskId", testrayTaskId
+				).put(
+					"score", String.valueOf(value.get("score"))
+				).build(),
+				_serviceContextHelper.getServiceContext());
+
+			sb = new StringBundler();
+
+			sb.append("update O_[%COMPANY_ID%]_CaseResult set ");
+			sb.append("r_subtaskToCaseResults_c_subtaskId = ? where ");
+			sb.append("r_buildToCaseResult_c_buildId = ? and errors_ = ?");
+
+			TestrayUtil.executeUpdate(
+				StringUtil.replace(
+					sb.toString(), "[%COMPANY_ID%]", String.valueOf(companyId)),
+				ListUtil.fromArray(
+					objectEntry.getObjectEntryId(),
+					GetterUtil.getLong(testrayBuildId),
+					String.valueOf(value.get("errors_"))));
+		}
+
+		return testraySubtasksAmount;
+	}
+
 	@Override
 	public Map<String, Object> fetchTestrayCaseFlakyParameters(
 			long companyId, OffsetDateTime offsetDateTime, long testrayCaseId)

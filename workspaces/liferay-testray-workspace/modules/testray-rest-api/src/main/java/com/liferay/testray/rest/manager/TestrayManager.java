@@ -20,6 +20,11 @@ import org.w3c.dom.Document;
  */
 public interface TestrayManager {
 
+	public int createTestraySubtasks(
+			long companyId, long testrayBuildId, long testrayTaskId,
+			long userId)
+		throws Exception;
+
 	public Map<String, Object> fetchTestrayCaseFlakyParameters(
 			long companyId, OffsetDateTime offsetDateTime, long testrayCaseId)
 		throws Exception;

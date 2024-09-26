@@ -19,14 +19,14 @@ const PARENT_TYPES = [
 	LAYOUT_DATA_ITEM_TYPES.root,
 ];
 
-function getItemTargetToPaste(item, layoutData) {
+function getItemTargetToPaste(item, layoutDataItems) {
 	if (PARENT_TYPES.some((type) => type === item.type)) {
 		return item;
 	}
 
-	const parent = layoutData?.items?.[item.parentId];
+	const parent = layoutDataItems[item.parentId];
 
-	return getItemTargetToPaste(parent, layoutData);
+	return getItemTargetToPaste(parent, layoutDataItems);
 }
 
 export default function canBeCopied(
@@ -47,7 +47,7 @@ export default function canBeCopied(
 		fragmentEntryLinks
 	);
 
-	const parent = getItemTargetToPaste(target, layoutData);
+	const parent = getItemTargetToPaste(target, layoutData.items);
 
 	const isChildAllowed = checkAllowedChild(
 		source,

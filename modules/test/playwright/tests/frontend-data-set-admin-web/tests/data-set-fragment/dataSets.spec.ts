@@ -215,7 +215,7 @@ test(
 
 		await test.step('Assert that "Data Set" fragment is not available on the page', async () => {
 			await expect(
-				page.getByText('Place fragments or widgets here.')
+				page.getByText('Drag and drop fragments or widgets here.')
 			).toBeInViewport();
 
 			await expect(

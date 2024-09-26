@@ -532,7 +532,7 @@ definition {
 
 			AssertVisible(
 				key_fragmentName = "Form Container",
-				key_messageInfo = "Place fragments here.",
+				key_messageInfo = "Drag and drop fragments or widgets here.",
 				key_position = 1,
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
@@ -612,7 +612,7 @@ definition {
 
 			AssertVisible(
 				key_fragmentName = "Form Container",
-				key_messageInfo = "Place fragments here.",
+				key_messageInfo = "Drag and drop fragments or widgets here.",
 				key_position = 1,
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
@@ -1546,7 +1546,7 @@ definition {
 
 			AssertVisible(
 				key_fragmentName = "Form Container",
-				key_messageInfo = "Place fragments here.",
+				key_messageInfo = "Drag and drop fragments or widgets here.",
 				key_position = 1,
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 

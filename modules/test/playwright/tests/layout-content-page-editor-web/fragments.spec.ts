@@ -596,7 +596,7 @@ test.describe('Dropdown Fragment', () => {
 		await pageEditorPage.addFragment(
 			'Basic Components',
 			'Heading',
-			page.getByText('Place fragments or widgets here.', {exact: true})
+			page.getByText('Drag and drop fragments or widgets here.', {exact: true})
 		);
 
 		await expect(page.getByText('Heading Example')).toBeVisible();
@@ -1457,7 +1457,7 @@ test.describe('Tabs Fragment', () => {
 		// Add the main drop zone on the first tab and a Heading fragment in the second tab
 
 		const tabDropZone = page
-			.getByText('Place fragments or widgets here.')
+			.getByText('Drag and drop fragments or widgets here.')
 			.first();
 
 		await dragAndDropElement({
@@ -1477,7 +1477,7 @@ test.describe('Tabs Fragment', () => {
 		await dragAndDropElement({
 			dragTarget: page.locator('[data-name="Heading"]'),
 			dropTarget: page
-				.getByText('Place fragments or widgets here.')
+				.getByText('Drag and drop fragments or widgets here.')
 				.first(),
 			page,
 		});

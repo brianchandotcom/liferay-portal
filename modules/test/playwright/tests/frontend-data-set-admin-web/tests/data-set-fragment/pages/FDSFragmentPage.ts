@@ -194,7 +194,7 @@ export class FDSFragmentPage {
 		});
 
 		await dataSetMenuItem.dragTo(
-			this.page.getByText('Place fragments or widgets here')
+			this.page.getByText('Drag and drop fragments or widgets here.')
 		);
 
 		const fragmentSelectionArea = this.page.getByText(

@@ -298,13 +298,12 @@ public class ViewChangesDisplayContext {
 	}
 
 	public List<FDSFilter> getFDSFilters() throws PortalException {
-		boolean showHideable = ParamUtil.getBoolean(
-			_renderRequest, "showHideable");
-
 		long groupId = ParamUtil.getLong(_renderRequest, "groupId");
-
 		long modelClassNameId = ParamUtil.getLong(
 			_renderRequest, "modelClassNameId");
+
+		boolean showHideable = ParamUtil.getBoolean(
+			_renderRequest, "showHideable");
 
 		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
 			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);

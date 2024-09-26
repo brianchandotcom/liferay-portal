@@ -59,22 +59,23 @@ public class CommerceOrderNoteServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceOrderNote
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderNoteService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceOrderNote fetchCommerceOrderNote(
 			long commerceOrderNoteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderNoteService.fetchCommerceOrderNote(
 			commerceOrderNoteId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote
+			fetchCommerceOrderNoteByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderNoteService.
+			fetchCommerceOrderNoteByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override

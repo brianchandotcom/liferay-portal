@@ -138,18 +138,18 @@ public class CPInstanceServiceUtil {
 		getService().deleteCPInstance(cpInstanceId);
 	}
 
-	public static CPInstance fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CPInstance fetchCPInstance(long cpInstanceId)
 		throws PortalException {
 
 		return getService().fetchCPInstance(cpInstanceId);
+	}
+
+	public static CPInstance fetchCPInstanceByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCPInstanceByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CPInstance fetchCProductInstance(

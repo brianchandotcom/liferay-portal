@@ -66,15 +66,15 @@ public interface CPOptionService extends BaseService {
 	public void deleteCPOption(long cpOptionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption fetchCPOption(long cpOptionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption fetchCPOption(long companyId, String key)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOption fetchCPOptionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	public List<CPOption> findCPOptionByCompanyId(

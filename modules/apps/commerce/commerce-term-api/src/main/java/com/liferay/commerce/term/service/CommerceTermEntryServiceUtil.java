@@ -58,19 +58,20 @@ public class CommerceTermEntryServiceUtil {
 		return getService().deleteCommerceTermEntry(commerceTermEntryId);
 	}
 
-	public static CommerceTermEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
 	public static CommerceTermEntry fetchCommerceTermEntry(
 			long commerceTermEntryId)
 		throws PortalException {
 
 		return getService().fetchCommerceTermEntry(commerceTermEntryId);
+	}
+
+	public static CommerceTermEntry
+			fetchCommerceTermEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchCommerceTermEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	public static List<CommerceTermEntry> getCommerceTermEntries(

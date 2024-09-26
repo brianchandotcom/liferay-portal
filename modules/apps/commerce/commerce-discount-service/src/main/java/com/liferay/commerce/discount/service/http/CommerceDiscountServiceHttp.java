@@ -449,94 +449,6 @@ public class CommerceDiscountServiceHttp {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscount
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceDiscountServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.discount.model.CommerceDiscount)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.discount.model.CommerceDiscount
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceDiscountServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes8);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.discount.model.CommerceDiscount)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.discount.model.CommerceDiscount
 			fetchCommerceDiscount(
 				HttpPrincipal httpPrincipal, long commerceDiscountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -544,10 +456,54 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "fetchCommerceDiscount",
-				_fetchCommerceDiscountParameterTypes9);
+				_fetchCommerceDiscountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.discount.model.CommerceDiscount)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			fetchCommerceDiscountByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceDiscountServiceUtil.class,
+				"fetchCommerceDiscountByExternalReferenceCode",
+				_fetchCommerceDiscountByExternalReferenceCodeParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -586,7 +542,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "getCommerceDiscount",
-				_getCommerceDiscountParameterTypes10);
+				_getCommerceDiscountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId);
@@ -630,7 +586,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "getCommerceDiscounts",
-				_getCommerceDiscountsParameterTypes11);
+				_getCommerceDiscountsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, couponCode);
@@ -675,7 +631,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "getCommerceDiscounts",
-				_getCommerceDiscountsParameterTypes12);
+				_getCommerceDiscountsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, level, active, status);
@@ -717,7 +673,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "getCommerceDiscountsCount",
-				_getCommerceDiscountsCountParameterTypes13);
+				_getCommerceDiscountsCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, couponCode);
@@ -759,7 +715,7 @@ public class CommerceDiscountServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class,
 				"getCommerceDiscountsCountByPricingClassId",
-				_getCommerceDiscountsCountByPricingClassIdParameterTypes14);
+				_getCommerceDiscountsCountByPricingClassIdParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePricingClassId, title);
@@ -804,7 +760,7 @@ public class CommerceDiscountServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class,
 				"searchByCommercePricingClassId",
-				_searchByCommercePricingClassIdParameterTypes15);
+				_searchByCommercePricingClassIdParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePricingClassId, title, start, end);
@@ -851,7 +807,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "searchCommerceDiscounts",
-				_searchCommerceDiscountsParameterTypes16);
+				_searchCommerceDiscountsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, keywords, status, start, end, sort);
@@ -906,7 +862,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "updateCommerceDiscount",
-				_updateCommerceDiscountParameterTypes17);
+				_updateCommerceDiscountParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId, title, target, useCouponCode,
@@ -967,7 +923,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "updateCommerceDiscount",
-				_updateCommerceDiscountParameterTypes18);
+				_updateCommerceDiscountParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId, title, target, useCouponCode,
@@ -1029,7 +985,7 @@ public class CommerceDiscountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class, "updateCommerceDiscount",
-				_updateCommerceDiscountParameterTypes19);
+				_updateCommerceDiscountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId, title, target, useCouponCode,
@@ -1080,7 +1036,7 @@ public class CommerceDiscountServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class,
 				"updateCommerceDiscountExternalReferenceCode",
-				_updateCommerceDiscountExternalReferenceCodeParameterTypes20);
+				_updateCommerceDiscountExternalReferenceCodeParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId, externalReferenceCode);
@@ -1124,7 +1080,7 @@ public class CommerceDiscountServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceDiscountServiceUtil.class,
 				"updateCommerceDiscountExternalReferenceCode",
-				_updateCommerceDiscountExternalReferenceCodeParameterTypes21);
+				_updateCommerceDiscountExternalReferenceCodeParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceDiscountId);
@@ -1232,37 +1188,32 @@ public class CommerceDiscountServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceDiscountParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes7 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes8 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCommerceDiscountParameterTypes9 =
+	private static final Class<?>[] _fetchCommerceDiscountParameterTypes7 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCommerceDiscountParameterTypes10 =
+	private static final Class<?>[]
+		_fetchCommerceDiscountByExternalReferenceCodeParameterTypes8 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[] _getCommerceDiscountParameterTypes9 =
 		new Class[] {long.class};
+	private static final Class<?>[] _getCommerceDiscountsParameterTypes10 =
+		new Class[] {long.class, String.class};
 	private static final Class<?>[] _getCommerceDiscountsParameterTypes11 =
-		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getCommerceDiscountsParameterTypes12 =
 		new Class[] {long.class, String.class, boolean.class, int.class};
-	private static final Class<?>[] _getCommerceDiscountsCountParameterTypes13 =
+	private static final Class<?>[] _getCommerceDiscountsCountParameterTypes12 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCommerceDiscountsCountByPricingClassIdParameterTypes14 =
+		_getCommerceDiscountsCountByPricingClassIdParameterTypes13 =
 			new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_searchByCommercePricingClassIdParameterTypes15 = new Class[] {
+		_searchByCommercePricingClassIdParameterTypes14 = new Class[] {
 			long.class, String.class, int.class, int.class
 		};
-	private static final Class<?>[] _searchCommerceDiscountsParameterTypes16 =
+	private static final Class<?>[] _searchCommerceDiscountsParameterTypes15 =
 		new Class[] {
 			long.class, String.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCommerceDiscountParameterTypes17 =
+	private static final Class<?>[] _updateCommerceDiscountParameterTypes16 =
 		new Class[] {
 			long.class, String.class, String.class, boolean.class, String.class,
 			boolean.class, java.math.BigDecimal.class,
@@ -1273,7 +1224,7 @@ public class CommerceDiscountServiceHttp {
 			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommerceDiscountParameterTypes18 =
+	private static final Class<?>[] _updateCommerceDiscountParameterTypes17 =
 		new Class[] {
 			long.class, String.class, String.class, boolean.class, String.class,
 			boolean.class, java.math.BigDecimal.class, String.class,
@@ -1284,7 +1235,7 @@ public class CommerceDiscountServiceHttp {
 			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommerceDiscountParameterTypes19 =
+	private static final Class<?>[] _updateCommerceDiscountParameterTypes18 =
 		new Class[] {
 			long.class, String.class, String.class, boolean.class, String.class,
 			boolean.class, java.math.BigDecimal.class, String.class,
@@ -1296,10 +1247,10 @@ public class CommerceDiscountServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateCommerceDiscountExternalReferenceCodeParameterTypes20 =
+		_updateCommerceDiscountExternalReferenceCodeParameterTypes19 =
 			new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_updateCommerceDiscountExternalReferenceCodeParameterTypes21 =
+		_updateCommerceDiscountExternalReferenceCodeParameterTypes20 =
 			new Class[] {String.class, long.class};
 
 }

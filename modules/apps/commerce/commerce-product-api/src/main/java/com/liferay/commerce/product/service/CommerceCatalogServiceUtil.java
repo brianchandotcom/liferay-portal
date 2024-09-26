@@ -47,18 +47,18 @@ public class CommerceCatalogServiceUtil {
 		return getService().deleteCommerceCatalog(commerceCatalogId);
 	}
 
-	public static CommerceCatalog fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceCatalog fetchCommerceCatalog(long commerceCatalogId)
 		throws PortalException {
 
 		return getService().fetchCommerceCatalog(commerceCatalogId);
+	}
+
+	public static CommerceCatalog fetchCommerceCatalogByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceCatalogByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceCatalog fetchCommerceCatalogByGroupId(long groupId)

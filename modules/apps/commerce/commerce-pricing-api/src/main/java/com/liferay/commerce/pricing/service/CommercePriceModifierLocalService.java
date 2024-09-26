@@ -264,10 +264,6 @@ public interface CommercePriceModifierLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceModifier fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceModifier fetchCommercePriceModifier(
 		long commercePriceModifierId);
 

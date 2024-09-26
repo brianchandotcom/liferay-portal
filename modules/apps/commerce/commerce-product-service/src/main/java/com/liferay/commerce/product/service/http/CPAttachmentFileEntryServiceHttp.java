@@ -197,19 +197,18 @@ public class CPAttachmentFileEntryServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+			fetchCPAttachmentFileEntry(
+				HttpPrincipal httpPrincipal, long cpAttachmentFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPAttachmentFileEntryServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes3);
+				"fetchCPAttachmentFileEntry",
+				_fetchCPAttachmentFileEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, cpAttachmentFileEntryId);
 
 			Object returnObj = null;
 
@@ -241,18 +240,19 @@ public class CPAttachmentFileEntryServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
-			fetchCPAttachmentFileEntry(
-				HttpPrincipal httpPrincipal, long cpAttachmentFileEntryId)
+			fetchCPAttachmentFileEntryByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPAttachmentFileEntryServiceUtil.class,
-				"fetchCPAttachmentFileEntry",
-				_fetchCPAttachmentFileEntryParameterTypes4);
+				"fetchCPAttachmentFileEntryByExternalReferenceCode",
+				_fetchCPAttachmentFileEntryByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpAttachmentFileEntryId);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -634,12 +634,11 @@ public class CPAttachmentFileEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_deleteCPAttachmentFileEntryParameterTypes2 = new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCPAttachmentFileEntryParameterTypes4 =
+	private static final Class<?>[] _fetchCPAttachmentFileEntryParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCPAttachmentFileEntryByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCPAttachmentFileEntriesParameterTypes5 =
 		new Class[] {
 			long.class, long.class, int.class, int.class, int.class, int.class

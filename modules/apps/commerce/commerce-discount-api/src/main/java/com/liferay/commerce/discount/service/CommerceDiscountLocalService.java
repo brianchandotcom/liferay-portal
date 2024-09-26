@@ -366,19 +366,6 @@ public interface CommerceDiscountLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #fetchByExternalReferenceCode(String, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceDiscount fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceDiscount fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceDiscount fetchCommerceDiscount(long commerceDiscountId);
 

@@ -326,13 +326,6 @@ public class CPInstanceLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CPInstance fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CPInstance fetchCPInstance(long CPInstanceId) {
 		return getService().fetchCPInstance(CPInstanceId);
 	}

@@ -117,15 +117,15 @@ public class CommerceAddressLocalServiceUtil {
 		getService().deleteRegionCommerceAddresses(regionId);
 	}
 
-	public static CommerceAddress fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceAddress fetchCommerceAddress(long commerceAddressId) {
 		return getService().fetchCommerceAddress(commerceAddressId);
+	}
+
+	public static CommerceAddress fetchCommerceAddressByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchCommerceAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceAddress geolocateCommerceAddress(

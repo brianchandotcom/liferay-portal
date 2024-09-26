@@ -377,13 +377,6 @@ public class CommerceOrderLocalServiceUtil {
 			userId, commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
-	public static CommerceOrder fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrder fetchCommerceOrder(long commerceOrderId) {
 		return getService().fetchCommerceOrder(commerceOrderId);
 	}

@@ -188,7 +188,7 @@ public class CommerceInventoryWarehouseServiceHttp {
 
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
-				fetchByExternalReferenceCode(
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
 					HttpPrincipal httpPrincipal, String externalReferenceCode,
 					long companyId)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -196,8 +196,8 @@ public class CommerceInventoryWarehouseServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryWarehouseServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes3);
+				"fetchCommerceInventoryWarehouseByExternalReferenceCode",
+				_fetchCommerceInventoryWarehouseByExternalReferenceCodeParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId);
@@ -854,9 +854,8 @@ public class CommerceInventoryWarehouseServiceHttp {
 			long.class
 		};
 	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			String.class, long.class
-		};
+		_fetchCommerceInventoryWarehouseByExternalReferenceCodeParameterTypes3 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_geolocateCommerceInventoryWarehouseParameterTypes4 = new Class[] {
 			long.class, double.class, double.class

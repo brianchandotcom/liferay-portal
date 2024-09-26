@@ -264,14 +264,6 @@ public class CommerceChannelLocalServiceWrapper
 	}
 
 	@Override
-	public CommerceChannel fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _commerceChannelLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommerceChannel fetchCommerceChannel(long commerceChannelId) {
 		return _commerceChannelLocalService.fetchCommerceChannel(
 			commerceChannelId);

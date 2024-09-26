@@ -225,10 +225,6 @@ public interface CommerceChannelLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceChannel fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceChannel fetchCommerceChannel(long commerceChannelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -215,10 +215,6 @@ public interface CommerceOrderTypeLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderType fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderType fetchCommerceOrderType(long commerceOrderTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

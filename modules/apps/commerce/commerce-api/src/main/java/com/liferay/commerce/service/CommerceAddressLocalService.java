@@ -97,11 +97,11 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceAddress fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceAddress fetchCommerceAddress(long commerceAddressId);
+	public CommerceAddress fetchCommerceAddressByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress geolocateCommerceAddress(long commerceAddressId)

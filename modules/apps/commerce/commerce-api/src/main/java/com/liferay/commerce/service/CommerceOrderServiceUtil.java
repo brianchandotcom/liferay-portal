@@ -143,14 +143,6 @@ public class CommerceOrderServiceUtil {
 			commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
-	public static CommerceOrder fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrder fetchCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
@@ -181,6 +173,14 @@ public class CommerceOrderServiceUtil {
 		throws PortalException {
 
 		return getService().fetchCommerceOrder(uuid, groupId);
+	}
+
+	public static CommerceOrder fetchCommerceOrderByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceOrderByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceOrder getCommerceOrder(long commerceOrderId)

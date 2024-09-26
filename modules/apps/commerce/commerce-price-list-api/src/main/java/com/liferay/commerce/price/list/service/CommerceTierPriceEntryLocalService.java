@@ -329,10 +329,6 @@ public interface CommerceTierPriceEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, BigDecimal minQuantity);
 

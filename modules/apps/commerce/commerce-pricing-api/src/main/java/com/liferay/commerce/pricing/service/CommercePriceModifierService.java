@@ -78,13 +78,14 @@ public interface CommercePriceModifierService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceModifier fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommercePriceModifier fetchCommercePriceModifier(
+			long commercePriceModifierId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceModifier fetchCommercePriceModifier(
-			long commercePriceModifierId)
+	public CommercePriceModifier
+			fetchCommercePriceModifierByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

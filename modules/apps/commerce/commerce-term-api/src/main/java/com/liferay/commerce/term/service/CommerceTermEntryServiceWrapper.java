@@ -62,21 +62,22 @@ public class CommerceTermEntryServiceWrapper
 
 	@Override
 	public com.liferay.commerce.term.model.CommerceTermEntry
-			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceTermEntryService.fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	@Override
-	public com.liferay.commerce.term.model.CommerceTermEntry
 			fetchCommerceTermEntry(long commerceTermEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTermEntryService.fetchCommerceTermEntry(
 			commerceTermEntryId);
+	}
+
+	@Override
+	public com.liferay.commerce.term.model.CommerceTermEntry
+			fetchCommerceTermEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryService.
+			fetchCommerceTermEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	@Override

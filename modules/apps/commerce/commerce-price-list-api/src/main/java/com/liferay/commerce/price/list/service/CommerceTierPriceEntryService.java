@@ -99,13 +99,14 @@ public interface CommerceTierPriceEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
+			long commerceTierPriceEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
-			long commerceTierPriceEntryId)
+	public CommerceTierPriceEntry
+			fetchCommerceTierPriceEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

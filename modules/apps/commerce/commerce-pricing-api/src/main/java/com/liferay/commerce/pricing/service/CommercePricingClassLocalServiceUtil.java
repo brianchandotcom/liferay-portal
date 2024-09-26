@@ -247,13 +247,6 @@ public class CommercePricingClassLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommercePricingClass fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommercePricingClass fetchCommercePricingClass(
 		long commercePricingClassId) {
 

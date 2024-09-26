@@ -412,13 +412,6 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommerceTierPriceEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
 

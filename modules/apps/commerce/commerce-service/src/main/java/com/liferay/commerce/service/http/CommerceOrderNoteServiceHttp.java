@@ -168,19 +168,17 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNote
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+			fetchCommerceOrderNote(
+				HttpPrincipal httpPrincipal, long commerceOrderNoteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceOrderNoteServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes3);
+				CommerceOrderNoteServiceUtil.class, "fetchCommerceOrderNote",
+				_fetchCommerceOrderNoteParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, commerceOrderNoteId);
 
 			Object returnObj = null;
 
@@ -211,17 +209,19 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNote
-			fetchCommerceOrderNote(
-				HttpPrincipal httpPrincipal, long commerceOrderNoteId)
+			fetchCommerceOrderNoteByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceOrderNoteServiceUtil.class, "fetchCommerceOrderNote",
-				_fetchCommerceOrderNoteParameterTypes4);
+				CommerceOrderNoteServiceUtil.class,
+				"fetchCommerceOrderNoteByExternalReferenceCode",
+				_fetchCommerceOrderNoteByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceOrderNoteId);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -561,12 +561,11 @@ public class CommerceOrderNoteServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceOrderNoteParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCommerceOrderNoteParameterTypes4 =
+	private static final Class<?>[] _fetchCommerceOrderNoteParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCommerceOrderNoteByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCommerceOrderNoteParameterTypes5 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCommerceOrderNotesParameterTypes6 =

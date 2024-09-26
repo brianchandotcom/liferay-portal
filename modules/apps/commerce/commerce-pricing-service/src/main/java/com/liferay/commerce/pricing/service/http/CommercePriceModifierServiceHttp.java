@@ -199,19 +199,18 @@ public class CommercePriceModifierServiceHttp {
 	}
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+			fetchCommercePriceModifier(
+				HttpPrincipal httpPrincipal, long commercePriceModifierId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes3);
+				"fetchCommercePriceModifier",
+				_fetchCommercePriceModifierParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, commercePriceModifierId);
 
 			Object returnObj = null;
 
@@ -243,18 +242,19 @@ public class CommercePriceModifierServiceHttp {
 	}
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			fetchCommercePriceModifier(
-				HttpPrincipal httpPrincipal, long commercePriceModifierId)
+			fetchCommercePriceModifierByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierServiceUtil.class,
-				"fetchCommercePriceModifier",
-				_fetchCommercePriceModifierParameterTypes4);
+				"fetchCommercePriceModifierByExternalReferenceCode",
+				_fetchCommercePriceModifierByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceModifierId);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -629,12 +629,11 @@ public class CommercePriceModifierServiceHttp {
 		};
 	private static final Class<?>[]
 		_deleteCommercePriceModifierParameterTypes2 = new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCommercePriceModifierParameterTypes4 =
+	private static final Class<?>[] _fetchCommercePriceModifierParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCommercePriceModifierByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCommercePriceModifierParameterTypes5 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCommercePriceModifiersParameterTypes6 =

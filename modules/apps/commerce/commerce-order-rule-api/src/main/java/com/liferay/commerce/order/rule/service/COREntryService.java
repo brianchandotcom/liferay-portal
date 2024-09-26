@@ -56,12 +56,12 @@ public interface COREntryService extends BaseService {
 	public COREntry deleteCOREntry(long corEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public COREntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException;
+	public COREntry fetchCOREntry(long corEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public COREntry fetchCOREntry(long corEntryId) throws PortalException;
+	public COREntry fetchCOREntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<COREntry> getCOREntries(

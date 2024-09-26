@@ -350,14 +350,6 @@ public class CPInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public CPInstance fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _cpInstanceLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CPInstance fetchCPInstance(long CPInstanceId) {
 		return _cpInstanceLocalService.fetchCPInstance(CPInstanceId);
 	}

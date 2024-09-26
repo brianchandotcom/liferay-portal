@@ -96,12 +96,12 @@ public interface CommercePriceEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommercePriceEntry fetchCommercePriceEntry(long commercePriceEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceEntry fetchCommercePriceEntry(long commercePriceEntryId)
+	public CommercePriceEntry fetchCommercePriceEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

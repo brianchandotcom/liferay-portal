@@ -56,19 +56,20 @@ public class CommerceOrderNoteServiceUtil {
 		getService().deleteCommerceOrderNote(commerceOrderNoteId);
 	}
 
-	public static CommerceOrderNote fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrderNote fetchCommerceOrderNote(
 			long commerceOrderNoteId)
 		throws PortalException {
 
 		return getService().fetchCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	public static CommerceOrderNote
+			fetchCommerceOrderNoteByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceOrderNoteByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceOrderNote getCommerceOrderNote(

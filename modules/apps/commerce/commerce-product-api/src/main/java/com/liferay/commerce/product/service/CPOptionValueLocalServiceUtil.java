@@ -239,13 +239,6 @@ public class CPOptionValueLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CPOptionValue fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CPOptionValue fetchCPOptionValue(long CPOptionValueId) {
 		return getService().fetchCPOptionValue(CPOptionValueId);
 	}

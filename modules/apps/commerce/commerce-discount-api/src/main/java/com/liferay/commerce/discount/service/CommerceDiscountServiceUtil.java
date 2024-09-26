@@ -194,32 +194,19 @@ public class CommerceDiscountServiceUtil {
 		getService().deleteCommerceDiscount(commerceDiscountId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #fetchByExternalReferenceCode(String, long)}
-	 */
-	@Deprecated
-	public static CommerceDiscount fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	public static CommerceDiscount fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceDiscount fetchCommerceDiscount(
 			long commerceDiscountId)
 		throws PortalException {
 
 		return getService().fetchCommerceDiscount(commerceDiscountId);
+	}
+
+	public static CommerceDiscount fetchCommerceDiscountByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceDiscountByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceDiscount getCommerceDiscount(long commerceDiscountId)

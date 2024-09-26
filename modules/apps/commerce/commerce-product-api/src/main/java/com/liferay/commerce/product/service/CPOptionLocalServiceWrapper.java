@@ -257,14 +257,6 @@ public class CPOptionLocalServiceWrapper
 	}
 
 	@Override
-	public CPOption fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _cpOptionLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CPOption fetchCPOption(long CPOptionId) {
 		return _cpOptionLocalService.fetchCPOption(CPOptionId);
 	}

@@ -66,18 +66,18 @@ public class CommerceChannelServiceUtil {
 		return getService().deleteCommerceChannel(commerceChannelId);
 	}
 
-	public static CommerceChannel fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceChannel fetchCommerceChannel(long commerceChannelId)
 		throws PortalException {
 
 		return getService().fetchCommerceChannel(commerceChannelId);
+	}
+
+	public static CommerceChannel fetchCommerceChannelByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceChannelByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceChannel getCommerceChannel(long commerceChannelId)

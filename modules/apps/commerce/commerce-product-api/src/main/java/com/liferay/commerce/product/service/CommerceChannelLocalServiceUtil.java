@@ -241,13 +241,6 @@ public class CommerceChannelLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommerceChannel fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceChannel fetchCommerceChannel(long commerceChannelId) {
 		return getService().fetchCommerceChannel(commerceChannelId);
 	}

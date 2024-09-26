@@ -63,14 +63,6 @@ public class CPOptionServiceUtil {
 		getService().deleteCPOption(cpOptionId);
 	}
 
-	public static CPOption fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CPOption fetchCPOption(long cpOptionId)
 		throws PortalException {
 
@@ -81,6 +73,14 @@ public class CPOptionServiceUtil {
 		throws PortalException {
 
 		return getService().fetchCPOption(companyId, key);
+	}
+
+	public static CPOption fetchCPOptionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCPOptionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<CPOption> findCPOptionByCompanyId(

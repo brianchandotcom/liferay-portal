@@ -281,13 +281,6 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CPAttachmentFileEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CPAttachmentFileEntry fetchCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId) {
 

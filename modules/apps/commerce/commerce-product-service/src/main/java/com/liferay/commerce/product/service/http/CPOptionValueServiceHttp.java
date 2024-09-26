@@ -168,18 +168,17 @@ public class CPOptionValueServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValue
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+			fetchCPOptionValue(
+				HttpPrincipal httpPrincipal, long cpOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CPOptionValueServiceUtil.class, "fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes3);
+				CPOptionValueServiceUtil.class, "fetchCPOptionValue",
+				_fetchCPOptionValueParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, cpOptionValueId);
 
 			Object returnObj = null;
 
@@ -210,17 +209,19 @@ public class CPOptionValueServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValue
-			fetchCPOptionValue(
-				HttpPrincipal httpPrincipal, long cpOptionValueId)
+			fetchCPOptionValueByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CPOptionValueServiceUtil.class, "fetchCPOptionValue",
-				_fetchCPOptionValueParameterTypes4);
+				CPOptionValueServiceUtil.class,
+				"fetchCPOptionValueByExternalReferenceCode",
+				_fetchCPOptionValueByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionValueId);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -518,12 +519,11 @@ public class CPOptionValueServiceHttp {
 		};
 	private static final Class<?>[] _deleteCPOptionValueParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCPOptionValueParameterTypes4 =
+	private static final Class<?>[] _fetchCPOptionValueParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCPOptionValueByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCPOptionValueParameterTypes5 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCPOptionValuesParameterTypes6 =

@@ -231,13 +231,6 @@ public class CommerceOrderTypeLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommerceOrderType fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrderType fetchCommerceOrderType(
 		long commerceOrderTypeId) {
 

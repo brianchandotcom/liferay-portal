@@ -224,10 +224,6 @@ public interface CommerceCatalogLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCatalog fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCatalog fetchCommerceCatalog(long commerceCatalogId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

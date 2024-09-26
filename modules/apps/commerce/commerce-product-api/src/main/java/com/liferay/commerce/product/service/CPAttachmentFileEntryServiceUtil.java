@@ -84,19 +84,20 @@ public class CPAttachmentFileEntryServiceUtil {
 		getService().deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
 	}
 
-	public static CPAttachmentFileEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CPAttachmentFileEntry fetchCPAttachmentFileEntry(
 			long cpAttachmentFileEntryId)
 		throws PortalException {
 
 		return getService().fetchCPAttachmentFileEntry(cpAttachmentFileEntryId);
+	}
+
+	public static CPAttachmentFileEntry
+			fetchCPAttachmentFileEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCPAttachmentFileEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<CPAttachmentFileEntry> getCPAttachmentFileEntries(

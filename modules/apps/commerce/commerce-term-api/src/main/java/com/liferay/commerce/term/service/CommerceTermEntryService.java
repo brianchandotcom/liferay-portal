@@ -61,12 +61,12 @@ public interface CommerceTermEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTermEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+	public CommerceTermEntry fetchCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTermEntry fetchCommerceTermEntry(long commerceTermEntryId)
+	public CommerceTermEntry fetchCommerceTermEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

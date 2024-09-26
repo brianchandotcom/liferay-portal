@@ -288,13 +288,6 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommerceOrderItem fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrderItem fetchCommerceOrderItem(
 		long commerceOrderItemId) {
 

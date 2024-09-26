@@ -83,18 +83,18 @@ public class CommerceAddressServiceUtil {
 		getService().deleteCommerceAddress(commerceAddressId);
 	}
 
-	public static CommerceAddress fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceAddress fetchCommerceAddress(long commerceAddressId)
 		throws PortalException {
 
 		return getService().fetchCommerceAddress(commerceAddressId);
+	}
+
+	public static CommerceAddress fetchCommerceAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<CommerceAddress> getBillingCommerceAddresses(

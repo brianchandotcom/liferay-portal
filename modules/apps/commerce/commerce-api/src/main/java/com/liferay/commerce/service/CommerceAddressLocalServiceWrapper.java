@@ -126,20 +126,21 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceAddress
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		return _commerceAddressLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceAddress fetchCommerceAddress(
 		long commerceAddressId) {
 
 		return _commerceAddressLocalService.fetchCommerceAddress(
 			commerceAddressId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceAddress
+		fetchCommerceAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _commerceAddressLocalService.
+			fetchCommerceAddressByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override

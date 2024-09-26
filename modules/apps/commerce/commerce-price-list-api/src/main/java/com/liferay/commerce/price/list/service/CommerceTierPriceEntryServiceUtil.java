@@ -128,20 +128,21 @@ public class CommerceTierPriceEntryServiceUtil {
 		getService().deleteCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
-	public static CommerceTierPriceEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 			long commerceTierPriceEntryId)
 		throws PortalException {
 
 		return getService().fetchCommerceTierPriceEntry(
 			commerceTierPriceEntryId);
+	}
+
+	public static CommerceTierPriceEntry
+			fetchCommerceTierPriceEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceTierPriceEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<CommerceTierPriceEntry> getCommerceTierPriceEntries(

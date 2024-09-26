@@ -273,16 +273,6 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 				externalReferenceCode, companyId);
 	}
 
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
-		fetchCommerceInventoryWarehouseByReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		return _commerceInventoryWarehouseLocalService.
-			fetchCommerceInventoryWarehouseByReferenceCode(
-				externalReferenceCode, companyId);
-	}
-
 	/**
 	 * Returns the commerce inventory warehouse with the matching UUID and company.
 	 *

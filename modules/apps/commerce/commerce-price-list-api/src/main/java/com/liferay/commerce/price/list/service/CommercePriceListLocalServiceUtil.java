@@ -289,13 +289,6 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommercePriceList fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommercePriceList fetchCatalogBaseCommercePriceList(
 			long groupId)
 		throws PortalException {

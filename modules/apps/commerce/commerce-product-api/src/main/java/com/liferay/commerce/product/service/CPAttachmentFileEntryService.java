@@ -77,13 +77,14 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+			long cpAttachmentFileEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
-			long cpAttachmentFileEntryId)
+	public CPAttachmentFileEntry
+			fetchCPAttachmentFileEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

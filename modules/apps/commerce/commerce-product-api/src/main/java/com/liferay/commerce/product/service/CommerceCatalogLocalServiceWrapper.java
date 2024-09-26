@@ -265,14 +265,6 @@ public class CommerceCatalogLocalServiceWrapper
 	}
 
 	@Override
-	public CommerceCatalog fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _commerceCatalogLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommerceCatalog fetchCommerceCatalog(long commerceCatalogId) {
 		return _commerceCatalogLocalService.fetchCommerceCatalog(
 			commerceCatalogId);

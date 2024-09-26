@@ -83,15 +83,6 @@ public class CommercePriceListServiceWrapper
 	}
 
 	@Override
-	public CommercePriceList fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceListService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
 			long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -119,6 +110,16 @@ public class CommercePriceListServiceWrapper
 
 		return _commercePriceListService.fetchCommercePriceList(
 			commercePriceListId);
+	}
+
+	@Override
+	public CommercePriceList fetchCommercePriceListByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListService.
+			fetchCommercePriceListByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override

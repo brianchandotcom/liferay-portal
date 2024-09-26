@@ -453,14 +453,6 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
-	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _commerceTierPriceEntryLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
 

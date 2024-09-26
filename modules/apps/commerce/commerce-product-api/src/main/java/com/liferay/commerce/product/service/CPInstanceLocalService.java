@@ -278,10 +278,6 @@ public interface CPInstanceLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstance fetchCPInstance(long CPInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

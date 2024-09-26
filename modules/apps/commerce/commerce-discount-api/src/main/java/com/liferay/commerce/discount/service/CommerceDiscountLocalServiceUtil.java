@@ -477,25 +477,6 @@ public class CommerceDiscountLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #fetchByExternalReferenceCode(String, long)}
-	 */
-	@Deprecated
-	public static CommerceDiscount fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	public static CommerceDiscount fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceDiscount fetchCommerceDiscount(
 		long commerceDiscountId) {
 

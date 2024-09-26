@@ -78,12 +78,12 @@ public interface CommerceAddressService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceAddress fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceAddress fetchCommerceAddress(long commerceAddressId)
+	public CommerceAddress fetchCommerceAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -221,10 +221,6 @@ public interface CPOptionLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption fetchCPOption(long CPOptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

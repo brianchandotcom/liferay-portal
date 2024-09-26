@@ -348,14 +348,6 @@ public class CommercePriceModifierLocalServiceWrapper
 	}
 
 	@Override
-	public CommercePriceModifier fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _commercePriceModifierLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommercePriceModifier fetchCommercePriceModifier(
 		long commercePriceModifierId) {
 

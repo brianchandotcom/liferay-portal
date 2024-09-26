@@ -82,12 +82,12 @@ public interface CommerceOrderItemService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderItem fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId)
+	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

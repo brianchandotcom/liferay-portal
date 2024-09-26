@@ -138,19 +138,19 @@ public class CPInstanceServiceWrapper
 	}
 
 	@Override
-	public CPInstance fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpInstanceService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CPInstance fetchCPInstance(long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpInstanceService.fetchCPInstance(cpInstanceId);
+	}
+
+	@Override
+	public CPInstance fetchCPInstanceByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

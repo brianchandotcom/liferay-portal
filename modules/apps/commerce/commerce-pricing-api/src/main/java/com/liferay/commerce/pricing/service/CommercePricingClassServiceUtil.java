@@ -62,19 +62,20 @@ public class CommercePricingClassServiceUtil {
 		return getService().deleteCommercePricingClass(commercePricingClassId);
 	}
 
-	public static CommercePricingClass fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommercePricingClass fetchCommercePricingClass(
 			long commercePricingClassId)
 		throws PortalException {
 
 		return getService().fetchCommercePricingClass(commercePricingClassId);
+	}
+
+	public static CommercePricingClass
+			fetchCommercePricingClassByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommercePricingClassByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommercePricingClass getCommercePricingClass(

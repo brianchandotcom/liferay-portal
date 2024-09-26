@@ -58,12 +58,12 @@ public interface CommerceOrderNoteService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderNote fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceOrderNote fetchCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderNote fetchCommerceOrderNote(long commerceOrderNoteId)
+	public CommerceOrderNote fetchCommerceOrderNoteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

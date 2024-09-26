@@ -82,19 +82,20 @@ public class CommercePriceModifierServiceUtil {
 			commercePriceModifierId);
 	}
 
-	public static CommercePriceModifier fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommercePriceModifier fetchCommercePriceModifier(
 			long commercePriceModifierId)
 		throws PortalException {
 
 		return getService().fetchCommercePriceModifier(commercePriceModifierId);
+	}
+
+	public static CommercePriceModifier
+			fetchCommercePriceModifierByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommercePriceModifierByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommercePriceModifier getCommercePriceModifier(

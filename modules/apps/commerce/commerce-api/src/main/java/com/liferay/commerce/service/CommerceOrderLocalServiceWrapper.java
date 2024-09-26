@@ -411,15 +411,6 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceOrder
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		return _commerceOrderLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
 		long commerceOrderId) {
 

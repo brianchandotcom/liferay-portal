@@ -242,14 +242,6 @@ public class CommerceInventoryWarehouseLocalServiceUtil {
 				externalReferenceCode, companyId);
 	}
 
-	public static CommerceInventoryWarehouse
-		fetchCommerceInventoryWarehouseByReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		return getService().fetchCommerceInventoryWarehouseByReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	/**
 	 * Returns the commerce inventory warehouse with the matching UUID and company.
 	 *

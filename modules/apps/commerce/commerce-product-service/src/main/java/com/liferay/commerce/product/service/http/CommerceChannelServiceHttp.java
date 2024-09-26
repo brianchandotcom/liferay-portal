@@ -182,19 +182,17 @@ public class CommerceChannelServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+			fetchCommerceChannel(
+				HttpPrincipal httpPrincipal, long commerceChannelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceChannelServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes3);
+				CommerceChannelServiceUtil.class, "fetchCommerceChannel",
+				_fetchCommerceChannelParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, commerceChannelId);
 
 			Object returnObj = null;
 
@@ -226,17 +224,19 @@ public class CommerceChannelServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel
-			fetchCommerceChannel(
-				HttpPrincipal httpPrincipal, long commerceChannelId)
+			fetchCommerceChannelByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceChannelServiceUtil.class, "fetchCommerceChannel",
-				_fetchCommerceChannelParameterTypes4);
+				CommerceChannelServiceUtil.class,
+				"fetchCommerceChannelByExternalReferenceCode",
+				_fetchCommerceChannelByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceChannelId);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -672,12 +672,11 @@ public class CommerceChannelServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceChannelParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCommerceChannelParameterTypes4 =
+	private static final Class<?>[] _fetchCommerceChannelParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCommerceChannelByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCommerceChannelParameterTypes5 =
 		new Class[] {long.class};
 	private static final Class<?>[]

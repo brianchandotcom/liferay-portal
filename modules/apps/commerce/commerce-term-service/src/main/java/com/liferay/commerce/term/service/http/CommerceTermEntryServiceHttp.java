@@ -139,19 +139,17 @@ public class CommerceTermEntryServiceHttp {
 	}
 
 	public static com.liferay.commerce.term.model.CommerceTermEntry
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+			fetchCommerceTermEntry(
+				HttpPrincipal httpPrincipal, long commerceTermEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceTermEntryServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes2);
+				CommerceTermEntryServiceUtil.class, "fetchCommerceTermEntry",
+				_fetchCommerceTermEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, commerceTermEntryId);
 
 			Object returnObj = null;
 
@@ -182,17 +180,19 @@ public class CommerceTermEntryServiceHttp {
 	}
 
 	public static com.liferay.commerce.term.model.CommerceTermEntry
-			fetchCommerceTermEntry(
-				HttpPrincipal httpPrincipal, long commerceTermEntryId)
+			fetchCommerceTermEntryByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long companyId,
+				String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceTermEntryServiceUtil.class, "fetchCommerceTermEntry",
-				_fetchCommerceTermEntryParameterTypes3);
+				CommerceTermEntryServiceUtil.class,
+				"fetchCommerceTermEntryByExternalReferenceCode",
+				_fetchCommerceTermEntryByExternalReferenceCodeParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceTermEntryId);
+				methodKey, companyId, externalReferenceCode);
 
 			Object returnObj = null;
 
@@ -466,12 +466,11 @@ public class CommerceTermEntryServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceTermEntryParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[] _fetchCommerceTermEntryParameterTypes3 =
+	private static final Class<?>[] _fetchCommerceTermEntryParameterTypes2 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCommerceTermEntryByExternalReferenceCodeParameterTypes3 =
+			new Class[] {long.class, String.class};
 	private static final Class<?>[] _getCommerceTermEntriesParameterTypes4 =
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[] _getCommerceTermEntryParameterTypes5 =

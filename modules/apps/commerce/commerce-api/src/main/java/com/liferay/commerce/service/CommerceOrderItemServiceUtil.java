@@ -93,19 +93,20 @@ public class CommerceOrderItemServiceUtil {
 			commerceOrderId, commerceOrderItemIds, externalReferenceCodes);
 	}
 
-	public static CommerceOrderItem fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrderItem fetchCommerceOrderItem(
 			long commerceOrderItemId)
 		throws PortalException {
 
 		return getService().fetchCommerceOrderItem(commerceOrderItemId);
+	}
+
+	public static CommerceOrderItem
+			fetchCommerceOrderItemByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceOrderItemByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<CommerceOrderItem>

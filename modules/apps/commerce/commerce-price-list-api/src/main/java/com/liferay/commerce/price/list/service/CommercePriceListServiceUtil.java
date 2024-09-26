@@ -81,14 +81,6 @@ public class CommercePriceListServiceUtil {
 		getService().deleteCommercePriceList(commercePriceListId);
 	}
 
-	public static CommercePriceList fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommercePriceList fetchCatalogBaseCommercePriceListByType(
 			long groupId, String type)
 		throws PortalException {
@@ -114,6 +106,15 @@ public class CommercePriceListServiceUtil {
 		throws PortalException {
 
 		return getService().fetchCommercePriceList(commercePriceListId);
+	}
+
+	public static CommercePriceList
+			fetchCommercePriceListByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommercePriceListByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommercePriceList getCommercePriceList(

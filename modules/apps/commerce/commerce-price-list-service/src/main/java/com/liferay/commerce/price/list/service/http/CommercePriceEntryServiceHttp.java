@@ -303,19 +303,17 @@ public class CommercePriceEntryServiceHttp {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+			fetchCommercePriceEntry(
+				HttpPrincipal httpPrincipal, long commercePriceEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes5);
+				CommercePriceEntryServiceUtil.class, "fetchCommercePriceEntry",
+				_fetchCommercePriceEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, commercePriceEntryId);
 
 			Object returnObj = null;
 
@@ -347,17 +345,19 @@ public class CommercePriceEntryServiceHttp {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			fetchCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long commercePriceEntryId)
+			fetchCommercePriceEntryByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "fetchCommercePriceEntry",
-				_fetchCommercePriceEntryParameterTypes6);
+				CommercePriceEntryServiceUtil.class,
+				"fetchCommercePriceEntryByExternalReferenceCode",
+				_fetchCommercePriceEntryByExternalReferenceCodeParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -969,12 +969,11 @@ public class CommercePriceEntryServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommercePriceEntryParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes5 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCommercePriceEntryParameterTypes6 =
+	private static final Class<?>[] _fetchCommercePriceEntryParameterTypes5 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCommercePriceEntryByExternalReferenceCodeParameterTypes6 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCommercePriceEntriesParameterTypes7 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _getCommercePriceEntriesParameterTypes8 =

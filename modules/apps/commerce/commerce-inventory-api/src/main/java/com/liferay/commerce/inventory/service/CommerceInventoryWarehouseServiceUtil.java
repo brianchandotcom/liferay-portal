@@ -63,12 +63,14 @@ public class CommerceInventoryWarehouseServiceUtil {
 			commerceInventoryWarehouseId);
 	}
 
-	public static CommerceInventoryWarehouse fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public static CommerceInventoryWarehouse
+			fetchCommerceInventoryWarehouseByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
+		return getService().
+			fetchCommerceInventoryWarehouseByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	public static CommerceInventoryWarehouse

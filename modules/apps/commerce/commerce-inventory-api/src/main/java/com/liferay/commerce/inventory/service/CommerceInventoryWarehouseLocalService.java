@@ -221,11 +221,6 @@ public interface CommerceInventoryWarehouseLocalService
 		fetchCommerceInventoryWarehouseByExternalReferenceCode(
 			String externalReferenceCode, long companyId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventoryWarehouse
-		fetchCommerceInventoryWarehouseByReferenceCode(
-			String externalReferenceCode, long companyId);
-
 	/**
 	 * Returns the commerce inventory warehouse with the matching UUID and company.
 	 *

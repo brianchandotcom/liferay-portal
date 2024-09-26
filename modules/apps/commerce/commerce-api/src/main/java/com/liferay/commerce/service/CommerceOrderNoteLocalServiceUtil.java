@@ -239,13 +239,6 @@ public class CommerceOrderNoteLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommerceOrderNote fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommerceOrderNote fetchCommerceOrderNote(
 		long commerceOrderNoteId) {
 

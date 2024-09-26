@@ -412,48 +412,6 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceOrderServiceUtil.class, "fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes8);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.model.CommerceOrder)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
 			HttpPrincipal httpPrincipal, long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -461,7 +419,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderServiceUtil.class, "fetchCommerceOrder",
-				_fetchCommerceOrderParameterTypes9);
+				_fetchCommerceOrderParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId);
@@ -502,7 +460,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderServiceUtil.class, "fetchCommerceOrder",
-				_fetchCommerceOrderParameterTypes10);
+				_fetchCommerceOrderParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceAccountId, groupId, orderStatus);
@@ -543,7 +501,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderServiceUtil.class, "fetchCommerceOrder",
-				_fetchCommerceOrderParameterTypes11);
+				_fetchCommerceOrderParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceAccountId, groupId, userId, orderStatus);
@@ -583,10 +541,53 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderServiceUtil.class, "fetchCommerceOrder",
-				_fetchCommerceOrderParameterTypes12);
+				_fetchCommerceOrderParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, uuid, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder
+			fetchCommerceOrderByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderServiceUtil.class,
+				"fetchCommerceOrderByExternalReferenceCode",
+				_fetchCommerceOrderByExternalReferenceCodeParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -2779,18 +2780,17 @@ public class CommerceOrderServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _executeWorkflowTransitionParameterTypes7 =
 		new Class[] {long.class, long.class, String.class, String.class};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes8 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _fetchCommerceOrderParameterTypes9 =
+	private static final Class<?>[] _fetchCommerceOrderParameterTypes8 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchCommerceOrderParameterTypes10 =
+	private static final Class<?>[] _fetchCommerceOrderParameterTypes9 =
 		new Class[] {long.class, long.class, int.class};
-	private static final Class<?>[] _fetchCommerceOrderParameterTypes11 =
+	private static final Class<?>[] _fetchCommerceOrderParameterTypes10 =
 		new Class[] {long.class, long.class, long.class, int.class};
-	private static final Class<?>[] _fetchCommerceOrderParameterTypes12 =
+	private static final Class<?>[] _fetchCommerceOrderParameterTypes11 =
 		new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_fetchCommerceOrderByExternalReferenceCodeParameterTypes12 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getCommerceOrderParameterTypes13 =
 		new Class[] {long.class};
 	private static final Class<?>[]

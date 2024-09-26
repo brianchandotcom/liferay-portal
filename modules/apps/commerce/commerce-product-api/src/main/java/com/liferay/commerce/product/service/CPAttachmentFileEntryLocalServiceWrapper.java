@@ -315,14 +315,6 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	}
 
 	@Override
-	public CPAttachmentFileEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return _cpAttachmentFileEntryLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId) {
 

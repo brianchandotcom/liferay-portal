@@ -6,7 +6,6 @@
 		"@clayui/button": "^3.111.0",
 		"@clayui/card": "^3.85.0",
 		"@clayui/charts": "^3.106.1",
-		"@clayui/css": "^3.85.0",
 		"@clayui/drop-down": "^3.87.0",
 		"@clayui/empty-state": "^3.106.1",
 		"@clayui/form": "^3.85.0",
@@ -38,7 +37,7 @@
 		"react-infinite-scroll-component": "^6.1.0",
 		"react-quill": "^2.0.0",
 		"react-router-dom": "^6.8.0",
-		"sass": "^1.57.1",
+		"sass": "1.57.1",
 		"swr": "^2.2.4",
 		"zod": "^3.21.4"
 	},

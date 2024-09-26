@@ -3,21 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
+import DOMPurify from 'dompurify';
+
 import brightnessEmptyIcon from '../../../../../../assets/icons/brightness_empty_icon.svg';
 import {CardLink} from '../../../../../../components/Card/CardLink';
 import {CardView} from '../../../../../../components/Card/CardView';
+import LicensePriceChildren from '../../../../../../components/LicensePriceCard/LicensePriceChildren';
 import {Tag} from '../../../../../../components/Tag/Tag';
+import i18n from '../../../../../../i18n';
 import {removeUnnecessaryURLString} from '../../../../../../utils/string';
 import {CardSection} from './CardSection';
 import {App} from './ReviewAndSubmitAppPageUtil';
 
 import './CardSectionsBody.scss';
-
-import ClayIcon from '@clayui/icon';
-import DOMPurify from 'dompurify';
-
-import LicensePriceChildren from '../../../../../../components/LicensePriceCard/LicensePriceChildren';
-import i18n from '../../../../../../i18n';
 
 interface CardSectionsBodyProps {
 	app: App;

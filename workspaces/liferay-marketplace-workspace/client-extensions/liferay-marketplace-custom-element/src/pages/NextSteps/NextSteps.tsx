@@ -4,57 +4,30 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
-import {ReactNode} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {ORDER_TYPES} from '../../enums/Order';
+import withProviders from '../../hoc/withProviders';
+import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {baseURL} from '../../utils/api';
 import {
 	getAccountImage,
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../utils/util';
-
-import './NextSteps.scss';
-
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import {ORDER_TYPES} from '../../enums/Order';
-import withProviders from '../../hoc/withProviders';
-import i18n from '../../i18n';
-import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {PaymentStatus} from '../GetApp/enums/PaymentStatus';
 import getProductPriceModel from '../GetApp/utils/getProductPriceModel';
 import useNextSteps from './useNextSteps';
 
-type NextStepsProps = {
-	children?: ReactNode;
-	continueButtonText?: string;
-	header?: {
-		description?: string;
-		title?: string;
-	};
-	linkText?: string;
-	onClickContinue?: () => void;
-	showBackButton?: boolean;
-	showOrderId?: boolean;
-	size?: 'lg';
-};
+import './NextSteps.scss';
 
-type TypeNextStepBody = {
-	[key in string]?: ReactNode;
-};
-
-export function NextSteps({
-	children,
-	onClickContinue,
-	showBackButton,
-	size,
-}: NextStepsProps) {
+export function NextSteps() {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const orderId = urlParams.get('orderId');
@@ -88,7 +61,7 @@ export function NextSteps({
 
 	const {isPaidApp} = getProductPriceModel(product);
 
-	const nextStepBody: TypeNextStepBody = {
+	const nextStepBody = {
 		[PaymentStatus.PAID]: (
 			<Header
 				description={
@@ -193,38 +166,32 @@ export function NextSteps({
 	}
 
 	return (
-		<div
-			className={classNames('next-step-page-container', {
-				'next-step-page-container-larger': size === 'lg',
-			})}
-		>
+		<div className="next-step-page-container">
 			<div className="next-step-page-content">
-				{!children && (
-					<div className="next-step-page-cards">
-						<AccountAndAppCard
-							category="Application"
-							logo={appLogo || 'catalog'}
-							title={appName}
-						/>
+				<div className="next-step-page-cards">
+					<AccountAndAppCard
+						category="Application"
+						logo={appLogo || 'catalog'}
+						title={appName}
+					/>
 
-						<ClayIcon
-							className="m-0 next-step-page-icon"
-							symbol="arrow-right-full"
-						/>
+					<ClayIcon
+						className="m-0 next-step-page-icon"
+						symbol="arrow-right-full"
+					/>
 
-						<AccountAndAppCard
-							category="Account"
-							logo={getAccountImage(
-								accountCommerce?.logoURL as string
-							)}
-							title={accountCommerce?.name ?? ''}
-						/>
-					</div>
-				)}
+					<AccountAndAppCard
+						category="Account"
+						logo={getAccountImage(
+							accountCommerce?.logoURL as string
+						)}
+						title={accountCommerce?.name ?? ''}
+					/>
+				</div>
 
 				<div className="next-step-page-text">
 					<div className="next-step-page-text">
-						{nextStepBody[String(paymentStatus) || '']}
+						{(nextStepBody as any)[String(paymentStatus) || '']}
 					</div>
 				</div>
 
@@ -277,8 +244,7 @@ export function NextSteps({
 
 						if (
 							orderTypeExternalReferenceCode ===
-								ORDER_TYPES.CLOUDAPP &&
-							onClickContinue
+							ORDER_TYPES.CLOUDAPP
 						) {
 							if (
 								properties.featureFlags?.includes('LPD-34129')
@@ -296,7 +262,6 @@ export function NextSteps({
 							}
 						}
 					}}
-					showBackButton={showBackButton}
 					showContinueButton={properties.featureFlags?.includes(
 						'LPD-21582'
 					)}

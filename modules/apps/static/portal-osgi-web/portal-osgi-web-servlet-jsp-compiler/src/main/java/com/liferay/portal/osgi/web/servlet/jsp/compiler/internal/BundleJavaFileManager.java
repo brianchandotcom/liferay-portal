@@ -40,15 +40,15 @@ public class BundleJavaFileManager
 	public static final String OPT_VERBOSE = "-verbose";
 
 	public BundleJavaFileManager(
+		List<BytecodeJavaFileObject> bytecodeJavaFileObjects,
 		ClassLoader classLoader, JavaFileManager javaFileManager,
-		List<JavaFileObjectResolver> javaFileObjectResolvers,
-		List<BytecodeJavaFileObject> bytecodeJavaFileObjects) {
+		List<JavaFileObjectResolver> javaFileObjectResolvers) {
 
 		super(javaFileManager);
 
+		_bytecodeJavaFileObjects = bytecodeJavaFileObjects;
 		_classLoader = classLoader;
 		_javaFileObjectResolvers = javaFileObjectResolvers;
-		_bytecodeJavaFileObjects = bytecodeJavaFileObjects;
 	}
 
 	@Override

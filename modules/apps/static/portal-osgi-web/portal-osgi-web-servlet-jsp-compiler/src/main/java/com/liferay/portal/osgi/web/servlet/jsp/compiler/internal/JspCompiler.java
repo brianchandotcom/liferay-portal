@@ -109,8 +109,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 
 		try (JavaFileManager javaFileManager = new BundleJavaFileManager(
-				_classLoader, standardJavaFileManager, _javaFileObjectResolvers,
-				_bytecodeJavaFileObjects)) {
+				_bytecodeJavaFileObjects, _classLoader, standardJavaFileManager,
+				_javaFileObjectResolvers)) {
 
 			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
 				null, javaFileManager, diagnosticCollector, _compilerOptions,

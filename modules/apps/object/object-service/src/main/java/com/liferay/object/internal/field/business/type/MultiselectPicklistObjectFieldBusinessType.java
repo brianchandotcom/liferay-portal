@@ -5,11 +5,11 @@
 
 package com.liferay.object.internal.field.business.type;
 
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
@@ -48,7 +48,7 @@ public class MultiselectPicklistObjectFieldBusinessType
 
 	@Override
 	public String getDDMFormFieldTypeName() {
-		return DDMFormFieldTypeConstants.SELECT;
+		return ObjectDDMFormFieldTypeConstants.MULTISELECT_PICKLIST;
 	}
 
 	@Override

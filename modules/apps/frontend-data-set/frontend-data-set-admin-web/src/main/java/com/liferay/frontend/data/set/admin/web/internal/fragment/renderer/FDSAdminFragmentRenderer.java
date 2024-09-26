@@ -406,14 +406,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				}));
 	}
 
-	private JSONObject _getDateJSONObject(String isoDate) {
+	private JSONObject _getDateJSONObject(Object isoDate) {
 		if (isoDate == null) {
 			return null;
 		}
 
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.setTime(Date.from(Instant.parse(isoDate)));
+		calendar.setTime(Date.from(Instant.parse(String.valueOf(isoDate))));
 
 		return JSONUtil.put(
 			"day", calendar.get(Calendar.DATE)
@@ -600,9 +600,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					Objects.equals(type, "date-time")) {
 
 					JSONObject fromJSONObject = _getDateJSONObject(
-						String.valueOf(properties.get("from")));
+						properties.get("from"));
 					JSONObject toJSONObject = _getDateJSONObject(
-						String.valueOf(properties.get("to")));
+						properties.get("to"));
 
 					boolean hasPreloadedData =
 						(fromJSONObject != null) || (toJSONObject != null);

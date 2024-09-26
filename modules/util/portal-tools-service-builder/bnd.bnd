@@ -1,15 +1,6 @@
 Bundle-Name: Liferay Portal Tools Service Builder
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder
 Bundle-Version: 1.0.490
-Import-Package:\
-	!javax.portlet.*,\
-	\
-	!javax.servlet.*,\
-	\
-	!org.apache.maven.plugin.*,\
-	!org.apache.tools.ant.*,\
-	\
-	*
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -includeresource:\
 	com/liferay/account/service.xml=../../../modules/apps/account/account-service/service.xml,\

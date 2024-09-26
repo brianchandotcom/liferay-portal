@@ -268,19 +268,16 @@ const Main = ({
 				<MultipleSelection
 					fixedOptions={[]}
 					label={label}
-					localizedValue={undefined}
-					localizedValueEdited={undefined}
 					name={name}
 					onChange={onChange}
 					options={normalizedOptions}
 					predefinedValue={predefinedValueArray}
 					readOnly={readOnly}
 					required={otherProps.required}
-					showEmptyOption={false}
 					value={
 						viewMode || !!multipleSelectValues.length
 							? multipleSelectValues
-							: predefinedValue
+							: (predefinedValue as string[])
 					}
 					{...otherProps}
 				/>

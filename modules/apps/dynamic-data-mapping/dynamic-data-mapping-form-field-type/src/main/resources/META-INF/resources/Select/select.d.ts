@@ -43,7 +43,12 @@ interface MainProps {
 }
 
 interface MultiSelectProps
-	extends Omit<MainProps, 'editingLanguageId' | 'selectedKey'> {}
+	extends Omit<
+		MainProps,
+		'editingLanguageId' | 'selectedKey' | 'showEmptyOption' | 'value'
+	> {
+	value: string[];
+}
 
 interface Option<T> {
 	label: LocalizedValue<string>;
@@ -58,6 +63,6 @@ interface SelectProps
 
 type MultiSelectItem = {
 	label: string;
-	reference: string;
+	reference: string | null;
 	value: string;
 };

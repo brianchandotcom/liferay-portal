@@ -591,18 +591,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return cpInstancePersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CPInstance fetchCPInstance(long cProductId, String cpInstanceUuid) {
 		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
 

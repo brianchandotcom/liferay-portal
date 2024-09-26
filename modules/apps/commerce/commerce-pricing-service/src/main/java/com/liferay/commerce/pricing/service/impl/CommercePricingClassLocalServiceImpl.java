@@ -218,18 +218,6 @@ public class CommercePricingClassLocalServiceImpl
 	}
 
 	@Override
-	public CommercePricingClass fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commercePricingClassPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public long[] getCommercePricingClassByCPDefinition(long cpDefinitionId) {
 		return TransformUtil.transformToLongArray(
 			_commercePricingClassCPDefinitionRelLocalService.

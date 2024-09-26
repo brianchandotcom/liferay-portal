@@ -208,13 +208,13 @@ public class CommerceTierPriceEntryServiceImpl
 	}
 
 	@Override
-	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
+			long commerceTierPriceEntryId)
 		throws PortalException {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			commerceTierPriceEntryLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			commerceTierPriceEntryLocalService.fetchCommerceTierPriceEntry(
+				commerceTierPriceEntryId);
 
 		if (commerceTierPriceEntry != null) {
 			CommercePriceEntry commercePriceEntry =
@@ -229,13 +229,15 @@ public class CommerceTierPriceEntryServiceImpl
 	}
 
 	@Override
-	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
-			long commerceTierPriceEntryId)
+	public CommerceTierPriceEntry
+			fetchCommerceTierPriceEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			commerceTierPriceEntryLocalService.fetchCommerceTierPriceEntry(
-				commerceTierPriceEntryId);
+			commerceTierPriceEntryLocalService.
+				fetchCommerceTierPriceEntryByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commerceTierPriceEntry != null) {
 			CommercePriceEntry commercePriceEntry =

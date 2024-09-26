@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -195,18 +194,6 @@ public class CommerceCatalogLocalServiceImpl
 			commerceCatalogLocalService.forceDeleteCommerceCatalog(
 				commerceCatalog);
 		}
-	}
-
-	@Override
-	public CommerceCatalog fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commerceCatalogPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
 	}
 
 	@Override

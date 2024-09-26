@@ -279,27 +279,13 @@ public class CommerceDiscountServiceImpl
 		commerceDiscountLocalService.deleteCommerceDiscount(commerceDiscountId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #fetchByExternalReferenceCode(String, long)}
-	 */
-	@Deprecated
 	@Override
-	public CommerceDiscount fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return fetchByExternalReferenceCode(externalReferenceCode, companyId);
-	}
-
-	@Override
-	public CommerceDiscount fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceDiscount fetchCommerceDiscount(long commerceDiscountId)
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			commerceDiscountLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			commerceDiscountLocalService.fetchCommerceDiscount(
+				commerceDiscountId);
 
 		if (commerceDiscount != null) {
 			_commerceDiscountResourcePermission.check(
@@ -310,12 +296,14 @@ public class CommerceDiscountServiceImpl
 	}
 
 	@Override
-	public CommerceDiscount fetchCommerceDiscount(long commerceDiscountId)
+	public CommerceDiscount fetchCommerceDiscountByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			commerceDiscountLocalService.fetchCommerceDiscount(
-				commerceDiscountId);
+			commerceDiscountLocalService.
+				fetchCommerceDiscountByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commerceDiscount != null) {
 			_commerceDiscountResourcePermission.check(

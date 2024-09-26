@@ -166,13 +166,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CPInstance fetchCPInstance(long cpInstanceId)
 		throws PortalException {
 
-		CPInstance cpInstance =
-			cpInstanceLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+		CPInstance cpInstance = cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
 
 		if (cpInstance != null) {
 			_checkCommerceCatalogByCPDefinitionId(
@@ -183,11 +181,13 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance fetchCPInstance(long cpInstanceId)
+	public CPInstance fetchCPInstanceByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		CPInstance cpInstance = cpInstanceLocalService.fetchCPInstance(
-			cpInstanceId);
+		CPInstance cpInstance =
+			cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
+				externalReferenceCode, companyId);
 
 		if (cpInstance != null) {
 			_checkCommerceCatalogByCPDefinitionId(

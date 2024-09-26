@@ -67,13 +67,8 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 	}
 
 	@Override
-	public COREntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		COREntry corEntry =
-			corEntryLocalService.fetchCOREntryByExternalReferenceCode(
-				externalReferenceCode, companyId);
+	public COREntry fetchCOREntry(long corEntryId) throws PortalException {
+		COREntry corEntry = corEntryLocalService.fetchCOREntry(corEntryId);
 
 		if (corEntry != null) {
 			_corEntryModelResourcePermission.check(
@@ -84,8 +79,13 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 	}
 
 	@Override
-	public COREntry fetchCOREntry(long corEntryId) throws PortalException {
-		COREntry corEntry = corEntryLocalService.fetchCOREntry(corEntryId);
+	public COREntry fetchCOREntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		COREntry corEntry =
+			corEntryLocalService.fetchCOREntryByExternalReferenceCode(
+				externalReferenceCode, companyId);
 
 		if (corEntry != null) {
 			_corEntryModelResourcePermission.check(

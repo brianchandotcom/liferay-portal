@@ -184,18 +184,6 @@ public class CPOptionValueLocalServiceImpl
 	}
 
 	@Override
-	public CPOptionValue fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return cpOptionValuePersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CPOptionValue getCPOptionValue(long cpOptionId, String key)
 		throws PortalException {
 

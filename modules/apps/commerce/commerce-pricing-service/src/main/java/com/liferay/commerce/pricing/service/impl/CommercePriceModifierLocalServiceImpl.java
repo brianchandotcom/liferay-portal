@@ -331,18 +331,6 @@ public class CommercePriceModifierLocalServiceImpl
 	}
 
 	@Override
-	public CommercePriceModifier fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commercePriceModifierPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public List<CommercePriceModifier> getCommercePriceModifiers(
 		long commercePriceListId) {
 

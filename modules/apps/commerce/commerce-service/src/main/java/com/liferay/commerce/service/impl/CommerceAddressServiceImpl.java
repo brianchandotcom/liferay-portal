@@ -102,13 +102,11 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceAddress fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId)
 		throws PortalException {
 
 		CommerceAddress commerceAddress =
-			commerceAddressLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			commerceAddressLocalService.fetchCommerceAddress(commerceAddressId);
 
 		if (commerceAddress != null) {
 			_checkPermission(commerceAddress);
@@ -118,11 +116,14 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceAddress fetchCommerceAddress(long commerceAddressId)
+	public CommerceAddress fetchCommerceAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceAddress commerceAddress =
-			commerceAddressLocalService.fetchCommerceAddress(commerceAddressId);
+			commerceAddressLocalService.
+				fetchCommerceAddressByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commerceAddress != null) {
 			_checkPermission(commerceAddress);

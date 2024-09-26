@@ -253,8 +253,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 		else if (Validator.isNotNull(externalReferenceCode)) {
 			cpAttachmentFileEntry =
-				cpAttachmentFileEntryLocalService.fetchByExternalReferenceCode(
-					externalReferenceCode, serviceContext.getCompanyId());
+				cpAttachmentFileEntryLocalService.
+					fetchCPAttachmentFileEntryByExternalReferenceCode(
+						externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if ((cpAttachmentFileEntry != null) &&
@@ -438,14 +439,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
 			cpAttachmentFileEntry);
-	}
-
-	@Override
-	public CPAttachmentFileEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return cpAttachmentFileEntryPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
 	}
 
 	@Override

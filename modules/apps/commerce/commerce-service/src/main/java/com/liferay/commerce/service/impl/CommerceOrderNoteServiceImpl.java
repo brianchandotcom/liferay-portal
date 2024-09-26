@@ -100,24 +100,6 @@ public class CommerceOrderNoteServiceImpl
 	}
 
 	@Override
-	public CommerceOrderNote fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CommerceOrderNote commerceOrderNote =
-			commerceOrderNoteLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (commerceOrderNote != null) {
-			_commerceOrderModelResourcePermission.check(
-				getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
-				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
-		}
-
-		return commerceOrderNote;
-	}
-
-	@Override
 	public CommerceOrderNote fetchCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException {
 
@@ -126,6 +108,25 @@ public class CommerceOrderNoteServiceImpl
 				commerceOrderNoteId);
 
 		_checkCommerceOrderNotePermissions(commerceOrderNote);
+
+		return commerceOrderNote;
+	}
+
+	@Override
+	public CommerceOrderNote fetchCommerceOrderNoteByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CommerceOrderNote commerceOrderNote =
+			commerceOrderNoteLocalService.
+				fetchCommerceOrderNoteByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (commerceOrderNote != null) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
+		}
 
 		return commerceOrderNote;
 	}

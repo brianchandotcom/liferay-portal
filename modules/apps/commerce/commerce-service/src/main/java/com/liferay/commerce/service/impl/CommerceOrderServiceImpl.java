@@ -103,7 +103,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.fetchByExternalReferenceCode(
+			commerceOrderLocalService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -208,23 +208,6 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceOrder fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (commerceOrder != null) {
-			_commerceOrderModelResourcePermission.check(
-				getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
-		}
-
-		return commerceOrder;
-	}
-
-	@Override
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
@@ -284,6 +267,23 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
 				uuid, groupId);
+
+		if (commerceOrder != null) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
+		}
+
+		return commerceOrder;
+	}
+
+	@Override
+	public CommerceOrder fetchCommerceOrderByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.fetchCommerceOrderByExternalReferenceCode(
+				externalReferenceCode, companyId);
 
 		if (commerceOrder != null) {
 			_commerceOrderModelResourcePermission.check(

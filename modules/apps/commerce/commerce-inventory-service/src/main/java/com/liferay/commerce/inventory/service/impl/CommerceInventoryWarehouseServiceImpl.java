@@ -95,13 +95,14 @@ public class CommerceInventoryWarehouseServiceImpl
 	}
 
 	@Override
-	public CommerceInventoryWarehouse fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceInventoryWarehouse
+			fetchCommerceInventoryWarehouseByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseLocalService.
-				fetchCommerceInventoryWarehouseByReferenceCode(
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
 		if (commerceInventoryWarehouse != null) {

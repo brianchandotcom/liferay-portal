@@ -508,14 +508,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	@Override
-	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return commerceTierPriceEntryPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, BigDecimal minQuantity) {
 

@@ -170,15 +170,6 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			deleteCommerceInventoryWarehouse(commerceInventoryWarehouse);
 	}
 
-	@Override
-	public CommerceInventoryWarehouse
-		fetchCommerceInventoryWarehouseByReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		return commerceInventoryWarehousePersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryWarehouse geolocateCommerceInventoryWarehouse(

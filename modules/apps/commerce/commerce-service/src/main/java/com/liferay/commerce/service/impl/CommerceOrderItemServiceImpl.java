@@ -155,13 +155,12 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
-	public CommerceOrderItem fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			commerceOrderItemLocalService.fetchCommerceOrderItem(
+				commerceOrderItemId);
 
 		if (commerceOrderItem != null) {
 			_commerceOrderModelResourcePermission.check(
@@ -173,12 +172,14 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
-	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId)
+	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemLocalService.fetchCommerceOrderItem(
-				commerceOrderItemId);
+			commerceOrderItemLocalService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commerceOrderItem != null) {
 			_commerceOrderModelResourcePermission.check(

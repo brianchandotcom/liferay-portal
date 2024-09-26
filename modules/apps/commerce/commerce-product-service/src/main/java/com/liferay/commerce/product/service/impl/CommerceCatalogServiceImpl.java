@@ -75,13 +75,11 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceCatalog fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommerceCatalog fetchCommerceCatalog(long commerceCatalogId)
 		throws PortalException {
 
 		CommerceCatalog commerceCatalog =
-			commerceCatalogLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			commerceCatalogLocalService.fetchCommerceCatalog(commerceCatalogId);
 
 		if (commerceCatalog != null) {
 			_commerceCatalogModelResourcePermission.check(
@@ -92,11 +90,14 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceCatalog fetchCommerceCatalog(long commerceCatalogId)
+	public CommerceCatalog fetchCommerceCatalogByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceCatalog commerceCatalog =
-			commerceCatalogLocalService.fetchCommerceCatalog(commerceCatalogId);
+			commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commerceCatalog != null) {
 			_commerceCatalogModelResourcePermission.check(

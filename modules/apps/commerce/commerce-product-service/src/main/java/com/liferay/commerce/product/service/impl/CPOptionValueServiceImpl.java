@@ -56,7 +56,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 		throws PortalException {
 
 		CPOptionValue cpOptionValue =
-			cpOptionValueLocalService.fetchByExternalReferenceCode(
+			cpOptionValueLocalService.fetchCPOptionValueByExternalReferenceCode(
 				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (cpOptionValue == null) {
@@ -84,13 +84,11 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	}
 
 	@Override
-	public CPOptionValue fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CPOptionValue fetchCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue =
-			cpOptionValueLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			cpOptionValueLocalService.fetchCPOptionValue(cpOptionValueId);
 
 		if (cpOptionValue != null) {
 			_cpOptionModelResourcePermission.check(
@@ -102,11 +100,13 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	}
 
 	@Override
-	public CPOptionValue fetchCPOptionValue(long cpOptionValueId)
+	public CPOptionValue fetchCPOptionValueByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue =
-			cpOptionValueLocalService.fetchCPOptionValue(cpOptionValueId);
+			cpOptionValueLocalService.fetchCPOptionValueByExternalReferenceCode(
+				externalReferenceCode, companyId);
 
 		if (cpOptionValue != null) {
 			_cpOptionModelResourcePermission.check(

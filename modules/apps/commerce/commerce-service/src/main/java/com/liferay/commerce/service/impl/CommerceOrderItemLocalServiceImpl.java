@@ -403,18 +403,6 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrderItem fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commerceOrderItemPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommerceOrderItem
 		fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
 			long commerceInventoryBookedQuantityId) {

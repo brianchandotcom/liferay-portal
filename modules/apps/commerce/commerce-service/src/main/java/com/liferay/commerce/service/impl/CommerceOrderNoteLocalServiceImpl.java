@@ -107,18 +107,6 @@ public class CommerceOrderNoteLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrderNote fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commerceOrderNotePersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public List<CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, boolean restricted) {
 

@@ -357,18 +357,6 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public CommercePriceList fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commercePriceListPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId)
 		throws PortalException {
 

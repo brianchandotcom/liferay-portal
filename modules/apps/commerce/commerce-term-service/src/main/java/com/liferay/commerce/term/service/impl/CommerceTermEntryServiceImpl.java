@@ -79,14 +79,12 @@ public class CommerceTermEntryServiceImpl
 	}
 
 	@Override
-	public CommerceTermEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+	public CommerceTermEntry fetchCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException {
 
 		CommerceTermEntry commerceTermEntry =
-			commerceTermEntryLocalService.
-				fetchCommerceTermEntryByExternalReferenceCode(
-					externalReferenceCode, companyId);
+			commerceTermEntryLocalService.fetchCommerceTermEntry(
+				commerceTermEntryId);
 
 		if (commerceTermEntry != null) {
 			_commerceTermEntryModelResourcePermission.check(
@@ -97,12 +95,14 @@ public class CommerceTermEntryServiceImpl
 	}
 
 	@Override
-	public CommerceTermEntry fetchCommerceTermEntry(long commerceTermEntryId)
+	public CommerceTermEntry fetchCommerceTermEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException {
 
 		CommerceTermEntry commerceTermEntry =
-			commerceTermEntryLocalService.fetchCommerceTermEntry(
-				commerceTermEntryId);
+			commerceTermEntryLocalService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commerceTermEntry != null) {
 			_commerceTermEntryModelResourcePermission.check(

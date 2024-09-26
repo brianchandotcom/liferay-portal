@@ -76,23 +76,6 @@ public class CommerceOrderTypeServiceImpl
 	}
 
 	@Override
-	public CommerceOrderType fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CommerceOrderType commerceOrderType =
-			commerceOrderTypeLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (commerceOrderType != null) {
-			_commerceOrderTypeModelResourcePermission.check(
-				getPermissionChecker(), commerceOrderType, ActionKeys.VIEW);
-		}
-
-		return commerceOrderType;
-	}
-
-	@Override
 	public CommerceOrderType fetchCommerceOrderType(long commerceOrderTypeId)
 		throws PortalException {
 
@@ -103,6 +86,24 @@ public class CommerceOrderTypeServiceImpl
 		if (commerceOrderType != null) {
 			_commerceOrderTypeModelResourcePermission.check(
 				getPermissionChecker(), commerceOrderTypeId, ActionKeys.VIEW);
+		}
+
+		return commerceOrderType;
+	}
+
+	@Override
+	public CommerceOrderType fetchCommerceOrderTypeByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CommerceOrderType commerceOrderType =
+			commerceOrderTypeLocalService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (commerceOrderType != null) {
+			_commerceOrderTypeModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderType, ActionKeys.VIEW);
 		}
 
 		return commerceOrderType;

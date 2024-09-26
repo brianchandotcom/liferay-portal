@@ -64,8 +64,9 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPOption cpOption = cpOptionLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, serviceContext.getCompanyId());
+		CPOption cpOption =
+			cpOptionLocalService.fetchCPOptionByExternalReferenceCode(
+				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (cpOption == null) {
 			PortletResourcePermission portletResourcePermission =
@@ -91,22 +92,6 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
-	public CPOption fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CPOption cpOption = cpOptionLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-
-		if (cpOption != null) {
-			_cpOptionModelResourcePermission.check(
-				getPermissionChecker(), cpOption, ActionKeys.VIEW);
-		}
-
-		return cpOption;
-	}
-
-	@Override
 	public CPOption fetchCPOption(long cpOptionId) throws PortalException {
 		CPOption cpOption = cpOptionLocalService.fetchCPOption(cpOptionId);
 
@@ -123,6 +108,23 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 		throws PortalException {
 
 		CPOption cpOption = cpOptionLocalService.fetchCPOption(companyId, key);
+
+		if (cpOption != null) {
+			_cpOptionModelResourcePermission.check(
+				getPermissionChecker(), cpOption, ActionKeys.VIEW);
+		}
+
+		return cpOption;
+	}
+
+	@Override
+	public CPOption fetchCPOptionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPOption cpOption =
+			cpOptionLocalService.fetchCPOptionByExternalReferenceCode(
+				externalReferenceCode, companyId);
 
 		if (cpOption != null) {
 			_cpOptionModelResourcePermission.check(

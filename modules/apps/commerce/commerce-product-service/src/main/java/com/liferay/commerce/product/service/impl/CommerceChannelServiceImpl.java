@@ -91,24 +91,6 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceChannel fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CommerceChannel commerceChannel =
-			commerceChannelLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (commerceChannel != null) {
-			_commerceChannelModelResourcePermission.check(
-				getPermissionChecker(), commerceChannel.getCommerceChannelId(),
-				ActionKeys.VIEW);
-		}
-
-		return commerceChannel;
-	}
-
-	@Override
 	public CommerceChannel fetchCommerceChannel(long commerceChannelId)
 		throws PortalException {
 
@@ -118,6 +100,25 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 		if (commerceChannel != null) {
 			_commerceChannelModelResourcePermission.check(
 				getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+		}
+
+		return commerceChannel;
+	}
+
+	@Override
+	public CommerceChannel fetchCommerceChannelByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.
+				fetchCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (commerceChannel != null) {
+			_commerceChannelModelResourcePermission.check(
+				getPermissionChecker(), commerceChannel.getCommerceChannelId(),
+				ActionKeys.VIEW);
 		}
 
 		return commerceChannel;

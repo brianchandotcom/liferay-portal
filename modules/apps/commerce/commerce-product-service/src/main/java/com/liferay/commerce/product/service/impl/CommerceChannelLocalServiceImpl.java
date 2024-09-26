@@ -172,8 +172,9 @@ public class CommerceChannelLocalServiceImpl
 			User user = _userLocalService.getUser(userId);
 
 			commerceChannel =
-				commerceChannelLocalService.fetchByExternalReferenceCode(
-					externalReferenceCode, user.getCompanyId());
+				commerceChannelLocalService.
+					fetchCommerceChannelByExternalReferenceCode(
+						externalReferenceCode, user.getCompanyId());
 		}
 
 		if (commerceChannel == null) {
@@ -242,18 +243,6 @@ public class CommerceChannelLocalServiceImpl
 		for (CommerceChannel commerceChannel : commerceChannels) {
 			commerceChannelLocalService.deleteCommerceChannel(commerceChannel);
 		}
-	}
-
-	@Override
-	public CommerceChannel fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commerceChannelPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
 	}
 
 	@Override

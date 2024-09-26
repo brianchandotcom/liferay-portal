@@ -106,13 +106,13 @@ public class CommercePriceModifierServiceImpl
 	}
 
 	@Override
-	public CommercePriceModifier fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommercePriceModifier fetchCommercePriceModifier(
+			long commercePriceModifierId)
 		throws PortalException {
 
 		CommercePriceModifier commercePriceModifier =
-			commercePriceModifierLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
+			commercePriceModifierLocalService.fetchCommercePriceModifier(
+				commercePriceModifierId);
 
 		if (commercePriceModifier != null) {
 			_commercePriceListModelResourcePermission.check(
@@ -125,13 +125,15 @@ public class CommercePriceModifierServiceImpl
 	}
 
 	@Override
-	public CommercePriceModifier fetchCommercePriceModifier(
-			long commercePriceModifierId)
+	public CommercePriceModifier
+			fetchCommercePriceModifierByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommercePriceModifier commercePriceModifier =
-			commercePriceModifierLocalService.fetchCommercePriceModifier(
-				commercePriceModifierId);
+			commercePriceModifierLocalService.
+				fetchCommercePriceModifierByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		if (commercePriceModifier != null) {
 			_commercePriceListModelResourcePermission.check(

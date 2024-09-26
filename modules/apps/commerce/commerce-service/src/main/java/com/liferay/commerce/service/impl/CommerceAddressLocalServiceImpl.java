@@ -208,18 +208,18 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@Override
-	public CommerceAddress fetchByExternalReferenceCode(
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId) {
+		return CommerceAddressImpl.fromAddress(
+			_addressLocalService.fetchAddress(commerceAddressId));
+	}
+
+	@Override
+	public CommerceAddress fetchCommerceAddressByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 
 		return CommerceAddressImpl.fromAddress(
 			_addressLocalService.fetchAddressByExternalReferenceCode(
 				externalReferenceCode, companyId));
-	}
-
-	@Override
-	public CommerceAddress fetchCommerceAddress(long commerceAddressId) {
-		return CommerceAddressImpl.fromAddress(
-			_addressLocalService.fetchAddress(commerceAddressId));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

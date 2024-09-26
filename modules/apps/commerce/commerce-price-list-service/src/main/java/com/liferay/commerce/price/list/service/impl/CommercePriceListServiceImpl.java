@@ -146,23 +146,6 @@ public class CommercePriceListServiceImpl
 	}
 
 	@Override
-	public CommercePriceList fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CommercePriceList commercePriceList =
-			commercePriceListLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (commercePriceList != null) {
-			_commercePriceListModelResourcePermission.check(
-				getPermissionChecker(), commercePriceList, ActionKeys.VIEW);
-		}
-
-		return commercePriceList;
-	}
-
-	@Override
 	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
 			long groupId, String type)
 		throws PortalException {
@@ -203,6 +186,24 @@ public class CommercePriceListServiceImpl
 		if (commercePriceList != null) {
 			_commercePriceListModelResourcePermission.check(
 				getPermissionChecker(), commercePriceListId, ActionKeys.VIEW);
+		}
+
+		return commercePriceList;
+	}
+
+	@Override
+	public CommercePriceList fetchCommercePriceListByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			commercePriceListLocalService.
+				fetchCommercePriceListByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (commercePriceList != null) {
+			_commercePriceListModelResourcePermission.check(
+				getPermissionChecker(), commercePriceList, ActionKeys.VIEW);
 		}
 
 		return commercePriceList;

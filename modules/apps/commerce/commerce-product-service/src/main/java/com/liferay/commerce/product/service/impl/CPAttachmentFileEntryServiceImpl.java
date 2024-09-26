@@ -134,33 +134,6 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
-	public CPAttachmentFileEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			cpAttachmentFileEntryLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (cpAttachmentFileEntry != null) {
-			long cpDefinitionClassNameId = _portal.getClassNameId(
-				CPDefinition.class);
-
-			if (cpDefinitionClassNameId ==
-					cpAttachmentFileEntry.getClassNameId()) {
-
-				_checkCommerceCatalog(
-					cpAttachmentFileEntry.getClassPK(), ActionKeys.VIEW);
-			}
-			else {
-				_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
-			}
-		}
-
-		return cpAttachmentFileEntry;
-	}
-
-	@Override
 	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
 			long cpAttachmentFileEntryId)
 		throws PortalException {
@@ -191,6 +164,35 @@ public class CPAttachmentFileEntryServiceImpl
 			}
 			else {
 				_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+			}
+		}
+
+		return cpAttachmentFileEntry;
+	}
+
+	@Override
+	public CPAttachmentFileEntry
+			fetchCPAttachmentFileEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntryLocalService.
+				fetchCPAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (cpAttachmentFileEntry != null) {
+			long cpDefinitionClassNameId = _portal.getClassNameId(
+				CPDefinition.class);
+
+			if (cpDefinitionClassNameId ==
+					cpAttachmentFileEntry.getClassNameId()) {
+
+				_checkCommerceCatalog(
+					cpAttachmentFileEntry.getClassPK(), ActionKeys.VIEW);
+			}
+			else {
+				_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
 			}
 		}
 

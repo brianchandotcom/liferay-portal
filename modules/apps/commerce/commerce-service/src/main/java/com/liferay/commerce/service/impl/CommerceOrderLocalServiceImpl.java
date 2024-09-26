@@ -690,18 +690,6 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
-	@Override
-	public CommerceOrder fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commerceOrderPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */

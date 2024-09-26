@@ -11,7 +11,7 @@
 	"items": [
 		{
 			"key": "sample-key",
-			"languageId": "en_US",
+			"languageId": "en",
 			"value": "Sample Value"
 		},
 		{

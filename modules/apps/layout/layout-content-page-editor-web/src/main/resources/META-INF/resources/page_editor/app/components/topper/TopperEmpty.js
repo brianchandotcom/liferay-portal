@@ -42,35 +42,41 @@ import {
 import useDropContainerId from '../../utils/useDropContainerId';
 import {TopperLabel} from './TopperLabel';
 
-export default function ({children, ...props}) {
-	if (Liferay.FeatureFlags['LPD-18221']) {
-		return <TopperEmptyWrapper {...props}>{children}</TopperEmptyWrapper>;
-	}
-
-	return <OldTopperEmpty {...props}>{children}</OldTopperEmpty>;
-}
-
-const TopperEmptyWrapper = ({children, item, ...props}) => {
+export default function ({activable = true, children, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
+	if (!canUpdatePageStructure) {
+		return children;
+	}
+
+	if (Liferay.FeatureFlags['LPD-18221'] && activable) {
+		return (
+			<ActivableTopperEmptyWrapper {...props}>
+				{children}
+			</ActivableTopperEmptyWrapper>
+		);
+	}
+
+	return <TopperEmpty {...props}>{children}</TopperEmpty>;
+}
+
+const ActivableTopperEmptyWrapper = ({children, item, ...props}) => {
 	const isHovered = useIsHovered();
 	const isActive = useIsActive();
 
-	return canUpdatePageStructure ? (
-		<MemoizedTopperEmpty
+	return (
+		<MemoizedActivableTopperEmpty
 			{...props}
 			isActive={isActive(item.itemId)}
 			isHovered={isHovered(item.itemId)}
 			item={item}
 		>
 			{children}
-		</MemoizedTopperEmpty>
-	) : (
-		children
+		</MemoizedActivableTopperEmpty>
 	);
 };
 
-const OldTopperEmpty = ({children, className, item}) => {
+const TopperEmpty = ({children, className, item}) => {
 	const containerRef = useRef(null);
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
@@ -133,7 +139,7 @@ const OldTopperEmpty = ({children, className, item}) => {
 	});
 };
 
-const TopperEmpty = ({
+const ActivableTopperEmpty = ({
 	children,
 	className,
 	isActive,
@@ -254,7 +260,7 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
 	return (
-		<TopperLabel itemElement={itemElement}>
+		<TopperLabel item={item} itemElement={itemElement}>
 			<ul className="tbar-nav">
 				<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
 					{name}
@@ -333,7 +339,7 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 	);
 };
 
-const MemoizedTopperEmpty = React.memo(TopperEmpty);
+const MemoizedActivableTopperEmpty = React.memo(ActivableTopperEmpty);
 
 TopperEmpty.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,

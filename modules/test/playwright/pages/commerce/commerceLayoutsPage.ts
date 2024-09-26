@@ -241,10 +241,45 @@ export class CommerceLayoutsPage {
 			.click();
 	}
 
+	async addWidget(itemName: string, menuName: string = '') {
+		await this.page
+			.getByRole('tab', {
+				exact: true,
+				name: 'Widgets',
+			})
+			.click();
+
+		const source = await this.page.getByRole('menuitem', {
+			name: itemName,
+		});
+
+		if ((await source.isHidden()) && menuName) {
+			await this.page
+				.getByRole('menuitem', {
+					exact: true,
+					name: menuName,
+				})
+				.click();
+		}
+
+		await source.focus();
+		await source.press('Enter');
+		await source.press('Enter');
+	}
+
 	async addWidgetToPage(widgetName: string) {
 		await this.addWidgetButton.click();
 		await this.searchFormInput.fill(widgetName);
 		await this.addWidgetLabel(widgetName).click();
+	}
+
+	async checkValueOrderSummary(nameValue: string, value: string) {
+		await expect(
+			this.page.getByText(nameValue, {exact: true})
+		).toBeVisible();
+		await expect(
+			this.page.locator('span').filter({hasText: value})
+		).toBeVisible();
 	}
 
 	async cleanupSiteInitializerData(

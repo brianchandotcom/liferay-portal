@@ -1745,16 +1745,27 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition1.getRootObjectDefinitionId();
 
 		if (rootObjectDefinitionId != 0) {
-			objectDefinition1.setRootObjectDefinitionId(rootObjectDefinitionId);
+			ObjectDefinition rootObjectDefinition =
+				objectDefinitionLocalService.getObjectDefinition(
+					rootObjectDefinitionId);
+
+			if (rootObjectDefinition.isApproved() !=
+					objectDefinition1.isApproved()) {
+
+				rootObjectDefinitionId =
+					objectDefinition1.getObjectDefinitionId();
+			}
 		}
 		else {
 			rootObjectDefinitionId = objectDefinition1.getObjectDefinitionId();
-
-			objectDefinition1.setRootObjectDefinitionId(rootObjectDefinitionId);
 		}
+
+		objectDefinition1.setRootObjectDefinitionId(rootObjectDefinitionId);
 
 		objectDefinition1 = objectDefinitionPersistence.update(
 			objectDefinition1);
+
+		deployObjectDefinition(objectDefinition1);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition objectDefinition2 =

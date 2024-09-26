@@ -237,8 +237,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				externalReferenceCode,
 				_getAccountEntryId(
 					channel, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
-				channel.getSiteGroupId(), channel.getName(), channel.getType(),
-				null, channel.getCurrencyCode(),
+				GetterUtil.get(channel.getSiteGroupId(), 0), channel.getName(),
+				channel.getType(), null, channel.getCurrencyCode(),
 				_serviceContextHelper.getServiceContext()));
 	}
 

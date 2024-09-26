@@ -1733,7 +1733,7 @@ paths:
         get:
             description:
                 Retrieve cart billing address.
-            operationId: getCartByExternalReferenceCodeBillingAddres
+            operationId: getCartByExternalReferenceCodeBillingAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2243,7 +2243,7 @@ paths:
         get:
             description:
                 Retrieve cart billing address.
-            operationId: getCartByExternalReferenceCodeShippingAddres
+            operationId: getCartByExternalReferenceCodeShippingAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -2580,7 +2580,7 @@ paths:
         get:
             description:
                 Retrieve cart billing address.
-            operationId: getCartBillingAddres
+            operationId: getCartBillingAddress
             parameters:
                 - in: path
                   explode: false
@@ -3179,7 +3179,7 @@ paths:
         get:
             description:
                 Retrieve cart billing address.
-            operationId: getCartShippingAddres
+            operationId: getCartShippingAddress
             parameters:
                 - in: path
                   explode: false

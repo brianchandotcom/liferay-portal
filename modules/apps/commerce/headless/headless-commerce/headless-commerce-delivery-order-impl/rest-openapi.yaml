@@ -1330,7 +1330,7 @@ paths:
         get:
             description:
                 Retrieve placed order billing address.
-            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1533,7 +1533,7 @@ paths:
         get:
             description:
                 Retrieve placed order shipping address.
-            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1818,7 +1818,7 @@ paths:
         get:
             description:
                 Retrieve placed order billing address.
-            operationId: getPlacedOrderPlacedOrderBillingAddres
+            operationId: getPlacedOrderPlacedOrderBillingAddress
             parameters:
                 - in: path
                   explode: false
@@ -2036,7 +2036,7 @@ paths:
         get:
             description:
                 Retrieve placed order shipping address.
-            operationId: getPlacedOrderPlacedOrderShippingAddres
+            operationId: getPlacedOrderPlacedOrderShippingAddress
             parameters:
                 - in: path
                   explode: false

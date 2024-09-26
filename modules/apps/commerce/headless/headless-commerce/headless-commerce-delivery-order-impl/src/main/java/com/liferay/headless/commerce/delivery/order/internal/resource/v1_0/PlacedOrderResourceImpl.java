@@ -152,7 +152,7 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 	}
 
 	@Override
-	public String getPlacedOrderByExternalReferenceCodePaymentURL(
+	public String getPlacedOrderByExternalReferenceCodePaymentUrl(
 			String externalReferenceCode, String callbackURL)
 		throws Exception {
 
@@ -166,12 +166,12 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 					externalReferenceCode);
 		}
 
-		return getPlacedOrderPaymentURL(
+		return getPlacedOrderPaymentUrl(
 			commerceOrder.getCommerceOrderId(), callbackURL);
 	}
 
 	@Override
-	public String getPlacedOrderPaymentURL(
+	public String getPlacedOrderPaymentUrl(
 			Long placedOrderId, String callbackURL)
 		throws Exception {
 

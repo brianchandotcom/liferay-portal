@@ -121,18 +121,18 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	}
 
 	@Override
-	protected Address testGetCartBillingAddres_addAddress() throws Exception {
+	protected Address testGetCartBillingAddress_addAddress() throws Exception {
 		return _toAddress(_getCommerceAddress());
 	}
 
 	@Override
-	protected Long testGetCartBillingAddres_getCartId() throws Exception {
-		return _getCartBillingAddres_getCartId();
+	protected Long testGetCartBillingAddress_getCartId() throws Exception {
+		return _getCartBillingAddress_getCartId();
 	}
 
 	@Override
 	protected Address
-			testGetCartByExternalReferenceCodeBillingAddres_addAddress()
+			testGetCartByExternalReferenceCodeBillingAddress_addAddress()
 		throws Exception {
 
 		return _toAddress(_getCommerceAddress());
@@ -140,7 +140,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+			testGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -149,7 +149,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected Address
-			testGetCartByExternalReferenceCodeShippingAddres_addAddress()
+			testGetCartByExternalReferenceCodeShippingAddress_addAddress()
 		throws Exception {
 
 		return _toAddress(_getCommerceAddress());
@@ -157,7 +157,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+			testGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -165,13 +165,13 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	}
 
 	@Override
-	protected Address testGetCartShippingAddres_addAddress() throws Exception {
+	protected Address testGetCartShippingAddress_addAddress() throws Exception {
 		return _toAddress(_getCommerceAddress());
 	}
 
 	@Override
-	protected Long testGetCartShippingAddres_getCartId() throws Exception {
-		return _getCartShippingAddres_getCartId();
+	protected Long testGetCartShippingAddress_getCartId() throws Exception {
+		return _getCartShippingAddress_getCartId();
 	}
 
 	@Override
@@ -180,15 +180,15 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	}
 
 	@Override
-	protected Long testGraphQLGetCartBillingAddres_getCartId()
+	protected Long testGraphQLGetCartBillingAddress_getCartId()
 		throws Exception {
 
-		return _getCartBillingAddres_getCartId();
+		return _getCartBillingAddress_getCartId();
 	}
 
 	@Override
 	protected String
-			testGraphQLGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+			testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -197,7 +197,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGraphQLGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+			testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -205,22 +205,10 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	}
 
 	@Override
-	protected Long testGraphQLGetCartShippingAddres_getCartId()
+	protected Long testGraphQLGetCartShippingAddress_getCartId()
 		throws Exception {
 
-		return _getCartShippingAddres_getCartId();
-	}
-
-	private long _getCartBillingAddres_getCartId() throws Exception {
-		_commerceOrder = _getCommerceOrder();
-
-		_commerceOrder.setBillingAddressId(
-			_getCommerceAddress().getCommerceAddressId());
-
-		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			_commerceOrder);
-
-		return _commerceOrder.getCommerceOrderId();
+		return _getCartShippingAddress_getCartId();
 	}
 
 	private String _getCartBillingAddress_getCartExternalReferenceCode()
@@ -237,10 +225,10 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 		return _commerceOrder.getExternalReferenceCode();
 	}
 
-	private long _getCartShippingAddres_getCartId() throws Exception {
+	private long _getCartBillingAddress_getCartId() throws Exception {
 		_commerceOrder = _getCommerceOrder();
 
-		_commerceOrder.setShippingAddressId(
+		_commerceOrder.setBillingAddressId(
 			_getCommerceAddress().getCommerceAddressId());
 
 		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
@@ -261,6 +249,18 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 			_commerceOrder);
 
 		return _commerceOrder.getExternalReferenceCode();
+	}
+
+	private long _getCartShippingAddress_getCartId() throws Exception {
+		_commerceOrder = _getCommerceOrder();
+
+		_commerceOrder.setShippingAddressId(
+			_getCommerceAddress().getCommerceAddressId());
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
+
+		return _commerceOrder.getCommerceOrderId();
 	}
 
 	private CommerceAddress _getCommerceAddress() throws Exception {

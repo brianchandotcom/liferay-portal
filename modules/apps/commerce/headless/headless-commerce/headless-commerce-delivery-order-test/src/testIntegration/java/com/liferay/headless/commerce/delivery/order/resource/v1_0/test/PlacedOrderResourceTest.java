@@ -79,17 +79,17 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePaymentURL()
+	public void testGetPlacedOrderByExternalReferenceCodePaymentUrl()
 		throws Exception {
 
-		super.testGetPlacedOrderByExternalReferenceCodePaymentURL();
+		super.testGetPlacedOrderByExternalReferenceCodePaymentUrl();
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testGetPlacedOrderPaymentURL() throws Exception {
-		super.testGetPlacedOrderPaymentURL();
+	public void testGetPlacedOrderPaymentUrl() throws Exception {
+		super.testGetPlacedOrderPaymentUrl();
 	}
 
 	@Override

@@ -82,8 +82,9 @@ public class CommerceTierPriceEntryTestUtil {
 
 		if (priceEntryExternalReferenceCode != null) {
 			CommercePriceEntry commercePriceEntry =
-				CommercePriceEntryLocalServiceUtil.fetchByExternalReferenceCode(
-					priceEntryExternalReferenceCode, companyId);
+				CommercePriceEntryLocalServiceUtil.
+					fetchCommercePriceEntryByExternalReferenceCode(
+						priceEntryExternalReferenceCode, companyId);
 
 			if (commercePriceEntry != null) {
 				CommercePriceList commercePriceList =

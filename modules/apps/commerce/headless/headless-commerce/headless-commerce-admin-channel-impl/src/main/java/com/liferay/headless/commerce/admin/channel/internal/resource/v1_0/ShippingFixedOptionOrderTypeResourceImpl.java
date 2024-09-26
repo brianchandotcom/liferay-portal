@@ -121,10 +121,11 @@ public class ShippingFixedOptionOrderTypeResourceImpl
 		}
 		else {
 			commerceOrderType =
-				_commerceOrderTypeService.fetchByExternalReferenceCode(
-					shippingFixedOptionOrderType.
-						getOrderTypeExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						shippingFixedOptionOrderType.
+							getOrderTypeExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		return commerceOrderType;

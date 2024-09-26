@@ -74,8 +74,9 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -103,8 +104,9 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -148,8 +150,9 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			String externalReferenceCode, OrderRule orderRule)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -173,8 +176,9 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			String externalReferenceCode, OrderRule orderRule)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			corEntry = _addCOREntry(externalReferenceCode, orderRule);

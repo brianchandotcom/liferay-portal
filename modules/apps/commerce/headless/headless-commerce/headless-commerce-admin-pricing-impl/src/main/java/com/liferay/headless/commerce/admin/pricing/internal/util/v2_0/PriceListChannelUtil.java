@@ -45,9 +45,10 @@ public class PriceListChannelUtil {
 		}
 		else {
 			commerceChannel =
-				commerceChannelService.fetchByExternalReferenceCode(
-					priceListChannel.getChannelExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						priceListChannel.getChannelExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

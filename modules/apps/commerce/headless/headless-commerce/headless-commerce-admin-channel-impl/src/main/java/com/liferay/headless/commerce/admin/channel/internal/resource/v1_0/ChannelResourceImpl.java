@@ -59,7 +59,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throws Exception {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelService.fetchByExternalReferenceCode(
+			_commerceChannelService.fetchCommerceChannelByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceChannel == null) {
@@ -102,7 +102,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throws Exception {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelService.fetchByExternalReferenceCode(
+			_commerceChannelService.fetchCommerceChannelByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceChannel == null) {
@@ -168,7 +168,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throws Exception {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelService.fetchByExternalReferenceCode(
+			_commerceChannelService.fetchCommerceChannelByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceChannel == null) {

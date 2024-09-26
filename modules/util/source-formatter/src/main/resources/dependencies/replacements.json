@@ -3783,9 +3783,9 @@
 			"CommercePriceListLocalService",
 			"CommercePriceListLocalServiceUtil"
 		],
-		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
+		"from": "fetchCommercePriceListByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-196611",
-		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
+		"to": "fetchCommercePriceListByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
 		"from": "AssetCategory::getLeftCategoryId",
@@ -3940,15 +3940,6 @@
 			"CPInstanceLocalServiceUtil",
 			"CPInstanceService",
 			"CPInstanceServiceUtil"
-		],
-		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
-		"issueKey": "LPS-197965",
-		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
-	},
-	{
-		"classNames": [
-			"CPInstanceLocalService",
-			"CPInstanceLocalServiceUtil"
 		],
 		"from": "fetchCPInstanceByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-197965",

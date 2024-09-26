@@ -36,9 +36,10 @@ public class OrderRuleOrderTypeUtil {
 		}
 		else {
 			commerceOrderType =
-				commerceOrderTypeService.fetchByExternalReferenceCode(
-					orderRuleOrderType.getOrderTypeExternalReferenceCode(),
-					corEntry.getCompanyId());
+				commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						orderRuleOrderType.getOrderTypeExternalReferenceCode(),
+						corEntry.getCompanyId());
 
 			if (commerceOrderType == null) {
 				String orderTypeExternalReferenceCode =

@@ -52,8 +52,9 @@ public class OrderRuleOrderTypeResourceImpl
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -103,8 +104,9 @@ public class OrderRuleOrderTypeResourceImpl
 				OrderRuleOrderType orderRuleOrderType)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -160,9 +162,10 @@ public class OrderRuleOrderTypeResourceImpl
 		}
 		else {
 			commerceOrderType =
-				_commerceOrderTypeService.fetchByExternalReferenceCode(
-					orderRuleOrderType.getOrderTypeExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						orderRuleOrderType.getOrderTypeExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		return commerceOrderType;

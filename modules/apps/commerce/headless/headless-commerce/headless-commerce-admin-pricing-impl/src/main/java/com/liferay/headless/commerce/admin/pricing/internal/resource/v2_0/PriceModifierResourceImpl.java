@@ -62,8 +62,9 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		throws Exception {
 
 		CommercePriceModifier commercePriceModifier =
-			_commercePriceModifierService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceModifierService.
+				fetchCommercePriceModifierByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -82,8 +83,9 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		throws Exception {
 
 		CommercePriceList commercePriceList =
-			_commercePriceListService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceListService.
+				fetchCommercePriceListByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -138,8 +140,9 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		throws Exception {
 
 		CommercePriceModifier commercePriceModifier =
-			_commercePriceModifierService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceModifierService.
+				fetchCommercePriceModifierByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -170,8 +173,9 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		throws Exception {
 
 		CommercePriceModifier commercePriceModifier =
-			_commercePriceModifierService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceModifierService.
+				fetchCommercePriceModifierByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -192,8 +196,9 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		throws Exception {
 
 		CommercePriceList commercePriceList =
-			_commercePriceListService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceListService.
+				fetchCommercePriceListByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(

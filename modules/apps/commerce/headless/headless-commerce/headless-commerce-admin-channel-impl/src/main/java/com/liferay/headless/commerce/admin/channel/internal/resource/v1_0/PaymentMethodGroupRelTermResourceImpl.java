@@ -120,9 +120,11 @@ public class PaymentMethodGroupRelTermResourceImpl
 		}
 		else {
 			commerceTerm =
-				_commerceTermEntryService.fetchByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					paymentMethodGroupRelTerm.getTermExternalReferenceCode());
+				_commerceTermEntryService.
+					fetchCommerceTermEntryByExternalReferenceCode(
+						contextCompany.getCompanyId(),
+						paymentMethodGroupRelTerm.
+							getTermExternalReferenceCode());
 		}
 
 		return commerceTerm;

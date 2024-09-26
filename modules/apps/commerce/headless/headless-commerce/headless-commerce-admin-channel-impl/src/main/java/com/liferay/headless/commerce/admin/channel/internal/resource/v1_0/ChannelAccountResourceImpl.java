@@ -63,8 +63,9 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 		throws Exception {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceChannelLocalService.
+				fetchCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceChannel == null) {
 			throw new NoSuchChannelException(
@@ -190,8 +191,9 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 				_serviceContextHelper.getServiceContext();
 
 			commerceChannel =
-				_commerceChannelService.fetchByExternalReferenceCode(
-					externalReferenceCode, serviceContext.getCompanyId());
+				_commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

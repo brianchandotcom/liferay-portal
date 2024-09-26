@@ -104,9 +104,10 @@ public class ProductOptionValueResourceImpl
 
 		long cpInstanceId = 0;
 
-		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			productOptionValue.getSkuExternalReferenceCode(),
-			contextCompany.getCompanyId());
+		CPInstance cpInstance =
+			_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				productOptionValue.getSkuExternalReferenceCode(),
+				contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			cpInstance = _cpInstanceService.fetchCPInstance(

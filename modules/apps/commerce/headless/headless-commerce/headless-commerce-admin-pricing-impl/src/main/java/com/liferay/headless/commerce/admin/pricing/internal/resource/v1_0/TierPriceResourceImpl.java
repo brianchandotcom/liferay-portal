@@ -57,8 +57,9 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		throws Exception {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			_commerceTierPriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceTierPriceEntryService.
+				fetchCommerceTierPriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceTierPriceEntry == null) {
 			throw new NoSuchTierPriceEntryException(
@@ -80,8 +81,9 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		throws Exception {
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceEntryService.
+				fetchCommercePriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -137,8 +139,9 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		throws Exception {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			_commerceTierPriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceTierPriceEntryService.
+				fetchCommerceTierPriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceTierPriceEntry == null) {
 			throw new NoSuchTierPriceEntryException(
@@ -169,8 +172,9 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		throws Exception {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			_commerceTierPriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceTierPriceEntryService.
+				fetchCommerceTierPriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceTierPriceEntry == null) {
 			throw new NoSuchTierPriceEntryException(
@@ -191,8 +195,9 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		throws Exception {
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceEntryService.
+				fetchCommercePriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(

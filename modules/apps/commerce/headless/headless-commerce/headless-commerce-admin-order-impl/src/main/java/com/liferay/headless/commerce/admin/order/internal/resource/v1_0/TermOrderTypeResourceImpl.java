@@ -51,8 +51,9 @@ public class TermOrderTypeResourceImpl extends BaseTermOrderTypeResourceImpl {
 		throws Exception {
 
 		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
 			throw new NoSuchTermEntryException(
@@ -106,8 +107,9 @@ public class TermOrderTypeResourceImpl extends BaseTermOrderTypeResourceImpl {
 		throws Exception {
 
 		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
 			throw new NoSuchTermEntryException(
@@ -163,9 +165,10 @@ public class TermOrderTypeResourceImpl extends BaseTermOrderTypeResourceImpl {
 		}
 		else {
 			commerceOrderType =
-				_commerceOrderTypeService.fetchByExternalReferenceCode(
-					termOrderType.getOrderTypeExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						termOrderType.getOrderTypeExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		return commerceOrderType;

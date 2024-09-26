@@ -97,8 +97,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -138,7 +139,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -198,8 +199,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -245,8 +247,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -267,7 +270,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -387,8 +390,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			GetterUtil.getLong(orderItem.getOrderId()));
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			commerceOrderItem = OrderItemUtil.addCommerceOrderItem(

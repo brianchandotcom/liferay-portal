@@ -186,7 +186,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 			long skuId = GetterUtil.getLong(mappedProduct.getSkuId());
 
 			CPInstance cpInstance =
-				_cpInstanceService.fetchByExternalReferenceCode(
+				_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 					mappedProduct.getSkuExternalReferenceCode(),
 					contextCompany.getCompanyId());
 

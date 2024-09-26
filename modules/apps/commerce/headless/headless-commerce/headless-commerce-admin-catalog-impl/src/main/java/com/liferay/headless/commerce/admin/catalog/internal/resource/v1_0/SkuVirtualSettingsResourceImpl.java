@@ -36,8 +36,9 @@ public class SkuVirtualSettingsResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPInstance cpInstance =
+			_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(

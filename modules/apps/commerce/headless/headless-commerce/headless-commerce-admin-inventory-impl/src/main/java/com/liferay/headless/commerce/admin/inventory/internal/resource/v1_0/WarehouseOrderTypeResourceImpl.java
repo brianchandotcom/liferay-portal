@@ -56,8 +56,9 @@ public class WarehouseOrderTypeResourceImpl
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -121,8 +122,9 @@ public class WarehouseOrderTypeResourceImpl
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -182,9 +184,10 @@ public class WarehouseOrderTypeResourceImpl
 		}
 		else {
 			commerceOrderType =
-				_commerceOrderTypeService.fetchByExternalReferenceCode(
-					warehouseOrderType.getOrderTypeExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						warehouseOrderType.getOrderTypeExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		return commerceOrderType;

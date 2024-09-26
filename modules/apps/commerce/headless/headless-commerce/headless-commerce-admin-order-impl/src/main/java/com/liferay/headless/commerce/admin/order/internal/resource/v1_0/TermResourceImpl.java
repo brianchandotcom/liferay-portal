@@ -63,8 +63,9 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		throws Exception {
 
 		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
 			throw new NoSuchTermEntryException(
@@ -93,8 +94,9 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		throws Exception {
 
 		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
 			throw new NoSuchTermEntryException(
@@ -138,8 +140,9 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		throws Exception {
 
 		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
 			throw new NoSuchTermEntryException(
@@ -161,8 +164,9 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		throws Exception {
 
 		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
 			return postTerm(term);

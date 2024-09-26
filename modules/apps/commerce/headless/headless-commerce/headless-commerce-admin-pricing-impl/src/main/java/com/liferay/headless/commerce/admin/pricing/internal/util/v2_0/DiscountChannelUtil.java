@@ -42,9 +42,10 @@ public class DiscountChannelUtil {
 		}
 		else {
 			commerceChannel =
-				commerceChannelService.fetchByExternalReferenceCode(
-					discountChannel.getChannelExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						discountChannel.getChannelExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

@@ -80,8 +80,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -98,7 +99,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -144,8 +145,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -201,8 +203,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -220,7 +223,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -274,8 +277,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
@@ -349,7 +353,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		if (replacedSkuId == 0) {
 			CPInstance replacedSku =
-				_cpInstanceService.fetchByExternalReferenceCode(
+				_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 					cartItem.getReplacedSkuExternalReferenceCode(),
 					contextCompany.getCompanyId());
 
@@ -376,9 +380,10 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		if (shippingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					cartItem.getShippingAddressExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						cartItem.getShippingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
 
 			if (commerceAddress != null) {
 				shippingAddressId = commerceAddress.getCommerceAddressId();

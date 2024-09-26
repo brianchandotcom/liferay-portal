@@ -83,8 +83,9 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_cpAttachmentFileEntryService.
+				fetchCPAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpAttachmentFileEntry == null) {
 			throw new NoSuchCPAttachmentFileEntryException(
@@ -102,8 +103,9 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_cpAttachmentFileEntryService.
+				fetchCPAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpAttachmentFileEntry == null) {
 			throw new NoSuchCPAttachmentFileEntryException(
@@ -201,8 +203,9 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_cpAttachmentFileEntryService.
+				fetchCPAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpAttachmentFileEntry == null) {
 			throw new NoSuchCPAttachmentFileEntryException(
@@ -429,8 +432,9 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_cpAttachmentFileEntryService.
+				fetchCPAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpAttachmentFileEntry == null) {
 			throw new NoSuchCPAttachmentFileEntryException(

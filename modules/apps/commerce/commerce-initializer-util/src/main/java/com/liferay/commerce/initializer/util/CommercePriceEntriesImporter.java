@@ -153,8 +153,10 @@ public class CommercePriceEntriesImporter {
 			_friendlyURLNormalizer.normalize(name);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchByExternalReferenceCode(
-				priceListExternalReferenceCode, serviceContext.getCompanyId());
+			_commercePriceListLocalService.
+				fetchCommercePriceListByExternalReferenceCode(
+					priceListExternalReferenceCode,
+					serviceContext.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -165,7 +167,7 @@ public class CommercePriceEntriesImporter {
 			"externalReferenceCode");
 
 		CPInstance cpInstance =
-			_cpInstanceLocalService.fetchByExternalReferenceCode(
+			_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
 				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (cpInstance == null) {

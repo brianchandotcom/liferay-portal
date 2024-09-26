@@ -122,7 +122,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -160,7 +160,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -214,7 +214,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -299,9 +299,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (billingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					order.getBillingAddressExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						order.getBillingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
 
 			if (commerceAddress != null) {
 				billingAddressId = commerceAddress.getCommerceAddressId();
@@ -348,9 +349,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (shippingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					order.getShippingAddressExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						order.getShippingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
 
 			if (commerceAddress != null) {
 				shippingAddressId = commerceAddress.getCommerceAddressId();
@@ -515,9 +517,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		}
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				order.getOrderTypeExternalReferenceCode(),
-				contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					order.getOrderTypeExternalReferenceCode(),
+					contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			return 0;
@@ -738,9 +741,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (billingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					order.getBillingAddressExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						order.getBillingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
 
 			if (commerceAddress == null) {
 				billingAddressId = commerceOrder.getBillingAddressId();
@@ -767,9 +771,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (shippingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					order.getShippingAddressExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						order.getShippingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
 
 			if (commerceAddress == null) {
 				shippingAddressId = commerceOrder.getShippingAddressId();

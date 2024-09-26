@@ -69,7 +69,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 		throws Exception {
 
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.fetchByExternalReferenceCode(
+			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
@@ -97,7 +97,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 		throws Exception {
 
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.fetchByExternalReferenceCode(
+			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
@@ -187,7 +187,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 		throws Exception {
 
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.fetchByExternalReferenceCode(
+			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
@@ -206,7 +206,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 	@Override
 	public Catalog postCatalog(Catalog catalog) throws Exception {
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.fetchByExternalReferenceCode(
+			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
 				catalog.getExternalReferenceCode(),
 				contextCompany.getCompanyId());
 
@@ -244,7 +244,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 		throws Exception {
 
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.fetchByExternalReferenceCode(
+			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {

@@ -49,8 +49,9 @@ public class PlacedOrderItemShipmentResourceImpl
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(

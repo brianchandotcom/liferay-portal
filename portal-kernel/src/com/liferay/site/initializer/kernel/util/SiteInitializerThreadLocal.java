@@ -17,7 +17,7 @@ public class SiteInitializerThreadLocal {
 		return _key.get();
 	}
 
-	public static SafeCloseable setKey(String key) {
+	public static SafeCloseable setKeyWithSafeCloseable(String key) {
 		return _key.setWithSafeCloseable(key);
 	}
 

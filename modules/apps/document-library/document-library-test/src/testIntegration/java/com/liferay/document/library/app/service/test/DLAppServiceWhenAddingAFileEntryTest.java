@@ -463,7 +463,8 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		@Override
 		protected void doRun() throws Exception {
 			try (SafeCloseable safeCloseable =
-					BufferedIncrementThreadLocal.setWithSafeCloseable(true)) {
+					BufferedIncrementThreadLocal.setForceSyncWithSafeCloseable(
+						true)) {
 
 				FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId(),

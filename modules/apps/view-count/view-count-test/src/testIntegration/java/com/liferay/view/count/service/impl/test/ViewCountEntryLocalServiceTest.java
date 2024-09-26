@@ -98,8 +98,8 @@ public class ViewCountEntryLocalServiceTest {
 			FutureTask<Void> futureTask = new FutureTask<>(
 				() -> {
 					try (SafeCloseable safeCloseable =
-							BufferedIncrementThreadLocal.setWithSafeCloseable(
-								true)) {
+							BufferedIncrementThreadLocal.
+								setForceSyncWithSafeCloseable(true)) {
 
 						_viewCountEntryLocalService.incrementViewCount(
 							TestPropsValues.getCompanyId(),

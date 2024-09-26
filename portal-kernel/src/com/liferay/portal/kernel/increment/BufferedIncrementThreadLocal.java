@@ -17,7 +17,9 @@ public class BufferedIncrementThreadLocal {
 		return _forceSync.get();
 	}
 
-	public static SafeCloseable setWithSafeCloseable(boolean forceSync) {
+	public static SafeCloseable setForceSyncWithSafeCloseable(
+		boolean forceSync) {
+
 		return _forceSync.setWithSafeCloseable(forceSync);
 	}
 

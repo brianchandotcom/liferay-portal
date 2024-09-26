@@ -114,8 +114,8 @@ public class CompanySampleDataGenerationTest {
 				futures.add(
 					_executorService.submit(
 						() -> {
-							BufferedIncrementThreadLocal.setWithSafeCloseable(
-								true);
+							BufferedIncrementThreadLocal.
+								setForceSyncWithSafeCloseable(true);
 
 							_addCompany(companyIndex);
 

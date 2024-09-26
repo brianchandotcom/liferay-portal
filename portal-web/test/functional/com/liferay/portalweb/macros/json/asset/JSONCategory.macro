@@ -141,6 +141,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro getCategoryFieldValueById(categoryId = null, fieldName = null) {
+		Variables.assertDefined(parameterList = "${categoryId},${fieldName}");
+
+		var fieldValue = JSONCategoryAPI._getCategoryFieldValueById(
+			categoryId = ${categoryId},
+			fieldName = ${fieldName});
+
+		return ${fieldValue};
+	}
+
+	@summary = "Default summary"
 	macro getCategoryId(groupName = null, site = null, vocabularyName = null, categoryName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 

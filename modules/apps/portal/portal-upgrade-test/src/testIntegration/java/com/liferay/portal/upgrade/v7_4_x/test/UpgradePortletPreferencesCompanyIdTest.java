@@ -59,7 +59,7 @@ public class UpgradePortletPreferencesCompanyIdTest {
 	@Test
 	public void testUpgrade() throws Exception {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					CompanyConstants.SYSTEM)) {
 
 			PortletPreferences portletPreferences =

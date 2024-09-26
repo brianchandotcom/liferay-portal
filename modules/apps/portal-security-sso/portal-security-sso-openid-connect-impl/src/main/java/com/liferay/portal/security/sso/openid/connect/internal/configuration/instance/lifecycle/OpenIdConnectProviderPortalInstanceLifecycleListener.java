@@ -504,7 +504,8 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			}
 			else {
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
 
 					_deleteOAuthClientEntry(companyId, properties);
 				}
@@ -539,7 +540,8 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			}
 
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
 
 				_updateOAuthClientEntry(companyId, oldProperties, properties);
 			}

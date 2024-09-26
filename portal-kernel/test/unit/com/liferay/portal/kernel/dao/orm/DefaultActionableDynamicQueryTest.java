@@ -100,7 +100,8 @@ public class DefaultActionableDynamicQueryTest {
 		long expectedCompanyId = 1L;
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(expectedCompanyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					expectedCompanyId)) {
 
 			DefaultActionableDynamicQuery defaultActionableDynamicQuery =
 				new DefaultActionableDynamicQuery() {

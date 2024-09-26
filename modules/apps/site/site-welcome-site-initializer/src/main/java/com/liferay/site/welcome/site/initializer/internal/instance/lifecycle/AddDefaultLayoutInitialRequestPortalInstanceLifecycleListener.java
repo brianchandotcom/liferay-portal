@@ -125,7 +125,8 @@ public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setInitializingPortalInstance(true)) {
+				CompanyThreadLocal.
+					setInitializingPortalInstanceWithSafeCloseable(true)) {
 
 			User user = _getUser(companyId);
 

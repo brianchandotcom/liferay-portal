@@ -103,7 +103,8 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 			}
 
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
 
 				Ticket ticket = _onDemandAdminTicketGenerator.generate(
 					companyLocalService.getCompany(targetCompanyId), null,

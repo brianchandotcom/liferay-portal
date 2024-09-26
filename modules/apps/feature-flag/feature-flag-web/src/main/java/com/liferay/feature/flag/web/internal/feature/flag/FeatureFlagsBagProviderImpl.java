@@ -188,7 +188,8 @@ public class FeatureFlagsBagProviderImpl
 		}
 		else {
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
 
 				_populateFeatureFlagsMap(
 					companyId, featureFlags, systemFeatureFlags);

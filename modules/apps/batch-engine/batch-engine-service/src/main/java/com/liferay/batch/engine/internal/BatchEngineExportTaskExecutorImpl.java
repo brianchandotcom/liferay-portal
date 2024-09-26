@@ -62,9 +62,10 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Override
 	public void execute(BatchEngineExportTask batchEngineExportTask) {
-		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
-			batchEngineExportTask.getCompanyId(),
-			CTCollectionThreadLocal.getCTCollectionId());
+		SafeCloseable safeCloseable =
+			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+				batchEngineExportTask.getCompanyId(),
+				CTCollectionThreadLocal.getCTCollectionId());
 
 		try {
 			batchEngineExportTask.setExecuteStatus(

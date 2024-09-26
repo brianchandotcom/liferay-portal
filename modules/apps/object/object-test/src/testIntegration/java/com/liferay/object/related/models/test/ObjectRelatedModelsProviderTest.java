@@ -752,7 +752,7 @@ public class ObjectRelatedModelsProviderTest {
 		String originalName = PrincipalThreadLocal.getName();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			_setUser(user);
 

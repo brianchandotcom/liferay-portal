@@ -70,7 +70,8 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 		long repositoryId = count + 1000;
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					COMPANY_IDS[0])) {
 
 			long groupId = count + 100;
 
@@ -81,7 +82,8 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[1])) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					COMPANY_IDS[1])) {
 
 			long groupId = count + 200;
 
@@ -144,13 +146,15 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 		long count2 = 1;
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					COMPANY_IDS[0])) {
 
 			count1 = _counterLocalService.increment();
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[1])) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					COMPANY_IDS[1])) {
 
 			count2 = _counterLocalService.increment();
 		}

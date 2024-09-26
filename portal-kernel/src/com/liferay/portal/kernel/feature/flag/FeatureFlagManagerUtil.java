@@ -39,7 +39,8 @@ public class FeatureFlagManagerUtil {
 				}
 
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
 
 					return GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag." + key));

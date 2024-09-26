@@ -178,29 +178,12 @@ public class CompanyThreadLocal {
 		CTCollectionThreadLocal.removeCTCollectionId();
 	}
 
-	public static SafeCloseable setInitializingCompanyIdWithSafeCloseable(
-		long companyId) {
-
-		if (companyId > 0) {
-			return _companyId.setWithSafeCloseable(companyId);
-		}
-
-		return _companyId.setWithSafeCloseable(CompanyConstants.SYSTEM);
-	}
-
-	public static SafeCloseable setInitializingPortalInstance(
-		boolean initializingPortalInstance) {
-
-		return _initializingPortalInstance.setWithSafeCloseable(
-			initializingPortalInstance);
-	}
-
-	public static SafeCloseable setWithSafeCloseable(Long companyId) {
-		return setWithSafeCloseable(
+	public static SafeCloseable setCompanyIdWithSafeCloseable(Long companyId) {
+		return setCompanyIdWithSafeCloseable(
 			companyId, CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION);
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setCompanyIdWithSafeCloseable(
 		Long companyId, Long ctCollectionId) {
 
 		List<SafeCloseable> safeCloseables = new ArrayList<>();
@@ -246,6 +229,23 @@ public class CompanyThreadLocal {
 				safeCloseable.close();
 			}
 		};
+	}
+
+	public static SafeCloseable setInitializingCompanyIdWithSafeCloseable(
+		long companyId) {
+
+		if (companyId > 0) {
+			return _companyId.setWithSafeCloseable(companyId);
+		}
+
+		return _companyId.setWithSafeCloseable(CompanyConstants.SYSTEM);
+	}
+
+	public static SafeCloseable setInitializingPortalInstanceWithSafeCloseable(
+		boolean initializingPortalInstance) {
+
+		return _initializingPortalInstance.setWithSafeCloseable(
+			initializingPortalInstance);
 	}
 
 	private static void _clearUserThreadLocals() {

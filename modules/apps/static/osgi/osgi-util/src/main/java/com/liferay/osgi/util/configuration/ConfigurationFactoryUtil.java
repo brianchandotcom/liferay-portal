@@ -37,7 +37,7 @@ public class ConfigurationFactoryUtil {
 		long companyId = getCompanyId(companyLocalService, properties);
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			unsafeConsumer.accept(companyId);
 		}

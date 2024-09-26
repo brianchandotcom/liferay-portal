@@ -54,7 +54,7 @@ public class QuartzDBPartitionUpgradeProcessTest
 
 	private void _assertHasAllQuartzIndexes() throws Exception {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalUtil.getDefaultCompanyId())) {
 
 			for (Index index : _QUARTZ_INDEXES) {

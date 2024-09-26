@@ -77,7 +77,8 @@ public class DBPartitionUtil {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_defaultCompanyId)) {
 
 			_addDBPartition(companyId);
 		}
@@ -122,7 +123,8 @@ public class DBPartitionUtil {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_defaultCompanyId)) {
 
 			_extractDBPartition(companyId);
 		}
@@ -246,7 +248,8 @@ public class DBPartitionUtil {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(_defaultCompanyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_defaultCompanyId)) {
 
 			_dropDBPartition(companyId);
 		}
@@ -1257,7 +1260,7 @@ public class DBPartitionUtil {
 		String partitionName = getPartitionName(companyId);
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			if (!dbInspector.hasTable(tableName)) {
 				statement.executeUpdate(

@@ -98,9 +98,10 @@ public class BatchEngineImportTaskExecutorImpl
 			startTime = System.currentTimeMillis();
 		}
 
-		SafeCloseable safeCloseable1 = CompanyThreadLocal.setWithSafeCloseable(
-			batchEngineImportTask.getCompanyId(),
-			CTCollectionThreadLocal.getCTCollectionId());
+		SafeCloseable safeCloseable1 =
+			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+				batchEngineImportTask.getCompanyId(),
+				CTCollectionThreadLocal.getCTCollectionId());
 
 		File file;
 

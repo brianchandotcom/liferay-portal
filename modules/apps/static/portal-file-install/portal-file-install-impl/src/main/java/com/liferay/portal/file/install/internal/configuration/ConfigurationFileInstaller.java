@@ -95,7 +95,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		String[] pid = _parsePid(file.getName());
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_getCompanyId(
 						_getScope(dictionary), dictionary, file.getName()))) {
 
@@ -223,7 +223,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			file.getName(), pid[0], pid[1]);
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_getCompanyId(
 						ExtendedObjectClassDefinition.Scope.COMPANY,
 						configuration.getProperties(), file.getName()))) {

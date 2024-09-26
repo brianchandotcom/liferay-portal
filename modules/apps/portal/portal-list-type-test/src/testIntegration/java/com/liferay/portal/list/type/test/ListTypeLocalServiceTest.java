@@ -71,7 +71,7 @@ public class ListTypeLocalServiceTest {
 				false));
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
 			for (int i = 0; i < listTypesJSONArray.length(); i++) {
@@ -95,7 +95,7 @@ public class ListTypeLocalServiceTest {
 		ListType listType = null;
 
 		try (SafeCloseable safeCloseable1 =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
 			listType = _listTypeLocalService.addListType(
@@ -106,7 +106,7 @@ public class ListTypeLocalServiceTest {
 					_company.getCompanyId(), _LIST_TYPE_NAME, _LIST_TYPE_TYPE));
 
 			try (SafeCloseable safeCloseable2 =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						PortalUtil.getDefaultCompanyId())) {
 
 				Assert.assertNull(
@@ -118,7 +118,7 @@ public class ListTypeLocalServiceTest {
 		finally {
 			if (listType != null) {
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 							_company.getCompanyId())) {
 
 					_listTypeLocalService.deleteListType(listType);
@@ -132,7 +132,7 @@ public class ListTypeLocalServiceTest {
 		ListType listType = null;
 
 		try (SafeCloseable safeCloseable1 =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
 			listType = _listTypeLocalService.addListType(
@@ -144,7 +144,7 @@ public class ListTypeLocalServiceTest {
 			Assert.assertEquals(listTypes.toString(), 1, listTypes.size());
 
 			try (SafeCloseable safeCloseable2 =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						PortalUtil.getDefaultCompanyId())) {
 
 				listTypes = _listTypeLocalService.getListTypes(
@@ -156,7 +156,7 @@ public class ListTypeLocalServiceTest {
 		finally {
 			if (listType != null) {
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 							_company.getCompanyId())) {
 
 					_listTypeLocalService.deleteListType(listType);

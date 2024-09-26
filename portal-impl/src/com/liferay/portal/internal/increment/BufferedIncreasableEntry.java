@@ -37,7 +37,7 @@ public class BufferedIncreasableEntry<K, T>
 	@Override
 	public BufferedIncreasableEntry<K, T> increase(Increment<T> deltaValue) {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_companyId, _ctCollectionId)) {
 
 			return new BufferedIncreasableEntry<>(
@@ -50,7 +50,7 @@ public class BufferedIncreasableEntry<K, T>
 		_arguments[_arguments.length - 1] = getValue().getValue();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_companyId, _ctCollectionId)) {
 
 			_aopMethodInvocation.proceed(_arguments);

@@ -437,8 +437,9 @@ public class RestrictedLiferayObjectWrapperTest
 				// Base model with wrong company ID and disabled checking
 
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setInitializingPortalInstance(
-							true)) {
+						CompanyThreadLocal.
+							setInitializingPortalInstanceWithSafeCloseable(
+								true)) {
 
 					objectWrapper.wrap(new TestBaseModel(123L));
 				}

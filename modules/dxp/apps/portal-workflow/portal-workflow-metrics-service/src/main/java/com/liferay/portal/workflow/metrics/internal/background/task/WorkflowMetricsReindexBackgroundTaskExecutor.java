@@ -102,8 +102,9 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 								getWorkflowMetricsReindexer(indexEntityName);
 
 						try (SafeCloseable safeCloseable =
-								CompanyThreadLocal.setWithSafeCloseable(
-									backgroundTask.getCompanyId())) {
+								CompanyThreadLocal.
+									setCompanyIdWithSafeCloseable(
+										backgroundTask.getCompanyId())) {
 
 							workflowMetricsReindexer.reindex(
 								backgroundTask.getCompanyId());

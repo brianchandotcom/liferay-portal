@@ -331,7 +331,7 @@ public class EntityCacheImpl
 		boolean updateByEntityCache) {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			_notify(className, baseModel, updateByEntityCache);
 		}

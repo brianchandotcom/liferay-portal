@@ -695,7 +695,7 @@ public class ObjectDefinitionLocalServiceImpl
 				entry.getValue();
 
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						objectDefinition.getCompanyId())) {
 
 				serviceRegistrationsMap.computeIfAbsent(

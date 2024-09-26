@@ -71,8 +71,9 @@ public class GraphWalkerPortalExecutor {
 				_noticeableExecutorService.submit(
 					() -> {
 						try (SafeCloseable safeCloseable =
-								CompanyThreadLocal.setWithSafeCloseable(
-									companyId, ctCollectionId)) {
+								CompanyThreadLocal.
+									setCompanyIdWithSafeCloseable(
+										companyId, ctCollectionId)) {
 
 							_walk(pathElement);
 						}
@@ -92,7 +93,7 @@ public class GraphWalkerPortalExecutor {
 			_noticeableExecutorService.submit(
 				() -> {
 					try (SafeCloseable safeCloseable =
-							CompanyThreadLocal.setWithSafeCloseable(
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 								companyId, ctCollectionId)) {
 
 						_walk(pathElement);

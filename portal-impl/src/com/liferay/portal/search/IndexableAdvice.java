@@ -112,7 +112,8 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 				}
 
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
 
 					_reindex(curIndexer, indexableContext, arguments, result);
 				}

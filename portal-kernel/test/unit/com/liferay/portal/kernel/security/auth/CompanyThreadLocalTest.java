@@ -48,7 +48,7 @@ public class CompanyThreadLocalTest {
 
 	@Test
 	public void testLockWithSetWithSafeCloseable() {
-		_testLock(CompanyThreadLocal::setWithSafeCloseable);
+		_testLock(CompanyThreadLocal::setCompanyIdWithSafeCloseable);
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class CompanyThreadLocalTest {
 		TimeZoneThreadLocal.setDefaultTimeZone(pstTimeZone);
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(1L)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(1L)) {
 
 			Assert.assertNotEquals(
 				LocaleUtil.GERMAN, LocaleThreadLocal.getDefaultLocale());

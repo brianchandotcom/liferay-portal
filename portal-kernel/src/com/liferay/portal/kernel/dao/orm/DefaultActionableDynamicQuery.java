@@ -285,8 +285,9 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 						executorService.submit(
 							() -> {
 								try (SafeCloseable safeCloseable =
-										CompanyThreadLocal.setWithSafeCloseable(
-											companyId)) {
+										CompanyThreadLocal.
+											setCompanyIdWithSafeCloseable(
+												companyId)) {
 
 									performAction(object);
 

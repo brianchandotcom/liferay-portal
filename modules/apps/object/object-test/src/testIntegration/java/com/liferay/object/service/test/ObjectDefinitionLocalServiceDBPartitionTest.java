@@ -63,7 +63,7 @@ public class ObjectDefinitionLocalServiceDBPartitionTest {
 		_objectDefinition = null;
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					TestPropsValues.getCompanyId())) {
 
 			_objectDefinition =
@@ -90,7 +90,7 @@ public class ObjectDefinitionLocalServiceDBPartitionTest {
 		int resourceActionsCount) {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			Assert.assertEquals(
 				resourceActionsCount,

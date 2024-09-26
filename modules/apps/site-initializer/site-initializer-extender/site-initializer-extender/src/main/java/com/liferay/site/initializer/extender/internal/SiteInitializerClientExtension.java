@@ -206,7 +206,7 @@ public class SiteInitializerClientExtension
 		long companyId = company.getCompanyId();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,

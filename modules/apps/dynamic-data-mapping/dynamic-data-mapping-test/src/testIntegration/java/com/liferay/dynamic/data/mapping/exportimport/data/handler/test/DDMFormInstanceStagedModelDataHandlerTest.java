@@ -118,7 +118,7 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 		Company company = CompanyTestUtil.addCompany();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
 			User user = UserTestUtil.getAdminUser(company.getCompanyId());

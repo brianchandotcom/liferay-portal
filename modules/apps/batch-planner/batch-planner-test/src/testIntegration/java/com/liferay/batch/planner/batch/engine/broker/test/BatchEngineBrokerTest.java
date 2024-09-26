@@ -625,7 +625,7 @@ public class BatchEngineBrokerTest {
 		_company2 = CompanyTestUtil.addCompany(true);
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company2.getCompanyId())) {
 
 			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());

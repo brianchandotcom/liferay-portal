@@ -75,7 +75,7 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 		_company = CompanyTestUtil.addCompany();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
 			User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());

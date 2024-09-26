@@ -158,7 +158,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 	private String _testExport(long companyId) throws Exception {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			return ReflectionTestUtil.invoke(
 				DBPartitionMigrationValidator.class, "_write",

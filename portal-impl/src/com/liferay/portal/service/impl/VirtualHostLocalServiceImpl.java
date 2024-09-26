@@ -219,7 +219,7 @@ public class VirtualHostLocalServiceImpl
 				long virtualHostId = 0;
 
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 							CompanyConstants.SYSTEM)) {
 
 					virtualHostId = counterLocalService.increment();

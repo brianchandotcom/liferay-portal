@@ -94,7 +94,7 @@ public class OnDemandAdminTicketGeneratorImpl
 			onDemandAdminConfiguration.authenticationTokenExpirationTime();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
 			return _ticketLocalService.addDistinctTicket(
@@ -113,7 +113,7 @@ public class OnDemandAdminTicketGeneratorImpl
 		throws PortalException {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			String password = PwdGenerator.getPassword(20);
 

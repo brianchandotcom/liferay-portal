@@ -100,7 +100,7 @@ public class SchedulerResponseManagerTest {
 		_company = CompanyTestUtil.addCompany();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
 			_schedulerResponseManager.run(

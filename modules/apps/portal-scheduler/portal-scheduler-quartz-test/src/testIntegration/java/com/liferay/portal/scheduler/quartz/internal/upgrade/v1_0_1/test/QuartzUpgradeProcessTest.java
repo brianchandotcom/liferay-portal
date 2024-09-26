@@ -195,7 +195,7 @@ public class QuartzUpgradeProcessTest {
 		long companyId2 = _company.getCompanyId();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId2)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId2)) {
 
 			_ctCollection = _ctCollectionLocalService.addCTCollection(
 				null, companyId2, TestPropsValues.getUserId(), 0, "test", null);

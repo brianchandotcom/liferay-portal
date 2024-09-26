@@ -85,7 +85,7 @@ public class OmniadminUtil {
 			}
 
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						PortalInstancePool.getDefaultCompanyId())) {
 
 				return RoleLocalServiceUtil.hasUserRole(

@@ -105,7 +105,7 @@ public class BufferedIncrementRunnableTest {
 		long companyId) {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			return new BufferedIncreasableEntry(
 				_createTestMethodInvocation(

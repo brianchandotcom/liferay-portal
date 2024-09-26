@@ -180,8 +180,9 @@ public class PortalInstanceLifecycleListenerManagerImpl
 					LocaleThreadLocal.getSiteDefaultLocale();
 
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setInitializingPortalInstance(
-							true)) {
+						CompanyThreadLocal.
+							setInitializingPortalInstanceWithSafeCloseable(
+								true)) {
 
 					CompanyThreadLocal.setCompanyId(company.getCompanyId());
 					LocaleThreadLocal.setDefaultLocale(company.getLocale());

@@ -43,7 +43,7 @@ public class SynchronousDestination extends BaseDestination {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			_send(message);
 		}

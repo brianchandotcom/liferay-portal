@@ -147,7 +147,7 @@ public class AssetAutoTaggerOSGiCommands implements OSGiCommands {
 			actionableDynamicQuery.setPerformActionMethod(
 				(AssetEntry assetEntry) -> {
 					try (SafeCloseable safeCloseable =
-							CompanyThreadLocal.setWithSafeCloseable(
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 								assetEntry.getCompanyId())) {
 
 						consumer.accept(assetEntry);

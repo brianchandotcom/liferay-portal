@@ -153,7 +153,7 @@ public class ObjectFolderLocalServiceTest {
 		ObjectFolder objectFolder = null;
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
 			User user = UserTestUtil.getAdminUser(company.getCompanyId());

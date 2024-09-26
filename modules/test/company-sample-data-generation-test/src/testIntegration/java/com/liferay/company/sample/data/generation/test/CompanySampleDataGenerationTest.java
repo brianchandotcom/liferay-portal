@@ -154,7 +154,7 @@ public class CompanySampleDataGenerationTest {
 			// Add user
 
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						company.getCompanyId())) {
 
 				int originalCompanyUsersCount =

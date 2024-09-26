@@ -98,7 +98,7 @@ public class PortletPreferencesLocalServiceTest
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					TestPropsValues.getCompanyId())) {
 
 			PortletPreferences portletPreferences =
@@ -118,7 +118,7 @@ public class PortletPreferencesLocalServiceTest
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					CompanyConstants.SYSTEM)) {
 
 			PortletPreferences portletPreferences =

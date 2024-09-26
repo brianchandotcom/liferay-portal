@@ -67,7 +67,7 @@ public class PortalInstances {
 			Company company = unsafeSupplier.get();
 
 			try (SafeCloseable safeCloseable2 =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						company.getCompanyId())) {
 
 				initCompany(company, true);

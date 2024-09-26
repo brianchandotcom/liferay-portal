@@ -114,7 +114,7 @@ public abstract class BaseDBPartitionTestCase {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId())) {
 
 			db.runSQL(
@@ -145,7 +145,8 @@ public abstract class BaseDBPartitionTestCase {
 		try (Statement statement = connection.createStatement()) {
 			for (long companyId : COMPANY_IDS) {
 				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
 
 					statement.execute(
 						"delete from Company where companyId = " + companyId);
@@ -165,7 +166,7 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static void dropControlTable(String tableName) throws Exception {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId())) {
 
 			dropTable(tableName);
@@ -252,7 +253,7 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void insertPartitionData() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(companyId);
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId);
 				PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						"insert into Group_ (mvccVersion, ctCollectionId, " +
@@ -318,7 +319,7 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void insertPartitionRequiredData() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(companyId);
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId);
 				PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						"insert into Company (companyId, mx, webId) values " +
@@ -408,7 +409,7 @@ public abstract class BaseDBPartitionTestCase {
 		createControlTable(tableName);
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId());
 			Statement statement = connection.createStatement()) {
 

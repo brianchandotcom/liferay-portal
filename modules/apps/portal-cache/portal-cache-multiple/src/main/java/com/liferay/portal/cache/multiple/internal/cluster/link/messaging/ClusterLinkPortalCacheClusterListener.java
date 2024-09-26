@@ -78,7 +78,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 		if (portalCache.isSharded()) {
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						ClusterLinkMessageUtil.getCompanyId(message))) {
 
 				_handlePortalCacheClusterEvent(message, portalCache);

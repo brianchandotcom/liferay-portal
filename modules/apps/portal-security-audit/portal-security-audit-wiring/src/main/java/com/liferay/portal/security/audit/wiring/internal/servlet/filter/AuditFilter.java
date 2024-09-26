@@ -94,7 +94,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		if (userId != null) {
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						_portal.getCompanyId(httpServletRequest))) {
 
 				User user = _userLocalService.fetchUser(userId);

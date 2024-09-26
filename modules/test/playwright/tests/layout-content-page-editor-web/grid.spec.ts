@@ -307,7 +307,7 @@ test('Can cut and paste a grid inside a container', async ({
 
 	const gridId = getRandomString();
 
-	const grid = getGridDefinition({
+	const gridDefinition = getGridDefinition({
 		id: gridId,
 	});
 
@@ -315,7 +315,7 @@ test('Can cut and paste a grid inside a container', async ({
 
 	const container = getContainerDefinition({
 		id: containerId,
-		pageElements: [grid],
+		pageElements: [gridDefinition],
 	});
 
 	// Create page and go to edit mode
@@ -330,19 +330,17 @@ test('Can cut and paste a grid inside a container', async ({
 
 	// Cut grid and check if on paste is added properly inside the container
 
-	await expect(
-		page.locator(`.lfr-layout-structure-item-${gridId}`)
-	).toBeVisible();
+	const grid = page.locator('[data-name="Grid"]');
+
+	await expect(grid).toBeVisible();
 
 	await pageEditorPage.cutFragment(gridId);
 
-	await expect(
-		page.locator(`.lfr-layout-structure-item-${gridId}`)
-	).not.toBeVisible();
+	await expect(grid).not.toBeVisible();
 
 	await pageEditorPage.pasteFragment(containerId);
 
-	const containerTopper = pageEditorPage.getTopper(containerId);
-
-	await expect(containerTopper.locator('.page-editor__row')).toHaveCount(1);
+	await expect(
+		page.locator('[data-name="Container"]').locator('.page-editor__row')
+	).toBeVisible();
 });

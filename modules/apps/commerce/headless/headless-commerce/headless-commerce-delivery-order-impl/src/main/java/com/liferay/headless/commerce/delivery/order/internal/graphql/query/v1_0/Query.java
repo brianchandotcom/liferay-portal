@@ -5,11 +5,13 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.graphql.query.v1_0;
 
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.OrderTransition;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderAddress;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderComment;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.OrderTransitionResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderAddressResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCommentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
@@ -46,6 +48,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setOrderTransitionResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTransitionResource>
+			orderTransitionResourceComponentServiceObjects) {
+
+		_orderTransitionResourceComponentServiceObjects =
+			orderTransitionResourceComponentServiceObjects;
+	}
 
 	public static void setPlacedOrderResourceComponentServiceObjects(
 		ComponentServiceObjects<PlacedOrderResource>
@@ -86,6 +96,26 @@ public class Query {
 
 		_placedOrderItemShipmentResourceComponentServiceObjects =
 			placedOrderItemShipmentResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderOrderTransitions(placedOrderId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve order transitions of the given Placed Order."
+	)
+	public OrderTransitionPage placedOrderOrderTransitions(
+			@GraphQLName("placedOrderId") Long placedOrderId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTransitionResource -> new OrderTransitionPage(
+				orderTransitionResource.getPlacedOrderOrderTransitionsPage(
+					placedOrderId)));
 	}
 
 	/**
@@ -515,32 +545,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(PlacedOrder.class)
-	public class GetPlacedOrderCommentByExternalReferenceCodeTypeExtension {
-
-		public GetPlacedOrderCommentByExternalReferenceCodeTypeExtension(
-			PlacedOrder placedOrder) {
-
-			_placedOrder = placedOrder;
-		}
-
-		@GraphQLField
-		public PlacedOrderComment commentByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_placedOrderCommentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				placedOrderCommentResource ->
-					placedOrderCommentResource.
-						getPlacedOrderCommentByExternalReferenceCode(
-							_placedOrder.getExternalReferenceCode()));
-		}
-
-		private PlacedOrder _placedOrder;
-
-	}
-
-	@GraphQLTypeExtension(PlacedOrder.class)
 	public class
 		GetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddressTypeExtension {
 
@@ -585,6 +589,144 @@ public class Query {
 				placedOrderResource ->
 					placedOrderResource.getPlacedOrderPaymentURL(
 						_placedOrder.getId(), callbackURL));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class GetPlacedOrderPlacedOrderShippingAddresTypeExtension {
+
+		public GetPlacedOrderPlacedOrderShippingAddresTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField(description = "Retrieve placed order shipping address.")
+		public PlacedOrderAddress placedOrderShippingAddres() throws Exception {
+			return _applyComponentServiceObjects(
+				_placedOrderAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				placedOrderAddressResource ->
+					placedOrderAddressResource.
+						getPlacedOrderPlacedOrderShippingAddres(
+							_placedOrder.getId()));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class
+		GetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageTypeExtension {
+
+		public GetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField(description = "Retrieve placed order items.")
+		public PlacedOrderItemPage byExternalReferenceCodePlacedOrderItems(
+				@GraphQLName("search") String search,
+				@GraphQLName("skuId") Long skuId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_placedOrderItemResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				placedOrderItemResource -> new PlacedOrderItemPage(
+					placedOrderItemResource.
+						getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage(
+							_placedOrder.getExternalReferenceCode(), search,
+							skuId, Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								placedOrderItemResource, sortsString))));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class
+		GetPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageTypeExtension {
+
+		public GetPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField
+		public PlacedOrderCommentPage
+				byExternalReferenceCodePlacedOrderComments(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_placedOrderCommentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				placedOrderCommentResource -> new PlacedOrderCommentPage(
+					placedOrderCommentResource.
+						getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
+							_placedOrder.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(OrderTransition.class)
+	public class GetPlacedOrderTypeExtension {
+
+		public GetPlacedOrderTypeExtension(OrderTransition orderTransition) {
+			_orderTransition = orderTransition;
+		}
+
+		@GraphQLField(
+			description = "Retrieve information of the given Placed Order."
+		)
+		public PlacedOrder placedOrder() throws Exception {
+			return _applyComponentServiceObjects(
+				_placedOrderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				placedOrderResource -> placedOrderResource.getPlacedOrder(
+					_orderTransition.getPlacedOrderId()));
+		}
+
+		private OrderTransition _orderTransition;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class GetPlacedOrderCommentByExternalReferenceCodeTypeExtension {
+
+		public GetPlacedOrderCommentByExternalReferenceCodeTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField
+		public PlacedOrderComment commentByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_placedOrderCommentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				placedOrderCommentResource ->
+					placedOrderCommentResource.
+						getPlacedOrderCommentByExternalReferenceCode(
+							_placedOrder.getExternalReferenceCode()));
 		}
 
 		private PlacedOrder _placedOrder;
@@ -644,6 +786,31 @@ public class Query {
 						placedOrderItemShipmentResource.
 							getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage(
 								_placedOrder.getExternalReferenceCode())));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class GetPlacedOrderOrderTransitionsPageTypeExtension {
+
+		public GetPlacedOrderOrderTransitionsPageTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField(
+			description = "Retrieve order transitions of the given Placed Order."
+		)
+		public OrderTransitionPage orderTransitions() throws Exception {
+			return _applyComponentServiceObjects(
+				_orderTransitionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				orderTransitionResource -> new OrderTransitionPage(
+					orderTransitionResource.getPlacedOrderOrderTransitionsPage(
+						_placedOrder.getId())));
 		}
 
 		private PlacedOrder _placedOrder;
@@ -728,30 +895,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(PlacedOrder.class)
-	public class GetPlacedOrderPlacedOrderShippingAddresTypeExtension {
-
-		public GetPlacedOrderPlacedOrderShippingAddresTypeExtension(
-			PlacedOrder placedOrder) {
-
-			_placedOrder = placedOrder;
-		}
-
-		@GraphQLField(description = "Retrieve placed order shipping address.")
-		public PlacedOrderAddress placedOrderShippingAddres() throws Exception {
-			return _applyComponentServiceObjects(
-				_placedOrderAddressResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				placedOrderAddressResource ->
-					placedOrderAddressResource.
-						getPlacedOrderPlacedOrderShippingAddres(
-							_placedOrder.getId()));
-		}
-
-		private PlacedOrder _placedOrder;
-
-	}
-
-	@GraphQLTypeExtension(PlacedOrder.class)
 	public class
 		GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddressTypeExtension {
 
@@ -779,69 +922,36 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(PlacedOrder.class)
-	public class
-		GetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageTypeExtension {
+	@GraphQLName("OrderTransitionPage")
+	public class OrderTransitionPage {
 
-		public GetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageTypeExtension(
-			PlacedOrder placedOrder) {
+		public OrderTransitionPage(Page orderTransitionPage) {
+			actions = orderTransitionPage.getActions();
 
-			_placedOrder = placedOrder;
-		}
-
-		@GraphQLField(description = "Retrieve placed order items.")
-		public PlacedOrderItemPage byExternalReferenceCodePlacedOrderItems(
-				@GraphQLName("search") String search,
-				@GraphQLName("skuId") Long skuId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_placedOrderItemResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				placedOrderItemResource -> new PlacedOrderItemPage(
-					placedOrderItemResource.
-						getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage(
-							_placedOrder.getExternalReferenceCode(), search,
-							skuId, Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								placedOrderItemResource, sortsString))));
-		}
-
-		private PlacedOrder _placedOrder;
-
-	}
-
-	@GraphQLTypeExtension(PlacedOrder.class)
-	public class
-		GetPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageTypeExtension {
-
-		public GetPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageTypeExtension(
-			PlacedOrder placedOrder) {
-
-			_placedOrder = placedOrder;
+			items = orderTransitionPage.getItems();
+			lastPage = orderTransitionPage.getLastPage();
+			page = orderTransitionPage.getPage();
+			pageSize = orderTransitionPage.getPageSize();
+			totalCount = orderTransitionPage.getTotalCount();
 		}
 
 		@GraphQLField
-		public PlacedOrderCommentPage
-				byExternalReferenceCodePlacedOrderComments(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
+		protected Map<String, Map<String, String>> actions;
 
-			return _applyComponentServiceObjects(
-				_placedOrderCommentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				placedOrderCommentResource -> new PlacedOrderCommentPage(
-					placedOrderCommentResource.
-						getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
-							_placedOrder.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
+		@GraphQLField
+		protected java.util.Collection<OrderTransition> items;
 
-		private PlacedOrder _placedOrder;
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
 
 	}
 
@@ -1030,6 +1140,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			OrderTransitionResource orderTransitionResource)
+		throws Exception {
+
+		orderTransitionResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTransitionResource.setContextCompany(_company);
+		orderTransitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		orderTransitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		orderTransitionResource.setContextUriInfo(_uriInfo);
+		orderTransitionResource.setContextUser(_user);
+		orderTransitionResource.setGroupLocalService(_groupLocalService);
+		orderTransitionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			PlacedOrderResource placedOrderResource)
 		throws Exception {
 
@@ -1109,6 +1235,8 @@ public class Query {
 		placedOrderItemShipmentResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<OrderTransitionResource>
+		_orderTransitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PlacedOrderResource>
 		_placedOrderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PlacedOrderAddressResource>

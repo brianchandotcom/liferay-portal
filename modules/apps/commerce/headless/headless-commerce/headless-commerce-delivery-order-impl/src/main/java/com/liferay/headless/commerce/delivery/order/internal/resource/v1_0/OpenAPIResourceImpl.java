@@ -85,6 +85,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(OrderTransitionResourceImpl.class);
+
 			add(PlacedOrderResourceImpl.class);
 
 			add(PlacedOrderAddressResourceImpl.class);

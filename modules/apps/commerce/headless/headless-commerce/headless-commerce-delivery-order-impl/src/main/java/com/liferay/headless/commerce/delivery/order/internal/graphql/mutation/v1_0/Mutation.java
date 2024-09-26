@@ -5,7 +5,9 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.OrderTransition;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.OrderTransitionResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCommentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemShipmentResource;
@@ -40,6 +42,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setOrderTransitionResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTransitionResource>
+			orderTransitionResourceComponentServiceObjects) {
+
+		_orderTransitionResourceComponentServiceObjects =
+			orderTransitionResourceComponentServiceObjects;
+	}
+
 	public static void setPlacedOrderResourceComponentServiceObjects(
 		ComponentServiceObjects<PlacedOrderResource>
 			placedOrderResourceComponentServiceObjects) {
@@ -71,6 +81,52 @@ public class Mutation {
 
 		_placedOrderItemShipmentResourceComponentServiceObjects =
 			placedOrderItemShipmentResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public Response createPlacedOrderOrderTransitionsPageExportBatch(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTransitionResource ->
+				orderTransitionResource.
+					postPlacedOrderOrderTransitionsPageExportBatch(
+						placedOrderId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public OrderTransition createPlacedOrderOrderTransition(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("orderTransition") OrderTransition orderTransition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTransitionResource ->
+				orderTransitionResource.postPlacedOrderOrderTransition(
+					placedOrderId, orderTransition));
+	}
+
+	@GraphQLField
+	public Response createPlacedOrderOrderTransitionBatch(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTransitionResource ->
+				orderTransitionResource.postPlacedOrderOrderTransitionBatch(
+					placedOrderId, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -198,6 +254,28 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			OrderTransitionResource orderTransitionResource)
+		throws Exception {
+
+		orderTransitionResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTransitionResource.setContextCompany(_company);
+		orderTransitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		orderTransitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		orderTransitionResource.setContextUriInfo(_uriInfo);
+		orderTransitionResource.setContextUser(_user);
+		orderTransitionResource.setGroupLocalService(_groupLocalService);
+		orderTransitionResource.setRoleLocalService(_roleLocalService);
+
+		orderTransitionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		orderTransitionResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			PlacedOrderResource placedOrderResource)
 		throws Exception {
 
@@ -285,6 +363,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<OrderTransitionResource>
+		_orderTransitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PlacedOrderResource>
 		_placedOrderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PlacedOrderCommentResource>

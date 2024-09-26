@@ -11,12 +11,14 @@ import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.Addres
 import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.CartCommentResourceImpl;
 import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.CartItemResourceImpl;
 import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.CartResourceImpl;
+import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.CartTransitionResourceImpl;
 import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.PaymentMethodResourceImpl;
 import com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0.ShippingMethodResourceImpl;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AddressResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartTransitionResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.PaymentMethodResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.ShippingMethodResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -50,6 +52,8 @@ public class ServletDataImpl implements ServletData {
 			_cartCommentResourceComponentServiceObjects);
 		Mutation.setCartItemResourceComponentServiceObjects(
 			_cartItemResourceComponentServiceObjects);
+		Mutation.setCartTransitionResourceComponentServiceObjects(
+			_cartTransitionResourceComponentServiceObjects);
 		Mutation.setPaymentMethodResourceComponentServiceObjects(
 			_paymentMethodResourceComponentServiceObjects);
 		Mutation.setShippingMethodResourceComponentServiceObjects(
@@ -63,6 +67,8 @@ public class ServletDataImpl implements ServletData {
 			_cartCommentResourceComponentServiceObjects);
 		Query.setCartItemResourceComponentServiceObjects(
 			_cartItemResourceComponentServiceObjects);
+		Query.setCartTransitionResourceComponentServiceObjects(
+			_cartTransitionResourceComponentServiceObjects);
 		Query.setPaymentMethodResourceComponentServiceObjects(
 			_paymentMethodResourceComponentServiceObjects);
 		Query.setShippingMethodResourceComponentServiceObjects(
@@ -257,6 +263,21 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartItemResourceImpl.class, "postCartItem"));
 					put(
+						"mutation#createCartCartTransitionsPageExportBatch",
+						new ObjectValuePair<>(
+							CartTransitionResourceImpl.class,
+							"postCartCartTransitionsPageExportBatch"));
+					put(
+						"mutation#createCartCartTransition",
+						new ObjectValuePair<>(
+							CartTransitionResourceImpl.class,
+							"postCartCartTransition"));
+					put(
+						"mutation#createCartCartTransitionBatch",
+						new ObjectValuePair<>(
+							CartTransitionResourceImpl.class,
+							"postCartCartTransitionBatch"));
+					put(
 						"mutation#createCartPaymentMethodsPageExportBatch",
 						new ObjectValuePair<>(
 							PaymentMethodResourceImpl.class,
@@ -356,6 +377,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartItemResourceImpl.class, "getCartItemsPage"));
 					put(
+						"query#cartCartTransitions",
+						new ObjectValuePair<>(
+							CartTransitionResourceImpl.class,
+							"getCartCartTransitionsPage"));
+					put(
 						"query#cartByExternalReferenceCodePaymentMethods",
 						new ObjectValuePair<>(
 							PaymentMethodResourceImpl.class,
@@ -402,6 +428,10 @@ public class ServletDataImpl implements ServletData {
 							CartResourceImpl.class,
 							"getCartByExternalReferenceCodePaymentUrl"));
 					put(
+						"query#CartTransition.cart",
+						new ObjectValuePair<>(
+							CartResourceImpl.class, "getCart"));
+					put(
 						"query#Cart.paymentURL",
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "getCartPaymentURL"));
@@ -433,6 +463,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartItemResourceImpl.class,
 							"getCartItemByExternalReferenceCode"));
+					put(
+						"query#Cart.cartTransitions",
+						new ObjectValuePair<>(
+							CartTransitionResourceImpl.class,
+							"getCartCartTransitionsPage"));
 					put(
 						"query#Cart.byExternalReferenceCodePaymentMethods",
 						new ObjectValuePair<>(
@@ -477,6 +512,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CartItemResource>
 		_cartItemResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CartTransitionResource>
+		_cartTransitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PaymentMethodResource>

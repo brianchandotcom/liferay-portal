@@ -9,12 +9,14 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartTransition;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AddressResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartTransitionResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.PaymentMethodResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.ShippingMethodResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -79,6 +81,14 @@ public class Query {
 
 		_cartItemResourceComponentServiceObjects =
 			cartItemResourceComponentServiceObjects;
+	}
+
+	public static void setCartTransitionResourceComponentServiceObjects(
+		ComponentServiceObjects<CartTransitionResource>
+			cartTransitionResourceComponentServiceObjects) {
+
+		_cartTransitionResourceComponentServiceObjects =
+			cartTransitionResourceComponentServiceObjects;
 	}
 
 	public static void setPaymentMethodResourceComponentServiceObjects(
@@ -471,6 +481,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartCartTransitions(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieve cart transitions of the given Cart.")
+	public CartTransitionPage cartCartTransitions(
+			@GraphQLName("cartId") Long cartId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartTransitionResource -> new CartTransitionPage(
+				cartTransitionResource.getCartCartTransitionsPage(cartId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodePaymentMethods(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -666,6 +693,26 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(CartTransition.class)
+	public class GetCartTypeExtension {
+
+		public GetCartTypeExtension(CartTransition cartTransition) {
+			_cartTransition = cartTransition;
+		}
+
+		@GraphQLField(description = "Retrieve information of the given Cart.")
+		public Cart cart() throws Exception {
+			return _applyComponentServiceObjects(
+				_cartResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				cartResource -> cartResource.getCart(
+					_cartTransition.getCartId()));
+		}
+
+		private CartTransition _cartTransition;
+
+	}
+
 	@GraphQLTypeExtension(Cart.class)
 	public class GetCartPaymentURLTypeExtension {
 
@@ -822,6 +869,29 @@ public class Query {
 				cartItemResource ->
 					cartItemResource.getCartItemByExternalReferenceCode(
 						_cart.getExternalReferenceCode()));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartCartTransitionsPageTypeExtension {
+
+		public GetCartCartTransitionsPageTypeExtension(Cart cart) {
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve cart transitions of the given Cart."
+		)
+		public CartTransitionPage cartTransitions() throws Exception {
+			return _applyComponentServiceObjects(
+				_cartTransitionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				cartTransitionResource -> new CartTransitionPage(
+					cartTransitionResource.getCartCartTransitionsPage(
+						_cart.getId())));
 		}
 
 		private Cart _cart;
@@ -1097,6 +1167,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("CartTransitionPage")
+	public class CartTransitionPage {
+
+		public CartTransitionPage(Page cartTransitionPage) {
+			actions = cartTransitionPage.getActions();
+
+			items = cartTransitionPage.getItems();
+			lastPage = cartTransitionPage.getLastPage();
+			page = cartTransitionPage.getPage();
+			pageSize = cartTransitionPage.getPageSize();
+			totalCount = cartTransitionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<CartTransition> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("PaymentMethodPage")
 	public class PaymentMethodPage {
 
@@ -1260,6 +1363,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			CartTransitionResource cartTransitionResource)
+		throws Exception {
+
+		cartTransitionResource.setContextAcceptLanguage(_acceptLanguage);
+		cartTransitionResource.setContextCompany(_company);
+		cartTransitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		cartTransitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		cartTransitionResource.setContextUriInfo(_uriInfo);
+		cartTransitionResource.setContextUser(_user);
+		cartTransitionResource.setGroupLocalService(_groupLocalService);
+		cartTransitionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			PaymentMethodResource paymentMethodResource)
 		throws Exception {
 
@@ -1298,6 +1417,8 @@ public class Query {
 		_cartCommentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CartItemResource>
 		_cartItemResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CartTransitionResource>
+		_cartTransitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PaymentMethodResource>
 		_paymentMethodResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingMethodResource>

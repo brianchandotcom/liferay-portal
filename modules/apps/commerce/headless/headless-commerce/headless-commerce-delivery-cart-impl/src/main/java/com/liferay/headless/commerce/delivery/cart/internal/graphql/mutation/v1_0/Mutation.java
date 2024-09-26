@@ -8,10 +8,12 @@ package com.liferay.headless.commerce.delivery.cart.internal.graphql.mutation.v1
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartTransition;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartTransitionResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.PaymentMethodResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.ShippingMethodResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -66,6 +68,14 @@ public class Mutation {
 
 		_cartItemResourceComponentServiceObjects =
 			cartItemResourceComponentServiceObjects;
+	}
+
+	public static void setCartTransitionResourceComponentServiceObjects(
+		ComponentServiceObjects<CartTransitionResource>
+			cartTransitionResourceComponentServiceObjects) {
+
+		_cartTransitionResourceComponentServiceObjects =
+			cartTransitionResourceComponentServiceObjects;
 	}
 
 	public static void setPaymentMethodResourceComponentServiceObjects(
@@ -544,6 +554,51 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createCartCartTransitionsPageExportBatch(
+			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartTransitionResource ->
+				cartTransitionResource.postCartCartTransitionsPageExportBatch(
+					cartId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public CartTransition createCartCartTransition(
+			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("cartTransition") CartTransition cartTransition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartTransitionResource ->
+				cartTransitionResource.postCartCartTransition(
+					cartId, cartTransition));
+	}
+
+	@GraphQLField
+	public Response createCartCartTransitionBatch(
+			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartTransitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartTransitionResource ->
+				cartTransitionResource.postCartCartTransitionBatch(
+					cartId, callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response createCartPaymentMethodsPageExportBatch(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("callbackURL") String callbackURL,
@@ -672,6 +727,28 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			CartTransitionResource cartTransitionResource)
+		throws Exception {
+
+		cartTransitionResource.setContextAcceptLanguage(_acceptLanguage);
+		cartTransitionResource.setContextCompany(_company);
+		cartTransitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		cartTransitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		cartTransitionResource.setContextUriInfo(_uriInfo);
+		cartTransitionResource.setContextUser(_user);
+		cartTransitionResource.setGroupLocalService(_groupLocalService);
+		cartTransitionResource.setRoleLocalService(_roleLocalService);
+
+		cartTransitionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		cartTransitionResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			PaymentMethodResource paymentMethodResource)
 		throws Exception {
 
@@ -720,6 +797,8 @@ public class Mutation {
 		_cartCommentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CartItemResource>
 		_cartItemResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CartTransitionResource>
+		_cartTransitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PaymentMethodResource>
 		_paymentMethodResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingMethodResource>

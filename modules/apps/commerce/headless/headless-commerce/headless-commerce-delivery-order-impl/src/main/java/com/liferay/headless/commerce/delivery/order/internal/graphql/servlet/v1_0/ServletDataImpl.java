@@ -7,11 +7,13 @@ package com.liferay.headless.commerce.delivery.order.internal.graphql.servlet.v1
 
 import com.liferay.headless.commerce.delivery.order.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.delivery.order.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.OrderTransitionResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderAddressResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderCommentResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderItemResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderItemShipmentResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderResourceImpl;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.OrderTransitionResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderAddressResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCommentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
@@ -42,6 +44,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setOrderTransitionResourceComponentServiceObjects(
+			_orderTransitionResourceComponentServiceObjects);
 		Mutation.setPlacedOrderResourceComponentServiceObjects(
 			_placedOrderResourceComponentServiceObjects);
 		Mutation.setPlacedOrderCommentResourceComponentServiceObjects(
@@ -51,6 +55,8 @@ public class ServletDataImpl implements ServletData {
 		Mutation.setPlacedOrderItemShipmentResourceComponentServiceObjects(
 			_placedOrderItemShipmentResourceComponentServiceObjects);
 
+		Query.setOrderTransitionResourceComponentServiceObjects(
+			_orderTransitionResourceComponentServiceObjects);
 		Query.setPlacedOrderResourceComponentServiceObjects(
 			_placedOrderResourceComponentServiceObjects);
 		Query.setPlacedOrderAddressResourceComponentServiceObjects(
@@ -98,6 +104,21 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createPlacedOrderOrderTransitionsPageExportBatch",
+						new ObjectValuePair<>(
+							OrderTransitionResourceImpl.class,
+							"postPlacedOrderOrderTransitionsPageExportBatch"));
+					put(
+						"mutation#createPlacedOrderOrderTransition",
+						new ObjectValuePair<>(
+							OrderTransitionResourceImpl.class,
+							"postPlacedOrderOrderTransition"));
+					put(
+						"mutation#createPlacedOrderOrderTransitionBatch",
+						new ObjectValuePair<>(
+							OrderTransitionResourceImpl.class,
+							"postPlacedOrderOrderTransitionBatch"));
+					put(
 						"mutation#patchPlacedOrderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
@@ -122,6 +143,11 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderItemShipmentResourceImpl.class,
 							"postPlacedOrderItemPlacedOrderItemShipmentsPageExportBatch"));
 
+					put(
+						"query#placedOrderOrderTransitions",
+						new ObjectValuePair<>(
+							OrderTransitionResourceImpl.class,
+							"getPlacedOrderOrderTransitionsPage"));
 					put(
 						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrders",
 						new ObjectValuePair<>(
@@ -223,11 +249,6 @@ public class ServletDataImpl implements ServletData {
 							"getPlacedOrderItemPlacedOrderItemShipmentsPage"));
 
 					put(
-						"query#PlacedOrder.commentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PlacedOrderCommentResourceImpl.class,
-							"getPlacedOrderCommentByExternalReferenceCode"));
-					put(
 						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
@@ -238,6 +259,30 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderPaymentURL"));
 					put(
+						"query#PlacedOrder.placedOrderShippingAddres",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderPlacedOrderShippingAddres"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
+						new ObjectValuePair<>(
+							PlacedOrderItemResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderComments",
+						new ObjectValuePair<>(
+							PlacedOrderCommentResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage"));
+					put(
+						"query#OrderTransition.placedOrder",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class, "getPlacedOrder"));
+					put(
+						"query#PlacedOrder.commentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PlacedOrderCommentResourceImpl.class,
+							"getPlacedOrderCommentByExternalReferenceCode"));
+					put(
 						"query#PlacedOrder.byExternalReferenceCodePaymentURL",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
@@ -247,6 +292,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderItemShipmentResourceImpl.class,
 							"getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage"));
+					put(
+						"query#PlacedOrder.orderTransitions",
+						new ObjectValuePair<>(
+							OrderTransitionResourceImpl.class,
+							"getPlacedOrderOrderTransitionsPage"));
 					put(
 						"query#PlacedOrder.placedOrderBillingAddres",
 						new ObjectValuePair<>(
@@ -263,27 +313,16 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCode"));
 					put(
-						"query#PlacedOrder.placedOrderShippingAddres",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderPlacedOrderShippingAddres"));
-					put(
 						"query#PlacedOrder.byExternalReferenceCodePlacedOrderShippingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
-						new ObjectValuePair<>(
-							PlacedOrderItemResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderComments",
-						new ObjectValuePair<>(
-							PlacedOrderCommentResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTransitionResource>
+		_orderTransitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderResource>

@@ -33,7 +33,7 @@ public class DeletedAssetObjectThreadLocal {
 		return false;
 	}
 
-	public static SafeCloseable setWithSafeCloseable(
+	public static SafeCloseable setAssetObjectWithSafeCloseable(
 		long classNameId, long classPK) {
 
 		return _assetObjectThreadLocal.setWithSafeCloseable(

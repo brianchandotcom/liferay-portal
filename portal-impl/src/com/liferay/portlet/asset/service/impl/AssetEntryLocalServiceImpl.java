@@ -146,9 +146,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				// Must do aop service call to go through service wrappers
 
 				try (SafeCloseable safeCloseable =
-						DeletedAssetObjectThreadLocal.setWithSafeCloseable(
-							assetEntry.getClassNameId(),
-							assetEntry.getClassPK())) {
+						DeletedAssetObjectThreadLocal.
+							setAssetObjectWithSafeCloseable(
+								assetEntry.getClassNameId(),
+								assetEntry.getClassPK())) {
 
 					assetEntryLocalService.deleteEntry(assetEntry);
 				}
@@ -1391,7 +1392,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Social
 
 		try (SafeCloseable safeCloseable =
-				DeletedAssetEntryThreadLocal.setWithSafeCloseable(entry)) {
+				DeletedAssetEntryThreadLocal.setAssetEntryWithSafeCloseable(
+					entry)) {
 
 			SocialActivityManagerUtil.deleteActivities(entry);
 		}

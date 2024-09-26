@@ -30,7 +30,9 @@ public class DeletedAssetEntryThreadLocal {
 		return false;
 	}
 
-	public static SafeCloseable setWithSafeCloseable(AssetEntry assetEntry) {
+	public static SafeCloseable setAssetEntryWithSafeCloseable(
+		AssetEntry assetEntry) {
+
 		return _assetEntryThreadLocal.setWithSafeCloseable(assetEntry);
 	}
 

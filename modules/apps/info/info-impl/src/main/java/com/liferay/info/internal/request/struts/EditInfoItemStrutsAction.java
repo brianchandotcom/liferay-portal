@@ -399,7 +399,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 		if (Validator.isNotNull(notificationText)) {
 			SessionMessages.add(
-				httpServletRequest, "requestProcessed", notificationText);
+				httpServletRequest, "formRequestProcessed", notificationText);
 		}
 
 		httpServletResponse.sendRedirect(redirect);

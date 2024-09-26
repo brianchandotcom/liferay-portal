@@ -7,6 +7,7 @@ package com.liferay.object.exception;
 
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class ObjectValidationRuleEngineException extends PortalException {
 		List<ObjectValidationRuleResult> objectValidationRuleResults) {
 
 		_objectValidationRuleResults = objectValidationRuleResults;
+
+		_message = ListUtil.toString(
+			objectValidationRuleResults, "errorMessage");
 	}
 
 	public String getMessage() {

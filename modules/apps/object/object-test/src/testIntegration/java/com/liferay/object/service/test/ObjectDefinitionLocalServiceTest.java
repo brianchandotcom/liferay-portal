@@ -1601,6 +1601,82 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testCompleteBindingGraftingAParent() throws Exception {
+		TreeTestUtil.createObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[] {"AAA"}
+			).put(
+				"AAA", new String[] {"AAAA"}
+			).put(
+				"AAAA", new String[] {"AAAAA"}
+			).put(
+				"AAAAA", new String[0]
+			).build(),
+			_objectDefinitionLocalService, Arrays.asList("AAAA", "AAAAA"),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[] {"AAA"}
+			).put(
+				"AAA", new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionA.getObjectDefinitionId(),
+				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionAAAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AAAA");
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"AAAA", new String[] {"AAAAA"}
+			).put(
+				"AAAAA", new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionAAAA.getObjectDefinitionId(),
+				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionAAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AAA");
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinitionAAA.getObjectDefinitionId());
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"AAA", new String[] {"AAAA"}
+			).put(
+				"AAAA", new String[] {"AAAAA"}
+			).put(
+				"AAAAA", new String[0]
+			).build(),
+			_treeFactory.createObjectDefinitionTree(
+				objectDefinitionAAA.getObjectDefinitionId(),
+				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionLocalService);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_AAAAA", "C_AAAA", "C_AAA", "C_AA", "C_A"},
+			_objectEntryLocalService);
+	}
+
+	@Test
 	public void testDeleteCompanyObjectDefinitions() throws Exception {
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

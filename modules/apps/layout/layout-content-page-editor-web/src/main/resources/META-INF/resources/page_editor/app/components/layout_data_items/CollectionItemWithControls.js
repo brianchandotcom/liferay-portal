@@ -31,6 +31,7 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 			})}
 		>
 			<TopperEmpty
+				activable={false}
 				className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
 				item={item}
 				itemElement={itemElement}

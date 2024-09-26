@@ -804,9 +804,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testUpgradeReportDirectoryWriteProtected() throws Exception {
-		File reportsDir = new File("/");
+		File reportDir = new File("/");
 
-		Assume.assumeFalse(reportsDir.canWrite());
+		Assume.assumeFalse(reportDir.canWrite());
 
 		String originalUpgradeReportDir =
 			ReflectionTestUtil.getAndSetFieldValue(
@@ -824,9 +824,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_appender.stop();
 
 				_assertUpgradeReportDirectoryWriteProtected(
-					logCapture, reportsDir, "upgrade-report.txt");
+					logCapture, reportDir, "upgrade-report.txt");
 				_assertUpgradeReportDirectoryWriteProtected(
-					logCapture, reportsDir, "upgrade-report-diagnostics.txt");
+					logCapture, reportDir, "upgrade-report-diagnostics.txt");
 			}
 		}
 		finally {
@@ -1016,10 +1016,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private void _assertUpgradeReportDirectoryWriteProtected(
-			LogCapture logCapture, File reportsDir, String fileName)
+			LogCapture logCapture, File reportDir, String fileName)
 		throws Exception {
 
-		File reportFile = new File(reportsDir, fileName);
+		File reportFile = new File(reportDir, fileName);
 
 		Assert.assertFalse(reportFile.exists());
 

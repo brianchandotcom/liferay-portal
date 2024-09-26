@@ -6,8 +6,10 @@
 package com.liferay.wiki.navigation.web.internal.portlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.navigation.web.internal.constants.WikiNavigationPortletKeys;
 
@@ -57,6 +59,12 @@ public class WikiNavigationTreeMenuPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(renderRequest), "LPD-35013")) {
+
+			return;
+		}
+
 		renderRequest.setAttribute(
 			WikiGroupServiceConfiguration.class.getName(),
 			_wikiGroupServiceConfiguration);
@@ -69,6 +77,9 @@ public class WikiNavigationTreeMenuPortlet extends MVCPortlet {
 		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
 			WikiGroupServiceConfiguration.class, properties);
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.wiki.navigation.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

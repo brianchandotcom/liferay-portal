@@ -71,8 +71,8 @@ function useMovementTargetPosition() {
 	const {target} = useContext(KeyboardMovementContext);
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
-	const targetItem = layoutDataRef.current.items[target.itemId];
-	const parentItem = layoutDataRef.current.items[targetItem?.parentId];
+	const targetItem = layoutDataRef.current?.items[target.itemId];
+	const parentItem = layoutDataRef.current?.items[targetItem?.parentId];
 
 	if (!parentItem || !isItemContainerFlex(parentItem)) {
 		return target.position;

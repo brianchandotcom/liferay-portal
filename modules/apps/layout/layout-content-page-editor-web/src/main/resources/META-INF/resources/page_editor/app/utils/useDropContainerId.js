@@ -15,7 +15,7 @@ export default function useDropContainerId() {
 
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const keyboardMovementItem =
-		layoutDataRef.current.items[keyboardMovementItemId];
+		layoutDataRef.current?.items[keyboardMovementItemId];
 
 	if (!dropItem && !keyboardMovementItem) {
 		return null;

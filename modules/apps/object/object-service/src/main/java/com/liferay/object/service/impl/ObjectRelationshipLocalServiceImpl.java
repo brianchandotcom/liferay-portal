@@ -1318,6 +1318,23 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		if (objectDefinition1.isApproved() == objectDefinition2.isApproved()) {
+			if (objectDefinition1.isApproved()) {
+				if (!objectDefinition1.isRootNode()) {
+					ObjectDefinition rootObjectDefinition1 =
+						_objectDefinitionPersistence.findByPrimaryKey(
+							objectDefinition1.getRootObjectDefinitionId());
+
+					objectDefinitionLocalService.deployObjectDefinition(
+						rootObjectDefinition1);
+				}
+
+				objectDefinition1.setPreviousRESTContextPath(
+					objectDefinition1PreviousRESTContextPath);
+
+				objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition1);
+			}
+
 			Tree tree = _treeFactory.createObjectDefinitionTree(
 				objectDefinition2.getObjectDefinitionId(),
 				objectDefinitionLocalService::getObjectDefinition);
@@ -1351,23 +1368,6 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinitionLocalService.deployObjectDefinition(
 						nodeObjectDefinition);
 				}
-			}
-
-			if (objectDefinition1.isApproved()) {
-				objectDefinition1.setPreviousRESTContextPath(
-					objectDefinition1PreviousRESTContextPath);
-
-				objectDefinitionLocalService.deployObjectDefinition(
-					objectDefinition1);
-			}
-
-			if (!objectDefinition1.isRootNode()) {
-				ObjectDefinition rootObjectDefinition1 =
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectDefinition1.getRootObjectDefinitionId());
-
-				objectDefinitionLocalService.deployObjectDefinition(
-					rootObjectDefinition1);
 			}
 		}
 		else {

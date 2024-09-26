@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
@@ -239,15 +241,22 @@ public class ScimNotificationSchedulerJobConfiguration
 	private void _sendNotificationEvent(List<User> users, String body) {
 		try {
 			for (User user : users) {
-				NotificationEvent notificationEvent = new NotificationEvent(
-					System.currentTimeMillis(), ScimWebKeys.SCIM_CONFIGURATION,
-					JSONUtil.put("body", body));
+				if (UserNotificationManagerUtil.isDeliver(
+						user.getUserId(), ScimWebKeys.SCIM_CONFIGURATION, 0,
+						UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+						UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-				notificationEvent.setDeliveryType(
-					UserNotificationDeliveryConstants.TYPE_WEBSITE);
+					NotificationEvent notificationEvent = new NotificationEvent(
+						System.currentTimeMillis(),
+						ScimWebKeys.SCIM_CONFIGURATION,
+						JSONUtil.put("body", body));
 
-				_userNotificationEventLocalService.addUserNotificationEvent(
-					user.getUserId(), notificationEvent);
+					notificationEvent.setDeliveryType(
+						UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+					_userNotificationEventLocalService.addUserNotificationEvent(
+						user.getUserId(), notificationEvent);
+				}
 			}
 		}
 		catch (PortalException portalException) {

@@ -90,15 +90,15 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 
 	@Before
 	public void setUp() {
-		_currentExcludedMessageBusDestinationNames =
+		_originalExcludedMessageBusDestinationNames =
 			ReflectionTestUtil.getFieldValue(
 				_dbPartitionMessageBusInterceptor,
 				"_excludedMessageBusDestinationNames");
 
-		_currentExcludedSchedulerJobNames = ReflectionTestUtil.getFieldValue(
+		_originalExcludedSchedulerJobNames = ReflectionTestUtil.getFieldValue(
 			_dbPartitionMessageBusInterceptor, "_excludedSchedulerJobNames");
 
-		_currentCompanyId = CompanyThreadLocal.getCompanyId();
+		_originalCompanyId = CompanyThreadLocal.getCompanyId();
 
 		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 	}
@@ -108,12 +108,12 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor,
 			"_excludedMessageBusDestinationNames",
-			_currentExcludedMessageBusDestinationNames);
+			_originalExcludedMessageBusDestinationNames);
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor, "_excludedSchedulerJobNames",
-			_currentExcludedSchedulerJobNames);
+			_originalExcludedSchedulerJobNames);
 
-		CompanyThreadLocal.setCompanyId(_currentCompanyId);
+		CompanyThreadLocal.setCompanyId(_originalCompanyId);
 	}
 
 	@Test
@@ -320,9 +320,9 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 	private static TestDBPartitionMessageListener
 		_testDBPartitionMessageListener;
 
-	private long _currentCompanyId;
-	private Set<String> _currentExcludedMessageBusDestinationNames;
-	private Set<String> _currentExcludedSchedulerJobNames;
+	private long _originalCompanyId;
+	private Set<String> _originalExcludedMessageBusDestinationNames;
+	private Set<String> _originalExcludedSchedulerJobNames;
 
 	private static class TestDBPartitionMessageListener
 		extends BaseMessageListener {

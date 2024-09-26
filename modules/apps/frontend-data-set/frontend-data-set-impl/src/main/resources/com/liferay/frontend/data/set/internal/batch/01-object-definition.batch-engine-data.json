@@ -585,6 +585,22 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
+					"externalReferenceCode": "REQUEST_BODY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Request Body"
+					},
+					"localized": false,
+					"name": "requestBody",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
 					"externalReferenceCode": "URL",
 					"indexed": true,
 					"indexedAsKeyword": false,

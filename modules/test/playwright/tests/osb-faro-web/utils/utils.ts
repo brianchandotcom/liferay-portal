@@ -74,3 +74,19 @@ export async function viewPaginationResults({
 
 	await waitForLoading(page);
 }
+
+export async function selectPaginationItemsPerPage({
+	itemsPerPage,
+	page,
+}: {
+	itemsPerPage: string;
+	page: Page;
+}) {
+	await waitForLoading(page);
+
+	await page.locator('.pagination-items-per-page').click();
+
+	await page.getByRole('menuitem', {exact: true, name: itemsPerPage}).click();
+
+	await waitForLoading(page);
+}

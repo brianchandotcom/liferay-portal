@@ -356,7 +356,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.names\[acceptance-dxp\]=)\\(\n.*?)*portal-license-smoke-mysql57-jdk8"
+			match="(test\.batch\.names\[acceptance-dxp\]=)\\(\n.*?)*portal-license-smoke-mysql57"
 			replace="\1{test.batch.names[acceptance-ce]}"
 		/>
 

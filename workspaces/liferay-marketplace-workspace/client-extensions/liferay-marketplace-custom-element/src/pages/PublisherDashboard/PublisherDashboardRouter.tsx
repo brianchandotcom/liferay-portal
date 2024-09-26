@@ -28,7 +28,6 @@ import Pricing from './pages/NewAppFlow/pages/Pricing';
 import Storefront from './pages/NewAppFlow/pages/Storefront';
 import Support from './pages/NewAppFlow/pages/Support';
 import Version from './pages/NewAppFlow/pages/Version';
-import Projects from './pages/Projects';
 import Solutions from './pages/Solutions';
 import PublishSolutionOutlet from './pages/Solutions/NewSolutionFlow/PublishSolutionOutlet';
 import {
@@ -126,7 +125,6 @@ const PublisherDashboardRouter = () => {
 					</Route>
 
 					<Route element={<Accounts />} path="accounts" />
-					<Route element={<Projects />} path="projects" />
 
 					<Route path="solutions">
 						<Route element={<Solutions />} index />

@@ -13,6 +13,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {liferayConfig} from '../../liferay.config';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
@@ -1011,6 +1012,159 @@ test('LPD-33809 Edit Payment Method in Open Order Details', async ({
 		await expect(
 			commerceLayoutsPage.infoBoxButton('Payment Method')
 		).toBeHidden();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-35558 Order Details - Order Summary', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminDiscountsPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		await page.getByLabel('COMMERCE-9410').click();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.check();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'orderSummary'
+		);
+
+		await commerceLayoutsPage.infoBoxLabelInput.fill('Order Summary');
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				skus: [
+					{
+						cost: 0,
+						price: 20,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		const discount =
+			await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+				couponCode: getRandomString(),
+				percentageLevel1: 10,
+				target: 'subtotal',
+				useCouponCode: true,
+				usePercentage: true,
+			});
+
+		await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+			percentageLevel1: 10,
+			target: 'total',
+			usePercentage: true,
+		});
+
+		await commerceLayoutsPage.addWidget('Coupon Code Entry', 'Commerce');
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForSuccessAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Order Summary')).toBeVisible();
+
+		await commerceAdminDiscountsPage.enterPromoCodeToWidget(
+			discount.couponCode
+		);
+
+		await commerceLayoutsPage.checkValueOrderSummary('Subtotal', '$ 20.00');
+		await commerceLayoutsPage.checkValueOrderSummary(
+			'Subtotal Discount',
+			'$ 2.00'
+		);
+		await commerceLayoutsPage.checkValueOrderSummary(
+			'Total Discount',
+			discount.couponCode
+		);
+
+		await expect(page.getByText('Total', {exact: true})).toBeVisible();
+		await expect(page.getByText('$ 16.20')).toBeVisible();
 	}
 	finally {
 		await systemSettingsPage.goToSystemSetting(

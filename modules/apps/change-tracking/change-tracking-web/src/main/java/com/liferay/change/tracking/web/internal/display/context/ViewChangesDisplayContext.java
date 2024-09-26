@@ -347,22 +347,21 @@ public class ViewChangesDisplayContext {
 		JSONArray itemsOverviewJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<Long, String> siteName : siteNames.entrySet()) {
-			Map<Long, ObjectValuePair<String, Integer>> objectValuePairsMap =
+			Map<Long, ObjectValuePair<String, Integer>> objectValuePairs =
 				_getObjectValuePairs(
 					_ctCollection.getCtCollectionId(), siteName.getKey(),
 					showHideable, _themeDisplay);
 
-			if (objectValuePairsMap.isEmpty()) {
+			if (objectValuePairs.isEmpty()) {
 				continue;
 			}
 
+			int siteCount = 0;
 			JSONArray typeNameAndCountJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			int siteCount = 0;
-
 			for (Map.Entry<Long, ObjectValuePair<String, Integer>> entry :
-					objectValuePairsMap.entrySet()) {
+					objectValuePairs.entrySet()) {
 
 				ObjectValuePair<String, Integer> objectValuePair =
 					entry.getValue();
@@ -1332,6 +1331,9 @@ public class ViewChangesDisplayContext {
 		long ctCollectionId, long groupId, boolean showHideable,
 		ThemeDisplay themeDisplay) {
 
+		Map<Long, ObjectValuePair<String, Integer>> objectValuePairs =
+			new LinkedHashMap<>();
+
 		Searcher searcher = _searcherSnapshot.get();
 		Sorts sorts = _sortsSnapshot.get();
 
@@ -1388,9 +1390,6 @@ public class ViewChangesDisplayContext {
 
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
-
-		Map<Long, ObjectValuePair<String, Integer>> objectValuePairs =
-			new LinkedHashMap<>();
 
 		for (Document document : searchResponse.getDocuments()) {
 			ObjectValuePair<String, Integer> objectValuePair =

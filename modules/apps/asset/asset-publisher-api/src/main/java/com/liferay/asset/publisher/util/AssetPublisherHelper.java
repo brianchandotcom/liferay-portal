@@ -155,6 +155,8 @@ public interface AssetPublisherHelper {
 			int start, int end)
 		throws Exception;
 
+	public Group getItemSelectorScopeGroup(Group scopeGroup) throws Exception;
+
 	public String[] getKeywords(PortletPreferences portletPreferences);
 
 	public String getScopeId(Group group, long scopeGroupId);

@@ -136,7 +136,7 @@ public abstract class BaseDBSchemaDefinitionExporterTestCase {
 			configurationAdmin, databaseType, folder.getAbsolutePath(), PID);
 
 		return FileUtil.read(
-			new File(folder, "db-schema-definition-export-report.txt"));
+			new File(folder, "db_schema_definition_export_report.txt"));
 	}
 
 	protected void testExportImportDBSchemaDefinition(

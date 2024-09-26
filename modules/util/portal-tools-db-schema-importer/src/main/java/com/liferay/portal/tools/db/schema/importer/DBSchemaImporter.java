@@ -70,7 +70,7 @@ public class DBSchemaImporter {
 			try (PrintWriter printWriter = new PrintWriter(
 					new File(
 						commandLine.getOptionValue("path"),
-						"db-schema-import-report.txt"))) {
+						"db_schema_import_report.txt"))) {
 
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					DateUtil.ISO_8601_PATTERN);

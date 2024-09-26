@@ -118,11 +118,11 @@ public class UpgradeReport {
 
 		_printToLogContext(reportData);
 
-		_writeToFile(reportData, "upgrade-report.txt");
+		_writeToFile(reportData, "upgrade_report.txt");
 
 		_printToLogContext(reportDataDiagnostics);
 
-		_writeToFile(reportDataDiagnostics, "upgrade-report-diagnostics.txt");
+		_writeToFile(reportDataDiagnostics, "upgrade_report_diagnostics.txt");
 	}
 
 	private int _getBuildNumber() {

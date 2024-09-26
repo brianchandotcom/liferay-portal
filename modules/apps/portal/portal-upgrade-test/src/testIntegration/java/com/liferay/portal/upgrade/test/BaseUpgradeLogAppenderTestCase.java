@@ -153,13 +153,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 
 		if (reportsDir.exists()) {
-			File reportFile = new File(reportsDir, "upgrade-report.txt");
+			File reportFile = new File(reportsDir, "upgrade_report.txt");
 
 			if (reportFile.exists()) {
 				reportFile.delete();
 			}
 
-			reportFile = new File(reportsDir, "upgrade-report-diagnostics.txt");
+			reportFile = new File(reportsDir, "upgrade_report_diagnostics.txt");
 
 			if (reportFile.exists()) {
 				reportFile.delete();
@@ -569,13 +569,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 
 		File file = new File(
-			new File(getFilePath(), "reports"), "upgrade-report.txt");
+			new File(getFilePath(), "reports"), "upgrade_report.txt");
 
 		Assert.assertTrue(!file.exists());
 
 		file = new File(
 			new File(getFilePath(), "reports"),
-			"upgrade-report-diagnostics.txt");
+			"upgrade_report_diagnostics.txt");
 
 		Assert.assertTrue(!file.exists());
 	}
@@ -640,8 +640,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertRenameUpgradeReport("upgrade-report.txt");
-		_assertRenameUpgradeReport("upgrade-report-diagnostics.txt");
+		_assertRenameUpgradeReport("upgrade_report.txt");
+		_assertRenameUpgradeReport("upgrade_report_diagnostics.txt");
 	}
 
 	@Test
@@ -787,9 +787,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 				_appender.stop();
 
-				_assertUpgradeReportDirectory(logCapture, "upgrade-report.txt");
+				_assertUpgradeReportDirectory(logCapture, "upgrade_report.txt");
 				_assertUpgradeReportDirectory(
-					logCapture, "upgrade-report-diagnostics.txt");
+					logCapture, "upgrade_report_diagnostics.txt");
 			}
 		}
 		finally {
@@ -821,9 +821,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_appender.stop();
 
 				_assertUpgradeReportDirectoryWriteProtected(
-					logCapture, reportDir, "upgrade-report.txt");
+					logCapture, reportDir, "upgrade_report.txt");
 				_assertUpgradeReportDirectoryWriteProtected(
-					logCapture, reportDir, "upgrade-report-diagnostics.txt");
+					logCapture, reportDir, "upgrade_report_diagnostics.txt");
 			}
 		}
 		finally {
@@ -843,11 +843,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			File reportFile = _getReportFile("upgrade-report.txt");
+			File reportFile = _getReportFile("upgrade_report.txt");
 
 			Assert.assertFalse(reportFile.exists());
 
-			reportFile = _getReportFile("upgrade-report-diagnostics.txt");
+			reportFile = _getReportFile("upgrade_report_diagnostics.txt");
 
 			Assert.assertFalse(reportFile.exists());
 		}
@@ -1046,7 +1046,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private String _getLogContextValue(String key) {
-		return _getLogContextValue(key, "upgrade-report.txt");
+		return _getLogContextValue(key, "upgrade_report.txt");
 	}
 
 	private String _getLogContextValue(String key, String reportFileName) {
@@ -1075,7 +1075,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private String _getLogContextValueDiagnostics(String key) {
-		return _getLogContextValue(key, "upgrade-report-diagnostics.txt");
+		return _getLogContextValue(key, "upgrade_report_diagnostics.txt");
 	}
 
 	private Map<String, String> _getLogContextValues(String logContextContent) {
@@ -1093,7 +1093,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private String _getReportContent() throws Exception {
-		File reportFile = _getReportFile("upgrade-report.txt");
+		File reportFile = _getReportFile("upgrade_report.txt");
 
 		Assert.assertTrue(reportFile.exists());
 
@@ -1102,7 +1102,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	private String _getReportContentDiagnostics() throws Exception {
 		File diagnosticsReportFile = _getReportFile(
-			"upgrade-report-diagnostics.txt");
+			"upgrade_report_diagnostics.txt");
 
 		Assert.assertTrue(diagnosticsReportFile.exists());
 

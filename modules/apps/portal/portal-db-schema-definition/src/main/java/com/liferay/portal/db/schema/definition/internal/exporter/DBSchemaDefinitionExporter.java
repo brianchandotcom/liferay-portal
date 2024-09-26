@@ -148,7 +148,7 @@ public class DBSchemaDefinitionExporter {
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 		FileUtil.write(
-			new File(dirName, "db-schema-definition-export-report.txt"),
+			new File(dirName, "db_schema_definition_export_report.txt"),
 			StringUtil.merge(
 				new Object[] {
 					"Export date: " + _toString(new Date()),

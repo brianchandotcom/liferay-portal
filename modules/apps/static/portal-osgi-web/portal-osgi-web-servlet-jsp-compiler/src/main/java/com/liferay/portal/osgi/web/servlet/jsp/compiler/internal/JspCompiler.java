@@ -448,7 +448,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	}
 
 	private void _collectTLDMappings(
-			Map<String, String[]> tldMappings, Map<String, URL> tagFileJarUrls,
+			Map<String, String[]> tldMappings, Map<String, URL> tagFileJarURLs,
 			Bundle bundle)
 		throws IOException {
 
@@ -476,7 +476,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				String urlString = url.toExternalForm();
 
-				tagFileJarUrls.put(
+				tagFileJarURLs.put(
 					absoluteResourcePath,
 					new URL(
 						urlString.substring(
@@ -501,7 +501,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	@SuppressWarnings("unchecked")
 	private void _initTLDMappings(
-		ServletContext servletContext, Map<String, URL> tagFileJarUrls) {
+		ServletContext servletContext, Map<String, URL> tagFileJarURLs) {
 
 		Map<String, String[]> tldMappings =
 			(Map<String, String[]>)servletContext.getAttribute(
@@ -515,7 +515,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		try {
 			for (Bundle bundle : _allParticipatingBundles) {
-				_collectTLDMappings(tldMappings, tagFileJarUrls, bundle);
+				_collectTLDMappings(tldMappings, tagFileJarURLs, bundle);
 			}
 		}
 		catch (Exception exception) {

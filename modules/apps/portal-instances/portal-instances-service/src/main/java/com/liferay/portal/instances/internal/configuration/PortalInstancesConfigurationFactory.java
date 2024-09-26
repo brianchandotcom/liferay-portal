@@ -15,7 +15,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
@@ -60,18 +62,34 @@ public class PortalInstancesConfigurationFactory {
 		}
 
 		if (company == null) {
-			PortalInstances.addCompany(
-				portalInstancesConfiguration.siteInitializerKey(),
-				() -> _companyLocalService.addCompany(
-					null, webId, virtualHostname, mx, maxUsers,
-					portalInstancesConfiguration.active(),
-					portalInstancesConfiguration.addDefaultAdminUser(),
-					portalInstancesConfiguration.adminPassword(),
-					portalInstancesConfiguration.adminScreenName(),
-					portalInstancesConfiguration.adminEmailAddress(),
-					portalInstancesConfiguration.adminFirstName(),
-					portalInstancesConfiguration.adminMiddleName(),
-					portalInstancesConfiguration.adminLastName()));
+			String emailAddress =
+				portalInstancesConfiguration.adminEmailAddress();
+			boolean addDefaultAdminUser =
+				portalInstancesConfiguration.addDefaultAdminUser();
+
+			// ignore adminEmailAddress when addDefaultAdminUser is false
+
+			if (addDefaultAdminUser && !_validateEmailAddress(emailAddress)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Instance for " + virtualHostname +
+							" is not created as admin user email was invalid.");
+				}
+			}
+			else {
+				PortalInstances.addCompany(
+					portalInstancesConfiguration.siteInitializerKey(),
+					() -> _companyLocalService.addCompany(
+						null, webId, virtualHostname, mx, maxUsers,
+						portalInstancesConfiguration.active(),
+						addDefaultAdminUser,
+						portalInstancesConfiguration.adminPassword(),
+						portalInstancesConfiguration.adminScreenName(),
+						emailAddress,
+						portalInstancesConfiguration.adminFirstName(),
+						portalInstancesConfiguration.adminMiddleName(),
+						portalInstancesConfiguration.adminLastName()));
+			}
 		}
 		else {
 			if (company.getCompanyId() ==
@@ -98,6 +116,17 @@ public class PortalInstancesConfigurationFactory {
 		}
 
 		return pid;
+	}
+
+	private boolean _validateEmailAddress(String emailAddress) {
+		if (Validator.isNotNull(emailAddress) &&
+			Validator.isEmailAddress(emailAddress) &&
+			PropsValues.USERS_EMAIL_ADDRESS_REQUIRED) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

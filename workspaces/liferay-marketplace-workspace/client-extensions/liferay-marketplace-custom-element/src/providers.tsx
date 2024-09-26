@@ -4,6 +4,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {ClayModalProvider} from '@clayui/modal';
 import React, {ReactNode} from 'react';
 import {SWRConfig} from 'swr';
 
@@ -24,11 +25,13 @@ const Providers: React.FC<ProviderProps> = ({children, properties}) => (
 			revalidateOnFocus: false,
 		}}
 	>
-		<MarketplaceContextProvider properties={properties}>
-			<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-				{children}
-			</ClayIconSpriteContext.Provider>
-		</MarketplaceContextProvider>
+		<ClayModalProvider>
+			<MarketplaceContextProvider properties={properties}>
+				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+					{children}
+				</ClayIconSpriteContext.Provider>
+			</MarketplaceContextProvider>
+		</ClayModalProvider>
 	</SWRConfig>
 );
 

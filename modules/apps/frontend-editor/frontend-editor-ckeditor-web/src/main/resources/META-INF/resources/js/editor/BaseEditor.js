@@ -76,7 +76,9 @@ const BaseEditor = forwardRef(
 					setLoading(false);
 				},
 			});
-		}, [initialConfig]);
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
 
 		const getHTML = useCallback(() => {
 			let data = contents;

@@ -23,13 +23,18 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Step;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Summary;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -83,6 +88,7 @@ public class PlacedOrderDTOConverter
 			{
 				setAccount(commerceOrder::getCommerceAccountName);
 				setAccountId(commerceOrder::getCommerceAccountId);
+				setAttachments(() -> _getAttachments(commerceOrder));
 				setAuthor(commerceOrder::getUserName);
 				setChannelId(
 					() -> {
@@ -256,6 +262,27 @@ public class PlacedOrderDTOConverter
 		}
 
 		return _commercePriceFormatter.format(commerceCurrency, price, locale);
+	}
+
+	private Attachment[] _getAttachments(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return TransformUtil.transformToArray(
+			commerceOrder.getAttachmentFileEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			fileEntry -> new Attachment() {
+				{
+					setExternalReferenceCode(
+						fileEntry::getExternalReferenceCode);
+					setId(fileEntry::getFileEntryId);
+					setTitle(fileEntry::getTitle);
+					setUrl(
+						() -> DLURLHelperUtil.getDownloadURL(
+							fileEntry, fileEntry.getLatestFileVersion(), null,
+							StringPool.BLANK, true, true));
+				}
+			},
+			Attachment.class);
 	}
 
 	private String[] _getFormattedDiscountPercentages(

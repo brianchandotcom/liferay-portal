@@ -764,6 +764,13 @@ public class CommerceOrderWrapper
 	}
 
 	@Override
+	public int getAttachmentFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAttachmentFileEntriesCount();
+	}
+
+	@Override
 	public CommerceAddress getBillingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

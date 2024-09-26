@@ -90,3 +90,19 @@ export async function selectPaginationItemsPerPage({
 
 	await waitForLoading(page);
 }
+
+export async function selectPaginationPageNumber({
+	page,
+	paginationPageNumber,
+}: {
+	page: Page;
+	paginationPageNumber: string;
+}) {
+	await waitForLoading(page);
+
+	await page
+		.locator(`xpath=//*[contains(@href,'page=${paginationPageNumber}')]`)
+		.first().click();
+
+	await waitForLoading(page);
+}

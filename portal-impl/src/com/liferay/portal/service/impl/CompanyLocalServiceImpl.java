@@ -540,7 +540,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateWebId(webId);
 
 		SafeCloseable safeCloseable1 =
-			PortalInstances.setCopyInProcessCompanyId(fromCompanyId);
+			PortalInstances.setCopyInProcessCompanyIdWithSafeCloseable(
+				fromCompanyId);
 
 		try {
 			DBPartitionUtil.copyDBPartition(fromCompanyId, toCompanyId);
@@ -617,7 +618,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try (SafeCloseable safeCloseable1 =
 				CompanyThreadLocal.setWithSafeCloseable(companyId);
 			SafeCloseable safeCloseable2 =
-				PortalInstances.setCompanyInDeletionProcess(companyId)) {
+				PortalInstances.setCompanyInDeletionProcessWithSafeCloseable(
+					companyId)) {
 
 			return doDeleteCompany(companyId);
 		}
@@ -666,7 +668,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			companyId);
 
 		try (SafeCloseable safeCloseable2 =
-				PortalInstances.setCompanyInDeletionProcess(companyId)) {
+				PortalInstances.setCompanyInDeletionProcessWithSafeCloseable(
+					companyId)) {
 
 			_clearCompanyCache(companyId, true);
 			_clearVirtualHostCache(companyId);

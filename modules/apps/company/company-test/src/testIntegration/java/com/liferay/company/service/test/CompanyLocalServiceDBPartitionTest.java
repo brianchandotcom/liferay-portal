@@ -392,7 +392,8 @@ public class CompanyLocalServiceDBPartitionTest
 				_getRulesCount(getPartitionName(copiedCompany.getCompanyId())));
 
 			SafeCloseable safeCloseable =
-				PortalInstances.setCopyInProcessCompanyId(copiedCompanyId);
+				PortalInstances.setCopyInProcessCompanyIdWithSafeCloseable(
+					copiedCompanyId);
 
 			safeCloseable.close();
 		}
@@ -427,7 +428,8 @@ public class CompanyLocalServiceDBPartitionTest
 			_checkPartitionDoesNotExist(toCompanyId);
 
 			SafeCloseable safeCloseable =
-				PortalInstances.setCopyInProcessCompanyId(toCompanyId);
+				PortalInstances.setCopyInProcessCompanyIdWithSafeCloseable(
+					toCompanyId);
 
 			safeCloseable.close();
 		}
@@ -479,7 +481,8 @@ public class CompanyLocalServiceDBPartitionTest
 			_checkPartitionDoesNotExist(toCompanyId);
 
 			SafeCloseable safeCloseable =
-				PortalInstances.setCopyInProcessCompanyId(toCompanyId);
+				PortalInstances.setCopyInProcessCompanyIdWithSafeCloseable(
+					toCompanyId);
 
 			safeCloseable.close();
 		}

@@ -241,7 +241,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 		throws InterruptedException {
 
 		try (SafeCloseable safeCloseable =
-				PortalInstances.setCompanyInDeletionProcess(
+				PortalInstances.setCompanyInDeletionProcessWithSafeCloseable(
 					_activeCompanyIds[0])) {
 
 			_countDownLatch = new CountDownLatch(_activeCompanyIds.length);

@@ -389,7 +389,9 @@ public class PortalInstances {
 		WebAppPool.remove(companyId, WebKeys.PORTLET_CATEGORY);
 	}
 
-	public static SafeCloseable setCompanyInDeletionProcess(long companyId) {
+	public static SafeCloseable setCompanyInDeletionProcessWithSafeCloseable(
+		long companyId) {
+
 		if (_companyIdsInDeletionProcess.contains(companyId)) {
 			throw new UnsupportedOperationException(
 				companyId + " is already in deletion");
@@ -400,7 +402,9 @@ public class PortalInstances {
 		return () -> _companyIdsInDeletionProcess.remove(companyId);
 	}
 
-	public static SafeCloseable setCopyInProcessCompanyId(long companyId) {
+	public static SafeCloseable setCopyInProcessCompanyIdWithSafeCloseable(
+		long companyId) {
+
 		if (_copyInProcessCompanyId != null) {
 			throw new UnsupportedOperationException(
 				"Company in process company ID is not null");

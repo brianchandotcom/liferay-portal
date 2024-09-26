@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.taglib.ui.SuccessTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -121,6 +122,8 @@ public class LayoutStructureRenderer {
 	public void render() throws Exception {
 		_renderLayoutStructure(
 			_renderLayoutStructureDisplayContext.getMainChildrenItemIds());
+
+		_renderFormSessionMessages();
 
 		if (_renderActionHandler) {
 			_renderComponent(
@@ -852,6 +855,24 @@ public class LayoutStructureRenderer {
 		jspWriter.write(message);
 
 		jspWriter.write("</div></div>");
+	}
+
+	private void _renderFormSessionMessages() throws Exception {
+		if (!SessionMessages.contains(
+				_httpServletRequest, "formRequestProcessed")) {
+
+			return;
+		}
+
+		SuccessTag successTag = new SuccessTag();
+
+		successTag.setKey("formRequestProcessed");
+		successTag.setMessage(
+			(String)SessionMessages.get(
+				_httpServletRequest, "formRequestProcessed"));
+		successTag.setTranslateMessage(false);
+
+		successTag.doTag(_pageContext);
 	}
 
 	private void _renderFormStepContainerStyledLayoutStructureItem(

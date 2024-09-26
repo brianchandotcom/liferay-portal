@@ -23,7 +23,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alvaro Saugar
  */
-@Component(service = UserNotificationHandler.class)
+@Component(
+	property = "javax.portlet.name=" + ScimWebKeys.SCIM_CONFIGURATION,
+	service = UserNotificationHandler.class
+)
 public class ScimUserNotificationHandler extends BaseUserNotificationHandler {
 
 	public ScimUserNotificationHandler() {

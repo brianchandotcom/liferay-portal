@@ -121,7 +121,7 @@ public class PortalAcceptancePullRequestJob
 		if (_isRelevantTestSuite() &&
 			!_hasMatchingFiles(_restBuilderFilePathMatchers)) {
 
-			batchNames.remove("rest-builder-jdk8");
+			batchNames.remove("rest-builder");
 		}
 
 		if (_isRelevantTestSuite() && _hasOnlyFilesInDirectory("modules")) {

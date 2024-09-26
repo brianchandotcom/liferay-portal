@@ -41,6 +41,28 @@ function getItemIcon(fragmentEntryLinks, fragments, item, widgets) {
 		?.icon;
 }
 
+export function getIcon({
+	activeItemIds,
+	fragmentEntryLinks,
+	fragments,
+	item,
+	widgets,
+}) {
+	if (activeItemIds.length > 1) {
+		return null;
+	}
+
+	return (
+		item?.icon ?? getItemIcon(fragmentEntryLinks, fragments, item, widgets)
+	);
+}
+
+export function getLabel({activeItemIds, item}) {
+	return activeItemIds.length > 1
+		? sub(Liferay.Language.get('x-items'), activeItemIds.length)
+		: item?.name;
+}
+
 export default function DragPreviewWrapper() {
 	const activeItemIds = useActiveItemIds();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
@@ -49,17 +71,16 @@ export default function DragPreviewWrapper() {
 
 	return (
 		<DragPreview
-			getIcon={(item) => {
-				return (
-					item?.icon ??
-					getItemIcon(fragmentEntryLinks, fragments, item, widgets)
-				);
-			}}
-			getLabel={(item) =>
-				activeItemIds.length > 1
-					? sub(Liferay.Language.get('x-items'), activeItemIds.length)
-					: item?.name
+			getIcon={(item) =>
+				getIcon({
+					activeItemIds,
+					fragmentEntryLinks,
+					fragments,
+					item,
+					widgets,
+				})
 			}
+			getLabel={(item) => getLabel({activeItemIds, item})}
 		/>
 	);
 }

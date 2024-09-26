@@ -2,13 +2,18 @@ Bundle-Name: Liferay Portal CCPP Implementation
 Bundle-SymbolicName: com.liferay.portal.ccpp.impl
 Bundle-Version: 1.0.3
 Import-Package:\
-	com.liferay.portal.ccpp,\
+	!EDU.oswego.cs.dl.util.concurrent,\
 	\
-	javax.ccpp,\
-	javax.ccpp.uaprof,\
+	!com.sleepycat.db,\
 	\
-	javax.servlet.http,\
+	!junit.*,\
 	\
-	javax.xml.parsers,\
+	!org.apache.*,\
 	\
-	org.xml.sax
+	!org.w3c.*,\
+	\
+	!org.xml.sax.helpers,\
+	\
+	!sun.misc,\
+	\
+	*

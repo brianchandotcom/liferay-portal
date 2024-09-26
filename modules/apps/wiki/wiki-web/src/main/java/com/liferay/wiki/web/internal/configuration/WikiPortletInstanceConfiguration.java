@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Iván Zaera
  */
 @ExtendedObjectClassDefinition(
-	category = "wiki",
+	category = "wiki", featureFlagKey = "LPD-35013",
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(

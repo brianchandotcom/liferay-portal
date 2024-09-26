@@ -21,7 +21,7 @@ public class ClusterInvokeThreadLocal {
 		_enabled.set(enabled);
 	}
 
-	public static SafeCloseable setWithSafeCloseable(boolean enabled) {
+	public static SafeCloseable setEnabledWithSafeCloseable(boolean enabled) {
 		return _enabled.setWithSafeCloseable(enabled);
 	}
 

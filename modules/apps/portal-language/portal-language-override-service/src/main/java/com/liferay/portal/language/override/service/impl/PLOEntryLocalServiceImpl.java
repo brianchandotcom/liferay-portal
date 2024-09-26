@@ -129,7 +129,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 		}
 
 		try (SafeCloseable safeCloseable =
-				ClusterInvokeThreadLocal.setWithSafeCloseable(false)) {
+				ClusterInvokeThreadLocal.setEnabledWithSafeCloseable(false)) {
 
 			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 				_addOrUpdatePLOEntry(

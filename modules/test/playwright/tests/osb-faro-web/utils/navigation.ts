@@ -10,7 +10,7 @@ import {waitForLoading} from './loading';
 
 export enum ACPage {
 	assetPage = 'assets',
-	eventAnalysisPage = 'events',
+	eventAnalysisPage = 'event-analysis',
 	individualPage = 'contacts/individuals',
 	segmentPage = 'contacts/segments',
 	sitePage = 'sites',

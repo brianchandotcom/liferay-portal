@@ -369,7 +369,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 							<ClayDropDown.Divider />
 						) : (
 							<ClayDropDown.Item
-								aria-label={Liferay.Language.get(item.label)}
+								aria-label={item.label}
 								disabled={item.disabled}
 								onClick={() => {
 									setActive(false);

@@ -334,9 +334,7 @@ export default function Sidebar() {
 							return (
 								<ClayButtonWithIcon
 									aria-controls={sidebarContentId}
-									aria-label={Liferay.Language.get(
-										panel.label
-									)}
+									aria-label={panel.label}
 									aria-selected={active}
 									className={classNames({active})}
 									data-panel-id={panel.sidebarPanelId}

@@ -1,0 +1,2495 @@
+[
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93015",
+		"height": 2,
+		"images": [
+			"Minium_ProductImage_24.png"
+		],
+		"length": 7,
+		"manufacturerPartNumber": "BB98318",
+		"minStockQuantity": 5,
+		"name": "ABS Sensor",
+		"price": 50.0,
+		"promoPrice": 0,
+		"sku": "MIN93015",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.00 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 20,
+		"weight": 1,
+		"width": 5.6
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93016",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_103.png"
+		],
+		"length": 4,
+		"minStockQuantity": 5,
+		"name": "Brake Fluid",
+		"options": [
+			{
+				"key": "package-quantity",
+				"values": [
+					"12",
+					"48",
+					"112"
+				]
+			}
+		],
+		"skus": [
+			{
+				"contributorOptions": [
+					{
+						"key": "package-quantity",
+						"value": "12"
+					}
+				],
+				"externalReferenceCode": "MIN93016A",
+				"manufacturerPartNumber": "BB98319",
+				"price": 80.0,
+				"promoPrice": 72.0,
+				"sku": "MIN93016A",
+				"warehouse1": 100,
+				"warehouse2": 40,
+				"warehouse3": 100
+			},
+			{
+				"contributorOptions": [
+					{
+						"key": "package-quantity",
+						"value": "48"
+					}
+				],
+				"externalReferenceCode": "MIN93016B",
+				"manufacturerPartNumber": "BB98320",
+				"price": 80.0,
+				"promoPrice": 72.0,
+				"sku": "MIN93016B",
+				"warehouse1": 100,
+				"warehouse2": 20,
+				"warehouse3": 60
+			},
+			{
+				"contributorOptions": [
+					{
+						"key": "package-quantity",
+						"value": "112"
+					}
+				],
+				"externalReferenceCode": "MIN93016C",
+				"manufacturerPartNumber": "BB98321",
+				"price": 80.0,
+				"promoPrice": 72.0,
+				"sku": "MIN93016C",
+				"warehouse1": 100,
+				"warehouse2": 100,
+				"warehouse3": 40
+			}
+		],
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "12, 48 or 112"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.75 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"tags": [
+			"featured"
+		],
+		"taxCategory": "Normal Product",
+		"weight": 1.75,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93017",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_103.png"
+		],
+		"length": 4,
+		"manufacturerPartNumber": "BB98322",
+		"minStockQuantity": 5,
+		"name": "Premium Brake Fluid",
+		"price": 100.0,
+		"promoPrice": 90.0,
+		"sku": "MIN93017",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "6"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.875 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"tags": [
+			"featured"
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 0.875,
+		"width": 9.5
+	},
+	{
+		"attachments": [
+			"Minium_InstallationGuide.pdf"
+		],
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93027",
+		"height": 8.7,
+		"length": 6.2,
+		"manufacturerPartNumber": "BB98334",
+		"minStockQuantity": 5,
+		"name": "Wear Sensors",
+		"price": 60.0,
+		"promoPrice": 0,
+		"sku": "MIN93027",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 1,
+		"width": 2.1
+	},
+	{
+		"attachments": [
+			"Minium_InstallationGuide.pdf"
+		],
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93018",
+		"height": 8.7,
+		"images": [
+			"Minium_ProductImage_83.png"
+		],
+		"length": 6.2,
+		"manufacturerPartNumber": "BB98323",
+		"minStockQuantity": 5,
+		"name": "Brake Pads",
+		"price": 21.0,
+		"promoPrice": 18.9,
+		"relatedProducts": [
+			"Wear Sensors"
+		],
+		"sku": "MIN93018",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "3.96 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
+			}
+		],
+		"tags": [
+			"featured"
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 3.96,
+		"width": 2.1
+	},
+	{
+		"attachments": [
+			"Minium_InstallationGuide.pdf"
+		],
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93019",
+		"height": 8.7,
+		"images": [
+			"Minium_ProductImage_83.png"
+		],
+		"length": 6.2,
+		"manufacturerPartNumber": "BB98324",
+		"minStockQuantity": 5,
+		"name": "Premium Brake Pads",
+		"price": 29.0,
+		"promoPrice": 26.1,
+		"relatedProducts": [
+			"Wear Sensors"
+		],
+		"sku": "MIN93019",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Ceramic"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "4.01 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
+			}
+		],
+		"tags": [
+			"featured"
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 20,
+		"warehouse3": 20,
+		"weight": 4.01,
+		"width": 2.1
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93020",
+		"height": 1.7,
+		"images": [
+			"Minium_ProductImage_30.png"
+		],
+		"length": 10.2,
+		"manufacturerPartNumber": "BB98325",
+		"minStockQuantity": 5,
+		"name": "Brake Rotors",
+		"price": 40.0,
+		"promoPrice": 0,
+		"sku": "MIN93020",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Cast Iron"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "12.45 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"tags": [
+			"featured"
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 12.45,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93021",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "BB98326",
+		"minStockQuantity": 5,
+		"name": "Calipers",
+		"price": 90.0,
+		"promoPrice": 0,
+		"sku": "MIN93021",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "7.34 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 7.34,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93022",
+		"height": 18,
+		"length": 12,
+		"minStockQuantity": 5,
+		"name": "Hoses",
+		"options": [
+			{
+				"key": "package-quantity",
+				"values": [
+					"6",
+					"24",
+					"48"
+				]
+			}
+		],
+		"skus": [
+			{
+				"contributorOptions": [
+					{
+						"key": "package-quantity",
+						"value": "6"
+					}
+				],
+				"externalReferenceCode": "MIN93022A",
+				"manufacturerPartNumber": "BB98327",
+				"price": 120.0,
+				"promoPrice": 0,
+				"sku": "MIN93022A",
+				"warehouse1": 40,
+				"warehouse2": 40,
+				"warehouse3": 40
+			},
+			{
+				"contributorOptions": [
+					{
+						"key": "package-quantity",
+						"value": "24"
+					}
+				],
+				"externalReferenceCode": "MIN93022B",
+				"manufacturerPartNumber": "BB98328",
+				"price": 120.0,
+				"promoPrice": 0,
+				"sku": "MIN93022B",
+				"warehouse1": 40,
+				"warehouse2": 20,
+				"warehouse3": 20
+			},
+			{
+				"contributorOptions": [
+					{
+						"key": "package-quantity",
+						"value": "48"
+					}
+				],
+				"externalReferenceCode": "MIN93022C",
+				"manufacturerPartNumber": "BB98329",
+				"price": 120.0,
+				"promoPrice": 0,
+				"sku": "MIN93022C",
+				"warehouse1": 40,
+				"warehouse2": 100,
+				"warehouse3": 100
+			}
+		],
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "6"
+			},
+			{
+				"key": "material",
+				"value": "Rubber"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "11.7 oz"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"weight": 0.73125,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93023",
+		"height": 18,
+		"images": [
+			"Minium_ProductImage_42.png"
+		],
+		"length": 12,
+		"manufacturerPartNumber": "BB98330",
+		"minStockQuantity": 5,
+		"name": "Timing Belt",
+		"price": 600.0,
+		"promoPrice": 0,
+		"sku": "MIN93023",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "12"
+			},
+			{
+				"key": "material",
+				"value": "Rubber"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 1,
+		"width": 2
+	},
+	{
+		"attachments": [
+			"Minium_InstallationGuide.pdf"
+		],
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93024",
+		"height": 3.8,
+		"images": [
+			"Minium_ProductImage_77.png",
+			"Minium_ProductImage_105.png"
+		],
+		"length": 2.5,
+		"manufacturerPartNumber": "BB98331",
+		"minStockQuantity": 5,
+		"name": "Master Cylinder",
+		"price": 78.0,
+		"promoPrice": 0,
+		"relatedProducts": [
+			"Wear Sensors"
+		],
+		"sku": "MIN93024",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Aluminum"
+			},
+			{
+				"key": "warranty",
+				"value": "3 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.456 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "2.5\" x 4.1\" x 3.8\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 1.456,
+		"width": 4.1
+	},
+	{
+		"attachments": [
+			"Minium_InstallationGuide.pdf"
+		],
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93025",
+		"height": 3.8,
+		"images": [
+			"Minium_ProductImage_77.png",
+			"Minium_ProductImage_105.png"
+		],
+		"length": 2.5,
+		"manufacturerPartNumber": "BB98332",
+		"minStockQuantity": 5,
+		"name": "Master Cylinder",
+		"price": 34.0,
+		"promoPrice": 0,
+		"relatedProducts": [
+			"Wear Sensors"
+		],
+		"sku": "MIN93025",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Cast Iron"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "2.5\" x 4.1\" x 3.8\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 20,
+		"warehouse3": 20,
+		"weight": 1,
+		"width": 4.1
+	},
+	{
+		"attachments": [
+			"Minium_InstallationGuide.pdf"
+		],
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Brake System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN93026",
+		"height": 3.8,
+		"images": [
+			"Minium_ProductImage_77.png",
+			"Minium_ProductImage_105.png"
+		],
+		"length": 2.5,
+		"manufacturerPartNumber": "BB98333",
+		"minStockQuantity": 5,
+		"name": "Master Cylinder",
+		"price": 39.0,
+		"promoPrice": 0,
+		"relatedProducts": [
+			"Wear Sensors"
+		],
+		"sku": "MIN93026",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "2.5\" x 4.1\" x 3.8\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 1,
+		"width": 4.1
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00673",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "EX938051",
+		"minStockQuantity": 5,
+		"name": "Bearings",
+		"price": 70.0,
+		"promoPrice": 0,
+		"sku": "MIN00673",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "2 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 2,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00674",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "EX938052",
+		"minStockQuantity": 5,
+		"name": "Cams",
+		"price": 695.0,
+		"promoPrice": 0,
+		"sku": "MIN00674",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "2.81 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 2.81,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00675",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "EX938053",
+		"minStockQuantity": 5,
+		"name": "Engine Mount",
+		"price": 120.0,
+		"promoPrice": 0,
+		"sku": "MIN00675",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.9 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 1.9,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00676",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_46.png"
+		],
+		"length": 4,
+		"manufacturerPartNumber": "EX938054",
+		"minStockQuantity": 5,
+		"name": "Oil Filter",
+		"price": 450.0,
+		"promoPrice": 0,
+		"sku": "MIN00676",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "24"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "9 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 100,
+		"warehouse3": 60,
+		"weight": 9,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00677",
+		"height": 2,
+		"images": [
+			"Minium_ProductImage_33.png"
+		],
+		"length": 7,
+		"manufacturerPartNumber": "EX938055",
+		"minStockQuantity": 5,
+		"name": "Oil Pump",
+		"price": 79.0,
+		"promoPrice": 0,
+		"sku": "MIN00677",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "2.05 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 2.05,
+		"width": 5.6
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00678",
+		"height": 2.5,
+		"length": 4,
+		"manufacturerPartNumber": "EX938056",
+		"minStockQuantity": 5,
+		"name": "Piston",
+		"price": 14.0,
+		"promoPrice": 0,
+		"sku": "MIN00678",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Aluminum"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.72 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 20,
+		"weight": 1.72,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00679",
+		"height": 8.7,
+		"length": 6.2,
+		"manufacturerPartNumber": "EX938057",
+		"minStockQuantity": 5,
+		"name": "Pulley Kit",
+		"price": 201.0,
+		"promoPrice": 0,
+		"sku": "MIN00679",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Aluminum"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.93 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 40,
+		"warehouse3": 100,
+		"weight": 1.93,
+		"width": 2.1
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00680",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "EX938058",
+		"minStockQuantity": 5,
+		"name": "Seal",
+		"price": 30.0,
+		"promoPrice": 0,
+		"sku": "MIN00680",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "2"
+			},
+			{
+				"key": "material",
+				"value": "Rubber"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.19 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 0.19,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00681",
+		"height": 5.3,
+		"images": [
+			"Minium_ProductImage_94.png"
+		],
+		"length": 9.4,
+		"manufacturerPartNumber": "EX938059",
+		"minStockQuantity": 5,
+		"name": "Timing Chain Tensioner",
+		"price": 30.0,
+		"promoPrice": 0,
+		"sku": "MIN00681",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Plastic"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.45 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 0,
+		"warehouse2": 3,
+		"warehouse3": 0,
+		"weight": 0.45,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00682",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "EX938060",
+		"minStockQuantity": 5,
+		"name": "Timing Chain",
+		"price": 23.0,
+		"promoPrice": 0,
+		"sku": "MIN00682",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Aluminum"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "1.3 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 1.3,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Engine"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN00683",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "EX938061",
+		"minStockQuantity": 5,
+		"name": "Valve Cover Grommets",
+		"price": 6.0,
+		"promoPrice": 0,
+		"sku": "MIN00683",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "2"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.1 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 0.1,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Exhaust System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN77822",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "ES98205",
+		"minStockQuantity": 5,
+		"name": "Catalytic Converters",
+		"price": 106.0,
+		"promoPrice": 0,
+		"sku": "MIN77822",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "4.7 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 0,
+		"warehouse2": 0,
+		"warehouse3": 0,
+		"weight": 4.7,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Exhaust System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN77823",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "ES98206",
+		"minStockQuantity": 5,
+		"name": "Exhaust Clamps",
+		"price": 9.0,
+		"promoPrice": 0,
+		"sku": "MIN77823",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.62 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 100,
+		"weight": 0.62,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "7-14 days",
+		"backOrders": true,
+		"categories": [
+			"Exhaust System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN77824",
+		"height": 2.5,
+		"length": 4,
+		"manufacturerPartNumber": "ES98207",
+		"minStockQuantity": 5,
+		"name": "Muffler/Resonators",
+		"price": 32.0,
+		"promoPrice": 0,
+		"sku": "MIN77824",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "11.75 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 60,
+		"weight": 11.75,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "7-14 days",
+		"backOrders": true,
+		"categories": [
+			"Exhaust System"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN77825",
+		"height": 2,
+		"length": 7,
+		"manufacturerPartNumber": "ES98208",
+		"minStockQuantity": 5,
+		"name": "Lift Support",
+		"price": 20.0,
+		"promoPrice": 0,
+		"sku": "MIN77825",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.6 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 0.6,
+		"width": 5.6
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Turbocharger"
+		],
+		"description": "Includes wastegate actuator. Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN19999",
+		"filterAccountGroups": [
+			"North American Accounts"
+		],
+		"height": 14.4,
+		"images": [
+			"Minium_ProductImage_106.png",
+			"Minium_ProductImage_107.png",
+			"Minium_ProductImage_108.png"
+		],
+		"length": 15.3,
+		"manufacturerPartNumber": "TC90432",
+		"minStockQuantity": 5,
+		"name": "Turbocharger",
+		"price": 665.0,
+		"promoPrice": 0,
+		"sku": "MIN19999",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Aluminum"
+			},
+			{
+				"key": "warranty",
+				"value": "3 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "19 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "15.3\" x 12.9\" x 14.4\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 60,
+		"warehouse3": 20,
+		"weight": 19,
+		"width": 12.9
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38794",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "HM88893",
+		"minStockQuantity": 5,
+		"name": "Ball Joints",
+		"price": 152.0,
+		"promoPrice": 0,
+		"sku": "MIN38794",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "20.51 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 40,
+		"warehouse3": 100,
+		"weight": 20.51,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38795",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "HM88894",
+		"minStockQuantity": 5,
+		"name": "Bushings",
+		"price": 18.0,
+		"promoPrice": 0,
+		"sku": "MIN38795",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Rubber"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "0.5 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 0.5,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38796",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "HM88895",
+		"minStockQuantity": 5,
+		"name": "CV Axles",
+		"price": 89.0,
+		"promoPrice": 0,
+		"sku": "MIN38796",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "19.39 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 100,
+		"warehouse3": 40,
+		"weight": 19.39,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38797",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_20.png"
+		],
+		"length": 4,
+		"manufacturerPartNumber": "HM88896",
+		"minStockQuantity": 5,
+		"name": "Universal CV Boot",
+		"price": 185.0,
+		"promoPrice": 0,
+		"sku": "MIN38797",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "24"
+			},
+			{
+				"key": "material",
+				"value": "Neoprene"
+			},
+			{
+				"key": "weight",
+				"value": "6.35 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 6.35,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38798",
+		"height": 2,
+		"length": 7,
+		"manufacturerPartNumber": "HM88897",
+		"minStockQuantity": 5,
+		"name": "Hub Bearing Assembly - Rear",
+		"price": 175.0,
+		"promoPrice": 0,
+		"sku": "MIN38798",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "warranty",
+				"value": "3 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "13.10 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 60,
+		"warehouse3": 100,
+		"weight": 13.1,
+		"width": 5.6
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38799",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_13.png",
+			"Minium_ProductImage_73.png"
+		],
+		"length": 4,
+		"manufacturerPartNumber": "HM88898",
+		"minStockQuantity": 5,
+		"name": "Coil Spring - Rear",
+		"price": 104.0,
+		"promoPrice": 0,
+		"sku": "MIN38799",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "2"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "19.81 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 19.81,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38800",
+		"height": 8.7,
+		"length": 6.2,
+		"manufacturerPartNumber": "HM88899",
+		"minStockQuantity": 5,
+		"name": "Power Steering Pump",
+		"price": 160.0,
+		"promoPrice": 0,
+		"sku": "MIN38800",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Cast Iron"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "4.76 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 0,
+		"warehouse2": 0,
+		"warehouse3": 0,
+		"weight": 4.76,
+		"width": 2.1
+	},
+	{
+		"availabilityEstimate": "7-14 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38801",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "HM88900",
+		"minStockQuantity": 5,
+		"name": "Differential Ring and Pinion - Universal",
+		"price": 211.0,
+		"promoPrice": 0,
+		"sku": "MIN38801",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "17.88 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 17.88,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38802",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "HM88901",
+		"minStockQuantity": 5,
+		"name": "Shock Absorber",
+		"price": 75.0,
+		"promoPrice": 0,
+		"sku": "MIN38802",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "12 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 60,
+		"warehouse3": 100,
+		"weight": 12,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38803",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "HM88902",
+		"minStockQuantity": 5,
+		"name": "Shock Strut - Front",
+		"price": 129.0,
+		"promoPrice": 0,
+		"sku": "MIN38803",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Rubber"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "23.48 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 40,
+		"warehouse3": 60,
+		"weight": 23.48,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "7-14 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38804",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "HM88903",
+		"minStockQuantity": 5,
+		"name": "Tie Rod End Tool",
+		"price": 35.0,
+		"promoPrice": 0,
+		"sku": "MIN38804",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "2 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 2,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Suspension"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN38805",
+		"height": 5.3,
+		"images": [
+			"Minium_ProductImage_103.png"
+		],
+		"length": 9.4,
+		"manufacturerPartNumber": "HM88904",
+		"minStockQuantity": 5,
+		"name": "Wheel Bearing Grease",
+		"price": 54.0,
+		"promoPrice": 0,
+		"sku": "MIN38805",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "6"
+			},
+			{
+				"key": "weight",
+				"value": "0.75 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 20,
+		"weight": 0.75,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55853",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "TT00024",
+		"minStockQuantity": 5,
+		"name": "CV Axles",
+		"price": 89.0,
+		"promoPrice": 0,
+		"sku": "MIN55853",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "19.39 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 19.39,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55854",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_20.png"
+		],
+		"length": 4,
+		"manufacturerPartNumber": "TT00025",
+		"minStockQuantity": 5,
+		"name": "Universal CV Boot",
+		"price": 185.0,
+		"promoPrice": 0,
+		"sku": "MIN55854",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "24"
+			},
+			{
+				"key": "material",
+				"value": "Neoprene"
+			},
+			{
+				"key": "weight",
+				"value": "6.35 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 6.35,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55855",
+		"height": 2,
+		"length": 7,
+		"manufacturerPartNumber": "TT00026",
+		"minStockQuantity": 5,
+		"name": "Drive Shafts",
+		"price": 396.0,
+		"promoPrice": 0,
+		"sku": "MIN55855",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "weight",
+				"value": "1.75 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 1.75,
+		"width": 5.6
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55856",
+		"height": 2.5,
+		"images": [
+			"Minium_ProductImage_103.png"
+		],
+		"length": 4,
+		"manufacturerPartNumber": "TT00027",
+		"minStockQuantity": 5,
+		"name": "Transmission Fluid",
+		"price": 42.0,
+		"promoPrice": 0,
+		"sku": "MIN55856",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "6"
+			},
+			{
+				"key": "weight",
+				"value": "11.72 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 11.72,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55857",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "TT00028",
+		"minStockQuantity": 5,
+		"name": "Mount",
+		"price": 3.0,
+		"promoPrice": 0,
+		"sku": "MIN55857",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "2.26 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 2.26,
+		"width": 10.2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55858",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "TT00029",
+		"minStockQuantity": 5,
+		"name": "Wheel Seal - Front",
+		"price": 4.0,
+		"promoPrice": 0,
+		"sku": "MIN55858",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "weight",
+				"value": "0.04 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 0.04,
+		"width": 7.3
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55859",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "TT00030",
+		"minStockQuantity": 5,
+		"name": "Torque Converters",
+		"price": 34.0,
+		"promoPrice": 0,
+		"sku": "MIN55859",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
+			},
+			{
+				"key": "weight",
+				"value": "0.22 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 0.22,
+		"width": 2
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55860",
+		"height": 2.5,
+		"length": 4,
+		"manufacturerPartNumber": "TT00031",
+		"minStockQuantity": 5,
+		"name": "Transmission Cooler Line Assembly",
+		"price": 15.0,
+		"promoPrice": 0,
+		"sku": "MIN55860",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Rubber"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "0.71 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 0.71,
+		"width": 9.5
+	},
+	{
+		"availabilityEstimate": "7-14 days",
+		"backOrders": false,
+		"categories": [
+			"Transmission"
+		],
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "MIN55861",
+		"height": 2,
+		"images": [
+			"Minium_ProductImage_64.png"
+		],
+		"length": 7,
+		"manufacturerPartNumber": "TT00032",
+		"minStockQuantity": 5,
+		"name": "U-Joint",
+		"price": 24.0,
+		"promoPrice": 0,
+		"sku": "MIN55861",
+		"specificationOptions": [
+			{
+				"key": "quantity",
+				"value": "1"
+			},
+			{
+				"key": "material",
+				"value": "Steel"
+			},
+			{
+				"key": "warranty",
+				"value": "Limited Lifetime"
+			},
+			{
+				"key": "weight",
+				"value": "1.30 lbs"
+			},
+			{
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
+			}
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 1.3,
+		"width": 5.6
+	}
+]

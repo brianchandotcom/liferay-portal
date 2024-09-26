@@ -578,6 +578,20 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			commerceCatalogGroup.getGroupId(), serviceContext.getUserId());
 	}
 
+	private void _addCPSpecificationOptions(
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		_cpSpecificationOptionsImporter.importCPSpecificationOptions(
+			jsonArray, serviceContext.getScopeGroupId(),
+			serviceContext.getUserId());
+	}
+
 	private void _addDefaultCPDisplayLayout(
 			Channel channel, String resourcePath, ServiceContext serviceContext,
 			ServletContext servletContext)
@@ -707,13 +721,17 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				catalog,
 				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
 				serviceContext, servletContext);
+
+			_addOrUpdateCPOptionCategories(serviceContext, servletContext);
+			_addCPSpecificationOptions(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".specification.options.json"),
+				serviceContext, servletContext);
 			_addCPDefinitions(
 				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext, servletContext, stringUtilReplaceValues);
-
-			_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 
 			_addCommerceProductSpecifications(
 				StringUtil.replaceLast(

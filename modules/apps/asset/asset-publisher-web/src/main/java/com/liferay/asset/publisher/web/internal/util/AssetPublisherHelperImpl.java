@@ -27,6 +27,8 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -857,6 +861,30 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			Pagination.of(end, start), assetEntries.size());
 	}
 
+	public Group getItemSelectorScopeGroup(Group scopeGroup)
+		throws PortalException {
+
+		if (scopeGroup.isLayoutPrototype()) {
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.fetchLayoutPrototype(
+					scopeGroup.getClassPK());
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
+			if ((layoutPageTemplateEntry != null) &&
+				(layoutPageTemplateEntry.getGroupId() > 0)) {
+
+				return _groupLocalService.getGroup(
+					layoutPageTemplateEntry.getGroupId());
+			}
+		}
+
+		return scopeGroup;
+	}
+
 	@Override
 	public String[] getKeywords(PortletPreferences portletPreferences) {
 		String[] allKeywords = new String[0];
@@ -1455,6 +1483,13 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
 	private Portal _portal;

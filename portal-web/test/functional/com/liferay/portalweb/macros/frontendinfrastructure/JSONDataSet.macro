@@ -68,7 +68,7 @@ definition {
 						"defaultItemsPerPage": ${defaultItemsPerPage},
 						"listOfItemsPerPage": "${listOfItemsPerPage}",
 						"label": "${dataSetViewName}",
-						"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${dataSetEntryId}
+						"r_fdsEntryFDSViewRelationship_l_fdsEntryId": ${dataSetEntryId}
 					}
 			''';
 

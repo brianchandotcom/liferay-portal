@@ -80,7 +80,7 @@ public class SaveFDSFieldsMVCResourceCommand
 				).put(
 					"name", String.valueOf(creationDataJSONObject.get("name"))
 				).put(
-					"r_fdsViewFDSFieldRelationship_c_fdsViewId", dataSetId
+					"r_fdsViewFDSFieldRelationship_l_fdsViewId", dataSetId
 				).put(
 					"renderer", "default"
 				).put(

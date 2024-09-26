@@ -32,29 +32,29 @@ const FUZZY_OPTIONS = {
 const OBJECT_RELATIONSHIP = {
 	DATA_SET_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
 	DATA_SET_CARDS_SECTION_ERC:
-		'r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC',
+		'r_fdsViewFDSCardsSectionRelationship_l_fdsViewERC',
 	DATA_SET_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
 	DATA_SET_CLIENT_EXTENSION_FILTER_ID:
 		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',
 	DATA_SET_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship',
 	DATA_SET_CREATION_ACTION_ID:
-		'r_fdsViewFDSCreationActionRelationship_c_fdsViewId',
+		'r_fdsViewFDSCreationActionRelationship_l_fdsViewId',
 	DATA_SET_DATE_FILTER: 'fdsViewFDSDateFilterRelationship',
-	DATA_SET_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_c_fdsViewId',
+	DATA_SET_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_l_fdsViewId',
 	DATA_SET_ITEM_ACTION: 'fdsViewFDSItemActionRelationship',
-	DATA_SET_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_c_fdsViewId',
+	DATA_SET_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_l_fdsViewId',
 	DATA_SET_LIST_SECTION: 'fdsViewFDSListSectionRelationship',
 	DATA_SET_LIST_SECTION_ERC:
-		'r_fdsViewFDSListSectionRelationship_c_fdsViewERC',
+		'r_fdsViewFDSListSectionRelationship_l_fdsViewERC',
 	DATA_SET_SELECTION_FILTER: 'fdsViewFDSDynamicFilterRelationship',
 	DATA_SET_SELECTION_FILTER_ID:
-		'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId',
+		'r_fdsViewFDSDynamicFilterRelationship_l_fdsViewId',
 	DATA_SET_SORT: 'fdsViewFDSSortRelationship',
-	DATA_SET_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId',
+	DATA_SET_SORT_ID: 'r_fdsViewFDSSortRelationship_l_fdsViewId',
 	DATA_SET_TABLE_SECTION: 'fdsViewFDSFieldRelationship',
-	DATA_SET_TABLE_SECTION_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId',
+	DATA_SET_TABLE_SECTION_ID: 'r_fdsViewFDSFieldRelationship_l_fdsViewId',
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
-	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
+	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_l_fdsEntryId',
 } as const;
 
 const FDS_DEFAULT_PROPS = {

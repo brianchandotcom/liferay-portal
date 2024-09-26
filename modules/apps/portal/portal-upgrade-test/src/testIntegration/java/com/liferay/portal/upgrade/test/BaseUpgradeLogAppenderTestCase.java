@@ -933,8 +933,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_getLogContextValueDiagnostics(key), text, StringPool.BLANK));
 	}
 
-	private void _assertRenameUpgradeReport(String fileName) throws Exception {
-		File reportFile1 = _getReportFile(fileName);
+	private void _assertRenameUpgradeReport(String reportFileName)
+		throws Exception {
+
+		File reportFile1 = _getReportFile(reportFileName);
 
 		Assert.assertTrue(reportFile1.exists());
 
@@ -944,11 +946,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		File reportFile2 = _getReportFile(fileName);
+		File reportFile2 = _getReportFile(reportFileName);
 
 		Assert.assertTrue(
 			_getReportFile(
-				fileName + "." + reportFile1LastModified
+				reportFileName + "." + reportFile1LastModified
 			).exists());
 		Assert.assertTrue(reportFile2.exists());
 		Assert.assertTrue(
@@ -997,10 +999,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private void _assertUpgradeReportDirectory(
-			LogCapture logCapture, String fileName)
+			LogCapture logCapture, String reportFileName)
 		throws Exception {
 
-		File reportFile = _getReportFile(fileName);
+		File reportFile = _getReportFile(reportFileName);
 
 		Assert.assertTrue(reportFile.exists());
 
@@ -1016,10 +1018,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private void _assertUpgradeReportDirectoryWriteProtected(
-			LogCapture logCapture, File reportDir, String fileName)
+			LogCapture logCapture, File reportDir, String reportFileName)
 		throws Exception {
 
-		File reportFile = new File(reportDir, fileName);
+		File reportFile = new File(reportDir, reportFileName);
 
 		Assert.assertFalse(reportFile.exists());
 
@@ -1031,7 +1033,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_upgradeReportDir = "";
 
-		reportFile = _getReportFile(fileName);
+		reportFile = _getReportFile(reportFileName);
 
 		Assert.assertTrue(reportFile.exists());
 
@@ -1050,8 +1052,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return _getLogContextValue(key, "upgrade-report.txt");
 	}
 
-	private String _getLogContextValue(String key, String fileName) {
-		File file = new File(new File(getFilePath(), "reports"), fileName);
+	private String _getLogContextValue(String key, String reportFileName) {
+		File file = new File(
+			new File(getFilePath(), "reports"), reportFileName);
 
 		Pattern pattern = Pattern.compile(
 			"(?s)INFO - Upgrade report generated in " +
@@ -1109,7 +1112,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return FileUtil.read(diagnosticsReportFile);
 	}
 
-	private File _getReportFile(String fileName) throws Exception {
+	private File _getReportFile(String reportFileName) throws Exception {
 		File reportsDir = null;
 
 		if (Validator.isBlank(_upgradeReportDir)) {
@@ -1123,7 +1126,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			Assert.assertTrue(reportsDir.exists());
 		}
 
-		return new File(reportsDir, fileName);
+		return new File(reportsDir, reportFileName);
 	}
 
 	private String _getRootDir() {

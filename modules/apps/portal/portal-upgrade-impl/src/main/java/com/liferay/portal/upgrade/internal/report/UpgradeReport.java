@@ -117,9 +117,11 @@ public class UpgradeReport {
 			upgradeRecorder);
 
 		_printToLogContext(reportData);
-		_printToLogContext(reportDataDiagnostics);
 
 		_writeToFile(reportData, "upgrade-report.txt");
+
+		_printToLogContext(reportDataDiagnostics);
+
 		_writeToFile(reportDataDiagnostics, "upgrade-report-diagnostics.txt");
 	}
 

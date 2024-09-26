@@ -470,10 +470,15 @@ public class DDMIndexerImplTest {
 
 		HtmlParser htmlParser = Mockito.mock(HtmlParser.class);
 
+		String bigString = RandomTestUtil.randomString(10000);
+
+		String bigStringWithHTML = "<h1>" + bigString + "</h1>";
+		String bigStringTruncated = bigString.substring(0, 255);
+
 		Mockito.when(
-			htmlParser.extractText("<h1>test</h1>")
+			htmlParser.extractText(bigStringWithHTML)
 		).thenReturn(
-			"test"
+			bigString
 		);
 
 		ReflectionTestUtil.setFieldValue(ddmIndexer, "_htmlParser", htmlParser);
@@ -494,10 +499,10 @@ public class DDMIndexerImplTest {
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						"<h1>test</h1>", LocaleUtil.US))));
+						bigStringWithHTML, LocaleUtil.US))));
 
 		Assert.assertEquals(
-			"test",
+			bigStringTruncated,
 			document.get(
 				StringBundler.concat(
 					"ddm__text__", ddmStructure.getStructureId(), "__",

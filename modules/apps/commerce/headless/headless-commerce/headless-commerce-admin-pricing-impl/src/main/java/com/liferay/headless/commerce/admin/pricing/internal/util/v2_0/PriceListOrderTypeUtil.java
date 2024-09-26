@@ -46,9 +46,10 @@ public class PriceListOrderTypeUtil {
 		}
 		else {
 			commerceOrderType =
-				commerceOrderTypeService.fetchByExternalReferenceCode(
-					priceListOrderType.getOrderTypeExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						priceListOrderType.getOrderTypeExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceOrderType == null) {
 				String orderTypeExternalReferenceCode =

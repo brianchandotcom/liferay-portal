@@ -121,10 +121,11 @@ public class PaymentMethodGroupRelOrderTypeResourceImpl
 		}
 		else {
 			commerceOrderType =
-				_commerceOrderTypeService.fetchByExternalReferenceCode(
-					paymentMethodGroupRelOrderType.
-						getOrderTypeExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						paymentMethodGroupRelOrderType.
+							getOrderTypeExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		return commerceOrderType;

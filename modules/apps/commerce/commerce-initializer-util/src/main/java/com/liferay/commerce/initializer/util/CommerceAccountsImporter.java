@@ -239,7 +239,7 @@ public class CommerceAccountsImporter {
 
 					CommercePriceList commercePriceList =
 						_commercePriceListLocalService.
-							fetchByExternalReferenceCode(
+							fetchCommercePriceListByExternalReferenceCode(
 								externalReferenceCode,
 								serviceContext.getCompanyId());
 

@@ -62,8 +62,9 @@ public class WarehouseChannelResourceImpl
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchWarehouseException(
@@ -120,8 +121,9 @@ public class WarehouseChannelResourceImpl
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchWarehouseException(
@@ -174,9 +176,10 @@ public class WarehouseChannelResourceImpl
 		}
 		else {
 			commerceChannel =
-				_commerceChannelService.fetchByExternalReferenceCode(
-					warehouseChannel.getChannelExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				_commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						warehouseChannel.getChannelExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

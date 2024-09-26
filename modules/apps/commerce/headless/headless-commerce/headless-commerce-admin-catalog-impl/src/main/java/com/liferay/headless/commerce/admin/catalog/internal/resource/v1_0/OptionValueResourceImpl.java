@@ -79,7 +79,7 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 		throws Exception {
 
 		CPOptionValue cpOptionValue =
-			_cpOptionValueService.fetchByExternalReferenceCode(
+			_cpOptionValueService.fetchCPOptionValueByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOptionValue == null) {
@@ -102,8 +102,9 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPOption cpOption =
+			_cpOptionService.fetchCPOptionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
@@ -160,7 +161,7 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 		throws Exception {
 
 		CPOptionValue cpOptionValue =
-			_cpOptionValueService.fetchByExternalReferenceCode(
+			_cpOptionValueService.fetchCPOptionValueByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOptionValue == null) {
@@ -190,7 +191,7 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 		throws Exception {
 
 		CPOptionValue cpOptionValue =
-			_cpOptionValueService.fetchByExternalReferenceCode(
+			_cpOptionValueService.fetchCPOptionValueByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOptionValue == null) {
@@ -211,8 +212,9 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 			String externalReferenceCode, OptionValue optionValue)
 		throws Exception {
 
-		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPOption cpOption =
+			_cpOptionService.fetchCPOptionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(

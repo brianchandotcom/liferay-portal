@@ -185,9 +185,10 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 				shipment.getOrderId());
 		}
 		else {
-			commerceOrder = _commerceOrderService.fetchByExternalReferenceCode(
-				shipment.getOrderExternalReferenceCode(),
-				contextCompany.getCompanyId());
+			commerceOrder =
+				_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
+					shipment.getOrderExternalReferenceCode(),
+					contextCompany.getCompanyId());
 
 			if (commerceOrder == null) {
 				throw new NoSuchOrderException(

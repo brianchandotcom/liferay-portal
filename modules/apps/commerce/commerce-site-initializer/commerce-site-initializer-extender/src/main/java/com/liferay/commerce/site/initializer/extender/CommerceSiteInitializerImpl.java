@@ -550,7 +550,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 			_addOrUpdateCommercePriceEntries(
 				cpDefinition,
-				_cpInstanceLocalService.fetchByExternalReferenceCode(
+				_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
 					subscriptionPropertiesJSONObject.getString(
 						"cpDefinitionExternalReferenceCode"),
 					serviceContext.getCompanyId()),

@@ -1195,10 +1195,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 			for (ProductChannel productChannel : productChannels) {
 				CommerceChannel commerceChannel =
-					_commerceChannelService.fetchByExternalReferenceCode(
-						GetterUtil.getString(
-							productChannel.getExternalReferenceCode()),
-						contextCompany.getCompanyId());
+					_commerceChannelService.
+						fetchCommerceChannelByExternalReferenceCode(
+							GetterUtil.getString(
+								productChannel.getExternalReferenceCode()),
+							contextCompany.getCompanyId());
 
 				if (commerceChannel == null) {
 					commerceChannel =

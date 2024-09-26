@@ -120,9 +120,10 @@ public class ShippingFixedOptionTermResourceImpl
 		}
 		else {
 			commerceTerm =
-				_commerceTermEntryService.fetchByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					shippingFixedOptionTerm.getTermExternalReferenceCode());
+				_commerceTermEntryService.
+					fetchCommerceTermEntryByExternalReferenceCode(
+						contextCompany.getCompanyId(),
+						shippingFixedOptionTerm.getTermExternalReferenceCode());
 		}
 
 		return commerceTerm;

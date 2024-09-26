@@ -64,8 +64,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		throws Exception {
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceEntryService.
+				fetchCommercePriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -95,8 +96,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		throws Exception {
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceEntryService.
+				fetchCommercePriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -113,8 +115,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		throws Exception {
 
 		CommercePriceList commercePriceList =
-			_commercePriceListService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceListService.
+				fetchCommercePriceListByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -177,8 +180,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		throws Exception {
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceEntryService.
+				fetchCommercePriceEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -199,8 +203,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		throws Exception {
 
 		CommercePriceList commercePriceList =
-			_commercePriceListService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePriceListService.
+				fetchCommercePriceListByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -245,8 +250,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 			cpInstance = _cpInstanceService.fetchCPInstance(skuId);
 		}
 		else if (Validator.isNotNull(skuExternalReferenceCode)) {
-			cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-				skuExternalReferenceCode, serviceContext.getCompanyId());
+			cpInstance =
+				_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+					skuExternalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (cpInstance != null) {

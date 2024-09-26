@@ -52,8 +52,9 @@ public class ProductGroupProductResourceImpl
 		throws Exception {
 
 		CommercePricingClass commercePricingClass =
-			_commercePricingClassService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePricingClassService.
+				fetchCommercePricingClassByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
@@ -108,8 +109,9 @@ public class ProductGroupProductResourceImpl
 		throws Exception {
 
 		CommercePricingClass commercePricingClass =
-			_commercePricingClassService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePricingClassService.
+				fetchCommercePricingClassByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(

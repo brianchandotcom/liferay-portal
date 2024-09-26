@@ -1563,8 +1563,9 @@ public class ObjectActionLocalServiceTest {
 			commerceOrder1.getOrderStatus());
 
 		CommerceOrder commerceOrder2 =
-			_commerceOrderLocalService.fetchByExternalReferenceCode(
-				"newCommerceOrder", TestPropsValues.getCompanyId());
+			_commerceOrderLocalService.
+				fetchCommerceOrderByExternalReferenceCode(
+					"newCommerceOrder", TestPropsValues.getCompanyId());
 
 		Assert.assertNotNull(commerceOrder2);
 

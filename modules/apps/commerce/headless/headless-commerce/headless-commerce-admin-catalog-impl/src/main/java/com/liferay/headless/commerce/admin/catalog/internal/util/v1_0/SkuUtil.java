@@ -74,7 +74,7 @@ public class SkuUtil {
 					sku.getReplacementSkuExternalReferenceCode())) {
 
 				discontinuedCPInstance =
-					cpInstanceService.fetchByExternalReferenceCode(
+					cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 						sku.getReplacementSkuExternalReferenceCode(),
 						cpDefinition.getCompanyId());
 			}

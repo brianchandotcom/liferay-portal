@@ -59,8 +59,9 @@ public class OrderTypeChannelResourceImpl
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
@@ -116,8 +117,9 @@ public class OrderTypeChannelResourceImpl
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
@@ -154,9 +156,10 @@ public class OrderTypeChannelResourceImpl
 		}
 		else {
 			commerceChannel =
-				_commerceChannelService.fetchByExternalReferenceCode(
-					orderTypeChannel.getChannelExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				_commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						orderTypeChannel.getChannelExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

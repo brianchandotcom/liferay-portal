@@ -37,9 +37,10 @@ public class TermOrderTypeUtil {
 		}
 		else {
 			commerceOrderType =
-				commerceOrderTypeService.fetchByExternalReferenceCode(
-					termOrderType.getOrderTypeExternalReferenceCode(),
-					commerceTermEntry.getCompanyId());
+				commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						termOrderType.getOrderTypeExternalReferenceCode(),
+						commerceTermEntry.getCompanyId());
 
 			if (commerceOrderType == null) {
 				String orderTypeExternalReferenceCode =

@@ -53,7 +53,7 @@ public class PlacedOrderItemResourceImpl
 		throws Exception {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.fetchByExternalReferenceCode(
+			_commerceOrderService.fetchCommerceOrderByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
@@ -90,8 +90,9 @@ public class PlacedOrderItemResourceImpl
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(

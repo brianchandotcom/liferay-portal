@@ -58,9 +58,10 @@ public class OrderItemUtil {
 		if ((cpInstance == null) &&
 			(orderItem.getSkuExternalReferenceCode() != null)) {
 
-			cpInstance = cpInstanceService.fetchByExternalReferenceCode(
-				orderItem.getSkuExternalReferenceCode(),
-				serviceContext.getCompanyId());
+			cpInstance =
+				cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+					orderItem.getSkuExternalReferenceCode(),
+					serviceContext.getCompanyId());
 		}
 
 		if (cpInstance == null) {
@@ -73,7 +74,7 @@ public class OrderItemUtil {
 
 		if (replacedSkuId == 0) {
 			CPInstance replacedCPInstance =
-				cpInstanceService.fetchByExternalReferenceCode(
+				cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 					orderItem.getReplacedSkuExternalReferenceCode(),
 					serviceContext.getCompanyId());
 
@@ -113,9 +114,10 @@ public class OrderItemUtil {
 
 		if (shippingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				commerceAddressService.fetchByExternalReferenceCode(
-					orderItem.getShippingAddressExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						orderItem.getShippingAddressExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceAddress != null) {
 				shippingAddressId = commerceAddress.getCommerceAddressId();
@@ -234,9 +236,10 @@ public class OrderItemUtil {
 		}
 
 		if (orderItem.getSkuExternalReferenceCode() != null) {
-			cpInstance = cpInstanceService.fetchByExternalReferenceCode(
-				orderItem.getSkuExternalReferenceCode(),
-				serviceContext.getCompanyId());
+			cpInstance =
+				cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+					orderItem.getSkuExternalReferenceCode(),
+					serviceContext.getCompanyId());
 		}
 
 		if (cpInstance == null) {
@@ -257,9 +260,10 @@ public class OrderItemUtil {
 			!Validator.isBlank(orderItem.getExternalReferenceCode())) {
 
 			commerceOrderItem =
-				commerceOrderItemService.fetchByExternalReferenceCode(
-					orderItem.getExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceOrderItemService.
+					fetchCommerceOrderItemByExternalReferenceCode(
+						orderItem.getExternalReferenceCode(),
+						serviceContext.getCompanyId());
 		}
 
 		if (commerceOrderItem != null) {
@@ -274,7 +278,7 @@ public class OrderItemUtil {
 
 		if (replacedSkuId == 0) {
 			CPInstance replacedSku =
-				cpInstanceService.fetchByExternalReferenceCode(
+				cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 					orderItem.getReplacedSkuExternalReferenceCode(),
 					serviceContext.getCompanyId());
 
@@ -338,9 +342,10 @@ public class OrderItemUtil {
 
 		if (shippingAddressId == 0) {
 			CommerceAddress commerceAddress =
-				commerceAddressService.fetchByExternalReferenceCode(
-					orderItem.getShippingAddressExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						orderItem.getShippingAddressExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceAddress != null) {
 				shippingAddressId = commerceAddress.getCommerceAddressId();

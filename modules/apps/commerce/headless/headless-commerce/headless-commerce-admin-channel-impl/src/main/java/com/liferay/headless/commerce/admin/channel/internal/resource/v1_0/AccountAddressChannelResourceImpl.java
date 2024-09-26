@@ -179,8 +179,9 @@ public class AccountAddressChannelResourceImpl
 				accountAddressChannel.getAddressChannelExternalReferenceCode();
 
 			commerceChannel =
-				_commerceChannelService.fetchByExternalReferenceCode(
-					externalReferenceCode, serviceContext.getCompanyId());
+				_commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

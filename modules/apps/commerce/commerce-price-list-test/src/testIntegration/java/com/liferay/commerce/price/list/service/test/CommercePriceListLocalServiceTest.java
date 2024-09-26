@@ -336,8 +336,9 @@ public class CommercePriceListLocalServiceTest {
 			RandomTestUtil.randomDouble(), true, null, null);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, _group.getCompanyId());
+			_commercePriceListLocalService.
+				fetchCommercePriceListByExternalReferenceCode(
+					externalReferenceCode, _group.getCompanyId());
 
 		_assertPriceListAttributes(
 			updatedCurrency, updatedName, commercePriceList);

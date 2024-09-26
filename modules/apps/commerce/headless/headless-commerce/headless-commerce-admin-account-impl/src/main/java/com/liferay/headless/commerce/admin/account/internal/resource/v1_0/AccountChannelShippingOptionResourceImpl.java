@@ -342,11 +342,12 @@ public class AccountChannelShippingOptionResourceImpl
 		throws Exception {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchByExternalReferenceCode(
-				GetterUtil.getString(
-					accountChannelShippingOption.
-						getChannelExternalReferenceCode()),
-				contextCompany.getCompanyId());
+			_commerceChannelLocalService.
+				fetchCommerceChannelByExternalReferenceCode(
+					GetterUtil.getString(
+						accountChannelShippingOption.
+							getChannelExternalReferenceCode()),
+					contextCompany.getCompanyId());
 
 		if (commerceChannel == null) {
 			commerceChannel = _commerceChannelLocalService.fetchCommerceChannel(

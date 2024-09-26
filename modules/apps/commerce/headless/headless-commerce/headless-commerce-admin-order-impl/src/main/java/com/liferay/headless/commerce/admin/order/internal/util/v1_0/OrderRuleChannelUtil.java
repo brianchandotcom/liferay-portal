@@ -36,9 +36,10 @@ public class OrderRuleChannelUtil {
 		}
 		else {
 			commerceChannel =
-				commerceChannelService.fetchByExternalReferenceCode(
-					orderRuleChannel.getChannelExternalReferenceCode(),
-					corEntry.getCompanyId());
+				commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						orderRuleChannel.getChannelExternalReferenceCode(),
+						corEntry.getCompanyId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(

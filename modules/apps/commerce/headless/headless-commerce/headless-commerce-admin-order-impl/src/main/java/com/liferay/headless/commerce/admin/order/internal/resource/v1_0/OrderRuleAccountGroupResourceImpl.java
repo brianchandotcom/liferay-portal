@@ -54,8 +54,9 @@ public class OrderRuleAccountGroupResourceImpl
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -107,8 +108,9 @@ public class OrderRuleAccountGroupResourceImpl
 				OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(

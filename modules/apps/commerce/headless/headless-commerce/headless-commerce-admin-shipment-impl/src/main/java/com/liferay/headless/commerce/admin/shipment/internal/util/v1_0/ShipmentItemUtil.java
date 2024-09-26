@@ -88,8 +88,10 @@ public class ShipmentItemUtil {
 		}
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				shipmentItem.getWarehouseExternalReferenceCode(), companyId);
+			commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					shipmentItem.getWarehouseExternalReferenceCode(),
+					companyId);
 
 		if (commerceInventoryWarehouse != null) {
 			return commerceInventoryWarehouse.getCommerceInventoryWarehouseId();
@@ -111,8 +113,10 @@ public class ShipmentItemUtil {
 		}
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemService.fetchByExternalReferenceCode(
-				shipmentItem.getOrderItemExternalReferenceCode(), companyId);
+			commerceOrderItemService.
+				fetchCommerceOrderItemByExternalReferenceCode(
+					shipmentItem.getOrderItemExternalReferenceCode(),
+					companyId);
 
 		if (commerceOrderItem != null) {
 			return commerceOrderItem.getCommerceOrderItemId();

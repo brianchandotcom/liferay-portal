@@ -54,8 +54,9 @@ public class OrderRuleChannelResourceImpl
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -105,8 +106,9 @@ public class OrderRuleChannelResourceImpl
 				String externalReferenceCode, OrderRuleChannel orderRuleChannel)
 		throws Exception {
 
-		COREntry corEntry = _corEntryService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
@@ -160,9 +162,10 @@ public class OrderRuleChannelResourceImpl
 		}
 		else {
 			commerceChannel =
-				_commerceChannelService.fetchByExternalReferenceCode(
-					orderRuleChannel.getChannelExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceChannelService.
+					fetchCommerceChannelByExternalReferenceCode(
+						orderRuleChannel.getChannelExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		return commerceChannel;

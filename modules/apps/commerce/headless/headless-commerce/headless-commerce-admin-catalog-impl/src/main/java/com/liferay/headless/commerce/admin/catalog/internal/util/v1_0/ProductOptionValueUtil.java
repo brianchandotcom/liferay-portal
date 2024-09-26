@@ -41,9 +41,10 @@ public class ProductOptionValueUtil {
 
 		long cpInstanceId = 0;
 
-		CPInstance cpInstance = cpInstanceService.fetchByExternalReferenceCode(
-			productOptionValue.getSkuExternalReferenceCode(),
-			serviceContext.getCompanyId());
+		CPInstance cpInstance =
+			cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				productOptionValue.getSkuExternalReferenceCode(),
+				serviceContext.getCompanyId());
 
 		if (cpInstance == null) {
 			cpInstance = cpInstanceService.fetchCPInstance(

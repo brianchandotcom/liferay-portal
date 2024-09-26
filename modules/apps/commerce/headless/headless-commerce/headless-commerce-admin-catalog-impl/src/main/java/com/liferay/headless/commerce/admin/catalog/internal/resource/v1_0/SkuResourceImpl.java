@@ -115,8 +115,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPInstance cpInstance =
+			_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -176,8 +177,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	public Sku getSkuByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
 
-		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPInstance cpInstance =
+			_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -244,8 +246,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			String externalReferenceCode, Sku sku)
 		throws Exception {
 
-		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPInstance cpInstance =
+			_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -293,8 +296,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			String externalReferenceCode, Sku sku)
 		throws Exception {
 
-		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+		CPInstance cpInstance =
+			_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -338,7 +342,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 					sku.getReplacementSkuExternalReferenceCode())) {
 
 				discontinuedCPInstance =
-					_cpInstanceService.fetchByExternalReferenceCode(
+					_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 						sku.getReplacementSkuExternalReferenceCode(),
 						contextCompany.getCompanyId());
 			}
@@ -733,7 +737,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 					sku.getReplacementSkuExternalReferenceCode())) {
 
 				discontinuedCPInstance =
-					_cpInstanceService.fetchByExternalReferenceCode(
+					_cpInstanceService.fetchCPInstanceByExternalReferenceCode(
 						sku.getReplacementSkuExternalReferenceCode(),
 						contextCompany.getCompanyId());
 			}

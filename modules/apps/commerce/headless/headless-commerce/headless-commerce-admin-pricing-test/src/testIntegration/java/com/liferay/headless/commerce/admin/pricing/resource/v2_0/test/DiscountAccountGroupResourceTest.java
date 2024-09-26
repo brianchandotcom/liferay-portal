@@ -93,8 +93,9 @@ public class DiscountAccountGroupResourceTest
 		}
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.fetchByExternalReferenceCode(
-				"external-reference-code-test", testCompany.getCompanyId());
+			_commerceDiscountLocalService.
+				fetchCommerceDiscountByExternalReferenceCode(
+					"external-reference-code-test", testCompany.getCompanyId());
 
 		if (commerceDiscount != null) {
 			_commerceDiscountLocalService.deleteCommerceDiscount(
@@ -141,8 +142,9 @@ public class DiscountAccountGroupResourceTest
 		}
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.fetchByExternalReferenceCode(
-				"external-reference-code-test", testCompany.getCompanyId());
+			_commerceDiscountLocalService.
+				fetchCommerceDiscountByExternalReferenceCode(
+					"external-reference-code-test", testCompany.getCompanyId());
 
 		if (commerceDiscount != null) {
 			_commerceDiscountLocalService.deleteCommerceDiscount(
@@ -278,8 +280,9 @@ public class DiscountAccountGroupResourceTest
 		throws Exception {
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, testCompany.getCompanyId());
+			_commerceDiscountLocalService.
+				fetchCommerceDiscountByExternalReferenceCode(
+					externalReferenceCode, testCompany.getCompanyId());
 
 		CommerceDiscountCommerceAccountGroupRel
 			commerceDiscountCommerceAccountGroupRel =

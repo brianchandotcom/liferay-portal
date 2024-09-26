@@ -63,7 +63,7 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		throws Exception {
 
 		CommerceAddress commerceAddress =
-			_commerceAddressService.fetchByExternalReferenceCode(
+			_commerceAddressService.fetchCommerceAddressByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceAddress == null) {
@@ -92,7 +92,7 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		throws Exception {
 
 		CommerceAddress commerceAddress =
-			_commerceAddressService.fetchByExternalReferenceCode(
+			_commerceAddressService.fetchCommerceAddressByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceAddress == null) {
@@ -185,7 +185,7 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		throws Exception {
 
 		CommerceAddress commerceAddress =
-			_commerceAddressService.fetchByExternalReferenceCode(
+			_commerceAddressService.fetchCommerceAddressByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceAddress == null) {
@@ -257,9 +257,10 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		}
 		else if (accountAddress.getExternalReferenceCode() != null) {
 			commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					accountAddress.getExternalReferenceCode(),
-					contextCompany.getCompanyId());
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						accountAddress.getExternalReferenceCode(),
+						contextCompany.getCompanyId());
 		}
 
 		if (commerceAddress != null) {

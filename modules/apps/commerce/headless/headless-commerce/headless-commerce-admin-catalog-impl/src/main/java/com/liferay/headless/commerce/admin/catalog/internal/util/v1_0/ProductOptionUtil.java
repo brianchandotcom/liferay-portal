@@ -40,7 +40,7 @@ public class ProductOptionUtil {
 			cpOption = cpOptionService.getCPOption(optionId);
 		}
 		else {
-			cpOption = cpOptionService.fetchByExternalReferenceCode(
+			cpOption = cpOptionService.fetchCPOptionByExternalReferenceCode(
 				productOption.getOptionExternalReferenceCode(),
 				serviceContext.getCompanyId());
 

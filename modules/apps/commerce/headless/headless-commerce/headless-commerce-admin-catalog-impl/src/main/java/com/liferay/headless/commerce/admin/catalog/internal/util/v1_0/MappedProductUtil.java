@@ -40,8 +40,9 @@ public class MappedProductUtil {
 
 		long skuId = GetterUtil.getLong(mappedProduct.getSkuId());
 
-		CPInstance cpInstance = cpInstanceService.fetchByExternalReferenceCode(
-			mappedProduct.getSkuExternalReferenceCode(), companyId);
+		CPInstance cpInstance =
+			cpInstanceService.fetchCPInstanceByExternalReferenceCode(
+				mappedProduct.getSkuExternalReferenceCode(), companyId);
 
 		if (cpInstance != null) {
 			skuId = cpInstance.getCPInstanceId();

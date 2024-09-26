@@ -325,9 +325,10 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 			return optionId;
 		}
 
-		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
-			productOption.getOptionExternalReferenceCode(),
-			contextCompany.getCompanyId());
+		CPOption cpOption =
+			_cpOptionService.fetchCPOptionByExternalReferenceCode(
+				productOption.getOptionExternalReferenceCode(),
+				contextCompany.getCompanyId());
 
 		if (cpOption != null) {
 			return cpOption.getCPOptionId();

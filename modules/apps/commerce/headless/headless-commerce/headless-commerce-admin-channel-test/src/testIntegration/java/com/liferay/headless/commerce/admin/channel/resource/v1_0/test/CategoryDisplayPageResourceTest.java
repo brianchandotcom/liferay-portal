@@ -233,8 +233,9 @@ public class CategoryDisplayPageResourceTest
 		throws Exception {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, testCompany.getCompanyId());
+			_commerceChannelLocalService.
+				fetchCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, testCompany.getCompanyId());
 
 		if (commerceChannel == null) {
 			commerceChannel = CommerceTestUtil.addCommerceChannel(

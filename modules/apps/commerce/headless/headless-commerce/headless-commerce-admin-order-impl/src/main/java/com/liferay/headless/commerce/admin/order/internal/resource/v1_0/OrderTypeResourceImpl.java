@@ -67,8 +67,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
@@ -110,8 +111,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
@@ -170,8 +172,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
@@ -196,8 +199,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderType == null) {
 			commerceOrderType = _addCommerceOrderType(

@@ -45,9 +45,10 @@ public class DiscountOrderTypeUtil {
 		}
 		else {
 			commerceOrderType =
-				commerceOrderTypeService.fetchByExternalReferenceCode(
-					discountOrderType.getOrderTypeExternalReferenceCode(),
-					serviceContext.getCompanyId());
+				commerceOrderTypeService.
+					fetchCommerceOrderTypeByExternalReferenceCode(
+						discountOrderType.getOrderTypeExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (commerceOrderType == null) {
 				String orderTypeExternalReferenceCode =

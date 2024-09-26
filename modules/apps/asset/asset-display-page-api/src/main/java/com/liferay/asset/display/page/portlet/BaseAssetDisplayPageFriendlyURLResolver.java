@@ -217,7 +217,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		FriendlyURLSeparatorProvider friendlyURLSeparatorProvider =
-			_friendlyURLSeparatorProvider.get();
+			_friendlyURLSeparatorProviderSnapshot.get();
 
 		if (friendlyURLSeparatorProvider == null) {
 			return getDefaultURLSeparator();
@@ -557,7 +557,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		BaseAssetDisplayPageFriendlyURLResolver.class);
 
 	private static final Snapshot<FriendlyURLSeparatorProvider>
-		_friendlyURLSeparatorProvider = new Snapshot<>(
+		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			BaseAssetDisplayPageFriendlyURLResolver.class,
 			FriendlyURLSeparatorProvider.class);
 

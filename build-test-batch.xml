@@ -6456,7 +6456,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="portal-license-smoke-mysql57-jdk8">
+	<target name="portal-license-smoke-mysql57">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">

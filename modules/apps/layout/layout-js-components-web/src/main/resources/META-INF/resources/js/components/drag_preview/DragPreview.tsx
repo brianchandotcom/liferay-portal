@@ -59,7 +59,7 @@ export default function DragPreview<T extends DragItem>({
 	const icon = useMemo(() => getIcon(item), [getIcon, item]);
 	const label = useMemo(() => getLabel(item), [getLabel, item]);
 
-	if (!isDragging) {
+	if (!isDragging || (!icon && !label)) {
 		return null;
 	}
 

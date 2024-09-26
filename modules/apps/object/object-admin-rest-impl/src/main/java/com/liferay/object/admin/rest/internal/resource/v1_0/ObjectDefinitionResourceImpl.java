@@ -550,6 +550,9 @@ public class ObjectDefinitionResourceImpl
 					0);
 		}
 		else {
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				objectDefinition.getDefaultLanguageId());
+
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.updateCustomObjectDefinition(
 					objectDefinition.getExternalReferenceCode(),
@@ -575,14 +578,18 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryHistory()),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getLabel()),
+					_getLocalizedMap(
+						defaultLocale,
+						LocalizedMapUtil.getLocalizedMap(
+							objectDefinition.getLabel())),
 					objectDefinition.getName(),
 					objectDefinition.getPanelAppOrder(),
 					objectDefinition.getPanelCategoryKey(),
 					GetterUtil.getBoolean(objectDefinition.getPortlet()),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getPluralLabel()),
+					_getLocalizedMap(
+						defaultLocale,
+						LocalizedMapUtil.getLocalizedMap(
+							objectDefinition.getPluralLabel())),
 					objectDefinition.getScope(), statusInt);
 		}
 

@@ -362,11 +362,7 @@ export default function ChangeTrackingChangeView({
 
 	const getMoveChangesURL = useCallback(
 		(node) => {
-			if (
-				!Liferay.FeatureFlags['LPS-171364'] ||
-				!node.movable ||
-				!moveChangesURL
-			) {
+			if (!node.movable || !moveChangesURL) {
 				return null;
 			}
 

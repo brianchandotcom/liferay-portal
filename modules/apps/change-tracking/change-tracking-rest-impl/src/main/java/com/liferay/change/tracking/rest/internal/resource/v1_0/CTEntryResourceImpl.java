@@ -18,7 +18,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -226,9 +225,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 						ctEntry.getModelClassNameId(),
 						ctEntry.getModelClassPK());
 
-					if (!FeatureFlagManagerUtil.isEnabled(
-							contextCompany.getCompanyId(), "LPS-171364") ||
-						(model == null) ||
+					if ((model == null) ||
 						_ctDisplayRendererRegistry.isHideable(
 							model, ctEntry.getModelClassNameId())) {
 

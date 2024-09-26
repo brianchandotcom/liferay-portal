@@ -21,7 +21,6 @@ export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-20556': true,
-		'LPS-171364': true,
 	}),
 	changeTrackingPagesTest
 );

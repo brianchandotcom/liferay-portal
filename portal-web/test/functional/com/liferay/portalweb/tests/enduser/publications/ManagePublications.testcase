@@ -27,8 +27,6 @@ definition {
 
 	@priority = 4
 	test AssertDependenciesMovePublicationsWithParentChange {
-		property custom.properties = "feature.flag.LPS-171364=true";
-
 		task ("Add 2 different publications") {
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
@@ -100,8 +98,6 @@ definition {
 
 	@priority = 5
 	test CanMoveChangeBetweenPublications {
-		property custom.properties = "feature.flag.LPS-171364=true";
-
 		task ("Add 1 web content and 2 different publications") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
@@ -189,8 +185,6 @@ definition {
 
 	@priority = 4
 	test CannotMoveChangesBetweenPublicationsIfConflictsArePresent {
-		property custom.properties = "feature.flag.LPS-171364=true";
-
 		task ("Add 1 web content and 2 different publications") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
@@ -283,8 +277,6 @@ definition {
 	@description = "This is a use case for LPS-182679"
 	@priority = 3
 	test CannotMoveTheChangeWithoutParentsChange {
-		property custom.properties = "feature.flag.LPS-171364=true";
-
 		task ("Add 2 new publications") {
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
@@ -347,8 +339,6 @@ definition {
 	@description = "This is a use case for LPS-194056 - As a publication user, I would like to prevent system changes from being moved."
 	@priority = 3
 	test CanPreventSystemChangesFromBeingMoved {
-		property custom.properties = "feature.flag.LPS-171364=true";
-
 		task ("Create 2 Publications and select one of them") {
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");
 

@@ -80,6 +80,28 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _getCategoryFieldValueById(categoryId = null, fieldName = null) {
+		Variables.assertDefined(parameterList = "${categoryId},${fieldName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetcategory/get-category \
+				-u ${userLoginInfo} \
+				-d categoryId=${categoryId}
+		''';
+
+		var fieldValue = JSONCurlUtil.post(${curl}, "$.['${fieldName}']");
+
+		if (${fieldValue} == "") {
+			fail("FAIL. Cannot find category field value.");
+		}
+
+		return ${fieldValue};
+	}
+
+	@summary = "Default summary"
 	macro _getCategoryIdByName(vocabularyId = null, groupId = null, categoryName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
 

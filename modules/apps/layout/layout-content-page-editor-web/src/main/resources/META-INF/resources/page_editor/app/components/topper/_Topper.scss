@@ -64,7 +64,8 @@ html#{$cadmin-selector} {
 	.page-editor__topper {
 		position: relative;
 
-		&:after {
+		&:not(.page-editor__col):after,
+		& > .page-editor__col__border:after {
 			box-shadow: inset 0 0 0 $borderWidth fade_out($cadmin-primary-l2, 1);
 			content: '';
 			display: block;
@@ -77,11 +78,14 @@ html#{$cadmin-selector} {
 			width: 100%;
 		}
 
-		.page-editor__row:not(.no-gutters) > .page-editor__col:before {
-			$spacingUnit: 12px;
+		.page-editor__row:not(.no-gutters) > .page-editor__col {
+			&:before,
+			& > .page-editor__col__border:after {
+				$spacingUnit: 12px;
 
-			left: $spacingUnit;
-			width: calc(100% - #{$spacingUnit * 2});
+				left: $spacingUnit;
+				width: calc(100% - #{$spacingUnit * 2});
+			}
 		}
 
 		&:focus {
@@ -100,7 +104,8 @@ html#{$cadmin-selector} {
 			box-shadow: inset 0 0 0 $borderWidth $cadmin-primary-l1;
 		}
 
-		&.active:after,
+		&.active:not(.page-editor__col):after,
+		&.active > .page-editor__col__border:after,
 		&.highlighted:after {
 			box-shadow: inset 0 0 0 $borderWidth $cadmin-primary;
 			z-index: 1;

@@ -14,33 +14,43 @@ import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateIte
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 
-const Column = React.forwardRef(({children, className, item}, ref) => {
-	const canUpdateItemConfiguration = useSelector(
-		selectCanUpdateItemConfiguration
-	);
-	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
-	const nextColumnSizes = useNextColumnSizes();
-
-	const columnSize =
-		nextColumnSizes?.[item.itemId] ||
-		getResponsiveColumnSize(item.config, selectedViewportSize);
-
-	const columnContent =
-		canUpdatePageStructure || canUpdateItemConfiguration ? (
-			<div className="page-editor__col__border">{children}</div>
-		) : (
-			children
+const Column = React.forwardRef(
+	({children, className, item, ...otherProps}, ref) => {
+		const canUpdateItemConfiguration = useSelector(
+			selectCanUpdateItemConfiguration
 		);
+		const canUpdatePageStructure = useSelector(
+			selectCanUpdatePageStructure
+		);
+		const selectedViewportSize = useSelector(
+			(state) => state.selectedViewportSize
+		);
+		const nextColumnSizes = useNextColumnSizes();
 
-	return (
-		<ClayLayout.Col className={className} ref={ref} size={columnSize}>
-			{columnContent}
-		</ClayLayout.Col>
-	);
-});
+		const columnSize =
+			nextColumnSizes?.[item.itemId] ||
+			getResponsiveColumnSize(item.config, selectedViewportSize);
+
+		const columnContent =
+			canUpdatePageStructure || canUpdateItemConfiguration ? (
+				<div className="page-editor__col__border" ref={ref}>
+					{children}
+				</div>
+			) : (
+				children
+			);
+
+		return (
+			<ClayLayout.Col
+				className={className}
+				size={columnSize}
+				{...otherProps}
+			>
+				{columnContent}
+			</ClayLayout.Col>
+		);
+	}
+);
 
 Column.propTypes = {
 	item: getLayoutDataItemPropTypes({

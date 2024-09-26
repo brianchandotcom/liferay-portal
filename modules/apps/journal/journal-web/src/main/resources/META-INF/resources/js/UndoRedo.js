@@ -42,16 +42,25 @@ export default function UndoRedo({
 					initialFields[`${META_FIELD_NAMES.description}`][
 						`${initialDefaultLanguageId}`
 					] || '',
+				descriptionTranslatedLanguages: Object.keys(
+					initialFields[`${META_FIELD_NAMES.description}`]
+				),
 				friendlyURLInputValue:
 					initialFields[`${META_FIELD_NAMES.friendlyURL}`][
 						`${initialDefaultLanguageId}`
 					] || '',
+				friendlyURLTranslatedLanguages: Object.keys(
+					initialFields[`${META_FIELD_NAMES.friendlyURL}`]
+				),
 				name: 'Reset',
 				selectedLanguageId: languageId,
 				titleInputValue:
 					initialFields[`${META_FIELD_NAMES.title}`][
 						`${initialDefaultLanguageId}`
 					] || '',
+				titleTranslatedLanguages: Object.keys(
+					initialFields[`${META_FIELD_NAMES.title}`]
+				),
 			},
 		],
 		selectedLanguageId: languageId,

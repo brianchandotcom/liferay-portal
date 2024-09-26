@@ -9,6 +9,7 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +22,8 @@ import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathU
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import java.lang.reflect.Field;
 
 import java.net.URL;
 
@@ -56,9 +59,11 @@ import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.Options;
 import org.apache.jasper.compiler.ErrorDispatcher;
 import org.apache.jasper.compiler.TldCache;
+import org.apache.tomcat.util.descriptor.LocalResolver;
 import org.apache.tomcat.util.descriptor.tld.TaglibXml;
 import org.apache.tomcat.util.descriptor.tld.TldParser;
 import org.apache.tomcat.util.descriptor.tld.TldResourcePath;
+import org.apache.tomcat.util.digester.Digester;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -68,8 +73,6 @@ import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.ServiceTracker;
-
-import org.xml.sax.SAXException;
 
 /**
  * @author Raymond Augé
@@ -484,9 +487,9 @@ public class JspCompiler {
 
 		String uri = TldURIUtil.getTldURI(url);
 
-		uri = uri.trim();
-
 		if ((uri != null) && !uriTldResourcePathMap.containsKey(uri)) {
+			uri = uri.trim();
+
 			try {
 				TldResourcePath tldResourcePath = new TldResourcePath(
 					url, absoluteResourcePath);
@@ -495,11 +498,18 @@ public class JspCompiler {
 
 				TldParser tldParser = new TldParser(true, false, true);
 
+				Digester digester = (Digester)_digesterField.get(tldParser);
+
+				digester.setEntityResolver(
+					new LocalResolver(
+						JspTaglibIDUtil.servletApiPublicIdsMap,
+						JspTaglibIDUtil.servletApiSystemIdsMap, true));
+
 				tldResourcePathTaglibXmlMap.put(
 					tldResourcePath, tldParser.parse(tldResourcePath));
 			}
-			catch (SAXException saxException) {
-				_log.error(saxException, saxException);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}
@@ -517,6 +527,7 @@ public class JspCompiler {
 			new ConcurrentReferenceValueHashMap<>(
 				FinalizeManager.SOFT_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private static final Field _digesterField;
 	private static final BundleWiring _jspBundleWiring;
 	private static final Map<BundleWiring, Set<String>>
 		_jspBundleWiringPackageNames = new HashMap<>();
@@ -544,6 +555,14 @@ public class JspCompiler {
 			bundleContext,
 			"(&(jsp.compiler.resource.map=*)(objectClass=" +
 				Map.class.getName() + "))");
+
+		try {
+			_digesterField = ReflectionUtil.getDeclaredField(
+				TldParser.class, "digester");
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
 	}
 
 	private Bundle[] _allParticipatingBundles;

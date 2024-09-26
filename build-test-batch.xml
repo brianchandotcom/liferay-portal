@@ -8627,7 +8627,7 @@ information. Make sure to commit in all build REST results.
 		</fail>
 	</target>
 
-	<target name="semantic-versioning-jdk8">
+	<target name="semantic-versioning">
 		<run-batch-test>
 			<test-action>
 				<echo>Checking for baseline log files.</echo>

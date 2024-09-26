@@ -17,9 +17,9 @@ import Loading from '../../../../../components/Loading';
 import Modal from '../../../../../components/Modal';
 import Table from '../../../../../components/Table/Table';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
-import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
+import trialOAuth2 from '../../../../../services/oauth/Trial';
 import CommerceSelectAccountImpl from '../../../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceAdminOrderImpl from '../../../../../services/rest/HeadlessCommerceAdminOrder';
 import NewTrialModal from './NewTrialModal';
@@ -45,7 +45,7 @@ const safeRunner = async (promise: any) => {
 	try {
 		await promise;
 	}
-	catch (error) {}
+	catch {}
 };
 
 const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
@@ -54,15 +54,13 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 	const newTrialModal = useModal();
 	const modal = useModal();
 
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-
 	const onDeleteTrial = async (order: Order) => {
 		setProcessing(true);
 
 		const orderId = String(order.id);
 
 		await safeRunner(HeadlessCommerceAdminOrderImpl.deleteOrder(orderId));
-		await safeRunner(marketplaceSpringBootOAuth2.deleteTrial(orderId));
+		await safeRunner(trialOAuth2.deleteTrial(orderId));
 
 		await revalidate();
 

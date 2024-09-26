@@ -4,10 +4,8 @@
  */
 
 import {ORDER_TYPES} from '../../../enums/Order';
-import MarketplaceSpringBootOAuth2 from '../../../services/oauth/MarketplaceSpringBootOAuth2';
+import trialOAuth2 from '../../../services/oauth/Trial';
 import ProductPurchase from './ProductPurchase';
-
-const marketplaceSpringBootOAuth2 = new MarketplaceSpringBootOAuth2();
 
 export default class ProductPurchaseSolutionTrial extends ProductPurchase {
 	protected orderTypeExternalReferenceCode = ORDER_TYPES.SOLUTIONS7;
@@ -15,14 +13,13 @@ export default class ProductPurchaseSolutionTrial extends ProductPurchase {
 	public async createOrder(): Promise<Cart> {
 		const order = await super.createOrder();
 
-		await marketplaceSpringBootOAuth2.provisioningTrial(order.id);
+		await trialOAuth2.provisioningTrial(order.id);
 
 		return order;
 	}
 
 	public async isTrialInHold() {
-		const trialAvailability =
-			await marketplaceSpringBootOAuth2.getTrialAvailability();
+		const trialAvailability = await trialOAuth2.getAvailability();
 
 		return trialAvailability.fallback
 			? false

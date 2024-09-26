@@ -5,24 +5,22 @@
 
 import useSWR from 'swr';
 
-import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
+import analyticsOAuth2 from '../../../services/oauth/Analytics';
 import {colors} from '../mock';
 
 const useAnalyticsViewsMetrics = () => {
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-
 	const {data: analyticsViewsResponse = [], ...swr} = useSWR<
 		AnalyticsViews[]
 	>('administrator-dashboard/metrics/analytics', () =>
 		Promise.all([
-			marketplaceSpringBootOAuth2.getAnalyticsPages(
+			analyticsOAuth2.getPages(
 				new URLSearchParams({
 					rangeKey: '90',
 					sortMetric: 'viewsMetric',
 					sortOrder: 'desc',
 				})
 			),
-			marketplaceSpringBootOAuth2.getAnalyticsPages(
+			analyticsOAuth2.getPages(
 				new URLSearchParams({
 					keywords: '/p/',
 					rangeKey: '90',

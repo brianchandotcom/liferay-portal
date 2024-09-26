@@ -5,31 +5,27 @@
 
 import {ORDER_TYPES} from '../../../enums/Order';
 import zodSchema, {z} from '../../../schema/zod';
-import MarketplaceSpringBootOAuth2 from '../../../services/oauth/MarketplaceSpringBootOAuth2';
+import analyticsOAuth2 from '../../../services/oauth/Analytics';
 import {sanitizeStringForURL} from '../../../utils/string';
 import ProductPurchase from './ProductPurchase';
 
 export default class ProductPurchaseAnalytics extends ProductPurchase {
 	protected orderTypeExternalReferenceCode = ORDER_TYPES.ADDONS;
-	private marketplaceSpringBootOAuth2 = new MarketplaceSpringBootOAuth2();
 
-	async startProvisioning(
+	private async startProvisioning(
 		form: z.infer<typeof zodSchema.analyticsProvisioning>,
 		orderId: number
 	) {
-		return this.marketplaceSpringBootOAuth2.provisioningAnalyticsCloud(
-			orderId,
-			{
-				corpProjectName: form.workspaceName,
-				corpProjectUuid: `KOR-${new Date().getTime()}`,
-				emailAddressDomains: form.allowedEmailDomains,
-				friendlyURL: `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`,
-				incidentReportEmailAddresses: form.incidentReportContacts,
-				name: form.workspaceName,
-				ownerEmailAddress: form.workspaceOwnerEmail,
-				timeZoneId: form.timezone,
-			}
-		);
+		return analyticsOAuth2.provisioning(orderId, {
+			corpProjectName: form.workspaceName,
+			corpProjectUuid: `KOR-${new Date().getTime()}`,
+			emailAddressDomains: form.allowedEmailDomains,
+			friendlyURL: `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`,
+			incidentReportEmailAddresses: form.incidentReportContacts,
+			name: form.workspaceName,
+			ownerEmailAddress: form.workspaceOwnerEmail,
+			timeZoneId: form.timezone,
+		});
 	}
 
 	public async create(form: z.infer<typeof zodSchema.analyticsProvisioning>) {

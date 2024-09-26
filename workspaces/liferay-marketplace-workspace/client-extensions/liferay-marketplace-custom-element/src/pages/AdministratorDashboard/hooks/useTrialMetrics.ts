@@ -9,7 +9,7 @@ import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
 import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../../../enums/Order';
-import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
+import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
 type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
@@ -34,8 +34,6 @@ const useTrialMetrics = (param: FilterType) => {
 	const [refreshInterval, setRefreshInterval] = useState(
 		DEFAULT_REFRESH_INTERVAL
 	);
-
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const beforeLastPeriod = addDays(
 		new Date(),
@@ -99,7 +97,7 @@ const useTrialMetrics = (param: FilterType) => {
 		'administrator-dashboard/metrics/trial',
 		() =>
 			Promise.all([
-				marketplaceSpringBootOAuth2.getTrialAvailability(),
+				trialOAuth2.getAvailability(),
 				...requestsParams.map((searchParam) =>
 					HeadlessCommerceAdminOrderImpl.getOrders(searchParam)
 				),

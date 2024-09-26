@@ -10,14 +10,13 @@ import {KeyedMutator} from 'swr';
 import {Analytics} from '../../../../../../core/Analytics';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
-import MarketplaceSpringBootOAuth2 from '../../../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import provisioningOAuth2 from '../../../../../../services/oauth/Provisioning';
 import {LicenseKey} from '../../../../../../services/oauth/types';
 
 type Props = {
 	deactivateLicenseModal: ReturnType<typeof useModal>;
 	keyType: string;
 	licenseKeyModal: ReturnType<typeof useModal>;
-	marketplaceSpringBootOAuth2: MarketplaceSpringBootOAuth2;
 	mutate: KeyedMutator<any>;
 	product?: DeliveryProduct;
 	setModal: (data: any) => void;
@@ -27,13 +26,12 @@ const useLicenseActions = ({
 	deactivateLicenseModal,
 	keyType,
 	licenseKeyModal,
-	marketplaceSpringBootOAuth2,
 	mutate,
 	product,
 	setModal,
 }: Props) => {
 	const onDeativateLicenseKey = (licenseKey: LicenseKey) =>
-		marketplaceSpringBootOAuth2
+		provisioningOAuth2
 			.deactivateLicenseKey(licenseKey?.id as number)
 			.then(() => {
 				mutate((data: any) => data, {revalidate: true});
@@ -65,7 +63,7 @@ const useLicenseActions = ({
 			}
 
 			try {
-				await marketplaceSpringBootOAuth2.downloadLicenseKey(
+				await provisioningOAuth2.downloadLicenseKey(
 					licenseKey?.id as number
 				);
 
@@ -83,7 +81,7 @@ const useLicenseActions = ({
 				});
 			}
 		},
-		[marketplaceSpringBootOAuth2, product?.name]
+		[product?.name]
 	);
 
 	return {

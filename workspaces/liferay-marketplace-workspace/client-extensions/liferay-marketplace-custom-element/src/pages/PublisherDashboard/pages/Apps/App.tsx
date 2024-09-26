@@ -16,9 +16,9 @@ import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/R
 import './App.scss';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
-import useMarketplaceSpringBootOAuth2 from '../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
+import koroneikiOAuth2 from '../../../../services/oauth/Koroneiki';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	getProductVersionFromSpecifications,
@@ -42,7 +42,6 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 	selectedApp,
 }) => {
 	const [loading, setLoading] = useState(false);
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const isDraft =
 		selectedApp.workflowStatusInfo.code ===
@@ -64,7 +63,7 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 				type: 'success',
 			});
 		}
-		catch (error) {
+		catch {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
@@ -81,8 +80,8 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 				onClick={() => {
 					setLoading(true);
 
-					marketplaceSpringBootOAuth2
-						.syncKoroneikiProduct(productId)
+					koroneikiOAuth2
+						.syncProduct(productId)
 						.then(() =>
 							Liferay.Util.openToast({
 								message: 'Koroneiki Sync Successfully',

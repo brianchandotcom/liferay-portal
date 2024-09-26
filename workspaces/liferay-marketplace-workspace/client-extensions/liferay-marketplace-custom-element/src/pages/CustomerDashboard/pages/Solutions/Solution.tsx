@@ -17,8 +17,8 @@ import {
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,
 } from '../../../../enums/Order';
-import useMarketplaceSpringBootOAuth2 from '../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../i18n';
+import analyticsOAuth2 from '../../../../services/oauth/Analytics';
 import {removeHTMLTags} from '../../../../utils/string';
 import {formatDate} from '../../../PublisherDashboard/PublisherDashboardPageUtil';
 import TrialAlert from '../../components/Solution/TrialAlert';
@@ -109,18 +109,12 @@ type AnalyticsWorkspaceDetailsProps = {
 const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 	analyticsGroupId,
 }) => {
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-
 	const {data = [], isLoading} = useSWR(
 		`/analytics/project/${analyticsGroupId}/`,
 		() =>
 			Promise.all([
-				marketplaceSpringBootOAuth2.getAnalyticsProject(
-					analyticsGroupId
-				),
-				marketplaceSpringBootOAuth2.getAnalyticsProjectEmailAddressDomains(
-					analyticsGroupId
-				),
+				analyticsOAuth2.getProject(analyticsGroupId),
+				analyticsOAuth2.getProjectEmailAddressDomains(analyticsGroupId),
 			])
 	);
 

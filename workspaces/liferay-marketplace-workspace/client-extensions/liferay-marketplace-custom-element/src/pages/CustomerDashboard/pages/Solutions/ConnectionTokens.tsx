@@ -15,9 +15,9 @@ import EmptyState from '../../../../components/EmptyState';
 import Loading from '../../../../components/Loading';
 import Table from '../../../../components/Table/Table';
 import {ORDER_CUSTOM_FIELDS} from '../../../../enums/Order';
-import useMarketplaceSpringBootOAuth2 from '../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
+import analyticsOAuth2 from '../../../../services/oauth/Analytics';
 import {copyToClipboard} from '../../../../utils/browser';
 
 type DataSourcesProps = {
@@ -30,17 +30,13 @@ const dataSourceTypes = {
 };
 
 const DataSources: React.FC<DataSourcesProps> = ({analyticsGroupId}) => {
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-
 	const {
 		data: projectDataSources,
 		isLoading,
 		isValidating,
 		mutate,
 	} = useSWR(`/analytics/project/group-${analyticsGroupId}/data-source`, () =>
-		marketplaceSpringBootOAuth2.getAnalyticsProjectDataSource(
-			analyticsGroupId
-		)
+		analyticsOAuth2.getProjectDataSource(analyticsGroupId)
 	);
 
 	const {items = [], total} = projectDataSources || {};
@@ -112,8 +108,6 @@ const DataSources: React.FC<DataSourcesProps> = ({analyticsGroupId}) => {
 };
 
 const ConnectionTokens = () => {
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-
 	const {placedOrder} = useOutletContext<{placedOrder: PlacedOrder}>();
 
 	const analyticsGroupId =
@@ -121,10 +115,7 @@ const ConnectionTokens = () => {
 
 	const {data: projectDataSourceToken = '', isValidating: isLoading} = useSWR(
 		`/analytics/project/group-${analyticsGroupId}/data-source/token`,
-		() =>
-			marketplaceSpringBootOAuth2.getAnalyticsProjectDataSourceToken(
-				analyticsGroupId
-			)
+		() => analyticsOAuth2.getProjectDataSourceToken(analyticsGroupId)
 	);
 
 	return (

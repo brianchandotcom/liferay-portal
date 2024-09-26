@@ -3,31 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useModal} from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 import {format, isBefore} from 'date-fns';
 import {useMemo, useState} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {DashboardEmptyTable} from '../../../../../../components/DashboardTable/DashboardEmptyTable';
-import StatusCell from '../../../../../../components/Table/StatusCell';
-import Table from '../../../../../../components/Table/Table';
-import i18n from '../../../../../../i18n';
-
-import './Licenses.scss';
-
-import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useModal} from '@clayui/modal';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-import classNames from 'classnames';
-
 import Modal from '../../../../../../components/Modal';
 import {Statuses as OrderStatuses} from '../../../../../../components/OrderStatus';
+import StatusCell from '../../../../../../components/Table/StatusCell';
+import Table from '../../../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
-import useMarketplaceSpringBootOAuth2 from '../../../../../../hooks/useMarketplaceSpringBootOAuth2';
+import i18n from '../../../../../../i18n';
+import provisioningOAuth2 from '../../../../../../services/oauth/Provisioning';
 import {LicenseKey} from '../../../../../../services/oauth/types';
 import DeactivateKeysModal from '../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import LicenseDetailsModalHeader from '../../../../components/LicenseDetailsModalHeader';
@@ -35,6 +31,8 @@ import LicenceKeyModalContent from '../../../../components/LicenseModalContent';
 import TableActions from '../../../../components/TableActions';
 import TitleSubtitleHeader from '../../../../components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
+
+import './Licenses.scss';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -57,7 +55,6 @@ const Licenses = () => {
 	const {orderId} = useParams();
 	const deactivateLicenseModal = useModal();
 	const licenseKeyModal = useModal();
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 	const outletContext = useOutletContext<OutletContext['data']>();
 
 	const placedOrder = outletContext?.placedOrder;
@@ -76,7 +73,7 @@ const Licenses = () => {
 		`/order-license-keys/${orderId}/${page}/${pageSize}`,
 		async () => {
 			try {
-				return marketplaceSpringBootOAuth2.getOrderLicenseKeys(
+				return provisioningOAuth2.getOrderLicenseKeys(
 					orderId as string,
 					new URLSearchParams({
 						page: page.toString(),
@@ -103,7 +100,6 @@ const Licenses = () => {
 			deactivateLicenseModal,
 			keyType,
 			licenseKeyModal,
-			marketplaceSpringBootOAuth2,
 			mutate,
 			product,
 			setModal: setModalData,

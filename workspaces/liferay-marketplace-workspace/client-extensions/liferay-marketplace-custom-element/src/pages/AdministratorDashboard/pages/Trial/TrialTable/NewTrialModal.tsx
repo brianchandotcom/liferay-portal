@@ -14,8 +14,8 @@ import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../../core/SearchBuilder';
 import {ORDER_TYPES} from '../../../../../enums/Order';
 import useDebounce from '../../../../../hooks/useDebounce';
-import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import {Liferay} from '../../../../../liferay/liferay';
+import trialOAuth2 from '../../../../../services/oauth/Trial';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import headlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 
@@ -35,7 +35,6 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 	const [search, setSearch] = useState('');
 	const {channel, myUserAccount} = useMarketplaceContext();
 	const debouncedSearch = useDebounce(search, 1000);
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 	const [selectedTrial, setSelectedTrial] = useState<{
 		accountId: string;
 		product: Product;
@@ -114,7 +113,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 
 			await headlessCommerceDeliveryCart.checkoutCart(cart.id);
 
-			await marketplaceSpringBootOAuth2.provisioningTrial(cart.id);
+			await trialOAuth2.provisioningTrial(cart.id);
 
 			onOpenChange(false);
 
@@ -127,7 +126,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 				type: 'success',
 			});
 		}
-		catch (error) {
+		catch {
 			Liferay.Util.openToast({
 				message: 'Not possible to create Trial',
 				type: 'danger',

@@ -17,7 +17,6 @@ import {PageRenderer} from '../../../../../../../components/Page';
 import ProductPurchase from '../../../../../../../components/ProductPurchase';
 import {useAccount} from '../../../../../../../hooks/data/useAccounts';
 import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
-import useMarketplaceSpringBootOAuth2 from '../../../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../../../../i18n';
 import zodSchema, {z, zodResolver} from '../../../../../../../schema/zod';
 import useGetResourceInfo, {
@@ -25,6 +24,7 @@ import useGetResourceInfo, {
 } from '../../../../../../GetApp/hooks/useGetResourceInfo';
 
 import '../index.scss';
+import consoleOAuth2 from '../../../../../../../services/oauth/Console';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
 import {scrollToTop} from '../../../../../../../utils/browser';
 
@@ -99,7 +99,6 @@ const CloudProvisioningOutlet = () => {
 	const {data: selectedAccount} = useAccount();
 	const {orderId} = useParams();
 	const {pathname} = useLocation();
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 	const navigate = useNavigate();
 	const orderInfo = useGetProductByOrderId(orderId as string);
 
@@ -145,7 +144,7 @@ const CloudProvisioningOutlet = () => {
 
 		navigate('installation');
 
-		await marketplaceSpringBootOAuth2.provisioningCloudApp(placedOrder.id, {
+		await consoleOAuth2.provisioning(placedOrder.id, {
 			orderItemId: placedOrder.placedOrderItems[0].id,
 			projectId: environment.projectId,
 		});

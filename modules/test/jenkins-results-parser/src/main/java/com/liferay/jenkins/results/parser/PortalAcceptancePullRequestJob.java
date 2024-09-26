@@ -125,7 +125,7 @@ public class PortalAcceptancePullRequestJob
 		}
 
 		if (_isRelevantTestSuite() && _hasOnlyFilesInDirectory("modules")) {
-			batchNames.remove("semantic-versioning-jdk8");
+			batchNames.remove("semantic-versioning");
 		}
 
 		if (_isRelevantTestSuite() && _hasOnlyFilesInDirectory("portal-web")) {

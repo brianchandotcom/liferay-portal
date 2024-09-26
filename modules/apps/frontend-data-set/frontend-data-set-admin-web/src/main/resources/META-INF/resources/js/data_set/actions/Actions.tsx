@@ -242,17 +242,10 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	};
 
 	const updateActionsOrder = async ({order}: {order: string}) => {
-		let actionTypeOrder =
+		const actionTypeOrder =
 			activeTab === 0 ? 'fdsItemActionsOrder' : 'fdsCreationActionsOrder';
 
-		let apiURL = API_URL.DATA_SETS;
-
-		if (Liferay.FeatureFlags['LPD-15729']) {
-			actionTypeOrder =
-				activeTab === 0 ? 'itemActionsOrder' : 'creationActionsOrder';
-
-			apiURL = API_URL.DATA_SETS;
-		}
+		const apiURL = API_URL.DATA_SETS;
 
 		const response = await fetch(
 			`${apiURL}/by-external-reference-code/${dataSet.externalReferenceCode}`,

@@ -34,7 +34,7 @@ export const Column = forwardRef(
 		},
 		ref
 	) => {
-		const {defaultLanguageId, portletId} = useFormState();
+		const {defaultLanguageId, history, portletId} = useFormState();
 
 		const addr = {
 			'data-ddm-field-column': index,
@@ -48,6 +48,12 @@ export const Column = forwardRef(
 
 		const defaultLanguageIdRef = useRef(defaultLanguageId);
 		const dispatch = useForm();
+
+		useEffect(() => {
+			if (history?.steps.length === 0) {
+				dispatch({type: EVENT_TYPES.HISTORY.ADD});
+			}
+		}, [history, dispatch]);
 
 		useEffect(() => {
 			if (defaultLanguageIdRef.current !== defaultLanguageId) {

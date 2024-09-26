@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -42,7 +43,11 @@ public class MethodNamingCheck extends BaseCheck {
 			_checkSearchMethodName(detailAST, methodName);
 		}
 
-		_checkSetSafeCloseableName(detailAST, methodName);
+		String className = JavaSourceUtil.getClassName(getAbsolutePath());
+
+		if (!className.equals("CentralizedThreadLocal")) {
+			_checkSetSafeCloseableName(detailAST, methodName);
+		}
 
 		if (AnnotationUtil.containsAnnotation(detailAST, "Override")) {
 			return;

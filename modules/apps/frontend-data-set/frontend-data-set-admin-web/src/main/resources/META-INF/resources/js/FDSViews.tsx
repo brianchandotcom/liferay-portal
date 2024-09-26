@@ -68,7 +68,7 @@ const AddFDSViewModalContent = ({
 			description: fdsViewDescriptionRef.current?.value,
 			label: fdsViewLabelRef.current?.value,
 			listOfItemsPerPage: LIST_OF_ITEMS_PER_PAGE,
-			r_fdsEntryFDSViewRelationship_c_fdsEntryId: fdsEntryId,
+			r_fdsEntryFDSViewRelationship_l_fdsEntryId: fdsEntryId,
 			symbol: 'catalog',
 		};
 

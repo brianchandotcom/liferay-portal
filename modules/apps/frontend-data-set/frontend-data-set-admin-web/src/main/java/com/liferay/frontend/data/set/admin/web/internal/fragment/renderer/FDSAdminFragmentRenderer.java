@@ -261,7 +261,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		String objectEntryERC = String.valueOf(
 			fdsViewObjectEntryProperties.get(
-				"r_fdsEntryFDSViewRelationship_c_fdsEntryERC"));
+				"r_fdsEntryFDSViewRelationship_l_fdsEntryERC"));
 
 		String objectDefinitionName = "FDSEntry";
 

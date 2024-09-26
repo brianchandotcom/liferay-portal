@@ -124,7 +124,7 @@ public class SaveFDSSortMVCResourceCommand
 			).put(
 				"orderType", orderType
 			).put(
-				"r_fdsViewFDSSortRelationship_c_fdsViewId", dataSetId
+				"r_fdsViewFDSSortRelationship_l_fdsViewId", dataSetId
 			).build(),
 			new ServiceContext());
 

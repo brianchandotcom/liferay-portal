@@ -334,7 +334,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		dataSetERC?: string;
 		fieldName?: string;
 		name?: string;
-		r_fdsViewFDSListSectionRelationship_c_fdsViewERC?: string;
+		r_fdsViewFDSListSectionRelationship_l_fdsViewERC?: string;
 	}) {
 		const url = `${this.baseUrl}data-set-manager/list-sections`;
 

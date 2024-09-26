@@ -14,7 +14,7 @@ const DEFAULT_LABEL = {
 };
 
 const REL_PREFIX = 'r_fdsViewFDS';
-const REL_POSTFIX = 'Relationship_c_fdsViewERC';
+const REL_POSTFIX = 'Relationship_l_fdsViewERC';
 
 const CARDS_SECTION_DATA_SET_RELATIONSHIP =
 	REL_PREFIX + 'CardsSection' + REL_POSTFIX;

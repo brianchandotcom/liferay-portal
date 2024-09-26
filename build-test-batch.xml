@@ -8723,7 +8723,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 		</run-batch-test>
 	</target>
 
-	<target name="service-builder-jdk8">
+	<target name="service-builder">
 		<run-batch-test>
 			<test-action>
 				<if>

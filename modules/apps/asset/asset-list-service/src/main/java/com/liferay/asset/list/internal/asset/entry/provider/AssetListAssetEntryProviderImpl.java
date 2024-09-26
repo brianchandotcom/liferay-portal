@@ -8,6 +8,7 @@ package com.liferay.asset.list.internal.asset.entry.provider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -68,6 +70,7 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -317,37 +320,39 @@ public class AssetListAssetEntryProviderImpl
 		return ArrayUtil.toArray(assetCategoryIdsList.toArray(new Long[0]));
 	}
 
-	private List<AssetListEntryAssetEntryRel>
-		_filterAssetListEntryAssetEntryRels(
-			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
+	private Map<AssetListEntryAssetEntryRel, AssetEntry>
+		_filterAssetListEntryAssetEntryRelAssetEntryMap(
+			Map<AssetListEntryAssetEntryRel, AssetEntry>
+				assetListEntryAssetEntryRelAssetEntryMap) {
 
-		return ListUtil.filter(
-			assetListEntryAssetEntryRels,
-			assetListEntryAssetEntryRel -> {
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					assetListEntryAssetEntryRel.getAssetEntryId());
+		for (Map.Entry<AssetListEntryAssetEntryRel, AssetEntry> entry :
+				assetListEntryAssetEntryRelAssetEntryMap.entrySet()) {
 
-				if ((assetEntry == null) || !assetEntry.isVisible()) {
-					return false;
-				}
+			AssetEntry assetEntry = entry.getValue();
 
-				AssetRendererFactory<?> assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
+			if ((assetEntry == null) || !assetEntry.isVisible()) {
+				assetListEntryAssetEntryRelAssetEntryMap.remove(entry.getKey());
+
+				continue;
+			}
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
+
+			if (assetRendererFactory == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No asset renderer factory found for class " +
 							assetEntry.getClassName());
-
-				if (assetRendererFactory == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No asset renderer factory found for class " +
-								assetEntry.getClassName());
-					}
-
-					return false;
 				}
 
-				return true;
-			});
+				assetListEntryAssetEntryRelAssetEntryMap.remove(entry.getKey());
+			}
+		}
+
+		return assetListEntryAssetEntryRelAssetEntryMap;
 	}
 
 	private long[] _getAssetCategoryIds(UnicodeProperties unicodeProperties) {
@@ -411,34 +416,32 @@ public class AssetListAssetEntryProviderImpl
 		};
 	}
 
-	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
+	private Map<AssetListEntryAssetEntryRel, AssetEntry>
+		_getAssetListEntryAssetEntryRelAssetEntryMap(
+			AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-				new ArrayList<>();
+			Map<AssetListEntryAssetEntryRel, AssetEntry>
+				assetListEntryAssetEntryRelAssetEntryMap = new HashMap<>();
 
 			segmentsEntryIds = _sortSegmentsByPriority(
 				assetListEntry,
 				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds));
 
 			for (long segmentId : segmentsEntryIds) {
-				assetListEntryAssetEntryRels.addAll(
-					ListUtil.sort(
-						_filterAssetListEntryAssetEntryRels(
-							_assetListEntryAssetEntryRelLocalService.
-								getAssetListEntryAssetEntryRels(
-									assetListEntry.getAssetListEntryId(),
-									new long[] {segmentId}, QueryUtil.ALL_POS,
-									QueryUtil.ALL_POS)),
-						Comparator.comparing(
-							AssetListEntryAssetEntryRelModel::getPosition)));
+				assetListEntryAssetEntryRelAssetEntryMap.putAll(
+					_getAssetListEntryAssetEntryRelAssetEntryMap(
+						_assetListEntryAssetEntryRelLocalService.
+							getAssetListEntryAssetEntryRels(
+								assetListEntry.getAssetListEntryId(),
+								new long[] {segmentId}, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS)));
 			}
 
-			return assetListEntryAssetEntryRels;
+			return assetListEntryAssetEntryRelAssetEntryMap;
 		}
 
-		return _filterAssetListEntryAssetEntryRels(
+		return _getAssetListEntryAssetEntryRelAssetEntryMap(
 			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRels(
 					assetListEntry.getAssetListEntryId(),
@@ -447,6 +450,27 @@ public class AssetListAssetEntryProviderImpl
 							assetListEntry, segmentsEntryIds)
 					},
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+	}
+
+	private Map<AssetListEntryAssetEntryRel, AssetEntry>
+		_getAssetListEntryAssetEntryRelAssetEntryMap(
+			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
+
+		Map<AssetListEntryAssetEntryRel, AssetEntry>
+			assetListEntryAssetEntryRelAssetEntryMap = new HashMap<>();
+
+		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+				assetListEntryAssetEntryRels) {
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				assetListEntryAssetEntryRel.getAssetEntryId());
+
+			assetListEntryAssetEntryRelAssetEntryMap.put(
+				assetListEntryAssetEntryRel, assetEntry);
+		}
+
+		return _filterAssetListEntryAssetEntryRelAssetEntryMap(
+			assetListEntryAssetEntryRelAssetEntryMap);
 	}
 
 	private String[] _getAssetTagNames(UnicodeProperties unicodeProperties) {
@@ -803,15 +827,20 @@ public class AssetListAssetEntryProviderImpl
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		int start, int end) {
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(assetListEntry, segmentsEntryIds);
+		Map<AssetListEntryAssetEntryRel, AssetEntry>
+			assetListEntryAssetEntryRelAssetEntryMap =
+				_getAssetListEntryAssetEntryRelAssetEntryMap(
+					assetListEntry, segmentsEntryIds);
 
-		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
+		if (MapUtil.isEmpty(assetListEntryAssetEntryRelAssetEntryMap)) {
 			return InfoPage.of(Collections.emptyList());
 		}
 
 		List<Long> assetEntryIds = ListUtil.toList(
-			assetListEntryAssetEntryRels,
+			ListUtil.sort(
+				ListUtil.fromMapKeys(assetListEntryAssetEntryRelAssetEntryMap),
+				Comparator.comparing(
+					AssetListEntryAssetEntryRelModel::getPosition)),
 			AssetListEntryAssetEntryRelModel::getAssetEntryId);
 
 		try {
@@ -819,8 +848,11 @@ public class AssetListAssetEntryProviderImpl
 				_getManualSearchContext(
 					assetCategoryIds, assetEntryIds, assetTagNames,
 					assetListEntry.getCompanyId(), keywords),
-				_getManualAssetEntryQuery(assetListEntry), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				_getManualAssetEntryQuery(
+					ListUtil.fromMapValues(
+						assetListEntryAssetEntryRelAssetEntryMap),
+					assetListEntry),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
 
@@ -842,7 +874,7 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private AssetEntryQuery _getManualAssetEntryQuery(
-		AssetListEntry assetListEntry) {
+		List<AssetEntry> assetEntries, AssetListEntry assetListEntry) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -865,6 +897,11 @@ public class AssetListAssetEntryProviderImpl
 				AssetRendererFactoryRegistryUtil.getClassNameIds(
 					assetListEntry.getCompanyId(), true));
 		}
+
+		assetEntryQuery.setGroupIds(
+			ArrayUtil.unique(
+				ListUtil.toLongArray(
+					assetEntries, AssetEntryModel::getGroupId)));
 
 		return assetEntryQuery;
 	}

@@ -3,24 +3,37 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
+import {useCopiedItemIds} from '../../contexts/ClipboardContext';
 import {
+	useActiveItemIds,
 	useHoverItem,
 	useIsActive,
 	useIsHovered,
 	useSelectItem,
+	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
 import {
 	useMovementTarget,
 	useMovementTargetPosition,
 } from '../../contexts/KeyboardMovementContext';
-import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
+import pasteItem from '../../thunks/pasteItem';
+import canBeCopied from '../../utils/canBeCopied';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import {
 	useDropTarget,
@@ -145,11 +158,6 @@ const TopperEmpty = ({
 	const isValidDrop =
 		(isDroppable && isOverTarget) || movementTargetItemId === item.itemId;
 
-	const name = useSelectorCallback(
-		(state) => selectLayoutDataItemLabel(state, item),
-		[item]
-	);
-
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();
 
@@ -220,17 +228,109 @@ const TopperEmpty = ({
 				})}
 
 				{isActive ? (
-					<TopperLabel itemElement={itemElement}>
-						<ul className="tbar-nav">
-							<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
-								{name}
-							</li>
-						</ul>
-					</TopperLabel>
+					<TopperEmptyLabel item={item} itemElement={itemElement} />
 				) : null}
 			</>
 		);
 	});
+};
+
+const TopperEmptyLabel = ({item, itemElement}) => {
+	const copiedItemIds = useCopiedItemIds();
+	const activeItemIds = useActiveItemIds();
+
+	const selectItems = useSelectMultipleItems();
+
+	const dispatch = useDispatch();
+
+	const layoutData = useSelector((state) => state.layoutData);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+
+	const name = useSelectorCallback(
+		(state) => selectLayoutDataItemLabel(state, item),
+		[item]
+	);
+
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+
+	return (
+		<TopperLabel itemElement={itemElement}>
+			<ul className="tbar-nav">
+				<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
+					{name}
+				</li>
+
+				{canUpdatePageStructure ? (
+					<li className="page-editor__topper__item tbar-item">
+						<ClayDropDown
+							alignmentPosition={Align.BottomRight}
+							hasLeftSymbols
+							menuElementAttrs={{
+								containerProps: {
+									className: 'cadmin',
+								},
+							}}
+							trigger={
+								<ClayButton
+									aria-label={Liferay.Language.get('options')}
+									disabled={activeItemIds.length > 1}
+									displayType="unstyled"
+									onClick={(event) => event.stopPropagation()}
+									size="sm"
+									title={Liferay.Language.get('options')}
+								>
+									<ClayIcon
+										className="page-editor__topper__icon"
+										symbol="ellipsis-v"
+									/>
+								</ClayButton>
+							}
+						>
+							<ClayDropDown.ItemList>
+								<ClayDropDown.Item
+									disabled={!copiedItemIds?.length}
+									onClick={(event) => {
+										event.stopPropagation();
+
+										if (
+											copiedItemIds.every(
+												(copiedItemId) =>
+													!!layoutData.items[
+														copiedItemId
+													] &&
+													!!item &&
+													canBeCopied(
+														copiedItemId,
+														fragmentEntryLinks,
+														item.itemId,
+														layoutData
+													)
+											)
+										) {
+											dispatch(
+												pasteItem({
+													copiedItemIds,
+													parentItemId: item.itemId,
+													selectItems,
+												})
+											);
+										}
+									}}
+									symbolLeft="paste"
+								>
+									{Liferay.Language.get('paste')}
+
+									<span className="ml-2">
+										<FeatureIndicator type="beta" />
+									</span>
+								</ClayDropDown.Item>
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</li>
+				) : null}
+			</ul>
+		</TopperLabel>
+	);
 };
 
 const MemoizedTopperEmpty = React.memo(TopperEmpty);

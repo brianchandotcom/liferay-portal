@@ -205,7 +205,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	&__resizer {
 		cursor: ew-resize;
 		height: 100%;
-		left: calc(100% - #{$resizerWidth / 2});
+		left: calc(100% - calc($resizerWidth / 2));
 		position: absolute;
 		top: 0;
 		width: $resizerWidth;
@@ -214,8 +214,9 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		&:focus-visible,
 		&--resizing {
 			box-shadow:
-				inset ($resizerWidth / 2 - $resizerBorderWidth) 0 0 $white,
-				inset ($resizerWidth / 2) 0 0 $primary-l1;
+				inset calc(calc($resizerWidth / 2) - $resizerBorderWidth) 0 0
+					$white,
+				inset calc($resizerWidth / 2) 0 0 $primary-l1;
 			outline: none;
 		}
 

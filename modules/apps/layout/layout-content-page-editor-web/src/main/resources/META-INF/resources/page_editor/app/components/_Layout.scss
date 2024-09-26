@@ -154,13 +154,13 @@ html#{$cadmin-selector} {
 					flex: 1;
 
 					&__border {
-						min-height: $emptyItemMinHeight / 2;
+						min-height: calc($emptyItemMinHeight / 2);
 					}
 				}
 			}
 
 			.page-editor__col {
-				min-height: $emptyItemMinHeight / 2;
+				min-height: calc($emptyItemMinHeight / 2);
 			}
 		}
 
@@ -292,7 +292,7 @@ html#{$cadmin-selector} {
 			}
 
 			.page-editor__row.empty .page-editor__col {
-				min-height: $emptyItemMinHeight / 2;
+				min-height: calc($emptyItemMinHeight / 2);
 				min-width: $emptyColumnMinWidth;
 			}
 		}

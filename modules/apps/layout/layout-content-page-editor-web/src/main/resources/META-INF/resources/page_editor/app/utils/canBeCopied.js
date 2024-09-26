@@ -7,11 +7,10 @@ import {openToast} from 'frontend-js-web';
 
 import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
 import checkAllowedChild from './drag_and_drop/checkAllowedChild';
 import {formIsMapped} from './formIsMapped';
-import isItemWidget from './isItemWidget';
 import {isUnmappedCollection} from './isUnmappedCollection';
+import normalizeSourceItem from './normalizeSourceItem';
 
 const PARENT_TYPES = [
 	LAYOUT_DATA_ITEM_TYPES.container,
@@ -19,14 +18,6 @@ const PARENT_TYPES = [
 	LAYOUT_DATA_ITEM_TYPES.form,
 	LAYOUT_DATA_ITEM_TYPES.root,
 ];
-
-function getFragmentEntryLink(item, fragmentEntryLinks) {
-	if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		return null;
-	}
-
-	return fragmentEntryLinks[item.config?.fragmentEntryLinkId];
-}
 
 function getItemTargetToPaste(item, layoutData) {
 	if (PARENT_TYPES.some((type) => type === item.type)) {
@@ -38,32 +29,6 @@ function getItemTargetToPaste(item, layoutData) {
 	return getItemTargetToPaste(parent, layoutData);
 }
 
-function normalizeSourceItem(itemId, layoutData, fragmentEntryLinks) {
-	const item = layoutData.items[itemId];
-
-	const fragmentEntryLink = getFragmentEntryLink(item, fragmentEntryLinks);
-	const fieldTypes = fragmentEntryLink?.fieldTypes ?? [];
-	const fragmentEntryType = fragmentEntryLink?.fragmentEntryType ?? null;
-
-	const isWidget = isItemWidget(item, fragmentEntryLinks);
-
-	const name = selectLayoutDataItemLabel(
-		{
-			fragmentEntryLinks,
-			layoutData,
-		},
-		item
-	);
-
-	return {
-		...item,
-		fieldTypes,
-		fragmentEntryType,
-		isWidget,
-		name,
-	};
-}
-
 export default function canBeCopied(
 	copiedItemId,
 	fragmentEntryLinks,
@@ -71,13 +36,13 @@ export default function canBeCopied(
 	layoutData
 ) {
 	const source = normalizeSourceItem(
-		copiedItemId,
+		layoutData.items[copiedItemId],
 		layoutData,
 		fragmentEntryLinks
 	);
 
 	const target = normalizeSourceItem(
-		parentItemId,
+		layoutData.items[parentItemId],
 		layoutData,
 		fragmentEntryLinks
 	);

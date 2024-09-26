@@ -54,6 +54,9 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 			getAttachmentFileEntries(int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public int getAttachmentFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public CommerceAddress getBillingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

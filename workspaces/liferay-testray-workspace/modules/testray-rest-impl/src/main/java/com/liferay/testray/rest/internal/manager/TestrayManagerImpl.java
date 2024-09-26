@@ -5,6 +5,7 @@
 
 package com.liferay.testray.rest.internal.manager;
 
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -264,6 +266,49 @@ public class TestrayManagerImpl implements TestrayManager {
 
 			updateTestrayBuildSummary(
 				companyId, testrayCache.getTestrayBuildId(), userId);
+
+			Map<String, Serializable> values =
+				_objectEntryLocalService.getValues(
+					testrayCache.getTestrayRoutineId());
+
+			if (!GetterUtil.getBoolean(values.get("autoanalyze"))) {
+				return;
+			}
+
+			ObjectEntry objectEntry = _addObjectEntry(
+				"Task", serviceContext, testrayCache, userId,
+				HashMapBuilder.<String, Serializable>put(
+					"dueStatus", "INANALYSIS"
+				).put(
+					"name", testrayCache.getTestrayBuildName()
+				).put(
+					"r_buildToTasks_c_buildId", testrayCache.getTestrayBuildId()
+				).build());
+
+			if (_testrayLeadUserIds == null) {
+				_testrayLeadUserIds = _userLocalService.getRoleUserIds(
+					_roleLocalService.getRole(
+						companyId, "Testray Lead"
+					).getRoleId());
+			}
+
+			for (long testrayLeadUserId : _testrayLeadUserIds) {
+				_addObjectEntry(
+					"TasksUsers", serviceContext, testrayCache, userId,
+					HashMapBuilder.<String, Serializable>put(
+						"name",
+						objectEntry.getObjectEntryId() + "-" + testrayLeadUserId
+					).put(
+						"r_taskToTasksUsers_c_taskId",
+						objectEntry.getObjectEntryId()
+					).put(
+						"r_userToTasksUsers_userId", testrayLeadUserId
+					).build());
+			}
+
+			createTestraySubtasks(
+				companyId, testrayCache.getTestrayBuildId(),
+				objectEntry.getObjectEntryId(), userId);
 		}
 	}
 
@@ -291,12 +336,17 @@ public class TestrayManagerImpl implements TestrayManager {
 				companyId, serviceContext, testrayCache, testrayProjectId,
 				propertiesMap.get("testray.build.type"), userId);
 
+			testrayCache.setTestrayRoutineId(testrayRoutineId);
+
 			long testrayBuildId = _getTestrayBuildId(
 				companyId, propertiesMap, serviceContext,
 				propertiesMap.get("testray.build.name"), testrayCache,
 				testrayProjectId, testrayRoutineId, userId);
 
 			testrayCache.setTestrayBuildId(testrayBuildId);
+
+			testrayCache.setTestrayBuildName(
+				propertiesMap.get("testray.build.name"));
 
 			long testrayRunId = _getTestrayRunId(
 				companyId, element, serviceContext, propertiesMap,
@@ -1535,6 +1585,14 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
+
+	private long[] _testrayLeadUserIds;
 
 	@Reference
 	private UserLocalService _userLocalService;

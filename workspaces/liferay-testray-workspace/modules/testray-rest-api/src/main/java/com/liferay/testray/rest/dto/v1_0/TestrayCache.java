@@ -40,8 +40,16 @@ public class TestrayCache {
 		return _testrayBuildId;
 	}
 
+	public String getTestrayBuildName() {
+		return _testrayBuildName;
+	}
+
 	public long getTestrayCaseResultAmount() {
 		return _testrayCaseResultAmount;
+	}
+
+	public long getTestrayRoutineId() {
+		return _testrayRoutineId;
 	}
 
 	public void incrementTestrayCaseResultAmount() {
@@ -52,11 +60,21 @@ public class TestrayCache {
 		_testrayBuildId = testrayBuildId;
 	}
 
+	public void setTestrayBuildName(String testrayBuildName) {
+		_testrayBuildName = testrayBuildName;
+	}
+
+	public void setTestrayRoutineId(long testrayRoutineId) {
+		_testrayRoutineId = testrayRoutineId;
+	}
+
 	private final Map<String, ObjectDefinition> _objectDefinitions =
 		new HashMap<>();
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 	private long _testrayBuildId;
+	private String _testrayBuildName;
 	private long _testrayCaseResultAmount;
+	private long _testrayRoutineId;
 	private long _testrayRunNumber = 1;
 
 }

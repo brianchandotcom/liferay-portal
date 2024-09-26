@@ -4,19 +4,21 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import Row from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/Row';
-import TopperEmpty from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/Topper';
+import TopperEmpty from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/TopperEmpty';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
 const renderTopperEmpty = ({
+	itemType = LAYOUT_DATA_ITEM_TYPES.row,
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 } = {}) => {
@@ -25,9 +27,9 @@ const renderTopperEmpty = ({
 		config: {
 			styles: {},
 		},
-		itemId: 'row',
+		itemId: 'itemId',
 		parentId: null,
-		type: LAYOUT_DATA_ITEM_TYPES.row,
+		type: itemType,
 	};
 
 	const layoutData = {
@@ -36,7 +38,7 @@ const renderTopperEmpty = ({
 
 	return render(
 		<DndProvider backend={HTML5Backend}>
-			<ControlsProvider>
+			<ControlsProvider activeInitialState={{activeItemIds: ['itemId']}}>
 				<StoreAPIContextProvider
 					getState={() => ({
 						fragmentEntryLinks: {},
@@ -72,5 +74,35 @@ describe('TopperEmpty', () => {
 		expect(
 			baseElement.querySelector('.page-editor__topper')
 		).toBeInTheDocument();
+	});
+
+	it('renders topper label with topper empty', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		const {debug} = renderTopperEmpty({
+			itemType: LAYOUT_DATA_ITEM_TYPES.column,
+		});
+
+		debug();
+
+		expect(screen.getByText('module')).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
+	});
+
+	it('renders paste options', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		const {debug} = renderTopperEmpty({
+			itemType: LAYOUT_DATA_ITEM_TYPES.column,
+		});
+
+		debug();
+
+		userEvent.click(screen.getByLabelText('options'));
+
+		expect(screen.getByText('paste')).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 });

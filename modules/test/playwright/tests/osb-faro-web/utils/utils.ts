@@ -58,3 +58,19 @@ export async function searchByTerm({
 
 	await waitForLoading(page);
 }
+
+export async function viewPaginationResults({
+	page,
+	paginationResults,
+}: {
+	page: Page;
+	paginationResults: string;
+}) {
+	await waitForLoading(page);
+
+	await expect(page.locator('.pagination-results')).toContainText(
+		paginationResults
+	);
+
+	await waitForLoading(page);
+}

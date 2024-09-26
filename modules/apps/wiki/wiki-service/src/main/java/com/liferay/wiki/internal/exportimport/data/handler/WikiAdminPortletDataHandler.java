@@ -141,6 +141,17 @@ public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
+	@Override
+	public boolean isConfigurationEnabled() {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-35013")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	@Activate
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(

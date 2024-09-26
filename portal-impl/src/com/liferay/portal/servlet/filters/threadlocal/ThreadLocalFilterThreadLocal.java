@@ -21,7 +21,9 @@ public class ThreadLocalFilterThreadLocal {
 		_filterInvoked.set(true);
 	}
 
-	public static SafeCloseable setFilterInvoked(boolean filterInvoked) {
+	public static SafeCloseable setFilterInvokedWithSafeCloseable(
+		boolean filterInvoked) {
+
 		return _filterInvoked.setWithSafeCloseable(filterInvoked);
 	}
 

@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 
 import org.gradle.api.DefaultTask;
@@ -75,10 +74,6 @@ public class GenerateLanguageBatchEngineDataTask extends DefaultTask {
 
 				String languageId = name.substring(
 					"Language_".length(), name.lastIndexOf(".properties"));
-
-				if (Objects.equals(languageId, "en")) {
-					languageId = "en_US";
-				}
 
 				Properties properties = new Properties();
 

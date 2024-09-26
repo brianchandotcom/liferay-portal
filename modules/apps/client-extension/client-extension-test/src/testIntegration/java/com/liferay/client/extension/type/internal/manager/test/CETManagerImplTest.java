@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -32,12 +33,15 @@ public class CETManagerImplTest {
 	@Test
 	public void testGetCET() throws PortalException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME_CET_MANAGER_IMPL, LoggerTestUtil.WARN)) {
+				"com.liferay.client.extension.type.internal.manager." +
+					"CETManagerImpl",
+				LoggerTestUtil.WARN)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
 
 			Assert.assertNull(
 				_cetManager.getCET(
-					TestPropsValues.getCompanyId(),
-					_NONEXISTENT_EXTERNAL_REFERENCE_CODE));
+					TestPropsValues.getCompanyId(), externalReferenceCode));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -47,7 +51,7 @@ public class CETManagerImplTest {
 
 			Assert.assertEquals(
 				"No CET found for external reference code " +
-					_NONEXISTENT_EXTERNAL_REFERENCE_CODE,
+					externalReferenceCode,
 				logEntry.getMessage());
 		}
 	}
@@ -55,12 +59,6 @@ public class CETManagerImplTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	private static final String _CLASS_NAME_CET_MANAGER_IMPL =
-		"com.liferay.client.extension.type.internal.manager.CETManagerImpl";
-
-	private static final String _NONEXISTENT_EXTERNAL_REFERENCE_CODE =
-		"NONEXISTENT_EXTERNAL_REFERENCE_CODE";
 
 	@Inject
 	private CETManager _cetManager;

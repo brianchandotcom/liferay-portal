@@ -7,6 +7,8 @@ import ClaySticker from '@clayui/sticker';
 
 import './index.scss';
 
+import ClayIcon from '@clayui/icon';
+
 type AccountInfoProps = {
 	userAccount?: {
 		emailAddress?: string;
@@ -25,13 +27,17 @@ const AccountEmailInfo: React.FC<AccountInfoProps> = ({userAccount}) => (
 			</div>
 		</div>
 
-		<ClaySticker shape="circle" size="sm">
-			<ClaySticker.Image
-				alt="placeholder"
-				height="24"
-				src={userAccount?.image ?? 'picture'}
-				width="24"
-			/>
+		<ClaySticker displayType="light" shape="circle" size="sm">
+			{userAccount?.image ? (
+				<ClaySticker.Image
+					alt="placeholder"
+					height="24"
+					src={userAccount?.image}
+					width="24"
+				/>
+			) : (
+				<ClayIcon symbol="picture" />
+			)}
 		</ClaySticker>
 	</div>
 );

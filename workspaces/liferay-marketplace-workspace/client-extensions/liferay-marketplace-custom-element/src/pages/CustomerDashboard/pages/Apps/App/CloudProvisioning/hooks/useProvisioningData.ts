@@ -13,7 +13,7 @@ import i18n from '../../../../../../../i18n';
 import {getSpecificationByKey} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
-import {InstallStatus} from '../components/InstallStatus';
+import {InstallStatus} from '../types';
 
 const getExpirationDate = (createdDate: Date, licenseType: string) => {
 	if (licenseType === 'Perpetual') {
@@ -28,9 +28,10 @@ const useProvisioningData = (orderId: string) => {
 
 	const order = data?.placedOrder || ({} as PlacedOrder);
 	const orderItems = order.placedOrderItems;
+	const product = data?.product;
 
 	const resourceRequirements = useGetResourceInfo({
-		product: data?.product,
+		product,
 		selectedProject: undefined,
 		shouldFetch: true,
 	});
@@ -39,9 +40,9 @@ const useProvisioningData = (orderId: string) => {
 		() =>
 			getSpecificationByKey(
 				PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE,
-				data?.product as DeliveryProduct
+				product as DeliveryProduct
 			)?.value || '',
-		[data?.product]
+		[product]
 	);
 
 	const provisioningTableData = useMemo(() => {

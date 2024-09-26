@@ -35,3 +35,25 @@
 		color: #282934 !important;
 	}
 }
+
+.provisioning-details {
+	&-info-badge {
+		background: #f7f7f8;
+		color: #272833;
+
+		&-expired {
+			background: #fbe3e3;
+			color: #da1414;
+		}
+
+		&-installed {
+			background: #eef8ec;
+			color: #4aab3b;
+		}
+
+		&-ready-to-install {
+			background: #e6ebf5;
+			color: #2e5aac;
+		}
+	}
+}

@@ -77,6 +77,7 @@ export default {
 	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution':
 		'Choose the Marketplace category that most accurately describes what your solution does. Users looking for specific types of solutions will often browse categories by searching on a specific category name in the main Marketplace home page. Having your solution listed under the appropriate category will help them find your solution.',
 	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
+	'client-extension': 'Client Extension',
 	'client-extensions': 'Client Extensions',
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
 		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
@@ -141,6 +142,7 @@ export default {
 		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
 	'details': 'Details',
 	'discover-and-customize': 'Discover and customize',
+	'done': 'Done',
 	'download': 'Download',
 	'download-app': 'Download App',
 	'download-key': 'Download Key',
@@ -216,6 +218,7 @@ export default {
 	'installation': 'Installation',
 	'installation-failed': 'Installation Failed',
 	'installation-in-progress': 'Installation in Progress',
+	'installation-status': 'Installation Status',
 	'installation-success': 'Installation Success',
 	'instance-size': 'Instance Size',
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
@@ -300,6 +303,7 @@ export default {
 	'provide-company-profile-details': 'Provide company profile details',
 	'provide-contact-us-details': 'Provide contact us details',
 	'provisioning': 'Provisioning',
+	'provisioning-details': 'Provisioning Details',
 	'publish-apps-and-they-will-show-up-here':
 		'Publish apps and they will show up here',
 	'publish-apps-to-the-liferay-marketplace':

@@ -6,11 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
-export enum InstallStatus {
-	INSTALLED = 'installed',
-	READY_TO_INSTALL = 'ready to install',
-	EXPIRED = 'expired',
-}
+import {InstallStatus} from '../types';
 
 type InstallationStatusProps = {
 	children?: string;

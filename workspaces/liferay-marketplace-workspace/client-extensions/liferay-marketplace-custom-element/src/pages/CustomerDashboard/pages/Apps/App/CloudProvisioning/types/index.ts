@@ -5,6 +5,12 @@
 
 import {ReactNode} from 'react';
 
+export enum InstallStatus {
+	EXPIRED = 'expired',
+	INSTALLED = 'installed',
+	READY_TO_INSTALL = 'ready to install',
+}
+
 export enum StepCloudInstallation {
 	ENVIRONMENT = 'environment',
 	INSTALLATION = 'installation',

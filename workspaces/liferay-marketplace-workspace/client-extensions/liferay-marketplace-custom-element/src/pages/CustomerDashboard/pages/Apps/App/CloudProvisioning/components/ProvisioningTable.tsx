@@ -6,6 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {useModal} from '@clayui/modal';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import Modal from '../../../../../../../components/Modal';
@@ -15,9 +16,28 @@ import i18n from '../../../../../../../i18n';
 import {Liferay} from '../../../../../../../liferay/liferay';
 import {cloudConsoleURLs} from '../../../../../../../utils/link';
 import useProvisioningData from '../hooks/useProvisioningData';
-import InstallationStatus, {InstallStatus} from './InstallStatus';
+import {InstallStatus} from '../types';
+import InstallationStatus from './InstallStatus';
+import ProvisioningDetails from './ProvisioningDetails';
 
 type ProvisioningTableProps = ReturnType<typeof useProvisioningData>;
+type OrderItem = ReturnType<
+	typeof useProvisioningData
+>['provisioningTableData'][0];
+
+type DetailsData = {
+	headerInfo: {
+		image?: string;
+		licenseType?: string;
+		myUserAccount: ReturnType<
+			typeof useMarketplaceContext
+		>['myUserAccount'];
+		name?: string;
+	};
+	isExpired: boolean;
+	isInstalled: boolean;
+	orderItem: OrderItem;
+};
 
 const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 	mutateOrder,
@@ -28,9 +48,32 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 	const {
 		properties: {cloudConsoleURL},
 	} = useMarketplaceContext();
+	const {myUserAccount} = useMarketplaceContext();
+
+	const [detailsData, setDetailsData] = useState<DetailsData>();
 	const navigate = useNavigate();
 	const modal = useModal();
 	const uninstallModal = useModal();
+	const detailsModal = useModal();
+
+	const onOpenDetailsModal = (orderItem: OrderItem) => {
+		const isExpired = orderItem.status === InstallStatus.EXPIRED;
+		const isInstalled = orderItem.status === InstallStatus.INSTALLED;
+
+		setDetailsData({
+			headerInfo: {
+				image: order.placedOrderItems[0].thumbnail,
+				licenseType: `${orderItem?.type} License for ${myUserAccount.name}`,
+				myUserAccount,
+				name: order.placedOrderItems[0].name,
+			},
+			isExpired,
+			isInstalled,
+			orderItem,
+		});
+
+		detailsModal.onOpenChange(true);
+	};
 
 	const install = (requirements: any) => {
 		if (!requirements.resourceRequest?.userProjects?.length) {
@@ -178,8 +221,12 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 									>
 										<ClayDropDown.ItemList>
 											<ClayDropDown.Item
-												disabled
-												onClick={() => {}}
+												disabled={false}
+												onClick={() => {
+													onOpenDetailsModal(
+														orderItem
+													);
+												}}
 											>
 												{i18n.translate('view-details')}
 											</ClayDropDown.Item>
@@ -233,6 +280,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 						},
 					},
 				]}
+				onClickRow={(row) => onOpenDetailsModal(row)}
 				rows={provisioningTableData}
 			/>
 
@@ -299,10 +347,64 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 						'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license'
 					)}
 				</p>
+
 				<p>
-					A request to uninstall the license will be processed, and it
-					will no longer be visible in your account.
+					{i18n.translate(
+						'a-request-to-uninstall-the-license-will-be-processed-and-it-will-no-longer-be-visible-in-your-account'
+					)}
 				</p>
+			</Modal>
+
+			<Modal
+				last={
+					<>
+						{!detailsData?.isInstalled &&
+							!detailsData?.isExpired && (
+								<ClayButton
+									className="border border-primary ml-2 rounded-lg text-primary"
+									displayType="secondary"
+									onClick={() => {
+										install(resourceRequirements);
+									}}
+									size="sm"
+								>
+									{i18n.translate('install')}
+								</ClayButton>
+							)}
+
+						{detailsData?.isInstalled && (
+							<ClayButton
+								className="border border-danger ml-2 rounded-lg text-danger"
+								displayType="secondary"
+								onClick={() => {
+									uninstall();
+									detailsModal.onClose();
+								}}
+								size="sm"
+							>
+								{i18n.translate('uninstall')}
+							</ClayButton>
+						)}
+
+						<ClayButton
+							className="ml-2 rounded-lg"
+							displayType="primary"
+							onClick={() => detailsModal.onClose()}
+							size="sm"
+						>
+							{i18n.translate('done')}
+						</ClayButton>
+					</>
+				}
+				observer={detailsModal.observer}
+				size={'lg' as any}
+				visible={detailsModal.open}
+			>
+				<ProvisioningDetails
+					headerInfo={detailsData?.headerInfo}
+					onClose={() => detailsModal.onClose()}
+					orderItem={detailsData?.orderItem}
+				/>
 			</Modal>
 		</>
 	);

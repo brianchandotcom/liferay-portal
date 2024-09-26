@@ -11,6 +11,7 @@ import {ModalRecurrencePage} from './ModalRecurrencePage';
 export class CalendarWidgetPage {
 	readonly addEventButton: Locator;
 	readonly allDayCheckbox: Locator;
+	readonly calendarGrid: Locator;
 	readonly calendarWidget: Locator;
 	readonly closeConfigurationButton: Locator;
 	readonly configurationMenuItem: Locator;
@@ -32,6 +33,7 @@ export class CalendarWidgetPage {
 				exact: true,
 				name: 'All Day',
 			});
+		this.calendarGrid = page.locator('.yui3-calendar-grid');
 		this.calendarWidget = page.locator(
 			'.lfr-layout-structure-item-com-liferay-calendar-web-portlet-calendarportlet'
 		);

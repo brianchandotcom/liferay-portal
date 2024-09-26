@@ -698,6 +698,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
+		CustomFacetPortletPreferences customFacetPortletPreferences) {
+
+		customFacetPortletPreferences.getFederatedSearchKeyOptional();
+	}
+
+	public void method(
 		DDMFormViewFormInstanceRecordsDisplayContext
 			ddmFormViewFormInstanceRecordsDisplayContext){
 		

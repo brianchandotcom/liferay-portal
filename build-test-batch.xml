@@ -7566,7 +7566,7 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
-	<target name="subrepository-compile-jdk8">
+	<target name="subrepository-compile">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />

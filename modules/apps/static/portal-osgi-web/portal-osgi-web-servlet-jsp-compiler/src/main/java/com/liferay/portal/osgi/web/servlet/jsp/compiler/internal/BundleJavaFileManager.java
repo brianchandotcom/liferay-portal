@@ -65,12 +65,10 @@ public class BundleJavaFileManager
 		Location location, String className, JavaFileObject.Kind kind,
 		FileObject sibling) {
 
-		Map<String, Map<String, JavaFileObject>> packageMap = _packageMap;
-
 		String packageName = className.substring(
 			0, className.lastIndexOf(CharPool.PERIOD));
 
-		Map<String, JavaFileObject> packageJavaFileObjects = packageMap.get(
+		Map<String, JavaFileObject> packageJavaFileObjects = _packageMap.get(
 			packageName);
 
 		BytecodeJavaFileObject bytecodeJavaFileObject =
@@ -79,7 +77,7 @@ public class BundleJavaFileManager
 		if (packageJavaFileObjects == null) {
 			packageJavaFileObjects = new ConcurrentHashMap<>();
 
-			packageMap.put(packageName, packageJavaFileObjects);
+			_packageMap.put(packageName, packageJavaFileObjects);
 		}
 
 		packageJavaFileObjects.put(className, bytecodeJavaFileObject);

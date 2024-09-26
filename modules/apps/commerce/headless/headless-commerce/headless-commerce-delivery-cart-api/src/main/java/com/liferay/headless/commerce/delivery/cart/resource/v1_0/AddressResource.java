@@ -43,17 +43,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AddressResource {
 
-	public Address getCartByExternalReferenceCodeBillingAddres(
+	public Address getCartByExternalReferenceCodeBillingAddress(
 			String externalReferenceCode)
 		throws Exception;
 
-	public Address getCartByExternalReferenceCodeShippingAddres(
+	public Address getCartByExternalReferenceCodeShippingAddress(
 			String externalReferenceCode)
 		throws Exception;
 
-	public Address getCartBillingAddres(Long cartId) throws Exception;
+	public Address getCartBillingAddress(Long cartId) throws Exception;
 
-	public Address getCartShippingAddres(Long cartId) throws Exception;
+	public Address getCartShippingAddress(Long cartId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

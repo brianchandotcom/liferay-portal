@@ -178,25 +178,25 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderPaymentUrl"));
 					put(
-						"query#placedOrderByExternalReferenceCodePlacedOrderBillingAddres",
+						"query#placedOrderByExternalReferenceCodePlacedOrderBillingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres"));
+							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress"));
 					put(
-						"query#placedOrderByExternalReferenceCodePlacedOrderShippingAddres",
+						"query#placedOrderByExternalReferenceCodePlacedOrderShippingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres"));
+							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
 					put(
-						"query#placedOrderPlacedOrderBillingAddres",
+						"query#placedOrderPlacedOrderBillingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderPlacedOrderBillingAddres"));
+							"getPlacedOrderPlacedOrderBillingAddress"));
 					put(
-						"query#placedOrderPlacedOrderShippingAddres",
+						"query#placedOrderPlacedOrderShippingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderPlacedOrderShippingAddres"));
+							"getPlacedOrderPlacedOrderShippingAddress"));
 					put(
 						"query#placedOrderCommentByExternalReferenceCode",
 						new ObjectValuePair<>(
@@ -249,36 +249,6 @@ public class ServletDataImpl implements ServletData {
 							"getPlacedOrderItemPlacedOrderItemShipmentsPage"));
 
 					put(
-						"query#PlacedOrder.paymentUrl",
-						new ObjectValuePair<>(
-							PlacedOrderResourceImpl.class,
-							"getPlacedOrderPaymentUrl"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderShippingAddres",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddres"));
-					put(
-						"query#PlacedOrder.placedOrderShippingAddres",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderPlacedOrderShippingAddres"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddres",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddres"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
-						new ObjectValuePair<>(
-							PlacedOrderItemResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderComments",
-						new ObjectValuePair<>(
-							PlacedOrderCommentResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage"));
-					put(
 						"query#OrderTransition.placedOrder",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class, "getPlacedOrder"));
@@ -287,6 +257,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderCommentResourceImpl.class,
 							"getPlacedOrderCommentByExternalReferenceCode"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddress",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress"));
+					put(
+						"query#PlacedOrder.paymentUrl",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class,
+							"getPlacedOrderPaymentUrl"));
 					put(
 						"query#PlacedOrder.byExternalReferenceCodePaymentUrl",
 						new ObjectValuePair<>(
@@ -303,11 +283,6 @@ public class ServletDataImpl implements ServletData {
 							OrderTransitionResourceImpl.class,
 							"getPlacedOrderOrderTransitionsPage"));
 					put(
-						"query#PlacedOrder.placedOrderBillingAddres",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderPlacedOrderBillingAddres"));
-					put(
 						"query#PlacedOrder.itemByExternalReferenceCode",
 						new ObjectValuePair<>(
 							PlacedOrderItemResourceImpl.class,
@@ -317,6 +292,21 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCode"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderShippingAddress",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
+						new ObjectValuePair<>(
+							PlacedOrderItemResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderComments",
+						new ObjectValuePair<>(
+							PlacedOrderCommentResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage"));
 				}
 			};
 

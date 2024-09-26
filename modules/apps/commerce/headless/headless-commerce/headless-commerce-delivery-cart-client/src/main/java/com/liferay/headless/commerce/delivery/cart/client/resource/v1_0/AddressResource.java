@@ -31,33 +31,33 @@ public interface AddressResource {
 		return new Builder();
 	}
 
-	public Address getCartByExternalReferenceCodeBillingAddres(
+	public Address getCartByExternalReferenceCodeBillingAddress(
 			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getCartByExternalReferenceCodeBillingAddresHttpResponse(
+			getCartByExternalReferenceCodeBillingAddressHttpResponse(
 				String externalReferenceCode)
 		throws Exception;
 
-	public Address getCartByExternalReferenceCodeShippingAddres(
+	public Address getCartByExternalReferenceCodeShippingAddress(
 			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getCartByExternalReferenceCodeShippingAddresHttpResponse(
+			getCartByExternalReferenceCodeShippingAddressHttpResponse(
 				String externalReferenceCode)
 		throws Exception;
 
-	public Address getCartBillingAddres(Long cartId) throws Exception;
+	public Address getCartBillingAddress(Long cartId) throws Exception;
 
-	public HttpInvoker.HttpResponse getCartBillingAddresHttpResponse(
+	public HttpInvoker.HttpResponse getCartBillingAddressHttpResponse(
 			Long cartId)
 		throws Exception;
 
-	public Address getCartShippingAddres(Long cartId) throws Exception;
+	public Address getCartShippingAddress(Long cartId) throws Exception;
 
-	public HttpInvoker.HttpResponse getCartShippingAddresHttpResponse(
+	public HttpInvoker.HttpResponse getCartShippingAddressHttpResponse(
 			Long cartId)
 		throws Exception;
 
@@ -169,12 +169,12 @@ public interface AddressResource {
 
 	public static class AddressResourceImpl implements AddressResource {
 
-		public Address getCartByExternalReferenceCodeBillingAddres(
+		public Address getCartByExternalReferenceCodeBillingAddress(
 				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCartByExternalReferenceCodeBillingAddresHttpResponse(
+				getCartByExternalReferenceCodeBillingAddressHttpResponse(
 					externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -238,7 +238,7 @@ public interface AddressResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getCartByExternalReferenceCodeBillingAddresHttpResponse(
+				getCartByExternalReferenceCodeBillingAddressHttpResponse(
 					String externalReferenceCode)
 			throws Exception {
 
@@ -276,12 +276,12 @@ public interface AddressResource {
 			return httpInvoker.invoke();
 		}
 
-		public Address getCartByExternalReferenceCodeShippingAddres(
+		public Address getCartByExternalReferenceCodeShippingAddress(
 				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCartByExternalReferenceCodeShippingAddresHttpResponse(
+				getCartByExternalReferenceCodeShippingAddressHttpResponse(
 					externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -345,7 +345,7 @@ public interface AddressResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getCartByExternalReferenceCodeShippingAddresHttpResponse(
+				getCartByExternalReferenceCodeShippingAddressHttpResponse(
 					String externalReferenceCode)
 			throws Exception {
 
@@ -383,9 +383,9 @@ public interface AddressResource {
 			return httpInvoker.invoke();
 		}
 
-		public Address getCartBillingAddres(Long cartId) throws Exception {
+		public Address getCartBillingAddress(Long cartId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getCartBillingAddresHttpResponse(cartId);
+				getCartBillingAddressHttpResponse(cartId);
 
 			String content = httpResponse.getContent();
 
@@ -447,7 +447,7 @@ public interface AddressResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getCartBillingAddresHttpResponse(
+		public HttpInvoker.HttpResponse getCartBillingAddressHttpResponse(
 				Long cartId)
 			throws Exception {
 
@@ -485,9 +485,9 @@ public interface AddressResource {
 			return httpInvoker.invoke();
 		}
 
-		public Address getCartShippingAddres(Long cartId) throws Exception {
+		public Address getCartShippingAddress(Long cartId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getCartShippingAddresHttpResponse(cartId);
+				getCartShippingAddressHttpResponse(cartId);
 
 			String content = httpResponse.getContent();
 
@@ -549,7 +549,7 @@ public interface AddressResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getCartShippingAddresHttpResponse(
+		public HttpInvoker.HttpResponse getCartShippingAddressHttpResponse(
 				Long cartId)
 			throws Exception {
 

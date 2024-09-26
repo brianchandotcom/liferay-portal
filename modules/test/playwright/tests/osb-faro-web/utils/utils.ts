@@ -102,7 +102,8 @@ export async function selectPaginationPageNumber({
 
 	await page
 		.locator(`xpath=//*[contains(@href,'page=${paginationPageNumber}')]`)
-		.first().click();
+		.first()
+		.click();
 
 	await waitForLoading(page);
 }

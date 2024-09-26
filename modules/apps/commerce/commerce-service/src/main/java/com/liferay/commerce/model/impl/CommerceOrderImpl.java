@@ -75,6 +75,23 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public int getAttachmentFileEntriesCount() throws PortalException {
+		LocalRepository localRepository = getLocalRepository();
+
+		if (localRepository == null) {
+			return 0;
+		}
+
+		Folder folder = getFolder(localRepository);
+
+		if (folder == null) {
+			return 0;
+		}
+
+		return localRepository.getFileEntriesCount(folder.getFolderId());
+	}
+
+	@Override
 	public CommerceAddress getBillingAddress() throws PortalException {
 		long billingAddressId = getBillingAddressId();
 

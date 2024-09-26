@@ -192,7 +192,7 @@
 			"key": "portalBatchName",
 			"label": "Portal Batch Name",
 			"type": "string",
-			"valueDescription": "e.g. functional-tomcat90-mysql57-jdk8"
+			"valueDescription": "e.g. functional-tomcat90-mysql57"
 		},
 		{
 			"externalReferenceCode": "portalBatchTestSelector",

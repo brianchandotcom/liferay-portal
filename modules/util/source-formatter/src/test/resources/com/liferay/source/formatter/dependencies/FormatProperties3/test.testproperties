@@ -70,8 +70,8 @@
     	((portal.acceptance != quarantine) AND (portal.upstream != quarantine)) AND \
     	(portal.stable != "true")
 
-	test.batch.run.property.query[functional-tomcat90-mysql57-jdk8][search-remote]=\
-        ${test.batch.run.property.query[functional-tomcat90-mysql57-jdk8][search]} AND \
+	test.batch.run.property.query[functional-tomcat90-mysql57][search-remote]=\
+        ${test.batch.run.property.query[functional-tomcat90-mysql57][search]} AND \
         (embedded.elasticsearch.only != "true")
 
     test.batch.run.property.query[functional-smoke-bundle-jboss74-mysql57-jdk8]=\
@@ -93,7 +93,7 @@
             (testray.main.component.name ~ "Headless Frontend Infrastructure") \
         )
 
-    test.batch.run.property.query[functional-tomcat90-mysql57-jdk8][site-template]=\
+    test.batch.run.property.query[functional-tomcat90-mysql57][site-template]=\
         (testray.component.names ~ "Site Templates") OR \
         (testray.main.component.name ~ "Site Templates")\
 

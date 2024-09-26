@@ -333,7 +333,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		>
 			<replacetoken><![CDATA[{temp.batches}]]></replacetoken>
 			<replacevalue><![CDATA[
-		functional-tomcat90-mysql57-chrome100-jdk8,\
+		functional-tomcat90-mysql57-chrome100,\
 		js-unit-jdk8,\
 		modules-integration-mysql57-jdk8,\
 		unit-jdk8]]></replacevalue>
@@ -349,7 +349,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.run\.property\.query\[functional-tomcat90-mysql57-jdk8\]=\\)((\n.*?)*)(portal\.acceptance == )(true)"
+			match="(test\.batch\.run\.property\.query\[functional-tomcat90-mysql57\]=\\)((\n.*?)*)(portal\.acceptance == )(true)"
 			replace="\1\2\4${custom.suite}"
 		/>
 

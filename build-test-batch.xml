@@ -8481,7 +8481,7 @@ ${output.content}</echo>
 		<run-release-osgi-state-lpkg-test database.type="postgresql" />
 	</target>
 
-	<target name="rest-builder-jdk8">
+	<target name="rest-builder">
 		<run-batch-test>
 			<test-action>
 				<if>

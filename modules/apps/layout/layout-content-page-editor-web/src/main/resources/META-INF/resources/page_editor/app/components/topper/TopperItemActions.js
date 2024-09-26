@@ -130,6 +130,7 @@ export default function TopperItemActions({disabled, item}) {
 				items.push({
 					action: () => setCopiedItemIds([item.itemId]),
 					icon: 'copy',
+					isBetaFeature: true,
 					label: Liferay.Language.get('copy'),
 				});
 			}

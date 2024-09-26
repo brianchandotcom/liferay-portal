@@ -190,7 +190,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertTablesAreSortedByInitialRows(
 			_logContextTablesInitialFinalRowsPattern.matcher(
 				_getLogContextValue(
-					"upgrade.report.tables.initial.final.rows", false)));
+					"upgrade.report.tables.initial.final.rows")));
 		_assertTablesAreSortedByInitialRows(_pattern.matcher(_reportContent));
 	}
 
@@ -444,8 +444,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			reportContentDiagnostics.indexOf(slowerUpgradeProcessName) <
 				reportContentDiagnostics.indexOf(fasterUpgradeProcessName));
 
-		String longestUpgradeProcessesValue = _getLogContextValue(
-			"upgrade.report.longest.upgrade.processes", true);
+		String longestUpgradeProcessesValue = _getLogContextValueDiagnostics(
+			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertTrue(
 			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
@@ -924,13 +924,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private void _assertLogContext(String key, String text) {
 		Assert.assertTrue(
 			StringUtil.containsIgnoreCase(
-				_getLogContextValue(key, false), text, StringPool.BLANK));
+				_getLogContextValue(key), text, StringPool.BLANK));
 	}
 
 	private void _assertLogContextDiagnostics(String key, String text) {
 		Assert.assertTrue(
 			StringUtil.containsIgnoreCase(
-				_getLogContextValue(key, true), text, StringPool.BLANK));
+				_getLogContextValueDiagnostics(key), text, StringPool.BLANK));
 	}
 
 	private void _assertRenameUpgradeReport(String fileName) throws Exception {
@@ -1046,13 +1046,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return _unsyncStringWriter.toString();
 	}
 
-	private String _getLogContextValue(String key, boolean diagnostics) {
-		String fileName = "upgrade-report.txt";
+	private String _getLogContextValue(String key) {
+		return _getLogContextValue(key, "upgrade-report.txt");
+	}
 
-		if (diagnostics) {
-			fileName = "upgrade-report-diagnostics.txt";
-		}
-
+	private String _getLogContextValue(String key, String fileName) {
 		File file = new File(new File(getFilePath(), "reports"), fileName);
 
 		Pattern pattern = Pattern.compile(
@@ -1074,6 +1072,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Assert.assertTrue(logContextValues.containsKey(key));
 
 		return logContextValues.get(key);
+	}
+
+	private String _getLogContextValueDiagnostics(String key) {
+		return _getLogContextValue(key, "upgrade-report-diagnostics.txt");
 	}
 
 	private Map<String, String> _getLogContextValues(String logContextContent) {

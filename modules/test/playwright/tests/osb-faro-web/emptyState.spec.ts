@@ -298,7 +298,7 @@ test(
 				})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 
@@ -335,7 +335,7 @@ test(
 				})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 
@@ -363,7 +363,7 @@ test(
 				.getByRole('link', {name: 'Learn more about interests.'})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 
@@ -393,7 +393,7 @@ test(
 				.getByRole('link', {name: 'Learn more about distribution.'})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 
@@ -422,7 +422,7 @@ test(
 				.getByRole('link', {name: 'Learn more about interests.'})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 
@@ -449,7 +449,7 @@ test(
 				.getByRole('link', {name: 'Learn more about distribution.'})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 
@@ -480,7 +480,7 @@ test(
 				.getByRole('link', {name: 'Learn more about tests.'})
 				.click();
 
-				const newPage = await page.waitForEvent('popup');
+			const newPage = await page.waitForEvent('popup');
 
 			const href = newPage.url();
 

@@ -3371,6 +3371,18 @@
 	},
 	{
 		"classNames": [
+			"Address",
+			"EmailAddress",
+			"OrgLabor",
+			"Phone",
+			"Website"
+		],
+		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>get|set)TypeId",
+		"issueKey": "LPD-36750",
+		"to": "${variableName}.${prefixMethodName}ListTypeId"
+	},
+	{
+		"classNames": [
 			"CommercePriceListLocalService",
 			"CommercePriceListLocalServiceUtil"
 		],
@@ -4082,18 +4094,6 @@
 	},
 	{
 		"classNames": [
-			"Address",
-			"EmailAddress",
-			"OrgLabor",
-			"Phone",
-			"Website"
-		],
-		"from": "getTypeId",
-		"issueKey": "LPS-197984",
-		"to": "getListTypeId"
-	},
-	{
-		"classNames": [
 			"Contact"
 		],
 		"from": "setPrefixId",
@@ -4115,18 +4115,6 @@
 		"from": "setSuffixId",
 		"issueKey": "LPS-197984",
 		"to": "setSuffixListTypeId"
-	},
-	{
-		"classNames": [
-			"Address",
-			"EmailAddress",
-			"OrgLabor",
-			"Phone",
-			"Website"
-		],
-		"from": "setTypeId",
-		"issueKey": "LPS-197984",
-		"to": "setListTypeId"
 	},
 	{
 		"classNames": [

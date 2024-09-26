@@ -29,7 +29,15 @@ import {
 import useDropContainerId from '../../utils/useDropContainerId';
 import {TopperLabel} from './TopperLabel';
 
-export default function ({children, item, ...props}) {
+export default function ({children, ...props}) {
+	if (Liferay.FeatureFlags['LPD-18221']) {
+		return <TopperEmptyWrapper {...props}>{children}</TopperEmptyWrapper>;
+	}
+
+	return <OldTopperEmpty {...props}>{children}</OldTopperEmpty>;
+}
+
+const TopperEmptyWrapper = ({children, item, ...props}) => {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
 	const isHovered = useIsHovered();
@@ -47,7 +55,70 @@ export default function ({children, item, ...props}) {
 	) : (
 		children
 	);
-}
+};
+
+const OldTopperEmpty = ({children, className, item}) => {
+	const containerRef = useRef(null);
+
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
+	const {itemId: movementTargetItemId} = useMovementTarget();
+	const movementTargetPosition = useMovementTargetPosition();
+
+	const dropTargetPosition = targetPosition || movementTargetPosition;
+
+	const isFragment = children.type === React.Fragment;
+	const realChildren = isFragment ? children.props.children : children;
+
+	const dropContainerId = useDropContainerId();
+	const isDroppable = useIsDroppable();
+
+	const isValidDrop =
+		(isDroppable && isOverTarget) || movementTargetItemId === item.itemId;
+
+	return React.Children.map(realChildren, (child) => {
+		if (!child) {
+			return child;
+		}
+
+		return (
+			<>
+				{React.cloneElement(child, {
+					...child.props,
+					className: classNames(
+						child.props.className,
+						className,
+						'page-editor__topper',
+						{
+							'drag-over-bottom':
+								isValidDrop &&
+								dropTargetPosition === TARGET_POSITIONS.BOTTOM,
+							'drag-over-middle':
+								isValidDrop &&
+								dropTargetPosition === TARGET_POSITIONS.MIDDLE,
+							'drag-over-top':
+								isValidDrop &&
+								dropTargetPosition === TARGET_POSITIONS.TOP,
+							'drop-container': dropContainerId === item.itemId,
+						}
+					),
+					ref: (node) => {
+						containerRef.current = node;
+						targetRef(node);
+
+						// Call the original ref, if any.
+
+						if (typeof child.ref === 'function') {
+							child.ref(node);
+						}
+						else if (child.ref && 'current' in child.ref) {
+							child.ref.current = node;
+						}
+					},
+				})}
+			</>
+		);
+	});
+};
 
 const TopperEmpty = ({
 	children,

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,9 +47,9 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	public void deletePortalInstance(String portalInstanceId) throws Exception {
 		Company company = _companyService.getCompanyByWebId(portalInstanceId);
 
-		_companyService.deleteCompany(company.getCompanyId());
+		_synchronizePortalInstances();
 
-		_portalInstancesLocalService.synchronizePortalInstances();
+		_companyService.deleteCompany(company.getCompanyId());
 	}
 
 	@Override
@@ -116,6 +117,8 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 		long finalCompanyId = companyId;
 
+		_synchronizePortalInstances();
+
 		Company company = PortalInstances.addCompany(
 			portalInstance.getSiteInitializerKey(),
 			() -> _companyService.addCompany(
@@ -154,8 +157,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				contact.getJobTitle(), null, null, null, null, null, null);
 		}
 
-		_portalInstancesLocalService.synchronizePortalInstances();
-
 		return _toPortalInstance(company);
 	}
 
@@ -179,6 +180,15 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		_companyService.updateCompany(
 			company.getCompanyId(), company.getVirtualHostname(),
 			company.getMx(), company.getMaxUsers(), false);
+	}
+
+	private void _synchronizePortalInstances() {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_portalInstancesLocalService.synchronizePortalInstances();
+
+				return null;
+			});
 	}
 
 	private PortalInstance _toPortalInstance(Company company) {

@@ -22,10 +22,17 @@ const test = mergeTests(
 test(
 	'Create AI Image option in Management Toolbar without API Key opens an alert',
 	{tag: '@LPD-6717'},
-	async ({documentLibraryPage, page, site}) => {
+	async ({
+		aiCreatorInstanceSettingsPage,
+		documentLibraryPage,
+		page,
+		site,
+	}) => {
+		await aiCreatorInstanceSettingsPage.enableDalleCreateImages();
+		await aiCreatorInstanceSettingsPage.removeApiKey();
+
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.openCreateAIImage();
-
 		await expect(page.getByText('Configure OpenAI')).toBeVisible();
 	}
 );
@@ -40,6 +47,7 @@ test(
 		site,
 	}) => {
 		await aiCreatorInstanceSettingsPage.disableDalleCreateImages();
+
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.openNewButton();
 		await expect(
@@ -64,6 +72,7 @@ test(
 			'scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient'
 		);
 		await aiCreatorInstanceSettingsPage.addApiKey();
+
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.openCreateAIImage();
 		await expect(page.getByText('Create AI Image')).toBeVisible();

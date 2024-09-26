@@ -5,13 +5,15 @@
 
 import ClayIcon from '@clayui/icon';
 import {isObject} from 'frontend-js-web';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 
+import {EVENT_TYPES} from '../../../custom/form/eventTypes';
 import * as MultiPages from '../../../custom/form/renderer/MultiPagesVariant.es';
 import * as Paginated from '../../../custom/form/renderer/PaginatedVariant.es';
 import * as SuccessPage from '../../../custom/form/renderer/SuccessVariant.es';
 import * as Wizard from '../../../custom/form/renderer/WizardVariant.es';
 import {PagesVisitor} from '../../../utils/visitors.es';
+import {useForm, useFormState} from '../../hooks/useForm.es';
 import {PageProvider} from '../../hooks/usePage.es';
 import {mergeVariants} from '../../utils/merge-variants.es';
 import * as DefaultVariant from './DefaultVariant.es';
@@ -176,6 +178,53 @@ const Page = ({
 	const isDDMFormPortletNamespace = portletNamespace.includes(
 		DDM_FORM_PORTLET_NAMESPACE
 	);
+
+	const {defaultLanguageId, history} = useFormState();
+
+	const dispatch = useForm();
+	const defaultLanguageIdRef = useRef(defaultLanguageId);
+
+	useEffect(() => {
+		if (history?.steps.length === 0) {
+			dispatch({type: EVENT_TYPES.HISTORY.ADD});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		if (defaultLanguageIdRef.current !== defaultLanguageId) {
+			defaultLanguageIdRef.current = defaultLanguageId;
+			dispatch({type: EVENT_TYPES.HISTORY.RESET});
+		}
+	}, [defaultLanguageId, dispatch]);
+
+	useEffect(() => {
+		const goToHandler = ({step}) => {
+			dispatch({step, type: EVENT_TYPES.HISTORY.GOTO});
+		};
+		const handleStoreState = () => {
+			dispatch({type: EVENT_TYPES.HISTORY.ADD});
+		};
+		const undoHandler = () => {
+			dispatch({type: EVENT_TYPES.HISTORY.PREV});
+		};
+		const redoHandler = () => {
+			dispatch({type: EVENT_TYPES.HISTORY.NEXT});
+		};
+
+		Liferay.on('journal:goto', goToHandler);
+		Liferay.on('journal:undo', undoHandler);
+		Liferay.on('journal:redo', redoHandler);
+		Liferay.on('journal:storeState', handleStoreState);
+
+		return () => {
+			Liferay.detach('journal:goto', goToHandler);
+			Liferay.detach('journal:undo', undoHandler);
+			Liferay.detach('journal:redo', redoHandler);
+			Liferay.detach('journal:storeState', handleStoreState);
+		};
+	}, [dispatch]);
 
 	return (
 		<VariantsProvider components={variants}>

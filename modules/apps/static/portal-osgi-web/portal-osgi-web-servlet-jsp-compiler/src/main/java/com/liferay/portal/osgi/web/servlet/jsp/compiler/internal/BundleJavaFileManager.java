@@ -123,10 +123,7 @@ public class BundleJavaFileManager
 		if ((location == StandardLocation.CLASS_PATH) &&
 			packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
 
-			Map<String, Map<String, JavaFileObject>> packageMap =
-				_javaFileObjectsMap;
-
-			Map<String, JavaFileObject> packageFiles = packageMap.get(
+			Map<String, JavaFileObject> packageFiles = _javaFileObjectsMap.get(
 				packageName);
 
 			if (packageFiles != null) {

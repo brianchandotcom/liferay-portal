@@ -11,7 +11,9 @@ import fetcher from '../../../services/fetcher';
 
 const useAccounts = () => {
 	const {myUserAccount} = useMarketplaceContext();
-	const [selectedAccount, setSelectedAccount] = useState<any>(null);
+	const [selectedAccount, setSelectedAccount] = useState<Account | null>(
+		null
+	);
 
 	const accountBriefs = useMemo(
 		() => myUserAccount?.accountBriefs || [],
@@ -36,7 +38,7 @@ const useAccounts = () => {
 	return {
 		accounts,
 		myUserAccount,
-		selectedAccount,
+		selectedAccount: accounts.length === 1 ? accounts[0] : selectedAccount,
 		setSelectedAccount,
 	};
 };

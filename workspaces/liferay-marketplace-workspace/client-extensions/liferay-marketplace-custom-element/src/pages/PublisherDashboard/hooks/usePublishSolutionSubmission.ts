@@ -360,9 +360,12 @@ const usePublishSolutionSubmission = (
 		const imagesToDelete = context.references.imagesToDelete;
 
 		for (const externalReferenceCode of imagesToDelete) {
-			await headlessCommerceAdminCatalogImpl.deleteAttachmentByExternalReferenceCode(
-				externalReferenceCode
-			);
+			try {
+				await headlessCommerceAdminCatalogImpl.deleteAttachmentByExternalReferenceCode(
+					externalReferenceCode
+				);
+			}
+			catch {}
 		}
 	};
 

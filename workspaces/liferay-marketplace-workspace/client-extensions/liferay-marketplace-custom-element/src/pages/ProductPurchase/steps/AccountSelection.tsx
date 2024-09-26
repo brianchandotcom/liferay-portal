@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useEffect} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import AccountSelection from '../../../components/Checkout/AccountSelection';
@@ -15,8 +16,16 @@ import {ProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
 const ProductPurchaseAccountSelection = () => {
 	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
-	const {selectedAccount, setSelectedAccount} =
+	const {accounts, routes, selectedAccount, setSelectedAccount} =
 		useOutletContext<ProductPurchaseOutletContext>();
+
+	const nextRoutePath = routes[1].path;
+
+	useEffect(() => {
+		if (accounts.length === 1 && nextRoutePath) {
+			navigate(nextRoutePath);
+		}
+	}, [accounts.length, navigate, nextRoutePath]);
 
 	return (
 		<ProductPurchase.Shell

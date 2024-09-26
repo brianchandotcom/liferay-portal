@@ -111,15 +111,7 @@ export class DocumentLibraryPage {
 			.click();
 	}
 
-	async goToEditFolder(entryTitle: string) {
-		await this.page
-			.locator(`.card-body:has-text('${entryTitle}')`)
-			.getByLabel('More actions')
-			.click();
-		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
-	}
-
-	async editFileEntry(entryTitle: string) {
+	async goToEditFileEntry(entryTitle: string) {
 		await this.page
 			.getByRole('link', {exact: true, name: entryTitle})
 			.click();
@@ -132,6 +124,14 @@ export class DocumentLibraryPage {
 			}),
 			trigger: this.page.getByRole('button', {name: 'Show Actions'}),
 		});
+	}
+
+	async goToEditFolder(entryTitle: string) {
+		await this.page
+			.locator(`.card-body:has-text('${entryTitle}')`)
+			.getByLabel('More actions')
+			.click();
+		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
 	}
 
 	async goToCreateNewFile() {

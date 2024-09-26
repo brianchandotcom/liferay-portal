@@ -83,7 +83,7 @@ test(
 			site.friendlyUrlPath
 		);
 
-		await documentLibraryPage.editFileEntry(title);
+		await documentLibraryPage.goToEditFileEntry(title);
 		await documentLibraryEditFilePage.descriptionInput.fill(
 			getRandomString()
 		);
@@ -177,7 +177,7 @@ test(
 
 		await documentLibraryPage.changeView('cards');
 
-		await documentLibraryPage.editFileEntry(title);
+		await documentLibraryPage.goToEditFileEntry(title);
 
 		await documentLibraryPage.assertPrivateFileIcon();
 
@@ -390,7 +390,7 @@ test(
 
 		for (const document of [document1, document2]) {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.editFileEntry(document.title);
+			await documentLibraryPage.goToEditFileEntry(document.title);
 			await documentLibraryEditFilePage.openFieldset('Categorization');
 			await page.getByText(vocabularyName).waitFor();
 

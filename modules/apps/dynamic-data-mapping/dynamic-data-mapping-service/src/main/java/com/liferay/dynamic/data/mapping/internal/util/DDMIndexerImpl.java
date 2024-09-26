@@ -690,7 +690,20 @@ public class DDMIndexerImpl implements DDMIndexer {
 					richTextValues.add(_htmlParser.extractText(valueString));
 				}
 
-				valuesString = richTextValues.toArray(new String[0]);
+				List<String> truncatedValues = new ArrayList<>();
+
+				for (String richTextValue : richTextValues) {
+					if (richTextValue.length() >
+							_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
+
+						richTextValue = richTextValue.substring(
+							0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
+					}
+
+					truncatedValues.add(richTextValue);
+				}
+
+				valuesString = truncatedValues.toArray(new String[0]);
 			}
 
 			if (indexType.equals("keyword")) {

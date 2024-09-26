@@ -18,9 +18,13 @@ import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinderRegistryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -181,6 +185,11 @@ public class KBArticleAssetRenderer
 				return friendlyURL;
 			}
 		}
+
+		if (!_hasViewInContextGroupLayout(
+				themeDisplay, _kbArticle.getGroupId())) {
+
+			return null;
 		}
 
 		return KnowledgeBaseUtil.getKBArticleURL(
@@ -259,6 +268,39 @@ public class KBArticleAssetRenderer
 
 		return themeDisplay.getScopeGroup();
 	}
+
+	private boolean _hasViewInContextGroupLayout(
+		ThemeDisplay themeDisplay, long groupId) {
+
+		try {
+			PortletLayoutFinder portletLayoutFinder =
+				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
+					getClassName());
+
+			if (portletLayoutFinder == null) {
+				return false;
+			}
+
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
+				themeDisplay, groupId);
+
+			if ((result == null) || Validator.isNull(result.getPortletId())) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBArticleAssetRenderer.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;

@@ -9226,7 +9226,7 @@ ${output.content}</echo>
 		<antcall target="clean-up-sybase-processes" />
 	</target>
 
-	<target name="tck-jdk8">
+	<target name="tck">
 		<run-batch-test tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">

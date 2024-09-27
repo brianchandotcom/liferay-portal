@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "org.yaml", name: "snakeyaml", version: "2.2"
+		classpath group: "org.yaml", name: "snakeyaml", version: "2.3"
 		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "@biz.aQute.bnd.version@"
 	}
 }

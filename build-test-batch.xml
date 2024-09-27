@@ -3631,7 +3631,7 @@ information. Make sure to commit in all build-iw results.
 		</run-batch-test>
 	</target>
 
-	<target name="build-lib-versions-jdk8">
+	<target name="build-lib-versions">
 		<run-batch-test>
 			<test-action>
 				<ant dir="portal-impl" inheritAll="false" target="build-lib-versions" />

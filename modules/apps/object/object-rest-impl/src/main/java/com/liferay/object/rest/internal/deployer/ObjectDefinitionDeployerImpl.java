@@ -475,8 +475,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			"companyId", companyIds
 		).put(
 			"entity.class.name",
-			ObjectEntry.class.getName() + "#" +
-				StringUtil.toLowerCase(objectDefinition.getName())
+			ObjectEntry.class.getName() + "#" + osgiJaxRsName
 		).put(
 			"osgi.jaxrs.application.select",
 			"(osgi.jaxrs.name=" + osgiJaxRsName + ")"

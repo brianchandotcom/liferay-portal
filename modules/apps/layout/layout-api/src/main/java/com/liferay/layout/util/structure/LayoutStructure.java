@@ -493,6 +493,23 @@ public class LayoutStructure {
 			position = -1;
 		}
 
+		if (parentLayoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem) {
+
+			List<String> childrenItemIds =
+				parentLayoutStructureItem.getChildrenItemIds();
+
+			if (ListUtil.isEmpty(childrenItemIds)) {
+				throw new UnsupportedOperationException(
+					"Unable to copy items because collection doesn't have " +
+						"collection items");
+			}
+
+			parentItemId = childrenItemIds.get(0);
+
+			position = -1;
+		}
+
 		for (String itemId : itemIds) {
 			if (Objects.equals(itemId, parentItemId)) {
 				throw new UnsupportedOperationException(

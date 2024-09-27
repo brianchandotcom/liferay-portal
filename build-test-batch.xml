@@ -8846,7 +8846,41 @@ information. Make sure to commit in all build services results.
 		<setup-testable-tomcat-gc test.portal.bundle.version="${test.portal.bundle.version}" />
 	</target>
 
-	<target name="source-format-current-branch-jdk8">
+	<target name="source-format">
+		<run-batch-test>
+			<test-action>
+				<if>
+					<available file="modules/util/source-formatter" />
+					<then>
+						<gradle-execute dir="modules/util/source-formatter" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
+
+				<loadproperties>
+					<zipentry name="META-INF/MANIFEST.MF" zipfile="tools/sdk/dependencies/com.liferay.source.formatter/lib/com.liferay.source.formatter.jar" />
+				</loadproperties>
+
+				<echo>Running com.liferay.source.formatter.jar ${Bundle-Version}.</echo>
+
+				<ant dir="portal-impl" target="format-source-all">
+					<property name="source.auto.fix" value="false" />
+					<property name="source.fail.on.auto.fix" value="true" />
+					<property name="source.fail.on.has.warning" value="true" />
+					<property if:true="${liferay.releng.public}" name="source.formatter.excludes" value="modules/private/**" />
+					<property name="source.print.errors" value="false" />
+					<property name="source.use.properties" value="false" />
+				</ant>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
+	<target name="source-format-current-branch">
 		<run-batch-test>
 			<test-action>
 				<exec executable="git" failonerror="true" outputproperty="git.diff">
@@ -8909,40 +8943,6 @@ information. Make sure to commit in all build services results.
 					</else>
 				</if>
 			</test-action>
-		</run-batch-test>
-	</target>
-
-	<target name="source-format-jdk8">
-		<run-batch-test>
-			<test-action>
-				<if>
-					<available file="modules/util/source-formatter" />
-					<then>
-						<gradle-execute dir="modules/util/source-formatter" task="deploy">
-							<arg value="clean" />
-						</gradle-execute>
-					</then>
-				</if>
-
-				<loadproperties>
-					<zipentry name="META-INF/MANIFEST.MF" zipfile="tools/sdk/dependencies/com.liferay.source.formatter/lib/com.liferay.source.formatter.jar" />
-				</loadproperties>
-
-				<echo>Running com.liferay.source.formatter.jar ${Bundle-Version}.</echo>
-
-				<ant dir="portal-impl" target="format-source-all">
-					<property name="source.auto.fix" value="false" />
-					<property name="source.fail.on.auto.fix" value="true" />
-					<property name="source.fail.on.has.warning" value="true" />
-					<property if:true="${liferay.releng.public}" name="source.formatter.excludes" value="modules/private/**" />
-					<property name="source.print.errors" value="false" />
-					<property name="source.use.properties" value="false" />
-				</ant>
-			</test-action>
-
-			<test-set-up>
-				<setup-test-environment />
-			</test-set-up>
 		</run-batch-test>
 	</target>
 

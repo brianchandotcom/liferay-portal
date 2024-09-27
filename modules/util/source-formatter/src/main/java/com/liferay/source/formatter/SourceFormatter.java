@@ -809,7 +809,7 @@ public class SourceFormatter {
 				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, exclude));
 		}
 
-		// See the source-format-jdk8 task in built-test-batch.xml for more
+		// See the source-format task in built-test-batch.xml for more
 		// information
 
 		String systemExcludes = System.getProperty("source.formatter.excludes");

@@ -3,7 +3,7 @@
 <project basedir="../" name="portal-test-batch" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="../build-test-batch.xml" />
 
-	<target name="jsf-jdk8">
+	<target name="jsf">
 		<get-database-property property.name="database.version" />
 
 		<run-batch-test>

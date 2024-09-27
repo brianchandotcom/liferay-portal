@@ -6065,8 +6065,8 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="jsf-jdk8">
-		<ant antfile="build-test-batch/jsf.xml" target="jsf-jdk8" />
+	<target name="jsf">
+		<ant antfile="build-test-batch/jsf.xml" target="jsf" />
 	</target>
 
 	<target name="jsp-runtime-compile-mysql57">

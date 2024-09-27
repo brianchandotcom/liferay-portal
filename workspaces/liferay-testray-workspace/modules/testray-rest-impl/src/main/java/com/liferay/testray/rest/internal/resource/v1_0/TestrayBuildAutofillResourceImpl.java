@@ -5,12 +5,6 @@
 
 package com.liferay.testray.rest.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -112,22 +106,8 @@ public class TestrayBuildAutofillResourceImpl
 		return jsonObject;
 	}
 
-	@Reference(
-		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
-	)
-	private FilterFactory<Predicate> _filterFactory;
-
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
 	private TestrayManager _testrayManager;

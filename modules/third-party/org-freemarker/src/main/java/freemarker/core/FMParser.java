@@ -4295,7 +4295,7 @@ mixedContentNesting--;
       jj_la1[103] = jj_gen;
       ;
     }
-{if ("" != null) return tp != null ? tp : new TextBlock(CollectionUtils.EMPTY_CHAR_ARRAY, false);}
+{if ("" != null) return tp != null ? tp : new TextBlock("", false);}
     throw new Error("Missing return statement in function");
 }
 
@@ -6240,3 +6240,4 @@ TemplateElement root = children.asSingleElement();
   }
 
 }
+/* @generated */

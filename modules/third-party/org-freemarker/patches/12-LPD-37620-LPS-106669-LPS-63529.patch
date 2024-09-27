@@ -1,0 +1,19 @@
+diff --git a/freemarker/core/FMParser.java b/freemarker/core/FMParser.java
+index 624f182602cef..77af2645cd014 100644
+--- a/freemarker/core/FMParser.java
++++ b/freemarker/core/FMParser.java
+@@ -4295,7 +4295,7 @@ mixedContentNesting--;
+       jj_la1[103] = jj_gen;
+       ;
+     }
+-{if ("" != null) return tp != null ? tp : new TextBlock(CollectionUtils.EMPTY_CHAR_ARRAY, false);}
++{if ("" != null) return tp != null ? tp : new TextBlock("", false);}
+     throw new Error("Missing return statement in function");
+ }
+ 
+@@ -6240,3 +6240,4 @@ TemplateElement root = children.asSingleElement();
+   }
+ 
+ }
++/* @generated */
+\ No newline at end of file

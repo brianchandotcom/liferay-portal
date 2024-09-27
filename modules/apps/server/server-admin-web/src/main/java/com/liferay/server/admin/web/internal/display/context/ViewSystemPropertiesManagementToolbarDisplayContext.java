@@ -43,6 +43,11 @@ public class ViewSystemPropertiesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSortingURL() {
+		return null;
+	}
+
+	@Override
 	public Boolean isSelectable() {
 		return false;
 	}

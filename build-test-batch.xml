@@ -3711,7 +3711,7 @@ information. Make sure to commit in all build-lib-versions results.
 		</run-batch-test>
 	</target>
 
-	<target name="compile-jsp-jdk8">
+	<target name="compile-jsp">
 		<run-batch-test>
 			<test-action>
 				<delete dir="${project.dir}/portal-web/docroot/html" />

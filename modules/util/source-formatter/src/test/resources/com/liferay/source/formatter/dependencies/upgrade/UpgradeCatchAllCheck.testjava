@@ -716,6 +716,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_journalConverter.getContent(ddmStructure, ddmFields);
 	}
 
+	public void method(Group group, LayoutSet layoutSet) {
+		group.getPrivateLayoutSet().getVirtualHostname();
+		layoutSet.getVirtualHostname();
+	}
+
 	public void method(HttpServletRequest httpServletRequest) {
 		_commerceAccountHelper.getCurrentCommerceAccount(httpServletRequest);
 		_commerceAccountHelper.getCurrentCommerceAccount(null);

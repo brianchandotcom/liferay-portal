@@ -102,6 +102,15 @@
 			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
 		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Liferay Staff",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"resourceName": "com.liferay.commerce.order",
 		"roleName": "Organization User",
 		"scope": "3"
 	},

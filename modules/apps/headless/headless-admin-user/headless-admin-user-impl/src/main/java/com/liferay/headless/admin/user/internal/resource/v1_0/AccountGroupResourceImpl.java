@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelService;
@@ -173,6 +174,33 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@Override
+	public AccountGroup patchAccountGroup(
+			Long accountGroupId, AccountGroup accountGroup)
+		throws Exception {
+
+		com.liferay.account.model.AccountGroup serviceAccountGroup =
+			_accountGroupService.getAccountGroup(accountGroupId);
+
+		return _updateAccountGroup(accountGroup, serviceAccountGroup);
+	}
+
+	@Override
+	public AccountGroup patchAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, AccountGroup accountGroup)
+		throws Exception {
+
+		com.liferay.account.model.AccountGroup serviceAccountGroup =
+			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (serviceAccountGroup == null) {
+			throw new NoSuchGroupException();
+		}
+
+		return _updateAccountGroup(accountGroup, serviceAccountGroup);
 	}
 
 	@Override
@@ -359,6 +387,26 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 
 		return _accountGroupResourceDTOConverter.toDTO(
 			_getDTOConverterContext(accountGroup.getAccountGroupId()));
+	}
+
+	private AccountGroup _updateAccountGroup(
+			AccountGroup accountGroup,
+			com.liferay.account.model.AccountGroup serviceAccountGroup)
+		throws Exception {
+
+		serviceAccountGroup = _accountGroupService.updateAccountGroup(
+			serviceAccountGroup.getAccountGroupId(),
+			GetterUtil.getString(
+				accountGroup.getDescription(),
+				serviceAccountGroup.getDescription()),
+			GetterUtil.getString(
+				accountGroup.getName(), serviceAccountGroup.getName()),
+			_createServiceContext(accountGroup));
+
+		return _toAccountGroup(
+			_accountGroupService.updateExternalReferenceCode(
+				serviceAccountGroup.getAccountGroupId(),
+				accountGroup.getExternalReferenceCode()));
 	}
 
 	@Reference(

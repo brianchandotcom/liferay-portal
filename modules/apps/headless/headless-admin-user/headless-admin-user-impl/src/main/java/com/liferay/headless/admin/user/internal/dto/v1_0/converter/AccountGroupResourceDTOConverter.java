@@ -70,6 +70,7 @@ public class AccountGroupResourceDTOConverter
 						accountGroup.getAccountGroupId(),
 						accountGroup.getCompanyId(),
 						dtoConverterContext.getLocale()));
+				setDescription(accountGroup::getDescription);
 				setExternalReferenceCode(
 					accountGroup::getExternalReferenceCode);
 				setId(accountGroup::getAccountGroupId);

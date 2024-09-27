@@ -39,15 +39,15 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 				_configurationProvider.getCompanyConfiguration(
 					AnalyticsConfiguration.class,
 					contextCompany.getCompanyId()));
-
-			_analyticsSettingsManager.deleteCompanyConfiguration(
-				contextUser.getCompanyId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
 		}
+
+		_analyticsSettingsManager.deleteCompanyConfiguration(
+			contextUser.getCompanyId());
 	}
 
 	@Override

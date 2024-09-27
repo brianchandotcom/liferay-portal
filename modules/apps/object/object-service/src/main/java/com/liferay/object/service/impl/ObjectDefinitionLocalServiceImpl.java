@@ -1702,84 +1702,6 @@ public class ObjectDefinitionLocalServiceImpl
 			false, null);
 	}
 
-	private ObjectDefinition _completeBindingAsChild(
-			ObjectDefinition objectDefinition2)
-		throws PortalException {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.fetchByODI2_E(
-				objectDefinition2.getObjectDefinitionId(), true);
-
-		if (objectRelationship == null) {
-			return objectDefinition2;
-		}
-
-		ObjectDefinition objectDefinition1 =
-			objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		if (objectDefinition1.isApproved()) {
-			objectDefinition2.setRootObjectDefinitionId(
-				objectDefinition1.getRootObjectDefinitionId());
-		}
-		else {
-			objectDefinition2.setRootObjectDefinitionId(
-				objectDefinition2.getObjectDefinitionId());
-		}
-
-		return objectDefinitionPersistence.update(objectDefinition2);
-	}
-
-	private ObjectDefinition _completeBindingAsParent(
-			ObjectDefinition objectDefinition1)
-		throws PortalException {
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipPersistence.findByODI1_E(
-				objectDefinition1.getObjectDefinitionId(), true);
-
-		if (objectRelationships.isEmpty()) {
-			return objectDefinition1;
-		}
-
-		deployObjectDefinition(objectDefinition1);
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectDefinition objectDefinition2 =
-				objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId2());
-
-			if (!objectDefinition2.isApproved()) {
-				continue;
-			}
-
-			Tree tree = _treeFactory.createObjectDefinitionTree(
-				objectRelationship.getObjectDefinitionId2(),
-				objectDefinitionLocalService::getObjectDefinition);
-
-			Iterator<Node> iterator = tree.iterator();
-
-			while (iterator.hasNext()) {
-				Node node = iterator.next();
-
-				ObjectDefinition nodeObjectDefinition =
-					objectDefinitionLocalService.getObjectDefinition(
-						node.getPrimaryKey());
-
-				nodeObjectDefinition.setRootObjectDefinitionId(
-					objectDefinition1.getRootObjectDefinitionId());
-				nodeObjectDefinition.setPortlet(false);
-				nodeObjectDefinition.setPreviousRESTContextPath(
-					nodeObjectDefinition.getRESTContextPath());
-
-				deployObjectDefinition(
-					objectDefinitionPersistence.update(nodeObjectDefinition));
-			}
-		}
-
-		return objectDefinition1;
-	}
-
 	private void _createLocalizationTable(
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable) {
@@ -2040,9 +1962,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		objectDefinition = _completeBindingAsChild(objectDefinition);
+		objectDefinition = _updateNode(objectDefinition);
 
-		objectDefinition = _completeBindingAsParent(objectDefinition);
+		objectDefinition = _updateDescendantNodes(objectDefinition);
 
 		_createLocalizationTable(
 			DynamicObjectDefinitionLocalizationTableFactory.create(
@@ -2090,6 +2012,83 @@ public class ObjectDefinitionLocalServiceImpl
 					return null;
 				});
 		}
+	}
+
+	private ObjectDefinition _updateDescendantNodes(
+			ObjectDefinition objectDefinition1)
+		throws PortalException {
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipPersistence.findByODI1_E(
+				objectDefinition1.getObjectDefinitionId(), true);
+
+		if (objectRelationships.isEmpty()) {
+			return objectDefinition1;
+		}
+
+		deployObjectDefinition(objectDefinition1);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition2 =
+				objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (!objectDefinition2.isApproved()) {
+				continue;
+			}
+
+			Tree tree = _treeFactory.createObjectDefinitionTree(
+				objectRelationship.getObjectDefinitionId2(),
+				objectDefinitionLocalService::getObjectDefinition);
+
+			Iterator<Node> iterator = tree.iterator();
+
+			while (iterator.hasNext()) {
+				Node node = iterator.next();
+
+				ObjectDefinition nodeObjectDefinition =
+					objectDefinitionLocalService.getObjectDefinition(
+						node.getPrimaryKey());
+
+				nodeObjectDefinition.setRootObjectDefinitionId(
+					objectDefinition1.getRootObjectDefinitionId());
+				nodeObjectDefinition.setPortlet(false);
+				nodeObjectDefinition.setPreviousRESTContextPath(
+					nodeObjectDefinition.getRESTContextPath());
+
+				deployObjectDefinition(
+					objectDefinitionPersistence.update(nodeObjectDefinition));
+			}
+		}
+
+		return objectDefinition1;
+	}
+
+	private ObjectDefinition _updateNode(ObjectDefinition objectDefinition2)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.fetchByODI2_E(
+				objectDefinition2.getObjectDefinitionId(), true);
+
+		if (objectRelationship == null) {
+			return objectDefinition2;
+		}
+
+		ObjectDefinition objectDefinition1 =
+			objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (objectDefinition1.isApproved()) {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition1.getRootObjectDefinitionId());
+		}
+		else {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition2.getObjectDefinitionId());
+		}
+
+		return objectDefinitionPersistence.update(objectDefinition2);
 	}
 
 	private ObjectDefinition _updateObjectDefinition(

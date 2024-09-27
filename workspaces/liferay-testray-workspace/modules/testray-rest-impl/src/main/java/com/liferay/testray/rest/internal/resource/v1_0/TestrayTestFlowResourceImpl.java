@@ -6,7 +6,6 @@
 package com.liferay.testray.rest.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -467,9 +466,6 @@ public class TestrayTestFlowResourceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
 	private TestrayManager _testrayManager;

@@ -600,12 +600,12 @@ baseTest(
 				trigger: translationButton,
 			});
 
-			await fillAndClickOutside(page, journalEditArticlePage.titleInput);
+			await journalEditArticlePage.fillContent(getRandomString());
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: page.getByRole('option', {
-					name: language + ' Language: Translated 1/',
+					name: language + ' Language: Translating 1/',
 				}),
 				trigger: translationButton,
 			});
@@ -1221,20 +1221,24 @@ baseTest(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {
-				name: 'Catalan Language: Not',
+				name: 'Catalan Language: Not Translated',
 			}),
 			trigger: translationButton,
 		});
 
 		await expect(async () => {
-			await journalEditArticlePage.fillTitle('new Title');
+			await fillAndClickOutside(
+				page,
+				page.getByLabel(basicTextFieldName),
+				content
+			);
 
 			await translationButton.click();
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: page.getByRole('option', {
-					name: 'Catalan Language: Translated',
+					name: 'Catalan Language: Translating 1/',
 				}),
 				trigger: translationButton,
 			});
@@ -1265,7 +1269,7 @@ baseTest(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {
-				name: 'Catalan Language, Not Translated',
+				name: 'Catalan Language: Not',
 			}),
 			trigger: translationButton,
 		});

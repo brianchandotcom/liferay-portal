@@ -12,12 +12,15 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroup;
+import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,6 +29,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
@@ -77,11 +81,50 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetAccountGroupsPage() throws Exception {
 	}
 
+	@Override
+	@Test
+	public void testPatchAccountGroup() throws Exception {
+		super.testPatchAccountGroup();
+
+		_testPatchAccountGroupWithoutName();
+	}
+
+	@Override
+	@Test
+	public void testPatchAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		super.testPatchAccountGroupByExternalReferenceCode();
+
+		_testPatchAccountGroupByExternalReferenceCodeWithoutName();
+	}
+
 	@Ignore
 	@Override
 	@Test
 	public void testPostAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode()
 		throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testPutAccountGroup() throws Exception {
+		super.testPutAccountGroup();
+
+		_testPutAccountGroupWithoutName();
+	}
+
+	@Override
+	@Test
+	public void testPutAccountGroupByExternalReferenceCode() throws Exception {
+		super.testPutAccountGroupByExternalReferenceCode();
+
+		_testPutAccountGroupByExternalReferenceWithoutName();
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"description", "externalReferenceCode", "name"};
 	}
 
 	@Override
@@ -239,6 +282,103 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		throws Exception {
 
 		return accountGroupResource.postAccountGroup(accountGroup);
+	}
+
+	private void _testPatchAccountGroupByExternalReferenceCodeWithoutName()
+		throws Exception {
+
+		AccountGroup postAccountGroup = _postAccountGroup(randomAccountGroup());
+
+		AccountGroup randomPatchAccountGroup = randomPatchAccountGroup();
+
+		randomPatchAccountGroup.setName(() -> null);
+
+		AccountGroup patchAccountGroup =
+			accountGroupResource.patchAccountGroupByExternalReferenceCode(
+				postAccountGroup.getExternalReferenceCode(),
+				randomPatchAccountGroup);
+
+		AccountGroup expectedPatchAccountGroup = postAccountGroup.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAccountGroup, expectedPatchAccountGroup);
+
+		expectedPatchAccountGroup.setName(postAccountGroup.getName());
+
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			patchAccountGroup.getId());
+
+		assertEquals(expectedPatchAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	private void _testPatchAccountGroupWithoutName() throws Exception {
+		AccountGroup postAccountGroup = _postAccountGroup(randomAccountGroup());
+
+		AccountGroup randomPatchAccountGroup = randomPatchAccountGroup();
+
+		randomPatchAccountGroup.setName(() -> null);
+
+		AccountGroup patchAccountGroup = accountGroupResource.patchAccountGroup(
+			postAccountGroup.getId(), randomPatchAccountGroup);
+
+		AccountGroup expectedPatchAccountGroup = postAccountGroup.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAccountGroup, expectedPatchAccountGroup);
+
+		expectedPatchAccountGroup.setName(postAccountGroup.getName());
+
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			patchAccountGroup.getId());
+
+		assertEquals(expectedPatchAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	private void _testPutAccountGroupByExternalReferenceWithoutName()
+		throws Exception {
+
+		AccountGroup postAccountGroup = _postAccountGroup(randomAccountGroup());
+
+		AccountGroup randomAccountGroup = randomAccountGroup();
+
+		randomAccountGroup.setName(() -> null);
+
+		try {
+			accountGroupResource.putAccountGroupByExternalReferenceCode(
+				postAccountGroup.getExternalReferenceCode(),
+				randomAccountGroup);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				"The account group name is invalid", problem.getTitle());
+		}
+	}
+
+	private void _testPutAccountGroupWithoutName() throws Exception {
+		AccountGroup postAccountGroup = _postAccountGroup(randomAccountGroup());
+
+		AccountGroup randomAccountGroup = randomAccountGroup();
+
+		randomAccountGroup.setName(() -> null);
+
+		try {
+			accountGroupResource.putAccountGroup(
+				postAccountGroup.getId(), randomAccountGroup);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				"The account group name is invalid", problem.getTitle());
+		}
 	}
 
 	private AccountEntry _accountEntry;

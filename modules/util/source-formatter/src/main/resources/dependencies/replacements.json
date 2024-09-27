@@ -3222,6 +3222,15 @@
 	},
 	{
 		"classNames": [
+			"Group",
+			"LayoutSet"
+		],
+		"from": "getVirtualHostname",
+		"issueKey": "LPD-31998",
+		"to": "getVirtualHostnames().firstKey"
+	},
+	{
+		"classNames": [
 			"Country"
 		],
 		"from": "getCommerceCountryId",

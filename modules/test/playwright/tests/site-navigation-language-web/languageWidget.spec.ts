@@ -124,7 +124,7 @@ test('The user can choose which languages will be available to site via language
 	// Confirm iframe has loaded by waiting for Display Template select
 
 	await expandSection(
-		configurationIFrame.getByRole('link', {name: 'Display Settings'})
+		configurationIFrame.getByRole('button', {name: 'Display Settings'})
 	);
 
 	await configurationIFrame.getByLabel('Display Template').waitFor();
@@ -132,7 +132,7 @@ test('The user can choose which languages will be available to site via language
 	// Configure available languages
 
 	await expandSection(
-		configurationIFrame.getByRole('link', {name: 'Languages'})
+		configurationIFrame.getByRole('button', {name: 'Languages'})
 	);
 
 	const leftSelector = configurationIFrame.locator('.left-selector');

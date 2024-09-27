@@ -207,7 +207,7 @@ export class JournalEditArticlePage {
 				item.classList.contains('show')
 			))
 		) {
-			await this.page.getByRole('link', {name: assetType}).click();
+			await this.page.getByRole('button', {name: assetType}).click();
 		}
 	}
 

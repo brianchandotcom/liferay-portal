@@ -221,7 +221,7 @@ export class JournalPage {
 	}
 
 	async setArticleViewableBy(value: 'Anyone' | 'Site Members' | 'Owner') {
-		const permissionsGroup = this.page.getByRole('link', {
+		const permissionsGroup = this.page.getByRole('button', {
 			name: 'Permissions',
 		});
 

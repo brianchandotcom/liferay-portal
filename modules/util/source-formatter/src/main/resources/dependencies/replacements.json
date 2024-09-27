@@ -3361,6 +3361,14 @@
 		"to": "getSearchContainer"
 	},
 	{
+		"from": "HtmlUtil.getHTML",
+		"issueKey": "LPD-37503",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HtmlUtil_IW"
+		],
+		"to": "HtmlUtil_IW.getInstance"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

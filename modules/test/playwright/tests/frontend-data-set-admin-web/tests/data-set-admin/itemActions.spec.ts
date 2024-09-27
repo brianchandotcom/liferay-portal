@@ -55,6 +55,28 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
+async function assertTableCellContent({actionData, page, rowIndex = 0}) {
+	await test.step('Assert table cell content', async () => {
+		await page
+			.locator('.orderable-table > tbody > .orderable-table-row')
+			.first()
+			.waitFor();
+
+		const tableRowContent = await page
+			.locator('.orderable-table-row')
+			.nth(rowIndex)
+			.locator('td');
+
+		const expectedRowContent = [
+			actionData.icon,
+			actionData.label,
+			actionData.type,
+		];
+
+		await expect(tableRowContent).toContainText(expectedRowContent);
+	});
+}
+
 test(
 	'Check interactive options in item action form',
 	{tag: '@LPD-11300'},
@@ -1082,30 +1104,6 @@ test(
 		});
 	}
 );
-
-async function assertTableCellContent({actionData, page, rowIndex = 0}) {
-	await test.step('Assert table cell content', async () => {
-		await page
-			.locator('.orderable-table > tbody > .orderable-table-row')
-			.first()
-			.waitFor();
-
-		const tableRowContent = await page
-			.locator('.orderable-table-row')
-			.nth(rowIndex)
-			.locator('td');
-
-		const expectedRowContent = [
-			'',
-			actionData.icon,
-			actionData.label,
-			actionData.type,
-			'',
-		];
-
-		await expect(tableRowContent).toContainText(expectedRowContent);
-	});
-}
 
 test(
 	'Item actions can be reordered',

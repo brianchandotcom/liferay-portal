@@ -7645,7 +7645,7 @@ information. Make sure to commit in all build services results.
 		<echo>Check for baseline log files completed.</echo>
 	</target>
 
-	<target name="subrepository-source-format-jdk8">
+	<target name="subrepository-source-format">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />

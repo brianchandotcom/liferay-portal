@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
+import com.liferay.portal.kernel.model.Company;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -47,8 +48,11 @@ public class OpenAPIResourceImpl {
 				_objectDefinition);
 
 		return objectEntryOpenAPIResource.getOpenAPI(
-			_httpServletRequest, type, _uriInfo);
+			_company.getCompanyId(), _httpServletRequest, type, _uriInfo);
 	}
+
+	@Context
+	private Company _company;
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

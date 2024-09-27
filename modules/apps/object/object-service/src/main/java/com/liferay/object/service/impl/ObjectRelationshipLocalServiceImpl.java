@@ -6,6 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -22,6 +23,7 @@ import com.liferay.object.exception.ObjectRelationshipSystemException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -37,6 +39,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.base.ObjectRelationshipLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectActionPersistence;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
@@ -1587,6 +1590,19 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition1, oldRootObjectDefinitionId1,
 			newRootObjectDefinitionId1);
 
+		if (newRootObjectDefinitionId1 == 0) {
+			for (ObjectAction objectAction :
+					_objectActionPersistence.findByO_A_OATK(
+						objectDefinition1.getObjectDefinitionId(), true,
+						ObjectActionTriggerConstants.
+							KEY_ON_AFTER_ROOT_UPDATE)) {
+
+				objectAction.setActive(false);
+
+				_objectActionPersistence.update(objectAction);
+			}
+		}
+
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
@@ -2064,6 +2080,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private CurrentConnection _currentConnection;
+
+	@Reference
+	private ObjectActionPersistence _objectActionPersistence;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

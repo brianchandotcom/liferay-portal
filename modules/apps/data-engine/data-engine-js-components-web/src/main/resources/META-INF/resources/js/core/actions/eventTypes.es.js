@@ -33,10 +33,11 @@ const FIELD_SET = {
 const HISTORY = {
 	ADD: 'add_step',
 	BLUR: 'handle_blur',
-	EDITED: 'mark_edited',
+	MARK: 'mark_edited',
 	NEXT: 'next_step',
 	PREV: 'prev_step',
 	RESET: 'reset_history',
+	UNMARK: 'unmark_edited',
 };
 
 const LANGUAGE = {

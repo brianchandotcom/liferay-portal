@@ -19,10 +19,18 @@ export default function fieldBlur({
 		dispatch({payload: properties, type: EVENT_TYPES.FIELD.BLUR});
 
 		if (Liferay.FeatureFlags['LPD-11228']) {
-			dispatch({
-				payload: fieldInstance.label,
-				type: EVENT_TYPES.HISTORY.BLUR,
-			});
+			if (
+				fieldInstance.type === 'numeric' ||
+				fieldInstance.type === 'text' ||
+				fieldInstance.type === 'rich_text' ||
+				fieldInstance.type === 'image' ||
+				fieldInstance.type === 'color'
+			) {
+				dispatch({
+					payload: fieldInstance.label,
+					type: EVENT_TYPES.HISTORY.BLUR,
+				});
+			}
 		}
 
 		Liferay.fire('ddmFieldBlur', {

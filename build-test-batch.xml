@@ -7186,7 +7186,7 @@ information. Make sure to commit in all build REST results.
 		</run-batch-test>
 	</target>
 
-	<target name="ruby-sass-compiler-jdk8">
+	<target name="ruby-sass-compiler">
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 
 		<setup-test-environment />

@@ -40,6 +40,46 @@ const TableFieldsHeader = () => (
 		</ClayTable.Row>
 	</ClayTable.Head>
 );
+
+const createAnyOfGroups = (dbFields) => {
+	const relationshipGroups = {};
+
+	dbFields.required.forEach((dbField) => {
+		const {anyOfGroup, name} = dbField;
+
+		if (anyOfGroup) {
+			if (!relationshipGroups[anyOfGroup]) {
+				relationshipGroups[anyOfGroup] = [];
+			}
+
+			relationshipGroups[anyOfGroup].push(name);
+		}
+	});
+
+	return relationshipGroups;
+};
+
+const anyOfGroupNotFilled = (dbFields, fieldsSelections) => {
+	const relationshipGroups = createAnyOfGroups(dbFields);
+
+	return Object.keys(relationshipGroups).some(
+		(group) =>
+			!relationshipGroups[group].some((value) =>
+				Object.keys(fieldsSelections).some((field) => field === value)
+			)
+	);
+};
+
+const isAnyOfValid = (dbField, dbFields, fieldsSelections) => {
+	const relationshipGroups = createAnyOfGroups(dbFields);
+
+	return Object.keys(fieldsSelections).some(
+		(selectedField) =>
+			relationshipGroups[dbField.anyOfGroup] &&
+			relationshipGroups[dbField.anyOfGroup].includes(selectedField)
+	);
+};
+
 function ImportForm({
 	formDataQuerySelector,
 	formImportURL,
@@ -71,30 +111,10 @@ function ImportForm({
 			(dbField) => !fieldsSelections[dbField.name] && !dbField.anyOfGroup
 		);
 
-		const relationshipGroups = {};
-
-		dbFields.required.forEach((dbField) => {
-			const {anyOfGroup, name} = dbField;
-
-			if (anyOfGroup) {
-				if (!relationshipGroups[anyOfGroup]) {
-					relationshipGroups[anyOfGroup] = [];
-				}
-
-				relationshipGroups[anyOfGroup].push(name);
-			}
-		});
-
-		const anyOfGroupNotFilled = Object.keys(relationshipGroups).some(
-			(group) =>
-				!relationshipGroups[group].some((value) =>
-					Object.keys(fieldsSelections).some(
-						(field) => field === value
-					)
-				)
+		return (
+			!requiredFieldNotFilled &&
+			!anyOfGroupNotFilled(dbFields, fieldsSelections)
 		);
-
-		return !requiredFieldNotFilled && !anyOfGroupNotFilled;
 	}, [fieldsSelections, dbFields]);
 
 	const updateFieldMapping = (fileField, dbFieldName) => {
@@ -280,6 +300,11 @@ function ImportForm({
 												dbField={dbField}
 												fileFields={fileFields}
 												formEvaluated={formEvaluated}
+												isAnyOfValid={isAnyOfValid(
+													dbField,
+													dbFields,
+													fieldsSelections
+												)}
 												key={dbField.name}
 												portletNamespace={
 													portletNamespace
@@ -299,7 +324,12 @@ function ImportForm({
 												selectedFileField={
 													fieldsSelections[
 														dbField.name
-													] || ''
+													] ||
+													('' &&
+														!anyOfGroupNotFilled(
+															dbFields,
+															fieldsSelections
+														))
 												}
 												updateFieldMapping={(
 													selectedFileField

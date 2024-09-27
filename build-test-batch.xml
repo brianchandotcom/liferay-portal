@@ -3494,7 +3494,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<run-archived-modules-test />
 	</target>
 
-	<target name="blade-samples-jdk8">
+	<target name="blade-samples">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 
 		<run-batch-test>

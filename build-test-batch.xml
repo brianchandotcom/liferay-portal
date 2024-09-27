@@ -3746,7 +3746,7 @@ information. Make sure to commit in all build-lib-versions results.
 		</parallel>
 	</target>
 
-	<target name="empty-osgi-core-dir-mysql57-jdk8">
+	<target name="empty-osgi-core-dir-mysql57">
 		<run-empty-osgi-core-dir-test />
 	</target>
 

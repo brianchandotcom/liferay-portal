@@ -6189,43 +6189,43 @@ information. Make sure to commit in all format-javadoc results.
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
-	<target name="lpkg-container-mysql57-jdk8">
+	<target name="lpkg-container-mysql57">
 		<run-lpkg-container-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-container-postgresql155-jdk8">
+	<target name="lpkg-container-postgresql155">
 		<run-lpkg-container-test database.type="postgresql" />
 	</target>
 
-	<target name="lpkg-controller-mysql57-jdk8">
+	<target name="lpkg-controller-mysql57">
 		<run-lpkg-controller-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-controller-postgresql155-jdk8">
+	<target name="lpkg-controller-postgresql155">
 		<run-lpkg-controller-test database.type="postgresql" />
 	</target>
 
-	<target name="lpkg-override-mysql57-jdk8">
+	<target name="lpkg-override-mysql57">
 		<run-lpkg-override-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-override-postgresql155-jdk8">
+	<target name="lpkg-override-postgresql155">
 		<run-lpkg-override-test database.type="postgresql" />
 	</target>
 
-	<target name="lpkg-persistence-mysql57-jdk8">
+	<target name="lpkg-persistence-mysql57">
 		<run-lpkg-persistence-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-persistence-postgresql155-jdk8">
+	<target name="lpkg-persistence-postgresql155">
 		<run-lpkg-persistence-test database.type="postgresql" />
 	</target>
 
-	<target name="lpkg-startup-mysql57-jdk8">
+	<target name="lpkg-startup-mysql57">
 		<run-lpkg-startup-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-startup-postgresql155-jdk8">
+	<target name="lpkg-startup-postgresql155">
 		<run-lpkg-startup-test database.type="postgresql" />
 	</target>
 

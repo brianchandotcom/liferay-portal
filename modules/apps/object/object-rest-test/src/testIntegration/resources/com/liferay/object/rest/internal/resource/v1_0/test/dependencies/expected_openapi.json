@@ -391,6 +391,10 @@
 						"description": "Information about the relationship relationship2 can be embedded with \"nestedFields\".",
 						"type": "object"
 					},
+					"relationship2ERC": {
+						"type": "string",
+						"x-parent-map": "properties"
+					},
 					"scopeKey": {
 						"readOnly": true,
 						"type": "string"

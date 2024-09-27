@@ -48,6 +48,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionEvent;
@@ -885,7 +886,13 @@ public class LiferayContextController extends ContextController {
 		ServletContextAdaptor servletContextAdaptor = new ServletContextAdaptor(
 			this, bundle, servletContextHelper,
 			_servletContextHelperDataContext, _eventListeners,
-			AccessController.getContext());
+			AccessController.getContext()) {
+
+			public JspConfigDescriptor getJspConfigDescriptor() {
+				return null;
+			}
+
+		};
 
 		return servletContextAdaptor.createServletContext();
 	}

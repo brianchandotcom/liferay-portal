@@ -3,9 +3,6 @@ Bundle-Name: Liferay Portal OSGi Web HTTP Servlet Implementation
 Bundle-SymbolicName: com.liferay.portal.osgi.web.http.servlet.impl
 Bundle-Version: 1.0.8
 Import-Package:\
-	javax.servlet.annotation;resolution:=optional,\
-	javax.servlet.descriptor;resolution:=optional,\
-	\
 	org.osgi.service.http.whiteboard,\
 	\
 	*

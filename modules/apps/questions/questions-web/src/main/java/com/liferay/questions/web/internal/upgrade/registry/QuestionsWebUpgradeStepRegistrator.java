@@ -42,7 +42,9 @@ public class QuestionsWebUpgradeStepRegistrator
 			new com.liferay.questions.web.internal.upgrade.v1_1_0.
 				QuestionsConfigurationUpgradeProcess(
 					_configurationAdmin, _configurationProvider,
-					_mbCategoryLocalService));
+					_mbCategoryLocalService),
+			new com.liferay.questions.web.internal.upgrade.v1_1_0.
+				UpgradePortletPreferences(_mbCategoryLocalService));
 	}
 
 	@Reference

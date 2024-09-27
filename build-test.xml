@@ -15630,7 +15630,7 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-plugin-names">
-		<condition else="plugins-compile-jdk8" property="test.batch.name" value="${test.batch.name}">
+		<condition else="plugins-compile" property="test.batch.name" value="${test.batch.name}">
 			<isset property="test.batch.name" />
 		</condition>
 

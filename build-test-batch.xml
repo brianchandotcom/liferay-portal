@@ -7162,7 +7162,7 @@ ${output.content}</echo>
 		<run-playwright-js-test database.type="postgresql" />
 	</target>
 
-	<target name="plugins-compile-jdk8">
+	<target name="plugins-compile">
 		<run-batch-test>
 			<test-action>
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
@@ -7212,7 +7212,7 @@ ${output.content}</echo>
 		/>
 	</target>
 
-	<target name="plugins-gulp-jdk8">
+	<target name="plugins-gulp">
 		<fail message="Please set the property ${test.base.dir.name}" unless="test.base.dir.name" />
 
 		<run-batch-test>

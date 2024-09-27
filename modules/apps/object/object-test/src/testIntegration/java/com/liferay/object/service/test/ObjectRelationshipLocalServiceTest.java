@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -79,6 +81,8 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
 
 import java.sql.Connection;
 
@@ -1336,6 +1340,87 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testUnbindObjectDefinitionsWithObjectEntries()
+		throws Exception {
+
+		TreeTestUtil.bind(
+			_objectDefinitionLocalService,
+			Arrays.asList(_objectRelationshipAA_AAA, _objectRelationshipA_AA));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			_objectDefinitionA.getObjectDefinitionId());
+
+		ObjectEntry objectEntryA = _addObjectEntry(
+			_objectDefinitionA, Collections.emptyMap());
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			_objectDefinitionAA,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntryA.getObjectEntryId()
+			).build());
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			_objectDefinitionAA,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntryA.getObjectEntryId()
+			).build());
+
+		objectField = _objectFieldLocalService.fetchObjectField(
+			_objectRelationshipAA_AAA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			_objectDefinitionAAA,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntryAA1.getObjectEntryId()
+			).build());
+		ObjectEntry objectEntryAAA2 = _addObjectEntry(
+			_objectDefinitionAAA,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntryAA2.getObjectEntryId()
+			).build());
+
+		_unbindObjectDefinitions(_objectRelationshipA_AA);
+
+		_entityCache.clearCache();
+
+		_assertRootObjectEntryId(0, objectEntryA.getObjectEntryId());
+
+		_assertRootObjectEntryId(
+			objectEntryAA1.getObjectEntryId(),
+			objectEntryAA1.getObjectEntryId());
+		_assertRootObjectEntryId(
+			objectEntryAA1.getObjectEntryId(),
+			objectEntryAAA1.getObjectEntryId());
+
+		_assertRootObjectEntryId(
+			objectEntryAA2.getObjectEntryId(),
+			objectEntryAA2.getObjectEntryId());
+		_assertRootObjectEntryId(
+			objectEntryAA2.getObjectEntryId(),
+			objectEntryAAA2.getObjectEntryId());
+
+		_unbindObjectDefinitions(_objectRelationshipAA_AAA);
+
+		_entityCache.clearCache();
+
+		_assertRootObjectEntryId(0, objectEntryAA1.getObjectEntryId());
+		_assertRootObjectEntryId(0, objectEntryAA2.getObjectEntryId());
+		_assertRootObjectEntryId(0, objectEntryAAA1.getObjectEntryId());
+		_assertRootObjectEntryId(0, objectEntryAAA2.getObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAAA1);
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAAA2);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA1);
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA2);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryA);
+	}
+
+	@Test
 	public void testUnbindObjectDefinitionsWithResourcePermissions()
 		throws Exception {
 
@@ -1683,6 +1768,16 @@ public class ObjectRelationshipLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectEntry _addObjectEntry(
+			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+		throws Exception {
+
+		return _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), values,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private ObjectRelationship _addObjectRelationshipSystemObjectDefinition()
 		throws Exception {
 
@@ -1736,6 +1831,17 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertEquals(
 			expectedRootObjectDefinitionId,
 			objectDefinition.getRootObjectDefinitionId());
+	}
+
+	private void _assertRootObjectEntryId(
+			long expectedRootObjectEntryId, long objectEntryId)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntryId);
+
+		Assert.assertEquals(
+			expectedRootObjectEntryId, objectEntry.getRootObjectEntryId());
 	}
 
 	private ObjectRelationship _bindObjectDefinitions(
@@ -2220,6 +2326,9 @@ public class ObjectRelationshipLocalServiceTest {
 	private static final Pattern _pattern = Pattern.compile(
 		"R_[A-Z][0-9][A-Z][0-9]$");
 	private static ObjectDefinition _systemObjectDefinition1;
+
+	@Inject
+	private EntityCache _entityCache;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

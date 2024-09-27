@@ -75,6 +75,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -118,10 +119,49 @@ public class ObjectRelationshipLocalServiceTest {
 			_addAndPublishModifiableSystemObjectDefinition();
 		_objectDefinition1 = _addAndPublishCustomObjectDefinition();
 		_objectDefinition2 = _addAndPublishCustomObjectDefinition();
+
+		_objectDefinitionA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName());
+		_objectDefinitionAA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+		_objectDefinitionAAA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+		_objectDefinitionAB =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+
 		_objectDefinitionTreeFactory = new ObjectDefinitionTreeFactory(
 			_objectDefinitionLocalService, _objectRelationshipLocalService);
+
+		_objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinitionA,
+				_objectDefinitionAA);
+		_objectRelationshipA_AB =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinitionA,
+				_objectDefinitionAB);
+		_objectRelationshipAA_AAA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinitionAA,
+				_objectDefinitionAAA);
+
 		_systemObjectDefinition2 = _addSystemObjectDefinition(
 			"/o/test-endpoint/entries");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinitionA.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinitionAA.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinitionAAA.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinitionAB.getObjectDefinitionId());
 	}
 
 	@Test
@@ -1219,6 +1259,67 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testUnbindObjectDefinitions() throws Exception {
+		TreeTestUtil.bind(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				_objectRelationshipAA_AAA, _objectRelationshipA_AA,
+				_objectRelationshipA_AB));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			_objectDefinitionA.getObjectDefinitionId());
+
+		_unbindObjectDefinitions(_objectRelationshipA_AA);
+
+		_assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA.getShortName(),
+				new String[] {_objectDefinitionAB.getShortName()}
+			).put(
+				_objectDefinitionAB.getShortName(), new String[0]
+			).build(),
+			_objectDefinitionA.getObjectDefinitionId());
+
+		_assertRootObjectDefinitionId(
+			_objectDefinitionA.getObjectDefinitionId(),
+			_objectDefinitionA.getObjectDefinitionId());
+		_assertRootObjectDefinitionId(
+			_objectDefinitionA.getObjectDefinitionId(),
+			_objectDefinitionAB.getObjectDefinitionId());
+
+		_assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionAA.getShortName(),
+				new String[] {_objectDefinitionAAA.getShortName()}
+			).put(
+				_objectDefinitionAAA.getShortName(), new String[0]
+			).build(),
+			_objectDefinitionAA.getObjectDefinitionId());
+
+		_assertRootObjectDefinitionId(
+			_objectDefinitionAA.getObjectDefinitionId(),
+			_objectDefinitionAA.getObjectDefinitionId());
+		_assertRootObjectDefinitionId(
+			_objectDefinitionAA.getObjectDefinitionId(),
+			_objectDefinitionAAA.getObjectDefinitionId());
+
+		_unbindObjectDefinitions(_objectRelationshipA_AB);
+
+		_assertRootObjectDefinitionId(
+			0, _objectDefinitionA.getObjectDefinitionId());
+		_assertRootObjectDefinitionId(
+			0, _objectDefinitionAB.getObjectDefinitionId());
+
+		_unbindObjectDefinitions(_objectRelationshipAA_AAA);
+
+		_assertRootObjectDefinitionId(
+			0, _objectDefinitionAA.getObjectDefinitionId());
+		_assertRootObjectDefinitionId(
+			0, _objectDefinitionAAA.getObjectDefinitionId());
+	}
+
+	@Test
 	public void testUpdateObjectRelationship() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -1551,6 +1652,30 @@ public class ObjectRelationshipLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _assertObjectDefinitionTree(
+			Map<String, String[]> expectedObjectDefinitionTreeMap,
+			long rootObjectDefinitionId)
+		throws Exception {
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			expectedObjectDefinitionTreeMap,
+			_objectDefinitionTreeFactory.create(rootObjectDefinitionId),
+			_objectDefinitionLocalService);
+	}
+
+	private void _assertRootObjectDefinitionId(
+			long expectedRootObjectDefinitionId, long objectDefinitionId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectDefinitionId);
+
+		Assert.assertEquals(
+			expectedRootObjectDefinitionId,
+			objectDefinition.getRootObjectDefinitionId());
 	}
 
 	private ObjectRelationship _bindObjectDefinitions(
@@ -1956,6 +2081,34 @@ public class ObjectRelationshipLocalServiceTest {
 		_addObjectRelationshipSystemObjectDefinition();
 	}
 
+	private void _unbindObjectDefinitions(ObjectRelationship objectRelationship)
+		throws Exception {
+
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap(), null);
+
+		Assert.assertFalse(objectRelationship.isEdge());
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		Assert.assertEquals(
+			objectDefinition1.getScope(), objectDefinition2.getScope());
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		Assert.assertTrue(objectField.isRequired());
+	}
+
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -1971,6 +2124,10 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+	private ObjectDefinition _objectDefinitionA;
+	private ObjectDefinition _objectDefinitionAA;
+	private ObjectDefinition _objectDefinitionAAA;
+	private ObjectDefinition _objectDefinitionAB;
 
 	private ObjectDefinitionTreeFactory _objectDefinitionTreeFactory;
 
@@ -1982,6 +2139,10 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	private ObjectRelationship _objectRelationshipA_AA;
+	private ObjectRelationship _objectRelationshipA_AB;
+	private ObjectRelationship _objectRelationshipAA_AAA;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

@@ -35,7 +35,7 @@ const OBJECT_RELATIONSHIP = {
 		'r_fdsViewFDSCardsSectionRelationship_l_fdsViewERC',
 	DATA_SET_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
 	DATA_SET_CLIENT_EXTENSION_FILTER_ID:
-		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',
+		'r_fdsViewFDSClientExtensionFilter_l_fdsViewId',
 	DATA_SET_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship',
 	DATA_SET_CREATION_ACTION_ID:
 		'r_fdsViewFDSCreationActionRelationship_l_fdsViewId',

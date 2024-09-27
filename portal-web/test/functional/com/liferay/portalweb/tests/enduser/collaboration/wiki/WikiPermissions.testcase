@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -323,7 +324,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CannotAddWikiAssetsWithRegularRoleWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPS-188058=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -355,7 +356,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CannotAddWikiAssetsWithSiteRoleWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPS-188058=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

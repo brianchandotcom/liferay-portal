@@ -132,16 +132,11 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 		testContains(
 			gradleProjectDir,
 			"src/main/resources/META-INF/resources/foobar.es.js",
-			"import React from 'react';",
-			"import {FieldBase} from 'dynamic-data-mapping-form-field-type" +
-				"/FieldBase/ReactFieldBase.es';",
-			"import {useSyncValue} from " +
-				"'dynamic-data-mapping-form-field-type/hooks/useSyncValue.es';",
-			"const Foobar = ({name, onChange, predefinedValue, readOnly, " +
-				"value})",
-			"const Main = ({label, name, onChange, predefinedValue, " +
-				"readOnly, value, ...otherProps})",
-			"Main.displayName = 'Foobar';", "export default Main;");
+			"import {ReactFieldBase as FieldBase} from " +
+				"'dynamic-data-mapping-form-field-type';",
+			"import React, {useState} from 'react';",
+			"export default function Foobar({",
+			"const [currentValue, setCurrentValue] = useState(");
 
 		testNotContains(
 			gradleProjectDir, "build.gradle", true, "^repositories \\{.*");

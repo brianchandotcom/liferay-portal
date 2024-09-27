@@ -1422,6 +1422,22 @@ public class ObjectRelationshipLocalServiceImpl
 			return;
 		}
 
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(
+				objectDefinition1.getClassName());
+
+		_performActions(
+			objectDefinition2.getObjectDefinitionId(), true,
+			(ObjectEntry objectEntry) -> _copyResourcePermissions(
+				resourceActions,
+				_resourcePermissionLocalService.getResourcePermissions(
+					objectDefinition1.getCompanyId(),
+					objectDefinition1.getClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(objectEntry.getRootObjectEntryId())),
+				objectDefinition2.getClassName(),
+				String.valueOf(objectEntry.getObjectEntryId())));
+
 		_copyResourcePermissions(
 			objectDefinition1.getCompanyId(), objectDefinition1.getClassName(),
 			objectDefinition2.getClassName());

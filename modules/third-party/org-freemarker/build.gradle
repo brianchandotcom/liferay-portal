@@ -1,0 +1,37 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	api group: "com.liferay", name: "org.apache.logging.log4j", transitive: false, version: "2.17.1.LIFERAY-PATCHED-1"
+	api group: "com.liferay", name: "org.apache.logging.log4j.core", transitive: false, version: "2.17.1.LIFERAY-PATCHED-1"
+	api group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
+	api group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.32"
+	api group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.26"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/freemarker/core/Configurable.java"
+	fileNames "**/freemarker/core/FMParser.java"
+	fileNames "**/freemarker/core/IteratorBlock.java"
+	fileNames "**/freemarker/core/TemplateElementArrayBuilder.java"
+	fileNames "**/freemarker/core/TextBlock.java"
+	fileNames "**/freemarker/ext/jsp/JspTagModelBase.java"
+	fileNames "**/freemarker/ext/jsp/JspWriterAdapter.java"
+	fileNames "**/freemarker/ext/jsp/TagTransformModel.java"
+	fileNames "**/freemarker/log/_Log4jLoggerFactory.java"
+	fileNames "**/freemarker/log/_Log4jOverSLF4JTester.java"
+	fileNames "**/freemarker/log/Logger.java"
+
+	originalLibModuleName = "freemarker"
+}

@@ -1,0 +1,306 @@
+diff --git a/freemarker/core/Configurable.java b/freemarker/core/Configurable.java
+index 9da31136dff8d..272ca86807d72 100644
+--- a/freemarker/core/Configurable.java
++++ b/freemarker/core/Configurable.java
+@@ -69,6 +69,7 @@ import freemarker.template._VersionInts;
+ import freemarker.template.utility.CollectionUtils;
+ import freemarker.template.utility.NullArgumentException;
+ import freemarker.template.utility.StringUtil;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+  * This is a common superclass of {@link freemarker.template.Configuration},
+@@ -374,7 +375,7 @@ public class Configurable {
+     };
+ 
+     private Configurable parent;
+-    private Properties properties;
++    private Map<String, String> properties;
+     private HashMap<Object, Object> customAttributes;
+     
+     private Locale locale;
+@@ -430,64 +431,64 @@ public class Configurable {
+         _TemplateAPI.checkVersionNotNullAndSupported(incompatibleImprovements);
+         
+         parent = null;
+-        properties = new Properties();
++        properties = new ConcurrentHashMap<>();
+         
+         locale = _TemplateAPI.getDefaultLocale();
+-        properties.setProperty(LOCALE_KEY, locale.toString());
++        properties.put(LOCALE_KEY, locale.toString());
+ 
+         timeZone = _TemplateAPI.getDefaultTimeZone();
+-        properties.setProperty(TIME_ZONE_KEY, timeZone.getID());
++        properties.put(TIME_ZONE_KEY, timeZone.getID());
+         
+         sqlDataAndTimeTimeZone = null;
+-        properties.setProperty(SQL_DATE_AND_TIME_TIME_ZONE_KEY, String.valueOf(sqlDataAndTimeTimeZone));
++        properties.put(SQL_DATE_AND_TIME_TIME_ZONE_KEY, String.valueOf(sqlDataAndTimeTimeZone));
+         
+         numberFormat = "number";
+-        properties.setProperty(NUMBER_FORMAT_KEY, numberFormat);
++        properties.put(NUMBER_FORMAT_KEY, numberFormat);
+         
+         timeFormat = "";
+-        properties.setProperty(TIME_FORMAT_KEY, timeFormat);
++        properties.put(TIME_FORMAT_KEY, timeFormat);
+         
+         dateFormat = "";
+-        properties.setProperty(DATE_FORMAT_KEY, dateFormat);
++        properties.put(DATE_FORMAT_KEY, dateFormat);
+         
+         dateTimeFormat = "";
+-        properties.setProperty(DATETIME_FORMAT_KEY, dateTimeFormat);
++        properties.put(DATETIME_FORMAT_KEY, dateTimeFormat);
+ 
+         cFormat = _TemplateAPI.getDefaultCFormat(incompatibleImprovements);
+ 
+         classicCompatible = Integer.valueOf(0);
+-        properties.setProperty(CLASSIC_COMPATIBLE_KEY, classicCompatible.toString());
++        properties.put(CLASSIC_COMPATIBLE_KEY, classicCompatible.toString());
+         
+         templateExceptionHandler = _TemplateAPI.getDefaultTemplateExceptionHandler(incompatibleImprovements);
+-        properties.setProperty(TEMPLATE_EXCEPTION_HANDLER_KEY, templateExceptionHandler.getClass().getName());
++        properties.put(TEMPLATE_EXCEPTION_HANDLER_KEY, templateExceptionHandler.getClass().getName());
+         
+         wrapUncheckedExceptions = _TemplateAPI.getDefaultWrapUncheckedExceptions(incompatibleImprovements);
+ 
+         attemptExceptionReporter = _TemplateAPI.getDefaultAttemptExceptionReporter(incompatibleImprovements);
+         
+         arithmeticEngine = ArithmeticEngine.BIGDECIMAL_ENGINE;
+-        properties.setProperty(ARITHMETIC_ENGINE_KEY, arithmeticEngine.getClass().getName());
++        properties.put(ARITHMETIC_ENGINE_KEY, arithmeticEngine.getClass().getName());
+         
+         objectWrapper = Configuration.getDefaultObjectWrapper(incompatibleImprovements);
+         // bug: setProperty missing
+         
+         autoFlush = Boolean.TRUE;
+-        properties.setProperty(AUTO_FLUSH_KEY, autoFlush.toString());
++        properties.put(AUTO_FLUSH_KEY, autoFlush.toString());
+         
+         newBuiltinClassResolver = TemplateClassResolver.UNRESTRICTED_RESOLVER;
+-        properties.setProperty(NEW_BUILTIN_CLASS_RESOLVER_KEY, newBuiltinClassResolver.getClass().getName());
++        properties.put(NEW_BUILTIN_CLASS_RESOLVER_KEY, newBuiltinClassResolver.getClass().getName());
+ 
+         truncateBuiltinAlgorithm = DefaultTruncateBuiltinAlgorithm.ASCII_INSTANCE;
+ 
+         showErrorTips = Boolean.TRUE;
+-        properties.setProperty(SHOW_ERROR_TIPS_KEY, showErrorTips.toString());
++        properties.put(SHOW_ERROR_TIPS_KEY, showErrorTips.toString());
+         
+         apiBuiltinEnabled = Boolean.FALSE;
+-        properties.setProperty(API_BUILTIN_ENABLED_KEY, apiBuiltinEnabled.toString());
++        properties.put(API_BUILTIN_ENABLED_KEY, apiBuiltinEnabled.toString());
+         
+         logTemplateExceptions = Boolean.valueOf(
+                 _TemplateAPI.getDefaultLogTemplateExceptions(incompatibleImprovements));
+-        properties.setProperty(LOG_TEMPLATE_EXCEPTIONS_KEY, logTemplateExceptions.toString());
++        properties.put(LOG_TEMPLATE_EXCEPTIONS_KEY, logTemplateExceptions.toString());
+         
+         // outputEncoding and urlEscapingCharset defaults to null,
+         // which means "not specified"
+@@ -512,7 +513,7 @@ public class Configurable {
+      */
+     public Configurable(Configurable parent) {
+         this.parent = parent;
+-        properties = new Properties(parent.properties);
++        properties = new ConcurrentHashMap<>(parent.properties);
+         customAttributes = new HashMap<>(0);
+     }
+     
+@@ -520,7 +521,7 @@ public class Configurable {
+     protected Object clone() throws CloneNotSupportedException {
+         Configurable copy = (Configurable) super.clone();
+         if (properties != null) {
+-            copy.properties = new Properties(properties);
++            copy.properties = new ConcurrentHashMap(properties);
+         }
+         if (customAttributes != null) {
+             copy.customAttributes = (HashMap) customAttributes.clone();
+@@ -571,7 +572,7 @@ public class Configurable {
+      */
+     public void setClassicCompatible(boolean classicCompatibility) {
+         this.classicCompatible = Integer.valueOf(classicCompatibility ? 1 : 0);
+-        properties.setProperty(CLASSIC_COMPATIBLE_KEY, classicCompatibilityIntToString(classicCompatible));
++        properties.put(CLASSIC_COMPATIBLE_KEY, classicCompatibilityIntToString(classicCompatible));
+     }
+ 
+     /**
+@@ -676,7 +677,7 @@ public class Configurable {
+     public void setLocale(Locale locale) {
+         NullArgumentException.check("locale", locale);
+         this.locale = locale;
+-        properties.setProperty(LOCALE_KEY, locale.toString());
++        properties.put(LOCALE_KEY, locale.toString());
+     }
+ 
+     /**
+@@ -744,7 +745,7 @@ public class Configurable {
+     public void setTimeZone(TimeZone timeZone) {
+         NullArgumentException.check("timeZone", timeZone);
+         this.timeZone = timeZone;
+-        properties.setProperty(TIME_ZONE_KEY, timeZone.getID());
++        properties.put(TIME_ZONE_KEY, timeZone.getID());
+     }
+ 
+     /**
+@@ -828,7 +829,7 @@ public class Configurable {
+     public void setSQLDateAndTimeTimeZone(TimeZone tz) {
+         sqlDataAndTimeTimeZone = tz;
+         sqlDataAndTimeTimeZoneSet = true;
+-        properties.setProperty(SQL_DATE_AND_TIME_TIME_ZONE_KEY, tz != null ? tz.getID() : "null");
++        properties.put(SQL_DATE_AND_TIME_TIME_ZONE_KEY, tz != null ? tz.getID() : "null");
+     }
+     
+     /**
+@@ -888,7 +889,7 @@ public class Configurable {
+     public void setNumberFormat(String numberFormat) {
+         NullArgumentException.check("numberFormat", numberFormat);
+         this.numberFormat = numberFormat;
+-        properties.setProperty(NUMBER_FORMAT_KEY, numberFormat);
++        properties.put(NUMBER_FORMAT_KEY, numberFormat);
+     }
+     
+     /**
+@@ -1035,7 +1036,7 @@ public class Configurable {
+     public void setBooleanFormat(String booleanFormat) {
+         validateBooleanFormat(booleanFormat);
+         this.booleanFormat = booleanFormat;
+-        properties.setProperty(BOOLEAN_FORMAT_KEY, booleanFormat);
++        properties.put(BOOLEAN_FORMAT_KEY, booleanFormat);
+     }
+ 
+     /**
+@@ -1110,7 +1111,7 @@ public class Configurable {
+     public void setTimeFormat(String timeFormat) {
+         NullArgumentException.check("timeFormat", timeFormat);
+         this.timeFormat = timeFormat;
+-        properties.setProperty(TIME_FORMAT_KEY, timeFormat);
++        properties.put(TIME_FORMAT_KEY, timeFormat);
+     }
+ 
+     /**
+@@ -1140,7 +1141,7 @@ public class Configurable {
+     public void setDateFormat(String dateFormat) {
+         NullArgumentException.check("dateFormat", dateFormat);
+         this.dateFormat = dateFormat;
+-        properties.setProperty(DATE_FORMAT_KEY, dateFormat);
++        properties.put(DATE_FORMAT_KEY, dateFormat);
+     }
+ 
+     /**
+@@ -1248,7 +1249,7 @@ public class Configurable {
+     public void setDateTimeFormat(String dateTimeFormat) {
+         NullArgumentException.check("dateTimeFormat", dateTimeFormat);
+         this.dateTimeFormat = dateTimeFormat;
+-        properties.setProperty(DATETIME_FORMAT_KEY, dateTimeFormat);
++        properties.put(DATETIME_FORMAT_KEY, dateTimeFormat);
+     }
+ 
+     /**
+@@ -1372,7 +1373,7 @@ public class Configurable {
+     public void setTemplateExceptionHandler(TemplateExceptionHandler templateExceptionHandler) {
+         NullArgumentException.check("templateExceptionHandler", templateExceptionHandler);
+         this.templateExceptionHandler = templateExceptionHandler;
+-        properties.setProperty(TEMPLATE_EXCEPTION_HANDLER_KEY, templateExceptionHandler.getClass().getName());
++        properties.put(TEMPLATE_EXCEPTION_HANDLER_KEY, templateExceptionHandler.getClass().getName());
+     }
+ 
+     /**
+@@ -1439,7 +1440,7 @@ public class Configurable {
+     public void setArithmeticEngine(ArithmeticEngine arithmeticEngine) {
+         NullArgumentException.check("arithmeticEngine", arithmeticEngine);
+         this.arithmeticEngine = arithmeticEngine;
+-        properties.setProperty(ARITHMETIC_ENGINE_KEY, arithmeticEngine.getClass().getName());
++        properties.put(ARITHMETIC_ENGINE_KEY, arithmeticEngine.getClass().getName());
+     }
+ 
+     /**
+@@ -1466,7 +1467,7 @@ public class Configurable {
+     public void setObjectWrapper(ObjectWrapper objectWrapper) {
+         NullArgumentException.check("objectWrapper", objectWrapper);
+         this.objectWrapper = objectWrapper;
+-        properties.setProperty(OBJECT_WRAPPER_KEY, objectWrapper.getClass().getName());
++        properties.put(OBJECT_WRAPPER_KEY, objectWrapper.getClass().getName());
+     }
+ 
+     /**
+@@ -1498,7 +1499,7 @@ public class Configurable {
+         this.outputEncoding = outputEncoding;
+         // java.util.Properties doesn't allow null value!
+         if (outputEncoding != null) {
+-            properties.setProperty(OUTPUT_ENCODING_KEY, outputEncoding);
++            properties.put(OUTPUT_ENCODING_KEY, outputEncoding);
+         } else {
+             properties.remove(OUTPUT_ENCODING_KEY);
+         }
+@@ -1533,7 +1534,7 @@ public class Configurable {
+         this.urlEscapingCharset = urlEscapingCharset;
+         // java.util.Properties doesn't allow null value!
+         if (urlEscapingCharset != null) {
+-            properties.setProperty(URL_ESCAPING_CHARSET_KEY, urlEscapingCharset);
++            properties.put(URL_ESCAPING_CHARSET_KEY, urlEscapingCharset);
+         } else {
+             properties.remove(URL_ESCAPING_CHARSET_KEY);
+         }
+@@ -1575,7 +1576,7 @@ public class Configurable {
+     public void setNewBuiltinClassResolver(TemplateClassResolver newBuiltinClassResolver) {
+         NullArgumentException.check("newBuiltinClassResolver", newBuiltinClassResolver);
+         this.newBuiltinClassResolver = newBuiltinClassResolver;
+-        properties.setProperty(NEW_BUILTIN_CLASS_RESOLVER_KEY,
++        properties.put(NEW_BUILTIN_CLASS_RESOLVER_KEY,
+                 newBuiltinClassResolver.getClass().getName());
+     }
+ 
+@@ -1617,7 +1618,7 @@ public class Configurable {
+      */
+     public void setAutoFlush(boolean autoFlush) {
+         this.autoFlush = Boolean.valueOf(autoFlush);
+-        properties.setProperty(AUTO_FLUSH_KEY, String.valueOf(autoFlush));
++        properties.put(AUTO_FLUSH_KEY, String.valueOf(autoFlush));
+     }
+     
+     /**
+@@ -1648,7 +1649,7 @@ public class Configurable {
+      */
+     public void setShowErrorTips(boolean showTips) {
+         this.showErrorTips = Boolean.valueOf(showTips);
+-        properties.setProperty(SHOW_ERROR_TIPS_KEY, String.valueOf(showTips));
++        properties.put(SHOW_ERROR_TIPS_KEY, String.valueOf(showTips));
+     }
+     
+     /**
+@@ -1679,7 +1680,7 @@ public class Configurable {
+      */
+     public void setAPIBuiltinEnabled(boolean value) {
+         apiBuiltinEnabled = Boolean.valueOf(value);
+-        properties.setProperty(API_BUILTIN_ENABLED_KEY, String.valueOf(value));
++        properties.put(API_BUILTIN_ENABLED_KEY, String.valueOf(value));
+     }
+ 
+     /**
+@@ -1750,7 +1751,7 @@ public class Configurable {
+      */
+     public void setLogTemplateExceptions(boolean value) {
+         logTemplateExceptions = Boolean.valueOf(value);
+-        properties.setProperty(LOG_TEMPLATE_EXCEPTIONS_KEY, String.valueOf(value));
++        properties.put(LOG_TEMPLATE_EXCEPTIONS_KEY, String.valueOf(value));
+     }
+ 
+     /**
+@@ -2918,7 +2919,7 @@ public class Configurable {
+      */
+     @Deprecated
+     public String getSetting(String key) {
+-        return properties.getProperty(key);
++        return properties.get(key);
+     }
+     
+     /**
+@@ -3377,3 +3378,4 @@ public class Configurable {
+     }
+     
+ }
++/* @generated */
+\ No newline at end of file

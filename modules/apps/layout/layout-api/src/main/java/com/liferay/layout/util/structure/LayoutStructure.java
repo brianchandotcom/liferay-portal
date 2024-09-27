@@ -477,31 +477,40 @@ public class LayoutStructure {
 					" cannot be selected as parent item"));
 		}
 
-		List<LayoutStructureItem> copiedLayoutStructureItems =
-			new ArrayList<>();
-
 		int position = 0;
 
 		if (parentLayoutStructureItem instanceof
 				FormStepContainerStyledLayoutStructureItem ||
-			parentLayoutStructureItem instanceof
-				FragmentStyledLayoutStructureItem ||
 			parentLayoutStructureItem instanceof RowStyledLayoutStructureItem) {
 
 			parentItemId = parentLayoutStructureItem.getParentItemId();
 
 			position = -1;
 		}
+		else if (parentLayoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
 
-		if (parentLayoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem) {
+			String oldParentItemId = parentItemId;
+
+			parentItemId = parentLayoutStructureItem.getParentItemId();
+
+			LayoutStructureItem newParentLayoutStructureItem =
+				_layoutStructureItems.get(parentItemId);
+
+			List<String> childrenItemIds =
+				newParentLayoutStructureItem.getChildrenItemIds();
+
+			position = childrenItemIds.indexOf(oldParentItemId) + 1;
+		}
+		else if (parentLayoutStructureItem instanceof
+					CollectionStyledLayoutStructureItem) {
 
 			List<String> childrenItemIds =
 				parentLayoutStructureItem.getChildrenItemIds();
 
 			if (ListUtil.isEmpty(childrenItemIds)) {
 				throw new UnsupportedOperationException(
-					"Unable to copy items because collection doesn't have " +
+					"Unable to copy items because collection does not have " +
 						"collection items");
 			}
 
@@ -509,6 +518,9 @@ public class LayoutStructure {
 
 			position = -1;
 		}
+
+		List<LayoutStructureItem> copiedLayoutStructureItems =
+			new ArrayList<>();
 
 		for (String itemId : itemIds) {
 			if (Objects.equals(itemId, parentItemId)) {

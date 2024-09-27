@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextM
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -74,23 +75,32 @@ public class WorkflowMetricsIndexCreator {
 
 				User user = company.getGuestUser();
 
-				_backgroundTaskLocalService.addBackgroundTask(
-					user.getUserId(), company.getGroupId(),
-					WorkflowMetricsIndexCreator.class.getSimpleName(),
-					WorkflowMetricsReindexBackgroundTaskExecutor.class.
-						getName(),
-					HashMapBuilder.<String, Serializable>put(
-						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
-						true
-					).put(
-						"workflow.metrics.index.entity.names",
-						new String[] {
-							"instance", "node", "process",
-							"sla-instance-result", "sla-task-result", "task",
-							"transition"
-						}
-					).build(),
-					new ServiceContext());
+				String name = PrincipalThreadLocal.getName();
+
+				try {
+					PrincipalThreadLocal.setName(user.getUserId());
+
+					_backgroundTaskLocalService.addBackgroundTask(
+						user.getUserId(), company.getGroupId(),
+						WorkflowMetricsIndexCreator.class.getSimpleName(),
+						WorkflowMetricsReindexBackgroundTaskExecutor.class.
+							getName(),
+						HashMapBuilder.<String, Serializable>put(
+							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
+							true
+						).put(
+							"workflow.metrics.index.entity.names",
+							new String[] {
+								"instance", "node", "process",
+								"sla-instance-result", "sla-task-result",
+								"task", "transition"
+							}
+						).build(),
+						new ServiceContext());
+				}
+				finally {
+					PrincipalThreadLocal.setName(name);
+				}
 
 				return null;
 			});

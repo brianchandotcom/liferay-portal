@@ -230,8 +230,6 @@ components:
                 name:
                     example: AccountGroup Name
                     type: string
-            required:
-                - name
             type: object
         AccountRole:
             # @review

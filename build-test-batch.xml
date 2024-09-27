@@ -5234,7 +5234,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="gogo-shell-client-mysql57-jdk8">
+	<target name="gogo-shell-client-mysql57">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">

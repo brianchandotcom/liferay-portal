@@ -1419,26 +1419,18 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testCompleteBindingAsChild() throws Exception {
+		TreeTestUtil.createObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[0]
+			).build(),
+			_objectDefinitionLocalService, Arrays.asList("A"),
+			_objectRelationshipLocalService);
+
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionA.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
-
-		ObjectRelationship objectRelationshipA_AA =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinitionA,
-				objectDefinitionAA);
-
-		_objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationshipA_AA.getExternalReferenceCode(),
-			objectRelationshipA_AA.getObjectRelationshipId(), 0,
-			objectRelationshipA_AA.getDeletionType(), true,
-			objectRelationshipA_AA.getLabelMap(), null);
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
 		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
@@ -1448,6 +1440,10 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionA.getObjectDefinitionId(),
 				_objectDefinitionLocalService::getObjectDefinition),
 			_objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -1471,26 +1467,18 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testCompleteBindingAsParent() throws Exception {
+		TreeTestUtil.createObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[0]
+			).build(),
+			_objectDefinitionLocalService, Arrays.asList("AA"),
+			_objectRelationshipLocalService);
+
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
-
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionAA.getObjectDefinitionId());
-
-		ObjectRelationship objectRelationshipA_AA =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinitionA,
-				objectDefinitionAA);
-
-		_objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationshipA_AA.getExternalReferenceCode(),
-			objectRelationshipA_AA.getObjectRelationshipId(), 0,
-			objectRelationshipA_AA.getDeletionType(), true,
-			objectRelationshipA_AA.getLabelMap(), null);
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
 		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(

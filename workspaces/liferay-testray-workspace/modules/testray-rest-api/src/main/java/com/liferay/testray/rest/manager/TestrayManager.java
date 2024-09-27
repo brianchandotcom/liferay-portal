@@ -20,6 +20,10 @@ import org.w3c.dom.Document;
  */
 public interface TestrayManager {
 
+	public int autofillTestrayBuilds(
+			long companyId, long testrayBuild1, long testrayBuild2, long userId)
+		throws Exception;
+
 	public int createTestraySubtasks(
 			long companyId, long testrayBuildId, long testrayTaskId,
 			long userId)

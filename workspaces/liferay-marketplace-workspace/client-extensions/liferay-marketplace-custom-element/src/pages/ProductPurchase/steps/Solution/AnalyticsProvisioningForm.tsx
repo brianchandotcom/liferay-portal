@@ -12,6 +12,7 @@ import {useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 import {z} from 'zod';
 
+import HelpPopover from '../../../../components/HelpPopover';
 import {Input} from '../../../../components/Input/Input';
 import Loading from '../../../../components/Loading';
 import ProductPurchase from '../../../../components/ProductPurchase';
@@ -147,6 +148,7 @@ const AnalyticsProvisioning = () => {
 				{...register('workspaceOwnerEmail')}
 				disabled
 				label="Workspace Owner Email"
+				required
 			/>
 
 			<Select
@@ -195,7 +197,6 @@ const AnalyticsProvisioning = () => {
 				helpMessage={`You can only set your friendly workspace URL once. ${properties.analyticsCloudURL}/workspace`}
 				label="Set a Friendly Workspace URL"
 				prependGroupItemSymbol="/"
-				required
 			/>
 
 			<ClayInput.Group
@@ -246,13 +247,34 @@ const AnalyticsProvisioning = () => {
 			<ClayForm.Group
 				className={classNames('mt-4', {
 					'has-error':
+						formState.errors.incidentReportContacts?.length ||
 						formState.errors.incidentReportContacts?.message,
 				})}
 			>
 				<div className="d-flex flex-column">
-					<label htmlFor="incident-report-contacts">
-						Add Incident Report Contacts
-					</label>
+					<div>
+						<label
+							className="required"
+							htmlFor="incident-report-contacts"
+						>
+							Add Incident Report Contacts{' '}
+						</label>
+
+						<HelpPopover header="Incident Report Contact">
+							<span>
+								This person will be contacted in the event of:
+							</span>
+
+							<ul>
+								<li>Services interruptions;</li>
+								<li>Security incidents;</li>
+								<li>
+									Other urgent service updates that require
+									action.
+								</li>
+							</ul>
+						</HelpPopover>
+					</div>
 					<small>
 						Who should we contact in case of a security breach?
 					</small>
@@ -274,7 +296,9 @@ const AnalyticsProvisioning = () => {
 				/>
 
 				<ClayForm.FeedbackItem>
-					{formState.errors.incidentReportContacts?.message}
+					{Array.isArray(formState.errors.incidentReportContacts)
+						? formState.errors.incidentReportContacts?.[0]?.message
+						: formState.errors.incidentReportContacts?.message}
 				</ClayForm.FeedbackItem>
 			</ClayForm.Group>
 

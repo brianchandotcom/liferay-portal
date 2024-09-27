@@ -20,7 +20,9 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 			corpProjectName: form.workspaceName,
 			corpProjectUuid: `KOR-${new Date().getTime()}`,
 			emailAddressDomains: form.allowedEmailDomains,
-			friendlyURL: `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`,
+			friendlyURL: form.friendlyWorkspaceURL
+				? `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`
+				: 'TBD',
 			incidentReportEmailAddresses: form.incidentReportContacts,
 			name: form.workspaceName,
 			ownerEmailAddress: form.workspaceOwnerEmail,

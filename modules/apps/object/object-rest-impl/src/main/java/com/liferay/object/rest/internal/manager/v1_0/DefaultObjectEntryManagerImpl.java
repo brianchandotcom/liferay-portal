@@ -55,7 +55,6 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1393,14 +1392,6 @@ public class DefaultObjectEntryManagerImpl
 
 		FileEntry fileEntry = ObjectMapperUtil.readValue(
 			FileEntry.class, propertyValue);
-
-		if ((fileEntry != null) &&
-			!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-29347")) {
-
-			fileEntry.setExternalReferenceCode(() -> null);
-			fileEntry.setScope(() -> null);
-		}
 
 		if ((fileEntry == null) ||
 			((fileEntry.getExternalReferenceCode() == null) &&

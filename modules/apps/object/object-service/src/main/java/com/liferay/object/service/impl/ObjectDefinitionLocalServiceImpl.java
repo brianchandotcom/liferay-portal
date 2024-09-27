@@ -1714,14 +1714,14 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinition2;
 		}
 
+		objectDefinition2.setRootObjectDefinitionId(
+			objectDefinition2.getObjectDefinitionId());
+
 		ObjectDefinition objectDefinition1 =
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
-		objectDefinition2.setRootObjectDefinitionId(
-			objectDefinition1.getObjectDefinitionId());
-
-		if (objectDefinition1.getRootObjectDefinitionId() != 0) {
+		if (objectDefinition1.isApproved()) {
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition1.getRootObjectDefinitionId());
 		}
@@ -1740,30 +1740,6 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectRelationships.isEmpty()) {
 			return objectDefinition1;
 		}
-
-		long rootObjectDefinitionId =
-			objectDefinition1.getRootObjectDefinitionId();
-
-		if (rootObjectDefinitionId != 0) {
-			ObjectDefinition rootObjectDefinition =
-				objectDefinitionLocalService.getObjectDefinition(
-					rootObjectDefinitionId);
-
-			if (rootObjectDefinition.isApproved() !=
-					objectDefinition1.isApproved()) {
-
-				rootObjectDefinitionId =
-					objectDefinition1.getObjectDefinitionId();
-			}
-		}
-		else {
-			rootObjectDefinitionId = objectDefinition1.getObjectDefinitionId();
-		}
-
-		objectDefinition1.setRootObjectDefinitionId(rootObjectDefinitionId);
-
-		objectDefinition1 = objectDefinitionPersistence.update(
-			objectDefinition1);
 
 		deployObjectDefinition(objectDefinition1);
 
@@ -1790,7 +1766,7 @@ public class ObjectDefinitionLocalServiceImpl
 						node.getPrimaryKey());
 
 				nodeObjectDefinition.setRootObjectDefinitionId(
-					rootObjectDefinitionId);
+					objectDefinition1.getRootObjectDefinitionId());
 				nodeObjectDefinition.setPortlet(false);
 				nodeObjectDefinition.setPreviousRESTContextPath(
 					nodeObjectDefinition.getRESTContextPath());

@@ -158,12 +158,15 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		(state) => state
 	);
 
-	const isHidden = item.config.styles.display === 'none';
+	const isHidden = item.config?.styles?.display === 'none';
 
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
 		if (
+			item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+			item.type !== LAYOUT_DATA_ITEM_TYPES.formStep &&
+			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
 			!hasDropZoneChild(item, layoutData) &&
 			!isInputFragment(item, fragmentEntryLinks)
@@ -276,7 +279,10 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
+			(canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets) ||
+				item.type === LAYOUT_DATA_ITEM_TYPES.column ||
+				item.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone ||
+				item.type === LAYOUT_DATA_ITEM_TYPES.formStep)
 		) {
 			items.push({
 				action: () => {
@@ -320,11 +326,11 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		items.push({
-			type: 'divider',
-		});
-
 		if (canBeRemoved(item, layoutData)) {
+			items.push({
+				type: 'divider',
+			});
+
 			items.push({
 				action: () => {
 					dispatch(

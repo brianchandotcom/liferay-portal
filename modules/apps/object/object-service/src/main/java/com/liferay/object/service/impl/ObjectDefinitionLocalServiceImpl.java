@@ -1714,9 +1714,6 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinition2;
 		}
 
-		objectDefinition2.setRootObjectDefinitionId(
-			objectDefinition2.getObjectDefinitionId());
-
 		ObjectDefinition objectDefinition1 =
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
@@ -1724,6 +1721,10 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition1.isApproved()) {
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition1.getRootObjectDefinitionId());
+		}
+		else {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition2.getObjectDefinitionId());
 		}
 
 		return objectDefinitionPersistence.update(objectDefinition2);

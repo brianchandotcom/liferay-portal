@@ -530,7 +530,7 @@ public class ObjectDefinitionResourceTest
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
 
-		// Default language id
+		// Default language ID
 
 		postObjectDefinition = objectDefinitionResource.postObjectDefinition(
 			randomObjectDefinition());
@@ -545,7 +545,6 @@ public class ObjectDefinitionResourceTest
 
 		postObjectDefinition.setDefaultLanguageId(
 			objectDefinitionDefaultLanguageId);
-
 		postObjectDefinition.setLabel(
 			MapUtil.fromArray(
 				objectDefinitionDefaultLanguageId,

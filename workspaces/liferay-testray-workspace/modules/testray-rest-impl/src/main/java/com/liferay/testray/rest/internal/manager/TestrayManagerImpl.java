@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
@@ -51,9 +52,11 @@ import java.sql.Timestamp;
 
 import java.time.OffsetDateTime;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -75,6 +78,70 @@ import org.w3c.dom.NodeList;
  */
 @Component(service = TestrayManager.class)
 public class TestrayManagerImpl implements TestrayManager {
+
+	public int autofillTestrayBuilds(
+			long companyId, long testrayBuildId1, long testrayBuildId2,
+			long userId)
+		throws Exception {
+
+		int caseAmount = 0;
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_CaseResult");
+
+		Map<Long, List<Map<String, Serializable>>>
+			testrayCaseResultsGroupedByTestrayCase1 =
+				_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
+					companyId, objectDefinition, testrayBuildId1, userId);
+		Map<Long, List<Map<String, Serializable>>>
+			testrayCaseResultsGroupedByTestrayCase2 =
+				_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
+					companyId, objectDefinition, testrayBuildId2, userId);
+
+		for (Map.Entry<Long, List<Map<String, Serializable>>> entry :
+				testrayCaseResultsGroupedByTestrayCase1.entrySet()) {
+
+			List<Map<String, Serializable>> testrayCaseResults2 =
+				testrayCaseResultsGroupedByTestrayCase2.get(entry.getKey());
+
+			if (testrayCaseResults2 == null) {
+				continue;
+			}
+
+			List<Map<String, Serializable>> testrayCaseResults1 =
+				entry.getValue();
+
+			for (Map<String, Serializable> testrayCaseResult1 :
+					testrayCaseResults1) {
+
+				for (Map<String, Serializable> testrayCaseResult2 :
+						testrayCaseResults2) {
+
+					if (!Objects.equals(
+							String.valueOf(testrayCaseResult1.get("errors")),
+							String.valueOf(testrayCaseResult2.get("errors")))) {
+
+						continue;
+					}
+
+					ObjectEntry objectEntry = _autofillTestrayCaseResult(
+						testrayCaseResult1, testrayCaseResult2, userId);
+
+					if (objectEntry != null) {
+						caseAmount++;
+					}
+				}
+			}
+		}
+
+		if (caseAmount != 0) {
+			updateTestrayBuildSummary(companyId, testrayBuildId1, userId);
+			updateTestrayBuildSummary(companyId, testrayBuildId2, userId);
+		}
+
+		return caseAmount;
+	}
 
 	public int createTestraySubtasks(
 			long companyId, long testrayBuildId, long testrayTaskId,
@@ -790,6 +857,51 @@ public class TestrayManagerImpl implements TestrayManager {
 			).build());
 	}
 
+	private ObjectEntry _autofillTestrayCaseResult(
+			Map<String, Serializable> testrayCaseResult1,
+			Map<String, Serializable> testrayCaseResult2, long userId)
+		throws Exception {
+
+		Map<String, Serializable> targetTestrayCaseResult = null;
+		Map<String, Serializable> sourceTestrayCaseResult = null;
+
+		if (((Long)testrayCaseResult1.get("r_userToCaseResults_userId") > 0) &&
+			Validator.isNotNull(testrayCaseResult1.get("issues")) &&
+			((Long)testrayCaseResult2.get("r_userToCaseResults_userId") <= 0) &&
+			Validator.isNull(testrayCaseResult2.get("issues"))) {
+
+			sourceTestrayCaseResult = testrayCaseResult1;
+			targetTestrayCaseResult = testrayCaseResult2;
+		}
+		else if (((Long)testrayCaseResult1.get("r_userToCaseResults_userId") <=
+					0) &&
+				 Validator.isNull(testrayCaseResult1.get("issues")) &&
+				 ((Long)testrayCaseResult1.get("r_userToCaseResults_userId") >
+					 0) &&
+				 Validator.isNotNull(testrayCaseResult2.get("issues"))) {
+
+			sourceTestrayCaseResult = testrayCaseResult2;
+			targetTestrayCaseResult = testrayCaseResult1;
+		}
+
+		if (targetTestrayCaseResult == null) {
+			return null;
+		}
+
+		targetTestrayCaseResult.put(
+			"dueStatus", sourceTestrayCaseResult.get("dueStatus"));
+		targetTestrayCaseResult.put(
+			"r_userToCaseResults_userId",
+			sourceTestrayCaseResult.get("r_userToCaseResults_userId"));
+		targetTestrayCaseResult.put(
+			"issues", String.valueOf(sourceTestrayCaseResult.get("issues")));
+
+		return _objectEntryLocalService.updateObjectEntry(
+			userId,
+			GetterUtil.getLong(targetTestrayCaseResult.get("c_caseResultId")),
+			targetTestrayCaseResult, _serviceContextHelper.getServiceContext());
+	}
+
 	private String _getAttributeValue(String attributeName, Node node) {
 		NamedNodeMap namedNodeMap = node.getAttributes();
 
@@ -993,6 +1105,43 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 
 		return map;
+	}
+
+	private Map<Long, List<Map<String, Serializable>>>
+			_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
+				long companyId, ObjectDefinition objectDefinition,
+				long testrayBuildId1, long userId)
+		throws Exception {
+
+		Map<Long, List<Map<String, Serializable>>>
+			testrayCaseResultsGroupedByTestrayCase = new HashMap<>();
+
+		for (Map<String, Serializable> values :
+				_objectEntryLocalService.getValuesList(
+					0, companyId, userId,
+					objectDefinition.getObjectDefinitionId(), null,
+					_filterFactory.create(
+						"buildId eq '" + testrayBuildId1 + "' and errors ne ''",
+						objectDefinition),
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			long testrayCaseId = (Long)values.get(
+				"r_caseToCaseResult_c_caseId");
+
+			List<Map<String, Serializable>> testrayCaseResults =
+				testrayCaseResultsGroupedByTestrayCase.get(testrayCaseId);
+
+			if (testrayCaseResults == null) {
+				testrayCaseResults = new ArrayList<>();
+
+				testrayCaseResultsGroupedByTestrayCase.put(
+					testrayCaseId, testrayCaseResults);
+			}
+
+			testrayCaseResults.add(values);
+		}
+
+		return testrayCaseResultsGroupedByTestrayCase;
 	}
 
 	private long _getTestrayCaseTypeId(

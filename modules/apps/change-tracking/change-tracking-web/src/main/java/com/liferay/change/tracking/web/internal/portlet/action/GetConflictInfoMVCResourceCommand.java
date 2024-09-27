@@ -102,7 +102,7 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 
 		if (ListUtil.isEmpty(ctEntries)) {
 			if (FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
-				return null;
+				return _jsonFactory.createJSONObject();
 			}
 
 			return JSONUtil.put(

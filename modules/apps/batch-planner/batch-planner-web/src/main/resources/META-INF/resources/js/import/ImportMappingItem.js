@@ -13,6 +13,7 @@ const ImportMappingItem = ({
 	dbField,
 	fileFields,
 	formEvaluated,
+	isAnyOfValid,
 	portletNamespace,
 	previewValue,
 	required,
@@ -20,8 +21,9 @@ const ImportMappingItem = ({
 	updateFieldMapping,
 }) => {
 	const inputId = `input-field-${dbField.name}`;
-	const hasError = formEvaluated && required && !selectedFileField;
 
+	const hasError =
+		formEvaluated && !isAnyOfValid && required && !selectedFileField;
 	const hasSuccess = formEvaluated && !hasError;
 
 	return (

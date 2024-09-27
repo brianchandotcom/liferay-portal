@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -331,16 +332,40 @@ public class TestrayManagerImpl implements TestrayManager {
 				System.currentTimeMillis() - startTime, fileName, bytes.length,
 				serviceContext, testrayCache, userId);
 
-			updateTestrayBuildSummary(
-				companyId, testrayCache.getTestrayBuildId(), userId);
-
 			Map<String, Serializable> values =
 				_objectEntryLocalService.getValues(
 					testrayCache.getTestrayRoutineId());
 
 			if (!GetterUtil.getBoolean(values.get("autoanalyze"))) {
+				updateTestrayBuildSummary(
+					companyId, testrayCache.getTestrayBuildId(), userId);
+
 				return;
 			}
+
+			List<Map<String, Serializable>> valuesList =
+				_objectEntryLocalService.getValuesList(
+					0, companyId, userId,
+					testrayCache.getObjectDefinition(
+						"Build"
+					).getObjectDefinitionId(),
+					new String[] {"c_buildid"},
+					_filterFactory.create(
+						"importStatus eq 'DONE' and routineId eq '" +
+							testrayCache.getTestrayRoutineId() + "'",
+						testrayCache.getObjectDefinition("Build")),
+					null, 0, 1, new Sort[] {new Sort("dueDate", true)});
+
+			if (ListUtil.isNotEmpty(valuesList)) {
+				values = valuesList.get(0);
+
+				autofillTestrayBuilds(
+					companyId, testrayCache.getTestrayBuildId(),
+					GetterUtil.getLong(values.get("c_buildId")), userId);
+			}
+
+			updateTestrayBuildSummary(
+				companyId, testrayCache.getTestrayBuildId(), userId);
 
 			ObjectEntry objectEntry = _addObjectEntry(
 				"Task", serviceContext, testrayCache, userId,

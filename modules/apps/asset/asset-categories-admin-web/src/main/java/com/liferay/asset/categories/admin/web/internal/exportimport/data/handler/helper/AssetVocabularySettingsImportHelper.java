@@ -157,8 +157,8 @@ public class AssetVocabularySettingsImportHelper
 		List<Boolean> requireds = new ArrayList<>();
 
 		_fillClassNameIdsAndClassTypePKs(
-			getClassNameIdsAndClassTypePKs(), classNameIds, classTypePKs,
-			false, depotRequireds, false, requireds);
+			getClassNameIdsAndClassTypePKs(), classNameIds, classTypePKs, false,
+			depotRequireds, false, requireds);
 
 		_fillClassNameIdsAndClassTypePKs(
 			getDepotRequiredClassNameIdsAndClassTypePKs(), classNameIds,

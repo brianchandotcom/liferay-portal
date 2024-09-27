@@ -524,9 +524,17 @@ public class LayoutStructure {
 
 		for (String itemId : itemIds) {
 			if (Objects.equals(itemId, parentItemId)) {
-				throw new UnsupportedOperationException(
-					"Unable to copy items because item ID and parent item ID " +
-						"cannot be the same item");
+				String oldParentItemId = parentItemId;
+
+				parentItemId = parentLayoutStructureItem.getParentItemId();
+
+				LayoutStructureItem newParentLayoutStructureItem =
+					_layoutStructureItems.get(parentItemId);
+
+				List<String> childrenItemIds =
+					newParentLayoutStructureItem.getChildrenItemIds();
+
+				position = childrenItemIds.indexOf(oldParentItemId) + 1;
 			}
 
 			List<String> childrenItemIds =

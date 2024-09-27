@@ -7,12 +7,15 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
+import com.liferay.object.exception.ObjectActionActiveException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
@@ -23,6 +26,7 @@ import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -30,6 +34,7 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -69,6 +74,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -1328,6 +1334,20 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testUnbindObjectDefinitionsWithObjectAction() throws Exception {
+		TreeTestUtil.bind(
+			_objectDefinitionLocalService,
+			Arrays.asList(_objectRelationshipAA_AAA, _objectRelationshipA_AA));
+
+		_testUnbindObjectDefinitionsWithObjectAction(
+			_objectRelationshipA_AA,
+			_objectDefinitionA.getObjectDefinitionId());
+		_testUnbindObjectDefinitionsWithObjectAction(
+			_objectRelationshipAA_AAA,
+			_objectDefinitionAA.getObjectDefinitionId());
+	}
+
+	@Test
 	public void testUnbindObjectDefinitionsWithResourcePermissions()
 		throws Exception {
 
@@ -2154,6 +2174,51 @@ public class ObjectRelationshipLocalServiceTest {
 		_addObjectRelationshipSystemObjectDefinition();
 	}
 
+	private void _testUnbindObjectDefinitionsWithObjectAction(
+			ObjectRelationship objectRelationship, long rootObjectDefinitionId)
+		throws Exception {
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			rootObjectDefinitionId, true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"secret", "onafterrootupdate"
+			).put(
+				"url", "https://onafterrootupdate.com"
+			).build(),
+			false);
+
+		_unbindObjectDefinitions(objectRelationship);
+
+		objectAction = _objectActionLocalService.fetchObjectAction(
+			objectAction.getObjectActionId());
+
+		Assert.assertFalse(objectAction.isActive());
+
+		ObjectAction finalObjectAction = objectAction;
+
+		AssertUtils.assertFailure(
+			ObjectActionActiveException.class,
+			"Cannot activate object action if trigger is onAfterRootUpdate " +
+				"but object definition is not a root node",
+			() -> _objectActionLocalService.updateObjectAction(
+				finalObjectAction.getExternalReferenceCode(),
+				finalObjectAction.getObjectActionId(), true,
+				finalObjectAction.getConditionExpression(),
+				finalObjectAction.getDescription(),
+				finalObjectAction.getErrorMessageMap(),
+				finalObjectAction.getLabelMap(), finalObjectAction.getName(),
+				finalObjectAction.getObjectActionExecutorKey(),
+				finalObjectAction.getObjectActionTriggerKey(),
+				finalObjectAction.getParametersUnicodeProperties()));
+	}
+
 	private void _unbindObjectDefinitions(ObjectRelationship objectRelationship)
 		throws Exception {
 
@@ -2188,6 +2253,9 @@ public class ObjectRelationshipLocalServiceTest {
 	private static final Pattern _pattern = Pattern.compile(
 		"R_[A-Z][0-9][A-Z][0-9]$");
 	private static ObjectDefinition _systemObjectDefinition1;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _modifiableSystemObjectDefinition;

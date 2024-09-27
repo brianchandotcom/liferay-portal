@@ -964,6 +964,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			_bindObjectDefinitions(objectRelationship);
 		}
+		else if (!edge && objectRelationship.isEdge()) {
+			_unbindObjectDefinitions(objectRelationship);
+		}
 
 		return objectRelationship;
 	}
@@ -1366,6 +1369,32 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 	}
 
+	private void _deployObjectDefinition(ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		if (!objectDefinition.isApproved()) {
+			return;
+		}
+
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			_objectDefinitionLocalServiceSnapshot.get();
+
+		objectDefinitionLocalService.deployObjectDefinition(objectDefinition);
+	}
+
+	private long _getRootObjectDefinitionId(ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		long count = objectRelationshipPersistence.countByODI1_E(
+			objectDefinition.getObjectDefinitionId(), true);
+
+		if (count == 0) {
+			return 0;
+		}
+
+		return objectDefinition.getObjectDefinitionId();
+	}
+
 	private String _getServiceRegistrationKey(
 		ObjectRelationship objectRelationship) {
 
@@ -1447,6 +1476,109 @@ public class ObjectRelationshipLocalServiceImpl
 				).put(
 					"item.class.name", objectDefinition1.getClassName()
 				).build()));
+	}
+
+	private void _unbindObjectDefinitions(ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		objectRelationship.setEdge(false);
+
+		objectRelationship =
+			objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship);
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (objectDefinition1.isRootDescendantNode()) {
+			objectDefinition1 = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition1.getRootObjectDefinitionId());
+		}
+
+		long oldRootObjectDefinitionId1 =
+			objectDefinition1.getRootObjectDefinitionId();
+		long newRootObjectDefinitionId1 = _getRootObjectDefinitionId(
+			objectDefinition1);
+
+		_updateObjectDefinition(
+			objectDefinition1, oldRootObjectDefinitionId1,
+			newRootObjectDefinitionId1);
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		objectDefinition2.setScope(objectDefinition1.getScope());
+
+		long oldRootObjectDefinitionId2 =
+			objectDefinition2.getRootObjectDefinitionId();
+		long newRootObjectDefinitionId2 = _getRootObjectDefinitionId(
+			objectDefinition2);
+
+		_updateObjectDefinition(
+			objectDefinition2, oldRootObjectDefinitionId2,
+			newRootObjectDefinitionId2);
+
+		_updateObjectDefinitionTree(
+			objectDefinition2, oldRootObjectDefinitionId2,
+			newRootObjectDefinitionId2);
+	}
+
+	private void _updateObjectDefinition(
+			ObjectDefinition objectDefinition, long oldRootObjectDefinitionId,
+			long newRootObjectDefinitionId)
+		throws PortalException {
+
+		if (oldRootObjectDefinitionId == newRootObjectDefinitionId) {
+			_deployObjectDefinition(objectDefinition);
+
+			return;
+		}
+
+		String previousRESTContextPath = objectDefinition.getRESTContextPath();
+
+		objectDefinition.setRootObjectDefinitionId(newRootObjectDefinitionId);
+
+		objectDefinition = _objectDefinitionPersistence.update(
+			objectDefinition);
+
+		objectDefinition.setPreviousRESTContextPath(previousRESTContextPath);
+
+		_deployObjectDefinition(objectDefinition);
+	}
+
+	private void _updateObjectDefinitionTree(
+			ObjectDefinition objectDefinition1, long oldRootObjectDefinitionId,
+			long newRootObjectDefinitionId)
+		throws PortalException {
+
+		if (newRootObjectDefinitionId == 0) {
+			return;
+		}
+
+		for (ObjectRelationship objectRelationship :
+				objectRelationshipLocalService.getObjectRelationships(
+					objectDefinition1.getObjectDefinitionId(), true)) {
+
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (oldRootObjectDefinitionId !=
+					objectDefinition2.getRootObjectDefinitionId()) {
+
+				continue;
+			}
+
+			_updateObjectDefinition(
+				objectDefinition2, oldRootObjectDefinitionId,
+				newRootObjectDefinitionId);
+
+			_updateObjectDefinitionTree(
+				objectDefinition2, oldRootObjectDefinitionId,
+				newRootObjectDefinitionId);
+		}
 	}
 
 	private ObjectRelationship _updateObjectRelationship(

@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -74,6 +75,8 @@ public class PortalInstancesLocalServiceImpl
 			_companyLocalService.forEachCompanyId(
 				companyId -> PortalInstances.removeCompany(companyId),
 				ArrayUtil.toLongArray(removeableCompanyIds));
+
+			DBPartitionUtil.synchronizeCompanyIds();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

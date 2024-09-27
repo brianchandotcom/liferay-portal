@@ -7000,7 +7000,7 @@ ${output.content}</echo>
 		</exec>
 	</target>
 
-	<target name="patching-tool-custom-scripts-jdk8">
+	<target name="patching-tool-custom-scripts">
 		<fail message="Please set the property liferay.jenkins.dir">
 			<condition>
 				<not>
@@ -7025,7 +7025,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="patching-tool-mysql57-jdk8">
+	<target name="patching-tool-mysql57">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -7066,7 +7066,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="patching-tool-postgresql155-jdk8">
+	<target name="patching-tool-postgresql155">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="postgresql" stop.app.server="true">

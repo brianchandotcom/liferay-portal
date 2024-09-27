@@ -1,7 +1,7 @@
 liferay-customer-site-initializer-quickstart:
     name: Liferay Customer Site Initializer Quickstart
-    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-code-oahs
-    siteExternalReferenceCode: LIFERAY_CUSTOMER
+    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-oahs
+    siteExternalReferenceCode: CUSTOMER_PORTAL
     siteName: Customer Portal
     type: siteInitializer
 liferay-customer-talend-oahs:
@@ -16,6 +16,7 @@ liferay-customer-talend-oahs:
         - c_admindxpcloud.everything
         - c_adminliferayexperiencecloud.everything
         - c_analyticscloudworkspace.everything
+        - c_bannedemaildomain.everything
         - c_dxpcloudenvironment.everything
         - c_incidentreportcontactanalyticscloud.everything
         - c_koroneikiaccount.everything

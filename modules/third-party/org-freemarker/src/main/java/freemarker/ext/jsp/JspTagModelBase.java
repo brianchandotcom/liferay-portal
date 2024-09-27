@@ -19,7 +19,10 @@
 
 package freemarker.ext.jsp;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -47,22 +50,16 @@ class JspTagModelBase {
     private final Method dynaSetter;
     private final Map propertySetters = new HashMap();
     
-    protected JspTagModelBase(String tagName, Class tagClass) {
+    protected JspTagModelBase(String tagName, Class tagClass) throws IntrospectionException {
         this.tagName = tagName;
         this.tagClass = tagClass;
-        for (Method method : tagClass.getMethods()) {
-            if (method.getReturnType().equals(void.class)
-                && (method.getParameterTypes().length == 1)) {
-
-                String methodName = method.getName();
-
-                if (methodName.startsWith("set") && (methodName.length() > 3) &&
-                    Character.isUpperCase(methodName.charAt(3))) {
-
-                    propertySetters.put(
-                        Introspector.decapitalize(methodName.substring(3)),
-                        method);
-                }
+        BeanInfo bi = Introspector.getBeanInfo(tagClass);
+        PropertyDescriptor[] pda = bi.getPropertyDescriptors();
+        for (int i = 0; i < pda.length; i++) {
+            PropertyDescriptor pd = pda[i];
+            Method m = pd.getWriteMethod();
+            if (m != null) {
+                propertySetters.put(pd.getName(), m);
             }
         }
         // Check to see if the tag implements the JSP2.0 DynamicAttributes
@@ -170,4 +167,3 @@ class JspTagModelBase {
     }
     
 }
-/* @generated */

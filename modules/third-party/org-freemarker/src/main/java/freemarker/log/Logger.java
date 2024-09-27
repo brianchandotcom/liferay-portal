@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * Delegates logger creation to an actual logging library. By default it looks for logger libraries in this order (in
- * FreeMarker 2.3.x): Log4J, Avalon LogKit, JUL (i.e., <tt>java.util.logging</tt>). Prior to FreeMarker 2.4, SLF4J and
+ * FreeMarker 2.3.x): Log4J, Avalon LogKit, JUL (i.e., {@code java.util.logging}). Prior to FreeMarker 2.4, SLF4J and
  * Apache Commons Logging aren't searched automatically due to backward compatibility constraints. But if you have
  * {@code log4j-over-slf4j} properly installed (means, you have no real Log4j in your class path, and SLF4J has a
  * backing implementation like {@code logback-classic}), then FreeMarker will use SLF4J directly instead of Log4j (since
@@ -154,8 +154,7 @@ public abstract class Logger {
     public static final String LIBRARY_NAME_SLF4J = "SLF4J";
     private static final int MAX_LIBRARY_ENUM = LIBRARY_SLF4J;
 
-    private static final String REAL_LOG4J_PRESENCE_CLASS =
-		"org.apache.logging.log4j.core.appender.FileAppender";
+    private static final String REAL_LOG4J_PRESENCE_CLASS = "org.apache.log4j.FileAppender";
     private static final String LOG4J_OVER_SLF4J_TESTER_CLASS = "freemarker.log._Log4jOverSLF4JTester";
 
     /**
@@ -164,7 +163,7 @@ public abstract class Logger {
     private static final String[] LIBRARIES_BY_PRIORITY = {
             null, LIBRARY_NAME_JUL,
             "org.apache.log.Logger", LIBRARY_NAME_AVALON,
-            "org.apache.logging.log4j.Logger", LIBRARY_NAME_LOG4J,
+            "org.apache.log4j.Logger", LIBRARY_NAME_LOG4J,
             /* In 2.3.x this two is skipped by LIBRARY_AUTO: */
             "org.apache.commons.logging.Log", LIBRARY_NAME_COMMONS_LOGGING,
             "org.slf4j.Logger", LIBRARY_NAME_SLF4J,
@@ -215,7 +214,7 @@ public abstract class Logger {
      * subsystem, the change in this value will have no effect on them.
      * 
      * @param libraryEnum
-     *            One of <tt>LIBRARY_...</tt> constants. By default, {@link #LIBRARY_AUTO} is used.
+     *            One of {@code LIBRARY_...} constants. By default, {@link #LIBRARY_AUTO} is used.
      * 
      * @throws ClassNotFoundException
      *             if an explicit logging library is asked for (that is, not {@value #LIBRARY_AUTO} or
@@ -580,4 +579,3 @@ public abstract class Logger {
     }
 
 }
-/* @generated */

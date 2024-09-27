@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import freemarker.template.Configuration;
 import freemarker.template.SimpleNumber;
 import freemarker.template.TemplateBooleanModel;
 import freemarker.template.TemplateCollectionModel;
@@ -276,9 +275,6 @@ final class IteratorBlock extends TemplateElement {
         private boolean executedNestedContentForCollOrSeqListing(Environment env, TemplateElement[] childBuffer)
                 throws IOException, TemplateException {
             final boolean listNotEmpty;
-
-            int loopCountThreshold = _getLoopCountThreshold(env);
-
             if (listedValue instanceof TemplateCollectionModel) {
                 final TemplateCollectionModel collModel = (TemplateCollectionModel) listedValue;
                 final TemplateModelIterator iterModel
@@ -288,8 +284,6 @@ final class IteratorBlock extends TemplateElement {
                 if (listNotEmpty) {
                     if (loopVar1Name != null) {
                         listLoop: do {
-                        	_checkIndex(loopCountThreshold);
-
                             loopVar1Value = iterModel.next();
                             hasNext = iterModel.hasNext();
                             try {
@@ -320,8 +314,6 @@ final class IteratorBlock extends TemplateElement {
                 if (listNotEmpty) {
                     if (loopVar1Name != null) {
                             listLoop: for (index = 0; index < size; index++) {
-                            	_checkIndex(loopCountThreshold);
-
                                 loopVar1Value = seqModel.get(index);
                                 hasNext = (size > index + 1);
                                 try {
@@ -371,9 +363,6 @@ final class IteratorBlock extends TemplateElement {
 
         private boolean executedNestedContentForHashListing(Environment env, TemplateElement[] childBuffer)
                 throws IOException, TemplateException {
-
-            int loopCountThreshold = _getLoopCountThreshold(env);
-
             final boolean hashNotEmpty;
             if (listedValue instanceof TemplateHashModelEx) {
                 TemplateHashModelEx listedHash = (TemplateHashModelEx) listedValue; 
@@ -385,8 +374,6 @@ final class IteratorBlock extends TemplateElement {
                     if (hashNotEmpty) {
                         if (loopVar1Name != null) {
                             listLoop: do {
-                            	_checkIndex(loopCountThreshold);
-
                                 KeyValuePair kvp = kvpIter.next();
                                 loopVar1Value = kvp.getKey();
                                 loopVar2Value = kvp.getValue();
@@ -417,8 +404,6 @@ final class IteratorBlock extends TemplateElement {
                     if (hashNotEmpty) {
                         if (loopVar1Name != null) {
                             listLoop: do {
-                            	_checkIndex(loopCountThreshold);
-
                                 loopVar1Value = keysIter.next();
                                 if (!(loopVar1Value instanceof TemplateScalarModel)) {
                                     throw _MessageUtil.newKeyValuePairListingNonStringKeyExceptionMessage(
@@ -457,28 +442,6 @@ final class IteratorBlock extends TemplateElement {
                         listedExp, listedValue, env);
             }
             return hashNotEmpty;
-        }
-
-        private int _getLoopCountThreshold(Environment env) {
-            Configuration configuration = env.getConfiguration();
-
-            TemplateModel templateModel = configuration.getSharedVariable("loop-count-threshold");
-
-            if (templateModel instanceof SimpleNumber) {
-                SimpleNumber simpleNumber = (SimpleNumber)templateModel;
-
-                Number number = simpleNumber.getAsNumber();
-
-                return number.intValue();
-            }
-
-            return 0;
-        }
-
-        private void _checkIndex(int loopCountThreshold) throws TemplateException {
-            if ((loopCountThreshold > 0) && ((index + 1) > loopCountThreshold)) {
-                throw new _MiscTemplateException("Loop count exceeds threshold ", loopCountThreshold);
-            }
         }
 
         boolean hasVisibleLoopVar(String visibleLoopVarName) {
@@ -552,4 +515,3 @@ final class IteratorBlock extends TemplateElement {
     }
     
 }
-/* @generated */

@@ -31,6 +31,10 @@ public class CTEntryKeywordQueryContributor implements KeywordQueryContributor {
 		queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			Field.TITLE, false);
+
+		queryHelper.addSearchTerm(
+			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
+			"ctCollectionName", false);
 	}
 
 	@Reference

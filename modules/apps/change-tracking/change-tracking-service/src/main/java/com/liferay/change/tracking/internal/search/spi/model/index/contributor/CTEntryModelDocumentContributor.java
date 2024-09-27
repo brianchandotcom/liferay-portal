@@ -82,8 +82,16 @@ public class CTEntryModelDocumentContributor
 			ctEntry.getCtCollectionId());
 
 		if (ctCollection != null) {
-			document.addKeyword("ctCollectionName", ctCollection.getName());
+			document.addKeywordSortable(
+				"ctCollectionName", ctCollection.getName());
+
 			document.addKeyword("ctCollectionStatus", ctCollection.getStatus());
+			document.addLocalizedKeyword(
+				"ctCollectionStatusLabel",
+				_localization.getLocalizationMap(
+					_language.getAvailableLocales(), LocaleUtil.getDefault(),
+					WorkflowConstants.getStatusLabel(ctCollection.getStatus())),
+				true, true);
 
 			if ((ctCollection.getStatus() ==
 					WorkflowConstants.STATUS_APPROVED) ||
@@ -101,7 +109,7 @@ public class CTEntryModelDocumentContributor
 					document.addKeyword(
 						"ctCollectionStatusUserId",
 						ctCollectionStatusUser.getUserId());
-					document.addText(
+					document.addKeywordSortable(
 						"ctCollectionStatusUserName",
 						ctCollectionStatusUser.getFullName());
 				}

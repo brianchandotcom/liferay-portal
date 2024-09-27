@@ -7866,7 +7866,7 @@ ${output.content}</echo>
 		</sequential>
 	</target>
 
-	<target name="portal-startup-space-in-path-mysql57-jdk8">
+	<target name="portal-startup-space-in-path-mysql57">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 
 		<sequential>
@@ -8110,7 +8110,7 @@ ${output.content}</echo>
 		</sequential>
 	</target>
 
-	<target name="portal-startup-space-in-path-postgresql155-jdk8">
+	<target name="portal-startup-space-in-path-postgresql155">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 
 		<sequential>

@@ -3370,6 +3370,26 @@
 		"to": "getSearchContainer"
 	},
 	{
+		"classNames": [
+			"CommercePriceListLocalService",
+			"CommercePriceListLocalServiceUtil"
+		],
+		"from": "fetchByExternalReferenceCode(String paramName, long paramName)",
+		"issueKey": "LPD-37502",
+		"to": "fetchCommercePriceListByExternalReferenceCode(param#0#, param#1#)"
+	},
+	{
+		"classNames": [
+			"CPInstanceLocalService",
+			"CPInstanceLocalServiceUtil",
+			"CPInstanceService",
+			"CPInstanceServiceUtil"
+		],
+		"from": "fetchByExternalReferenceCode(String paramName, long paramName)",
+		"issueKey": "LPD-37502",
+		"to": "fetchCPInstanceByExternalReferenceCode(param#0#, param#1#)"
+	},
+	{
 		"from": "HtmlUtil.getHTML",
 		"issueKey": "LPD-37503",
 		"newImports": [
@@ -3813,7 +3833,7 @@
 		],
 		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-196611",
-		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
+		"to": "fetchCommercePriceListByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
 		"from": "AssetCategory::getLeftCategoryId",
@@ -3971,7 +3991,7 @@
 		],
 		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-197965",
-		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
+		"to": "fetchCPInstanceByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
 		"classNames": [

@@ -1192,6 +1192,18 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		indexableActionableDynamicQuery.setSearchEngineId(searchEngineId);
 	}
 
+	public void method(String externalReferenceCode, long companyId) {
+		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+		_commercePriceListLocalService.fetchByExternalReferenceCode("test123", 123);
+		_commercePriceListLocalService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+
+		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode("test123", 123);
+		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+		CPInstanceServiceUtil.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+		_cpInstanceLocalService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+		_cpInstanceService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+	}
+
 	public void method(
 		String searchEngineId, long companyId, Collection<Document> documents,
 		boolean commitImmediately) {

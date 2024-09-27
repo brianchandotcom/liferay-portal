@@ -507,7 +507,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			return;
 		}
 
-		_configuration = new Configuration(Configuration.VERSION_2_3_32);
+		_configuration = new Configuration(Configuration.VERSION_2_3_33);
 
 		_configuration.setAttemptExceptionReporter(
 			(templateException, environment) -> {

@@ -44,7 +44,7 @@ public class PaymentProcessCheckoutStepDisplayContext {
 			_commerceCheckoutRequestHelper.getUser()
 		).build();
 
-		return cartResource.getCartPaymentURL(
+		return cartResource.getCartPaymentUrl(
 			_commerceOrder.getCommerceOrderId(), StringPool.BLANK);
 	}
 

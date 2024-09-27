@@ -901,7 +901,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		else if (((Long)testrayCaseResult1.get("r_userToCaseResults_userId") <=
 					0) &&
 				 Validator.isNull(testrayCaseResult1.get("issues")) &&
-				 ((Long)testrayCaseResult1.get("r_userToCaseResults_userId") >
+				 ((Long)testrayCaseResult2.get("r_userToCaseResults_userId") >
 					 0) &&
 				 Validator.isNotNull(testrayCaseResult2.get("issues"))) {
 

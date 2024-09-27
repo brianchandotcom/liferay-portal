@@ -5277,7 +5277,7 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="gradle-plugins-test-jdk8">
+	<target name="gradle-plugins-test">
 		<run-batch-test>
 			<test-action>
 				<antcall inheritAll="false" target="compile" />

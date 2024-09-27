@@ -25,6 +25,7 @@ import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolderItem;
@@ -56,7 +57,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1531,6 +1534,24 @@ public class ObjectRelationshipLocalServiceImpl
 		return false;
 	}
 
+	private void _performActions(
+			long objectDefinitionId, boolean parallel,
+			ActionableDynamicQuery.PerformActionMethod<?> performActionMethod)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_objectEntryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"objectDefinitionId", objectDefinitionId)));
+		actionableDynamicQuery.setParallel(parallel);
+		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
+
+		actionableDynamicQuery.performActions();
+	}
+
 	private void _registerRelatedInfoItemCollectionProvider(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2,
@@ -1590,6 +1611,10 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition1, oldRootObjectDefinitionId1,
 			newRootObjectDefinitionId1);
 
+		_updateObjectEntries(
+			objectDefinition1, oldRootObjectDefinitionId1,
+			newRootObjectDefinitionId1);
+
 		if (newRootObjectDefinitionId1 == 0) {
 			for (ObjectAction objectAction :
 					_objectActionPersistence.findByO_A_OATK(
@@ -1619,6 +1644,10 @@ public class ObjectRelationshipLocalServiceImpl
 			newRootObjectDefinitionId2);
 
 		_copyResourcePermissions(objectDefinition1, objectDefinition2);
+
+		_updateObjectEntries(
+			objectDefinition2, oldRootObjectDefinitionId2,
+			newRootObjectDefinitionId2);
 
 		_updateObjectDefinitionTree(
 			objectDefinition2, oldRootObjectDefinitionId2,
@@ -1675,10 +1704,65 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition2, oldRootObjectDefinitionId,
 				newRootObjectDefinitionId);
 
+			if (objectDefinition2.isApproved()) {
+				ObjectField objectField =
+					_objectFieldPersistence.findByPrimaryKey(
+						objectRelationship.getObjectFieldId2());
+
+				_performActions(
+					objectDefinition1.getObjectDefinitionId(), true,
+					(ObjectEntry objectEntry) -> runSQL(
+						StringBundler.concat(
+							"update ObjectEntry set rootObjectEntryId = ",
+							objectEntry.getRootObjectEntryId(),
+							" where objectEntryId in (select ",
+							objectDefinition2.getPKObjectFieldDBColumnName(),
+							" from ", objectField.getDBTableName(), " where ",
+							objectField.getDBColumnName(), " = ",
+							objectEntry.getObjectEntryId(), ")")));
+
+				if (objectDefinition2.isEnableIndexSearch()) {
+					Indexer<ObjectEntry> indexer =
+						IndexerRegistryUtil.getIndexer(
+							objectDefinition2.getClassName());
+
+					_performActions(
+						objectDefinition2.getObjectDefinitionId(), true,
+						(ObjectEntry objectEntry) -> indexer.reindex(
+							objectEntry));
+				}
+			}
+
 			_updateObjectDefinitionTree(
 				objectDefinition2, oldRootObjectDefinitionId,
 				newRootObjectDefinitionId);
 		}
+	}
+
+	private void _updateObjectEntries(
+			ObjectDefinition objectDefinition, long oldRootObjectDefinitionId,
+			long newRootObjectDefinitionId)
+		throws PortalException {
+
+		if (!objectDefinition.isApproved() ||
+			(oldRootObjectDefinitionId == newRootObjectDefinitionId)) {
+
+			return;
+		}
+
+		_performActions(
+			objectDefinition.getObjectDefinitionId(), false,
+			(ObjectEntry objectEntry) -> {
+				if (newRootObjectDefinitionId == 0) {
+					objectEntry.setRootObjectEntryId(0);
+				}
+				else {
+					objectEntry.setRootObjectEntryId(
+						objectEntry.getObjectEntryId());
+				}
+
+				_objectEntryLocalService.updateObjectEntry(objectEntry);
+			});
 	}
 
 	private ObjectRelationship _updateObjectRelationship(

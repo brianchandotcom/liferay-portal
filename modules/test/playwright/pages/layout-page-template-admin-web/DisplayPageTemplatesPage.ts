@@ -187,7 +187,10 @@ export class DisplayPageTemplatesPage {
 				.click();
 		}
 		else {
-			await this.newButton.click();
+			await clickAndExpectToBeVisible({
+				target: this.page.getByRole('button', {name: 'Blank'}),
+				trigger: this.newButton,
+			});
 		}
 
 		await this.page.getByRole('button', {name: 'Blank'}).click();

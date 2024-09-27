@@ -831,8 +831,6 @@ definition {
 		task ("When the site designer changes to pt-BR in web content editor") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-			Panel.expandPanel(panel = "Friendly URL");
-
 			PortletEntry.changeLocale(
 				locale = "pt-BR",
 				translated = "true");

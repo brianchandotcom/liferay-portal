@@ -26,9 +26,14 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,45 +108,61 @@ public class CTProcessLocalServiceTest {
 		_journalFolderFixture.addFolder(
 			_group.getGroupId(), conflictingFolderName);
 
-		CTProcess ctProcess = _ctProcessLocalService.addCTProcess(
-			ctCollection.getUserId(), ctCollection.getCtCollectionId());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.getBackgroundTask(
+			CTProcess ctProcess = _ctProcessLocalService.addCTProcess(
+				ctCollection.getUserId(), ctCollection.getCtCollectionId());
+
+			BackgroundTask backgroundTask =
+				_backgroundTaskLocalService.getBackgroundTask(
+					ctProcess.getBackgroundTaskId());
+
+			Assert.assertEquals(
+				BackgroundTaskConstants.STATUS_FAILED,
+				backgroundTask.getStatus());
+
+			ctProcess = _ctProcessLocalService.deleteCTProcess(
+				ctProcess.getCtProcessId());
+
+			ctCollection = _ctCollectionLocalService.fetchCTCollection(
+				ctProcess.getCtCollectionId());
+
+			Assert.assertNotNull(ctCollection);
+
+			_ctCollectionLocalService.discardCTEntry(
+				ctCollection.getCtCollectionId(), _journalFolderClassNameId,
+				ctJournalFolder.getFolderId(), false);
+
+			ctProcess = _ctProcessLocalService.addCTProcess(
+				ctCollection.getUserId(), ctCollection.getCtCollectionId());
+
+			backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
 				ctProcess.getBackgroundTaskId());
 
-		Assert.assertEquals(
-			BackgroundTaskConstants.STATUS_FAILED, backgroundTask.getStatus());
+			Assert.assertEquals(
+				BackgroundTaskConstants.STATUS_SUCCESSFUL,
+				backgroundTask.getStatus());
 
-		ctProcess = _ctProcessLocalService.deleteCTProcess(
-			ctProcess.getCtProcessId());
+			ctProcess = _ctProcessLocalService.deleteCTProcess(
+				ctProcess.getCtProcessId());
 
-		ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctProcess.getCtCollectionId());
+			ctCollection = _ctCollectionLocalService.fetchCTCollection(
+				ctProcess.getCtProcessId());
 
-		Assert.assertNotNull(ctCollection);
+			Assert.assertNull(ctCollection);
 
-		_ctCollectionLocalService.discardCTEntry(
-			ctCollection.getCtCollectionId(), _journalFolderClassNameId,
-			ctJournalFolder.getFolderId(), false);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		ctProcess = _ctProcessLocalService.addCTProcess(
-			ctCollection.getUserId(), ctCollection.getCtCollectionId());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-		backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
-			ctProcess.getBackgroundTaskId());
+			LogEntry logEntry = logEntries.get(0);
 
-		Assert.assertEquals(
-			BackgroundTaskConstants.STATUS_SUCCESSFUL,
-			backgroundTask.getStatus());
-
-		ctProcess = _ctProcessLocalService.deleteCTProcess(
-			ctProcess.getCtProcessId());
-
-		ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctProcess.getCtProcessId());
-
-		Assert.assertNull(ctCollection);
+			Assert.assertEquals(
+				"Unable to execute background task", logEntry.getMessage());
+		}
 	}
 
 	@Inject

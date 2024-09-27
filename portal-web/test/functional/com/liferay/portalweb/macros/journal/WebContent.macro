@@ -1368,8 +1368,6 @@ definition {
 
 	@summary = "Default summary"
 	macro editFriendlyURL(webContentFriendlyURL = null) {
-		Panel.expandPanel(panel = "Friendly URL");
-
 		Type(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
@@ -2762,7 +2760,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithStructureCP(webContentLocaleFieldLabel = null, webContentTitleEscapeCharacter = null, webContentUpload = null, description = null, webContentImageDescription = null, webContentLinkToPage = null, webContentText = null, webContentGrid = null, webContentImage = null, row = null, webContentSelectFromList = null, webContentSingleSelection = null, skipGotoEditCp = null, webContentColor = null, webContentDate = null, webContentWebContent = null, webContentNumeric = null, webContentBoolean = null, webContentTitle = null, webContentRichText = null, webContentTitleTranslated = null, location = null, webContentMultipleSelection = null, fieldType = null) {
+	macro viewWithStructureCP(webContentLocaleFieldLabel = null, webContentTitleEscapeCharacter = null, webContentUpload = null, description = null, webContentImageDescription = null, webContentLinkToPage = null, webContentText = null, webContentGrid = null, webContentImage = null, row = null, webContentSelectFromList = null, webContentSingleSelection = null, skipGotoEditCp = null, webContentColor = null, webContentDate = null, webContentWebContent = null, webContentNumeric = null, webContentBoolean = null, webContentTitle = null, webContentRichText = null, webContentTitleTranslated = null, location = null, webContentMultipleSelection = null, fieldType = null, translated = null) {
 		if (!(isSet(predefinedValue))) {
 			if (${skipGotoEditCp} != "true") {
 				LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -2775,7 +2773,14 @@ definition {
 			}
 
 			if (isSet(webContentLocaleFieldLabel)) {
-				PortletEntry.changeLocale(locale = ${webContentLocaleFieldLabel});
+				if (isSet(translated)) {
+					PortletEntry.changeLocale(
+						locale = ${webContentLocaleFieldLabel},
+						translated = ${translated});
+				}
+				else {
+					PortletEntry.changeLocale(locale = ${webContentLocaleFieldLabel});
+				}
 			}
 
 			if (isSet(webContentTitleTranslated)) {

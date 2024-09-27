@@ -876,7 +876,11 @@ export class PageEditorPage {
 			(element) => !!element.closest('.page-editor__form')
 		);
 
-		if (isCollection || isForm) {
+		const isGrid = await fragment.evaluate(
+			(element) => !!element.closest('.lfr-layout-structure-item-row')
+		);
+
+		if (isCollection || isForm || isGrid) {
 			await this.goToSidebarTab('Browser');
 
 			const treeNode = this.page.locator(

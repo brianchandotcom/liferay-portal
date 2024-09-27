@@ -79,11 +79,9 @@ describe('TopperEmpty', () => {
 	it('renders topper label with topper empty', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
-		const {debug} = renderTopperEmpty({
+		renderTopperEmpty({
 			itemType: LAYOUT_DATA_ITEM_TYPES.column,
 		});
-
-		debug();
 
 		expect(screen.getByText('module')).toBeInTheDocument();
 
@@ -93,11 +91,9 @@ describe('TopperEmpty', () => {
 	it('renders paste options', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
-		const {debug} = renderTopperEmpty({
+		renderTopperEmpty({
 			itemType: LAYOUT_DATA_ITEM_TYPES.column,
 		});
-
-		debug();
 
 		userEvent.click(screen.getByLabelText('options'));
 

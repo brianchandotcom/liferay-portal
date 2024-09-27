@@ -1,0 +1,26 @@
+{
+	"friendlyURL": "/callback-form",
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "Callback Form"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

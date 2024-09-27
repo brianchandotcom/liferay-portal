@@ -211,7 +211,9 @@ export class UsersAndOrganizationsPage {
 				strictEqual
 			);
 		};
-		this.myOrganizationsUserAndOrgsTableRowLink = async (organizationName: string) => {
+		this.myOrganizationsUserAndOrgsTableRowLink = async (
+			organizationName: string
+		) => {
 			const row = await this.myOrganizationsUserAndOrgsTableRow(
 				1,
 				organizationName,

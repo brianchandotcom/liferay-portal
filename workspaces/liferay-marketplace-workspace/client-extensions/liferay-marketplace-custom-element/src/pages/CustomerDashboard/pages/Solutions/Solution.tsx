@@ -12,6 +12,7 @@ import useSWR from 'swr';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import Loading from '../../../../components/Loading';
 import QATable from '../../../../components/QATable';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {
 	ORDER_CUSTOM_FIELDS,
 	ORDER_TYPES,
@@ -109,6 +110,9 @@ type AnalyticsWorkspaceDetailsProps = {
 const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 	analyticsGroupId,
 }) => {
+	const {
+		properties: {analyticsCloudURL},
+	} = useMarketplaceContext();
 	const {data = [], isLoading} = useSWR(
 		`/analytics/project/${analyticsGroupId}/`,
 		() =>
@@ -138,7 +142,14 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 					items={[
 						{
 							title: i18n.translate('workspace-friendly-url'),
-							value: project?.friendlyURL,
+							value: project?.friendlyURL ? (
+								<a
+									href={`${analyticsCloudURL}/workspace${project?.friendlyURL}`}
+									target="blank"
+								>
+									{project?.friendlyURL}
+								</a>
+							) : null,
 						},
 						{
 							title: i18n.translate('workspace-name'),

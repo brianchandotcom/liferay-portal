@@ -210,6 +210,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// Notification triggered by admin user
 
+		String body = _read("object_entry_notification_template_body.ftl");
+
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			childObjectDefinition);
+
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			dtoConverterContext, childObjectDefinition,
 			new ObjectEntry() {
@@ -220,12 +226,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				}
 			},
 			group.getGroupKey());
-
-		String body = _read("object_entry_notification_template_body.ftl");
-
-		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			childObjectDefinition);
 
 		objectEntryManager.updateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,

@@ -433,16 +433,13 @@ test('can use notification terms and freeMarker variables in notification templa
 	const freeMarkerVariables = [
 		'Author',
 		'Create Date',
-		'Current URL',
 		'Default',
 		'External Reference Code',
-		'HTTP Request',
 		'ID',
 		'Locale',
 		'Modified Date',
 		'Portal URL',
 		'Publish Date',
-		'Template ID',
 		'Status',
 		'User Profile Image',
 		objectFieldName,
@@ -453,8 +450,6 @@ test('can use notification terms and freeMarker variables in notification templa
 			page.getByRole('button', {exact: true, name: freeMarkerVariable})
 		).toBeVisible();
 	}
-
-	await page.getByRole('button', {name: 'Current URL'}).click();
 
 	await page.getByRole('button', {name: objectFieldName}).click();
 
@@ -468,7 +463,7 @@ test('can use notification terms and freeMarker variables in notification templa
 		page
 			.locator('.CodeMirror-lines')
 			.getByText(
-				'${currentURL}$' + `{ObjectField_${objectFieldName}.getData()}`
+				`{ObjectField_${objectFieldName}.getData()}`
 			)
 	).toBeVisible();
 });

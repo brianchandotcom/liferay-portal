@@ -191,8 +191,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 
 		for (String relevantRuleName : relevantRuleNames) {
 			String playwrightTestProjectPropertyName = StringBundler.concat(
-				"playwright.test.project[playwright-js-tomcat90-mysql57-",
-				"jdk8][relevant][", relevantRuleName, "]");
+				"playwright.test.project[playwright-js-tomcat90-mysql57",
+				"][relevant][", relevantRuleName, "]");
 
 			List<String> playwrightTestProjectList = ListUtil.fromString(
 				properties.getProperty(playwrightTestProjectPropertyName),

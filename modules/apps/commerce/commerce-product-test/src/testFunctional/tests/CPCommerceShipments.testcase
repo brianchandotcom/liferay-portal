@@ -1479,12 +1479,12 @@ definition {
 			AssertElementNotPresent(locator1 = "Message#SUCCESS");
 		}
 
-		task ("Then an error message is shown (Error:Please enter a unique external reference code.)") {
+		task ("Then an error message is shown (Close Error:Please enter a unique external reference code.)") {
 			WaitForElementPresent(locator1 = "Message#ERROR");
 
 			AssertTextEquals.assertText(
 				locator1 = "Message#ERROR",
-				value1 = "Error:Please enter a unique external reference code.");
+				value1 = "Close Error:Please enter a unique external reference code.");
 		}
 	}
 

@@ -786,7 +786,7 @@ definition {
 
 			AssertTextEquals.assertText(
 				locator1 = "Message#ERROR",
-				value1 = "Close Error:There is already one SKU with the external reference code.");
+				value1 = "Close Error:Please enter a unique external reference code.");
 		}
 	}
 

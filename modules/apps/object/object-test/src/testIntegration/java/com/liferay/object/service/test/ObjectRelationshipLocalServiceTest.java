@@ -1366,6 +1366,14 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectEntry objectEntryA = _addObjectEntry(
 			_objectDefinitionA, Collections.emptyMap());
 
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinitionA.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryA.getObjectEntryId()), role.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			_objectRelationshipA_AA.getObjectFieldId2());
 
@@ -1399,20 +1407,24 @@ public class ObjectRelationshipLocalServiceTest {
 		_entityCache.clearCache();
 
 		_assertRootObjectEntryId(0, objectEntryA.getObjectEntryId());
-
 		_assertRootObjectEntryId(
 			objectEntryAA1.getObjectEntryId(),
 			objectEntryAA1.getObjectEntryId());
 		_assertRootObjectEntryId(
 			objectEntryAA1.getObjectEntryId(),
 			objectEntryAAA1.getObjectEntryId());
-
 		_assertRootObjectEntryId(
 			objectEntryAA2.getObjectEntryId(),
 			objectEntryAA2.getObjectEntryId());
 		_assertRootObjectEntryId(
 			objectEntryAA2.getObjectEntryId(),
 			objectEntryAAA2.getObjectEntryId());
+
+		_assertHasResourcePermission(true, objectEntryA, role);
+		_assertHasResourcePermission(true, objectEntryAA1, role);
+		_assertHasResourcePermission(true, objectEntryAA2, role);
+		_assertHasResourcePermission(false, objectEntryAAA1, role);
+		_assertHasResourcePermission(false, objectEntryAAA2, role);
 
 		_unbindObjectDefinitions(_objectRelationshipAA_AAA);
 
@@ -1422,6 +1434,9 @@ public class ObjectRelationshipLocalServiceTest {
 		_assertRootObjectEntryId(0, objectEntryAA2.getObjectEntryId());
 		_assertRootObjectEntryId(0, objectEntryAAA1.getObjectEntryId());
 		_assertRootObjectEntryId(0, objectEntryAAA2.getObjectEntryId());
+
+		_assertHasResourcePermission(true, objectEntryAAA1, role);
+		_assertHasResourcePermission(true, objectEntryAAA2, role);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryAAA1);
 		_objectEntryLocalService.deleteObjectEntry(objectEntryAAA2);
@@ -1840,6 +1855,31 @@ public class ObjectRelationshipLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _assertHasResourcePermission(
+			boolean expectedHasResourcePermission, ObjectEntry objectEntry,
+			Role role)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		Assert.assertEquals(
+			expectedHasResourcePermission,
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				role.getRoleId(), ActionKeys.UPDATE));
+		Assert.assertEquals(
+			expectedHasResourcePermission,
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				role.getRoleId(), ActionKeys.VIEW));
 	}
 
 	private void _assertObjectDefinitionTree(

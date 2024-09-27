@@ -98,7 +98,10 @@ export default function fieldChange({
 				fieldInstance.type === 'image' ||
 				fieldInstance.type === 'color'
 			) {
-				dispatch({type: EVENT_TYPES.HISTORY.EDITED});
+				dispatch({type: EVENT_TYPES.HISTORY.MARK});
+			}
+			else {
+				dispatch({type: EVENT_TYPES.HISTORY.UNMARK});
 			}
 		}
 

@@ -35,11 +35,18 @@ export default function historyReducer(state, action) {
 					edited: false,
 				},
 			};
-		case EVENT_TYPES.HISTORY.EDITED:
+		case EVENT_TYPES.HISTORY.MARK:
 			return {
 				history: {
 					...state.history,
 					edited: true,
+				},
+			};
+		case EVENT_TYPES.HISTORY.UNMARK:
+			return {
+				history: {
+					...state.history,
+					edited: false,
 				},
 			};
 		case EVENT_TYPES.HISTORY.GOTO:

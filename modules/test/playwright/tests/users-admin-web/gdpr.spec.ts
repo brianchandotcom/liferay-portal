@@ -25,6 +25,7 @@ export const test = mergeTests(
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-35013': true,
 		'LPS-178052': true,
 	}),
 	loginTest({screenName: 'demo.company.admin'}),
@@ -36,6 +37,7 @@ export const testAdmin = mergeTests(
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-35013': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),

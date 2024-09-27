@@ -295,7 +295,7 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		).toBeVisible();
 	});
 
-	test('LPD-28116 No Edit or Manage Organizations permission', async ({
+	test('LPD-28116 No Update or Manage Organizations permission', async ({
 		accountsPage,
 		apiHelpers,
 		context,

@@ -30,7 +30,7 @@ public interface OpenAPIResource {
 		throws Exception;
 
 	public default Response getOpenAPI(
-			OpenAPIContributor openAPIContributor,
+			long companyId, OpenAPIContributor openAPIContributor,
 			OpenAPISchemaFilter openAPISchemaFilter,
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {

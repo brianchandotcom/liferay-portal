@@ -252,6 +252,72 @@
 			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-009",
 			"startDate": "2021-10-01 00:00:00.0",
 			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-010",
+			"accountSubscriptionGroupERC": "ERC-010_liferay-self-hosted",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-010",
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-011",
+			"accountSubscriptionGroupERC": "ERC-011_liferay-self-hosted",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-011",
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-012",
+			"accountSubscriptionGroupERC": "ERC-012_liferay-self-hosted",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-012",
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-012",
+			"accountSubscriptionGroupERC": "ERC-012_portal",
+			"endDate": "2022-12-31 00:00:00.0",
+			"instanceSize": "",
+			"name": "Service Partnership",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-012",
+			"startDate": "2021-01-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-013",
+			"accountSubscriptionGroupERC": "ERC-013_liferay-self-hosted",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-013",
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-014",
+			"accountSubscriptionGroupERC": "ERC-014_liferay-self-hosted",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-014",
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
 		}
 	],
 	"objectDefinitionName": "AccountSubscription"

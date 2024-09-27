@@ -13113,7 +13113,8 @@ public class ObjectEntryResourceTest {
 						com.liferay.object.rest.dto.v1_0.ObjectEntry.class.
 							getName(),
 						StringPool.POUND,
-						StringUtil.toLowerCase(objectDefinition.getName())));
+						StringUtil.toLowerCase(
+							objectDefinition.getShortName())));
 
 			objectEntryResource.setContextAcceptLanguage(
 				new AcceptLanguage() {

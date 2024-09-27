@@ -279,7 +279,7 @@ public class ObjectEntryEntityModelTest {
 		ObjectEntryResource objectEntryResource = _serviceTrackerMap.getService(
 			StringBundler.concat(
 				ObjectEntry.class.getName(), StringPool.POUND,
-				StringUtil.toLowerCase(objectDefinition.getName())));
+				StringUtil.toLowerCase(objectDefinition.getShortName())));
 
 		if (objectEntryResource instanceof EntityModelResource) {
 			Class<?> clazz = objectEntryResource.getClass();

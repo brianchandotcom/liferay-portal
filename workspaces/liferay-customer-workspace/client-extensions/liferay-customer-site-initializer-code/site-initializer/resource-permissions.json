@@ -452,6 +452,15 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
 		"roleName": "Provisioning Admin",
 		"scope": "1"
@@ -695,6 +704,14 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]",
 		"roleName": "User",
 		"scope": "1"
 	},

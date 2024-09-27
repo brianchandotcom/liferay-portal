@@ -117,7 +117,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 			return GetterUtil.getLong(
 				values.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId"));
 		}
 		else if (StringUtil.equals(externalReferenceCode, "L_API_FILTER")) {
 			Map<String, Serializable> apiFilterObjectEntryValues =
@@ -127,7 +127,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 				_objectEntryLocalService.fetchObjectEntry(
 					GetterUtil.getLong(
 						apiFilterObjectEntryValues.get(
-							"r_apiEndpointToAPIFilters_c_apiEndpointId")));
+							"r_apiEndpointToAPIFilters_l_apiEndpointId")));
 
 			if (apiEndpointObjectEntry == null) {
 				return 0;
@@ -138,7 +138,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 			return GetterUtil.getLong(
 				apiEndpointObjectEntryValues.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId"));
 		}
 		else if (StringUtil.equals(externalReferenceCode, "L_API_PROPERTY")) {
 			Map<String, Serializable> apiPropertyObjectEntryValues =
@@ -148,7 +148,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 				_objectEntryLocalService.fetchObjectEntry(
 					GetterUtil.getLong(
 						apiPropertyObjectEntryValues.get(
-							"r_apiSchemaToAPIProperties_c_apiSchemaId")));
+							"r_apiSchemaToAPIProperties_l_apiSchemaId")));
 
 			if (apiSchemaObjectEntry == null) {
 				return 0;
@@ -159,13 +159,13 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 			return GetterUtil.getLong(
 				apiSchemaObjectEntryValues.get(
-					"r_apiApplicationToAPISchemas_c_apiApplicationId"));
+					"r_apiApplicationToAPISchemas_l_apiApplicationId"));
 		}
 		else if (StringUtil.equals(externalReferenceCode, "L_API_SCHEMA")) {
 			Map<String, Serializable> values = objectEntry.getValues();
 
 			return GetterUtil.getLong(
-				values.get("r_apiApplicationToAPISchemas_c_apiApplicationId"));
+				values.get("r_apiApplicationToAPISchemas_l_apiApplicationId"));
 		}
 		else if (StringUtil.equals(externalReferenceCode, "L_API_SORT")) {
 			Map<String, Serializable> apiSortObjectEntryValues =
@@ -175,7 +175,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 				_objectEntryLocalService.fetchObjectEntry(
 					GetterUtil.getLong(
 						apiSortObjectEntryValues.get(
-							"r_apiEndpointToAPISorts_c_apiEndpointId")));
+							"r_apiEndpointToAPISorts_l_apiEndpointId")));
 
 			if (apiEndpointObjectEntry == null) {
 				return 0;
@@ -186,7 +186,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 			return GetterUtil.getLong(
 				apiEndpointObjectEntryValues.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId"));
 		}
 
 		if (_log.isDebugEnabled()) {

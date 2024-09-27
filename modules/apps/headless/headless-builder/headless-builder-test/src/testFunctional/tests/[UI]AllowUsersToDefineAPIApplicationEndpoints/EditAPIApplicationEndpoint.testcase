@@ -254,7 +254,7 @@ definition {
 			var response = EndpointAPI.getAPIEndpoints();
 
 			var actualValue = JSONPathUtil.getProperty(
-				property = "$.items..r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				property = "$.items..r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 				response = ${response});
 
 			TestUtils.assertEquals(

@@ -408,7 +408,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONUtil.put(
 				"oDataFilter", "textField eq 'value5' or textField eq 'value7'"
 			).put(
-				"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+				"r_apiEndpointToAPIFilters_l_apiEndpointERC",
 				_API_ENDPOINT_ERC_1
 			).toString(),
 			"headless-builder/filters", Http.Method.POST);
@@ -1027,7 +1027,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				StringPool.FORWARD_SLASH +
 					StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).put(
 				"responseAPISchemaToAPIEndpoints",
@@ -1059,7 +1059,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", RandomTestUtil.randomString()
 				).put(
-					"r_apiApplicationToAPISchemas_c_apiApplicationId",
+					"r_apiApplicationToAPISchemas_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				)
 			).put(
@@ -1590,7 +1590,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record3"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				).put(
 					"type", "record"
@@ -1611,7 +1611,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record5"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_4
 				).put(
 					"type", "record"
@@ -1625,7 +1625,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				),
 				JSONUtil.put(
@@ -1640,7 +1640,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectRelationshipNames", _objectRelationship1.getName()
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_5
 				)),
 			JSONUtil.put(
@@ -1675,7 +1675,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record2"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_1
 				).put(
 					"type", "record"
@@ -1687,7 +1687,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record3"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				).put(
 					"type", "record"
@@ -1701,7 +1701,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				),
 				JSONUtil.put(
@@ -1716,7 +1716,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectRelationshipNames", _objectRelationship1.getName()
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_3
 				)),
 			JSONUtil.put(
@@ -1766,7 +1766,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				StringPool.FORWARD_SLASH +
 					StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).put(
 				"responseAPISchemaToAPIEndpoints",
@@ -1791,7 +1791,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", RandomTestUtil.randomString()
 				).put(
-					"r_apiApplicationToAPISchemas_c_apiApplicationId",
+					"r_apiApplicationToAPISchemas_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				)
 			).put(
@@ -2707,7 +2707,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record3"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				).put(
 					"type", "record"
@@ -2728,7 +2728,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record5"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_4
 				).put(
 					"type", "record"
@@ -2742,7 +2742,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				),
 				JSONUtil.put(
@@ -2757,7 +2757,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectRelationshipNames", _objectRelationship1.getName()
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_5
 				)),
 			JSONUtil.put(
@@ -2808,7 +2808,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record2"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_1
 				).put(
 					"type", "record"
@@ -2820,7 +2820,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "record3"
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				).put(
 					"type", "record"
@@ -2834,7 +2834,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_2
 				),
 				JSONUtil.put(
@@ -2849,7 +2849,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"objectRelationshipNames", _objectRelationship1.getName()
 				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 					_API_PROPERTY_RECORD_ERC_3
 				)),
 			JSONUtil.put(
@@ -3156,10 +3156,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				apiEndpointExternalReferenceCode, Http.Method.GET, path,
 				pathParameter, retrieveType, scope
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationERC",
 				apiApplicationExternalReferenceCode
 			).put(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 				apiSchemaExternalReferenceCode
 			).toString(),
 			"headless-builder/endpoints", Http.Method.POST);
@@ -3378,10 +3378,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						getValue(),
 					APIApplication.Endpoint.Scope.COMPANY
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationERC",
 					_API_APPLICATION_ERC_1
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 					_API_SCHEMA_OBJECT_PROPERTY_ERC
 				).toString(),
 				"headless-builder/endpoints", Http.Method.POST);
@@ -3395,13 +3395,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						getValue(),
 					APIApplication.Endpoint.Scope.COMPANY
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationERC",
 					_API_APPLICATION_ERC_1
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 					_API_SCHEMA_OBJECT_PROPERTY_ERC
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaERC",
 					_API_SCHEMA_OBJECT_PROPERTY_ERC
 				).toString(),
 				"headless-builder/endpoints", Http.Method.POST);
@@ -3413,7 +3413,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONUtil.put(
 				"oDataSort", sortString
 			).put(
-				"r_apiEndpointToAPISorts_c_apiEndpointERC", _API_ENDPOINT_ERC_1
+				"r_apiEndpointToAPISorts_l_apiEndpointERC", _API_ENDPOINT_ERC_1
 			).toString(),
 			"headless-builder/sorts", Http.Method.POST);
 	}
@@ -3757,7 +3757,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"name", "record1"
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					).put(
 						"type", "record"
@@ -3769,7 +3769,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"name", "record2"
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					).put(
 						"type", "record"
@@ -3781,7 +3781,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"name", "record3"
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					).put(
 						"type", "record"
@@ -3793,7 +3793,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"name", "record4"
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					).put(
 						"type", "record"
@@ -3805,7 +3805,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"name", "record5"
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					).put(
 						"type", "record"
@@ -3819,7 +3819,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					),
 					JSONUtil.put(
@@ -3835,7 +3835,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						"objectRelationshipNames",
 						_objectRelationship1.getName()
 					).put(
-						"r_apiPropertyToAPIProperties_c_apiPropertyId",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId",
 						StringPool.BLANK
 					))
 			).put(

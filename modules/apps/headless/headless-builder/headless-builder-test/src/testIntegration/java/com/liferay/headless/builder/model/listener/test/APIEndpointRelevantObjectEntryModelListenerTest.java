@@ -124,7 +124,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.COMMA)
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -143,7 +143,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject1.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -169,10 +169,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -206,10 +206,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -239,7 +239,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.FORWARD_SLASH, StringPool.COMMA)
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -273,7 +273,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", RandomTestUtil.randomString()
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -309,7 +309,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameterDescription", RandomTestUtil.randomString()
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -341,7 +341,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameterDescription", RandomTestUtil.randomString()
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -376,10 +376,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", RandomTestUtil.randomString()
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -411,10 +411,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -433,7 +433,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject1.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -460,13 +460,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ID
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject2.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject2.getLong("id")
 				).put(
 					"retrieveType",
@@ -481,7 +481,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject1.get("id")
 			).put(
 				"status", JSONUtil.put("code", 0)
@@ -496,13 +496,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					StringPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -515,7 +515,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject1.get("id")
 			).put(
 				"status", JSONUtil.put("code", 0)
@@ -536,13 +536,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ID
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -567,7 +567,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"path", path
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject1.getLong("id")
 			).put(
 				"retrieveType",
@@ -594,7 +594,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject2.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -614,7 +614,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path", path
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
@@ -662,10 +662,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					StringPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject3.getLong("id")
 				).put(
 					"retrieveType",
@@ -692,10 +692,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path", path
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject2.getLong("id")
 				).put(
 					"retrieveType",
@@ -709,7 +709,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject1.get("id")
 			).toString(),
 			apiEndpointJSONObject.toString(), JSONCompareMode.LENIENT);
@@ -720,7 +720,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"title",
 				"The value is invalid for object field " +
-					"\"r_apiApplicationToAPIEndpoints_c_apiApplicationId\""
+					"\"r_apiApplicationToAPIEndpoints_l_apiApplicationId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -732,7 +732,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					StringPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					_objectEntry.getObjectEntryId()
 				).put(
 					"retrieveType",
@@ -750,7 +750,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"title",
 				"The value is invalid for object field " +
-					"\"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\""
+					"\"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -762,13 +762,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					StringPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					_objectEntry.getObjectEntryId()
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					_objectEntry.getObjectEntryId()
 				).put(
 					"retrieveType",
@@ -800,7 +800,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -826,7 +826,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.COMMA)
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(
 					"retrieveType",
@@ -859,13 +859,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.CLOSE_CURLY_BRACE)
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
 					"retrieveType",
@@ -892,7 +892,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"path",
 					StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(
 					"retrieveType",
@@ -923,13 +923,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ID
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
 					"retrieveType",
@@ -958,13 +958,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					StringPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
 					"retrieveType",
@@ -977,7 +977,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 				apiApplicationJSONObject.get("id")
 			).put(
 				"status", JSONUtil.put("code", 0)
@@ -992,13 +992,13 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					StringPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId",
 					apiSchemaJSONObject.getLong("id")
 				).put(
 					"retrieveType",

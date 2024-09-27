@@ -56,7 +56,7 @@ export default function APIEndpointsTable({
 
 	const endpointAPIURLPath = getFilterRelatedItemURL({
 		apiURLPath: apiURLPaths.endpoints,
-		filterQuery: `r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '${currentAPIApplicationId}'`,
+		filterQuery: `r_apiApplicationToAPIEndpoints_l_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
 	const deleteAPIEnpoint = (

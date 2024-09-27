@@ -104,13 +104,13 @@ export default function PathParameterConfiguration({
 	}, []);
 
 	useEffect(() => {
-		if (data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
+		if (data.r_responseAPISchemaToAPIEndpoints_l_apiSchemaId) {
 			fetchPathParameterOptions(
-				data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?.toString()
+				data.r_responseAPISchemaToAPIEndpoints_l_apiSchemaId?.toString()
 			);
 		}
 	}, [
-		data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+		data.r_responseAPISchemaToAPIEndpoints_l_apiSchemaId,
 		fetchPathParameterOptions,
 	]);
 

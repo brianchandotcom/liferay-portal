@@ -73,9 +73,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 				originalObjectEntry.getValues(), objectEntry.getValues(),
 				"httpMethod", "path", "pathParameter",
 				"pathParameterDescription", "retrieveType",
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId")) {
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationId",
+				"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId",
+				"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId")) {
 
 			_validate(objectEntry);
 		}
@@ -129,7 +129,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 			long apiApplicationId = GetterUtil.getLong(
 				values.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
+					"r_apiApplicationToAPIEndpoints_l_apiApplicationId"));
 
 			if (!_validationHelper.isValidObjectEntry(
 					"L_API_APPLICATION", apiApplicationId)) {
@@ -141,7 +141,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 			}
 
 			long responseAPISchemaId = GetterUtil.getLong(
-				values.get("r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"));
+				values.get("r_responseAPISchemaToAPIEndpoints_l_apiSchemaId"));
 
 			APIApplication.Endpoint.Scope scope =
 				APIApplication.Endpoint.Scope.parse(
@@ -153,7 +153,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 			}
 
 			long requestAPISchemaId = GetterUtil.getLong(
-				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"));
+				values.get("r_requestAPISchemaToAPIEndpoints_l_apiSchemaId"));
 
 			if (requestAPISchemaId != 0) {
 				_validateAPISchema(apiApplicationId, requestAPISchemaId, scope);
@@ -187,8 +187,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"id ne '", objectEntry.getObjectEntryId(),
 				"' and httpMethod eq '", values.get("httpMethod"),
 				"' and path eq '", values.get("path"),
-				"' and r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '",
-				values.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
+				"' and r_apiApplicationToAPIEndpoints_l_apiApplicationId eq '",
+				values.get("r_apiApplicationToAPIEndpoints_l_apiApplicationId"),
 				"'");
 			ObjectDefinition apiEndpointObjectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
@@ -249,7 +249,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		if (!Objects.equals(
 				apiApplicationId,
 				apiSchemaValues.get(
-					"r_apiApplicationToAPISchemas_c_apiApplicationId"))) {
+					"r_apiApplicationToAPISchemas_l_apiApplicationId"))) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				null,

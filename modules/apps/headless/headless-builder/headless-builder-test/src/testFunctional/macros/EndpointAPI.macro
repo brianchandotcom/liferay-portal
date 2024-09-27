@@ -39,15 +39,15 @@ definition {
 			"httpMethod": "${httpMethod}",
 			"name": "${name}",
 			"path": "${path}",
-			"r_apiApplicationToAPIEndpoints_c_apiApplicationERC": "${apiApplicationERC}"
+			"r_apiApplicationToAPIEndpoints_l_apiApplicationERC": "${apiApplicationERC}"
 		''';
 
 		if (isSet(requestSchemaId)) {
-			var body = StringUtil.add(${body}, ", \"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\": ${requestSchemaId}", "");
+			var body = StringUtil.add(${body}, ", \"r_requestAPISchemaToAPIEndpoints_l_apiSchemaId\": ${requestSchemaId}", "");
 		}
 
 		if (isSet(responseSchemaId)) {
-			var body = StringUtil.add(${body}, ", \"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId\": ${responseSchemaId}", "");
+			var body = StringUtil.add(${body}, ", \"r_responseAPISchemaToAPIEndpoints_l_apiSchemaId\": ${responseSchemaId}", "");
 		}
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

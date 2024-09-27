@@ -120,7 +120,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 			Map<String, Serializable> values = objectEntry.getValues();
 
 			long apiSchemaId = GetterUtil.getLong(
-				values.get("r_apiSchemaToAPIProperties_c_apiSchemaId"));
+				values.get("r_apiSchemaToAPIProperties_l_apiSchemaId"));
 
 			if (!_validationHelper.isValidObjectEntry(
 					"L_API_SCHEMA", apiSchemaId)) {
@@ -183,7 +183,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 			}
 
 			long parentAPIPropertyId = GetterUtil.getLong(
-				values.get("r_apiPropertyToAPIProperties_c_apiPropertyId"));
+				values.get("r_apiPropertyToAPIProperties_l_apiPropertyId"));
 
 			if (parentAPIPropertyId != 0) {
 				if (!_validationHelper.isValidObjectEntry(
@@ -204,7 +204,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 				if (!Objects.equals(
 						apiPropertyValues.get(
-							"r_apiSchemaToAPIProperties_c_apiSchemaId"),
+							"r_apiSchemaToAPIProperties_l_apiSchemaId"),
 						apiSchemaId)) {
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
@@ -247,9 +247,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 							StringBundler.concat(
 								"id ne '", objectEntry.getObjectEntryId(),
 								"' and name eq '", values.get("name"), "' and ",
-								"r_apiPropertyToAPIProperties_c_apiPropertyId ",
+								"r_apiPropertyToAPIProperties_l_apiPropertyId ",
 								"eq '", parentAPIPropertyId, "' and ",
-								"r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
+								"r_apiSchemaToAPIProperties_l_apiSchemaId eq '",
 								apiSchemaId, "'"),
 							_objectDefinitionLocalService.getObjectDefinition(
 								objectEntry.getObjectDefinitionId())),

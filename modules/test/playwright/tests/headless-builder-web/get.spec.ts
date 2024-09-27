@@ -49,9 +49,9 @@ test('can associate and disassociate schema', async ({
 			httpMethod: 'get',
 			name: 'Basic API Endpoint',
 			path: '/endpoint/',
-			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+			r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
 				application.externalReferenceCode,
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+			r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
 				application.apiApplicationToAPISchemas[0].externalReferenceCode,
 			retrieveType: 'collection',
 			scope: 'company',
@@ -203,9 +203,9 @@ test('can see schema unique fields as path parameter properties', async ({
 			httpMethod: 'get',
 			name: 'Basic API Endpoint',
 			path: '/endpoint/{pathParam}',
-			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+			r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
 				application.externalReferenceCode,
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+			r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
 				application.apiApplicationToAPISchemas[0].externalReferenceCode,
 			retrieveType: 'singleElement',
 			scope: 'company',

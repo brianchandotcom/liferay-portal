@@ -218,7 +218,7 @@ definition {
 		if (isSet(applicationId)) {
 			Click.pauseClickAt(
 				locator1 = "TextInput#ANY_WITH_NAME",
-				name = "r_apiApplicationToAPIEndpoints_c_apiApplicationId");
+				name = "r_apiApplicationToAPIEndpoints_l_apiApplicationId");
 
 			Click(
 				applicationId = ${applicationId},

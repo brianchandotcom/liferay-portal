@@ -92,7 +92,7 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 		await apiHelpers.apiBuilder.postApiResource(
 			{
 				oDataFilter: "textField eq 'value5' or textField eq 'value24'",
-				r_apiEndpointToAPIFilters_c_apiEndpointERC: 'ENDPOINT',
+				r_apiEndpointToAPIFilters_l_apiEndpointERC: 'ENDPOINT',
 			},
 			'filters'
 		)

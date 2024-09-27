@@ -145,7 +145,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				).put(
 					"oDataFilter", "test ne 1"
 				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					"r_apiEndpointToAPIFilters_l_apiEndpointERC",
 					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
@@ -165,7 +165,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				).put(
 					"oDataFilter", RandomTestUtil.randomString(1001)
 				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					"r_apiEndpointToAPIFilters_l_apiEndpointERC",
 					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
@@ -184,7 +184,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				).put(
 					"oDataFilter", "test ne 1"
 				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					"r_apiEndpointToAPIFilters_l_apiEndpointERC",
 					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
@@ -209,10 +209,10 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"pathParameter", "id"
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationERC",
 				_API_APPLICATION_ERC
 			).put(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 				_API_SCHEMA_ERC
 			).put(
 				"retrieveType", "singleElement"
@@ -233,7 +233,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				JSONUtil.put(
 					"oDataFilter", "test:desc"
 				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointId",
+					"r_apiEndpointToAPIFilters_l_apiEndpointId",
 					jsonObject.get("id")
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
@@ -246,7 +246,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"title",
 				"The value is invalid for object field " +
-					"\"r_apiEndpointToAPIFilters_c_apiEndpointId\""
+					"\"r_apiEndpointToAPIFilters_l_apiEndpointId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -254,7 +254,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				).put(
 					"oDataFilter", "test ne 1"
 				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointId",
+					"r_apiEndpointToAPIFilters_l_apiEndpointId",
 					_objectEntryJSONObject.getLong("id")
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
@@ -341,7 +341,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"oDataFilter", filterString
 			).put(
-				"r_apiEndpointToAPIFilters_c_apiEndpointERC", _API_ENDPOINT_ERC
+				"r_apiEndpointToAPIFilters_l_apiEndpointERC", _API_ENDPOINT_ERC
 			).toString(),
 			"headless-builder/filters", Http.Method.POST);
 	}

@@ -39,7 +39,7 @@ export default function EditEndpointConfiguration({
 
 	useEffect(() => {
 		getAllItems<APISchemaItem>({
-			filter: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentAPIApplicationId}'`,
+			filter: `r_apiApplicationToAPISchemas_l_apiApplicationId eq '${currentAPIApplicationId}'`,
 			url: schemaAPIURLPath,
 		}).then((result) => {
 			const options = result
@@ -66,26 +66,26 @@ export default function EditEndpointConfiguration({
 	useEffect(() => {
 		if (schemaOptions.length) {
 			if (
-				data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId !==
+				data.r_responseAPISchemaToAPIEndpoints_l_apiSchemaId !==
 				undefined
 			) {
 				setSelectedResponseBodySchema(
 					schemaOptions.find(
 						(option) =>
 							option.value ===
-							data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?.toString()
+							data.r_responseAPISchemaToAPIEndpoints_l_apiSchemaId?.toString()
 					)
 				);
 			}
 			if (
-				data.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId !==
+				data.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId !==
 				undefined
 			) {
 				setSelectedRequestBodySchema(
 					schemaOptions.find(
 						(option) =>
 							option.value ===
-							data.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId?.toString()
+							data.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId?.toString()
 					)
 				);
 			}
@@ -111,7 +111,7 @@ export default function EditEndpointConfiguration({
 				<ClayForm.Group
 					className={classNames('mb-4', {
 						'has-error':
-							displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,
+							displayError.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId,
 					})}
 				>
 					<>
@@ -131,7 +131,7 @@ export default function EditEndpointConfiguration({
 							onClick={(value) =>
 								handleSelectBodySchema(
 									setSelectedRequestBodySchema,
-									'r_requestAPISchemaToAPIEndpoints_c_apiSchemaId',
+									'r_requestAPISchemaToAPIEndpoints_l_apiSchemaId',
 									value
 								)
 							}
@@ -143,7 +143,7 @@ export default function EditEndpointConfiguration({
 							selectedOption={selectedRequestBodySchema}
 						/>
 
-						{displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId && (
+						{displayError.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId && (
 							<ClayAlert
 								className="mt-2"
 								displayType="danger"
@@ -180,7 +180,7 @@ export default function EditEndpointConfiguration({
 					onClick={(value) =>
 						handleSelectBodySchema(
 							setSelectedResponseBodySchema,
-							'r_responseAPISchemaToAPIEndpoints_c_apiSchemaId',
+							'r_responseAPISchemaToAPIEndpoints_l_apiSchemaId',
 							value
 						)
 					}

@@ -67,7 +67,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				).put(
 					"oDataSort", "test:desc"
 				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointERC",
+					"r_apiEndpointToAPISorts_l_apiEndpointERC",
 					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/sorts", Http.Method.POST
@@ -87,7 +87,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				).put(
 					"oDataSort", RandomTestUtil.randomString(1001)
 				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointERC",
+					"r_apiEndpointToAPISorts_l_apiEndpointERC",
 					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/sorts", Http.Method.POST
@@ -105,7 +105,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				).put(
 					"oDataSort", "test:desc"
 				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointERC",
+					"r_apiEndpointToAPISorts_l_apiEndpointERC",
 					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/sorts", Http.Method.POST
@@ -130,10 +130,10 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).put(
 				"pathParameter", "id"
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+				"r_apiApplicationToAPIEndpoints_l_apiApplicationERC",
 				_API_APPLICATION_ERC
 			).put(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 				_API_SCHEMA_ERC
 			).put(
 				"retrieveType", "singleElement"
@@ -154,7 +154,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				JSONUtil.put(
 					"oDataSort", "test:desc"
 				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointId",
+					"r_apiEndpointToAPISorts_l_apiEndpointId",
 					jsonObject.get("id")
 				).toString(),
 				"headless-builder/sorts", Http.Method.POST
@@ -167,13 +167,13 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).put(
 				"title",
 				"The value is invalid for object field " +
-					"\"r_apiEndpointToAPISorts_c_apiEndpointId\""
+					"\"r_apiEndpointToAPISorts_l_apiEndpointId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
 					"oDataSort", "test:desc"
 				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointId",
+					"r_apiEndpointToAPISorts_l_apiEndpointId",
 					_objectEntryJSONObject.getLong("id")
 				).toString(),
 				"headless-builder/sorts", Http.Method.POST

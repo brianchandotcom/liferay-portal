@@ -40,9 +40,9 @@ const singleElementIdEndpoint = {
 	name: 'Basic Single Element API Endpoint',
 	path: '/single-element-endpoint/{id}',
 	pathParameter: 'id',
-	r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+	r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
 		application.externalReferenceCode,
-	r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+	r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
 		application.apiApplicationToAPISchemas[0].externalReferenceCode,
 	retrieveType: 'singleElement',
 	scope: 'company',
@@ -64,7 +64,7 @@ test('can see filter and sort parameters for collection endpoints', async ({
 			httpMethod: 'get',
 			name: 'Basic collection API Endpoint',
 			path: '/collection-endpoint',
-			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+			r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
 				application.externalReferenceCode,
 			retrieveType: 'collection',
 			scope: 'company',
@@ -104,9 +104,9 @@ test('can see get endpoint path with erc parameter', async ({
 			name: 'Basic Single Element API Endpoint',
 			path: '/single-element-endpoint/{erc}',
 			pathParameter: 'externalReferenceCode',
-			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+			r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
 				application.externalReferenceCode,
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+			r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
 				application.apiApplicationToAPISchemas[0].externalReferenceCode,
 			retrieveType: 'singleElement',
 			scope: 'company',

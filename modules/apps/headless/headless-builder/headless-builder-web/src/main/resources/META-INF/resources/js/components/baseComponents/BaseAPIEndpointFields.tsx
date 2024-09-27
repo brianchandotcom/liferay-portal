@@ -141,14 +141,14 @@ export default function BaseAPIEndpointFields({
 	}, []);
 
 	useEffect(() => {
-		displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId &&
+		displayError.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId &&
 			openToast({
 				message: Liferay.Language.get(
 					'there-are-errors-on-the-form-please-check-if-any-mandatory-fields-have-not-been-completed'
 				),
 				type: 'danger',
 			});
-	}, [displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId]);
+	}, [displayError.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId]);
 
 	useEffect(() => {
 		if (data.retrieveType?.key && retrieveTypeOptions.length) {
@@ -204,7 +204,7 @@ export default function BaseAPIEndpointFields({
 		}
 		else if (data.httpMethod?.key === HTTP_METHODS.GET) {
 			setData((previousValue) => {
-				delete previousValue.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId;
+				delete previousValue.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId;
 
 				return {
 					...previousValue,
@@ -548,7 +548,7 @@ export default function BaseAPIEndpointFields({
 
 			<div aria-live="assertive" className="sr-only">
 				{(displayError.httpMethod ||
-					displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId ||
+					displayError.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId ||
 					displayError.retrieveType ||
 					displayError.scope ||
 					pathHasErrors) && (

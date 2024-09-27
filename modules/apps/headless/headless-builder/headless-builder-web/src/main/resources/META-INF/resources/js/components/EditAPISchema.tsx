@@ -255,8 +255,8 @@ export default function EditAPISchema({
 										}),
 										name: property.name,
 										objectFieldERC: property.objectFieldERC,
-										r_apiSchemaToAPIProperties_c_apiSchemaId:
-											property.r_apiSchemaToAPIProperties_c_apiSchemaId,
+										r_apiSchemaToAPIProperties_l_apiSchemaId:
+											property.r_apiSchemaToAPIProperties_l_apiSchemaId,
 										...(property.objectRelationshipNames && {
 											objectRelationshipNames:
 												property.objectRelationshipNames,

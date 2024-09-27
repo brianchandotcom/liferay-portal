@@ -40,7 +40,7 @@ export function CreateAPIEndpointModalContent({
 		parameter: false,
 		path: false,
 		pathParameter: false,
-		r_requestAPISchemaToAPIEndpoints_c_apiSchemaId: false,
+		r_requestAPISchemaToAPIEndpoints_l_apiSchemaId: false,
 		retrieveType: false,
 		scope: false,
 	});
@@ -81,7 +81,7 @@ export function CreateAPIEndpointModalContent({
 							beginStringWithForwardSlash(parameter)
 					),
 				}),
-				r_apiApplicationToAPIEndpoints_c_apiApplicationId:
+				r_apiApplicationToAPIEndpoints_l_apiApplicationId:
 					currentAPIApplicationId,
 				...(localUIData.scope?.key && {
 					scope: {key: localUIData.scope.key},

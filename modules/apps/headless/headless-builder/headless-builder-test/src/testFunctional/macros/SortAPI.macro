@@ -32,7 +32,7 @@ definition {
 		var curl = SortAPI._curlAPISort(virtualHost = ${virtualHost});
 		var body = '''
 			"oDataSort": "${sortValue}",
-			"r_apiEndpointToAPISorts_c_apiEndpointERC": ${endpointERC}
+			"r_apiEndpointToAPISorts_l_apiEndpointERC": ${endpointERC}
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

@@ -61,7 +61,7 @@ public class APISchemaRelevantObjectEntryModelListener
 					"L_API_APPLICATION",
 					GetterUtil.getLong(
 						values.get(
-							"r_apiApplicationToAPISchemas_c_" +
+							"r_apiApplicationToAPISchemas_l_" +
 								"apiApplicationId")))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
@@ -96,10 +96,10 @@ public class APISchemaRelevantObjectEntryModelListener
 						StringBundler.concat(
 							"id ne '", objectEntry.getObjectEntryId(),
 							"' and name eq '", values.get("name"),
-							"' and r_apiApplicationToAPISchemas_c_",
+							"' and r_apiApplicationToAPISchemas_l_",
 							"apiApplicationId eq '",
 							values.get(
-								"r_apiApplicationToAPISchemas_c_" +
+								"r_apiApplicationToAPISchemas_l_" +
 									"apiApplicationId"),
 							"'"),
 						"L_API_SCHEMA"))) {

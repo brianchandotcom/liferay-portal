@@ -70,7 +70,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -86,7 +86,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -131,7 +131,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationErc",
+				"r_apiApplicationToAPISchemas_l_apiApplicationErc",
 				_objectEntry.getExternalReferenceCode()
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -148,7 +148,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).put(
 				"name", _API_SCHEMA_NAME
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -168,7 +168,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).put(
 				"name", _API_SCHEMA_NAME
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -185,7 +185,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				"r_apiApplicationToAPISchemas_l_apiApplicationId",
 				jsonObject2.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
@@ -193,7 +193,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject1.get("status"));
 		Assert.assertEquals(
 			"The value is invalid for object field " +
-				"\"r_apiApplicationToAPISchemas_c_apiApplicationId\"",
+				"\"r_apiApplicationToAPISchemas_l_apiApplicationId\"",
 			jsonObject1.get("title"));
 	}
 

@@ -586,7 +586,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"name", "recordProperty3"
 							).put(
-								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 								_API_PROPERTY_RECORD_ERC_1
 							).put(
 								"type", "record"
@@ -609,7 +609,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"name", "recordProperty5"
 							).put(
-								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 								_API_PROPERTY_RECORD_ERC_2
 							).put(
 								"type", "record"
@@ -625,7 +625,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								"objectFieldERC",
 								_API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC
 							).put(
-								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 								_API_PROPERTY_RECORD_ERC_1
 							),
 							JSONUtil.put(
@@ -639,7 +639,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								"objectFieldERC",
 								_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC
 							).put(
-								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								"r_apiPropertyToAPIProperties_l_apiPropertyERC",
 								_API_PROPERTY_RECORD_ERC_3
 							))
 					).put(
@@ -750,7 +750,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"pathParameter",
 						HeadlessBuilderConstants.PATH_PARAMETER_ID
 					).put(
-						"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SINGLE_ELEMENT_SCHEMA_ERC
 					).put(
 						"retrieveType",
@@ -777,7 +777,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"pathParameter",
 						HeadlessBuilderConstants.PATH_PARAMETER_ERC
 					).put(
-						"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SINGLE_ELEMENT_SITE_SCOPED_SCHEMA_ERC
 					).put(
 						"retrieveType",
@@ -817,7 +817,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/site-scoped-path"
 					).put(
-						"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SITE_SCOPED_SCHEMA_ERC
 					).put(
 						"retrieveType",
@@ -855,7 +855,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/path"
 					).put(
-						"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SCHEMA_ERC
 					).put(
 						"retrieveType",
@@ -876,7 +876,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/post-path"
 					).put(
-						"r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_requestAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SCHEMA_ERC
 					).put(
 						"retrieveType",
@@ -898,10 +898,10 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/site-scoped-post-path"
 					).put(
-						"r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_requestAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SITE_SCOPED_SCHEMA_ERC
 					).put(
-						"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+						"r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SITE_SCOPED_SCHEMA_ERC
 					).put(
 						"retrieveType",

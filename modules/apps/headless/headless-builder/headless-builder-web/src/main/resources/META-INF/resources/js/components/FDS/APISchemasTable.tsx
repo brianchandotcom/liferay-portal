@@ -49,7 +49,7 @@ export default function APISchemasTable({
 
 	const schemaAPIURLPath = getFilterRelatedItemURL({
 		apiURLPath: apiURLPaths.schemas,
-		filterQuery: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentAPIApplicationId}'`,
+		filterQuery: `r_apiApplicationToAPISchemas_l_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
 	const deleteAPISchema = (itemData: APISchemaItem, loadData: voidReturn) => {

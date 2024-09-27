@@ -76,7 +76,7 @@ export function AddObjectFieldsDataToProperties({
 					...(objectRelationshipNames && {
 						objectRelationshipNames,
 					}),
-					r_apiSchemaToAPIProperties_c_apiSchemaId: apiSchema.id,
+					r_apiSchemaToAPIProperties_l_apiSchemaId: apiSchema.id,
 					type: 'trewViewItem',
 				};
 			}
@@ -116,15 +116,15 @@ export function hasEndpointDataChanged({
 	const {
 		description,
 		path,
-		r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+		r_responseAPISchemaToAPIEndpoints_l_apiSchemaId,
 		scope,
 	} = fetchedEndpointData;
 
 	const {
 		description: uiDescription,
 		path: uiPath,
-		r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
-			uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+		r_responseAPISchemaToAPIEndpoints_l_apiSchemaId:
+			uiR_responseAPISchemaToAPIEndpoints_l_apiSchemaId,
 		scope: uiScope,
 	} = localUIData;
 
@@ -147,13 +147,13 @@ export function hasEndpointDataChanged({
 	const pathChanged = path !== beginStringWithForwardSlash(uiPath);
 
 	const schemaIdChanged =
-		((r_responseAPISchemaToAPIEndpoints_c_apiSchemaId === 0 &&
-			uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId) ||
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaId !==
-				uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId) &&
+		((r_responseAPISchemaToAPIEndpoints_l_apiSchemaId === 0 &&
+			uiR_responseAPISchemaToAPIEndpoints_l_apiSchemaId) ||
+			r_responseAPISchemaToAPIEndpoints_l_apiSchemaId !==
+				uiR_responseAPISchemaToAPIEndpoints_l_apiSchemaId) &&
 		!(
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaId === 0 &&
-			!uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId
+			r_responseAPISchemaToAPIEndpoints_l_apiSchemaId === 0 &&
+			!uiR_responseAPISchemaToAPIEndpoints_l_apiSchemaId
 		);
 
 	const scopeKeyChanged = scope.key !== uiScope?.key;

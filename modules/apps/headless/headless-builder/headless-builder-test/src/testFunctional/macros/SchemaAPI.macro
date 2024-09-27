@@ -56,7 +56,7 @@ definition {
 				"externalReferenceCode": "${schemaERC}",
 				"mainObjectDefinitionERC": "${mainObjectDefinitionERC}",
 				"name": "${name}",
-				"r_apiApplicationToAPISchemas_c_apiApplicationERC": "${apiApplicationERC}"
+				"r_apiApplicationToAPISchemas_l_apiApplicationERC": "${apiApplicationERC}"
 			}
 		''';
 
@@ -102,7 +102,7 @@ definition {
 
 		var response = JSONCurlUtil.put(${curl});
 
-		var schemaErc = JSONUtil.getWithJSONPath(${response}, "$.r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC");
+		var schemaErc = JSONUtil.getWithJSONPath(${response}, "$.r_requestAPISchemaToAPIEndpoints_l_apiSchemaERC");
 
 		TestUtils.assertEquals(
 			actual = ${schemaErc},
@@ -119,7 +119,7 @@ definition {
 
 		var response = JSONCurlUtil.put(${curl});
 
-		var schemaId = JSONUtil.getWithJSONPath(${response}, "$.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId");
+		var schemaId = JSONUtil.getWithJSONPath(${response}, "$.r_requestAPISchemaToAPIEndpoints_l_apiSchemaId");
 
 		TestUtils.assertEquals(
 			actual = ${schemaId},
@@ -136,7 +136,7 @@ definition {
 
 		var response = JSONCurlUtil.put(${curl});
 
-		var schemaErc = JSONUtil.getWithJSONPath(${response}, "$.r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC");
+		var schemaErc = JSONUtil.getWithJSONPath(${response}, "$.r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC");
 
 		TestUtils.assertEquals(
 			actual = ${schemaErc},
@@ -153,7 +153,7 @@ definition {
 
 		var response = JSONCurlUtil.put(${curl});
 
-		var schemaId = JSONUtil.getWithJSONPath(${response}, "$.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId");
+		var schemaId = JSONUtil.getWithJSONPath(${response}, "$.r_responseAPISchemaToAPIEndpoints_l_apiSchemaId");
 
 		TestUtils.assertEquals(
 			actual = ${schemaId},

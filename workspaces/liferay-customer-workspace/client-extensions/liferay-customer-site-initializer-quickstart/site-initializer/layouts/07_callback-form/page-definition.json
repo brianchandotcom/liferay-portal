@@ -1,0 +1,365 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral1",
+						"paddingLeft": "5",
+						"paddingRight": "5",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"align": "Center",
+						"contentDisplay": "FlexRow",
+						"justify": "Center",
+						"paddingLeft": 4,
+						"paddingRight": 4
+					},
+					"name": "Callback Form Container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"formConfig": {
+								"formReference": {
+									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]",
+									"classType": 0
+								}
+							},
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral0",
+								"borderRadius": "borderRadiusLg",
+								"paddingBottom": "5",
+								"paddingLeft": "6",
+								"paddingRight": "6",
+								"paddingTop": "5",
+								"width": "680px"
+							},
+							"indexed": true,
+							"layout": {}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"marginBottom": 4
+									},
+									"name": "Header Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h3"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Callback Request"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Request a Support Engineer to contact you as soon as possible."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightNormal",
+												"textColor": "colorNeutral7"
+											},
+											"indexed": true,
+											"name": "Header Paragraph"
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "callback-form-user-input",
+										"siteKey": "Customer Portal"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_name",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"name": "Name Input"
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "callback-form-user-input",
+										"siteKey": "Customer Portal"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_emailAddress",
+										"showCharactersCount": false,
+										"fieldType": "email"
+									},
+									"fragmentFields": [],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"name": "Email Input"
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+								  "fragment": {
+									"key": "autofill-organization",
+									"siteKey": "Customer Portal"
+								  },
+								  "fragmentConfig": {
+									"inputFieldId": "ObjectField_organization"
+								  },
+								  "fragmentFields": [],
+								  "fragmentStyle": {
+									"marginBottom": "4"
+								  },
+								  "indexed": true,
+								  "name": "Organization Select"
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"layout": {
+										"marginBottom": 2
+									},
+									"name": "Phone Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexRow"
+											},
+											"name": "Input Container"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "INPUTS-text-input"
+													},
+													"fragmentConfig": {
+														"inputFieldId": "ObjectField_countryCode",
+														"showCharactersCount": false,
+														"placeholder": "+1"
+													},
+													"fragmentFields": [],
+													"fragmentStyle": {
+														"width": "28%"
+													},
+													"indexed": true,
+													"name": "Country Code Input"
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "INPUTS-text-input"
+													},
+													"fragmentConfig": {
+														"inputFieldId": "ObjectField_phoneNumber",
+														"showCharactersCount": false,
+														"placeholder": "(210) 283-2299"
+													},
+													"fragmentFields": [],
+													"fragmentStyle": {
+														"width": "72%"
+													},
+													"indexed": true,
+													"name": "Phone Number Input"
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Please enter your phone number in international format, starting with a plus sign (+) followed by your country code, area code, and phone number."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontSize": "fontSizeBase",
+												"fontWeight": "fontWeightNormal",
+												"textColor": "colorNeutral7"
+											},
+											"indexed": true,
+											"name": "Phone Help Text"
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "callback-form-textarea",
+										"siteKey": "Customer Portal"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_description",
+										"showCharactersCount": false,
+										"numberOfCharacters": 2000
+									},
+									"fragmentFields": [],
+									"fragmentStyle": {
+										"marginBottom": "5"
+									},
+									"indexed": true,
+									"name": "Select Textarea"
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+										"contentDisplay": "FlexRow",
+										"justify": "End"
+									},
+									"name": "Button Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonType": "secondary",
+												"type": "link",
+												"buttonSize": "nm"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Cancel"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginRight": "3"
+											},
+											"indexed": true,
+											"name": "Cancel Button"
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-submit-button"
+											},
+											"fragmentConfig": {
+												"buttonType": "primary",
+												"submittedEntryStatus": "approved",
+												"buttonSize": "nm"
+											},
+											"fragmentFields": [
+												{
+													"id": "submit-button-text",
+													"value": {
+														"fragmentLink": {}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Form"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "home-variant"
+		}
+	},
+	"version": 1.1
+}

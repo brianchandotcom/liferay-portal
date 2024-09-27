@@ -10,7 +10,8 @@ package com.liferay.scim.configuration.web.internal.constants;
  */
 public class ScimWebKeys {
 
-	public static final String SCIM_CONFIGURATION = "SCIM_CONFIGURATION";
+	public static final String SCIM_CONFIGURATION =
+		"com_liferay_scim_configuration_web_internal_portlet_ScimPortlet";
 
 	public static final String SCIM_MATCHER_FIELD = "SCIM_MATCHER_FIELD";
 

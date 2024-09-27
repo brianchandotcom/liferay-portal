@@ -3676,7 +3676,7 @@ information. Make sure to commit in all build-lib-versions results.
 		</run-batch-test>
 	</target>
 
-	<target name="bundle-blacklist-restart-mysql57-jdk8">
+	<target name="bundle-blacklist-restart-mysql57">
 		<run-bundle-blacklist-restart-test />
 	</target>
 

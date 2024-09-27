@@ -93,6 +93,15 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				}
 			}
 
+			testPropertiesFileNames = ListUtil.filter(
+				testPropertiesFileNames,
+				testPropertiesFileName ->
+					!testPropertiesFileName.endsWith(
+						"/modules/apps/" + moduleName + "/test.properties") &&
+					!testPropertiesFileName.endsWith(
+						"/modules/dxp/apps/" + moduleName +
+							"/test.properties"));
+
 			if (ListUtil.isEmpty(testPropertiesFileNames) ||
 				(testPropertiesFileNames.size() != 1)) {
 
@@ -124,6 +133,14 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 			absolutePath.contains("/modules/dxp/apps/")) {
 
 			String moduleName = _getModuleName(absolutePath);
+
+			if (absolutePath.endsWith(
+					"/modules/apps/" + moduleName + "/test.properties") ||
+				absolutePath.endsWith(
+					"/modules/dxp/apps/" + moduleName + "/test.properties")) {
+
+				return content;
+			}
 
 			File file = new File(
 				getPortalDir() + "/modules/test/playwright/tests/" +

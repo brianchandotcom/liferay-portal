@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "Callback Form User Input",
+  "typeOptions": {"fieldTypes": [
+    "long-text",
+    "text"
+  ]},
+  "type": "input"
+}

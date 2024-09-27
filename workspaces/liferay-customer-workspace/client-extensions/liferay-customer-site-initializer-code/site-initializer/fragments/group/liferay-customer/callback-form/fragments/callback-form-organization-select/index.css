@@ -1,0 +1,16 @@
+.select-from-list__dropdown-menu {
+	left: 0;
+	max-height: 500px;
+	position: absolute;
+	top: 0;
+}
+
+.select-from-list__dropdown-menu .dropdown-item.active {
+	background-color: transparent;
+}
+
+.select-from-list__dropdown-menu .dropdown-item.active[aria-selected="true"],
+.select-from-list__dropdown-menu .dropdown-item[aria-selected="true"] {
+	background-color: #f0f5ff;
+	color: #272833;
+}

@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "Callback Form Organization Select",
+  "typeOptions": {"fieldTypes": [
+    "relationship",
+    "select"
+  ]},
+  "type": "input"
+}

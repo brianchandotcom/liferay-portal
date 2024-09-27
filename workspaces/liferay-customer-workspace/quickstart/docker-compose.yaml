@@ -47,12 +47,6 @@ services:
             - 1025:1025
             - 1080:1080
         restart: always
-    mock_endpoints:
-        build: ./mock-endpoints
-        container_name: liferay-customer-workspace-mock-endpoints
-        env_file: mock-endpoints.env
-        ports:
-            - 3001:3001
     spring_boot:
         build: ../client-extensions/liferay-customer-etc-spring-boot/build/liferay-client-extension-build
         container_name: liferay-customer-workspace-spring-boot

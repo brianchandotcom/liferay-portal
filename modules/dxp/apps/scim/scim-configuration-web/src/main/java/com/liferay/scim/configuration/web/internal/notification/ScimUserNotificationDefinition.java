@@ -25,7 +25,8 @@ public class ScimUserNotificationDefinition extends UserNotificationDefinition {
 	public ScimUserNotificationDefinition() {
 		super(
 			ScimWebKeys.SCIM_CONFIGURATION, 0,
-			MembershipRequestConstants.STATUS_PENDING, "scim-email-subject");
+			MembershipRequestConstants.STATUS_PENDING,
+			"scim-access-token-email-subject");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

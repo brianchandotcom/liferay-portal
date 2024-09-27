@@ -366,6 +366,17 @@ public class ObjectEntryOpenAPIResourceImpl
 							setRequired(objectField.isRequired());
 						}
 					});
+
+				dtoProperties.add(
+					new DTOProperty(
+						Collections.singletonMap("x-parent-map", "properties"),
+						objectRelationship.getName() + "ERC",
+						String.class.getSimpleName()) {
+
+						{
+							setRequired(objectField.isRequired());
+						}
+					});
 			}
 		}
 

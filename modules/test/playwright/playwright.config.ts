@@ -6,6 +6,7 @@
 import 'dotenv/config';
 import {defineConfig, devices} from '@playwright/test';
 
+import {config as accessibilityMenuWeb} from './tests/accessibility-menu-web/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
 import {config as analyticsReportsJsComponentsWeb} from './tests/analytics-reports-js-components-web/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
@@ -97,6 +98,7 @@ export default defineConfig({
 	},
 	forbidOnly: !!process.env.CI,
 	projects: [
+		accessibilityMenuWeb,
 		accountAdminWebConfig,
 		analyticsReportsJsComponentsWeb,
 		analyticsSettingsWebConfig,

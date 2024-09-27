@@ -6978,7 +6978,7 @@ ${output.content}</echo>
 		</sequential>
 	</target>
 
-	<target name="poshi-validation-jdk8">
+	<target name="poshi-validation">
 		<run-batch-test>
 			<test-action>
 				<run-poshi-validation />

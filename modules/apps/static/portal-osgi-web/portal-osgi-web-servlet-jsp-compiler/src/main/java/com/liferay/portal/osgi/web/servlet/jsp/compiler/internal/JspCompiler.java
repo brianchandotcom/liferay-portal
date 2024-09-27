@@ -27,9 +27,6 @@ import java.lang.reflect.Field;
 
 import java.net.URL;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import java.security.AccessController;
 import java.security.CodeSource;
 import java.security.PrivilegedAction;
@@ -460,7 +457,7 @@ public class JspCompiler {
 					}
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 				}
 			}
 		}
@@ -509,7 +506,7 @@ public class JspCompiler {
 					tldResourcePath, tldParser.parse(tldResourcePath));
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

@@ -6087,7 +6087,7 @@ ${custom.upgrade.properties}</echo>
 		<sequential>
 			<local name="test.batch.name" />
 
-			<condition else="@{test.type}-test-csv-report-jdk8" property="test.batch.name" value="${test.batch.name}">
+			<condition else="@{test.type}-test-csv-report" property="test.batch.name" value="${test.batch.name}">
 				<isset property="test.batch.name" />
 			</condition>
 

@@ -26,7 +26,7 @@ describe('validateRequired', () => {
 		).toEqual(ERROR_MESSAGES.REQUIRED);
 	});
 
-	it('returns error message for empty category selector list', () => {
+	it('returns error message for empty category selector list (ID)', () => {
 		expect(
 			validateRequired(
 				[],
@@ -35,7 +35,19 @@ describe('validateRequired', () => {
 				true,
 				INPUT_TYPES.NUMBER
 			)
-		).toEqual(ERROR_MESSAGES.REQUIRED_CATEGORY_SELECTOR);
+		).toEqual(ERROR_MESSAGES.REQUIRED_CATEGORY_SELECTOR_ID);
+	});
+
+	it('returns error message for empty category selector list (ERC)', () => {
+		expect(
+			validateRequired(
+				[],
+				'asset_category_external_reference_code',
+				false,
+				true,
+				INPUT_TYPES.TEXT
+			)
+		).toEqual(ERROR_MESSAGES.REQUIRED);
 	});
 
 	it('returns error message for empty field', () => {

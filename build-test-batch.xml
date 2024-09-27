@@ -5401,7 +5401,7 @@ information. Make sure to commit in all format-javadoc results.
 		<ant antfile="build-test-batch/jsf.xml" target="jsf-jdk8" />
 	</target>
 
-	<target name="jsp-runtime-compile-mysql57-jdk8">
+	<target name="jsp-runtime-compile-mysql57">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">

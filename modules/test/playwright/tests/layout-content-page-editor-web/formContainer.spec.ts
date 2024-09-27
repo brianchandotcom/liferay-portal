@@ -66,7 +66,7 @@ test.describe('Form Configuration', () => {
 				title: getRandomString(),
 			});
 
-			// Go to edit mode
+			// Go to edit mode and change form configuration
 
 			await pageEditorPage.goto(
 				layout,
@@ -104,9 +104,30 @@ test.describe('Form Configuration', () => {
 
 			await page.getByRole('button', {name: 'Submit'}).click();
 
-			await expect(
-				page.getByText('Request received correctly')
-			).toHaveCount(1);
+			// Wait for the first alert
+
+			await page.getByText('Request received correctly').waitFor();
+
+			// Verify that the first alert disappears without any more alerts being displayed
+
+			let moreAlertsAppear = false;
+			let firstAlertDisappears = false;
+
+			await expect(async () => {
+				const alerts = await page
+					.getByText('Request received correctly')
+					.all();
+
+				if (alerts.length > 1) {
+					moreAlertsAppear = true;
+				}
+				else if (!alerts.length) {
+					firstAlertDisappears = true;
+				}
+
+				expect(firstAlertDisappears).toBe(true);
+				expect(moreAlertsAppear).toBe(false);
+			}).toPass();
 		}
 	);
 });

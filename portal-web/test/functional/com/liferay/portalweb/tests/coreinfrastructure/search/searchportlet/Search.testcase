@@ -1,6 +1,7 @@
 @component-name = "portal-search"
 definition {
 
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
@@ -215,7 +216,7 @@ definition {
 
 	@priority = 4
 	test AssertNonAdminsCannotAddCertainWidgets {
-		property custom.properties = "layout.user.access.via.plid.enabled=true";
+		property custom.properties = "layout.user.access.via.plid.enabled=true${line.separator}feature.flag.LPD-35013=true";
 
 		JSONRole.addRegularRole(
 			roleKey = "Can Add Widgets",
@@ -252,7 +253,7 @@ definition {
 	@description = "This is a use case for LPS-130227."
 	@priority = 4
 	test AssertPaginationURLforHTTPS {
-		property custom.properties = "redirect.url.domains.allowed=${line.separator}redirect.url.security.mode=domain${line.separator}web.server.host=localhost${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https";
+		property custom.properties = "redirect.url.domains.allowed=${line.separator}redirect.url.security.mode=domain${line.separator}web.server.host=localhost${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https${line.separator}feature.flag.LPD-35013=true";
 		property portal.ssl.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
@@ -307,7 +308,7 @@ definition {
 	@description = "This is a use case for LPS-89561."
 	@priority = 4
 	test AssertSearchURLWhenModifyingPagination {
-		property custom.properties = "search.container.page.default.delta=10";
+		property custom.properties = "search.container.page.default.delta=10${line.separator}feature.flag.LPD-35013=true";
 
 		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
 			JSONWebcontent.addWebContent(
@@ -424,7 +425,7 @@ definition {
 	@description = "This is a use case for LPS-95670."
 	@priority = 4
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
-		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
+		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE${line.separator}feature.flag.LPD-35013=true";
 		property index.search.spell.checker.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
@@ -597,7 +598,7 @@ definition {
 
 	@priority = 4
 	test CannotViewTermsOfUseWhenEnterpriseSearchIsDisabled {
-		property custom.properties = "enterprise.product.enterprise.search.enabled=false${line.separator}enterprise.product.notification.enabled=true";
+		property custom.properties = "enterprise.product.enterprise.search.enabled=false${line.separator}enterprise.product.notification.enabled=true${line.separator}feature.flag.LPD-35013=true";
 		property test.run.environment = "EE";
 
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
@@ -671,7 +672,7 @@ definition {
 
 	@priority = 4
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
-		property custom.properties = "enterprise.product.notification.enabled=true";
+		property custom.properties = "enterprise.product.notification.enabled=true${line.separator}feature.flag.LPD-35013=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 		property test.run.type = "single";
@@ -1259,7 +1260,7 @@ definition {
 	@priority = 4
 	test ModifyPaginationPortalProperties {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,wildfly";
-		property custom.properties = "search.container.page.default.delta=1";
+		property custom.properties = "search.container.page.default.delta=1${line.separator}feature.flag.LPD-35013=true";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
@@ -2079,7 +2080,7 @@ definition {
 	@description = "This test will assert that configurations set within the Embedded search bar will be used when searching via the Widget search bar"
 	@priority = 4
 	test SearchDifferentScopesViaSearchWidget {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPD-35013=true";
 		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(

@@ -1,7 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
-	property custom.properties = "default.layout.template.id=1_column${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Wiki";

@@ -1,6 +1,7 @@
 @component-name = "portal-search"
 definition {
 
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
@@ -24,7 +25,7 @@ definition {
 	@description = "This is a use case for LPS-168704."
 	@priority = 3
 	test AssertBlacklistedTextEmbeddingProvidersAreUnavailable {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -102,7 +103,7 @@ definition {
 	@description = "This is a use case for LPS-174623."
 	@priority = 3
 	test AssertReindexWarningAppearsForCriticalChanges {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -313,7 +314,7 @@ definition {
 
 	@priority = 3
 	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
 
 		JSONWebcontent.addWebContent(
@@ -344,7 +345,7 @@ definition {
 
 	@priority = 3
 	test AssertTxtaiTextEmbeddingIndexFieldAddedToAssets {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
 
 		JSONWebcontent.addWebContent(
@@ -389,7 +390,7 @@ definition {
 
 	@priority = 3
 	test AssertTxtaiWithTextEmbeddingElementAffectsBlueprintPreview {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
 
 		JSONWebcontent.addWebContent(
@@ -440,7 +441,7 @@ definition {
 
 	@priority = 3
 	test ViewHuggingFaceSystemSettingsRequiredFieldValidation {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 
 		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
@@ -518,7 +519,7 @@ definition {
 	@description = "This is a use case for LPS-170345 and LPS-172161."
 	@priority = 3
 	test ViewSystemAndInstanceSettingsSaveUI {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -709,7 +710,7 @@ definition {
 	@description = "This is a use case for LPS-173824."
 	@priority = 3
 	test ViewSystemSettingUnsuccessfulConnectionWarning {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property txtai.enabled = "true";
@@ -786,7 +787,7 @@ definition {
 
 	@priority = 3
 	test ViewTxtaiSystemSettingsRequiredFieldValidation {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 
 		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
@@ -818,7 +819,7 @@ definition {
 
 	@priority = 3
 	test ViewTxtaiSystemSettingsTestConfiguration {
-		property custom.properties = "feature.flag.LPS-122920=true";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property txtai.enabled = "true";

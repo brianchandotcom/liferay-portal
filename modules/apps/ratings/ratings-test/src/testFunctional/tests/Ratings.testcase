@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Ratings";
@@ -254,7 +255,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanRateAndEditWikiPageComment {
-		property custom.properties = "default.layout.template.id=1_column";
+		property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPD-35013=true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -313,7 +314,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanRateBlogsEntry {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONUser.addUser(
@@ -568,7 +569,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanRevokeBlogsStarsRating {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -977,7 +978,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewLikeCountForDocument {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		Ratings.configureRatingType(

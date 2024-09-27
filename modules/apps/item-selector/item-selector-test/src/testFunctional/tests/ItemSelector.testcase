@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -1475,7 +1476,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test PrivateSiteShouldNotBeViewableWithoutPermissionsInCalendar {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		var portalURL = PropsUtil.get("portal.url");

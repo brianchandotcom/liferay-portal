@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Recycle Bin";
@@ -213,7 +214,7 @@ definition {
 	@description = "Assert scheduled clean up in recycle bin works."
 	@priority = 3
 	test RecycleBinScheduledCleanup {
-		property custom.properties = "trash.entries.max.age=0";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}trash.entries.max.age=0";
 
 		task ("Add a blogs widget to page and a blog entry") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -307,7 +308,7 @@ definition {
 	@description = "Assert 2 documents moved to recycle bin are searchable."
 	@priority = 3
 	test RecycleBinSearchDMEntriesInFolder {
-		property custom.properties = "default.layout.template.id=1_column";
+		property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPD-35013=true";
 
 		task ("Add DM widget to page") {
 			JSONLayout.addWidgetToPublicLayout(

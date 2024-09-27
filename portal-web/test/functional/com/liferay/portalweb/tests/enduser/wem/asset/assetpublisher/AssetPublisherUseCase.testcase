@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Asset Publisher Widget";
@@ -105,7 +106,7 @@ definition {
 	@priority = 4
 	test ConfigureAssetPublisherAsSiteAdministrater {
 		property asset.publisher.selection.style = "asset-list";
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		var userEmailAddress = StringUtil.randomString(8);
 		var userFirstName = StringUtil.randomString(8);
@@ -2128,7 +2129,7 @@ definition {
 	@priority = 3
 	@uitest
 	test ViewWebContentAuthor {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		var userScreenName1 = StringUtil.randomString(8);
 		var userScreenName2 = StringUtil.randomString(8);

@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Staging";
@@ -407,7 +408,7 @@ definition {
 	@description = "This is a test for LPS-189238 TC-9. Verify can enable advanced staging configuration checkbox for remote staging."
 	@priority = 3
 	test CanEnableAdvancedStagingConfigurationForRemoteStaging {
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPD-35013=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -661,7 +662,7 @@ definition {
 	@priority = 3
 	test CanPublishWCWithURLReferenceViaRemoteStaging {
 		property app.server.bundles.size = "1";
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPD-35013=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1519,7 +1520,7 @@ definition {
 	@priority = 3
 	test PublishChildSiteViaRemoteStagingWithParentStructure {
 		property app.server.bundles.size = "1";
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPD-35013=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
@@ -2310,7 +2311,7 @@ definition {
 	@priority = 3
 	test PublishVocabularyDeletionViaRemoteStagingOnGlobalSite {
 		property app.server.bundles.size = "1";
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPD-35013=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2947,7 +2948,7 @@ definition {
 	@priority = 3
 	test StagingRemoteWithDynamicExportLimit {
 		property app.server.bundles.size = "1";
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPD-35013=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";

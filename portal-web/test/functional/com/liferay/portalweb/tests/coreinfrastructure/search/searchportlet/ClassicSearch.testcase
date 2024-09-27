@@ -1,6 +1,7 @@
 @component-name = "portal-search"
 definition {
 
+	property custom.properties = "feature.flag.LPD-35013=true";
 	property osgi.module.configuration.file.names = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config";
 	property osgi.module.configurations = "classicSearchPortletInFrontPage=\"true\"";
 	property portal.release = "true";
@@ -137,7 +138,7 @@ definition {
 
 	@priority = 4
 	test SearchByUserFacet {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

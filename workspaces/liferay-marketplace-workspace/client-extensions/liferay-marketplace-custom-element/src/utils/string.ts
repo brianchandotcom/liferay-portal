@@ -20,14 +20,14 @@ export function normalizeURLProtocol(url = '') {
 	return url.replace('https', 'http');
 }
 
-export function removeUnnecessaryURLString(str: string) {
-	const index = str.indexOf('/o');
+export function removeUnnecessaryURLString(text: string) {
+	const index = text.indexOf('/o');
 
-	return str.substring(index);
+	return text.substring(index);
 }
 
-export function removeHTMLTags(value: string) {
-	return value.replace(/<\/?[^>]+(>|$)/g, '');
+export function removeHTMLTags(text: string) {
+	return text.replace(/<\/?[^>]+(>|$)/g, '');
 }
 
 export function sanitizeStringForURL(text: string) {

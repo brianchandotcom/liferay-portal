@@ -10,6 +10,8 @@ import i18n from '../i18n';
 import {Liferay} from '../liferay/liferay';
 import {removeHTMLTags} from '../utils/string';
 
+const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+?\.)+[a-zA-Z]{2,}$/;
+
 const baseContentSchema = z.object({
 	description: z.string().min(1).refine(removeHTMLTags),
 	title: z.string().min(1),
@@ -77,9 +79,19 @@ const zodSchema = {
 		acceptTerms: z.boolean().refine((value) => value, {
 			message: 'You must agree with the terms',
 		}),
-		allowedEmailDomains: z.array(z.string()).min(1),
+		allowedEmailDomains: z
+			.array(z.string())
+			.optional()
+			.default([])
+			.refine(
+				(values) =>
+					values.length
+						? values.every((value) => domainRegex.test(value))
+						: true,
+				'One of the chosen domains is invalid.'
+			),
 		dataCenterLocation: z.string(),
-		friendlyWorkspaceURL: z.string().min(3),
+		friendlyWorkspaceURL: z.string().optional(),
 		incidentReportContacts: z.array(z.string().email()).min(1),
 		region: z.string(),
 		timezone: z.string(),

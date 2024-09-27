@@ -181,6 +181,32 @@ public class LayoutStructureTest {
 			rootLayoutStructureItem.getItemId());
 	}
 
+	@Test
+	public void testCopyFragmentStyledLayoutStructureItemWithSameFragmentStyledLayoutStructureItemAsParent()
+		throws Exception {
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				rootLayoutStructureItem.getItemId(), 0);
+
+		List<LayoutStructureItem> copiedLayoutStructureItems =
+			layoutStructure.copyLayoutStructureItems(
+				Collections.singletonList(
+					fragmentStyledLayoutStructureItem.getItemId()),
+				fragmentStyledLayoutStructureItem.getItemId());
+
+		_assertParentLayoutStructureItem(
+			2, 1, copiedLayoutStructureItems, rootLayoutStructureItem);
+	}
+
 	@Test(expected = UnsupportedOperationException.class)
 	public void testCopyLayoutStructureItemsWithCollectionItemAsParent() {
 		LayoutStructure layoutStructure = new LayoutStructure();

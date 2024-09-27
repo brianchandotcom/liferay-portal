@@ -8457,27 +8457,27 @@ ${output.content}</echo>
 		<antcall target="functional-tomcat-postgresql155-jdk11_open" />
 	</target>
 
-	<target name="release-osgi-state-exploded-test-mysql57-jdk8">
+	<target name="release-osgi-state-exploded-test-mysql57">
 		<run-release-osgi-state-exploded-test database.type="mysql" />
 	</target>
 
-	<target name="release-osgi-state-exploded-test-postgresql155-jdk8">
+	<target name="release-osgi-state-exploded-test-postgresql155">
 		<run-release-osgi-state-exploded-test database.type="postgresql" />
 	</target>
 
-	<target name="release-osgi-state-lpkg-change-directory-test-mysql57-jdk8">
+	<target name="release-osgi-state-lpkg-change-directory-test-mysql57">
 		<run-release-osgi-state-lpkg-change-directory-test database.type="mysql" />
 	</target>
 
-	<target name="release-osgi-state-lpkg-change-directory-test-postgresql155-jdk8">
+	<target name="release-osgi-state-lpkg-change-directory-test-postgresql155">
 		<run-release-osgi-state-lpkg-change-directory-test database.type="postgresql" />
 	</target>
 
-	<target name="release-osgi-state-lpkg-test-mysql57-jdk8">
+	<target name="release-osgi-state-lpkg-test-mysql57">
 		<run-release-osgi-state-lpkg-test database.type="mysql" />
 	</target>
 
-	<target name="release-osgi-state-lpkg-test-postgresql155-jdk8">
+	<target name="release-osgi-state-lpkg-test-postgresql155">
 		<run-release-osgi-state-lpkg-test database.type="postgresql" />
 	</target>
 

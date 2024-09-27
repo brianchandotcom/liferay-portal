@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -136,7 +137,17 @@ public class PublishLayoutMVCActionCommand
 			UnicodeProperties originalTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			_layoutLocalService.copyLayoutContent(draftLayout, layout);
+			boolean indexReadOnly =
+				IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+			IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
+			try {
+				_layoutLocalService.copyLayoutContent(draftLayout, layout);
+			}
+			finally {
+				IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+			}
 
 			layout = _layoutLocalService.getLayout(layout.getPlid());
 

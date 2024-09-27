@@ -290,6 +290,25 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
+	public void testFreeMarkerNotificationTemplateContextContributor()
+		throws Exception {
+
+		executeNotificationObjectAction(
+			0,
+			_addNotificationTemplate(
+				"${testTemplateContextContributorKey}",
+				NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+				Collections.singletonMap(
+					LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]"),
+				false,
+				Collections.singletonMap(
+					LocaleUtil.US, user1.getEmailAddress())));
+
+		_assertNotificationQueueEntryBody(
+			"testTemplateContextContributorValue");
+	}
+
+	@Test
 	public void testFreeMarkerNotificationWithCommerceOrder() throws Exception {
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -1713,8 +1732,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			Map<String, Object> contextObjects,
 			HttpServletRequest httpServletRequest) {
 
-			contextObjects.put("key1", "value1");
-			contextObjects.put("key2", "value2");
+			contextObjects.put(
+				"testTemplateContextContributorKey",
+				"testTemplateContextContributorValue");
 		}
 
 	}

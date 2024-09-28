@@ -45,7 +45,9 @@ public class MethodNamingCheck extends BaseCheck {
 
 		String className = JavaSourceUtil.getClassName(getAbsolutePath());
 
-		if (!className.equals("CentralizedThreadLocal")) {
+		if (isAttributeValue(_CHECK_SET_WITH_SAFE_CLOSEABLE_METHOD_NAMES) &&
+			!className.equals("CentralizedThreadLocal")) {
+
 			_checkSetWithSafeCloseableMethodName(detailAST, methodName);
 		}
 
@@ -260,6 +262,9 @@ public class MethodNamingCheck extends BaseCheck {
 
 	private static final String _CHECK_SEARCH_METHOD_NAMES =
 		"checkSearchMethodNames";
+
+	private static final String _CHECK_SET_WITH_SAFE_CLOSEABLE_METHOD_NAMES =
+		"checkSetWithSafeCloseableMethodNames";
 
 	private static final String _ENFORCE_TYPE_NAMES_KEY = "enforceTypeNames";
 

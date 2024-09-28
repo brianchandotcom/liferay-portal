@@ -42,17 +42,23 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 		String shortFileName = fileName.substring(pos + 1);
 
+		if (absolutePath.contains("/workspaces/") &&
+			!absolutePath.contains("/playwright/") &&
+			shortFileName.equals("portal-ext.properties")) {
+
+			return content;
+		}
+
 		if (((isPortalSource() || isSubrepository()) &&
 			 shortFileName.startsWith("portal") &&
 			 !shortFileName.contains("-legacy-") &&
-			 !(shortFileName.equals("portal-ext.properties") &&
-			   absolutePath.contains("/workspaces/")) &&
 			 !shortFileName.equals("portal-osgi-configuration.properties") &&
 			 !shortFileName.equals("portal-test.properties") &&
 			 !shortFileName.equals("portal-upgrade-database.properties") &&
 			 !shortFileName.equals("portal-upgrade-ext.properties")) ||
 			(!isPortalSource() && !isSubrepository() &&
-			 shortFileName.equals("portal.properties"))) {
+			 (shortFileName.equals("portal.properties") ||
+			  shortFileName.equals("portal-ext.properties")))) {
 
 			content = _sortPortalProperties(absolutePath, content);
 

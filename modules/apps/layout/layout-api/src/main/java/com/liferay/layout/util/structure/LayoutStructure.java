@@ -498,7 +498,7 @@ public class LayoutStructure {
 		else if (parentLayoutStructureItem instanceof
 					FormStepContainerStyledLayoutStructureItem ||
 				 parentLayoutStructureItem instanceof
-				 	RowStyledLayoutStructureItem) {
+					 RowStyledLayoutStructureItem) {
 
 			parentItemId = parentLayoutStructureItem.getParentItemId();
 

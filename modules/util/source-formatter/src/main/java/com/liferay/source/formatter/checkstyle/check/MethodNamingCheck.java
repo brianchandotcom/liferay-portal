@@ -46,7 +46,7 @@ public class MethodNamingCheck extends BaseCheck {
 		String className = JavaSourceUtil.getClassName(getAbsolutePath());
 
 		if (!className.equals("CentralizedThreadLocal")) {
-			_checkSetSafeCloseableName(detailAST, methodName);
+			_checkSetWithSafeCloseableMethodName(detailAST, methodName);
 		}
 
 		if (AnnotationUtil.containsAnnotation(detailAST, "Override")) {
@@ -192,7 +192,7 @@ public class MethodNamingCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkSetSafeCloseableName(
+	private void _checkSetWithSafeCloseableMethodName(
 		DetailAST detailAST, String methodName) {
 
 		String typeName = getTypeName(

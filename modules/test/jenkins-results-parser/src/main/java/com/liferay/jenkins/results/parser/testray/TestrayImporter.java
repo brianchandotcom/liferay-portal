@@ -1068,8 +1068,6 @@ public class TestrayImporter {
 							axisTestClassGroup instanceof
 								JUnitAxisTestClassGroup ||
 							axisTestClassGroup instanceof
-								PlaywrightAxisTestClassGroup ||
-							axisTestClassGroup instanceof
 								SemVerModulesAxisTestClassGroup) {
 
 							PortalLogBatchBuildTestrayCaseResult
@@ -1097,7 +1095,9 @@ public class TestrayImporter {
 							}
 						}
 						else if (axisTestClassGroup instanceof
-									JSUnitAxisTestClassGroup) {
+									JSUnitAxisTestClassGroup ||
+								 axisTestClassGroup instanceof
+									 PlaywrightAxisTestClassGroup) {
 
 							for (TestClass testClass :
 									axisTestClassGroup.getTestClasses()) {

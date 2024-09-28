@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal CCPP Implementation
 Bundle-SymbolicName: com.liferay.portal.ccpp.impl
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 Import-Package:\
 	!EDU.oswego.cs.dl.util.concurrent,\
 	\

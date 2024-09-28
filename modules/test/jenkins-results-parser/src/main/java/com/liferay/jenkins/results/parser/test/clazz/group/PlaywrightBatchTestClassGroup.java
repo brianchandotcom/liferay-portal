@@ -347,7 +347,17 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
+			String title = suiteJSONObject.getString("title");
+			String file = suiteJSONObject.getString("file");
+
 			for (int j = 0; j < specsJSONArray.length(); j++) {
+				JSONObject specJSONObject = specsJSONArray.getJSONObject(j);
+
+				if (!title.equals(file)) {
+					specJSONObject.put("subSuite", title);
+				}
+
+				specJSONObjects.add(specJSONObject);
 				specJSONObjects.add(specsJSONArray.getJSONObject(j));
 			}
 		}
@@ -388,7 +398,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				specTitles = new ArrayList<>();
 			}
 
-			specTitles.add(specJSONObject.getString("title"));
+			if (specJSONObject.has("subSuite")) {
+				specTitles.add(
+					specJSONObject.getString("subSuite") + " › " +
+						specJSONObject.getString("title"));
+			}
+			else {
+				specTitles.add(specJSONObject.getString("title"));
+			}
 
 			specFileTitlesMap.put(specFile, specTitles);
 		}

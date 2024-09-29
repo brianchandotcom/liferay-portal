@@ -304,6 +304,19 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
+	@TestInfo("LPS-121201")
+	public void testExportLayoutWithCustomCanonicalURL() throws Exception {
+		initExport();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		_updateLayoutSEOEntry(layout);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layout);
+	}
+
+	@Test
 	public void testLayoutPageTemplateEntry() throws Exception {
 		initExport();
 

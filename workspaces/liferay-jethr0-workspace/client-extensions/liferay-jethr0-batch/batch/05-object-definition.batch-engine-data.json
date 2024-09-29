@@ -1,7 +1,6 @@
 {
 	"configuration": {
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"multiCompany": false,
 		"parameters": {
 			"containsHeaders": "false",
 			"createStrategy": "UPSERT",

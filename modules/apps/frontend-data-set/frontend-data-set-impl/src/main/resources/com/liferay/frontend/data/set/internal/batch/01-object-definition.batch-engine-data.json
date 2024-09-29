@@ -9,11 +9,394 @@
 			"importStrategy": "ON_ERROR_FAIL",
 			"updateStrategy": "UPDATE"
 		},
-		"taskItemDelegateName": "DEFAULT",
-		"userId": 0,
-		"version": "v1.0"
+		"taskItemDelegateName": "DEFAULT"
 	},
 	"items": [
+		{
+			"externalReferenceCode": "L_DATA_SET",
+			"label": {
+				"en_US": "Data Set"
+			},
+			"modifiable": true,
+			"name": "DataSet",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ADDITIONAL_API_URL_PARAMETERS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Additional API URL Parameters"
+					},
+					"name": "additionalAPIURLParameters",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "CREATION_ACTIONS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Creation Actions Order"
+					},
+					"name": "creationActionsOrder",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "DEFAULT_ITEMS_PER_PAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Default Items per Page"
+					},
+					"name": "defaultItemsPerPage",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DEFAULT_VISUALIZATION_MODE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Default Visualization Mode"
+					},
+					"name": "defaultVisualizationMode",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "FILTERS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Filters Order"
+					},
+					"name": "filtersOrder",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "ITEM_ACTIONS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Item Actions Order"
+					},
+					"name": "itemActionsOrder",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "label",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LIST_OF_ITEMS_PER_PAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "List of Items per Page"
+					},
+					"name": "listOfItemsPerPage",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_APPLICATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Application"
+					},
+					"name": "restApplication",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Endpoint"
+					},
+					"name": "restEndpoint",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_SCHEMA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Schema"
+					},
+					"name": "restSchema",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "SORTS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Sorts Order"
+					},
+					"name": "sortsOrder",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "TABLE_SECTIONS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Table Sections Order"
+					},
+					"name": "tableSectionsOrder",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_CREATION_DATA_SET_ACTIONS",
+					"label": {
+						"en_US": "Data Set to Creation Data Set Actions"
+					},
+					"name": "dataSetToCreationDataSetActions",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_ACTION",
+					"objectDefinitionName2": "DataSetAction",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_CARDS_SECTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set Cards Sections"
+					},
+					"name": "dataSetToDataSetCardsSections",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_CARDS_SECTION",
+					"objectDefinitionName2": "DataSetCardsSection",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_CLIENT_EXTENSION_FILTERS",
+					"label": {
+						"en_US": "Data Set to Data Set Client Extension Filters"
+					},
+					"name": "dataSetToDataSetClientExtensionFilters",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_CLIENT_EXTENSION_FILTER",
+					"objectDefinitionName2": "DataSetClientExtensionFilter",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_DATE_FILTERS",
+					"label": {
+						"en_US": "Data Set to Data Set Date Filters"
+					},
+					"name": "dataSetToDataSetDateFilters",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_DATE_FILTER",
+					"objectDefinitionName2": "DataSetDateFilter",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_LIST_SECTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set List Sections"
+					},
+					"name": "dataSetToDataSetListSections",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_LIST_SECTION",
+					"objectDefinitionName2": "DataSetListSection",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_SELECTION_FILTERS",
+					"label": {
+						"en_US": "Data Set to Data Set Selection Filters"
+					},
+					"name": "dataSetToDataSetSelectionFilters",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_SELECTION_FILTER",
+					"objectDefinitionName2": "DataSetSelectionFilter",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_SORTS",
+					"label": {
+						"en_US": "Data Set to Data Set Sorts"
+					},
+					"name": "dataSetToDataSetSorts",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_SORT",
+					"objectDefinitionName2": "DataSetSort",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_TABLE_SECTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set Table Sections"
+					},
+					"name": "dataSetToDataSetTableSections",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_TABLE_SECTION",
+					"objectDefinitionName2": "DataSetTableSection",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_ITEM_DATA_SET_ACTIONS",
+					"label": {
+						"en_US": "Data Set to Item Data Set Actions"
+					},
+					"name": "dataSetToItemDataSetActions",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_ACTION",
+					"objectDefinitionName2": "DataSetAction",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				}
+			],
+			"pluralLabel": {
+				"en_US": "Data Sets"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "label"
+		},
 		{
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_ACTION",
@@ -941,391 +1324,6 @@
 				"code": 0
 			},
 			"system": true
-		},
-		{
-			"externalReferenceCode": "L_DATA_SET",
-			"label": {
-				"en_US": "Data Set"
-			},
-			"modifiable": true,
-			"name": "DataSet",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "ADDITIONAL_API_URL_PARAMETERS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Additional API URL Parameters"
-					},
-					"name": "additionalAPIURLParameters",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "CREATION_ACTIONS_ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Creation Actions Order"
-					},
-					"name": "creationActionsOrder",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Clob"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "DEFAULT_ITEMS_PER_PAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Default Items per Page"
-					},
-					"name": "defaultItemsPerPage",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "Integer"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "DEFAULT_VISUALIZATION_MODE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Default Visualization Mode"
-					},
-					"name": "defaultVisualizationMode",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "DESCRIPTION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Description"
-					},
-					"name": "description",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "FILTERS_ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Filters Order"
-					},
-					"name": "filtersOrder",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Clob"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "ITEM_ACTIONS_ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Item Actions Order"
-					},
-					"name": "itemActionsOrder",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Clob"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "label",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "LIST_OF_ITEMS_PER_PAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "List of Items per Page"
-					},
-					"name": "listOfItemsPerPage",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "REST_APPLICATION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "REST Application"
-					},
-					"name": "restApplication",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "REST_ENDPOINT",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "REST Endpoint"
-					},
-					"name": "restEndpoint",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "REST_SCHEMA",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "REST Schema"
-					},
-					"name": "restSchema",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "SORTS_ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Sorts Order"
-					},
-					"name": "sortsOrder",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Clob"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "TABLE_SECTIONS_ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Table Sections Order"
-					},
-					"name": "tableSectionsOrder",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Clob"
-				}
-			],
-			"objectRelationships": [
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_CREATION_DATA_SET_ACTIONS",
-					"label": {
-						"en_US": "Data Set to Creation Data Set Actions"
-					},
-					"name": "dataSetToCreationDataSetActions",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_ACTION",
-					"objectDefinitionName2": "DataSetAction",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_CARDS_SECTIONS",
-					"label": {
-						"en_US": "Data Set to Data Set Cards Sections"
-					},
-					"name": "dataSetToDataSetCardsSections",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_CARDS_SECTION",
-					"objectDefinitionName2": "DataSetCardsSection",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_CLIENT_EXTENSION_FILTERS",
-					"label": {
-						"en_US": "Data Set to Data Set Client Extension Filters"
-					},
-					"name": "dataSetToDataSetClientExtensionFilters",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_CLIENT_EXTENSION_FILTER",
-					"objectDefinitionName2": "DataSetClientExtensionFilter",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_DATE_FILTERS",
-					"label": {
-						"en_US": "Data Set to Data Set Date Filters"
-					},
-					"name": "dataSetToDataSetDateFilters",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_DATE_FILTER",
-					"objectDefinitionName2": "DataSetDateFilter",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_LIST_SECTIONS",
-					"label": {
-						"en_US": "Data Set to Data Set List Sections"
-					},
-					"name": "dataSetToDataSetListSections",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_LIST_SECTION",
-					"objectDefinitionName2": "DataSetListSection",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_SELECTION_FILTERS",
-					"label": {
-						"en_US": "Data Set to Data Set Selection Filters"
-					},
-					"name": "dataSetToDataSetSelectionFilters",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_SELECTION_FILTER",
-					"objectDefinitionName2": "DataSetSelectionFilter",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_SORTS",
-					"label": {
-						"en_US": "Data Set to Data Set Sorts"
-					},
-					"name": "dataSetToDataSetSorts",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_SORT",
-					"objectDefinitionName2": "DataSetSort",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_TABLE_SECTIONS",
-					"label": {
-						"en_US": "Data Set to Data Set Table Sections"
-					},
-					"name": "dataSetToDataSetTableSections",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_TABLE_SECTION",
-					"objectDefinitionName2": "DataSetTableSection",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_DATA_SET_TO_ITEM_DATA_SET_ACTIONS",
-					"label": {
-						"en_US": "Data Set to Item Data Set Actions"
-					},
-					"name": "dataSetToItemDataSetActions",
-					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
-					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_ACTION",
-					"objectDefinitionName2": "DataSetAction",
-					"objectDefinitionSystem2": true,
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				}
-			],
-			"pluralLabel": {
-				"en_US": "Data Sets"
-			},
-			"portlet": false,
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "label"
 		}
 	]
 }

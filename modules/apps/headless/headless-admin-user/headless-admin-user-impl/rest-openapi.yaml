@@ -2709,6 +2709,11 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: accountRoleIds
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2728,10 +2733,18 @@ paths:
                     A list of user email addresses to assign to the account
                 required: true
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
             tags: ["UserAccount"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}":
         delete:
@@ -2773,10 +2786,14 @@ paths:
                   schema:
                       type: string
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}/account-roles":
         get:
@@ -6093,6 +6110,37 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+            tags: ["UserAccount"]
+        patch:
+            description:
+                Updates the user account with information sent in the request body. Only the provided fields are
+                updated.
+            operationId: patchUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        "UserAccount successfully updated"
             tags: ["UserAccount"]
         put:
             operationId: putUserAccountByExternalReferenceCode

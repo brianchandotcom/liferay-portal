@@ -145,8 +145,8 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 />
 
 <c:if test='<%= aggregationType.equals("dateRange") || aggregationType.equals("range") %>'>
-	<aui:script use="liferay-search-date-facet">
-		new Liferay.Search.DateFacetFilter({
+	<aui:script use="liferay-search-custom-range-facet">
+		new Liferay.Search.CustomRangeFacet({
 			aggregationType: '<%= customFacetDisplayContext.getAggregationType() %>',
 			form: A.one('#<portlet:namespace />fm'),
 			fromInputName: '<portlet:namespace />fromInput',

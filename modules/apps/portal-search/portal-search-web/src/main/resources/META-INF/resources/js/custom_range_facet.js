@@ -4,17 +4,23 @@
  */
 
 AUI.add(
-	'liferay-search-date-facet',
+	'liferay-search-custom-range-facet',
 	(A) => {
+		const AGGREGATION_TYPES = {
+			DATE_RANGE: 'dateRange',
+			RANGE: 'range',
+		};
+
 		const DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		const Util = Liferay.Util;
 
-		const DateFacetFilter = function (config) {
+		const CustomRangeFacet = function (config) {
 			const instance = this;
 
 			instance.form = config.form;
-			instance.aggregationType = config.aggregationType || 'dateRange';
+			instance.aggregationType =
+				config.aggregationType || AGGREGATION_TYPES.DATE_RANGE;
 			instance.fromInputName = config.fromInputName;
 			instance.namespace = config.namespace;
 			instance.parameterName = config.parameterName;
@@ -23,7 +29,7 @@ AUI.add(
 				config.searchCustomRangeToggleName;
 			instance.toInputName = config.toInputName;
 
-			if (instance.aggregationType === 'range') {
+			if (instance.aggregationType === AGGREGATION_TYPES.RANGE) {
 				instance.fromInputPicker = document.getElementById(
 					instance.fromInputName
 				);
@@ -38,9 +44,14 @@ AUI.add(
 				instance.toInputDatePicker = Liferay.component(
 					instance.toInputName + 'DatePicker'
 				);
-			}
 
-			instance._initializeFormValidator();
+				if (
+					instance.fromInputDatePicker &&
+					instance.toInputDatePicker
+				) {
+					instance._initializeFormDateValidator();
+				}
+			}
 
 			if (instance.searchCustomRangeButton) {
 				instance.searchCustomRangeButton.on(
@@ -50,7 +61,7 @@ AUI.add(
 			}
 		};
 
-		const DateFacetFilterUtil = {
+		const CustomRangeFacetUtil = {
 			addURLParameter(key, value, parameterArray) {
 				key = encodeURIComponent(key);
 				value = encodeURIComponent(value);
@@ -90,8 +101,8 @@ AUI.add(
 			},
 		};
 
-		A.mix(DateFacetFilter.prototype, {
-			_initializeFormValidator() {
+		A.mix(CustomRangeFacet.prototype, {
+			_initializeFormDateValidator() {
 				const instance = this;
 
 				const dateRangeRuleName = instance.namespace + 'dateRange';
@@ -171,20 +182,26 @@ AUI.add(
 				let fromParameter;
 				let toParameter;
 
-				if (instance.aggregationType === 'range') {
+				if (instance.fromInputPicker) {
 					fromParameter = instance.fromInputPicker.value;
+				}
+
+				if (instance.toInputPicker) {
 					toParameter = instance.toInputPicker.value;
 				}
-				else {
-					const fromDate = instance.fromInputDatePicker.getDate();
-					const toDate = instance.toInputDatePicker.getDate();
 
+				if (instance.fromInputDatePicker) {
 					fromParameter =
-						DateFacetFilterUtil.toLocaleDateStringFormatted(
-							fromDate
+						CustomRangeFacetUtil.toLocaleDateStringFormatted(
+							instance.fromInputDatePicker.getDate()
 						);
+				}
+
+				if (instance.toInputDatePicker) {
 					toParameter =
-						DateFacetFilterUtil.toLocaleDateStringFormatted(toDate);
+						CustomRangeFacetUtil.toLocaleDateStringFormatted(
+							instance.toInputDatePicker.getDate()
+						);
 				}
 
 				const param = instance.parameterName;
@@ -200,18 +217,18 @@ AUI.add(
 				);
 
 				if (!searchCustomRangeToggle?.hasAttribute('data-term-id')) {
-					parameterArray = DateFacetFilterUtil.removeURLParameters(
+					parameterArray = CustomRangeFacetUtil.removeURLParameters(
 						param,
 						parameterArray
 					);
 				}
 
-				parameterArray = DateFacetFilterUtil.removeURLParameters(
+				parameterArray = CustomRangeFacetUtil.removeURLParameters(
 					paramFrom,
 					parameterArray
 				);
 
-				parameterArray = DateFacetFilterUtil.removeURLParameters(
+				parameterArray = CustomRangeFacetUtil.removeURLParameters(
 					paramTo,
 					parameterArray
 				);
@@ -221,31 +238,31 @@ AUI.add(
 				);
 
 				if (startParameterNameElement) {
-					parameterArray = DateFacetFilterUtil.removeURLParameters(
+					parameterArray = CustomRangeFacetUtil.removeURLParameters(
 						startParameterNameElement.value,
 						parameterArray
 					);
 				}
 
-				parameterArray = DateFacetFilterUtil.addURLParameter(
+				parameterArray = CustomRangeFacetUtil.addURLParameter(
 					paramFrom,
 					fromParameter,
 					parameterArray
 				);
 
-				parameterArray = DateFacetFilterUtil.addURLParameter(
+				parameterArray = CustomRangeFacetUtil.addURLParameter(
 					paramTo,
 					toParameter,
 					parameterArray
 				);
 
-				DateFacetFilterUtil.submitSearch(parameterArray.join('&'));
+				CustomRangeFacetUtil.submitSearch(parameterArray.join('&'));
 			},
 		});
 
-		Liferay.namespace('Search').DateFacetFilter = DateFacetFilter;
+		Liferay.namespace('Search').CustomRangeFacet = CustomRangeFacet;
 
-		Liferay.namespace('Search').DateFacetFilterUtil = DateFacetFilterUtil;
+		Liferay.namespace('Search').CustomRangeFacetUtil = CustomRangeFacetUtil;
 	},
 	'',
 	{

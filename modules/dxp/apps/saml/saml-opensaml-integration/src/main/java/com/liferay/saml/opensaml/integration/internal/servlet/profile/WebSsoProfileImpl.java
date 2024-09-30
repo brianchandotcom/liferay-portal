@@ -1117,6 +1117,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		String samlMessageId = ParamUtil.getString(
 			httpServletRequest, "saml_message_id");
 
+		if (Validator.isBlank(samlMessageId)) {
+			samlMessageId = "idpInitiated";
+		}
+
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		SamlSsoRequestContext samlSsoRequestContext = _getSamlSsoRequestContext(
@@ -1989,6 +1993,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 		}
 		else if (samlPeerEntityContext.getEntityId() != null) {
+			_bindSamlSsoRequestContext(
+				"idpInitiated", httpSession, samlSsoRequestContext);
+
 			redirectSB.append("?entityId=");
 			redirectSB.append(
 				URLCodec.encodeURL(samlPeerEntityContext.getEntityId()));

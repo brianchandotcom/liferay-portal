@@ -47,7 +47,19 @@ public class ObjectDefinitionTreeFactoryTest {
 				"AAB", new String[0]
 			).build(),
 			TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService),
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				false,
+				LinkedHashMapBuilder.put(
+					"A", new String[] {"AA", "AB"}
+				).put(
+					"AA", new String[] {"AAA", "AAB"}
+				).put(
+					"AB", new String[0]
+				).put(
+					"AAA", new String[0]
+				).put(
+					"AAB", new String[0]
+				).build()),
 			_objectDefinitionLocalService);
 	}
 

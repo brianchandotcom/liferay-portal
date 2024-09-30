@@ -16,6 +16,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,7 +49,19 @@ public class TreeTest {
 		// Breadth first iterator
 
 		Tree tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService);
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
 		_testIterator(
 			Arrays.asList("A", "AA", "AB", "AAA", "AAB"),

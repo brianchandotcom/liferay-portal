@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -130,17 +131,25 @@ public class ObjectEntryServiceTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		_tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService);
-		_user = UserTestUtil.addUser();
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
 		_rootObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				_adminUser.getUserId(),
-				rootObjectDefinition.getObjectDefinitionId());
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		_user = UserTestUtil.addUser();
 	}
 
 	@After

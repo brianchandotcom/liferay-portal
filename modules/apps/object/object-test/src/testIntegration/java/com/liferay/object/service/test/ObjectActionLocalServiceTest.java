@@ -850,9 +850,17 @@ public class ObjectActionLocalServiceTest {
 							ObjectFieldConstants.DB_TYPE_STRING, "First Name",
 							"firstName")));
 
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId());
+
 			ObjectDefinition objectDefinitionAA =
 				ObjectDefinitionTestUtil.addCustomObjectDefinition(
 					ObjectDefinitionTestUtil.getRandomName());
+
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionAA.getObjectDefinitionId());
 
 			ObjectRelationship objectRelationshipA_AA =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -862,6 +870,10 @@ public class ObjectActionLocalServiceTest {
 			ObjectDefinition objectDefinitionAAA =
 				ObjectDefinitionTestUtil.addCustomObjectDefinition(
 					ObjectDefinitionTestUtil.getRandomName());
+
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionAAA.getObjectDefinitionId());
 
 			ObjectRelationship objectRelationshipAA_AAA =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -888,10 +900,6 @@ public class ObjectActionLocalServiceTest {
 					"url", "https://onafterrootupdate.com"
 				).build(),
 				false);
-
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinitionA.getObjectDefinitionId());
 
 			ObjectEntry rootObjectEntry =
 				_objectEntryLocalService.addObjectEntry(

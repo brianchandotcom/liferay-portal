@@ -111,14 +111,12 @@ import java.sql.Connection;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -319,7 +317,19 @@ public class ObjectDefinitionLocalServiceTest {
 			_hasTable(objectDefinition.getExtensionDBTableName()));
 
 		Tree tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService);
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			false,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,
@@ -1850,9 +1860,8 @@ public class ObjectDefinitionLocalServiceTest {
 			LinkedHashMapBuilder.put(
 				"A", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1865,9 +1874,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -1915,9 +1923,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.assertObjectDefinitionTree(
@@ -1926,9 +1933,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAAA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionAAA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionAAA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1943,9 +1949,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -2007,9 +2012,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAAAA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -2044,9 +2048,8 @@ public class ObjectDefinitionLocalServiceTest {
 			LinkedHashMapBuilder.put(
 				"A", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -2059,9 +2062,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -2108,9 +2110,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		ObjectDefinition objectDefinitionAAAA =
@@ -2123,9 +2124,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAAAA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionAAAA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionAAAA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		ObjectDefinition objectDefinitionAAA =
@@ -2144,9 +2144,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAAAA", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinitionAAA.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionAAA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -2203,7 +2202,19 @@ public class ObjectDefinitionLocalServiceTest {
 				"AAB", new String[0]
 			).build(),
 			TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService),
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				true,
+				LinkedHashMapBuilder.put(
+					"A", new String[] {"AA", "AB"}
+				).put(
+					"AA", new String[] {"AAA", "AAB"}
+				).put(
+					"AB", new String[0]
+				).put(
+					"AAA", new String[0]
+				).put(
+					"AAB", new String[0]
+				).build()),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.unbind(_objectDefinitionLocalService, "C_AA");
@@ -3006,23 +3017,11 @@ public class ObjectDefinitionLocalServiceTest {
 			boolean published, Map<String, String[]> treeMap)
 		throws Exception {
 
-		TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			published, treeMap);
-
-		Set<String> keys = treeMap.keySet();
-
-		Iterator<String> iterator = keys.iterator();
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_" + iterator.next());
-
 		TreeTestUtil.assertObjectDefinitionTree(
 			treeMap,
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinition.getObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			TreeTestUtil.createObjectDefinitionTree(
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				published, treeMap),
 			_objectDefinitionLocalService);
 	}
 

@@ -45,6 +45,12 @@
 			},
 			"type": "object"
 		},
+		"fields": {
+			"items": {
+				"type": "string"
+			},
+			"type": "array"
+		},
 		"source": {
 			"properties": {
 				"excludes": {

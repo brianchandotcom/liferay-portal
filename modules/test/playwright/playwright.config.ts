@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import 'dotenv/config';
 import {defineConfig, devices} from '@playwright/test';
 
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
@@ -56,6 +57,7 @@ import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
 import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
 import {config as portalSecurityServiceAccessPolicyService} from './tests/portal-security-service-access-policy-service/config';
+import {config as portalToolsRestBuilderTestImpl} from './tests/portal-tools-rest-builder-test-impl/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as portalWorkflowTaskWebConfig} from './tests/portal-workflow-task-web/config';
 import {config as portletConfigurationCssWebConfig} from './tests/portlet-configuration-css-web/config';
@@ -151,6 +153,7 @@ export default defineConfig({
 		portalSearchWebConfig,
 		portalSecurityScriptManagementWebConfig,
 		portalSecurityServiceAccessPolicyService,
+		portalToolsRestBuilderTestImpl,
 		portalWorkflowKaleoDesignerWebConfig,
 		portalWorkflowTaskWebConfig,
 		portletConfigurationCssWebConfig,

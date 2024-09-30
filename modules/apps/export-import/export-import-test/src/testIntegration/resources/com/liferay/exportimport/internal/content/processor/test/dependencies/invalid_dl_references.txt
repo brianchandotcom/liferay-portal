@@ -47,3 +47,18 @@ Nonlegacy HTML reference with escaped single quotes:
 
 <a href=\'/documents/\'>Link</a>
 <a href=\'/documents/d/[$GROUP_NAME$]/\'>Link</a>
+
+Style references with no quotes:
+
+background: url(/documents/);
+background: url(/documents/d/[$GROUP_NAME$]/);
+
+Style references with double quotes:
+
+background: url("/documents/");
+background: url("/documents/d/[$GROUP_NAME$]/");
+
+Style references with single quotes:
+
+background: url('/documents/');
+background: url('/documents/d/[$GROUP_NAME$]/');

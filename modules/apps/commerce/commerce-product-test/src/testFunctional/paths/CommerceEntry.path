@@ -837,7 +837,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td'][2][contains(.,'${key_entryDescription}')]</td>
+	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[contains(@class,'dnd-td')][2][contains(.,'${key_entryDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1523,7 +1523,7 @@
 </tr>
 <tr>
 	<td>TABLE_SEARCH_BY_NAME_AND_CONTENT</td>
-	<td>//div[@class='dnd-td' and contains(.,'${key_productName}')]/following-sibling::div[contains(text(),'${key_value}')]</td>
+	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_productName}')]/following-sibling::div[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

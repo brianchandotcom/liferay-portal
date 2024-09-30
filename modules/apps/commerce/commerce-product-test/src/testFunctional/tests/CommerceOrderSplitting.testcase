@@ -1104,7 +1104,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "$ 25.00",
 				key_cellName2 = "",
-				key_columnNumber = 4,
+				key_columnNumber = 5,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "Minium Portal");
 		}
@@ -1113,7 +1113,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "$ 24.00",
 				key_cellName2 = "",
-				key_columnNumber = 4,
+				key_columnNumber = 5,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "Minium Portal");
 		}
@@ -1379,7 +1379,7 @@ definition {
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 		}
 
 		task ("When the admin opens the customer order") {
@@ -1394,14 +1394,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 		}
 
 		task ("But if the admin changes the quantity inside the customer order") {
@@ -1414,14 +1414,14 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1,
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productTotalPrice = "$ 24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
 				productQuantity = 6,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 		}
 
 		task ("Then the changes are not updated inside the supplier order") {

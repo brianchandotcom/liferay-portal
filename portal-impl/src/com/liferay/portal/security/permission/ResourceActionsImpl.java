@@ -1309,13 +1309,18 @@ public class ResourceActionsImpl implements ResourceActions {
 				guestUnsupportedActions, guestDefaultActions);
 		}
 
+		Set<String> ownerDefaultActions =
+			resourceActionsBag.getOwnerDefaultActions();
+
 		Element ownerDefaultsElement = _getPermissionsChildElement(
 			resourceElement, "owner-defaults");
 
 		if (ownerDefaultsElement != null) {
-			_readActionKeys(
-				resourceActionsBag.getOwnerDefaultActions(),
-				ownerDefaultsElement);
+			_readActionKeys(ownerDefaultActions, ownerDefaultsElement);
+		}
+
+		if (ownerDefaultActions.isEmpty()) {
+			ownerDefaultActions.addAll(resourceActions);
 		}
 
 		Set<String> layoutManagerActions =

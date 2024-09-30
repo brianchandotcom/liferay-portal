@@ -69,26 +69,32 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (themeDisplay.isIsolated() ||
-				themeDisplay.isLifecycleResource() ||
-				themeDisplay.isStateExclusive()) {
-
+			if (themeDisplay == null) {
 				position = _POSITION_INLINE;
 			}
 			else {
-				position = _POSITION_AUTO;
-			}
+				if (themeDisplay.isIsolated() ||
+					themeDisplay.isLifecycleResource() ||
+					themeDisplay.isStateExclusive()) {
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+					position = _POSITION_INLINE;
+				}
+				else {
+					position = _POSITION_AUTO;
+				}
 
-			String portletId = portletDisplay.getId();
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
 
-			if (Validator.isNotNull(portletId) &&
-				themeDisplay.isPortletEmbedded(
-					themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
-					portletId)) {
+				String portletId = portletDisplay.getId();
 
-				position = _POSITION_INLINE;
+				if (Validator.isNotNull(portletId) &&
+					themeDisplay.isPortletEmbedded(
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getLayout(), portletId)) {
+
+					position = _POSITION_INLINE;
+				}
 			}
 		}
 

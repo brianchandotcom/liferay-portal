@@ -134,6 +134,12 @@ public class ResourceActionsUtil {
 		return _resourceActions.getPortletResourceLayoutManagerActions(name);
 	}
 
+	public static List<String> getPortletResourceOwnerDefaultActions(
+		String name) {
+
+		return _resourceActions.getPortletResourceOwnerDefaultActions(name);
+	}
+
 	public static String getPortletRootModelResource(String portletName) {
 		return _resourceActions.getPortletRootModelResource(portletName);
 	}

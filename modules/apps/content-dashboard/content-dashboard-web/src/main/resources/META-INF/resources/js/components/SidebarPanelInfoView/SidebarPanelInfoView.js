@@ -310,6 +310,7 @@ const SidebarPanelInfoView = ({
 									contentPerformanceDataFetchURL={
 										contentPerformanceDataFetchURL
 									}
+									getItemVersionsURL={getItemVersionsURL}
 								/>
 							</ClayTabs.TabPane>
 						)}

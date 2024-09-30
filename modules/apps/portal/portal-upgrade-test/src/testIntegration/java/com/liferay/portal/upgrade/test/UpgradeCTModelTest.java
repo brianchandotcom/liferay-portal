@@ -65,7 +65,7 @@ public class UpgradeCTModelTest {
 
 				_db.runSQL(
 					StringBundler.concat(
-						"create table UpgradeCTModelMappingTest (companyId",
+						"create table UpgradeCTModelMappingTest (companyId ",
 						"LONG not null, leftId LONG not null, rightId LONG ",
 						"not null, primary key (leftId, rightId))"));
 

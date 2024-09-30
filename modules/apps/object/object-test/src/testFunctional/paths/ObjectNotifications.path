@@ -12,12 +12,12 @@
 <tbody>
 	<tr>
 		<td>NOTIFICATION_STATUS</td>
-		<td>//div[@class='dnd-td']//strong[contains(.,'${key_statusName}')]</td>
+		<td>//div[contains(@class,'dnd-td')]//strong[contains(.,'${key_statusName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>DELETE_NOTIFICATION_IN_QUEUE</td>
-		<td>//div[@class='dnd-td'][contains(.,'${key_text}')]//following-sibling::div//*[contains(@class, 'icon-trash')]</td>
+		<td>//div[contains(@class,'dnd-td')][contains(.,'${key_text}')]//following-sibling::div//*[contains(@class, 'icon-trash')]</td>
 		<td></td>
 	</tr>
 	<tr>

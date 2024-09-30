@@ -422,17 +422,17 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_LABEL</td>
-		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldLabel}')]</td>
+		<td>//div[contains(@class, 'dnd-td') and contains (.,'${key_fieldLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_TYPE</td>
-		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldType}')]</td>
+		<td>//div[contains(@class, 'dnd-td') and contains (.,'${key_fieldType}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_LAYOUT_LABEL</td>
-		<td>//div[(@class = 'dnd-td') and contains (.,'${key_layoutLabel}')]</td>
+		<td>//div[contains(@class, 'dnd-td') and contains (.,'${key_layoutLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

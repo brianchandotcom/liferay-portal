@@ -11,12 +11,9 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
@@ -32,10 +29,6 @@ public class AuthVerifierRegistry {
 
 	public static AuthVerifier getAuthVerifier(String simpleClassName) {
 		return _serviceTrackerMap.getService(simpleClassName);
-	}
-
-	public static List<AuthVerifier> getAuthVerifiers() {
-		return _authVerifiers;
 	}
 
 	private static AuthVerifierConfiguration _buildAuthVerifierConfiguration(
@@ -71,23 +64,6 @@ public class AuthVerifierRegistry {
 
 		return authVerifierConfiguration;
 	}
-
-	private static final List<AuthVerifier> _authVerifiers =
-		Collections.synchronizedList(
-			new SortedArrayList<AuthVerifier>() {
-
-				@Override
-				public int compare(
-					AuthVerifier authVerifier1, AuthVerifier authVerifier2) {
-
-					if (authVerifier1.isForceable()) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-			});
 
 	private static final ServiceTrackerMap<String, AuthVerifier>
 		_serviceTrackerMap;
@@ -180,8 +156,6 @@ public class AuthVerifierRegistry {
 								authVerifierConfiguration, null);
 						}
 
-						_authVerifiers.add(authVerifier);
-
 						return new Tracked(authVerifier, serviceRegistration);
 					}
 
@@ -223,8 +197,6 @@ public class AuthVerifierRegistry {
 						if (serviceRegistration != null) {
 							serviceRegistration.unregister();
 						}
-
-						_authVerifiers.remove(tracked.getAuthVerifier());
 
 						bundleContext.ungetService(serviceReference);
 					}

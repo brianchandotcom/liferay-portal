@@ -46,6 +46,27 @@ public class AdvancedConfiguration implements Cloneable, Serializable {
 
 	protected Collapse collapse;
 
+	public String[] getFields() {
+		return fields;
+	}
+
+	public void setFields(String[] fields) {
+		this.fields = fields;
+	}
+
+	public void setFields(
+		UnsafeSupplier<String[], Exception> fieldsUnsafeSupplier) {
+
+		try {
+			fields = fieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] fields;
+
 	public Source getSource() {
 		return source;
 	}

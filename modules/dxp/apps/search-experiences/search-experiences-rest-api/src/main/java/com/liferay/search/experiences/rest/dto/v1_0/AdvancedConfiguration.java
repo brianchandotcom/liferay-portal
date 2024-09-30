@@ -94,6 +94,47 @@ public class AdvancedConfiguration implements Serializable {
 	private Supplier<Collapse> _collapseSupplier;
 
 	@Schema
+	public String[] getFields() {
+		if (_fieldsSupplier != null) {
+			fields = _fieldsSupplier.get();
+
+			_fieldsSupplier = null;
+		}
+
+		return fields;
+	}
+
+	public void setFields(String[] fields) {
+		this.fields = fields;
+
+		_fieldsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFields(
+		UnsafeSupplier<String[], Exception> fieldsUnsafeSupplier) {
+
+		_fieldsSupplier = () -> {
+			try {
+				return fieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] fields;
+
+	@JsonIgnore
+	private Supplier<String[]> _fieldsSupplier;
+
+	@Schema
 	@Valid
 	public Source getSource() {
 		if (_sourceSupplier != null) {
@@ -214,6 +255,32 @@ public class AdvancedConfiguration implements Serializable {
 			sb.append("\"collapse\": ");
 
 			sb.append(String.valueOf(collapse));
+		}
+
+		String[] fields = getFields();
+
+		if (fields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < fields.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(fields[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < fields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		Source source = getSource();

@@ -10,4 +10,5 @@ clientDir: "../portal-tools-rest-builder-test-client/src/main/java"
 compatibilityVersion: 6
 forcePredictableOperationId: true
 generateGraphQL: false
+generateJSClient: true
 testDir: "../portal-tools-rest-builder-test-test/src/testIntegration/java"

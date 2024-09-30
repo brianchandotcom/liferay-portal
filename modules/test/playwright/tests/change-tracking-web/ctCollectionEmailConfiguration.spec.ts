@@ -39,7 +39,7 @@ test('LPD-28802 Verify email notification checkbox is displayed', async ({
 
 	const dialogIFrame = page.frameLocator('iframe');
 
-	await dialogIFrame.getByRole('link', {name: 'Publications'}).click();
+	await dialogIFrame.getByRole('button', {name: 'Publications'}).click();
 
 	const invitePublication = dialogIFrame.getByRole('cell', {
 		name: 'Receive a notification when someone: Invites you to work on a publication.',

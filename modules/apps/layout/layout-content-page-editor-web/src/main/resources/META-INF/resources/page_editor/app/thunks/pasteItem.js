@@ -7,6 +7,7 @@ import pasteItemAction from '../actions/pasteItem';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import FragmentService from '../services/FragmentService';
 import getFirstControlsId from '../utils/getFirstControlsId';
+import sortItemIds from '../utils/sortItemIds';
 import filterSelectedItems from './filterSelectedItems';
 
 export default function pasteItem({
@@ -18,7 +19,10 @@ export default function pasteItem({
 		const {layoutData, segmentsExperienceId} = getState();
 
 		FragmentService.pasteItem({
-			itemIds: filterSelectedItems(copiedItemIds, layoutData.items),
+			itemIds: sortItemIds(
+				filterSelectedItems(copiedItemIds, layoutData.items),
+				layoutData
+			),
 			onNetworkStatus: dispatch,
 			parentItemId,
 			segmentsExperienceId,

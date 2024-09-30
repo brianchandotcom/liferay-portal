@@ -523,7 +523,9 @@ public class LayoutStructure {
 		List<LayoutStructureItem> copiedLayoutStructureItems =
 			new ArrayList<>();
 
-		for (String itemId : itemIds) {
+		for (int i = itemIds.size() - 1; i >= 0; i--) {
+			String itemId = itemIds.get(i);
+
 			if (Objects.equals(itemId, parentItemId)) {
 				String oldParentItemId = parentItemId;
 

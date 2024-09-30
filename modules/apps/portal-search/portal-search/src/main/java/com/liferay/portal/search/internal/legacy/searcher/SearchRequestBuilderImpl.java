@@ -500,6 +500,15 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public SearchRequestBuilder storedFields(String... storedFields) {
+		_withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setStoredFields(
+				storedFields));
+
+		return this;
+	}
+
+	@Override
 	public SearchRequestBuilder withFacetContext(
 		Consumer<FacetContext> facetContextConsumer) {
 

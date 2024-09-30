@@ -301,6 +301,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	}
 
 	@Override
+	public String[] getStoredFields() {
+		return _storedFields;
+	}
+
+	@Override
 	public boolean isBasicFacetSelection() {
 		return _basicFacetSelection;
 	}
@@ -479,6 +484,10 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		Collections.addAll(_statsRequests, statsRequests);
 	}
 
+	public void setStoredFields(String... storedFields) {
+		_storedFields = storedFields;
+	}
+
 	private final Map<String, Aggregation> _aggregationsMap =
 		new LinkedHashMap<>();
 	private boolean _basicFacetSelection;
@@ -514,5 +523,6 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	private Integer _size;
 	private final List<Sort> _sorts = new ArrayList<>();
 	private final List<StatsRequest> _statsRequests = new ArrayList<>();
+	private String[] _storedFields;
 
 }

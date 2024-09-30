@@ -57,12 +57,12 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 		<c:choose>
 			<c:when test="<%= (oAuth2AccessTokenExpirationDays < 30) && (oAuth2AccessTokenExpirationDays > 0) %>">
 				<div class="alert alert-warning">
-					<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION)) %>" key="scim-access-token-expiration-date-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION)) %>" key="the-access-token-for-the-scim-client-will-expire-at-x" translateArguments="<%= false %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= oAuth2AccessTokenExpirationDays < 0 %>">
 				<div class="alert alert-danger">
-					<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION)) %>" key="scim-access-token-already-expired-date-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION)) %>" key="the-access-token-for-the-scim-client-expired-at-x" translateArguments="<%= false %>" />
 				</div>
 			</c:when>
 		</c:choose>

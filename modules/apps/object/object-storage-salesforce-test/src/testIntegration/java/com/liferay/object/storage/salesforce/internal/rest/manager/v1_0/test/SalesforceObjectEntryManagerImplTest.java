@@ -14,6 +14,7 @@ import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
+import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -162,84 +165,75 @@ public class SalesforceObjectEntryManagerImplTest
 				null, LocalizedMapUtil.getLocalizedMap("Tickets"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
-				Collections.emptyList());
-
-		ObjectFieldUtil.addCustomObjectField(
-			new DateObjectFieldBuilder(
-			).externalReferenceCode(
-				"Due_date__c"
-			).userId(
-				adminUser.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Due Date")
-			).name(
-				"dueDate"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).build());
-
-		ObjectFieldUtil.addCustomObjectField(
-			new BooleanObjectFieldBuilder(
-			).externalReferenceCode(
-				"Flagged__c"
-			).userId(
-				adminUser.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Flagged")
-			).name(
-				"flagged"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).build());
-
-		ObjectFieldUtil.addCustomObjectField(
-			new LongIntegerObjectFieldBuilder(
-			).externalReferenceCode(
-				"Object_Definition_id__c"
-			).userId(
-				adminUser.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Object Definition ID")
-			).name(
-				"objectDefinitionId"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).build());
-
-		ObjectFieldUtil.addCustomObjectField(
-			new DateTimeObjectFieldBuilder(
-			).externalReferenceCode(
-				"Start_date__c"
-			).userId(
-				adminUser.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Start Date")
-			).name(
-				"startDate"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.singletonList(
-					_createObjectFieldSetting(
-						ObjectFieldSettingConstants.NAME_TIME_STORAGE,
-						ObjectFieldSettingConstants.VALUE_USE_INPUT_AS_ENTERED))
-			).build());
-
-		ObjectFieldUtil.addCustomObjectField(
-			new PicklistObjectFieldBuilder(
-			).externalReferenceCode(
-				"Status__c"
-			).userId(
-				adminUser.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Status")
-			).listTypeDefinitionId(
-				listTypeDefinition.getListTypeDefinitionId()
-			).name(
-				"customStatus"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).build());
+				ListUtil.fromArray(
+					new RichTextObjectFieldBuilder(
+					).externalReferenceCode(
+						"Description__c"
+					).userId(
+						adminUser.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Description")
+					).name(
+						"description"
+					).build(),
+					new DateObjectFieldBuilder(
+					).externalReferenceCode(
+						"Due_date__c"
+					).userId(
+						adminUser.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Due Date")
+					).name(
+						"dueDate"
+					).build(),
+					new BooleanObjectFieldBuilder(
+					).externalReferenceCode(
+						"Flagged__c"
+					).userId(
+						adminUser.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Flagged")
+					).name(
+						"flagged"
+					).build(),
+					new LongIntegerObjectFieldBuilder(
+					).externalReferenceCode(
+						"Object_Definition_id__c"
+					).userId(
+						adminUser.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Object Definition ID")
+					).name(
+						"objectDefinitionId"
+					).build(),
+					new DateTimeObjectFieldBuilder(
+					).externalReferenceCode(
+						"Start_date__c"
+					).userId(
+						adminUser.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Start Date")
+					).name(
+						"startDate"
+					).objectFieldSettings(
+						Collections.singletonList(
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+								ObjectFieldSettingConstants.
+									VALUE_USE_INPUT_AS_ENTERED))
+					).build(),
+					new PicklistObjectFieldBuilder(
+					).externalReferenceCode(
+						"Status__c"
+					).userId(
+						adminUser.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Status")
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"customStatus"
+					).build()));
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
@@ -549,15 +543,18 @@ public class SalesforceObjectEntryManagerImplTest
 		String title = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, false, null, title);
+			null, "<p>Description</p>", null, false, null, title);
 
-		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
+		_assertObjectEntry(
+			"<p>Description</p>", objectEntry.getExternalReferenceCode(),
+			title);
 	}
 
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, false, null, RandomTestUtil.randomString());
+			null, RandomTestUtil.randomString(), null, false, null,
+			RandomTestUtil.randomString());
 
 		_objectEntryManager.partialUpdateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -565,13 +562,17 @@ public class SalesforceObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
+						"description", "<p>Description</p>"
+					).put(
 						"title", "Able"
 					).build();
 				}
 			},
 			null);
 
-		_assertObjectEntry(objectEntry.getExternalReferenceCode(), "Able");
+		_assertObjectEntry(
+			"<p>Description</p>", objectEntry.getExternalReferenceCode(),
+			"Able");
 	}
 
 	@Override
@@ -590,8 +591,18 @@ public class SalesforceObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			String customStatus, Date date, boolean flagged,
+			String customStatus, Date dueDate, boolean flagged,
 			LocalDateTime startDate, String title)
+		throws Exception {
+
+		return _addObjectEntry(
+			customStatus, RandomTestUtil.randomString(), dueDate, flagged,
+			startDate, title);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			String customStatus, String description, Date dueDate,
+			boolean flagged, LocalDateTime startDate, String title)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
@@ -601,8 +612,11 @@ public class SalesforceObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>put(
 						"customStatus", customStatus
 					).put(
+						"description", description
+					).put(
 						"dueDate",
-						(date != null) ? _simpleDateFormat.format(date) : null
+						(dueDate != null) ? _simpleDateFormat.format(dueDate) :
+							null
 					).put(
 						"flagged", flagged
 					).put(
@@ -622,13 +636,21 @@ public class SalesforceObjectEntryManagerImplTest
 		return objectEntry;
 	}
 
-	private void _assertObjectEntry(String externalReferenceCode, String title)
+	private void _assertObjectEntry(
+			String description, String externalReferenceCode, String title)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
 			_objectDefinition, ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		Assert.assertEquals(
+			description,
+			MapUtil.getString(objectEntry.getProperties(), "description"));
+		Assert.assertEquals(
+			HtmlParserUtil.extractText(description),
+			MapUtil.getString(
+				objectEntry.getProperties(), "descriptionRawText"));
 		Assert.assertEquals(
 			title, MapUtil.getString(objectEntry.getProperties(), "title"));
 	}

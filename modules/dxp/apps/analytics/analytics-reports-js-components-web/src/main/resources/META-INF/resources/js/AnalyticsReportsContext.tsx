@@ -10,9 +10,10 @@ import {
 	Individuals,
 	MetricType,
 	RangeSelectors,
+	Version,
 } from './types/global';
 
-type State = {
+export type State = {
 	assetId: string;
 	assetType: AssetTypes | null;
 	changeIndividualFilter: (value: any) => void;
@@ -24,6 +25,7 @@ type State = {
 		rangeSelector: RangeSelectors;
 	};
 	groupId: string;
+	versions: Version[] | null;
 };
 
 enum Types {
@@ -49,6 +51,7 @@ const initialState: State = {
 		rangeSelector: RangeSelectors.Last30Days,
 	},
 	groupId: '0',
+	versions: null,
 };
 
 export const AnalyticsReportsContext = createContext(initialState);
@@ -98,6 +101,7 @@ interface IAnalyticsReportsProviderProps
 	assetId: string;
 	assetType: AssetTypes | null;
 	groupId: string;
+	versions: Version[] | null;
 }
 
 const AnalyticsReportsProvider: React.FC<IAnalyticsReportsProviderProps> = ({
@@ -105,6 +109,7 @@ const AnalyticsReportsProvider: React.FC<IAnalyticsReportsProviderProps> = ({
 	assetType,
 	children,
 	groupId,
+	versions,
 }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -139,6 +144,7 @@ const AnalyticsReportsProvider: React.FC<IAnalyticsReportsProviderProps> = ({
 				changeMetricFilter,
 				changeRangeSelectorFilter,
 				groupId,
+				versions,
 			}}
 		>
 			{children}

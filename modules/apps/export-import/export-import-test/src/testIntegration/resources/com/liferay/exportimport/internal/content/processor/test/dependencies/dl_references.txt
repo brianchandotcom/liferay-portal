@@ -133,3 +133,51 @@ Nonlegacy HTML reference with escaped single quotes:
 <a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]\'>Link</a>
 <a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2\'>Link</a>
 <a href=\'/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\'>Link</a>
+
+Style reference with no quotes:
+
+background: url(/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]);
+background: url(/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]);
+background: url(/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]);
+background: url(/documents/[$GROUP_ID$]/0/[$TITLE$]);
+background: url(/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2);
+background: url(/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]);
+background: url(/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]);
+background: url(/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]);
+background: url(/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]);
+background: url(/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]);
+background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]);
+background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]);
+background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]);
+
+Style reference with double quotes:
+
+background: url("/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]");
+background: url("/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]");
+background: url("/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]");
+background: url("/documents/[$GROUP_ID$]/0/[$TITLE$]");
+background: url("/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2");
+background: url("/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]");
+background: url("/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]");
+background: url("/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]");
+background: url("/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]");
+background: url("/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]");
+background: url("[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]");
+background: url("[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]");
+background: url("[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]");
+
+Style reference with single quotes:
+
+background: url('/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]');
+background: url('/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]');
+background: url('/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]');
+background: url('/documents/[$GROUP_ID$]/0/[$TITLE$]');
+background: url('/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2');
+background: url('/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]');
+background: url('/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]');
+background: url('/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]');
+background: url('/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]');
+background: url('/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]');
+background: url('[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]');
+background: url('[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]');
+background: url('[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]');

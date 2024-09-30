@@ -27,6 +27,7 @@ import org.junit.Assert;
 
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.query_dsl.FieldAndFormat;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
 import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.SearchResponse;
@@ -51,7 +52,9 @@ public class SearchAssert {
 			String... expectedValues)
 		throws Exception {
 
-		searchRequestBuilder.storedFields(StringPool.STAR);
+		searchRequestBuilder.fields(
+			FieldAndFormat.of(
+				fieldAndFormat -> fieldAndFormat.field(StringPool.STAR)));
 
 		SearchRequest searchRequest = searchRequestBuilder.build();
 
@@ -102,7 +105,9 @@ public class SearchAssert {
 			new SearchRequest.Builder();
 
 		searchRequestBuilder.query(query);
-		searchRequestBuilder.storedFields(StringPool.STAR);
+		searchRequestBuilder.fields(
+			FieldAndFormat.of(
+				fieldAndFormat -> fieldAndFormat.field(StringPool.STAR)));
 
 		return search(openSearchClient, searchRequestBuilder.build());
 	}

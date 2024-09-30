@@ -202,9 +202,10 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 
 		return _toPhone(
 			PhoneLocalServiceUtil.addPhone(
-				_user.getUserId(), className, classPK, phone.getPhoneNumber(),
-				phone.getExtension(), _getListTypeId(listTypeId),
-				phone.getPrimary(), new ServiceContext()));
+				RandomTestUtil.randomString(), _user.getUserId(), className,
+				classPK, phone.getPhoneNumber(), phone.getExtension(),
+				_getListTypeId(listTypeId), phone.getPrimary(),
+				new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {

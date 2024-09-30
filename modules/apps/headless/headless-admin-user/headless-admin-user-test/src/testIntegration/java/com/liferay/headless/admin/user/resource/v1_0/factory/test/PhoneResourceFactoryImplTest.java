@@ -138,6 +138,7 @@ public class PhoneResourceFactoryImplTest {
 					ListType listType = listTypes.get(0);
 
 					_phoneLocalService.addPhone(
+						RandomTestUtil.randomString(),
 						_companyAdminUser.getUserId(),
 						_organization.getModelClassName(),
 						_organization.getOrganizationId(),

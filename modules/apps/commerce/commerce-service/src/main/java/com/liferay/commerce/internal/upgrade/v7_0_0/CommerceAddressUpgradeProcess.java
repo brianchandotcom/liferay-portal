@@ -190,7 +190,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 		try {
 			_phoneLocalService.addPhone(
-				serviceContext.getUserId(), Address.class.getName(),
+				null, serviceContext.getUserId(), Address.class.getName(),
 				address.getAddressId(), phoneNumber, null,
 				_listTypeLocalService.getListTypeId(
 					address.getCompanyId(), "phone-number",

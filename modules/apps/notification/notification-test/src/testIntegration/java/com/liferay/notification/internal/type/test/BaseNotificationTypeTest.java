@@ -107,10 +107,10 @@ public class BaseNotificationTypeTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ListTypeEntry listTypeEntry1 = ListTypeEntryUtil.createListTypeEntry(
-			"listTypeEntry1Key",
+			RandomTestUtil.randomString(),
 			Collections.singletonMap(LocaleUtil.US, "listTypeEntry1Value"));
 		ListTypeEntry listTypeEntry2 = ListTypeEntryUtil.createListTypeEntry(
-			"listTypeEntry2Key",
+			RandomTestUtil.randomString(),
 			Collections.singletonMap(LocaleUtil.US, "listTypeEntry2Value"));
 
 		_listTypeDefinition =
@@ -442,7 +442,7 @@ public class BaseNotificationTypeTest {
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationship", false,
+				"oneToManyObjectRelationship", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		_childAuthorTermValues = HashMapBuilder.<String, Object>put(

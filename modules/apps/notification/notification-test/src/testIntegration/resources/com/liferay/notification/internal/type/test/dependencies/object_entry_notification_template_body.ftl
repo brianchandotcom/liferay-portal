@@ -14,6 +14,6 @@ ${ObjectField_integerObjectField.getData()}
 ${ObjectField_longIntegerObjectField.getData()}
 ${ObjectField_multiselectPicklistObjectField.getData()}
 ${ObjectField_picklistObjectField.getData()}
-${ObjectField_r_oneToManyRelationship_c_parentObjectDefinitionId.getData()}
+${ObjectField_r_oneToManyObjectRelationship_c_parentObjectDefinitionId.getData()}
 ${ObjectField_textObjectField.getData()}
 ${portalURL}

@@ -55,7 +55,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -1020,9 +1019,7 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectFieldId2(), false);
 		}
 
-		if (edge && !objectRelationship.isEdge() &&
-			FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
-
+		if (edge && !objectRelationship.isEdge()) {
 			_bindObjectDefinitions(objectRelationship);
 		}
 

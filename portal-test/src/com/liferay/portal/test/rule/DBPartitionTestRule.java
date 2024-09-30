@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
+import com.liferay.portal.util.PortalInstances;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -31,10 +32,12 @@ public class DBPartitionTestRule implements TestRule {
 				}
 				catch (Exception exception) {
 					if (exception instanceof NoSuchCompanyException) {
-						CompanyLocalServiceUtil.addCompany(
-							null, _PARTITION_WEB_ID, _PARTITION_WEB_ID,
-							_PARTITION_WEB_ID, 0, true, true, null, null, null,
-							null, null, null);
+						PortalInstances.addCompany(
+							"",
+							() -> CompanyLocalServiceUtil.addCompany(
+								null, _PARTITION_WEB_ID, _PARTITION_WEB_ID,
+								_PARTITION_WEB_ID, 0, true, true, null, null, null,
+								null, null, null));
 					}
 					else {
 						throw exception;

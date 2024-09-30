@@ -52,12 +52,11 @@ public abstract class BaseQueryStringTestCase extends BaseIndexingTestCase {
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addSelectedFieldNames(
-							"_source"
-						).includeResponseString(
-							true
-						));
+					searchRequestBuilder -> searchRequestBuilder.fetchSource(
+						true
+					).includeResponseString(
+						true
+					));
 
 				consumer.accept(indexingTestHelper);
 

@@ -3,14 +3,20 @@
 		"@clayui/alert": "3.111.0",
 		"@clayui/button": "3.116.0",
 		"@clayui/core": "3.120.0",
+		"@clayui/data-provider": "3.119.0",
 		"@clayui/drop-down": "3.120.0",
 		"@clayui/empty-state": "3.116.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/link": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",
+		"@clayui/popover": "3.119.0",
+		"@clayui/tooltip": "3.119.0",
 		"classnames": "2.3.1",
+		"d3": "5.9.3",
 		"frontend-js-web": "*",
-		"react": "16.12.0"
+		"moment": "^2.30.1",
+		"react": "16.12.0",
+		"recharts": "^2.8.0"
 	},
 	"jest": {
 		"setupFiles": [

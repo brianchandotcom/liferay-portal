@@ -38,3 +38,27 @@ export function toThousands(number: number) {
 
 	return `${setFactor(factor)}${suffix}`.toUpperCase();
 }
+
+export function toDuration(
+	time: number,
+	format: string = 'DD[d] hh[h] mm[m] ss[s]'
+): string {
+	if (time === 0) {
+		format = 'DD[d] hh[h] mm[m] s[s]';
+	}
+
+	const duration = new Date(time);
+
+	const days = duration.getUTCDate() - 1;
+	const hours = duration.getUTCHours();
+	const minutes = duration.getUTCMinutes();
+	const seconds = duration.getUTCSeconds();
+	const formattedDuration = format
+		.replace('DD', days.toString())
+		.replace('hh', hours.toString().padStart(2, '0'))
+		.replace('mm', minutes.toString().padStart(2, '0'))
+		.replace('ss', seconds.toString().padStart(2, '0'))
+		.replace('s', seconds.toString());
+
+	return formattedDuration;
+}

@@ -3,13 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export enum Colors {
+	Black = '#000000',
+	Blue = '#4b9fff',
+	Cyan = '#5fc8ff',
+	Green = '#9be169',
+	Indigo = '#7785ff',
+	Orange = '#ffb46e',
+	Pink = '#ff73c3',
+	Purple = '#af78ff',
+	Red = '#ff5f5f',
+	Teal = '#50d2a0',
+	Yellow = '#ffd76e',
+}
+
 export enum Individuals {
 	AllIndividuals = 'ALL',
-	KnownIndividuals = 'KNOWN',
 	AnonymousIndividuals = 'UNKNOWN',
+	KnownIndividuals = 'KNOWN',
 }
 
 export enum RangeSelectors {
+	Last24Hours = '0',
 	Last7Days = '7',
 	Last28Days = '28',
 	Last30Days = '30',
@@ -20,19 +35,39 @@ export enum MetricName {
 	Comments = 'commentsMetric',
 	Downloads = 'downloadsMetric',
 	Previews = 'previewsMetric',
+	Undefined = 'undefinedMetric',
 	Views = 'viewsMetric',
 }
 
 export enum AssetTypes {
-	Document = 'document',
-	WebContent = 'journal',
 	Blog = 'blog',
+	Document = 'document',
 	Undefined = 'undefined',
+	WebContent = 'journal',
 }
 
 export enum MetricType {
 	Comments = 'COMMENTS',
 	Downloads = 'DOWNLOADS',
 	Previews = 'PREVIEWS',
+	Undefined = 'UNDEFINED',
 	Views = 'VIEWS',
 }
+
+export enum Alignments {
+	Center = 'center',
+	Left = 'left',
+	Right = 'right',
+}
+
+export enum Weights {
+	Bold = 'bold',
+	Light = 'light',
+	Normal = 'normal',
+	Semibold = 'semibold',
+}
+
+export type Version = {
+	createDate: string;
+	version: string;
+};

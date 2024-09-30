@@ -204,6 +204,7 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletDisplayContext.
 				setSuggestionsContributorConfiguration(
 					_getSuggestionsContributorConfiguration(
+						themeDisplay.getCompanyId(),
 						_isIncludeAttachments(
 							portletPreferencesLookup, searchBarPrecedenceHelper,
 							portletSharedSearchResponse.getSearchSettings(),
@@ -420,10 +421,10 @@ public class SearchBarPortletDisplayContextFactory {
 	}
 
 	private String _getSuggestionsContributorConfiguration(
-		boolean includeAttachments,
+		long companyId, boolean includeAttachments,
 		String[] suggestionsContributorConfigurations) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35128")) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35128")) {
 			return StringBundler.concat(
 				StringPool.OPEN_BRACKET,
 				StringUtil.merge(

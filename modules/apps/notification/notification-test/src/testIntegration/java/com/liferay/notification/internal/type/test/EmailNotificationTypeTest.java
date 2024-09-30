@@ -233,7 +233,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectEntry, group.getGroupKey());
 
 		_assertNotificationQueueEntryBody(
-			_getObjectEntryExpectedBody(objectEntry));
+			_getObjectEntryNotificationQueueEntryBody(objectEntry));
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 
@@ -284,7 +284,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		}
 
 		_assertNotificationQueueEntryBody(
-			_getObjectEntryExpectedBody(objectEntry));
+			_getObjectEntryNotificationQueueEntryBody(objectEntry));
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 	}
@@ -338,7 +338,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			CommerceOrderPaymentConstants.STATUS_PENDING);
 
 		_assertNotificationQueueEntryBody(
-			_getCommerceOrderExpectedBody(commerceOrder));
+			_getCommerceOrderNotificationQueueEntryBody(commerceOrder));
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 
@@ -1343,7 +1343,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				String.valueOf(notificationRecipientSettingsMap.get("to"))));
 	}
 
-	private void _assertNotificationQueueEntryBody(String expectedBody)
+	private void _assertNotificationQueueEntryBody(
+			String notificationQueueEntryBody)
 		throws Exception {
 
 		List<NotificationQueueEntry> notificationQueueEntries =
@@ -1358,7 +1359,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntries.get(0);
 
-		Assert.assertEquals(expectedBody, notificationQueueEntry.getBody());
+		Assert.assertEquals(
+			notificationQueueEntryBody, notificationQueueEntry.getBody());
 
 		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntry);
@@ -1378,7 +1380,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		return dateFormat.format(date);
 	}
 
-	private String _getCommerceOrderExpectedBody(CommerceOrder commerceOrder)
+	private String _getCommerceOrderNotificationQueueEntryBody(
+			CommerceOrder commerceOrder)
 		throws Exception {
 
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
@@ -1411,7 +1414,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationQueueEntry.getNotificationQueueEntryId()));
 	}
 
-	private String _getObjectEntryExpectedBody(ObjectEntry objectEntry)
+	private String _getObjectEntryNotificationQueueEntryBody(
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =

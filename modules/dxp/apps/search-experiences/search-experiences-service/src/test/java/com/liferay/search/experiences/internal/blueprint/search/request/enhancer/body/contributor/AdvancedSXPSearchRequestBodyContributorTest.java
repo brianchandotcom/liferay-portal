@@ -87,6 +87,35 @@ public class AdvancedSXPSearchRequestBodyContributorTest {
 	}
 
 	@Test
+	public void testFields() {
+		Configuration configuration = new Configuration();
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder();
+
+		AdvancedConfiguration advancedConfiguration =
+			new AdvancedConfiguration();
+
+		List<String> storedFields = Arrays.asList(
+			Field.TITLE, Field.DESCRIPTION);
+
+		advancedConfiguration.setFields(storedFields.toArray(new String[0]));
+
+		configuration.setAdvancedConfiguration(advancedConfiguration);
+
+		_advancedSXPSearchRequestBodyContributor.contribute(
+			configuration, searchRequestBuilder, null);
+
+		SearchContext searchContext = searchRequestBuilder.withSearchContextGet(
+			Function.identity());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		Assert.assertEquals(
+			storedFields, Arrays.asList(queryConfig.getSelectedFieldNames()));
+	}
+
+	@Test
 	public void testStoredFields() {
 		Configuration configuration = new Configuration();
 
@@ -107,13 +136,10 @@ public class AdvancedSXPSearchRequestBodyContributorTest {
 		_advancedSXPSearchRequestBodyContributor.contribute(
 			configuration, searchRequestBuilder, null);
 
-		SearchContext searchContext = searchRequestBuilder.withSearchContextGet(
-			Function.identity());
+		SearchRequest searchRequest = searchRequestBuilder.build();
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		Assert.assertEquals(
-			storedFields, Arrays.asList(queryConfig.getSelectedFieldNames()));
+		Assert.assertArrayEquals(
+			storedFields.toArray(), searchRequest.getStoredFields());
 	}
 
 	private AdvancedSXPSearchRequestBodyContributor

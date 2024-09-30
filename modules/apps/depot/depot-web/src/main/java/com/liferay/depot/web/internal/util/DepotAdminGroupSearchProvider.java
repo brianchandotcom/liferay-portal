@@ -126,13 +126,16 @@ public class DepotAdminGroupSearchProvider {
 
 		if (Validator.isNotNull(keywords)) {
 			groupSearch.setResultsAndTotal(
-				() -> _groupService.search(
-					company.getCompanyId(),
-					new long[] {
-						_portal.getClassNameId(DepotEntry.class.getName())
-					},
-					keywords, groupParams, groupSearch.getStart(),
-					groupSearch.getEnd(), groupSearch.getOrderByComparator()),
+				() -> _processGroups(
+					themeDisplay.getScopeGroup(),
+					_groupService.search(
+						company.getCompanyId(),
+						new long[] {
+							_portal.getClassNameId(DepotEntry.class.getName())
+						},
+						keywords, groupParams, groupSearch.getStart(),
+						groupSearch.getEnd(),
+						groupSearch.getOrderByComparator())),
 				_groupService.searchCount(
 					company.getCompanyId(),
 					new long[] {
@@ -142,13 +145,16 @@ public class DepotAdminGroupSearchProvider {
 		}
 		else {
 			groupSearch.setResultsAndTotal(
-				() -> _groupService.search(
-					company.getCompanyId(),
-					new long[] {
-						_portal.getClassNameId(DepotEntry.class.getName())
-					},
-					keywords, groupParams, groupSearch.getStart(),
-					groupSearch.getEnd(), groupSearch.getOrderByComparator()),
+				() -> _processGroups(
+					themeDisplay.getScopeGroup(),
+					_groupService.search(
+						company.getCompanyId(),
+						new long[] {
+							_portal.getClassNameId(DepotEntry.class.getName())
+						},
+						keywords, groupParams, groupSearch.getStart(),
+						groupSearch.getEnd(),
+						groupSearch.getOrderByComparator())),
 				_groupService.searchCount(
 					company.getCompanyId(),
 					new long[] {
@@ -158,6 +164,25 @@ public class DepotAdminGroupSearchProvider {
 		}
 
 		return groupSearch;
+	}
+
+	private List<Group> _processGroups(Group group, List<Group> groups) {
+		if (!group.isStagingGroup()) {
+			return groups;
+		}
+
+		List<Group> processedGroups = new ArrayList<>();
+
+		for (Group curGroup : groups) {
+			if (curGroup.hasStagingGroup()) {
+				processedGroups.add(curGroup.getStagingGroup());
+			}
+			else {
+				processedGroups.add(curGroup);
+			}
+		}
+
+		return processedGroups;
 	}
 
 	@Reference

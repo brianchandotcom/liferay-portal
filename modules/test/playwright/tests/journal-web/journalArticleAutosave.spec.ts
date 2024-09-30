@@ -47,7 +47,20 @@ const autosaveWithoutPermissionsTest = mergeTests(
 	}),
 	isolatedSiteTest,
 	journalPagesTest,
-	loginTest(),
+	loginTest()
+);
+
+const autoSaveUndoRedoTest = mergeTests(
+	apiHelpersTest,
+	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-11228': true,
+		'LPD-15596': true,
+		'LPD-36053': true,
+	}),
+	isolatedSiteTest,
+	journalPagesTest,
+	loginTest()
 );
 
 autoSaveTest(
@@ -80,19 +93,6 @@ autoSaveTest(
 		expect(journalEditArticlePage.undoButton).not.toBeVisible();
 		expect(journalEditArticlePage.redoButton).not.toBeVisible();
 	}
-);
-
-const autoSaveUndoRedoTest = mergeTests(
-	apiHelpersTest,
-	applicationsMenuPageTest,
-	featureFlagsTest({
-		'LPD-11228': true,
-		'LPD-15596': true,
-		'LPD-36053': true,
-	}),
-	isolatedSiteTest,
-	journalPagesTest,
-	loginTest()
 );
 
 autoSaveTest(
@@ -187,6 +187,7 @@ autoSaveTest(
 		);
 	}
 );
+
 autoSaveUndoRedoTest(
 	'Translation is removed when using Undo and restored when using Redo',
 	{
@@ -240,6 +241,7 @@ autoSaveUndoRedoTest(
 		});
 	}
 );
+
 autoSaveUndoRedoTest(
 	'Undo/Redo buttons work with metadata fields',
 	{

@@ -20,11 +20,10 @@ import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,70 +40,31 @@ public class ResourcePermissionLocalServiceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		Role guestRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.GUEST);
-
-		_roleIds[0] = guestRole.getRoleId();
-	}
-
 	@Test
 	public void testShouldFailIfFirstResourceIsNotIndividual()
 		throws Exception {
 
-		try {
-			_resourcePermissionLocalService.hasResourcePermission(
-				new ArrayList<Resource>() {
-					{
-						add(_createResource(ResourceConstants.SCOPE_GROUP));
-						add(_createResource(ResourceConstants.SCOPE_COMPANY));
-					}
-				},
-				_roleIds, ActionKeys.VIEW);
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			Assert.assertEquals(
-				"The first resource must be an individual scope",
-				illegalArgumentException.getMessage());
-		}
+		_testResources(
+			"The first resource must be an individual scope",
+			Arrays.asList(
+				_createResource(ResourceConstants.SCOPE_GROUP),
+				_createResource(ResourceConstants.SCOPE_COMPANY)));
 	}
 
 	@Test
 	public void testShouldFailIfLastResourceIsNotCompany() throws Exception {
-		try {
-			_resourcePermissionLocalService.hasResourcePermission(
-				new ArrayList<Resource>() {
-					{
-						add(
-							_createResource(
-								ResourceConstants.SCOPE_INDIVIDUAL));
-						add(_createResource(ResourceConstants.SCOPE_GROUP));
-					}
-				},
-				_roleIds, ActionKeys.VIEW);
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			Assert.assertEquals(
-				"The last resource must be a company scope",
-				illegalArgumentException.getMessage());
-		}
+		_testResources(
+			"The last resource must be a company scope",
+			Arrays.asList(
+				_createResource(ResourceConstants.SCOPE_INDIVIDUAL),
+				_createResource(ResourceConstants.SCOPE_GROUP)));
 	}
 
 	@Test
 	public void testShouldFailIfResourcesIsLessThanTwo() throws Exception {
-		try {
-			_resourcePermissionLocalService.hasResourcePermission(
-				Collections.singletonList(new ResourceImpl()), _roleIds,
-				ActionKeys.VIEW);
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			Assert.assertEquals(
-				"The list of resources must contain at least two values",
-				illegalArgumentException.getMessage());
-		}
+		_testResources(
+			"The list of resources must contain at least two values",
+			Arrays.asList(new ResourceImpl()));
 	}
 
 	private Resource _createResource(int scope) {
@@ -115,13 +75,30 @@ public class ResourcePermissionLocalServiceTest {
 		return resource;
 	}
 
+	private void _testResources(
+			String expectedMessage, List<Resource> resources)
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		Role guestRole = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		try {
+			_resourcePermissionLocalService.hasResourcePermission(
+				resources, new long[] {guestRole.getRoleId()}, ActionKeys.VIEW);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				expectedMessage, illegalArgumentException.getMessage());
+		}
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	private final long[] _roleIds = new long[1];
 
 	@Inject
 	private RoleLocalService _roleLocalService;

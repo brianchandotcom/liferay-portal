@@ -74,8 +74,8 @@ const FrontendDataSet = ({
 	nestedItemsReferenceKey,
 	onActionDropdownItemClick,
 	onBulkActionItemClick,
-	onItemSelected,
 	onSelect,
+	onSelectedItemsChange,
 	overrideEmptyResultView,
 	pagination,
 	portletId,
@@ -434,11 +434,11 @@ const FrontendDataSet = ({
 				}
 			});
 
-			onItemSelected(newSelectedItems);
+			onSelectedItemsChange(newSelectedItems);
 
 			return newSelectedItems;
 		});
-	}, [selectedItemsValue, items, onItemSelected, selectedItemsKey]);
+	}, [selectedItemsValue, items, onSelectedItemsChange, selectedItemsKey]);
 
 	useEffect(() => {
 		if (View || !contentRendererModuleURL) {
@@ -974,7 +974,7 @@ FrontendDataSet.defaultProps = {
 	inlineEditingSettings: null,
 	items: null,
 	itemsActions: null,
-	onItemSelected: () => {},
+	onSelectedItemsChange: () => {},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
 	showBulkActionsManagementBar: true,

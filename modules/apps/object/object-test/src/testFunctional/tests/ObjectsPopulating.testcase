@@ -93,7 +93,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test text");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -156,7 +156,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "123.123456");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -213,7 +213,7 @@ definition {
 			checkboxName = "Boolean",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -270,7 +270,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -331,7 +331,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1.54");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -388,7 +388,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = 123456789);
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -445,7 +445,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = 1234567891234567);
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -522,7 +522,7 @@ definition {
 
 		IFrame.selectTopFrame();
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -581,7 +581,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Work hard. Dream big. Never give up.");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -658,7 +658,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "String text");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -715,7 +715,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Do not worry, be happy.");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -776,7 +776,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		PortletEntry.submitForWorkflow();
+		PortletEntry.save();
 
 		Navigator.openURL();
 

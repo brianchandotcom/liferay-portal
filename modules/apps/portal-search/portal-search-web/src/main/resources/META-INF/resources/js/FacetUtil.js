@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const CUSTOM_DATE_RANGE_BUCKET_TEXT = 'custom-range';
+const CUSTOM_RANGE_BUCKET_TEXT = 'custom-range';
 
 const FACET_TERM_CLASS = 'facet-term';
 
@@ -86,7 +86,39 @@ export const FacetUtil = {
 
 				return isCurrentTarget ? !isSelected : isSelected;
 			})
-			.map((term) => _getTermId(term));
+			.map((term) => {
+				const termId = _getTermId(term);
+
+				if (termId === CUSTOM_RANGE_BUCKET_TEXT) {
+
+					// For the special case of a range facet, the
+					// termId is 'custom-range' and the parameters are
+					// prefixed with 'from' and 'to'.
+
+					if (
+						form.querySelector('.aggregation-type').value ===
+						'range'
+					) {
+						return [0, 1];
+					}
+
+					// If no min-max values are set, assume it's a date
+					// range, and use the last 24 hours as the default range.
+
+					const endDate = new Date();
+					const startDate = new Date(
+						endDate - 1000 * 60 * 60 * 24 // 24 hours
+					);
+
+					return [
+						startDate.toISOString().split('T')[0],
+						endDate.toISOString().split('T')[0],
+					];
+				}
+				else {
+					return termId;
+				}
+			});
 
 		this.selectTerms(form, selectedTerms);
 	},
@@ -231,26 +263,16 @@ export const FacetUtil = {
 		newParameters = this.removeURLParameters(key + 'To', newParameters);
 
 		selections.forEach((item) => {
-			if (item === CUSTOM_DATE_RANGE_BUCKET_TEXT) {
-
-				// For the special case of a date range facet, the
-				// termId is 'custom-range' and the parameters are
-				// prefixed with 'from' and 'to'.
-
-				const endDate = new Date();
-				const startDate = new Date(
-					endDate - 1000 * 60 * 60 * 24 // 24 hours
-				);
-
+			if (Array.isArray(item)) {
 				newParameters = this.addURLParameter(
 					key + 'From',
-					startDate.toISOString().split('T')[0],
+					item[0],
 					newParameters
 				);
 
 				newParameters = this.addURLParameter(
 					key + 'To',
-					endDate.toISOString().split('T')[0],
+					item[1],
 					newParameters
 				);
 			}

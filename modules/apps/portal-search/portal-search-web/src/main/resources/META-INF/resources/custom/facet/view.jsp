@@ -41,6 +41,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 	</c:when>
 	<c:otherwise>
 		<aui:form action="#" autocomplete="off" method="get" name="fm">
+			<aui:input cssClass="aggregation-type" name="aggregation-type" type="hidden" value="<%= customFacetDisplayContext.getAggregationType() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>" />
 			<aui:input name="start-parameter-name" type="hidden" value="<%= customFacetDisplayContext.getPaginationStartParameterName() %>" />
 
@@ -143,9 +144,10 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 	module="{FacetUtil} from portal-search-web"
 />
 
-<c:if test='<%= aggregationType.equals("dateRange") %>'>
+<c:if test='<%= aggregationType.equals("dateRange") || aggregationType.equals("range") %>'>
 	<aui:script use="liferay-search-date-facet">
 		new Liferay.Search.DateFacetFilter({
+			aggregationType: '<%= customFacetDisplayContext.getAggregationType() %>',
 			form: A.one('#<portlet:namespace />fm'),
 			fromInputName: '<portlet:namespace />fromInput',
 			namespace: '<portlet:namespace />',

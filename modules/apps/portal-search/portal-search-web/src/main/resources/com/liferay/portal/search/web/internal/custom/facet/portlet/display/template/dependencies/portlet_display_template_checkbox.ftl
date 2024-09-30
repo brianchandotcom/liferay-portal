@@ -61,7 +61,7 @@
 				</#list>
 			</#if>
 
-			<#if customFacetDisplayContext.getAggregationType() == "range">
+			<#if (customFacetDisplayContext.getAggregationType() == "range") || (customFacetDisplayContext.getAggregationType() == "dateRange")>
 				<li class="facet-value">
 					<div class="custom-checkbox custom-control">
 						<label class="facet-checkbox-label" for="${namespace}${customRangeBucketDisplayContext.getBucketText()}">
@@ -94,6 +94,40 @@
 						</label>
 					</div>
 				</li>
+			</#if>
+
+			<#if customFacetDisplayContext.getAggregationType() == "range">
+				<div class="${(!customRangeBucketDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
+					<div class="col-md-6" id="${namespace}customRangeFrom">
+						<@liferay_aui["field-wrapper"] label="from">
+							<input
+								class="form-control"
+								id="${namespace + 'fromInput'}"
+								name="fromInput"
+								value=""
+							/>
+						</@>
+					</div>
+
+					<div class="col-md-6" id="${namespace}customRangeTo">
+						<@liferay_aui["field-wrapper"] label="to">
+							<input
+								class="form-control"
+								id="${namespace + 'toInput'}"
+								name="toInput"
+								value=""
+							/>
+						</@>
+					</div>
+
+					<@clay["button"]
+						cssClass="date-facet-custom-range-filter-button"
+						displayType="secondary"
+						id="${namespace + 'searchCustomRangeButton'}"
+						label="search"
+						name="${namespace + 'searchCustomRangeButton'}"
+					/>
+				</div>
 			</#if>
 
 			<#if customFacetDisplayContext.getAggregationType() == "dateRange">

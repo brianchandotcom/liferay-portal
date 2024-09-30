@@ -14,6 +14,7 @@ AUI.add(
 			const instance = this;
 
 			instance.form = config.form;
+			instance.aggregationType = config.aggregationType || 'dateRange';
 			instance.fromInputName = config.fromInputName;
 			instance.namespace = config.namespace;
 			instance.parameterName = config.parameterName;
@@ -22,12 +23,22 @@ AUI.add(
 				config.searchCustomRangeToggleName;
 			instance.toInputName = config.toInputName;
 
-			instance.fromInputDatePicker = Liferay.component(
-				instance.fromInputName + 'DatePicker'
-			);
-			instance.toInputDatePicker = Liferay.component(
-				instance.toInputName + 'DatePicker'
-			);
+			if (instance.aggregationType === 'range') {
+				instance.fromInputPicker = document.getElementById(
+					instance.fromInputName
+				);
+				instance.toInputPicker = document.getElementById(
+					instance.toInputName
+				);
+			}
+			else {
+				instance.fromInputDatePicker = Liferay.component(
+					instance.fromInputName + 'DatePicker'
+				);
+				instance.toInputDatePicker = Liferay.component(
+					instance.toInputName + 'DatePicker'
+				);
+			}
 
 			instance._initializeFormValidator();
 
@@ -157,15 +168,24 @@ AUI.add(
 			filter() {
 				const instance = this;
 
-				const fromDate = instance.fromInputDatePicker.getDate();
+				let fromParameter;
+				let toParameter;
 
-				const toDate = instance.toInputDatePicker.getDate();
+				if (instance.aggregationType === 'range') {
+					fromParameter = instance.fromInputPicker.value;
+					toParameter = instance.toInputPicker.value;
+				}
+				else {
+					const fromDate = instance.fromInputDatePicker.getDate();
+					const toDate = instance.toInputDatePicker.getDate();
 
-				const dateFromParameter =
-					DateFacetFilterUtil.toLocaleDateStringFormatted(fromDate);
-
-				const dateToParameter =
-					DateFacetFilterUtil.toLocaleDateStringFormatted(toDate);
+					fromParameter =
+						DateFacetFilterUtil.toLocaleDateStringFormatted(
+							fromDate
+						);
+					toParameter =
+						DateFacetFilterUtil.toLocaleDateStringFormatted(toDate);
+				}
 
 				const param = instance.parameterName;
 				const paramFrom = param + 'From';
@@ -209,13 +229,13 @@ AUI.add(
 
 				parameterArray = DateFacetFilterUtil.addURLParameter(
 					paramFrom,
-					dateFromParameter,
+					fromParameter,
 					parameterArray
 				);
 
 				parameterArray = DateFacetFilterUtil.addURLParameter(
 					paramTo,
-					dateToParameter,
+					toParameter,
 					parameterArray
 				);
 

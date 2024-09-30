@@ -7,7 +7,7 @@ dependencies {
 	compileInclude group: "org.drools", name: "knowledge-internal-api", version: "5.4.0.Final"
 	compileInclude group: "org.eclipse.jdt.core.compiler", name: "ecj", version: "4.5.1"
 
-	compileOnly group: "com.google.protobuf", name: "protobuf-java", version: "3.21.7"
+	compileOnly group: "com.google.protobuf", name: "protobuf-java", version: "3.25.5"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

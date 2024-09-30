@@ -1316,6 +1316,8 @@ public class ResourceActionsImpl implements ResourceActions {
 			resourceElement, "owner-defaults");
 
 		if (ownerDefaultsElement != null) {
+			ownerDefaultActions.clear();
+
 			_readActionKeys(ownerDefaultActions, ownerDefaultsElement);
 		}
 

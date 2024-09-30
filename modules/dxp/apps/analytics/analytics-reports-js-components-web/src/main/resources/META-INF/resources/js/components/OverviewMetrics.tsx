@@ -3,20 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AnalyticsReportsContext} from '../AnalyticsReportsContext';
-import {fetchAssetMetric} from '../apis/asset-metrics';
+import {fetchAssetMetric} from '../apis/analytics-reports';
 import OverviewMetric, {
 	TrendClassification,
 } from '../components/OverviewMetric';
-import {AssetTypes, MetricName, MetricType} from '../types/global';
-
-type AssetMetrics = {
-	[key in AssetTypes]: MetricName[];
-};
+import {AssetTypes, MetricType} from '../types/global';
+import {assetMetrics} from '../utils/metrics';
+import StateRenderer from './StateRenderer';
 
 type MetricData = {
 	metricType: MetricType;
@@ -34,17 +30,6 @@ type Data = {
 	selectedMetrics: MetricData[];
 };
 
-const assetMetrics: AssetMetrics = {
-	[AssetTypes.Blog]: [MetricName.Views, MetricName.Comments],
-	[AssetTypes.Document]: [
-		MetricName.Downloads,
-		MetricName.Previews,
-		MetricName.Comments,
-	],
-	[AssetTypes.WebContent]: [MetricName.Views],
-	[AssetTypes.Undefined]: [],
-};
-
 type Metrics = {
 	[key in MetricType]: string;
 };
@@ -54,6 +39,7 @@ export const MetricsTitle: Metrics = {
 	[MetricType.Downloads]: Liferay.Language.get('downloads'),
 	[MetricType.Previews]: Liferay.Language.get('previews'),
 	[MetricType.Views]: Liferay.Language.get('views'),
+	[MetricType.Undefined]: Liferay.Language.get('undefined'),
 };
 
 interface IOverviewMetricsWithDataProps {
@@ -114,6 +100,10 @@ const OverviewMetrics = () => {
 						assetMetrics[assetType || AssetTypes.Undefined],
 				});
 
+				if (!response.ok) {
+					throw new Error();
+				}
+
 				const data = await response.json();
 
 				if (data.error) {
@@ -125,7 +115,9 @@ const OverviewMetrics = () => {
 				setError('');
 			}
 			catch (error: any) {
-				console.error(error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 
 				setData(null);
 				setLoading(false);
@@ -142,15 +134,11 @@ const OverviewMetrics = () => {
 		groupId,
 	]);
 
-	if (loading) {
-		return <ClayLoadingIndicator className="mt-10" />;
-	}
-
-	if (error) {
-		return <ClayAlert displayType="danger" title={error} />;
-	}
-
-	return data ? <OverviewMetricsWithData data={data} /> : null;
+	return (
+		<StateRenderer data={data} error={error} loading={loading}>
+			{({data}) => <OverviewMetricsWithData data={data} />}
+		</StateRenderer>
+	);
 };
 
 export default OverviewMetrics;

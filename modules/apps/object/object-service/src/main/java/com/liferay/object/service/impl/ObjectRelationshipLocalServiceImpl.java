@@ -1331,7 +1331,7 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinitionLocalService.fetchObjectDefinition(
 						node.getPrimaryKey());
 
-				String nodeObjectDefinitionPreviousRESTContextPath =
+				String objectDefinitionPreviousRESTContextPath =
 					nodeObjectDefinition.getRESTContextPath();
 
 				nodeObjectDefinition.setRootObjectDefinitionId(
@@ -1346,7 +1346,7 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition1.isApproved()) {
 
 					nodeObjectDefinition.setPreviousRESTContextPath(
-						nodeObjectDefinitionPreviousRESTContextPath);
+						objectDefinitionPreviousRESTContextPath);
 
 					objectDefinitionLocalService.deployObjectDefinition(
 						nodeObjectDefinition);

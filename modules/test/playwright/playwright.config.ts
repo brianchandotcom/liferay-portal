@@ -60,6 +60,7 @@ import {config as portalSearchWebConfig} from './tests/portal-search-web/config'
 import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
 import {config as portalSecurityServiceAccessPolicyService} from './tests/portal-security-service-access-policy-service/config';
 import {config as portalToolsRestBuilderTestImpl} from './tests/portal-tools-rest-builder-test-impl/config';
+import {config as portalWebConfig} from './tests/portal-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as portalWorkflowTaskWebConfig} from './tests/portal-workflow-task-web/config';
 import {config as portletConfigurationCssWebConfig} from './tests/portlet-configuration-css-web/config';
@@ -158,6 +159,7 @@ export default defineConfig({
 		portalSecurityScriptManagementWebConfig,
 		portalSecurityServiceAccessPolicyService,
 		portalToolsRestBuilderTestImpl,
+		portalWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
 		portalWorkflowTaskWebConfig,
 		portletConfigurationCssWebConfig,

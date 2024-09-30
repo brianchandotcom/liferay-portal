@@ -56,32 +56,38 @@ public class UpgradeCompanyIdTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_upgradeProcess.runSQL(
-			StringBundler.concat(
-				"create table ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
-				" LONG not null primary key);"));
+		_companyLocalService.forEachCompany(
+			company -> {
+				_upgradeProcess.runSQL(
+					StringBundler.concat(
+						"create table ", _MAPPING_TABLE_NAME, " (",
+						_COLUMN_NAME, " LONG not null primary key);"));
 
-		_upgradeProcess.runSQL(
-			StringBundler.concat(
-				"insert into ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
-				") values (", _COLUMN_VALUE, ");"));
+				_upgradeProcess.runSQL(
+					StringBundler.concat(
+						"insert into ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
+						") values (", _COLUMN_VALUE, ");"));
 
-		_upgradeProcess.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME, " (", _COLUMN_NAME,
-				" LONG not null primary key, companyId LONG);"));
+				_upgradeProcess.runSQL(
+					StringBundler.concat(
+						"create table ", _TABLE_NAME, " (", _COLUMN_NAME,
+						" LONG not null primary key, companyId LONG);"));
 
-		_upgradeProcess.runSQL(
-			StringBundler.concat(
-				"insert into ", _TABLE_NAME, " (", _COLUMN_NAME,
-				", companyId) values (", _COLUMN_VALUE,
-				", (select max(companyId) from Company));"));
+				_upgradeProcess.runSQL(
+					StringBundler.concat(
+						"insert into ", _TABLE_NAME, " (", _COLUMN_NAME,
+						", companyId) values (", _COLUMN_VALUE,
+						", (select max(companyId) from Company));"));
+			});
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_upgradeProcess.runSQL("drop table " + _MAPPING_TABLE_NAME);
-		_upgradeProcess.runSQL("drop table " + _TABLE_NAME);
+		_companyLocalService.forEachCompany(
+			company -> {
+				_upgradeProcess.runSQL("drop table " + _MAPPING_TABLE_NAME);
+				_upgradeProcess.runSQL("drop table " + _TABLE_NAME);
+			});
 	}
 
 	@Test

@@ -11,9 +11,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -61,15 +63,18 @@ public class UpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", TABLE_NAME, " (id LONG not null primary key, ",
-				"typeVarchar VARCHAR(75) not null);"));
+		_companyLocalService.forEachCompany(
+			company -> _db.runSQL(
+				StringBundler.concat(
+					"create table ", TABLE_NAME,
+					" (id LONG not null primary key, typeVarchar VARCHAR(75) ",
+					"not null);")));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_db.runSQL("drop table " + TABLE_NAME);
+		_companyLocalService.forEachCompany(
+			company -> _db.runSQL("drop table " + TABLE_NAME));
 	}
 
 	@Test
@@ -120,6 +125,9 @@ public class UpgradeProcessTest {
 
 		upgradeProcess.upgrade();
 	}
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private static Connection _connection;
 	private static DB _db;

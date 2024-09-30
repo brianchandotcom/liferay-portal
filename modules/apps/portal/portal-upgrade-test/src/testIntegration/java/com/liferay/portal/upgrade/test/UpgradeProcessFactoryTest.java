@@ -11,10 +11,12 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -56,19 +58,26 @@ public class UpgradeProcessFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME_1, " (id LONG not null primary ",
-				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
-				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
-				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+		_companyLocalService.forEachCompany(
+			company -> {
+				_db.runSQL(
+					StringBundler.concat(
+						"create table ", _TABLE_NAME_1,
+						" (id LONG not null primary ",
+						"key, notNilColumn VARCHAR(75) not null, nilColumn ",
+						"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
+						"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
+						"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
+						"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+			});
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_1 + ")");
+		_companyLocalService.forEachCompany(
+			company -> {
+				_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_1 + ")");
+			});
 	}
 
 	@Test
@@ -246,6 +255,9 @@ public class UpgradeProcessFactoryTest {
 	private static final String _TABLE_NAME_1 = "UpgradeProcessFactoryTest1";
 
 	private static final String _TABLE_NAME_2 = "UpgradeProcessFactoryTest2";
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private static Connection _connection;
 	private static DB _db;

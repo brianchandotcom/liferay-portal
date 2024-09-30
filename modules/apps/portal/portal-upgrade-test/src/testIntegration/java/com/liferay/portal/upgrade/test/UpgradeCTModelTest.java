@@ -11,9 +11,11 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -45,33 +47,40 @@ public class UpgradeCTModelTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_db = DBManagerUtil.getDB();
+		_companyLocalService.forEachCompany(
+			company -> {
+				_db = DBManagerUtil.getDB();
 
-		_db.runSQL(
-			StringBundler.concat(
-				"create table UpgradeCTModelTest (mvccVersion LONG default 0 ",
-				"not null, uuid_ VARCHAR(75) null, upgradeCTModelId LONG not ",
-				"null primary key, companyId LONG, createDate DATE null, ",
-				"modifiedDate DATE null, name STRING null)"));
+				_db.runSQL(
+					StringBundler.concat(
+						"create table UpgradeCTModelTest (mvccVersion LONG default 0 ",
+						"not null, uuid_ VARCHAR(75) null, upgradeCTModelId LONG not ",
+						"null primary key, companyId LONG, createDate DATE null, ",
+						"modifiedDate DATE null, name STRING null)"));
 
-		_db.runSQL(
-			"insert into UpgradeCTModelTest values (0, 'uuid', 1, 2, NULL, " +
-				"NULL, 'name')");
+				_db.runSQL(
+					"insert into UpgradeCTModelTest values (0, 'uuid', 1, 2, NULL, " +
+						"NULL, 'name')");
 
-		_db.runSQL(
-			StringBundler.concat(
-				"create table UpgradeCTModelMappingTest (companyId LONG not ",
-				"null, leftId LONG not null, rightId LONG not null, primary ",
-				"key (leftId, rightId))"));
+				_db.runSQL(
+					StringBundler.concat(
+						"create table UpgradeCTModelMappingTest (companyId LONG not ",
+						"null, leftId LONG not null, rightId LONG not null, primary ",
+						"key (leftId, rightId))"));
 
-		_db.runSQL("insert into UpgradeCTModelMappingTest values (1, 2, 3)");
+				_db.runSQL(
+					"insert into UpgradeCTModelMappingTest values (1, 2, 3)");
+			});
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.runSQL("drop table UpgradeCTModelTest");
+		_companyLocalService.forEachCompany(
+			company -> {
+				_db.runSQL("drop table UpgradeCTModelTest");
 
-		_db.runSQL("drop table UpgradeCTModelMappingTest");
+				_db.runSQL("drop table UpgradeCTModelMappingTest");
+			});
 	}
 
 	@Test
@@ -194,6 +203,9 @@ public class UpgradeCTModelTest {
 				pkNames.toArray(new String[0]));
 		}
 	}
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private static DB _db;
 

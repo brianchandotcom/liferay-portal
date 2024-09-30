@@ -34,9 +34,9 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	@Override
 	public Phone addPhone(
-			long userId, String className, long classPK, String number,
-			String extension, long listTypeId, boolean primary,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String number, String extension, long listTypeId,
+			boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userPersistence.findByPrimaryKey(userId);
@@ -51,6 +51,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		Phone phone = phonePersistence.create(phoneId);
 
 		phone.setUuid(serviceContext.getUuid());
+		phone.setExternalReferenceCode(externalReferenceCode);
 		phone.setCompanyId(user.getCompanyId());
 		phone.setUserId(user.getUserId());
 		phone.setUserName(user.getFullName());
@@ -109,14 +110,15 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	@Override
 	public Phone updatePhone(
-			long phoneId, String number, String extension, long listTypeId,
-			boolean primary)
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long listTypeId, boolean primary)
 		throws PortalException {
 
 		validate(phoneId, 0, 0, 0, number, extension, listTypeId, primary);
 
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
 
+		phone.setExternalReferenceCode(externalReferenceCode);
 		phone.setNumber(number);
 		phone.setExtension(extension);
 		phone.setListTypeId(listTypeId);

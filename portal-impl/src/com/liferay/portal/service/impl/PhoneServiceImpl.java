@@ -23,8 +23,9 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 
 	@Override
 	public Phone addPhone(
-			String className, long classPK, String number, String extension,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String number, String extension, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		String actionId = ActionKeys.UPDATE;
@@ -39,8 +40,8 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			getPermissionChecker(), className, classPK, actionId);
 
 		return phoneLocalService.addPhone(
-			getUserId(), className, classPK, number, extension, typeId, primary,
-			serviceContext);
+			externalReferenceCode, getUserId(), className, classPK, number,
+			extension, typeId, primary, serviceContext);
 	}
 
 	@Override
@@ -64,8 +65,40 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 	}
 
 	@Override
+	public Phone fetchPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Phone phone = phoneLocalService.fetchPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (phone != null) {
+			CommonPermissionUtil.check(
+				getPermissionChecker(), phone.getClassNameId(),
+				phone.getClassPK(), ActionKeys.VIEW);
+		}
+
+		return phone;
+	}
+
+	@Override
 	public Phone getPhone(long phoneId) throws PortalException {
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
+
+		CommonPermissionUtil.check(
+			getPermissionChecker(), phone.getClassNameId(), phone.getClassPK(),
+			ActionKeys.VIEW);
+
+		return phone;
+	}
+
+	@Override
+	public Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Phone phone = phoneLocalService.getPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), phone.getClassNameId(), phone.getClassPK(),
@@ -89,8 +122,8 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 
 	@Override
 	public Phone updatePhone(
-			long phoneId, String number, String extension, long typeId,
-			boolean primary)
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long typeId, boolean primary)
 		throws PortalException {
 
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
@@ -109,7 +142,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			actionId);
 
 		return phoneLocalService.updatePhone(
-			phoneId, number, extension, typeId, primary);
+			externalReferenceCode, phoneId, number, extension, typeId, primary);
 	}
 
 }

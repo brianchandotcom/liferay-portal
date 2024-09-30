@@ -25,7 +25,6 @@ import com.liferay.object.rest.internal.odata.entity.v1_0.test.ObjectEntryEntity
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -50,8 +49,10 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -237,101 +238,6 @@ public class OpenAPIResourceTest {
 	}
 
 	@Test
-	public void testGetOpenAPIFilterableFields() throws Exception {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				_objectDefinition.getObjectDefinitionId());
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"Object2",
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						"field", "field", false)),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-			null, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap("relationship1"), "relationship1",
-			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
-		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-			null, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap("relationship2"), "relationship2",
-			false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		Map<String, EntityField> entityFieldsMap =
-			_getObjectDefinitionEntityFieldsMap(objectDefinition);
-
-		Set<String> expectedFilterableFields = entityFieldsMap.keySet();
-
-		JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null, objectDefinition.getRESTContextPath() + "/openapi.json",
-			Http.Method.GET);
-
-		Set<String> actualFilterableFields = _getFilterableFieldsFromOpenAPI(
-			openAPIJSONObject);
-
-		Arrays.asList(
-			"userId", "creatorId"
-		).forEach(
-			expectedFilterableFields::remove
-		);
-
-		Assert.assertEquals(
-			"Mismatch between entity model filterable fields and OpenAPI " +
-				"x-filterable fields",
-			expectedFilterableFields, actualFilterableFields);
-
-		Set<String> schemaLevelFilterableFields =
-			_getSchemaLevelXFilterableFields(openAPIJSONObject);
-
-		Assert.assertEquals(
-			"Mismatch between entity model filterable fields and OpenAPI " +
-				"schema-level x-filterable fields",
-			expectedFilterableFields, schemaLevelFilterableFields);
-
-		entityFieldsMap = _getObjectDefinitionEntityFieldsMap(
-			relatedObjectDefinition);
-
-		expectedFilterableFields = entityFieldsMap.keySet();
-
-		openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			relatedObjectDefinition.getRESTContextPath() + "/openapi.json",
-			Http.Method.GET);
-
-		actualFilterableFields = _getFilterableFieldsFromOpenAPI(
-			openAPIJSONObject);
-
-		Arrays.asList(
-			"userId", "creatorId", "object1Id"
-		).forEach(
-			expectedFilterableFields::remove
-		);
-
-		Assert.assertEquals(
-			"Mismatch between entity model filterable fields and OpenAPI " +
-				"x-filterable fields",
-			expectedFilterableFields, actualFilterableFields);
-
-		schemaLevelFilterableFields = _getSchemaLevelXFilterableFields(
-			openAPIJSONObject);
-
-		Assert.assertEquals(
-			"Mismatch between entity model filterable fields and OpenAPI " +
-				"schema-level x-filterable fields",
-			expectedFilterableFields, schemaLevelFilterableFields);
-	}
-
-	@Test
 	public void testGetOpenAPIInDifferentCompany() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -387,6 +293,27 @@ public class OpenAPIResourceTest {
 							companyObjectDefinition.getRESTContextPath() +
 								"/openapi.yaml",
 						jsonArray.get(0));
+
+					Set<String> expectedFilterableFieldsCompany = new HashSet<>(
+						_getObjectDefinitionFilterableFields(
+							companyObjectDefinition));
+
+					JSONObject openAPICOmpanyJSONObject =
+						HTTPTestUtil.invokeToJSONObject(
+							null,
+							companyObjectDefinition.getRESTContextPath() +
+								"/openapi.json",
+							Http.Method.GET);
+
+					Set<String> actualFilterableFieldsCompany = new HashSet<>(
+						_getSchemaLevelXFilterableFields(
+							openAPICOmpanyJSONObject));
+
+					Assert.assertEquals(
+						"Mismatch between entity model filterable fields and " +
+							"OpenAPI schema-level x-filterable fields",
+						expectedFilterableFieldsCompany,
+						actualFilterableFieldsCompany);
 				}
 			);
 		}
@@ -492,47 +419,40 @@ public class OpenAPIResourceTest {
 			JSONCompareMode.STRICT);
 	}
 
-	private Set<String> _getFilterableFieldsFromOpenAPI(JSONObject jsonObject) {
-		Set<String> filterableFields = new HashSet<>();
+	private Set<String> _getFilterableFieldNames(
+		EntityField entityField, String fieldName,
+		Set<EntityField> processedEntityFields) {
 
-		JSONObject schemasJSONObject = jsonObject.getJSONObject(
-			"components"
-		).getJSONObject(
-			"schemas"
-		);
-
-		for (String schemaName : schemasJSONObject.keySet()) {
-			JSONObject schemaJSONObject = schemasJSONObject.getJSONObject(
-				schemaName);
-
-			JSONObject propertiesJSONObject = schemaJSONObject.getJSONObject(
-				"properties");
-
-			for (String propertyName : propertiesJSONObject.keySet()) {
-				JSONObject propertyJSONObject =
-					propertiesJSONObject.getJSONObject(propertyName);
-
-				if ((propertyJSONObject != null) &&
-					propertyJSONObject.has("x-filterable")) {
-
-					boolean filterable = propertyJSONObject.getBoolean(
-						"x-filterable");
-
-					if (filterable) {
-						filterableFields.add(propertyName);
-					}
-				}
-			}
+		if (!processedEntityFields.add(entityField)) {
+			return new HashSet<>();
 		}
 
-		return filterableFields;
+		if (!(entityField instanceof ComplexEntityField)) {
+			return SetUtil.fromArray(fieldName);
+		}
+
+		ComplexEntityField complexEntityField = (ComplexEntityField)entityField;
+
+		Map<String, EntityField> entityFieldsMap =
+			complexEntityField.getEntityFieldsMap();
+
+		Set<String> filterableFieldNames = new HashSet<>();
+
+		for (Map.Entry<String, EntityField> entry :
+				entityFieldsMap.entrySet()) {
+
+			filterableFieldNames.addAll(
+				_getFilterableFieldNames(
+					entry.getValue(), fieldName + "/" + entry.getKey(),
+					processedEntityFields));
+		}
+
+		return filterableFieldNames;
 	}
 
-	private Map<String, EntityField> _getObjectDefinitionEntityFieldsMap(
+	private Set<String> _getObjectDefinitionFilterableFields(
 			ObjectDefinition objectDefinition)
 		throws Exception {
-
-		Map<String, EntityField> objectEntityFieldsMap = null;
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			ObjectEntryEntityModelTest.class);
@@ -547,6 +467,8 @@ public class OpenAPIResourceTest {
 				ObjectEntry.class.getName(), StringPool.POUND,
 				StringUtil.toLowerCase(objectDefinition.getShortName())));
 
+		Set<String> filterableFieldNames = new HashSet<>();
+
 		if (objectEntryResource instanceof EntityModelResource) {
 			Class<?> clazz = objectEntryResource.getClass();
 
@@ -560,10 +482,20 @@ public class OpenAPIResourceTest {
 
 			EntityModel entityModel = entityModelResource.getEntityModel(null);
 
-			objectEntityFieldsMap = entityModel.getEntityFieldsMap();
+			Set<EntityField> processedEntityFields = new HashSet<>();
+
+			for (Map.Entry<String, EntityField> entry :
+					entityModel.getEntityFieldsMap(
+					).entrySet()) {
+
+				filterableFieldNames.addAll(
+					_getFilterableFieldNames(
+						entry.getValue(), entry.getKey(),
+						processedEntityFields));
+			}
 		}
 
-		return objectEntityFieldsMap;
+		return filterableFieldNames;
 	}
 
 	private Set<String> _getSchemaLevelXFilterableFields(

@@ -347,8 +347,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			String title = suiteJSONObject.getString("title");
 			String file = suiteJSONObject.getString("file");
+			String title = suiteJSONObject.getString("title");
 
 			for (int j = 0; j < specsJSONArray.length(); j++) {
 				JSONObject specJSONObject = specsJSONArray.getJSONObject(j);

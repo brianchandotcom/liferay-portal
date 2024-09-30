@@ -1521,7 +1521,7 @@ public class ObjectRelationshipLocalServiceImpl
 			boolean edge, ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		if (!edge || !FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+		if (!edge) {
 			return;
 		}
 

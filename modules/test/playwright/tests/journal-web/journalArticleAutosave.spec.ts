@@ -40,6 +40,16 @@ const autoSaveTest = mergeTests(
 	pagesAdminPagesTest
 );
 
+const autosaveWithoutPermissionsTest = mergeTests(
+	featureFlagsTest({
+		'LPD-11228': true,
+		'LPD-15596': false,
+	}),
+	isolatedSiteTest,
+	journalPagesTest,
+	loginTest(),
+);
+
 autoSaveTest(
 	'UndoRedo Should not appear when editing default values',
 	{
@@ -607,5 +617,21 @@ autoSaveTest(
 		await journalEditArticlePage.undoButton.click();
 
 		await expect(page.getByLabel(fieldName)).toHaveText('Choose an Option');
+	}
+);
+
+autosaveWithoutPermissionsTest(
+	'Web Content is published when Feature Flag LPD-11228 is enabled but LPD-15596 is disabled',
+	{
+		tag: '@LPD-37606',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const articleTitle = 'Web Content Title';
+
+		journalEditArticlePage.createWCWithBasicPublishButton(articleTitle);
+
+		await expect(page.getByTitle(articleTitle)).toBeVisible();
 	}
 );

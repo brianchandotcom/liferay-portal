@@ -172,6 +172,17 @@ export class JournalEditArticlePage {
 		await expect(page.getByTitle(title, {exact: true})).toBeVisible();
 	}
 
+	async createWCWithBasicPublishButton(articleTitle: string) {
+		await this.titleInput.fill(articleTitle);
+		await this.publishButton.waitFor();
+		await this.publishButton.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			`Success:${articleTitle} was created successfully.`
+		);
+	}
+
 	async fillTitle(title: string) {
 		await this.propertiesTab.waitFor();
 

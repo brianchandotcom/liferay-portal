@@ -327,7 +327,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_STATUS</td>
-		<td>//*[contains(@class, 'dnd-tr')][contains(.,'${key_label}')] //*[contains(@class,'label')]</td>
+		<td>//*[contains(@class, 'dnd-tr')][contains(.,'${key_label}')] //*[contains(@class,'status')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -2037,9 +2037,13 @@ public class ObjectDefinitionLocalServiceImpl
 				continue;
 			}
 
-			Tree tree = _treeFactory.createObjectDefinitionTree(
-				objectRelationship.getObjectDefinitionId2(),
-				objectDefinitionLocalService::getObjectDefinition);
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+				new ObjectDefinitionTreeFactory(
+					objectDefinitionLocalService,
+					_objectRelationshipLocalService);
+
+			Tree tree = objectDefinitionTreeFactory.create(
+				objectRelationship.getObjectDefinitionId2());
 
 			Iterator<Node> iterator = tree.iterator();
 

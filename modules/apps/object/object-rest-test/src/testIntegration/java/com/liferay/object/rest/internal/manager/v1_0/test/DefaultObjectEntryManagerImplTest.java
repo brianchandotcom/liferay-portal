@@ -124,6 +124,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -566,7 +567,18 @@ public class DefaultObjectEntryManagerImplTest
 				null, null, null, null));
 
 		_tree = TreeTestUtil.createObjectDefinitionTree(
-			objectDefinitionLocalService, _objectRelationshipLocalService);
+			objectDefinitionLocalService, _objectRelationshipLocalService, true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
 		Node rootNode = _tree.getRootNode();
 
@@ -581,9 +593,6 @@ public class DefaultObjectEntryManagerImplTest
 						RandomTestUtil.randomString()),
 					"oneToManyRelationshipName2", false,
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
-
-		objectDefinitionLocalService.publishCustomObjectDefinition(
-			adminUser.getUserId(), rootNode.getPrimaryKey());
 	}
 
 	@After

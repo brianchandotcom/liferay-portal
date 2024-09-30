@@ -1910,18 +1910,28 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService);
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
-		Node rootObjectDefinitionNode = objectDefinitionTree.getRootNode();
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			rootObjectDefinitionNode.getPrimaryKey());
+		ObjectDefinition objectDefinitionA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
 		Tree objectEntryTree1 = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
 			_objectFieldLocalService, _objectRelationshipLocalService,
-			rootObjectDefinitionNode.getPrimaryKey());
+			objectDefinitionA.getObjectDefinitionId());
 
 		TreeTestUtil.assertObjectEntryTree(
 			LinkedHashMapBuilder.put(
@@ -1940,7 +1950,7 @@ public class ObjectEntryLocalServiceTest {
 		Tree objectEntryTree2 = TreeTestUtil.createObjectEntryTree(
 			"2", _objectDefinitionLocalService, _objectEntryLocalService,
 			_objectFieldLocalService, _objectRelationshipLocalService,
-			rootObjectDefinitionNode.getPrimaryKey());
+			objectDefinitionA.getObjectDefinitionId());
 
 		TreeTestUtil.assertObjectEntryTree(
 			LinkedHashMapBuilder.put(
@@ -1956,17 +1966,17 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			objectEntryTree2, _objectEntryLocalService);
 
-		ObjectDefinition objectDefinition =
+		ObjectDefinition objectDefinitionAA =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_AA");
 
 		_objectEntryLocalService.addOrUpdateObjectEntry(
 			"AA1", TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					Node node = objectDefinitionTree.getNode(
-						objectDefinition.getObjectDefinitionId());
+						objectDefinitionAA.getObjectDefinitionId());
 
 					ObjectRelationship objectRelationship =
 						_objectRelationshipLocalService.getObjectRelationship(
@@ -1982,7 +1992,7 @@ public class ObjectEntryLocalServiceTest {
 				() -> {
 					ObjectEntry objectEntry =
 						_objectEntryLocalService.getObjectEntry(
-							"A2", rootObjectDefinitionNode.getPrimaryKey());
+							"A2", objectDefinitionA.getObjectDefinitionId());
 
 					return objectEntry.getObjectEntryId();
 				}

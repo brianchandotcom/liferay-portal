@@ -38,6 +38,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import org.junit.Assert;
 
@@ -92,7 +93,7 @@ public class TreeTestUtil {
 		}
 	}
 
-	public static void createObjectDefinitionTree(
+	public static Tree createObjectDefinitionTree(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			boolean published, Map<String, String[]> treeMap)
@@ -134,41 +135,21 @@ public class TreeTestUtil {
 							parentObjectDefinition, childObjectDefinition)));
 			}
 		}
-	}
 
-	public static Tree createObjectDefinitionTree(
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectRelationshipLocalService objectRelationshipLocalService)
-		throws Exception {
+		Set<String> keys = treeMap.keySet();
 
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
+		Iterator<String> iterator = keys.iterator();
 
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
-
-		bind(
-			objectDefinitionLocalService,
-			Arrays.asList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					objectRelationshipLocalService, objectDefinitionA,
-					objectDefinitionAA),
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA")),
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAB")),
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					objectRelationshipLocalService, objectDefinitionA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition("AB"))));
+		ObjectDefinition rootObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_" + iterator.next());
 
 		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
 			new ObjectDefinitionTreeFactory(
 				objectDefinitionLocalService, objectRelationshipLocalService);
 
 		return objectDefinitionTreeFactory.create(
-			objectDefinitionA.getObjectDefinitionId());
+			rootObjectDefinition.getObjectDefinitionId());
 	}
 
 	public static Tree createObjectEntryTree(

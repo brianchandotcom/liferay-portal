@@ -26,6 +26,7 @@ import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import java.util.Map;
 import org.opensearch.client.opensearch._types.SortOptions;
 import org.opensearch.client.opensearch._types.Time;
 import org.opensearch.client.opensearch._types.TimeUnit;
+import org.opensearch.client.opensearch._types.query_dsl.FieldAndFormat;
 import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.search.SourceConfig;
@@ -57,6 +59,7 @@ public class SearchSearchRequestAssemblerImpl
 			searchSearchRequest, searchRequestBuilder);
 
 		_setFetchSource(searchRequestBuilder, searchSearchRequest);
+		_setFields(searchRequestBuilder, searchSearchRequest);
 		_setGroupBy(searchRequestBuilder, searchSearchRequest);
 		_setGroupByRequests(searchRequestBuilder, searchSearchRequest);
 		_setHighlighter(searchRequestBuilder, searchSearchRequest);
@@ -106,6 +109,23 @@ public class SearchSearchRequestAssemblerImpl
 			));
 
 		searchRequestBuilder.source(sourceConfigBuilder.build());
+	}
+
+	private void _setFields(
+		SearchRequest.Builder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		String[] selectedFieldNames =
+			searchSearchRequest.getSelectedFieldNames();
+
+		if (!ArrayUtil.isEmpty(selectedFieldNames)) {
+			searchRequestBuilder.fields(
+				_toFieldAndFormatList(selectedFieldNames));
+		}
+		else {
+			searchRequestBuilder.fields(
+				_toFieldAndFormatList(new String[] {StringPool.STAR}));
+		}
 	}
 
 	private void _setGroupBy(
@@ -241,16 +261,13 @@ public class SearchSearchRequestAssemblerImpl
 		SearchRequest.Builder searchRequestBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
-		String[] selectedFieldNames =
-			searchSearchRequest.getSelectedFieldNames();
+		String[] storedFields = searchSearchRequest.getStoredFields();
 
-		if (!ArrayUtil.isEmpty(selectedFieldNames)) {
-			searchRequestBuilder.storedFields(
-				ListUtil.fromArray(selectedFieldNames));
+		if (ArrayUtil.isEmpty(storedFields)) {
+			return;
 		}
-		else {
-			searchRequestBuilder.storedFields(StringPool.STAR);
-		}
+
+		searchRequestBuilder.storedFields(ListUtil.fromArray(storedFields));
 	}
 
 	private void _setTrackScores(
@@ -268,6 +285,18 @@ public class SearchSearchRequestAssemblerImpl
 
 		SetterUtil.setNotNullBoolean(
 			searchRequestBuilder::version, searchSearchRequest.getVersion());
+	}
+
+	private List<FieldAndFormat> _toFieldAndFormatList(String[] fields) {
+		List<FieldAndFormat> fieldAndFormats = new ArrayList<>();
+
+		for (String field : fields) {
+			fieldAndFormats.add(
+				FieldAndFormat.of(
+					fieldAndFormat -> fieldAndFormat.field(field)));
+		}
+
+		return fieldAndFormats;
 	}
 
 	@Reference

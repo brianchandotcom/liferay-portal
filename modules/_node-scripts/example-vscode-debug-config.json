@@ -1,0 +1,20 @@
+{
+	"configurations": [
+		{
+			"args": [
+				"test",
+				"${fileBasenameNoExtension}"
+			],
+			"console": "integratedTerminal",
+			"cwd": "${fileDirname}",
+			"env": {
+				"NODE_ENV": "test"
+			},
+			"name": "Liferay node-scripts test: current file",
+			"request": "launch",
+			"runtimeExecutable": "yarn",
+			"type": "node"
+		}
+	],
+	"version": "0.2.0"
+}

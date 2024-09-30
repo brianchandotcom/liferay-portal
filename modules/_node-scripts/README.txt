@@ -1,1 +1,0 @@
-See https://liferay.atlassian.net/browse/LPD-37078.

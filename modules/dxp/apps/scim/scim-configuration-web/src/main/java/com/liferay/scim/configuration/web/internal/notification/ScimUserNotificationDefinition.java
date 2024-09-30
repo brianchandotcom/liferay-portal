@@ -26,7 +26,7 @@ public class ScimUserNotificationDefinition extends UserNotificationDefinition {
 		super(
 			ScimWebKeys.SCIM_CONFIGURATION, 0,
 			MembershipRequestConstants.STATUS_PENDING,
-			"scim-access-token-email-subject");
+			"receive-a-notification-when-scim-access-token-is-going-to-expire");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

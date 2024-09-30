@@ -56,7 +56,7 @@ export default function List(props: IDataSetSectionProps) {
 
 	const getFDSListSections = async () => {
 		const response = await fetch(
-			`${API_URL.LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTION_ERC} eq '${dataSet.externalReferenceCode}')`,
+			`${API_URL.LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS_ERC} eq '${dataSet.externalReferenceCode}')`,
 			{
 				headers: DEFAULT_FETCH_HEADERS,
 			}
@@ -177,7 +177,7 @@ export default function List(props: IDataSetSectionProps) {
 
 		const response = await fetch(url, {
 			body: JSON.stringify({
-				[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTION_ERC]:
+				[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS_ERC]:
 					dataSet.externalReferenceCode,
 				fieldName: field.name,
 				name: listSection.name,

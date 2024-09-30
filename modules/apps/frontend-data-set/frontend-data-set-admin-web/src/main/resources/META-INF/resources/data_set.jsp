@@ -22,11 +22,11 @@ renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 		HashMapBuilder.<String, Object>put(
 			"backURL", backURL
 		).put(
+			"cellClientExtensionRenderers", fdsAdminDisplayContext.getFDSCellRendererCETsJSONArray()
+		).put(
 			"dataSetERC", ParamUtil.getString(request, "dataSetERC")
 		).put(
-			"fdsClientExtensionCellRenderers", fdsAdminDisplayContext.getFDSCellRendererCETsJSONArray()
-		).put(
-			"fdsFilterClientExtensions", fdsAdminDisplayContext.getFDSFilterCETsJSONArray()
+			"filterClientExtensionRenderers", fdsAdminDisplayContext.getFDSFilterCETsJSONArray()
 		).put(
 			"learnResources", LearnMessageUtil.getReactDataJSONObject("frontend-data-set-admin-web")
 		).put(
@@ -36,9 +36,9 @@ renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 		).put(
 			"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
 		).put(
-			"saveFDSFieldsURL", fdsAdminDisplayContext.getSaveFDSFieldsURL()
+			"saveDataSetSortURL", fdsAdminDisplayContext.getSaveDataSetSortURL()
 		).put(
-			"saveFDSSortURL", fdsAdminDisplayContext.getSaveFDSSortURL()
+			"saveDataSetTableSectionsURL", fdsAdminDisplayContext.getSaveDataSetTableSectionsURL()
 		).put(
 			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build()

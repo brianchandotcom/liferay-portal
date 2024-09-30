@@ -128,13 +128,13 @@ public class SaveScimConfigurationMVCActionCommand
 				Date accessTokenExpirationDate =
 					oAuth2Authorization.getAccessTokenExpirationDate();
 
-				int daysBetween = DateUtil.getDaysBetween(
+				int daysToExpireAccessToken = DateUtil.getDaysBetween(
 					accessTokenExpirationDate, new Date());
 
 				Date refreshTokenExpirationDate =
 					oAuth2Authorization.getRefreshTokenExpirationDate();
 
-				if ((daysBetween > 10) ||
+				if ((daysToExpireAccessToken > 10) ||
 					(refreshTokenExpirationDate != null)) {
 
 					oAuth2Authorization.setAccessTokenExpirationDate(

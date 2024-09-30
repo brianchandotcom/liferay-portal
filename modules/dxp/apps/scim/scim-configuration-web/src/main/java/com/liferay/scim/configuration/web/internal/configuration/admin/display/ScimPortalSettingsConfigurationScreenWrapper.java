@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -34,6 +33,7 @@ import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -214,18 +214,14 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION,
 					strAccessTokenExpirationDate);
 
-				int daysBetweenExpiration = DateUtil.getDaysBetween(
-					new Date(), accessTokenExpirationDate);
-
-				int compareDaysBetweenExpiration = DateUtil.compareTo(
-					accessTokenExpirationDate, new Date());
-
-				long accessTokenExpirationDays =
-					compareDaysBetweenExpiration * daysBetweenExpiration;
+				long daysUntilExpiry = TimeUnit.DAYS.convert(
+					accessTokenExpirationDate.getTime() -
+						System.currentTimeMillis(),
+					TimeUnit.MILLISECONDS);
 
 				httpServletRequest.setAttribute(
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DAYS,
-					accessTokenExpirationDays);
+					daysUntilExpiry);
 			}
 
 			httpServletRequest.setAttribute(

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 
@@ -17,6 +18,15 @@ export const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	wikiPagesTest
+);
+
+export const testWithWikiDeprecation = mergeTests(
+	featureFlagsTest({
+		'LPD-35013': false,
+	}),
+	loginTest(),
+	productMenuPageTest,
 	wikiPagesTest
 );
 
@@ -97,3 +107,43 @@ test('LPD-28898 Image added via rich text editor on Wiki tool losing reference',
 
 	await wikiPage.assertAddedImage(page.getByAltText('alternate text'), image);
 });
+
+test(
+	'Add deprecation flag Wiki with FF enabled',
+	{
+		tag: '@LPD-37306',
+	},
+	async ({page, site, wikiPage}) => {
+		await wikiPage.goto(site.friendlyUrlPath);
+
+		await wikiPage.createNewWikiNode('Wiki Node Title');
+
+		await expect(
+			page.getByRole('link', {exact: true, name: 'Wiki Node Title'})
+		).toBeVisible();
+
+		await expect(page.getByText('Deprecated')).toBeVisible();
+	}
+);
+
+testWithWikiDeprecation(
+	'Add deprecation flag Wiki with FF disabled',
+	{
+		tag: '@LPD-37306',
+	},
+	async ({page, productMenuPage}) => {
+		await productMenuPage.openProductMenuIfClosed();
+
+		await expect(
+			page.getByRole('menuitem', {
+				name: 'Content & Data',
+			})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {
+				name: 'Wiki',
+			})
+		).not.toBeVisible();
+	}
+);

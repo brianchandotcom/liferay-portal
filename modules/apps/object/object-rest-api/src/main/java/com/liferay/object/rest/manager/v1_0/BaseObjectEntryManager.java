@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -504,6 +505,13 @@ public abstract class BaseObjectEntryManager {
 				value = _fetchListEntry(
 					dtoConverterContext, GetterUtil.getString(value),
 					objectDefinition, objectField);
+			}
+			else if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+				properties.put(
+					objectField.getName() + "RawText",
+					HtmlParserUtil.extractText(GetterUtil.getString(value)));
 			}
 
 			properties.put(objectField.getName(), value);

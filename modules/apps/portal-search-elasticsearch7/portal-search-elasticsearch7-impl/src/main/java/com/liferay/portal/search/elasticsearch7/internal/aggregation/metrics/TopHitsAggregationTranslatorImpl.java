@@ -127,8 +127,6 @@ public class TopHitsAggregationTranslatorImpl
 			topHitsAggregationBuilder.sorts(sortBuilders);
 		}
 
-		topHitsAggregationBuilder.storedFields();
-
 		if (topHitsAggregation.getTrackScores() != null) {
 			topHitsAggregationBuilder.trackScores(
 				topHitsAggregation.getTrackScores());

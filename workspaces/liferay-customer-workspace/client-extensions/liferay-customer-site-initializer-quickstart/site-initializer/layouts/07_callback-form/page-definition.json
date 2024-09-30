@@ -38,7 +38,8 @@
 								"width": "680px"
 							},
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -65,7 +66,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Callback Request"
@@ -83,12 +85,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Request a Support Engineer to contact you as soon as possible."
@@ -119,7 +123,8 @@
 										"inputFieldId": "ObjectField_name",
 										"showCharactersCount": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
@@ -135,11 +140,12 @@
 										"siteKey": "Customer Portal"
 									},
 									"fragmentConfig": {
+										"fieldType": "email",
 										"inputFieldId": "ObjectField_emailAddress",
-										"showCharactersCount": false,
-										"fieldType": "email"
+										"showCharactersCount": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
@@ -150,19 +156,20 @@
 							},
 							{
 								"definition": {
-								  "fragment": {
-									"key": "autofill-organization",
-									"siteKey": "Customer Portal"
-								  },
-								  "fragmentConfig": {
-									"inputFieldId": "ObjectField_organization"
-								  },
-								  "fragmentFields": [],
-								  "fragmentStyle": {
-									"marginBottom": "4"
-								  },
-								  "indexed": true,
-								  "name": "Organization Select"
+									"fragment": {
+										"key": "autofill-organization",
+										"siteKey": "Customer Portal"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_organization"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"name": "Organization Select"
 								},
 								"type": "Fragment"
 							},
@@ -195,10 +202,11 @@
 													},
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_countryCode",
-														"showCharactersCount": false,
-														"placeholder": "+1"
+														"placeholder": "+1",
+														"showCharactersCount": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"width": "28%"
 													},
@@ -214,10 +222,11 @@
 													},
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_phoneNumber",
-														"showCharactersCount": false,
-														"placeholder": "(210) 283-2299"
+														"placeholder": "(210) 283-2299",
+														"showCharactersCount": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"width": "72%"
 													},
@@ -234,12 +243,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Please enter your phone number in international format, starting with a plus sign (+) followed by your country code, area code, and phone number."
@@ -269,10 +280,11 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_description",
-										"showCharactersCount": false,
-										"numberOfCharacters": 2000
+										"numberOfCharacters": 2000,
+										"showCharactersCount": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"marginBottom": "5"
 									},
@@ -297,15 +309,16 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "nm",
 												"buttonType": "secondary",
-												"type": "link",
-												"buttonSize": "nm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
 													"id": "link",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Cancel"
@@ -328,15 +341,16 @@
 												"key": "INPUTS-submit-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "nm",
 												"buttonType": "primary",
-												"submittedEntryStatus": "approved",
-												"buttonSize": "nm"
+												"submittedEntryStatus": "approved"
 											},
 											"fragmentFields": [
 												{
 													"id": "submit-button-text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],

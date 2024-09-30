@@ -1,65 +1,65 @@
 {
-    "label": {
-        "en_US": "Callback Form Entry"
-    },
-    "name": "CallbackFormEntry",
-    "objectFields": [
-        {
-            "DBType": "String",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Name"
-            },
-            "name": "name",
-            "required": true
-        },
-        {
-            "DBType": "String",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Email Address"
-            },
-            "name": "emailAddress",
-            "required": true
-        },
-        {
-            "DBType": "String",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Phone Number"
-            },
-            "name": "phoneNumber",
-            "required": true
-        },
-        {
-            "DBType": "Clob",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Description"
-            },
-            "name": "description",
-            "required": true
-        },
-        {
-            "DBType": "String",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Country Code"
-            },
-            "name": "countryCode",
-            "required": true
-        }
-    ],
-    "panelCategoryKey": "applications_menu.applications.content",
-    "pluralLabel": {
-        "en_US": "Callback Form Entries"
-    },
-    "portlet": true,
-    "scope": "company",
-    "system": false
+	"label": {
+		"en_US": "Callback Form Entry"
+	},
+	"name": "CallbackFormEntry",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email Address"
+			},
+			"name": "emailAddress",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Phone Number"
+			},
+			"name": "phoneNumber",
+			"required": true
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country Code"
+			},
+			"name": "countryCode",
+			"required": true
+		}
+	],
+	"panelCategoryKey": "applications_menu.applications.content",
+	"pluralLabel": {
+		"en_US": "Callback Form Entries"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
 }

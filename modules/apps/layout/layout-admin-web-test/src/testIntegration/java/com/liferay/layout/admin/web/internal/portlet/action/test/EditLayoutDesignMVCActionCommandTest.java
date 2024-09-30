@@ -89,7 +89,8 @@ public class EditLayoutDesignMVCActionCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, serviceContext, StringPool.BLANK);
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				serviceContext);
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),

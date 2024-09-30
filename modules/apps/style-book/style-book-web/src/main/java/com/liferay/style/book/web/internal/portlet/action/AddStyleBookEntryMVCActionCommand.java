@@ -82,7 +82,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		return _styleBookEntryService.addStyleBookEntry(
 			null, serviceContext.getScopeGroupId(), name, StringPool.BLANK,
-			serviceContext, themeId);
+			themeId, serviceContext);
 	}
 
 	private String _getRedirectURL(

@@ -114,8 +114,8 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry targetStyleBookEntry = addStyleBookEntry(
 			null, userId, groupId, false,
 			sourceStyleBookEntry.getFrontendTokensValues(), name,
-			StringPool.BLANK, serviceContext,
-			sourceStyleBookEntry.getThemeId());
+			StringPool.BLANK, sourceStyleBookEntry.getThemeId(),
+			serviceContext);
 
 		long previewFileEntryId = _copyStyleBookEntryPreviewFileEntry(
 			userId, groupId, sourceStyleBookEntry, targetStyleBookEntry);

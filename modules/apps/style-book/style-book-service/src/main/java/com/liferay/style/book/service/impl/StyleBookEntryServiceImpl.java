@@ -40,7 +40,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 		return addStyleBookEntry(
 			externalReferenceCode, groupId, StringPool.BLANK, name,
-			styleBookEntryKey, serviceContext, themeId);
+			styleBookEntryKey, themeId, serviceContext);
 	}
 
 	@Override
@@ -56,8 +56,8 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 		return styleBookEntryLocalService.addStyleBookEntry(
 			externalReferenceCode, getUserId(), groupId, false,
-			frontendTokensValues, name, styleBookEntryKey, serviceContext,
-			themeId);
+			frontendTokensValues, name, styleBookEntryKey, themeId,
+			serviceContext);
 	}
 
 	@Override

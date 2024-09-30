@@ -154,9 +154,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()),
-				StringPool.BLANK);
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		draftLayout = _layoutLocalService.updateStyleBookEntryId(
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),

@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -82,13 +83,8 @@ public class PlaywrightJUnitBatchBuildTestrayCaseResult
 			String testClassName = testClassResult.getClassName();
 
 			for (TestResult testResult : testClassResult.getTestResults()) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(testClassName);
-				sb.append(" > ");
-				sb.append(testResult.getTestName());
-
-				String fullTestName = sb.toString();
+				String fullTestName = JenkinsResultsParserUtil.combine(
+					testClassName, " > ", testResult.getTestName());
 
 				if (fullTestName.equals(getName())) {
 					_testClassResults.add(testClassResult);
@@ -111,9 +107,8 @@ public class PlaywrightJUnitBatchBuildTestrayCaseResult
 			List<TestResult> results = testClassResult.getTestResults();
 
 			for (TestResult testResult : results) {
-				String testName = testResult.getTestName();
-
-				testName = testClassName + " > " + testName;
+				String testName = JenkinsResultsParserUtil.combine(
+					testClassName, " > ", testResult.getTestName());
 
 				if (testName.equals(getName())) {
 					testResults.add(testResult);

@@ -215,14 +215,12 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION,
 					strAccessTokenExpirationDate);
 
-				long daysUntilExpiry = TimeUnit.DAYS.convert(
-					accessTokenExpirationDate.getTime() -
-						System.currentTimeMillis(),
-					TimeUnit.MILLISECONDS);
-
 				httpServletRequest.setAttribute(
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DAYS,
-					daysUntilExpiry);
+					TimeUnit.DAYS.convert(
+						accessTokenExpirationDate.getTime() -
+						System.currentTimeMillis(),
+						TimeUnit.MILLISECONDS));
 			}
 
 			httpServletRequest.setAttribute(

@@ -93,10 +93,9 @@ public class TreeTestUtil {
 	}
 
 	public static void createObjectDefinitionTree(
-			Map<String, String[]> treeMap,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			List<String> objectDefinitionNamesToBePublished,
-			ObjectRelationshipLocalService objectRelationshipLocalService)
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			boolean published, Map<String, String[]> treeMap)
 		throws Exception {
 
 		for (Map.Entry<String, String[]> entry : treeMap.entrySet()) {
@@ -110,9 +109,7 @@ public class TreeTestUtil {
 						entry.getKey());
 			}
 
-			if (objectDefinitionNamesToBePublished.contains(entry.getKey()) &&
-				!parentObjectDefinition.isApproved()) {
-
+			if (!parentObjectDefinition.isApproved() && published) {
 				objectDefinitionLocalService.publishCustomObjectDefinition(
 					TestPropsValues.getUserId(),
 					parentObjectDefinition.getObjectDefinitionId());
@@ -123,9 +120,7 @@ public class TreeTestUtil {
 					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						childObjectDefinitionName);
 
-				if (objectDefinitionNamesToBePublished.contains(
-						childObjectDefinitionName)) {
-
+				if (published) {
 					objectDefinitionLocalService.publishCustomObjectDefinition(
 						TestPropsValues.getUserId(),
 						childObjectDefinition.getObjectDefinitionId());

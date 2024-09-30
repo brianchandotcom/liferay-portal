@@ -53,20 +53,21 @@ public class UpgradeCTModelTest {
 
 				_db.runSQL(
 					StringBundler.concat(
-						"create table UpgradeCTModelTest (mvccVersion LONG default 0 ",
-						"not null, uuid_ VARCHAR(75) null, upgradeCTModelId LONG not ",
-						"null primary key, companyId LONG, createDate DATE null, ",
-						"modifiedDate DATE null, name STRING null)"));
+						"create table UpgradeCTModelTest (mvccVersion LONG ",
+						"default 0 not null, uuid_ VARCHAR(75) null, ",
+						"upgradeCTModelId LONG not null primary key, ",
+						"companyId LONG, createDate DATE null, modifiedDate ",
+						"DATE null, name STRING null)"));
 
 				_db.runSQL(
-					"insert into UpgradeCTModelTest values (0, 'uuid', 1, 2, NULL, " +
-						"NULL, 'name')");
+					"insert into UpgradeCTModelTest values (0, 'uuid', 1, 2, " +
+						"NULL, NULL, 'name')");
 
 				_db.runSQL(
 					StringBundler.concat(
-						"create table UpgradeCTModelMappingTest (companyId LONG not ",
-						"null, leftId LONG not null, rightId LONG not null, primary ",
-						"key (leftId, rightId))"));
+						"create table UpgradeCTModelMappingTest (companyId",
+						"LONG not null, leftId LONG not null, rightId LONG ",
+						"not null, primary key (leftId, rightId))"));
 
 				_db.runSQL(
 					"insert into UpgradeCTModelMappingTest values (1, 2, 3)");

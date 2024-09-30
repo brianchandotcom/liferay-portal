@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -74,8 +75,8 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 		_company = CompanyTestUtil.addCompany();
 
 		try (SafeCloseable safeCloseable =
-				 CompanyThreadLocal.setWithSafeCloseable(
-					 _company.getCompanyId())) {
+				CompanyThreadLocal.setWithSafeCloseable(
+					_company.getCompanyId())) {
 
 			User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
 
@@ -132,7 +133,7 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 							COPY_DB_SCHEMA_NAME);
 
 						if (companyId ==
-							PortalInstancePool.getDefaultCompanyId()) {
+								PortalInstancePool.getDefaultCompanyId()) {
 
 							DatabaseTestUtil.importFile(
 								tablesSQLFile, copyDataSource);
@@ -155,7 +156,7 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 							DatabaseTestUtil.getViewNames(copyDataSource));
 
 						if (companyId ==
-							PortalInstancePool.getDefaultCompanyId()) {
+								PortalInstancePool.getDefaultCompanyId()) {
 
 							DatabaseTestUtil.importFile(
 								indexesSQLFile, copyDataSource);
@@ -176,7 +177,7 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 
 						if ((dataSource != null) &&
 							(dataSource !=
-							 InfrastructureUtil.getDataSource())) {
+								InfrastructureUtil.getDataSource())) {
 
 							DatabaseTestUtil.destroyDataSource(dataSource);
 						}
@@ -198,11 +199,11 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 		Assert.assertTrue(
 			reportContent.contains(
 				"Virtual instance " + _company.getCompanyId() +
-				" missing tables:\n"));
+					" missing tables:\n"));
 		Assert.assertTrue(
 			reportContent.contains(
 				"Virtual instance " + TestPropsValues.getCompanyId() +
-				" missing views:"));
+					" missing views:"));
 	}
 
 	@Test
@@ -215,11 +216,11 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 		try {
 			db.runSQL(
 				"create table " + defaultPartitionName +
-				".TestTable (testColumn bigint primary key)");
+					".TestTable (testColumn bigint primary key)");
 			db.runSQL(
 				"create table " +
-				DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
-				".TestTable2 (testColumn bigint primary key)");
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
+						".TestTable2 (testColumn bigint primary key)");
 
 			String reportContent = getReportContent();
 
@@ -239,16 +240,14 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 					StringBundler.concat(
 						"Virtual instance ", TestPropsValues.getCompanyId(),
 						" missing tables:")));
-
-
 		}
 		finally {
 			db.runSQL(
 				"DROP_TABLE_IF_EXISTS(" + defaultPartitionName + ".TestTable)");
 			db.runSQL(
 				"DROP_TABLE_IF_EXISTS(" +
-				DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
-				".TestTable2)");
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
+						".TestTable2)");
 		}
 	}
 
@@ -259,8 +258,8 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 		try {
 			db.runSQL(
 				"create view " +
-				DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
-				".TestView as select * from Company");
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
+						".TestView as select * from Company");
 
 			String reportContent = getReportContent();
 
@@ -274,8 +273,8 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 		finally {
 			db.runSQL(
 				"drop view if exists " +
-				DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
-				".TestView");
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
+						".TestView");
 		}
 	}
 

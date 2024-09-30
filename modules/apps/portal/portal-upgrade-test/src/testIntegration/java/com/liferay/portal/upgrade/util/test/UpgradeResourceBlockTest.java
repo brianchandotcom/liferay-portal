@@ -57,28 +57,30 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 			company -> {
 				runSQL(
 					StringBundler.concat(
-						"create table ResourceBlock (mvccVersion LONG default 0 not ",
-						"null, resourceBlockId LONG not null primary key, companyId ",
-						"LONG, groupId LONG, name VARCHAR(75) null, permissionsHash ",
-						"VARCHAR(75) null, referenceCount LONG);"));
+						"create table ResourceBlock (mvccVersion LONG default ",
+						"0 not null, resourceBlockId LONG not null primary ",
+						"key, companyId LONG, groupId LONG, name VARCHAR(75)  ",
+						"null, permissionsHash VARCHAR(75) null, ",
+						"referenceCount LONG);"));
 
 				runSQL(
 					StringBundler.concat(
-						"create table ResourceBlockPermission (mvccVersion LONG ",
-						"default 0 not null, resourceBlockPermissionId LONG not null ",
-						"primary key, companyId LONG, resourceBlockId LONG, roleId ",
-						"LONG, actionIds LONG);"));
+						"create table ResourceBlockPermission (mvccVersion ",
+						"LONG default 0 not null, resourceBlockPermissionId ",
+						"LONG not null primary key, companyId LONG, ",
+						"resourceBlockId LONG, roleId LONG, actionIds LONG);"));
 
 				runSQL(
-					"create table UpgradeResourceBlockTest(id_ LONG not null primary " +
-						"key, userId LONG, resourceBlockId LONG)");
+					"create table UpgradeResourceBlockTest(id_ LONG not null " +
+						"primary key, userId LONG, resourceBlockId LONG)");
 
 				runSQL(
 					StringBundler.concat(
-						"create table ResourceTypePermission (mvccVersion LONG ",
-						"default 0 not null, resourceTypePermissionId LONG not null ",
-						"primary key, companyId LONG, groupId LONG, name VARCHAR(75) ",
-						"null, roleId LONG, actionIds LONG);"));
+						"create table ResourceTypePermission (mvccVersion ",
+						"LONG default 0 not null, resourceTypePermissionId ",
+						"LONG not null primary key, companyId LONG, groupId ",
+						"LONG, name VARCHAR(75) null, roleId LONG, actionIds ",
+						"LONG);"));
 
 				long resourceBlockId = -1;
 
@@ -110,8 +112,8 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 				sb.append(
 					"insert into ResourceBlock(mvccVersion, resourceBlockId, ");
-				sb.append(
-					"companyId, groupId, name, permissionsHash, referenceCount");
+				sb.append("companyId, groupId, name, ");
+				sb.append("permissionsHash, referenceCount");
 				sb.append(") values (1, ");
 				sb.append(resourceBlockId);
 				sb.append(", ");

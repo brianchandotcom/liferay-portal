@@ -59,25 +59,22 @@ public class UpgradeProcessFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		_companyLocalService.forEachCompany(
-			company -> {
-				_db.runSQL(
-					StringBundler.concat(
-						"create table ", _TABLE_NAME_1,
-						" (id LONG not null primary ",
-						"key, notNilColumn VARCHAR(75) not null, nilColumn ",
-						"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
-						"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-						"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-						"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
-			});
+			company -> _db.runSQL(
+				StringBundler.concat(
+					"create table ", _TABLE_NAME_1,
+					" (id LONG not null primary key, notNilColumn VARCHAR(75)",
+					"not null, nilColumn VARCHAR(75) null, typeBlob BLOB,",
+					"typeBoolean BOOLEAN,typeDate DATE null, typeDouble ",
+					"DOUBLE, typeInteger INTEGER, typeLong LONG null, ",
+					"typeSBlob SBLOB, typeString STRING null, typeText TEXT ",
+					"null, typeVarchar VARCHAR(75) null);")));
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_companyLocalService.forEachCompany(
-			company -> {
-				_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_1 + ")");
-			});
+			company -> _db.runSQL(
+				"DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_1 + ")"));
 	}
 
 	@Test

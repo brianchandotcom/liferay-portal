@@ -59,6 +59,11 @@ type TDataApiHelpersData = {
 	type: string;
 };
 
+interface HeadlessClientConfig {
+	BASE: string;
+	HEADERS: Record<string, string>;
+}
+
 interface PostOptions<T> {
 	data?: T;
 	failOnStatusCode?: boolean;
@@ -193,6 +198,18 @@ export class ApiHelpers {
 		this.searchExperiences = new SearchExperiencesApiHelper(this);
 	}
 
+	async buildRestClient<
+		T extends new (config: HeadlessClientConfig) => InstanceType<T>,
+	>(HeadlessClientClass: T): Promise<InstanceType<T>> {
+		return new HeadlessClientClass({
+			BASE: liferayConfig.environment.baseUrl + '/o',
+			HEADERS: {
+				Cookie: `JSESSIONID=${await this.getJSessionId()};`,
+				...(await this.getCSRFTokenHeader()),
+			},
+		});
+	}
+
 	async postResponse<T>(
 		url: string,
 		{data, failOnStatusCode, headers, multipart}: PostOptions<T> = {}
@@ -295,6 +312,12 @@ export class ApiHelpers {
 			'Content-Type': 'application/json',
 			...(await this.getCSRFTokenHeader()),
 		};
+	}
+
+	async getJSessionId() {
+		const cookies = await this.page.context().cookies();
+
+		return cookies.find((cookie) => cookie.name === 'JSESSIONID').value;
 	}
 
 	async getCSRFTokenHeader() {

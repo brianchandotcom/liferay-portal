@@ -273,7 +273,10 @@ export default function _JournalPortlet({
 	const handlePublishButtonClick = (event) => {
 		lockHolder.lock?.lock();
 
-		if (Liferay.FeatureFlags['LPD-11228']) {
+		if (
+			Liferay.FeatureFlags['LPD-11228'] &&
+			Liferay.FeatureFlags['LPD-15596']
+		) {
 			return;
 		}
 

@@ -3,19 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import {Provider as ClayIconProvider} from '@clayui/core';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {AnalyticsReportsProvider} from '../AnalyticsReportsContext';
-import {AssetTypes} from '../types/global';
+import {AssetTypes, Version} from '../types/global';
 import EmptyState from './EmptyState';
+import StateRenderer from './StateRenderer';
 
-interface IAppSetupProps extends React.HTMLAttributes<HTMLElement> {
+interface IAppSetupStateRendererProps
+	extends React.HTMLAttributes<HTMLElement> {
 	contentPerformanceDataFetchURL: string;
+	getItemVersionsURL: string;
 }
 
 type Data = {
@@ -29,61 +31,15 @@ type Data = {
 	isAdmin: boolean;
 	siteEditDepotEntryDepotAdminPortletURL: string;
 	siteSyncedToAnalyticsCloud: boolean;
+	versions: Version[] | null;
 };
 
-const AppSetup: React.FC<IAppSetupProps> = ({
-	children,
-	contentPerformanceDataFetchURL,
-}) => {
-	const [data, setData] = useState<Data | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState('');
+interface IAppSetupProps {
+	data: Data;
+}
 
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				const response = await fetch(contentPerformanceDataFetchURL, {
-					method: 'GET',
-				});
-
-				const data = await response.json();
-
-				if (data.error) {
-					throw new Error(data.error);
-				}
-
-				setData(data);
-				setLoading(false);
-				setError('');
-			}
-			catch (error: any) {
-				console.error(error);
-
-				setData(null);
-				setLoading(false);
-				setError(error.toString());
-			}
-		}
-
-		fetchData();
-	}, [contentPerformanceDataFetchURL]);
-
-	if (loading) {
-		return (
-			<ClayLoadingIndicator
-				className="mt-10"
-				displayType="primary"
-				shape="squares"
-				size="md"
-			/>
-		);
-	}
-
-	if (error) {
-		return <ClayAlert displayType="danger" title={error} />;
-	}
-
-	if (data && !data.connectedToAnalyticsCloud) {
+const AppSetup: React.FC<IAppSetupProps> = ({children, data}) => {
+	if (!data.connectedToAnalyticsCloud) {
 		if (data.isAdmin) {
 			return (
 				<EmptyState
@@ -117,7 +73,7 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 		);
 	}
 
-	if (data && data.assetLibrary && !data.connectedToAssetLibrary) {
+	if (data.assetLibrary && !data.connectedToAssetLibrary) {
 		if (data.isAdmin) {
 			return (
 				<EmptyState
@@ -153,7 +109,7 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 		);
 	}
 
-	if (data && !data.siteSyncedToAnalyticsCloud) {
+	if (!data.siteSyncedToAnalyticsCloud) {
 		if (data.isAdmin) {
 			return (
 				<EmptyState
@@ -187,15 +143,99 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 		<ClayIconProvider
 			spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`}
 		>
-			<AnalyticsReportsProvider
-				assetId={data?.assetId ?? '0'}
-				assetType={data?.assetType ?? null}
-				groupId={data?.groupId ?? '0'}
-			>
-				{children}
-			</AnalyticsReportsProvider>
+			<ClayTooltipProvider>
+				<div>
+					<AnalyticsReportsProvider
+						assetId={data?.assetId ?? '0'}
+						assetType={data?.assetType ?? null}
+						groupId={data?.groupId ?? '0'}
+						versions={data?.versions ?? null}
+					>
+						{children}
+					</AnalyticsReportsProvider>
+				</div>
+			</ClayTooltipProvider>
 		</ClayIconProvider>
 	);
 };
 
-export default AppSetup;
+const AppSetupStateRenderer: React.FC<IAppSetupStateRendererProps> = ({
+	children,
+	contentPerformanceDataFetchURL,
+	getItemVersionsURL,
+}) => {
+	const [data, setData] = useState<Data | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState('');
+
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const response = await fetch(contentPerformanceDataFetchURL, {
+					method: 'GET',
+				});
+
+				if (!response.ok) {
+					throw new Error();
+				}
+
+				const data = await response.json();
+
+				if (data.error) {
+					throw new Error(data.error);
+				}
+
+				let versionsData:
+					| ({versions: Version[]} & {error: string})
+					| null = null;
+
+				if (getItemVersionsURL) {
+					const responseVersions = await fetch(getItemVersionsURL, {
+						method: 'GET',
+					});
+
+					if (!responseVersions.ok) {
+						throw new Error();
+					}
+
+					versionsData = await responseVersions.json();
+
+					if (versionsData?.error) {
+						throw new Error(versionsData.error);
+					}
+				}
+
+				setData({
+					...data,
+					versions: versionsData?.versions.map(
+						({createDate, version}) => ({
+							createDate,
+							version,
+						})
+					),
+				});
+				setLoading(false);
+				setError('');
+			}
+			catch (error: any) {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+
+				setData(null);
+				setLoading(false);
+				setError(error.toString());
+			}
+		}
+
+		fetchData();
+	}, [contentPerformanceDataFetchURL, getItemVersionsURL]);
+
+	return (
+		<StateRenderer data={data} error={error} loading={loading}>
+			{({data}) => <AppSetup data={data}>{children}</AppSetup>}
+		</StateRenderer>
+	);
+};
+
+export default AppSetupStateRenderer;

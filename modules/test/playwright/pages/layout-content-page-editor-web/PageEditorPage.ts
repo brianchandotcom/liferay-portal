@@ -872,6 +872,10 @@ export class PageEditorPage {
 			element.classList.contains('lfr-layout-structure-item-collection')
 		);
 
+		const isContainer = await fragment.evaluate((element) =>
+			element.classList.contains('lfr-layout-structure-item-container')
+		);
+
 		const isForm = await fragment.evaluate((element) =>
 			element.classList.contains('lfr-layout-structure-item-form')
 		);
@@ -880,7 +884,7 @@ export class PageEditorPage {
 			element.classList.contains('lfr-layout-structure-item-row')
 		);
 
-		if (isCollection || isForm || isGrid) {
+		if (isCollection || isContainer || isForm || isGrid) {
 			await this.goToSidebarTab('Browser');
 
 			const treeNode = this.page.locator(

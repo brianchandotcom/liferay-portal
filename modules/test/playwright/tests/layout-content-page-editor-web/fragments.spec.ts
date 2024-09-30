@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
@@ -46,6 +47,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
+	fragmentsPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
@@ -596,7 +598,9 @@ test.describe('Dropdown Fragment', () => {
 		await pageEditorPage.addFragment(
 			'Basic Components',
 			'Heading',
-			page.getByText('Drag and drop fragments or widgets here.', {exact: true})
+			page.getByText('Drag and drop fragments or widgets here.', {
+				exact: true,
+			})
 		);
 
 		await expect(page.getByText('Heading Example')).toBeVisible();
@@ -1750,6 +1754,109 @@ test.describe('Video URL', () => {
 					'Life at Liferay - A Look into Liferay Culture'
 				)
 			).toBeVisible();
+		}
+	);
+});
+
+test.describe('Dropzone', () => {
+	test(
+		'Create a fragment with multiple Drop Zone areas and add a fragment into one of them to save it as a composition',
+		{
+			tag: '@LPS-101258',
+		},
+		async ({
+			apiHelpers,
+			fragmentEditorPage,
+			fragmentsPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Go to fragment administration and create fragment set
+
+			await fragmentsPage.goto(site.friendlyUrlPath);
+
+			const fragmentSetName = getRandomString();
+
+			await fragmentsPage.createFragmentSet(fragmentSetName);
+
+			// Create fragment
+
+			const fragmentName = getRandomString();
+
+			await fragmentsPage.createFragment(
+				fragmentSetName,
+				fragmentName,
+				'basic'
+			);
+
+			await fragmentEditorPage.addHTML(` 
+			<lfr-drop-zone></lfr-drop-zone>	
+			<lfr-drop-zone></lfr-drop-zone>	
+			`);
+
+			await fragmentEditorPage.publish();
+
+			// Create a page with a container and the fragment inside
+
+			const title = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title,
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment('Layout Elements', 'Container');
+
+			const containerId = await pageEditorPage.getFragmentId('Container');
+
+			await pageEditorPage.addFragment(
+				fragmentSetName,
+				fragmentName,
+				pageEditorPage.getFragment(containerId)
+			);
+
+			// Add a fragment in one of the drop zones
+
+			await pageEditorPage.addFragment(
+				'Basic Components',
+				'Button',
+				page
+					.getByText('Drag and drop fragments or widgets here.')
+					.first()
+			);
+
+			// Verify that the fragments are present
+
+			await expect(page.getByText('Go Somewhere')).toBeVisible();
+
+			await expect(
+				page.getByText('Drag and drop fragments or widgets here.')
+			).toBeVisible();
+
+			// Save the composition
+
+			await pageEditorPage.clickFragmentOption(
+				containerId,
+				'Save Composition'
+			);
+
+			const compositionName = getRandomString();
+
+			await page.getByPlaceholder('Name').fill(compositionName);
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			// Check the composition has been saved
+
+			await fragmentsPage.goto(site.friendlyUrlPath);
+
+			await fragmentsPage.gotoFragmentSet(fragmentSetName);
+
+			await expect(page.getByText(compositionName)).toBeVisible();
 		}
 	);
 });

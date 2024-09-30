@@ -1,0 +1,64 @@
+{
+	"category": "conditional",
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"terms": {
+									"boost": "${configuration.boost}",
+									"groupAssetCategoryExternalReferenceCodes": "${configuration.group_asset_category_external_reference_codes}"
+								}
+							}
+						}
+					],
+					"condition": {
+						"range": {
+							"format": "yyyyMMdd",
+							"gte": "${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
+							"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+							"parameterName": "user.create_date"
+						}
+					}
+				}
+			]
+		}
+	},
+	"icon": "thumbs-up",
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"label": "asset-category-external-reference-codes",
+						"name": "group_asset_category_external_reference_codes",
+						"type": "multiselect"
+					},
+					{
+						"defaultValue": 30,
+						"label": "time-range",
+						"name": "time_range",
+						"type": "number",
+						"typeOptions": {
+							"unit": "days",
+							"unitSuffix": "d"
+						}
+					},
+					{
+						"defaultValue": 20,
+						"label": "boost",
+						"name": "boost",
+						"type": "number",
+						"typeOptions": {
+							"min": 0
+						}
+					}
+				]
+			}
+		]
+	}
+}

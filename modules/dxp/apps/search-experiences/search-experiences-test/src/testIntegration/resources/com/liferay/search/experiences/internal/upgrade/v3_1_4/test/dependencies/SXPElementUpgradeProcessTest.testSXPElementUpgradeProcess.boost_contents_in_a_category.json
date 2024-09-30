@@ -1,0 +1,46 @@
+{
+	"category": "boost",
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"terms": {
+									"boost": "${configuration.boost}",
+									"groupAssetCategoryExternalReferenceCodes": "${configuration.group_asset_category_external_reference_codes}"
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"icon": "thumbs-up",
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"label": "asset-category-external-reference-codes",
+						"name": "group_asset_category_external_reference_codes",
+						"type": "multiselect"
+					},
+					{
+						"defaultValue": 10,
+						"label": "boost",
+						"name": "boost",
+						"type": "number",
+						"typeOptions": {
+							"min": 0
+						}
+					}
+				]
+			}
+		]
+	}
+}

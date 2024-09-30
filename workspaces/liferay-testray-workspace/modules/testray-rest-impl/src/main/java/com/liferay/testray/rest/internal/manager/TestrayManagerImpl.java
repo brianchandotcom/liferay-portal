@@ -367,6 +367,15 @@ public class TestrayManagerImpl implements TestrayManager {
 			updateTestrayBuildSummary(
 				companyId, testrayCache.getTestrayBuildId(), userId);
 
+			long testrayTaskId = _getObjectEntryId(
+				companyId,
+				"buildId eq '" + testrayCache.getTestrayBuildId() + "'", null,
+				new String[] {"c_taskId"}, "Task", testrayCache, userId);
+
+			if (testrayTaskId != 0) {
+				_objectEntryLocalService.deleteObjectEntry(testrayTaskId);
+			}
+
 			ObjectEntry objectEntry = _addObjectEntry(
 				"Task", serviceContext, testrayCache, userId,
 				HashMapBuilder.<String, Serializable>put(

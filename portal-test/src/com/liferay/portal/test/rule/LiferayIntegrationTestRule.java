@@ -38,6 +38,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		testRules.add(PortalRunModeClassTestRule.INSTANCE);
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(DataGuardTestRule.INSTANCE);
+		testRules.add(DBPartitionTestRule.INSTANCE);
 		testRules.add(LogAssertionTestRule.INSTANCE);
 		testRules.add(SybaseDumpTransactionLogTestRule.INSTANCE);
 		testRules.add(ClearThreadLocalClassTestRule.INSTANCE);

@@ -2050,11 +2050,14 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinitionLocalService.getObjectDefinition(
 						node.getPrimaryKey());
 
+				String previousRESTContextPath =
+					nodeObjectDefinition.getRESTContextPath();
+
 				nodeObjectDefinition.setRootObjectDefinitionId(
 					objectDefinition1.getRootObjectDefinitionId());
 				nodeObjectDefinition.setPortlet(false);
 				nodeObjectDefinition.setPreviousRESTContextPath(
-					nodeObjectDefinition.getRESTContextPath());
+					previousRESTContextPath);
 
 				deployObjectDefinition(
 					objectDefinitionPersistence.update(nodeObjectDefinition));

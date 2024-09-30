@@ -48,18 +48,18 @@ test.describe('Parameters in Data Set Fragment', () => {
 		layout,
 	}) => {
 		await test.step('Add fields', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
-				label_i18n: {en_US: 'Name'},
-				name: 'name',
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 				sortable: true,
 				type: 'string',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: 'id',
 				label_i18n: {en_US: 'ID'},
-				name: 'id',
 				sortable: true,
 				type: 'string',
 			});
@@ -67,7 +67,7 @@ test.describe('Parameters in Data Set Fragment', () => {
 
 		await test.step('Add parameters', async () => {
 			await dataSetManagerApiHelpers.updateDataSet({
-				additionalAPIURLParameters: 'sort=name:desc',
+				additionalAPIURLParameters: 'sort=fieldName:desc',
 				erc: dataSetERC,
 			});
 		});
@@ -98,18 +98,18 @@ test.describe('Parameters in Data Set Fragment', () => {
 		layout,
 	}) => {
 		await test.step('Add fields', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
-				label_i18n: {en_US: 'Name'},
-				name: 'name',
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 				sortable: true,
 				type: 'string',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: 'id',
 				label_i18n: {en_US: 'ID'},
-				name: 'id',
 				sortable: true,
 				type: 'string',
 			});
@@ -117,7 +117,7 @@ test.describe('Parameters in Data Set Fragment', () => {
 
 		await test.step('Add parameters', async () => {
 			await dataSetManagerApiHelpers.updateDataSet({
-				additionalAPIURLParameters: "filter=name eq 'name'",
+				additionalAPIURLParameters: "filter=fieldName eq 'fieldName'",
 				erc: dataSetERC,
 			});
 		});
@@ -135,7 +135,7 @@ test.describe('Parameters in Data Set Fragment', () => {
 				.allInnerTexts();
 
 			expect(
-				tableNameCellTexts.every((value) => value === 'name')
+				tableNameCellTexts.every((value) => value === 'fieldName')
 			).toBeTruthy();
 		});
 	});

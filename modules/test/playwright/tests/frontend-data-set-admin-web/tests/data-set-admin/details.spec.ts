@@ -92,7 +92,7 @@ test.describe('Data Set Details', () => {
 
 			await test.step('Check the URL Preview input properly displays the REST endpoint with the encoded parameters', async () => {
 				await expect(detailsPage.urlPreviewInput).toHaveValue(
-					'/data-set-manager/table-sections?filter=name%20eq%20%22Test%20Test%22'
+					'/data-set-admin/table-sections?filter=name%20eq%20%22Test%20Test%22'
 				);
 			});
 		});

@@ -231,8 +231,8 @@ test.describe('Sorting in Data Set Manager', () => {
 			await dataSetManagerApiHelpers.createDataSetSort({
 				dataSetERC,
 				defaultValue: false,
-				fieldName: 'name',
-				label_i18n: {en_US: 'Name'},
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 			});
 
 			await dataSetManagerApiHelpers.createDataSetSort({
@@ -249,30 +249,38 @@ test.describe('Sorting in Data Set Manager', () => {
 			});
 		});
 
-		await test.step('Check that "Date Created" is below "Name"', async () => {
+		await test.step('Check that "Date Created" is below "Field Name"', async () => {
 			const tableLabelCellTexts =
 				await sortingPage.getTableColumnInnerTexts(2);
 
-			expect(tableLabelCellTexts).toEqual(['ID', 'Name', 'Date Created']);
+			expect(tableLabelCellTexts).toEqual([
+				'ID',
+				'Field Name',
+				'Date Created',
+			]);
 		});
 
-		await test.step('Move the "Date Created" option above "Name"', async () => {
+		await test.step('Move the "Date Created" option above "Field Name"', async () => {
 			const dateCreatedRow = sortingPage.sortingTable.getByRole('row', {
 				name: 'Date Created',
 			});
 
-			const nameRow = sortingPage.sortingTable.getByRole('row', {
-				name: 'Name',
+			const fieldNameRow = sortingPage.sortingTable.getByRole('row', {
+				name: 'Field Name',
 			});
 
-			await dateCreatedRow.dragTo(nameRow);
+			await dateCreatedRow.dragTo(fieldNameRow);
 		});
 
-		await test.step('Check that "Date Created" is above "Name"', async () => {
+		await test.step('Check that "Date Created" is above "Field Name"', async () => {
 			const tableLabelCellTexts =
 				await sortingPage.getTableColumnInnerTexts(2);
 
-			expect(tableLabelCellTexts).toEqual(['ID', 'Date Created', 'Name']);
+			expect(tableLabelCellTexts).toEqual([
+				'ID',
+				'Date Created',
+				'Field Name',
+			]);
 		});
 
 		await test.step('Navigate to the "Details" tab and back to "Sorting" tab', async () => {
@@ -284,7 +292,11 @@ test.describe('Sorting in Data Set Manager', () => {
 			const tableLabelCellTexts =
 				await sortingPage.getTableColumnInnerTexts(2);
 
-			expect(tableLabelCellTexts).toEqual(['ID', 'Date Created', 'Name']);
+			expect(tableLabelCellTexts).toEqual([
+				'ID',
+				'Date Created',
+				'Field Name',
+			]);
 		});
 	});
 
@@ -305,8 +317,8 @@ test.describe('Sorting in Data Set Manager', () => {
 			await dataSetManagerApiHelpers.createDataSetSort({
 				dataSetERC,
 				defaultValue: false,
-				fieldName: 'name',
-				label_i18n: {en_US: 'Name'},
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 			});
 		});
 
@@ -375,119 +387,135 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
-	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
-		page,
-		sortingPage,
-	}) => {
-		await test.step('Navigate to Sorting section', async () => {
-			await sortingPage.goto({
-				dataSetLabel,
-			});
-		});
-
-		await test.step('Open new sort modal', async () => {
-			await sortingPage.openAddSortingModal();
-		});
-
-		await test.step('Order Type input only appears when default is checked', async () => {
-			await expect(page.getByLabel('Order Type')).not.toBeVisible();
-
-			await page.getByLabel('Use as Default Sorting').check();
-
-			await expect(page.getByLabel('Order Type')).toBeVisible();
-		});
-
-		await test.step('Check the options of the Order Type input are "Ascending" and "Descending"', async () => {
-			const orderTypeInput = await page
-				.getByLabel('Order Type')
-				.textContent();
-
-			expect(orderTypeInput).toEqual('AscendingDescending');
-		});
-	});
-
-	test('Sorting can be created, edited, and deleted @LPD-19465', async ({
-		page,
-		sortingPage,
-	}) => {
-		await test.step('Navigate to Sorting section', async () => {
-			await sortingPage.goto({
-				dataSetLabel,
-			});
-		});
-
-		await test.step('Open new sort modal', async () => {
-			await sortingPage.openAddSortingModal();
-		});
-
-		await test.step('Input values', async () => {
-			await page.getByLabel('Label').fill('Date Modified');
-			await page.getByLabel('Sort By').selectOption('dateModified');
-			await page.getByLabel('Use as Default Sorting').check();
-		});
-
-		await test.step('Save changes', async () => {
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('New sort is displayed on the table', async () => {
-			await expect(page.getByText('Date Modified').first()).toBeVisible();
-			await expect(page.getByText('dateModified').first()).toBeVisible();
-			await expect(page.getByText('Yes').first()).toBeVisible();
-		});
-
-		await test.step('Open edit sort modal', async () => {
-			const tableRow = sortingPage.sortingTable.locator('tr', {
-				has: page.locator('text="Date Modified"'),
+	test(
+		'In the New Sort modal, the Order Type input only appears when default is checked',
+		{
+			tag: '@LPD-19465',
+		},
+		async ({page, sortingPage}) => {
+			await test.step('Navigate to Sorting section', async () => {
+				await sortingPage.goto({
+					dataSetLabel,
+				});
 			});
 
-			await tableRow
-				.getByRole('cell', {name: 'Actions'})
-				.getByRole('button')
-				.click();
-
-			await page.getByRole('menuitem', {name: 'Edit'}).click();
-		});
-
-		await test.step('Change label and sort by values', async () => {
-			await page.getByLabel('Label').fill('Date Created');
-			await page.getByLabel('Sort By').selectOption('dateCreated');
-			await page.getByLabel('Use as Default Sorting').setChecked(false);
-		});
-
-		await test.step('Save changes', async () => {
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('Edited sort is updated on the table', async () => {
-			await expect(page.getByText('Date Created').first()).toBeVisible();
-			await expect(page.getByText('dateCreated').first()).toBeVisible();
-			await expect(page.getByText('No').first()).toBeVisible();
-		});
-
-		await test.step('Delete sort', async () => {
-			const tableRow = sortingPage.sortingTable.locator('tr', {
-				has: page.locator('text="Date Created"'),
+			await test.step('Open new sort modal', async () => {
+				await sortingPage.openAddSortingModal();
 			});
 
-			await tableRow
-				.getByRole('cell', {name: 'Actions'})
-				.getByRole('button')
-				.click();
+			await test.step('Order Type input only appears when default is checked', async () => {
+				await expect(page.getByLabel('Order Type')).not.toBeVisible();
 
-			await page.getByRole('menuitem', {name: 'Delete'}).click();
+				await page.getByLabel('Use as Default Sorting').check();
 
-			await page.getByRole('button', {name: 'Delete'}).click();
+				await expect(page.getByLabel('Order Type')).toBeVisible();
+			});
 
-			await expect(
-				page.getByText('Date Created').first()
-			).not.toBeVisible();
-		});
-	});
+			await test.step('Check the options of the Order Type input are "Ascending" and "Descending"', async () => {
+				const orderTypeInput = await page
+					.getByLabel('Order Type')
+					.textContent();
+
+				expect(orderTypeInput).toEqual('AscendingDescending');
+			});
+		}
+	);
+
+	test(
+		'Sorting can be created, edited, and deleted',
+		{
+			tag: '@LPD-19465',
+		},
+		async ({page, sortingPage}) => {
+			await test.step('Navigate to Sorting section', async () => {
+				await sortingPage.goto({
+					dataSetLabel,
+				});
+			});
+
+			await test.step('Open new sort modal', async () => {
+				await sortingPage.openAddSortingModal();
+			});
+
+			await test.step('Input values', async () => {
+				await page.getByLabel('Label').fill('Date Modified');
+				await page.getByLabel('Sort By').selectOption('dateModified');
+				await page.getByLabel('Use as Default Sorting').check();
+			});
+
+			await test.step('Save changes', async () => {
+				await saveFromModal({
+					page,
+				});
+			});
+
+			await test.step('New sort is displayed on the table', async () => {
+				await expect(
+					page.getByText('Date Modified').first()
+				).toBeVisible();
+				await expect(
+					page.getByText('dateModified').first()
+				).toBeVisible();
+				await expect(page.getByText('Yes').first()).toBeVisible();
+			});
+
+			await test.step('Open edit sort modal', async () => {
+				const tableRow = sortingPage.sortingTable.locator('tr', {
+					has: page.locator('text="Date Modified"'),
+				});
+
+				await tableRow
+					.getByRole('cell', {name: 'Actions'})
+					.getByRole('button')
+					.click();
+
+				await page.getByRole('menuitem', {name: 'Edit'}).click();
+			});
+
+			await test.step('Change label and sort by values', async () => {
+				await page.getByLabel('Label').fill('Date Created');
+				await page.getByLabel('Sort By').selectOption('dateCreated');
+				await page
+					.getByLabel('Use as Default Sorting')
+					.setChecked(false);
+			});
+
+			await test.step('Save changes', async () => {
+				await saveFromModal({
+					page,
+				});
+			});
+
+			await test.step('Edited sort is updated on the table', async () => {
+				await expect(
+					page.getByText('Date Created').first()
+				).toBeVisible();
+				await expect(
+					page.getByText('dateCreated').first()
+				).toBeVisible();
+				await expect(page.getByText('No').first()).toBeVisible();
+			});
+
+			await test.step('Delete sort', async () => {
+				const tableRow = sortingPage.sortingTable.locator('tr', {
+					has: page.locator('text="Date Created"'),
+				});
+
+				await tableRow
+					.getByRole('cell', {name: 'Actions'})
+					.getByRole('button')
+					.click();
+
+				await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+				await page.getByRole('button', {name: 'Delete'}).click();
+
+				await expect(
+					page.getByText('Date Created').first()
+				).not.toBeVisible();
+			});
+		}
+	);
 
 	test('Unmark default sorting when a new one is marked and saved @LPD-25392', async ({
 		page,
@@ -583,7 +611,7 @@ test.describe('Sorting in Data Set Manager', () => {
 
 			await test.step('Input values', async () => {
 				await page.getByLabel('Label').fill('Nombre');
-				await page.getByLabel('Sort By').selectOption('name');
+				await page.getByLabel('Sort By').selectOption('fieldName');
 			});
 
 			await test.step('Save changes', async () => {

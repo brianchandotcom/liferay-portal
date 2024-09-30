@@ -26,7 +26,7 @@ let dataSetERC: string;
 let dataSetLabel: string;
 const clientExtensionName = 'Liferay Sample FDS Filter';
 const DATE_FIELD_NAME = 'dateCreated';
-const NAME_FIELD_NAME = 'name';
+const NAME_FIELD_NAME = 'fieldName';
 
 test.beforeEach(async ({dataSetManagerApiHelpers, filtersPage}) => {
 	dataSetERC = getRandomString();

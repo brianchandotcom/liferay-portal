@@ -154,16 +154,16 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 	const filterLabel = getRandomString();
 
 	await test.step('Add a field, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'renderer',
 			label_i18n: {en_US: 'Renderer'},
-			name: 'renderer',
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'sortable',
 			label_i18n: {en_US: 'Sortable'},
-			name: 'sortable',
 			renderer: 'boolean',
 		});
 	});
@@ -264,16 +264,16 @@ test('Selection filter of type "Object Picklist" can be configured to use single
 	let selectionFilter;
 
 	await test.step('Add fields, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'renderer',
 			label_i18n: {en_US: 'Renderer'},
-			name: 'renderer',
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'sortable',
 			label_i18n: {en_US: 'Sortable'},
-			name: 'sortable',
 			renderer: 'boolean',
 		});
 	});
@@ -429,16 +429,16 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 	let selectionFilter;
 
 	await test.step('Add fields, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'renderer',
 			label_i18n: {en_US: 'Renderer'},
-			name: 'renderer',
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'sortable',
 			label_i18n: {en_US: 'Sortable'},
-			name: 'sortable',
 			renderer: 'boolean',
 		});
 	});
@@ -550,24 +550,24 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 	const filterLabel = getRandomString();
 
 	await test.step('Add fields, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'id',
 			label_i18n: {en_US: 'Id'},
-			name: 'id',
 			type: 'integer',
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'type',
 			label_i18n: {en_US: 'Type'},
-			name: 'type',
 			type: 'string',
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'sortable',
 			label_i18n: {en_US: 'Sortable'},
-			name: 'sortable',
 			type: 'boolean',
 		});
 	});
@@ -750,8 +750,8 @@ test(
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: customDataSetERC,
 				label: customDataSetLabel,
-				restApplication: '/data-set-manager/data-sets',
-				restSchema: 'FDSView',
+				restApplication: '/data-set-admin/data-sets',
+				restSchema: 'DataSet',
 			});
 		});
 
@@ -766,12 +766,12 @@ test(
 		await test.step('Create a new "API Rest Application" selection filter for card fields', async () => {
 			await dataSetManagerApiHelpers.createDataSetSelectionFilter({
 				dataSetERC: customDataSetERC,
-				fieldName: 'fdsViewFDSCardsSectionRelationship[]fieldName',
+				fieldName: 'dataSetToDataSetCardsSections[]fieldName',
 				itemKey: 'fieldName',
 				itemLabel: 'fieldName',
 				label_i18n: {en_US: filterLabel},
 				multiple: true,
-				source: `/o/data-set-manager/cards-sections/`,
+				source: `/o/data-set-admin/cards-sections/`,
 				sourceType: 'API_REST_APPLICATION',
 			});
 		});

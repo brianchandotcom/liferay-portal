@@ -60,10 +60,10 @@ test.describe('Empty Item Actions in Data Set fragment', () => {
 		layout,
 	}) => {
 		await test.step('Create table field', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: 'id',
 				label_i18n: {en_US: 'Id'},
-				name: 'id',
 				type: 'string',
 			});
 		});
@@ -86,16 +86,17 @@ test.describe('Empty Item Actions in Data Set fragment', () => {
 test.describe('Item Actions in Data Set fragment', () => {
 	test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 		await test.step('Populate Data Set', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: 'id',
 				label_i18n: {en_US: 'Id'},
-				name: 'id',
 				type: 'string',
 			});
-			await dataSetManagerApiHelpers.createDataSetField({
+
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
-				label_i18n: {en_US: 'Name'},
-				name: 'name',
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 				type: 'string',
 			});
 		});
@@ -326,7 +327,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionUrl = '/o/data-set-manager/table-sections/{id}';
+		const asyncItemActionUrl = '/o/data-set-admin/table-sections/{id}';
 		const headlessItemActionName = 'Headless item action';
 		const headlessItemActionPermissionKey = 'delete';
 		const nonAvailableHeadlessItemActionName =
@@ -367,9 +368,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 		const datasetRow =
 			await test.step('Check data set items have two item actions', async () => {
-				const tableRow = await page
-					.locator('.dnd-td.item-actions')
-					.first();
+				const tableRow = page.locator('.dnd-td.item-actions').first();
 
 				await expect(
 					tableRow.getByRole('button', {
@@ -417,7 +416,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 
 		await test.step('Click in the headless item action executes the action', async () => {
-			const button = await datasetRow.getByRole('button', {
+			const button = datasetRow.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});
@@ -484,7 +483,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionUrl = '/o/data-set-manager/table-sections/{id}';
+		const asyncItemActionUrl = '/o/data-set-admin/table-sections/{id}';
 		const asyncItemNewLabel = getRandomString();
 		const headlessItemActionName = 'Headless item action';
 		const headlessItemActionPermissionKey = 'update';
@@ -495,7 +494,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: headlessItemActionName},
 				permissionKey: headlessItemActionPermissionKey,
-				requestBody: `{"name": "${headlessItemNewLabel}"}`,
+				requestBody: `{"label_i18n": {"en_US": "${headlessItemNewLabel}"}}`,
 				type: EItemActionType.HEADLESS,
 			});
 
@@ -503,7 +502,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.PATCH,
-				requestBody: `{"name": "${asyncItemNewLabel}"}`,
+				requestBody: `{"label_i18n": {"en_US": "${asyncItemNewLabel}"}}`,
 				type: EItemActionType.ASYNC,
 				url: asyncItemActionUrl,
 			});
@@ -585,7 +584,11 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			await waitForAlert(page);
 
-			await expect(page.getByText(headlessItemNewLabel)).toBeVisible();
+			await page.reload();
+
+			await expect(
+				page.locator('.cell-id').getByText(headlessItemNewLabel)
+			).toBeVisible();
 		});
 
 		await test.step('Click in the async item action executes the action', async () => {
@@ -619,7 +622,11 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			await waitForAlert(page);
 
-			await expect(page.getByText(asyncItemNewLabel)).toBeVisible();
+			await page.reload();
+
+			await expect(
+				page.locator('.cell-id').getByText(asyncItemNewLabel)
+			).toBeVisible();
 		});
 	});
 
@@ -631,7 +638,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 	}) => {
 		const asyncItemActionName = 'Async item action';
 		const asyncItemActionWrongUrl =
-			'/o/data-set-manager/table-sections/{foo}';
+			'/o/data-set-admin/table-sections/{foo}';
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({

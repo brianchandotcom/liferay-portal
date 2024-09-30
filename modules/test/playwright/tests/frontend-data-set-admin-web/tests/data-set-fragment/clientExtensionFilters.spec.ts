@@ -46,32 +46,28 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-const clientExtensionERC = 'LXC:liferay-sample-fds-filter';
-
 test('Deployed client extension filter is available in fragment @LPS-190457', async ({
 	dataSetManagerApiHelpers,
 	fdsFragmentPage,
 	layout,
 	page,
 }) => {
-	const fieldLabel = getRandomString();
-
 	const filterLabel = getRandomString();
 
 	await test.step('Create a new client extension filter', async () => {
 		await dataSetManagerApiHelpers.createDataSetClientExtensionFilter({
+			clientExtensionEntryERC: 'LXC:liferay-sample-fds-filter',
 			dataSetId: dataSet.id,
-			fdsFilterClientExtensionERC: clientExtensionERC,
 			fieldName: DATE_FIELD_NAME,
 			label_i18n: {en_US: filterLabel},
 		});
 	});
 
 	await test.step('Add a field, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
-			label_i18n: {en_US: fieldLabel},
-			name: 'rendererType',
+			fieldName: 'rendererType',
+			label_i18n: {en_US: getRandomString()},
 			type: 'string',
 		});
 	});

@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
-import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
@@ -18,7 +17,6 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPD-19465': true,
 		'LPS-178052': true,
 	}),
 	isolatedLayoutTest({publish: false}),
@@ -62,26 +60,26 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 			await dataSetManagerApiHelpers.createDataSetSort({
 				dataSetERC,
 				defaultValue: false,
-				fieldName: 'name',
-				label_i18n: {en_US: 'Name'},
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 			});
 		});
 
 		await test.step('Add fields, so data is displayed', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: 'id',
 				label_i18n: {
 					en_US: 'ID',
 				},
-				name: 'id',
 				sortable: true,
 				type: 'string',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
-				label_i18n: {en_US: 'Name'},
-				name: 'name',
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 				sortable: true,
 				type: 'string',
 			});
@@ -190,26 +188,26 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetSort({
 					dataSetERC,
 					defaultValue: false,
-					fieldName: 'name',
+					fieldName: 'fieldName',
 					label_i18n: {en_US: 'Name', es_ES: 'Nombre'},
 				});
 			});
 
 			await test.step('Add fields, so data is displayed', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					dataSetERC,
+					fieldName: 'id',
 					label_i18n: {
 						en_US: 'ID',
 					},
-					name: 'id',
 					sortable: true,
 					type: 'string',
 				});
 
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					dataSetERC,
-					label_i18n: {en_US: 'Name'},
-					name: 'name',
+					fieldName: 'fieldName',
+					label_i18n: {en_US: 'Field Name'},
 					sortable: true,
 					type: 'string',
 				});
@@ -237,9 +235,7 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 
 				await page.getByRole('button', {name: 'Save'}).click();
 
-				await expect(
-					page.getByText('Éxito:Su petición ha terminado con éxito.')
-				).toBeVisible();
+				await expect(page.locator('.alert-success')).toBeVisible();
 
 				spanishLanguage = true;
 			});
@@ -280,7 +276,7 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 
 					await page.getByRole('button', {name: 'Guardar'}).click();
 
-					await waitForAlert(page);
+					await expect(page.locator('.alert-success')).toBeVisible();
 				});
 			}
 		}

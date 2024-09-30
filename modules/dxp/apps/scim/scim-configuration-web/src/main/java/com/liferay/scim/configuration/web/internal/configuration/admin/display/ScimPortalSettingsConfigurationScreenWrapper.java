@@ -219,7 +219,7 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DAYS,
 					TimeUnit.DAYS.convert(
 						accessTokenExpirationDate.getTime() -
-						System.currentTimeMillis(),
+							System.currentTimeMillis(),
 						TimeUnit.MILLISECONDS));
 			}
 

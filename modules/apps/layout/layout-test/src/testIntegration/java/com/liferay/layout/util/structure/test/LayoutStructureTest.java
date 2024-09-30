@@ -711,17 +711,30 @@ public class LayoutStructureTest {
 			copiedLayoutStructureItems.toString(), 2,
 			copiedLayoutStructureItems.size());
 
+		List<String> childrenItemIds =
+			containerStyledLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem copiedLayoutStructureItem1 =
+			copiedLayoutStructureItems.get(0);
+
 		_assertFragmentStyledLayoutStructureItem(
-			(FragmentStyledLayoutStructureItem)copiedLayoutStructureItems.get(
-				0),
+			(FragmentStyledLayoutStructureItem)copiedLayoutStructureItem1,
 			(FragmentStyledLayoutStructureItem)
 				fragmentStyledLayoutStructureItem1);
 
+		Assert.assertEquals(
+			0, childrenItemIds.indexOf(copiedLayoutStructureItem1.getItemId()));
+
+		LayoutStructureItem copiedLayoutStructureItem2 =
+			copiedLayoutStructureItems.get(1);
+
 		_assertFragmentStyledLayoutStructureItem(
-			(FragmentStyledLayoutStructureItem)copiedLayoutStructureItems.get(
-				1),
+			(FragmentStyledLayoutStructureItem)copiedLayoutStructureItem2,
 			(FragmentStyledLayoutStructureItem)
 				fragmentStyledLayoutStructureItem2);
+
+		Assert.assertEquals(
+			1, childrenItemIds.indexOf(copiedLayoutStructureItem2.getItemId()));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)

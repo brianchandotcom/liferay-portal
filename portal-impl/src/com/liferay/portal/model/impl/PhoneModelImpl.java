@@ -66,13 +66,13 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"phoneId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"number_", Types.VARCHAR},
-		{"extension", Types.VARCHAR}, {"listTypeId", Types.BIGINT},
-		{"primary_", Types.BOOLEAN}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"phoneId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"number_", Types.VARCHAR}, {"extension", Types.VARCHAR},
+		{"listTypeId", Types.BIGINT}, {"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,6 +82,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("phoneId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +98,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Phone (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,phoneId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,listTypeId LONG,primary_ BOOLEAN,primary key (phoneId, ctCollectionId))";
+		"create table Phone (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,phoneId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,listTypeId LONG,primary_ BOOLEAN,primary key (phoneId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Phone";
 
@@ -151,26 +152,32 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIMARY_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long PRIMARY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -269,6 +276,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 			attributeGetterFunctions.put(
 				"ctCollectionId", Phone::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Phone::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", Phone::getExternalReferenceCode);
 			attributeGetterFunctions.put("phoneId", Phone::getPhoneId);
 			attributeGetterFunctions.put("companyId", Phone::getCompanyId);
 			attributeGetterFunctions.put("userId", Phone::getUserId);
@@ -305,6 +314,9 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 				(BiConsumer<Phone, Long>)Phone::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Phone, String>)Phone::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<Phone, String>)Phone::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"phoneId", (BiConsumer<Phone, Long>)Phone::setPhoneId);
 			attributeSetterBiConsumers.put(
@@ -394,6 +406,35 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -752,6 +793,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		phoneImpl.setMvccVersion(getMvccVersion());
 		phoneImpl.setCtCollectionId(getCtCollectionId());
 		phoneImpl.setUuid(getUuid());
+		phoneImpl.setExternalReferenceCode(getExternalReferenceCode());
 		phoneImpl.setPhoneId(getPhoneId());
 		phoneImpl.setCompanyId(getCompanyId());
 		phoneImpl.setUserId(getUserId());
@@ -779,6 +821,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		phoneImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		phoneImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		phoneImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		phoneImpl.setPhoneId(this.<Long>getColumnOriginalValue("phoneId"));
 		phoneImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
 		phoneImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
@@ -881,6 +925,16 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			phoneCacheModel.uuid = null;
+		}
+
+		phoneCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = phoneCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			phoneCacheModel.externalReferenceCode = null;
 		}
 
 		phoneCacheModel.phoneId = getPhoneId();
@@ -1002,6 +1056,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _phoneId;
 	private long _companyId;
 	private long _userId;
@@ -1049,6 +1104,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("phoneId", _phoneId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1092,29 +1149,31 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("phoneId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("phoneId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("classNameId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("classPK", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("number_", 2048L);
+		columnBitmasks.put("classPK", 2048L);
 
-		columnBitmasks.put("extension", 4096L);
+		columnBitmasks.put("number_", 4096L);
 
-		columnBitmasks.put("listTypeId", 8192L);
+		columnBitmasks.put("extension", 8192L);
 
-		columnBitmasks.put("primary_", 16384L);
+		columnBitmasks.put("listTypeId", 16384L);
+
+		columnBitmasks.put("primary_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -44,11 +44,17 @@ public interface PhoneService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.PhoneServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the phone remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PhoneServiceUtil} if injection and service tracking are not available.
 	 */
 	public Phone addPhone(
-			String className, long classPK, String number, String extension,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String number, String extension, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deletePhone(long phoneId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone fetchPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -61,12 +67,17 @@ public interface PhoneService extends BaseService {
 	public Phone getPhone(long phoneId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Phone> getPhones(String className, long classPK)
 		throws PortalException;
 
 	public Phone updatePhone(
-			long phoneId, String number, String extension, long typeId,
-			boolean primary)
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long typeId, boolean primary)
 		throws PortalException;
 
 }

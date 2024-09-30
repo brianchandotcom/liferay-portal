@@ -1117,6 +1117,56 @@ public interface PhonePersistence
 		long companyId, long classNameId, long classPK, boolean primary);
 
 	/**
+	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPhoneException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching phone
+	 * @throws NoSuchPhoneException if a matching phone could not be found
+	 */
+	public Phone findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchPhoneException;
+
+	/**
+	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching phone, or <code>null</code> if a matching phone could not be found
+	 */
+	public Phone fetchByERC_C(String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching phone, or <code>null</code> if a matching phone could not be found
+	 */
+	public Phone fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the phone where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the phone that was removed
+	 */
+	public Phone removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchPhoneException;
+
+	/**
+	 * Returns the number of phones where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching phones
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
+
+	/**
 	 * Caches the phone in the entity cache if it is enabled.
 	 *
 	 * @param phone the phone

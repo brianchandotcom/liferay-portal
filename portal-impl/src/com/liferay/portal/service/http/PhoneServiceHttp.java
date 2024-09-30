@@ -42,8 +42,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class PhoneServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Phone addPhone(
-			HttpPrincipal httpPrincipal, String className, long classPK,
-			String number, String extension, long typeId, boolean primary,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			String className, long classPK, String number, String extension,
+			long typeId, boolean primary,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -52,8 +53,8 @@ public class PhoneServiceHttp {
 				PhoneServiceUtil.class, "addPhone", _addPhoneParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, classPK, number, extension, typeId,
-				primary, serviceContext);
+				methodKey, externalReferenceCode, className, classPK, number,
+				extension, typeId, primary, serviceContext);
 
 			Object returnObj = null;
 
@@ -117,15 +118,99 @@ public class PhoneServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Phone
+			fetchPhoneByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PhoneServiceUtil.class, "fetchPhoneByExternalReferenceCode",
+				_fetchPhoneByExternalReferenceCodeParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Phone)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Phone getPhone(
 			HttpPrincipal httpPrincipal, long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				PhoneServiceUtil.class, "getPhone", _getPhoneParameterTypes2);
+				PhoneServiceUtil.class, "getPhone", _getPhoneParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, phoneId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Phone)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.Phone
+			getPhoneByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PhoneServiceUtil.class, "getPhoneByExternalReferenceCode",
+				_getPhoneByExternalReferenceCodeParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -162,7 +247,7 @@ public class PhoneServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				PhoneServiceUtil.class, "getPhones", _getPhonesParameterTypes3);
+				PhoneServiceUtil.class, "getPhones", _getPhonesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK);
@@ -197,17 +282,19 @@ public class PhoneServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Phone updatePhone(
-			HttpPrincipal httpPrincipal, long phoneId, String number,
-			String extension, long typeId, boolean primary)
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long phoneId, String number, String extension, long typeId,
+			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				PhoneServiceUtil.class, "updatePhone",
-				_updatePhoneParameterTypes4);
+				_updatePhoneParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, phoneId, number, extension, typeId, primary);
+				methodKey, externalReferenceCode, phoneId, number, extension,
+				typeId, primary);
 
 			Object returnObj = null;
 
@@ -240,20 +327,30 @@ public class PhoneServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(PhoneServiceHttp.class);
 
 	private static final Class<?>[] _addPhoneParameterTypes0 = new Class[] {
-		String.class, long.class, String.class, String.class, long.class,
-		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
+		String.class, String.class, long.class, String.class, String.class,
+		long.class, boolean.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _deletePhoneParameterTypes1 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getPhoneParameterTypes2 = new Class[] {
+	private static final Class<?>[]
+		_fetchPhoneByExternalReferenceCodeParameterTypes2 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[] _getPhoneParameterTypes3 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getPhonesParameterTypes3 = new Class[] {
+	private static final Class<?>[]
+		_getPhoneByExternalReferenceCodeParameterTypes4 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[] _getPhonesParameterTypes5 = new Class[] {
 		String.class, long.class
 	};
-	private static final Class<?>[] _updatePhoneParameterTypes4 = new Class[] {
-		long.class, String.class, String.class, long.class, boolean.class
+	private static final Class<?>[] _updatePhoneParameterTypes6 = new Class[] {
+		String.class, long.class, String.class, String.class, long.class,
+		boolean.class
 	};
 
 }

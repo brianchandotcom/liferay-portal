@@ -18,18 +18,25 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicatePhoneExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchPhoneException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.PhoneTable;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.PhoneUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -3982,6 +3989,269 @@ public class PhonePersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 =
 		"phone.primary = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPhoneException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching phone
+	 * @throws NoSuchPhoneException if a matching phone could not be found
+	 */
+	@Override
+	public Phone findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchPhoneException {
+
+		Phone phone = fetchByERC_C(externalReferenceCode, companyId);
+
+		if (phone == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchPhoneException(sb.toString());
+		}
+
+		return phone;
+	}
+
+	/**
+	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching phone, or <code>null</code> if a matching phone could not be found
+	 */
+	@Override
+	public Phone fetchByERC_C(String externalReferenceCode, long companyId) {
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching phone, or <code>null</code> if a matching phone could not be found
+	 */
+	@Override
+	public Phone fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					Phone.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, companyId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByERC_C, finderArgs, this);
+			}
+
+			if (result instanceof Phone) {
+				Phone phone = (Phone)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						phone.getExternalReferenceCode()) ||
+					(companyId != phone.getCompanyId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_PHONE_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					List<Phone> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByERC_C, finderArgs, list);
+						}
+					}
+					else {
+						Phone phone = list.get(0);
+
+						result = phone;
+
+						cacheResult(phone);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Phone)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the phone where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the phone that was removed
+	 */
+	@Override
+	public Phone removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchPhoneException {
+
+		Phone phone = findByERC_C(externalReferenceCode, companyId);
+
+		return remove(phone);
+	}
+
+	/**
+	 * Returns the number of phones where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching phones
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					Phone.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_C;
+
+			Object[] finderArgs = new Object[] {
+				externalReferenceCode, companyId
+			};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_PHONE_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"phone.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(phone.externalReferenceCode IS NULL OR phone.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"phone.companyId = ?";
+
 	public PhonePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -4012,6 +4282,13 @@ public class PhonePersistenceImpl
 
 			EntityCacheUtil.putResult(
 				PhoneImpl.class, phone.getPrimaryKey(), phone);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_C,
+				new Object[] {
+					phone.getExternalReferenceCode(), phone.getCompanyId()
+				},
+				phone);
 		}
 	}
 
@@ -4084,6 +4361,23 @@ public class PhonePersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			EntityCacheUtil.removeResult(PhoneImpl.class, primaryKey);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(PhoneModelImpl phoneModelImpl) {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					phoneModelImpl.getCtCollectionId())) {
+
+			Object[] args = new Object[] {
+				phoneModelImpl.getExternalReferenceCode(),
+				phoneModelImpl.getCompanyId()
+			};
+
+			FinderCacheUtil.putResult(
+				_finderPathCountByERC_C, args, Long.valueOf(1));
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_C, args, phoneModelImpl);
 		}
 	}
 
@@ -4217,6 +4511,66 @@ public class PhonePersistenceImpl
 			phone.setUuid(uuid);
 		}
 
+		if (Validator.isNull(phone.getExternalReferenceCode())) {
+			phone.setExternalReferenceCode(phone.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					phoneModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					phone.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = phone.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = phone.getPrimaryKey();
+					}
+
+					try {
+						phone.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								Phone.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								phone.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			Phone ercPhone = fetchByERC_C(
+				phone.getExternalReferenceCode(), phone.getCompanyId());
+
+			if (isNew) {
+				if (ercPhone != null) {
+					throw new DuplicatePhoneExternalReferenceCodeException(
+						"Duplicate phone with external reference code " +
+							phone.getExternalReferenceCode() + " and company " +
+								phone.getCompanyId());
+				}
+			}
+			else {
+				if ((ercPhone != null) &&
+					(phone.getPhoneId() != ercPhone.getPhoneId())) {
+
+					throw new DuplicatePhoneExternalReferenceCodeException(
+						"Duplicate phone with external reference code " +
+							phone.getExternalReferenceCode() + " and company " +
+								phone.getCompanyId());
+				}
+			}
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -4264,6 +4618,8 @@ public class PhonePersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(PhoneImpl.class, phoneModelImpl, false, true);
+
+		cacheUniqueFindersCache(phoneModelImpl);
 
 		if (isNew) {
 			phone.setNew(false);
@@ -4742,6 +5098,7 @@ public class PhonePersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
@@ -4762,6 +5119,9 @@ public class PhonePersistenceImpl
 			CTColumnResolutionType.PK, Collections.singleton("phoneId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -4925,6 +5285,16 @@ public class PhonePersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK", "primary_"},
 			false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		PhoneUtil.setPersistence(this);
 	}

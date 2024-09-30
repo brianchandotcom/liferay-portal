@@ -275,6 +275,7 @@ create index IX_CD25266E on PasswordPolicyRel (passwordPolicyId);
 create index IX_326F75BD on PasswordTracker (userId);
 
 create index IX_812CE07A on Phone (companyId, classNameId, classPK, primary_);
+create unique index IX_DC0DF107 on Phone (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_F202B9CE on Phone (userId);
 create index IX_EA6245A0 on Phone (uuid_[$COLUMN_LENGTH:75$]);
 

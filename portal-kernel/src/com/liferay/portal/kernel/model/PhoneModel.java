@@ -25,8 +25,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface PhoneModel
-	extends AttachedModel, BaseModel<Phone>, CTModel<Phone>, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends AttachedModel, BaseModel<Phone>, CTModel<Phone>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -98,6 +99,23 @@ public interface PhoneModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this phone.
+	 *
+	 * @return the external reference code of this phone
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this phone.
+	 *
+	 * @param externalReferenceCode the external reference code of this phone
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the phone ID of this phone.

@@ -29,6 +29,10 @@ public class PhoneTable extends BaseTable<PhoneTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<PhoneTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<PhoneTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<PhoneTable, Long> phoneId = createColumn(
 		"phoneId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<PhoneTable, Long> companyId = createColumn(

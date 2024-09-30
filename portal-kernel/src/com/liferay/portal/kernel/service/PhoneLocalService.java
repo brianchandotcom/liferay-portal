@@ -63,11 +63,6 @@ public interface PhoneLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.PhoneLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the phone local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PhoneLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public Phone addPhone(
-			long userId, String className, long classPK, String number,
-			String extension, long listTypeId, boolean primary,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Adds the phone to the database. Also notifies the appropriate model listeners.
@@ -81,6 +76,12 @@ public interface PhoneLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Phone addPhone(Phone phone);
+
+	public Phone addPhone(
+			String externalReferenceCode, long userId, String className,
+			long classPK, String number, String extension, long listTypeId,
+			boolean primary, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -212,6 +213,10 @@ public interface PhoneLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Phone fetchPhone(long phoneId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone fetchPhoneByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the phone with the matching UUID and company.
 	 *
@@ -257,6 +262,11 @@ public interface PhoneLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Phone getPhone(long phoneId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the phone with the matching UUID and company.
 	 *
@@ -298,11 +308,6 @@ public interface PhoneLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPhonesCount();
 
-	public Phone updatePhone(
-			long phoneId, String number, String extension, long listTypeId,
-			boolean primary)
-		throws PortalException;
-
 	/**
 	 * Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -315,6 +320,11 @@ public interface PhoneLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Phone updatePhone(Phone phone);
+
+	public Phone updatePhone(
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long listTypeId, boolean primary)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)

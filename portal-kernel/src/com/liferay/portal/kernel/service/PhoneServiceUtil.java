@@ -30,17 +30,26 @@ public class PhoneServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.PhoneServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Phone addPhone(
-			String className, long classPK, String number, String extension,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String number, String extension, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addPhone(
-			className, classPK, number, extension, typeId, primary,
-			serviceContext);
+			externalReferenceCode, className, classPK, number, extension,
+			typeId, primary, serviceContext);
 	}
 
 	public static void deletePhone(long phoneId) throws PortalException {
 		getService().deletePhone(phoneId);
+	}
+
+	public static Phone fetchPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -56,6 +65,14 @@ public class PhoneServiceUtil {
 		return getService().getPhone(phoneId);
 	}
 
+	public static Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static List<Phone> getPhones(String className, long classPK)
 		throws PortalException {
 
@@ -63,12 +80,12 @@ public class PhoneServiceUtil {
 	}
 
 	public static Phone updatePhone(
-			long phoneId, String number, String extension, long typeId,
-			boolean primary)
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long typeId, boolean primary)
 		throws PortalException {
 
 		return getService().updatePhone(
-			phoneId, number, extension, typeId, primary);
+			externalReferenceCode, phoneId, number, extension, typeId, primary);
 	}
 
 	public static PhoneService getService() {

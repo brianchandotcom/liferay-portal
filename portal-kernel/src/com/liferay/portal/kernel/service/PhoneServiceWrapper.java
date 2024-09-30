@@ -27,13 +27,14 @@ public class PhoneServiceWrapper
 
 	@Override
 	public Phone addPhone(
-			String className, long classPK, String number, String extension,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String number, String extension, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.addPhone(
-			className, classPK, number, extension, typeId, primary,
-			serviceContext);
+			externalReferenceCode, className, classPK, number, extension,
+			typeId, primary, serviceContext);
 	}
 
 	@Override
@@ -41,6 +42,15 @@ public class PhoneServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_phoneService.deletePhone(phoneId);
+	}
+
+	@Override
+	public Phone fetchPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phoneService.fetchPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -61,6 +71,15 @@ public class PhoneServiceWrapper
 	}
 
 	@Override
+	public Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phoneService.getPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public java.util.List<Phone> getPhones(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -69,12 +88,12 @@ public class PhoneServiceWrapper
 
 	@Override
 	public Phone updatePhone(
-			long phoneId, String number, String extension, long typeId,
-			boolean primary)
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.updatePhone(
-			phoneId, number, extension, typeId, primary);
+			externalReferenceCode, phoneId, number, extension, typeId, primary);
 	}
 
 	@Override

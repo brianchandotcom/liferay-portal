@@ -28,18 +28,6 @@ public class PhoneLocalServiceWrapper
 		_phoneLocalService = phoneLocalService;
 	}
 
-	@Override
-	public Phone addPhone(
-			long userId, String className, long classPK, String number,
-			String extension, long listTypeId, boolean primary,
-			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _phoneLocalService.addPhone(
-			userId, className, classPK, number, extension, listTypeId, primary,
-			serviceContext);
-	}
-
 	/**
 	 * Adds the phone to the database. Also notifies the appropriate model listeners.
 	 *
@@ -53,6 +41,18 @@ public class PhoneLocalServiceWrapper
 	@Override
 	public Phone addPhone(Phone phone) {
 		return _phoneLocalService.addPhone(phone);
+	}
+
+	@Override
+	public Phone addPhone(
+			String externalReferenceCode, long userId, String className,
+			long classPK, String number, String extension, long listTypeId,
+			boolean primary, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phoneLocalService.addPhone(
+			externalReferenceCode, userId, className, classPK, number,
+			extension, listTypeId, primary, serviceContext);
 	}
 
 	/**
@@ -232,6 +232,14 @@ public class PhoneLocalServiceWrapper
 		return _phoneLocalService.fetchPhone(phoneId);
 	}
 
+	@Override
+	public Phone fetchPhoneByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _phoneLocalService.fetchPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the phone with the matching UUID and company.
 	 *
@@ -303,6 +311,15 @@ public class PhoneLocalServiceWrapper
 		return _phoneLocalService.getPhone(phoneId);
 	}
 
+	@Override
+	public Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phoneLocalService.getPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the phone with the matching UUID and company.
 	 *
@@ -356,16 +373,6 @@ public class PhoneLocalServiceWrapper
 		return _phoneLocalService.getPhonesCount();
 	}
 
-	@Override
-	public Phone updatePhone(
-			long phoneId, String number, String extension, long listTypeId,
-			boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _phoneLocalService.updatePhone(
-			phoneId, number, extension, listTypeId, primary);
-	}
-
 	/**
 	 * Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -379,6 +386,17 @@ public class PhoneLocalServiceWrapper
 	@Override
 	public Phone updatePhone(Phone phone) {
 		return _phoneLocalService.updatePhone(phone);
+	}
+
+	@Override
+	public Phone updatePhone(
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long listTypeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phoneLocalService.updatePhone(
+			externalReferenceCode, phoneId, number, extension, listTypeId,
+			primary);
 	}
 
 	@Override

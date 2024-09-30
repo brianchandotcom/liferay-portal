@@ -67,7 +67,7 @@ public class PhoneCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -75,6 +75,8 @@ public class PhoneCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", phoneId=");
 		sb.append(phoneId);
 		sb.append(", companyId=");
@@ -116,6 +118,13 @@ public class PhoneCacheModel
 		}
 		else {
 			phoneImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			phoneImpl.setExternalReferenceCode("");
+		}
+		else {
+			phoneImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		phoneImpl.setPhoneId(phoneId);
@@ -174,6 +183,7 @@ public class PhoneCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		phoneId = objectInput.readLong();
 
@@ -206,6 +216,13 @@ public class PhoneCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(phoneId);
@@ -250,6 +267,7 @@ public class PhoneCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long phoneId;
 	public long companyId;
 	public long userId;

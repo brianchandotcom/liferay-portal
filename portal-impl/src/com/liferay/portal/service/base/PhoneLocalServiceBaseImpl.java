@@ -249,6 +249,21 @@ public abstract class PhoneLocalServiceBaseImpl
 		return phonePersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
+	@Override
+	public Phone fetchPhoneByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return phonePersistence.fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return phonePersistence.findByERC_C(externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the phone with the primary key.
 	 *

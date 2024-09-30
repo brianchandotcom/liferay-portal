@@ -35,16 +35,6 @@ public class PhoneLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.PhoneLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static Phone addPhone(
-			long userId, String className, long classPK, String number,
-			String extension, long listTypeId, boolean primary,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addPhone(
-			userId, className, classPK, number, extension, listTypeId, primary,
-			serviceContext);
-	}
 
 	/**
 	 * Adds the phone to the database. Also notifies the appropriate model listeners.
@@ -58,6 +48,17 @@ public class PhoneLocalServiceUtil {
 	 */
 	public static Phone addPhone(Phone phone) {
 		return getService().addPhone(phone);
+	}
+
+	public static Phone addPhone(
+			String externalReferenceCode, long userId, String className,
+			long classPK, String number, String extension, long listTypeId,
+			boolean primary, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addPhone(
+			externalReferenceCode, userId, className, classPK, number,
+			extension, listTypeId, primary, serviceContext);
 	}
 
 	/**
@@ -214,6 +215,13 @@ public class PhoneLocalServiceUtil {
 		return getService().fetchPhone(phoneId);
 	}
 
+	public static Phone fetchPhoneByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the phone with the matching UUID and company.
 	 *
@@ -277,6 +285,14 @@ public class PhoneLocalServiceUtil {
 		return getService().getPhone(phoneId);
 	}
 
+	public static Phone getPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getPhoneByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the phone with the matching UUID and company.
 	 *
@@ -325,15 +341,6 @@ public class PhoneLocalServiceUtil {
 		return getService().getPhonesCount();
 	}
 
-	public static Phone updatePhone(
-			long phoneId, String number, String extension, long listTypeId,
-			boolean primary)
-		throws PortalException {
-
-		return getService().updatePhone(
-			phoneId, number, extension, listTypeId, primary);
-	}
-
 	/**
 	 * Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -346,6 +353,16 @@ public class PhoneLocalServiceUtil {
 	 */
 	public static Phone updatePhone(Phone phone) {
 		return getService().updatePhone(phone);
+	}
+
+	public static Phone updatePhone(
+			String externalReferenceCode, long phoneId, String number,
+			String extension, long listTypeId, boolean primary)
+		throws PortalException {
+
+		return getService().updatePhone(
+			externalReferenceCode, phoneId, number, extension, listTypeId,
+			primary);
 	}
 
 	public static PhoneLocalService getService() {

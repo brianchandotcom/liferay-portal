@@ -52,6 +52,7 @@ public class AdvancedSXPSearchRequestBodyContributor
 		}
 
 		_setCollapse(searchRequestBuilder, advancedConfiguration.getCollapse());
+		_setFields(searchRequestBuilder, advancedConfiguration.getFields());
 		_setSourceFields(
 			searchRequestBuilder, advancedConfiguration.getSource());
 		_setStoredFields(
@@ -88,6 +89,21 @@ public class AdvancedSXPSearchRequestBodyContributor
 		searchRequestBuilder.collapse(collapseBuilder.build());
 	}
 
+	private void _setFields(
+		SearchRequestBuilder searchRequestBuilder, String[] fields) {
+
+		if (fields == null) {
+			return;
+		}
+
+		if (fields.length == 0) {
+			searchRequestBuilder.fields(StringPool.BLANK);
+		}
+		else {
+			searchRequestBuilder.fields(fields);
+		}
+	}
+
 	private void _setSourceFields(
 		SearchRequestBuilder searchRequestBuilder, Source source) {
 
@@ -116,10 +132,10 @@ public class AdvancedSXPSearchRequestBodyContributor
 		}
 
 		if (storedFields.length == 0) {
-			searchRequestBuilder.fields(StringPool.BLANK);
+			searchRequestBuilder.storedFields(StringPool.BLANK);
 		}
 		else {
-			searchRequestBuilder.fields(storedFields);
+			searchRequestBuilder.storedFields(storedFields);
 		}
 	}
 

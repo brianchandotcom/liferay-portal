@@ -1605,13 +1605,15 @@ test.describe('Tags Fragment', () => {
 			`/group${pageManagementSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
 		);
 
-		await page
-			.locator('.table-list-title')
-			.getByRole('link')
-			.first()
-			.click();
-
 		const grid = page.getByRole('grid');
+
+		await clickAndExpectToBeVisible({
+			target: grid,
+			trigger: page
+				.locator('.table-list-title')
+				.getByRole('link')
+				.first(),
+		});
 
 		await grid.waitFor();
 

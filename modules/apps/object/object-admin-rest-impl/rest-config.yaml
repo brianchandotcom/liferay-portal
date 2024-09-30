@@ -8,4 +8,5 @@ author: "Javier Gamarra"
 clientDir: "../object-admin-rest-client/src/main/java"
 compatibilityVersion: 6
 forcePredictableOperationId: true
+generateJSClient: true
 testDir: "../object-admin-rest-test/src/testIntegration/java"

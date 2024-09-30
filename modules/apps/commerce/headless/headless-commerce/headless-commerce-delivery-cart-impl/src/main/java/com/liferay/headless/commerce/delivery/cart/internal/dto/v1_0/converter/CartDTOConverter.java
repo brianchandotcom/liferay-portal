@@ -31,16 +31,21 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Step;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
+import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -92,6 +97,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			{
 				setAccount(commerceOrder::getCommerceAccountName);
 				setAccountId(commerceOrder::getCommerceAccountId);
+				setAttachments(() -> _getAttachments(commerceOrder));
 				setAuthor(commerceOrder::getUserName);
 				setBillingAddress(
 					() -> _toAddress(
@@ -313,6 +319,15 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		}
 
 		return _commercePriceFormatter.format(commerceCurrency, price, locale);
+	}
+
+	private Attachment[] _getAttachments(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return TransformUtil.transformToArray(
+			commerceOrder.getAttachmentFileEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_attachmentDTOConverter::toDTO, Attachment.class);
 	}
 
 	private String[] _getFormattedDiscountPercentages(
@@ -763,6 +778,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	private static final Snapshot<FriendlyURLSeparatorProvider>
 		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			CartDTOConverter.class, FriendlyURLSeparatorProvider.class);
+
+	@Reference(target = DTOConverterConstants.ATTACHMENT_DTO_CONVERTER)
+	private DTOConverter<FileEntry, Attachment> _attachmentDTOConverter;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

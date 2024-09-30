@@ -597,6 +597,9 @@ const MoveButton = ({
 
 	if (
 		selectedViewportSize !== VIEWPORT_SIZES.desktop ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.column ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.formStep ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone ||
 		node.itemType === ITEM_TYPES.editable ||
 		node.itemType === ITEM_TYPES.dropZone ||
 		node.isMasterItem ||

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.4.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_4_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.portal.security.permission.test.ResourceActions</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_permission_test_ResourcePermissionLocalServiceTest_ResourceActionsPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<owner-defaults />
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

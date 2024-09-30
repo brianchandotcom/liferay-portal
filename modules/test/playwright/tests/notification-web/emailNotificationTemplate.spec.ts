@@ -462,8 +462,6 @@ test('can use notification terms and freeMarker variables in notification templa
 	await expect(
 		page
 			.locator('.CodeMirror-lines')
-			.getByText(
-				`{ObjectField_${objectFieldName}.getData()}`
-			)
+			.getByText(`{ObjectField_${objectFieldName}.getData()}`)
 	).toBeVisible();
 });

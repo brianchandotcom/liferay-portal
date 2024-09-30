@@ -97,7 +97,9 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 				printWriter);
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-30371")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-30371")) {
+
 			return;
 		}
 

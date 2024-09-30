@@ -34,8 +34,52 @@ const GlobalFilters = () => {
 	const {changeIndividualFilter, changeRangeSelectorFilter, filters} =
 		useContext(AnalyticsReportsContext);
 
+	let timeFilterItems = [
+		{
+			description: getDateRange(RangeSelectors.Last7Days),
+			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
+				RangeSelectors.Last7Days,
+			]),
+			value: RangeSelectors.Last7Days,
+		},
+		{
+			description: getDateRange(RangeSelectors.Last28Days),
+			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
+				RangeSelectors.Last28Days,
+			]),
+			value: RangeSelectors.Last28Days,
+		},
+		{
+			description: getDateRange(RangeSelectors.Last30Days),
+			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
+				RangeSelectors.Last30Days,
+			]),
+			value: RangeSelectors.Last30Days,
+		},
+		{
+			description: getDateRange(RangeSelectors.Last90Days),
+			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
+				RangeSelectors.Last90Days,
+			]),
+			value: RangeSelectors.Last90Days,
+		},
+	];
+
+	if (process.env.NODE_ENV === 'development') {
+		timeFilterItems = [
+			{
+				description: getDateRange(RangeSelectors.Last24Hours),
+				label: Liferay.Util.sub(Liferay.Language.get('last-x-hours'), [
+					RangeSelectors.Last24Hours,
+				]),
+				value: RangeSelectors.Last24Hours,
+			},
+			...timeFilterItems,
+		];
+	}
+
 	return (
-		<div className="d-flex global-filters justify-content-between">
+		<div className="d-flex global-filters justify-content-between mb-3">
 			<Title value={Liferay.Language.get('overview')} />
 
 			<div className="d-flex">
@@ -68,46 +112,7 @@ const GlobalFilters = () => {
 					active={filters.rangeSelector}
 					filterByValue="rangeSelectors"
 					icon="calendar"
-					items={[
-						{
-							description: getDateRange(RangeSelectors.Last7Days),
-							label: Liferay.Util.sub(
-								Liferay.Language.get('last-x-days'),
-								[RangeSelectors.Last7Days]
-							),
-							value: RangeSelectors.Last7Days,
-						},
-						{
-							description: getDateRange(
-								RangeSelectors.Last28Days
-							),
-							label: Liferay.Util.sub(
-								Liferay.Language.get('last-x-days'),
-								[RangeSelectors.Last28Days]
-							),
-							value: RangeSelectors.Last28Days,
-						},
-						{
-							description: getDateRange(
-								RangeSelectors.Last30Days
-							),
-							label: Liferay.Util.sub(
-								Liferay.Language.get('last-x-days'),
-								[RangeSelectors.Last30Days]
-							),
-							value: RangeSelectors.Last30Days,
-						},
-						{
-							description: getDateRange(
-								RangeSelectors.Last90Days
-							),
-							label: Liferay.Util.sub(
-								Liferay.Language.get('last-x-days'),
-								[RangeSelectors.Last90Days]
-							),
-							value: RangeSelectors.Last90Days,
-						},
-					]}
+					items={timeFilterItems}
 					onSelectItem={(item) =>
 						changeRangeSelectorFilter(item.value)
 					}

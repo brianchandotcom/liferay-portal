@@ -523,9 +523,7 @@ public class LayoutStructure {
 		List<LayoutStructureItem> copiedLayoutStructureItems =
 			new ArrayList<>();
 
-		for (int i = itemIds.size() - 1; i >= 0; i--) {
-			String itemId = itemIds.get(i);
-
+		for (String itemId : itemIds) {
 			if (Objects.equals(itemId, parentItemId)) {
 				String oldParentItemId = parentItemId;
 
@@ -568,6 +566,10 @@ public class LayoutStructure {
 
 			copiedLayoutStructureItems.addAll(
 				_duplicateLayoutStructureItem(itemId, parentItemId, position));
+
+			if (position >= 0) {
+				position++;
+			}
 		}
 
 		return copiedLayoutStructureItems;

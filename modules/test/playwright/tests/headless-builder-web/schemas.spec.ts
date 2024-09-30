@@ -5,6 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
@@ -25,7 +29,7 @@ export const testFeatureFlagsDisabled = mergeTests(
 	loginTest()
 );
 
-const objectDefinitionData = {
+const objectDefinitionData: ObjectDefinition = {
 	active: true,
 	externalReferenceCode: `objectDefinition`,
 	label: {
@@ -61,7 +65,7 @@ const objectDefinitionData = {
 	},
 };
 
-const objectDefinition1Data = {
+const objectDefinition1Data: ObjectDefinition = {
 	active: true,
 	externalReferenceCode: `customObjectDefinition1`,
 	label: {
@@ -184,43 +188,51 @@ testFeatureFlagsDisabled(
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinitions = [];
 
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		for (let i = 0; i <= 21; i++) {
 			objectDefinitions.push(
-				await apiHelpers.objectAdmin.postObjectDefinition({
-					active: true,
-					externalReferenceCode: `objectDefinition${i}`,
-					label: {
-						en_US: `objectDefinition${i}`,
-					},
-					name: `ObjectDefinition${i}`,
-					objectFields: [
-						{
-							DBType: 'String',
-							businessType: 'Text',
-							externalReferenceCode: 'ObjectFieldERC',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: 'en_US',
+				await objectAdminRestClient.objectDefinition.postObjectDefinition(
+					{
+						requestBody: {
+							active: true,
+							externalReferenceCode: `objectDefinition${i}`,
 							label: {
-								en_US: 'Object Field',
+								en_US: `objectDefinition${i}`,
 							},
-							listTypeDefinitionId: 0,
-							name: 'objectField',
-							required: false,
-							state: false,
-							system: false,
-							type: 'String',
+							name: `ObjectDefinition${i}`,
+							objectFields: [
+								{
+									DBType: 'String',
+									businessType: 'Text',
+									externalReferenceCode: 'ObjectFieldERC',
+									indexed: true,
+									indexedAsKeyword: false,
+									indexedLanguageId: 'en_US',
+									label: {
+										en_US: 'Object Field',
+									},
+									listTypeDefinitionId: 0,
+									name: 'objectField',
+									required: false,
+									state: false,
+									system: false,
+									type: 'String',
+								},
+							],
+							pluralLabel: {
+								en_US: `objectDefinitions${i}`,
+							},
+							portlet: true,
+							scope: 'company',
+							status: {
+								code: 0,
+							},
 						},
-					],
-					pluralLabel: {
-						en_US: `objectDefinitions${i}`,
-					},
-					portlet: true,
-					scope: 'company',
-					status: {
-						code: 0,
-					},
-				})
+					}
+				)
 			);
 		}
 
@@ -259,15 +271,13 @@ testFeatureFlagsDisabled(
 		});
 
 		for (const objectDefinition of objectDefinitions) {
-			await expect
-				.poll(async () =>
-					(
-						await apiHelpers.objectAdmin.deleteObjectDefinition(
-							objectDefinition.id
-						)
-					).status()
-				)
-				.toBe(204);
+			expect(async () => {
+				await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
+					{
+						objectDefinitionId: objectDefinition.id,
+					}
+				);
+			}).not.toThrow();
 		}
 
 		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
@@ -280,10 +290,14 @@ testFeatureFlagsDisabled(
 testFeatureFlagsDisabled(
 	'can see allowed object definitions on schema creation',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				objectDefinitionData
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: objectDefinitionData,
+			});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			applicationData,
@@ -318,19 +332,23 @@ testFeatureFlagsDisabled(
 			application.externalReferenceCode
 		);
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
 	}
 );
 
 testFeatureFlagsEnabled(
 	'can see allowed object definitions on schema creation with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				objectDefinitionData
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: objectDefinitionData,
+			});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			applicationData,
@@ -367,24 +385,28 @@ testFeatureFlagsEnabled(
 			application.externalReferenceCode
 		);
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
 	}
 );
 
 testFeatureFlagsDisabled(
 	'check related objects enablement without feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage, schemaPage}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				objectDefinitionData
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: objectDefinitionData,
+			});
 
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				objectDefinition1Data
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: objectDefinition1Data,
+			});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -487,34 +509,40 @@ testFeatureFlagsDisabled(
 
 		objectDefinition1.objectRelationships.forEach(
 			async (objectRelationship) => {
-				await apiHelpers.objectAdmin.deleteObjectRelationship(
-					objectRelationship.id
+				await objectAdminRestClient.objectRelationship.deleteObjectRelationship(
+					{
+						objectRelationshipId: objectRelationship.id,
+					}
 				);
 			}
 		);
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition1.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition1.id,
+		});
 	}
 );
 
 testFeatureFlagsEnabled(
 	'check related objects enablement with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage, schemaPage}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				objectDefinitionData
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: objectDefinitionData,
+			});
 
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				objectDefinition1Data
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: objectDefinition1Data,
+			});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -621,18 +649,19 @@ testFeatureFlagsEnabled(
 
 		objectDefinition1.objectRelationships.forEach(
 			async (objectRelationship) => {
-				await apiHelpers.objectAdmin.deleteObjectRelationship(
-					objectRelationship.id
+				await objectAdminRestClient.objectRelationship.deleteObjectRelationship(
+					{
+						objectRelationshipId: objectRelationship.id,
+					}
 				);
 			}
 		);
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
-
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition1.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition1.id,
+		});
 	}
 );

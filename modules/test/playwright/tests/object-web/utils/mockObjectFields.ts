@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -44,8 +45,8 @@ type ObjectFieldBusinessTypes =
 
 const objectFieldbusinessTypeInfo: {
 	[K in ObjectFieldBusinessTypes]: {
-		['DBType']: string;
-		['businessType']: ObjectFieldBusinessTypeName;
+		['DBType']: ObjectField['DBType'];
+		['businessType']: ObjectField['businessType'];
 	};
 } = {
 	attachment: {
@@ -111,11 +112,11 @@ export function createObjectField(
 	objectFieldBusinessTypeLabelName: LabelNameObject,
 	additionalSettings: Partial<ObjectField> = {}
 ): Partial<ObjectField> {
-	const baseObjectField = {
+	const baseObjectField: ObjectField = {
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
 		localized: false,
-		readOnly: 'false' as ReadOnlyFieldValue,
+		readOnly: 'false',
 		readOnlyConditionExpression: '',
 		required: false,
 		state: false,
@@ -245,15 +246,15 @@ export async function mockObjectFields({
 						{
 							name: 'acceptedFileExtensions',
 							value: 'jpeg, jpg, pdf, png',
-						},
+						} as any,
 						{
 							name: 'fileSource',
 							value: 'documentsAndMedia',
-						},
+						} as any,
 						{
 							name: 'maximumFileSize',
 							value: '100',
-						},
+						} as any,
 					],
 				};
 			case 'autoIncrement':
@@ -262,7 +263,7 @@ export async function mockObjectFields({
 						{
 							name: 'initialValue',
 							value: '1',
-						},
+						} as any,
 					],
 				};
 			case 'longText':
@@ -271,7 +272,7 @@ export async function mockObjectFields({
 						{
 							name: 'showCounter',
 							value: false,
-						},
+						} as any,
 					],
 				};
 			case 'multiselectPicklist':

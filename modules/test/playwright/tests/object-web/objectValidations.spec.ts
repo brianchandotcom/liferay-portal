@@ -5,6 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -33,8 +37,16 @@ test.beforeEach(async ({apiHelpers}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition1.id);
-	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition2.id);
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition1.id,
+	});
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition2.id,
+	});
 });
 
 test.describe('Object Unique Composite Key Validation', () => {
@@ -45,23 +57,29 @@ test.describe('Object Unique Composite Key Validation', () => {
 		objectValidationsPage,
 		page,
 	}) => {
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
 			{
-				DBType: 'Integer',
-				businessType: 'Integer',
-				externalReferenceCode: 'integerField',
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: 'integerField'},
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: 'integerField',
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'Integer',
+					businessType: 'Integer',
+					externalReferenceCode: 'integerField',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: 'integerField'},
+					listTypeDefinitionId: 0,
+					localized: false,
+					name: 'integerField',
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
 			}
 		);
 
@@ -100,54 +118,62 @@ test.describe('Object Unique Composite Key Validation', () => {
 	}) => {
 		const integerFieldName = 'integerField' + getRandomInt();
 
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
 			{
-				DBType: 'Integer',
-				businessType: 'Integer',
-				externalReferenceCode: integerFieldName,
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: integerFieldName},
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: integerFieldName,
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'Integer',
+					businessType: 'Integer',
+					externalReferenceCode: integerFieldName,
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: integerFieldName},
+					listTypeDefinitionId: 0,
+					localized: false,
+					name: integerFieldName,
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
 			}
 		);
 
 		const objectValidationName =
 			'Unique Composite Key Object Validation' + getRandomInt();
 
-		await apiHelpers.objectAdmin.postObjectValidation(
-			objectDefinition1.externalReferenceCode,
+		await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			{
-				active: true,
-				engine: 'compositeKey',
-				engineLabel: 'Composite Key',
-				errorLabel: {
-					en_US: 'The field values are already in use. Please choose unique values.',
-				},
-				name: {
-					en_US: objectValidationName,
-				},
-				objectValidationRuleSettings: [
-					{
-						name: 'compositeKeyObjectFieldExternalReferenceCode',
-						value: 'textField',
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					active: true,
+					engine: 'compositeKey',
+					engineLabel: 'Composite Key',
+					errorLabel: {
+						en_US: 'The field values are already in use. Please choose unique values.',
 					},
-					{
-						name: 'compositeKeyObjectFieldExternalReferenceCode',
-						value: integerFieldName,
+					name: {
+						en_US: objectValidationName,
 					},
-				],
-				outputType: 'fullValidation',
-				script: '',
-				system: false,
+					objectValidationRuleSettings: [
+						{
+							name: 'compositeKeyObjectFieldExternalReferenceCode',
+							value: 'textField',
+						} as any,
+						{
+							name: 'compositeKeyObjectFieldExternalReferenceCode',
+							value: integerFieldName,
+						} as any,
+					],
+					outputType: 'fullValidation',
+					script: '',
+					system: false,
+				},
 			}
 		);
 
@@ -218,113 +244,126 @@ test.describe('Object Unique Composite Key Validation', () => {
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 		const picklistFieldName = 'picklistField' + getRandomInt();
 
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
 			{
-				DBType: 'String',
-				businessType: 'AutoIncrement',
-				externalReferenceCode: autoIncrementFieldName,
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: autoIncrementFieldName},
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: autoIncrementFieldName,
-				objectFieldSettings: [
-					{
-						name: 'initialValue',
-						value: '1234',
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'String',
+					businessType: 'AutoIncrement',
+					externalReferenceCode: autoIncrementFieldName,
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: autoIncrementFieldName},
+					listTypeDefinitionId: 0,
+					localized: false,
+					name: autoIncrementFieldName,
+					objectFieldSettings: [
+						{
+							name: 'initialValue',
+							value: '1234',
+						} as any,
+					],
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
+			}
+		);
+
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
+			{
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'Date',
+					businessType: 'Date',
+					externalReferenceCode: dateFieldName,
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: dateFieldName},
+					listTypeDefinitionId: 0,
+					localized: false,
+					name: dateFieldName,
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
+			}
+		);
+
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
+			{
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'Integer',
+					businessType: 'Integer',
+					externalReferenceCode: integerFieldName,
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: integerFieldName},
+					listTypeDefinitionId: 0,
+					localized: false,
+					name: integerFieldName,
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
+			}
+		);
+
+		await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			{
+				externalReferenceCode: objectDefinition2.externalReferenceCode,
+				requestBody: {
+					label: {
+						en_US: objectRelationshipLabel,
 					},
-				],
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
+					name: objectRelationshipName,
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionId1: objectDefinition2.id,
+					objectDefinitionId2: objectDefinition1.id,
+					objectDefinitionName2: objectDefinition1.name,
+					type: 'oneToMany' as ObjectRelationshipType,
+				},
 			}
-		);
-
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
-			{
-				DBType: 'Date',
-				businessType: 'Date',
-				externalReferenceCode: dateFieldName,
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: dateFieldName},
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: dateFieldName,
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
-			}
-		);
-
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
-			{
-				DBType: 'Integer',
-				businessType: 'Integer',
-				externalReferenceCode: integerFieldName,
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: integerFieldName},
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: integerFieldName,
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
-			}
-		);
-
-		const objectRelationshipData: Partial<ObjectRelationship> = {
-			label: {
-				en_US: objectRelationshipLabel,
-			},
-			name: objectRelationshipName,
-			objectDefinitionExternalReferenceCode1:
-				objectDefinition2.externalReferenceCode,
-			objectDefinitionExternalReferenceCode2:
-				objectDefinition1.externalReferenceCode,
-			objectDefinitionId1: objectDefinition2.id,
-			objectDefinitionId2: objectDefinition1.id,
-			objectDefinitionName2: objectDefinition1.name,
-			type: 'oneToMany' as ObjectRelationshipType,
-		};
-
-		await apiHelpers.objectAdmin.postObjectRelationship(
-			objectRelationshipData
 		);
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
 			{
-				DBType: 'String',
-				businessType: 'Picklist',
-				externalReferenceCode: picklistFieldName,
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: picklistFieldName},
-				listTypeDefinitionExternalReferenceCode:
-					listTypeDefinition.externalReferenceCode,
-				listTypeDefinitionId: listTypeDefinition.id,
-				localized: false,
-				name: picklistFieldName,
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'String',
+					businessType: 'Picklist',
+					externalReferenceCode: picklistFieldName,
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: picklistFieldName},
+					listTypeDefinitionExternalReferenceCode:
+						listTypeDefinition.externalReferenceCode,
+					listTypeDefinitionId: listTypeDefinition.id,
+					localized: false,
+					name: picklistFieldName,
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
 			}
 		);
 
@@ -370,23 +409,29 @@ test.describe('Object Unique Composite Key Validation', () => {
 		objectValidationsPage,
 		page,
 	}) => {
-		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-			objectDefinition1.externalReferenceCode,
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectField.postObjectDefinitionByExternalReferenceCodeObjectField(
 			{
-				DBType: 'Integer',
-				businessType: 'Integer',
-				externalReferenceCode: 'integerField',
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: 'integerField'},
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: 'integerField',
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					DBType: 'Integer',
+					businessType: 'Integer',
+					externalReferenceCode: 'integerField',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: 'integerField'},
+					listTypeDefinitionId: 0,
+					localized: false,
+					name: 'integerField',
+					readOnly: 'false',
+					required: false,
+					state: false,
+					system: false,
+				},
 			}
 		);
 

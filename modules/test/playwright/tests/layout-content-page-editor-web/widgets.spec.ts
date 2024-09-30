@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -77,9 +78,15 @@ test('It is not possible to drag a widget inside a Form Container', async ({
 
 	// Get the id of Lemon object from the site initializer
 
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
 	const {id: objectDefinitionId} =
-		await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
-			LEMON_OBJECT_ERC
+		await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
+			{
+				externalReferenceCode: LEMON_OBJECT_ERC,
+			}
 		);
 
 	// Create page with Search Bar widget and a Form container

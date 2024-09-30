@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {ObjectAdminRestClient} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {backendPageTest} from '../../../fixtures/backendPageTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {
@@ -21,6 +22,10 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);
 
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
 	// Delete object definitions
 
 	for (const ERC of [
@@ -29,16 +34,18 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 		POTATO_OBJECT_ERC,
 	]) {
 		const {id: objectDefinitionId} =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
-				ERC
+			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
+				{
+					externalReferenceCode: ERC,
+				}
 			);
 
 		if (objectDefinitionId) {
-			await expect(
-				await apiHelpers.objectAdmin.deleteObjectDefinition(
-					objectDefinitionId
-				)
-			).toBeOK();
+			await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
+				{
+					objectDefinitionId,
+				}
+			);
 		}
 	}
 

@@ -5,32 +5,19 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	applicationsMenuPageTest,
+	dataApiHelpersTest,
 	formsPagesTest,
 	loginTest()
 );
-
-let objectDefinitions: ObjectDefinition[] = [];
-
-test.afterEach(async ({apiHelpers}) => {
-	if (objectDefinitions.length) {
-		for (const objectDefinition of objectDefinitions) {
-			await apiHelpers.objectAdmin.deleteObjectDefinition(
-				objectDefinition.id
-			);
-		}
-
-		objectDefinitions = [];
-	}
-});
 
 test.describe('FormView when form storage type is object', () => {
 	test.beforeEach(({page}) => {
@@ -53,10 +40,19 @@ test.describe('FormView when form storage type is object', () => {
 				status: {code: 0},
 			});
 
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
-		await apiHelpers.objectAdmin.postObjectDefinitionPublish(
-			objectDefinition.id
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectDefinition.postObjectDefinitionPublish(
+			{
+				objectDefinitionId: objectDefinition.id,
+			}
 		);
 
 		await formBuilderPage.goToNew();

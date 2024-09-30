@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectAdminRestClient,
+	ObjectField,
+	ObjectFolder,
+} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
@@ -15,67 +20,11 @@ export class ObjectAdminApiHelper {
 		this.basePath = 'object-admin/v1.0';
 	}
 
-	async deleteObjectAction(objectActionId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-actions/${objectActionId}`
-		);
-	}
-
-	async deleteObjectDefinition(objectDefinitionId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}`
-		);
-	}
-
-	async deleteObjectFolder(objectFolderId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-folders/${objectFolderId}`
-		);
-	}
-
-	async deleteObjectRelationship(objectRelationshipId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-relationships/${objectRelationshipId}`
-		);
-	}
-
-	async getObjectActionsByExternalReferenceCode(
-		objectDefinitionExternalReferenceCode: string
-	) {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-actions`
-		);
-	}
-
 	async getObjectDefinitionByExternalReferenceCode(
 		externalReferenceCode: string
 	): Promise<ObjectDefinition> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}`
-		);
-	}
-
-	async postObjectActionByExternalReferenceCode(
-		externalReferenceCode: string,
-		objectAction?: Partial<ObjectAction>
-	): Promise<ObjectAction> {
-		return this.apiHelpers.post<Partial<ObjectAction>>(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-actions`,
-			{data: objectAction}
-		);
-	}
-
-	async postObjectDefinition(data: DataObject): Promise<ObjectDefinition> {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
-			{data}
-		);
-	}
-
-	async postObjectDefinitionPublish(objectDefinitionId: number) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}/publish`,
-			{}
 		);
 	}
 
@@ -86,35 +35,6 @@ export class ObjectAdminApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}/object-fields/batch`,
 			{data: objectFields}
-		);
-	}
-
-	async postObjectFieldByExternalReferenceCode(
-		externalReferenceCode: string,
-		objectField: Partial<ObjectField>
-	): Promise<ObjectField> {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-fields`,
-			{data: objectField}
-		);
-	}
-
-	async postObjectRelationship(
-		objectRelationship: Partial<ObjectRelationship>
-	) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectRelationship.objectDefinitionExternalReferenceCode1}/object-relationships`,
-			{data: objectRelationship}
-		);
-	}
-
-	async postObjectValidation(
-		objectDefinitionExternalReferenceCode: string,
-		objectValidation: ObjectValidation
-	) {
-		return this.apiHelpers.post<ObjectValidation>(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-validation-rules`,
-			{data: objectValidation}
 		);
 	}
 
@@ -169,37 +89,31 @@ export class ObjectAdminApiHelper {
 				objectFolderExternalReferenceCode;
 		}
 
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
-			{data: requestBody}
-		) as Promise<ObjectDefinition>;
+		const objectAdminRestClient = await this.apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		return objectAdminRestClient.objectDefinition.postObjectDefinition({
+			requestBody,
+		});
 	}
 
 	async postRandomObjectFolder(): Promise<ObjectFolder> {
 		const objectFolderExternalReferenceCode =
 			'objectFolder' + getRandomInt();
 
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-folders`,
-			{
-				data: {
-					externalReferenceCode: objectFolderExternalReferenceCode,
-					label: {
-						en_US: objectFolderExternalReferenceCode,
-					},
-					name: objectFolderExternalReferenceCode,
-				},
-			}
+		const objectAdminRestClient = await this.apiHelpers.buildRestClient(
+			ObjectAdminRestClient
 		);
-	}
 
-	async putObjectRelationship(
-		objectRelationshipId: number,
-		objectRelationship: Partial<ObjectRelationship>
-	) {
-		return this.apiHelpers.put(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-relationships/${objectRelationshipId}`,
-			{data: objectRelationship}
-		);
+		return objectAdminRestClient.objectFolder.postObjectFolder({
+			requestBody: {
+				externalReferenceCode: objectFolderExternalReferenceCode,
+				label: {
+					en_US: objectFolderExternalReferenceCode,
+				},
+				name: objectFolderExternalReferenceCode,
+			},
+		});
 	}
 }

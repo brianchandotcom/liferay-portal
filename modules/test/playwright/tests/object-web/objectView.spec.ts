@@ -5,6 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -16,10 +20,14 @@ export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 const objectDefinitions: ObjectDefinition[] = [];
 
 test.afterEach(async ({apiHelpers}) => {
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
 	for (const objectDefinition of objectDefinitions) {
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
 	}
 });
 
@@ -48,22 +56,29 @@ test('can create an object custom view using object relationship entry', async (
 	const objectRelationshipName =
 		'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-	const objectRelationshipData: Partial<ObjectRelationship> = {
-		label: {
-			en_US: objectRelationshipLabel,
-		},
-		name: objectRelationshipName,
-		objectDefinitionExternalReferenceCode1:
-			objectDefinition1.externalReferenceCode,
-		objectDefinitionExternalReferenceCode2:
-			objectDefinition2.externalReferenceCode,
-		objectDefinitionId1: objectDefinition1.id,
-		objectDefinitionId2: objectDefinition2.id,
-		objectDefinitionName2: objectDefinition2.name,
-		type: 'oneToMany' as ObjectRelationshipType,
-	};
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
 
-	await apiHelpers.objectAdmin.postObjectRelationship(objectRelationshipData);
+	await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		{
+			externalReferenceCode: objectDefinition1.externalReferenceCode,
+			requestBody: {
+				label: {
+					en_US: objectRelationshipLabel,
+				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: 'oneToMany' as ObjectRelationshipType,
+			},
+		}
+	);
 
 	const applicationName = 'c/' + objectDefinition1.name.toLowerCase() + 's';
 

@@ -5,6 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {scriptManagementPagesTest} from '../../fixtures/scriptManagementPagesTest';
@@ -21,9 +25,17 @@ const createdEntities = {
 };
 
 test.afterEach(async ({apiHelpers, scriptManagementPage}) => {
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
 	if (createdEntities.objectDefinitionsIds.length) {
 		for (const id of createdEntities.objectDefinitionsIds) {
-			await apiHelpers.objectAdmin.deleteObjectDefinition(id);
+			await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
+				{
+					objectDefinitionId: id,
+				}
+			);
 		}
 	}
 	await scriptManagementPage.enableScriptManagementConfiguration();
@@ -38,6 +50,7 @@ test.describe('Script management container', () => {
 
 	test('cannot save the configuration with a active Object Action with Groovy Script', async ({
 		apiHelpers,
+
 		scriptManagementPage,
 	}) => {
 		const objectDefinition =
@@ -50,24 +63,30 @@ test.describe('Script management container', () => {
 
 		const groovyObjectActionName = 'groovyObjectAction' + getRandomInt();
 
-		await apiHelpers.objectAdmin.postObjectActionByExternalReferenceCode(
-			objectDefinition.externalReferenceCode,
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectAction.postObjectDefinitionByExternalReferenceCodeObjectAction(
 			{
-				active: true,
-				errorMessage: {
-					en_US: '',
+				externalReferenceCode: objectDefinition.externalReferenceCode,
+				requestBody: {
+					active: true,
+					errorMessage: {
+						en_US: '',
+					},
+					label: {
+						en_US: groovyObjectActionName,
+					},
+					name: groovyObjectActionName,
+					objectActionExecutorKey: 'groovy',
+					objectActionTriggerKey: 'onAfterAdd',
+					parameters: {
+						lineCount: 1,
+						script: 'test',
+					},
+					system: false,
 				},
-				label: {
-					en_US: groovyObjectActionName,
-				},
-				name: groovyObjectActionName,
-				objectActionExecutorKey: 'groovy',
-				objectActionTriggerKey: 'onAfterAdd',
-				parameters: {
-					lineCount: 1,
-					script: 'test',
-				},
-				system: false,
 			}
 		);
 
@@ -86,6 +105,7 @@ test.describe('Script management container', () => {
 
 	test('cannot save the configuration with a active Object Validation with Groovy Script', async ({
 		apiHelpers,
+
 		scriptManagementPage,
 	}) => {
 		const objectDefinition =
@@ -99,22 +119,28 @@ test.describe('Script management container', () => {
 		const objectValidationName =
 			'Groovy Object Validation' + getRandomInt();
 
-		await apiHelpers.objectAdmin.postObjectValidation(
-			objectDefinition.externalReferenceCode,
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			{
-				active: true,
-				engine: 'groovy',
-				engineLabel: 'Groovy',
-				errorLabel: {
-					en_US: 'Groovy Object Validation Error',
+				externalReferenceCode: objectDefinition.externalReferenceCode,
+				requestBody: {
+					active: true,
+					engine: 'groovy',
+					engineLabel: 'Groovy',
+					errorLabel: {
+						en_US: 'Groovy Object Validation Error',
+					},
+					name: {
+						en_US: objectValidationName,
+					},
+					objectValidationRuleSettings: [],
+					outputType: 'fullValidation',
+					script: 'test',
+					system: false,
 				},
-				name: {
-					en_US: objectValidationName,
-				},
-				objectValidationRuleSettings: [],
-				outputType: 'fullValidation',
-				script: 'test',
-				system: false,
 			}
 		);
 

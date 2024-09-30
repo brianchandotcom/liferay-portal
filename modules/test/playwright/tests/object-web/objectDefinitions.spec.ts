@@ -5,6 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+	ObjectFolder,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -36,10 +41,16 @@ let objectDefinitions: ObjectDefinition[] = [];
 let objectFolders: ObjectFolder[] = [];
 
 test.afterEach(async ({apiHelpers}) => {
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
 	if (objectDefinitions.length) {
 		for (const objectDefinition of objectDefinitions) {
-			await apiHelpers.objectAdmin.deleteObjectDefinition(
-				objectDefinition.id
+			await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
+				{
+					objectDefinitionId: objectDefinition.id,
+				}
 			);
 		}
 
@@ -48,7 +59,9 @@ test.afterEach(async ({apiHelpers}) => {
 
 	if (objectFolders.length) {
 		for (const objectFolder of objectFolders) {
-			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+			await objectAdminRestClient.objectFolder.deleteObjectFolder({
+				objectFolderId: objectFolder.id,
+			});
 		}
 
 		objectFolders = [];
@@ -224,6 +237,8 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		await modelBuilderObjectDefinitionNodePage.deleteObjectDefinitionOption.click();
 
+		objectDefinitions.splice(objectDefinitions.indexOf(objectDefinition1));
+
 		await expect(
 			modelBuilderLeftSidebarPage.sidebarItems.filter({
 				hasText: objectDefinition2.label['en_US'],
@@ -276,6 +291,8 @@ test.describe('Manage object definitions through Model Builder', () => {
 			objectDefinition1.name
 		);
 
+		objectDefinitions.splice(objectDefinitions.indexOf(objectDefinition1));
+
 		await expect(
 			modelBuilderDiagramPage.objectDefinitionNodes.filter({
 				hasText: objectDefinition2.label['en_US'],
@@ -320,23 +337,28 @@ test.describe('Manage object definitions through Model Builder', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectRelationshipData: Partial<ObjectRelationship> = {
-			label: {
-				en_US: objectRelationshipLabel,
-			},
-			name: objectRelationshipName,
-			objectDefinitionExternalReferenceCode1:
-				objectDefinition1.externalReferenceCode,
-			objectDefinitionExternalReferenceCode2:
-				objectDefinition2.externalReferenceCode,
-			objectDefinitionId1: objectDefinition1.id,
-			objectDefinitionId2: objectDefinition2.id,
-			objectDefinitionName2: objectDefinition2.name,
-			type: 'oneToMany' as ObjectRelationshipType,
-		};
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
 
-		await apiHelpers.objectAdmin.postObjectRelationship(
-			objectRelationshipData
+		await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			{
+				externalReferenceCode: objectDefinition1.externalReferenceCode,
+				requestBody: {
+					label: {
+						en_US: objectRelationshipLabel,
+					},
+					name: objectRelationshipName,
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition1.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany' as ObjectRelationshipType,
+				},
+			}
 		);
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
@@ -377,7 +399,9 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		// Clean up
 
-		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+		await objectAdminRestClient.objectFolder.deleteObjectFolder({
+			objectFolderId: objectFolder.id,
+		});
 	});
 
 	test('navigate to edit object definition page', async ({
@@ -419,51 +443,61 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		objectFolders.push(objectFolder);
 
-		const department = await apiHelpers.objectAdmin.postObjectDefinition({
-			active: true,
-			label: {
-				en_US: 'Department',
-				pt_BR: 'Departamento',
-			},
-			name: 'Department',
-			objectFields: [
-				createObjectField('text', {
-					label: 'Name',
-					name: 'name',
-				}),
-			],
-			objectFolderExternalReferenceCode:
-				objectFolder.externalReferenceCode,
-			panelCategoryKey: 'control_panel.object',
-			pluralLabel: {
-				en_US: 'Departments',
-				pt_BR: 'Departamentos',
-			},
-			scope: 'company',
-			status: {code: 0},
-			titleObjectFieldName: 'id',
-		});
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		const department =
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: {
+					active: true,
+					label: {
+						en_US: 'Department',
+						pt_BR: 'Departamento',
+					},
+					name: 'Department',
+					objectFields: [
+						createObjectField('text', {
+							label: 'Name',
+							name: 'name',
+						}),
+					],
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
+					panelCategoryKey: 'control_panel.object',
+					pluralLabel: {
+						en_US: 'Departments',
+						pt_BR: 'Departamentos',
+					},
+					scope: 'company',
+					status: {code: 0},
+					titleObjectFieldName: 'id',
+				},
+			});
 
 		objectDefinitions.push(department);
 
-		const employee = await apiHelpers.objectAdmin.postObjectDefinition({
-			active: false,
-			label: {
-				en_US: 'Employee',
-				pt_BR: 'Funcionario',
-			},
-			name: 'Employee',
-			objectFolderExternalReferenceCode:
-				objectFolder.externalReferenceCode,
-			panelCategoryKey: 'site_administration.design',
-			pluralLabel: {
-				en_US: 'Employees',
-				pt_BR: 'Funcionarios',
-			},
-			scope: 'site',
-			status: {code: 1},
-			titleObjectFieldName: 'name',
-		});
+		const employee =
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: {
+					active: false,
+					label: {
+						en_US: 'Employee',
+						pt_BR: 'Funcionario',
+					},
+					name: 'Employee',
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
+					panelCategoryKey: 'site_administration.design',
+					pluralLabel: {
+						en_US: 'Employees',
+						pt_BR: 'Funcionarios',
+					},
+					scope: 'site',
+					status: {code: 1},
+					titleObjectFieldName: 'name',
+				},
+			});
 
 		objectDefinitions.push(employee);
 
@@ -579,6 +613,8 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 			.click();
 
 		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+		objectDefinitions.splice(objectDefinitions.indexOf(objectDefinition2));
 
 		await expect(
 			viewObjectDefinitionsPage.frontendDataSetEntries.filter({

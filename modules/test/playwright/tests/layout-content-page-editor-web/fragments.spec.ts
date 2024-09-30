@@ -5,6 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
@@ -1513,9 +1514,15 @@ test.describe('Tags Fragment', () => {
 
 		// Get the id of Lemon object from the site initializer
 
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const {id: objectDefinitionId} =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
-				LEMON_OBJECT_ERC
+			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
+				{
+					externalReferenceCode: LEMON_OBJECT_ERC,
+				}
 			);
 
 		// Create a Form Container with a Tags fragment and Submit fragment
@@ -1649,9 +1656,15 @@ test.describe('Tags Fragment', () => {
 
 		// Get Lemon Basket object id from the site initializer
 
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const {id: objectDefinitionId} =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
-				LEMON_BASKET_OBJECT_ERC
+			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
+				{
+					externalReferenceCode: LEMON_BASKET_OBJECT_ERC,
+				}
 			);
 
 		// Set the "Enable Categorization of Object entries" configuration to false

@@ -5,6 +5,7 @@
 
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderTest} from '../headless-builder-web/fixtures/headlessBuilderTest';
@@ -130,6 +131,13 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 		},
 	]);
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
+
 	await apiHelpers.apiBuilder.deleteApiApplication(apiApplication.id);
 });

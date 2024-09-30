@@ -1378,8 +1378,14 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition2.getObjectDefinitionId());
 
-			objectDefinitionLocalService.updateObjectDefinition(
-				objectDefinition2);
+			objectDefinition2 =
+				objectDefinitionLocalService.updateObjectDefinition(
+					objectDefinition2);
+
+			if (objectDefinition2.isApproved()) {
+				objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition2);
+			}
 		}
 	}
 

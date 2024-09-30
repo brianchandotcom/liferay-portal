@@ -108,6 +108,7 @@ Export-Package:\
 	\
 	javax.portlet.*;version='2.0',\
 	\
+	javax.servlet.jsp.*;version='2.3.3',\
 	javax.servlet.*;version='3.1.0',\
 	\
 	javax.transaction;version='1.3',\
@@ -233,6 +234,22 @@ Provide-Capability:\
 		uses:="javax.el";\
 		version:Version=3.0.0,\
 	osgi.contract;\
+		osgi.contract="JavaJSP";\
+		uses:="javax.servlet.jsp,javax.servlet.jsp.el,javax.servlet.jsp.tagext";\
+		version:Version=2.0.0,\
+	osgi.contract;\
+		osgi.contract="JavaJSP";\
+		uses:="javax.servlet.jsp,javax.servlet.jsp.el,javax.servlet.jsp.tagext";\
+		version:Version=2.1.0,\
+	osgi.contract;\
+		osgi.contract="JavaJSP";\
+		uses:="javax.servlet.jsp,javax.servlet.jsp.el,javax.servlet.jsp.tagext";\
+		version:Version=2.2.0,\
+	osgi.contract;\
+		osgi.contract="JavaJSP";\
+		uses:="javax.servlet.jsp,javax.servlet.jsp.el,javax.servlet.jsp.tagext";\
+		version:Version=2.3.0,\
+	osgi.contract;\
 		osgi.contract=JavaPortlet;\
 		uses:="javax.portlet";\
 		version:Version=1,\
@@ -255,12 +272,17 @@ Provide-Capability:\
 	osgi.contract;\
 		osgi.contract=JavaServlet;\
 		uses:="javax.servlet,javax.servlet.annotation,javax.servlet.descriptor,javax.servlet.http";\
-		version:Version=3.1
+		version:Version=3.1,\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://java.sun.com/JSP/Page";\
+		version:Version="${Bundle-Version}"
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/activation.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/tomcat-el-api.jar,\
+	@../../../lib/development/tomcat-jsp-api.jar,\
 	@../../../lib/development/tomcat-servlet-api.jar,\
 	@../../../lib/portal/commons-lang.jar,\
 	@../../../lib/portal/commons-logging.jar,\

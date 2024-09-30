@@ -147,6 +147,10 @@ public class SearchSearchRequest
 		return _stats;
 	}
 
+	public String[] getStoredFields() {
+		return _storedFields;
+	}
+
 	public Boolean getVersion() {
 		return _version;
 	}
@@ -307,6 +311,10 @@ public class SearchSearchRequest
 		_stats = stats;
 	}
 
+	public void setStoredFields(String... storedFields) {
+		_storedFields = storedFields;
+	}
+
 	public void setVersion(Boolean version) {
 		_version = version;
 	}
@@ -338,6 +346,7 @@ public class SearchSearchRequest
 	private List<Sort> _sorts = new ArrayList<>();
 	private Integer _start;
 	private Map<String, Stats> _stats;
+	private String[] _storedFields;
 	private Boolean _version;
 
 }

@@ -186,6 +186,8 @@ public interface SearchRequestBuilder {
 	 */
 	public SearchRequestBuilder statsRequests(StatsRequest... statsRequests);
 
+	public SearchRequestBuilder storedFields(String... storedFields);
+
 	public SearchRequestBuilder withFacetContext(
 		Consumer<FacetContext> facetContextConsumer);
 

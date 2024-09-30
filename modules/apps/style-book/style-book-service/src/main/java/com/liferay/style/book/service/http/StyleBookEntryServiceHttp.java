@@ -43,9 +43,8 @@ public class StyleBookEntryServiceHttp {
 
 	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long groupId, String name, String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			String themeId)
+			long groupId, String name, String styleBookEntryKey, String themeId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -55,7 +54,7 @@ public class StyleBookEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, name,
-				styleBookEntryKey, serviceContext, themeId);
+				styleBookEntryKey, themeId, serviceContext);
 
 			Object returnObj = null;
 
@@ -88,9 +87,8 @@ public class StyleBookEntryServiceHttp {
 	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long groupId, String frontendTokensValues, String name,
-			String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			String themeId)
+			String styleBookEntryKey, String themeId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -100,7 +98,7 @@ public class StyleBookEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, frontendTokensValues,
-				name, styleBookEntryKey, serviceContext, themeId);
+				name, styleBookEntryKey, themeId, serviceContext);
 
 			Object returnObj = null;
 
@@ -635,13 +633,13 @@ public class StyleBookEntryServiceHttp {
 
 	private static final Class<?>[] _addStyleBookEntryParameterTypes0 =
 		new Class[] {
-			String.class, long.class, String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class, String.class
+			String.class, long.class, String.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addStyleBookEntryParameterTypes1 =
 		new Class[] {
 			String.class, long.class, String.class, String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class, String.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyStyleBookEntryParameterTypes2 =
 		new Class[] {

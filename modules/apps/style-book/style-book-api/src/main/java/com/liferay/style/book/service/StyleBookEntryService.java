@@ -45,14 +45,14 @@ public interface StyleBookEntryService extends BaseService {
 	 */
 	public StyleBookEntry addStyleBookEntry(
 			String externalReferenceCode, long groupId, String name,
-			String styleBookEntryKey, ServiceContext serviceContext,
-			String themeId)
+			String styleBookEntryKey, String themeId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public StyleBookEntry addStyleBookEntry(
 			String externalReferenceCode, long groupId,
 			String frontendTokensValues, String name, String styleBookEntryKey,
-			ServiceContext serviceContext, String themeId)
+			String themeId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public StyleBookEntry copyStyleBookEntry(

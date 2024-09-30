@@ -43,9 +43,6 @@ import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.tree.Node;
-import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -82,7 +79,6 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1299,10 +1295,8 @@ public class ObjectRelationshipLocalServiceImpl
 		String objectDefinition1PreviousRESTContextPath =
 			objectDefinition1.getRESTContextPath();
 
-		if (objectDefinition1.getRootObjectDefinitionId() == 0) {
-			objectDefinition1.setRootObjectDefinitionId(
-				objectDefinition1.getObjectDefinitionId());
-		}
+		objectDefinition1.setRootObjectDefinitionId(
+			objectDefinition1.getObjectDefinitionId());
 
 		ObjectDefinitionLocalService objectDefinitionLocalService =
 			_objectDefinitionLocalServiceSnapshot.get();
@@ -1314,51 +1308,26 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition2.getObjectDefinitionId(),
-			objectDefinitionLocalService::getObjectDefinition);
+		String objectDefinition2PreviousRESTContextPath =
+			objectDefinition2.getRESTContextPath();
 
-		Iterator<Node> iterator = tree.iterator();
+		objectDefinition2.setPortlet(false);
 
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			ObjectDefinition nodeObjectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
-					node.getPrimaryKey());
-
-			String objectDefinitionPreviousRESTContextPath =
-				nodeObjectDefinition.getRESTContextPath();
-
-			if (nodeObjectDefinition.isApproved() ==
-					objectDefinition1.isApproved()) {
-
-				nodeObjectDefinition.setRootObjectDefinitionId(
-					objectDefinition1.getRootObjectDefinitionId());
-			}
-
-			nodeObjectDefinition.setPortlet(false);
-
-			if (!objectDefinition1.isApproved() &&
-				nodeObjectDefinition.isRootNode()) {
-
-				nodeObjectDefinition.setPortlet(true);
-			}
-
-			nodeObjectDefinition =
-				objectDefinitionLocalService.updateObjectDefinition(
-					nodeObjectDefinition);
-
-			if (nodeObjectDefinition.isApproved() &&
-				objectDefinition1.isApproved()) {
-
-				nodeObjectDefinition.setPreviousRESTContextPath(
-					objectDefinitionPreviousRESTContextPath);
-
-				objectDefinitionLocalService.deployObjectDefinition(
-					nodeObjectDefinition);
-			}
+		if (!objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
+			objectDefinition2.setPortlet(true);
 		}
+
+		if (objectDefinition1.isApproved() == objectDefinition2.isApproved()) {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition1.getObjectDefinitionId());
+		}
+		else {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition2.getObjectDefinitionId());
+		}
+
+		objectDefinition2 = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition2);
 
 		if (objectDefinition1.isApproved()) {
 			objectDefinition1.setPreviousRESTContextPath(
@@ -1368,13 +1337,12 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition1);
 		}
 
-		if (!objectDefinition1.isRootNode()) {
-			ObjectDefinition rootObjectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectDefinition1.getRootObjectDefinitionId());
+		if (objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
+			objectDefinition2.setPreviousRESTContextPath(
+				objectDefinition2PreviousRESTContextPath);
 
 			objectDefinitionLocalService.deployObjectDefinition(
-				rootObjectDefinition1);
+				objectDefinition2);
 		}
 	}
 
@@ -1871,9 +1839,6 @@ public class ObjectRelationshipLocalServiceImpl
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
-
-	@Reference
-	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

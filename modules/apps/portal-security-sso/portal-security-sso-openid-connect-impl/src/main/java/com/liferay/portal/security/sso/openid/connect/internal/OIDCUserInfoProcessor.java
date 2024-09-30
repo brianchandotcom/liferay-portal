@@ -222,9 +222,9 @@ public class OIDCUserInfoProcessor {
 		}
 
 		_phoneLocalService.addPhone(
-			user.getUserId(), Contact.class.getName(), user.getContactId(),
-			phoneClaimString, null, listType.getListTypeId(), false,
-			serviceContext);
+			null, user.getUserId(), Contact.class.getName(),
+			user.getContactId(), phoneClaimString, null,
+			listType.getListTypeId(), false, serviceContext);
 	}
 
 	private User _addUser(

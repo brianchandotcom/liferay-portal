@@ -95,14 +95,15 @@ public class PhoneStagedModelDataHandler
 			serviceContext.setUuid(phone.getUuid());
 
 			importedPhone = _phoneLocalService.addPhone(
-				userId, phone.getClassName(), phone.getClassPK(),
-				phone.getNumber(), phone.getExtension(), phone.getListTypeId(),
-				phone.isPrimary(), serviceContext);
+				phone.getExternalReferenceCode(), userId, phone.getClassName(),
+				phone.getClassPK(), phone.getNumber(), phone.getExtension(),
+				phone.getListTypeId(), phone.isPrimary(), serviceContext);
 		}
 		else {
 			importedPhone = _phoneLocalService.updatePhone(
-				existingPhone.getPhoneId(), phone.getNumber(),
-				phone.getExtension(), phone.getListTypeId(), phone.isPrimary());
+				phone.getExternalReferenceCode(), existingPhone.getPhoneId(),
+				phone.getNumber(), phone.getExtension(), phone.getListTypeId(),
+				phone.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(phone, importedPhone);

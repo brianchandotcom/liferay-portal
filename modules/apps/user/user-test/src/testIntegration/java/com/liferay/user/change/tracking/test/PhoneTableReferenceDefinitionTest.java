@@ -64,8 +64,9 @@ public class PhoneTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _phoneLocalService.addPhone(
-			_user.getUserId(), Organization.class.getName(),
-			_organization.getOrganizationId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _user.getUserId(),
+			Organization.class.getName(), _organization.getOrganizationId(),
+			RandomTestUtil.randomString(),
 			String.valueOf(RandomTestUtil.randomInt()),
 			_listType.getListTypeId(), false,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));

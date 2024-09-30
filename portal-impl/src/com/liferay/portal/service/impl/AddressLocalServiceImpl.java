@@ -526,8 +526,9 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			ServiceContextThreadLocal.getServiceContext();
 
 		_phoneLocalService.addPhone(
-			serviceContext.getUserId(), Address.class.getName(), addressId,
-			phoneNumber, null, listType.getListTypeId(), false, serviceContext);
+			null, serviceContext.getUserId(), Address.class.getName(),
+			addressId, phoneNumber, null, listType.getListTypeId(), false,
+			serviceContext);
 	}
 
 	@BeanReference(type = ClassNameLocalService.class)

@@ -1562,6 +1562,7 @@ public class UsersAdminUtil {
 		for (Phone phone : phones) {
 			long phoneId = phone.getPhoneId();
 
+			String externalReferenceCode = phone.getExternalReferenceCode();
 			String number = phone.getNumber();
 			String extension = phone.getExtension();
 			long listTypeId = phone.getListTypeId();
@@ -1569,14 +1570,15 @@ public class UsersAdminUtil {
 
 			if (phoneId <= 0) {
 				phone = PhoneServiceUtil.addPhone(
-					className, classPK, number, extension, listTypeId, primary,
-					new ServiceContext());
+					externalReferenceCode, className, classPK, number,
+					extension, listTypeId, primary, new ServiceContext());
 
 				phoneId = phone.getPhoneId();
 			}
 			else {
 				PhoneServiceUtil.updatePhone(
-					phoneId, number, extension, listTypeId, primary);
+					externalReferenceCode, phoneId, number, extension,
+					listTypeId, primary);
 			}
 
 			phoneIds.add(phoneId);

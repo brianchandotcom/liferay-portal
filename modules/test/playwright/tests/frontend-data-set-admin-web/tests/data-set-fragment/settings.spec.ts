@@ -32,8 +32,8 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.createDataSet({
 		erc: settingsDataSetERC,
 		label: dataSetLabel,
-		restApplication: '/data-set-manager/cards-sections',
-		restSchema: 'FDSCardsSection',
+		restApplication: '/data-set-admin/cards-sections',
+		restSchema: 'DataSetCardsSection',
 	});
 });
 

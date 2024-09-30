@@ -113,7 +113,7 @@ test('Can create and delete a selection filter from picklist source', async ({
 
 	await test.step('Create a selection filter from picklist source without preselected values', async () => {
 		await filtersPage.createSelectionFilterPicklist({
-			filterBy: 'name',
+			filterBy: 'fieldName',
 			name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
 			preselectedValues: [],
 			selectionType: 'Single',
@@ -238,9 +238,9 @@ test('Can create a selection filter with API Headless source', async ({
 			itemLabel: 'label',
 			name: SELECTION_API_HEADLESS_FILTER_NAME,
 			preselectedValues: [dataSetLabel],
-			restApplication: '/data-set-manager/data-sets',
+			restApplication: '/data-set-admin/data-sets',
 			restEndpoint: '/',
-			restSchema: 'FDSView',
+			restSchema: 'DataSet',
 			selectionType: 'Single',
 			sourceType: 'API REST Application',
 		});
@@ -319,7 +319,7 @@ test(
 	'Can create and edit a selection filter with API Headless source using composed/complex fields',
 	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
-		const composedFieldName = 'fdsViewFDSFieldRelationship.description';
+		const composedFieldName = 'dataSetToDataSetTableSections.description';
 
 		await test.step('Create a selection filter from API Headless source', async () => {
 			await filtersPage.createSelectionFilterApiHeadless({
@@ -329,9 +329,9 @@ test(
 				itemLabel: 'label',
 				name: SELECTION_API_HEADLESS_FILTER_NAME,
 				preselectedValues: [dataSetLabel],
-				restApplication: '/data-set-manager/data-sets',
+				restApplication: '/data-set-admin/data-sets',
 				restEndpoint: '/',
-				restSchema: 'FDSView',
+				restSchema: 'DataSet',
 				selectionType: 'Single',
 				sourceType: 'API REST Application',
 			});

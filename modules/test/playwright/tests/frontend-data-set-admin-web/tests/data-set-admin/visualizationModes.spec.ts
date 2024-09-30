@@ -100,7 +100,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Assign a field to title section', async () => {
-			const fieldName = 'name';
+			const fieldName = 'fieldName';
 			const sectionLabel = 'Title';
 
 			const container =
@@ -128,7 +128,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 		await test.step('Edit field to title section', async () => {
 			const newFieldName = 'rendererType';
-			const oldFieldName = 'name';
+			const oldFieldName = 'fieldName';
 			const sectionLabel = 'Title';
 
 			const container =
@@ -162,7 +162,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Assign a field typing the name manually to Description section @LPD-25242', async () => {
-			const fieldName = 'name';
+			const fieldName = 'fieldName';
 			const sectionLabel = 'Description';
 
 			const container =
@@ -253,7 +253,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Assign a field to title section', async () => {
-			const fieldName = 'name';
+			const fieldName = 'fieldName';
 			const sectionLabel = 'Title';
 
 			const container =
@@ -281,7 +281,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 		await test.step('Edit field to title section', async () => {
 			const newFieldName = 'rendererType';
-			const oldFieldName = 'name';
+			const oldFieldName = 'fieldName';
 			const sectionLabel = 'Title';
 
 			const container =
@@ -315,7 +315,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Assign a field typing the name manually to Description section @LPD-25242', async () => {
-			const fieldName = 'name';
+			const fieldName = 'fieldName';
 			const sectionLabel = 'Description';
 
 			const container =
@@ -381,7 +381,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	}) => {
 		const sampleScalarField = 'id';
 		const sampleScalarFieldName = 'label';
-		const sampleObjectField = 'fdsViewFDSFieldRelationship';
+		const sampleObjectField = 'dataSetToDataSetTableSections';
 		const sampleObjectChildField = 'id';
 
 		await test.step('Navigate to table visualization mode page', async () => {
@@ -517,9 +517,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		page,
 		visualizationModesPage,
 	}) => {
-		const SAMPLE_FIELD = 'name';
+		const SAMPLE_FIELD = 'fieldName';
 		const sampleScalarField = 'id';
-		const sampleObjectField = 'fdsViewFDSFieldRelationship';
+		const sampleObjectField = 'dataSetToDataSetTableSections';
 		const sampleObjectChildField = 'id';
 
 		await test.step('Navigate to table visualization mode page', async () => {
@@ -643,8 +643,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SAMPLE_COMPLEX_ARRAY_FIELD = 'auditEvents[]*';
 		const SAMPLE_COMPLEX_ARRAY_CHILD_FIELD = 'auditEvents[]creator.name';
 		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
-		const SAMPLE_FULL_COMPLEX_FIELD = 'creator.*';
-		const SAMPLE_COMPLEX_OBJECT_CHILD_FIELD = 'creator.givenName';
+		const SAMPLE_FULL_COMPLEX_FIELD =
+			'dataSetToDataSetTableSections.auditEvents[]creator.*';
+		const SAMPLE_COMPLEX_OBJECT_CHILD_FIELD =
+			'dataSetToDataSetTableSections.auditEvents[]creator.givenName';
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -732,7 +734,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		visualizationModesPage,
 	}) => {
 		const sampleScalarField = 'id';
-		const sampleObjectField = 'fdsViewFDSFieldRelationship';
+		const sampleObjectField = 'dataSetToDataSetTableSections';
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -852,7 +854,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		visualizationModesPage,
 	}) => {
 		const sampleScalarField = 'id';
-		const SAMPLE_FIELD = 'name';
+		const SAMPLE_FIELD = 'fieldName';
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -1032,7 +1034,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		'Check that users can translate labels in table visualization mode.',
 		{tag: '@LPS-176516'},
 		async ({page, visualizationModesPage}) => {
-			const SAMPLE_FIELD = 'name';
+			const SAMPLE_FIELD = 'fieldName';
 			const SAMPLE_FIELD_EN_US = 'Name';
 			const SAMPLE_FIELD_ES_ES = 'Nombre';
 			const SAMPLE_FIELD_PT_BR = 'Nome';
@@ -1268,7 +1270,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		visualizationModesPage,
 	}) => {
 		const sampleScalarField = 'externalReferenceCode';
-		const SAMPLE_FIELD = 'name';
+		const SAMPLE_FIELD = 'fieldName';
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({

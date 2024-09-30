@@ -106,22 +106,22 @@ test(
 		});
 
 		await test.step('Create sample data for data sets', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: dataSetERC1,
-				label_i18n: {en_US: 'Name'},
-				name: 'name',
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: dataSetERC2,
+				fieldName: 'id',
 				label_i18n: {en_US: 'ID'},
-				name: 'id',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: dataSetERC2,
-				label_i18n: {en_US: 'Name'},
-				name: 'name',
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
 			});
 		});
 
@@ -136,13 +136,7 @@ test(
 		});
 
 		await test.step('Change assigment to second data set', async () => {
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {
-					name: 'Select Data Set View...',
-				}),
-				trigger: fdsFragmentPage.changeDataSetButton,
-			});
+			await fdsFragmentPage.changeDataSetButton.click();
 
 			const selectionListContainer =
 				fdsFragmentPage.selectDataSetModalFrame.locator(
@@ -176,7 +170,7 @@ test(
 					.first()
 					.locator('.dnd-th')
 					.allInnerTexts()
-			).toEqual(['ID', 'Name', '']);
+			).toEqual(['ID', 'Field Name', '']);
 		});
 
 		await test.step('Unassign data set', async () => {
@@ -281,20 +275,20 @@ test(
 				restSchema: structuredContentDataSetConfig.restSchema,
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: structuredContentDataSetConfig.erc,
+				fieldName: 'title',
 				label_i18n: {
 					en_US: 'Title',
 				},
-				name: 'title',
 				sortable: false,
 				type: 'string',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: structuredContentDataSetConfig.erc,
+				fieldName: 'description',
 				label_i18n: {en_US: 'Description'},
-				name: 'description',
 				sortable: false,
 				type: 'string',
 			});
@@ -318,20 +312,20 @@ test(
 				restSchema: adminUserDataSetConfig.restSchema,
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: adminUserDataSetConfig.erc,
+				fieldName: 'roleType',
 				label_i18n: {
 					en_US: 'Role Type',
 				},
-				name: 'roleType',
 				sortable: false,
 				type: 'string',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: adminUserDataSetConfig.erc,
+				fieldName: 'name',
 				label_i18n: {en_US: 'Name'},
-				name: 'name',
 				sortable: false,
 				type: 'string',
 			});
@@ -349,20 +343,20 @@ test(
 				restSchema: taxonomyVocabularyDataSetConfig.restSchema,
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: taxonomyVocabularyDataSetConfig.erc,
+				fieldName: 'name',
 				label_i18n: {
 					en_US: 'Vocabulary Name',
 				},
-				name: 'name',
 				sortable: false,
 				type: 'string',
 			});
 
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC: taxonomyVocabularyDataSetConfig.erc,
+				fieldName: 'numberOfTaxonomyCategories',
 				label_i18n: {en_US: 'Number of Categories'},
-				name: 'numberOfTaxonomyCategories',
 				sortable: false,
 				type: 'integer',
 			});
@@ -405,34 +399,25 @@ test(
 
 		await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async () => {
 			await fdsFragmentPage.editPage({layout});
+
 			await fdsFragmentPage.fdsTableWrapper.click();
 
-			await page
-				.getByRole('button', {name: 'Change Data Set View'})
-				.click();
+			await fdsFragmentPage.changeDataSetButton.click();
 
-			await page
-				.getByRole('menuitem', {name: 'Select Data Set View...'})
-				.click();
+			const selectionListContainer =
+				fdsFragmentPage.selectDataSetModalFrame.locator(
+					'.fds-admin-item-selector'
+				);
 
-			await page.getByRole('dialog').isVisible();
+			await expect(selectionListContainer).toBeVisible();
 
-			await page.getByRole('heading', {name: 'Select'}).isVisible();
-
-			await page
-				.frameLocator('iframe[title="Select"]')
-				.locator('.fds-admin-item-selector')
-				.waitFor({state: 'visible'});
-
-			await page
-				.frameLocator('iframe[title="Select"]')
+			await fdsFragmentPage.selectDataSetModalFrame
 				.locator('li')
 				.filter({hasText: adminUserDataSetConfig.label})
 				.first()
 				.click();
 
-			await page
-				.frameLocator('iframe[title="Select"]')
+			await fdsFragmentPage.selectDataSetModalFrame
 				.getByRole('button', {name: 'Save'})
 				.click();
 
@@ -471,24 +456,17 @@ test(
 
 		await test.step('Confirm that we can change the Data Set and display the Taxonomy Vocabulary Data Set', async () => {
 			await fdsFragmentPage.editPage({layout});
+
 			await fdsFragmentPage.fdsTableWrapper.click();
 
-			await page
-				.getByRole('button', {name: 'Change Data Set View'})
-				.click();
+			await fdsFragmentPage.changeDataSetButton.click();
 
-			await page
-				.getByRole('menuitem', {name: 'Select Data Set View...'})
-				.click();
+			const selectionListContainer =
+				fdsFragmentPage.selectDataSetModalFrame.locator(
+					'.fds-admin-item-selector'
+				);
 
-			await page.getByRole('dialog').isVisible();
-
-			await page.getByRole('heading', {name: 'Select'}).isVisible();
-
-			await page
-				.frameLocator('iframe[title="Select"]')
-				.locator('.fds-admin-item-selector')
-				.waitFor({state: 'visible'});
+			await expect(selectionListContainer).toBeVisible();
 
 			await page
 				.frameLocator('iframe[title="Select"]')

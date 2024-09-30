@@ -54,16 +54,16 @@ const skusDataSetConfig = {
 
 const tableSectionsDataSetConfig = {
 	name: getRandomString(),
-	restApplication: '/data-set-manager/table-sections',
+	restApplication: '/data-set-admin/table-sections',
 	restEndpoint: '/',
-	restSchema: 'FDSField',
+	restSchema: 'DataSetTableSection',
 };
 
 const tableSectionsWithSpecialCharactersDataSetConfig = {
 	name: 'Data Set ~!@#$%^&*(){}[].<>/? name',
-	restApplication: '/data-set-manager/table-sections',
+	restApplication: '/data-set-admin/table-sections',
 	restEndpoint: '/',
-	restSchema: 'FDSField',
+	restSchema: 'DataSetTableSection',
 };
 
 async function assertTableActionLabels(page) {

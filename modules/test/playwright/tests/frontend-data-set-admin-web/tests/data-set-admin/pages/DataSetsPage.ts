@@ -34,7 +34,7 @@ export class DataSetsPage {
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.basePath = 'data-set-manager/entries';
+		this.basePath = 'data-set-admin/entries';
 		this.dataSetsEmptyState = page.locator('.c-empty-state');
 		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
 		this.newDataSetButton = page.getByLabel('New Data Set').first();
@@ -62,9 +62,9 @@ export class DataSetsPage {
 
 	async createDataSet({
 		name = DEFAULT_LABEL.DATA_SET,
-		restApplication = '/data-set-manager/table-sections',
+		restApplication = '/data-set-admin/table-sections',
 		restEndpoint = '/',
-		restSchema = 'FDSField',
+		restSchema = 'DataSetTableSection',
 	}: {
 		name?: string;
 		restApplication?: string;
@@ -153,7 +153,7 @@ export class DataSetsPage {
 			this.page.waitForResponse(
 				(response) =>
 					response.status() === 200 &&
-					response.url().includes('/data-set-manager/data-sets?')
+					response.url().includes('/data-set-admin/data-sets?')
 			),
 		]);
 	}

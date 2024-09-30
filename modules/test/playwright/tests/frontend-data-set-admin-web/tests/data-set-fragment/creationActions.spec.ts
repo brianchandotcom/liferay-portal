@@ -41,10 +41,10 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	});
 
 	await test.step('Create table field', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'id',
 			label_i18n: {en_US: 'Id'},
-			name: 'id',
 			type: 'string',
 		});
 	});

@@ -73,10 +73,10 @@ test('Date-time filter is displayed in fragment, and applied to data @LPD-10754'
 	});
 
 	await test.step('Add a field, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'rendererType',
 			label_i18n: {en_US: fieldLabel},
-			name: 'rendererType',
 			type: 'string',
 		});
 	});
@@ -164,10 +164,10 @@ test('Can create Date-time filter without start and end dates', async ({
 	});
 
 	await test.step('Add a field, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
+		await dataSetManagerApiHelpers.createDataSetTableSection({
 			dataSetERC,
+			fieldName: 'renderer',
 			label_i18n: {en_US: fieldLabel},
-			name: 'rendererType',
 			type: 'string',
 		});
 	});

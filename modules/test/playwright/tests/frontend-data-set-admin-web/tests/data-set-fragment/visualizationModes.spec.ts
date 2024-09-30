@@ -30,6 +30,8 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
+		additionalAPIURLParameters:
+			'&nestedFields=dataSetToDataSetTableSections',
 		erc: dataSetERC,
 		label: dataSetLabel,
 	});
@@ -49,20 +51,20 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		page,
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
-		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_FIELD = 'dataSetToDataSetTableSections';
 		const SAMPLE_OBJECT_CHILD_FIELD = 'label';
 
 		await test.step('Create table fields', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 				label_i18n: {en_US: 'Label'},
-				name: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 				type: 'string',
 			});
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
+				fieldName: `${SAMPLE_SCALAR_FIELD}`,
 				label_i18n: {en_US: 'Id'},
-				name: `${SAMPLE_SCALAR_FIELD}`,
 				type: 'string',
 			});
 		});
@@ -180,13 +182,13 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
 
 		await test.step('Create table fields', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
+			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
 				extraBodyParams: {
 					keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
 				},
+				fieldName: SAMPLE_SCALAR_ARRAY_FIELD,
 				label_i18n: {en_US: SAMPLE_SCALAR_ARRAY_FIELD},
-				name: SAMPLE_SCALAR_ARRAY_FIELD,
 				type: 'array',
 			});
 		});

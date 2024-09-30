@@ -47,3 +47,18 @@ Nonlegacy HTML reference with escaped single quotes:
 
 <a href=\'/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>
 <a href=\'[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>
+
+Style references with no quotes:
+
+background: url(/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
+background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
+
+Style references with double quotes:
+
+background: url("/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
+background: url("[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
+
+Style references with single quotes:
+
+background: url('/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]');
+background: url('[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]');

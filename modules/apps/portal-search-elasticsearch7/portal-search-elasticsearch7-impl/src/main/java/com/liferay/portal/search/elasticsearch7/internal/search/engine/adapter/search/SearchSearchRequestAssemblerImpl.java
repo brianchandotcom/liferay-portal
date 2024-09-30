@@ -171,6 +171,9 @@ public class SearchSearchRequestAssemblerImpl
 				searchSearchRequest.getFetchSourceIncludes(),
 				searchSearchRequest.getFetchSourceExcludes());
 		}
+		else {
+			searchSourceBuilder.fetchSource(false);
+		}
 	}
 
 	private void _setGroupBy(

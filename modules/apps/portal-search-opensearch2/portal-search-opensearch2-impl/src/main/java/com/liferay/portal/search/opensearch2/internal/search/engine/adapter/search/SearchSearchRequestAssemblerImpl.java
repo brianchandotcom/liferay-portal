@@ -93,6 +93,9 @@ public class SearchSearchRequestAssemblerImpl
 			(searchSearchRequest.getFetchSourceExcludes() == null) &&
 			(searchSearchRequest.getFetchSourceIncludes() == null)) {
 
+			searchRequestBuilder.source(
+				SourceConfig.of(sourceConfig -> sourceConfig.fetch(false)));
+
 			return;
 		}
 

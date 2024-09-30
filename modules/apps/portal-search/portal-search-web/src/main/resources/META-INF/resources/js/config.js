@@ -11,8 +11,8 @@
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
-					'liferay-search-date-facet': {
-						path: 'date_facet.js',
+					'liferay-search-custom-range-facet': {
+						path: 'custom_range_facet.js',
 						requires: ['aui-form-validator'],
 					},
 				},

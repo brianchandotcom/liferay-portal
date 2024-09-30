@@ -205,8 +205,8 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 		module="{FacetUtil} from portal-search-web"
 	/>
 
-	<aui:script use="liferay-search-date-facet">
-		new Liferay.Search.DateFacetFilter({
+	<aui:script use="liferay-search-custom-range-facet">
+		new Liferay.Search.CustomRangeFacet({
 			form: A.one('#<portlet:namespace />fm'),
 			fromInputName: '<portlet:namespace />fromInput',
 			namespace: '<portlet:namespace />',

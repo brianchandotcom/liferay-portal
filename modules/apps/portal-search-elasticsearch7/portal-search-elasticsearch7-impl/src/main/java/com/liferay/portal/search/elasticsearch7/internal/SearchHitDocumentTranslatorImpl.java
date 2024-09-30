@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.common.document.DocumentField;
@@ -123,6 +124,25 @@ public class SearchHitDocumentTranslatorImpl
 		return translate(fieldName, value);
 	}
 
+	private GeoLocationPoint _getGeoLocationPoint(Object value) {
+		if (value instanceof Map) {
+			Map<String, Object> map = (Map<String, Object>)value;
+
+			if (MapUtil.isEmpty(map) || !map.containsKey("coordinates")) {
+				return null;
+			}
+
+			List<Double> list = (List<Double>)map.get("coordinates");
+
+			return new GeoLocationPoint(list.get(1), list.get(0));
+		}
+
+		String[] values = StringUtil.split(String.valueOf(value));
+
+		return new GeoLocationPoint(
+			Double.valueOf(values[0]), Double.valueOf(values[1]));
+	}
+
 	private boolean _isInvalidFieldName(String fieldName) {
 		if (fieldName.endsWith(".geopoint") || fieldName.equals("_ignored")) {
 			return true;
@@ -139,11 +159,7 @@ public class SearchHitDocumentTranslatorImpl
 	private Field _translateGeoPoint(String fieldName, Object value) {
 		Field field = new Field(fieldName);
 
-		String[] values = StringUtil.split(String.valueOf(value));
-
-		field.setGeoLocationPoint(
-			new GeoLocationPoint(
-				Double.valueOf(values[0]), Double.valueOf(values[1])));
+		field.setGeoLocationPoint(_getGeoLocationPoint(value));
 
 		return field;
 	}

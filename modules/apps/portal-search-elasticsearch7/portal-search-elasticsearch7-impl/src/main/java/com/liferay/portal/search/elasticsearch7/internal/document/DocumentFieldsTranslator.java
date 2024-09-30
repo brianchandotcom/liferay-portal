@@ -5,12 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.document;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.geolocation.GeoBuilders;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.common.document.DocumentField;
@@ -101,6 +105,41 @@ public class DocumentFieldsTranslator {
 		}
 	}
 
+	private GeoLocationPoint _getGeoLocationPoint(
+		DocumentField documentField1, DocumentField documentField2) {
+
+		Object value1 = documentField1.getValue();
+		String value2 = documentField2.getValue();
+
+		if (StringUtil.startsWith(value2, StringPool.OPEN_CURLY_BRACE) &&
+			(value1 instanceof Map)) {
+
+			return _getGeoLocationPointFromCoordinates(
+				(Map<String, Object>)value1);
+		}
+
+		return _getGeoLocationPointFromGeoHash(value2);
+	}
+
+	private GeoLocationPoint _getGeoLocationPointFromCoordinates(
+		Map<String, Object> map) {
+
+		if (MapUtil.isEmpty(map) || !map.containsKey("coordinates")) {
+			return null;
+		}
+
+		List<Double> list = (List<Double>)map.get("coordinates");
+
+		return _geoBuilders.geoLocationPoint(list.get(1), list.get(0));
+	}
+
+	private GeoLocationPoint _getGeoLocationPointFromGeoHash(String geoHash) {
+		GeoPoint geoPoint = GeoPoint.fromGeohash(geoHash);
+
+		return _geoBuilders.geoLocationPoint(
+			geoPoint.getLat(), geoPoint.getLon());
+	}
+
 	private boolean _translateGeoLocationPoint(
 		DocumentField documentField1, DocumentBuilder documentBuilder,
 		Map<String, DocumentField> documentFieldsMap) {
@@ -119,12 +158,8 @@ public class DocumentFieldsTranslator {
 			return false;
 		}
 
-		GeoPoint geoPoint = GeoPoint.fromGeohash(documentField2.getValue());
-
 		documentBuilder.setGeoLocationPoint(
-			fieldName1,
-			_geoBuilders.geoLocationPoint(
-				geoPoint.getLat(), geoPoint.getLon()));
+			fieldName1, _getGeoLocationPoint(documentField1, documentField2));
 
 		return true;
 	}

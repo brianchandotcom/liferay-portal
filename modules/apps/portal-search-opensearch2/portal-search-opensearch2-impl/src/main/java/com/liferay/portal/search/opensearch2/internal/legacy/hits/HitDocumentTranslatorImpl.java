@@ -135,6 +135,29 @@ public class HitDocumentTranslatorImpl implements HitDocumentTranslator {
 		return translate(fieldName, jsonValue);
 	}
 
+	private GeoLocationPoint _getGeoLocationPoint(JsonValue jsonValue) {
+		JsonValue.ValueType valueType = jsonValue.getValueType();
+
+		if (valueType == JsonValue.ValueType.OBJECT) {
+			JsonObject jsonObject = jsonValue.asJsonObject();
+
+			JsonArray jsonArray = jsonObject.getJsonArray("coordinates");
+
+			JsonNumber lat = jsonArray.getJsonNumber(1);
+			JsonNumber lon = jsonArray.getJsonNumber(0);
+
+			return new GeoLocationPoint(lat.doubleValue(), lon.doubleValue());
+		}
+
+		String location = jsonValue.toString();
+
+		String[] locationParts = location.split(",");
+
+		return new GeoLocationPoint(
+			Double.valueOf(StringUtil.trim(locationParts[0])),
+			Double.valueOf(StringUtil.trim(locationParts[1])));
+	}
+
 	private boolean _isInvalidFieldName(String fieldName) {
 		if (fieldName.endsWith(".geopoint") || fieldName.equals("_ignored")) {
 			return true;
@@ -176,14 +199,7 @@ public class HitDocumentTranslatorImpl implements HitDocumentTranslator {
 
 		JsonArray jsonArray = jsonValue.asJsonArray();
 
-		String location = jsonArray.getString(0);
-
-		String[] locationParts = location.split(",");
-
-		field.setGeoLocationPoint(
-			new GeoLocationPoint(
-				Double.valueOf(StringUtil.trim(locationParts[0])),
-				Double.valueOf(StringUtil.trim(locationParts[1]))));
+		field.setGeoLocationPoint(_getGeoLocationPoint(jsonArray.get(0)));
 
 		return field;
 	}

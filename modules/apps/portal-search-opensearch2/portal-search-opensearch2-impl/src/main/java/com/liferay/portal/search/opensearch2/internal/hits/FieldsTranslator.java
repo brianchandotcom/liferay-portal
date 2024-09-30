@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.geolocation.GeoBuilders;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 
 import jakarta.json.JsonArray;
@@ -131,6 +132,30 @@ public class FieldsTranslator {
 		}
 	}
 
+	private GeoLocationPoint _getGeoLocationPoint(JsonValue jsonValue) {
+		JsonValue.ValueType valueType = jsonValue.getValueType();
+
+		if (valueType == JsonValue.ValueType.OBJECT) {
+			JsonObject jsonObject = jsonValue.asJsonObject();
+
+			JsonArray jsonArray = jsonObject.getJsonArray("coordinates");
+
+			JsonNumber lat = jsonArray.getJsonNumber(1);
+			JsonNumber lon = jsonArray.getJsonNumber(0);
+
+			return _geoBuilders.geoLocationPoint(
+				lat.doubleValue(), lon.doubleValue());
+		}
+
+		String coordinates = jsonValue.toString();
+
+		String[] coordinatesParts = coordinates.split(",");
+
+		return _geoBuilders.geoLocationPoint(
+			Double.valueOf(coordinatesParts[0]),
+			Double.valueOf(coordinatesParts[1]));
+	}
+
 	private Collection<Object> _toCollectionValue(JsonValue jsonValue) {
 		List<Object> values = new ArrayList<>();
 
@@ -198,15 +223,8 @@ public class FieldsTranslator {
 
 		JsonArray jsonArray = jsonValue.asJsonArray();
 
-		String coordinates = jsonArray.getString(0);
-
-		String[] coordinatesParts = coordinates.split(",");
-
 		documentBuilder.setGeoLocationPoint(
-			fieldName,
-			_geoBuilders.geoLocationPoint(
-				Double.valueOf(coordinatesParts[0]),
-				Double.valueOf(coordinatesParts[1])));
+			fieldName, _getGeoLocationPoint(jsonArray.get(0)));
 	}
 
 	private static final String _GEOPOINT_SUFFIX = ".geopoint";

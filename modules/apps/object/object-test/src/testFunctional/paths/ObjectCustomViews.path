@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_VIEW_LABEL</td>
-		<td>//div[(@class = 'dnd-td') and contains (.,'${key_viewLabel}')]</td>
+		<td>//div[contains(@class, 'dnd-td') and contains(., '${key_viewLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

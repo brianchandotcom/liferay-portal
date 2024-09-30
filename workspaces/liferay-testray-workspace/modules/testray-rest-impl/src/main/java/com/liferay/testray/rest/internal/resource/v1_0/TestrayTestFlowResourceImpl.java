@@ -294,7 +294,7 @@ public class TestrayTestFlowResourceImpl
 		testrayTestFlow.setSubtaskAmount(
 			_testrayManager.createTestraySubtasks(
 				contextCompany.getCompanyId(),
-				GetterUtil.getLong(testrayBuild.get("c_buildid_")),
+				GetterUtil.getLong(testrayBuild.get("c_buildId")),
 				testrayTaskId, contextUser.getUserId()));
 
 		return testrayTestFlow;

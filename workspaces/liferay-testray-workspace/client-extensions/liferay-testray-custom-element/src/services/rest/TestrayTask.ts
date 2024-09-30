@@ -75,7 +75,6 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	public abandon(task: TestrayTask) {
 		return this.update(task.id, {
 			dueStatus: TaskStatuses.ABANDONED,
-			name: task.name,
 		});
 	}
 
@@ -94,7 +93,6 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	public complete(task: TestrayTask) {
 		return this.update(task.id, {
 			dueStatus: TaskStatuses.COMPLETE,
-			name: task.name,
 		});
 	}
 
@@ -123,10 +121,14 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		const searchBuilder = new SearchBuilder();
 
 		if (id) {
-			searchBuilder.ne('id', id).and();
+			searchBuilder.ne('id', id);
 		}
 
-		const filter = searchBuilder.eq('name', task.name).build();
+		if (task.name) {
+			searchBuilder.and().eq('name', task.name);
+		}
+
+		const filter = searchBuilder.build();
 
 		const response = await this.fetcher<APIResponse<TestrayTask>>(
 			`/tasks?filter=${filter}`

@@ -3,7 +3,6 @@
 		{
 			"template_commerce_attribute": {
 				"mapping": {
-					"store": true,
 					"type": "keyword"
 				},
 				"match": "*_VALUES_NAMES",
@@ -13,7 +12,6 @@
 		{
 			"template_commerce_attribute_ids": {
 				"mapping": {
-					"store": true,
 					"type": "keyword"
 				},
 				"match": "*_VALUES_IDS",
@@ -23,7 +21,6 @@
 		{
 			"template_commerce_attribute_id": {
 				"mapping": {
-					"store": true,
 					"type": "keyword"
 				},
 				"match": "*_VALUE_ID",
@@ -33,7 +30,6 @@
 		{
 			"template_commerce_specification": {
 				"mapping": {
-					"store": true,
 					"type": "keyword"
 				},
 				"match": "*_VALUE_NAME",
@@ -43,7 +39,6 @@
 		{
 			"template_terms_set_required_matches": {
 				"mapping": {
-					"store": true,
 					"type": "integer"
 				},
 				"match": "*_required_matches",
@@ -53,79 +48,60 @@
 	],
 	"properties": {
 		"advanceStatus": {
-			"store": true,
 			"type": "keyword"
 		},
 		"assetCategoryNames": {
-			"store": true,
 			"type": "keyword"
 		},
 		"basePrice": {
-			"store": true,
 			"type": "double"
 		},
 		"commerceAccountGroupIds_required_matches": {
-			"store": true,
 			"type": "integer"
 		},
 		"commerceAccountId": {
-			"store": true,
 			"type": "keyword"
 		},
 		"couponCode": {
-			"store": true,
 			"type": "keyword"
 		},
 		"criterionType_organization_required_matches": {
-			"store": true,
 			"type": "integer"
 		},
 		"criterionType_role_required_matches": {
-			"store": true,
 			"type": "integer"
 		},
 		"criterionType_user_group_required_matches": {
-			"store": true,
 			"type": "integer"
 		},
 		"criterionType_user_required_matches": {
-			"store": true,
 			"type": "integer"
 		},
 		"entryModelClassName": {
-			"store": true,
 			"type": "keyword"
 		},
 		"optionsNames": {
-			"store": true,
 			"type": "keyword"
 		},
 		"orderCreatorEmailAddress": {
-			"store": true,
 			"type": "keyword"
 		},
 		"orderOrganizationId": {
-			"store": true,
 			"type": "keyword"
 		},
 		"orderStatus": {
-			"store": true,
 			"type": "keyword"
 		},
 		"orderTypeId": {
-			"store": true,
 			"type": "keyword"
 		},
 		"productTypeName": {
-			"store": true,
 			"type": "keyword"
 		},
 		"replacementCPInstanceUuid": {
-			"store": true,
 			"type": "keyword"
 		},
 		"replacementCProductId": {
-			"store": true,
 			"type": "keyword"
 		},
 		"sku": {
@@ -136,7 +112,6 @@
 					"type": "text"
 				},
 				"raw": {
-					"store": true,
 					"type": "keyword"
 				},
 				"reverse": {
@@ -147,7 +122,6 @@
 			"type": "text"
 		},
 		"skuExternalReferenceCode": {
-			"store": true,
 			"type": "keyword"
 		},
 		"skus": {
@@ -165,15 +139,12 @@
 			"type": "text"
 		},
 		"specificationOptionsIds": {
-			"store": true,
 			"type": "keyword"
 		},
 		"specificationOptionsNames": {
-			"store": true,
 			"type": "keyword"
 		},
 		"targetType": {
-			"store": true,
 			"type": "keyword"
 		}
 	}

@@ -5,7 +5,6 @@
 			"template_ar": {
 				"mapping": {
 					"analyzer": "arabic",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -18,7 +17,6 @@
 			"template_bg": {
 				"mapping": {
 					"analyzer": "bulgarian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -31,7 +29,6 @@
 			"template_ca": {
 				"mapping": {
 					"analyzer": "catalan",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -44,7 +41,6 @@
 			"template_cs": {
 				"mapping": {
 					"analyzer": "czech",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -57,7 +53,6 @@
 			"template_da": {
 				"mapping": {
 					"analyzer": "danish",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -70,7 +65,6 @@
 			"template_de": {
 				"mapping": {
 					"analyzer": "german",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -83,7 +77,6 @@
 			"template_el": {
 				"mapping": {
 					"analyzer": "greek",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -96,7 +89,6 @@
 			"template_en": {
 				"mapping": {
 					"analyzer": "english",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -109,7 +101,6 @@
 			"template_es": {
 				"mapping": {
 					"analyzer": "spanish",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -122,7 +113,6 @@
 			"template_eu": {
 				"mapping": {
 					"analyzer": "basque",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -135,7 +125,6 @@
 			"template_fi": {
 				"mapping": {
 					"analyzer": "finnish",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -148,7 +137,6 @@
 			"template_fr": {
 				"mapping": {
 					"analyzer": "french",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -161,7 +149,6 @@
 			"template_hi": {
 				"mapping": {
 					"analyzer": "hindi",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -174,7 +161,6 @@
 			"template_hu": {
 				"mapping": {
 					"analyzer": "hungarian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -187,7 +173,6 @@
 			"template_hy": {
 				"mapping": {
 					"analyzer": "armenian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -200,7 +185,6 @@
 			"template_id": {
 				"mapping": {
 					"analyzer": "indonesian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -213,7 +197,6 @@
 			"template_it": {
 				"mapping": {
 					"analyzer": "italian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -226,7 +209,6 @@
 			"template_ja": {
 				"mapping": {
 					"analyzer": "kuromoji",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -239,7 +221,6 @@
 			"template_ko": {
 				"mapping": {
 					"analyzer": "cjk",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -251,7 +232,6 @@
 		{
 			"template_long_sortable": {
 				"mapping": {
-					"store": true,
 					"type": "long"
 				},
 				"match": "*_sortable",
@@ -262,7 +242,6 @@
 			"template_nl": {
 				"mapping": {
 					"analyzer": "dutch",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -275,7 +254,6 @@
 			"template_no": {
 				"mapping": {
 					"analyzer": "norwegian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -288,7 +266,6 @@
 			"template_pl": {
 				"mapping": {
 					"analyzer": "polish",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -301,7 +278,6 @@
 			"template_pt": {
 				"mapping": {
 					"analyzer": "portuguese",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -314,7 +290,6 @@
 			"template_pt_br": {
 				"mapping": {
 					"analyzer": "brazilian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -326,7 +301,6 @@
 			"template_ro": {
 				"mapping": {
 					"analyzer": "romanian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -339,7 +313,6 @@
 			"template_ru": {
 				"mapping": {
 					"analyzer": "russian",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -352,7 +325,6 @@
 			"template_string_sortable": {
 				"mapping": {
 					"normalizer": "keyword_lowercase",
-					"store": true,
 					"type": "keyword"
 				},
 				"match": "*_sortable",
@@ -363,7 +335,6 @@
 			"template_sv": {
 				"mapping": {
 					"analyzer": "swedish",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -376,7 +347,6 @@
 			"template_th": {
 				"mapping": {
 					"analyzer": "thai",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -389,7 +359,6 @@
 			"template_tr": {
 				"mapping": {
 					"analyzer": "turkish",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -402,7 +371,6 @@
 			"template_zh": {
 				"mapping": {
 					"analyzer": "smartcn",
-					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
 				},
@@ -414,147 +382,115 @@
 	],
 	"properties": {
 		"active": {
-			"store": true,
 			"type": "boolean"
 		},
 		"assetTitle": {
-			"store": true,
 			"term_vector": "with_positions_offsets",
 			"type": "text"
 		},
 		"assetType": {
-			"store": true,
 			"term_vector": "with_positions_offsets",
 			"type": "text"
 		},
 		"className": {
-			"store": true,
 			"type": "keyword"
 		},
 		"classPK": {
-			"store": true,
 			"type": "long"
 		},
 		"companyId": {
-			"store": true,
 			"type": "long"
 		},
 		"completed": {
-			"store": true,
 			"type": "boolean"
 		},
 		"completionDate": {
 			"format": "yyyyMMddHHmmss",
-			"store": true,
 			"type": "date"
 		},
 		"createDate": {
 			"format": "yyyyMMddHHmmss",
-			"store": true,
 			"type": "date"
 		},
 		"deleted": {
-			"store": true,
 			"type": "boolean"
 		},
 		"duration": {
-			"store": true,
 			"type": "long"
 		},
 		"id": {
-			"store": true,
 			"type": "long"
 		},
 		"instanceId": {
-			"store": true,
 			"type": "long"
 		},
 		"modifiedDate": {
 			"format": "yyyyMMddHHmmss",
-			"store": true,
 			"type": "date"
 		},
 		"processId": {
-			"store": true,
 			"type": "long"
 		},
 		"slaDefinitionIds": {
-			"store": true,
 			"type": "long"
 		},
 		"slaResults": {
 			"properties": {
 				"onTime": {
-					"store": true,
 					"type": "boolean"
 				},
 				"overdueDate": {
 					"format": "yyyyMMddHHmmss",
-					"store": true,
 					"type": "date"
 				},
 				"remainingTime": {
-					"store": true,
 					"type": "long"
 				},
 				"slaDefinitionId": {
-					"store": true,
 					"type": "long"
 				},
 				"status": {
-					"store": true,
 					"type": "keyword"
 				}
 			},
 			"type": "nested"
 		},
 		"slaStatus": {
-			"store": true,
 			"type": "keyword"
 		},
 		"tasks": {
 			"properties": {
 				"assigneeGroupIds": {
-					"store": true,
 					"type": "long"
 				},
 				"assigneeIds": {
-					"store": true,
 					"type": "long"
 				},
 				"assigneeName": {
-					"store": true,
 					"type": "keyword"
 				},
 				"assigneeType": {
-					"store": true,
 					"type": "keyword"
 				},
 				"taskId": {
-					"store": true,
 					"type": "long"
 				},
 				"taskName": {
-					"store": true,
 					"type": "keyword"
 				}
 			},
 			"type": "nested"
 		},
 		"uid": {
-			"store": true,
 			"type": "keyword"
 		},
 		"userId": {
-			"store": true,
 			"type": "long"
 		},
 		"userName": {
-			"store": true,
 			"type": "keyword"
 		},
 		"version": {
-			"store": true,
 			"type": "keyword"
 		}
 	}

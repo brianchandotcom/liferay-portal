@@ -83,14 +83,17 @@ describe('AnalyticsReports Overview Metrics', () => {
 		);
 
 		const {container, getByText} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(2);
+		expect(mockedFetch).toHaveBeenCalledTimes(4);
 
 		expect(getByText('overview')).toBeTruthy();
 	});
@@ -113,14 +116,17 @@ describe('AnalyticsReports Overview Metrics', () => {
 		);
 
 		const {container, getByText} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(2);
+		expect(mockedFetch).toHaveBeenCalledTimes(5);
 
 		expect(getByText('comments')).toBeInTheDocument();
 		expect(getByText('views')).toBeInTheDocument();
@@ -144,14 +150,17 @@ describe('AnalyticsReports Overview Metrics', () => {
 		);
 
 		const {container, getByText} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(2);
+		expect(mockedFetch).toHaveBeenCalledTimes(5);
 
 		expect(getByText('downloads')).toBeInTheDocument();
 		expect(getByText('previews')).toBeInTheDocument();
@@ -180,14 +189,17 @@ describe('AnalyticsReports Overview Metrics', () => {
 		);
 
 		const {container, getByText} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(2);
+		expect(mockedFetch).toHaveBeenCalledTimes(5);
 
 		expect(getByText('views')).toBeInTheDocument();
 	});
@@ -200,11 +212,14 @@ describe('AnalyticsReports Filter by Individuals', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const individualsFilter = getByTestId('individuals');
@@ -224,11 +239,14 @@ describe('AnalyticsReports Filter by Individuals', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const individualsFilter = getByTestId('individuals');
@@ -248,11 +266,14 @@ describe('AnalyticsReports Filter by Individuals', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const individualsFilter = getByTestId('individuals');
@@ -274,11 +295,14 @@ describe('AnalyticsReports Filter by RangeSelectors', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const rangeSelectorsFilter = getByTestId('rangeSelectors');
@@ -296,11 +320,14 @@ describe('AnalyticsReports Filter by RangeSelectors', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const rangeSelectorsFilter = getByTestId('rangeSelectors');
@@ -320,11 +347,14 @@ describe('AnalyticsReports Filter by RangeSelectors', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const rangeSelectorsFilter = getByTestId('rangeSelectors');
@@ -344,11 +374,14 @@ describe('AnalyticsReports Filter by RangeSelectors', () => {
 		);
 
 		const {container, getByTestId} = render(
-			<AnalyticsReports contentPerformanceDataFetchURL="/o/api/fake-url" />
+			<AnalyticsReports
+				contentPerformanceDataFetchURL="/o/api/fake-url"
+				getItemVersionsURL=""
+			/>
 		);
 
 		await waitForElementToBeRemoved(
-			container.querySelector('.loading-animation-primary')
+			container.querySelector('.loading-animation')
 		);
 
 		const rangeSelectorsFilter = getByTestId('rangeSelectors');

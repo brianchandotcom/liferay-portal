@@ -97,6 +97,8 @@ Export-Package:\
 	\
 	java_cup.runtime.*;version='2.7.1',\
 	\
+	javax.el;version='3.0.0',\
+	\
 	javax.jws;version='1.1',\
 	javax.jws.soap;version='1.1',\
 	\
@@ -241,11 +243,24 @@ Provide-Capability:\
 	osgi.contract;\
 		osgi.contract=JavaServlet;\
 		uses:="javax.servlet,javax.servlet.annotation,javax.servlet.descriptor,javax.servlet.http";\
-		version:Version=3.1
+		version:Version=3.1,\
+	osgi.contract;\
+		osgi.contract="JavaEL";\
+		uses:="javax.el";\
+		version:Version=2.1.0,\
+	osgi.contract;\
+		osgi.contract="JavaEL";\
+		uses:="javax.el";\
+		version:Version=2.2.0,\
+	osgi.contract;\
+		osgi.contract="JavaEL";\
+		uses:="javax.el";\
+		version:Version=3.0.0
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/activation.jar,\
 	@../../../lib/development/mail.jar,\
+	@../../../lib/development/tomcat-el-api.jar,\
 	@../../../lib/development/tomcat-servlet-api.jar,\
 	@../../../lib/portal/commons-lang.jar,\
 	@../../../lib/portal/commons-logging.jar,\

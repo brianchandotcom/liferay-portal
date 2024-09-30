@@ -8,15 +8,19 @@ import React, {useEffect, useRef} from 'react';
 import AppSetup from './components/AppSetup';
 import GlobalFilters from './components/GlobalFilters';
 import OverviewMetrics from './components/OverviewMetrics';
+import InteractionsByPage from './components/interactions-by-page/InteractionsByPage';
+import VisitorsBehavior from './components/visitors-behavior/VisitorsBehavior';
 
 import '../css/main.scss';
 
 interface AnalyticsReports {
 	contentPerformanceDataFetchURL: string;
+	getItemVersionsURL: string;
 }
 
 const AnalyticsReports: React.FC<AnalyticsReports> = ({
 	contentPerformanceDataFetchURL,
+	getItemVersionsURL,
 }) => {
 	const analyticsReportsRef = useRef<HTMLDivElement>(null);
 
@@ -39,10 +43,15 @@ const AnalyticsReports: React.FC<AnalyticsReports> = ({
 		>
 			<AppSetup
 				contentPerformanceDataFetchURL={contentPerformanceDataFetchURL}
+				getItemVersionsURL={getItemVersionsURL}
 			>
 				<GlobalFilters />
 
 				<OverviewMetrics />
+
+				<VisitorsBehavior />
+
+				<InteractionsByPage />
 			</AppSetup>
 		</div>
 	);

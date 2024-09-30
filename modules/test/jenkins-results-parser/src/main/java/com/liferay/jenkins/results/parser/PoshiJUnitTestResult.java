@@ -43,16 +43,33 @@ public class PoshiJUnitTestResult extends JUnitTestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
+		Build build = getBuild();
+
+		String consoleText = build.getConsoleText();
+
+		if (consoleText.contains(getPoshiReportURL())) {
+			Dom4JUtil.addToElement(
+				downstreamBuildListItemElement, " - ",
+				Dom4JUtil.getNewAnchorElement(
+					getPoshiReportURL(), "Poshi Report"));
+		}
+
+		if (consoleText.contains(getPoshiSummaryURL())) {
+			Dom4JUtil.addToElement(
+				downstreamBuildListItemElement, " - ",
+				Dom4JUtil.getNewAnchorElement(
+					getPoshiSummaryURL(), "Poshi Summary"));
+		}
+
+		if (consoleText.contains(getPoshiConsoleURL())) {
+			Dom4JUtil.addToElement(
+				downstreamBuildListItemElement, " - ",
+				Dom4JUtil.getNewAnchorElement(
+					getPoshiConsoleURL(), "Poshi Console"));
+		}
+
 		Dom4JUtil.addToElement(
 			downstreamBuildListItemElement, " - ",
-			Dom4JUtil.getNewAnchorElement(getPoshiReportURL(), "Poshi Report"),
-			" - ",
-			Dom4JUtil.getNewAnchorElement(
-				getPoshiSummaryURL(), "Poshi Summary"),
-			" - ",
-			Dom4JUtil.getNewAnchorElement(
-				getPoshiConsoleURL(), "Poshi Console"),
-			" - ",
 			Dom4JUtil.getNewAnchorElement(
 				getConsoleOutputURL(), "Console Output"));
 

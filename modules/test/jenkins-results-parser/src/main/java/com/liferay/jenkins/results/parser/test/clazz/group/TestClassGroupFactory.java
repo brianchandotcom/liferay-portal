@@ -303,9 +303,9 @@ public class TestClassGroupFactory {
 
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-			if (batchName.startsWith("functional-") ||
-				batchName.startsWith("modules-functional-") ||
-				batchName.startsWith("subrepository-functional-")) {
+			if (batchName.startsWith("functional") ||
+				batchName.startsWith("modules-functional") ||
+				batchName.startsWith("subrepository-functional")) {
 
 				if (jsonObject != null) {
 					batchTestClassGroup = new FunctionalBatchTestClassGroup(
@@ -321,9 +321,9 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("integration-") ||
-					 batchName.startsWith("junit-test-") ||
-					 batchName.startsWith("unit-")) {
+			else if (batchName.startsWith("integration") ||
+					 batchName.startsWith("junit-test") ||
+					 batchName.startsWith("unit")) {
 
 				if (jsonObject != null) {
 					batchTestClassGroup = new JUnitBatchTestClassGroup(
@@ -334,8 +334,8 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("js-test-") ||
-					 batchName.startsWith("portal-frontend-js-")) {
+			else if (batchName.startsWith("js-test") ||
+					 batchName.startsWith("portal-frontend-js")) {
 
 				if (jsonObject != null) {
 					batchTestClassGroup = new NPMTestBatchTestClassGroup(
@@ -346,7 +346,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("js-unit-")) {
+			else if (batchName.startsWith("js-unit")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
@@ -356,7 +356,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("modules-compile-")) {
+			else if (batchName.startsWith("modules-compile")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new CompileModulesBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
@@ -367,8 +367,8 @@ public class TestClassGroupFactory {
 				}
 			}
 			else if (batchName.startsWith(
-						"modules-integration-project-templates-") ||
-					 batchName.startsWith("modules-unit-project-templates-")) {
+						"modules-integration-project-templates") ||
+					 batchName.startsWith("modules-unit-project-templates")) {
 
 				if (jsonObject != null) {
 					batchTestClassGroup =
@@ -381,14 +381,14 @@ public class TestClassGroupFactory {
 							batchName, portalTestClassJob);
 				}
 			}
-			else if ((batchName.startsWith("modules-integration-") &&
+			else if ((batchName.startsWith("modules-integration") &&
 					  !batchName.startsWith(
-						  "modules-integration-project-templates-")) ||
-					 (batchName.startsWith("modules-unit-") &&
+						  "modules-integration-project-templates")) ||
+					 (batchName.startsWith("modules-unit") &&
 					  !batchName.startsWith(
-						  "modules-unit-project-templates-")) ||
-					 batchName.startsWith("subrepository-integration-") ||
-					 batchName.startsWith("subrepository-unit-")) {
+						  "modules-unit-project-templates")) ||
+					 batchName.startsWith("subrepository-integration") ||
+					 batchName.startsWith("subrepository-unit")) {
 
 				if (jsonObject != null) {
 					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
@@ -404,7 +404,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("modules-semantic-versioning-")) {
+			else if (batchName.startsWith("modules-semantic-versioning")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new SemVerModulesBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
@@ -414,7 +414,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("playwright-compile-")) {
+			else if (batchName.startsWith("playwright-compile")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =
 						new PlaywrightCompileBatchTestClassGroup(
@@ -426,7 +426,7 @@ public class TestClassGroupFactory {
 							batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("playwright-js-")) {
+			else if (batchName.startsWith("playwright-js")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
@@ -441,7 +441,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("plugins-compile-")) {
+			else if (batchName.startsWith("plugins-compile")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new PluginsBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
@@ -451,7 +451,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("plugins-functional-")) {
+			else if (batchName.startsWith("plugins-functional")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =
 						new PluginsFunctionalBatchTestClassGroup(
@@ -463,7 +463,7 @@ public class TestClassGroupFactory {
 							batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("plugins-gulp-")) {
+			else if (batchName.startsWith("plugins-gulp")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new PluginsGulpBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
@@ -473,7 +473,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("qa-websites-functional-") &&
+			else if (batchName.startsWith("qa-websites-functional") &&
 					 (job instanceof QAWebsitesGitRepositoryJob)) {
 
 				if (jsonObject != null) {
@@ -487,7 +487,7 @@ public class TestClassGroupFactory {
 							batchName, (QAWebsitesGitRepositoryJob)job);
 				}
 			}
-			else if (batchName.startsWith("qa-websites-playwright-")) {
+			else if (batchName.startsWith("qa-websites-playwright")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =
 						new QAWebsitesPlaywrightBatchTestClassGroup(
@@ -499,7 +499,7 @@ public class TestClassGroupFactory {
 							batchName, (QAWebsitesGitRepositoryJob)job);
 				}
 			}
-			else if (batchName.startsWith("rest-builder-")) {
+			else if (batchName.startsWith("rest-builder")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =
 						new RESTBuilderModulesBatchTestClassGroup(
@@ -521,7 +521,7 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("service-builder-")) {
+			else if (batchName.startsWith("service-builder")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =
 						new ServiceBuilderModulesBatchTestClassGroup(
@@ -533,7 +533,7 @@ public class TestClassGroupFactory {
 							batchName, portalTestClassJob);
 				}
 			}
-			else if (batchName.startsWith("tck-")) {
+			else if (batchName.startsWith("tck")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new TCKJunitBatchTestClassGroup(
 						jsonObject, portalTestClassJob);

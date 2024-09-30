@@ -486,7 +486,7 @@ public class LayoutTestUtil {
 		String description = "This is a test page.";
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(group, user.getUserId());
 
 		if (layoutPrototype != null) {
 			serviceContext.setAttribute(

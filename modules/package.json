@@ -40,6 +40,7 @@
 			"dxp/apps/*/*",
 			"dxp/apps/*/!(osb-faro/osb-faro-web)*/*",
 			"dxp/apps/osb/*/!(osb-faro/osb-faro-web)*/*",
+			"util/portal-tools-rest-builder-test-client-js",
 			"_node-scripts"
 		]
 	}

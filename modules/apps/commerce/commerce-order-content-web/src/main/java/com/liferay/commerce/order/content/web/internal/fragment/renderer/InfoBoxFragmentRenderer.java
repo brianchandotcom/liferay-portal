@@ -517,7 +517,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	}
 
 	private static final String[] _READ_ONLY_FIELDS = {
-		"accountInfo", "channelName", "orderDate", "orderType", "orderSummary"
+		"accountInfo", "channelName", "orderDate", "orderSummary", "orderType"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

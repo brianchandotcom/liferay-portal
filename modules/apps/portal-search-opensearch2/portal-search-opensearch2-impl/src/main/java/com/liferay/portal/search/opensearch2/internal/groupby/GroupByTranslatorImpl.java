@@ -5,17 +5,16 @@
 
 package com.liferay.portal.search.opensearch2.internal.groupby;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.sort.SortTranslator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +28,8 @@ import org.opensearch.client.opensearch._types.aggregations.BucketSortAggregatio
 import org.opensearch.client.opensearch._types.aggregations.TermsAggregation;
 import org.opensearch.client.opensearch._types.aggregations.TopHitsAggregation;
 import org.opensearch.client.opensearch.core.SearchRequest;
+import org.opensearch.client.opensearch.core.search.SourceConfig;
+import org.opensearch.client.opensearch.core.search.SourceFilter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -185,10 +186,16 @@ public class GroupByTranslatorImpl implements GroupByTranslator {
 		}
 
 		if (ArrayUtil.isEmpty(selectedFieldNames)) {
-			builder.storedFields(StringPool.STAR);
+			builder.source(
+				SourceConfig.of(sourceConfig -> sourceConfig.fetch(true)));
 		}
 		else {
-			builder.storedFields(Arrays.asList(selectedFieldNames));
+			builder.source(
+				SourceConfig.of(
+					sourceConfig -> sourceConfig.filter(
+						SourceFilter.of(
+							sourceFilter -> sourceFilter.includes(
+								ListUtil.fromArray(selectedFieldNames))))));
 		}
 
 		return new Aggregation(builder.build());

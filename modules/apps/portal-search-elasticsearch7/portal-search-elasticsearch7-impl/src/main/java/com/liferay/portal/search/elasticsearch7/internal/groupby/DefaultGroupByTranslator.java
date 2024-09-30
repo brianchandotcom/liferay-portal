@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.groupby;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.Sort;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.groupby.GroupByRequest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -211,11 +209,11 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 		String[] selectedFieldNames) {
 
 		if (ArrayUtil.isEmpty(selectedFieldNames)) {
-			topHitsAggregationBuilder.storedField(StringPool.STAR);
+			topHitsAggregationBuilder.fetchSource(true);
 		}
 		else {
-			topHitsAggregationBuilder.storedFields(
-				Arrays.asList(selectedFieldNames));
+			topHitsAggregationBuilder.fetchSource(
+				selectedFieldNames, new String[0]);
 		}
 	}
 

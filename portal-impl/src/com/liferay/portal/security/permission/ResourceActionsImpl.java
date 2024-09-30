@@ -1320,8 +1320,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 			_readActionKeys(ownerDefaultActions, ownerDefaultsElement);
 		}
-
-		if (ownerDefaultActions.isEmpty()) {
+		else {
 			ownerDefaultActions.addAll(resourceActions);
 		}
 

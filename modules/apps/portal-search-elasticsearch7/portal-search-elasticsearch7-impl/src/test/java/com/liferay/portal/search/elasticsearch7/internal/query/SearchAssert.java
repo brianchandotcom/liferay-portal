@@ -106,7 +106,7 @@ public class SearchAssert {
 		RestHighLevelClient restHighLevelClient,
 		SearchSourceBuilder searchSourceBuilder, SearchRequest searchRequest) {
 
-		searchSourceBuilder.storedField(StringPool.STAR);
+		searchSourceBuilder.fetchField(StringPool.STAR);
 
 		searchRequest.source(searchSourceBuilder);
 

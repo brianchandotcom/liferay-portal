@@ -419,29 +419,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,
-			nodeObjectDefinition -> {
-				if (nodeObjectDefinition.isRootNode()) {
-					return;
-				}
-
-				AssertUtils.assertFailure(
-					ObjectDefinitionStatusException.class,
-					"Nonroot object definitions within a hierarchical " +
-						"structure are ineligible for publication",
-					() ->
-						_objectDefinitionLocalService.
-							publishCustomObjectDefinition(
-								TestPropsValues.getUserId(),
-								nodeObjectDefinition.getObjectDefinitionId()));
-			});
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			rootObjectDefinition.getObjectDefinitionId());
+			nodeObjectDefinition ->
+				_objectDefinitionLocalService.publishCustomObjectDefinition(
+					TestPropsValues.getUserId(),
+					nodeObjectDefinition.getObjectDefinitionId()));
 
 		// After publish, database table
 

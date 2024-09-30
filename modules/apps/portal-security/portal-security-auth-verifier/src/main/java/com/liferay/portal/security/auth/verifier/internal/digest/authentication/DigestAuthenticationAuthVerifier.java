@@ -36,11 +36,6 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 	}
 
 	@Override
-	public boolean isForceable() {
-		return true;
-	}
-
-	@Override
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties configuration)
 		throws AuthException {

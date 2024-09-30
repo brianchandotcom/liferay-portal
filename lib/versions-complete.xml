@@ -3618,30 +3618,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java-util.jar</file-name>
-				<version>3.21.7</version>
-				<project-name>Protocol Buffers [Util]</project-name>
-				<project-url>https://developers.google.com/protocol-buffers/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD-3-Clause</license-name>
-						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java.jar</file-name>
-				<version>3.21.7</version>
-				<project-name>Protocol Buffers [Core]</project-name>
-				<project-url>https://developers.google.com/protocol-buffers/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD-3-Clause</license-name>
-						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!threetenbp.jar</file-name>
 				<version>1.5.0</version>
 				<project-name>ThreeTen backport</project-name>
@@ -5402,6 +5378,30 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.protobuf.jar!protobuf-java-util.jar</file-name>
+				<version>3.25.5</version>
+				<project-name>Protocol Buffers [Util]</project-name>
+				<project-url>https://developers.google.com/protocol-buffers/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.protobuf.jar!protobuf-java.jar</file-name>
+				<version>3.25.5</version>
+				<project-name>Protocol Buffers [Core]</project-name>
+				<project-url>https://developers.google.com/protocol-buffers/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>

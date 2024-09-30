@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {openSelectionModal} from 'frontend-js-web';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {
 	GROUP_EXTERNAL_REFERENCE_CODE,
@@ -53,11 +53,12 @@ function SiteSelectorInput({
 	const {namespace} = useContext(ThemeContext);
 	const {selectSitesURL} = useContext(ThemeContext);
 
-	const identifierType =
-		id.includes(GROUP_EXTERNAL_REFERENCE_CODE) ||
-		id.includes(GROUP_EXTERNAL_REFERENCE_CODES)
+	const identifierType = useMemo(() => {
+		return id.includes(GROUP_EXTERNAL_REFERENCE_CODE) ||
+			id.includes(GROUP_EXTERNAL_REFERENCE_CODES)
 			? IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
 			: IDENTIFIER_TYPES.ID;
+	}, [id]);
 
 	const locator =
 		identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE

@@ -9,7 +9,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import useDebounceCallback from '../../../hooks/useDebounceCallback';
 import {
@@ -117,11 +117,12 @@ function CategorySelectorInput({
 	const [autocompleteDropdownActive, setAutocompleteDropdownActive] =
 		useState(false);
 
-	const _getIdentifierType = () =>
-		id.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE) ||
-		id.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES)
+	const identifierType = useMemo(() => {
+		return id.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE) ||
+			id.includes(ASSET_CATEGORY_EXTERNAL_REFERENCE_CODES)
 			? IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
 			: IDENTIFIER_TYPES.ID;
+	}, [id]);
 
 	const _handleSetMatchingCategories = (inputValue, categoryTree) => {
 		const categories = [];
@@ -172,7 +173,7 @@ function CategorySelectorInput({
 						let value = categoryId;
 
 						if (
-							_getIdentifierType() ===
+							identifierType ===
 							IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE
 						) {
 							label = `${name} (ERC: ${externalReferenceCode})`;
@@ -193,7 +194,7 @@ function CategorySelectorInput({
 			.finally(() => {
 				if (
 					typeof toNumber(inputValue) === 'number' &&
-					_getIdentifierType() === IDENTIFIER_TYPES.ID
+					identifierType === IDENTIFIER_TYPES.ID
 				) {
 
 					// If inputValue is a number, check if it is associated to a
@@ -291,7 +292,7 @@ function CategorySelectorInput({
 		if (newValue.trim()) {
 			handleSetMatchingCategoriesDebounced(newValue.trim(), categoryTree);
 
-			if (_getIdentifierType() === IDENTIFIER_TYPES.ID) {
+			if (identifierType === IDENTIFIER_TYPES.ID) {
 				const newValueNumber = toNumber(newValue);
 
 				setFieldValue(
@@ -310,7 +311,7 @@ function CategorySelectorInput({
 	};
 
 	const _handleSingleItemChange = (item) => {
-		if (_getIdentifierType() === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
+		if (identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
 			setFieldValue(name, item.value);
 			setInputValue(item.value);
 		}
@@ -333,7 +334,7 @@ function CategorySelectorInput({
 	};
 
 	const _handleMultiItemsChange = (items) => {
-		if (_getIdentifierType() === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
+		if (identifierType === IDENTIFIER_TYPES.EXTERNAL_REFERENCE_CODE) {
 			setFieldValue(name, _filterMultiItemsByERC(items));
 		}
 		else {
@@ -619,7 +620,7 @@ function CategorySelectorInput({
 
 			<ClayInput.GroupItem shrink>
 				<CategorySelectorModal
-					identifierType={_getIdentifierType()}
+					identifierType={identifierType}
 					multiple={multiple}
 					onChangeTree={setCategoryTree}
 					onChangeValue={_handleFieldValueChange}

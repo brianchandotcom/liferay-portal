@@ -8,6 +8,7 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
+import InfoBoxModalAddressInput from './info_box/modal/InfoBoxModalAddressInput';
 import InfoBoxModalDateInput from './info_box/modal/InfoBoxModalDateInput';
 import InfoBoxModalPaymentMethodInput from './info_box/modal/InfoBoxModalPaymentMethodInput';
 import InfoBoxModalShippingMethodInput from './info_box/modal/InfoBoxModalShippingMethodInput';
@@ -16,6 +17,10 @@ import InfoBoxModalTextInput from './info_box/modal/InfoBoxModalTextInput';
 const getInputRendered = (field, fieldValueType) => {
 	if (fieldValueType === 'date') {
 		return InfoBoxModalDateInput;
+	}
+
+	if (field === 'billingAddress' || field === 'shippingAddress') {
+		return InfoBoxModalAddressInput;
 	}
 
 	if (field === 'paymentMethod') {
@@ -41,10 +46,12 @@ const InfoBoxModal = ({
 	onOpenChange,
 	open,
 	orderId,
+	setHandleSubmit,
 	setInputValue,
 	setParseRequest,
 	setParseResponse,
 	spritemap,
+	submitOrder,
 }) => {
 	const [isValid, setIsValid] = useState(true);
 	const InputRenderer = getInputRendered(field, fieldValueType);
@@ -65,14 +72,17 @@ const InfoBoxModal = ({
 							<ClayForm.Group>
 								<InputRenderer
 									additionalProps={additionalProps}
+									field={field}
 									inputValue={inputValue}
 									label={label}
 									orderId={orderId}
+									setHandleSubmit={setHandleSubmit}
 									setInputValue={setInputValue}
 									setIsValid={setIsValid}
 									setParseRequest={setParseRequest}
 									setParseResponse={setParseResponse}
 									spritemap={spritemap}
+									submitOrder={submitOrder}
 								/>
 							</ClayForm.Group>
 						</ClayModal.Body>

@@ -1,0 +1,58 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {isObject} from 'frontend-js-web';
+import React from 'react';
+
+const EDITABLE_FIELDS = [
+	'billingAddress',
+	'paymentMethod',
+	'requestedDeliveryDate',
+	'shippingAddress',
+	'shippingMethod',
+];
+
+export function formatValue(value, type) {
+	if (type === 'address' && value) {
+		try {
+			const address = isObject(value)
+				? value
+				: JSON.parse(Liferay.Util.unescapeHTML(value));
+
+			return (
+				<>
+					<p className="mb-1">{address.name}</p>
+
+					<p className="mb-1">{`${address.street1}, ${address.zip}, ${address.city}`}</p>
+
+					<p>{`${address.region ? `${address.region}, ` : ''}${address.country}`}</p>
+				</>
+			);
+		}
+		catch (error) {
+			console.error(error);
+
+			return null;
+		}
+	}
+	else if (type === 'date' && value) {
+		const date = new Intl.DateTimeFormat(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			{dateStyle: 'short'}
+		).format(new Date(value));
+
+		return <p>{date}</p>;
+	}
+
+	return <p>{value}</p>;
+}
+
+export function isEditable(field, isOpen) {
+	if (EDITABLE_FIELDS.includes(field) && !isOpen) {
+		return false;
+	}
+
+	return true;
+}

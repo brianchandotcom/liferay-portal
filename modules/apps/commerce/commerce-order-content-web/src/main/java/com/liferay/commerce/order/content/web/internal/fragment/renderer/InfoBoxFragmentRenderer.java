@@ -6,6 +6,9 @@
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingEngine;
@@ -37,7 +40,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -75,6 +81,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alessio Antonio Rendina
@@ -204,9 +212,15 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				_servletContext.getRequestDispatcher(
 					"/fragment/renderer/info_box/page.jsp");
 
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:additionalProps",
-				_getAdditionalProps(commerceOrder, field));
+				_getAdditionalProps(
+					commerceOrder, field, httpServletRequest,
+					permissionChecker));
+
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:commerceOrderId",
 				commerceOrder.getCommerceOrderId());
@@ -220,8 +234,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:hasPermission",
 				_commerceOrderModelResourcePermission.contains(
-					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
-					ActionKeys.UPDATE));
+					permissionChecker, commerceOrder, ActionKeys.UPDATE));
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -264,10 +277,28 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Map<String, Object> _getAdditionalProps(
-			CommerceOrder commerceOrder, String field)
+			CommerceOrder commerceOrder, String field,
+			HttpServletRequest httpServletRequest,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (field.equals("paymentMethod")) {
+		if (field.equals("billingAddress")) {
+			return HashMapBuilder.<String, Object>put(
+				"hasManageAddressesPermission",
+				() -> {
+					CommerceContext commerceContext =
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT);
+
+					return _accountEntryModelResourcePermission.contains(
+						permissionChecker, commerceContext.getAccountEntry(),
+						"MANAGE_ADDRESSES");
+				}
+			).put(
+				"value", commerceOrder.getBillingAddressId()
+			).build();
+		}
+		else if (field.equals("paymentMethod")) {
 			CommercePaymentMethod commercePaymentMethod =
 				_commercePaymentMethodRegistry.getCommercePaymentMethod(
 					commerceOrder.getCommercePaymentMethodKey());
@@ -290,6 +321,22 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			}
 
 			return Collections.emptyMap();
+		}
+		else if (field.equals("shippingAddress")) {
+			return HashMapBuilder.<String, Object>put(
+				"hasManageAddressesPermission",
+				() -> {
+					CommerceContext commerceContext =
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT);
+
+					return _accountEntryModelResourcePermission.contains(
+						permissionChecker, commerceContext.getAccountEntry(),
+						"MANAGE_ADDRESSES");
+				}
+			).put(
+				"value", commerceOrder.getShippingAddressId()
+			).build();
 		}
 		else if (field.equals("shippingMethod")) {
 			CommerceShippingMethod commerceShippingMethod =
@@ -317,6 +364,37 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		return Collections.emptyMap();
 	}
 
+	private String _getAddress(CommerceAddress commerceAddress, Locale locale)
+		throws PortalException {
+
+		if (commerceAddress == null) {
+			return StringPool.BLANK;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		Country country = commerceAddress.getCountry();
+		Region region = commerceAddress.getRegion();
+
+		jsonObject.put(
+			"city", commerceAddress.getCity()
+		).put(
+			"country", country.getName(locale)
+		).put(
+			"name", commerceAddress.getName()
+		).put(
+			"region",
+			(region == null) ? StringPool.BLANK :
+				region.getTitle(_language.getLanguageId(locale))
+		).put(
+			"street1", commerceAddress.getStreet1()
+		).put(
+			"zip", commerceAddress.getZip()
+		);
+
+		return jsonObject.toString();
+	}
+
 	private String _getConfigurationValue(
 		FragmentRendererContext fragmentRendererContext,
 		FragmentEntryLink fragmentEntryLink, String name) {
@@ -329,7 +407,10 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getEditableFieldValueType(String field) {
-		if (field.equals("requestedDeliveryDate")) {
+		if (field.equals("billingAddress") || field.equals("shippingAddress")) {
+			return "address";
+		}
+		else if (field.equals("requestedDeliveryDate")) {
 			return "date";
 		}
 
@@ -395,6 +476,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				accountEntry.getName(), StringPool.NEW_LINE, StringPool.POUND,
 				accountEntry.getAccountEntryId());
 		}
+		else if (field.equals("billingAddress")) {
+			return _getAddress(commerceOrder.getBillingAddress(), locale);
+		}
 		else if (field.equals("channelName")) {
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
@@ -449,7 +533,13 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				return StringPool.BLANK;
 			}
 
-			return String.valueOf(commerceOrder.getRequestedDeliveryDate());
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd", locale);
+
+			return dateFormat.format(commerceOrder.getOrderDate());
+		}
+		else if (field.equals("shippingAddress")) {
+			return _getAddress(commerceOrder.getShippingAddress(), locale);
 		}
 		else if (field.equals("shippingMethod")) {
 			CommerceShippingMethod commerceShippingMethod =
@@ -522,6 +612,14 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InfoBoxFragmentRenderer.class);
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

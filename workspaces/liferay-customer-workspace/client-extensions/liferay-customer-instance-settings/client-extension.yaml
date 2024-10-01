@@ -1,0 +1,5 @@
+liferay-customer-instance-settings-a1u6w3:
+    name: Liferay Customer Instance Settings Fragment Service
+    pid: com.liferay.fragment.configuration.FragmentServiceConfiguration
+    propagateChanges: true
+    type: instanceSettings

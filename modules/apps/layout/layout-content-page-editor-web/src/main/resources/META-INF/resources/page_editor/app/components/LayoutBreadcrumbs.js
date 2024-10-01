@@ -191,10 +191,6 @@ function useEllipsisBuffer(breacrumbItems, containerRef) {
 	const [ellipsisBuffer, setEllipsisBuffer] = useState(0);
 
 	useEffect(() => {
-		setEllipsisBuffer(0);
-	}, [breacrumbItems]);
-
-	useEffect(() => {
 		const containerElement = containerRef.current;
 
 		if (ellipsisBuffer !== 0) {

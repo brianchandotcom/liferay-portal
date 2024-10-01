@@ -92,7 +92,7 @@ definition {
 
 			AssertTextEquals(
 				key_label = "Custom",
-				locator1 = "ObjectAdmin#OBJECT_STATUS",
+				locator1 = "Picklist#PICKLIST_SOURCE",
 				value1 = "Custom");
 		}
 

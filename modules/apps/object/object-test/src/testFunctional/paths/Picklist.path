@@ -151,6 +151,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>PICKLIST_SOURCE</td>
+		<td>//*[contains(@class, 'dnd-tr')][contains(.,'${key_label}')] //*[contains(@class,'system')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>IMPORT_PICKLIST</td>
 		<td>//div[contains(@class, 'dropdown')]//button//*[name()='svg'][contains(@class,'download')]</td>
 		<td></td>

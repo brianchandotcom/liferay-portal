@@ -13,7 +13,8 @@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration" %><%@
@@ -144,7 +145,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 	module="{FacetUtil} from portal-search-web"
 />
 
-<c:if test='<%= aggregationType.equals("dateRange") || aggregationType.equals("range") %>'>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-153839") && customFacetDisplayContext.isShowInputRange() && (aggregationType.equals("dateRange") || aggregationType.equals("range")) %>'>
 	<aui:script use="liferay-search-custom-range-facet">
 		new Liferay.Search.CustomRangeFacet({
 			aggregationType: '<%= customFacetDisplayContext.getAggregationType() %>',

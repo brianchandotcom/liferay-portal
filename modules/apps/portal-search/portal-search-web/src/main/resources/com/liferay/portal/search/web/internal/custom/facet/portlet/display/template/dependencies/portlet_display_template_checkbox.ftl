@@ -61,120 +61,122 @@
 				</#list>
 			</#if>
 
-			<#if (customFacetDisplayContext.getAggregationType() == "range") || (customFacetDisplayContext.getAggregationType() == "dateRange")>
-				<li class="facet-value">
-					<div class="custom-checkbox custom-control">
-						<label class="facet-checkbox-label" for="${namespace}${customRangeBucketDisplayContext.getBucketText()}">
-							<input
-								${(customRangeBucketDisplayContext.isSelected())?then("checked", "")}
-								class="custom-control-input facet-term"
-								data-term-id="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}"
-								disabled
-								id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
-								name="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
-								onChange='Liferay.Search.FacetUtil.changeSelection(event);'
-								type="checkbox"
-							/>
+			<#if customFacetDisplayContext.isShowInputRange()>
+				<#if (customFacetDisplayContext.getAggregationType() == "range") || (customFacetDisplayContext.getAggregationType() == "dateRange")>
+					<li class="facet-value">
+						<div class="custom-checkbox custom-control">
+							<label class="facet-checkbox-label" for="${namespace}${customRangeBucketDisplayContext.getBucketText()}">
+								<input
+									${(customRangeBucketDisplayContext.isSelected())?then("checked", "")}
+									class="custom-control-input facet-term"
+									data-term-id="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}"
+									disabled
+									id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
+									name="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
+									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+									type="checkbox"
+								/>
 
-							<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
-								<span class="custom-control-label-text">
-									<#if customRangeBucketDisplayContext.isSelected()>
-										<strong><@liferay_ui["message"] key="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}" /></strong>
-									<#else>
-										<@liferay_ui["message"] key="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}" />
-									</#if>
+								<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
+									<span class="custom-control-label-text">
+										<#if customRangeBucketDisplayContext.isSelected()>
+											<strong><@liferay_ui["message"] key="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}" /></strong>
+										<#else>
+											<@liferay_ui["message"] key="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}" />
+										</#if>
+									</span>
 								</span>
-							</span>
 
-							<#if customRangeBucketDisplayContext.isSelected()>
-								<small class="term-count">
-									(${customRangeBucketDisplayContext.getFrequency()})
-								</small>
-							</#if>
-						</label>
+								<#if customRangeBucketDisplayContext.isSelected()>
+									<small class="term-count">
+										(${customRangeBucketDisplayContext.getFrequency()})
+									</small>
+								</#if>
+							</label>
+						</div>
+					</li>
+				</#if>
+
+				<#if customFacetDisplayContext.getAggregationType() == "range">
+					<div class="${(!customRangeBucketDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
+						<div class="col-md-6" id="${namespace}customRangeFrom">
+							<@liferay_aui["field-wrapper"] label="from">
+								<input
+									class="form-control"
+									id="${namespace + 'fromInput'}"
+									name="fromInput"
+									value=""
+								/>
+							</@>
+						</div>
+
+						<div class="col-md-6" id="${namespace}customRangeTo">
+							<@liferay_aui["field-wrapper"] label="to">
+								<input
+									class="form-control"
+									id="${namespace + 'toInput'}"
+									name="toInput"
+									value=""
+								/>
+							</@>
+						</div>
+
+						<@clay["button"]
+							cssClass="date-facet-custom-range-filter-button"
+							displayType="secondary"
+							id="${namespace + 'searchCustomRangeButton'}"
+							label="search"
+							name="${namespace + 'searchCustomRangeButton'}"
+						/>
 					</div>
-				</li>
-			</#if>
+				</#if>
 
-			<#if customFacetDisplayContext.getAggregationType() == "range">
-				<div class="${(!customRangeBucketDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
-					<div class="col-md-6" id="${namespace}customRangeFrom">
-						<@liferay_aui["field-wrapper"] label="from">
-							<input
-								class="form-control"
-								id="${namespace + 'fromInput'}"
-								name="fromInput"
-								value=""
-							/>
-						</@>
+				<#if customFacetDisplayContext.getAggregationType() == "dateRange">
+					<div class="${(!customFacetCalendarDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
+						<div class="col-md-6" id="${namespace}customRangeFrom">
+							<@liferay_aui["field-wrapper"] label="from">
+								<@liferay_ui["input-date"]
+									cssClass="date-facet-custom-range-input-date-from"
+									dayParam="fromDay"
+									dayValue=customFacetCalendarDisplayContext.getFromDayValue()
+									disabled=false
+									firstDayOfWeek=customFacetCalendarDisplayContext.getFromFirstDayOfWeek()
+									monthParam="fromMonth"
+									monthValue=customFacetCalendarDisplayContext.getFromMonthValue()
+									name="fromInput"
+									yearParam="fromYear"
+									yearValue=customFacetCalendarDisplayContext.getFromYearValue()
+								/>
+							</@>
+						</div>
+
+						<div class="col-md-6" id="${namespace}customRangeTo">
+							<@liferay_aui["field-wrapper"] label="to">
+								<@liferay_ui["input-date"]
+									cssClass="date-facet-custom-range-input-date-to"
+									dayParam="toDay"
+									dayValue=customFacetCalendarDisplayContext.getToDayValue()
+									disabled=false
+									firstDayOfWeek=customFacetCalendarDisplayContext.getToFirstDayOfWeek()
+									monthParam="toMonth"
+									monthValue=customFacetCalendarDisplayContext.getToMonthValue()
+									name="toInput"
+									yearParam="toYear"
+									yearValue=customFacetCalendarDisplayContext.getToYearValue()
+								/>
+							</@>
+						</div>
+
+						<@clay["button"]
+							cssClass="date-facet-custom-range-filter-button"
+							disabled=customFacetCalendarDisplayContext.isRangeBackwards()
+							displayType="secondary"
+							id="${namespace + 'searchCustomRangeButton'}"
+							label="search"
+							name="${namespace + 'searchCustomRangeButton'}"
+						/>
 					</div>
-
-					<div class="col-md-6" id="${namespace}customRangeTo">
-						<@liferay_aui["field-wrapper"] label="to">
-							<input
-								class="form-control"
-								id="${namespace + 'toInput'}"
-								name="toInput"
-								value=""
-							/>
-						</@>
-					</div>
-
-					<@clay["button"]
-						cssClass="date-facet-custom-range-filter-button"
-						displayType="secondary"
-						id="${namespace + 'searchCustomRangeButton'}"
-						label="search"
-						name="${namespace + 'searchCustomRangeButton'}"
-					/>
-				</div>
-			</#if>
-
-			<#if customFacetDisplayContext.getAggregationType() == "dateRange">
-				<div class="${(!customFacetCalendarDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
-					<div class="col-md-6" id="${namespace}customRangeFrom">
-						<@liferay_aui["field-wrapper"] label="from">
-							<@liferay_ui["input-date"]
-								cssClass="date-facet-custom-range-input-date-from"
-								dayParam="fromDay"
-								dayValue=customFacetCalendarDisplayContext.getFromDayValue()
-								disabled=false
-								firstDayOfWeek=customFacetCalendarDisplayContext.getFromFirstDayOfWeek()
-								monthParam="fromMonth"
-								monthValue=customFacetCalendarDisplayContext.getFromMonthValue()
-								name="fromInput"
-								yearParam="fromYear"
-								yearValue=customFacetCalendarDisplayContext.getFromYearValue()
-							/>
-						</@>
-					</div>
-
-					<div class="col-md-6" id="${namespace}customRangeTo">
-						<@liferay_aui["field-wrapper"] label="to">
-							<@liferay_ui["input-date"]
-								cssClass="date-facet-custom-range-input-date-to"
-								dayParam="toDay"
-								dayValue=customFacetCalendarDisplayContext.getToDayValue()
-								disabled=false
-								firstDayOfWeek=customFacetCalendarDisplayContext.getToFirstDayOfWeek()
-								monthParam="toMonth"
-								monthValue=customFacetCalendarDisplayContext.getToMonthValue()
-								name="toInput"
-								yearParam="toYear"
-								yearValue=customFacetCalendarDisplayContext.getToYearValue()
-							/>
-						</@>
-					</div>
-
-					<@clay["button"]
-						cssClass="date-facet-custom-range-filter-button"
-						disabled=customFacetCalendarDisplayContext.isRangeBackwards()
-						displayType="secondary"
-						id="${namespace + 'searchCustomRangeButton'}"
-						label="search"
-						name="${namespace + 'searchCustomRangeButton'}"
-					/>
-				</div>
+				</#if>
 			</#if>
 		</ul>
 	</@>

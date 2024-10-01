@@ -269,6 +269,8 @@ components:
                 customFields:
                     additionalProperties: true
                     type: object
+                deliveryGroup:
+                    type: string
                 errorMessages:
                     items:
                         type: string
@@ -318,6 +320,9 @@ components:
                 replacedSkuId:
                     format: int64
                     type: integer
+                requestedDeliveryDate:
+                    format: date
+                    type: string
                 settings:
                     $ref: "#/components/schemas/Settings"
                 shippingAddress:

@@ -2014,8 +2014,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private ObjectDefinition _updateDescendantNodes(
-			ObjectDefinition objectDefinition1)
+	private void _updateDescendantNodes(ObjectDefinition objectDefinition1)
 		throws PortalException {
 
 		List<ObjectRelationship> objectRelationships =
@@ -2023,7 +2022,7 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition1.getObjectDefinitionId(), true);
 
 		if (objectRelationships.isEmpty()) {
-			return objectDefinition1;
+			return;
 		}
 
 		deployObjectDefinition(objectDefinition1);
@@ -2060,15 +2059,16 @@ public class ObjectDefinitionLocalServiceImpl
 				nodeObjectDefinition.setRootObjectDefinitionId(
 					objectDefinition1.getRootObjectDefinitionId());
 				nodeObjectDefinition.setPortlet(false);
+
+				nodeObjectDefinition = objectDefinitionPersistence.update(
+					nodeObjectDefinition);
+
 				nodeObjectDefinition.setPreviousRESTContextPath(
 					previousRESTContextPath);
 
-				deployObjectDefinition(
-					objectDefinitionPersistence.update(nodeObjectDefinition));
+				deployObjectDefinition(nodeObjectDefinition);
 			}
 		}
-
-		return objectDefinition1;
 	}
 
 	private ObjectDefinition _updateNode(ObjectDefinition objectDefinition2)
@@ -2086,6 +2086,8 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
+		String previousRESTContextPath = objectDefinition2.getRESTContextPath();
+
 		if (objectDefinition1.isApproved()) {
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition1.getRootObjectDefinitionId());
@@ -2095,7 +2097,12 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition2.getObjectDefinitionId());
 		}
 
-		return objectDefinitionPersistence.update(objectDefinition2);
+		objectDefinition2 = objectDefinitionPersistence.update(
+			objectDefinition2);
+
+		objectDefinition2.setPreviousRESTContextPath(previousRESTContextPath);
+
+		return objectDefinition2;
 	}
 
 	private ObjectDefinition _updateObjectDefinition(

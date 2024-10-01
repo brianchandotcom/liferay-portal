@@ -470,15 +470,16 @@ public class DDMIndexerImplTest {
 
 		HtmlParser htmlParser = Mockito.mock(HtmlParser.class);
 
-		String bigString = RandomTestUtil.randomString(10000);
-
-		String bigStringWithHTML = "<h1>" + bigString + "</h1>";
-		String bigStringTruncated = bigString.substring(0, 255);
+		Mockito.when(
+			htmlParser.extractText("<h1>able</h1>")
+		).thenReturn(
+			"able"
+		);
 
 		Mockito.when(
-			htmlParser.extractText(bigStringWithHTML)
+			htmlParser.extractText("<h1>baker</h1>")
 		).thenReturn(
-			bigString
+			"baker"
 		);
 
 		ReflectionTestUtil.setFieldValue(ddmIndexer, "_htmlParser", htmlParser);
@@ -499,17 +500,69 @@ public class DDMIndexerImplTest {
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						bigStringWithHTML, LocaleUtil.US))));
+						"<h1>able</h1>", LocaleUtil.US)),
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"<h1>baker</h1>", LocaleUtil.US))));
 
-		Assert.assertEquals(
-			bigStringTruncated,
-			document.get(
+		Assert.assertArrayEquals(
+			new String[] {"able", "baker"},
+			document.getValues(
 				StringBundler.concat(
 					"ddm__text__", ddmStructure.getStructureId(), "__",
 					_FIELD_NAME, "_en_US")));
+		Assert.assertArrayEquals(
+			new String[] {"able", "baker"},
+			document.getValues(
+				StringBundler.concat(
+					"ddm__text__", ddmStructure.getStructureId(), "__",
+					_FIELD_NAME, "_en_US_String_sortable")));
+
+		String value = RandomTestUtil.randomString(10000);
+
+		String valueHTML = "<h1>" + value + "</h1>";
+
+		Mockito.when(
+			htmlParser.extractText(valueHTML)
+		).thenReturn(
+			value
+		);
+
+		ddmIndexer.addAttributes(
+			document, ddmStructure,
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						valueHTML, LocaleUtil.US)),
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						valueHTML, LocaleUtil.US))));
+
+		Assert.assertArrayEquals(
+			new String[] {value, value},
+			document.getValues(
+				StringBundler.concat(
+					"ddm__text__", ddmStructure.getStructureId(), "__",
+					_FIELD_NAME, "_en_US")));
+
+		String truncatedValue = value.substring(
+			0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
+
+		Assert.assertArrayEquals(
+			new String[] {truncatedValue, truncatedValue},
+			document.getValues(
+				StringBundler.concat(
+					"ddm__text__", ddmStructure.getStructureId(), "__",
+					_FIELD_NAME, "_en_US_String_sortable")));
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();
+
+	private static final int _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = 255;
 
 	private static final DDMFormDeserializer _ddmFormDeserializer =
 		new DDMFormJSONDeserializer();

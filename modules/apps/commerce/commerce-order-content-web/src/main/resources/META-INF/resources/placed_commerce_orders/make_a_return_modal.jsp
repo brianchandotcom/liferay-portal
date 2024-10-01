@@ -7,47 +7,19 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long commerceReturnId = ParamUtil.getLong(request, "commerceReturnId");
-%>
+<aui:form method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="" />
 
-<c:choose>
-	<c:when test="<%= commerceReturnId > 0 %>">
-		<commerce-ui:modal-content
-			title='<%= LanguageUtil.get(request, "select-returnable-items") %>'
-		>
-			<aui:form method="post" name="fm">
-				<aui:input name="redirect" type="hidden" value="" />
-
-				<frontend-data-set:headless-display
-					additionalProps="<%= commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams() %>"
-					apiURL="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsAPIURL() %>"
-					bulkActionDropdownItems="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsBulkActionDropdownItems() %>"
-					id="<%= CommerceOrderFDSNames.RETURNABLE_ORDER_ITEMS %>"
-					propsTransformer="{returnableOrderItemsPropsTransformer} from commerce-order-content-web"
-					selectedItems="<%= commerceOrderContentDisplayContext.getReturnableSelectedItems() %>"
-					selectedItemsKey="id"
-					selectionType="multiple"
-					style="fluid"
-				/>
-			</aui:form>
-		</commerce-ui:modal-content>
-	</c:when>
-	<c:otherwise>
-		<aui:form method="post" name="fm">
-			<aui:input name="redirect" type="hidden" value="" />
-
-			<frontend-data-set:headless-display
-				additionalProps="<%= commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams() %>"
-				apiURL="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsAPIURL() %>"
-				bulkActionDropdownItems="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsBulkActionDropdownItems() %>"
-				id="<%= CommerceOrderFDSNames.RETURNABLE_ORDER_ITEMS %>"
-				propsTransformer="{returnableOrderItemsPropsTransformer} from commerce-order-content-web"
-				selectedItems="<%= commerceOrderContentDisplayContext.getReturnableSelectedItems() %>"
-				selectedItemsKey="id"
-				selectionType="multiple"
-				style="fluid"
-			/>
-		</aui:form>
-	</c:otherwise>
-</c:choose>
+	<frontend-data-set:headless-display
+		additionalProps="<%= commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams() %>"
+		apiURL="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsAPIURL() %>"
+		bulkActionDropdownItems="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsBulkActionDropdownItems() %>"
+		id="<%= CommerceOrderFDSNames.RETURNABLE_ORDER_ITEMS %>"
+		propsTransformer="{returnableOrderItemsPropsTransformer} from commerce-order-content-web"
+		selectedItems="<%= commerceOrderContentDisplayContext.getReturnableSelectedItems() %>"
+		selectedItemsKey="id"
+		selectionType="multiple"
+		showBulkActionsManagementBarActions="<%= false %>"
+		style="fluid"
+	/>
+</aui:form>

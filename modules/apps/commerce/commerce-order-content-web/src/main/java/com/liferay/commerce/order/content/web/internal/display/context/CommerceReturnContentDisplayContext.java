@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,6 +79,7 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -339,30 +341,19 @@ public class CommerceReturnContentDisplayContext {
 				commerceReturn.getReturnStatus(),
 				CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
 
+			LiferayPortletResponse liferayPortletResponse =
+				_cpRequestHelper.getLiferayPortletResponse();
+
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(
-						PortletURLBuilder.create(
-							PortletProviderUtil.getPortletURL(
-								_cpRequestHelper.getRequest(),
-								CommerceOrder.class.getName(),
-								PortletProvider.Action.VIEW)
-						).setMVCRenderCommandName(
-							"/commerce_order_content" +
-								"/view_returnable_commerce_order_items"
-						).setParameter(
-							"commerceOrderId", getCommerceOrderId()
-						).setParameter(
-							"commerceOrderItemIds", _getCommerceOrderItemIds()
-						).setParameter(
-							"commerceReturnId", commerceReturn.getId()
-						).setWindowState(
-							LiferayWindowState.POP_UP
-						).buildPortletURL());
+						liferayPortletResponse.getNamespace() +
+							"editCommerceReturnableItems");
+
 					dropdownItem.setLabel(
 						_language.get(
 							_cpRequestHelper.getRequest(), "add-return-item"));
-					dropdownItem.setTarget("modal-lg");
+					dropdownItem.setTarget("event");
 				});
 		}
 
@@ -595,6 +586,53 @@ public class CommerceReturnContentDisplayContext {
 		return _getTotalAmount();
 	}
 
+	public HashMap<String, Object> getReturnableOrderItemsContextParams() {
+		try {
+			CommerceReturn commerceReturn = getCommerceReturn();
+
+			if (commerceReturn == null) {
+				return new HashMap<>();
+			}
+
+			return HashMapBuilder.<String, Object>put(
+				"accountEntryId", commerceReturn.getAccountId()
+			).put(
+				"channelGroupId", commerceReturn.getChannelGroupId()
+			).put(
+				"channelId", commerceReturn.getChannelId()
+			).put(
+				"channelName", commerceReturn.getChannelName()
+			).put(
+				"commerceOrderId", commerceReturn.getOrderId()
+			).put(
+				"commerceOrderItemIds",
+				ParamUtil.getLongValues(
+					_cpRequestHelper.getRequest(), "commerceOrderItemIds")
+			).put(
+				"commerceReturnId",
+				ParamUtil.getLong(
+					_cpRequestHelper.getRequest(), "commerceReturnId")
+			).put(
+				"redirect",
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						_cpRequestHelper.getRequest(),
+						CommerceReturn.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setMVCRenderCommandName(
+					"/commerce_return_content/view_commerce_return"
+				).setParameter(
+					"commerceReturnId", ""
+				).buildString()
+			).build();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return new HashMap<>();
+		}
+	}
+
 	public String getReturnItemsAPIURL() {
 		long commerceReturnId = getCommerceReturnId();
 
@@ -724,6 +762,32 @@ public class CommerceReturnContentDisplayContext {
 			_cpRequestHelper.getRequest(),
 			(requestedItems == 1) ? "x-item" : "x-items", requestedItems,
 			false);
+	}
+
+	public String getViewReturnableCommerceOrderItemsURL()
+		throws PortalException {
+
+		CommerceReturn commerceReturn = getCommerceReturn();
+
+		if (commerceReturn == null) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_cpRequestHelper.getRequest(), CommerceOrder.class.getName(),
+				PortletProvider.Action.VIEW)
+		).setMVCRenderCommandName(
+			"/commerce_order_content/view_returnable_commerce_order_items"
+		).setParameter(
+			"commerceOrderId", getCommerceOrderId()
+		).setParameter(
+			"commerceOrderItemIds", _getCommerceOrderItemIds()
+		).setParameter(
+			"commerceReturnId", commerceReturn.getId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public boolean hasCommentPermission(

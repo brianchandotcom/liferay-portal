@@ -136,6 +136,7 @@ describe('MultiSelectManager', () => {
 			document.body.dispatchEvent(
 				new KeyboardEvent('keydown', {
 					ctrlKey: false,
+					key: 'ArrowUp',
 					shiftKey: true,
 				})
 			);

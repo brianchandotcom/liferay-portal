@@ -6,6 +6,8 @@
 import {useEffect, useRef} from 'react';
 
 import {
+	ARROW_DOWN_KEY_CODE,
+	ARROW_UP_KEY_CODE,
 	CONTROL_KEY_CODE,
 	ENTER_KEY_CODE,
 	ESCAPE_KEY_CODE,
@@ -35,8 +37,9 @@ export default function MultiSelectManager() {
 				activateMultiSelect(MULTI_SELECT_TYPES.range);
 			},
 			disableKeyCombination: (event) => event.key === SHIFT_KEY_CODE,
-			keyCombination: (event) => event.shiftKey,
-			keyboardActivation: () => true,
+			keyCombination: (event) => event.shiftKey && !isCtrlOrMeta(event),
+			keyboardActivation: (event) =>
+				[ARROW_DOWN_KEY_CODE, ARROW_UP_KEY_CODE].includes(event.key),
 		},
 		simpleMultiSelect: {
 			action: () => {

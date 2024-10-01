@@ -27,6 +27,7 @@ patch {
 	fileNames "**/org/apache/jasper/compiler/Jsr199JavaCompiler.java"
 	fileNames "**/org/apache/jasper/compiler/Node.java"
 	fileNames "**/org/apache/jasper/compiler/SmapUtil.java"
+	fileNames "**/org/apache/jasper/compiler/TagLibraryInfoImpl.java"
 	fileNames "**/org/apache/jasper/runtime/JspContextWrapper.java"
 	fileNames "**/org/apache/jasper/runtime/JspWriterImpl.java"
 	fileNames "**/org/apache/jasper/runtime/PageContextImpl.java"

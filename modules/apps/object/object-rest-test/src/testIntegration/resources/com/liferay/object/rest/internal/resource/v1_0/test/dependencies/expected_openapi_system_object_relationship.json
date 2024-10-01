@@ -17,6 +17,11 @@
 						"description": "Information about the relationship relation1ToM can be embedded with \"nestedFields\".",
 						"type": "object"
 					},
+					"relation1ToMERC": {
+						"readOnly": true,
+						"type": "string",
+						"x-parent-map": "properties"
+					},
 					"relationMTo1": {
 						"description": "Information about the relationship relationMTo1 can be embedded with \"nestedFields\".",
 						"items": {
@@ -30,7 +35,7 @@
 							"type": "object"
 						},
 						"type": "array"
-					}
+					},
 				},
 				"type": "object",
 				"xml": {

@@ -102,6 +102,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= fragmentEntriesDisplayContext.getCollectionsDropdownItems() %>"
 										propsTransformer="{FragmentCollectionViewDefaultPropsTransformer} from fragment-web"
+										title='<%= LanguageUtil.get(request, "fragment-sets-options") %>'
 									/>
 								</li>
 							</ul>

@@ -22,6 +22,10 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -180,6 +184,47 @@ public class CartItem implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
+
+	@Schema
+	public String getDeliveryGroup() {
+		if (_deliveryGroupSupplier != null) {
+			deliveryGroup = _deliveryGroupSupplier.get();
+
+			_deliveryGroupSupplier = null;
+		}
+
+		return deliveryGroup;
+	}
+
+	public void setDeliveryGroup(String deliveryGroup) {
+		this.deliveryGroup = deliveryGroup;
+
+		_deliveryGroupSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeliveryGroup(
+		UnsafeSupplier<String, Exception> deliveryGroupUnsafeSupplier) {
+
+		_deliveryGroupSupplier = () -> {
+			try {
+				return deliveryGroupUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String deliveryGroup;
+
+	@JsonIgnore
+	private Supplier<String> _deliveryGroupSupplier;
 
 	@Schema
 	public String[] getErrorMessages() {
@@ -720,6 +765,47 @@ public class CartItem implements Serializable {
 	private Supplier<Long> _replacedSkuIdSupplier;
 
 	@Schema
+	public Date getRequestedDeliveryDate() {
+		if (_requestedDeliveryDateSupplier != null) {
+			requestedDeliveryDate = _requestedDeliveryDateSupplier.get();
+
+			_requestedDeliveryDateSupplier = null;
+		}
+
+		return requestedDeliveryDate;
+	}
+
+	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
+		this.requestedDeliveryDate = requestedDeliveryDate;
+
+		_requestedDeliveryDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRequestedDeliveryDate(
+		UnsafeSupplier<Date, Exception> requestedDeliveryDateUnsafeSupplier) {
+
+		_requestedDeliveryDateSupplier = () -> {
+			try {
+				return requestedDeliveryDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date requestedDeliveryDate;
+
+	@JsonIgnore
+	private Supplier<Date> _requestedDeliveryDateSupplier;
+
+	@Schema
 	@Valid
 	public Settings getSettings() {
 		if (_settingsSupplier != null) {
@@ -1162,6 +1248,9 @@ public class CartItem implements Serializable {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		String adaptiveMediaImageHTMLTag = getAdaptiveMediaImageHTMLTag();
 
 		if (adaptiveMediaImageHTMLTag != null) {
@@ -1210,6 +1299,22 @@ public class CartItem implements Serializable {
 			sb.append("\"customFields\": ");
 
 			sb.append(_toJSON(customFields));
+		}
+
+		String deliveryGroup = getDeliveryGroup();
+
+		if (deliveryGroup != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryGroup\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deliveryGroup));
+
+			sb.append("\"");
 		}
 
 		String[] errorMessages = getErrorMessages();
@@ -1401,6 +1506,22 @@ public class CartItem implements Serializable {
 			sb.append("\"replacedSkuId\": ");
 
 			sb.append(replacedSkuId);
+		}
+
+		Date requestedDeliveryDate = getRequestedDeliveryDate();
+
+		if (requestedDeliveryDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"requestedDeliveryDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(requestedDeliveryDate));
+
+			sb.append("\"");
 		}
 
 		Settings settings = getSettings();

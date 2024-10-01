@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * @author Joshua Cords
@@ -17,6 +18,10 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeSXPElement();
+	}
+
+	private void _upgradeSXPElement() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update SXPElement set elementDefinitionJSON = ? where " +
 					"externalReferenceCode = 'LIMIT_SEARCH_TO_THESE_SITES'")) {

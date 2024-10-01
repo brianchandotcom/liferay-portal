@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
-import java.util.Objects;
 
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,15 +62,63 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 						"x" + RandomTestUtil.randomString(), false)),
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectRelationship objectRelationship =
+		ObjectRelationship manyToManyObjectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				objectDefinition1, objectDefinition2,
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
+		ObjectRelationship manyToOneObjectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectRelationship manyToOneObjectRelationship2 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectRelationship oneToManyObjectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition1, objectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
 		Page<Field> page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
 			_getObjectDefinitionInternalClassName(objectDefinition1.getName()),
 			null);
+
+		String manyToOneObjectRelationship1Name =
+			manyToOneObjectRelationship1.getName();
+
+		String manyToOneObjectRelationship1IdFieldName = StringBundler.concat(
+			"r_", manyToOneObjectRelationship1Name, "_",
+			objectDefinition2.getPKObjectFieldName());
+
+		String manyToOneObjectRelationship1ERCFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				ObjectFieldLocalServiceUtil.getObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					manyToOneObjectRelationship1IdFieldName));
+
+		String manyToOneObjectRelationship2Name =
+			manyToOneObjectRelationship2.getName();
+
+		String manyToOneObjectRelationship2IdFieldName = StringBundler.concat(
+			"r_", manyToOneObjectRelationship2Name, "_",
+			objectDefinition2.getPKObjectFieldName());
+
+		String manyToOneObjectRelationship2ERCFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				ObjectFieldLocalServiceUtil.getObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					manyToOneObjectRelationship2IdFieldName));
 
 		assertEqualsIgnoringOrder(
 			ListUtil.fromArray(
@@ -82,152 +128,34 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 				_toField(null, "taxonomyCategoryIds", false, "array", "CSV"),
 				_toField(null, fieldName, false, "string", null),
 				_toField(
-					null, objectRelationship.getName(), false, "array", null)),
+					null, manyToManyObjectRelationship.getName(), false,
+					"array", null),
+				_toField(
+					null, oneToManyObjectRelationship.getName(), false, "array",
+					null),
+				_toField(
+					manyToOneObjectRelationship1Name,
+					manyToOneObjectRelationship1Name, false, "object", null),
+				_toField(
+					manyToOneObjectRelationship1Name,
+					manyToOneObjectRelationship1IdFieldName, false, "integer",
+					null),
+				_toField(
+					manyToOneObjectRelationship1Name,
+					manyToOneObjectRelationship1ERCFieldName, false, "string",
+					null),
+				_toField(
+					manyToOneObjectRelationship2Name,
+					manyToOneObjectRelationship2Name, false, "object", null),
+				_toField(
+					manyToOneObjectRelationship2Name,
+					manyToOneObjectRelationship2IdFieldName, false, "integer",
+					null),
+				_toField(
+					manyToOneObjectRelationship2Name,
+					manyToOneObjectRelationship2ERCFieldName, false, "string",
+					null)),
 			ListUtil.fromCollection(page.getItems()));
-	}
-
-	@Test
-	public void testGetFieldsWithMultipleOneToManyRelationship()
-		throws Exception {
-
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						RandomTestUtil.randomString(),
-						"x" + RandomTestUtil.randomString(), false)),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						RandomTestUtil.randomString(),
-						"x" + RandomTestUtil.randomString(), false)),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectRelationship objectRelationship1 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				objectDefinition1, objectDefinition2,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		ObjectDefinition objectDefinition3 =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						RandomTestUtil.randomString(),
-						"x" + RandomTestUtil.randomString(), false)),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectRelationship objectRelationship2 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				objectDefinition3, objectDefinition2,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		Page<Field> page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
-			_getObjectDefinitionInternalClassName(objectDefinition2.getName()),
-			null);
-
-		String objectRelationship1Name = objectRelationship1.getName();
-
-		String objectRelationship1IdFieldName = StringBundler.concat(
-			"r_", objectRelationship1Name, "_",
-			objectDefinition1.getPKObjectFieldName());
-
-		String objectRelationship2Name = objectRelationship2.getName();
-
-		String objectRelationship2IdFieldName = StringBundler.concat(
-			"r_", objectRelationship2Name, "_",
-			objectDefinition3.getPKObjectFieldName());
-
-		int objectRelationshipFieldsCount = 0;
-
-		for (Field field : page.getItems()) {
-			String anyOfGroup = field.getAnyOfGroup();
-
-			if (Objects.equals(
-					field.getName(), objectRelationship1IdFieldName) ||
-				Objects.equals(field.getName(), objectRelationship1Name)) {
-
-				Assert.assertNotNull(
-					field.getName() + " should not be null", anyOfGroup);
-
-				Assert.assertEquals(objectRelationship1Name, anyOfGroup);
-
-				objectRelationshipFieldsCount++;
-
-				continue;
-			}
-
-			if (Objects.equals(
-					field.getName(), objectRelationship2IdFieldName) ||
-				Objects.equals(field.getName(), objectRelationship2Name)) {
-
-				Assert.assertNotNull(
-					field.getName() + " should not be null", anyOfGroup);
-
-				Assert.assertEquals(objectRelationship2Name, anyOfGroup);
-
-				objectRelationshipFieldsCount++;
-
-				continue;
-			}
-
-			String objectRelationship1ERCFieldName =
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-					ObjectFieldLocalServiceUtil.getObjectField(
-						objectDefinition2.getObjectDefinitionId(),
-						objectRelationship1IdFieldName));
-
-			if (Objects.equals(
-					field.getName(), objectRelationship1ERCFieldName)) {
-
-				Assert.assertNotNull(
-					field.getName() + " should not be null", anyOfGroup);
-
-				Assert.assertEquals(objectRelationship1Name, anyOfGroup);
-
-				objectRelationshipFieldsCount++;
-
-				continue;
-			}
-
-			String objectRelationship2ERCFieldName =
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-					ObjectFieldLocalServiceUtil.getObjectField(
-						objectDefinition2.getObjectDefinitionId(),
-						objectRelationship2IdFieldName));
-
-			if (Objects.equals(
-					field.getName(), objectRelationship2ERCFieldName)) {
-
-				Assert.assertNotNull(
-					field.getName() + " should not be null", anyOfGroup);
-
-				Assert.assertEquals(objectRelationship2Name, anyOfGroup);
-
-				objectRelationshipFieldsCount++;
-			}
-		}
-
-		Assert.assertEquals(
-			"Incorrect number of object relationship fields", 6,
-			objectRelationshipFieldsCount);
 	}
 
 	@Ignore

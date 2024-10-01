@@ -392,6 +392,7 @@
 						"$ref": "#/components/schemas/Object1"
 					},
 					"relationship2ERC": {
+						"readOnly": true,
 						"type": "string",
 						"x-parent-map": "properties"
 					},

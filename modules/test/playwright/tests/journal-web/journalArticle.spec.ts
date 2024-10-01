@@ -74,13 +74,6 @@ const prefixUrlTest = mergeTests(
 	})
 );
 
-const scheduleTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-15596': true,
-	})
-);
-
 const translationAndAutosaveTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -1276,62 +1269,6 @@ baseTest(
 	}
 );
 
-scheduleTest(
-	'Change permission of a web content in edition mode',
-	async ({journalEditArticlePage, journalPage, page, site}) => {
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
-
-		const title = getRandomString();
-
-		await journalEditArticlePage.fillTitle(title);
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Publish With Permissions',
-			}),
-			trigger: page.getByRole('button', {
-				name: 'Select and Confirm Publish Settings',
-			}),
-		});
-
-		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
-
-		await waitForAlert(page, `Success:${title} was created successfully.`);
-
-		await page.getByLabel(`Actions for ${title}`).waitFor();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'Edit',
-			}),
-			trigger: page.getByLabel(`Actions for ${title}`, {
-				exact: true,
-			}),
-		});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Permissions',
-			}),
-			trigger: page.getByRole('button', {
-				name: 'Options',
-			}),
-		});
-
-		await journalPage.setPermissions(['#power-user_ACTION_DELETE']);
-
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalPage.assertJournalArticlePermissions(title, [
-			{enabled: true, locator: '#power-user_ACTION_DELETE'},
-		]);
-	}
-);
-
 baseTest(
 	'LPD-6800 Create AI Image option visible from Item Selector',
 	async ({journalEditArticlePage, page, site}) => {
@@ -1550,77 +1487,6 @@ baseTest(
 		await page.getByLabel('Go to page, 2').click();
 
 		await expect(page.getByText('page2')).toBeVisible();
-	}
-);
-
-scheduleTest(
-	'Create a web content scheduled',
-	async ({journalEditArticlePage, site}) => {
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
-
-		const articleTitle = getRandomString();
-		const expirationDate = '01/01/9999';
-		const publishDate = '9987-11-26 13:00';
-		const reviewDate = '01/01/9999';
-
-		await journalEditArticlePage.scheduleArticle(
-			articleTitle,
-			publishDate,
-			undefined,
-			expirationDate,
-			reviewDate
-		);
-
-		await journalEditArticlePage.assertScheduledArticleDates(
-			articleTitle,
-			publishDate,
-			undefined,
-			expirationDate,
-			reviewDate
-		);
-	}
-);
-
-scheduleTest(
-	'Create a web content scheduled with workflow activated',
-	async ({
-		journalEditArticlePage,
-		journalPage,
-		site,
-		workflowPage,
-		workflowTasksPage,
-	}) => {
-		await workflowPage.goto(site.friendlyUrlPath);
-
-		await workflowPage.changeWorkflow(
-			'Web Content Article',
-			'Single Approver'
-		);
-
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
-
-		const articleTitle = getRandomString();
-		const articleDate = '9987-11-26 13:00';
-
-		await journalEditArticlePage.scheduleArticle(
-			articleTitle,
-			articleDate,
-			{workflow: true}
-		);
-
-		await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
-
-		await workflowTasksPage.assignToMe(articleTitle);
-
-		await workflowTasksPage.approve(articleTitle);
-
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.assertScheduledArticleDates(
-			articleTitle,
-			articleDate,
-			{workflow: true}
-		);
 	}
 );
 

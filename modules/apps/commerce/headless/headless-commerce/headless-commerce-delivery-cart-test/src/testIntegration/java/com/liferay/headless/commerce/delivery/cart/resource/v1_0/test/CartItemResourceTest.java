@@ -306,10 +306,12 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 
 		return new CartItem() {
 			{
+				deliveryGroup = RandomTestUtil.randomString();
 				externalReferenceCode = RandomTestUtil.randomString();
 				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10));
 				replacedSkuExternalReferenceCode =
 					RandomTestUtil.randomString();
+				requestedDeliveryDate = RandomTestUtil.nextDate();
 				shippingAddressExternalReferenceCode =
 					RandomTestUtil.randomString();
 				sku = cpInstance.getSku();

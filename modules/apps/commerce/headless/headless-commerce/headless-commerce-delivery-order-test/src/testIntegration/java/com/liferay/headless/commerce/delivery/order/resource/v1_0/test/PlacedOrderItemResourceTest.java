@@ -389,12 +389,14 @@ public class PlacedOrderItemResourceTest
 
 		return new PlacedOrderItem() {
 			{
+				deliveryGroup = RandomTestUtil.randomString();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				productId = cpDefinition.getCProductId();
 				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 100));
+				requestedDeliveryDate = RandomTestUtil.nextDate();
 				sku = cpInstance.getSku();
 				skuId = cpInstance.getCPInstanceId();
 				subscription = false;

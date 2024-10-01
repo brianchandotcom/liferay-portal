@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_1.UpgradeMessageB
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_1_1.KaleoNotificationUpgradeProcess;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_2_0.KaleoInstanceUpgradeProcess;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v4_0_0.KaleoDefinitionContentUpgradeProcess;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v4_0_1.DDLFormRecordToDDMFormInstanceRecordUpgradeClassNames;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -172,6 +173,10 @@ public class KaleoServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.5.2", "4.0.0", new KaleoDefinitionContentUpgradeProcess());
+
+		registry.register(
+			"4.0.0", "4.0.1",
+			new DDLFormRecordToDDMFormInstanceRecordUpgradeClassNames());
 	}
 
 }

@@ -105,7 +105,7 @@ public class QuestionsConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithInvalidTopicRootId() throws Exception {
-		_testUpgrade(StringPool.BLANK, 1);
+		_testUpgrade(StringPool.BLANK, RandomTestUtil.randomLong());
 	}
 
 	@Test

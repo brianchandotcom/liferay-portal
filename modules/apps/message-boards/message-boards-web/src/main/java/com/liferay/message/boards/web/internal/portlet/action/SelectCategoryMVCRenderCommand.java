@@ -38,30 +38,37 @@ public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		MBCategory category = null;
-		long categoryId = ParamUtil.getLong(renderRequest, "mbCategoryId");
+		MBCategory mbCategory = _getMBCategory(renderRequest);
+
+		if (mbCategory != null) {
+			renderRequest.setAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY, mbCategory);
+		}
+
+		return "/message_boards/select_category.jsp";
+	}
+
+	private MBCategory _getMBCategory(RenderRequest renderRequest) {
+		long mbCategoryId = ParamUtil.getLong(renderRequest, "mbCategoryId");
+
+		if (mbCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			return _mbCategoryLocalService.fetchMBCategory(mbCategoryId);
+		}
+
 		String mbCategoryExternalReferenceCode = ParamUtil.getString(
 			renderRequest, "mbCategoryExternalReferenceCode");
 
-		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			category = _mbCategoryLocalService.fetchMBCategory(categoryId);
-		}
-		else if (!Validator.isBlank(mbCategoryExternalReferenceCode)) {
+		if (!Validator.isBlank(mbCategoryExternalReferenceCode)) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			category =
-				_mbCategoryLocalService.fetchMBCategoryByExternalReferenceCode(
+			return _mbCategoryLocalService.
+				fetchMBCategoryByExternalReferenceCode(
 					mbCategoryExternalReferenceCode,
 					themeDisplay.getScopeGroupId());
 		}
 
-		if (category != null) {
-			renderRequest.setAttribute(
-				WebKeys.MESSAGE_BOARDS_CATEGORY, category);
-		}
-
-		return "/message_boards/select_category.jsp";
+		return null;
 	}
 
 	@Reference

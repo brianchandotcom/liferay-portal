@@ -14,7 +14,7 @@
 	<%
 	QuestionsConfiguration questionsConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(QuestionsConfiguration.class, themeDisplay);
 
-	long categoryId = 0;
+	long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 
 	if (!Validator.isBlank(questionsConfiguration.rootTopicExternalReferenceCode())) {
 		MBCategory mbCategory = MBCategoryLocalServiceUtil.getMBCategoryByExternalReferenceCode(questionsConfiguration.rootTopicExternalReferenceCode(), themeDisplay.getScopeGroupId());

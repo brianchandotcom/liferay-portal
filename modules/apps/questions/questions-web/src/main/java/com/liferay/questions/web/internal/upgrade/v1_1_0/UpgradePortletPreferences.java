@@ -43,29 +43,41 @@ public class UpgradePortletPreferences
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		String value = portletPreferences.getValue("rootTopicId", null);
+		String rootTopicExternalReferenceCode =
+			_getRootTopicExternalReferenceCode(portletPreferences);
 
-		if (value != null) {
-			long rootTopicId = GetterUtil.getLong(value);
-
-			String rootTopicExternalReferenceCode = StringPool.BLANK;
-
-			if (rootTopicId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-				MBCategory mbCategory = _mbCategoryLocalService.fetchMBCategory(
-					rootTopicId);
-
-				if (mbCategory != null) {
-					rootTopicExternalReferenceCode =
-						mbCategory.getExternalReferenceCode();
-				}
-			}
-
+		if (rootTopicExternalReferenceCode != null) {
 			portletPreferences.setValue(
 				"rootTopicExternalReferenceCode",
 				rootTopicExternalReferenceCode);
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	private String _getRootTopicExternalReferenceCode(
+		PortletPreferences portletPreferences) {
+
+		String value = portletPreferences.getValue("rootTopicId", null);
+
+		if (value == null) {
+			return null;
+		}
+
+		long rootTopicId = GetterUtil.getLong(value);
+
+		if (rootTopicId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			return StringPool.BLANK;
+		}
+
+		MBCategory mbCategory = _mbCategoryLocalService.fetchMBCategory(
+			rootTopicId);
+
+		if (mbCategory == null) {
+			return StringPool.BLANK;
+		}
+
+		return mbCategory.getExternalReferenceCode();
 	}
 
 	private final MBCategoryLocalService _mbCategoryLocalService;

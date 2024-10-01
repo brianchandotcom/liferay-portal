@@ -41,30 +41,23 @@ public class QuestionsConfigurationUpgradeProcess extends UpgradeProcess {
 		_updateSystemConfiguration();
 	}
 
-	private Configuration[] _getScopedConfigurations() throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(%s=%s.scoped)", ConfigurationAdmin.SERVICE_FACTORYPID,
-				_CLASS_NAME_QUESTIONS_CONFIGURATION));
+	private String _getRootTopicExternalReferenceCode(
+		Dictionary<String, Object> properties) {
 
-		if (configurations == null) {
-			return new Configuration[0];
+		long rootTopicId = (long)properties.get("rootTopicId");
+
+		if (rootTopicId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			return StringPool.BLANK;
 		}
 
-		return configurations;
-	}
+		MBCategory mbCategory = _mbCategoryLocalService.fetchMBCategory(
+			rootTopicId);
 
-	private Configuration _getSystemConfiguration() throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(%s=%s)", Constants.SERVICE_PID,
-				_CLASS_NAME_QUESTIONS_CONFIGURATION));
-
-		if (configurations == null) {
-			return null;
+		if (mbCategory == null) {
+			return StringPool.BLANK;
 		}
 
-		return configurations[0];
+		return mbCategory.getExternalReferenceCode();
 	}
 
 	private Dictionary<String, Object> _getUpdatedProperties(
@@ -80,27 +73,22 @@ public class QuestionsConfigurationUpgradeProcess extends UpgradeProcess {
 			return null;
 		}
 
-		String rootTopicExternalReferenceCode = StringPool.BLANK;
-		long rootTopicId = (long)properties.get("rootTopicId");
-
-		if (rootTopicId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			MBCategory mbCategory = _mbCategoryLocalService.fetchMBCategory(
-				rootTopicId);
-
-			if (mbCategory != null) {
-				rootTopicExternalReferenceCode =
-					mbCategory.getExternalReferenceCode();
-			}
-		}
-
 		properties.put(
-			"rootTopicExternalReferenceCode", rootTopicExternalReferenceCode);
+			"rootTopicExternalReferenceCode",
+			_getRootTopicExternalReferenceCode(properties));
 
 		return properties;
 	}
 
 	private void _updateCompanyConfigurations() throws Exception {
-		Configuration[] configurations = _getScopedConfigurations();
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(%s=%s.scoped)", ConfigurationAdmin.SERVICE_FACTORYPID,
+				_CLASS_NAME_QUESTIONS_CONFIGURATION));
+
+		if (configurations == null) {
+			return;
+		}
 
 		for (Configuration configuration : configurations) {
 			Dictionary<String, Object> properties = _getUpdatedProperties(
@@ -113,18 +101,27 @@ public class QuestionsConfigurationUpgradeProcess extends UpgradeProcess {
 			long companyId = (long)properties.get(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
 
-			if (companyId != 0) {
-				_configurationProvider.saveCompanyConfiguration(
-					QuestionsConfiguration.class, companyId, properties);
+			if (companyId == 0) {
+				continue;
 			}
+
+			_configurationProvider.saveCompanyConfiguration(
+				QuestionsConfiguration.class, companyId, properties);
 		}
 	}
 
 	private void _updateSystemConfiguration() throws Exception {
-		Configuration configuration = _getSystemConfiguration();
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(%s=%s)", Constants.SERVICE_PID,
+				_CLASS_NAME_QUESTIONS_CONFIGURATION));
+
+		if (configurations == null) {
+			return;
+		}
 
 		Dictionary<String, Object> properties = _getUpdatedProperties(
-			configuration);
+			configurations[0]);
 
 		if (properties == null) {
 			return;

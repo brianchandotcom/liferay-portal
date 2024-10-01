@@ -14,7 +14,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.message.boards.model.MBCategory" %><%@
+<%@ page import="com.liferay.message.boards.constants.MBCategoryConstants" %><%@
+page import="com.liferay.message.boards.model.MBCategory" %><%@
 page import="com.liferay.message.boards.service.MBCategoryLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %><%@

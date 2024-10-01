@@ -4891,7 +4891,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@CTAware(onProduction = true)
 	@Indexable(
-		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		callbackKey = "com.liferay.portal.kernel.model.User#activated",
 		type = IndexableType.REINDEX
 	)
 	@Override
@@ -4904,17 +4904,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@CTAware(onProduction = true)
 	@Indexable(
-		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		callbackKey = "com.liferay.portal.kernel.model.User#activated",
 		type = IndexableType.REINDEX
 	)
 	@Override
 	public User updateLastLogin(User user, String loginIP)
 		throws PortalException {
 
+		Date date = new Date();
+
 		Date lastLoginDate = user.getLoginDate();
 
 		if (lastLoginDate == null) {
-			lastLoginDate = new Date();
+			lastLoginDate = date;
 		}
 
 		String lastLoginIP = user.getLoginIP();
@@ -4924,7 +4926,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		User updatedUser = _updateLastLogin(
-			user, new Date(), loginIP, lastLoginDate, lastLoginIP, 0);
+			user, date, loginIP, lastLoginDate, lastLoginIP, 0);
 
 		if (updatedUser == null) {
 			return userPersistence.findByPrimaryKey(user.getUserId());

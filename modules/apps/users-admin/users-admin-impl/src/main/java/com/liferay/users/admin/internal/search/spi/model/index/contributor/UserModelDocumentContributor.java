@@ -84,7 +84,15 @@ public class UserModelDocumentContributor
 			document.addText("fullName", user.getFullName());
 			document.addKeyword("groupIds", user.getGroupIds());
 			document.addText("jobTitle", user.getJobTitle());
-			document.addDate("lastLoginDate", user.getLastLoginDate());
+
+			boolean activated = false;
+
+			if (user.getLastLoginDate() != null) {
+				activated = true;
+			}
+
+			document.addKeyword("activated", activated);
+
 			document.addText("lastName", user.getLastName());
 			document.addText("middleName", user.getMiddleName());
 			document.addKeyword("organizationIds", organizationIds);

@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
 import com.liferay.portal.search.model.uid.UIDFactory;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -21,10 +23,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	property = "key=com.liferay.portal.kernel.model.User#lastLoginDate",
+	property = "key=com.liferay.portal.kernel.model.User#activated",
 	service = Indexable.Callback.class
 )
-public class UserLastLoginDateCallback implements Indexable.Callback {
+public class UserActivatedCallback implements Indexable.Callback {
 
 	@Override
 	public void reindex(BaseModel<?> baseModel) {
@@ -34,18 +36,15 @@ public class UserLastLoginDateCallback implements Indexable.Callback {
 
 		User user = (User)baseModel;
 
-		Document document = new DocumentImpl();
+		if (Objects.equals(user.getLoginDate(), user.getLastLoginDate())) {
+			Document document = new DocumentImpl();
 
-		document.add(
-			new Field(Field.ENTRY_CLASS_NAME, user.getModelClassName()));
-		document.add(
-			new Field(Field.ENTRY_CLASS_PK, String.valueOf(user.getUserId())));
-		document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
-		document.addKeyword(Field.UID, _uidFactory.getUID(user));
-		document.addDate("lastLoginDate", user.getLastLoginDate());
+			document.addKeyword(Field.UID, _uidFactory.getUID(user));
+			document.addKeyword("activated", true);
 
-		_updateDocumentIndexWriter.updateDocumentPartially(
-			user.getCompanyId(), document, false);
+			_updateDocumentIndexWriter.updateDocumentPartially(
+				user.getCompanyId(), document, false);
+		}
 	}
 
 	@Reference

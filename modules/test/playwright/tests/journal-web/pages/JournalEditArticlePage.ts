@@ -285,7 +285,7 @@ export class JournalEditArticlePage {
 		await this.fillTitle(title);
 
 		if (!(await this.page.getByText('Never Expire').isVisible())) {
-			await this.page.getByRole('link', {name: 'Schedule'}).click();
+			await this.page.getByRole('button', {name: 'Schedule'}).click();
 		}
 
 		if (expirationDate) {

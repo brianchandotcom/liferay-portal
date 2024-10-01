@@ -238,7 +238,8 @@ public class ScimNotificationSchedulerJobConfiguration
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", company.getLocale(), getClass());
 
-		String subject = _language.get(resourceBundle, "scim-email-subject");
+		String subject = _language.get(
+			resourceBundle, "scim-access-token-email-subject");
 
 		String body = _generateBody(strAccessTokenExpirationDate);
 

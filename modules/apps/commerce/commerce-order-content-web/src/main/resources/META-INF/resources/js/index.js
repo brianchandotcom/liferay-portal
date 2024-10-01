@@ -8,6 +8,7 @@ export {default as commerceOrderOrderTypeModal} from './commerceOrderOrderTypeMo
 export {default as commerceReturnItemsPropsTransformer} from './commerceReturnItemsPropsTransformer';
 export {default as commerceReturnPropsTransformer} from './commerceReturnPropsTransformer';
 export {default as editCommerceOrder} from './editCommerceOrder';
+export {default as editCommerceReturnItem} from './editCommerceReturnItem';
 export {default as editCommerceReturn} from './editCommerceReturn';
 export {default as InfoBox} from './InfoBox';
 export {default as newView} from './newView';
@@ -17,5 +18,5 @@ export {default as preview} from './preview';
 export {default as requestQuote} from './requestQuote';
 export {default as returnableOrderItemsPropsTransformer} from './returnableOrderItemsPropsTransformer';
 export {default as StepTracker} from './StepTracker';
-export {default as view} from './view';
 export {default as viewCommerceOrderDetailsCTAs} from './viewCommerceOrderDetailsCTAs';
+export {default as view} from './view';

@@ -504,6 +504,8 @@ if (commerceOrder != null) {
 		HashMapBuilder.<String, Object>put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
+			"returnableOrderItemsContextParams", commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams()
+		).put(
 			"viewReturnableCommerceOrderItemsURL", viewReturnableCommerceOrderItemsURL
 		).build()
 	%>'

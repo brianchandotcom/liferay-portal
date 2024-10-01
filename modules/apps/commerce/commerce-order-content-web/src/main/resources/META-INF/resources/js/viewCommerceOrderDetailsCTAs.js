@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-web';
+import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
+import {createPortletURL, openModal, openToast} from 'frontend-js-web';
 
 function toggleModalTitleTooltip(isShow) {
 	const tooltipElement = document.querySelector(
@@ -13,13 +14,118 @@ function toggleModalTitleTooltip(isShow) {
 	tooltipElement.classList[isShow ? 'add' : 'remove']('show');
 }
 
-export default function ({namespace, viewReturnableCommerceOrderItemsURL}) {
+async function submitReturnableItems(
+	returnableOrderItemsContextParams,
+	selectedReturnableItems
+) {
+	const CommerceReturnResource = CommerceServiceProvider.ReturnAPI();
+
+	const {
+		accountEntryId,
+		channelGroupId,
+		channelId,
+		channelName,
+		commerceOrderId,
+		commerceReturnId,
+	} = returnableOrderItemsContextParams;
+
+	const commerceReturn = {
+		channelGroupId: parseInt(channelGroupId, 10),
+		channelId: parseInt(channelId, 10),
+		channelName,
+		commerceReturnToCommerceReturnItems: selectedReturnableItems.map(
+			({
+				id: commerceOrderItemId,
+				price: {finalPrice: amount},
+				quantity,
+			}) => ({
+				amount,
+				quantity,
+				r_accountToCommerceReturnItems_accountEntryId: parseInt(
+					accountEntryId,
+					10
+				),
+				r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
+					commerceOrderItemId,
+			})
+		),
+		r_accountToCommerceReturns_accountEntryId: parseInt(accountEntryId, 10),
+		r_commerceOrderToCommerceReturns_commerceOrderId: parseInt(
+			commerceOrderId,
+			10
+		),
+	};
+
+	if (parseInt(commerceReturnId, 10)) {
+		return CommerceReturnResource.updateItemById(
+			commerceReturnId,
+			commerceReturn
+		);
+	}
+
+	return CommerceReturnResource.createItem(commerceReturn);
+}
+
+export default function ({
+	namespace,
+	returnableOrderItemsContextParams,
+	viewReturnableCommerceOrderItemsURL,
+}) {
 	const formElement = document[`${namespace}fm`];
 	const cmdInputElement = formElement[`${namespace}cmd`];
 
+	Liferay.on(`${namespace}editCommerceReturnableItems`, () => {
+		window.top[`${namespace}handleCTA`]('makeReturn');
+	});
+
 	Liferay.provide(window, `${namespace}handleCTA`, (cmdValue) => {
 		if (cmdValue === 'makeReturn') {
+			let selectedReturnableItems;
+
+			window.top.Liferay.on(
+				commerceEvents.SELECTED_RETURNABLE_ITEMS,
+				({selectedItems}) => {
+					selectedReturnableItems = selectedItems;
+				}
+			);
+
 			openModal({
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						label: Liferay.Language.get('submit'),
+						onClick: () => {
+							submitReturnableItems(
+								returnableOrderItemsContextParams,
+								selectedReturnableItems
+							)
+								.then((response) => {
+									const portletURL = createPortletURL(
+										returnableOrderItemsContextParams.redirect,
+										{
+											commerceReturnId: response.id,
+										}
+									);
+									window.top.location.href =
+										portletURL.toString();
+								})
+								.catch((error) => {
+									openToast({
+										message:
+											error.message ||
+											Liferay.Language.get(
+												'an-unexpected-error-occurred'
+											),
+										type: 'danger',
+									});
+								});
+						},
+					},
+				],
 				containerProps: {
 					center: true,
 					className: 'commerce-modal',

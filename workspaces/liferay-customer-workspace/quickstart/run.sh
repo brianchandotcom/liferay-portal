@@ -17,23 +17,6 @@ function check_health {
 	check_health
 }
 
-function check_logs {
-	docker logs "${container_id}" 2>&1 | grep --extended-regexp --quiet "${1}"
-
-	if [[ $? -eq 0 ]]
-	then
-		echo "Text found in logs: ${1}"
-
-		return 0
-	fi
-
-	echo "Text not found in logs: ${1}"
-
-	sleep 10
-
-	check_logs "${1}"
-}
-
 function download_hotfix {
 	for file_url in \
 		"https://releases-cdn.liferay.com/dxp/hotfix/2024.q2.7/liferay-dxp-2024.q2.7-hotfix-4.zip" \
@@ -70,17 +53,25 @@ function get_container_id {
 function main {
 	download_hotfix
 
+	pushd .. > /dev/null
+
+	./gradlew clean build
+
+	rm -rf ./bundles
+
+	mkdir bundles
+
+	popd > /dev/null
+
 	docker compose up --detach
 
 	local container_id=$(get_container_id "liferay")
 
 	check_health
 
-	check_logs "Server startup in \[[0-9]+\] milliseconds"
-
 	pushd .. > /dev/null
 
-	./gradlew clean deploy "-Ddeploy.docker.container.id=${container_id}"
+	./gradlew deploy
 
 	popd > /dev/null
 

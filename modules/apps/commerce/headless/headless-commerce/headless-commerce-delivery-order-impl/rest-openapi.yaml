@@ -276,6 +276,9 @@ components:
                     additionalProperties: true
                     readOnly: true
                     type: object
+                deliveryGroup:
+                    readOnly: true
+                    type: string
                 errorMessages:
                     items:
                         type: string
@@ -333,9 +336,21 @@ components:
                 replacedSku:
                     readOnly: true
                     type: string
+                requestedDeliveryDate:
+                    format: date
+                    readOnly: true
+                    type: string
                 settings:
                     $ref: "#/components/schemas/Settings"
                     readOnly: true
+                shippingAddressExternalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
+                shippingAddressId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 sku:
                     readOnly: true
                     type: string

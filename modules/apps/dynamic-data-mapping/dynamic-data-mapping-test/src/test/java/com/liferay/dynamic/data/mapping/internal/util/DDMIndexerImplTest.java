@@ -122,10 +122,11 @@ public class DDMIndexerImplTest {
 		_ddmFixture.setUp();
 		_documentFixture.setUp();
 
+		_ddmIndexer = _createDDMIndexer(false);
+
+		_setUpJSONFactoryUtil();
 		_setUpPortalUtil();
 		_setUpPropsUtil();
-
-		_ddmIndexer = _createDDMIndexer(false);
 	}
 
 	@After
@@ -219,69 +220,48 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testFormWithSelectFieldAndOption() throws JSONException {
+	public void testFormWithSelectField() throws JSONException {
+		Document document = _createDocument();
+
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			"select", "select", DDMFormFieldType.SELECT, "string", true, false,
-			false);
-
-		ddmFormField.setIndexType("keyword");
+			_FIELD_NAME, RandomTestUtil.randomString(), DDMFormFieldType.SELECT,
+			"string", true, false, false);
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-		ddmFormFieldOptions.addOptionLabel("Option 1", LocaleUtil.US, "Test");
+		ddmFormFieldOptions.addOptionLabel(
+			"Option Value", LocaleUtil.US, "Option Label");
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
+		ddmFormField.setIndexType("keyword");
+
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
-
-		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
-
-		Mockito.when(
-			jsonFactory.createJSONArray("[Test]")
-		).thenReturn(
-			JSONFactoryUtil.createJSONArray("[Test]")
-		);
-
-		Mockito.when(
-			jsonFactory.createJSONArray("[test]")
-		).thenReturn(
-			JSONFactoryUtil.createJSONArray("[test]")
-		);
-
-		Mockito.when(
-			jsonFactory.createJSONArray("[Option 1]")
-		).thenReturn(
-			JSONFactoryUtil.createJSONArray("[Option 1]")
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			_ddmIndexer, "_jsonFactory", jsonFactory);
-
-		Document document = _createDocument();
-
 		_ddmIndexer.addAttributes(
-			document, ddmStructure,
+			document, _createDDMStructure(ddmForm),
 			_createDDMFormValues(
 				ddmForm,
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					"select",
+					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						"[Option 1]", LocaleUtil.US))));
+						"[\"Option Value\"]", LocaleUtil.US))));
 
 		FieldValuesAssert.assertFieldValues(
 			HashMapBuilder.put(
-				"ddmFieldArray.ddmFieldValueKeyword_en_US_String", "Test"
+				"ddmFieldArray.ddmFieldValueKeyword_en_US", "Option Value"
+			).put(
+				"ddmFieldArray.ddmFieldValueKeyword_en_US_String",
+				"Option Label"
 			).put(
 				"ddmFieldArray.ddmFieldValueKeyword_en_US_String_sortable",
-				"test"
+				"option label"
 			).build(),
-			"ddmFieldArray.ddmFieldValueKeyword_en_US_String", document,
-			"Test");
+			"ddmFieldArray.ddmFieldValueKeyword_en_US", document,
+			StringPool.BLANK);
 	}
 
 	@Test
@@ -459,6 +439,17 @@ public class DDMIndexerImplTest {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		return simpleDateFormat.format(new Date());
+	}
+
+	private void _setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmIndexer, "_jsonFactory", jsonFactory);
+
+		jsonFactoryUtil.setJSONFactory(jsonFactory);
 	}
 
 	private void _setUpPortalUtil() {

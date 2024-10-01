@@ -723,18 +723,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 			}
 			else if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
 				document.addKeyword(
-					name + "_String",
-					ArrayUtil.toStringArray(
-						_jsonFactory.createJSONArray(
-							String.valueOf(sortableValue))));
+					_getFieldName(name), _toStringArray(sortableValue));
 				document.addKeyword(
 					_getSortableFieldName(name),
-					ArrayUtil.toStringArray(
-						_jsonFactory.createJSONArray(sortableValueString)));
-				document.addKeyword(
-					name,
-					ArrayUtil.toStringArray(
-						_jsonFactory.createJSONArray(valueString)));
+					_toStringArray(sortableValueString));
+				document.addKeyword(name, _toStringArray(valueString));
 			}
 			else {
 				if ((type.equals(DDMFormFieldTypeConstants.DATE) ||
@@ -901,9 +894,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return dateValues.toArray(new Date[0]);
 	}
 
+	private String _getFieldName(String name) {
+		return name + "_String";
+	}
+
 	private String _getSortableFieldName(String name) {
 		return com.liferay.portal.kernel.search.Field.getSortableFieldName(
-			name + "_String");
+			_getFieldName(name));
 	}
 
 	private String _getSortableValue(
@@ -944,6 +941,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return new Fields();
+	}
+
+	private String[] _toStringArray(Object value) throws PortalException {
+		return ArrayUtil.toStringArray(
+			_jsonFactory.createJSONArray(String.valueOf(value)));
 	}
 
 	private static final int _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH =

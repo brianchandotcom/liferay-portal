@@ -143,6 +143,9 @@ public interface ContactsEngineClient {
 	public void disconnectDataSource(FaroProject faroProject, String id)
 		throws FaroEngineClientException;
 
+	public void disconnectDataSources(FaroProject faroProject)
+		throws FaroEngineClientException;
+
 	public <T> T get(
 			FaroProject faroProject, Map<String, String> headers, String path,
 			Map<String, List<String>> queryParameters, Class<T> returnType)

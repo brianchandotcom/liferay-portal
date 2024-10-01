@@ -61,6 +61,9 @@ public interface Rels {
 	public static final String DATA_SOURCE_DISCONNECT =
 		"data-source-disconnect";
 
+	public static final String DATA_SOURCE_DISCONNECT_ALL =
+		"data-source-disconnect-all";
+
 	public static final String DATA_SOURCE_DXP_GROUPS =
 		"data-source-dxp-groups";
 

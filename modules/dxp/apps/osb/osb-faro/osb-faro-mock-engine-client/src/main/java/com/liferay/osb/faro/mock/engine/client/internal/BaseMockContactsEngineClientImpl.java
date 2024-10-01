@@ -269,6 +269,13 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public void disconnectDataSources(FaroProject faroProject)
+		throws FaroEngineClientException {
+
+		contactsEngineClient.disconnectDataSources(faroProject);
+	}
+
+	@Override
 	public <T> T get(
 			FaroProject faroProject, Map<String, String> headers, String path,
 			Map<String, List<String>> queryParameters, Class<T> returnType)

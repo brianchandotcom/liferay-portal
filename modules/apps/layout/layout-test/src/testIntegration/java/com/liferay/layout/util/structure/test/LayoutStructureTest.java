@@ -605,6 +605,30 @@ public class LayoutStructureTest {
 	}
 
 	@Test
+	public void testCopyLayoutStructureItemWithRowStyleLayoutStructureItemAsParent() {
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0, 3);
+
+		layoutStructure.addContainerStyledLayoutStructureItem(
+			rootLayoutStructureItem.getItemId(), 1);
+
+		List<LayoutStructureItem> copiedLayoutStructureItems =
+			layoutStructure.copyLayoutStructureItems(
+				Collections.singletonList(
+					rowStyledLayoutStructureItem.getItemId()),
+				rowStyledLayoutStructureItem.getItemId());
+
+		_assertParentLayoutStructureItem(
+			3, 1, copiedLayoutStructureItems, rootLayoutStructureItem);
+	}
+
+	@Test
 	public void testCopyLayoutStructureItemWithSameItemIdAndParentItemId() {
 		LayoutStructure layoutStructure = new LayoutStructure();
 

@@ -69,9 +69,7 @@ const GlobalFilters = () => {
 		timeFilterItems = [
 			{
 				description: getDateRange(RangeSelectors.Last24Hours),
-				label: Liferay.Util.sub(Liferay.Language.get('last-x-hours'), [
-					RangeSelectors.Last24Hours,
-				]),
+				label: Liferay.Language.get('last-24-hours'),
 				value: RangeSelectors.Last24Hours,
 			},
 			...timeFilterItems,

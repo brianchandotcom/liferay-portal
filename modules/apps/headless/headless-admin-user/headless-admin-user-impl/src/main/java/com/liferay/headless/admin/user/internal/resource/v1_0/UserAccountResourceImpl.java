@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -662,6 +663,17 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
+	public UserAccount patchUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception {
+
+		User user = _userService.getUserByExternalReferenceCode(
+			contextCompany.getCompanyId(), externalReferenceCode);
+
+		return patchUserAccount(user.getUserId(), userAccount);
+	}
+
+	@Override
 	public void
 			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
@@ -786,11 +798,12 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
+	public UserAccount
+			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+				String externalReferenceCode, String emailAddress)
 		throws Exception {
 
-		postAccountUserAccountByEmailAddress(
+		return postAccountUserAccountByEmailAddress(
 			DTOConverterUtil.getModelPrimaryKey(
 				_accountResourceDTOConverter, externalReferenceCode),
 			emailAddress);
@@ -832,14 +845,18 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public void postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] emailAddresses)
+	public Page<UserAccount>
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				String externalReferenceCode, String accountRoleIds,
+				String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : emailAddresses) {
-			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-				externalReferenceCode, emailAddress);
-		}
+		AccountEntry accountEntry =
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return postAccountUserAccountsByEmailAddress(
+			accountEntry.getAccountEntryId(), accountRoleIds, emailAddresses);
 	}
 
 	@Override
@@ -1052,62 +1069,14 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
-		boolean autoPassword = true;
-		String password = userAccount.getPassword();
+		User user = _userService.fetchUserByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
 
-		if (Validator.isNotNull(password)) {
-			autoPassword = false;
-
-			_checkCurrentPassword(
-				_userLocalService.fetchUserByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId()),
-				userAccount.getCurrentPassword());
+		if (user == null) {
+			return postUserAccount(userAccount);
 		}
 
-		ServiceContext serviceContext = _createServiceContext(userAccount);
-
-		User user = _userService.addOrUpdateUser(
-			externalReferenceCode, contextUser.getUserId(),
-			contextCompany.getCompanyId(), autoPassword, password, password,
-			false, userAccount.getAlternateName(),
-			userAccount.getEmailAddress(), _getLocale(userAccount),
-			userAccount.getGivenName(), userAccount.getAdditionalName(),
-			userAccount.getFamilyName(), _getPrefixId(null, userAccount),
-			_getSuffixId(null, userAccount), true,
-			_getBirthdayMonth(Calendar.JANUARY, userAccount),
-			_getBirthdayDay(1, userAccount),
-			_getBirthdayYear(1977, userAccount), userAccount.getJobTitle(),
-			_getAddresses(null, userAccount),
-			_getServiceBuilderEmailAddresses(null, userAccount),
-			_getServiceBuilderPhones(null, userAccount),
-			_getWebsites(null, userAccount), false, serviceContext);
-
-		byte[] portraitBytes = _getPortraitBytes(true, user, userAccount);
-
-		if (ArrayUtil.isNotEmpty(portraitBytes)) {
-			user = _userService.updatePortrait(user.getUserId(), portraitBytes);
-		}
-
-		user = _updateStatus(serviceContext, user, userAccount);
-
-		UserAccountContactInformation userAccountContactInformation =
-			userAccount.getUserAccountContactInformation();
-
-		if (userAccountContactInformation != null) {
-			Contact contact = user.getContact();
-
-			contact.setSmsSn(userAccountContactInformation.getSms());
-			contact.setFacebookSn(userAccountContactInformation.getFacebook());
-			contact.setJabberSn(userAccountContactInformation.getJabber());
-			contact.setSkypeSn(userAccountContactInformation.getSkype());
-			contact.setTwitterSn(userAccountContactInformation.getTwitter());
-
-			_contactLocalService.updateContact(contact);
-
-			user = _userService.getUserById(user.getUserId());
-		}
-
-		return _toUserAccount(user);
+		return putUserAccount(user.getUserId(), userAccount);
 	}
 
 	@Override
@@ -1744,6 +1713,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	)
 	private volatile ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

@@ -7,8 +7,10 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -873,7 +876,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		userAccountResource.
 			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-				_accountEntry.getExternalReferenceCode(),
+				_accountEntry.getExternalReferenceCode(), null,
 				_toEmailAddresses(users));
 
 		for (User user : users) {
@@ -881,6 +884,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
+
+		_testPostAccountUserAccountsByExternalReferenceCodeByEmailAddressWithRoleId();
 	}
 
 	@Override
@@ -1423,6 +1428,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected UserAccount
+			testPatchUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
+	}
+
+	@Override
 	protected UserAccount testPostAccountUserAccount_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {
@@ -1941,6 +1954,46 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		Assert.assertTrue(patchUserAccount.getImageId() > 0);
 	}
 
+	private void _testPostAccountUserAccountsByExternalReferenceCodeByEmailAddressWithRoleId()
+		throws Exception {
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		for (User user : users) {
+			Assert.assertNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null,
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()));
+
+		userAccountResource.
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				_accountEntry.getExternalReferenceCode(),
+				String.valueOf(accountRole.getAccountRoleId()),
+				_toEmailAddresses(users));
+
+		for (User user : users) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+
+			UserGroupRole userGroupRole =
+				_userGroupRoleLocalService.fetchUserGroupRole(
+					user.getUserId(), _accountEntry.getAccountEntryGroupId(),
+					accountRole.getRoleId());
+
+			Assert.assertNotNull(userGroupRole);
+		}
+	}
+
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)
 		throws Exception {
 
@@ -2145,6 +2198,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

@@ -22,5 +22,13 @@ Import-Package:\
 	\
 	!org.zeroturnaround.javarebel,\
 	\
+	jakarta.el;resolution:=optional,\
+	\
+	jakarta.servlet;resolution:=optional,\
+	jakarta.servlet.http;resolution:=optional,\
+	jakarta.servlet.jsp;resolution:=optional,\
+	jakarta.servlet.jsp.el;resolution:=optional,\
+	jakarta.servlet.jsp.tagext;resolution:=optional,\
+	\
 	*
 Web-ContextPath: /document-library-google-docs

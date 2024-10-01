@@ -26,6 +26,14 @@ Import-Package:\
 	\
 	!org.zeroturnaround.javarebel,\
 	\
+	jakarta.el;resolution:=optional,\
+	\
+	jakarta.servlet;resolution:=optional,\
+	jakarta.servlet.http;resolution:=optional,\
+	jakarta.servlet.jsp;resolution:=optional,\
+	jakarta.servlet.jsp.el;resolution:=optional,\
+	jakarta.servlet.jsp.tagext;resolution:=optional,\
+	\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\

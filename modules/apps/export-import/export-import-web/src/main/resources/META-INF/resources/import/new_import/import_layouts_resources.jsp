@@ -216,6 +216,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 											for (Portlet portlet : dataPortlets) {
 												PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
+												if (!portletDataHandler.isEnabled()) {
+													continue;
+												}
+
 												Class<?> portletDataHandlerClass = portletDataHandler.getClass();
 
 												String portletDataHandlerClassName = portletDataHandlerClass.getName();

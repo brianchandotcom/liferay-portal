@@ -392,6 +392,7 @@
 						"type": "object"
 					},
 					"relationship2ERC": {
+						"readOnly": true,
 						"type": "string",
 						"x-parent-map": "properties"
 					},

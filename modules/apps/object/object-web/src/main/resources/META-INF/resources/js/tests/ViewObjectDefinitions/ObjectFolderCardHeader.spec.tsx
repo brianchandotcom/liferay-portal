@@ -8,8 +8,8 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import ObjectFolderCardHeader from '../components/ViewObjectDefinitions/ObjectFolderCardHeader';
-import {getObjectFolderActions} from '../components/ViewObjectDefinitions/objectDefinitionUtil';
+import ObjectFolderCardHeader from '../../components/ViewObjectDefinitions/ObjectFolderCardHeader';
+import {getObjectFolderActions} from '../../components/ViewObjectDefinitions/objectDefinitionUtil';
 
 const defaultFolderHTTPMethods = {
 	objectDefinitionActions: {

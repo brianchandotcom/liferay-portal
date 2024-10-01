@@ -8,7 +8,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import ObjectFoldersSideBar from '../components/ViewObjectDefinitions/ObjectFoldersSidebar';
+import ObjectFoldersSideBar from '../../components/ViewObjectDefinitions/ObjectFoldersSidebar';
 
 const defaultObjectFolder = {
 	actions: {get: {href: '', method: 'GET'}},

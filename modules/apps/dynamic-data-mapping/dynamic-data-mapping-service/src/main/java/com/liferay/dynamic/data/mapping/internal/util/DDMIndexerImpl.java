@@ -687,14 +687,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 			else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
 				List<String> richTextValues = new ArrayList<>(
 					valuesString.length);
+				List<String> truncatedValues = new ArrayList<>(
+					valuesString.length);
 
 				for (String valueString : valuesString) {
-					richTextValues.add(_htmlParser.extractText(valueString));
-				}
+					String richTextValue = _htmlParser.extractText(valueString);
 
-				List<String> truncatedValues = new ArrayList<>();
+					richTextValues.add(richTextValue);
 
-				for (String richTextValue : richTextValues) {
 					if (richTextValue.length() >
 							_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
 
@@ -705,6 +705,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					truncatedValues.add(richTextValue);
 				}
 
+				valuesString = richTextValues.toArray(new String[0]);
 				truncatedValuesString = truncatedValues.toArray(new String[0]);
 			}
 

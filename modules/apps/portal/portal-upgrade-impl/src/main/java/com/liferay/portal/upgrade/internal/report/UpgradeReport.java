@@ -966,7 +966,7 @@ public class UpgradeReport {
 
 	private static final int _LONGEST_RUNNING_SQLS_COUNT = 20;
 
-	private static final int _LONGEST_UPGRADE_PROCESSES_COUNT = 20;
+	private static final int _LONGEST_UPGRADE_PROCESSES_COUNT = 10;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 

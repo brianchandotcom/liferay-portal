@@ -1,29 +1,29 @@
 <@liferay_ui["panel-container"]
 	extended=true
-	id="${namespace + 'facetDatePanelContainer'}"
+	id="${namespace + 'facetCustomPanelContainer'}"
 	markupView="lexicon"
 	persistState=true
 >
 	<@liferay_ui.panel
 		collapsible=true
 		cssClass="search-facet"
-		id="${namespace + 'facetDatePanel'}"
+		id="${namespace + 'facetCustomPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="date"
+		title="${customFacetDisplayContext.getDisplayCaption()}"
 	>
 		<#if !customFacetDisplayContext.isNothingSelected()>
 			<@clay.button
 				cssClass="btn-unstyled c-mb-4 facet-clear-btn"
 				displayType="link"
-				id="${namespace + 'facetDateClear'}"
+				id="${namespace + 'facetCustomClear'}"
 				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
 			>
 				<strong>${languageUtil.get(locale, "clear")}</strong>
 			</@clay.button>
 		</#if>
 
-		<ul class="date list-unstyled">
+		<ul class="list-unstyled">
 			<#if entries?has_content>
 				<#list entries as entry>
 					<li class="facet-value">
@@ -100,29 +100,29 @@
 				<#if customFacetDisplayContext.getAggregationType() == "range">
 					<div class="${(!customRangeBucketDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
 						<div class="col-md-6" id="${namespace}customRangeFrom">
-							<@liferay_aui["field-wrapper"] label="from">
-								<input
-									class="form-control"
-									id="${namespace + 'fromInput'}"
+							<@liferay_aui["field-wrapper"]>
+								<@liferay_aui.input
+									label="from"
+									id="fromInput"
 									name="fromInput"
-									value=""
+									type="number"
 								/>
 							</@>
 						</div>
 
 						<div class="col-md-6" id="${namespace}customRangeTo">
-							<@liferay_aui["field-wrapper"] label="to">
-								<input
-									class="form-control"
-									id="${namespace + 'toInput'}"
+							<@liferay_aui["field-wrapper"]>
+								<@liferay_aui.input
+									label="to"
+									id="toInput"
 									name="toInput"
-									value=""
+									type="number"
 								/>
 							</@>
 						</div>
 
 						<@clay["button"]
-							cssClass="date-facet-custom-range-filter-button"
+							cssClass="custom-range-filter-button"
 							displayType="secondary"
 							id="${namespace + 'searchCustomRangeButton'}"
 							label="search"
@@ -136,7 +136,7 @@
 						<div class="col-md-6" id="${namespace}customRangeFrom">
 							<@liferay_aui["field-wrapper"] label="from">
 								<@liferay_ui["input-date"]
-									cssClass="date-facet-custom-range-input-date-from"
+									cssClass="custom-range-input-date-from"
 									dayParam="fromDay"
 									dayValue=customFacetCalendarDisplayContext.getFromDayValue()
 									disabled=false
@@ -153,7 +153,7 @@
 						<div class="col-md-6" id="${namespace}customRangeTo">
 							<@liferay_aui["field-wrapper"] label="to">
 								<@liferay_ui["input-date"]
-									cssClass="date-facet-custom-range-input-date-to"
+									cssClass="custom-range-input-date-to"
 									dayParam="toDay"
 									dayValue=customFacetCalendarDisplayContext.getToDayValue()
 									disabled=false
@@ -168,7 +168,7 @@
 						</div>
 
 						<@clay["button"]
-							cssClass="date-facet-custom-range-filter-button"
+							cssClass="custom-range-filter-button"
 							disabled=customFacetCalendarDisplayContext.isRangeBackwards()
 							displayType="secondary"
 							id="${namespace + 'searchCustomRangeButton'}"

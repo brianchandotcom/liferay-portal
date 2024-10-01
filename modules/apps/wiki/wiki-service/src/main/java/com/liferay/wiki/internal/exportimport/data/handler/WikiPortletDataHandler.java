@@ -13,6 +13,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -82,6 +83,15 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 		return _wikiAdminPortletDataHandler.importData(
 			portletDataContext, portletId, portletPreferences, data);
+	}
+
+	@Override
+	public boolean isEnabled(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35013")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

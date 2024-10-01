@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
@@ -35,6 +36,15 @@ public class WikiDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public boolean isEnabled(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35013")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Activate

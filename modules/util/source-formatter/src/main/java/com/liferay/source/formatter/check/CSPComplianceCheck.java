@@ -92,10 +92,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					break;
 				}
 
-				if (x == 0) {
-					continue;
-				}
-
 				char previousChar = content.charAt(x - 1);
 
 				if ((previousChar != CharPool.NEW_LINE) &&

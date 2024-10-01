@@ -216,7 +216,7 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
     aria-haspopup="listbox"
     aria-label="select-a-language.-current-language-x"
     class="btn-block btn btn-monospaced btn-secondary"
-    id="lfr-350df49e-3d58-4c97-b6e9-46c8846414e7"
+    id=""
     role="combobox"
     tabindex="0"
     title="select-a-language"

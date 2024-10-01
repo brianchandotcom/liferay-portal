@@ -5,6 +5,7 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuardTestRule;
@@ -30,7 +31,9 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	private static TestRule[] _getTestRules() {
 		List<TestRule> testRules = new ArrayList<>();
 
-		testRules.add(DBPartitionTestRule.INSTANCE);
+		if (DBPartition.isPartitionEnabled()) {
+			testRules.add(DBPartitionTestRule.INSTANCE);
+		}
 
 		if (System.getenv("JENKINS_HOME") != null) {
 			testRules.add(TimeoutTestRule.INSTANCE);

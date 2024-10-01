@@ -5,7 +5,6 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -27,22 +26,17 @@ public class DBPartitionTestRule implements TestRule {
 	@Override
 	public Statement apply(Statement statement, Description description) {
 		try {
-			if (DBPartition.isPartitionEnabled()) {
-				Company company =
-					CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME);
+			Company company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+				DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME);
 
-				if (company == null) {
-					PortalInstances.addCompany(
-						"",
-						() -> CompanyLocalServiceUtil.addCompany(
-							null, DBPartitionTestConstants.DB_PARTITION_WEB_ID,
-							DBPartitionTestConstants.
-								DB_PARTITION_VIRTUAL_HOSTNAME,
-							DBPartitionTestConstants.
-								DB_PARTITION_VIRTUAL_HOSTNAME,
-							0, true, true, null, null, null, null, null, null));
-				}
+			if (company == null) {
+				PortalInstances.addCompany(
+					"",
+					() -> CompanyLocalServiceUtil.addCompany(
+						null, DBPartitionTestConstants.DB_PARTITION_WEB_ID,
+						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME,
+						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME,
+						0, true, true, null, null, null, null, null, null));
 			}
 		}
 		catch (PortalException portalException) {

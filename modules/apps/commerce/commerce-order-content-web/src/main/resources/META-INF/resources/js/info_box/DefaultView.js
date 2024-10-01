@@ -7,33 +7,10 @@ import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {openToast, sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import InfoBoxModal from '../InfoBoxModal';
-
-const formatValue = (value, type) => {
-	if (type === 'date' && value) {
-		return new Intl.DateTimeFormat(
-			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			{dateStyle: 'short'}
-		).format(new Date(value));
-	}
-
-	return value;
-};
-
-const isEditable = (field, isOpen) => {
-	if (
-		['paymentMethod', 'requestedDeliveryDate', 'shippingMethod'].indexOf(
-			field
-		) >= 0 &&
-		!isOpen
-	) {
-		return false;
-	}
-
-	return true;
-};
+import {formatValue, isEditable} from './util';
 
 const DefaultView = ({
 	additionalProps,
@@ -54,6 +31,7 @@ const DefaultView = ({
 	const [inputValue, setInputValue] = useState(
 		additionalProps?.value ? additionalProps?.value : fieldValue
 	);
+	const [currentValue, setCurrentValue] = useState(inputValue);
 	const [parseRequest, setParseRequest] = useState(
 		() => (field, inputValue) => {
 			return {
@@ -72,9 +50,7 @@ const DefaultView = ({
 	);
 	const [value, setValue] = useState(fieldValue);
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-
+	const submitOrder = async (inputValue) => {
 		const updateOrder = isOpen
 			? CommerceServiceProvider.DeliveryCartAPI('v1').updateCartById
 			: CommerceServiceProvider.DeliveryOrderAPI('v1')
@@ -82,6 +58,7 @@ const DefaultView = ({
 
 		updateOrder(orderId, parseRequest(field, inputValue))
 			.then((response) => {
+				setCurrentValue(inputValue);
 				setValue(parseResponse(field, response));
 
 				onOpenChange(false);
@@ -96,57 +73,79 @@ const DefaultView = ({
 			});
 	};
 
+	const [handleSubmit, setHandleSubmit] = useState(() => async (event) => {
+		event.preventDefault();
+
+		await submitOrder(inputValue);
+	});
+
+	useEffect(() => {
+		setHandleSubmit(() => async (event) => {
+			event.preventDefault();
+
+			await submitOrder(inputValue);
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [inputValue]);
+
 	return (
 		<div className={namespace + 'info-box'} id={elementId}>
-			{label ? (
-				<div className="align-items-center d-flex">
+			<div className="align-items-center d-flex">
+				{label ? (
 					<div className="h5 info-box-label m-0">{label}</div>
+				) : null}
 
-					{hasPermission && !readOnly && isEditable(field, isOpen) ? (
-						<ClayButton
-							aria-controls={`${namespace}infoBoxModal`}
-							aria-label={
-								value
-									? sub(Liferay.Language.get('edit-x'), label)
-									: sub(Liferay.Language.get('add-x'), label)
-							}
-							className="ml-2"
-							data-qa-id={`${label}-infoBoxButton`}
-							displayType={buttonDisplayType}
-							onClick={() => onOpenChange(true)}
-							size="xs"
-						>
-							{value
-								? Liferay.Language.get('edit')
-								: Liferay.Language.get('add')}
-						</ClayButton>
-					) : null}
-				</div>
-			) : null}
+				{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+					<ClayButton
+						aria-controls={`${namespace}infoBoxModal`}
+						aria-label={
+							value
+								? sub(Liferay.Language.get('edit-x'), label)
+								: sub(Liferay.Language.get('add-x'), label)
+						}
+						className="ml-2"
+						data-qa-id={`${label}-infoBoxButton`}
+						displayType={buttonDisplayType}
+						onClick={() => {
+							setInputValue(currentValue);
 
-			<div>
-				<p className="info-box-value">
-					{formatValue(value, fieldValueType)}
-				</p>
+							onOpenChange(true);
+						}}
+						size="xs"
+					>
+						{value
+							? Liferay.Language.get('edit')
+							: Liferay.Language.get('add')}
+					</ClayButton>
+				) : null}
 			</div>
 
-			<InfoBoxModal
-				additionalProps={additionalProps}
-				field={field}
-				fieldValueType={fieldValueType}
-				handleSubmit={handleSubmit}
-				id={`${namespace}infoBoxModal`}
-				inputValue={inputValue}
-				label={label}
-				observer={observer}
-				onOpenChange={onOpenChange}
-				open={open}
-				orderId={orderId}
-				setInputValue={setInputValue}
-				setParseRequest={setParseRequest}
-				setParseResponse={setParseResponse}
-				spritemap={spritemap}
-			/>
+			<div className="info-box-value">
+				{formatValue(value, fieldValueType)}
+			</div>
+
+			{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+				<InfoBoxModal
+					additionalProps={additionalProps}
+					field={field}
+					fieldValueType={fieldValueType}
+					handleSubmit={handleSubmit}
+					id={`${namespace}infoBoxModal`}
+					inputValue={inputValue}
+					label={label}
+					observer={observer}
+					onOpenChange={onOpenChange}
+					open={open}
+					orderId={orderId}
+					setHandleSubmit={setHandleSubmit}
+					setInputValue={setInputValue}
+					setParseRequest={setParseRequest}
+					setParseResponse={setParseResponse}
+					spritemap={spritemap}
+					submitOrder={submitOrder}
+				/>
+			) : null}
 		</div>
 	);
 };

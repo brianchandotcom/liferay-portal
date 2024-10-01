@@ -36,6 +36,10 @@
 								"value": "accountInfo"
 							},
 							{
+								"label": "billing-address",
+								"value": "billingAddress"
+							},
+							{
 								"label": "channel-name",
 								"value": "channelName"
 							},
@@ -62,6 +66,10 @@
 							{
 								"label": "requested-delivery-date",
 								"value": "requestedDeliveryDate"
+							},
+							{
+								"label": "shipping-address",
+								"value": "shippingAddress"
 							},
 							{
 								"label": "shipping-method",

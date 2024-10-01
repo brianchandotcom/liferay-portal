@@ -8,7 +8,7 @@ package com.liferay.portal.test.rule;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.test.constants.DBPartitionTestConstants;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.util.PortalInstances;
 
 import org.junit.rules.TestRule;
@@ -27,16 +27,16 @@ public class DBPartitionTestRule implements TestRule {
 	public Statement apply(Statement statement, Description description) {
 		try {
 			Company company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-				DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME);
+				TestPropsValues.COMPANY_WEB_ID);
 
 			if (company == null) {
 				PortalInstances.addCompany(
 					"",
 					() -> CompanyLocalServiceUtil.addCompany(
-						null, DBPartitionTestConstants.DB_PARTITION_WEB_ID,
-						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME,
-						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME,
-						0, true, true, null, null, null, null, null, null));
+						null, TestPropsValues.COMPANY_WEB_ID,
+						TestPropsValues.COMPANY_WEB_ID,
+						TestPropsValues.COMPANY_WEB_ID, 0, true, true, null,
+						null, null, null, null, null));
 			}
 		}
 		catch (PortalException portalException) {

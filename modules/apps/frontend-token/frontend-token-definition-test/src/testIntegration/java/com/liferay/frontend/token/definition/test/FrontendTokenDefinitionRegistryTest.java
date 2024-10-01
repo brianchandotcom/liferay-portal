@@ -90,11 +90,31 @@ public class FrontendTokenDefinitionRegistryTest {
 
 	@Test
 	public void testGetFrontendTokenDefinitions() {
+		List<FrontendTokenDefinition> frontendTokenDefinitionsList =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
+				_layoutSet.getCompanyId());
+
 		Assert.assertTrue(
 			ListUtil.exists(
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
-					_layoutSet.getCompanyId()),
-				frontendTokenDefinition -> Objects.equals(frontendTokenDefinition.getThemeId(), _THEME_ID_CLIENT_EXTENSION_ENTRY)));
+				frontendTokenDefinitionsList,
+				item -> Objects.equals(
+					item.getThemeId(), _THEME_ID_CLIENT_EXTENSION_ENTRY)));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				frontendTokenDefinitionsList,
+				item -> Objects.equals(
+					item.getThemeId(), _THEME_ID_LAYOUT_SET)));
+	}
+
+	@Test
+	public void testGetThemeBundleFrontendTokenDefinition() {
+		_layoutSet.setLayoutSetId(RandomTestUtil.randomLong());
+
+		_assertFrontendTokenDefinition(
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				_layoutSet),
+			_THEME_ID_LAYOUT_SET);
 	}
 
 	@Test
@@ -105,22 +125,13 @@ public class FrontendTokenDefinitionRegistryTest {
 			_THEME_ID_CLIENT_EXTENSION_ENTRY);
 	}
 
-	@Test
-	public void testGetThemeFrontendTokenDefinition() {
-		_layoutSet.setLayoutSetId(-1);
-
-		_assertFrontendTokenDefinition(
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_layoutSet),
-			_THEME_ID_LAYOUT_SET);
-	}
-
 	private void _addThemeCSSCET() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				_THEME_ID_CLIENT_EXTENSION_ENTRY, user.getUserId(), StringPool.BLANK,
+				_THEME_ID_CLIENT_EXTENSION_ENTRY, user.getUserId(),
+				StringPool.BLANK,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
@@ -211,9 +222,11 @@ public class FrontendTokenDefinitionRegistryTest {
 			_clientExtensionEntry);
 	}
 
-	private static final String _THEME_ID_CLIENT_EXTENSION_ENTRY = RandomTestUtil.randomString();
+	private static final String _THEME_ID_CLIENT_EXTENSION_ENTRY =
+		RandomTestUtil.randomString();
 
-	private static final String _THEME_ID_LAYOUT_SET = "testfrontendtokendefinition";
+	private static final String _THEME_ID_LAYOUT_SET =
+		"testfrontendtokendefinition";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

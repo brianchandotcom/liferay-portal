@@ -12,6 +12,9 @@ import com.liferay.portal.kernel.dao.jdbc.util.PreparedStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.StatementWrapper;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -216,21 +219,28 @@ public class UpgradeSQLRecorder {
 
 				long duration = System.currentTimeMillis() - startTime;
 
-				if (Validator.isBlank(_upgradeProcessClassName)) {
-					_sqlExecutionTimes.put(sql, duration);
-				}
-				else if (DBPartition.isPartitionEnabled()) {
-					_sqlExecutionTimes.put(
-						StringBundler.concat(
-							_upgradeProcessClassName, StringPool.AT,
-							String.valueOf(CompanyThreadLocal.getCompanyId()),
-							StringPool.PIPE, sql),
-						duration);
-				}
-				else {
-					_sqlExecutionTimes.put(
-						_upgradeProcessClassName + StringPool.PIPE + sql,
-						duration);
+				long sqlQueryThresholdDuration = GetterUtil.getLong(
+					PropsUtil.get(
+						PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION));
+
+				if (duration >= sqlQueryThresholdDuration) {
+					if (Validator.isBlank(_upgradeProcessClassName)) {
+						_sqlExecutionTimes.put(sql, duration);
+					}
+					else if (DBPartition.isPartitionEnabled()) {
+						_sqlExecutionTimes.put(
+							StringBundler.concat(
+								_upgradeProcessClassName, StringPool.AT,
+								String.valueOf(
+									CompanyThreadLocal.getCompanyId()),
+								StringPool.PIPE, sql),
+							duration);
+					}
+					else {
+						_sqlExecutionTimes.put(
+							_upgradeProcessClassName + StringPool.PIPE + sql,
+							duration);
+					}
 				}
 			}
 		}

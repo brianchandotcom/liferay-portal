@@ -563,7 +563,7 @@ public class UpgradeReport {
 					return new ArrayList<>();
 				}
 
-				Map<String, Integer> upgradeProcessDurations = new HashMap<>();
+				Map<String, Long> upgradeProcessDurations = new HashMap<>();
 
 				for (String message : messages) {
 					int startIndex = message.indexOf("com.");
@@ -585,10 +585,15 @@ public class UpgradeReport {
 					endIndex = message.indexOf(
 						StringPool.SPACE, startIndex + 1);
 
-					upgradeProcessDurations.put(
-						className,
-						GetterUtil.getInteger(
-							message.substring(startIndex, endIndex)));
+					long duration = GetterUtil.getLong(
+						message.substring(startIndex, endIndex));
+
+					if (duration >=
+							PropsValues.
+								UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION) {
+
+						upgradeProcessDurations.put(className, duration);
+					}
 				}
 
 				List<RunningUpgradeProcess> longestRunningUpgradeProcesses =
@@ -596,12 +601,11 @@ public class UpgradeReport {
 
 				int count = 0;
 
-				for (Map.Entry<String, Integer> entry :
+				for (Map.Entry<String, Long> entry :
 						ListUtil.sort(
 							new ArrayList<>(upgradeProcessDurations.entrySet()),
 							Collections.reverseOrder(
-								Map.Entry.comparingByValue(
-									Integer::compare)))) {
+								Map.Entry.comparingByValue(Long::compare)))) {
 
 					longestRunningUpgradeProcesses.add(
 						new RunningUpgradeProcess(

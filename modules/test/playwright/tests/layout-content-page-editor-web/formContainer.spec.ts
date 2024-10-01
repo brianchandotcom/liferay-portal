@@ -1194,6 +1194,69 @@ test.describe('Multistep', () => {
 	);
 });
 
+test.describe('Edit mode language changes', () => {
+	test('Input fragments show correct label when switching language', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+			'Lemon Size',
+			'Lemon Basket to Lemons',
+		]);
+
+		const fragmentId = await pageEditorPage.getFragmentId('Text');
+
+		// Add translation to label
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId,
+			tab: 'General',
+			value: 'English Label',
+		});
+
+		await pageEditorPage.switchLanguage('es-ES');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId,
+			tab: 'General',
+			value: 'Spanish Label',
+		});
+
+		// Check labels are correctly displayed
+
+		await pageEditorPage.switchLanguage('en-US');
+
+		await expect(page.getByLabel('English Label')).toBeVisible();
+
+		await pageEditorPage.switchLanguage('es-ES');
+
+		await expect(page.getByLabel('Spanish Label')).toBeVisible();
+	});
+});
+
 test.describe('Edit mode form errors', () => {
 	test(
 		'Show an error when there is no Submit Button',

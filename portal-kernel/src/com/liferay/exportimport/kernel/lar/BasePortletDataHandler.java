@@ -46,6 +46,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return null;
+		}
+
 		long startTime = 0;
 
 		if (_log.isInfoEnabled()) {
@@ -81,6 +85,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return null;
+		}
+
 		long startTime = 0;
 
 		if (_log.isInfoEnabled()) {
@@ -111,6 +119,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
+
+		if (!isEnabled()) {
+			return null;
+		}
 
 		long startTime = 0;
 
@@ -363,6 +375,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return null;
+		}
+
 		long startTime = 0;
 
 		if (_log.isInfoEnabled()) {
@@ -470,6 +486,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return;
+		}
+
 		try {
 			doPrepareManifestSummary(portletDataContext, portletPreferences);
 		}
@@ -492,6 +512,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public boolean validateSchemaVersion(String schemaVersion) {
+		if (!isEnabled()) {
+			return true;
+		}
+
 		try {
 			return doValidateSchemaVersion(schemaVersion);
 		}

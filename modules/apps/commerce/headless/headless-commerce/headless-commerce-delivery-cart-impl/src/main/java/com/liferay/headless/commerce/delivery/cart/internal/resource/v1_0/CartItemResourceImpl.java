@@ -258,17 +258,41 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
+		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
+			commerceOrderItem.getCommerceOrderItemId(), cartItem.getQuantity(),
+			_commerceContextFactory.create(
+				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+				contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+				commerceOrder.getCommerceAccountId()),
+			_serviceContextHelper.getServiceContext(
+				commerceOrder.getGroupId()));
+
+		long shippingAddressId = GetterUtil.getLong(
+			cartItem.getShippingAddressId());
+
+		if (shippingAddressId == 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						cartItem.getShippingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+			if (commerceAddress != null) {
+				shippingAddressId = commerceAddress.getCommerceAddressId();
+			}
+			else {
+				shippingAddressId = commerceOrderItem.getShippingAddressId();
+			}
+		}
+
+		commerceOrderItem =
+			_commerceOrderItemService.updateCommerceOrderItemInfo(
+				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
+				cartItem.getDeliveryGroup(),
+				commerceOrderItem.getPrintedNote());
+
 		return _toCartItem(
-			commerceOrder.getCommerceAccountId(),
-			_commerceOrderItemService.updateCommerceOrderItem(
-				commerceOrderItem.getCommerceOrderItemId(),
-				cartItem.getQuantity(),
-				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-					commerceOrder.getCommerceAccountId()),
-				_serviceContextHelper.getServiceContext(
-					commerceOrder.getGroupId())));
+			commerceOrder.getCommerceAccountId(), commerceOrderItem);
 	}
 
 	@Override

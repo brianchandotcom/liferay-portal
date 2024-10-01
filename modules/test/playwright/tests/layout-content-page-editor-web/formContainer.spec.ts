@@ -315,6 +315,12 @@ test.describe('Numeric input field', () => {
 				'Thank you. Your information was successfully received.'
 			)
 		).toBeVisible();
+
+		await deleteObjectEntries({
+			entityName: 'Lemons',
+			page,
+			siteUrl: pageManagementSite.friendlyUrlPath,
+		});
 	});
 });
 

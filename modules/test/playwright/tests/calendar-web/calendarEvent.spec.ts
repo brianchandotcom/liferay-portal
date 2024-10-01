@@ -11,9 +11,11 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -62,7 +64,7 @@ test.beforeEach(
 test('can create all-day calendar event with different time zone', async ({
 	calendarWidgetPage,
 }) => {
-	await calendarWidgetPage.addEvent(true);
+	await calendarWidgetPage.addEvent(true, null, null);
 
 	const endTime = await calendarWidgetPage.endTime.inputValue();
 	const startTime = await calendarWidgetPage.startTime.inputValue();
@@ -98,4 +100,41 @@ test('can create an all-day calendar event in a different time zone, ensuring th
 			name: expectedLink,
 		})
 	).toBeVisible();
+});
+
+test('can create calendar event different start/end dates ensuring that the end date is displayed', async ({
+	calendarWidgetPage,
+	page,
+}) => {
+	const startDate = new Date();
+
+	const endDate = new Date(startDate);
+	endDate.setDate(endDate.getDate() + 1);
+
+	const endDateFormatted = toLocalDateTimeFormatted(endDate.toUTCString(), {
+		day: '2-digit',
+		hour: '2-digit',
+		month: '2-digit',
+		timeZone: 'UTC',
+		year: 'numeric',
+	} as const);
+
+	const title = getRandomInt().toString();
+
+	await calendarWidgetPage.addEvent(false, endDateFormatted, title);
+
+	await calendarWidgetPage.closeModalEvent();
+
+	await calendarWidgetPage.clickEvent(title);
+
+	await expect(page.locator('.scheduler-event-recorder-date')).toHaveText(
+		new RegExp(
+			toLocalDateTimeFormatted(endDate.toUTCString(), {
+				day: '2-digit',
+				month: 'long',
+				timeZone: 'UTC',
+				weekday: 'short',
+			} as const)
+		)
+	);
 });

@@ -23,6 +23,7 @@ export class CalendarWidgetPage {
 	readonly saveConfigurationButton: Locator;
 	readonly startTime: Locator;
 	readonly timeZoneDropdown: Locator;
+	readonly title: Locator;
 	readonly useGlobalTimeZoneCheckBox: Locator;
 
 	constructor(page: Page) {
@@ -68,6 +69,9 @@ export class CalendarWidgetPage {
 		this.timeZoneDropdown = page
 			.frameLocator('iframe')
 			.getByLabel('Time Zone', {exact: true});
+		this.title = page
+			.frameLocator('iframe')
+			.getByLabel('Title', {exact: true});
 		this.useGlobalTimeZoneCheckBox = page
 			.frameLocator('iframe')
 			.getByRole('checkbox', {
@@ -76,11 +80,19 @@ export class CalendarWidgetPage {
 			});
 	}
 
-	async addEvent(allDay: boolean) {
+	async addEvent(allDay: boolean, dateEnd: string, title: string) {
 		await this.addEventButton.click();
 
 		await this.allDayCheckbox.hover();
 		await this.allDayCheckbox.setChecked(allDay);
+
+		if (dateEnd) {
+			await this.endTime.fill(dateEnd);
+		}
+
+		if (title) {
+			await this.title.fill(title);
+		}
 
 		await this.publishEvent();
 	}
@@ -91,6 +103,13 @@ export class CalendarWidgetPage {
 			this.page.frameLocator('iframe'),
 			`Success:Your request completed successfully.`
 		);
+	}
+
+	async closeModalEvent() {
+		await this.page.getByRole('button', {name: 'Close'}).click();
+	}
+	async clickEvent(title: string) {
+		await this.page.getByText(title).click();
 	}
 
 	async fillEventWithRecurrence(allDay: boolean, recurrence: Recurrence) {

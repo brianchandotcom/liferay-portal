@@ -629,6 +629,10 @@ components:
                     description:
                         The phone number's extension.
                     type: string
+                externalReferenceCode:
+                    description:
+                        The phone number's external reference code.
+                    type: string
                 id:
                     description:
                         The phone number's ID.
@@ -1384,7 +1388,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.67'."
+        'com.liferay.headless.admin.user.client', and version '4.0.68'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -4848,7 +4852,89 @@ paths:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
             tags: ["Organization"]
+    "/phones/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            description:
+                Deletes the phone number by external reference code.
+            operationId: deletePhoneByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Phone"]
+        get:
+            description:
+                Retrieves the phone number by external reference code.
+            operationId: getPhoneByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+            tags: ["Phone"]
+        patch:
+            description:
+                Updates the phone number by external reference code.
+            operationId: patchPhoneByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Phone"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Phone"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+            tags: ["Phone"]
     "/phones/{phoneId}":
+        delete:
+            description:
+                Deletes the phone number.
+            operationId: deletePhone
+            parameters:
+                - in: path
+                  name: phoneId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Phone"]
         get:
             description:
                 Retrieves the phone number.
@@ -4860,6 +4946,35 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+            tags: ["Phone"]
+        patch:
+            description:
+                Updates the phone number.
+            operationId: patchPhone
+            parameters:
+                - in: path
+                  name: phoneId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Phone"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Phone"
             responses:
                 200:
                     content:

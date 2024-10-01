@@ -40,6 +40,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
+		if (!isEnabled()) {
+			return;
+		}
+
 		StagedModelRepository<T> stagedModelRepository =
 			getStagedModelRepository();
 
@@ -53,6 +57,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	@Override
 	public void deleteStagedModel(T stagedModel) throws PortalException {
+		if (!isEnabled()) {
+			return;
+		}
+
 		StagedModelRepository<T> stagedModelRepository =
 			getStagedModelRepository();
 
@@ -67,6 +75,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public void exportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		super.exportStagedModel(portletDataContext, stagedModel);
 
@@ -158,6 +170,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		StagedModelRepository<T> stagedModelRepository =
 			getStagedModelRepository();

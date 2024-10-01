@@ -67,6 +67,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return;
+		}
+
 		validateExport(portletDataContext, stagedModel);
 
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
@@ -270,6 +274,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return;
+		}
+
 		try {
 			doImportMissingReference(portletDataContext, referenceElement);
 		}
@@ -289,6 +297,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			long classPK)
 		throws PortletDataException {
 
+		if (!isEnabled()) {
+			return;
+		}
+
 		try {
 			doImportMissingReference(
 				portletDataContext, uuid, groupId, classPK);
@@ -305,6 +317,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
@@ -422,6 +438,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		try {
 			if (stagedModel instanceof TrashedModel) {

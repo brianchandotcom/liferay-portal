@@ -7,6 +7,7 @@ import {Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -75,12 +76,8 @@ export async function createAssetPublisherAndConfigure({
 		);
 	}
 
-	const configurationSourceAssetTypeSelect =
-		await configurationModal.getByLabel('Asset Type');
-	if (await configurationSourceAssetTypeSelect.isHidden()) {
-		await configurationModal.getByRole('link', {name: 'Source'}).click();
-	}
-	await configurationSourceAssetTypeSelect.selectOption({
+	await openFieldset(configurationModal, 'Source');
+	await configurationModal.getByLabel('Asset Type').selectOption({
 		label: 'Blogs Entry',
 	});
 

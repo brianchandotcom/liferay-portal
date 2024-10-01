@@ -1,62 +1,62 @@
-CREOLE image reference:
+CREOLE image references:
 
 {{/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]/}}
 {{[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]/}}
 
-CREOLE link with text:
+CREOLE links with text:
 
 [[/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]|Link]]
 [[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]|Link]]
 
-CREOLE link without text:
+CREOLE links without text:
 
 [[/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]]]
 [[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]]]
-
-HTML references with no quotes:
-
-<a href=/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
-<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
-
-# HTML references with no quotes but space:
-
-<a href=/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
-<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
 
 HTML references with double quotes:
 
 <a href="/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]">Link</a>
 <a href="[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]">Link</a>
 
+HTML references with no quotes:
+
+<a href=/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
+
+HTML references with no quotes but space:
+
+<a href=/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
+
 HTML references with single quotes:
 
 <a href='/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]'>Link</a>
 <a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]'>Link</a>
 
-JSON configuration of image fragment entry:
+JSON configurations of image fragment entry:
 
 {"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {"image-square": {"defaultValue": "", "config": {"alt": {"en_US": ""}, "imageConfiguration":{}}, "en_US": {"classNameId": 99999, "classPK": "99999", "fileEntryId": "99999", "title": "file1821253941895", "url": "/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]"}}}, "com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {"imageSize": "w-100"}}
 {"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {"image-square": {"defaultValue": "", "config": {"alt": {"en_US": ""}, "imageConfiguration":{}}, "en_US": {"classNameId": 99999, "classPK": "99999", "fileEntryId": "99999", "title": "file1821253941895", "url": "[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]"}}}, "com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {"imageSize": "w-100"}}
 
-Nonlegacy HTML reference with escaped double quotes:
+Nonlegacy HTML references with escaped double quotes:
 
 <a href=\"/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\">Link</a>
 <a href=\"[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\">Link</a>
 
-Nonlegacy HTML reference with escaped single quotes:
+Nonlegacy HTML references with escaped single quotes:
 
 <a href=\'/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>
 <a href=\'[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>
-
-Style references with no quotes:
-
-background: url(/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
-background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
 
 Style references with double quotes:
 
 background: url("/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
 background: url("[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
+
+Style references with no quotes:
+
+background: url(/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
+background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
 
 Style references with single quotes:
 

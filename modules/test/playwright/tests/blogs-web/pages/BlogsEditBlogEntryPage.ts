@@ -6,7 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {expandSection} from '../../../utils/expandSection';
+import {openFieldset} from '../../../utils/openFieldset';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {BlogsPage} from './BlogsPage';
 
@@ -47,15 +47,7 @@ export class BlogsEditBlogEntryPage {
 		categories,
 		vocabularyName,
 	}: editBlogEntryAddfriendlyUrlType) {
-		const fieldset = await this.page.locator(
-			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_categorization'
-		);
-
-		if (await fieldset.locator('.panel-body').isHidden()) {
-			await fieldset
-				.getByRole('button', {name: 'Categorization'})
-				.click();
-		}
+		const fieldset = await openFieldset(this.page, 'Categorization');
 
 		await fieldset.getByLabel(`Select ${vocabularyName}`).click();
 
@@ -82,13 +74,7 @@ export class BlogsEditBlogEntryPage {
 			vocabularyName,
 		});
 
-		const fieldset = await this.page.locator(
-			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_friendly-url'
-		);
-
-		if (await fieldset.locator('.panel-body').isHidden()) {
-			await fieldset.getByRole('button', {name: 'Friendly URL'}).click();
-		}
+		const fieldset = await openFieldset(this.page, 'Friendly URL');
 
 		await fieldset.getByText('Use a Customized URL').click();
 
@@ -139,11 +125,11 @@ export class BlogsEditBlogEntryPage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator('fieldset', {
-			hasText: 'Display Page',
-		});
+		const displayPageFieldSet = await openFieldset(
+			this.page,
+			'Display Page'
+		);
 
-		await expandSection(displayPageFieldSet);
 		await displayPageFieldSet
 			.getByLabel('Display Page Template')
 			.selectOption('Specific');

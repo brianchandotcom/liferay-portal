@@ -28,19 +28,31 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 		LEMON_BASKET_OBJECT_ERC,
 		POTATO_OBJECT_ERC,
 	]) {
-		const {id} =
+		const {id: objectDefinitionId} =
 			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 				ERC
 			);
 
-		await expect(
-			await apiHelpers.objectAdmin.deleteObjectDefinition(id)
-		).toBeOK();
+		if (objectDefinitionId) {
+			await expect(
+				await apiHelpers.objectAdmin.deleteObjectDefinition(
+					objectDefinitionId
+				)
+			).toBeOK();
+		}
 	}
 
 	// Delete site
 
-	await expect(
-		await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC)
-	).toBeOK();
+	const {id: siteId} = await apiHelpers.headlessSite.getSiteByERC(
+		PAGE_MANAGEMENT_SITE_ERC
+	);
+
+	if (siteId) {
+		await expect(
+			await apiHelpers.headlessSite.deleteSiteByERC(
+				PAGE_MANAGEMENT_SITE_ERC
+			)
+		).toBeOK();
+	}
 });

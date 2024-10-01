@@ -73,13 +73,21 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 		String objectRelationshipName = objectRelationship.getName();
 
+		int objectRelationshipFieldsCount = 0;
+
 		for (Field field : page.getItems()) {
 			if (Objects.equals(field.getName(), objectRelationshipName)) {
 				Assert.assertNull(
 					field.getName() + " should not be present",
 					field.getAnyOfGroup());
+
+				objectRelationshipFieldsCount++;
 			}
 		}
+
+		Assert.assertEquals(
+			"Incorrect number of object relationship fields", 1,
+			objectRelationshipFieldsCount);
 	}
 
 	@Test
@@ -147,6 +155,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 			"r_", objectRelationship2Name, "_",
 			objectDefinition3.getPKObjectFieldName());
 
+		int objectRelationshipFieldsCount = 0;
+
 		for (Field field : page.getItems()) {
 			String anyOfGroup = field.getAnyOfGroup();
 
@@ -159,6 +169,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 				Assert.assertEquals(objectRelationship1Name, anyOfGroup);
 
+				objectRelationshipFieldsCount++;
+
 				continue;
 			}
 
@@ -170,6 +182,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					field.getName() + " should not be null", anyOfGroup);
 
 				Assert.assertEquals(objectRelationship2Name, anyOfGroup);
+
+				objectRelationshipFieldsCount++;
 
 				continue;
 			}
@@ -190,6 +204,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 				Assert.assertEquals(objectRelationship1Name, anyOfGroup);
 
+				objectRelationshipFieldsCount++;
+
 				continue;
 			}
 
@@ -208,8 +224,14 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					field.getName() + " should not be null", anyOfGroup);
 
 				Assert.assertEquals(objectRelationship2Name, anyOfGroup);
+
+				objectRelationshipFieldsCount++;
 			}
 		}
+
+		Assert.assertEquals(
+			"Incorrect number of object relationship fields", 6,
+			objectRelationshipFieldsCount);
 	}
 
 	@Test
@@ -252,6 +274,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 			"r_", objectRelationshipName, "_",
 			objectDefinition1.getPKObjectFieldName());
 
+		int objectRelationshipFieldsCount = 0;
+
 		for (Field field : page.getItems()) {
 			String anyOfGroup = field.getAnyOfGroup();
 
@@ -263,6 +287,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					field.getName() + " should not be null", anyOfGroup);
 
 				Assert.assertEquals(objectRelationshipName, anyOfGroup);
+
+				objectRelationshipFieldsCount++;
 
 				continue;
 			}
@@ -282,8 +308,14 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					field.getName() + " should not be null", anyOfGroup);
 
 				Assert.assertEquals(objectRelationshipName, anyOfGroup);
+
+				objectRelationshipFieldsCount++;
 			}
 		}
+
+		Assert.assertEquals(
+			"Incorrect number of object relationship fields", 3,
+			objectRelationshipFieldsCount);
 	}
 
 	@Ignore

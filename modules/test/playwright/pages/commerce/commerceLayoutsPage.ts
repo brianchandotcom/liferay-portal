@@ -17,6 +17,7 @@ export class CommerceLayoutsPage {
 	readonly addWidgetLabel: (widgetName: string) => Locator;
 	readonly availableThemesFrame: FrameLocator;
 	readonly backLink: Locator;
+	readonly cancelButton: Locator;
 	readonly catalogLink: Locator;
 	readonly changeCurrentThemeButton: Locator;
 	readonly closeProductMenuButton: Locator;
@@ -87,6 +88,10 @@ export class CommerceLayoutsPage {
 		);
 
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
+		this.cancelButton = page.getByRole('button', {
+			exact: true,
+			name: 'Cancel',
+		});
 		this.catalogLink = page.getByRole('link', {
 			exact: true,
 			name: 'Catalog',

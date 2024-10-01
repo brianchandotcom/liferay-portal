@@ -42,11 +42,7 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 								'd-block': block,
 							})}
 							key={dataKey}
-							onKeyDown={(event) => {
-								if (event.key === 'Enter') {
-									onDatakeyChange(dataKey);
-								}
-							}}
+							onFocus={() => onDatakeyChange(dataKey)}
 							onMouseEnter={() => onDatakeyChange(dataKey)}
 							onMouseLeave={() => onDatakeyChange(null)}
 							tabIndex={activeTabIndex ? 0 : -1}

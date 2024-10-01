@@ -1983,6 +1983,21 @@ public class RESTBuilder {
 		return tempPath.toString();
 	}
 
+	private String _getNpmPath() {
+		String absolutePath = _configDir.getAbsolutePath();
+
+		int index = absolutePath.indexOf("/liferay-portal/");
+
+		if (index != -1) {
+			return String.valueOf(
+				Paths.get(
+					absolutePath.substring(0, index), "liferay-portal", "build",
+					"node", "bin", "npm"));
+		}
+
+		return "npm";
+	}
+
 	private Set<String> _getRelatedSchemaNames(
 		Map<String, Schema> schemas,
 		List<JavaMethodSignature> javaMethodSignatures) {
@@ -2028,7 +2043,7 @@ public class RESTBuilder {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
-				"npm", "exec", "-y", "--prefix", _getNodePrefix(),
+				_getNpmPath(), "exec", "-y", "--prefix", _getNodePrefix(),
 				"openapi-typescript-codegen@0.27.0", "--", "--input",
 				openAPIYAMLFile.getPath(), "--output", outputDirPath,
 				"--client", targetClientType, "--name", clientName,

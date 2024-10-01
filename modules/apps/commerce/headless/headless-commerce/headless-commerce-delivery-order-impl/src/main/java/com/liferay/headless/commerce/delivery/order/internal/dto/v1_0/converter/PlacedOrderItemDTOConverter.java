@@ -11,6 +11,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
@@ -23,6 +24,7 @@ import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrde
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -96,6 +98,7 @@ public class PlacedOrderItemDTOConverter
 
 						return expandoBridge.getAttributes();
 					});
+				setDeliveryGroup(commerceOrderItem::getDeliveryGroup);
 				setErrorMessages(
 					() -> _getErrorMessages(commerceOrderItem, locale));
 				setExternalReferenceCode(
@@ -119,8 +122,23 @@ public class PlacedOrderItemDTOConverter
 						commerceOrderItem.getQuantity(),
 						commerceOrderItem.getUnitOfMeasureKey()));
 				setReplacedSku(commerceOrderItem::getReplacedSku);
+				setRequestedDeliveryDate(
+					commerceOrderItem::getRequestedDeliveryDate);
 				setSettings(
 					() -> _getSettings(commerceOrderItem.getCPInstanceId()));
+				setShippingAddressExternalReferenceCode(
+					() -> {
+						CommerceAddress commerceAddress =
+							_commerceAddressService.fetchCommerceAddress(
+								commerceOrderItem.getShippingAddressId());
+
+						if (commerceAddress == null) {
+							return null;
+						}
+
+						return commerceAddress.getExternalReferenceCode();
+					});
+				setShippingAddressId(commerceOrderItem::getShippingAddressId);
 				setSku(commerceOrderItem::getSku);
 				setSkuId(commerceOrderItem::getCPInstanceId);
 				setSubscription(commerceOrderItem::isSubscription);
@@ -420,6 +438,9 @@ public class PlacedOrderItemDTOConverter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PlacedOrderItemDTOConverter.class);
+
+	@Reference
+	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;

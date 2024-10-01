@@ -5,6 +5,7 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -25,6 +26,10 @@ public class DBPartitionTestRule implements TestRule {
 
 	@Override
 	public Statement apply(Statement statement, Description description) {
+		if (!DBPartition.isPartitionEnabled()) {
+			return statement;
+		}
+
 		try {
 			Company company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 				TestPropsValues.COMPANY_WEB_ID);

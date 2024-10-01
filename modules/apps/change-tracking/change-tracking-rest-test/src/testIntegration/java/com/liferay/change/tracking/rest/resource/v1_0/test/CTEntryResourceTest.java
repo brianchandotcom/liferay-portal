@@ -325,8 +325,9 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
-			"changeType", "ownerName", "siteId", "siteName", "status",
-			"typeName"
+			"changeType", "ctCollectionName", "ctCollectionStatus",
+			"ctCollectionStatusDate", "ctCollectionStatusUserName", "ownerName",
+			"siteId", "siteName", "status", "typeName"
 		};
 	}
 

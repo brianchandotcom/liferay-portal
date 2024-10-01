@@ -35,6 +35,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -698,6 +699,23 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		test.dependsOn(closure);
 
 		test.jvmArgs("-Djava.net.preferIPv4Stack=true", "-Duser.timezone=GMT");
+
+		JavaVersion javaVersion = test.getJavaVersion();
+
+		if (javaVersion.isJava11Compatible()) {
+			test.jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED");
+			test.jvmArgs(
+				"--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED");
+			test.jvmArgs(
+				"--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED");
+			test.jvmArgs("--add-opens", "java.base/java.net=ALL-UNNAMED");
+			test.jvmArgs(
+				"--add-opens",
+				"java.base/sun.net.www.protocol.http=ALL-UNNAMED");
+			test.jvmArgs(
+				"--add-opens", "java.base/sun.util.calendar=ALL-UNNAMED");
+			test.jvmArgs("--add-opens", "jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
+		}
 
 		Properties systemProperties = System.getProperties();
 

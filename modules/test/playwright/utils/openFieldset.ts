@@ -3,16 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
-export async function openFieldset(page: Page | FrameLocator, name: string) {
+import {expandSection} from './expandSection';
+
+export async function openFieldset(
+	page: Page | FrameLocator,
+	name: string
+): Promise<Locator> {
 	const fieldset = page.getByRole('group', {
 		name,
 	});
 
-	if (await fieldset.locator('.panel-body').isHidden()) {
-		await fieldset.getByRole('button', {name}).click();
-	}
+	await expandSection(fieldset.getByRole('button', {name}));
 
-	await expect(fieldset.locator('.panel-body')).toBeVisible();
+	return fieldset;
 }

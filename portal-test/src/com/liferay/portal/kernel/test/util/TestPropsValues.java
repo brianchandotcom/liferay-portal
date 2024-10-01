@@ -39,6 +39,8 @@ public class TestPropsValues {
 
 	public static final String COMPANY_WEB_ID;
 
+	public static final String DB_PARTITION_WEB_ID = "db-partition.com";
+
 	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
 		GetterUtil.getBoolean(
 			TestPropsUtil.get(
@@ -51,6 +53,44 @@ public class TestPropsValues {
 
 	public static final String USER_PASSWORD = TestPropsUtil.get(
 		"user.password");
+
+	static {
+		String companyWebId = TestPropsUtil.get("company.web.id");
+
+		try {
+			if (DBPartition.isPartitionEnabled()) {
+				try {
+					Company company = CompanyLocalServiceUtil.getCompanyByWebId(
+						DB_PARTITION_WEB_ID);
+
+					companyWebId = company.getWebId();
+				}
+				catch (Exception exception) {
+					if (exception instanceof NoSuchCompanyException) {
+						throw new PortalException(
+							"Missing partitioned company: " +
+								DB_PARTITION_WEB_ID);
+					}
+					else {
+						throw exception;
+					}
+				}
+			}
+			else if (Validator.isNull(companyWebId)) {
+				companyWebId = GetterUtil.getString(
+					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+			}
+
+			TestPropsUtil.set("company.web.id", companyWebId);
+		}
+		catch (Exception exception) {
+			throw new LoggedExceptionInInitializerError(exception);
+		}
+
+		TestPropsUtil.printProperties();
+
+		COMPANY_WEB_ID = companyWebId;
+	}
 
 	public static long getCompanyId() throws PortalException {
 		if (_companyId > 0) {
@@ -112,50 +152,10 @@ public class TestPropsValues {
 		return _userId;
 	}
 
-	private static final String _PARTITION_WEB_ID = "db-partition.com";
-
 	private static long _companyId;
 	private static long _groupId;
 	private static long _plid;
 	private static User _user;
 	private static long _userId;
-
-	static {
-		String companyWebId = TestPropsUtil.get("company.web.id");
-
-		try {
-			if (DBPartition.isPartitionEnabled()) {
-				try {
-					Company company = CompanyLocalServiceUtil.getCompanyByWebId(
-						_PARTITION_WEB_ID);
-
-					companyWebId = company.getWebId();
-				}
-				catch (Exception exception) {
-					if (exception instanceof NoSuchCompanyException) {
-						throw new PortalException(
-							"Missing partitioned company: " +
-								_PARTITION_WEB_ID);
-					}
-					else {
-						throw exception;
-					}
-				}
-			}
-			else if (Validator.isNull(companyWebId)) {
-				companyWebId = GetterUtil.getString(
-					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
-			}
-
-			TestPropsUtil.set("company.web.id", companyWebId);
-		}
-		catch (Exception exception) {
-			throw new LoggedExceptionInInitializerError(exception);
-		}
-
-		TestPropsUtil.printProperties();
-
-		COMPANY_WEB_ID = companyWebId;
-	}
 
 }

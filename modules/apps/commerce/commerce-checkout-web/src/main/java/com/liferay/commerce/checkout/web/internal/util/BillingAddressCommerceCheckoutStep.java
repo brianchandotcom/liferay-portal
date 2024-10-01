@@ -105,32 +105,29 @@ public class BillingAddressCommerceCheckoutStep
 
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
-		if (!commerceOrder.isGuestOrder() &&
+		if (!commerceOrder.isGuestOrder() && (accountEntry != null) &&
 			!accountEntry.isPersonalAccount()) {
 
 			CommerceAddress defaultBillingCommerceAddress = null;
 
-			if (accountEntry != null) {
-				CommerceChannel commerceChannel =
-					_commerceChannelLocalService.
-						getCommerceChannelByOrderGroupId(
-							commerceOrder.getGroupId());
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+					commerceOrder.getGroupId());
 
-				CommerceChannelAccountEntryRel
-					billingAddressCommerceChannelAccountEntryRel =
-						_commerceChannelAccountEntryRelLocalService.
-							fetchCommerceChannelAccountEntryRel(
-								accountEntry.getAccountEntryId(),
-								commerceChannel.getCommerceChannelId(),
-								CommerceChannelAccountEntryRelConstants.
-									TYPE_BILLING_ADDRESS);
+			CommerceChannelAccountEntryRel
+				billingAddressCommerceChannelAccountEntryRel =
+					_commerceChannelAccountEntryRelLocalService.
+						fetchCommerceChannelAccountEntryRel(
+							accountEntry.getAccountEntryId(),
+							commerceChannel.getCommerceChannelId(),
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_BILLING_ADDRESS);
 
-				if (billingAddressCommerceChannelAccountEntryRel != null) {
-					defaultBillingCommerceAddress =
-						_commerceAddressService.getCommerceAddress(
-							billingAddressCommerceChannelAccountEntryRel.
-								getClassPK());
-				}
+			if (billingAddressCommerceChannelAccountEntryRel != null) {
+				defaultBillingCommerceAddress =
+					_commerceAddressService.getCommerceAddress(
+						billingAddressCommerceChannelAccountEntryRel.
+							getClassPK());
 			}
 
 			long defaultBillingCommerceAddressId = 0;

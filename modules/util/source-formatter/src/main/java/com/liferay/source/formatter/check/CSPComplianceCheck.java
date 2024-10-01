@@ -42,37 +42,29 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	protected String getEnclosingTagStart(String content, int x) {
-		boolean inJavaCode = false;
-
-		int startIndex;
+		int startIndex = x;
 
 		for (startIndex = x; startIndex >= 0; startIndex--) {
-			if (inJavaCode) {
-				if ((content.charAt(startIndex) == CharPool.LESS_THAN) &&
-					(content.charAt(startIndex + 1) == CharPool.PERCENT)) {
+			char c = content.charAt(startIndex);
 
-					inJavaCode = false;
-				}
-			}
-			else if ((content.charAt(startIndex) == CharPool.GREATER_THAN) &&
-					 (content.charAt(startIndex - 1) == CharPool.PERCENT)) {
+			if ((c != CharPool.LESS_THAN) ||
+				(content.charAt(startIndex + 1) == CharPool.PERCENT) ||
+				isJavaSource(content, startIndex)) {
 
-				inJavaCode = true;
+				continue;
 			}
-			else if ((content.charAt(startIndex) == CharPool.LESS_THAN) &&
-					 !StringUtil.equals(
-						 content.substring(startIndex, startIndex + 18),
-						 "<portlet:namespace")) {
+
+			if (StringUtil.equals(
+					content.substring(startIndex, startIndex + 18),
+					"<portlet:namespace")) {
 
 				break;
 			}
+
+			return content.substring(startIndex, x);
 		}
 
-		if (startIndex < 0) {
-			return null;
-		}
-
-		return content.substring(startIndex, x);
+		return null;
 	}
 
 	private String _checkIllegalAttributes(
@@ -92,7 +84,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					break;
 				}
 
-				if (Character.isWhitespace(content.charAt(x - 1))) {
+				if (!Character.isWhitespace(content.charAt(x - 1)) ||
+					isJavaSource(content, x)) {
+
 					continue;
 				}
 

@@ -2,6 +2,7 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
 
+task jarManifest
 task patch(type: PatchTask)
 
 dependencies {
@@ -10,6 +11,20 @@ dependencies {
 	api group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
 	api group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.33"
 	api group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.26"
+}
+
+jar {
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true) {
+			delegate.manifest {
+				attribute(name: "Require-Capability", value: null)
+			}
+		}
+	}
 }
 
 jarSources {

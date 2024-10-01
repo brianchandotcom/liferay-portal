@@ -13,9 +13,11 @@ import {isUnmappedCollection} from './isUnmappedCollection';
 import normalizeSourceItem from './normalizeSourceItem';
 
 const PARENT_TYPES = [
+	LAYOUT_DATA_ITEM_TYPES.column,
 	LAYOUT_DATA_ITEM_TYPES.container,
 	LAYOUT_DATA_ITEM_TYPES.dropZone,
 	LAYOUT_DATA_ITEM_TYPES.form,
+	LAYOUT_DATA_ITEM_TYPES.formStep,
 	LAYOUT_DATA_ITEM_TYPES.root,
 ];
 

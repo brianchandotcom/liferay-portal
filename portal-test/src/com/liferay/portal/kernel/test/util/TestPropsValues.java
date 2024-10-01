@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.test.constants.DBPartitionTestConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -38,11 +39,6 @@ public class TestPropsValues {
 
 	public static final String COMPANY_WEB_ID;
 
-	public static final String DB_PARTITION_VIRTUAL_HOSTNAME =
-		"db-partition.com";
-
-	public static final String DB_PARTITION_WEB_ID = "db-partition.com";
-
 	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
 		GetterUtil.getBoolean(
 			TestPropsUtil.get(
@@ -63,12 +59,13 @@ public class TestPropsValues {
 			if (DBPartition.isPartitionEnabled()) {
 				Company company =
 					CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-						DB_PARTITION_VIRTUAL_HOSTNAME);
+						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME);
 
 				if (company == null) {
 					throw new PortalException(
 						"Missing partitioned company: " +
-							DB_PARTITION_VIRTUAL_HOSTNAME);
+							DBPartitionTestConstants.
+								DB_PARTITION_VIRTUAL_HOSTNAME);
 				}
 
 				companyWebId = company.getWebId();

@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.constants.DBPartitionTestConstants;
 import com.liferay.portal.util.PortalInstances;
 
 import org.junit.rules.TestRule;
@@ -30,16 +30,18 @@ public class DBPartitionTestRule implements TestRule {
 			if (DBPartition.isPartitionEnabled()) {
 				Company company =
 					CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-						TestPropsValues.DB_PARTITION_VIRTUAL_HOSTNAME);
+						DBPartitionTestConstants.DB_PARTITION_VIRTUAL_HOSTNAME);
 
 				if (company == null) {
 					PortalInstances.addCompany(
 						"",
 						() -> CompanyLocalServiceUtil.addCompany(
-							null, TestPropsValues.DB_PARTITION_WEB_ID,
-							TestPropsValues.DB_PARTITION_VIRTUAL_HOSTNAME,
-							TestPropsValues.DB_PARTITION_VIRTUAL_HOSTNAME, 0,
-							true, true, null, null, null, null, null, null));
+							null, DBPartitionTestConstants.DB_PARTITION_WEB_ID,
+							DBPartitionTestConstants.
+								DB_PARTITION_VIRTUAL_HOSTNAME,
+							DBPartitionTestConstants.
+								DB_PARTITION_VIRTUAL_HOSTNAME,
+							0, true, true, null, null, null, null, null, null));
 				}
 			}
 		}

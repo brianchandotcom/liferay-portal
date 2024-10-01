@@ -2254,8 +2254,15 @@ public class LayoutStagedModelDataHandler
 		layoutPageTemplateStructureElement.addAttribute(
 			"classPK", String.valueOf(classPK));
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, layoutPageTemplateStructureElement);
+		long originalPlid = portletDataContext.getPlid();
+
+		try {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutPageTemplateStructureElement);
+		}
+		finally {
+			portletDataContext.setPlid(originalPlid);
+		}
 
 		Map<Long, Long> layoutPageTemplateStructureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

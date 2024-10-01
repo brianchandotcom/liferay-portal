@@ -8,6 +8,7 @@ import React, {useState} from 'react';
 
 export type IAccessibleTickProps = {
 	index: number;
+	onTickBlur?: () => void;
 	payload?: any;
 	showTooltip?: (props: IAccessibleTickProps) => void;
 	title?: string;
@@ -18,7 +19,7 @@ export type IAccessibleTickProps = {
 
 const AccessibleTick: React.FC<
 	IAccessibleTickProps & {activeTabIndex: boolean}
-> = ({activeTabIndex, index, payload, showTooltip, x, y}) => {
+> = ({activeTabIndex, index, onTickBlur, payload, showTooltip, x, y}) => {
 	const [active, setActive] = useState(false);
 
 	return (
@@ -32,8 +33,27 @@ const AccessibleTick: React.FC<
 					setActive(true);
 				}}
 				onKeyDown={(event) => {
-					if (showTooltip && event.key === 'Tab') {
-						if (event.shiftKey) {
+					if (
+						event.key === 'Escape' ||
+						(event.key === 'Tab' && event.shiftKey && index === 0)
+					) {
+						onTickBlur?.();
+					}
+
+					if (showTooltip) {
+						if (event.key === 'Tab') {
+							showTooltip({
+								index: index + 1,
+								payload,
+								visible: true,
+								x,
+								y: 0,
+							});
+
+							return;
+						}
+
+						if (event.key === 'Tab' && event.shiftKey) {
 							showTooltip({
 								index: index - 1,
 								payload,
@@ -44,16 +64,6 @@ const AccessibleTick: React.FC<
 
 							return;
 						}
-
-						showTooltip({
-							index: index + 1,
-							payload,
-							visible: true,
-							x,
-							y: 0,
-						});
-
-						return;
 					}
 				}}
 				tabIndex={activeTabIndex ? 0 : -1}

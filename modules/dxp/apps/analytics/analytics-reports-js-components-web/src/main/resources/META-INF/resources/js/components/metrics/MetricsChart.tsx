@@ -34,12 +34,14 @@ export function getAccessibleAxisX({
 	changeTooltipProps,
 	formatter,
 	intervals,
+	onTickBlur,
 	rangeSelector,
 }: {
 	activeTabIndex: boolean;
 	changeTooltipProps: (props: IAccessibleTickProps) => void;
 	formatter: (value: number) => string | number;
 	intervals: (null | number)[];
+	onTickBlur: () => void;
 	rangeSelector: RangeSelectors;
 }) {
 	return (tickProps: IAccessibleTickProps & {textAnchor: any}) => {
@@ -59,6 +61,7 @@ export function getAccessibleAxisX({
 				<AccessibleTick
 					{...tickProps}
 					activeTabIndex={activeTabIndex}
+					onTickBlur={onTickBlur}
 					showTooltip={({index}) => {
 						changeTooltipProps({
 							index,
@@ -93,8 +96,9 @@ interface IMetricsChartProps extends React.HTMLAttributes<HTMLElement> {
 	emptyChartProps: IChartEmptyStateProps;
 	formattedData: FormattedData;
 	legendItems: IMetricsChartLegendProps['legendItems'];
+	onChartBlur: () => void;
+	onChartFocus: () => void;
 	onDatakeyChange: (dataKey: string | null) => void;
-	onKeyPressEnter: () => void;
 	rangeSelector: RangeSelectors;
 	tooltipTitle: string;
 	xAxisDataKey: string;
@@ -136,8 +140,9 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 	emptyChartProps,
 	formattedData,
 	legendItems,
+	onChartBlur,
+	onChartFocus,
 	onDatakeyChange,
-	onKeyPressEnter,
 	rangeSelector,
 	tooltipTitle,
 	xAxisDataKey,
@@ -158,7 +163,6 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 
 	return (
 		<div
-			aria-label=""
 			className="metrics-chart tab-focus"
 			onKeyDown={(event) => {
 				if (event.key === 'Enter') {
@@ -196,7 +200,7 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 						}
 					}
 
-					onKeyPressEnter();
+					onChartFocus();
 				}
 			}}
 			ref={metricChartRef}
@@ -240,6 +244,11 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 								formatter: (value) =>
 									formatXAxisDate(value, rangeSelector),
 								intervals: formattedData.intervals,
+								onTickBlur: () => {
+									metricChartRef.current?.focus();
+
+									onChartBlur();
+								},
 								rangeSelector,
 							})}
 							tickLine={false}

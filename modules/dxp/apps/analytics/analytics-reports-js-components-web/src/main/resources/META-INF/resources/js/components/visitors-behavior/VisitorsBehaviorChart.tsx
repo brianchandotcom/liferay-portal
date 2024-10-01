@@ -92,10 +92,11 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 				}}
 				formattedData={formattedData}
 				legendItems={legendItems}
+				onChartBlur={() => setActiveTabIndex(false)}
+				onChartFocus={() => setActiveTabIndex(true)}
 				onDatakeyChange={(dataKey) =>
 					setActiveLegendItem(dataKey as VisitorsBehaviorDataKey)
 				}
-				onKeyPressEnter={() => setActiveTabIndex(true)}
 				rangeSelector={filters.rangeSelector}
 				tooltipTitle={Liferay.Language.get('visitors-behavior')}
 				xAxisDataKey={VisitorsBehaviorDataKey.Metric}

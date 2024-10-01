@@ -100,10 +100,11 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 			}}
 			formattedData={formattedData}
 			legendItems={legendItems as IMetricsChartLegendProps['legendItems']}
+			onChartBlur={() => setActiveTabIndex(false)}
+			onChartFocus={() => setActiveTabIndex(true)}
 			onDatakeyChange={(dataKey) =>
 				setActiveLegendItem(dataKey as InteractionsByPageDataKey)
 			}
-			onKeyPressEnter={() => setActiveTabIndex(true)}
 			rangeSelector={filters.rangeSelector}
 			tooltipTitle={
 				assetContent[metricName].interactionsByPageTooltipTitle

@@ -55,6 +55,8 @@ public class DTOProperty {
 		return _required;
 	}
 
+	public boolean isReadOnly() { return _readOnly; }
+
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -75,11 +77,14 @@ public class DTOProperty {
 		_type = type;
 	}
 
+	public void setReadOnly(boolean readOnly) { _readOnly = readOnly; }
+
 	private String _description;
 	private List<DTOProperty> _dtoProperties = new ArrayList<>();
 	private final Map<String, Object> _extensions;
 	private String _name;
 	private boolean _required;
 	private String _type;
+	private boolean _readOnly;
 
 }

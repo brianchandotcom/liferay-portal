@@ -372,9 +372,8 @@ public class ObjectEntryOpenAPIResourceImpl
 						Collections.singletonMap("x-parent-map", "properties"),
 						objectRelationship.getName() + "ERC",
 						String.class.getSimpleName()) {
-
 						{
-							setRequired(objectField.isRequired());
+							setReadOnly(true);
 						}
 					});
 			}

@@ -19,7 +19,6 @@ export const test = mergeTests(
 	changeTrackingPagesTest,
 	featureFlagsTest({
 		'LPD-20556': true,
-		'LPS-171364': true,
 	}),
 	journalPagesTest
 );

@@ -3,9 +3,6 @@ services:
     cron:
         build: ../client-extensions/liferay-customer-etc-cron/build/liferay-client-extension-build
         container_name: liferay-customer-workspace-cron
-        depends_on:
-            liferay:
-                condition: service_healthy
         env_file: cron.env
         ports:
             - 18080:18080
@@ -17,26 +14,27 @@ services:
         command: mysqld --character-set-filesystem=utf8 --character-set-server=utf8 --collation-server=utf8_general_ci --max_allowed_packet=32M
         container_name: liferay-customer-workspace-database
         env_file: database.env
-        healthcheck:
-            interval: 5s
-            retries: 10
-            start_period: 5s
-            test: mysql --execute="select 1" --host=localhost --password=$$MYSQL_ROOT_PASSWORD --protocol=tcp --user=root 2>&1 | grep -qvF "Can't connect"
         image: mysql:5.7
         ports:
             - 3306:3306
     liferay:
         container_name: liferay-customer-workspace-liferay
         depends_on:
-            database:
-                condition: service_healthy
+            - database
         env_file: liferay.env
+        healthcheck:
+            interval: 10s
+            retries: 60
+            start_period: 40s 
+            test: ["CMD", "curl", "-f", "-s", "--fail", "http://localhost:8080/c/portal/status"]
+            timeout: 10s
         image: liferay/dxp:2024.q2.7
         ports:
             - 8080:8080
         user: root
         volumes:
             - ./liferay:/mnt/liferay
+            - ../bundles/osgi/client-extensions:/opt/liferay/osgi/client-extensions
             - routes_cron:/opt/liferay/routes/default/liferay-customer-etc-cron
             - routes_dxp:/opt/liferay/routes/default/dxp
             - routes_spring_boot:/opt/liferay/routes/default/liferay-customer-etc-spring-boot
@@ -50,9 +48,6 @@ services:
     spring_boot:
         build: ../client-extensions/liferay-customer-etc-spring-boot/build/liferay-client-extension-build
         container_name: liferay-customer-workspace-spring-boot
-        depends_on:
-            liferay:
-                condition: service_healthy
         env_file: spring-boot.env
         ports:
             - 58081:58081

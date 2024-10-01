@@ -129,6 +129,9 @@ function CustomConfigurationRangeOptions({
 		const aggregationTypeElement = document.getElementById(
 			`${namespace}aggregationType`
 		);
+		const maxTermsContainerElement = document.getElementById(
+			`${namespace}maxTermsContainer`
+		);
 		const preferenceKeyOrderElement = document.getElementById(
 			`${namespace}preferenceKeyOrder`
 		);
@@ -204,6 +207,10 @@ function CustomConfigurationRangeOptions({
 					RANGES_CONFIGURATION_OPTION.VALUE;
 
 				enableRangesConfiguration(currentValue);
+
+				if (!maxTermsContainerElement.classList.contains('hide')) {
+					maxTermsContainerElement.classList.add('hide');
+				}
 			}
 			else if (currentValue === AGGREGATION_TYPES.TERMS) {
 				disableRangesConfiguration();
@@ -217,6 +224,10 @@ function CustomConfigurationRangeOptions({
 				}
 
 				removeRangeConfigurationOptionItem();
+
+				if (maxTermsContainerElement.classList.contains('hide')) {
+					maxTermsContainerElement.classList.remove('hide');
+				}
 			}
 		};
 

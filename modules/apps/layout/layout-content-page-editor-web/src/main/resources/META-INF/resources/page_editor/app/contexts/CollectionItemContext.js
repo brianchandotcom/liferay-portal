@@ -9,6 +9,7 @@ import React, {useCallback, useContext, useEffect} from 'react';
 
 import batchRenderFragmentEntryContentRequest from '../../common/batchRenderFragmentEntryContentRequest';
 import {updateFragmentEntryLinkContent} from '../actions/index';
+import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 import isMappedToInfoItem from '../utils/editable_value/isMappedToInfoItem';
@@ -129,9 +130,10 @@ const useGetContent = (
 
 	useEffect(() => {
 		const hasLocalizable =
-			fieldSets?.some((fieldSet) =>
+			!!fieldSets?.some((fieldSet) =>
 				fieldSet.fields.some((field) => field.localizable)
-			) ?? false;
+			) ||
+			fragmentEntryLink.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
 
 		if (
 			shouldRenderFragmentEntryLink({
@@ -177,6 +179,7 @@ const useGetContent = (
 		editableValues,
 		fieldSets,
 		fragmentEntryLinkId,
+		fragmentEntryLink.fragmentEntryType,
 		itemClassName,
 		itemClassPK,
 		itemExternalReferenceCode,

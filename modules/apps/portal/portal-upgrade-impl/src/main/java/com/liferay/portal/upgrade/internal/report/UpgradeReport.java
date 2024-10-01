@@ -715,17 +715,24 @@ public class UpgradeReport {
 	}
 
 	private String _getReportHeader(String key) {
+		if (key.equals("longest.running.sqls")) {
+			return String.format(
+				"Top %d longest SQL queries above %d milliseconds",
+				_LONGEST_RUNNING_SQLS_COUNT,
+				PropsValues.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION);
+		}
+
+		if (key.equals("longest.upgrade.processes")) {
+			return String.format(
+				"Top %d longest upgrade processes above %d milliseconds",
+				_LONGEST_UPGRADE_PROCESSES_COUNT,
+				PropsValues.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION);
+		}
+
 		if (key.startsWith("tables.")) {
 			return String.format(
 				TablePrinter.FORMAT, "Table Name", "Initial Rows",
 				"Final Rows");
-		}
-
-		if (key.endsWith(".sqls")) {
-			return StringUtil.replace(
-				StringUtil.upperCaseFirstLetter(
-					StringUtil.replaceLast(key, "sql", "SQL")),
-				'.', ' ');
 		}
 
 		return StringUtil.replace(

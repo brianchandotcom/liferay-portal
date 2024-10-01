@@ -377,7 +377,6 @@ public class LayoutStagedModelDataHandlerTest
 		Group group = GroupTestUtil.addGroup();
 
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
-
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 
 		LayoutSEOEntry layoutSEOEntry = _updateLayoutSEOEntry(layout1);
@@ -397,7 +396,6 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout stagingLayout1 = _layoutLocalService.fetchLayout(
 			layout1.getUuid(), stagingGroup.getGroupId(), false);
-
 		Layout stagingLayout2 = _layoutLocalService.fetchLayout(
 			layout2.getUuid(), stagingGroup.getGroupId(), false);
 

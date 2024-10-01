@@ -2402,6 +2402,15 @@ public class PropsValues {
 	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 
+	public static final long UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION));
+
+	public static final long UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION =
+		GetterUtil.getLong(
+			PropsUtil.get(
+				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION));
+
 	public static boolean USER_GROUPS_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_NAME_ALLOW_NUMERIC));

@@ -20,9 +20,9 @@ interface ObjectFoldersSidebarProps {
 	baseResourceURL: string;
 	importObjectFolderURL: string;
 	objectDefinitionsActions: Actions;
-	objectFoldersRequestInfo: ObjectFoldersRequestInfo;
+	objectFoldersRequestInfo?: ObjectFoldersRequestInfo;
 	portletNamespace: string;
-	selectedObjectFolder: ObjectFolder;
+	selectedObjectFolder?: Partial<ObjectFolder>;
 	setModalImportProperties: (
 		value: SetStateAction<ModalImportProperties>
 	) => void;
@@ -44,22 +44,28 @@ export default function ObjectFoldersSideBar({
 }: ObjectFoldersSidebarProps) {
 	const objectFoldersKebabOptions = [];
 
-	objectFoldersKebabOptions.push({
-		label: Liferay.Language.get('export-object-folder'),
-		onClick: () => {
-			const exportObjectFolderURL = createResourceURL(baseResourceURL, {
-				objectFolderId: selectedObjectFolder.id,
-				p_p_resource_id: '/object_definitions/export_object_folder',
-			}).href;
+	if (selectedObjectFolder) {
+		objectFoldersKebabOptions.push({
+			label: Liferay.Language.get('export-object-folder'),
+			onClick: () => {
+				const exportObjectFolderURL = createResourceURL(
+					baseResourceURL,
+					{
+						objectFolderId: selectedObjectFolder.id,
+						p_p_resource_id:
+							'/object_definitions/export_object_folder',
+					}
+				).href;
 
-			exportObjectEntity({
-				exportObjectEntityURL: exportObjectFolderURL,
-				objectEntityId: selectedObjectFolder.id,
-			});
-		},
-		symbolLeft: 'export',
-		value: 'exportObjectFolder',
-	});
+				exportObjectEntity({
+					exportObjectEntityURL: exportObjectFolderURL,
+					objectEntityId: selectedObjectFolder.id as number,
+				});
+			},
+			symbolLeft: 'export',
+			value: 'exportObjectFolder',
+		});
+	}
 
 	if (
 		objectDefinitionsActions?.create &&
@@ -92,85 +98,97 @@ export default function ObjectFoldersSideBar({
 					{Liferay.Language.get('object-folders').toUpperCase()}
 				</span>
 
-				<div className="d-flex">
-					<ClayButton
-						aria-label={Liferay.Language.get('add-object-folder')}
-						className="component-action"
-						displayType="unstyled"
-						monospaced
-						onClick={() =>
-							setShowModal(
-								(
-									previousState: ShowObjectDefinitionsModals
-								) => ({
-									...previousState,
-									addObjectFolder: true,
-								})
-							)
-						}
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
+				{selectedObjectFolder && objectFoldersRequestInfo && (
+					<div className="d-flex">
+						<ClayButton
+							aria-label={Liferay.Language.get(
+								'add-object-folder'
+							)}
+							className="component-action"
+							displayType="unstyled"
+							monospaced
+							onClick={() =>
+								setShowModal(
+									(
+										previousState: ShowObjectDefinitionsModals
+									) => ({
+										...previousState,
+										addObjectFolder: true,
+									})
+								)
+							}
+						>
+							<ClayIcon symbol="plus" />
+						</ClayButton>
 
-					<ClayDropDownWithItems
-						items={objectFoldersKebabOptions}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'object-folder-actions'
-								)}
-								className="component-action"
-								displayType="unstyled"
-								monospaced
-								onClick={(event) => {
-									event?.stopPropagation();
-								}}
-								symbol="ellipsis-v"
-							/>
-						}
-					/>
-				</div>
+						<ClayDropDownWithItems
+							items={objectFoldersKebabOptions}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'object-folder-actions'
+									)}
+									className="component-action"
+									displayType="unstyled"
+									monospaced
+									onClick={(event) => {
+										event?.stopPropagation();
+									}}
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					</div>
+				)}
 			</div>
 
 			<ClayList className="lfr__object-web-view-object-definitions-object-folder-list">
-				{objectFoldersRequestInfo.items.map((currentObjectFolder) => (
-					<ClayList.Item
-						action
-						active={
-							selectedObjectFolder.externalReferenceCode ===
-							currentObjectFolder.externalReferenceCode
-						}
-						className="cursor-pointer lfr__object-web-view-object-definitions-object-folder-list-item"
-						flex
-						key={currentObjectFolder.name}
-						onClick={() => {
-							setSelectedObjectFolder(currentObjectFolder);
+				{objectFoldersRequestInfo &&
+					selectedObjectFolder &&
+					objectFoldersRequestInfo.items.map(
+						(currentObjectFolder) => (
+							<ClayList.Item
+								action
+								active={
+									selectedObjectFolder.externalReferenceCode ===
+									currentObjectFolder.externalReferenceCode
+								}
+								className="cursor-pointer lfr__object-web-view-object-definitions-object-folder-list-item"
+								flex
+								key={currentObjectFolder.name}
+								onClick={() => {
+									setSelectedObjectFolder(
+										currentObjectFolder
+									);
 
-							const currentURL = new URL(window.location.href);
+									const currentURL = new URL(
+										window.location.href
+									);
 
-							currentURL.searchParams.set(
-								'objectFolderName',
-								currentObjectFolder.name
-							);
+									currentURL.searchParams.set(
+										'objectFolderName',
+										currentObjectFolder.name
+									);
 
-							window.history.replaceState(
-								null,
-								'',
-								currentURL.href
-							);
-						}}
-					>
-						<span className="lfr__object-web-view-object-definitions-object-folder-list-item-label">
-							<Text truncate>
-								{stringUtils.getLocalizableLabel(
-									defaultLanguageId,
-									currentObjectFolder.label,
-									currentObjectFolder.name
-								)}
-							</Text>
-						</span>
-					</ClayList.Item>
-				))}
+									window.history.replaceState(
+										null,
+										'',
+										currentURL.href
+									);
+								}}
+							>
+								<span className="lfr__object-web-view-object-definitions-object-folder-list-item-label">
+									<Text truncate>
+										{stringUtils.getLocalizableLabel(
+											defaultLanguageId,
+											currentObjectFolder.label,
+											currentObjectFolder.name
+										)}
+									</Text>
+								</span>
+							</ClayList.Item>
+						)
+					)}
 			</ClayList>
 		</div>
 	);

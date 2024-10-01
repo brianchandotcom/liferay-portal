@@ -195,7 +195,7 @@ export async function getAllObjectDefinitions() {
 }
 
 export async function getAllObjectFolders() {
-	return await fetchJSON<ObjectFolderRequestInfo>(
+	return await fetchJSON<ObjectFolderRequestInfo | undefined>(
 		'/o/object-admin/v1.0/object-folders?pageSize=-1'
 	);
 }

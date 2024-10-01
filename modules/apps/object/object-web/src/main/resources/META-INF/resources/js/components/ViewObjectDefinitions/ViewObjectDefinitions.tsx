@@ -6,7 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {API, Card, stringUtils} from '@liferay/object-js-components-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {SetStateAction, useCallback, useEffect, useState} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
@@ -101,8 +101,9 @@ export default function ViewObjectDefinitions({
 	const [objectDefinitionsActions, setObjectDefinitionActions] =
 		useState<Actions>();
 
-	const [objectFoldersRequestInfo, setObjectFoldersRequestInfo] =
-		useState<ObjectFoldersRequestInfo>(initialValues);
+	const [objectFoldersRequestInfo, setObjectFoldersRequestInfo] = useState<
+		ObjectFoldersRequestInfo | undefined
+	>(initialValues);
 
 	const [reloadFDS, setReloadFDS] = useState(false);
 
@@ -110,7 +111,7 @@ export default function ViewObjectDefinitions({
 		useState<ObjectDefinition>();
 
 	const [selectedObjectFolder, setSelectedObjectFolder] =
-		useState<Partial<ObjectFolder>>(initialValues);
+		useState<Partial<ObjectFolder | undefined>>(initialValues);
 
 	const [showModal, setShowModal] = useState<ShowObjectDefinitionsModals>({
 		addObjectDefinition: false,
@@ -148,12 +149,13 @@ export default function ViewObjectDefinitions({
 			/>
 		);
 	}
-	const getURL = () => {
+
+	const getURL = (selectedObjectFolderExternalReferenceCode: string) => {
 		let url: string = '';
 
-		if (selectedObjectFolder.externalReferenceCode) {
+		if (selectedObjectFolderExternalReferenceCode) {
 			url = `/o/object-admin/v1.0/object-definitions?${stringUtils.stringToURLParameterFormat(
-				`filter=objectFolderExternalReferenceCode eq '${selectedObjectFolder.externalReferenceCode}'`
+				`filter=objectFolderExternalReferenceCode eq '${selectedObjectFolderExternalReferenceCode}'`
 			)}`;
 		}
 
@@ -227,7 +229,10 @@ export default function ViewObjectDefinitions({
 	};
 
 	useEffect(() => {
-		if (objectFoldersRequestInfo?.items.length > 1) {
+		if (
+			objectFoldersRequestInfo &&
+			objectFoldersRequestInfo?.items.length > 1
+		) {
 			const itemsActions = [...objectDefinitionsFDSActionDropdownItems];
 
 			itemsActions.push({
@@ -253,28 +258,37 @@ export default function ViewObjectDefinitions({
 		const makeFetch = async () => {
 			const allObjectFolders = await API.getAllObjectFolders();
 
-			setObjectFoldersRequestInfo(allObjectFolders);
+			if (allObjectFolders) {
+				setObjectFoldersRequestInfo(allObjectFolders);
 
-			const objectDefinitions = await API.getAllObjectDefinitions();
+				const objectDefinitions = await API.getAllObjectDefinitions();
 
-			setObjectDefinitionActions(objectDefinitions.actions);
+				setObjectDefinitionActions(objectDefinitions.actions);
 
-			const currentURL = new URL(window.location.href);
+				const currentURL = new URL(window.location.href);
 
-			const objectFolderNameSearchParam =
-				currentURL.searchParams.get('objectFolderName');
+				const objectFolderNameSearchParam =
+					currentURL.searchParams.get('objectFolderName');
 
-			const newSelectedObjectFolder = allObjectFolders.items.find(
-				(objectFolder) =>
-					objectFolder.name === objectFolderNameSearchParam
-			);
+				const newSelectedObjectFolder = allObjectFolders.items.find(
+					(objectFolder) =>
+						objectFolder.name === objectFolderNameSearchParam
+				);
 
-			if (newSelectedObjectFolder) {
-				setSelectedObjectFolder(newSelectedObjectFolder);
+				if (newSelectedObjectFolder) {
+					setSelectedObjectFolder(newSelectedObjectFolder);
+				}
+				else {
+					setDefaultToSearchParams(allObjectFolders, currentURL);
+				}
+
+				setLoading(false);
+
+				return;
 			}
-			else {
-				setDefaultToSearchParams(allObjectFolders, currentURL);
-			}
+
+			setObjectFoldersRequestInfo(undefined);
+			setSelectedObjectFolder(undefined);
 
 			setLoading(false);
 		};
@@ -314,43 +328,45 @@ export default function ViewObjectDefinitions({
 							}
 							objectFoldersRequestInfo={objectFoldersRequestInfo}
 							portletNamespace={portletNamespace}
-							selectedObjectFolder={
-								selectedObjectFolder as ObjectFolder
-							}
+							selectedObjectFolder={selectedObjectFolder}
 							setModalImportProperties={setModalImportProperties}
-							setSelectedObjectFolder={setSelectedObjectFolder}
+							setSelectedObjectFolder={
+								setSelectedObjectFolder as (
+									value: SetStateAction<Partial<ObjectFolder>>
+								) => void
+							}
 							setShowModal={setShowModal}
 						/>
+
 						<Card
 							className="lfr__object-web-view-object-definitions-card"
 							customHeader={
 								<ObjectFolderCardHeader
-									externalReferenceCode={
-										selectedObjectFolder.externalReferenceCode
-									}
 									items={
-										getObjectFolderActions({
-											actions: {
-												objectDefinitionActions:
-													objectDefinitionsActions as Actions,
-												objectFolderActions:
-													selectedObjectFolder.actions as Actions,
-											},
-											baseResourceURL,
-											importObjectDefinitionURL,
-											objectFolderExternalReferenceCode:
-												selectedObjectFolder.externalReferenceCode as string,
-											objectFolderId:
-												selectedObjectFolder.id as number,
-											objectFolderPermissionsURL,
-											portletNamespace,
-											setModalImportProperties,
-											setShowModal,
-										}) as IItem[]
+										selectedObjectFolder
+											? (getObjectFolderActions({
+													actions: {
+														objectDefinitionActions:
+															objectDefinitionsActions as Actions,
+														objectFolderActions:
+															selectedObjectFolder?.actions as Actions,
+													},
+													baseResourceURL,
+													importObjectDefinitionURL,
+													objectFolderExternalReferenceCode:
+														selectedObjectFolder?.externalReferenceCode as string,
+													objectFolderId:
+														selectedObjectFolder?.id ??
+														0,
+													objectFolderPermissionsURL,
+													portletNamespace,
+													setModalImportProperties,
+													setShowModal,
+												}) as IItem[])
+											: []
 									}
-									label={selectedObjectFolder.label}
 									modelBuilderURL={modelBuilderURL}
-									name={selectedObjectFolder.name}
+									selectedObjectFolder={selectedObjectFolder}
 								/>
 							}
 							viewMode="no-header-border"
@@ -361,130 +377,156 @@ export default function ViewObjectDefinitions({
 									size="sm"
 								/>
 							) : (
-								<FrontendDataSet
-									{...defaultFDSDataSetProps}
-									apiURL={getURL()}
-									creationMenu={objectDefinitionsCreationMenu}
-									customDataRenderers={{
-										objectDefinitionLabelDataRenderer,
-										objectDefinitionModifiedDateDataRenderer,
-										objectDefinitionSystemDataRenderer,
-										statusDataRenderer,
-									}}
-									emptyState={{
-										description: Liferay.Language.get(
-											'create-your-first-object-or-import-an-existing-one-to-start-working-with-object-folders'
-										),
-										image: '/states/empty_state.svg',
-										title: Liferay.Language.get(
-											'no-objects-created-yet'
-										),
-									}}
-									id={objectDefinitionsFDSName}
-									itemsActions={updatedFDSItemsActions}
-									key={
-										selectedObjectFolder.externalReferenceCode
-									}
-									namespace="_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_"
-									onActionDropdownItemClick={
-										onActionDropdownItemClick
-									}
-									portletId="com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet"
-									sidePanelId="none"
-									style="fluid"
-									views={[
-										{
-											contentRenderer: 'table',
-											label: 'Table',
-											name: 'table',
-											schema: {
-												fields: [
-													{
-														contentRenderer:
-															'objectDefinitionLabelDataRenderer',
-														expand: false,
-														fieldName: 'label',
-														label: Liferay.Language.get(
-															'label'
-														),
-														localizeLabel: true,
-														sortable: true,
-													},
-													{
-														expand: false,
-														fieldName: 'scope',
-														label: Liferay.Language.get(
-															'scope'
-														),
-														localizeLabel: true,
-														sortable: false,
-													},
-													{
-														contentRenderer:
-															'objectDefinitionSystemDataRenderer',
-														expand: false,
-														fieldName: 'system',
-														label: Liferay.Language.get(
-															'system'
-														),
-														localizeLabel: true,
-														sortable: false,
-													},
-													{
-														contentRenderer:
-															'objectDefinitionModifiedDateDataRenderer',
-														expand: false,
-														fieldName:
-															'dateModified',
-														label: Liferay.Language.get(
-															'modified-date'
-														),
-														localizeLabel: true,
-														sortable: true,
-													},
-													{
-														contentRenderer:
-															'statusDataRenderer',
-														expand: false,
-														fieldName: 'status',
-														label: Liferay.Language.get(
-															'status'
-														),
-														localizeLabel: true,
-														sortable: false,
-													},
-												],
+								<>
+									<FrontendDataSet
+										{...defaultFDSDataSetProps}
+										apiURL={
+											selectedObjectFolder
+												? getURL(
+														selectedObjectFolder.externalReferenceCode as string
+													)
+												: undefined
+										}
+										creationMenu={
+											selectedObjectFolder
+												? objectDefinitionsCreationMenu
+												: undefined
+										}
+										customDataRenderers={{
+											objectDefinitionLabelDataRenderer,
+											objectDefinitionModifiedDateDataRenderer,
+											objectDefinitionSystemDataRenderer,
+											statusDataRenderer,
+										}}
+										emptyState={{
+											description: Liferay.Language.get(
+												'create-your-first-object-or-import-an-existing-one-to-start-working-with-object-folders'
+											),
+											image: '/states/empty_state.svg',
+											title: Liferay.Language.get(
+												'no-objects-created-yet'
+											),
+										}}
+										id={objectDefinitionsFDSName}
+										itemsActions={updatedFDSItemsActions}
+										key={
+											selectedObjectFolder
+												? selectedObjectFolder.externalReferenceCode
+												: 'viewObjectDefinitionsEmptyFDS'
+										}
+										namespace="_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_"
+										onActionDropdownItemClick={
+											onActionDropdownItemClick
+										}
+										portletId="com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet"
+										sidePanelId="none"
+										style="fluid"
+										views={[
+											{
+												contentRenderer: 'table',
+												label: 'Table',
+												name: 'table',
+												schema: {
+													fields: [
+														{
+															contentRenderer:
+																'objectDefinitionLabelDataRenderer',
+															expand: false,
+															fieldName: 'label',
+															label: Liferay.Language.get(
+																'label'
+															),
+															localizeLabel: true,
+															sortable: true,
+														},
+														{
+															expand: false,
+															fieldName: 'scope',
+															label: Liferay.Language.get(
+																'scope'
+															),
+															localizeLabel: true,
+															sortable: false,
+														},
+														{
+															contentRenderer:
+																'objectDefinitionSystemDataRenderer',
+															expand: false,
+															fieldName: 'system',
+															label: Liferay.Language.get(
+																'system'
+															),
+															localizeLabel: true,
+															sortable: false,
+														},
+														{
+															contentRenderer:
+																'objectDefinitionModifiedDateDataRenderer',
+															expand: false,
+															fieldName:
+																'dateModified',
+															label: Liferay.Language.get(
+																'modified-date'
+															),
+															localizeLabel: true,
+															sortable: true,
+														},
+														{
+															contentRenderer:
+																'statusDataRenderer',
+															expand: false,
+															fieldName: 'status',
+															label: Liferay.Language.get(
+																'status'
+															),
+															localizeLabel: true,
+															sortable: false,
+														},
+													],
+												},
+												thumbnail: 'table',
 											},
-											thumbnail: 'table',
-										},
-									]}
-								/>
+										]}
+									/>
+								</>
 							)}
 						</Card>
 					</>
 				)}
 			</div>
 
-			<ViewObjectDefinitionsModals
-				baseResourceURL={baseResourceURL}
-				deletedObjectDefinition={deletedObjectDefinition}
-				learnResourceContext={learnResourceContext}
-				modalImportProperties={modalImportProperties}
-				moveObjectDefinition={moveObjectDefinition}
-				nameMaxLength={nameMaxLength}
-				objectDefinitionsStorageTypes={objectDefinitionsStorageTypes}
-				objectFoldersRequestInfo={objectFoldersRequestInfo}
-				portletNamespace={portletNamespace}
-				selectedObjectDefinition={selectedObjectDefinition}
-				selectedObjectFolder={selectedObjectFolder}
-				setDeletedObjectDefinition={setDeletedObjectDefinition}
-				setMoveObjectDefinition={setMoveObjectDefinition}
-				setObjectFoldersRequestInfo={setObjectFoldersRequestInfo}
-				setReloadFDS={setReloadFDS}
-				setSelectedObjectFolder={setSelectedObjectFolder}
-				setShowModal={setShowModal}
-				showModal={showModal}
-			/>
+			{objectFoldersRequestInfo && selectedObjectFolder && (
+				<ViewObjectDefinitionsModals
+					baseResourceURL={baseResourceURL}
+					deletedObjectDefinition={deletedObjectDefinition}
+					learnResourceContext={learnResourceContext}
+					modalImportProperties={modalImportProperties}
+					moveObjectDefinition={moveObjectDefinition}
+					nameMaxLength={nameMaxLength}
+					objectDefinitionsStorageTypes={
+						objectDefinitionsStorageTypes
+					}
+					objectFoldersRequestInfo={objectFoldersRequestInfo}
+					portletNamespace={portletNamespace}
+					selectedObjectDefinition={selectedObjectDefinition}
+					selectedObjectFolder={selectedObjectFolder}
+					setDeletedObjectDefinition={setDeletedObjectDefinition}
+					setMoveObjectDefinition={setMoveObjectDefinition}
+					setObjectFoldersRequestInfo={
+						setObjectFoldersRequestInfo as React.Dispatch<
+							React.SetStateAction<ObjectFoldersRequestInfo>
+						>
+					}
+					setReloadFDS={setReloadFDS}
+					setSelectedObjectFolder={
+						setSelectedObjectFolder as React.Dispatch<
+							React.SetStateAction<Partial<ObjectFolder>>
+						>
+					}
+					setShowModal={setShowModal}
+					showModal={showModal}
+				/>
+			)}
 		</>
 	);
 }

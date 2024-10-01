@@ -70,7 +70,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Callback Request"
@@ -88,12 +89,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Request a Support Engineer to contact you as soon as possible."
@@ -147,7 +150,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Thank you for your submission."
@@ -170,8 +174,10 @@
 												"key": "callback-form-entry-sla-text",
 												"siteKey": "[$GROUP_KEY$]"
 											},
-											"fragmentConfig": {},
-											"fragmentFields": [],
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"marginBottom": "5"
 											},
@@ -185,9 +191,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "nm",
 												"buttonType": "primary",
-												"type": "link",
-												"buttonSize": "nm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{

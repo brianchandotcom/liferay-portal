@@ -10,9 +10,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.osb.faro.admin.web.internal.model.FaroProjectAdminDisplay;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -76,6 +78,32 @@ public class FaroAdminDisplayContext {
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "deactivate-project"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setDisabled(true);
+				dropdownItem.setHref(
+					StringBundler.concat(
+						"javascript:Liferay.Util.openConfirmModal({message: '",
+						LanguageUtil.get(
+							_httpServletRequest,
+							"are-you-sure-you-want-to-disconnect-the-data-" +
+								"sources"),
+						"',onConfirm: (isConfirmed) => { if(isConfirmed) {",
+						"location.href='",
+						ActionURLBuilder.createActionURL(
+							_renderResponse
+						).setActionName(
+							"/faro_admin/disconnect_data_sources"
+						).setParameter(
+							"faroProjectId",
+							faroProjectAdminDisplay.getFaroProjectId()
+						).buildString(),
+						"'}}})"));
+				dropdownItem.setIcon("logout");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "disconnect-data-sources"));
 			}
 		).add(
 			dropdownItem -> {

@@ -231,6 +231,7 @@ export default function TopperItemActions({disabled, item}) {
 		<>
 			<ClayDropDown
 				alignmentPosition={Align.BottomRight}
+				closeOnClick
 				hasLeftSymbols
 				menuElementAttrs={{
 					containerProps: {

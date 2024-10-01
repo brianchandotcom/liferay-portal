@@ -370,6 +370,18 @@ public class DataSourceController extends BaseFaroController {
 		contactsEngineClient.disconnectDataSource(faroProject, id);
 	}
 
+	@Path("/disconnect-all")
+	@POST
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public void disconnectAll(@PathParam("groupId") long groupId)
+		throws Exception {
+
+		FaroProject faroProject =
+			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
+		contactsEngineClient.disconnectDataSources(faroProject);
+	}
+
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)

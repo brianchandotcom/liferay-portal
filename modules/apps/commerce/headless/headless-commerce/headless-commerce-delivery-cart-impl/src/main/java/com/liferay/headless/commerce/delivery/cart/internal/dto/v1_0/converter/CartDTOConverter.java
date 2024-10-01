@@ -25,10 +25,13 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -80,6 +83,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setAccount(commerceOrder::getCommerceAccountName);
 				setAccountId(commerceOrder::getCommerceAccountId);
 				setAuthor(commerceOrder::getUserName);
+				setBillingAddress(
+					() -> _toAddress(
+						commerceOrder.getBillingAddress(), locale));
 				setBillingAddressExternalReferenceCode(
 					() -> {
 						CommerceAddress billingCommerceAddress =
@@ -175,6 +181,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
 				setRequestedDeliveryDate(
 					commerceOrder::getRequestedDeliveryDate);
+				setShippingAddress(
+					() -> _toAddress(
+						commerceOrder.getShippingAddress(), locale));
 				setShippingAddressExternalReferenceCode(
 					() -> {
 						CommerceAddress shippingCommerceAddress =
@@ -601,6 +610,67 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		summary.setTotalDiscountValueFormatted(
 			() -> _formatPrice(
 				finalTotalDiscountAmount, commerceCurrency, locale));
+	}
+
+	private Address _toAddress(CommerceAddress commerceAddress, Locale locale) {
+		if (commerceAddress == null) {
+			return null;
+		}
+
+		return new Address() {
+			{
+				setCity(commerceAddress::getCity);
+				setCountry(
+					() -> {
+						Country commerceAddressCountry =
+							commerceAddress.getCountry();
+
+						return commerceAddressCountry.getName(locale);
+					});
+				setCountryISOCode(
+					() -> {
+						Country commerceAddressCountry =
+							commerceAddress.getCountry();
+
+						return commerceAddressCountry.getA2();
+					});
+				setDescription(commerceAddress::getDescription);
+				setExternalReferenceCode(
+					commerceAddress::getExternalReferenceCode);
+				setId(commerceAddress::getCommerceAddressId);
+				setLatitude(commerceAddress::getLatitude);
+				setLongitude(commerceAddress::getLongitude);
+				setName(commerceAddress::getName);
+				setPhoneNumber(commerceAddress::getPhoneNumber);
+				setRegion(
+					() -> {
+						Region commerceAddressRegion =
+							commerceAddress.getRegion();
+
+						if (commerceAddressRegion == null) {
+							return null;
+						}
+
+						return commerceAddressRegion.getTitle(
+							_language.getLanguageId(locale));
+					});
+				setRegionISOCode(
+					() -> {
+						Region commerceAddressRegion =
+							commerceAddress.getRegion();
+
+						if (commerceAddressRegion == null) {
+							return null;
+						}
+
+						return commerceAddressRegion.getRegionCode();
+					});
+				setStreet1(commerceAddress::getStreet1);
+				setStreet2(commerceAddress::getStreet2);
+				setStreet3(commerceAddress::getStreet3);
+				setZip(commerceAddress::getZip);
+			}
+		};
 	}
 
 	private Status _toStatus(

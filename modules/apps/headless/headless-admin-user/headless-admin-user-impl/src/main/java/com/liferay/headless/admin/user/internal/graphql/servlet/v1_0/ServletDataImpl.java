@@ -854,6 +854,11 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"deleteUserAccountByExternalReferenceCode"));
 					put(
+						"mutation#patchUserAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"patchUserAccountByExternalReferenceCode"));
+					put(
 						"mutation#updateUserAccountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,

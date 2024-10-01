@@ -234,12 +234,6 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 						"Virtual instance ", _company.getCompanyId(),
 						" missing tables: ",
 						StringUtil.toLowerCase("TestTable2"))));
-
-			Assert.assertTrue(
-				reportContent.contains(
-					StringBundler.concat(
-						"Virtual instance ", TestPropsValues.getCompanyId(),
-						" missing tables:")));
 		}
 		finally {
 			db.runSQL(

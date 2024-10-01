@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -148,5 +148,31 @@ scheduleTest(
 			articleDate,
 			{workflow: true}
 		);
+	}
+);
+
+scheduleTest(
+	'Web content can be saved as draft',
+	{
+		tag: '@LPD-37754',
+	},
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const articleTitle = 'Web Content Draft Title';
+
+		await journalEditArticlePage.saveAsDraftWithPermissions(articleTitle);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('link', {exact: true, name: articleTitle})
+		).toBeVisible();
+
+		await expect(
+			page.locator(
+				'[id="_com_liferay_journal_web_portlet_JournalPortlet_articles_1"] span.label-item'
+			)
+		).toHaveText('Draft');
 	}
 );

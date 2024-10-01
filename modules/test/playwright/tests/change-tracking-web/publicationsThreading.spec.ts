@@ -91,7 +91,7 @@ test('LPS-117642 NoSuchTagException throws when adding a web content with tag wi
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: page.getByRole('link', {
+		target: page.getByRole('button', {
 			name: 'Categorization',
 		}),
 		trigger: page.getByTitle('Actions', {exact: true}),

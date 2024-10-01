@@ -41,27 +41,7 @@ const TableFieldsHeader = () => (
 	</ClayTable.Head>
 );
 
-const createAnyOfGroups = (dbFields) => {
-	const relationshipGroups = {};
-
-	dbFields.required.forEach((dbField) => {
-		const {anyOfGroup, name} = dbField;
-
-		if (anyOfGroup) {
-			if (!relationshipGroups[anyOfGroup]) {
-				relationshipGroups[anyOfGroup] = [];
-			}
-
-			relationshipGroups[anyOfGroup].push(name);
-		}
-	});
-
-	return relationshipGroups;
-};
-
-const anyOfGroupNotFilled = (dbFields, fieldsSelections) => {
-	const relationshipGroups = createAnyOfGroups(dbFields);
-
+const anyOfGroupNotFilled = (fieldsSelections, relationshipGroups) => {
 	return Object.keys(relationshipGroups).some(
 		(group) =>
 			!relationshipGroups[group].some((value) =>
@@ -70,9 +50,7 @@ const anyOfGroupNotFilled = (dbFields, fieldsSelections) => {
 	);
 };
 
-const isAnyOfValid = (dbField, dbFields, fieldsSelections) => {
-	const relationshipGroups = createAnyOfGroups(dbFields);
-
+const isAnyOfValid = (dbField, fieldsSelections, relationshipGroups) => {
 	return Object.keys(fieldsSelections).some(
 		(selectedField) =>
 			relationshipGroups[dbField.anyOfGroup] &&
@@ -97,6 +75,23 @@ function ImportForm({
 	const [fieldsSelections, setFieldsSelections] = useState({});
 	const [mappingsToBeEvaluated, setMappingsToBeEvaluated] =
 		useState(mappedFields);
+	const relationshipGroups = useMemo(() => {
+		const groups = {};
+
+		dbFields.required.forEach((dbField) => {
+			const {anyOfGroup, name} = dbField;
+
+			if (anyOfGroup) {
+				if (!groups[anyOfGroup]) {
+					groups[anyOfGroup] = [];
+				}
+
+				groups[anyOfGroup].push(name);
+			}
+		});
+
+		return groups;
+	}, [dbFields]);
 	const useTemplateMappingRef = useRef();
 
 	const formIsValid = useMemo(() => {
@@ -113,9 +108,9 @@ function ImportForm({
 
 		return (
 			!requiredFieldNotFilled &&
-			!anyOfGroupNotFilled(dbFields, fieldsSelections)
+			!anyOfGroupNotFilled(fieldsSelections, relationshipGroups)
 		);
-	}, [fieldsSelections, dbFields]);
+	}, [dbFields, fieldsSelections, relationshipGroups]);
 
 	const updateFieldMapping = (fileField, dbFieldName) => {
 		setFieldsSelections((prevSelections) => {
@@ -302,8 +297,8 @@ function ImportForm({
 												formEvaluated={formEvaluated}
 												isAnyOfValid={isAnyOfValid(
 													dbField,
-													dbFields,
-													fieldsSelections
+													fieldsSelections,
+													relationshipGroups
 												)}
 												key={dbField.name}
 												portletNamespace={
@@ -327,8 +322,8 @@ function ImportForm({
 													] ||
 													('' &&
 														!anyOfGroupNotFilled(
-															dbFields,
-															fieldsSelections
+															fieldsSelections,
+															relationshipGroups
 														))
 												}
 												updateFieldMapping={(

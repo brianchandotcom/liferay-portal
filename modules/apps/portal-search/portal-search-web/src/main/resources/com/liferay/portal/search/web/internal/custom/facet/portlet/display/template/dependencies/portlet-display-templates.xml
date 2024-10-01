@@ -17,4 +17,12 @@
 		<script-file>com/liferay/portal/search/web/internal/custom/facet/portlet/display/template/dependencies/portlet_display_template_label.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
+	<template>
+		<template-key>custom-facet-checkbox-ftl</template-key>
+		<name>portlet-display-template-name-checkbox-layout-multiselect</name>
+		<description>portlet-display-template-description-facet-checkbox</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/search/web/internal/custom/facet/portlet/display/template/dependencies/portlet_display_template_checkbox.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
 </root>

@@ -29,4 +29,10 @@ public interface CustomFacetPortletInstanceConfiguration {
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 
+	@Meta.AD(
+		deflt = "custom-facet-checkbox-ftl",
+		name = "custom-facet-template-key-default", required = false
+	)
+	public String customFacetTemplateKeyDefault();
+
 }

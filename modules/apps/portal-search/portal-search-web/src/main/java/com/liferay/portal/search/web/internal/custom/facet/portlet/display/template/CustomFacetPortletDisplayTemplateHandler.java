@@ -5,11 +5,13 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.portlet.display.template;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
 import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortlet;
@@ -22,13 +24,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Tan
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration",
 	property = "javax.portlet.name=" + CustomFacetPortletKeys.CUSTOM_FACET,
 	service = TemplateHandler.class
 )
@@ -38,6 +43,12 @@ public class CustomFacetPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return CustomFacetPortlet.class.getName();
+	}
+
+	@Override
+	public String getDefaultTemplateKey() {
+		return _customFacetPortletInstanceConfiguration.
+			customFacetTemplateKeyDefault();
 	}
 
 	@Override
@@ -97,11 +108,22 @@ public class CustomFacetPortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_customFacetPortletInstanceConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CustomFacetPortletInstanceConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/portal/search/web/internal/custom/facet/portlet" +
 			"/display/template/dependencies/portlet-display-templates.xml";
 	}
+
+	private volatile CustomFacetPortletInstanceConfiguration
+		_customFacetPortletInstanceConfiguration;
 
 	@Reference
 	private Language _language;

@@ -167,7 +167,7 @@ test.describe('Numeric input field', () => {
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Size']);
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Weight']);
 
 		// Check Mark as Required field
 
@@ -182,7 +182,7 @@ test.describe('Numeric input field', () => {
 
 		const requireIcon = page
 			.locator('label')
-			.filter({hasText: 'Lemon Size'})
+			.filter({hasText: 'Lemon Weight'})
 			.locator('svg.reference-mark');
 
 		await expect(requireIcon).toBeAttached();
@@ -193,12 +193,12 @@ test.describe('Numeric input field', () => {
 			fieldLabel: 'Label',
 			fragmentId: numericInputId,
 			tab: 'General',
-			value: 'Lemon size in grams',
+			value: 'Lemon weight in grams',
 		});
 
 		const label = page
 			.locator('label')
-			.filter({hasText: 'Lemon size in grams'});
+			.filter({hasText: 'Lemon weight in grams'});
 
 		await expect(label).not.toHaveClass(/sr-only/);
 
@@ -232,11 +232,11 @@ test.describe('Numeric input field', () => {
 			fieldLabel: 'Help Text',
 			fragmentId: numericInputId,
 			tab: 'General',
-			value: 'The lemon size must be in grams',
+			value: 'The lemon weight must be in grams',
 		});
 
 		await expect(
-			page.getByText('The lemon size must be in grams')
+			page.getByText('The lemon weight must be in grams')
 		).toBeVisible();
 
 		// Check Placeholder field
@@ -245,11 +245,11 @@ test.describe('Numeric input field', () => {
 			fieldLabel: 'Placeholder',
 			fragmentId: numericInputId,
 			tab: 'General',
-			value: 'Lemon size in grams',
+			value: 'Lemon weight in grams',
 		});
 
 		await expect(
-			page.getByPlaceholder('Lemon size in grams')
+			page.getByPlaceholder('Lemon weight in grams')
 		).toBeVisible();
 	});
 
@@ -278,7 +278,7 @@ test.describe('Numeric input field', () => {
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Size']);
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Weight']);
 
 		await pageEditorPage.publishPage();
 
@@ -288,25 +288,25 @@ test.describe('Numeric input field', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		const lemonSizeInput = page.getByLabel('Lemon size');
+		const lemonWeightInput = page.getByLabel('Lemon Weight');
 
-		expect(lemonSizeInput).toHaveAttribute('type', 'number');
-		expect(lemonSizeInput).toHaveAttribute('max');
-		expect(lemonSizeInput).toHaveAttribute('min');
+		expect(lemonWeightInput).toHaveAttribute('type', 'number');
+		expect(lemonWeightInput).toHaveAttribute('max');
+		expect(lemonWeightInput).toHaveAttribute('min');
 
 		// Submit the form with a wrong value
 
-		await lemonSizeInput.fill('-1');
+		await lemonWeightInput.fill('-1');
 
 		await page.getByText('Submit', {exact: true}).click();
 
 		await expect(
-			page.getByText('The lemon size must be greater than 0')
+			page.getByText('The lemon weight must be greater than 0')
 		).toBeVisible();
 
 		// Submit the form with a correct value
 
-		await lemonSizeInput.fill('10');
+		await lemonWeightInput.fill('10');
 
 		await page.getByText('Submit', {exact: true}).click();
 

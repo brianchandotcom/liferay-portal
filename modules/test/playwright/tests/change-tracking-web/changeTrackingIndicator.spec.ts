@@ -87,7 +87,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 		ctCollection.id
 	);
 
-	await featureFlagsInstanceSettingsPage.goto();
+	await featureFlagsInstanceSettingsPage.goto('Release');
 
 	await featureFlagsInstanceSettingsPage.search('LPD-20131');
 
@@ -111,7 +111,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 		page.locator('li').filter({hasText: ctCollection.name})
 	).toBeVisible();
 
-	await featureFlagsInstanceSettingsPage.goto();
+	await featureFlagsInstanceSettingsPage.goto('Release');
 
 	await featureFlagsInstanceSettingsPage.search('LPD-20131');
 

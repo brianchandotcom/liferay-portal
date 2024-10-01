@@ -11,12 +11,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -81,43 +79,26 @@ public class UpgradeProcessTest {
 
 	@Test
 	public void testAddMultipleTemporaryIndex() throws Exception {
-		String tempIndexName1 = "IX_TEMP_" + (_tempIndexCounter.get() + 1);
-		String tempIndexName2 = "IX_TEMP_" + (_tempIndexCounter.get() + 2);
-
-		String tempIndexName3 = "IX_TEMP_" + (_tempIndexCounter.get() + 3);
-		String tempIndexName4 = "IX_TEMP_" + (_tempIndexCounter.get() + 4);
-
 		UpgradeProcess upgradeProcess = new UpgradeProcess() {
 
 			@Override
 			protected void doUpgrade() throws Exception {
+				String tempIndexName1 =
+					"IX_TEMP_" + (_tempIndexCounter.get() + 1);
+				String tempIndexName2 =
+					"IX_TEMP_" + (_tempIndexCounter.get() + 2);
+
 				try (SafeCloseable safeCloseable1 = addTemporaryIndex(
 						TABLE_NAME, false, "typeVarchar");
 					SafeCloseable safeCloseable2 = addTemporaryIndex(
 						TABLE_NAME, false, "id", "typeVarchar")) {
 
-					if (CompanyThreadLocal.getCompanyId() ==
-							PortalUtil.getDefaultCompanyId()) {
-
-						Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName1));
-						Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName2));
-					}
-					else {
-						Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName3));
-						Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName4));
-					}
+					Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName1));
+					Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName2));
 				}
 
-				if (CompanyThreadLocal.getCompanyId() ==
-						PortalUtil.getDefaultCompanyId()) {
-
-					Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName1));
-					Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName2));
-				}
-				else {
-					Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName3));
-					Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName4));
-				}
+				Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName1));
+				Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName2));
 			}
 
 		};
@@ -127,35 +108,20 @@ public class UpgradeProcessTest {
 
 	@Test
 	public void testAddTemporaryIndex() throws Exception {
-		String tempIndexName1 = "IX_TEMP_" + (_tempIndexCounter.get() + 1);
-
-		String tempIndexName2 = "IX_TEMP_" + (_tempIndexCounter.get() + 2);
-
 		UpgradeProcess upgradeProcess = new UpgradeProcess() {
 
 			@Override
 			protected void doUpgrade() throws Exception {
+				String tempIndexName =
+					"IX_TEMP_" + (_tempIndexCounter.get() + 1);
+
 				try (SafeCloseable safeCloseable = addTemporaryIndex(
 						TABLE_NAME, false, "typeVarchar")) {
 
-					if (CompanyThreadLocal.getCompanyId() ==
-							PortalUtil.getDefaultCompanyId()) {
-
-						Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName1));
-					}
-					else {
-						Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName2));
-					}
+					Assert.assertTrue(hasIndex(TABLE_NAME, tempIndexName));
 				}
 
-				if (CompanyThreadLocal.getCompanyId() ==
-						PortalUtil.getDefaultCompanyId()) {
-
-					Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName1));
-				}
-				else {
-					Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName2));
-				}
+				Assert.assertFalse(hasIndex(TABLE_NAME, tempIndexName));
 			}
 
 		};

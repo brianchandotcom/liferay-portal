@@ -1,3 +1,5 @@
+import org.eclipse.transformer.cli.JakartaTransformerCLI
+
 buildscript {
 	dependencies {
 		classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
@@ -24,7 +26,7 @@ jar {
 
 jarTransformed {
 	doLast {
-		org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath}))
+		JakartaTransformerCLI.runWith(new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath}))
 	}
 
 	mustRunAfter generatePomFileForMavenPublication

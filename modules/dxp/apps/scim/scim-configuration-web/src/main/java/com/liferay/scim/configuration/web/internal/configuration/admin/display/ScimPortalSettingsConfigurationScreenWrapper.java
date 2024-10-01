@@ -209,7 +209,7 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					oAuth2Authorization.getAccessTokenExpirationDate();
 
 				httpServletRequest.setAttribute(
-					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION,
+					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DATE,
 					dateFormat.format(accessTokenExpirationDate));
 
 				httpServletRequest.setAttribute(

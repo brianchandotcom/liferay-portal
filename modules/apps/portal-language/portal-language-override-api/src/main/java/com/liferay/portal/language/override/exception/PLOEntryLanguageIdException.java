@@ -7,7 +7,6 @@ package com.liferay.portal.language.override.exception;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 
@@ -18,12 +17,14 @@ public class PLOEntryLanguageIdException extends PortalException {
 
 	public static class MustBeAvailable extends PLOEntryLanguageIdException {
 
-		public MustBeAvailable(String languageId) {
+		public MustBeAvailable(
+			String[] availableLanguageIds, String languageId) {
+
 			super(
 				StringBundler.concat(
 					"Language ID \"", languageId,
 					"\" is not one of the available language IDs: ",
-					Arrays.toString(PropsValues.LOCALES)));
+					Arrays.toString(availableLanguageIds)));
 		}
 
 	}

@@ -60,6 +60,10 @@
 								"value": "paymentMethod"
 							},
 							{
+								"label": "purchase-order-document",
+								"value": "purchaseOrderDocument"
+							},
+							{
 								"label": "purchase-order-number",
 								"value": "purchaseOrderNumber"
 							},

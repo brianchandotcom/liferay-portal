@@ -46,6 +46,12 @@ function resolveCartsByAccountIdAndChannelIdPath(
 
 export default function Cart(basePath) {
 	return {
+		addAttachment: (cartId, json) =>
+			AJAX.POST(
+				`${resolveCartsPath(basePath, cartId)}/attachments/by-base64`,
+				json
+			),
+
 		cartsByAccountIdAndChannelIdURL: (accountId, channelId) =>
 			resolveCartsByAccountIdAndChannelIdPath(
 				basePath,
@@ -69,6 +75,11 @@ export default function Cart(basePath) {
 			AJAX.POST(
 				`${resolveCartsPath(basePath, cartId)}/coupon-code`,
 				json
+			),
+
+		deleteAttachment: (cartId, attachmentId) =>
+			AJAX.DELETE(
+				`${resolveCartsPath(basePath, cartId)}/attachments/${attachmentId}`
 			),
 
 		deleteCartById: (cartId) =>

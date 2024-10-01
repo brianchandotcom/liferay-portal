@@ -23,12 +23,14 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -67,6 +70,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -293,6 +297,26 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 			return Collections.emptyMap();
 		}
+		else if (field.equals("purchaseOrderDocument")) {
+			List<FileEntry> attachmentFileEntries =
+				commerceOrder.getAttachmentFileEntries(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			if (attachmentFileEntries.isEmpty()) {
+				return Collections.emptyMap();
+			}
+
+			FileEntry fileEntry = attachmentFileEntries.get(0);
+
+			return HashMapBuilder.<String, Object>put(
+				"downloadURL",
+				DLURLHelperUtil.getDownloadURL(
+					fileEntry, fileEntry.getLatestFileVersion(), null,
+					StringPool.BLANK, true, true)
+			).put(
+				"value", fileEntry.getFileEntryId()
+			).build();
+		}
 		else if (field.equals("shippingAddress")) {
 			return HashMapBuilder.<String, Object>put(
 				"hasManageAddressesPermission",
@@ -451,6 +475,19 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			if (commercePaymentIntegration != null) {
 				return commercePaymentIntegration.getName(locale);
 			}
+		}
+		else if (field.equals("purchaseOrderDocument")) {
+			List<FileEntry> attachmentFileEntries =
+				commerceOrder.getAttachmentFileEntries(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			if (attachmentFileEntries.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			FileEntry fileEntry = attachmentFileEntries.get(0);
+
+			return fileEntry.getFileName();
 		}
 		else if (field.equals("purchaseOrderNumber")) {
 			return commerceOrder.getPurchaseOrderNumber();

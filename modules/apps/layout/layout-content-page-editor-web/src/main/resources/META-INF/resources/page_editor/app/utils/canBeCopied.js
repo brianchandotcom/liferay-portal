@@ -56,9 +56,7 @@ export default function canBeCopied(
 		fragmentEntryLinks
 	);
 	if (!isChildAllowed || isUnmappedCollection(target)) {
-		let error = Liferay.Language.get(
-			'element-can-not-be-copied-please-try-again'
-		);
+		let error = Liferay.Language.get('element-cannot-be-copied');
 
 		const isForm = (item) => item.type === LAYOUT_DATA_ITEM_TYPES.form;
 

@@ -28,16 +28,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		List<String> illegalTagNamesData = getAttributeValues(
-			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
+		content = _checkIllegalTags(fileName, absolutePath, content);
 
-		content = _checkIllegalTags(fileName, content, illegalTagNamesData);
-
-		List<String> illegalAttributeNames = getAttributeValues(
-			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
-
-		return _checkIllegalAttributes(
-			fileName, absolutePath, content, illegalAttributeNames);
+		return _checkIllegalAttributes(fileName, absolutePath, content);
 	}
 
 	protected int getTagStartPosition(String content, int x) {
@@ -60,11 +53,13 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _checkIllegalAttributes(
-		String fileName, String absolutePath, String content,
-		List<String> illegalAttributeNames) {
+		String fileName, String absolutePath, String content) {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
 		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
+
+		List<String> illegalAttributeNames = getAttributeValues(
+			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
 
 		for (String illegalAttributeName : illegalAttributeNames) {
 			int x = -1;
@@ -128,10 +123,13 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _checkIllegalTags(
-		String fileName, String content, List<String> illegalTagNamesData) {
+		String fileName, String absolutePath, String content) {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
 		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
+
+		List<String> illegalTagNamesData = getAttributeValues(
+			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
 
 		for (String illegalTagNameData : illegalTagNamesData) {
 			String[] parts = StringUtil.split(

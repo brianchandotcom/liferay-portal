@@ -191,6 +191,10 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
+	public default boolean isEnabled() {
+		return true;
+	}
+
 	/**
 	 * Restores the staged model from the trash. This method is called during
 	 * the import process to ensure the imported staged model is not in the

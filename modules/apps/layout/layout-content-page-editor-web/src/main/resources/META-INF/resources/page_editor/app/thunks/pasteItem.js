@@ -50,9 +50,12 @@ export default function pasteItem({
 						})
 					);
 
-					selectItems(itemIds, {
-						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
-					});
+					selectItems(
+						filterSelectedItems(itemIds, nextLayoutData.items),
+						{
+							origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+						}
+					);
 				}
 			}
 		);

@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
-import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -39,6 +38,9 @@ public class TestPropsValues {
 
 	public static final String COMPANY_WEB_ID;
 
+	public static final String DB_PARTITION_VIRTUAL_HOSTNAME =
+		"db-partition.com";
+
 	public static final String DB_PARTITION_WEB_ID = "db-partition.com";
 
 	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
@@ -59,22 +61,17 @@ public class TestPropsValues {
 
 		try {
 			if (DBPartition.isPartitionEnabled()) {
-				try {
-					Company company = CompanyLocalServiceUtil.getCompanyByWebId(
-						DB_PARTITION_WEB_ID);
+				Company company =
+					CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+						DB_PARTITION_VIRTUAL_HOSTNAME);
 
-					companyWebId = company.getWebId();
+				if (company == null) {
+					throw new PortalException(
+						"Missing partitioned company: " +
+							DB_PARTITION_VIRTUAL_HOSTNAME);
 				}
-				catch (Exception exception) {
-					if (exception instanceof NoSuchCompanyException) {
-						throw new PortalException(
-							"Missing partitioned company: " +
-								DB_PARTITION_WEB_ID);
-					}
-					else {
-						throw exception;
-					}
-				}
+
+				companyWebId = company.getWebId();
 			}
 			else if (Validator.isNull(companyWebId)) {
 				companyWebId = GetterUtil.getString(

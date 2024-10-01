@@ -6,8 +6,8 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.db.partition.DBPartition;
-import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.util.PortalInstances;
@@ -28,23 +28,18 @@ public class DBPartitionTestRule implements TestRule {
 	public Statement apply(Statement statement, Description description) {
 		try {
 			if (DBPartition.isPartitionEnabled()) {
-				try {
-					CompanyLocalServiceUtil.getCompanyByWebId(
-						TestPropsValues.DB_PARTITION_WEB_ID);
-				}
-				catch (Exception exception) {
-					if (exception instanceof NoSuchCompanyException) {
-						PortalInstances.addCompany(
-							"",
-							() -> CompanyLocalServiceUtil.addCompany(
-								null, TestPropsValues.DB_PARTITION_WEB_ID,
-								TestPropsValues.DB_PARTITION_WEB_ID,
-								TestPropsValues.DB_PARTITION_WEB_ID, 0, true,
-								true, null, null, null, null, null, null));
-					}
-					else {
-						throw exception;
-					}
+				Company company =
+					CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+						TestPropsValues.DB_PARTITION_VIRTUAL_HOSTNAME);
+
+				if (company == null) {
+					PortalInstances.addCompany(
+						"",
+						() -> CompanyLocalServiceUtil.addCompany(
+							null, TestPropsValues.DB_PARTITION_WEB_ID,
+							TestPropsValues.DB_PARTITION_VIRTUAL_HOSTNAME,
+							TestPropsValues.DB_PARTITION_VIRTUAL_HOSTNAME, 0,
+							true, true, null, null, null, null, null, null));
 				}
 			}
 		}

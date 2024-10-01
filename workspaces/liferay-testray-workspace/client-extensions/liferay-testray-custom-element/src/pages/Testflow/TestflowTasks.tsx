@@ -6,7 +6,13 @@
 import ClayIcon from '@clayui/icon';
 import {useAtom} from 'jotai';
 import {Dispatch, useContext, useState} from 'react';
-import {Link, useNavigate, useOutletContext, useParams} from 'react-router-dom';
+import {
+	Link,
+	useNavigate,
+	useOutletContext,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import Avatar from '~/components/Avatar';
 import AssignToMe from '~/components/Avatar/AssignToMe';
@@ -60,6 +66,13 @@ const ShortcutIcon = () => (
 	<ClayIcon className="ml-2" fontSize={12} symbol="shortcut" />
 );
 
+const allowedFilters = [
+	'issues',
+	'noIssues',
+	'testrayComponentIds',
+	'testrayTeamIds',
+];
+
 const TestFlowTasks = () => {
 	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 	const {
@@ -71,6 +84,26 @@ const TestFlowTasks = () => {
 	const {updateItemFromList} = useMutate();
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
+	const [searchParams, _setSearchParams] = useSearchParams();
+	const filterString = searchParams.get('filter');
+
+	let filter = '';
+
+	if (filterString) {
+		const filterJSONObject = JSON.parse(filterString);
+
+		filter = `?filter=${encodeURIComponent(
+			JSON.stringify(
+				Object.keys(filterJSONObject)
+					.filter((key) => allowedFilters.includes(key))
+					.reduce((object: any, key) => {
+						object[key] = filterJSONObject[key];
+
+						return object;
+					}, {})
+			)
+		)}&filterSchema=subtaskCaseResults`;
+	}
 
 	const [{myUserAccount}] = useContext(TestrayContext);
 
@@ -414,7 +447,7 @@ const TestFlowTasks = () => {
 								value: i18n.translate('assignee'),
 							},
 						],
-						navigateTo: ({id}) => `subtasks/${id}`,
+						navigateTo: ({id}) => `subtasks/${id}${filter}`,
 						rowSelectable: true,
 						rowWrap: true,
 					}}

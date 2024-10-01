@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,8 +36,9 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class FieldResourceTest extends BaseFieldResourceTestCase {
 
+	@Override
 	@Test
-	public void testGetFieldsWithManyToManyRelationship() throws Exception {
+	public void testGetPlanInternalClassNameKeyFieldsPage() throws Exception {
 		String fieldName = "x" + RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition1 =
@@ -156,13 +156,6 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					manyToOneObjectRelationship2ERCFieldName, false, "string",
 					null)),
 			ListUtil.fromCollection(page.getItems()));
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlanInternalClassNameKeyFieldsPage() throws Exception {
-		super.testGetPlanInternalClassNameKeyFieldsPage();
 	}
 
 	@Override

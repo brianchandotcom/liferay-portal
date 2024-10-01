@@ -540,6 +540,28 @@ public class ServletDataImpl implements ServletData {
 							PhoneResourceImpl.class,
 							"postOrganizationPhonesPageExportBatch"));
 					put(
+						"mutation#deletePhoneByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"deletePhoneByExternalReferenceCode"));
+					put(
+						"mutation#patchPhoneByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"patchPhoneByExternalReferenceCode"));
+					put(
+						"mutation#deletePhone",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class, "deletePhone"));
+					put(
+						"mutation#deletePhoneBatch",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class, "deletePhoneBatch"));
+					put(
+						"mutation#patchPhone",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class, "patchPhone"));
+					put(
 						"mutation#createUserAccountPhonesPageExportBatch",
 						new ObjectValuePair<>(
 							PhoneResourceImpl.class,
@@ -1110,6 +1132,11 @@ public class ServletDataImpl implements ServletData {
 							PhoneResourceImpl.class,
 							"getOrganizationPhonesPage"));
 					put(
+						"query#phoneByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"getPhoneByExternalReferenceCode"));
+					put(
 						"query#phone",
 						new ObjectValuePair<>(
 							PhoneResourceImpl.class, "getPhone"));
@@ -1545,6 +1572,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
 							"getRoleByExternalReferenceCode"));
+					put(
+						"query#Account.phoneByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"getPhoneByExternalReferenceCode"));
 					put(
 						"query#Site.userAccounts",
 						new ObjectValuePair<>(

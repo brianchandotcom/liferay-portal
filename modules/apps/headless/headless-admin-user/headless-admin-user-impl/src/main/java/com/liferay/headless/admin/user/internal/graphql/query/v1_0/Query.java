@@ -1007,7 +1007,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {phone(phoneId: ___){extension, id, phoneNumber, phoneType, primary}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {phoneByExternalReferenceCode(externalReferenceCode: ___){extension, externalReferenceCode, id, phoneNumber, phoneType, primary}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the phone number by external reference code."
+	)
+	public Phone phoneByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> phoneResource.getPhoneByExternalReferenceCode(
+				externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {phone(phoneId: ___){extension, externalReferenceCode, id, phoneNumber, phoneType, primary}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the phone number.")
 	public Phone phone(@GraphQLName("phoneId") Long phoneId) throws Exception {
@@ -3049,6 +3068,28 @@ public class Query {
 				_roleResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				roleResource -> roleResource.getRoleByExternalReferenceCode(
+					_account.getExternalReferenceCode()));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetPhoneByExternalReferenceCodeTypeExtension {
+
+		public GetPhoneByExternalReferenceCodeTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the phone number by external reference code."
+		)
+		public Phone phoneByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_phoneResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				phoneResource -> phoneResource.getPhoneByExternalReferenceCode(
 					_account.getExternalReferenceCode()));
 		}
 

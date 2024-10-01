@@ -58,6 +58,20 @@ public class PhoneSerDes {
 			sb.append("\"");
 		}
 
+		if (phone.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(phone.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (phone.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -131,6 +145,15 @@ public class PhoneSerDes {
 			map.put("extension", String.valueOf(phone.getExtension()));
 		}
 
+		if (phone.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(phone.getExternalReferenceCode()));
+		}
+
 		if (phone.getId() == null) {
 			map.put("id", null);
 		}
@@ -179,6 +202,11 @@ public class PhoneSerDes {
 			if (Objects.equals(jsonParserFieldName, "extension")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -203,6 +231,14 @@ public class PhoneSerDes {
 			if (Objects.equals(jsonParserFieldName, "extension")) {
 				if (jsonParserFieldValue != null) {
 					phone.setExtension((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					phone.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

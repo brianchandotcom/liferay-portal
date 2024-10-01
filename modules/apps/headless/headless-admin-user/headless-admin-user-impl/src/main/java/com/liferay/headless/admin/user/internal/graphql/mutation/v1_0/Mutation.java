@@ -10,6 +10,7 @@ import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
@@ -1459,6 +1460,74 @@ public class Mutation {
 			phoneResource ->
 				phoneResource.postOrganizationPhonesPageExportBatch(
 					organizationId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Deletes the phone number by external reference code."
+	)
+	public boolean deletePhoneByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> phoneResource.deletePhoneByExternalReferenceCode(
+				externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the phone number by external reference code."
+	)
+	public Phone patchPhoneByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("phone") Phone phone)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> phoneResource.patchPhoneByExternalReferenceCode(
+				externalReferenceCode, phone));
+	}
+
+	@GraphQLField(description = "Deletes the phone number.")
+	public boolean deletePhone(@GraphQLName("phoneId") Long phoneId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> phoneResource.deletePhone(phoneId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deletePhoneBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> phoneResource.deletePhoneBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField(description = "Updates the phone number.")
+	public Phone patchPhone(
+			@GraphQLName("phoneId") Long phoneId,
+			@GraphQLName("phone") Phone phone)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> phoneResource.patchPhone(phoneId, phone));
 	}
 
 	@GraphQLField

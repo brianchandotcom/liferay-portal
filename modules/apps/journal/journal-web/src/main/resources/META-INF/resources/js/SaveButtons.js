@@ -323,9 +323,7 @@ export default function SaveButtons({
 							publishModalVisible: false,
 						})
 					}
-					onPublishButtonClick={() => {
-						handleButtonClick(ACTION_PUBLISH);
-					}}
+					onPublishButtonClick={handleButtonClick}
 					permissionsURL={permissionsURL}
 					portletNamespace={portletNamespace}
 					showPermissionsOptions={showPublishModal}

@@ -1041,6 +1041,11 @@ components:
                         The author's full name.
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The external reference code of the author.
+                    readOnly: true
+                    type: string
                 profileURL:
                     # @review
                     description:

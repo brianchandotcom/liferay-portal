@@ -21,6 +21,12 @@ const defaultFolderHTTPMethods = {
 	},
 };
 
+const selectedObjectFolderMock: Partial<ObjectFolder> = {
+	externalReferenceCode: 'ticket',
+	label: {en_US: 'Ticket'},
+	name: 'ticket',
+};
+
 const ticketFolderHTTPMethods = {
 	objectDefinitionActions: {
 		create: {href: '', method: 'POST'},
@@ -37,7 +43,6 @@ describe('The ObjectFolderCardHeader component should', () => {
 	it('render all object folder actions', () => {
 		render(
 			<ObjectFolderCardHeader
-				externalReferenceCode="ticket"
 				items={
 					getObjectFolderActions({
 						actions: {
@@ -56,8 +61,8 @@ describe('The ObjectFolderCardHeader component should', () => {
 						setShowModal: () => {},
 					}) as IItem[]
 				}
-				label={{en_US: 'Ticket'}}
 				modelBuilderURL=""
+				selectedObjectFolder={selectedObjectFolderMock}
 			></ObjectFolderCardHeader>
 		);
 
@@ -83,7 +88,6 @@ describe('The ObjectFolderCardHeader component should', () => {
 	it('not render delete and edit object folder actions on default object folder', () => {
 		render(
 			<ObjectFolderCardHeader
-				externalReferenceCode="default"
 				items={
 					getObjectFolderActions({
 						actions: {
@@ -102,8 +106,8 @@ describe('The ObjectFolderCardHeader component should', () => {
 						setShowModal: () => {},
 					}) as IItem[]
 				}
-				label={{en_US: 'Default'}}
 				modelBuilderURL=""
+				selectedObjectFolder={selectedObjectFolderMock}
 			></ObjectFolderCardHeader>
 		);
 

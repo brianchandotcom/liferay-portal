@@ -142,7 +142,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			GetterUtil.getLong(
 				values.get(
-					"r_commerceReturnToCommerceReturnItems_c_" +
+					"r_commerceReturnToCommerceReturnItems_l_" +
 						"commerceReturnId")));
 
 		if (objectEntry == null) {

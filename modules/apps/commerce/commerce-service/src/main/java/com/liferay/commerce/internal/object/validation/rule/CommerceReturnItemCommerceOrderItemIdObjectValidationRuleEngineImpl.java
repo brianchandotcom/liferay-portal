@@ -72,7 +72,7 @@ public class CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			GetterUtil.getString(
 				properties.get(
-					"r_commerceReturnToCommerceReturnItems_c_" +
+					"r_commerceReturnToCommerceReturnItems_l_" +
 						"commerceReturnERC")),
 			objectDefinition.getObjectDefinitionId());
 
@@ -86,7 +86,7 @@ public class CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl
 			objectEntry = _objectEntryLocalService.fetchObjectEntry(
 				GetterUtil.getString(
 					originalProperties.get(
-						"r_commerceReturnToCommerceReturnItems_c_" +
+						"r_commerceReturnToCommerceReturnItems_l_" +
 							"commerceReturnERC")),
 				objectDefinition.getObjectDefinitionId());
 

@@ -175,7 +175,7 @@ public class CommerceReturnItemObjectEntryValuesContributorTest {
 				"r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId",
 				_commerceOrderItem.getCommerceOrderItemId()
 			).put(
-				"r_commerceReturnToCommerceReturnItems_c_commerceReturnId",
+				"r_commerceReturnToCommerceReturnItems_l_commerceReturnId",
 				_objectEntry.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());

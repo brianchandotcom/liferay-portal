@@ -145,7 +145,7 @@ public class
 							"commerceOrderItemId",
 						RandomTestUtil.randomLong()
 					).put(
-						"r_commerceReturnToCommerceReturnItems_c_" +
+						"r_commerceReturnToCommerceReturnItems_l_" +
 							"commerceReturnERC",
 						_objectEntry.getExternalReferenceCode()
 					).build()
@@ -167,7 +167,7 @@ public class
 						String.valueOf(
 							commerceOrderItem.getCommerceOrderItemId())
 					).put(
-						"r_commerceReturnToCommerceReturnItems_c_" +
+						"r_commerceReturnToCommerceReturnItems_l_" +
 							"commerceReturnERC",
 						_objectEntry.getExternalReferenceCode()
 					).build()

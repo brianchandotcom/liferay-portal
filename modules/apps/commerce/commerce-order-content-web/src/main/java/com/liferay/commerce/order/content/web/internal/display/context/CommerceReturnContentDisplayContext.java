@@ -642,7 +642,7 @@ public class CommerceReturnContentDisplayContext {
 
 		String encodedFilter = URLCodec.encodeURL(
 			StringBundler.concat(
-				"'r_commerceReturnToCommerceReturnItems_c_commerceReturnId' ",
+				"'r_commerceReturnToCommerceReturnItems_l_commerceReturnId' ",
 				"eq '", commerceReturnId, StringPool.APOSTROPHE),
 			true);
 

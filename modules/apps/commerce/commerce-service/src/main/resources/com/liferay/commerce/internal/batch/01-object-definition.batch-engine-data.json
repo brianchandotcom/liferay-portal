@@ -43,7 +43,7 @@
 							"en_US": "Commerce Return to Commerce Return Items"
 						},
 						"localized": false,
-						"name": "r_commerceReturnToCommerceReturnItems_c_commerceReturnId",
+						"name": "r_commerceReturnToCommerceReturnItems_l_commerceReturnId",
 						"objectFieldSettings": [
 							{
 								"name": "objectDefinition1ShortName",
@@ -51,7 +51,7 @@
 							},
 							{
 								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_commerceReturnToCommerceReturnItems_c_commerceReturnERC"
+								"value": "r_commerceReturnToCommerceReturnItems_l_commerceReturnERC"
 							}
 						],
 						"readOnly": "false",

@@ -90,7 +90,7 @@ public class CommerceReturnObjectEntryValuesContributor
 		values.put("currencyCode", commerceCurrency.getCode());
 		values.put("currencySymbol", commerceCurrency.getSymbol());
 
-		if (!values.containsKey("c_commerceReturnId") &&
+		if (!values.containsKey("l_commerceReturnId") &&
 			!values.containsKey("externalReferenceCode")) {
 
 			return;
@@ -98,7 +98,7 @@ public class CommerceReturnObjectEntryValuesContributor
 
 		ObjectEntry originalObjectEntry =
 			_objectEntryLocalService.fetchObjectEntry(
-				GetterUtil.getLong(values.get("c_commerceReturnId")));
+				GetterUtil.getLong(values.get("l_commerceReturnId")));
 
 		if (originalObjectEntry == null) {
 			originalObjectEntry = _objectEntryLocalService.fetchObjectEntry(

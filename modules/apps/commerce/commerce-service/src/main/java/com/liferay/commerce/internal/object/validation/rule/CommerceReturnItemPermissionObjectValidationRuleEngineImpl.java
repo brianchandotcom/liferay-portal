@@ -54,7 +54,7 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImpl
 			_objectEntryLocalService.fetchObjectEntry(
 				GetterUtil.getLong(
 					originalProperties.get(
-						"r_commerceReturnToCommerceReturnItems_c_" +
+						"r_commerceReturnToCommerceReturnItems_l_" +
 							"commerceReturnId")));
 
 		Map<String, Serializable> originalValues =

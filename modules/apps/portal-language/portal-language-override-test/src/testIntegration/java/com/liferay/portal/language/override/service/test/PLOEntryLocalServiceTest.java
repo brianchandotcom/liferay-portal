@@ -94,11 +94,16 @@ public class PLOEntryLocalServiceTest {
 			PLOEntryLanguageIdException.MustBeAvailable.class,
 			() -> _addOrUpdatePLOEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK));
+				RandomTestUtil.randomString()));
 		_assertException(
 			PLOEntryValueException.MustNotBeNull.class,
 			() -> _addOrUpdatePLOEntry(
 				RandomTestUtil.randomString(), languageId, StringPool.BLANK));
+
+		ploEntry = _addOrUpdatePLOEntry(
+			RandomTestUtil.randomString(), "en", RandomTestUtil.randomString());
+
+		Assert.assertEquals("en_US", ploEntry.getLanguageId());
 	}
 
 	@Test

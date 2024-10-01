@@ -507,16 +507,6 @@ public class CTCollectionLocalServiceImpl
 			_ctEntryPersistence.remove(ctEntry);
 		}
 
-		Indexer<CTEntry> indexer = _indexerRegistry.getIndexer(CTEntry.class);
-
-		if (indexer != null) {
-			_indexWriterHelper.deleteDocuments(
-				ctCollection.getCompanyId(),
-				TransformUtil.transform(
-					ctEntries, ctEntry -> _uidFactory.getUID(ctEntry)),
-				indexer.isCommitImmediately());
-		}
-
 		_ctMessagePersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
@@ -549,6 +539,16 @@ public class CTCollectionLocalServiceImpl
 				_ctSchemaVersionLocalService.deleteCTSchemaVersion(
 					ctSchemaVersion);
 			}
+		}
+
+		Indexer<CTEntry> indexer = _indexerRegistry.getIndexer(CTEntry.class);
+
+		if (indexer != null) {
+			_indexWriterHelper.deleteDocuments(
+				ctCollection.getCompanyId(),
+				TransformUtil.transform(
+					ctEntries, ctEntry -> _uidFactory.getUID(ctEntry)),
+				indexer.isCommitImmediately());
 		}
 
 		return ctCollectionPersistence.remove(ctCollection);

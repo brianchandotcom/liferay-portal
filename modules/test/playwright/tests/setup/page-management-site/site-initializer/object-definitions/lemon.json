@@ -6,14 +6,25 @@
 	"name": "Lemon",
 	"objectFields": [
 		{
-			"DBType": "Integer",
-			"externalReferenceCode": "lemon-size-erc",
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Lemon Size"
 			},
 			"name": "lemonSize",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Integer",
+			"externalReferenceCode": "lemon-weight-erc",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Lemon Weight"
+			},
+			"name": "lemonWeight",
 			"required": false,
 			"type": "Integer"
 		}
@@ -50,21 +61,21 @@
 			"engine": "ddm",
 			"engineLabel": "Expression Builder",
 			"errorLabel": {
-				"en_US": "The lemon size must be greater than 0"
+				"en_US": "The lemon weight must be greater than 0"
 			},
-			"externalReferenceCode": "lemon-validation-erc",
+			"externalReferenceCode": "lemon-weight-validation-erc",
 			"name": {
-				"en_US": "Lemon Size Validation"
+				"en_US": "Lemon Weight Validation"
 			},
 			"objectDefinitionExternalReferenceCode": "lemon-object-erc",
 			"objectValidationRuleSettings": [
 				{
 					"name": "outputObjectFieldExternalReferenceCode",
-					"value": "lemon-size-erc"
+					"value": "lemon-weight-erc"
 				}
 			],
 			"outputType": "partialValidation",
-			"script": "lemonSize > 0",
+			"script": "isEmpty(lemonWeight) OR lemonWeight > 0",
 			"system": false
 		}
 	],

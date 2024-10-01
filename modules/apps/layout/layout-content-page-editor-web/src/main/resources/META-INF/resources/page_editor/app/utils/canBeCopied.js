@@ -94,6 +94,11 @@ export default function canBeCopied(
 				'widgets-cannot-be-placed-inside-a-form-container'
 			);
 		}
+		else if (target.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer) {
+			error = Liferay.Language.get(
+				'fragments-cannot-be-placed-inside-a-form-step-container'
+			);
+		}
 
 		openToast({
 			message: error,

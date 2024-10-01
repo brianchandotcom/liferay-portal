@@ -56,7 +56,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		String fileName, String absolutePath, String content) {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
-		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
 
 		List<String> illegalAttributeNames = getAttributeValues(
 			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
@@ -93,13 +92,13 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				List<String> ignoredTagPrefixes = new ArrayList<>();
 
-				if (lowerCaseFileName.endsWith(".ftl")) {
+				if (fileName.endsWith(".ftl")) {
 					ignoredTagPrefixes = getAttributeValues(
 						_IGNORED_FTL_TAG_PREFIXES_KEY, absolutePath);
 				}
-				else if (lowerCaseFileName.endsWith(".jsp") ||
-						 lowerCaseFileName.endsWith(".jspf") ||
-						 lowerCaseFileName.endsWith(".jspx")) {
+				else if (fileName.endsWith(".jsp") ||
+						fileName.endsWith(".jspf") ||
+						fileName.endsWith(".jspx")) {
 
 					ignoredTagPrefixes = getAttributeValues(
 						_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
@@ -126,7 +125,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		String fileName, String absolutePath, String content) {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
-		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
 
 		List<String> illegalTagNamesData = getAttributeValues(
 			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
@@ -163,9 +161,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				int lineNumber = getLineNumber(content, x);
 
-				if (lowerCaseFileName.endsWith(".jsp") ||
-					lowerCaseFileName.endsWith(".jspf") ||
-					lowerCaseFileName.endsWith(".jspx")) {
+				if (fileName.endsWith(".jsp") ||
+						fileName.endsWith(".jspf") ||
+						fileName.endsWith(".jspx")) {
 
 					addMessage(
 						fileName,
@@ -174,12 +172,12 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 							">, see LPD-18227"),
 						lineNumber);
 				}
-				else if (lowerCaseFileName.endsWith(".ftl")) {
+				else if (fileName.endsWith(".ftl")) {
 					_checkMissingAttribute(
 						fileName, tagName, "${nonceAttribute}", tagString,
 						lineNumber);
 				}
-				else if (lowerCaseFileName.endsWith(".vm")) {
+				else if (fileName.endsWith(".vm")) {
 					_checkMissingAttribute(
 						fileName, tagName, "$nonceAttribute", tagString,
 						lineNumber);

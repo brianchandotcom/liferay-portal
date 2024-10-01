@@ -723,6 +723,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 			}
 			else if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
 				document.addKeyword(
+					name + "_String",
+					ArrayUtil.toStringArray(
+						_jsonFactory.createJSONArray(
+							String.valueOf(sortableValue))));
+				document.addKeyword(
 					_getSortableFieldName(name),
 					ArrayUtil.toStringArray(
 						_jsonFactory.createJSONArray(sortableValueString)));

@@ -370,6 +370,99 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
+	@TestInfo("LPD-37740")
+	public void testLayoutWithLayoutSeoEntryPublicationShouldNotFailWhenHasFragmentMappedToLayout()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+
+		LayoutSEOEntry layoutSEOEntry = _updateLayoutSEOEntry(layout1);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false, serviceContext);
+
+		Group stagingGroup = group.getStagingGroup();
+
+		_assertLayoutSEOEntry(
+			layoutSEOEntry.getCanonicalURLMap(), stagingGroup.getGroupId(),
+			layoutSEOEntry.getUuid());
+
+		Layout stagingLayout1 = _layoutLocalService.fetchLayout(
+			layout1.getUuid(), stagingGroup.getGroupId(), false);
+
+		Layout stagingLayout2 = _layoutLocalService.fetchLayout(
+			layout2.getUuid(), stagingGroup.getGroupId(), false);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				StringUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				"<div class=\"fragment_24\"><a href=\"#link\" " +
+					"data-lfr-editable-id=\"link-1\" data-lfr-editable-type=" +
+						"\"link\">textLink1</a></div>",
+				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"link-1",
+						JSONUtil.put(
+							"config",
+							JSONUtil.put(
+								"layout",
+								JSONUtil.put(
+									"groupId", stagingLayout2.getGroupId()
+								).put(
+									"layoutId", stagingLayout2.getLayoutId()
+								).put(
+									"layoutUuid", stagingLayout2.getUuid()
+								).put(
+									"privateLayout",
+									stagingLayout2.isPrivateLayout()
+								).put(
+									"title", stagingLayout2.getTitle()
+								))
+						).put(
+							"defaultValue", "textLink1"
+						))
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), stagingLayout1,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(stagingLayout1.getPlid()));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, layout1.fetchDraftLayout(), null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				stagingLayout1.getPlid()));
+
+		_publishLayouts(group, stagingGroup);
+	}
+
+	@Test
 	@TestInfo("LPD-35629")
 	public void testLocalStagingWithMasterLayoutWithSameLayoutId()
 		throws Exception {

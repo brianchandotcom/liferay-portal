@@ -5,6 +5,7 @@
 
 package com.liferay.portal.language.override.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -24,13 +25,13 @@ import com.liferay.portal.language.override.exception.PLOEntryValueException;
 import com.liferay.portal.language.override.internal.PLOEntryModelListener;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -194,7 +195,13 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 		String[] parts = languageId.split(StringPool.UNDERLINE);
 
 		if (parts.length < 2) {
-			return languageId;
+			Locale locale = _language.getLocale(languageId);
+
+			if (locale == null) {
+				return languageId;
+			}
+
+			return locale.toString();
 		}
 
 		languageId =
@@ -222,8 +229,14 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			throw new PLOEntryKeyException.MustBeShorter(keyMaxLength);
 		}
 
-		if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
-			throw new PLOEntryLanguageIdException.MustBeAvailable(languageId);
+		Set<Locale> availableLocales = _language.getAvailableLocales();
+
+		String[] availableLanguageIds = TransformUtil.unsafeTransform(
+			availableLocales.toArray(), String::valueOf, String.class);
+
+		if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
+			throw new PLOEntryLanguageIdException.MustBeAvailable(
+				availableLanguageIds, languageId);
 		}
 
 		if (Validator.isBlank(value)) {

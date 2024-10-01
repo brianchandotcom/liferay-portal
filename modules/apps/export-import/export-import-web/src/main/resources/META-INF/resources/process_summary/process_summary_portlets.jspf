@@ -57,6 +57,10 @@
 
 			PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
+			if (!portletDataHandler.isEnabled()) {
+				continue;
+			}
+
 			PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
 
 			PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();

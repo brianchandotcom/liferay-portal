@@ -671,6 +671,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else if (value instanceof Object[]) {
 			String[] valuesString = ArrayUtil.toStringArray((Object[])value);
 
+			String[] truncatedValuesString = valuesString;
+
 			String type = field.getType();
 
 			if (type.equals(DDMFormFieldTypeConstants.DATE) ||
@@ -703,18 +705,18 @@ public class DDMIndexerImpl implements DDMIndexer {
 					truncatedValues.add(richTextValue);
 				}
 
-				valuesString = truncatedValues.toArray(new String[0]);
+				truncatedValuesString = truncatedValues.toArray(new String[0]);
 			}
 
 			if (indexType.equals("keyword")) {
 				document.addKeywordSortable(name, valuesString);
 
-				document.addKeyword(_getSortableFieldName(name), valuesString);
+				document.addKeyword(_getSortableFieldName(name), truncatedValuesString);
 			}
 			else {
 				document.addTextSortable(name, valuesString);
 
-				document.addText(_getSortableFieldName(name), valuesString);
+				document.addText(_getSortableFieldName(name), truncatedValuesString);
 			}
 		}
 		else {

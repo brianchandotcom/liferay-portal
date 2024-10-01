@@ -47,10 +47,10 @@ public class UpgradeCTModelTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_db = DBManagerUtil.getDB();
+
 		_companyLocalService.forEachCompany(
 			company -> {
-				_db = DBManagerUtil.getDB();
-
 				_db.runSQL(
 					StringBundler.concat(
 						"create table UpgradeCTModelTest (mvccVersion LONG ",

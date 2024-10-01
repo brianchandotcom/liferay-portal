@@ -31,7 +31,7 @@ public class ConsoleService extends BaseRestController {
 	public void deleteProject(String projectId) throws Exception {
 		String projectName = _consoleProjectPrefix + "-ext" + projectId;
 
-		delete(getAuthorization(), null, "/projects/" + projectName);
+		delete(getAuthorization(), "", "/projects/" + projectName);
 	}
 
 	public JSONObject deployApp(
@@ -119,7 +119,7 @@ public class ConsoleService extends BaseRestController {
 	}
 
 	public void uninstallApp(long orderId) throws Exception {
-		delete(getAuthorization(), null, "/apps/" + orderId);
+		delete(getAuthorization(), "", "/apps/" + orderId);
 	}
 
 	@Override

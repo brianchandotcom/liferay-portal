@@ -1,4 +1,3 @@
-${locale}
 ${ObjectEntry_author.getData()}
 ${ObjectEntry_createDate.getData()}
 ${ObjectEntry_externalReferenceCode.getData()}
@@ -16,4 +15,5 @@ ${ObjectField_multiselectPicklistObjectField.getData()}
 ${ObjectField_picklistObjectField.getData()}
 ${ObjectField_r_oneToManyObjectRelationship_c_parentObjectDefinitionId.getData()}
 ${ObjectField_textObjectField.getData()}
+${locale}
 ${portalURL}

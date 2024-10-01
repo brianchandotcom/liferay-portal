@@ -492,20 +492,11 @@ public class LayoutStructure {
 			}
 
 			parentItemId = childrenItemIds.get(0);
-
-			position = -1;
 		}
 		else if (parentLayoutStructureItem instanceof
-					FormStepContainerStyledLayoutStructureItem ||
+					FragmentStyledLayoutStructureItem ||
 				 parentLayoutStructureItem instanceof
 					 RowStyledLayoutStructureItem) {
-
-			parentItemId = parentLayoutStructureItem.getParentItemId();
-
-			position = -1;
-		}
-		else if (parentLayoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem) {
 
 			String oldParentItemId = parentItemId;
 

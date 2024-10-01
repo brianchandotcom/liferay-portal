@@ -1,6 +1,6 @@
 {
 	"friendlyURL": "/support-ticket-escalation",
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
 		"en_US": "Escalate a Ticket",
 		"es_ES": "Escalar un billete",

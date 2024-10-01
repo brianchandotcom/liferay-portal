@@ -452,7 +452,7 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CallbackRequest$]",
 		"roleName": "User",
 		"scope": "1"
 	},
@@ -711,7 +711,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackRequest$]",
 		"roleName": "User",
 		"scope": "1"
 	},

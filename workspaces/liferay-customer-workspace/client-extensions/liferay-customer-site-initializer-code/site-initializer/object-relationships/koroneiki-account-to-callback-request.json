@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Koroneiki Account to Callback Request"
+	},
+	"name": "koroneikiAccountToCallbackRequest",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:KoroneikiAccount$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CallbackRequest$]",
+	"objectDefinitionName2": "CallbackRequest",
+	"type": "oneToMany"
+}

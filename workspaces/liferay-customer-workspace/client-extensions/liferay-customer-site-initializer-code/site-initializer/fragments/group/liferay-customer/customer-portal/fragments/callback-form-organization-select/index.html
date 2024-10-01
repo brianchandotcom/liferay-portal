@@ -1,7 +1,12 @@
 [#assign
+	accounts = []
+	koroneikiAccounts = restClient.get("/c/koroneikiaccounts")
 	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
-]
-[#assign accounts = (restClient.get('/c/koroneikiaccounts').items)![]]
+/]
+
+[#if koroneikiAccounts?is_hash && koroneikiAccounts.items?has_content]
+	[#assign accounts = koroneikiAccounts.items /]
+[/#if]
 
 <div class="select-from-list">
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">

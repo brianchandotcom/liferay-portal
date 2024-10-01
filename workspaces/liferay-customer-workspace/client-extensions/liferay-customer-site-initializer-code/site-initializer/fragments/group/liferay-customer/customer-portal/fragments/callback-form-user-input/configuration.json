@@ -4,23 +4,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "",
-					"label": "placeholder",
-					"localizable": true,
-					"name": "placeholder",
-					"type": "text"
-				},
-				{
-					"defaultValue": false,
-					"label": "show-characters-count",
-					"name": "showCharactersCount",
-					"type": "checkbox",
-					"typeOptions": {
-						"displayType": "toggle"
-					}
-				},
-				{
-					"dataType": "string",
 					"defaultValue": "name",
 					"label": "Field Type",
 					"name": "fieldType",

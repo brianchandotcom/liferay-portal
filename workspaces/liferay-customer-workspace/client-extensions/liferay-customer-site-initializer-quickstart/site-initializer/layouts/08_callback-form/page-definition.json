@@ -15,7 +15,8 @@
 						"contentDisplay": "FlexRow",
 						"justify": "Center",
 						"paddingLeft": 4,
-						"paddingRight": 4
+						"paddingRight": 4,
+						"paddingTop": 4
 					},
 					"name": "Callback Form Container"
 				},
@@ -24,7 +25,7 @@
 						"definition": {
 							"formConfig": {
 								"formReference": {
-									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]",
+									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackRequest$]",
 									"classType": 0
 								}
 							},
@@ -116,60 +117,62 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "callback-form-user-input",
-										"siteKey": "Customer Portal"
+										"key": "callback-form-user-input"
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_name",
-										"showCharactersCount": false
+										"inputLabel": {
+											"en_US": "Name"
+										}
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
-									"indexed": true,
-									"name": "Name Input"
+									"indexed": true
 								},
 								"type": "Fragment"
 							},
 							{
 								"definition": {
 									"fragment": {
-										"key": "callback-form-user-input",
-										"siteKey": "Customer Portal"
+										"key": "callback-form-user-input"
 									},
 									"fragmentConfig": {
 										"fieldType": "email",
 										"inputFieldId": "ObjectField_emailAddress",
-										"showCharactersCount": false
+										"inputLabel": {
+											"en_US": "Email Address"
+										}
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
-									"indexed": true,
-									"name": "Email Input"
+									"indexed": true
 								},
 								"type": "Fragment"
 							},
 							{
 								"definition": {
 									"fragment": {
-										"key": "autofill-organization",
-										"siteKey": "Customer Portal"
+										"key": "callback-form-organization-select"
 									},
 									"fragmentConfig": {
-										"inputFieldId": "ObjectField_organization"
+										"inputFieldId": "ObjectField_r_koroneikiAccountToCallbackRequest_c_koroneikiAccountId",
+										"inputLabel": {
+											"en_US": "Organization"
+										},
+										"inputRequired": true
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
-									"indexed": true,
-									"name": "Organization Select"
+									"indexed": true
 								},
 								"type": "Fragment"
 							},
@@ -202,6 +205,9 @@
 													},
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_countryCode",
+														"inputLabel": {
+															"en_US": "Country Code"
+														},
 														"placeholder": "+1",
 														"showCharactersCount": false
 													},
@@ -210,8 +216,7 @@
 													"fragmentStyle": {
 														"width": "28%"
 													},
-													"indexed": true,
-													"name": "Country Code Input"
+													"indexed": true
 												},
 												"type": "Fragment"
 											},
@@ -222,6 +227,9 @@
 													},
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_phoneNumber",
+														"inputLabel": {
+															"en_US": "Phone Number"
+														},
 														"placeholder": "(210) 283-2299",
 														"showCharactersCount": false
 													},
@@ -230,8 +238,7 @@
 													"fragmentStyle": {
 														"width": "72%"
 													},
-													"indexed": true,
-													"name": "Phone Number Input"
+													"indexed": true
 												},
 												"type": "Fragment"
 											}
@@ -275,22 +282,24 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "callback-form-textarea",
-										"siteKey": "Customer Portal"
+										"key": "INPUTS-textarea"
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_description",
+										"inputLabel": {
+											"en_US": "Description"
+										},
 										"numberOfCharacters": 2000,
-										"showCharactersCount": false
+										"showCharactersCount": true
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"marginBottom": "5"
+										"marginBottom": "4"
 									},
-									"indexed": true,
-									"name": "Select Textarea"
+									"indexed": true
 								},
+								"id": "ec177ef0-36ee-a3b1-9e01-7a9e8b7d5447",
 								"type": "Fragment"
 							},
 							{
@@ -372,7 +381,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "home-variant"
+			"key": "home"
 		}
 	},
 	"version": 1.1

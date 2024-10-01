@@ -1,6 +1,6 @@
 {
 	"friendlyURL": "/release-notes",
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
 		"en_US": "Release Notes",
 		"es_ES": "Notas de publicación",

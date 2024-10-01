@@ -1,8 +1,8 @@
 {
 	"label": {
-		"en_US": "Callback Form Entry"
+		"en_US": "Callback Request"
 	},
-	"name": "CallbackFormEntry",
+	"name": "CallbackRequest",
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -42,6 +42,16 @@
 				"en_US": "Description"
 			},
 			"name": "description",
+			"objectFieldSettings": [
+				{
+					"name": "maxLength",
+					"value": 2000
+				},
+				{
+					"name": "showCounter",
+					"value": true
+				}
+			],
 			"required": true
 		},
 		{
@@ -57,7 +67,7 @@
 	],
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
-		"en_US": "Callback Form Entries"
+		"en_US": "Callback Requests"
 	},
 	"portlet": true,
 	"scope": "company",

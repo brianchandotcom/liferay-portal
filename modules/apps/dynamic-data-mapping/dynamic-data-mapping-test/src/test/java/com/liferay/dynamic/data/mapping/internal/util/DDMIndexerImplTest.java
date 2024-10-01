@@ -16,6 +16,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -30,6 +31,9 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -212,6 +216,72 @@ public class DDMIndexerImplTest {
 		_testFormWithRepeatableField("keyword");
 		_testFormWithRepeatableField("text");
 		_testFormWithRepeatableRichTextField();
+	}
+
+	@Test
+	public void testFormWithSelectFieldAndOption() throws JSONException {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"select", "select", DDMFormFieldType.SELECT, "string", true, false,
+			false);
+
+		ddmFormField.setIndexType("keyword");
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("Option 1", LocaleUtil.US, "Test");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
+
+		Mockito.when(
+			jsonFactory.createJSONArray("[Test]")
+		).thenReturn(
+			JSONFactoryUtil.createJSONArray("[Test]")
+		);
+
+		Mockito.when(
+			jsonFactory.createJSONArray("[test]")
+		).thenReturn(
+			JSONFactoryUtil.createJSONArray("[test]")
+		);
+
+		Mockito.when(
+			jsonFactory.createJSONArray("[Option 1]")
+		).thenReturn(
+			JSONFactoryUtil.createJSONArray("[Option 1]")
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmIndexer, "_jsonFactory", jsonFactory);
+
+		Document document = _createDocument();
+
+		_ddmIndexer.addAttributes(
+			document, ddmStructure,
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"select",
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"[Option 1]", LocaleUtil.US))));
+
+		FieldValuesAssert.assertFieldValues(
+			HashMapBuilder.put(
+				"ddmFieldArray.ddmFieldValueKeyword_en_US_String", "Test"
+			).put(
+				"ddmFieldArray.ddmFieldValueKeyword_en_US_String_sortable",
+				"test"
+			).build(),
+			"ddmFieldArray.ddmFieldValueKeyword_en_US_String", document,
+			"Test");
 	}
 
 	@Test

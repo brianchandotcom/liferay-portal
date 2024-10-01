@@ -1964,7 +1964,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = _updateNode(objectDefinition);
 
-		objectDefinition = _updateDescendantNodes(objectDefinition);
+		_updateDescendantNodes(objectDefinition);
 
 		_createLocalizationTable(
 			DynamicObjectDefinitionLocalizationTableFactory.create(

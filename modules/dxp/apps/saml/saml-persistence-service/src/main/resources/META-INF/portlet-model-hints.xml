@@ -66,7 +66,9 @@
 		<field name="samlNameIdFormat" type="String">
 			<hint name="max-length">128</hint>
 		</field>
-		<field name="samlNameIdNameQualifier" type="String" />
+		<field name="samlNameIdNameQualifier" type="String">
+			<hint name="max-length">1024</hint>
+		</field>
 		<field name="samlNameIdSpNameQualifier" type="String" />
 		<field name="samlNameIdSpProvidedId" type="String" />
 		<field name="samlNameIdValue" type="String">

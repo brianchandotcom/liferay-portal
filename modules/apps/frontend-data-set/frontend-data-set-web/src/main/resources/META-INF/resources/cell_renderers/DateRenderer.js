@@ -27,7 +27,7 @@ function DateRenderer({options, value}) {
 		}
 	}
 
-	const locale = themeDisplay.getBCP47LanguageId();
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	const dateOptions = {
 		day: options?.format?.day || 'numeric',

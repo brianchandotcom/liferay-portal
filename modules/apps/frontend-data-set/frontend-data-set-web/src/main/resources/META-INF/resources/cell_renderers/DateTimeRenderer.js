@@ -10,7 +10,8 @@ function DateTimeRenderer({options, value}) {
 		return null;
 	}
 
-	const locale = themeDisplay.getLanguageId().replaceAll('_', '-');
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+
 	const dateOptions = options?.format || {
 		day: 'numeric',
 		hour: 'numeric',

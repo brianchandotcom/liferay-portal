@@ -92,9 +92,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				String tagString = getTag(content, tagStartPosition);
 
-				if (Validator.isNull(tagString) ||
-					tagString.startsWith("<portlet:namespace")) {
-
+				if (Validator.isNull(tagString)) {
 					continue;
 				}
 

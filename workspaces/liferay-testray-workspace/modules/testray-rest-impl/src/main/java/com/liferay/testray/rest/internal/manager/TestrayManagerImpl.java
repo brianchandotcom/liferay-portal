@@ -510,16 +510,23 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		Map<String, Serializable> map =
 			HashMapBuilder.<String, Serializable>put(
+				"caseResultBlocked", 0
+			).put(
+				"caseResultFailed", 0
+			).put(
+				"caseResultPassed", 0
+			).put(
+				"caseResultTestFix", 0
+			).put(
+				"caseResultUntested", 0
+			).put(
 				"importStatus", "DONE"
 			).build();
 
 		for (Facet.FacetValue facetValue : facetValues) {
 			String key = facetValue.getTerm();
 
-			if (key.equals("DIDNOTRUN")) {
-				key = "DidNotRun";
-			}
-			else if (key.equals("INPROGRESS")) {
+			if (key.equals("INPROGRESS")) {
 				key = "InProgress";
 			}
 			else if (key.equals("TESTFIX")) {
@@ -536,13 +543,12 @@ public class TestrayManagerImpl implements TestrayManager {
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			testrayBuildId);
 
-		objectEntry.getValues(
-		).putAll(
-			map
-		);
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		values.putAll(map);
 
 		return _objectEntryLocalService.updateObjectEntry(
-			userId, objectEntry.getObjectEntryId(), objectEntry.getValues(),
+			userId, objectEntry.getObjectEntryId(), values,
 			new ServiceContext());
 	}
 

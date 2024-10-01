@@ -1,0 +1,20 @@
+diff --git a/org/apache/jasper/compiler/TagLibraryInfoImpl.java b/org/apache/jasper/compiler/TagLibraryInfoImpl.java
+index dba5becd0cf5e..e933930c88f56 100644
+--- a/org/apache/jasper/compiler/TagLibraryInfoImpl.java
++++ b/org/apache/jasper/compiler/TagLibraryInfoImpl.java
+@@ -954,12 +954,9 @@ public class TagLibraryInfoImpl extends TagLibraryInfo implements TagConstants {
+             uri = URN_JSPTLD + uri;
+         }
+ 
+-        ValidationMessage[] messages = tlv.validate(getPrefixString(), uri,
+-                                                    thePage);
+-        tlv.release();
+-
+-        return messages;
++        return tlv.validate(getPrefixString(), uri, thePage);
+     }
+ 
+     protected TagLibraryValidator tagLibraryValidator; 
+ }
++/* @generated */
+\ No newline at end of file

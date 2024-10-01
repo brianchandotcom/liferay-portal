@@ -954,12 +954,9 @@ public class TagLibraryInfoImpl extends TagLibraryInfo implements TagConstants {
             uri = URN_JSPTLD + uri;
         }
 
-        ValidationMessage[] messages = tlv.validate(getPrefixString(), uri,
-                                                    thePage);
-        tlv.release();
-
-        return messages;
+        return tlv.validate(getPrefixString(), uri, thePage);
     }
 
     protected TagLibraryValidator tagLibraryValidator; 
 }
+/* @generated */

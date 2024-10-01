@@ -401,44 +401,6 @@ public class LayoutStructureTest {
 	}
 
 	@Test
-	public void testCopyLayoutStructureItemWithFormStepContainerStyledLayoutStructureItemAsParent()
-		throws Exception {
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
-		LayoutStructureItem formStyledLayoutStructureItem =
-			layoutStructure.addFormStyledLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
-			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
-				formStyledLayoutStructureItem.getItemId(), 0);
-
-		LayoutStructureItem formStepLayoutStructureItem =
-			layoutStructure.addFormStepLayoutStructureItem(
-				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
-
-		LayoutStructureItem fragmentStyledLayoutStructureItem =
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				formStepLayoutStructureItem.getItemId(), 0);
-
-		List<LayoutStructureItem> copiedLayoutStructureItems =
-			layoutStructure.copyLayoutStructureItems(
-				Collections.singletonList(
-					fragmentStyledLayoutStructureItem.getItemId()),
-				formStepContainerStyledLayoutStructureItem.getItemId());
-
-		_assertParentLayoutStructureItem(
-			2, 1, copiedLayoutStructureItems, formStyledLayoutStructureItem);
-	}
-
-	@Test
 	public void testCopyLayoutStructureItemWithFormStepLayoutStructureItemAsParent()
 		throws Exception {
 

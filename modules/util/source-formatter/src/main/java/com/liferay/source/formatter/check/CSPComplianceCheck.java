@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
 
 		return _checkIllegalAttributes(
-			fileName, content, illegalAttributeNames);
+			fileName, absolutePath, content, illegalAttributeNames);
 	}
 
 	protected int getTagStartPosition(String content, int x) {
@@ -61,7 +60,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _checkIllegalAttributes(
-		String fileName, String content, List<String> illegalAttributeNames) {
+		String fileName, String absolutePath, String content,
+		List<String> illegalAttributeNames) {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
 		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
@@ -100,13 +100,15 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 				List<String> ignoredTagPrefixes = Collections.emptyList();
 
 				if (lowerCaseFileName.endsWith(".ftl")) {
-					ignoredTagPrefixes = _ignoredFTLTagPrefixes;
+					ignoredTagPrefixes = getAttributeValues(
+						_IGNORED_FTL_TAG_PREFIXES_KEY, absolutePath);
 				}
 				else if (lowerCaseFileName.endsWith(".jsp") ||
 						 lowerCaseFileName.endsWith(".jspf") ||
 						 lowerCaseFileName.endsWith(".jspx")) {
 
-					ignoredTagPrefixes = _ignoredJSPTagPrefixes;
+					ignoredTagPrefixes = getAttributeValues(
+						_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
 				}
 
 				boolean skip = false;
@@ -213,17 +215,16 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		}
 	}
 
+	private static final String _IGNORED_FTL_TAG_PREFIXES_KEY =
+		"ignoredFTLTagPrefixes";
+
+	private static final String _IGNORED_JSP_TAG_PREFIXES_KEY =
+		"ignoredJSPTagPrefixes";
+
 	private static final String _ILLEGAL_ATTRIBUTE_NAMES_KEY =
 		"illegalAttributeNames";
 
 	private static final String _ILLEGAL_TAG_NAMES_DATA_KEY =
 		"illegalTagNamesData";
-
-	private static final List<String> _ignoredFTLTagPrefixes = Arrays.asList(
-		"<@clay.", "<@clay[", "<@liferay_aui.", "<@liferay_aui[",
-		"<@liferay_frontend.", "<@liferay_frontend[", "<@liferay_ui.",
-		"<@liferay_ui[");
-	private static final List<String> _ignoredJSPTagPrefixes = Arrays.asList(
-		"<aui:", "<clay:", "<liferay-frontend:", "<liferay-ui:");
 
 }

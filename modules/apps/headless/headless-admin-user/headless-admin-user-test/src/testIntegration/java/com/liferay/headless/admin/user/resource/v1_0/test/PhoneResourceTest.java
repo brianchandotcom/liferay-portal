@@ -81,6 +81,22 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 	}
 
 	@Override
+	protected Phone testDeletePhone_addPhone() throws Exception {
+		return _addPhone(
+			randomPhone(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+	}
+
+	@Override
+	protected Phone testDeletePhoneByExternalReferenceCode_addPhone()
+		throws Exception {
+
+		return _addPhone(
+			randomPhone(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+	}
+
+	@Override
 	protected Phone testGetAccountByExternalReferenceCodePhonesPage_addPhone(
 			String externalReferenceCode, Phone phone)
 		throws Exception {
@@ -158,6 +174,15 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 	}
 
 	@Override
+	protected Phone testGetPhoneByExternalReferenceCode_addPhone()
+		throws Exception {
+
+		return _addPhone(
+			randomPhone(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+	}
+
+	@Override
 	protected Phone
 			testGetUserAccountByExternalReferenceCodePhonesPage_addPhone(
 				String externalReferenceCode, Phone phone)
@@ -196,6 +221,22 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		return testGetPhone_addPhone();
 	}
 
+	@Override
+	protected Phone testPatchPhone_addPhone() throws Exception {
+		return _addPhone(
+			randomPhone(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+	}
+
+	@Override
+	protected Phone testPatchPhoneByExternalReferenceCode_addPhone()
+		throws Exception {
+
+		return _addPhone(
+			randomPhone(), Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+	}
+
 	private Phone _addPhone(
 			Phone phone, String className, long classPK, String listTypeId)
 		throws Exception {
@@ -221,6 +262,7 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		return new Phone() {
 			{
 				extension = phone.getExtension();
+				externalReferenceCode = phone.getExternalReferenceCode();
 				id = phone.getPhoneId();
 				phoneNumber = phone.getNumber();
 				primary = phone.isPrimary();

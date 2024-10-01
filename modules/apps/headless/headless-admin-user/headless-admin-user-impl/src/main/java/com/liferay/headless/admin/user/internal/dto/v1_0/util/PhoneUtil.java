@@ -19,6 +19,7 @@ public class PhoneUtil {
 		return new Phone() {
 			{
 				setExtension(phone::getExtension);
+				setExternalReferenceCode(phone::getExternalReferenceCode);
 				setId(phone::getPhoneId);
 				setPhoneNumber(phone::getNumber);
 				setPhoneType(

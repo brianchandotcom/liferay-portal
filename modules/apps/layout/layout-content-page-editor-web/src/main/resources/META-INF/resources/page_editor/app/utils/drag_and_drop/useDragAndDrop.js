@@ -394,7 +394,7 @@ function computeDrop({
 		targetPosition: targetPositionWithoutMiddle,
 	});
 
-	let sourceItemsAreDroppable = true;
+	let sourceItemsAreDroppable = dropItemIsDroppable;
 
 	if (sourceItems.length > 1) {
 
@@ -404,13 +404,13 @@ function computeDrop({
 			checkAllowedChild(
 				item,
 				layoutDataRef.current.items[dropItemId],
-				layoutDataRef,
-				fragmentEntryLinksRef
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
 			)
 		);
 	}
 
-	if (!dropItemIsDroppable || !sourceItemsAreDroppable) {
+	if (!sourceItemsAreDroppable) {
 		let message = '';
 
 		if (dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {

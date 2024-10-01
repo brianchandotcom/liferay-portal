@@ -1,0 +1,33 @@
+buildscript {
+	dependencies {
+		classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
+	}
+
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+}
+
+task jarTransformed
+
+dependencies {
+	compileOnly group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
+}
+
+jar {
+	setActions([])
+
+	finalizedBy jarTransformed
+}
+
+jarTransformed {
+	doLast {
+		delete files(jar.archivePath)
+
+		org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath}))
+	}
+
+	mustRunAfter generatePomFileForMavenPublication
+}

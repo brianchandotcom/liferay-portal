@@ -108,6 +108,7 @@ Export-Package:\
 	\
 	javax.portlet.*;version='2.0',\
 	\
+	javax.servlet.jsp.jstl.*;version='1.2.2',\
 	javax.servlet.jsp.*;version='2.3.3',\
 	javax.servlet.*;version='3.1.0',\
 	\
@@ -184,6 +185,7 @@ Export-Package:\
 	org.apache.logging.log4j.message;version='2.17.1',\
 	org.apache.logging.log4j.spi;version='2.17.1',\
 	org.apache.naming.java,\
+	org.apache.taglibs.standard.*;version='1.2.3',\
 	org.apache.xerces.*;version='2.11.0',\
 	org.apache.xml.dtm.*;version='2.7.1',\
 	org.apache.xml.res.*;version='2.7.1',\
@@ -280,6 +282,8 @@ Provide-Capability:\
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/activation.jar,\
+	@../../../lib/development/jstl-api.jar,\
+	@../../../lib/development/jstl-impl.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/tomcat-el-api.jar,\
 	@../../../lib/development/tomcat-jsp-api.jar,\

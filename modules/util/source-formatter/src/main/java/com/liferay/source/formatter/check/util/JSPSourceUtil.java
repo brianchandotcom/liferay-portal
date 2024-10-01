@@ -377,9 +377,9 @@ public class JSPSourceUtil {
 	private static final Pattern _javaCodeTagPattern = Pattern.compile(
 		"<%\\s*[@=\n]");
 	private static final Pattern _javaEndTagPattern = Pattern.compile(
-		"[\n\t]%>(\n|\\Z)");
+		"[\n\t]%>('|\"|\n|\\Z)");
 	private static final Pattern _javaStartTagPattern = Pattern.compile(
-		"[\n\t]<%\\!?(\n|\\Z)");
+		"['\"\n\t]<%\\!?(=|\n|\\Z)");
 	private static final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg|tag)");
 	private static final Pattern _scriptEndTagPattern = Pattern.compile(

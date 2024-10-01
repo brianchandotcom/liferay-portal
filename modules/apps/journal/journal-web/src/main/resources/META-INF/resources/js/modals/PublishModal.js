@@ -107,7 +107,7 @@ export default function PublishModal({
 									setShowErrorAlert(true);
 								}
 								else {
-									onPublishButtonClick();
+									onPublishButtonClick(actionButton);
 								}
 							}}
 							type={

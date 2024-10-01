@@ -120,10 +120,10 @@ public class ScimNotificationSchedulerJobConfiguration
 			body = StringUtil.read(
 				getClassLoader(),
 				"com/liferay/scim/configuration/web/internal/dependencies" +
-				"/body.tmpl");
+					"/body.tmpl");
 
 			body = StringUtil.replace(
-				body, new String[] {"[$DATE_EXPIRATION_ACCESS_TOKEN$]"},
+				body, new String[] {"[$ACCESS_TOKEN_EXPIRATION_DATE$]"},
 				new String[] {strAccessTokenExpirationDate});
 		}
 		catch (IOException ioException) {
@@ -158,9 +158,9 @@ public class ScimNotificationSchedulerJobConfiguration
 
 			for (OAuth2Application oAuth2Application : oAuth2Applications) {
 				if (oAuth2Application.getClientId(
-				).startsWith(
-					_SCIM_CLIENT_ID_PREFIX
-				)) {
+					).startsWith(
+						_SCIM_CLIENT_ID_PREFIX
+					)) {
 
 					List<OAuth2Authorization> applicationOAuth2Authorizations =
 						_oAuth2AuthorizationLocalService.
@@ -208,7 +208,7 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private void _sendNotificationExpirationToken(
-		long companyId, Date accessTokenExpirationDate)
+			long companyId, Date accessTokenExpirationDate)
 		throws Exception {
 
 		Role role = _roleLocalService.getRole(

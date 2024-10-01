@@ -1275,10 +1275,12 @@ definition {
 		}
 	}
 
-	@description = "This is use case for LPS-179333. Verify that timline and conflict icon can display for the conflict pulication bar."
+	@description = "This is use case for LPS-179333. Verify that timeline and conflict icon can display for the conflict publication bar."
 	@priority = 3
 	test TimelineAndConflictIconCanAppearOnConflictPublicationBar {
 		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Make change to the Home page on Publication 1 Name") {
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");

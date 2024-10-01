@@ -29,6 +29,7 @@ public class CreatorUtil {
 			{
 				setAdditionalName(user::getMiddleName);
 				setContentType(() -> "UserAccount");
+				setExternalReferenceCode(user::getExternalReferenceCode);
 				setFamilyName(user::getLastName);
 				setGivenName(user::getFirstName);
 				setId(user::getUserId);

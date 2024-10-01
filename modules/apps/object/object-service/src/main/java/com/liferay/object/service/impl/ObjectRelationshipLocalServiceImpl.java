@@ -1599,6 +1599,22 @@ public class ObjectRelationshipLocalServiceImpl
 					"reference in a root context");
 		}
 
+		if ((objectRelationshipId != 0) && objectDefinition1.isApproved() &&
+			objectDefinition2.isApproved()) {
+
+			int relatedObjectEntriesCount =
+				_objectEntryLocalService.getOneToManyObjectEntriesCount(
+					0, objectRelationshipId, 0L, false, null);
+
+			if (relatedObjectEntriesCount > 0) {
+				throw new ObjectRelationshipEdgeException(
+					StringBundler.concat(
+						"There must be no unrelated object entries when both ",
+						"object definitions are published so that the object ",
+						"relationship can be an edge to a root context"));
+			}
+		}
+
 		long objectDefinition2RootObjectDefinitionId =
 			objectDefinition2.getRootObjectDefinitionId();
 
@@ -1618,9 +1634,6 @@ public class ObjectRelationshipLocalServiceImpl
 				"Unable to bind the object definitions when they have " +
 					"different scopes");
 		}
-
-		_validateObjectEntries(
-			objectDefinition1, objectDefinition2, objectRelationshipId);
 	}
 
 	private void _validateExternalReferenceCode(
@@ -1743,27 +1756,6 @@ public class ObjectRelationshipLocalServiceImpl
 				"the object definition \"", objectDefinition.getShortName(),
 				".\" Parent and child object definitions cannot have the same ",
 				"name."));
-	}
-
-	private void _validateObjectEntries(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, long objectRelationshipId)
-		throws PortalException {
-
-		if ((objectRelationshipId == 0) || !objectDefinition1.isApproved() ||
-			!objectDefinition2.isApproved()) {
-
-			return;
-		}
-
-		int oneToManyObjectEntriesCount =
-			_objectEntryLocalService.getOneToManyObjectEntriesCount(
-				0, objectRelationshipId, 0L, false, null);
-
-		if (oneToManyObjectEntriesCount > 0) {
-			throw new ObjectRelationshipEdgeException(
-				"There must not exist unrelated entries");
-		}
 	}
 
 	private void _validateObjectEntryId(

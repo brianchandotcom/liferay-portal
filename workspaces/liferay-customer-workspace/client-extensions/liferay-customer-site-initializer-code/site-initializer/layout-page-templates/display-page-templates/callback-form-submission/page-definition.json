@@ -1,0 +1,259 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral1",
+						"paddingLeft": "5",
+						"paddingRight": "5",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"align": "Center",
+						"contentDisplay": "FlexRow",
+						"justify": "Center",
+						"paddingLeft": 4,
+						"paddingRight": 4,
+						"paddingTop": 4
+					},
+					"name": "Callback Form Entry Container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral0",
+								"borderRadius": "borderRadiusLg",
+								"marginBottom": "8",
+								"paddingBottom": "5",
+								"paddingLeft": "5",
+								"paddingRight": "5",
+								"paddingTop": "5",
+								"width": "680px"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 10,
+								"paddingBottom": 4,
+								"paddingLeft": 4,
+								"paddingRight": 4,
+								"paddingTop": 4
+							},
+							"name": "Entry Container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "5",
+										"paddingLeft": "4"
+									},
+									"indexed": true,
+									"layout": {
+										"marginBottom": 4,
+										"paddingLeft": 2
+									},
+									"name": "Header Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h3"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Callback Request"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Request a Support Engineer to contact you as soon as possible."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightNormal",
+												"textColor": "colorNeutral7"
+											},
+											"indexed": true,
+											"name": "Header Paragraph"
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "colorNeutral1",
+										"borderRadius": "borderRadiusLg",
+										"paddingBottom": "5",
+										"paddingLeft": "2rem",
+										"paddingRight": "2rem",
+										"paddingTop": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"contentDisplay": "FlexColumn",
+										"justify": "Center",
+										"paddingBottom": 4,
+										"paddingTop": 4
+									},
+									"name": "Message Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h5"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Thank you for your submission."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightBold",
+												"marginBottom": "2"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "callback-form-entry-sla-text",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [],
+											"fragmentStyle": {
+												"marginBottom": "5"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonType": "primary",
+												"type": "link",
+												"buttonSize": "nm"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/home"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				},
+																				{
+																					"fieldName": "siteKey",
+																					"fieldValue": "[$GROUP_KEY$]"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Return to Home"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "home-variant"
+		},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

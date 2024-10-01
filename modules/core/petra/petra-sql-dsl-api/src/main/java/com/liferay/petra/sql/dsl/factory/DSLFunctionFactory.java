@@ -47,6 +47,8 @@ public interface DSLFunctionFactory {
 
 	public Expression<Long> countDistinct(Expression<?> expression);
 
+	public Expression<String> date2sec(Expression<?> expression);
+
 	public <N extends Number> Expression<N> divide(
 		Expression<N> expression1, Expression<N> expression2);
 

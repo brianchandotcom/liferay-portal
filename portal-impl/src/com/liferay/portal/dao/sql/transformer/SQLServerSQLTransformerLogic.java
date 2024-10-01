@@ -23,9 +23,10 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 			getAggregationFunction(), getBitwiseCheckFunction(),
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
-			getDropTableIfExistsTextFunction(), getInstrFunction(),
-			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
-			getNullDateFunction(), getSubstrFunction()
+			getDateFormatFunction(), getDropTableIfExistsTextFunction(),
+			getInstrFunction(), getIntegerDivisionFunction(),
+			getLengthFunction(), getModFunction(), getNullDateFunction(),
+			getSubstrFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

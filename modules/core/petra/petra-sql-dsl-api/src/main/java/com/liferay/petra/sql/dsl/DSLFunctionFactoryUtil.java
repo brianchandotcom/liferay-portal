@@ -87,6 +87,10 @@ public class DSLFunctionFactoryUtil {
 		return _DSL_FUNCTION_FACTORY.countDistinct(expression);
 	}
 
+	public static Expression<String> date2sec(Expression<?> expression) {
+		return _DSL_FUNCTION_FACTORY.date2sec(expression);
+	}
+
 	public static <N extends Number> Expression<N> divide(
 		Expression<N> expression1, Expression<N> expression2) {
 

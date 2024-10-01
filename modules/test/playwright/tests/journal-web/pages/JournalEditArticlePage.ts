@@ -255,6 +255,26 @@ export class JournalEditArticlePage {
 		});
 	}
 
+	async saveAsDraftWithPermissions(title: string) {
+		await this.fillTitle(title);
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Save as Draft'})
+			.click();
+
+		await expect(async () => {
+			const draftButton = await this.page
+				.getByLabel('Save as Draft With Permissions')
+				.getByRole('button', {name: 'Save as Draft'});
+
+			await draftButton.waitFor();
+
+			await draftButton.click();
+		}).toPass();
+
+		await expect(this.page.getByText('Version: 1.0 Draft')).toBeVisible();
+	}
+
 	async scheduleArticle(
 		title: string,
 		publishDate: string,

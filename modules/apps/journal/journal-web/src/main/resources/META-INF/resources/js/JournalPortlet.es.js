@@ -67,6 +67,9 @@ export default function _JournalPortlet({
 
 	if (!Liferay.FeatureFlags['LPD-15596']) {
 		initializeLock('publishing', {
+			errorIndicator: document.getElementById(
+				`${namespace}lockErrorIndicator`
+			),
 			lockedIndicator: document.getElementById(
 				`${namespace}savingChangesIndicator`
 			),
@@ -445,10 +448,15 @@ export default function _JournalPortlet({
 
 					articleIdWrapper.classList.remove('hide');
 					displayedArticleId.innerHTML = articleId;
-				}
 
-				formDateInput.value = data.modifiedDate;
-				lockHolder.lock?.unlock();
+					formDateInput.value = data.modifiedDate;
+					lockHolder.lock?.unlock();
+				}
+				else {
+					formDateInput.value = data.modifiedDate;
+					lockHolder.lock?.unlock(true);
+					showAlert(data.errorMessage);
+				}
 			})
 			.catch((error) => {
 				console.error(error);

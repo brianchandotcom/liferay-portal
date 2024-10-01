@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -27,8 +28,7 @@ import com.liferay.portal.settings.configuration.admin.display.PortalSettingsCon
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.Format;
 
 import java.util.Date;
 import java.util.Dictionary;
@@ -66,6 +66,10 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	private final Format _format =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	@Reference
 	private Language _language;
@@ -202,15 +206,12 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN,
 					oAuth2Authorization.getAccessTokenContent());
 
-				DateFormat dateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
 				Date accessTokenExpirationDate =
 					oAuth2Authorization.getAccessTokenExpirationDate();
 
 				httpServletRequest.setAttribute(
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DATE,
-					dateFormat.format(accessTokenExpirationDate));
+					_format.format(accessTokenExpirationDate));
 
 				httpServletRequest.setAttribute(
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DAYS,

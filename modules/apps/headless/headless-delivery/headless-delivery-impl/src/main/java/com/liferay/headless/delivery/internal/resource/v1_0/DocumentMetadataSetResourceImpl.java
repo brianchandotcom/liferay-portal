@@ -7,7 +7,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.headless.delivery.dto.v1_0.DocumentMetadataSet;
 import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -48,7 +48,7 @@ public class DocumentMetadataSetResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		_ddmStructureService.deleteStructure(documentMetadataSetId);
+		_ddmStructureLocalService.deleteStructure(documentMetadataSetId);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class DocumentMetadataSetResourceImpl
 		}
 
 		return _toDocumentMetadataSet(
-			_ddmStructureService.getStructure(documentMetadataSetId));
+			_ddmStructureLocalService.getStructure(documentMetadataSetId));
 	}
 
 	@Override
@@ -114,13 +114,13 @@ public class DocumentMetadataSetResourceImpl
 		return Page.of(
 			actions,
 			transform(
-				_ddmStructureService.getStructures(
+				_ddmStructureLocalService.getStructures(
 					group.getCompanyId(), new long[] {groupId}, classNameId,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				ddmStructure -> _toDocumentMetadataSet(ddmStructure)),
 			pagination,
-			_ddmStructureService.getStructuresCount(
+			_ddmStructureLocalService.getStructuresCount(
 				group.getCompanyId(), new long[] {groupId}, classNameId, null,
 				WorkflowConstants.STATUS_ANY));
 	}
@@ -151,7 +151,7 @@ public class DocumentMetadataSetResourceImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private DDMStructureService _ddmStructureService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentMetadataSetDTOConverter)"

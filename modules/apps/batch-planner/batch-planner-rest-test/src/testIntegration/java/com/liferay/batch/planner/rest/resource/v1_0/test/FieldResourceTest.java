@@ -22,6 +22,8 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -39,6 +41,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 	@Test
 	public void testGetFieldsWithManyToManyRelationship() throws Exception {
+		String fieldName = "x" + RandomTestUtil.randomString();
+
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				ObjectDefinitionTestUtil.getRandomName(),
@@ -46,8 +50,7 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						RandomTestUtil.randomString(),
-						"x" + RandomTestUtil.randomString(), false)),
+						RandomTestUtil.randomString(), fieldName, false)),
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectDefinition objectDefinition2 =
@@ -68,26 +71,19 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Page<Field> page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
-			_getObjectDefinitionInternalClassName(objectDefinition2.getName()),
+			_getObjectDefinitionInternalClassName(objectDefinition1.getName()),
 			null);
 
-		String objectRelationshipName = objectRelationship.getName();
-
-		int objectRelationshipFieldsCount = 0;
-
-		for (Field field : page.getItems()) {
-			if (Objects.equals(field.getName(), objectRelationshipName)) {
-				Assert.assertNull(
-					field.getName() + " should not be present",
-					field.getAnyOfGroup());
-
-				objectRelationshipFieldsCount++;
-			}
-		}
-
-		Assert.assertEquals(
-			"Incorrect number of object relationship fields", 1,
-			objectRelationshipFieldsCount);
+		assertEqualsIgnoringOrder(
+			ListUtil.fromArray(
+				_toField(null, "externalReferenceCode", false, "string", null),
+				_toField(null, "keywords", false, "array", "CSV"),
+				_toField(null, "permissions", false, "array", null),
+				_toField(null, "taxonomyCategoryIds", false, "array", "CSV"),
+				_toField(null, fieldName, false, "string", null),
+				_toField(
+					null, objectRelationship.getName(), false, "array", null)),
+			ListUtil.fromCollection(page.getItems()));
 	}
 
 	@Test
@@ -325,11 +321,36 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 		super.testGetPlanInternalClassNameKeyFieldsPage();
 	}
 
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"anyOfGroup", "name", "required", "type", "unsupportedFormats"
+		};
+	}
+
 	private String _getObjectDefinitionInternalClassName(
 		String objectDefinitionName) {
 
 		return "com.liferay.object.rest.dto.v1_0.ObjectEntry%23" +
 			objectDefinitionName;
+	}
+
+	private Field _toField(
+		String anyOfGroup, String name, boolean required, String type,
+		String unsupportedFormats) {
+
+		Field field = new Field();
+
+		field.setAnyOfGroup(anyOfGroup);
+		field.setName(name);
+		field.setRequired(required);
+		field.setType(type);
+
+		if (unsupportedFormats != null) {
+			field.setUnsupportedFormats(StringUtil.split(unsupportedFormats));
+		}
+
+		return field;
 	}
 
 }

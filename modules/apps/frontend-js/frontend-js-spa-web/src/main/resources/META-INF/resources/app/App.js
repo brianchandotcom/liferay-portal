@@ -1081,8 +1081,11 @@ class App extends EventEmitter {
 		event.capturedFormElement = form;
 		const buttonSelector =
 			'button:not([type]),button[type=submit],input[type=submit]';
-		if (event.submitter.matches(buttonSelector)) {
-			event.capturedFormButtonElement = event.submitter;
+
+		const elementSubmitter = event.submitter ?? document.activeElement;
+
+		if (elementSubmitter.matches(buttonSelector)) {
+			event.capturedFormButtonElement = elementSubmitter;
 		}
 		else {
 			event.capturedFormButtonElement =

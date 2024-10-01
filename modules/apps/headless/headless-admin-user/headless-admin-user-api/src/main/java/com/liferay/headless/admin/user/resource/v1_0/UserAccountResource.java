@@ -80,16 +80,19 @@ public interface UserAccountResource {
 			String externalReferenceCode, String[] strings)
 		throws Exception;
 
-	public void postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] strings)
+	public Page<UserAccount>
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				String externalReferenceCode, String accountRoleIds,
+				String[] strings)
 		throws Exception;
 
 	public void deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
+	public UserAccount
+			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public Page<UserAccount> getAccountUserAccountsPage(
@@ -178,6 +181,10 @@ public interface UserAccountResource {
 
 	public UserAccount getUserAccountByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public UserAccount patchUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
 		throws Exception;
 
 	public UserAccount putUserAccountByExternalReferenceCode(

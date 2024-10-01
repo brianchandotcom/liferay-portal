@@ -984,29 +984,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testPostAccountUserAccountsByExternalReferenceCodeByEmailAddress()
 		throws Exception {
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testPostAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				postAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
-					userAccount.getExternalReferenceCode(), null));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.
-				postAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
-					userAccount.getExternalReferenceCode(), null));
-	}
-
-	protected UserAccount
-			testPostAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -1046,27 +1024,19 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testPostAccountUserAccountByExternalReferenceCodeByEmailAddress()
 		throws Exception {
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
+		UserAccount randomUserAccount = randomUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				postAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
-					userAccount.getExternalReferenceCode(),
-					userAccount.getEmailAddress()));
+		UserAccount postUserAccount =
+			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount(
+				randomUserAccount);
 
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.
-				postAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
-					userAccount.getExternalReferenceCode(),
-					userAccount.getEmailAddress()));
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
 	}
 
 	protected UserAccount
-			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount()
+			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount(
+				UserAccount userAccount)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -3413,6 +3383,40 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
+	public void testPatchUserAccountByExternalReferenceCode() throws Exception {
+		UserAccount postUserAccount =
+			testPatchUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount randomPatchUserAccount = randomPatchUserAccount();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount patchUserAccount =
+			userAccountResource.patchUserAccountByExternalReferenceCode(
+				postUserAccount.getExternalReferenceCode(),
+				randomPatchUserAccount);
+
+		UserAccount expectedPatchUserAccount = postUserAccount.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchUserAccount, expectedPatchUserAccount);
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				patchUserAccount.getExternalReferenceCode());
+
+		assertEquals(expectedPatchUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount
+			testPatchUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

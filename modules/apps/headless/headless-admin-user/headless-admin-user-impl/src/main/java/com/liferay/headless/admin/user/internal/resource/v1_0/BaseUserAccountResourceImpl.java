@@ -345,6 +345,10 @@ public abstract class BaseUserAccountResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "accountRoleIds"
 			)
 		}
 	)
@@ -358,13 +362,19 @@ public abstract class BaseUserAccountResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			String[] strings)
+	public Page<UserAccount>
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("accountRoleIds")
+				String accountRoleIds,
+				String[] strings)
 		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	/**
@@ -437,16 +447,19 @@ public abstract class BaseUserAccountResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("emailAddress")
-			String emailAddress)
+	public UserAccount
+			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("emailAddress")
+				String emailAddress)
 		throws Exception {
+
+		return new UserAccount();
 	}
 
 	/**
@@ -1516,6 +1529,122 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return new UserAccount();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserAccount")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/user-accounts/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public UserAccount patchUserAccountByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			UserAccount userAccount)
+		throws Exception {
+
+		UserAccount existingUserAccount = getUserAccountByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (userAccount.getAdditionalName() != null) {
+			existingUserAccount.setAdditionalName(
+				userAccount.getAdditionalName());
+		}
+
+		if (userAccount.getAlternateName() != null) {
+			existingUserAccount.setAlternateName(
+				userAccount.getAlternateName());
+		}
+
+		if (userAccount.getBirthDate() != null) {
+			existingUserAccount.setBirthDate(userAccount.getBirthDate());
+		}
+
+		if (userAccount.getCurrentPassword() != null) {
+			existingUserAccount.setCurrentPassword(
+				userAccount.getCurrentPassword());
+		}
+
+		existingUserAccount.setCustomFields(userAccount.getCustomFields());
+
+		if (userAccount.getEmailAddress() != null) {
+			existingUserAccount.setEmailAddress(userAccount.getEmailAddress());
+		}
+
+		if (userAccount.getExternalReferenceCode() != null) {
+			existingUserAccount.setExternalReferenceCode(
+				userAccount.getExternalReferenceCode());
+		}
+
+		if (userAccount.getFamilyName() != null) {
+			existingUserAccount.setFamilyName(userAccount.getFamilyName());
+		}
+
+		if (userAccount.getGivenName() != null) {
+			existingUserAccount.setGivenName(userAccount.getGivenName());
+		}
+
+		if (userAccount.getHonorificPrefix() != null) {
+			existingUserAccount.setHonorificPrefix(
+				userAccount.getHonorificPrefix());
+		}
+
+		if (userAccount.getHonorificSuffix() != null) {
+			existingUserAccount.setHonorificSuffix(
+				userAccount.getHonorificSuffix());
+		}
+
+		if (userAccount.getImageExternalReferenceCode() != null) {
+			existingUserAccount.setImageExternalReferenceCode(
+				userAccount.getImageExternalReferenceCode());
+		}
+
+		if (userAccount.getImageId() != null) {
+			existingUserAccount.setImageId(userAccount.getImageId());
+		}
+
+		if (userAccount.getJobTitle() != null) {
+			existingUserAccount.setJobTitle(userAccount.getJobTitle());
+		}
+
+		if (userAccount.getLanguageId() != null) {
+			existingUserAccount.setLanguageId(userAccount.getLanguageId());
+		}
+
+		if (userAccount.getPassword() != null) {
+			existingUserAccount.setPassword(userAccount.getPassword());
+		}
+
+		if (userAccount.getStatus() != null) {
+			existingUserAccount.setStatus(userAccount.getStatus());
+		}
+
+		preparePatch(userAccount, existingUserAccount);
+
+		return putUserAccountByExternalReferenceCode(
+			externalReferenceCode, existingUserAccount);
 	}
 
 	/**

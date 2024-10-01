@@ -2221,22 +2221,25 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns users to an account by their email addresses"
 	)
-	public boolean
+	public java.util.Collection<UserAccount>
 			createAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode,
+				@GraphQLName("accountRoleIds") String accountRoleIds,
 				@GraphQLName("strings") String[] strings)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource ->
-				userAccountResource.
-					postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-						externalReferenceCode, strings));
+			userAccountResource -> {
+				Page paginationPage =
+					userAccountResource.
+						postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+							externalReferenceCode, accountRoleIds, strings);
 
-		return true;
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -2263,22 +2266,20 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns a user to an account by external reference code by their email address"
 	)
-	public boolean
+	public UserAccount
 			createAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode,
 				@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
 					postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 						externalReferenceCode, emailAddress));
-
-		return true;
 	}
 
 	@GraphQLField
@@ -2525,6 +2526,22 @@ public class Mutation {
 					externalReferenceCode));
 
 		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
+	)
+	public UserAccount patchUserAccountByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("userAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource ->
+				userAccountResource.patchUserAccountByExternalReferenceCode(
+					externalReferenceCode, userAccount));
 	}
 
 	@GraphQLField

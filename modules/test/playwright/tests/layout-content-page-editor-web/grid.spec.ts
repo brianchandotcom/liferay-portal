@@ -305,9 +305,15 @@ test('Can cut and paste a grid inside a container', async ({
 
 	// Create a container with a grid inside
 
+	const headingDefinition = getFragmentDefinition({
+		id: getRandomString(),
+		key: 'BASIC_COMPONENT-heading',
+	});
+
 	const gridId = getRandomString();
 
 	const gridDefinition = getGridDefinition({
+		columns: [{pageElements: [headingDefinition], size: 12}],
 		id: gridId,
 	});
 
@@ -328,7 +334,7 @@ test('Can cut and paste a grid inside a container', async ({
 
 	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-	// Cut grid and check if on paste is added properly inside the container
+	// Cut grid and check that it has been pasted inside the container
 
 	const grid = page.locator('[data-name="Grid"]');
 
@@ -343,4 +349,12 @@ test('Can cut and paste a grid inside a container', async ({
 	await expect(
 		page.locator('[data-name="Container"]').locator('.page-editor__row')
 	).toBeVisible();
+
+	// Only the parent item (Grid) is activated
+
+	const pastedGridId = await pageEditorPage.getFragmentId('Grid');
+	const pastedHeadingId = await pageEditorPage.getFragmentId('Heading');
+
+	expect(await pageEditorPage.isActive(pastedGridId)).toBe(true);
+	expect(await pageEditorPage.isActive(pastedHeadingId)).toBe(false);
 });

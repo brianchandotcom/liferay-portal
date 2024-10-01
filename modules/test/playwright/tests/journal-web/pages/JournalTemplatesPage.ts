@@ -15,7 +15,9 @@ export class JournalTemplatesPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.newButton = page.getByText('New', {exact: true});
+		this.newButton = page.getByRole('link', {
+			name: 'Add FreeMarker (.ftl)',
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

@@ -17,7 +17,7 @@ export class JournalEditTemplatePage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.basicInformation = page.getByRole('link', {
+		this.basicInformation = page.getByRole('button', {
 			name: 'Basic Information',
 		});
 		this.elementsButton = page.getByTitle('Elements', {exact: true});

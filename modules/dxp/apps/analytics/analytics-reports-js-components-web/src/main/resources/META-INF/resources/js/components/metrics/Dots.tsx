@@ -111,30 +111,36 @@ export function PublishedVersionDot({
 	strokeOpacity,
 	value,
 }: DotProps) {
+	const PublishedVersionCircle = ({size}: {size: number}) => {
+		const halfSize = size / 2;
+
+		return (
+			<circle
+				cx={cx || size}
+				cy={cy || size}
+				fill="white"
+				fillOpacity={strokeOpacity}
+				r={displayOutsideOfRecharts ? halfSize - 1 : halfSize}
+				stroke={stroke}
+				strokeOpacity={strokeOpacity}
+				strokeWidth={
+					displayOutsideOfRecharts ? halfSize - 2 : halfSize - 1
+				}
+			/>
+		);
+	};
+
 	if (value === null) {
 		return null;
 	}
 
-	const size = 8;
-
-	const halfSize = size / 2;
-
-	const CustomDot = (
-		<circle
-			cx={cx || size}
-			cy={cy || size}
-			fill="white"
-			fillOpacity={strokeOpacity}
-			r={displayOutsideOfRecharts ? halfSize - 1 : halfSize}
-			stroke={stroke}
-			strokeOpacity={strokeOpacity}
-			strokeWidth={displayOutsideOfRecharts ? halfSize - 2 : halfSize - 1}
-		/>
-	);
-
 	if (displayOutsideOfRecharts) {
-		return <DotWrapper size={size * 2}>{CustomDot}</DotWrapper>;
+		return (
+			<DotWrapper size={14}>
+				<PublishedVersionCircle size={8} />
+			</DotWrapper>
+		);
 	}
 
-	return CustomDot;
+	return <PublishedVersionCircle size={6} />;
 }

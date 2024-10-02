@@ -792,7 +792,7 @@ baseTest(
 			trigger: translationFilterButton,
 		});
 
-		const fieldsWrapper = page.getByRole('link', {name: 'Fields'});
+		const fieldsWrapper = page.getByRole('button', {name: 'Fields'});
 
 		const metadataWapper = page.getByRole('button', {name: 'Metadata'});
 
@@ -843,6 +843,9 @@ baseTest(
 
 		await expect(noResultsWrapper).toBeHidden();
 
+		if(await  journalPage.articleContentTextBox.isHidden()){
+			await fieldsWrapper.click();
+		}
 		await journalEditArticlePage.fillContent(getRandomString());
 
 		await clickAndExpectToBeVisible({

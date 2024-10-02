@@ -121,11 +121,11 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		const searchBuilder = new SearchBuilder();
 
 		if (id) {
-			searchBuilder.ne('id', id);
+			searchBuilder.ne('id', id).and();
 		}
 
 		if (task.name) {
-			searchBuilder.and().eq('name', task.name);
+			searchBuilder.eq('name', task.name);
 		}
 
 		const filter = searchBuilder.build();

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -38,7 +39,7 @@ import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.io.IOException;
 
-import java.text.SimpleDateFormat;
+import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
@@ -201,11 +202,9 @@ public class ScimNotificationSchedulerJobConfiguration
 				user.getEmailAddress(), user.getFullName())
 		);
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-
 		String body = StringUtil.replace(
 			_body, new String[] {"[$ACCESS_TOKEN_EXPIRATION_DATE$]"},
-			new String[] {formatter.format(accessTokenExpirationDate)});
+			new String[] {_format.format(accessTokenExpirationDate)});
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -233,6 +232,10 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private final Format _format =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	@Reference
 	private Language _language;

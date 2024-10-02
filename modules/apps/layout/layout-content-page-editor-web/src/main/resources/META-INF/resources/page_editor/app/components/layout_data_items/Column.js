@@ -33,9 +33,7 @@ const Column = React.forwardRef(
 
 		const columnContent =
 			canUpdatePageStructure || canUpdateItemConfiguration ? (
-				<div className="page-editor__col__border" ref={ref}>
-					{children}
-				</div>
+				<div className="page-editor__col__border">{children}</div>
 			) : (
 				children
 			);
@@ -45,6 +43,7 @@ const Column = React.forwardRef(
 				className={className}
 				size={columnSize}
 				{...otherProps}
+				ref={ref}
 			>
 				{columnContent}
 			</ClayLayout.Col>

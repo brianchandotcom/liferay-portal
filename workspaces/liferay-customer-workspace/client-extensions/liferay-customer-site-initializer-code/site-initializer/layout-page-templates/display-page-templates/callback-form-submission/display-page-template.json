@@ -1,7 +1,0 @@
-{
-	"contentType": {
-		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackFormEntry$]"
-	},
-	"defaultTemplate": true,
-	"name": "Callback Form Entry Template"
-}

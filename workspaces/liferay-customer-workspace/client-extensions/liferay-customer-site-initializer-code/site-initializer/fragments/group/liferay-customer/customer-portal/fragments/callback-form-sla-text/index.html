@@ -1,0 +1,20 @@
+[#assign
+	displayObject = (request.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{}
+	objectEntryJSON = jsonFactoryUtil.createJSONObject()
+/]
+
+[#assign objectEntryId = (displayObject.getObjectEntryId())! /]
+
+[#if validator.isNotNull(objectEntryId)]
+	[#assign objectEntryResponse = restClient.get("/c/callbackrequests/" + objectEntryId + "?fields=koroneikiAccountToCallbackRequest.slaCurrent&nestedFields=koroneikiAccountToCallbackRequest") /]
+
+	[#assign objectEntryJSON = jsonFactoryUtil.createJSONObject(objectEntryResponse) /]
+[/#if]
+
+[#assign message = "While immediate callbacks are reserved for those with platinum level, a support member will get in touch within 1 business day during our <a href='https://web.liferay.com/support/coverage-areas-and-hours'>standard business hours</a> of your designated Support Center. In the meantime, consider creating a <a href='https://help.liferay.com/hc'>support ticket</a> which can help expedite a resolution." /]
+
+[#if objectEntryJSON.has("koroneikiAccountToCallbackRequest") && objectEntryJSON.get("koroneikiAccountToCallbackRequest").get("slaCurrent") == "Platinum Subscription"]
+	[#assign message = "A Liferay Support member will contact you within 1 hour at the indicated phone number. Consider creating a <a href='https://help.liferay.com/hc'>support ticket</a> if you haven't already to help expedite a resolution." /]
+[/#if]
+
+<p class="callback-message">${message}</p>

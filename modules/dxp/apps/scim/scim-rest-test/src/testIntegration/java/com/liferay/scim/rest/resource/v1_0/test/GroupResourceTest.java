@@ -164,6 +164,16 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		_assertListResponse(groupResource.getV2Groups(5, 3), 3, 1, group3);
 	}
 
+	@Test
+	public void testGetV2GroupsWhenScimIsNotConfigured() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404, groupResource.getV2GroupsHttpResponse(5, 0));
+
+		_restoreScimTestConfiguration();
+	}
+
 	@Override
 	@Test
 	public void testPostV2Group() throws Exception {
@@ -233,6 +243,18 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	@Override
 	@Test
 	public void testPostV2GroupSearch() throws Exception {
+	}
+
+	@Test
+	public void testPostV2GroupWhenScimIsNotConfigured() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		Group postGroup = randomGroup();
+
+		assertHttpResponseStatusCode(
+			404, groupResource.postV2GroupHttpResponse(postGroup));
+
+		_restoreScimTestConfiguration();
 	}
 
 	@Override
@@ -425,6 +447,21 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		Object groupObject = groupResource.getV2GroupById(userId);
 
 		return Group.toDTO(groupObject.toString());
+	}
+
+	private void _restoreScimTestConfiguration() throws Exception {
+		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
+			).build());
 	}
 
 	private static String _pid;

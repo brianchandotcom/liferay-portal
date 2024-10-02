@@ -160,7 +160,7 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:propsTransformer",
 				"{OrderDataSetPropsTransformer} from " +
-				"commerce-order-content-web");
+					"commerce-order-content-web");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -233,8 +233,10 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 
 	private Map<String, Object> _getFDSAdditionalProps(
 		HttpServletRequest httpServletRequest) {
+
 		return HashMapBuilder.<String, Object>put(
-			"productURLSeparator", _cpFriendlyURL.getProductURLSeparator(
+			"productURLSeparator",
+			_cpFriendlyURL.getProductURLSeparator(
 				_portal.getCompanyId(httpServletRequest))
 		).put(
 			"siteDefaultURL", _getSiteDefaultURL(httpServletRequest)

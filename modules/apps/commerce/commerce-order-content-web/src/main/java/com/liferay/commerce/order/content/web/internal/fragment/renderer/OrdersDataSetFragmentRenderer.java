@@ -176,7 +176,8 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 					httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:propsTransformer",
-				"{OrderDataSetPropsTransformer} from commerce-order-content-web");
+				"{OrderDataSetPropsTransformer} from " +
+					"commerce-order-content-web");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -226,11 +227,11 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 				_jsonFactory.createJSONObject();
 
 			commerceOrderTypeJSONObject.put(
-				"name_i18n", commerceOrderType.getName(
-					_portal.getLocale(httpServletRequest))
-				).put(
-					"orderTypeId", commerceOrderType.getCommerceOrderTypeId()
-				);
+				"name_i18n",
+				commerceOrderType.getName(_portal.getLocale(httpServletRequest))
+			).put(
+				"orderTypeId", commerceOrderType.getCommerceOrderTypeId()
+			);
 
 			commerceOrderTypesJSONArray.put(commerceOrderTypeJSONObject);
 		}
@@ -308,7 +309,8 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 
 		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS)) {
 			return HashMapBuilder.<String, Object>put(
-				"accountId", () -> {
+				"accountId",
+				() -> {
 					long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 					AccountEntry accountEntry =

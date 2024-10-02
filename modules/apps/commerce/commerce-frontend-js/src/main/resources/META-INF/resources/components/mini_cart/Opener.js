@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {
+	OPEN_MINICART_FOR_EDITING,
 	OPEN_MINI_CART,
-	OPEN_MINICART_FOR_EDITING
 } from '../../utilities/eventsDefinitions';
 import MiniCartContext from './MiniCartContext';
 import {hasOptions} from './util/index';

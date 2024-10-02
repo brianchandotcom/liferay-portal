@@ -1127,6 +1127,11 @@ components:
                     description:
                         The user's first name.
                     type: string
+                hasLoginDate:
+                    description:
+                        A flag that indicates whether the user has been signed in.
+                    readOnly: true
+                    type: boolean
                 honorificPrefix:
                     description:
                         The user's title (e.g., Dr., Mr., Mrs, Ms., etc.).

@@ -1739,7 +1739,9 @@ definition {
 				key_secondRowValue = "No",
 				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "Edit",
+				objectLabel = "Split order by catalog");
 
 			SelectFrame(locator1 = "IFrame#IFRAME");
 

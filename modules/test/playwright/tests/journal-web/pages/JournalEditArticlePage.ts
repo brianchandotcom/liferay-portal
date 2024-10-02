@@ -9,6 +9,7 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {JournalPage} from './JournalPage';
 
@@ -275,9 +276,7 @@ export class JournalEditArticlePage {
 	) {
 		await this.fillTitle(title);
 
-		if (!(await this.page.getByText('Never Expire').isVisible())) {
-			await this.page.getByRole('link', {name: 'Schedule'}).click();
-		}
+		await openFieldset(this.page,'Schedule')
 
 		if (expirationDate) {
 			await this.page.getByText('Never Expire').click();

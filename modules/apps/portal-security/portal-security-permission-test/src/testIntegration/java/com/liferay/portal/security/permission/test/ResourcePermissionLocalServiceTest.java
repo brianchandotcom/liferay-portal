@@ -55,20 +55,22 @@ public class ResourcePermissionLocalServiceTest {
 
 		_resourceActions.populateModelResources(
 			ResourcePermissionLocalServiceTest.class.getClassLoader(),
-			_RESOURCE_ACTIONS_MODELS_XML_PATH);
+			"com/liferay/portal/security/permission/test/dependencies" +
+				"/resource-actions-models.xml");
 
 		String portletNamePrefix = StringUtil.replace(
 			ResourcePermissionLocalServiceTest.class.getName(), CharPool.PERIOD,
 			CharPool.UNDERLINE);
 
-		String portletName = portletNamePrefix + _RESOURCE_ACTIONS_PORTLET_NAME;
+		String portletName = portletNamePrefix + "_ResourceActionsPortlet";
 
 		Portlet portlet = new PortletImpl(
 			TestPropsValues.getCompanyId(), portletName);
 
 		_resourceActions.populatePortletResource(
 			portlet, ResourcePermissionLocalServiceTest.class.getClassLoader(),
-			_RESOURCE_ACTIONS_PORTLETS_XML_PATH);
+			"com/liferay/portal/security/permission/test/dependencies" +
+				"/resource-actions-portlets.xml");
 
 		_portletLocalService.checkPortlet(portlet);
 
@@ -191,17 +193,6 @@ public class ResourcePermissionLocalServiceTest {
 
 	private static final String _RESOURCE_ACTIONS_MODEL_NAME =
 		"com.liferay.portal.security.permission.test.ResourceActions";
-
-	private static final String _RESOURCE_ACTIONS_MODELS_XML_PATH =
-		"com/liferay/portal/security/permission/test/dependencies" +
-			"/resource-actions-models.xml";
-
-	private static final String _RESOURCE_ACTIONS_PORTLET_NAME =
-		"_ResourceActionsPortlet";
-
-	private static final String _RESOURCE_ACTIONS_PORTLETS_XML_PATH =
-		"com/liferay/portal/security/permission/test/dependencies" +
-			"/resource-actions-portlets.xml";
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -150,9 +150,7 @@ public class ScimNotificationSchedulerJobConfiguration
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 						getOrderByComparator());
 
-				if ((applicationOAuth2Authorizations == null) ||
-					applicationOAuth2Authorizations.isEmpty()) {
-
+				if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
 					continue;
 				}
 

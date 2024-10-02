@@ -16,7 +16,6 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -62,8 +61,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		// Object definition, hierarchical structure, maximum height
 
 		Tree tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 
 		ObjectDefinition objectDefinitionAAA =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -388,8 +386,5 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
-
-	@Inject
-	private TreeFactory _treeFactory;
 
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.tree.test;
+package com.liferay.object.tree.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
@@ -13,7 +13,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -49,8 +48,7 @@ public class TreeTest {
 		// Breadth first iterator
 
 		Tree tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 
 		_testIterator(
 			Arrays.asList("A", "AA", "AB", "AAA", "AAB"),
@@ -114,9 +112,6 @@ public class TreeTest {
 	@Inject
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-
-	@Inject
-	private static TreeFactory _treeFactory;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

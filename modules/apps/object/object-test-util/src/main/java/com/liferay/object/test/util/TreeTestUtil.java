@@ -15,8 +15,9 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
+import com.liferay.object.tree.ObjectEntryTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -77,8 +78,7 @@ public class TreeTestUtil {
 
 	public static Tree createObjectDefinitionTree(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectRelationshipLocalService objectRelationshipLocalService,
-			TreeFactory treeFactory)
+			ObjectRelationshipLocalService objectRelationshipLocalService)
 		throws Exception {
 
 		ObjectDefinition objectDefinitionA =
@@ -103,9 +103,12 @@ public class TreeTestUtil {
 					objectRelationshipLocalService, objectDefinitionA,
 					ObjectDefinitionTestUtil.addCustomObjectDefinition("AB"))));
 
-		return treeFactory.createObjectDefinitionTree(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionLocalService::getObjectDefinition);
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				objectDefinitionLocalService, objectRelationshipLocalService);
+
+		return objectDefinitionTreeFactory.create(
+			objectDefinitionA.getObjectDefinitionId());
 	}
 
 	public static Tree createObjectEntryTree(
@@ -113,14 +116,16 @@ public class TreeTestUtil {
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectFieldLocalService objectFieldLocalService,
-			long rootObjectDefinitionId,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
-			TreeFactory treeFactory)
+			long rootObjectDefinitionId)
 		throws PortalException {
 
-		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
-			rootObjectDefinitionId,
-			objectDefinitionLocalService::getObjectDefinition);
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				objectDefinitionLocalService, objectRelationshipLocalService);
+
+		Tree objectDefinitionTree = objectDefinitionTreeFactory.create(
+			rootObjectDefinitionId);
 
 		Iterator<Node> iterator = objectDefinitionTree.iterator();
 
@@ -175,7 +180,11 @@ public class TreeTestUtil {
 				node.getPrimaryKey(), objectEntry.getObjectEntryId());
 		}
 
-		return treeFactory.createObjectEntryTree(
+		ObjectEntryTreeFactory objectEntryTreeFactory =
+			new ObjectEntryTreeFactory(
+				objectEntryLocalService, objectRelationshipLocalService);
+
+		return objectEntryTreeFactory.create(
 			rootObjectEntry.getObjectEntryId());
 	}
 

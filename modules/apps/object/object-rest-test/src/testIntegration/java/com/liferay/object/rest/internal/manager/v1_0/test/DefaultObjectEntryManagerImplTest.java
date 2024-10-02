@@ -76,7 +76,6 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -567,8 +566,7 @@ public class DefaultObjectEntryManagerImplTest
 				null, null, null, null));
 
 		_tree = TreeTestUtil.createObjectDefinitionTree(
-			objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			objectDefinitionLocalService, _objectRelationshipLocalService);
 
 		Node rootNode = _tree.getRootNode();
 
@@ -4894,8 +4892,8 @@ public class DefaultObjectEntryManagerImplTest
 		Tree tree = TreeTestUtil.createObjectEntryTree(
 			externalReferenceCodeSuffix, objectDefinitionLocalService,
 			_objectEntryLocalService, objectFieldLocalService,
-			_rootObjectDefinition.getObjectDefinitionId(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectRelationshipLocalService,
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		Node node = tree.getRootNode();
 
@@ -5188,9 +5186,6 @@ public class DefaultObjectEntryManagerImplTest
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	private Tree _tree;
-
-	@Inject
-	private TreeFactory _treeFactory;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -52,8 +52,8 @@ import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -119,6 +119,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -145,6 +146,12 @@ public class ObjectDefinitionLocalServiceTest {
 	public static void setUpClass() throws Exception {
 		_defaultObjectFolder = _objectFolderLocalService.getObjectFolder(
 			TestPropsValues.getCompanyId(), ObjectFolderConstants.NAME_DEFAULT);
+	}
+
+	@Before
+	public void setUp() {
+		_objectDefinitionTreeFactory = new ObjectDefinitionTreeFactory(
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test
@@ -310,8 +317,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_hasTable(objectDefinition.getExtensionDBTableName()));
 
 		Tree tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,
@@ -1886,8 +1892,7 @@ public class ObjectDefinitionLocalServiceTest {
 				"AAB", new String[0]
 			).build(),
 			TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				_treeFactory),
+				_objectDefinitionLocalService, _objectRelationshipLocalService),
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.unbind(_objectDefinitionLocalService, "C_AA");
@@ -1902,9 +1907,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AB", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinition.getRootObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinition.getRootObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		// Unbind object definition leaf node
@@ -1915,9 +1919,8 @@ public class ObjectDefinitionLocalServiceTest {
 			LinkedHashMapBuilder.put(
 				"A", new String[0]
 			).build(),
-			_treeFactory.createObjectDefinitionTree(
-				objectDefinition.getRootObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(
+				objectDefinition.getRootObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
 		// Unbind object definition root node
@@ -2684,9 +2687,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.assertObjectDefinitionTree(
 			expectedMap,
-			_treeFactory.createObjectDefinitionTree(
-				rootObjectDefinitionId,
-				_objectDefinitionLocalService::getObjectDefinition),
+			_objectDefinitionTreeFactory.create(rootObjectDefinitionId),
 			_objectDefinitionLocalService);
 	}
 
@@ -2925,6 +2926,8 @@ public class ObjectDefinitionLocalServiceTest {
 	)
 	private ModelListener<ObjectDefinition> _objectDefinitionModelListener;
 
+	private ObjectDefinitionTreeFactory _objectDefinitionTreeFactory;
+
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -2945,8 +2948,5 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private TreeFactory _treeFactory;
 
 }

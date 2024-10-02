@@ -78,8 +78,8 @@ import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectEntryTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
@@ -1910,8 +1910,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 
 		Node rootObjectDefinitionNode = objectDefinitionTree.getRootNode();
 
@@ -1921,8 +1920,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Tree objectEntryTree1 = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService, rootObjectDefinitionNode.getPrimaryKey(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			rootObjectDefinitionNode.getPrimaryKey());
 
 		TreeTestUtil.assertObjectEntryTree(
 			LinkedHashMapBuilder.put(
@@ -1940,8 +1939,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Tree objectEntryTree2 = TreeTestUtil.createObjectEntryTree(
 			"2", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService, rootObjectDefinitionNode.getPrimaryKey(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			rootObjectDefinitionNode.getPrimaryKey());
 
 		TreeTestUtil.assertObjectEntryTree(
 			LinkedHashMapBuilder.put(
@@ -1990,7 +1989,11 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		objectEntryTree1 = _treeFactory.createObjectEntryTree(
+		ObjectEntryTreeFactory objectEntryTreeFactory =
+			new ObjectEntryTreeFactory(
+				_objectEntryLocalService, _objectRelationshipLocalService);
+
+		objectEntryTree1 = objectEntryTreeFactory.create(
 			objectEntryTree1.getRootNode(
 			).getPrimaryKey());
 
@@ -2002,7 +2005,7 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			objectEntryTree1, _objectEntryLocalService);
 
-		objectEntryTree2 = _treeFactory.createObjectEntryTree(
+		objectEntryTree2 = objectEntryTreeFactory.create(
 			objectEntryTree2.getRootNode(
 			).getPrimaryKey());
 
@@ -4538,9 +4541,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private TreeFactory _treeFactory;
 
 	@Inject
 	private UserLocalService _userLocalService;

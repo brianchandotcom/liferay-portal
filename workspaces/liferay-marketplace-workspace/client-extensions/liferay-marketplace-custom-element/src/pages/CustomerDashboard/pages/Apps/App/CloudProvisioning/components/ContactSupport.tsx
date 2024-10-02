@@ -10,7 +10,7 @@ const ContactSupport = () => (
 		{`${i18n.translate('not-seeing-a-specific-project')} `}
 		<a
 			className="font-weight-bold project-selection-page-link"
-			href=""
+			href="https://help.liferay.com/hc/requests/new"
 			target="_blank"
 		>
 			{i18n.translate('contact-support')}

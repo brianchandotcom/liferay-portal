@@ -59,6 +59,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 					icon: item.icon,
 					isWidget: Boolean(item.data.portletId),
 					name: item.label,
+					portletId: item.data.portletId,
 					type: item.type,
 				},
 			]);
@@ -95,8 +96,9 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 			fieldTypes: item.data.fieldTypes,
 			fragmentEntryType: item.data.type,
 			icon: item.icon,
-			isWidget: item.data.portletId,
+			isWidget: Boolean(item.data.portletId),
 			label: item.label,
+			portletId: item.data.portletId,
 			type: item.type,
 		},
 		(parentId, position) => {

@@ -65,6 +65,7 @@ export default function KeyboardMovementManager() {
 		(state) => state.fragmentEntryLinks
 	);
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+	const widgetsRef = useSelectorRef((state) => state.widgets);
 	const keymapRef = useRef({});
 
 	const disableMovement = useDisableKeyboardMovement();
@@ -219,6 +220,7 @@ export default function KeyboardMovementManager() {
 					target,
 					fragmentEntryLinksRef,
 					layoutDataRef,
+					widgetsRef,
 					DIRECTIONS.down
 				);
 
@@ -240,7 +242,8 @@ export default function KeyboardMovementManager() {
 				const nextTarget = getInitialTarget(
 					sources,
 					layoutDataRef,
-					fragmentEntryLinksRef
+					fragmentEntryLinksRef,
+					widgetsRef
 				);
 
 				setTarget(nextTarget);
@@ -269,6 +272,7 @@ export default function KeyboardMovementManager() {
 					},
 					fragmentEntryLinksRef,
 					layoutDataRef,
+					widgetsRef,
 					DIRECTIONS.down
 				);
 
@@ -292,6 +296,7 @@ export default function KeyboardMovementManager() {
 					target,
 					fragmentEntryLinksRef,
 					layoutDataRef,
+					widgetsRef,
 					DIRECTIONS.up
 				);
 
@@ -334,7 +339,8 @@ export default function KeyboardMovementManager() {
 		const initialTarget = getInitialTarget(
 			sources,
 			layoutDataRef,
-			fragmentEntryLinksRef
+			fragmentEntryLinksRef,
+			widgetsRef
 		);
 
 		if (initialTarget) {
@@ -365,6 +371,7 @@ export default function KeyboardMovementManager() {
 		setTarget,
 		setText,
 		sources,
+		widgetsRef,
 	]);
 
 	return null;
@@ -373,7 +380,8 @@ export default function KeyboardMovementManager() {
 export function getInitialTarget(
 	sources,
 	layoutDataRef,
-	fragmentEntryLinksRef
+	fragmentEntryLinksRef,
+	widgetsRef
 ) {
 	const layoutData = layoutDataRef.current;
 	const fragmentEntryLinks = fragmentEntryLinksRef.current;
@@ -388,7 +396,8 @@ export function getInitialTarget(
 			lastSource,
 			root,
 			layoutDataRef.current,
-			fragmentEntryLinksRef.current
+			fragmentEntryLinksRef.current,
+			widgetsRef.current
 		);
 
 		// Check root children to see if someone is targetable
@@ -428,6 +437,7 @@ export function getInitialTarget(
 						target,
 						fragmentEntryLinksRef,
 						layoutDataRef,
+						widgetsRef,
 						DIRECTIONS.up
 					);
 				}
@@ -463,6 +473,7 @@ function getNextTarget(
 	target,
 	fragmentEntryLinksRef,
 	layoutDataRef,
+	widgetsRef,
 	direction
 ) {
 	const fragmentEntryLinks = fragmentEntryLinksRef.current;
@@ -489,6 +500,7 @@ function getNextTarget(
 				nextTarget,
 				fragmentEntryLinksRef,
 				layoutDataRef,
+				widgetsRef,
 				direction
 			);
 		}
@@ -505,7 +517,8 @@ function getNextTarget(
 					source,
 					nextTargetParent,
 					layoutDataRef.current,
-					fragmentEntryLinksRef.current
+					fragmentEntryLinksRef.current,
+					widgetsRef.current
 				)
 			) {
 				return getNextTarget(
@@ -513,6 +526,7 @@ function getNextTarget(
 					nextTarget,
 					fragmentEntryLinksRef,
 					layoutDataRef,
+					widgetsRef,
 					direction
 				);
 			}
@@ -525,7 +539,8 @@ function getNextTarget(
 					source,
 					nextTargetParent,
 					layoutDataRef.current,
-					fragmentEntryLinksRef.current
+					fragmentEntryLinksRef.current,
+					widgetsRef.current
 				)
 			) {
 				return getNextTarget(
@@ -533,6 +548,7 @@ function getNextTarget(
 					nextTarget,
 					fragmentEntryLinksRef,
 					layoutDataRef,
+					widgetsRef,
 					direction
 				);
 			}
@@ -545,7 +561,8 @@ function getNextTarget(
 					source,
 					nextTargetItem,
 					layoutDataRef.current,
-					fragmentEntryLinksRef.current
+					fragmentEntryLinksRef.current,
+					widgetsRef.current
 				)
 			) {
 				return getNextTarget(
@@ -553,6 +570,7 @@ function getNextTarget(
 					nextTarget,
 					fragmentEntryLinksRef,
 					layoutDataRef,
+					widgetsRef,
 					direction
 				);
 			}

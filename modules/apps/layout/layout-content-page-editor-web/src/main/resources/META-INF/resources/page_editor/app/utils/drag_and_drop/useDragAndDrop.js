@@ -99,6 +99,10 @@ export const initialDragDrop = {
 	},
 
 	targetRefs: new Map(),
+
+	widgetsRef: {
+		current: [],
+	},
 };
 
 const DragAndDropContext = React.createContext(initialDragDrop);
@@ -136,8 +140,14 @@ export function NotDraggableArea({children}) {
 }
 
 export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
-	const {canDrag, dispatch, fragmentEntryLinksRef, layoutDataRef, state} =
-		useContext(DragAndDropContext);
+	const {
+		canDrag,
+		dispatch,
+		fragmentEntryLinksRef,
+		layoutDataRef,
+		state,
+		widgetsRef,
+	} = useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
 	const lastSourceItem = sourceItems[sourceItems.length - 1];
 
@@ -170,6 +180,7 @@ export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
 				onDragEnd,
 				sourceItems,
 				state,
+				widgetsRef,
 			});
 		},
 
@@ -244,8 +255,14 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const toControlsId = useToControlsId();
 	const parentToControlsId = useParentToControlsId();
 
-	const {dispatch, fragmentEntryLinksRef, layoutDataRef, state, targetRefs} =
-		useContext(DragAndDropContext);
+	const {
+		dispatch,
+		fragmentEntryLinksRef,
+		layoutDataRef,
+		state,
+		targetRefs,
+		widgetsRef,
+	} = useContext(DragAndDropContext);
 
 	const targetRef = useRef(null);
 
@@ -280,6 +297,7 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 				targetItem,
 				targetRefs,
 				toControlsId,
+				widgetsRef,
 			});
 		},
 	});
@@ -337,6 +355,8 @@ export function DragAndDropContextProvider({children}) {
 
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
+	const widgetsRef = useSelectorRef((state) => state.widgets);
+
 	const dragAndDropContext = useMemo(
 		() => ({
 			canDrag,
@@ -346,6 +366,7 @@ export function DragAndDropContextProvider({children}) {
 			setCanDrag,
 			state,
 			targetRefs,
+			widgetsRef,
 		}),
 		[
 			canDrag,
@@ -355,6 +376,7 @@ export function DragAndDropContextProvider({children}) {
 			state,
 			targetRefs,
 			setCanDrag,
+			widgetsRef,
 		]
 	);
 
@@ -372,6 +394,7 @@ function computeDrop({
 	onDragEnd,
 	sourceItems,
 	state,
+	widgetsRef,
 }) {
 	const {
 		dropItem,
@@ -405,7 +428,8 @@ function computeDrop({
 				item,
 				layoutDataRef.current.items[dropItemId],
 				layoutDataRef.current,
-				fragmentEntryLinksRef.current
+				fragmentEntryLinksRef.current,
+				widgetsRef.current
 			)
 		);
 	}

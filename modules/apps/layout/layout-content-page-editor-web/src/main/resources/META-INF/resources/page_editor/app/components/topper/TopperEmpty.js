@@ -251,6 +251,7 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 
 	const layoutData = useSelector((state) => state.layoutData);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const widgets = useSelector((state) => state.widgets);
 
 	const name = useSelectorCallback(
 		(state) => selectLayoutDataItemLabel(state, item),
@@ -309,7 +310,8 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 														copiedItemId,
 														fragmentEntryLinks,
 														item.itemId,
-														layoutData
+														layoutData,
+														widgets
 													)
 											)
 										) {

@@ -171,7 +171,8 @@ export default function TopperItemActions({disabled, item}) {
 									copiedItemId,
 									fragmentEntryLinks,
 									item.itemId,
-									layoutData
+									layoutData,
+									widgets
 								)
 						)
 					) {

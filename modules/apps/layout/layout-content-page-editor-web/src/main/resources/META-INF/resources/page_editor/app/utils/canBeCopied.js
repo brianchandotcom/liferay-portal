@@ -35,7 +35,8 @@ export default function canBeCopied(
 	copiedItemId,
 	fragmentEntryLinks,
 	parentItemId,
-	layoutData
+	layoutData,
+	widgets
 ) {
 	const source = normalizeSourceItem(
 		layoutData.items[copiedItemId],
@@ -55,7 +56,8 @@ export default function canBeCopied(
 		source,
 		parent,
 		layoutData,
-		fragmentEntryLinks
+		fragmentEntryLinks,
+		widgets
 	);
 	if (!isChildAllowed || isUnmappedCollection(target)) {
 		let error = Liferay.Language.get('element-cannot-be-copied');

@@ -295,7 +295,8 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 									copiedItemId,
 									fragmentEntryLinks,
 									item.id,
-									layoutData
+									layoutData,
+									widgets
 								)
 						)
 					) {

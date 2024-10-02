@@ -365,7 +365,8 @@ export default function ShortcutManager() {
 								copiedItemId,
 								fragmentEntryLinks,
 								getParentItemId(),
-								layoutData
+								layoutData,
+								widgets
 							)
 					) &&
 					copiedItemIds.every(

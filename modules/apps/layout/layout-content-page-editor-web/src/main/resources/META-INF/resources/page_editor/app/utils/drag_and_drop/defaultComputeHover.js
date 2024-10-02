@@ -30,6 +30,7 @@ export default function defaultComputeHover({
 	sourceItem,
 	targetItem,
 	targetRefs,
+	widgetsRef,
 }) {
 
 	// Not dragging over direct child
@@ -113,7 +114,8 @@ export default function defaultComputeHover({
 				sourceItem,
 				targetItem,
 				layoutDataRef.current,
-				fragmentEntryLinksRef.current
+				fragmentEntryLinksRef.current,
+				widgetsRef.current
 			),
 			elevate: null,
 			targetPositionWithMiddle,
@@ -142,7 +144,8 @@ export default function defaultComputeHover({
 				sourceItem,
 				targetItem,
 				layoutDataRef.current,
-				fragmentEntryLinksRef.current
+				fragmentEntryLinksRef.current,
+				widgetsRef.current
 			),
 			elevate: true,
 			targetPositionWithMiddle,
@@ -227,6 +230,7 @@ export default function defaultComputeHover({
 				sourceItem,
 				targetItem: elevatedTargetItem,
 				targetRefs,
+				widgetsRef,
 			});
 		}
 	}

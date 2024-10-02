@@ -658,6 +658,7 @@ function computeHover({
 	sourceItem,
 	targetItem,
 	targetRefs,
+	widgetsRef,
 }) {
 
 	// Not dragging over direct child
@@ -735,7 +736,8 @@ function computeHover({
 				sourceItem,
 				targetItem,
 				layoutDataRef.current,
-				fragmentEntryLinksRef.current
+				fragmentEntryLinksRef.current,
+				widgetsRef.current
 			),
 			elevate: null,
 			targetPositionWithMiddle,
@@ -756,7 +758,8 @@ function computeHover({
 				sourceItem,
 				targetItem,
 				layoutDataRef.current,
-				fragmentEntryLinksRef.current
+				fragmentEntryLinksRef.current,
+				widgetsRef.current
 			),
 			elevate: true,
 			targetPositionWithMiddle,
@@ -813,6 +816,7 @@ function computeHover({
 				sourceItem,
 				targetItem: elevatedTargetItem,
 				targetRefs,
+				widgetsRef,
 			});
 		}
 	}

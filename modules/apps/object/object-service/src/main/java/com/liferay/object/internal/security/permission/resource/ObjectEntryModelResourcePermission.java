@@ -19,8 +19,6 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,10 +62,8 @@ public class ObjectEntryModelResourcePermission
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectRelationshipLocalService objectRelationshipLocalService,
 		PortletResourcePermission portletResourcePermission,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		TreeFactory treeFactory,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
 		_accountEntryLocalService = accountEntryLocalService;
@@ -79,10 +75,8 @@ public class ObjectEntryModelResourcePermission
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
-		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portletResourcePermission = portletResourcePermission;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
-		_treeFactory = treeFactory;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
@@ -310,12 +304,9 @@ public class ObjectEntryModelResourcePermission
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final ObjectRelationshipLocalService
-		_objectRelationshipLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
-	private final TreeFactory _treeFactory;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

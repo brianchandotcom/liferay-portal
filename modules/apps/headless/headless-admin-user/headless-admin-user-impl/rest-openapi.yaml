@@ -5242,6 +5242,22 @@ paths:
                         "Roles successfully created"
             tags: ["Role"]
     "/roles/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            description:
+                Deletes the role by its external reference code.
+            operationId: deleteRoleByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Role"]
         get:
             description:
                 Retrieves the role by its external reference code.
@@ -5264,7 +5280,7 @@ paths:
             tags: ["Role"]
         patch:
             description:
-                update the given Role
+                Updates the role by its external reference code.
             operationId: patchRoleByExternalReferenceCode
             parameters:
                 - in: path
@@ -5292,7 +5308,7 @@ paths:
             tags: ["Role"]
         put:
             description:
-                update the given Role
+                Updates the role by its external reference code.
             operationId: putRoleByExternalReferenceCode
             parameters:
                 - in: path
@@ -5482,6 +5498,23 @@ paths:
                         application/xml: {}
             tags: ["Role"]
     "/roles/{roleId}":
+        delete:
+            description:
+                Deletes the role.
+            operationId: deleteRole
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Role"]
         get:
             description:
                 Retrieves the role.
@@ -5493,6 +5526,64 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+            tags: ["Role"]
+        patch:
+            description:
+                Updates the role.
+            operationId: patchRole
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+            tags: ["Role"]
+        put:
+            description:
+                Updates the role.
+            operationId: putRole
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Role"
             responses:
                 200:
                     content:

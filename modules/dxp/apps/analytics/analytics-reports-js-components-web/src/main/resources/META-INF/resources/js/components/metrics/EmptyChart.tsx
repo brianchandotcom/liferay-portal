@@ -41,7 +41,9 @@ const ChartEmptyState: React.FC<IChartEmptyStateProps> = ({
 						title={title}
 					/>
 
-					<ClayLink href={link.url}>{link.title}</ClayLink>
+					<ClayLink href={link.url} target="_blank">
+						{link.title}
+					</ClayLink>
 				</div>
 			)}
 		</div>

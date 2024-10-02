@@ -9,6 +9,7 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {JournalPage} from './JournalPage';
 

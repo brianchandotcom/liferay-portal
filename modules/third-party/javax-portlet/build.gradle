@@ -1,33 +1,5 @@
-import org.eclipse.transformer.cli.JakartaTransformerCLI
-
-buildscript {
-	dependencies {
-		classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
-	}
-
-	repositories {
-		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-		}
-	}
-}
-
-task jarTransformed
+apply from: "../../build-jakarta-transformer.gradle"
 
 dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
-}
-
-jar {
-	setActions([])
-
-	finalizedBy jarTransformed
-}
-
-jarTransformed {
-	doLast {
-		JakartaTransformerCLI.runWith(new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath}))
-	}
-
-	mustRunAfter generatePomFileForMavenPublication
 }

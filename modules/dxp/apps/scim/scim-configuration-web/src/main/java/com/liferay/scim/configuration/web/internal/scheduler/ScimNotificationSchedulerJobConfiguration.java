@@ -142,15 +142,12 @@ public class ScimNotificationSchedulerJobConfiguration
 			return;
 		}
 
-		_sendNotification(company.getCompanyId());
-	}
-
-	private void _sendNotification(long companyId) {
 		List<OAuth2Application> oAuth2Applications = null;
 
 		try {
 			oAuth2Applications =
-				_oAuth2ApplicationLocalService.getOAuth2Applications(companyId);
+				_oAuth2ApplicationLocalService.getOAuth2Applications(
+					company.getCompanyId());
 
 			for (OAuth2Application oAuth2Application : oAuth2Applications) {
 				if (!Objects.equals(
@@ -188,8 +185,8 @@ public class ScimNotificationSchedulerJobConfiguration
 						(Date)expandoBridge.getAttribute(
 							"lastSuccessfulNotificationDate", false))) {
 
-					_sendNotificationExpirationToken(
-						companyId, accessTokenExpirationDate);
+					_sendNotification(
+						company.getCompanyId(), accessTokenExpirationDate);
 
 					expandoBridge.setAttribute(
 						"lastSuccessfulNotificationDate", new Date(), false);
@@ -205,7 +202,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		}
 	}
 
-	private void _sendNotificationExpirationToken(
+	private void _sendNotification(
 			long companyId, Date accessTokenExpirationDate)
 		throws Exception {
 

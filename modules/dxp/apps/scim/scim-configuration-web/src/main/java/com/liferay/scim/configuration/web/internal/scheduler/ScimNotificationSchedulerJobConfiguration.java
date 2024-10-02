@@ -132,42 +132,41 @@ public class ScimNotificationSchedulerJobConfiguration
 			return;
 		}
 
-			for (OAuth2Application oAuth2Application :
+		for (OAuth2Application oAuth2Application :
 				_oAuth2ApplicationLocalService.getOAuth2Applications(
 					company.getCompanyId())) {
 
-				if (!Objects.equals(
-						ScimClientUtil.generateScimClientId(
-							oAuth2Application.getName()),
-						oAuth2Application.getClientId())) {
+			if (!Objects.equals(
+					ScimClientUtil.generateScimClientId(
+						oAuth2Application.getName()),
+					oAuth2Application.getClientId())) {
 
-					continue;
-				}
+				continue;
+			}
 
-				List<OAuth2Authorization> applicationOAuth2Authorizations =
-					_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
-						oAuth2Application.getOAuth2ApplicationId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						getOrderByComparator());
+			List<OAuth2Authorization> applicationOAuth2Authorizations =
+				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+					oAuth2Application.getOAuth2ApplicationId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					getOrderByComparator());
 
-				if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
-					continue;
-				}
+			if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
+				continue;
+			}
 
-				OAuth2Authorization applicationOAuth2Authorization =
-					applicationOAuth2Authorizations.get(0);
+			OAuth2Authorization applicationOAuth2Authorization =
+				applicationOAuth2Authorizations.get(0);
 
-				Date accessTokenExpirationDate =
-					applicationOAuth2Authorization.
-						getAccessTokenExpirationDate();
+			Date accessTokenExpirationDate =
+				applicationOAuth2Authorization.getAccessTokenExpirationDate();
 
-				ExpandoBridge expandoBridge =
-					applicationOAuth2Authorization.getExpandoBridge();
+			ExpandoBridge expandoBridge =
+				applicationOAuth2Authorization.getExpandoBridge();
 
-				if (hasToSendNotification(
-						accessTokenExpirationDate,
-						(Date)expandoBridge.getAttribute(
-							"lastSuccessfulNotificationDate", false))) {
+			if (hasToSendNotification(
+					accessTokenExpirationDate,
+					(Date)expandoBridge.getAttribute(
+						"lastSuccessfulNotificationDate", false))) {
 
 				try {
 					_sendNotification(
@@ -175,7 +174,6 @@ public class ScimNotificationSchedulerJobConfiguration
 
 					expandoBridge.setAttribute(
 						"lastSuccessfulNotificationDate", new Date(), false);
-
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {

@@ -44,6 +44,7 @@ public class UserAccountTestUtil {
 	public static UserAccount randomUserAccount() {
 		return new UserAccount() {
 			{
+				activated = RandomTestUtil.randomBoolean();
 				additionalName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				alternateName = StringUtil.toLowerCase(
@@ -69,7 +70,6 @@ public class UserAccountTestUtil {
 				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				jobTitle = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				lastLoginDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				password = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

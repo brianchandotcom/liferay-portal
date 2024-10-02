@@ -119,6 +119,16 @@ public class UserResourceDTOConverter
 							accountEntryUserRel, dtoConverterContext, user),
 						AccountBrief.class));
 				setActions(dtoConverterContext::getActions);
+				setActivated(
+					() -> {
+						boolean activated = false;
+
+						if (user.getLastLoginDate() != null) {
+							activated = true;
+						}
+
+						return activated;
+					});
 				setAdditionalName(user::getMiddleName);
 				setAlternateName(user::getScreenName);
 				setBirthDate(contact::getBirthday);
@@ -191,7 +201,6 @@ public class UserResourceDTOConverter
 							dtoConverterContext.getLocale());
 					});
 				setLanguageId(user::getLanguageId);
-				setLastLoginDate(user::getLastLoginDate);
 				setName(user::getFullName);
 				setOrganizationBriefs(
 					() -> TransformUtil.transformToArray(

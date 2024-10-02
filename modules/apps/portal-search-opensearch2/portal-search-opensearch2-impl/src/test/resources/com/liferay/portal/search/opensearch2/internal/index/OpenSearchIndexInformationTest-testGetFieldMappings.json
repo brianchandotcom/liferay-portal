@@ -1409,6 +1409,10 @@
 				}
 			],
 			"properties": {
+				"activated": {
+					"store": true,
+					"type": "keyword"
+				},
 				"ancestorOrganizationIds": {
 					"type": "keyword"
 				},

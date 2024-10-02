@@ -1,0 +1,44 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "order-fragment-fds-pendingOrders",
+					"label": "Order status",
+					"name": "fdsName",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Pending orders",
+								"value": "order-fragment-fds-pendingOrders"
+							},
+							{
+								"label": "Placed orders",
+								"value": "order-fragment-fds-placedOrders"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": "fluid",
+					"label": "Style",
+					"name": "displayStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Fluid",
+								"value": "fluid"
+							},
+							{
+								"label": "Stacked",
+								"value": "stacked"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

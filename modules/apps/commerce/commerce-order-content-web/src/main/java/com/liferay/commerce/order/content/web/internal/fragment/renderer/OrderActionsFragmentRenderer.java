@@ -7,15 +7,13 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.order.content.web.internal.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,50 +54,28 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public boolean isSelectable(HttpServletRequest httpServletRequest) {
+		return FeatureFlagManagerUtil.isEnabled("COMMERCE-9410");
+	}
+
+	@Override
 	public void render(
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		CommerceOrder commerceOrder = null;
-
-		InfoItemReference infoItemReference =
-			(InfoItemReference)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
-
-		if (infoItemReference != null) {
-			try {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)
-						infoItemReference.getInfoItemIdentifier();
-
-				commerceOrder = _commerceOrderService.getCommerceOrder(
-					classPKInfoItemIdentifier.getClassPK());
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-
-				return;
-			}
-		}
+		CommerceOrder commerceOrder =
+			CommerceOrderInfoItemUtil.getCommerceOrder(
+				_commerceOrderService, httpServletRequest);
 
 		if (commerceOrder == null) {
-			Object infoItem = httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
-
-			if (!(infoItem instanceof CommerceOrder)) {
-				if (_isEditMode(httpServletRequest)) {
-					_printPortletMessageInfo(
-						httpServletRequest, httpServletResponse);
-				}
-
-				return;
+			if (_isEditMode(httpServletRequest)) {
+				_printPortletMessageInfo(
+					httpServletRequest, httpServletResponse);
 			}
 
-			commerceOrder = (CommerceOrder)infoItem;
+			return;
 		}
 
 		try {
@@ -118,15 +94,11 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:open", commerceOrder.isOpen());
 
-			FriendlyURLSeparatorProvider friendlyURLSeparatorProvider =
-				_friendlyURLSeparatorProviderSnapshot.get();
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:reorderURL",
-				String.valueOf(
-					friendlyURLSeparatorProvider.getFriendlyURLSeparator(
-						_portal.getCompanyId(httpServletRequest),
-						CommerceOrder.class.getName())));
+				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
+					_friendlyURLSeparatorProviderSnapshot.get(),
+					httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

@@ -33,7 +33,7 @@ public class CommerceOrderStepTrackerHelperImpl
 
 	@Override
 	public List<StepModel> getCommerceOrderSteps(
-			CommerceOrder commerceOrder, Locale locale)
+		CommerceOrder commerceOrder, Locale locale, boolean showOpenStatus)
 		throws PortalException {
 
 		List<StepModel> stepModels = new ArrayList<>();
@@ -53,7 +53,7 @@ public class CommerceOrderStepTrackerHelperImpl
 			return _getWorkflowSteps(commerceOrder, locale);
 		}
 
-		if (ArrayUtil.contains(
+		if (!showOpenStatus && ArrayUtil.contains(
 				CommerceOrderConstants.ORDER_STATUSES_OPEN,
 				commerceOrder.getOrderStatus())) {
 
@@ -70,9 +70,9 @@ public class CommerceOrderStepTrackerHelperImpl
 				 (commerceOrder.getOrderStatus() !=
 					 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) ||
 				!commerceOrderStatus.isValidForOrder(commerceOrder) ||
-				ArrayUtil.contains(
+				(!showOpenStatus && ArrayUtil.contains(
 					CommerceOrderConstants.ORDER_STATUSES_OPEN,
-					commerceOrderStatus.getKey()) ||
+					commerceOrderStatus.getKey())) ||
 				(commerceOrderStatus.getPriority() == -1)) {
 
 				continue;

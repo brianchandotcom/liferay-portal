@@ -30,7 +30,10 @@ import {isMultistepForm} from '../../utils/isMultistepForm';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
+import getItemWidget from '../getItemWidget';
 import {getStepperChild} from '../getStepperChild';
+import getWidget from '../getWidget';
+import {hasCollectionParent} from '../hasCollectionParent';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import defaultComputeHover from './defaultComputeHover';
@@ -199,7 +202,7 @@ export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
 }
 
 export function useDragSymbol(
-	{fieldTypes, fragmentEntryType, icon, isWidget, label, type},
+	{fieldTypes, fragmentEntryType, icon, isWidget, label, portletId, type},
 	onDragEnd
 ) {
 	const selectItem = useSelectItem();
@@ -214,10 +217,11 @@ export function useDragSymbol(
 				isWidget,
 				itemId: label,
 				name: label,
+				portletId,
 				type,
 			},
 		],
-		[fieldTypes, fragmentEntryType, icon, isWidget, label, type]
+		[fieldTypes, fragmentEntryType, icon, isWidget, label, portletId, type]
 	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
@@ -492,6 +496,30 @@ function computeDrop({
 		) {
 			message = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'
+			);
+		}
+		else if (
+			sourceItems.some((item) => {
+				if (!item.isWidget) {
+					return false;
+				}
+
+				const widget = item.portletId
+					? getWidget(widgetsRef.current, item.portletId)
+					: getItemWidget(
+							layoutDataRef.current.items[item.itemId],
+							fragmentEntryLinksRef.current,
+							widgetsRef.current
+						);
+
+				if (!widget.instanceable) {
+					return true;
+				}
+			}) &&
+			hasCollectionParent(dropTargetItem, layoutDataRef.current)
+		) {
+			message = Liferay.Language.get(
+				'noninstanceable-widgets-cannot-be-placed-inside-a-collection-display'
 			);
 		}
 		else if (

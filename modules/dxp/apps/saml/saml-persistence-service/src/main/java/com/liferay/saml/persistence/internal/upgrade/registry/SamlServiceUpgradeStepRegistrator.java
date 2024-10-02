@@ -101,7 +101,13 @@ public class SamlServiceUpgradeStepRegistrator
 		registry.register("2.3.0", "2.4.0", SamlPeerBindingTable.create());
 
 		registry.register(
-			"2.4.0", "2.5.0",
+			"2.4.0", "2.4.1",
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlNameIdNameQualifier",
+				"VARCHAR(1024) null"));
+
+		registry.register(
+			"2.4.1", "2.5.0",
 			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
 				SamlIdpSpSessionUpgradeProcess(),
 			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
@@ -140,6 +146,12 @@ public class SamlServiceUpgradeStepRegistrator
 			"3.0.2", "3.0.3",
 			UpgradeProcessFactory.alterColumnType(
 				"SamlSpSession", "sessionIndex", "VARCHAR(200) null"));
+
+		registry.register(
+			"3.0.3", "3.0.4",
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlNameIdNameQualifier",
+				"VARCHAR(1024) null"));
 	}
 
 	@Reference

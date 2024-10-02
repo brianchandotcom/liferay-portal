@@ -4653,6 +4653,69 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetCreatorExternalReferenceCodeFromObjectEntry() throws Exception {
+		User creatorUser = UserTestUtil.addUser(_group.getGroupId());
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, creatorUser.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				false,
+				Arrays.asList(
+					ListTypeEntryUtil.createListTypeEntry(
+						"listTypeEntryKey1",
+						Collections.singletonMap(
+							LocaleUtil.US, "List Type Entry Key 1"))));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				creatorUser.getUserId(), 0, false, true, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						"Test Field", "testField", true)));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			creatorUser.getUserId(), objectDefinition.getObjectDefinitionId());
+
+		ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				creatorUser.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"testField", true
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		long objectEntryId = serviceBuilderObjectEntry.getObjectEntryId();
+
+		ObjectEntryResource objectEntryResource = _getObjectEntryResource(
+			objectDefinition, creatorUser);
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			objectEntryResource.getObjectEntry(objectEntryId);
+
+		String creatorExternalReferenceCode = objectEntry.getCreator(
+		).getExternalReferenceCode();
+
+		Assert.assertEquals(
+			creatorUser.getExternalReferenceCode(),
+			creatorExternalReferenceCode);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			listTypeDefinition);
+	}
+
+	@Test
 	public void testGetNestedFieldDetailsInRelationshipsWithCustomObjectDefinition()
 		throws Exception {
 

@@ -479,8 +479,9 @@ public class LayoutStructure {
 
 		int position = 0;
 
-		if (parentLayoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem) {
+		if (!itemIds.contains(parentItemId) &&
+			(parentLayoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem)) {
 
 			List<String> childrenItemIds =
 				parentLayoutStructureItem.getChildrenItemIds();

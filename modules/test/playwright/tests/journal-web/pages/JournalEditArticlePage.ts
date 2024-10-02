@@ -26,6 +26,7 @@ export class JournalEditArticlePage {
 	readonly propertiesTab: Locator;
 	readonly publishButton: Locator;
 	readonly redoButton: Locator;
+	readonly selectButton: Locator;
 	readonly submitForWorkflowButton: Locator;
 	readonly titleInput: Locator;
 	readonly undoButton: Locator;
@@ -50,6 +51,7 @@ export class JournalEditArticlePage {
 			'#_com_liferay_journal_web_portlet_JournalPortlet_publishButton'
 		);
 		this.redoButton = page.getByTitle('Redo', {exact: true});
+		this.selectButton = page.getByRole('button', {exact: true, name: 'Select'});
 		this.submitForWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
 		});

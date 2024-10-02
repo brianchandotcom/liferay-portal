@@ -783,7 +783,10 @@ translationTest(
 );
 
 translationTest(
-	'LPD-24942: This is a test for translations filter button in web content',
+	'This is a test for translations filter button in web content',
+	{
+		tag: '@LPD-24942',
+	},
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalPage.goto();
 
@@ -816,7 +819,7 @@ translationTest(
 			trigger: translationFilterButton,
 		});
 
-		const fieldsWrapper = page.getByRole('link', {name: 'Fields'});
+		const fieldsWrapper = page.getByRole('button', {name: 'Fields'});
 
 		const metadataWapper = page.getByRole('button', {name: 'Metadata'});
 
@@ -867,6 +870,9 @@ translationTest(
 
 		await expect(noResultsWrapper).toBeHidden();
 
+		if(await  journalPage.articleContentTextBox.isHidden()){
+			await fieldsWrapper.click();
+		}
 		await journalEditArticlePage.fillContent(getRandomString());
 
 		await clickAndExpectToBeVisible({

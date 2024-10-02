@@ -7,6 +7,7 @@ AUI.add(
 	'liferay-scheduler-event-recorder',
 	(A) => {
 		const AArray = A.Array;
+		const DateMath = A.DataType.DateMath;
 		const Lang = A.Lang;
 
 		const CalendarWorkflow = Liferay.CalendarWorkflow;
@@ -658,6 +659,25 @@ AUI.add(
 					}
 
 					messageNode.innerHTML = messageHTML;
+				},
+				
+				getFormattedDate: function() {
+					var instance = this,
+						evt = (instance.get('event') || instance),
+						endDate = evt.get('endDate'),
+						startDate = evt.get('startDate'),
+						formattedDate = evt._formatDate(startDate, instance.get('dateFormat'));
+		
+					if (evt.get('allDay')) {
+						return formattedDate;
+					}
+		
+					formattedDate = formattedDate.concat(',');
+		
+					var scheduler = evt.get('scheduler'),
+						fmtHourFn = (scheduler.get('activeView').get('isoTime') ? DateMath.toIsoTimeString : DateMath.toUsTimeString);
+		
+					return [formattedDate, fmtHourFn(startDate), '-', fmtHourFn(endDate)].join(' ');
 				},
 
 				getTemplateData() {

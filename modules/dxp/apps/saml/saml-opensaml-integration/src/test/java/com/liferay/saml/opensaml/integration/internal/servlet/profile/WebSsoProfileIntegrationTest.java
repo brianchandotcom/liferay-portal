@@ -283,6 +283,232 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	@Test
+	public void testConcurrentAuthnRequest() throws Exception {
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService =
+			getMockPortletService(
+				SamlSpIdpConnectionLocalServiceUtil.class,
+				SamlSpIdpConnectionLocalService.class);
+
+		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
+
+		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+
+		Mockito.when(
+			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
+		).thenReturn(
+			samlSpIdpConnection
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "samlSpIdpConnectionLocalService",
+			samlSpIdpConnectionLocalService);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest(LOGIN_URL);
+
+		mockHttpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_webSsoProfileImpl.doSendAuthnRequest(
+			mockHttpServletRequest, mockHttpServletResponse, RELAY_STATE);
+
+		String redirect = mockHttpServletResponse.getRedirectedUrl();
+
+		prepareIdentityProvider(IDP_ENTITY_ID);
+
+		mockHttpServletRequest = getMockHttpServletRequest(redirect);
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		SamlSsoRequestContext samlSsoRequestContext1 =
+			_webSsoProfileImpl.decodeAuthnRequest(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+		MessageContext<AuthnRequest> messageContext =
+			(MessageContext<AuthnRequest>)
+				samlSsoRequestContext1.getSAMLMessageContext();
+
+		InOutOperationContext<?, ?> inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<?> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		SAMLMessageInfoContext samlMessageInfoContext =
+			inboundMessageContext.getSubcontext(
+				SAMLMessageInfoContext.class, false);
+
+		Assert.assertNotNull(samlMessageInfoContext.getMessageId());
+
+		String inboundSamlMessageId = samlMessageInfoContext.getMessageId();
+
+		mockHttpServletRequest = getMockHttpServletRequest(
+			SSO_URL + "?saml_message_id=" + inboundSamlMessageId);
+
+		HttpSession mockHttpSession = mockHttpServletRequest.getSession();
+
+		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			new LRUMap<>(2);
+
+		samlSsoRequestContext1.setSAMLMessageContext(null);
+
+		samlSsoRequestContexts.put(
+			inboundSamlMessageId, samlSsoRequestContext1);
+
+		SamlSsoRequestContext samlSsoRequestContext2 =
+			new SamlSsoRequestContext(
+				RandomTestUtil.randomString(), SP_ENTITY_ID, RELAY_STATE, null);
+
+		samlSsoRequestContexts.put(
+			RandomTestUtil.randomString(), samlSsoRequestContext2);
+
+		mockHttpSession.setAttribute(
+			SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContexts);
+
+		Mockito.when(
+			portal.getUserId(Mockito.any(MockHttpServletRequest.class))
+		).thenReturn(
+			1000L
+		);
+
+		samlSsoRequestContext1 = _webSsoProfileImpl.decodeAuthnRequest(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		messageContext =
+			(MessageContext<AuthnRequest>)
+				samlSsoRequestContext1.getSAMLMessageContext();
+
+		inOutOperationContext = messageContext.getSubcontext(
+			InOutOperationContext.class);
+
+		inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		Assert.assertNotNull(inboundMessageContext.getMessage());
+
+		SAMLMessageInfoContext messageInfoContext =
+			inboundMessageContext.getSubcontext(SAMLMessageInfoContext.class);
+
+		Assert.assertEquals(
+			inboundSamlMessageId, messageInfoContext.getMessageId());
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRedirectFromRelayStateToken(
+				samlBindingContext.getRelayState()));
+
+		samlSsoRequestContexts =
+			(LRUMap<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
+				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
+
+		Assert.assertEquals(
+			samlSsoRequestContexts.toString(), 1,
+			samlSsoRequestContexts.size());
+
+		Assert.assertEquals(
+			SamlSsoRequestContext.STAGE_AUTHENTICATED,
+			samlSsoRequestContext1.getStage());
+		Assert.assertEquals(1000, samlSsoRequestContext1.getUserId());
+	}
+
+	@Test
+	public void testConcurrentAuthnRequestIdpInitiatedSsoAfterAuthentication()
+		throws Exception {
+
+		prepareIdentityProvider(IDP_ENTITY_ID);
+
+		String idpInitiatedSamlMessageId1 =
+			_webSsoProfileImpl.generateIdentifier(20);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest(
+				StringBundler.concat(
+					SSO_URL, "?entityId=", SP_ENTITY_ID,
+					"&idp_initiated_saml_message_id=",
+					idpInitiatedSamlMessageId1));
+
+		HttpSession mockHttpSession = mockHttpServletRequest.getSession();
+
+		SamlSsoRequestContext samlSsoRequestContext1 =
+			new SamlSsoRequestContext(SP_ENTITY_ID, RELAY_STATE, null);
+
+		SamlSsoRequestContext samlSsoRequestContext2 =
+			new SamlSsoRequestContext(SP_ENTITY_ID, RELAY_STATE, null);
+
+		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			new LRUMap<>(2);
+
+		samlSsoRequestContexts.put(
+			idpInitiatedSamlMessageId1, samlSsoRequestContext1);
+
+		String idpInitiatedSamlMessageId2 =
+			_webSsoProfileImpl.generateIdentifier(20);
+
+		samlSsoRequestContexts.put(
+			idpInitiatedSamlMessageId2, samlSsoRequestContext2);
+
+		mockHttpSession.setAttribute(
+			SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContexts);
+
+		samlSsoRequestContext1 = _webSsoProfileImpl.decodeAuthnRequest(
+			mockHttpServletRequest, new MockHttpServletResponse());
+
+		MessageContext<AuthnRequest> messageContext =
+			(MessageContext<AuthnRequest>)
+				samlSsoRequestContext1.getSAMLMessageContext();
+
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		Assert.assertEquals(IDP_ENTITY_ID, samlSelfEntityContext.getEntityId());
+
+		SAMLMetadataContext samlMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		Assert.assertNotNull(samlMetadataContext.getEntityDescriptor());
+		Assert.assertNotNull(samlMetadataContext.getRoleDescriptor());
+		Assert.assertTrue(
+			samlMetadataContext.getRoleDescriptor() instanceof
+				IDPSSODescriptor);
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		Assert.assertEquals(SP_ENTITY_ID, samlPeerEntityContext.getEntityId());
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		Assert.assertNotNull(samlPeerMetadataContext.getEntityDescriptor());
+		Assert.assertNotNull(samlPeerMetadataContext.getRoleDescriptor());
+		Assert.assertTrue(
+			samlPeerMetadataContext.getRoleDescriptor() instanceof
+				SPSSODescriptor);
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		samlSsoRequestContexts =
+			(LRUMap<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
+				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
+
+		Assert.assertEquals(
+			samlSsoRequestContexts.toString(), 1,
+			samlSsoRequestContexts.size());
+
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
+
+		Assert.assertTrue(samlSsoRequestContext1.isNewSession());
+	}
+
+	@Test
 	public void testDecodeAuthnRequestIdpInitiatedSso() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 

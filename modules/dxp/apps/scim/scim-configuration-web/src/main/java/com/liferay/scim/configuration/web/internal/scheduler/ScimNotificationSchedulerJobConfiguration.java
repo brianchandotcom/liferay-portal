@@ -63,7 +63,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> _companyLocalService.forEachCompany(this::_notify);
+		return () -> _companyLocalService.forEachCompany(this::_process);
 	}
 
 	public OrderByComparator<OAuth2Authorization> getOrderByComparator() {
@@ -137,7 +137,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		return false;
 	}
 
-	private void _notify(Company company) {
+	private void _process(Company company) {
 		if (!_isEnabled() || !company.isActive()) {
 			return;
 		}

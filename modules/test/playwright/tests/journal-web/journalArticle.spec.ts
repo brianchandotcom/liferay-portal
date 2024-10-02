@@ -179,15 +179,18 @@ baseTest(
 );
 
 baseTest(
-	'LPD-36441: Navigate in ddm template selector',
+	'Navigate in ddm template selector',
+	{
+		tag: '@LPD-36441',
+	},
 	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await page.getByRole('link', {name: 'Default Template'}).click();
+		await journalEditArticlePage.defaultTemplateButton.click();
 
-		await page.getByRole('button', {exact: true, name: 'Select'}).waitFor();
+		await journalEditArticlePage.selectButton.waitFor();
 
-		await page.getByRole('button', {exact: true, name: 'Select'}).click();
+		await journalEditArticlePage.selectButton.click();
 
 		const breadcrumb = page
 			.frameLocator('iframe[title="Templates"]')

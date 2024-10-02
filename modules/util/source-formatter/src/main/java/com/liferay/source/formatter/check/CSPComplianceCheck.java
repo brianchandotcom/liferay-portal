@@ -185,19 +185,17 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	private int _getTagStartPosition(String content, int x) {
-		int startIndex = x;
+		while (x >= 0) {
+			char c = content.charAt(x);
 
-		for (startIndex = x; startIndex >= 0; startIndex--) {
-			char c = content.charAt(startIndex);
+			if ((c == CharPool.LESS_THAN) &&
+				(content.charAt(x + 1) != CharPool.PERCENT) &&
+				!isJavaSource(content, x)) {
 
-			if ((c != CharPool.LESS_THAN) ||
-				(content.charAt(startIndex + 1) == CharPool.PERCENT) ||
-				isJavaSource(content, startIndex)) {
-
-				continue;
+				return x;
 			}
 
-			return startIndex;
+			x = x - 1;
 		}
 
 		return -1;

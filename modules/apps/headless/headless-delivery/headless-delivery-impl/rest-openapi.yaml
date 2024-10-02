@@ -1014,6 +1014,11 @@ components:
                         The type of the content.
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The external reference code of the author.
+                    readOnly: true
+                    type: string
                 familyName:
                     description:
                         The author's surname.
@@ -1039,11 +1044,6 @@ components:
                 name:
                     description:
                         The author's full name.
-                    readOnly: true
-                    type: string
-                externalReferenceCode:
-                    description:
-                        The external reference code of the author.
                     readOnly: true
                     type: string
                 profileURL:

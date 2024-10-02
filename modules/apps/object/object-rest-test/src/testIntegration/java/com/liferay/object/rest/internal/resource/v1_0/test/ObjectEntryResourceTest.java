@@ -4653,7 +4653,9 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetCreatorExternalReferenceCodeFromObjectEntry() throws Exception {
+	public void testGetCreatorExternalReferenceCodeFromObjectEntry()
+		throws Exception {
+
 		User creatorUser = UserTestUtil.addUser(_group.getGroupId());
 
 		ListTypeDefinition listTypeDefinition =

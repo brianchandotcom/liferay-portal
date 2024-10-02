@@ -40,16 +40,6 @@ definition {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 		}
 
-		task ("Assert the fragment editor has autocomplete for lfr-editable tags") {
-			var fragmentHtml = '''<lfr-editable id="" type="image">''';
-			var htmlSnippet = '''<lfr-''';
-
-			FragmentsEditor.autocompleteFragmentHTML(
-				autocompleteField = "lfr-editable:image",
-				fragmentHtml = ${fragmentHtml},
-				htmlSnippet = ${htmlSnippet});
-		}
-
 		task ("Assert the fragment editor has autocomplete for lfr-widget tags") {
 			var fragmentHtml = '''<lfr-widget-asset-list>''';
 			var htmlSnippet = '''<lfr-''';

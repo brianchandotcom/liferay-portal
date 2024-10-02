@@ -817,7 +817,7 @@
 </tr>
 <tr>
 	<td>GRID_COLUMN</td>
-	<td>xpath=(//div[@data-name='Grid'])[${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]</td>
+	<td>xpath=(//div[@data-name='Grid'])[${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]//div[contains(@class,'page-editor__col')]</td>
 	<td></td>
 </tr>
 <tr>

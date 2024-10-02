@@ -3174,7 +3174,7 @@ definition {
 		}
 
 		task ("Then the admin can view the Transaction History") {
-			var timestamp = TestUtils.getElementTextContent(element = "//div[@class='dnd-tr']//div[@class='dnd-td'][3]");
+			var timestamp = TestUtils.getElementTextContent(element = "//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-td')][3]");
 
 			TestUtils.assertNotEquals(
 				actual = ${timestamp},

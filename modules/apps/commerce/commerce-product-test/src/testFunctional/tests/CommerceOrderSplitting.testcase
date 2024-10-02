@@ -530,7 +530,7 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 25.00')]//..//div[(@class='dnd-td')][1]");
+			var supplierOrderId = selenium.getText("//div[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//div[contains(@class,'dnd-td')][1]");
 		}
 
 		task ("And the admin navigates into a supplier order") {
@@ -1248,7 +1248,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "$ 25.00",
 				key_cellName2 = "",
-				key_columnNumber = 4,
+				key_columnNumber = 5,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "Minium Portal");
 		}
@@ -1257,7 +1257,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "$ 24.00",
 				key_cellName2 = "",
-				key_columnNumber = 4,
+				key_columnNumber = 5,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "Minium Portal");
 		}
@@ -1434,7 +1434,7 @@ definition {
 				productName = "Simple Product",
 				productQuantity = 3,
 				productSku = "TESTSKU",
-				productTotalPrice = "5.00");
+				productTotalPrice = "$ 5.00");
 		}
 	}
 

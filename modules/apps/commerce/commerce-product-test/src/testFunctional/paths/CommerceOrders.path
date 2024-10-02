@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRODUCT_SKU</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productSku}']</td>
+	<td>//div[contains(@class, 'dnd-td') and contains(.,'${key_productSku}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -877,7 +877,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_ROW_NESTED_FIELD_GENERIC</td>
-	<td>//div[contains(@class, 'dnd-tr nested')][${key_rowIndex}]//div[@class='dnd-td'][${key_columnIndex}]</td>
+	<td>//div[contains(@class, 'dnd-tr nested')][${key_rowIndex}]//div[contains(@class,'dnd-td')][${key_columnIndex}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -3556,7 +3556,7 @@ definition {
 		}
 
 		task ("When the supplier user navigates to the channel details") {
-			Click(
+			Click.clickNoMouseOver(
 				key_actionName = "Edit",
 				key_entryName = "Supplier Channel 1",
 				locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");

@@ -39,7 +39,9 @@ export class JournalEditArticlePage {
 		);
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
 		this.content = page.getByText('Content', {exact: true});
-		this.defaultTemplateButton = page.getByRole('button', {name: 'Default Template'});
+		this.defaultTemplateButton = page.getByRole('button', {
+			name: 'Default Template',
+		});
 
 		this.friendlyURLInput = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_friendlyURL'
@@ -52,7 +54,10 @@ export class JournalEditArticlePage {
 			'#_com_liferay_journal_web_portlet_JournalPortlet_publishButton'
 		);
 		this.redoButton = page.getByTitle('Redo', {exact: true});
-		this.selectButton = page.getByRole('button', {exact: true, name: 'Select'});
+		this.selectButton = page.getByRole('button', {
+			exact: true,
+			name: 'Select',
+		});
 		this.submitForWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
 		});
@@ -293,9 +298,7 @@ export class JournalEditArticlePage {
 	) {
 		await this.fillTitle(title);
 
-		if (!(await this.page.getByText('Never Expire').isVisible())) {
-			await this.page.getByRole('button', {name: 'Schedule'}).click();
-		}
+		await openFieldset(this.page, 'Schedule');
 
 		if (expirationDate) {
 			await this.page.getByText('Never Expire').click();

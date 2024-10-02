@@ -844,7 +844,7 @@ baseTest(
 
 		await expect(noResultsWrapper).toBeHidden();
 
-		if(await  journalPage.articleContentTextBox.isHidden()){
+		if (await journalPage.articleContentTextBox.isHidden()) {
 			await fieldsWrapper.click();
 		}
 		await journalEditArticlePage.fillContent(getRandomString());

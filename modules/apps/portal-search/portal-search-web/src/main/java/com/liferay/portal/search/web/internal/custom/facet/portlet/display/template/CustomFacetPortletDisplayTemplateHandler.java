@@ -46,12 +46,6 @@ public class CustomFacetPortletDisplayTemplateHandler
 	}
 
 	@Override
-	public String getDefaultTemplateKey() {
-		return _customFacetPortletInstanceConfiguration.
-			customFacetTemplateKeyDefault();
-	}
-
-	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

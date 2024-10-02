@@ -10,10 +10,14 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -100,16 +104,17 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 								<li class="facet-value">
 									<div class="custom-checkbox custom-control">
 										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-											<input class="custom-control-input facet-term" data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>" disabled id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
+											<input class="custom-control-input facet-term" data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getBucketText()) %>" disabled id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+											/>
 
 											<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 												<span class="custom-control-label-text">
 													<c:choose>
 														<c:when test="<%= bucketDisplayContext.isSelected() %>">
-															<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
+															<strong><liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" /></strong>
 														</c:when>
 														<c:otherwise>
-															<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
+															<liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" />
 														</c:otherwise>
 													</c:choose>
 												</span>
@@ -128,6 +133,131 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 							}
 							%>
 
+							<c:if test="<%= customFacetDisplayContext.isShowInputRange() %>">
+								<c:if test='<%= aggregationType.equals("range") || aggregationType.equals("dateRange") %>'>
+									<li class="facet-value">
+										<div class="custom-checkbox custom-control">
+											<label class="facet-checkbox-label" for="<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>">
+												<input
+													class="custom-control-input facet-term"
+													data-term-id="<%= HtmlUtil.escapeAttribute(customRangeBucketDisplayContext.getBucketText()) %>"
+													disabled
+													id="<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>"
+													name="<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>"
+													type="checkbox"
+													<%= customRangeBucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+												/>
+
+												<aui:script>
+													document.getElementById(
+														'<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>'
+													).onchange = function (event) {
+														Liferay.Search.FacetUtil.changeSelection(event);
+													};
+												</aui:script>
+
+												<span class="custom-control-label term-name <%= customRangeBucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+													<span class="custom-control-label-text">
+														<c:choose>
+															<c:when test="<%= customRangeBucketDisplayContext.isSelected() %>">
+																<strong><liferay-ui:message key="<%= HtmlUtil.escape(customRangeBucketDisplayContext.getBucketText()) %>" /></strong>
+															</c:when>
+															<c:otherwise>
+																<liferay-ui:message key="<%= HtmlUtil.escape(customRangeBucketDisplayContext.getBucketText()) %>" />
+															</c:otherwise>
+														</c:choose>
+													</span>
+												</span>
+
+												<c:if test="<%= customRangeBucketDisplayContext.isSelected() %>">
+													<small class="term-count">
+														(<%= customRangeBucketDisplayContext.getFrequency() %>)
+													</small>
+												</c:if>
+											</label>
+										</div>
+									</li>
+								</c:if>
+
+								<c:if test='<%= aggregationType.equals("range") %>'>
+									<div class="<%= !customRangeBucketDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> date-custom-range" id="<portlet:namespace />customRange">
+										<div class="col-md-6" id="<portlet:namespace />customRangeFrom">
+											<aui:field-wrapper>
+												<aui:input id="fromInput" label="from" name="fromInput" type="number" />
+											</aui:field-wrapper>
+										</div>
+
+										<div class="col-md-6" id="<portlet:namespace />customRangeTo">
+											<aui:field-wrapper>
+												<aui:input id="toInput" label="to" name="toInput" type="number" />
+											</aui:field-wrapper>
+										</div>
+
+										<clay:button
+											aria-label='<%= LanguageUtil.get(request, "search") %>'
+											cssClass="custom-range-filter-button"
+											displayType="secondary"
+											id='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
+											label="search"
+											name='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
+										/>
+									</div>
+								</c:if>
+
+								<c:if test='<%= aggregationType.equals("dateRange") %>'>
+									<div class="<%= !customFacetCalendarDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> date-custom-range" id="<portlet:namespace />customRange">
+										<clay:col
+											id='<%= liferayPortletResponse.getNamespace() + "customRangeFrom" %>'
+											md="6"
+										>
+											<aui:field-wrapper label="from">
+												<liferay-ui:input-date
+													cssClass="custom-range-input-date-from"
+													dayParam="fromDay"
+													dayValue="<%= customFacetCalendarDisplayContext.getFromDayValue() %>"
+													disabled="<%= false %>"
+													firstDayOfWeek="<%= customFacetCalendarDisplayContext.getFromFirstDayOfWeek() %>"
+													monthParam="fromMonth"
+													monthValue="<%= customFacetCalendarDisplayContext.getFromMonthValue() %>"
+													name="fromInput"
+													yearParam="fromYear"
+													yearValue="<%= customFacetCalendarDisplayContext.getFromYearValue() %>"
+												/>
+											</aui:field-wrapper>
+										</clay:col>
+
+										<clay:col
+											id='<%= liferayPortletResponse.getNamespace() + "customRangeTo" %>'
+											md="6"
+										>
+											<aui:field-wrapper label="to">
+												<liferay-ui:input-date
+													cssClass="custom-range-input-date-to"
+													dayParam="toDay"
+													dayValue="<%= customFacetCalendarDisplayContext.getToDayValue() %>"
+													disabled="<%= false %>"
+													firstDayOfWeek="<%= customFacetCalendarDisplayContext.getToFirstDayOfWeek() %>"
+													monthParam="toMonth"
+													monthValue="<%= customFacetCalendarDisplayContext.getToMonthValue() %>"
+													name="toInput"
+													yearParam="toYear"
+													yearValue="<%= customFacetCalendarDisplayContext.getToYearValue() %>"
+												/>
+											</aui:field-wrapper>
+										</clay:col>
+
+										<clay:button
+											aria-label='<%= LanguageUtil.get(request, "search") %>'
+											cssClass="custom-range-filter-button"
+											disabled="<%= customFacetCalendarDisplayContext.isRangeBackwards() %>"
+											displayType="secondary"
+											id='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
+											label="search"
+											name='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
+										/>
+									</div>
+								</c:if>
+							</c:if>
 						</ul>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>

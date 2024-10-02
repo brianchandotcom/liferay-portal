@@ -341,11 +341,14 @@ test(
 			page,
 		});
 
-		const secondStep = page
-			.locator('.page-editor__form-step-topper')
-			.last();
+		await pageEditorPage.waitForChangesSaved();
 
-		expect(secondStep.locator('[data-name="Text"]').first()).toBeAttached();
-		expect(secondStep.locator('[data-name="Text"]').last()).toBeAttached();
+		// Check inputs have been moved to second step
+
+		const firstStep = page.locator('.page-editor__form-step').nth(0);
+		const secondStep = page.locator('.page-editor__form-step').nth(1);
+
+		await expect(firstStep.locator('[data-name="Text"]')).toHaveCount(0);
+		await expect(secondStep.locator('[data-name="Text"]')).toHaveCount(2);
 	}
 );

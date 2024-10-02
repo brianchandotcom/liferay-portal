@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -208,47 +206,31 @@ public class ScimNotificationSchedulerJobConfiguration
 		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
-		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		users = ListUtil.filter(
-			users,
-			user -> {
-				if (user.getType() ==
-						UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT) {
-
-					return false;
-				}
-
-				return true;
-			});
+		ListUtil.filter(
+			_userLocalService.getRoleUsers(role.getRoleId()),
+			user -> !user.isServiceAccountUser()
+		).forEach(
+			user -> subscriptionSender.addRuntimeSubscribers(
+				user.getEmailAddress(), user.getFullName())
+		);
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-
-		Company company = _companyLocalService.getCompany(companyId);
 
 		String body = _generateBody(
 			formatter.format(accessTokenExpirationDate));
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
-
-		for (int i = 0; i < users.size(); i++) {
-			subscriptionSender.addRuntimeSubscribers(
-				users.get(
-					i
-				).getEmailAddress(),
-				users.get(
-					i
-				).getFullName());
-		}
+		Company company = _companyLocalService.getCompany(companyId);
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setEntryTitle(body);
 		subscriptionSender.setFrom(
 			"scim-notification@" + company.getMx(), "SCIM-Notification");
-		subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
 		subscriptionSender.setMailId("popPortletPrefix", "ids");
 		subscriptionSender.setNotificationType(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
+		subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
 		subscriptionSender.setSubject(
 			_language.get(
 				ResourceBundleUtil.getBundle(

@@ -222,7 +222,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	protected void update(JSONObject jenkinsSlaveJSONObject) {
 		_idle = jenkinsSlaveJSONObject.getBoolean("idle");
 		_offline = jenkinsSlaveJSONObject.getBoolean("offline");
-		_offlineCauseReason = jenkinsSlaveJSONObject.getString(
+		_offlineCauseReason = jenkinsSlaveJSONObject.optString(
 			"offlineCauseReason");
 	}
 

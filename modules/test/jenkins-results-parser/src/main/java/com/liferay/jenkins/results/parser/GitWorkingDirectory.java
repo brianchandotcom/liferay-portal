@@ -1645,13 +1645,7 @@ public class GitWorkingDirectory {
 			String gitDiffOutput = executionResult.getStandardOut();
 
 			for (String line : gitDiffOutput.split("\n")) {
-				File modifiedFile = new File(_workingDirectory, line);
-
-				if (!modifiedFile.exists()) {
-					continue;
-				}
-
-				modifiedFiles.add(modifiedFile);
+				modifiedFiles.add(new File(_workingDirectory, line));
 			}
 
 			_modifiedFilesMap.put(gitDiffCommandString, modifiedFiles);

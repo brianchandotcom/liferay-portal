@@ -77,8 +77,13 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 			return _jsonFactory.createJSONObject();
 		}
 
-		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
+
+		if (classPK == 0) {
+			return _jsonFactory.createJSONObject();
+		}
+
+		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -99,21 +104,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		if (ListUtil.isEmpty(ctEntries)) {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
-				return _jsonFactory.createJSONObject();
-			}
-
-			return JSONUtil.put(
-				"conflictIconClass", "change-tracking-conflict-icon"
-			).put(
-				"conflictIconLabel",
-				_language.get(themeDisplay.getLocale(), "no-modifications-help")
-			).put(
-				"conflictIconName", "check"
-			);
-		}
 
 		JSONObject conflictInfoJSONObject = _jsonFactory.createJSONObject();
 
@@ -207,6 +197,23 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"conflictIconName", "warning-full"
 				));
+		}
+
+		if (ListUtil.isEmpty(ctEntries) &&
+			(possibleConflictCollection == null)) {
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
+				return _jsonFactory.createJSONObject();
+			}
+
+			return JSONUtil.put(
+				"conflictIconClass", "change-tracking-conflict-icon"
+			).put(
+				"conflictIconLabel",
+				_language.get(themeDisplay.getLocale(), "no-modifications-help")
+			).put(
+				"conflictIconName", "check"
+			);
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-20556")) {

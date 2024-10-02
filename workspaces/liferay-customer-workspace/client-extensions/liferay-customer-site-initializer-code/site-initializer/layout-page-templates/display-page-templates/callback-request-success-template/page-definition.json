@@ -18,7 +18,7 @@
 						"paddingRight": 4,
 						"paddingTop": 4
 					},
-					"name": "Callback Form Entry Container"
+					"name": "Callback Request Container"
 				},
 				"pageElements": [
 					{
@@ -41,7 +41,7 @@
 								"paddingRight": 4,
 								"paddingTop": 4
 							},
-							"name": "Entry Container"
+							"name": "Request Container"
 						},
 						"pageElements": [
 							{
@@ -171,15 +171,15 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "callback-form-entry-sla-text",
-												"siteKey": "[$GROUP_KEY$]"
+												"key": "callback-form-sla-text"
 											},
 											"fragmentConfig": {
 											},
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginBottom": "5"
+												"marginBottom": "5",
+												"textAlign": "center"
 											},
 											"indexed": true
 										},
@@ -251,7 +251,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "home-variant"
+			"key": "home"
 		},
 		"themeName": "Dialect",
 		"themeSettings": {

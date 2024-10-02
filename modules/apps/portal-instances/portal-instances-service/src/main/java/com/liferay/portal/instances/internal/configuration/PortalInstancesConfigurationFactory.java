@@ -12,6 +12,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,45 +52,61 @@ public class PortalInstancesConfigurationFactory {
 				int maxUsers = portalInstancesConfiguration.maxUsers();
 				boolean active = portalInstancesConfiguration.active();
 
-				Company company = null;
+				String name = PrincipalThreadLocal.getName();
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
 
 				try {
-					company = _companyLocalService.getCompanyByWebId(webId);
-				}
-				catch (NoSuchCompanyException noSuchCompanyException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchCompanyException);
+					PermissionThreadLocal.setPermissionChecker(null);
+					PrincipalThreadLocal.setName(null);
+
+					Company company = null;
+
+					try {
+						company = _companyLocalService.getCompanyByWebId(webId);
 					}
-				}
-
-				if (company == null) {
-					PortalInstances.addCompany(
-						portalInstancesConfiguration.siteInitializerKey(),
-						() -> _companyLocalService.addCompany(
-							null, webId, virtualHostname, mx, maxUsers,
-							portalInstancesConfiguration.active(),
-							portalInstancesConfiguration.addDefaultAdminUser(),
-							portalInstancesConfiguration.adminPassword(),
-							portalInstancesConfiguration.adminScreenName(),
-							portalInstancesConfiguration.adminEmailAddress(),
-							portalInstancesConfiguration.adminFirstName(),
-							portalInstancesConfiguration.adminMiddleName(),
-							portalInstancesConfiguration.adminLastName()));
-				}
-				else {
-					if (company.getCompanyId() ==
-							_portalInstancesLocalService.
-								getDefaultCompanyId()) {
-
-						active = true;
+					catch (NoSuchCompanyException noSuchCompanyException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchCompanyException);
+						}
 					}
 
-					_companyLocalService.updateCompany(
-						company.getCompanyId(), virtualHostname, mx, maxUsers,
-						active);
-				}
+					if (company == null) {
+						PortalInstances.addCompany(
+							portalInstancesConfiguration.siteInitializerKey(),
+							() -> _companyLocalService.addCompany(
+								null, webId, virtualHostname, mx, maxUsers,
+								portalInstancesConfiguration.active(),
+								portalInstancesConfiguration.
+									addDefaultAdminUser(),
+								portalInstancesConfiguration.adminPassword(),
+								portalInstancesConfiguration.adminScreenName(),
+								portalInstancesConfiguration.
+									adminEmailAddress(),
+								portalInstancesConfiguration.adminFirstName(),
+								portalInstancesConfiguration.adminMiddleName(),
+								portalInstancesConfiguration.adminLastName()));
+					}
+					else {
+						if (company.getCompanyId() ==
+								_portalInstancesLocalService.
+									getDefaultCompanyId()) {
 
-				_portalInstancesLocalService.synchronizePortalInstances();
+							active = true;
+						}
+
+						_companyLocalService.updateCompany(
+							company.getCompanyId(), virtualHostname, mx,
+							maxUsers, active);
+					}
+
+					_portalInstancesLocalService.synchronizePortalInstances();
+				}
+				finally {
+					PermissionThreadLocal.setPermissionChecker(
+						permissionChecker);
+					PrincipalThreadLocal.setName(name);
+				}
 
 				return null;
 			});

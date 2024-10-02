@@ -22,7 +22,7 @@ renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 		HashMapBuilder.<String, Object>put(
 			"backURL", backURL
 		).put(
-			"cellClientExtensionRenderers", fdsAdminDisplayContext.getFDSCellRendererCETsJSONArray()
+			"cellClientExtensionRenderers", fdsAdminDisplayContext.getCellClientExtensionRenderersJSONArray()
 		).put(
 			"dataSetERC", ParamUtil.getString(request, "dataSetERC")
 		).put(

@@ -64,6 +64,25 @@ public class FDSAdminDisplayContext {
 				_themeDisplay.getCompanyId(), "DataSet");
 	}
 
+	public JSONArray getCellClientExtensionRenderersJSONArray()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return JSONUtil.toJSONArray(
+			_cetManager.getCETs(
+				themeDisplay.getCompanyId(), null,
+				ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null),
+			fdsCellRendererCET -> JSONUtil.put(
+				"externalReferenceCode",
+				fdsCellRendererCET.getExternalReferenceCode()
+			).put(
+				"name", fdsCellRendererCET.getName(themeDisplay.getLocale())
+			));
+	}
+
 	public String getDataSetPermissionsURL() {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
@@ -97,23 +116,6 @@ public class FDSAdminDisplayContext {
 		).setBackURL(
 			_themeDisplay.getURLCurrent()
 		).buildString();
-	}
-
-	public JSONArray getFDSCellRendererCETsJSONArray() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return JSONUtil.toJSONArray(
-			_cetManager.getCETs(
-				themeDisplay.getCompanyId(), null,
-				ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
-				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null),
-			fdsCellRendererCET -> JSONUtil.put(
-				"externalReferenceCode",
-				fdsCellRendererCET.getExternalReferenceCode()
-			).put(
-				"name", fdsCellRendererCET.getName(themeDisplay.getLocale())
-			));
 	}
 
 	public String getFDSEntriesURL() {

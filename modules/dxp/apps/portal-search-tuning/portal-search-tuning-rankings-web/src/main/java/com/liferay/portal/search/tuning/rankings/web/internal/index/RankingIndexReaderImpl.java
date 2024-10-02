@@ -206,7 +206,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 			rankingIndexName.getIndexName(), id);
 
 		getDocumentRequest.setFetchSource(true);
-		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
 		getDocumentRequest.setPreferLocalCluster(false);
 
 		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(

@@ -231,14 +231,6 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
-		subscriptionSender.setEntryTitle(body);
-		subscriptionSender.setNotificationType(
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
-		subscriptionSender.setBody(body);
-		subscriptionSender.setFrom(
-			"scim-notification@" + company.getMx(), "SCIM-Notification");
-
 		for (int i = 0; i < users.size(); i++) {
 			subscriptionSender.addRuntimeSubscribers(
 				users.get(
@@ -249,7 +241,14 @@ public class ScimNotificationSchedulerJobConfiguration
 				).getFullName());
 		}
 
+		subscriptionSender.setBody(body);
+		subscriptionSender.setEntryTitle(body);
+		subscriptionSender.setFrom(
+			"scim-notification@" + company.getMx(), "SCIM-Notification");
+		subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
 		subscriptionSender.setMailId("popPortletPrefix", "ids");
+		subscriptionSender.setNotificationType(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
 		subscriptionSender.setSubject(
 			_language.get(
 				ResourceBundleUtil.getBundle(

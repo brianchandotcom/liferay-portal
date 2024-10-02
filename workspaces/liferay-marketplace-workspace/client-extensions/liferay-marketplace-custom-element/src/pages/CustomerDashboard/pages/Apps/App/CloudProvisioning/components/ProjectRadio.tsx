@@ -50,9 +50,12 @@ const ProjectRadio: React.FC<ProjectRadioType> = ({
 				);
 			})
 			.map((project, index) => {
-				const disabled = project.environments.some(
+				const noExtensionEnvironment = project.environments.some(
 					({isExtensionEnvironment}) => !isExtensionEnvironment
 				);
+
+				const disabled =
+					noExtensionEnvironment || !project?.availabilityToProduct;
 
 				return (
 					<RadioCard
@@ -83,7 +86,7 @@ const ProjectRadio: React.FC<ProjectRadioType> = ({
 										)}GB RAM`}
 									</p>
 
-									{disabled && (
+									{noExtensionEnvironment && (
 										<small className="text-danger">
 											This project has no extension
 											environments

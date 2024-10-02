@@ -15,12 +15,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {IDataSet} from '../DataSets';
-import {FDSViewType} from '../FDSViews';
-import {
-	API_URL,
-	DEFAULT_FETCH_HEADERS,
-	OBJECT_RELATIONSHIP,
-} from '../utils/constants';
+import {API_URL, DEFAULT_FETCH_HEADERS} from '../utils/constants';
 import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import {IFieldTreeItem} from '../utils/types';
@@ -65,45 +60,45 @@ const NAVIGATION_BAR_ITEMS = [
 
 export interface IDataSetSectionProps {
 	backURL: string;
-	dataSet: IDataSet | FDSViewType;
-	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
+	cellClientExtensionRenderers: IClientExtensionRenderer[];
+	dataSet: IDataSet;
 	fieldTreeItems: Array<IFieldTreeItem>;
+	filterClientExtensionRenderers: IClientExtensionRenderer[];
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
-	onDataSetUpdate: (data: FDSViewType) => void;
+	onDataSetUpdate: (data: IDataSet) => void;
 	resolvedRESTSchemas: string[];
 	restApplications: string[];
-	saveFDSFieldsURL: string;
-	saveFDSSortURL: string;
+	saveDataSetSortURL: string;
+	saveDataSetTableSectionsURL: string;
 	spritemap: string;
 }
 
 const DataSet = ({
 	backURL,
 	dataSetERC,
-	fdsClientExtensionCellRenderers,
-	fdsFilterClientExtensions,
+	cellClientExtensionRenderers,
 	fdsViewId,
+	filterClientExtensionRenderers,
 	learnResources,
 	namespace,
 	resolvedRESTSchemas = [],
 	restApplications,
-	saveFDSFieldsURL,
-	saveFDSSortURL,
+	saveDataSetSortURL,
+	saveDataSetTableSectionsURL,
 	spritemap,
 }: {
 	backURL: string;
+	cellClientExtensionRenderers: IClientExtensionRenderer[];
 	dataSetERC: string;
-	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
+	filterClientExtensionRenderers: IClientExtensionRenderer[];
 	learnResources: ILearnResourceContext;
 	namespace: string;
 	resolvedRESTSchemas: string[];
 	restApplications: string[];
-	saveFDSFieldsURL: string;
-	saveFDSSortURL: string;
+	saveDataSetSortURL: string;
+	saveDataSetTableSectionsURL: string;
 	spritemap: string;
 }) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -115,9 +110,7 @@ const DataSet = ({
 
 	useEffect(() => {
 		const getDataSet = async () => {
-			const url = Liferay.FeatureFlags['LPD-15729']
-				? `${API_URL.DATA_SETS}/by-external-reference-code/${dataSetERC}`
-				: `${API_URL.DATA_SETS}/${fdsViewId}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`;
+			const url = `${API_URL.DATA_SETS}/by-external-reference-code/${dataSetERC}`;
 
 			const response = await fetch(url, {
 				headers: DEFAULT_FETCH_HEADERS,
@@ -128,11 +121,7 @@ const DataSet = ({
 			if (responseJSON?.id) {
 				setDataSet(responseJSON);
 
-				const {restApplication, restSchema} = Liferay.FeatureFlags[
-					'LPD-15729'
-				]
-					? responseJSON
-					: responseJSON[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW];
+				const {restApplication, restSchema} = responseJSON;
 
 				getFields({restApplication, restSchema}).then((fields) => {
 					setFieldTreeItems(fields);
@@ -174,14 +163,14 @@ const DataSet = ({
 					dataSet && (
 						<Content
 							backURL={backURL}
+							cellClientExtensionRenderers={
+								cellClientExtensionRenderers
+							}
 							dataSet={dataSet}
-							fdsClientExtensionCellRenderers={
-								fdsClientExtensionCellRenderers
-							}
-							fdsFilterClientExtensions={
-								fdsFilterClientExtensions
-							}
 							fieldTreeItems={fieldTreeItems}
+							filterClientExtensionRenderers={
+								filterClientExtensionRenderers
+							}
 							namespace={namespace}
 							onActiveSectionChange={(tab) => setActiveIndex(tab)}
 							onDataSetUpdate={(updatedDataSet) => {
@@ -189,8 +178,10 @@ const DataSet = ({
 							}}
 							resolvedRESTSchemas={resolvedRESTSchemas}
 							restApplications={restApplications}
-							saveFDSFieldsURL={saveFDSFieldsURL}
-							saveFDSSortURL={saveFDSSortURL}
+							saveDataSetSortURL={saveDataSetSortURL}
+							saveDataSetTableSectionsURL={
+								saveDataSetTableSectionsURL
+							}
 							spritemap={spritemap}
 						/>
 					)

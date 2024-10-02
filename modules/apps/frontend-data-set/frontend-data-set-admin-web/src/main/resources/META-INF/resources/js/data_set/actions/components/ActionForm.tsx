@@ -15,7 +15,6 @@ import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {IDataSet} from '../../../DataSets';
-import {FDSViewType} from '../../../FDSViews';
 import RequiredMark from '../../../components/RequiredMark';
 import Search from '../../../components/Search';
 import ValidationFeedback from '../../../components/ValidationFeedback';
@@ -115,7 +114,7 @@ const ActionForm = ({
 	spritemap,
 }: {
 	activeTab: number;
-	dataSet: IDataSet | FDSViewType;
+	dataSet: IDataSet;
 	editing?: boolean;
 	initialValues?: IAction;
 	namespace: string;
@@ -215,8 +214,8 @@ const ActionForm = ({
 
 		const relationship: string =
 			activeTab === 0
-				? OBJECT_RELATIONSHIP.DATA_SET_ITEM_ACTION_ID
-				: OBJECT_RELATIONSHIP.DATA_SET_CREATION_ACTION_ID;
+				? OBJECT_RELATIONSHIP.DATA_SET_ITEM_ACTIONS_ID
+				: OBJECT_RELATIONSHIP.DATA_SET_CREATION_ACTIONS_ID;
 
 		const body = {
 			confirmationMessage_i18n: confirmationMessageTranslations,

@@ -14,13 +14,8 @@ import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {IDataSet} from '../../DataSets';
-import {FDSViewType} from '../../FDSViews';
 import RequiredMark from '../../components/RequiredMark';
-import {
-	API_URL,
-	DEFAULT_FETCH_HEADERS,
-	OBJECT_RELATIONSHIP,
-} from '../../utils/constants';
+import {API_URL, DEFAULT_FETCH_HEADERS} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
@@ -30,9 +25,9 @@ const getURLPreview = ({
 	restApplication,
 	restEndpoint,
 }: {
-	additionalAPIURLParameters: string;
-	restApplication: string;
-	restEndpoint: string;
+	additionalAPIURLParameters: IDataSet['additionalAPIURLParameters'];
+	restApplication: IDataSet['restApplication'];
+	restEndpoint: IDataSet['restEndpoint'];
 }) => {
 	const encodedAdditionalAPIURLParameters = encodeURI(
 		additionalAPIURLParameters.trim()
@@ -61,14 +56,11 @@ const Details = ({
 }: IDataSetSectionProps) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
-	const dataSetAsIDataSet = dataSet as IDataSet;
-
 	const [urlPreview, setURLPreview] = useState(
 		getURLPreview({
-			additionalAPIURLParameters:
-				dataSetAsIDataSet.additionalAPIURLParameters,
-			restApplication: dataSetAsIDataSet.restApplication,
-			restEndpoint: dataSetAsIDataSet.restEndpoint,
+			additionalAPIURLParameters: dataSet.additionalAPIURLParameters,
+			restApplication: dataSet.restApplication,
+			restEndpoint: dataSet.restEndpoint,
 		})
 	);
 
@@ -82,8 +74,8 @@ const Details = ({
 		setURLPreview(
 			getURLPreview({
 				additionalAPIURLParameters: event.currentTarget.value,
-				restApplication: dataSetAsIDataSet.restApplication,
-				restEndpoint: dataSetAsIDataSet.restEndpoint,
+				restApplication: dataSet.restApplication,
+				restEndpoint: dataSet.restEndpoint,
 			})
 		);
 	};
@@ -131,13 +123,7 @@ const Details = ({
 		}
 	};
 
-	const {restApplication, restEndpoint, restSchema} = Liferay.FeatureFlags[
-		'LPD-15729'
-	]
-		? (dataSet as unknown as IDataSet)
-		: (dataSet as unknown as FDSViewType)[
-				OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW
-			];
+	const {restApplication, restEndpoint, restSchema} = dataSet;
 
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">

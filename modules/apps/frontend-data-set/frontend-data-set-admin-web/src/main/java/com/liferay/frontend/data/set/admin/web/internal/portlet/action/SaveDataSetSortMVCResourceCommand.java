@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + FDSAdminPortletKeys.FDS_ADMIN,
-		"mvc.command.name=/frontend_data_set_admin/save_fds_sort"
+		"mvc.command.name=/frontend_data_set_admin/save_data_set_sort"
 	},
 	service = MVCResourceCommand.class
 )
-public class SaveFDSSortMVCResourceCommand
+public class SaveDataSetSortMVCResourceCommand
 	extends BaseTransactionalMVCResourceCommand {
 
 	@Override
@@ -72,17 +72,20 @@ public class SaveFDSSortMVCResourceCommand
 		boolean useAsDefaultSorting = GetterUtil.getBoolean(
 			ParamUtil.getString(resourceRequest, "useAsDefaultSorting"));
 
-		ObjectDefinition fdsViewObjectDefinition =
+		ObjectDefinition dataSetObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "FDSView");
+				themeDisplay.getCompanyId(), "DataSet");
 
 		if (useAsDefaultSorting) {
-			Collection<ObjectEntry> fdsSortObjectEntries =
-				_getFDSSortObjectEntries(fdsViewObjectDefinition, dataSetId);
+			Collection<ObjectEntry> dataSetSortObjectEntries =
+				_getDataSetSortObjectEntries(
+					dataSetObjectDefinition, dataSetId);
 
-			for (ObjectEntry fdsSortObjectEntry : fdsSortObjectEntries) {
+			for (ObjectEntry dataSetSortObjectEntry :
+					dataSetSortObjectEntries) {
+
 				Map<String, Object> properties =
-					fdsSortObjectEntry.getProperties();
+					dataSetSortObjectEntry.getProperties();
 
 				boolean defaultProperty = GetterUtil.getBoolean(
 					properties.get("default"));
@@ -100,7 +103,7 @@ public class SaveFDSSortMVCResourceCommand
 					values.put("default", false);
 
 					_objectEntryService.updateObjectEntry(
-						fdsSortObjectEntry.getId(), values,
+						dataSetSortObjectEntry.getId(), values,
 						new ServiceContext());
 				}
 			}
@@ -108,7 +111,7 @@ public class SaveFDSSortMVCResourceCommand
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "FDSSort");
+				themeDisplay.getCompanyId(), "DataSetSort");
 
 		Map<String, Serializable> labelI18nMap =
 			(Map<String, Serializable>)_jsonFactory.looseDeserialize(labelI18n);
@@ -124,19 +127,19 @@ public class SaveFDSSortMVCResourceCommand
 			).put(
 				"orderType", orderType
 			).put(
-				"r_fdsViewFDSSortRelationship_l_fdsViewId", dataSetId
+				"r_dataSetToDataSetSorts_l_dataSetId", dataSetId
 			).build(),
 			new ServiceContext());
 
-		Collection<ObjectEntry> updatedFDSSortObjectEntries =
-			_getFDSSortObjectEntries(fdsViewObjectDefinition, dataSetId);
+		Collection<ObjectEntry> updatedDataSetSortObjectEntries =
+			_getDataSetSortObjectEntries(dataSetObjectDefinition, dataSetId);
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, updatedFDSSortObjectEntries);
+			resourceRequest, resourceResponse, updatedDataSetSortObjectEntries);
 	}
 
-	private Collection<ObjectEntry> _getFDSSortObjectEntries(
-			ObjectDefinition fdsViewObjectDefinition, Long objectEntryId)
+	private Collection<ObjectEntry> _getDataSetSortObjectEntries(
+			ObjectDefinition dataSetObjectDefinition, Long objectEntryId)
 		throws Exception {
 
 		DTOConverterContext dtoConverterContext =
@@ -147,12 +150,12 @@ public class SaveFDSSortMVCResourceCommand
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
-					fdsViewObjectDefinition.getStorageType()));
+					dataSetObjectDefinition.getStorageType()));
 
 		Page<ObjectEntry> relatedObjectEntriesPage =
 			defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
-				dtoConverterContext, fdsViewObjectDefinition, objectEntryId,
-				"fdsViewFDSSortRelationship",
+				dtoConverterContext, dataSetObjectDefinition, objectEntryId,
+				"dataSetToDataSetSorts",
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		return relatedObjectEntriesPage.getItems();

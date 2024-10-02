@@ -36,11 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + FDSAdminPortletKeys.FDS_ADMIN,
-		"mvc.command.name=/frontend_data_set_admin/save_fds_fields"
+		"mvc.command.name=/frontend_data_set_admin/save_data_set_table_sections"
 	},
 	service = MVCResourceCommand.class
 )
-public class SaveFDSFieldsMVCResourceCommand
+public class SaveDataSetTableSectionsMVCResourceCommand
 	extends BaseTransactionalMVCResourceCommand {
 
 	@Override
@@ -55,7 +55,7 @@ public class SaveFDSFieldsMVCResourceCommand
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "FDSField");
+				themeDisplay.getCompanyId(), "DataSetTableSection");
 
 		String dataSetId = ParamUtil.getString(resourceRequest, "dataSetId");
 
@@ -72,15 +72,16 @@ public class SaveFDSFieldsMVCResourceCommand
 			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 				0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
+					"fieldName",
+					String.valueOf(creationDataJSONObject.get("name"))
+				).put(
 					"label_i18n",
 					HashMapBuilder.put(
 						themeDisplay.getLanguageId(),
 						String.valueOf(creationDataJSONObject.get("name"))
 					).build()
 				).put(
-					"name", String.valueOf(creationDataJSONObject.get("name"))
-				).put(
-					"r_fdsViewFDSFieldRelationship_l_fdsViewId", dataSetId
+					"r_dataSetToDataSetTableSections_l_dataSetId", dataSetId
 				).put(
 					"renderer", "default"
 				).put(

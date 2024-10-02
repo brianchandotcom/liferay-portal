@@ -437,6 +437,18 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Role testDeleteRole_addRole() throws Exception {
+		return _addRole(true, RoleConstants.TYPE_REGULAR);
+	}
+
+	@Override
+	protected Role testDeleteRoleByExternalReferenceCode_addRole()
+		throws Exception {
+
+		return _addRole(true, RoleConstants.TYPE_REGULAR);
+	}
+
+	@Override
 	protected Role
 			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
 		throws Exception {
@@ -533,6 +545,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Role testPatchRole_addRole() throws Exception {
+		return _addRole(true, RoleConstants.TYPE_REGULAR);
+	}
+
+	@Override
 	protected Role testPatchRoleByExternalReferenceCode_addRole()
 		throws Exception {
 
@@ -590,6 +607,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		throws Exception {
 
 		return _addRole(true, RoleConstants.TYPE_SITE);
+	}
+
+	@Override
+	protected Role testPutRole_addRole() throws Exception {
+		return _addRole(true, RoleConstants.TYPE_REGULAR);
 	}
 
 	@Override

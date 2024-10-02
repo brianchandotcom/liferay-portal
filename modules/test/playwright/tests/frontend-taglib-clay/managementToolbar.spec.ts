@@ -62,7 +62,7 @@ test.describe('Management Toolbar With Results', () => {
 	test('Clear button has a cursor of type pointer', async ({page}) => {
 		let clearButton: Locator;
 
-		await test.step('Get clear button from management toolbar with results section', async () => {
+		await test.step('Get the clear button', async () => {
 			clearButton = page
 				.locator('#managementToolbarWithResultsBar')
 				.getByLabel('Clear');
@@ -76,6 +76,56 @@ test.describe('Management Toolbar With Results', () => {
 			);
 
 			await expect(cursorType).toEqual('pointer');
+		});
+	});
+});
+
+test.describe('Management Toolbar Active State', () => {
+	test('Assert the items in the actions ellipsis are displayed @LPS-144538', async ({
+		page,
+	}) => {
+		let actionsButton: Locator;
+
+		await test.step('Check that the ellipsis actions button is visible', async () => {
+			actionsButton = page
+				.locator('#managementToolbarActiveState')
+				.getByRole('button')
+				.nth(3);
+
+			await expect(actionsButton).toBeVisible();
+		});
+		await test.step('Click on the actions button', async () => {
+			await actionsButton.click();
+		});
+
+		await test.step('Check that the "Edit" button visible', async () => {
+			await expect(
+				page.getByRole('menuitem', {name: 'Edit'})
+			).toBeVisible();
+		});
+
+		await test.step('Check that the "Download" button and icon is visible', async () => {
+			await expect(
+				page.getByRole('menuitem', {name: 'Download'})
+			).toBeVisible();
+
+			await expect(
+				page
+					.getByRole('menuitem', {name: 'Download'})
+					.locator('.lexicon-icon-download')
+			).toBeVisible();
+		});
+
+		await test.step('Check that the "Delete" button and icon is visible', async () => {
+			await expect(
+				page.getByRole('menuitem', {name: 'Delete'})
+			).toBeVisible();
+
+			await expect(
+				page
+					.getByRole('menuitem', {name: 'Delete'})
+					.locator('.lexicon-icon-trash')
+			).toBeVisible();
 		});
 	});
 });

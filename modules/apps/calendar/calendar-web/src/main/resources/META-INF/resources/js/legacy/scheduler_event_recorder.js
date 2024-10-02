@@ -660,24 +660,45 @@ AUI.add(
 
 					messageNode.innerHTML = messageHTML;
 				},
-				
-				getFormattedDate: function() {
-					var instance = this,
-						evt = (instance.get('event') || instance),
-						endDate = evt.get('endDate'),
-						startDate = evt.get('startDate'),
-						formattedDate = evt._formatDate(startDate, instance.get('dateFormat'));
-		
-					if (evt.get('allDay')) {
-						return formattedDate;
+
+				getFormattedDate() {
+					const instance = this;
+					const event = instance.get('event') || instance;
+					const endDate = event.get('endDate');
+					const startDate = event.get('startDate');
+
+					const formattedStartDate = event._formatDate(
+						startDate,
+						instance.get('dateFormat')
+					);
+
+					if (event.get('allDay')) {
+						return formattedStartDate;
 					}
-		
-					formattedDate = formattedDate.concat(',');
-		
-					var scheduler = evt.get('scheduler'),
-						fmtHourFn = (scheduler.get('activeView').get('isoTime') ? DateMath.toIsoTimeString : DateMath.toUsTimeString);
-		
-					return [formattedDate, fmtHourFn(startDate), '-', fmtHourFn(endDate)].join(' ');
+
+					let formattedEndDate = event._formatDate(
+						endDate,
+						instance.get('dateFormat')
+					);
+
+					if (formattedEndDate === formattedStartDate) {
+						formattedEndDate = '';
+					}
+
+					const scheduler = event.get('scheduler');
+					const formatHours = scheduler
+						.get('activeView')
+						.get('isoTime')
+						? DateMath.toIsoTimeString
+						: DateMath.toUsTimeString;
+
+					return [
+						formattedStartDate.concat(','),
+						formatHours(startDate),
+						'-',
+						formattedEndDate ? formattedEndDate.concat(',') : '',
+						formatHours(endDate),
+					].join(' ');
 				},
 
 				getTemplateData() {

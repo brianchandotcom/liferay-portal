@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -23,12 +23,9 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.describe('Management Toolbar With Results', () => {
-	test('Clear button has a cursor of type pointer', async ({
-		apiHelpers,
-		page,
-		site,
-	}) => {
+test.beforeEach(
+	'Setup site and Clay Sample widget',
+	async ({apiHelpers, page, site}) => {
 		let layout: Layout;
 
 		await test.step('Create a content site and the frontend taglib clay widget', async () => {
@@ -45,7 +42,7 @@ test.describe('Management Toolbar With Results', () => {
 			});
 		});
 
-		await test.step('Select Management Toolbars tab ', async () => {
+		await test.step('Select Management Toolbars tab', async () => {
 			await page.goto(
 				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
@@ -54,18 +51,26 @@ test.describe('Management Toolbar With Results', () => {
 				.getByRole('tablist')
 				.getByText('Management Toolbars');
 
-			await expect(tabHeading).toBeInViewport();
+			await expect(tabHeading).toBeVisible();
 
 			await tabHeading.click();
 		});
+	}
+);
 
-		await test.step('Select Management Toolbar with results section', async () => {
-			const clearButton = page
+test.describe('Management Toolbar With Results', () => {
+	test('Clear button has a cursor of type pointer', async ({page}) => {
+		let clearButton: Locator;
+
+		await test.step('Get clear button from management toolbar with results section', async () => {
+			clearButton = page
 				.locator('#managementToolbarWithResultsBar')
 				.getByLabel('Clear');
 
 			await expect(clearButton).toBeVisible();
+		});
 
+		await test.step('Check that cursor type is a pointer', async () => {
 			const cursorType = await clearButton.evaluate((element) =>
 				window.getComputedStyle(element).getPropertyValue('cursor')
 			);

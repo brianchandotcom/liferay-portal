@@ -28,7 +28,9 @@ const statuses = {
 			<span>
 				Sorry, was not possible to install your app, you can try again.
 				If the problem persist, contact a{' '}
-				<a href={`mailto:${MARKETPLACE_ADMIN_EMAIL}`}>marketplace@liferay.com</a>
+				<a href={`mailto:${MARKETPLACE_ADMIN_EMAIL}`}>
+					{MARKETPLACE_ADMIN_EMAIL}
+				</a>
 			</span>
 		),
 		icon: (

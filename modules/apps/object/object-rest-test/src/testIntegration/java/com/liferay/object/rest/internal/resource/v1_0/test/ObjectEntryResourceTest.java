@@ -5119,6 +5119,38 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntriesFilteredByDateModified() throws Exception {
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2);
+
+		_objectEntry1.setModifiedDate(
+			_dateTimeDateFormat.parse("2023-09-20T10:00:00.150Z"));
+		_objectEntry2.setModifiedDate(
+			_dateTimeDateFormat.parse("2023-09-20T10:05:00.450Z"));
+
+		_objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			_objectEntry1);
+		_objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			_objectEntry2);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2,
+			URLCodec.encodeURL("dateModified gt 2023-09-20T10:00:00Z"),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			URLCodec.encodeURL("dateModified lt 2023-09-20T10:05:00Z"),
+			_objectDefinition1);
+
+		_assertFilteredObjectEntries(2, "dateModified ge 2023-09-20T10:00:00Z");
+		_assertFilteredObjectEntries(2, "dateModified le 2023-09-20T10:05:00Z");
+	}
+
+	@Test
 	public void testGetObjectEntriesWithPagination() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,

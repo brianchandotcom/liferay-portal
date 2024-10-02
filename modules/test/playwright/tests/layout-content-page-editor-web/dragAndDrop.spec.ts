@@ -10,9 +10,12 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import dragAndDropElement from '../../utils/dragAndDropElement';
 import getRandomString from '../../utils/getRandomString';
+import {POTATO_OBJECT_ERC} from '../setup/page-management-site/constants';
 import getContainerDefinition from './utils/getContainerDefinition';
+import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getGridDefinition from './utils/getGridDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -24,9 +27,10 @@ const test = mergeTests(
 		'LPD-18221': true,
 		'LPS-178052': true,
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
-	isolatedSiteTest
+	pageManagementSiteTest
 );
 
 test('Checks that a widget can be added and dragged to another part of the page', async ({
@@ -263,3 +267,85 @@ test('Check drag and drop from Page Structure Tree', async ({
 			.locator('[data-name="Asset Publisher"]')
 	).toBeVisible();
 });
+
+test(
+	'Drag multiple form elements from one step to another',
+	{tag: '@LPD-37828'},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Get the id of Potato object from the site initializer
+
+		const {id: objectDefinitionId} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				POTATO_OBJECT_ERC
+			);
+
+		// Create a form with two steps and a stepper
+
+		const stepperId = getRandomString();
+
+		const stepperFragment = getFragmentDefinition({
+			fragmentConfig: {
+				numberOfSteps: 2,
+			},
+			id: stepperId,
+			key: 'INPUTS-stepper',
+		});
+
+		const firstInputId = getRandomString();
+
+		const firstInputDefinition = getFragmentDefinition({
+			id: firstInputId,
+			key: 'INPUTS-text-input',
+		});
+
+		const secondInputId = getRandomString();
+
+		const secondInputDefintion = getFragmentDefinition({
+			id: secondInputId,
+			key: 'INPUTS-text-input',
+		});
+
+		const formDefinition = getFormContainerDefinition({
+			id: getRandomString(),
+			objectDefinitionId,
+			pageElements: [stepperFragment],
+			steps: [[firstInputDefinition, secondInputDefintion], []],
+		});
+
+		// Create page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Move multiple fragments into Step 2
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		await pageEditorPage.selectFragment(firstInputId);
+
+		await page.keyboard.down('Control');
+
+		await pageEditorPage.selectFragment(secondInputId);
+
+		await page.keyboard.up('Control');
+
+		await dragAndDropElement({
+			dragTarget: page.getByLabel('Select Text').first(),
+			dropTarget: page.getByLabel('Select Step 2'),
+			page,
+		});
+
+		const secondStep = page
+			.locator('.page-editor__form-step-topper')
+			.last();
+
+		expect(secondStep.locator('[data-name="Text"]').first()).toBeAttached();
+		expect(secondStep.locator('[data-name="Text"]').last()).toBeAttached();
+	}
+);

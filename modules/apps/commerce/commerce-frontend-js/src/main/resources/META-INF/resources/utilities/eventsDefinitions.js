@@ -23,6 +23,7 @@ export const CURRENT_PRODUCT_UPDATED = 'current-product-updated';
 export const IFRAME_LOADED = 'iframe-loaded';
 export const IS_LOADING_MODAL = 'is-loading-modal';
 export const ITEM_REMOVED_FROM_COMPARE = 'item-removed-from-compare';
+export const OPEN_MINI_CART = 'open-cart';
 export const OPEN_MINICART_FOR_EDITING = 'open-minicart-for-editing';
 export const OPEN_MODAL = 'open-modal';
 export const OPEN_SIDE_PANEL = 'open-side-panel';

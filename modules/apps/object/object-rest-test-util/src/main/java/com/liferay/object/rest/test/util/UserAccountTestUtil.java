@@ -44,6 +44,7 @@ public class UserAccountTestUtil {
 	public static UserAccount randomUserAccount() {
 		return new UserAccount() {
 			{
+				activated = RandomTestUtil.randomBoolean();
 				additionalName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				alternateName = StringUtil.toLowerCase(

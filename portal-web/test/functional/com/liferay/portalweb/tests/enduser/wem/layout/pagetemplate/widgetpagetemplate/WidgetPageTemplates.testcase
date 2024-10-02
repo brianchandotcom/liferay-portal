@@ -130,7 +130,6 @@ definition {
 	@priority = 5
 	test ImportLAR {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
 

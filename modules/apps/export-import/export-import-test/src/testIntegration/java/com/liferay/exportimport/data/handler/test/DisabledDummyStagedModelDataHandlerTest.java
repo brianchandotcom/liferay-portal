@@ -1,0 +1,324 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.exportimport.data.handler.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
+import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.exportimport.test.util.model.DisabledDummy;
+import com.liferay.exportimport.test.util.model.DummyFolder;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
+/**
+ * @author Mikel Lorza
+ */
+@RunWith(Arquillian.class)
+public class DisabledDummyStagedModelDataHandlerTest
+	extends BaseStagedModelDataHandlerTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_dummyStagedModelRepository =
+			(StagedModelRepository<DisabledDummy>)
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					DisabledDummy.class.getName());
+
+		_dummyFolderStagedModelRepository =
+			(StagedModelRepository<DummyFolder>)
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					DummyFolder.class.getName());
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			DisabledDummyStagedModelDataHandlerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			PersistedModelLocalService.class,
+			new PersistedModelLocalService() {
+
+				@Override
+				public PersistedModel deletePersistedModel(
+						PersistedModel persistedModel)
+					throws PortalException {
+
+					return null;
+				}
+
+				@Override
+				public <T> T dslQuery(DSLQuery dslQuery) {
+					return null;
+				}
+
+				@Override
+				public int dslQueryCount(DSLQuery dslQuery) {
+					return 0;
+				}
+
+				@Override
+				public BasePersistence<?> getBasePersistence() {
+					return null;
+				}
+
+				@Override
+				public PersistedModel getPersistedModel(
+						Serializable primaryKeyObj)
+					throws PortalException {
+
+					return null;
+				}
+
+			},
+			MapUtil.singletonDictionary(
+				"model.class.name", DisabledDummy.class.getName()));
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		_serviceRegistration.unregister();
+
+		super.tearDown();
+	}
+
+	@Override
+	@Test
+	public void testCleanStagedModelDataHandler() throws Exception {
+
+		// Export
+
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		// Comments
+
+		addComments(stagedModel);
+
+		// Ratings
+
+		addRatings(stagedModel);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, dependentStagedModelsMap);
+
+		// Import
+
+		initImport();
+
+		deleteStagedModel(stagedModel, dependentStagedModelsMap, stagingGroup);
+
+		// Reread the staged model for import from ZIP for true testing
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNull(exportedStagedModel);
+	}
+
+	@Override
+	@Test
+	public void testExportImportWithDefaultData() throws Exception {
+
+		// Export default data
+
+		initExport();
+
+		Map<String, List<StagedModel>> defaultDependentStagedModelsMap =
+			addDefaultDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addDefaultStagedModel(
+			stagingGroup, defaultDependentStagedModelsMap);
+
+		if (stagedModel == null) {
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, defaultDependentStagedModelsMap);
+
+		// Add default data to live site
+
+		Map<String, List<StagedModel>> secondDependentStagedModelsMap =
+			addDefaultDependentStagedModelsMap(liveGroup);
+
+		addDefaultStagedModel(liveGroup, secondDependentStagedModelsMap);
+
+		// Import
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNull(exportedStagedModel);
+	}
+
+	@Override
+	@Test
+	public void testStagedModelDataHandler() throws Exception {
+
+		// Export
+
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		// Comments
+
+		addComments(stagedModel);
+
+		// Ratings
+
+		addRatings(stagedModel);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, dependentStagedModelsMap);
+
+		// Import
+
+		initImport();
+
+		// Reread the staged model for import from ZIP for true testing
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNull(exportedStagedModel);
+	}
+
+	@Override
+	protected StagedModel addDefaultStagedModel(
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return new DisabledDummy(
+			group.getCompanyId(), group.getGroupId(), 123456,
+			TestPropsValues.getUser(), new ArrayList<>());
+	}
+
+	@Override
+	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
+			Group group)
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new LinkedHashMap<>();
+
+		DummyFolder dummyFolder =
+			_dummyFolderStagedModelRepository.addStagedModel(
+				null,
+				new DummyFolder(
+					TestPropsValues.getCompanyId(), group.getGroupId(),
+					TestPropsValues.getUser()));
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DummyFolder.class, dummyFolder);
+
+		return dependentStagedModelsMap;
+	}
+
+	@Override
+	protected StagedModel addStagedModel(
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		List<StagedModel> dummyFolderStagedModels =
+			dependentStagedModelsMap.get(DummyFolder.class.getSimpleName());
+
+		DummyFolder dummyFolder = (DummyFolder)dummyFolderStagedModels.get(0);
+
+		DisabledDummy dummy = new DisabledDummy(
+			group.getCompanyId(), group.getGroupId(), dummyFolder.getId(),
+			TestPropsValues.getUser(), new ArrayList<>());
+
+		return _dummyStagedModelRepository.addStagedModel(
+			portletDataContext, dummy);
+	}
+
+	@Override
+	protected void deleteStagedModel(
+			StagedModel dummy,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		_dummyStagedModelRepository.deleteStagedModel((DisabledDummy)dummy);
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group) {
+		return _dummyStagedModelRepository.fetchStagedModelByUuidAndGroupId(
+			uuid, group.getGroupId());
+	}
+
+	@Override
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return DisabledDummy.class;
+	}
+
+	private StagedModelRepository<DummyFolder>
+		_dummyFolderStagedModelRepository;
+	private StagedModelRepository<DisabledDummy> _dummyStagedModelRepository;
+	private ServiceRegistration<?> _serviceRegistration;
+
+}

@@ -16,6 +16,9 @@ export class JournalEditArticlePage {
 	readonly page: Page;
 
 	readonly changesSavedIndicator: Locator;
+	readonly clearButton: Locator;
+	readonly content: Locator;
+	readonly defaultTemplateButton: Locator;
 	readonly friendlyURLInput: Locator;
 	readonly friendlyUrlToggle: Locator;
 	readonly historyButton: Locator;
@@ -29,10 +32,13 @@ export class JournalEditArticlePage {
 
 	constructor(page: Page) {
 		this.page = page;
-
 		this.changesSavedIndicator = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
 		);
+		this.clearButton = page.getByRole('button', {name: 'Clear'});
+		this.content = page.getByText('Content', {exact: true});
+		this.defaultTemplateButton = page.getByRole('button', {name: 'Default Template'});
+
 		this.friendlyURLInput = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_friendlyURL'
 		);

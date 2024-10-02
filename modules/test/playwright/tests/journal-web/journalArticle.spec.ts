@@ -111,7 +111,10 @@ baseTest(
 );
 
 baseTest(
-	'LPD-31427: Select web content display template with the Preview feature',
+	'Select web content display template with the Preview feature',
+	{
+		tag: '@LPD-31427',
+	},
 	async ({journalEditArticlePage, page, site}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
@@ -119,29 +122,29 @@ baseTest(
 
 		const title = getRandomString();
 
-		await page.getByText('Content', {exact: true}).waitFor();
+		await journalEditArticlePage.content.waitFor();
 
 		await journalEditArticlePage.fillTitle(title);
 
-		await page.getByRole('button', {name: 'Publish'}).click();
+		await journalEditArticlePage.publishButton.click();
 
 		await journalEditArticlePage.editArticle(title);
 
-		await page.getByText('Content', {exact: true}).waitFor();
+		await journalEditArticlePage.content.waitFor();
 
-		await page.getByRole('link', {name: 'Default Template'}).click();
+		await journalEditArticlePage.defaultTemplateButton.click();
 
-		await page.getByRole('button', {name: 'Clear'}).waitFor();
+		await journalEditArticlePage.clearButton.waitFor();
 
-		await page.getByRole('button', {name: 'Clear'}).click();
+		await journalEditArticlePage.clearButton.click();
 
-		await page.getByText('Content', {exact: true}).waitFor();
+		await journalEditArticlePage.content.waitFor();
 
 		let templateName = page.getByLabel('Template Name');
 
 		await expect(templateName).toHaveValue('No Template');
 
-		await page.getByRole('link', {name: 'Default Template'}).click();
+		await journalEditArticlePage.defaultTemplateButton.click();
 
 		await page
 			.locator(
@@ -167,7 +170,7 @@ baseTest(
 
 		await dialogIFrame.getByRole('button', {name: 'Apply'}).click();
 
-		await page.getByText('Content', {exact: true}).waitFor();
+		await journalEditArticlePage.content.waitFor();
 
 		templateName = page.getByLabel('Template Name');
 

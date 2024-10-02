@@ -1,0 +1,29 @@
+import org.eclipse.transformer.cli.JakartaTransformerCLI
+
+buildscript {
+	dependencies {
+		classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
+	}
+
+	repositories {
+		maven {
+			url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+task jarTransformed
+
+jar {
+	setActions([])
+
+	finalizedBy jarTransformed
+}
+
+jarTransformed {
+	doLast {
+		JakartaTransformerCLI.runWith(new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath}))
+	}
+
+	mustRunAfter generatePomFileForMavenPublication
+}

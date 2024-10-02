@@ -61,8 +61,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> _companyLocalService.forEachCompany(
-			company -> _notify(company));
+		return () -> _companyLocalService.forEachCompany(this::_notify);
 	}
 
 	public OrderByComparator<OAuth2Authorization> getOrderByComparator() {

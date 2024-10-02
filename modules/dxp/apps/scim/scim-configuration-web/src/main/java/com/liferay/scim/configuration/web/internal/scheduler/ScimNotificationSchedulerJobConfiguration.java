@@ -45,7 +45,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -225,21 +224,10 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
-		String strAccessTokenExpirationDate = formatter.format(
-			accessTokenExpirationDate);
-
 		Company company = _companyLocalService.getCompany(companyId);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", company.getLocale(), getClass());
-
-		String subject = _language.get(
-			resourceBundle, "scim-access-token-email-subject");
-
-		String body = _generateBody(strAccessTokenExpirationDate);
-
-		String defaultEmailFromAddress = "scim-notification@" + company.getMx();
-		String defaultEmailFromName = "SCIM-Notification";
+		String body = _generateBody(
+			formatter.format(accessTokenExpirationDate));
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
@@ -252,7 +240,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		subscriptionSender.setBody(body);
 
 		subscriptionSender.setFrom(
-			defaultEmailFromAddress, defaultEmailFromName);
+			"scim-notification@" + company.getMx(), "SCIM-Notification");
 
 		for (int i = 0; i < users.size(); i++) {
 			subscriptionSender.addRuntimeSubscribers(
@@ -265,7 +253,11 @@ public class ScimNotificationSchedulerJobConfiguration
 		}
 
 		subscriptionSender.setMailId("popPortletPrefix", "ids");
-		subscriptionSender.setSubject(subject);
+		subscriptionSender.setSubject(
+			_language.get(
+				ResourceBundleUtil.getBundle(
+					"content.Language", company.getLocale(), getClass()),
+				"scim-access-token-email-subject"));
 
 		subscriptionSender.flushNotifications();
 	}

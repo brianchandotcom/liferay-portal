@@ -217,6 +217,20 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	@Override
+	public Role getRoleByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Role role = roleLocalService.getRoleByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		RolePermissionUtil.check(
+			getPermissionChecker(), role.getRoleId(), ActionKeys.VIEW);
+
+		return role;
+	}
+
+	@Override
 	public List<Role> getRoles(int type, String subtype)
 		throws PortalException {
 

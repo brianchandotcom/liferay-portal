@@ -119,8 +119,9 @@ public class FrontendTokenDefinitionRegistryTest {
 		Assert.assertTrue(
 			ListUtil.exists(
 				frontendTokenDefinitions,
-				item -> Objects.equals(
-					item.getThemeId(), _THEME_ID_LAYOUT_SET)));
+				frontendTokenDefinition -> Objects.equals(
+					frontendTokenDefinition.getThemeId(),
+					_THEME_ID_LAYOUT_SET)));
 	}
 
 	private void _addThemeCSSCET() throws Exception {

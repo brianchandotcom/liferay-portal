@@ -171,6 +171,10 @@ describe('TranslationAdminSelector', () => {
 	it('renders a dropdown trigger with the selected locale flag icon as content', () => {
 		const {asFragment} = render(<TranslationAdminSelector {...props} />);
 
+		const buttonElement = document.querySelector('button');
+
+		buttonElement.id = '';
+
 		expect(asFragment()).toMatchSnapshot();
 	});
 

@@ -1190,15 +1190,20 @@ test.describe('Multistep', () => {
 
 			// Move the stepper to the second form
 
-			const stepper = pageEditorPage.getFragment(stepperId);
+			await pageEditorPage.goToSidebarTab('Browser');
 
-			const secondForm = page
-				.locator('.page-editor__form .page-editor__container')
+			await pageEditorPage.selectFragment(stepperId);
+
+			const stepperTreeItem = page
+				.locator('.treeview-link')
+				.getByLabel('Select Stepper');
+
+			const secondFormTreeItem = page
+				.locator('.treeview-link')
+				.getByLabel('Select Form Container')
 				.last();
 
-			await stepper.dragTo(
-				secondForm.locator('.page-editor__no-fragments-state__message')
-			);
+			stepperTreeItem.dragTo(secondFormTreeItem);
 
 			await page
 				.locator('.modal-title', {hasText: 'Convert to Multistep Form'})
@@ -1227,6 +1232,10 @@ test.describe('Multistep', () => {
 			await expect(
 				page.getByLabel('Form Type', {exact: true})
 			).toHaveValue('simple');
+
+			const secondForm = page
+				.locator('.page-editor__form .page-editor__container')
+				.last();
 
 			await expect(
 				secondForm.locator('.multi-step-nav')

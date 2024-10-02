@@ -17,6 +17,7 @@ ViewTimelineHistoryDisplayContext viewTimelineHistoryDisplayContext = (ViewTimel
 	<frontend-data-set:headless-display
 		apiURL="<%= viewTimelineHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewTimelineHistoryDisplayContext.getFDSActionDropdownItems() %>"
+		fdsFilters="<%= viewTimelineHistoryDisplayContext.getFDSFilters() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_TIMELINE_HISTORY %>"
 		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="id"

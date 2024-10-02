@@ -57,9 +57,7 @@ function main {
 
 	./gradlew clean build
 
-	rm -rf ./bundles
-
-	mkdir bundles
+	rm ./bundles/osgi/client-extensions/*
 
 	popd > /dev/null
 

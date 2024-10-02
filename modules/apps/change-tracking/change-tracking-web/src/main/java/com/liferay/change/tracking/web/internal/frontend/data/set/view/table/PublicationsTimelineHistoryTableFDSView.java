@@ -38,24 +38,6 @@ public class PublicationsTimelineHistoryTableFDSView extends BaseTableFDSView {
 				"view-change"
 			).setContentRenderer(
 				"actionLink"
-			).setLocalizeLabel(
-				true
-			).setSortable(
-				true
-			)
-		).add(
-			"ctCollectionStatusDate", "published-date",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setLocalizeLabel(
-				true
-			).setSortable(
-				true
-			)
-		).add(
-			"ctCollectionStatusUserName", "published-by",
-			fdsTableSchemaField -> fdsTableSchemaField.setLocalizeLabel(
-				true
 			).setSortable(
 				true
 			)
@@ -63,6 +45,23 @@ public class PublicationsTimelineHistoryTableFDSView extends BaseTableFDSView {
 			"ctCollectionStatus", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"status"
+			).setLocalizeLabel(
+				true
+			).setSortable(
+				true
+			)
+		).add(
+			"ctCollectionStatusUserName", "published-by",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"changeType", "changed",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"ctCollectionStatusDate", "published-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setLocalizeLabel(
+				true
 			).setSortable(
 				true
 			)

@@ -63,7 +63,7 @@ function main {
 
 	popd > /dev/null
 
-	docker compose up --detach
+	docker compose up --detach database liferay
 
 	local container_id=$(get_container_id "liferay")
 
@@ -75,7 +75,7 @@ function main {
 
 	popd > /dev/null
 
-	docker compose up
+	docker compose up liferay
 }
 
 main "${@}"

@@ -37,7 +37,7 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
-import com.liferay.object.tree.TreeFactory;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -116,6 +116,8 @@ public class ObjectRelationshipLocalServiceTest {
 		_objectDefinition2 = _addAndPublishCustomObjectDefinition();
 		_systemObjectDefinition2 = _addSystemObjectDefinition(
 			"/o/test-endpoint/entries");
+		_objectDefinitionTreeFactory = new ObjectDefinitionTreeFactory(
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test
@@ -474,17 +476,15 @@ public class ObjectRelationshipLocalServiceTest {
 					LinkedHashMapBuilder.put(
 						"A", new String[0]
 					).build(),
-					_treeFactory.createObjectDefinitionTree(
-						objectDefinition1.getObjectDefinitionId(),
-						_objectDefinitionLocalService::getObjectDefinition),
+					_objectDefinitionTreeFactory.create(
+						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService);
 				TreeTestUtil.assertObjectDefinitionTree(
 					LinkedHashMapBuilder.put(
 						"AA", new String[0]
 					).build(),
-					_treeFactory.createObjectDefinitionTree(
-						objectDefinition2.getObjectDefinitionId(),
-						_objectDefinitionLocalService::getObjectDefinition),
+					_objectDefinitionTreeFactory.create(
+						objectDefinition2.getObjectDefinitionId()),
 					_objectDefinitionLocalService);
 			});
 	}
@@ -501,9 +501,8 @@ public class ObjectRelationshipLocalServiceTest {
 					).put(
 						"AA", new String[0]
 					).build(),
-					_treeFactory.createObjectDefinitionTree(
-						objectDefinition1.getObjectDefinitionId(),
-						_objectDefinitionLocalService::getObjectDefinition),
+					_objectDefinitionTreeFactory.create(
+						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
 	}
 
@@ -528,9 +527,8 @@ public class ObjectRelationshipLocalServiceTest {
 					).put(
 						"AA", new String[0]
 					).build(),
-					_treeFactory.createObjectDefinitionTree(
-						objectDefinition1.getObjectDefinitionId(),
-						_objectDefinitionLocalService::getObjectDefinition),
+					_objectDefinitionTreeFactory.create(
+						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
 	}
 
@@ -1413,6 +1411,8 @@ public class ObjectRelationshipLocalServiceTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
+	private ObjectDefinitionTreeFactory _objectDefinitionTreeFactory;
+
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -1427,8 +1427,5 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _systemObjectDefinition2;
-
-	@Inject
-	private TreeFactory _treeFactory;
 
 }

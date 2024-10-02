@@ -30,7 +30,6 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -130,9 +129,10 @@ public class ObjectEntryServiceTest {
 
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
 		_tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
+
 		_user = UserTestUtil.addUser();
 
 		ObjectDefinition rootObjectDefinition =
@@ -426,8 +426,8 @@ public class ObjectEntryServiceTest {
 
 		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService, objectDefinitionRootNode.getPrimaryKey(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			objectDefinitionRootNode.getPrimaryKey());
 
 		_setUser(_user);
 
@@ -481,8 +481,8 @@ public class ObjectEntryServiceTest {
 
 		objectEntryTree = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService, objectDefinitionRootNode.getPrimaryKey(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			objectDefinitionRootNode.getPrimaryKey());
 
 		Node objectEntryRootNode = objectEntryTree.getRootNode();
 
@@ -507,9 +507,8 @@ public class ObjectEntryServiceTest {
 
 		objectEntryTree = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService,
-			_rootObjectDefinition.getRootObjectDefinitionId(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			_rootObjectDefinition.getRootObjectDefinitionId());
 
 		objectEntryRootNode = objectEntryTree.getRootNode();
 
@@ -622,8 +621,8 @@ public class ObjectEntryServiceTest {
 
 		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService, objectDefinitionRootNode.getPrimaryKey(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			objectDefinitionRootNode.getPrimaryKey());
 
 		_setUser(_user);
 
@@ -1122,10 +1121,6 @@ public class ObjectEntryServiceTest {
 
 	private ObjectDefinition _rootObjectDefinition;
 	private Tree _tree;
-
-	@Inject
-	private TreeFactory _treeFactory;
-
 	private User _user;
 
 	@Inject(type = UserLocalService.class)

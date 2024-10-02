@@ -19,7 +19,6 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -62,8 +61,7 @@ public class ObjectEntryDisplayContextTest {
 	@Test
 	public void testGetBackURL() throws Exception {
 		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 
 		Node nodeA = objectDefinitionTree.getRootNode();
 
@@ -73,8 +71,8 @@ public class ObjectEntryDisplayContextTest {
 
 		TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
-			_objectFieldLocalService, nodeA.getPrimaryKey(),
-			_objectRelationshipLocalService, _treeFactory);
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			nodeA.getPrimaryKey());
 
 		ObjectDefinition objectDefinitionAA =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -213,8 +211,5 @@ public class ObjectEntryDisplayContextTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Inject
-	private TreeFactory _treeFactory;
 
 }

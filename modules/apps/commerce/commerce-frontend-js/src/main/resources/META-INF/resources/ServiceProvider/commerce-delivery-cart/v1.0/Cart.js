@@ -14,6 +14,9 @@ function resolveCartsPath(basePath = '', cartId) {
 	return `${basePath}${VERSION}${CARTS_PATH}/${cartId}`;
 }
 
+function resolveCartsBatchPath(basePath = '') {
+	return `${basePath}${VERSION}${CARTS_PATH}/batch`;
+}
 function resolveChannelsPath(basePath = '', channelId) {
 	return `${basePath}${VERSION}${CHANNELS_PATH}/${channelId}`;
 }
@@ -67,6 +70,11 @@ export default function Cart(basePath) {
 
 		deleteCartById: (cartId) =>
 			AJAX.DELETE(resolveCartsPath(basePath, cartId)),
+
+		deleteCartsById: (items) =>
+			AJAX.DELETE(resolveCartsBatchPath(basePath), {
+				body: JSON.stringify(items),
+			}),
 
 		executeCartTransitionsById: (cartId, json) =>
 			AJAX.POST(

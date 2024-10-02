@@ -90,6 +90,14 @@ export function TopperLabel({children, itemElement, style}) {
 				itemElementMarginLeft =
 					parseInt(computedStyle.marginLeft, 10) || 0;
 
+				if (itemElement.classList.contains('page-editor__col')) {
+					itemElementMarginRight -=
+						parseInt(computedStyle.paddingRight, 10) || 0;
+
+					itemElementMarginLeft -=
+						parseInt(computedStyle.paddingLeft, 10) || 0;
+				}
+
 				itemElementLeft =
 					boundingClientRect.left -
 					wrapper.offsetLeft +

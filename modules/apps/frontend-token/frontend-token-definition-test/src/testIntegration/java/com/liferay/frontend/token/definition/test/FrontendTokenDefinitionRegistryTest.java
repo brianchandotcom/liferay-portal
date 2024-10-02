@@ -89,26 +89,12 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	@Test
-	public void testGetFrontendTokenDefinitions() {
-		List<FrontendTokenDefinition> frontendTokenDefinitionsList =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
-				_layoutSet.getCompanyId());
+	public void testGetFrontendTokenDefinition() {
+		_assertFrontendTokenDefinition(
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				_layoutSet),
+			_THEME_ID_CLIENT_EXTENSION_ENTRY);
 
-		Assert.assertTrue(
-			ListUtil.exists(
-				frontendTokenDefinitionsList,
-				item -> Objects.equals(
-					item.getThemeId(), _THEME_ID_CLIENT_EXTENSION_ENTRY)));
-
-		Assert.assertTrue(
-			ListUtil.exists(
-				frontendTokenDefinitionsList,
-				item -> Objects.equals(
-					item.getThemeId(), _THEME_ID_LAYOUT_SET)));
-	}
-
-	@Test
-	public void testGetThemeBundleFrontendTokenDefinition() {
 		_layoutSet.setLayoutSetId(RandomTestUtil.randomLong());
 
 		_assertFrontendTokenDefinition(
@@ -118,11 +104,23 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	@Test
-	public void testGetThemeCSSCETFrontendTokenDefinition() {
-		_assertFrontendTokenDefinition(
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_layoutSet),
-			_THEME_ID_CLIENT_EXTENSION_ENTRY);
+	public void testGetFrontendTokenDefinitions() {
+		List<FrontendTokenDefinition> frontendTokenDefinitions =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
+				_layoutSet.getCompanyId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				frontendTokenDefinitions,
+				frontendTokenDefinition -> Objects.equals(
+					frontendTokenDefinition.getThemeId(),
+					_THEME_ID_CLIENT_EXTENSION_ENTRY)));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				frontendTokenDefinitions,
+				item -> Objects.equals(
+					item.getThemeId(), _THEME_ID_LAYOUT_SET)));
 	}
 
 	private void _addThemeCSSCET() throws Exception {

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -424,14 +425,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process " + fasterUpgradeProcessName +
-				" in 10 ms");
+				" in 30010 ms");
 
 		String slowerUpgradeProcessName =
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			"Completed upgrade process " + slowerUpgradeProcessName +
-				" in 20401 ms");
+				" in 50401 ms");
 
 		_appender.stop();
 
@@ -485,18 +486,18 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process com.liferay.portal.UpgradeTest in " +
-				"20401 ms");
+				"50401 ms");
 
 		_appender.stop();
 
 		_assertLogContextDiagnostics(
 			"upgrade.report.longest.upgrade.processes",
-			"com.liferay.portal.UpgradeTest:20401 ms");
+			"com.liferay.portal.UpgradeTest:50401 ms");
 		_assertLogContextDiagnostics("upgrade.report.warnings", "2:Warning");
 		_assertReportDiagnostics(
 			"2 occurrences of the following event: Warning");
 		_assertReportDiagnostics(
-			"com.liferay.portal.UpgradeTest took 20401 ms to complete");
+			"com.liferay.portal.UpgradeTest took 50401 ms to complete");
 	}
 
 	@Test
@@ -543,8 +544,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"upgrade.report.longest.upgrade.processes", "[]");
 		_assertLogContextDiagnostics("upgrade.report.warnings", "[]");
 		_assertReportDiagnostics("Errors: Nothing registered");
+
 		_assertReportDiagnostics(
-			"Longest upgrade processes: Nothing registered");
+			"Top 10 longest upgrade processes above " +
+				PropsValues.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION +
+					" milliseconds: Nothing registered");
+
 		_assertReportDiagnostics("Warnings: Nothing registered");
 	}
 
@@ -722,51 +727,65 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				}
 			});
 
-		_appender.start();
+		String originalUpgradeReportSqlQueryThresholdDuration = PropsUtil.get(
+			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION);
 
-		upgradeProcess1.upgrade();
+		PropsUtil.set(
+			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION,
+			String.valueOf(0));
 
-		upgradeProcess2.upgrade();
+		try {
+			_appender.start();
 
-		_appender.stop();
+			upgradeProcess1.upgrade();
 
-		for (String upgradeProcessClassName : upgradeProcess1ClassNames) {
-			_assertLogContextDiagnostics(
-				"upgrade.report.longest.running.sqls",
-				String.format("%s:%s", upgradeProcessClassName, sql1));
-			_assertReportDiagnostics(
-				String.format(
-					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
-					sql1));
+			upgradeProcess2.upgrade();
+
+			_appender.stop();
+
+			for (String upgradeProcessClassName : upgradeProcess1ClassNames) {
+				_assertLogContextDiagnostics(
+					"upgrade.report.longest.running.sqls",
+					String.format("%s:%s", upgradeProcessClassName, sql1));
+				_assertReportDiagnostics(
+					String.format(
+						"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
+						sql1));
+			}
+
+			for (String upgradeProcessClassName : upgradeProcess2ClassNames) {
+				_assertLogContextDiagnostics(
+					"upgrade.report.longest.running.sqls",
+					String.format("%s:%s", upgradeProcessClassName, sql2));
+				_assertReportDiagnostics(
+					String.format(
+						"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
+						sql2));
+			}
+
+			Map<String, Long> sqlExecutionTimes = ReflectionTestUtil.invoke(
+				_upgradeRecorder, "getSQLExecutionTimes", new Class<?>[0]);
+
+			for (Map.Entry<String, Long> entry : sqlExecutionTimes.entrySet()) {
+				Long duration = entry.getValue();
+
+				String sql = entry.getKey();
+
+				String[] parts = sql.split("\\|");
+
+				_assertLogContextDiagnostics(
+					"upgrade.report.longest.running.sqls",
+					String.format("%s:%s:%d ms", parts[0], parts[1], duration));
+				_assertReportDiagnostics(
+					String.format(
+						"Upgrade Process: %s\nSQL: %s\nDuration: %d ms",
+						parts[0], parts[1], duration));
+			}
 		}
-
-		for (String upgradeProcessClassName : upgradeProcess2ClassNames) {
-			_assertLogContextDiagnostics(
-				"upgrade.report.longest.running.sqls",
-				String.format("%s:%s", upgradeProcessClassName, sql2));
-			_assertReportDiagnostics(
-				String.format(
-					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
-					sql2));
-		}
-
-		Map<String, Long> sqlExecutionTimes = ReflectionTestUtil.invoke(
-			_upgradeRecorder, "getSQLExecutionTimes", new Class<?>[0]);
-
-		for (Map.Entry<String, Long> entry : sqlExecutionTimes.entrySet()) {
-			Long duration = entry.getValue();
-
-			String sql = entry.getKey();
-
-			String[] parts = sql.split("\\|");
-
-			_assertLogContextDiagnostics(
-				"upgrade.report.longest.running.sqls",
-				String.format("%s:%s:%d ms", parts[0], parts[1], duration));
-			_assertReportDiagnostics(
-				String.format(
-					"Upgrade Process: %s\nSQL: %s\nDuration: %d ms", parts[0],
-					parts[1], duration));
+		finally {
+			PropsUtil.set(
+				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION,
+				originalUpgradeReportSqlQueryThresholdDuration);
 		}
 	}
 

@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -81,6 +82,14 @@ public class ScimNotificationSchedulerJobConfiguration
 			System.currentTimeMillis());
 	}
 
+	@Activate
+	protected void activate() throws IOException {
+		_body = StringUtil.read(
+			getClassLoader(),
+			"com/liferay/scim/configuration/web/internal/dependencies" +
+				"/body.tmpl");
+	}
+
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();
 
@@ -108,22 +117,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		}
 
 		return false;
-	}
-
-	private String _generateBody(String strAccessTokenExpirationDate) {
-		try {
-			String body = StringUtil.read(
-				getClassLoader(),
-				"com/liferay/scim/configuration/web/internal/dependencies" +
-					"/body.tmpl");
-
-			return StringUtil.replace(
-				body, new String[] {"[$ACCESS_TOKEN_EXPIRATION_DATE$]"},
-				new String[] {strAccessTokenExpirationDate});
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	private boolean _isEnabled() {
@@ -218,8 +211,9 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
-		String body = _generateBody(
-			formatter.format(accessTokenExpirationDate));
+		String body = StringUtil.replace(
+			_body, new String[] {"[$ACCESS_TOKEN_EXPIRATION_DATE$]"},
+			new String[] {formatter.format(accessTokenExpirationDate)});
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -242,6 +236,8 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScimNotificationSchedulerJobConfiguration.class);
+
+	private String _body;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

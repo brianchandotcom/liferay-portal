@@ -869,15 +869,15 @@ export class PageEditorPage {
 		// if it's a collection
 
 		const isCollection = await fragment.evaluate((element) =>
-			element.classList.contains('page-editor__collection')
+			element.classList.contains('lfr-layout-structure-item-collection')
 		);
 
-		const isForm = await fragment.evaluate(
-			(element) => !!element.closest('.page-editor__form')
+		const isForm = await fragment.evaluate((element) =>
+			element.classList.contains('lfr-layout-structure-item-form')
 		);
 
-		const isGrid = await fragment.evaluate(
-			(element) => !!element.closest('.lfr-layout-structure-item-row')
+		const isGrid = await fragment.evaluate((element) =>
+			element.classList.contains('lfr-layout-structure-item-row')
 		);
 
 		if (isCollection || isForm || isGrid) {

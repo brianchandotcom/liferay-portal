@@ -82,7 +82,7 @@ test('Checks that a widget can be added and dragged to another part of the page'
 	expect(gridColumn.nth(2).locator('[data-name="Sort"]')).toBeVisible();
 });
 
-test('checks that the drag target and drop target have the correct classes when dragged', async ({
+test('Checks that the drag target and drop target have the correct classes when dragged', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

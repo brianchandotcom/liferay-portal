@@ -144,6 +144,16 @@ public class UserResourceDTOConverter
 				setExternalReferenceCode(user::getExternalReferenceCode);
 				setFamilyName(user::getLastName);
 				setGivenName(user::getFirstName);
+				setHasLoginDate(
+					() -> {
+						boolean hasLoginDate = false;
+
+						if (user.getLastLoginDate() != null) {
+							hasLoginDate = true;
+						}
+
+						return hasLoginDate;
+					});
 				setHonorificPrefix(
 					() ->
 						ServiceBuilderListTypeUtil.

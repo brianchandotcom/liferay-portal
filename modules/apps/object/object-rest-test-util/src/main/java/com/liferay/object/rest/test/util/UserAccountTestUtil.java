@@ -62,6 +62,7 @@ public class UserAccountTestUtil {
 					RandomTestUtil.randomString());
 				givenName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				hasLoginDate = RandomTestUtil.randomBoolean();
 				honorificPrefix = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				honorificSuffix = StringUtil.toLowerCase(

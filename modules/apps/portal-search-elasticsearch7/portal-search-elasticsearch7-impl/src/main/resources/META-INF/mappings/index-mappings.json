@@ -1558,6 +1558,10 @@
 		}
 	],
 	"properties": {
+		"activated": {
+			"store": true,
+			"type": "keyword"
+		},
 		"ancestorOrganizationIds": {
 			"store": true,
 			"type": "keyword"
@@ -1808,11 +1812,6 @@
 		"languageId": {
 			"store": true,
 			"type": "keyword"
-		},
-		"lastLoginDate": {
-			"format": "yyyyMMddHHmmss",
-			"store": true,
-			"type": "date"
 		},
 		"lastPostDate": {
 			"format": "yyyyMMddHHmmss",

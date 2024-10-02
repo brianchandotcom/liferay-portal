@@ -142,6 +142,51 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@Schema(
+		description = "A flag that indicates whether the user has been signed in."
+	)
+	public Boolean getActivated() {
+		if (_activatedSupplier != null) {
+			activated = _activatedSupplier.get();
+
+			_activatedSupplier = null;
+		}
+
+		return activated;
+	}
+
+	public void setActivated(Boolean activated) {
+		this.activated = activated;
+
+		_activatedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setActivated(
+		UnsafeSupplier<Boolean, Exception> activatedUnsafeSupplier) {
+
+		_activatedSupplier = () -> {
+			try {
+				return activatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether the user has been signed in."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean activated;
+
+	@JsonIgnore
+	private Supplier<Boolean> _activatedSupplier;
+
 	@Schema(description = "The user's additional name (e.g., middle name).")
 	public String getAdditionalName() {
 		if (_additionalNameSupplier != null) {
@@ -1063,47 +1108,6 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _languageIdSupplier;
 
-	@Schema(description = "The last time the user logged in.")
-	public Date getLastLoginDate() {
-		if (_lastLoginDateSupplier != null) {
-			lastLoginDate = _lastLoginDateSupplier.get();
-
-			_lastLoginDateSupplier = null;
-		}
-
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-
-		_lastLoginDateSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLastLoginDate(
-		UnsafeSupplier<Date, Exception> lastLoginDateUnsafeSupplier) {
-
-		_lastLoginDateSupplier = () -> {
-			try {
-				return lastLoginDateUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The last time the user logged in.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date lastLoginDate;
-
-	@JsonIgnore
-	private Supplier<Date> _lastLoginDateSupplier;
-
 	@Schema(description = "The user's full name.")
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -1560,6 +1564,18 @@ public class UserAccount implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		Boolean activated = getActivated();
+
+		if (activated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"activated\": ");
+
+			sb.append(activated);
+		}
+
 		String additionalName = getAdditionalName();
 
 		if (additionalName != null) {
@@ -1916,22 +1932,6 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(languageId));
-
-			sb.append("\"");
-		}
-
-		Date lastLoginDate = getLastLoginDate();
-
-		if (lastLoginDate != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"lastLoginDate\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(lastLoginDate));
 
 			sb.append("\"");
 		}

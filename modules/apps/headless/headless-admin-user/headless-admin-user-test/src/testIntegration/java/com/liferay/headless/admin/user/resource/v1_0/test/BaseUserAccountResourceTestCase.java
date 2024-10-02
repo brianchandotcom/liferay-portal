@@ -4676,6 +4676,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (userAccount.getActivated() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("additionalName", additionalAssertFieldName)) {
 				if (userAccount.getAdditionalName() == null) {
 					valid = false;
@@ -4828,14 +4836,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			if (Objects.equals("languageId", additionalAssertFieldName)) {
 				if (userAccount.getLanguageId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("lastLoginDate", additionalAssertFieldName)) {
-				if (userAccount.getLastLoginDate() == null) {
 					valid = false;
 				}
 
@@ -5053,6 +5053,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!equals(
 						(Map)userAccount1.getActions(),
 						(Map)userAccount2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getActivated(),
+						userAccount2.getActivated())) {
 
 					return false;
 				}
@@ -5305,17 +5316,6 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("lastLoginDate", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						userAccount1.getLastLoginDate(),
-						userAccount2.getLastLoginDate())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getName(), userAccount2.getName())) {
@@ -5531,6 +5531,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("activated")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -6338,37 +6343,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("lastLoginDate")) {
-			if (operator.equals("between")) {
-				Date date = userAccount.getLastLoginDate();
-
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
-				sb.append(")");
-			}
-			else {
-				sb.append(entityFieldName);
-
-				sb.append(" ");
-				sb.append(operator);
-				sb.append(" ");
-
-				sb.append(_dateFormat.format(userAccount.getLastLoginDate()));
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("name")) {
 			Object object = userAccount.getName();
 
@@ -6582,6 +6556,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected UserAccount randomUserAccount() throws Exception {
 		return new UserAccount() {
 			{
+				activated = RandomTestUtil.randomBoolean();
 				additionalName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				alternateName = StringUtil.toLowerCase(
@@ -6617,7 +6592,6 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				languageId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				lastLoginDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				password = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

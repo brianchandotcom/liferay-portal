@@ -3848,6 +3848,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (userAccount.getActivated() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("additionalName", additionalAssertFieldName)) {
 				if (userAccount.getAdditionalName() == null) {
 					valid = false;
@@ -4000,14 +4008,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			if (Objects.equals("languageId", additionalAssertFieldName)) {
 				if (userAccount.getLanguageId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("lastLoginDate", additionalAssertFieldName)) {
-				if (userAccount.getLastLoginDate() == null) {
 					valid = false;
 				}
 
@@ -4501,6 +4501,17 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getActivated(),
+						userAccount2.getActivated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("additionalName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getAdditionalName(),
@@ -4739,17 +4750,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getLanguageId(),
 						userAccount2.getLanguageId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("lastLoginDate", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						userAccount1.getLastLoginDate(),
-						userAccount2.getLastLoginDate())) {
 
 					return false;
 				}
@@ -5475,6 +5475,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	protected UserAccount randomUserAccount() throws Exception {
 		return new UserAccount() {
 			{
+				activated = RandomTestUtil.randomBoolean();
 				additionalName = RandomTestUtil.randomString();
 				alternateName = RandomTestUtil.randomString();
 				birthDate = RandomTestUtil.nextDate();
@@ -5495,7 +5496,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				jobTitle = RandomTestUtil.randomString();
 				languageDisplayName = RandomTestUtil.randomString();
 				languageId = RandomTestUtil.randomString();
-				lastLoginDate = RandomTestUtil.nextDate();
 				name = RandomTestUtil.randomString();
 				password = RandomTestUtil.randomString();
 				profileURL = RandomTestUtil.randomString();

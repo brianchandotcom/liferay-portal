@@ -70,6 +70,27 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Boolean getActivated() {
+		return activated;
+	}
+
+	public void setActivated(Boolean activated) {
+		this.activated = activated;
+	}
+
+	public void setActivated(
+		UnsafeSupplier<Boolean, Exception> activatedUnsafeSupplier) {
+
+		try {
+			activated = activatedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean activated;
+
 	public String getAdditionalName() {
 		return additionalName;
 	}
@@ -533,27 +554,6 @@ public class UserAccount implements Cloneable, Serializable {
 	}
 
 	protected String languageId;
-
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
-	public void setLastLoginDate(
-		UnsafeSupplier<Date, Exception> lastLoginDateUnsafeSupplier) {
-
-		try {
-			lastLoginDate = lastLoginDateUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date lastLoginDate;
 
 	public String getName() {
 		return name;

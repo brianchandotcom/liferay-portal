@@ -88,6 +88,16 @@ public class UserAccountSerDes {
 			sb.append(_toJSON(userAccount.getActions()));
 		}
 
+		if (userAccount.getActivated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"activated\": ");
+
+			sb.append(userAccount.getActivated());
+		}
+
 		if (userAccount.getAdditionalName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -403,21 +413,6 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		if (userAccount.getLastLoginDate() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"lastLoginDate\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(userAccount.getLastLoginDate()));
-
-			sb.append("\"");
-		}
-
 		if (userAccount.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -606,6 +601,13 @@ public class UserAccountSerDes {
 			map.put("actions", String.valueOf(userAccount.getActions()));
 		}
 
+		if (userAccount.getActivated() == null) {
+			map.put("activated", null);
+		}
+		else {
+			map.put("activated", String.valueOf(userAccount.getActivated()));
+		}
+
 		if (userAccount.getAdditionalName() == null) {
 			map.put("additionalName", null);
 		}
@@ -785,15 +787,6 @@ public class UserAccountSerDes {
 			map.put("languageId", String.valueOf(userAccount.getLanguageId()));
 		}
 
-		if (userAccount.getLastLoginDate() == null) {
-			map.put("lastLoginDate", null);
-		}
-		else {
-			map.put(
-				"lastLoginDate",
-				liferayToJSONDateFormat.format(userAccount.getLastLoginDate()));
-		}
-
 		if (userAccount.getName() == null) {
 			map.put("name", null);
 		}
@@ -887,6 +880,9 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "activated")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "additionalName")) {
 				return false;
 			}
@@ -959,9 +955,6 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "languageId")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "lastLoginDate")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -1022,6 +1015,11 @@ public class UserAccountSerDes {
 				if (jsonParserFieldValue != null) {
 					userAccount.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "activated")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setActivated((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "additionalName")) {
@@ -1161,12 +1159,6 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "languageId")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setLanguageId((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "lastLoginDate")) {
-				if (jsonParserFieldValue != null) {
-					userAccount.setLastLoginDate(
-						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

@@ -7,7 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {expandSection} from '../../utils/expandSection';
+import {openFieldset} from '../../utils/openFieldset';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {DocumentLibraryPage} from './DocumentLibraryPage';
 
@@ -203,15 +203,14 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator('fieldset', {
-			hasText: 'Display Page',
-		});
+		const fieldset = await openFieldset(this.page, 'Display Page');
 
-		await expandSection(displayPageFieldSet);
-		await displayPageFieldSet
+		await fieldset
 			.getByTitle('Display Page Template Type')
 			.selectOption('Specific');
-		displayPageFieldSet.getByRole('button', {name: 'Select'}).click();
+
+		await fieldset.getByRole('button', {name: 'Select'}).click();
+
 		const selectDisplayPageModal = await this.page.frameLocator(
 			'iframe[title*="Select Page"]'
 		);

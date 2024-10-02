@@ -30,12 +30,12 @@ AUI.add(
 			instance.toInputName = config.toInputName;
 
 			if (instance.aggregationType === AGGREGATION_TYPES.RANGE) {
-				instance.fromInputPicker = document.getElementById(
-					instance.fromInputName
-				);
-				instance.toInputPicker = document.getElementById(
-					instance.toInputName
-				);
+				instance.fromInputPicker = A.one(`#${instance.fromInputName}`);
+				instance.toInputPicker = A.one(`#${instance.toInputName}`);
+
+				if (instance.fromInputPicker && instance.toInputPicker) {
+					instance._initializeFormValidator();
+				}
 			}
 			else {
 				instance.fromInputDatePicker = Liferay.component(
@@ -130,7 +130,7 @@ AUI.add(
 					true
 				);
 
-				const customRangeValidator = new A.FormValidator({
+				const customDateRangeValidator = new A.FormValidator({
 					boundingBox: instance.form,
 					fieldContainer: 'div',
 					on: {
@@ -157,23 +157,83 @@ AUI.add(
 					},
 				});
 
+				const onDateRangeSelectionChange = function () {
+					customDateRangeValidator.validate();
+				};
+
+				instance.fromInputDatePicker.on(
+					'selectionChange',
+					onDateRangeSelectionChange
+				);
+
+				instance.toInputDatePicker.on(
+					'selectionChange',
+					onDateRangeSelectionChange
+				);
+			},
+
+			_initializeFormValidator() {
+				const instance = this;
+
+				const rangeRuleName = instance.namespace + 'range';
+
+				A.mix(
+					DEFAULTS_FORM_VALIDATOR.STRINGS,
+					{
+						[rangeRuleName]: Liferay.Language.get(
+							'search-custom-range-invalid-range'
+						),
+					},
+					true
+				);
+
+				A.mix(
+					DEFAULTS_FORM_VALIDATOR.RULES,
+					{
+						[rangeRuleName]() {
+							return (
+								instance.fromInputPicker.val() <=
+								instance.toInputPicker.val()
+							);
+						},
+					},
+					true
+				);
+
+				const customRangeValidator = new A.FormValidator({
+					boundingBox: instance.form,
+					fieldContainer: 'div',
+					on: {
+						errorField() {
+							Util.toggleDisabled(
+								instance.searchCustomRangeButton,
+								true
+							);
+						},
+						validField() {
+							Util.toggleDisabled(
+								instance.searchCustomRangeButton,
+								false
+							);
+						},
+					},
+					rules: {
+						[instance.fromInputName]: {
+							[rangeRuleName]: true,
+						},
+						[instance.toInputName]: {
+							[rangeRuleName]: true,
+						},
+					},
+				});
+
 				const onRangeSelectionChange = function () {
 					customRangeValidator.validate();
 				};
 
-				if (instance.fromInputDatePicker) {
-					instance.fromInputDatePicker.on(
-						'selectionChange',
-						onRangeSelectionChange
-					);
-				}
+				instance.fromInputPicker.on('change', onRangeSelectionChange);
 
-				if (instance.toInputDatePicker) {
-					instance.toInputDatePicker.on(
-						'selectionChange',
-						onRangeSelectionChange
-					);
-				}
+				instance.toInputPicker.on('change', onRangeSelectionChange);
 			},
 
 			filter() {
@@ -183,11 +243,11 @@ AUI.add(
 				let toParameter;
 
 				if (instance.fromInputPicker) {
-					fromParameter = instance.fromInputPicker.value;
+					fromParameter = instance.fromInputPicker.val();
 				}
 
 				if (instance.toInputPicker) {
-					toParameter = instance.toInputPicker.value;
+					toParameter = instance.toInputPicker.val();
 				}
 
 				if (instance.fromInputDatePicker) {

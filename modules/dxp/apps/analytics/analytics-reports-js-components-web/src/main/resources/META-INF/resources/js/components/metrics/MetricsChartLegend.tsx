@@ -42,6 +42,7 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 								'd-block': block,
 							})}
 							key={dataKey}
+							onBlur={() => onDatakeyChange(null)}
 							onFocus={() => onDatakeyChange(dataKey)}
 							onMouseEnter={() => onDatakeyChange(dataKey)}
 							onMouseLeave={() => onDatakeyChange(null)}
@@ -63,6 +64,11 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 									}
 									data-tooltip-align="top"
 									href={url}
+									onKeyDown={(event) => {
+										if (event.key === 'Enter') {
+											window.location.assign(url);
+										}
+									}}
 									tabIndex={activeTabIndex ? 0 : -1}
 									title={Liferay.Language.get(
 										'click-to-view-page'

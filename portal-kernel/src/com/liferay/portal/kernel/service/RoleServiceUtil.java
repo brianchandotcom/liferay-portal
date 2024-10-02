@@ -152,6 +152,14 @@ public class RoleServiceUtil {
 		return getService().getRole(companyId, name);
 	}
 
+	public static Role getRoleByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getRoleByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static List<Role> getRoles(int type, String subtype)
 		throws PortalException {
 

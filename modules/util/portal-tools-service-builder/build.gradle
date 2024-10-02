@@ -59,6 +59,7 @@ deployDependencies {
 	}
 
 	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)
+	rename(/org.freemarker-(.+)\.jar/, "org.freemarker" + renameSuffix)
 }
 
 liferay {

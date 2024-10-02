@@ -69,7 +69,9 @@ const GlobalFilters = () => {
 		timeFilterItems = [
 			{
 				description: getDateRange(RangeSelectors.Last24Hours),
-				label: Liferay.Language.get('last-24-hours'),
+				label: Liferay.Util.sub(Liferay.Language.get('last-x-hours'), [
+					24,
+				]),
 				value: RangeSelectors.Last24Hours,
 			},
 			...timeFilterItems,
@@ -114,10 +116,11 @@ const GlobalFilters = () => {
 					onSelectItem={(item) =>
 						changeRangeSelectorFilter(item.value)
 					}
-					triggerLabel={Liferay.Util.sub(
-						Liferay.Language.get('last-x-days'),
-						[filters.rangeSelector]
-					)}
+					triggerLabel={
+						timeFilterItems.find(
+							({value}) => value === filters.rangeSelector
+						)?.label ?? ''
+					}
 				/>
 			</div>
 		</div>

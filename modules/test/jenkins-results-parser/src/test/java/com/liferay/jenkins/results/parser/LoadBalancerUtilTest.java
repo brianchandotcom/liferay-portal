@@ -92,6 +92,10 @@ public class LoadBalancerUtilTest
 				JenkinsResultsParserUtil.combine(
 					"jenkins.local.url[", jenkinsMasterName, "]"),
 				"http://" + jenkinsMasterName);
+			properties.put(
+				JenkinsResultsParserUtil.combine(
+					"jenkins.remote.url[", jenkinsMasterName, "]"),
+				"https://" + jenkinsMasterName + ".liferay.com");
 
 			_copyProperties(
 				buildProperties, properties,
@@ -102,10 +106,11 @@ public class LoadBalancerUtilTest
 		properties.put(
 			JenkinsResultsParserUtil.combine("jenkins.local.url[test-2-1]"),
 			"http://test-2-1");
-
-		_copyProperties(
-			buildProperties, properties, "jenkins.local.url[test-2-1]",
-			"master.slaves(test-2-1)");
+		properties.put(
+			JenkinsResultsParserUtil.combine("jenkins.remote.url[test-2-1]"),
+			"https://test-2-1.liferay.com");
+		properties.put(
+			"master.slaves(test-2-1)", "test-2-1-1,test-2-1-2,test-2-1-3");
 
 		for (int i = 1; i <= 2; i++) {
 			String jenkinsMasterName = "test-3-" + i;

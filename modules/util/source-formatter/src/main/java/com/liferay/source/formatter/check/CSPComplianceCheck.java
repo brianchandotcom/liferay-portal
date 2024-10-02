@@ -30,14 +30,14 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
 
-		content = _checkIllegalTags(
+		_checkIllegalAttributes(
 			fileName, absolutePath, content, lowerCaseContent);
+		_checkIllegalTags(fileName, absolutePath, content, lowerCaseContent);
 
-		return _checkIllegalAttributes(
-			fileName, absolutePath, content, lowerCaseContent);
+		return content;
 	}
 
-	private String _checkIllegalAttributes(
+	private void _checkIllegalAttributes(
 		String fileName, String absolutePath, String content,
 		String lowerCaseContent) {
 
@@ -101,11 +101,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					getLineNumber(content, x));
 			}
 		}
-
-		return content;
 	}
 
-	private String _checkIllegalTags(
+	private void _checkIllegalTags(
 		String fileName, String absolutePath, String content,
 		String lowerCaseContent) {
 
@@ -166,8 +164,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 				}
 			}
 		}
-
-		return content;
 	}
 
 	private void _checkMissingAttribute(

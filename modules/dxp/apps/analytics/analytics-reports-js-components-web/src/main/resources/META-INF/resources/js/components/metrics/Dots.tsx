@@ -33,24 +33,30 @@ export function CircleDot({
 	stroke,
 	strokeOpacity,
 }: DotProps) {
-	const size = 8;
+	const Circle = ({size}: {size: number}) => {
+		const halfSize = size / 2;
 
-	const Circle = (
-		<circle
-			cx={cx || size / 2}
-			cy={cy || size / 2}
-			fill={stroke}
-			fillOpacity={strokeOpacity}
-			r={size / 2}
-			strokeOpacity={strokeOpacity}
-		/>
-	);
+		return (
+			<circle
+				cx={cx || halfSize}
+				cy={cy || halfSize}
+				fill={stroke}
+				fillOpacity={strokeOpacity}
+				r={halfSize}
+				strokeOpacity={strokeOpacity}
+			/>
+		);
+	};
 
 	if (displayOutsideOfRecharts) {
-		return <DotWrapper size={size}>{Circle}</DotWrapper>;
+		return (
+			<DotWrapper size={7}>
+				<Circle size={7} />
+			</DotWrapper>
+		);
 	}
 
-	return Circle;
+	return <Circle size={7} />;
 }
 
 export function SquareDot({
@@ -60,47 +66,70 @@ export function SquareDot({
 	stroke,
 	strokeOpacity,
 }: DotProps) {
-	const size = 6;
+	const Rect = ({size}: {size: number}) => {
+		const halfSize = size / 2;
 
-	const Rect = (
-		<rect
-			fill={stroke}
-			fillOpacity={strokeOpacity}
-			height={size}
-			strokeOpacity={strokeOpacity}
-			width={size}
-			x={cx ? cx - size / 2 : 0}
-			y={cy ? cy - size / 2 : 0}
-		/>
-	);
+		return (
+			<rect
+				fill={stroke}
+				fillOpacity={strokeOpacity}
+				height={size}
+				strokeOpacity={strokeOpacity}
+				width={size}
+				x={cx ? cx - halfSize : 0}
+				y={cy ? cy - halfSize : 0}
+			/>
+		);
+	};
 
 	if (displayOutsideOfRecharts) {
-		return <DotWrapper size={size}>{Rect}</DotWrapper>;
+		return (
+			<DotWrapper size={7}>
+				<Rect size={7} />
+			</DotWrapper>
+		);
 	}
 
-	return Rect;
+	return <Rect size={6} />;
 }
 
-export function DiamondDot({cx = 0, cy = 0, stroke, strokeOpacity}: DotProps) {
-	const size = 8;
-	const halfSize = size / 2;
+export function DiamondDot({
+	cx = 0,
+	cy = 0,
+	displayOutsideOfRecharts = false,
+	stroke,
+	strokeOpacity,
+}: DotProps) {
+	const Diamond = ({size}: {size: number}) => {
+		const halfSize = size / 2;
 
-	return (
-		<svg
-			fill={stroke}
-			fillOpacity={strokeOpacity}
-			height={size}
-			strokeOpacity={strokeOpacity}
-			viewBox={`0 0 ${size} ${size}`}
-			width={size}
-			x={cx ? cx - halfSize : 0}
-			y={cy ? cy - halfSize : 0}
-		>
-			<polygon
-				points={`${halfSize},0 ${size},${halfSize} ${halfSize},${size} 0,${halfSize}`}
-			/>
-		</svg>
-	);
+		return (
+			<svg
+				fill={stroke}
+				fillOpacity={strokeOpacity}
+				height={size}
+				strokeOpacity={strokeOpacity}
+				viewBox={`0 0 ${size} ${size}`}
+				width={size}
+				x={cx ? cx - halfSize : 0}
+				y={cy ? cy - halfSize : 0}
+			>
+				<polygon
+					points={`${halfSize},0 ${size},${halfSize} ${halfSize},${size} 0,${halfSize}`}
+				/>
+			</svg>
+		);
+	};
+
+	if (displayOutsideOfRecharts) {
+		return (
+			<DotWrapper size={8}>
+				<Diamond size={8} />
+			</DotWrapper>
+		);
+	}
+
+	return <Diamond size={8} />;
 }
 
 export function PublishedVersionDot({

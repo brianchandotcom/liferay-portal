@@ -11,7 +11,6 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -114,23 +113,19 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private String _generateBody(String strAccessTokenExpirationDate) {
-		String body = StringPool.BLANK;
-
 		try {
-			body = StringUtil.read(
+			String body = StringUtil.read(
 				getClassLoader(),
 				"com/liferay/scim/configuration/web/internal/dependencies" +
 					"/body.tmpl");
 
-			body = StringUtil.replace(
+			return StringUtil.replace(
 				body, new String[] {"[$ACCESS_TOKEN_EXPIRATION_DATE$]"},
 				new String[] {strAccessTokenExpirationDate});
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-
-		return body;
 	}
 
 	private boolean _isEnabled() {

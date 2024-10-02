@@ -5,6 +5,7 @@
 
 package com.liferay.scim.configuration.web.internal.scheduler;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.oauth2.provider.model.OAuth2Application;
@@ -41,14 +42,20 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 
+import java.io.File;
 import java.io.IOException;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.mail.internet.InternetAddress;
@@ -69,6 +76,9 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	public static final int TEN_DAYS = 10;
 
+	public static final List<Integer> notificationTime = Arrays.asList(
+		MONTH,TEN_DAYS, DAY);
+
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompany(
@@ -82,7 +92,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
+		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.MINUTE);
 	}
 
 	protected ClassLoader getClassLoader() {
@@ -191,11 +201,27 @@ public class ScimNotificationSchedulerJobConfiguration
 							applicationOAuth2Authorization.
 								getAccessTokenExpirationDate();
 
-						int daysBetween = DateUtil.getDaysBetween(
+						ExpandoBridge expandoBridge = applicationOAuth2Authorization.getExpandoBridge();
+
+						Date dateLastNotification =
+							(Date) expandoBridge.getAttribute("lastSuccessfulNotificationDate", false);
+
+						Integer daysLastNotification = null;
+						if (Validator.isNotNull(dateLastNotification)) {
+							daysLastNotification = DateUtil.getDaysBetween(
+								dateLastNotification,
+								accessTokenExpirationDate);
+						}
+
+						int compareDaysLastNotification = DateUtil.compareTo(accessTokenExpirationDate, dateLastNotification);
+
+						int daysBetweenExpiration = DateUtil.getDaysBetween(
 							new Date(), accessTokenExpirationDate);
 
-						if ((daysBetween == MONTH) ||
-							(daysBetween == TEN_DAYS) || (daysBetween == DAY)) {
+						int compareDaysBetweenExpiration = DateUtil.compareTo(accessTokenExpirationDate, new Date());
+
+						if (hasToSendNotification((daysBetweenExpiration*compareDaysBetweenExpiration),
+							(daysLastNotification*compareDaysLastNotification), notificationTime)) {
 
 							Role role = _roleLocalService.getRole(
 								companyId, RoleConstants.ADMINISTRATOR);
@@ -223,18 +249,71 @@ public class ScimNotificationSchedulerJobConfiguration
 							String body = _generateBody(
 								strAccessTokenExpirationDate);
 
-							_sendNotificationEvent(users, body);
-							_sendEmail(company, subject, body, users);
+
+
+
+							String defaultEmailFromAddress = "scim-notification@" + company.getMx();
+							String defaultEmailFromName = "SCIM-Notification";
+
+							String mail = users.get(0).getEmailAddress();
+
+							SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+							subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
+
+							subscriptionSender.setEntryTitle("entryTitle");
+
+							subscriptionSender.setNotificationType(UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
+							subscriptionSender.setBody(body);
+							subscriptionSender.setFrom(defaultEmailFromAddress, defaultEmailFromName);
+							subscriptionSender.setReplyToAddress("admin@liferay.com");
+
+							subscriptionSender.addRuntimeSubscribers("admin@liferay.com", "toName");
+
+							subscriptionSender.setMailId("popPortletPrefix", "ids");
+
+							subscriptionSender.flushNotifications();
 						}
 					}
 				}
 			}
 		}
 		catch (Exception exception) {
+			_log.fatal(exception.getMessage());
 			if (_log.isDebugEnabled()) {
 				throw new RuntimeException(exception);
 			}
 		}
+	}
+
+
+	public boolean hasToSendNotification(int daysToExpire, Integer daysLastNotification, List<Integer> notificationDays){
+
+		if (Validator.isNull(notificationDays)) {
+			return false;
+		}
+
+		if (daysToExpire > notificationDays.get(0)){
+			return false;
+		}
+
+		if (notificationDays.contains(daysToExpire)) {
+			return true;
+		}
+
+		for (int i = 0; i < notificationDays.size() ;i++) {
+			if ((notificationDays.get(i) >= daysToExpire) && (daysToExpire > notificationDays.get(i+1))){
+				if ((Validator.isNull(daysLastNotification)) || (daysLastNotification > notificationDays.get(i))) {
+					return true;
+				}
+
+			}
+		}
+
+		if ((daysToExpire < 0) && ((Validator.isNull(daysLastNotification)) || (daysLastNotification >= 0))) {
+			return true;
+		}
+		return false;
 	}
 
 	private void _sendNotificationEvent(List<User> users, String body) {

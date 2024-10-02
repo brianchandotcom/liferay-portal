@@ -16,6 +16,7 @@ import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import {openFieldset} from '../../utils/openFieldset';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -1167,9 +1168,7 @@ baseTest(
 			name: nonLocalizableFieldName,
 		});
 
-		if (await textBox.isHidden()) {
-			await page.getByRole('link', {name: 'Fields'}).click();
-		}
+		await openFieldset(page, 'Fields');
 
 		await expect(textBox).toBeDisabled();
 	}

@@ -1133,7 +1133,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				schema.setName(dtoProperty.getName());
 				schema.setReadOnly(dtoProperty.getReadOnly());
 
-
 				if (type.equals("Boolean")) {
 					schema.setType("boolean");
 				}

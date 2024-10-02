@@ -5,8 +5,10 @@
 
 package com.liferay.scim.configuration.web.internal.scheduler;
 
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Date;
 
@@ -68,7 +70,17 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	private static final Date _NO_NOTIFICATION_YET = new Date(0);
 
 	private final ScimNotificationSchedulerJobConfiguration
+		_scimNotificationSchedulerJobConfiguration;
+
+	{
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+
 		_scimNotificationSchedulerJobConfiguration =
 			new ScimNotificationSchedulerJobConfiguration();
+	}
 
 }

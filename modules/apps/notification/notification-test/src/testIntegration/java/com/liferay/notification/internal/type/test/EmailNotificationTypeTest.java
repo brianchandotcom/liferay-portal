@@ -210,7 +210,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// Notification triggered by admin user
 
-		String body = _read("object_entry_notification_template_body.ftl");
+		String body = _read("notification_template_body_object_entry.ftl");
 
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
 			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
@@ -329,7 +329,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
 
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			_read("commerce_order_notification_template_body.ftl"),
+			_read("notification_template_body_commerce_order.ftl"),
 			DestinationNames.COMMERCE_PAYMENT_STATUS,
 			commerceOrderObjectDefinition);
 

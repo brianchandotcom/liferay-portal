@@ -22,6 +22,7 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.RoleSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -197,6 +198,10 @@ public abstract class BaseRoleResourceTestCase {
 		assertContains(role1, (List<Role>)page.getItems());
 		assertContains(role2, (List<Role>)page.getItems());
 		assertValid(page, testGetRolesPage_getExpectedActions());
+
+		roleResource.deleteRole(role1.getId());
+
+		roleResource.deleteRole(role2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -359,6 +364,34 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Role testPostRole_addRole(Role role) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteRoleByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role = testDeleteRoleByExternalReferenceCode_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.deleteRoleByExternalReferenceCodeHttpResponse(
+				role.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.getRoleByExternalReferenceCodeHttpResponse(
+				role.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.getRoleByExternalReferenceCodeHttpResponse(
+				role.getExternalReferenceCode()));
+	}
+
+	protected Role testDeleteRoleByExternalReferenceCode_addRole()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -771,6 +804,98 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteRole() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role = testDeleteRole_addRole();
+
+		assertHttpResponseStatusCode(
+			204, roleResource.deleteRoleHttpResponse(role.getId()));
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role.getId()));
+
+		assertHttpResponseStatusCode(404, roleResource.getRoleHttpResponse(0L));
+	}
+
+	protected Role testDeleteRole_addRole() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteRole() throws Exception {
+
+		// No namespace
+
+		Role role1 = testGraphQLDeleteRole_addRole();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteRole",
+						new HashMap<String, Object>() {
+							{
+								put("roleId", role1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteRole"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"role",
+					new HashMap<String, Object>() {
+						{
+							put("roleId", role1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Role role2 = testGraphQLDeleteRole_addRole();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteRole",
+							new HashMap<String, Object>() {
+								{
+									put("roleId", role2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteRole"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"role",
+						new HashMap<String, Object>() {
+							{
+								put("roleId", role2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Role testGraphQLDeleteRole_addRole() throws Exception {
+		return testGraphQLRole_addRole();
+	}
+
+	@Test
 	public void testGetRole() throws Exception {
 		Role postRole = testGetRole_addRole();
 
@@ -872,6 +997,53 @@ public abstract class BaseRoleResourceTestCase {
 
 	protected Role testGraphQLGetRole_addRole() throws Exception {
 		return testGraphQLRole_addRole();
+	}
+
+	@Test
+	public void testPatchRole() throws Exception {
+		Role postRole = testPatchRole_addRole();
+
+		Role randomPatchRole = randomPatchRole();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role patchRole = roleResource.patchRole(
+			postRole.getId(), randomPatchRole);
+
+		Role expectedPatchRole = postRole.clone();
+
+		BeanTestUtil.copyProperties(randomPatchRole, expectedPatchRole);
+
+		Role getRole = roleResource.getRole(patchRole.getId());
+
+		assertEquals(expectedPatchRole, getRole);
+		assertValid(getRole);
+	}
+
+	protected Role testPatchRole_addRole() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutRole() throws Exception {
+		Role postRole = testPutRole_addRole();
+
+		Role randomRole = randomRole();
+
+		Role putRole = roleResource.putRole(postRole.getId(), randomRole);
+
+		assertEquals(randomRole, putRole);
+		assertValid(putRole);
+
+		Role getRole = roleResource.getRole(putRole.getId());
+
+		assertEquals(randomRole, getRole);
+		assertValid(getRole);
+	}
+
+	protected Role testPutRole_addRole() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

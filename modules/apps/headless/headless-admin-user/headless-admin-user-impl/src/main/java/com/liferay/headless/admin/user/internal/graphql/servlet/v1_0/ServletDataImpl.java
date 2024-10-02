@@ -645,6 +645,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RoleResourceImpl.class, "postRoleBatch"));
 					put(
+						"mutation#deleteRoleByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class,
+							"deleteRoleByExternalReferenceCode"));
+					put(
 						"mutation#patchRoleByExternalReferenceCode",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
@@ -684,6 +689,26 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
 							"postSiteRoleByExternalReferenceCodeUserAccountAssociation"));
+					put(
+						"mutation#deleteRole",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "deleteRole"));
+					put(
+						"mutation#deleteRoleBatch",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "deleteRoleBatch"));
+					put(
+						"mutation#patchRole",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "patchRole"));
+					put(
+						"mutation#updateRole",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "putRole"));
+					put(
+						"mutation#updateRoleBatch",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "putRoleBatch"));
 					put(
 						"mutation#deleteRoleUserAccountAssociation",
 						new ObjectValuePair<>(

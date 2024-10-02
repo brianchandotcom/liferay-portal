@@ -1778,7 +1778,25 @@ public class Mutation {
 			roleResource -> roleResource.postRoleBatch(callbackURL, object));
 	}
 
-	@GraphQLField(description = "update the given Role")
+	@GraphQLField(
+		description = "Deletes the role by its external reference code."
+	)
+	public boolean deleteRoleByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteRoleByExternalReferenceCode(
+				externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the role by its external reference code."
+	)
 	public Role patchRoleByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("role") Role role)
@@ -1791,7 +1809,9 @@ public class Mutation {
 				externalReferenceCode, role));
 	}
 
-	@GraphQLField(description = "update the given Role")
+	@GraphQLField(
+		description = "Updates the role by its external reference code."
+	)
 	public Role updateRoleByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("role") Role role)
@@ -1926,6 +1946,64 @@ public class Mutation {
 						Long.valueOf(siteKey)));
 
 		return true;
+	}
+
+	@GraphQLField(description = "Deletes the role.")
+	public boolean deleteRole(@GraphQLName("roleId") Long roleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteRole(roleId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteRoleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteRoleBatch(callbackURL, object));
+	}
+
+	@GraphQLField(description = "Updates the role.")
+	public Role patchRole(
+			@GraphQLName("roleId") Long roleId, @GraphQLName("role") Role role)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.patchRole(roleId, role));
+	}
+
+	@GraphQLField(description = "Updates the role.")
+	public Role updateRole(
+			@GraphQLName("roleId") Long roleId, @GraphQLName("role") Role role)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.putRole(roleId, role));
+	}
+
+	@GraphQLField
+	public Response updateRoleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.putRoleBatch(callbackURL, object));
 	}
 
 	@GraphQLField(description = "Unassociates a role with a user account")

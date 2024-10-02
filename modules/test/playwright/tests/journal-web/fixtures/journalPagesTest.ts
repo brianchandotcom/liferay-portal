@@ -13,6 +13,7 @@ import {JournalEditStructureDefaultValuesPage} from '../pages/JournalEditStructu
 import {JournalEditStructurePage} from '../pages/JournalEditStructurePage';
 import {JournalEditTemplatePage} from '../pages/JournalEditTemplatePage';
 import {JournalPage} from '../pages/JournalPage';
+import {JournalStructuresPage} from '../pages/JournalStructuresPage';
 
 const journalPagesTest = test.extend<{
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
@@ -23,6 +24,7 @@ const journalPagesTest = test.extend<{
 	journalEditStructurePage: JournalEditStructurePage;
 	journalEditTemplatePage: JournalEditTemplatePage;
 	journalPage: JournalPage;
+	journalStructuresPage: JournalStructuresPage;
 }>({
 	displayPageTemplatesPage: async ({page}, use) => {
 		await use(new DisplayPageTemplatesPage(page));
@@ -47,6 +49,9 @@ const journalPagesTest = test.extend<{
 	},
 	journalPage: async ({page}, use) => {
 		await use(new JournalPage(page));
+	},
+	journalStructuresPage: async ({page}, use) => {
+		await use(new JournalStructuresPage(page));
 	},
 });
 

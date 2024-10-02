@@ -132,14 +132,10 @@ public class ScimNotificationSchedulerJobConfiguration
 			return;
 		}
 
-		List<OAuth2Application> oAuth2Applications = null;
-
-		try {
-			oAuth2Applications =
+			for (OAuth2Application oAuth2Application :
 				_oAuth2ApplicationLocalService.getOAuth2Applications(
-					company.getCompanyId());
+					company.getCompanyId())) {
 
-			for (OAuth2Application oAuth2Application : oAuth2Applications) {
 				if (!Objects.equals(
 						ScimClientUtil.generateScimClientId(
 							oAuth2Application.getName()),
@@ -175,19 +171,19 @@ public class ScimNotificationSchedulerJobConfiguration
 						(Date)expandoBridge.getAttribute(
 							"lastSuccessfulNotificationDate", false))) {
 
+				try {
 					_sendNotification(
 						company.getCompanyId(), accessTokenExpirationDate);
 
 					expandoBridge.setAttribute(
 						"lastSuccessfulNotificationDate", new Date(), false);
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.fatal(exception);
 
-			if (_log.isDebugEnabled()) {
-				throw new RuntimeException(exception);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception);
+					}
+				}
 			}
 		}
 	}

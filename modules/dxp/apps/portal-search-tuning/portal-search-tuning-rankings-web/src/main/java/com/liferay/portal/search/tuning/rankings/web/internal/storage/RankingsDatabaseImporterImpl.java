@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.storage;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,6 +96,7 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 
 		searchSearchRequest.setFetchSource(true);
 		searchSearchRequest.setQuery(queries.matchAll());
+		searchSearchRequest.setSelectedFieldNames(StringPool.BLANK);
 
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
 			searchSearchRequest);

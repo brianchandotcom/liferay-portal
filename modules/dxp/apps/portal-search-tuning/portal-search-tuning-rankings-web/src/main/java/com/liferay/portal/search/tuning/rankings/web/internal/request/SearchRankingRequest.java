@@ -69,6 +69,7 @@ public class SearchRankingRequest {
 
 		searchSearchRequest.setFetchSource(true);
 		searchSearchRequest.setIndexNames(_rankingIndexName.getIndexName());
+		searchSearchRequest.setSelectedFieldNames(StringPool.BLANK);
 		searchSearchRequest.setSize(_searchContainer.getDelta());
 		searchSearchRequest.setSorts(_getSorts());
 		searchSearchRequest.setStart(_searchContainer.getStart());

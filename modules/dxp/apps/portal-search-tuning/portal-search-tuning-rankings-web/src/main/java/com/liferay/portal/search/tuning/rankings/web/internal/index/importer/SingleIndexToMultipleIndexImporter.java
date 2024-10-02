@@ -105,6 +105,7 @@ public class SingleIndexToMultipleIndexImporter {
 		searchSearchRequest.setIndexNames(SINGLE_INDEX_NAME.getIndexName());
 		searchSearchRequest.setQuery(_queries.term("index", companyIndexName));
 		searchSearchRequest.setFetchSource(true);
+		searchSearchRequest.setSelectedFieldNames(StringPool.BLANK);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);

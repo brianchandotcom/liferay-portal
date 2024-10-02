@@ -53,6 +53,7 @@ deployDependencies {
 	rename(/j2objc-annotations-(.+)\.jar/, "j2objc-annotations" + renameSuffix)
 	rename(/jsr305-(.+)\.jar/, "jsr305" + renameSuffix)
 	rename(/Saxon-HE-(.+)\.jar/, "Saxon-HE" + renameSuffix)
+	rename(/org.freemarker-(.+)\.jar/, "org.freemarker" + renameSuffix)
 }
 
 liferay {

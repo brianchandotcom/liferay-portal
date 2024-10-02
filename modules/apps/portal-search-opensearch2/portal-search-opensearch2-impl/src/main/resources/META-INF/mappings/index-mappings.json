@@ -1591,6 +1591,10 @@
 		"groupRoleId": {
 			"type": "keyword"
 		},
+		"hasLoginDate": {
+			"store": true,
+			"type": "keyword"
+		},
 		"head": {
 			"type": "keyword"
 		},

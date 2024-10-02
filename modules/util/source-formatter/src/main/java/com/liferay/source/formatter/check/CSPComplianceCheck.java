@@ -37,25 +37,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			fileName, absolutePath, content, lowerCaseContent);
 	}
 
-	protected int getTagStartPosition(String content, int x) {
-		int startIndex = x;
-
-		for (startIndex = x; startIndex >= 0; startIndex--) {
-			char c = content.charAt(startIndex);
-
-			if ((c != CharPool.LESS_THAN) ||
-				(content.charAt(startIndex + 1) == CharPool.PERCENT) ||
-				isJavaSource(content, startIndex)) {
-
-				continue;
-			}
-
-			return startIndex;
-		}
-
-		return -1;
-	}
-
 	private String _checkIllegalAttributes(
 		String fileName, String absolutePath, String content,
 		String lowerCaseContent) {
@@ -81,7 +62,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					continue;
 				}
 
-				int tagStartPosition = getTagStartPosition(content, x);
+				int tagStartPosition = _getTagStartPosition(content, x);
 
 				if (tagStartPosition == -1) {
 					continue;
@@ -201,6 +182,25 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					"> tag, see LPD-18227"),
 				lineNumber);
 		}
+	}
+
+	private int _getTagStartPosition(String content, int x) {
+		int startIndex = x;
+
+		for (startIndex = x; startIndex >= 0; startIndex--) {
+			char c = content.charAt(startIndex);
+
+			if ((c != CharPool.LESS_THAN) ||
+				(content.charAt(startIndex + 1) == CharPool.PERCENT) ||
+				isJavaSource(content, startIndex)) {
+
+				continue;
+			}
+
+			return startIndex;
+		}
+
+		return -1;
 	}
 
 	private static final String _IGNORED_FTL_TAG_PREFIXES_KEY =

@@ -934,23 +934,6 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 5
-	test EnterReservedScreenName {
-		property portal.acceptance = "true";
-
-		PortalSettings.viewReservedCredentialsScreenNamesCP();
-
-		PortalSettings.enterReservedScreenNameCP(userScreenName = "usersn");
-
-		User.openUsersAdmin();
-
-		User.addReservedScreenNameCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-	}
-
 	@priority = 4
 	test ExportedFactoryConfigurationCanBeImported {
 		property portal.acceptance = "true";

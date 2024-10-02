@@ -1423,7 +1423,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		return StringUtil.merge(
 			Arrays.asList(
-				LanguageUtil.getLanguageId(LocaleUtil.US),
 				serviceBuilderObjectEntry.getUserName(),
 				_formatDate(serviceBuilderObjectEntry.getCreateDate()),
 				serviceBuilderObjectEntry.getExternalReferenceCode(),
@@ -1436,6 +1435,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				"test@liferay.com", "12345", "123456789",
 				"listTypeEntry1Value,listTypeEntry2Value",
 				"listTypeEntry1Value", "", "textObjectFieldValue",
+				LanguageUtil.getLanguageId(LocaleUtil.US),
 				_portal.getPortalURL(
 					ServiceContextThreadLocal.getServiceContext(
 					).getRequest())),

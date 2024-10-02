@@ -57,12 +57,12 @@ export interface IField {
 	visible?: boolean;
 }
 
-export interface IFDSField extends IOrderable {
+export interface IDataSetTableSection extends IOrderable {
 	contextPath: string;
 	externalReferenceCode: string;
+	fieldName: string;
 	label: string;
 	label_i18n: LocalizedValue<string>;
-	name: string;
 	renderer: string;
 	rendererLabel?: string;
 	sortable: boolean;
@@ -110,7 +110,7 @@ export interface IFilterTypeProps {
 }
 
 export interface IClientExtensionFilter extends IFilter {
-	fdsFilterClientExtensionERC: string;
+	clientExtensionEntryERC: string;
 }
 
 export interface IDateFilter extends IFilter {

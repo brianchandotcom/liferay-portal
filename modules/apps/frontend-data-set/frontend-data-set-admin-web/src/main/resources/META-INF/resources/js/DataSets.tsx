@@ -41,17 +41,22 @@ export interface IDataSet {
 			method: string;
 		};
 	};
-	additionalAPIURLParameters: string;
+	additionalAPIURLParameters?: string;
+	creationActionsOrder?: string;
 	defaultItemsPerPage: number;
-	defaultVisualizationMode: string;
-	description: string;
+	defaultVisualizationMode?: string;
+	description?: string;
 	externalReferenceCode: string;
+	filtersOrder?: string;
 	id: string;
+	itemActionsOrder?: string;
 	label: string;
 	listOfItemsPerPage: string;
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;
+	sortsOrder?: string;
+	tableSectionsOrder?: string;
 }
 
 const LabelInput = ({

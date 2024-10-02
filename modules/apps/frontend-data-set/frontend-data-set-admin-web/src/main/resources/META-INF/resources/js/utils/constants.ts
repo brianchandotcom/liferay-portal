@@ -5,17 +5,18 @@
 
 import {IBaseVisualizationMode} from './types';
 
+const API_URL_PREFIX = '/o/data-set-admin';
+
 const API_URL = {
-	ACTIONS: '/o/data-set-manager/actions',
-	CARDS_SECTIONS: '/o/data-set-manager/cards-sections',
-	CLIENT_EXTENSION_FILTERS: '/o/data-set-manager/client-extension-filters',
-	DATA_SETS: '/o/data-set-manager/data-sets',
-	DATE_FILTERS: '/o/data-set-manager/date-filters',
-	FDS_ENTRIES: '/o/data-set-manager/entries',
-	LIST_SECTIONS: '/o/data-set-manager/list-sections',
-	SELECTION_FILTERS: '/o/data-set-manager/selection-filters',
-	SORTS: '/o/data-set-manager/sorts',
-	TABLE_SECTIONS: '/o/data-set-manager/table-sections',
+	ACTIONS: `${API_URL_PREFIX}/actions`,
+	CARDS_SECTIONS: `${API_URL_PREFIX}/cards-sections`,
+	CLIENT_EXTENSION_FILTERS: `${API_URL_PREFIX}/client-extension-filters`,
+	DATA_SETS: `${API_URL_PREFIX}/data-sets`,
+	DATE_FILTERS: `${API_URL_PREFIX}/date-filters`,
+	LIST_SECTIONS: `${API_URL_PREFIX}/list-sections`,
+	SELECTION_FILTERS: `${API_URL_PREFIX}/selection-filters`,
+	SORTS: `${API_URL_PREFIX}/sorts`,
+	TABLE_SECTIONS: `${API_URL_PREFIX}/table-sections`,
 };
 
 const DEFAULT_FETCH_HEADERS = {
@@ -29,32 +30,27 @@ const FUZZY_OPTIONS = {
 	pre: '<strong>',
 };
 
+const OBJECT_RELATIONSHIP_PREFIX = 'dataSetTo';
+
 const OBJECT_RELATIONSHIP = {
-	DATA_SET_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
-	DATA_SET_CARDS_SECTION_ERC:
-		'r_fdsViewFDSCardsSectionRelationship_l_fdsViewERC',
-	DATA_SET_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
-	DATA_SET_CLIENT_EXTENSION_FILTER_ID:
-		'r_fdsViewFDSClientExtensionFilter_l_fdsViewId',
-	DATA_SET_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship',
-	DATA_SET_CREATION_ACTION_ID:
-		'r_fdsViewFDSCreationActionRelationship_l_fdsViewId',
-	DATA_SET_DATE_FILTER: 'fdsViewFDSDateFilterRelationship',
-	DATA_SET_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_l_fdsViewId',
-	DATA_SET_ITEM_ACTION: 'fdsViewFDSItemActionRelationship',
-	DATA_SET_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_l_fdsViewId',
-	DATA_SET_LIST_SECTION: 'fdsViewFDSListSectionRelationship',
-	DATA_SET_LIST_SECTION_ERC:
-		'r_fdsViewFDSListSectionRelationship_l_fdsViewERC',
-	DATA_SET_SELECTION_FILTER: 'fdsViewFDSDynamicFilterRelationship',
-	DATA_SET_SELECTION_FILTER_ID:
-		'r_fdsViewFDSDynamicFilterRelationship_l_fdsViewId',
-	DATA_SET_SORT: 'fdsViewFDSSortRelationship',
-	DATA_SET_SORT_ID: 'r_fdsViewFDSSortRelationship_l_fdsViewId',
-	DATA_SET_TABLE_SECTION: 'fdsViewFDSFieldRelationship',
-	DATA_SET_TABLE_SECTION_ID: 'r_fdsViewFDSFieldRelationship_l_fdsViewId',
-	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
-	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_l_fdsEntryId',
+	DATA_SET_CARDS_SECTIONS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetCardsSections`,
+	DATA_SET_CARDS_SECTIONS_ERC: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetCardsSections_l_dataSetERC`,
+	DATA_SET_CLIENT_EXTENSION_FILTERS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetClientExtensionFilters`,
+	DATA_SET_CLIENT_EXTENSION_FILTERS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetClientExtensionFilters_l_dataSetId`,
+	DATA_SET_CREATION_ACTIONS: `${OBJECT_RELATIONSHIP_PREFIX}CreationDataSetActions`,
+	DATA_SET_CREATION_ACTIONS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}CreationDataSetActions_l_dataSetId`,
+	DATA_SET_DATE_FILTERS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetDateFilters`,
+	DATA_SET_DATE_FILTERS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetDateFilters_l_dataSetId`,
+	DATA_SET_ITEM_ACTIONS: `${OBJECT_RELATIONSHIP_PREFIX}ItemDataSetActions`,
+	DATA_SET_ITEM_ACTIONS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}ItemDataSetActions_l_dataSetId`,
+	DATA_SET_LIST_SECTIONS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetListSections`,
+	DATA_SET_LIST_SECTIONS_ERC: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetListSections_l_dataSetERC`,
+	DATA_SET_SELECTION_FILTERS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetSelectionFilters`,
+	DATA_SET_SELECTION_FILTERS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetSelectionFilters_l_dataSetId`,
+	DATA_SET_SORTS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetSorts`,
+	DATA_SET_SORTS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetSorts_l_dataSetId`,
+	DATA_SET_TABLE_SECTIONS: `${OBJECT_RELATIONSHIP_PREFIX}DataSetTableSections`,
+	DATA_SET_TABLE_SECTIONS_ID: `r_${OBJECT_RELATIONSHIP_PREFIX}DataSetTableSections_l_dataSetId`,
 } as const;
 
 const FDS_DEFAULT_PROPS = {

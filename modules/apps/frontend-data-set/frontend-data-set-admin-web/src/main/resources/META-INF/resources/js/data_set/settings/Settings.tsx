@@ -37,9 +37,9 @@ const Settings = ({
 	onDataSetUpdate,
 	spritemap,
 }: IDataSetSectionProps) => {
-	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState(
-		NOT_CONFIGURED_VISUALIZATION_MODE.type
-	);
+	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState<
+		string | undefined
+	>(NOT_CONFIGURED_VISUALIZATION_MODE.type);
 	const [loading, setLoading] = useState(true);
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
@@ -47,9 +47,9 @@ const Settings = ({
 
 	const getActiveVisualizationModes = async () => {
 		const fields = [
-			OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTION,
-			OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTION,
-			OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION,
+			OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS,
+			OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS,
+			OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS,
 		].join(',');
 
 		const response = await fetch(
@@ -72,9 +72,9 @@ const Settings = ({
 		const responseJSON = await response.json();
 
 		const {
-			fdsViewFDSCardsSectionRelationship: cards,
-			fdsViewFDSFieldRelationship: table,
-			fdsViewFDSListSectionRelationship: list,
+			[OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS]: cards,
+			[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS]: list,
+			[OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS]: table,
 		} = responseJSON;
 
 		const activeViews: Array<TVisualizationMode> = [];

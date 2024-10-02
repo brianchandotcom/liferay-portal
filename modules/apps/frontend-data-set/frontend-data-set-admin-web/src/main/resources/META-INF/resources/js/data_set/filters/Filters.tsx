@@ -36,7 +36,6 @@ import SelectionFilterFormContent from './components/selection_filter/SelectionF
 
 import '../../../css/Filters.scss';
 import {IDataSet} from '../../DataSets';
-import {FDSViewType} from '../../FDSViews';
 import sortItems from '../../utils/sortItems';
 
 const FILTER_MODE = {
@@ -51,9 +50,9 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		availableFieldsFilter: (item: IField) => !!item,
 		displayType: Liferay.Language.get('client-extension-filter'),
 		fdsViewRelationship:
-			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER,
+			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTERS,
 		fdsViewRelationshipId:
-			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER_ID,
+			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTERS_ID,
 		label: Liferay.Language.get('client-extension'),
 		url: API_URL.CLIENT_EXTENSION_FILTERS,
 	},
@@ -63,8 +62,8 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 			item.format === EFieldFormat.DATE ||
 			item.format === EFieldFormat.DATE_TIME,
 		displayType: Liferay.Language.get('date-filter'),
-		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER,
-		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER_ID,
+		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTERS,
+		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTERS_ID,
 		label: Liferay.Language.get('date-range'),
 		url: API_URL.DATE_FILTERS,
 	},
@@ -74,8 +73,9 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 			(item.type === EFieldType.STRING && !item.format) ||
 			item.type === EFieldType.INTEGER,
 		displayType: Liferay.Language.get('dynamic-filter'),
-		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER,
-		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID,
+		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTERS,
+		fdsViewRelationshipId:
+			OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTERS_ID,
 		label: Liferay.Language.get('selection'),
 		url: API_URL.SELECTION_FILTERS,
 	},
@@ -84,11 +84,11 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 type FilterCollection = Array<IFilter>;
 
 interface IPropsFilterFormComponent {
-	dataSet: IDataSet | FDSViewType;
-	fdsFilterClientExtensions?: IClientExtensionRenderer[];
+	dataSet: IDataSet;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter | ISelectionFilter;
+	filterClientExtensionRenderers?: IClientExtensionRenderer[];
 	filterType?: EFilterType;
 	namespace: string;
 	onCancel: Function;
@@ -99,10 +99,10 @@ interface IPropsFilterFormComponent {
 
 function FilterFormComponent({
 	dataSet,
-	fdsFilterClientExtensions = [],
 	fieldNames,
 	fields,
 	filter,
+	filterClientExtensionRenderers = [],
 	filterType,
 	namespace,
 	onCancel,
@@ -160,10 +160,10 @@ function FilterFormComponent({
 			</ClayLayout.SheetHeader>
 
 			<Component.Body
-				fdsFilterClientExtensions={fdsFilterClientExtensions}
 				fieldNames={fieldNames}
 				fields={fields}
 				filter={filter}
+				filterClientExtensionRenderers={filterClientExtensionRenderers}
 				namespace={namespace}
 				onCancel={onCancel}
 				onSave={(formData: any) => saveFDSFilter(formData)}
@@ -177,8 +177,8 @@ function FilterFormComponent({
 
 function Filters({
 	dataSet,
-	fdsFilterClientExtensions,
 	fieldTreeItems: fields,
+	filterClientExtensionRenderers,
 	namespace,
 	resolvedRESTSchemas,
 	restApplications,
@@ -356,7 +356,7 @@ function Filters({
 		}
 		else if (
 			filterType === EFilterType.CLIENT_EXTENSION &&
-			!fdsFilterClientExtensions.length
+			!filterClientExtensionRenderers.length
 		) {
 			noFilterClientExtensionsAvailableModal();
 		}
@@ -369,7 +369,7 @@ function Filters({
 	const onEdit = ({item}: {item: IFilter}) => {
 		if (
 			item.filterType === EFilterType.CLIENT_EXTENSION &&
-			!fdsFilterClientExtensions.length
+			!filterClientExtensionRenderers.length
 		) {
 			noFilterClientExtensionsAvailableModal();
 		}
@@ -476,11 +476,11 @@ function Filters({
 					{activeFilterType && (
 						<FilterFormComponent
 							dataSet={dataSet}
-							fdsFilterClientExtensions={
-								fdsFilterClientExtensions
-							}
 							fieldNames={fieldNames}
 							fields={availableFields}
+							filterClientExtensionRenderers={
+								filterClientExtensionRenderers
+							}
 							filterType={activeFilterType}
 							namespace={namespace}
 							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
@@ -507,12 +507,12 @@ function Filters({
 					{activeFilter && (
 						<FilterFormComponent
 							dataSet={dataSet}
-							fdsFilterClientExtensions={
-								fdsFilterClientExtensions
-							}
 							fieldNames={fieldNames}
 							fields={fields}
 							filter={activeFilter}
+							filterClientExtensionRenderers={
+								filterClientExtensionRenderers
+							}
 							filterType={activeFilter.filterType}
 							namespace={namespace}
 							onCancel={() => setActiveMode(FILTER_MODE.LIST)}

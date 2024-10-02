@@ -5,6 +5,4 @@
 
 export {default as DataSet} from './data_set/DataSet';
 export {default as DataSets} from './DataSets';
-export {default as FDSEntries} from './FDSEntries';
-export {default as FDSViews} from './FDSViews';
 export {default as FDSAdminItemSelector} from '../item/selector/FDSAdminItemSelector';

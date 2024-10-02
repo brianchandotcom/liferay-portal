@@ -22,20 +22,20 @@ function Header() {
 }
 
 interface IBodyProps {
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
+	filterClientExtensionRenderers: IClientExtensionRenderer[];
 	namespace: string;
 	onCancel: Function;
 	onSave: Function;
 }
 
 function Body({
-	fdsFilterClientExtensions,
 	fieldNames: usedFieldNames,
 	fields,
 	filter,
+	filterClientExtensionRenderers,
 	namespace,
 	onCancel,
 	onSave,
@@ -55,23 +55,21 @@ function Body({
 		IClientExtensionRenderer | undefined
 	>(
 		filter
-			? fdsFilterClientExtensions.find(
+			? filterClientExtensionRenderers.find(
 					(clientExtensionRenderer: IClientExtensionRenderer) =>
 						clientExtensionRenderer.externalReferenceCode ===
 						(filter as IClientExtensionFilter)
-							.fdsFilterClientExtensionERC
+							.clientExtensionEntryERC
 				)
 			: undefined
 	);
-	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
-		fdsFilterLabelTranslations
+		filter?.label_i18n ?? {}
 	);
-
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		filter ? {label: filter.fieldName, name: filter.fieldName} : undefined
 	);
-	const fdsFilterClientExtensionFormElementId = `${namespace}fdsFilterClientExtensionERC`;
+	const filterClientExtensionFormElementId = `${namespace}clientExtensionEntryERC`;
 
 	const isi18nFilterLabelsValid = (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
@@ -129,7 +127,7 @@ function Body({
 
 		if (success) {
 			const formData = {
-				fdsFilterClientExtensionERC:
+				clientExtensionEntryERC:
 					selectedClientExtension?.externalReferenceCode,
 				fieldName: selectedField?.name,
 				label_i18n: i18nFilterLabels,
@@ -180,9 +178,7 @@ function Body({
 						})}
 					>
 						<div className={classNames('form-group-item')}>
-							<label
-								htmlFor={fdsFilterClientExtensionFormElementId}
-							>
+							<label htmlFor={filterClientExtensionFormElementId}>
 								{Liferay.Language.get('client-extension')}
 
 								<RequiredMark />
@@ -199,11 +195,9 @@ function Body({
 										aria-labelledby={`${namespace}cellRenderersLabel`}
 										className="form-control form-control-select form-control-select-secondary"
 										displayType="secondary"
-										id={
-											fdsFilterClientExtensionFormElementId
-										}
+										id={filterClientExtensionFormElementId}
 										name={
-											fdsFilterClientExtensionFormElementId
+											filterClientExtensionFormElementId
 										}
 									>
 										{selectedClientExtension
@@ -213,10 +207,10 @@ function Body({
 								}
 							>
 								<ClayDropDown.ItemList
-									items={fdsFilterClientExtensions}
+									items={filterClientExtensionRenderers}
 									role="listbox"
 								>
-									{fdsFilterClientExtensions.map(
+									{filterClientExtensionRenderers.map(
 										(
 											filterClientExtension: IClientExtensionRenderer
 										) => (

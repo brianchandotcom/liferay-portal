@@ -158,17 +158,17 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			String externalReferenceCode = jsonObject.getString(
 				"externalReferenceCode");
 
-			ObjectEntry fdsViewObjectEntry = null;
+			ObjectEntry dataSetObjectEntry = null;
 
-			ObjectDefinition fdsViewObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					fragmentEntryLink.getCompanyId(), "FDSView");
+			ObjectDefinition dataSetObjectDefinition =
+				_dataSetObjectDefinitionLocalService.fetchObjectDefinition(
+					fragmentEntryLink.getCompanyId(), "DataSet");
 
 			if (Validator.isNotNull(externalReferenceCode)) {
 				try {
-					fdsViewObjectEntry = _getObjectEntry(
+					dataSetObjectEntry = _getObjectEntry(
 						fragmentEntryLink.getCompanyId(), externalReferenceCode,
-						fdsViewObjectDefinition);
+						dataSetObjectDefinition);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -181,7 +181,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				}
 			}
 
-			if ((fdsViewObjectEntry == null) &&
+			if ((dataSetObjectEntry == null) &&
 				fragmentRendererContext.isEditMode()) {
 
 				printWriter.write("<div class=\"portlet-msg-info\">");
@@ -215,13 +215,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				printWriter.write("</div></li></ul></div>");
 			}
 
-			if (fdsViewObjectEntry == null) {
+			if (dataSetObjectEntry == null) {
 				return;
 			}
 
 			printWriter.write(
 				_buildFragmentHTML(
-					fdsViewObjectDefinition, fdsViewObjectEntry,
+					dataSetObjectDefinition, dataSetObjectEntry,
 					fragmentRendererContext, httpServletRequest));
 		}
 		catch (Exception exception) {
@@ -235,8 +235,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _buildFragmentHTML(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry,
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry,
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -256,61 +256,46 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		Map<String, Object> fdsViewObjectEntryProperties =
-			fdsViewObjectEntry.getProperties();
+		Map<String, Object> dataSetObjectEntryProperties =
+			dataSetObjectEntry.getProperties();
 
-		String objectEntryERC = String.valueOf(
-			fdsViewObjectEntryProperties.get(
-				"r_fdsEntryFDSViewRelationship_l_fdsEntryERC"));
-
-		String objectDefinitionName = "FDSEntry";
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
-			objectEntryERC = fdsViewObjectEntry.getExternalReferenceCode();
-
-			objectDefinitionName = "FDSView";
-		}
-
-		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
-			fdsViewObjectDefinition, fdsViewObjectEntry);
+		Set<ObjectEntry> dataSetTableSectionObjectEntries =
+			_getDataSetTableSectionObjectEntries(
+				dataSetObjectDefinition, dataSetObjectEntry);
 
 		_reactRenderer.renderReact(
 			componentDescriptor,
 			HashMapBuilder.<String, Object>put(
 				"additionalAPIURLParameters",
-				fdsViewObjectEntry.getPropertyValue(
+				dataSetObjectEntry.getPropertyValue(
 					"additionalAPIURLParameters")
 			).put(
 				"apiURL",
 				_getAPIURL(
-					_getObjectEntry(
-						fragmentEntryLink.getCompanyId(), objectEntryERC,
-						_objectDefinitionLocalService.fetchObjectDefinition(
-							fragmentEntryLink.getCompanyId(),
-							objectDefinitionName)),
-					fdsFieldObjectEntries, httpServletRequest)
+					dataSetObjectEntry, dataSetTableSectionObjectEntries,
+					httpServletRequest)
 			).put(
 				"creationMenu",
 				_getCreationMenuJSONObject(
-					fdsViewObjectDefinition, fdsViewObjectEntry)
+					dataSetObjectDefinition, dataSetObjectEntry)
 			).put(
 				"filters",
 				_getFiltersJSONArray(
-					fdsViewObjectDefinition, fdsViewObjectEntry,
+					dataSetObjectDefinition, dataSetObjectEntry,
 					httpServletRequest)
 			).put(
 				"id", "FDS_" + fragmentRendererContext.getFragmentElementId()
 			).put(
 				"itemsActions",
 				_getItemsActionsJSONArray(
-					fdsViewObjectDefinition, fdsViewObjectEntry)
+					dataSetObjectDefinition, dataSetObjectEntry)
 			).put(
 				"namespace", fragmentRendererContext.getFragmentElementId()
 			).put(
-				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
+				"pagination", _getPaginationJSONObject(dataSetObjectEntry)
 			).put(
 				"sorts",
-				_getSortsJSONArray(fdsViewObjectDefinition, fdsViewObjectEntry)
+				_getSortsJSONArray(dataSetObjectDefinition, dataSetObjectEntry)
 			).put(
 				"style", "fluid"
 			).put(
@@ -318,15 +303,15 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				_getFDSViewsJSONArray(
 					fragmentEntryLink.getCompanyId(),
 					_getRelatedObjectEntries(
-						fdsViewObjectDefinition, fdsViewObjectEntry,
-						"fdsViewFDSCardsSectionRelationship"),
+						dataSetObjectDefinition, dataSetObjectEntry,
+						"dataSetToDataSetCardsSections"),
 					String.valueOf(
-						fdsViewObjectEntryProperties.get(
+						dataSetObjectEntryProperties.get(
 							"defaultVisualizationMode")),
-					fdsFieldObjectEntries,
+					dataSetTableSectionObjectEntries,
 					_getRelatedObjectEntries(
-						fdsViewObjectDefinition, fdsViewObjectEntry,
-						"fdsViewFDSListSectionRelationship"),
+						dataSetObjectDefinition, dataSetObjectEntry,
+						"dataSetToDataSetListSections"),
 					httpServletRequest)
 			).build(),
 			httpServletRequest, writer);
@@ -339,8 +324,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getAPIURL(
-			ObjectEntry fdsEntryObjectEntry,
-			Set<ObjectEntry> fdsFieldObjectEntries,
+			ObjectEntry dataSetObjectEntry,
+			Set<ObjectEntry> dataSetTableSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -348,7 +333,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		sb.append("/o");
 
-		Map<String, Object> properties = fdsEntryObjectEntry.getProperties();
+		Map<String, Object> properties = dataSetObjectEntry.getProperties();
 
 		String restApplication = String.valueOf(
 			properties.get("restApplication"));
@@ -360,24 +345,24 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		return _resolveParameters(
 			_interpolateURL(
-				_getNestedFields(sb.toString(), fdsFieldObjectEntries),
+				_getNestedFields(
+					sb.toString(), dataSetTableSectionObjectEntries),
 				httpServletRequest),
 			restApplication, String.valueOf(properties.get("restSchema")),
 			httpServletRequest);
 	}
 
 	private JSONObject _getCreationMenuJSONObject(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry)
 		throws Exception {
 
 		return JSONUtil.put(
 			"primaryItems",
 			JSONUtil.toJSONArray(
 				_getSortedRelatedObjectEntries(
-					fdsViewObjectDefinition, fdsViewObjectEntry,
-					"fdsCreationActionsOrder",
-					"fdsViewFDSCreationActionRelationship"),
+					dataSetObjectDefinition, dataSetObjectEntry,
+					"creationActionsOrder", "dataSetToCreationDataSetActions"),
 				(ObjectEntry objectEntry) -> {
 					Map<String, Object> properties =
 						objectEntry.getProperties();
@@ -406,6 +391,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				}));
 	}
 
+	private Set<ObjectEntry> _getDataSetTableSectionObjectEntries(
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry)
+		throws Exception {
+
+		return _getSortedRelatedObjectEntries(
+			dataSetObjectDefinition, dataSetObjectEntry, "tableSectionsOrder",
+			"dataSetToDataSetTableSections");
+	}
+
 	private JSONObject _getDateJSONObject(Object isoDate) {
 		if (isoDate == null) {
 			return null;
@@ -425,67 +420,57 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSCardsViewJSONObject(
-			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
-			String fdsDefaultVisualizationMode,
+			Collection<ObjectEntry> dataSetCardsSectionObjectEntries,
+			String defaultVisualizationMode,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
 			"contentRenderer", "cards"
 		).put(
-			"default", fdsDefaultVisualizationMode.equals("cards")
+			"default", defaultVisualizationMode.equals("cards")
 		).put(
 			"label", _language.get(httpServletRequest, "cards")
 		).put(
 			"name", "cards"
 		).put(
-			"schema", _getViewSchemaJSONObject(fdsCardsSectionObjectEntries)
+			"schema", _getViewSchemaJSONObject(dataSetCardsSectionObjectEntries)
 		).put(
 			"thumbnail", "cards2"
 		);
 	}
 
-	private Set<ObjectEntry> _getFDSFieldObjectEntries(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
-		throws Exception {
-
-		return _getSortedRelatedObjectEntries(
-			fdsViewObjectDefinition, fdsViewObjectEntry, "fdsFieldsOrder",
-			"fdsViewFDSFieldRelationship");
-	}
-
 	private JSONObject _getFDSListViewJSONObject(
-			String fdsDefaultVisualizationMode,
-			Collection<ObjectEntry> fdsListSectionObjectEntries,
+			String defaultVisualizationMode,
+			Collection<ObjectEntry> dataSetListSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
 			"contentRenderer", "list"
 		).put(
-			"default", fdsDefaultVisualizationMode.equals("list")
+			"default", defaultVisualizationMode.equals("list")
 		).put(
 			"label", _language.get(httpServletRequest, "list")
 		).put(
 			"name", "list"
 		).put(
-			"schema", _getViewSchemaJSONObject(fdsListSectionObjectEntries)
+			"schema", _getViewSchemaJSONObject(dataSetListSectionObjectEntries)
 		).put(
 			"thumbnail", "list"
 		);
 	}
 
 	private JSONObject _getFDSTableViewJSONObject(
-			long companyId, String fdsDefaultVisualizationMode,
-			Set<ObjectEntry> fdsFieldObjectEntries,
+			long companyId, String defaultVisualizationMode,
+			Set<ObjectEntry> dataSetTableSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
 			"contentRenderer", "table"
 		).put(
-			"default", fdsDefaultVisualizationMode.equals("table")
+			"default", defaultVisualizationMode.equals("table")
 		).put(
 			"label", _language.get(httpServletRequest, "table")
 		).put(
@@ -493,7 +478,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		).put(
 			"schema",
 			JSONUtil.put(
-				"fields", _getFieldsJSONArray(companyId, fdsFieldObjectEntries))
+				"fields",
+				_getFieldsJSONArray(
+					companyId, dataSetTableSectionObjectEntries))
 		).put(
 			"thumbnail", "table"
 		);
@@ -501,45 +488,45 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	private JSONArray _getFDSViewsJSONArray(
 			long companyId,
-			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
-			String fdsDefaultVisualizationMode,
-			Set<ObjectEntry> fdsFieldObjectEntries,
-			Collection<ObjectEntry> fdsListSectionObjectEntries,
+			Collection<ObjectEntry> dataSetCardsSectionObjectEntries,
+			String defaultVisualizationMode,
+			Set<ObjectEntry> dataSetTableSectionObjectEntries,
+			Collection<ObjectEntry> dataSetListSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		JSONArray viewsJSONArray = _jsonFactory.createJSONArray();
 
-		if (!fdsCardsSectionObjectEntries.isEmpty()) {
+		if (!dataSetCardsSectionObjectEntries.isEmpty()) {
 			viewsJSONArray.put(
 				_getFDSCardsViewJSONObject(
-					fdsCardsSectionObjectEntries, fdsDefaultVisualizationMode,
+					dataSetCardsSectionObjectEntries, defaultVisualizationMode,
 					httpServletRequest));
 		}
 
-		if (!fdsListSectionObjectEntries.isEmpty()) {
+		if (!dataSetListSectionObjectEntries.isEmpty()) {
 			viewsJSONArray.put(
 				_getFDSListViewJSONObject(
-					fdsDefaultVisualizationMode, fdsListSectionObjectEntries,
+					defaultVisualizationMode, dataSetListSectionObjectEntries,
 					httpServletRequest));
 		}
 
-		if (!fdsFieldObjectEntries.isEmpty()) {
+		if (!dataSetTableSectionObjectEntries.isEmpty()) {
 			viewsJSONArray.put(
 				_getFDSTableViewJSONObject(
-					companyId, fdsDefaultVisualizationMode,
-					fdsFieldObjectEntries, httpServletRequest));
+					companyId, defaultVisualizationMode,
+					dataSetTableSectionObjectEntries, httpServletRequest));
 		}
 
 		return viewsJSONArray;
 	}
 
 	private JSONArray _getFieldsJSONArray(
-			long companyId, Set<ObjectEntry> fdsFieldObjectEntries)
+			long companyId, Set<ObjectEntry> dataSetTableSectionObjectEntries)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
-			fdsFieldObjectEntries,
+			dataSetTableSectionObjectEntries,
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -547,9 +534,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					"contentRenderer",
 					String.valueOf(properties.get("renderer"))
 				).put(
-					"fieldName", String.valueOf(properties.get("name"))
+					"fieldName", String.valueOf(properties.get("fieldName"))
 				).put(
-					"label", _getValue("label", "name", properties)
+					"label", _getLabelValue("label", "fieldName", properties)
 				).put(
 					"sortable", (boolean)properties.get("sortable")
 				);
@@ -575,17 +562,17 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONArray _getFiltersJSONArray(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry,
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
-				fdsViewObjectDefinition, fdsViewObjectEntry, "fdsFiltersOrder",
-				"fdsViewFDSClientExtensionFilter",
-				"fdsViewFDSDateFilterRelationship",
-				"fdsViewFDSDynamicFilterRelationship"),
+				dataSetObjectDefinition, dataSetObjectEntry, "filtersOrder",
+				"dataSetToDataSetClientExtensionFilters",
+				"dataSetToDataSetDateFilters",
+				"dataSetToDataSetSelectionFilters"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -617,7 +604,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"id", fieldName
 					).put(
-						"label", _getValue("label", "fieldName", properties)
+						"label",
+						_getLabelValue("label", "fieldName", properties)
 					).put(
 						"preloadedData",
 						() -> {
@@ -666,7 +654,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 							return finalFieldName.substring(0, index);
 						}
 					).put(
-						"label", _getValue("label", "fieldName", properties)
+						"label",
+						_getLabelValue("label", "fieldName", properties)
 					).put(
 						"multiple", properties.get("multiple")
 					).put(
@@ -754,10 +743,10 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					);
 				}
 
-				String fdsFilterClientExtensionERC = MapUtil.getString(
-					properties, "fdsFilterClientExtensionERC");
+				String clientExtensionEntryERC = MapUtil.getString(
+					properties, "clientExtensionEntryERC");
 
-				if (Validator.isNotNull(fdsFilterClientExtensionERC)) {
+				if (Validator.isNotNull(clientExtensionEntryERC)) {
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
@@ -765,14 +754,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					FDSFilterCET fdsFilterCET =
 						(FDSFilterCET)_cetManager.getCET(
 							themeDisplay.getCompanyId(),
-							fdsFilterClientExtensionERC);
+							clientExtensionEntryERC);
 
 					if (fdsFilterCET == null) {
 						_log.error(
 							StringBundler.concat(
 								"No frontend data set filter client extension ",
 								"exists with the external reference code ",
-								fdsFilterClientExtensionERC));
+								clientExtensionEntryERC));
 
 						return null;
 					}
@@ -784,7 +773,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"id", fieldName
 					).put(
-						"label", _getValue("label", "fieldName", properties)
+						"label",
+						_getLabelValue("label", "fieldName", properties)
 					).put(
 						"type", "clientExtension"
 					);
@@ -795,14 +785,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONArray _getItemsActionsJSONArray(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
-				fdsViewObjectDefinition, fdsViewObjectEntry,
-				"fdsItemActionsOrder", "fdsViewFDSItemActionRelationship"),
+				dataSetObjectDefinition, dataSetObjectEntry, "itemActionsOrder",
+				"dataSetToItemDataSetActions"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -843,18 +833,34 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			});
 	}
 
+	private String _getLabelValue(
+		String defaultKey, String fallbackKey,
+		Map<String, Object> dataSetTableSectionProperties) {
+
+		String value = String.valueOf(
+			dataSetTableSectionProperties.get(defaultKey));
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		return String.valueOf(dataSetTableSectionProperties.get(fallbackKey));
+	}
+
 	private String _getNestedFields(
-			String apiURL, Set<ObjectEntry> fdsFieldObjectEntries)
+			String apiURL, Set<ObjectEntry> dataSetTableSectionObjectEntries)
 		throws Exception {
 
-		if (fdsFieldObjectEntries == null) {
+		if (dataSetTableSectionObjectEntries == null) {
 			return apiURL;
 		}
 
 		String nestedFields = StringPool.BLANK;
 		int nestedFieldsDepth = 1;
 
-		for (ObjectEntry fdsFieldObjectEntry : fdsFieldObjectEntries) {
+		for (ObjectEntry fdsFieldObjectEntry :
+				dataSetTableSectionObjectEntries) {
+
 			Map<String, Object> properties =
 				fdsFieldObjectEntry.getProperties();
 
@@ -902,7 +908,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	private ObjectEntry _getObjectEntry(
 			long companyId, String externalReferenceCode,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition dataSetObjectDefinition)
 		throws Exception {
 
 		DTOConverterContext dtoConverterContext =
@@ -912,18 +918,18 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					objectDefinition.getStorageType()));
+				_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+					dataSetObjectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
-			objectDefinition, null);
+			dataSetObjectDefinition, null);
 	}
 
-	private JSONObject _getPaginationJSONObject(ObjectEntry fdsViewObjectEntry)
+	private JSONObject _getPaginationJSONObject(ObjectEntry objectEntry)
 		throws Exception {
 
-		Map<String, Object> properties = fdsViewObjectEntry.getProperties();
+		Map<String, Object> properties = objectEntry.getProperties();
 
 		return JSONUtil.put(
 			"deltas",
@@ -940,8 +946,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Collection<ObjectEntry> _getRelatedObjectEntries(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry, String relationshipName)
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry, String relationshipName)
 		throws Exception {
 
 		DTOConverterContext dtoConverterContext =
@@ -951,13 +957,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					fdsViewObjectDefinition.getStorageType()));
+				_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+					dataSetObjectDefinition.getStorageType()));
 
 		Page<ObjectEntry> relatedObjectEntriesPage =
 			defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
-				dtoConverterContext, fdsViewObjectDefinition,
-				fdsViewObjectEntry.getId(), relationshipName,
+				dtoConverterContext, dataSetObjectDefinition,
+				dataSetObjectEntry.getId(), relationshipName,
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		return relatedObjectEntriesPage.getItems();
@@ -997,9 +1003,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Set<ObjectEntry> _getSortedRelatedObjectEntries(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry,
-			String objectEntryComparatorIdsPropertyKey,
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry,
+			String dataSetObjectEntryComparatorIdsPropertyKey,
 			String... relationshipNames)
 		throws Exception {
 
@@ -1008,15 +1014,15 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				ListUtil.toList(
 					ListUtil.fromString(
 						MapUtil.getString(
-							fdsViewObjectEntry.getProperties(),
-							objectEntryComparatorIdsPropertyKey),
+							dataSetObjectEntry.getProperties(),
+							dataSetObjectEntryComparatorIdsPropertyKey),
 						StringPool.COMMA),
 					Long::parseLong)));
 
 		for (String relationshipName : relationshipNames) {
 			objectEntries.addAll(
 				_getRelatedObjectEntries(
-					fdsViewObjectDefinition, fdsViewObjectEntry,
+					dataSetObjectDefinition, dataSetObjectEntry,
 					relationshipName));
 		}
 
@@ -1024,14 +1030,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONArray _getSortsJSONArray(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
-				fdsViewObjectDefinition, fdsViewObjectEntry, "fdsSortsOrder",
-				"fdsViewFDSSortRelationship"),
+				dataSetObjectDefinition, dataSetObjectEntry, "sortsOrder",
+				"dataSetToDataSetSorts"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -1059,27 +1065,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			});
 	}
 
-	private String _getValue(
-		String defaultKey, String fallbackKey,
-		Map<String, Object> fdsFieldProperties) {
-
-		String value = String.valueOf(fdsFieldProperties.get(defaultKey));
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		return String.valueOf(fdsFieldProperties.get(fallbackKey));
-	}
-
 	private JSONObject _getViewSchemaJSONObject(
 			Collection<ObjectEntry> fdsViewObjectEntries)
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		for (ObjectEntry objectEntry : fdsViewObjectEntries) {
-			Map<String, Object> properties = objectEntry.getProperties();
+		for (ObjectEntry dataSetObjectEntry : fdsViewObjectEntries) {
+			Map<String, Object> properties = dataSetObjectEntry.getProperties();
 
 			jsonObject.put(
 				String.valueOf(properties.get("name")),
@@ -1140,6 +1133,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	private CETManager _cetManager;
 
 	@Reference
+	private ObjectDefinitionLocalService _dataSetObjectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryManagerRegistry _dataSetObjectEntryManagerRegistry;
+
+	@Reference
 	private FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
 
 	@Reference
@@ -1158,12 +1157,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
-
-	@Reference
 	private ReactRenderer _reactRenderer;
 
 	private static class ObjectEntryComparator
@@ -1174,17 +1167,19 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		}
 
 		@Override
-		public int compare(ObjectEntry objectEntry1, ObjectEntry objectEntry2) {
-			long id1 = objectEntry1.getId();
-			long id2 = objectEntry2.getId();
+		public int compare(
+			ObjectEntry dataSetObjectEntry1, ObjectEntry dataSetObjectEntry2) {
+
+			long id1 = dataSetObjectEntry1.getId();
+			long id2 = dataSetObjectEntry2.getId();
 
 			int index1 = _ids.indexOf(id1);
 			int index2 = _ids.indexOf(id2);
 
 			if ((index1 == -1) && (index2 == -1)) {
-				Date date = objectEntry1.getDateCreated();
+				Date date = dataSetObjectEntry1.getDateCreated();
 
-				return date.compareTo(objectEntry2.getDateCreated());
+				return date.compareTo(dataSetObjectEntry2.getDateCreated());
 			}
 
 			if (index1 == -1) {

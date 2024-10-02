@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class InstanceSettingsPage {
@@ -51,5 +52,20 @@ export class InstanceSettingsPage {
 	async goToSSO() {
 		await this.goto();
 		await this.page.getByRole('link', {name: 'SSO'}).click();
+	}
+
+	async saveAndWaitForAlert(
+		text,
+		{
+			autoClose,
+			type,
+		}: {
+			autoClose?: boolean;
+			type?: 'success' | 'info' | 'warning' | 'danger';
+		}
+	) {
+		await this.saveButton.click();
+
+		await waitForAlert(this.page, text, {autoClose, type});
 	}
 }

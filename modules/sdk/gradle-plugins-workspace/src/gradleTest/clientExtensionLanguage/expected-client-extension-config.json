@@ -1,5 +1,5 @@
 {
-	"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~liferay-language-batch-oauth-application-headless-server": {
+	"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~language-batch-oauth-application-headless-server": {
 		".serviceAddress": "localhost:8080",
 		".serviceScheme": "http",
 		":configurator:policy": "force",
@@ -8,7 +8,7 @@
 		"description": "",
 		"dxp.lxc.liferay.com.virtualInstanceId": "default",
 		"homePageURL": "$[conf:.serviceScheme]://$[conf:.serviceAddress]",
-		"name": "Liferay Language OAuth Application Headless Server",
+		"name": "Language Batch OAuth Application Headless Server",
 		"projectId": "language",
 		"projectName": "language",
 		"properties": [

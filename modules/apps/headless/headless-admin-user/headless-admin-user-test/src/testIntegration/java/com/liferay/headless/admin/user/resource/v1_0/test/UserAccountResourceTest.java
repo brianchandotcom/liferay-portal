@@ -479,20 +479,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_userLocalService.updateLastLogin(userAccount3.getId(), null);
 
 		_testGetUserAccountsPage(
-			String.format(
-				"%s and %s", idFilterString,
-				"lastLoginDate gt 1900-01-01T01:01:28Z"),
+			String.format("%s and %s", idFilterString, "activated ne false"),
 			userAccount2, userAccount3);
 		_testGetUserAccountsPage(
-			String.format("%s and %s", idFilterString, "lastLoginDate ne null"),
-			userAccount2, userAccount3);
-		_testGetUserAccountsPage(
-			String.format(
-				"%s and %s", idFilterString,
-				"not (lastLoginDate gt 1900-01-01T01:01:28Z)"),
-			userAccount1);
-		_testGetUserAccountsPage(
-			String.format("%s and %s", idFilterString, "lastLoginDate eq null"),
+			String.format("%s and %s", idFilterString, "activated eq false"),
 			userAccount1);
 
 		_testGetUserAccountsPage(
@@ -1092,7 +1082,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
-			"alternateName", "emailAddress", "lastLoginDate", "name", "status"
+			"activated", "alternateName", "emailAddress", "name", "status"
 		};
 	}
 

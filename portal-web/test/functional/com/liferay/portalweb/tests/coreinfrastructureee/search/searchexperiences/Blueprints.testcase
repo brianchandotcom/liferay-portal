@@ -2585,7 +2585,6 @@ definition {
 		var categoryERC = JSONCategory.getCategoryFieldValueById(
 			categoryId = ${categoryId},
 			fieldName = "externalReferenceCode");
-
 		var webContentserviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
 
 		JSONWebcontent.addWebContent(
@@ -5501,7 +5500,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonText = "${categoryERC}",
+			key_jsonText = ${categoryERC},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
 
 		PortletEntry.save();

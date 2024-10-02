@@ -177,6 +177,11 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 						BooleanClauseFactoryUtil.create(
 							new BooleanQueryImpl() {
 								{
+									if (filter != null) {
+										booleanFilter.add(
+											filter, BooleanClauseOccur.MUST);
+									}
+
 									setPreBooleanFilter(booleanFilter);
 								}
 							},

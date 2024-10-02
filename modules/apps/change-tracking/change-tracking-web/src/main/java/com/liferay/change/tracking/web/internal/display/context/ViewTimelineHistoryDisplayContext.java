@@ -6,6 +6,9 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.CTCollectionStatusSelectionFDSFilter;
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.ChangeTypeSelectionFDSFilter;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
@@ -128,6 +131,12 @@ public class ViewTimelineHistoryDisplayContext {
 				"list-ul", "view-change",
 				_language.get(_httpServletRequest, "review-change"), "get",
 				"get", null));
+	}
+
+	public List<FDSFilter> getFDSFilters() {
+		return ListUtil.fromArray(
+			new ChangeTypeSelectionFDSFilter(),
+			new CTCollectionStatusSelectionFDSFilter());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

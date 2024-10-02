@@ -559,9 +559,7 @@ public class LayoutStructure {
 			copiedLayoutStructureItems.addAll(
 				_duplicateLayoutStructureItem(itemId, parentItemId, position));
 
-			if (position >= 0) {
-				position++;
-			}
+			position++;
 		}
 
 		return copiedLayoutStructureItems;

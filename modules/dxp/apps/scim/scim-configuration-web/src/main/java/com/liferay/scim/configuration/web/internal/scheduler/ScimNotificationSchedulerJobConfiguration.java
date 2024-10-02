@@ -232,13 +232,10 @@ public class ScimNotificationSchedulerJobConfiguration
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
-
 		subscriptionSender.setEntryTitle(body);
-
 		subscriptionSender.setNotificationType(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
 		subscriptionSender.setBody(body);
-
 		subscriptionSender.setFrom(
 			"scim-notification@" + company.getMx(), "SCIM-Notification");
 

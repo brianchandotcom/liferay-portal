@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,6 +42,23 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		String fileName, String absolutePath, String content,
 		String lowerCaseContent) {
 
+		List<String> ignoredTagPrefixes = new ArrayList<>();
+
+		if (fileName.endsWith(".ftl")) {
+			ignoredTagPrefixes = getAttributeValues(
+				_IGNORED_FTL_TAG_PREFIXES_KEY, absolutePath);
+		}
+		else if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
+				 fileName.endsWith(".jspx")) {
+
+			ignoredTagPrefixes = getAttributeValues(
+				_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
+		}
+
+		if (ListUtil.isEmpty(ignoredTagPrefixes)) {
+			return;
+		}
+
 		List<String> illegalAttributeNames = getAttributeValues(
 			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
 
@@ -72,20 +90,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				if (Validator.isNull(tagString)) {
 					continue;
-				}
-
-				List<String> ignoredTagPrefixes = new ArrayList<>();
-
-				if (fileName.endsWith(".ftl")) {
-					ignoredTagPrefixes = getAttributeValues(
-						_IGNORED_FTL_TAG_PREFIXES_KEY, absolutePath);
-				}
-				else if (fileName.endsWith(".jsp") ||
-						 fileName.endsWith(".jspf") ||
-						 fileName.endsWith(".jspx")) {
-
-					ignoredTagPrefixes = getAttributeValues(
-						_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
 				}
 
 				for (String ignoredTagPrefix : ignoredTagPrefixes) {

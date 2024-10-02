@@ -2271,7 +2271,7 @@ public interface UserLocalService
 	 */
 	@CTAware(onProduction = true)
 	@Indexable(
-		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		callbackKey = "com.liferay.portal.kernel.model.User#activated",
 		type = IndexableType.REINDEX
 	)
 	public User updateLastLogin(long userId, String loginIP)
@@ -2279,7 +2279,7 @@ public interface UserLocalService
 
 	@CTAware(onProduction = true)
 	@Indexable(
-		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		callbackKey = "com.liferay.portal.kernel.model.User#activated",
 		type = IndexableType.REINDEX
 	)
 	public User updateLastLogin(User user, String loginIP)

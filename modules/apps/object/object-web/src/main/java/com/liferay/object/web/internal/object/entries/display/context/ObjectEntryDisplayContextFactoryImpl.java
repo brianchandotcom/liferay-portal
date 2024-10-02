@@ -19,7 +19,6 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.tree.TreeFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,8 +42,7 @@ public class ObjectEntryDisplayContextFactoryImpl
 			_objectEntryManagerRegistry, _objectEntryLocalService,
 			_objectEntryService, _objectFieldBusinessTypeRegistry,
 			_objectFieldLocalService, _objectLayoutLocalService,
-			_objectRelationshipLocalService, _objectScopeProviderRegistry,
-			_treeFactory);
+			_objectRelationshipLocalService, _objectScopeProviderRegistry);
 	}
 
 	@Reference
@@ -82,8 +80,5 @@ public class ObjectEntryDisplayContextFactoryImpl
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Reference
-	private TreeFactory _treeFactory;
 
 }

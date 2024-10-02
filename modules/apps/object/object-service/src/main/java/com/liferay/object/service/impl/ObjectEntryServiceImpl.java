@@ -26,8 +26,8 @@ import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -623,9 +623,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws PortalException {
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition.getRootObjectDefinitionId(),
-			_objectDefinitionPersistence::findByPrimaryKey);
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				_objectDefinitionPersistence, _objectRelationshipLocalService);
+
+		Tree tree = objectDefinitionTreeFactory.create(
+			objectDefinition.getRootObjectDefinitionId());
 
 		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
 
@@ -854,9 +857,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

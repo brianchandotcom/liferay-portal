@@ -37,9 +37,10 @@ import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
-import com.liferay.object.tree.TreeFactory;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -167,8 +168,11 @@ public class ObjectActionLocalServiceImpl
 
 				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 					objectActionLocalService, objectDefinition,
-					_objectDefinitionPersistence, _portletLocalService,
-					_resourceActions, _treeFactory);
+					_objectDefinitionPersistence,
+					new ObjectDefinitionTreeFactory(
+						_objectDefinitionPersistence,
+						_objectRelationshipLocalService),
+					_portletLocalService, _resourceActions);
 			}
 			catch (Exception exception) {
 				ReflectionUtil.throwException(exception);
@@ -981,6 +985,9 @@ public class ObjectActionLocalServiceImpl
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
 	private ObjectScriptingValidator _objectScriptingValidator;
 
 	@Reference
@@ -992,9 +999,6 @@ public class ObjectActionLocalServiceImpl
 	@Reference
 	private ScriptManagementConfigurationHelper
 		_scriptManagementConfigurationHelper;
-
-	@Reference
-	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

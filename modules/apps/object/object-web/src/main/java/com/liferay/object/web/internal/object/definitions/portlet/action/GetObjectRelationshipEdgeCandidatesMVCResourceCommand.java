@@ -12,8 +12,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -85,9 +85,13 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 				continue;
 			}
 
-			Tree tree = _treeFactory.createObjectDefinitionTree(
-				objectDefinition1.getRootObjectDefinitionId(),
-				_objectDefinitionLocalService::getObjectDefinition);
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+				new ObjectDefinitionTreeFactory(
+					_objectDefinitionLocalService,
+					_objectRelationshipLocalService);
+
+			Tree tree = objectDefinitionTreeFactory.create(
+				objectDefinition1.getRootObjectDefinitionId());
 
 			int depth = ParamUtil.getInteger(resourceRequest, "depth");
 
@@ -187,8 +191,5 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TreeFactory _treeFactory;
 
 }

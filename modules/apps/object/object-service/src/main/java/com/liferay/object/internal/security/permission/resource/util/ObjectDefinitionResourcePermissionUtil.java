@@ -13,8 +13,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
@@ -37,8 +37,9 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
 			PortletLocalService portletLocalService,
-			ResourceActions resourceActions, TreeFactory treeFactory)
+			ResourceActions resourceActions)
 		throws Exception {
 
 		if (objectDefinition.isRootDescendantNode()) {
@@ -47,7 +48,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		Document document = _readDocument(
 			objectActionLocalService, objectDefinition,
-			objectDefinitionPersistence, treeFactory);
+			objectDefinitionPersistence, objectDefinitionTreeFactory);
 
 		resourceActions.populateModelResources(document);
 
@@ -69,7 +70,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
-			ResourceActions resourceActions, TreeFactory treeFactory)
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
+			ResourceActions resourceActions)
 		throws Exception {
 
 		Document document = _objectDefinitionResourceActionDocumentsMap.remove(
@@ -78,7 +80,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 		if (document == null) {
 			document = _readDocument(
 				objectActionLocalService, objectDefinition,
-				objectDefinitionPersistence, treeFactory);
+				objectDefinitionPersistence, objectDefinitionTreeFactory);
 		}
 
 		resourceActions.removeModelResources(document);
@@ -140,14 +142,14 @@ public class ObjectDefinitionResourcePermissionUtil {
 	private static String _getRootDescendantNodeObjectDefinitionsModelResources(
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
-			ObjectDefinition rootNodeObjectDefinition, TreeFactory treeFactory)
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
+			ObjectDefinition rootNodeObjectDefinition)
 		throws Exception {
 
 		int weight = _INITIAL_WEIGHT;
 
-		Tree tree = treeFactory.createObjectDefinitionTree(
-			rootNodeObjectDefinition.getObjectDefinitionId(),
-			objectDefinitionPersistence::findByPrimaryKey);
+		Tree tree = objectDefinitionTreeFactory.create(
+			rootNodeObjectDefinition.getObjectDefinitionId());
 
 		Iterator<Node> iterator = tree.iterator();
 
@@ -188,7 +190,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
-			TreeFactory treeFactory)
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory)
 		throws Exception {
 
 		String objectActionPermissionKeys = _getObjectActionPermissionKeys(
@@ -229,7 +231,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 					objectDefinition.getResourceName(),
 					_getRootDescendantNodeObjectDefinitionsModelResources(
 						objectActionLocalService, objectDefinitionPersistence,
-						objectDefinition, treeFactory)
+						objectDefinitionTreeFactory, objectDefinition)
 				}));
 	}
 

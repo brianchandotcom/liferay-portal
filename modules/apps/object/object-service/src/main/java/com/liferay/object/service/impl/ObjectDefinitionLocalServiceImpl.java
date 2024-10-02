@@ -81,8 +81,8 @@ import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -640,8 +640,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 				ObjectDefinitionResourcePermissionUtil.removeResourceActions(
 					_objectActionLocalService, objectDefinition,
-					objectDefinitionPersistence, _resourceActions,
-					_treeFactory);
+					objectDefinitionPersistence,
+					new ObjectDefinitionTreeFactory(
+						objectDefinitionLocalService,
+						_objectRelationshipLocalService),
+					_resourceActions);
 			}
 			catch (Exception exception) {
 				throw new PortalException(exception);
@@ -948,8 +951,11 @@ public class ObjectDefinitionLocalServiceImpl
 					"are ineligible for publication");
 		}
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinitionId, objectDefinitionPersistence::findByPrimaryKey);
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				objectDefinitionLocalService, _objectRelationshipLocalService);
+
+		Tree tree = objectDefinitionTreeFactory.create(objectDefinitionId);
 
 		Iterator<Node> iterator = tree.iterator();
 
@@ -1002,7 +1008,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_objectViewLocalService, _organizationLocalService,
 				_ploEntryLocalService, _portal, _portletLocalService,
-				_resourceActions, _treeFactory, _userLocalService,
+				_resourceActions, _userLocalService,
 				_resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService);
@@ -1109,9 +1115,12 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition.getObjectDefinitionId(),
-			objectDefinitionPersistence::findByPrimaryKey);
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				objectDefinitionLocalService, _objectRelationshipLocalService);
+
+		Tree tree = objectDefinitionTreeFactory.create(
+			objectDefinition.getObjectDefinitionId());
 
 		Iterator<Node> iterator = tree.iterator(
 			objectDefinition.getObjectDefinitionId());
@@ -2690,9 +2699,6 @@ public class ObjectDefinitionLocalServiceImpl
 		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>
 			_serviceRegistrationsMaps = Collections.synchronizedMap(
 				new LinkedHashMap<>());
-
-	@Reference
-	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

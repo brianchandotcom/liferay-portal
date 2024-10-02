@@ -54,8 +54,8 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -130,8 +130,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		OrganizationLocalService organizationLocalService,
 		PLOEntryLocalService ploEntryLocalService, Portal portal,
 		PortletLocalService portletLocalService,
-		ResourceActions resourceActions, TreeFactory treeFactory,
-		UserLocalService userLocalService,
+		ResourceActions resourceActions, UserLocalService userLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
@@ -162,12 +161,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_portal = portal;
 		_portletLocalService = portletLocalService;
 		_resourceActions = resourceActions;
-		_treeFactory = treeFactory;
 		_userLocalService = userLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_workflowStatusModelPreFilterContributor =
 			workflowStatusModelPreFilterContributor;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
+
+		_objectDefinitionTreeFactory = new ObjectDefinitionTreeFactory(
+			_objectDefinitionLocalService, _objectRelationshipLocalService);
 	}
 
 	@Override
@@ -183,7 +184,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_objectActionLocalService, objectDefinition,
 				(ObjectDefinitionPersistence)
 					_objectDefinitionLocalService.getBasePersistence(),
-				_portletLocalService, _resourceActions, _treeFactory);
+				_objectDefinitionTreeFactory, _portletLocalService,
+				_resourceActions);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -365,10 +367,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_groupLocalService, objectDefinition.getClassName(),
 						_objectActionLocalService,
 						_objectDefinitionLocalService, _objectEntryLocalService,
-						_objectFieldLocalService,
-						_objectRelationshipLocalService,
-						portletResourcePermission,
-						_resourcePermissionLocalService, _treeFactory,
+						_objectFieldLocalService, portletResourcePermission,
+						_resourcePermissionLocalService,
 						_userGroupRoleLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"com.liferay.object", "true"
@@ -434,9 +434,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			long rootObjectDefinitionId)
 		throws PortalException {
 
-		Tree tree = _treeFactory.createObjectDefinitionTree(
-			rootObjectDefinitionId,
-			_objectDefinitionLocalService::getObjectDefinition);
+		Tree tree = _objectDefinitionTreeFactory.create(rootObjectDefinitionId);
 
 		Iterator<Node> iterator = tree.iterator();
 
@@ -503,6 +501,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectDefinitionTreeFactory _objectDefinitionTreeFactory;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
@@ -523,7 +522,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_resourcePermissionLocalService;
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();
-	private final TreeFactory _treeFactory;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final UserLocalService _userLocalService;
 	private final ModelPreFilterContributor

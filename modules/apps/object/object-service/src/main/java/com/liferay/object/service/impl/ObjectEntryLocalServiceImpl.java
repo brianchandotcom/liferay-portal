@@ -95,8 +95,9 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
+import com.liferay.object.tree.ObjectEntryTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -4276,11 +4277,13 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		TreeFactory treeFactory = _treeFactorySnapshot.get();
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				_objectDefinitionPersistence,
+				_objectRelationshipLocalServiceSnapshot.get());
 
-		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
-			objectDefinition.getRootObjectDefinitionId(),
-			_objectDefinitionPersistence::findByPrimaryKey);
+		Tree objectDefinitionTree = objectDefinitionTreeFactory.create(
+			objectDefinition.getRootObjectDefinitionId());
 
 		Node objectDefinitionNode = objectDefinitionTree.getNode(
 			objectDefinition.getObjectDefinitionId());
@@ -4301,7 +4304,12 @@ public class ObjectEntryLocalServiceImpl
 				parentObjectEntry.getRootObjectEntryId()) &&
 			(objectEntry.getRootObjectEntryId() != 0)) {
 
-			Tree objectEntryTree = treeFactory.createObjectEntryTree(
+			ObjectEntryTreeFactory objectEntryTreeFactory =
+				new ObjectEntryTreeFactory(
+					objectEntryLocalService,
+					_objectRelationshipLocalServiceSnapshot.get());
+
+			Tree objectEntryTree = objectEntryTreeFactory.create(
 				objectEntry.getObjectEntryId());
 
 			Iterator<Node> iterator = objectEntryTree.iterator();
@@ -5272,9 +5280,6 @@ public class ObjectEntryLocalServiceImpl
 		new CentralizedThreadLocal<>(
 			ObjectEntryLocalServiceImpl.class + "._skipModelListeners",
 			() -> false);
-	private static final Snapshot<TreeFactory> _treeFactorySnapshot =
-		new Snapshot<>(
-			ObjectEntryLocalServiceImpl.class, TreeFactory.class, null, true);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

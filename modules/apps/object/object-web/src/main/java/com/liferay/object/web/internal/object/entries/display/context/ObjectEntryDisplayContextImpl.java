@@ -73,8 +73,8 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectEntryTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
@@ -149,8 +149,7 @@ public class ObjectEntryDisplayContextImpl
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry,
-		TreeFactory treeFactory) {
+		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -164,7 +163,6 @@ public class ObjectEntryDisplayContextImpl
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
-		_treeFactory = treeFactory;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_readOnly = (Boolean)httpServletRequest.getAttribute(
@@ -205,7 +203,11 @@ public class ObjectEntryDisplayContextImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
 
-		Tree tree = _treeFactory.createObjectEntryTree(
+		ObjectEntryTreeFactory objectEntryTreeFactory =
+			new ObjectEntryTreeFactory(
+				_objectEntryLocalService, _objectRelationshipLocalService);
+
+		Tree tree = objectEntryTreeFactory.create(
 			serviceBuilderObjectEntry.getRootObjectEntryId());
 
 		Node node = tree.getNode(serviceBuilderObjectEntry.getObjectEntryId());
@@ -1480,6 +1482,5 @@ public class ObjectEntryDisplayContextImpl
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final boolean _readOnly;
 	private final ThemeDisplay _themeDisplay;
-	private final TreeFactory _treeFactory;
 
 }

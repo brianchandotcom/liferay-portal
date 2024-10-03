@@ -543,6 +543,13 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	private String _getFilterString() {
 		if (contextHttpServletRequest == null) {
+			if (contextUriInfo != null) {
+				MultivaluedMap<String, String> queryParameters =
+					contextUriInfo.getQueryParameters();
+
+				return queryParameters.getFirst("filter");
+			}
+
 			return null;
 		}
 

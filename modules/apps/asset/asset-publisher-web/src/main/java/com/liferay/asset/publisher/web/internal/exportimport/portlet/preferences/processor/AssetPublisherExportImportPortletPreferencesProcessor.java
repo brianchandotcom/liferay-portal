@@ -203,25 +203,24 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		PortletDataContext portletDataContext, Portlet portlet,
 		String className, String externalReferenceCode) {
 
-		if (className.equals(Group.class.getName())) {
-			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-				externalReferenceCode, portletDataContext.getCompanyId());
-
-			if (!group.isStagingGroup()) {
-				return externalReferenceCode;
-			}
-
-			Group liveGroup = groupLocalService.fetchGroup(
-				group.getLiveGroupId());
-
-			if (liveGroup == null) {
-				return externalReferenceCode;
-			}
-
-			return liveGroup.getExternalReferenceCode();
+		if (!className.equals(Group.class.getName())) {
+			return externalReferenceCode;
 		}
 
-		return externalReferenceCode;
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, portletDataContext.getCompanyId());
+
+		if (!group.isStagingGroup()) {
+			return externalReferenceCode;
+		}
+
+		Group liveGroup = groupLocalService.fetchGroup(group.getLiveGroupId());
+
+		if (liveGroup == null) {
+			return externalReferenceCode;
+		}
+
+		return liveGroup.getExternalReferenceCode();
 	}
 
 	@Override
@@ -324,16 +323,18 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		String className = clazz.getName();
 
-		if (className.equals(Group.class.getName())) {
-			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-				externalReferenceCode, portletDataContext.getCompanyId());
-
-			if (group != null) {
-				return externalReferenceCode;
-			}
+		if (!className.equals(Group.class.getName())) {
+			return null;
 		}
 
-		return null;
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, portletDataContext.getCompanyId());
+
+		if (group == null) {
+			return null;
+		}
+
+		return externalReferenceCode;
 	}
 
 	@Override

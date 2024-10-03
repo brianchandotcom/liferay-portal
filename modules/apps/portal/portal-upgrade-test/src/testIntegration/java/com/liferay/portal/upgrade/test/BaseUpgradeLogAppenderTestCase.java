@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -424,15 +425,18 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"com.liferay.portal.FasterUpgradeTest";
 
 		log.info(
-			"Completed upgrade process " + fasterUpgradeProcessName +
-				" in 30010 ms");
+			StringBundler.concat(
+				"Completed upgrade process ", fasterUpgradeProcessName, " in ",
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD, " ms"));
 
 		String slowerUpgradeProcessName =
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
-			"Completed upgrade process " + slowerUpgradeProcessName +
-				" in 50401 ms");
+			StringBundler.concat(
+				"Completed upgrade process ", slowerUpgradeProcessName, " in ",
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
+				" ms"));
 
 		_appender.stop();
 
@@ -486,7 +490,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process com.liferay.portal.UpgradeTest in " +
-				"50401 ms");
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + " ms");
 
 		_appender.stop();
 
@@ -497,7 +501,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertReportDiagnostics(
 			"2 occurrences of the following event: Warning");
 		_assertReportDiagnostics(
-			"com.liferay.portal.UpgradeTest took 50401 ms to complete");
+			"com.liferay.portal.UpgradeTest took " +
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD +
+					" ms to complete");
 	}
 
 	@Test
@@ -782,11 +788,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				}
 			});
 
-		String originalUpgradeReportSqlQueryThresholdDuration = PropsUtil.get(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
-
-		PropsUtil.set(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD, String.valueOf(0));
+		long originalUpgradeReportSqlQueryThreshold =
+			ReflectionTestUtil.getAndSetFieldValue(
+				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
+				0);
 
 		try {
 			_appender.start();
@@ -837,9 +842,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			}
 		}
 		finally {
-			PropsUtil.set(
-				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD,
-				originalUpgradeReportSqlQueryThresholdDuration);
+			ReflectionTestUtil.setFieldValue(
+				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
+				originalUpgradeReportSqlQueryThreshold);
 		}
 	}
 

@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -27,7 +28,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -40,7 +41,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -61,6 +61,12 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
 		return ArrayUtil.append(
 			_getStagedModelTypes(), new StagedModelType(TemplateEntry.class));
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
 	}
 
 	@Override
@@ -90,14 +96,20 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public PortletDataHandlerControl[] getImportControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
 
-	@Activate
-	protected void activate() {
-		setExportControls(_getPortletDataHandlerControls());
-		setStagingControls(getExportControls());
+	@Override
+	public PortletDataHandlerControl[] getStagingControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
 	}
 
 	@Override
@@ -106,7 +118,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		for (long classNameId : _templateHandlerRegistry.getClassNameIds()) {
+		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
 			_ddmTemplateLocalService.deleteTemplates(
 				portletDataContext.getScopeGroupId(), classNameId);
 		}
@@ -222,7 +234,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		List<Long> classNameIds = new ArrayList<>();
 
 		for (TemplateHandler templateHandler :
-				_templateHandlerRegistry.getTemplateHandlers()) {
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
 
 			ClassName className = _classNameLocalService.fetchClassName(
 				templateHandler.getClassName());
@@ -290,7 +302,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 				TemplateEntry.class.getName()));
 
 		for (TemplateHandler templateHandler :
-				_templateHandlerRegistry.getTemplateHandlers()) {
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
 
 			ClassName className = _classNameLocalService.getClassName(
 				templateHandler.getClassName());
@@ -316,7 +328,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 					DDMTemplate.class);
 
 				for (long classNameId :
-						_templateHandlerRegistry.getClassNameIds()) {
+						TemplateHandlerRegistryUtil.getClassNameIds()) {
 
 					stagedModelTypes.add(
 						new StagedModelType(
@@ -339,6 +351,9 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private Portal _portal;
 
+	private final DCLSingleton<PortletDataHandlerControl[]>
+		_portletDataHandlerControlsDCLSingleton = new DCLSingleton<>();
+
 	@Reference
 	private Staging _staging;
 
@@ -347,8 +362,5 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<TemplateEntry>
 		_templateEntryStagedModelRepository;
-
-	@Reference
-	private TemplateHandlerRegistry _templateHandlerRegistry;
 
 }

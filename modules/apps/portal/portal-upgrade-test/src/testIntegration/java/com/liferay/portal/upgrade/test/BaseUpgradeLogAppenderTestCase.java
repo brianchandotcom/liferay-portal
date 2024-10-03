@@ -456,7 +456,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_assertLogContextDiagnostics(
 			"upgrade.report.longest.upgrade.processes",
-			"com.liferay.portal.UpgradeTest:50401 ms");
+			"com.liferay.portal.UpgradeTest:" +
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + " ms");
 		_assertLogContextDiagnostics("upgrade.report.warnings", "2:Warning");
 		_assertReportDiagnostics(
 			"2 occurrences of the following event: Warning");
@@ -471,7 +472,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		long originalUpgradeReportSqlStatementThreshold =
 			ReflectionTestUtil.getAndSetFieldValue(
 				UpgradeSQLRecorder.class,
-				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0);
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0L);
 
 		try {
 			_appender.start();
@@ -486,7 +487,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			ReflectionTestUtil.setFieldValue(
 				UpgradeSQLRecorder.class,
-				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 60000);
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 60000L);
 
 			String belowThresholdSQL =
 				"delete from UpgradeReportTable1 where id_ = 2";
@@ -541,13 +542,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				" ms"));
 
 		String belowThresholdUpgradeProcessName =
-			"com.liferay.portal.SlowerUpgradeTest";
+			"com.liferay.portal.BelowThresholdUpgradeTest";
 
 		log.info(
 			StringBundler.concat(
 				"Completed upgrade process ", belowThresholdUpgradeProcessName,
 				" in ",
-				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD - 1,
 				" ms"));
 
 		_appender.stop();
@@ -795,7 +796,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		long originalUpgradeReportSqlStatementThreshold =
 			ReflectionTestUtil.getAndSetFieldValue(
 				UpgradeSQLRecorder.class,
-				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0);
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0L);
 
 		try {
 			_appender.start();

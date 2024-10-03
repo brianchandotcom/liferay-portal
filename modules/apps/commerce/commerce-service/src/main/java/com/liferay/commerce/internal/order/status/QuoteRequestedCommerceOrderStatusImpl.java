@@ -122,6 +122,7 @@ public class QuoteRequestedCommerceOrderStatusImpl
 
 	private boolean _isRequestQuoteEnabled(CommerceOrder commerceOrder)
 		throws PortalException {
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());

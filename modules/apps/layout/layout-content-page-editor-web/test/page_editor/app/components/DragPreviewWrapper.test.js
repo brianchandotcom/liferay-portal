@@ -26,7 +26,7 @@ const fragments = [
 	},
 ];
 
-const widgets = [
+const getWidgets = () => [
 	{
 		portlets: [
 			{
@@ -67,8 +67,8 @@ describe('DragPreviewWrapper', () => {
 					activeItemIds: ['item01'],
 					fragmentEntryLinks,
 					fragments,
+					getWidgets,
 					item,
-					widgets,
 				})
 			).toBe('icon02');
 		});
@@ -79,8 +79,8 @@ describe('DragPreviewWrapper', () => {
 					activeItemIds: ['item01'],
 					fragmentEntryLinks,
 					fragments,
+					getWidgets,
 					item: {...item, type: 'type01'},
-					widgets,
 				})
 			).toBe('icon01');
 		});
@@ -91,11 +91,11 @@ describe('DragPreviewWrapper', () => {
 					activeItemIds: ['item01'],
 					fragmentEntryLinks,
 					fragments,
+					getWidgets,
 					item: {
 						...item,
 						config: {fragmentEntryLinkId: 'fragmentEntryLink02'},
 					},
-					widgets,
 				})
 			).toBe('square-hole');
 		});
@@ -106,11 +106,11 @@ describe('DragPreviewWrapper', () => {
 					activeItemIds: ['item01'],
 					fragmentEntryLinks,
 					fragments,
+					getWidgets,
 					item: {
 						...item,
 						config: {fragmentEntryLinkId: 'fragmentEntryLink03'},
 					},
-					widgets,
 				})
 			).toBe('square-hole-multi');
 		});
@@ -121,8 +121,8 @@ describe('DragPreviewWrapper', () => {
 					activeItemIds: ['item01', 'item02'],
 					fragmentEntryLinks,
 					fragments,
+					getWidgets,
 					item,
-					widgets,
 				})
 			).toBe(null);
 		});

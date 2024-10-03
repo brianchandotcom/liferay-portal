@@ -121,9 +121,11 @@ describe('checkAllowedChild', () => {
 			const grid = getGrid();
 			const form = getForm({formType: 'multistep'});
 
-			expect(checkAllowedChild(container, form, {}, {})).toBe(false);
+			expect(checkAllowedChild(container, form, {}, {}, () => [])).toBe(
+				false
+			);
 
-			expect(checkAllowedChild(grid, form, {}, {})).toBe(false);
+			expect(checkAllowedChild(grid, form, {}, {}, () => [])).toBe(false);
 		});
 
 		it('it is not possible to add standard fragments and inputs to a form if it is multistep', () => {
@@ -131,9 +133,13 @@ describe('checkAllowedChild', () => {
 			const input = getFragment({fragmentEntryType: 'input'});
 			const form = getForm({formType: 'multistep'});
 
-			expect(checkAllowedChild(fragment, form, {}, {})).toBe(false);
+			expect(checkAllowedChild(fragment, form, {}, {}, () => [])).toBe(
+				false
+			);
 
-			expect(checkAllowedChild(input, form, {}, {})).toBe(false);
+			expect(checkAllowedChild(input, form, {}, {}, () => [])).toBe(
+				false
+			);
 		});
 
 		it('it is possible to add standard fragments and inputs to a form step', () => {
@@ -141,22 +147,20 @@ describe('checkAllowedChild', () => {
 			const input = getFragment({fragmentEntryType: 'input'});
 			const formStep = getFormStep();
 
-			const layoutDataRef = {
-				current: {
-					items: {
-						[IDS.form]: getForm({formType: 'multistep'}),
-						[IDS.formStepContainer]: getFormStepContainer(),
-						[IDS.formStep]: formStep,
-					},
+			const layoutData = {
+				items: {
+					[IDS.form]: getForm({formType: 'multistep'}),
+					[IDS.formStepContainer]: getFormStepContainer(),
+					[IDS.formStep]: formStep,
 				},
 			};
 
 			expect(
-				checkAllowedChild(fragment, formStep, layoutDataRef.current, {})
+				checkAllowedChild(fragment, formStep, layoutData, {}, () => [])
 			).toBe(true);
 
 			expect(
-				checkAllowedChild(input, formStep, layoutDataRef.current, {})
+				checkAllowedChild(input, formStep, layoutData, {}, () => [])
 			).toBe(true);
 		});
 
@@ -164,14 +168,18 @@ describe('checkAllowedChild', () => {
 			const fragment = getFragment();
 			const form = getForm();
 
-			expect(checkAllowedChild(fragment, form, {}, {})).toBe(true);
+			expect(checkAllowedChild(fragment, form, {}, {}, () => [])).toBe(
+				true
+			);
 		});
 
 		it('it is not possible to add widgets to a form', () => {
 			const widget = getFragment({isWidget: true});
 			const form = getForm();
 
-			expect(checkAllowedChild(widget, form, {}, {})).toBe(false);
+			expect(checkAllowedChild(widget, form, {}, {}, () => [])).toBe(
+				false
+			);
 		});
 	});
 
@@ -183,7 +191,9 @@ describe('checkAllowedChild', () => {
 
 			const container = getContainer();
 
-			expect(checkAllowedChild(input, container, {}, {})).toBe(false);
+			expect(checkAllowedChild(input, container, {}, {}, () => [])).toBe(
+				false
+			);
 		});
 
 		it('it is possible to add inputs inside a form', () => {
@@ -193,7 +203,7 @@ describe('checkAllowedChild', () => {
 
 			const form = getForm();
 
-			expect(checkAllowedChild(input, form, {}, {})).toBe(true);
+			expect(checkAllowedChild(input, form, {}, {}, () => [])).toBe(true);
 		});
 	});
 
@@ -207,36 +217,33 @@ describe('checkAllowedChild', () => {
 			const form = getForm();
 			const multistepForm = getForm({formType: 'multistep'});
 
-			const layoutDataRef = {
-				current: {
-					items: {
-						[IDS.form]: form,
-						[IDS.formStepContainer]: getFormStepContainer(),
-						[IDS.formStep]: getFormStep(),
-					},
+			const layoutData = {
+				items: {
+					[IDS.form]: form,
+					[IDS.formStepContainer]: getFormStepContainer(),
+					[IDS.formStep]: getFormStep(),
 				},
 			};
 
-			const layoutDataRefWithMultistep = {
-				current: {
-					items: {
-						[IDS.form]: multistepForm,
-						[IDS.formStepContainer]: getFormStepContainer(),
-						[IDS.formStep]: getFormStep(),
-					},
+			const layoutDataWithMultistep = {
+				items: {
+					[IDS.form]: multistepForm,
+					[IDS.formStepContainer]: getFormStepContainer(),
+					[IDS.formStep]: getFormStep(),
 				},
 			};
 
 			expect(
-				checkAllowedChild(stepper, form, layoutDataRef.current, {})
+				checkAllowedChild(stepper, form, layoutData, {}, () => [])
 			).toBe(true);
 
 			expect(
 				checkAllowedChild(
 					stepper,
 					multistepForm,
-					layoutDataRefWithMultistep.current,
-					{}
+					layoutDataWithMultistep,
+					{},
+					[]
 				)
 			).toBe(true);
 		});
@@ -249,18 +256,16 @@ describe('checkAllowedChild', () => {
 
 			const formStep = getFormStep();
 
-			const layoutDataRef = {
-				current: {
-					items: {
-						[IDS.form]: getForm({formType: 'multistep'}),
-						[IDS.formStepContainer]: getFormStepContainer(),
-						[IDS.formStep]: formStep,
-					},
+			const layoutData = {
+				items: {
+					[IDS.form]: getForm({formType: 'multistep'}),
+					[IDS.formStepContainer]: getFormStepContainer(),
+					[IDS.formStep]: formStep,
 				},
 			};
 
 			expect(
-				checkAllowedChild(stepper, formStep, layoutDataRef.current, {})
+				checkAllowedChild(stepper, formStep, layoutData, {}, () => [])
 			).toBe(false);
 		});
 
@@ -272,7 +277,9 @@ describe('checkAllowedChild', () => {
 
 			const container = getContainer();
 
-			expect(checkAllowedChild(stepper, container, {}, {})).toBe(false);
+			expect(
+				checkAllowedChild(stepper, container, {}, {}, () => [])
+			).toBe(false);
 		});
 
 		it('it is not possible to add a stepper inside a form that already has a stepper', () => {
@@ -292,24 +299,20 @@ describe('checkAllowedChild', () => {
 				formType: 'multistep',
 			});
 
-			const layoutDataRef = {
-				current: {
-					items: {
-						[IDS.form]: form,
-						[IDS.formStepContainer]: getFormStepContainer(),
-						[IDS.formStep]: getFormStep(),
-						[existingStepper.itemId]: existingStepper,
-					},
+			const layoutData = {
+				items: {
+					[IDS.form]: form,
+					[IDS.formStepContainer]: getFormStepContainer(),
+					[IDS.formStep]: getFormStep(),
+					[existingStepper.itemId]: existingStepper,
 				},
 			};
 
-			const fragmentEntryLinksRef = {
-				current: {
-					[existingStepper.config.fragmentEntryLinkId]: {
-						fieldTypes: ['stepper'],
-						fragmentEntryLinkId:
-							existingStepper.config.fragmentEntryLinkId,
-					},
+			const fragmentEntryLinks = {
+				[existingStepper.config.fragmentEntryLinkId]: {
+					fieldTypes: ['stepper'],
+					fragmentEntryLinkId:
+						existingStepper.config.fragmentEntryLinkId,
 				},
 			};
 
@@ -317,8 +320,9 @@ describe('checkAllowedChild', () => {
 				checkAllowedChild(
 					stepper,
 					form,
-					layoutDataRef.current,
-					fragmentEntryLinksRef.current
+					layoutData,
+					fragmentEntryLinks,
+					() => []
 				)
 			).toBe(false);
 		});

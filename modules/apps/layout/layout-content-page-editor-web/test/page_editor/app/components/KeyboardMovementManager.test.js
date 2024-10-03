@@ -321,12 +321,14 @@ describe('KeyboardMovementManager', () => {
 
 		const fragmentEntryLinksRef = {current: {}};
 		const layoutDataRef = {current: layoutDataWithUnmappedForm};
+		const widgetsRef = {current: {}};
 
 		expect(
 			getInitialTarget(
 				[formInputSource],
 				layoutDataRef,
-				fragmentEntryLinksRef
+				fragmentEntryLinksRef,
+				widgetsRef
 			)
 		).toMatchObject({
 			itemId: 'form-id',

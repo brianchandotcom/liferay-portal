@@ -51,7 +51,7 @@ describe('canBeDuplicated', () => {
 			},
 		};
 
-		expect(canBeDuplicated(fragmentEntryLinks, stepper, {}, [])).toBe(
+		expect(canBeDuplicated(fragmentEntryLinks, stepper, {}, () => [])).toBe(
 			false
 		);
 	});
@@ -95,7 +95,12 @@ describe('canBeDuplicated', () => {
 		];
 
 		expect(
-			canBeDuplicated(fragmentEntryLinks, instanceableWidget, {}, widgets)
+			canBeDuplicated(
+				fragmentEntryLinks,
+				instanceableWidget,
+				{},
+				() => widgets
+			)
 		).toBe(true);
 
 		expect(
@@ -103,7 +108,7 @@ describe('canBeDuplicated', () => {
 				fragmentEntryLinks,
 				nonInstanceableWidget,
 				{},
-				widgets
+				() => widgets
 			)
 		).toBe(false);
 	});

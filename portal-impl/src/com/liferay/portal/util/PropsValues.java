@@ -2402,9 +2402,9 @@ public class PropsValues {
 	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 
-	public static final long UPGRADE_REPORT_SQL_QUERY_THRESHOLD =
+	public static final long UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD =
 		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD));
+			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD));
 
 	public static final long UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD =
 		GetterUtil.getLong(

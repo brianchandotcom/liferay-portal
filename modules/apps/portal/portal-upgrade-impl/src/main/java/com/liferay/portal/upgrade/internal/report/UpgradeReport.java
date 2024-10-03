@@ -719,7 +719,7 @@ public class UpgradeReport {
 			return String.format(
 				"Top %d longest running SQLs above %d milliseconds",
 				_LONGEST_RUNNING_SQLS_COUNT,
-				PropsValues.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
+				PropsValues.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD);
 		}
 
 		if (key.equals("longest.upgrade.processes")) {

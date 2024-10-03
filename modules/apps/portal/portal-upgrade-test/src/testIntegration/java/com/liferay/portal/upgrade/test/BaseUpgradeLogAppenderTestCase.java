@@ -468,10 +468,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testLongestRunningSQLsThreshold() throws Exception {
-		long originalUpgradeReportSqlQueryThreshold =
+		long originalUpgradeReportSqlStatementThreshold =
 			ReflectionTestUtil.getAndSetFieldValue(
-				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
-				0);
+				UpgradeSQLRecorder.class,
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0);
 
 		try {
 			_appender.start();
@@ -485,8 +485,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			aboveThresholdUpgradeProcess.upgrade();
 
 			ReflectionTestUtil.setFieldValue(
-				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
-				60000);
+				UpgradeSQLRecorder.class,
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 60000);
 
 			String belowThresholdSQL =
 				"delete from UpgradeReportTable1 where id_ = 2";
@@ -511,8 +511,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
-				originalUpgradeReportSqlQueryThreshold);
+				UpgradeSQLRecorder.class,
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD",
+				originalUpgradeReportSqlStatementThreshold);
 		}
 	}
 
@@ -791,10 +792,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				}
 			});
 
-		long originalUpgradeReportSqlQueryThreshold =
+		long originalUpgradeReportSqlStatementThreshold =
 			ReflectionTestUtil.getAndSetFieldValue(
-				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
-				0);
+				UpgradeSQLRecorder.class,
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0);
 
 		try {
 			_appender.start();
@@ -846,8 +847,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
-				originalUpgradeReportSqlQueryThreshold);
+				UpgradeSQLRecorder.class,
+				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD",
+				originalUpgradeReportSqlStatementThreshold);
 		}
 	}
 

@@ -5,12 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 
-export const test = mergeTests(isolatedSiteTest, loginTest(), wikiPagesTest);
+export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-35013': true,
+	}),
+	isolatedSiteTest,
+	loginTest(),
+	wikiPagesTest
+);
 
 test(
 	'Icon menu should close when another icon menu is open',

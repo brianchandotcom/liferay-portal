@@ -12,7 +12,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Roberto Díaz
  */
-@ExtendedObjectClassDefinition(category = "wiki")
+@ExtendedObjectClassDefinition(category = "wiki", featureFlagKey = "LPD-35013")
 @Meta.OCD(
 	id = "com.liferay.wiki.configuration.WikiFileUploadConfiguration",
 	localization = "content/Language",

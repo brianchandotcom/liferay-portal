@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -140,6 +141,15 @@ public class WikiPageAssetRendererFactory
 
 		return WikiPagePermission.contains(
 			permissionChecker, classPK, actionId);
+	}
+
+	@Override
+	public boolean isActive(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35013")) {
+			return false;
+		}
+
+		return super.isActive(companyId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

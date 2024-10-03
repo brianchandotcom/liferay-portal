@@ -225,6 +225,7 @@ AUI.add(
 							[rangeRuleName]: true,
 						},
 					},
+					validateOnInput: true,
 				});
 
 				const onRangeSelectionChange = function () {

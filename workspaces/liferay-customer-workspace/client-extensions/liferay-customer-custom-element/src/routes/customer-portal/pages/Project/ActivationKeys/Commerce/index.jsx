@@ -43,7 +43,7 @@ const Commerce = () => {
 		setIsLoadingActivationInstructions,
 	] = useState(false);
 
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 
 	const fetchCommerceActivationsKeysInstructions = async () => {
 		const webContentFolderName = 'commerce-activation';
@@ -116,7 +116,7 @@ const Commerce = () => {
 					accountSubscriptionGroupName="commerce"
 					productTitle="Commerce"
 					projectName={project?.name}
-					sessionId={sessionId}
+					oAuthToken={oAuthToken}
 				/>
 			) : (
 				<Table

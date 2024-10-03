@@ -7,7 +7,7 @@ import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
 
 const EnterpriseSearch = () => {
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 
 	return (
 		<ActivationKeysLayout>
@@ -16,7 +16,7 @@ const EnterpriseSearch = () => {
 				accountSubscriptionGroupName="enterprise-search"
 				productTitle="Enterprise Search"
 				projectName={project?.name}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 			/>
 		</ActivationKeysLayout>
 	);

@@ -10,23 +10,23 @@ import {useEffect, useState} from 'react';
 
 import {useAppPropertiesContext} from '../../contexts/AppPropertiesContext';
 import {Liferay} from '../../services/liferay';
-import {getCurrentSession} from '../../services/okta/rest/getCurrentSession';
-import OktaSessionModal from './OktaSessionModal';
+import {getOrRequestToken} from '../../services/liferay/security/auth/getOrRequestToken';
+import OAuthTokenModal from './OAuthTokenModal';
 
-const OktaSession = () => {
-	const {oktaSessionAPI} = useAppPropertiesContext();
+const OAuthToken = () => {
+	const {oAuthTokenAPI} = useAppPropertiesContext();
 	const [status, setStatus] = useState<'active' | 'idle' | 'inactive'>(
 		'idle'
 	);
 
-	const oktaSessionURL = new URL(oktaSessionAPI);
-	const oktaSessionDomain = `${oktaSessionURL.protocol}/${oktaSessionURL.host}`;
+	const oAuthTokenURL = new URL(oAuthTokenAPI);
+	const oAuthTokenDomain = `${oAuthTokenURL.protocol}/${oAuthTokenURL.host}`;
 
 	const {observer, onOpenChange, open} = useModal();
 
 	useEffect(() => {
-		getCurrentSession(oktaSessionAPI);
-	}, [oktaSessionAPI]);
+		getOrRequestToken(oAuthTokenAPI);
+	}, [oAuthTokenAPI]);
 
 	useEffect(() => {
 		const handler = ({
@@ -43,9 +43,9 @@ const OktaSession = () => {
 			setStatus(successfull ? 'active' : 'inactive');
 		};
 
-		Liferay.on('okta-status-changed', handler);
+		Liferay.on('oauth-token-status-changed', handler);
 
-		return () => Liferay.detach('okta-status-changed', handler);
+		return () => Liferay.detach('oauth-token-status-changed', handler);
 	}, [onOpenChange]);
 
 	const onCancel = () => {
@@ -54,7 +54,7 @@ const OktaSession = () => {
 
 	const onClickSignIn = () => {
 		if (window.location.protocol === 'http:') {
-			window.location.href = oktaSessionDomain;
+			window.location.href = oAuthTokenDomain;
 
 			return;
 		}
@@ -64,7 +64,7 @@ const OktaSession = () => {
 
 	if (open && status === 'inactive') {
 		return (
-			<OktaSessionModal
+			<OAuthTokenModal
 				observer={observer}
 				onClick={onClickSignIn}
 				onClose={onCancel}
@@ -75,4 +75,4 @@ const OktaSession = () => {
 	return null;
 };
 
-export default OktaSession;
+export default OAuthToken;

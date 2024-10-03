@@ -9,7 +9,7 @@ import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES} from '../../../utils/constants';
 
 const DXP = ({hasComplimentaryKey}) => {
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 
 	return (
 		<div className="mr-4">
@@ -18,7 +18,7 @@ const DXP = ({hasComplimentaryKey}) => {
 				initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital'))"
 				productName="DXP"
 				project={project}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 			/>
 
 			<DeveloperKeysLayouts>
@@ -31,7 +31,7 @@ const DXP = ({hasComplimentaryKey}) => {
 					listType={LIST_TYPES.dxpVersion}
 					productName="DXP"
 					projectName={project.name}
-					sessionId={sessionId}
+					oAuthToken={oAuthToken}
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>
 		</div>

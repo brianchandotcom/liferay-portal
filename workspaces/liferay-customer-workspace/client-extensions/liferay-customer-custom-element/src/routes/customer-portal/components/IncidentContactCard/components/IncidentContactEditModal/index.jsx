@@ -32,7 +32,7 @@ const IncidentContactEditModal = ({
 	leftButton,
 	modalFilter,
 }) => {
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 
 	const [addHighPriorityContact, setAddHighPriorityContacts] = useState([]);
 
@@ -75,7 +75,7 @@ const IncidentContactEditModal = ({
 					addContactRoleRaysource,
 					addHighPriorityContact,
 					project,
-					sessionId,
+					oAuthToken,
 					provisioningServerAPI
 				);
 
@@ -104,7 +104,7 @@ const IncidentContactEditModal = ({
 				removeContactRoleRaysource,
 				removeHighPriorityContacts,
 				project,
-				sessionId,
+				oAuthToken,
 				provisioningServerAPI
 			);
 

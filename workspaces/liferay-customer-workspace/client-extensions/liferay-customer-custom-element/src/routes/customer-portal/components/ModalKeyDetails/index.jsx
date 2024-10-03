@@ -16,7 +16,7 @@ const ModalKeyDetails = ({
 	observer,
 	onClose,
 	provisioningServerAPI,
-	sessionId,
+	oAuthToken,
 }) => {
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
@@ -62,7 +62,7 @@ const ModalKeyDetails = ({
 							downloadActivationLicenseKey(
 								activationKeys.id,
 								provisioningServerAPI,
-								sessionId
+								oAuthToken
 							)
 						}
 					>

@@ -30,7 +30,7 @@ import {DEACTIVATE_COLUMNS} from './utils/constants';
 
 const DeactivateKeysTable = ({initialFilter, productName}) => {
 	const {data: myAccount} = useGetMyUserAccount();
-	const [{project, sessionId, userAccount}] = useCustomerPortal();
+	const [{project, oAuthToken, userAccount}] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
@@ -166,7 +166,7 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 				}
 				activationKeysState={[setActivationKeys]}
 				productName={productName}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 			/>
 		</div>
 	);

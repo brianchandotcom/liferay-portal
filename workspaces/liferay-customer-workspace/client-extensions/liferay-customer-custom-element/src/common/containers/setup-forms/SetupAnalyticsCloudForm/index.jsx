@@ -121,9 +121,9 @@ const SetupAnalyticsCloudPage = ({
 
 	const onboardingContext = useOnboarding();
 
-	const sessionId =
-		customerPortalContext?.[0].sessionId ||
-		onboardingContext?.[0].sessionId;
+	const oAuthToken =
+		customerPortalContext?.[0].oAuthToken ||
+		onboardingContext?.[0].oAuthToken;
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>
@@ -293,7 +293,7 @@ const SetupAnalyticsCloudPage = ({
 						addContactRoleRaysource,
 						addHighPriorityContact,
 						project,
-						sessionId,
+						oAuthToken,
 						provisioningServerAPI
 					);
 
@@ -322,7 +322,7 @@ const SetupAnalyticsCloudPage = ({
 					removeContactRoleRaysource,
 					removeHighPriorityContact,
 					project,
-					sessionId,
+					oAuthToken,
 					provisioningServerAPI
 				);
 

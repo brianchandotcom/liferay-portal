@@ -41,7 +41,7 @@ const ModalKeyDetails = ({
 	observer,
 	onClose,
 	project,
-	sessionId,
+	oAuthToken,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
 	const [clipboardValue, setClipboardValue] = useState('');
@@ -81,7 +81,7 @@ const ModalKeyDetails = ({
 		getSubscriptionInKey(
 			provisioningServerAPI,
 			currentActivationKey.id,
-			sessionId
+			oAuthToken
 		)
 			.then((result) => {
 				setToggleSubscription(result);
@@ -95,7 +95,7 @@ const ModalKeyDetails = ({
 			.finally(() => {
 				setIsLoading(false);
 			});
-	}, [currentActivationKey.id, provisioningServerAPI, sessionId]);
+	}, [currentActivationKey.id, provisioningServerAPI, oAuthToken]);
 
 	const handleToggle = () => setToggleSubscription((toggled) => !toggled);
 
@@ -105,7 +105,7 @@ const ModalKeyDetails = ({
 		const fn = status ? deleteSubscriptionInKey : putSubscriptionInKey;
 
 		try {
-			await fn(provisioningServerAPI, currentActivationKey.id, sessionId);
+			await fn(provisioningServerAPI, currentActivationKey.id, oAuthToken);
 
 			openToast('success', 'your-request-completed-successfully', {
 				type: 'success',
@@ -213,7 +213,7 @@ const ModalKeyDetails = ({
 							const isAbleToDownloadKey = await downloadActivationLicenseKey(
 								currentActivationKey.id,
 								provisioningServerAPI,
-								sessionId,
+								oAuthToken,
 								currentActivationKey.productName,
 								currentActivationKey.productVersion,
 								project.name

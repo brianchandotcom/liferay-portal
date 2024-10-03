@@ -25,7 +25,7 @@ const ComplimentaryDate = ({
 	accountKey,
 	purposeDescription,
 	selectedKeyData,
-	sessionId,
+	oAuthToken,
 	setPurposeDescription,
 	setSelectedKeyData,
 	setStep,
@@ -126,7 +126,7 @@ const ComplimentaryDate = ({
 		];
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, sessionId);
+			return putSubscriptionInKey(provisioningServerAPI, id, oAuthToken);
 		};
 
 		const generateLicenseKey = async (item, isComplimentary = false) => {
@@ -216,7 +216,7 @@ const ComplimentaryDate = ({
 		provisioningServerAPI,
 		provisioningService,
 		purposeDescription,
-		sessionId,
+		oAuthToken,
 		state.activationKeys,
 		startDate,
 		urlPreviousPage,

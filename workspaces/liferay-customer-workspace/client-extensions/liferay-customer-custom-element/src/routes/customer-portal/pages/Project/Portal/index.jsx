@@ -11,7 +11,7 @@ import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES} from '../../../utils/constants';
 
 const Portal = ({hasComplimentaryKey}) => {
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
@@ -25,7 +25,7 @@ const Portal = ({hasComplimentaryKey}) => {
 				initialFilter="startswith(productName,'Portal')"
 				productName="Portal"
 				project={project}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 			/>
 
 			<DeveloperKeysLayouts>
@@ -38,7 +38,7 @@ const Portal = ({hasComplimentaryKey}) => {
 					listType={LIST_TYPES.portalVersion}
 					productName="Portal"
 					projectName={project.name}
-					sessionId={sessionId}
+					oAuthToken={oAuthToken}
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>
 		</div>

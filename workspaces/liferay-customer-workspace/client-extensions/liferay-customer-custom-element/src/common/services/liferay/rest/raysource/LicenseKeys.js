@@ -10,7 +10,7 @@ export async function getCommonLicenseKey(
 	environment,
 	provisioningServerAPI,
 	productName,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -18,7 +18,7 @@ export async function getCommonLicenseKey(
 		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -29,7 +29,7 @@ export async function getCommonLicenseKey(
 export async function getDevelopmentLicenseKey(
 	accountKey,
 	provisioningServerAPI,
-	sessionId,
+	oAuthToken,
 	selectedVersion,
 	productName
 ) {
@@ -40,7 +40,7 @@ export async function getDevelopmentLicenseKey(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -51,7 +51,7 @@ export async function getDevelopmentLicenseKey(
 export async function getActivationDownloadKey(
 	licenseKey,
 	provisioningServerAPI,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -60,7 +60,7 @@ export async function getActivationDownloadKey(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -71,7 +71,7 @@ export async function getActivationDownloadKey(
 export async function getAggregatedActivationDownloadKey(
 	selectedKeysIDs,
 	provisioningServerAPI,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -80,7 +80,7 @@ export async function getAggregatedActivationDownloadKey(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -91,7 +91,7 @@ export async function getAggregatedActivationDownloadKey(
 export async function getMultipleActivationDownloadKey(
 	selectedKeysIDs,
 	provisioningServerAPI,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -100,7 +100,7 @@ export async function getMultipleActivationDownloadKey(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -111,7 +111,7 @@ export async function getMultipleActivationDownloadKey(
 export async function getExportedLicenseKeys(
 	accountKey,
 	provisioningServerAPI,
-	sessionId,
+	oAuthToken,
 	productName
 ) {
 
@@ -121,7 +121,7 @@ export async function getExportedLicenseKeys(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -132,7 +132,7 @@ export async function getExportedLicenseKeys(
 export async function getExportedSelectedLicenseKeys(
 	selectedKeysIDs,
 	provisioningServerAPI,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -141,7 +141,7 @@ export async function getExportedSelectedLicenseKeys(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -156,7 +156,7 @@ export async function addContactRoleNameByEmailByProject({
 	lastName,
 	provisioningServerAPI,
 	roleName,
-	sessionId,
+	oAuthToken,
 }) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -164,7 +164,7 @@ export async function addContactRoleNameByEmailByProject({
 		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'PUT',
 		}
@@ -182,7 +182,7 @@ export async function deleteContactRoleNameByEmailByProject({
 	emailURI,
 	provisioningServerAPI,
 	rolesToDelete,
-	sessionId,
+	oAuthToken,
 }) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -190,7 +190,7 @@ export async function deleteContactRoleNameByEmailByProject({
 		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${rolesToDelete}`,
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'DELETE',
 		}
@@ -202,7 +202,7 @@ export async function deleteContactRoleNameByEmailByProject({
 export async function putDeactivateKeys(
 	provisioningServerAPI,
 	licenseKeyIds,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -211,7 +211,7 @@ export async function putDeactivateKeys(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'PUT',
 		}
@@ -224,7 +224,7 @@ export async function getNewGenerateKeyFormValues(
 	accountKey,
 	provisioningServerAPI,
 	productGroupName,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -232,7 +232,7 @@ export async function getNewGenerateKeyFormValues(
 		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productGroupName}/generate-form`,
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 		}
 	);
@@ -243,7 +243,7 @@ export async function getNewGenerateKeyFormValues(
 export async function createNewGenerateKey(
 	accountKey,
 	provisioningServerAPI,
-	sessionId,
+	oAuthToken,
 	licenseKey
 ) {
 
@@ -254,7 +254,7 @@ export async function createNewGenerateKey(
 			body: JSON.stringify([licenseKey]),
 			headers: {
 				'Content-Type': 'application/json',
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'POST',
 		}
@@ -266,7 +266,7 @@ export async function createNewGenerateKey(
 export async function putSubscriptionInKey(
 	provisioningServerAPI,
 	licenseKeyIds,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -275,7 +275,7 @@ export async function putSubscriptionInKey(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'PUT',
 		}
@@ -287,7 +287,7 @@ export async function putSubscriptionInKey(
 export async function deleteSubscriptionInKey(
 	provisioningServerAPI,
 	licenseKeyIds,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -296,7 +296,7 @@ export async function deleteSubscriptionInKey(
 
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'DELETE',
 		}
@@ -308,7 +308,7 @@ export async function deleteSubscriptionInKey(
 export async function getSubscriptionInKey(
 	provisioningServerAPI,
 	licenseKeyIds,
-	sessionId
+	oAuthToken
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -316,7 +316,7 @@ export async function getSubscriptionInKey(
 		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyId=${licenseKeyIds}`,
 		{
 			headers: {
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oAuthToken,
 			},
 			method: 'GET',
 		}

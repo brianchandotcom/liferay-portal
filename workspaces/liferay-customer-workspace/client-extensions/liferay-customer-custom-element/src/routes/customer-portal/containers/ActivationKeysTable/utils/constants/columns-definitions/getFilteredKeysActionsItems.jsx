@@ -10,7 +10,7 @@ import {downloadAllKeysDetails} from '../../downloadActivationLicenseKey';
 export function getFilteredKeysActionsItems(
 	accountKey,
 	provisioningServerAPI,
-	sessionId,
+	oAuthToken,
 	handleAlertStatus,
 	productName
 ) {
@@ -24,7 +24,7 @@ export function getFilteredKeysActionsItems(
 				const downloadedAggregated = await downloadAllKeysDetails(
 					accountKey,
 					provisioningServerAPI,
-					sessionId,
+					oAuthToken,
 					productName
 				);
 

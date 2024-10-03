@@ -11,7 +11,7 @@ import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 
 import './common/styles/global.scss';
-import OktaStatus from './common/components/OktaSession';
+import OAuthTokenStatus from './common/components/OAuthToken';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
@@ -48,7 +48,7 @@ type Properties = {
 
 type APIs = {
 	gravatarAPI: string | null;
-	oktaSessionAPI: string | null;
+	oAuthTokenAPI: string | null;
 	provisioningServerAPI: string | null;
 };
 
@@ -64,7 +64,7 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 }) => {
 	const {client, networkStatus} = useApollo(
 		apis.provisioningServerAPI,
-		apis.oktaSessionAPI
+		apis.oAuthTokenAPI
 	);
 
 	useGlobalNetworkIndicator(networkStatus);
@@ -87,7 +87,7 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 				}
 			>
 				{properties.featureFlags?.includes('LPS-192494') && (
-					<OktaStatus />
+					<OAuthTokenStatus />
 				)}
 
 				<AppRouteComponent />
@@ -145,7 +145,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 
 		const apis = {
 			gravatarAPI: super.getAttribute('gravatar-api'),
-			oktaSessionAPI: super.getAttribute('okta-session-api'),
+			oAuthTokenAPI: super.getAttribute('oauth-token-api'),
 			provisioningServerAPI: super.getAttribute(
 				'provisioning-server-api'
 			),

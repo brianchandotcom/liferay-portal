@@ -13,7 +13,7 @@ import {useCustomerPortal} from '../../../context';
 const RenewTable = ({hasComplimentaryKey, isDXPTable, isRenewTable}) => {
 	const productName = isDXPTable ? 'DXP' : 'Portal';
 
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 	const {data: myAccount} = useGetMyUserAccount();
 
 	const isAdminUserAccount = hasAdminUserAccount(myAccount);
@@ -34,7 +34,7 @@ const RenewTable = ({hasComplimentaryKey, isDXPTable, isRenewTable}) => {
 				isRenewTable={isRenewTable}
 				productName={productName}
 				project={project}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 				setActivationKeysChecked={setActivationKeysChecked}
 				setKeysSelectedCount={setKeysSelectedCount}
 				setRenewKeysFilterChecked={setRenewKeysFilterChecked}

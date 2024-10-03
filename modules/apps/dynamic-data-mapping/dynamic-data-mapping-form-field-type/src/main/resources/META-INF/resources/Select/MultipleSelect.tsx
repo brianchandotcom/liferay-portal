@@ -75,9 +75,11 @@ const MultipleSelection = ({
 						const uniqueItems = [
 							...new Set(itemsChanged.map((item) => item.value)),
 						];
+
 						if (itemsChanged.length > uniqueItems.length) {
 							uniqueItems.pop();
 						}
+
 						onChange({}, uniqueItems);
 					}}
 					onKeyDown={(event) => {
@@ -105,18 +107,17 @@ const MultipleSelection = ({
 									data-option-reference={item.reference}
 									data-testid={`labelItem-${item.value}`}
 									label={item.label}
-									onChange={(event) => {
-										const {
-											target: {checked},
-										} = event;
-										let newValue: string[] =
-											values as string[];
+									onChange={({target: {checked}}) => {
+										let newValues = values as string[];
+
 										if (checked) {
 											options.forEach((option) => {
 												if (
 													option.value === item.value
 												) {
-													newValue.push(option.value);
+													newValues.push(
+														option.value
+													);
 												}
 											});
 										}
@@ -125,7 +126,7 @@ const MultipleSelection = ({
 												if (
 													option.value === item.value
 												) {
-													newValue = (
+													newValues = (
 														values as string[]
 													).filter(
 														(value) =>
@@ -135,7 +136,17 @@ const MultipleSelection = ({
 											});
 										}
 
-										onChange({}, newValue);
+										setItems(
+											newValues.map((newValue) => {
+												return {
+													label: newValue,
+													reference: null,
+													value: newValue,
+												};
+											})
+										);
+
+										onChange({}, newValues);
 									}}
 								/>
 							</div>

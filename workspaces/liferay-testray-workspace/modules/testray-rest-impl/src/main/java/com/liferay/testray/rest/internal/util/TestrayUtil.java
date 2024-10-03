@@ -7,9 +7,11 @@ package com.liferay.testray.rest.internal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,36 +107,33 @@ public class TestrayUtil {
 			));
 	}
 
-	public static String interpolateParams(List<Object> params, Long[] values) {
-		StringBundler sb = new StringBundler();
+	public static String interpolateParams(List<Object> params, String values) {
+		Object[] valuesObjectArray;
 
-		for (Long value : values) {
-			sb.append("? ");
-			sb.append(", ");
-			params.add(value);
+		if (Validator.isNotNull(StringUtil.extractDigits(values))) {
+			valuesObjectArray = ArrayUtil.toLongArray(
+				StringUtil.split(values, ",", 0L));
+		}
+		else {
+			valuesObjectArray = StringUtil.split(values);
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	public static String interpolateParams(List<Object> params, String values) {
-		String[] valuesArray = StringUtil.split(values);
-
 		StringBundler sb = new StringBundler();
 
-		for (String value : valuesArray) {
+		for (Object value : valuesObjectArray) {
 			sb.append("? ");
 			sb.append(", ");
 
-			if (StringUtil.equals(value, StringUtil.extractDigits(values))) {
+			if (StringUtil.equals(
+					GetterUtil.getString(value),
+					StringUtil.extractDigits(GetterUtil.getString(value)))) {
+
 				params.add(GetterUtil.getLong(value));
 
 				continue;
 			}
 
-			params.add(value);
+			params.add(GetterUtil.getString(value));
 		}
 
 		sb.setIndex(sb.index() - 1);

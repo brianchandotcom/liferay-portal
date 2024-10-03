@@ -400,7 +400,7 @@ test('LPD-26155 Production conflict info is visible when new changes have been m
 	await expect(prodConflictIcon).toBeVisible();
 });
 
-test('LPD-26155 No conflict icon is visible when there are no conflictsn', async ({
+test('LPD-26155 No conflict icon is visible when there are no conflicts', async ({
 	apiHelpers,
 	documentLibraryPage,
 	page,
@@ -417,4 +417,30 @@ test('LPD-26155 No conflict icon is visible when there are no conflictsn', async
 	const noConflictIcon = page.locator('.change-tracking-conflict-icon');
 	await noConflictIcon.waitFor();
 	await expect(noConflictIcon).toBeVisible();
+});
+
+test('LPD-37842 Timeline icon is yellow for cross-publication edits.', async ({
+	apiHelpers,
+	changeTrackingPage,
+	documentLibraryPage,
+	page,
+	site,
+}) => {
+	const ctCollection2 =
+		await apiHelpers.headlessChangeTracking.createCTCollection(
+			getRandomString()
+		);
+
+	await changeTrackingPage.workOnPublication(ctCollection2);
+
+	await documentLibraryPage.goto(site.friendlyUrlPath);
+	await documentLibraryPage.goToEditFileEntry(title1);
+
+	const timelineButton = page.locator('.change-tracking-timeline-button svg');
+	await timelineButton.waitFor();
+	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
+
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection2.id
+	);
 });

@@ -88,7 +88,7 @@ public class QuoteRequestedCommerceOrderStatusImpl
 	public boolean isEnabled(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (commerceOrder.isOpen()) {
+		if (commerceOrder.isOpen() && _isRequestQuoteEnabled(commerceOrder)) {
 			return true;
 		}
 
@@ -114,27 +114,32 @@ public class QuoteRequestedCommerceOrderStatusImpl
 				return false;
 			}
 
-			CommerceChannel commerceChannel =
-				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-					commerceOrder.getGroupId());
-
-			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceOrderFieldsConfiguration.class,
-					new GroupServiceSettingsLocator(
-						commerceChannel.getGroupId(),
-						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
-
-			if (commerceOrderFieldsConfiguration.requestQuoteEnabled()) {
-				return true;
-			}
-
-			return ListUtil.exists(
-				commerceOrder.getCommerceOrderItems(),
-				CommerceOrderItemModel::isPriceOnApplication);
+			return _isRequestQuoteEnabled(commerceOrder);
 		}
 
 		return false;
+	}
+
+	private boolean _isRequestQuoteEnabled(CommerceOrder commerceOrder)
+		throws PortalException {
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderFieldsConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		if (commerceOrderFieldsConfiguration.requestQuoteEnabled()) {
+			return true;
+		}
+
+		return ListUtil.exists(
+			commerceOrder.getCommerceOrderItems(),
+			CommerceOrderItemModel::isPriceOnApplication);
 	}
 
 	@Reference

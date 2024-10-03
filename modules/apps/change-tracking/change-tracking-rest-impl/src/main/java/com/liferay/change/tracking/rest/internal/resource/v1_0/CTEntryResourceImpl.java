@@ -238,6 +238,14 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			).put(
 				"move-changes",
 				() -> {
+					if ((ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) &&
+						(ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_EXPIRED)) {
+
+						return null;
+					}
+
 					CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 						_ctDisplayRendererRegistry.getCTSQLMode(
 							ctEntry.getCtCollectionId(), ctEntry);
@@ -249,11 +257,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 					if ((model == null) ||
 						_ctDisplayRendererRegistry.isHideable(
-							model, ctEntry.getModelClassNameId()) ||
-						(ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) ||
-						(ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_EXPIRED)) {
+							model, ctEntry.getModelClassNameId())) {
 
 						return null;
 					}

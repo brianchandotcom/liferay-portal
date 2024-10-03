@@ -3807,7 +3807,7 @@ information. Make sure to commit in all build-lib-versions results.
 		<run-empty-osgi-core-dir-test database.type="postgresql" />
 	</target>
 
-	<target name="format-javadoc-jdk8">
+	<target name="format-javadoc-test">
 		<run-batch-test>
 			<test-action>
 				<record action="start" name="${project.dir}/format.javadoc.output.txt" />
@@ -6014,7 +6014,7 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="javadoc-jdk8">
+	<target name="javadoc-test">
 		<run-batch-test>
 			<test-action>
 				<antcall target="compile" />

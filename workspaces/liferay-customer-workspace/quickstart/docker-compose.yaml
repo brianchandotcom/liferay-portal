@@ -25,7 +25,7 @@ services:
         healthcheck:
             interval: 10s
             retries: 60
-            start_period: 40s 
+            start_period: 40s
             test: ["CMD", "curl", "-f", "-s", "--fail", "http://localhost:8080/c/portal/status"]
             timeout: 10s
         image: liferay/dxp:2024.q2.7
@@ -34,7 +34,6 @@ services:
         user: root
         volumes:
             - ./liferay:/mnt/liferay
-            - ../bundles/osgi/client-extensions:/opt/liferay/osgi/client-extensions
             - routes_cron:/opt/liferay/routes/default/liferay-customer-etc-cron
             - routes_dxp:/opt/liferay/routes/default/dxp
             - routes_spring_boot:/opt/liferay/routes/default/liferay-customer-etc-spring-boot

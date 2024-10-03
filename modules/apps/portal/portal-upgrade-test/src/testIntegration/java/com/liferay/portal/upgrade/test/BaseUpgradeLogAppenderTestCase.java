@@ -416,7 +416,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testInfoEventsInOrder() throws Exception {
+	public void testLongestUpgradeProcessesThresholdSorted() throws Exception {
 		_appender.start();
 
 		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
@@ -438,6 +438,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
 				" ms"));
 
+		String underThresholdUpgradeProcessName =
+				"com.liferay.portal.SlowerUpgradeTest";
+
+		log.info(
+				StringBundler.concat(
+						"Completed upgrade process ", underThresholdUpgradeProcessName, " in ",
+						PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
+						" ms"));
+
 		_appender.stop();
 
 		String reportContentDiagnostics = _getReportContentDiagnostics();
@@ -448,6 +457,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		String longestUpgradeProcessesValue = _getLogContextValueDiagnostics(
 			"upgrade.report.longest.upgrade.processes");
+
+		Assert.assertFalse(
+			StringUtil.contains(
+				longestUpgradeProcessesValue, underThresholdUpgradeProcessName,
+				StringPool.BLANK));
 
 		Assert.assertTrue(
 			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
@@ -846,62 +860,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
 				originalUpgradeReportSqlQueryThreshold);
 		}
-	}
-
-	@Test
-	public void testUpgradeProcessThresholdDuration() throws Exception {
-		_appender.start();
-
-		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
-
-		String fasterUpgradeProcessName =
-			"com.liferay.portal.FasterUpgradeTest";
-
-		long fasterUpgradeProcessDuration =
-			PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD - 100;
-
-		log.info(
-			StringBundler.concat(
-				"Completed upgrade process ", fasterUpgradeProcessName, " in ",
-				fasterUpgradeProcessDuration, " ms"));
-
-		String slowerUpgradeProcessName =
-			"com.liferay.portal.SlowerUpgradeTest";
-
-		long slowerUpgradeProcessDuration =
-			PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 100;
-
-		log.info(
-			StringBundler.concat(
-				"Completed upgrade process ", slowerUpgradeProcessName, " in ",
-				slowerUpgradeProcessDuration, " ms"));
-
-		_appender.stop();
-
-		String longestUpgradeProcessesValue = _getLogContextValueDiagnostics(
-			"upgrade.report.longest.upgrade.processes");
-
-		Assert.assertFalse(
-			StringUtil.containsIgnoreCase(
-				longestUpgradeProcessesValue, fasterUpgradeProcessName,
-				StringPool.BLANK));
-
-		Assert.assertTrue(
-			StringUtil.containsIgnoreCase(
-				longestUpgradeProcessesValue, slowerUpgradeProcessName,
-				StringPool.BLANK));
-
-		String reportContentDiagnostics = _getReportContentDiagnostics();
-
-		Assert.assertFalse(
-			StringUtil.contains(
-				reportContentDiagnostics, fasterUpgradeProcessName,
-				StringPool.BLANK));
-
-		Assert.assertTrue(
-			StringUtil.contains(
-				reportContentDiagnostics, slowerUpgradeProcessName,
-				StringPool.BLANK));
 	}
 
 	@Test

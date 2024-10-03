@@ -123,6 +123,32 @@ components:
                         - ChildTestEntity3
                     type: string
             type: object
+        TestEntityAddress:
+            description:
+                "https://www.schema.org/Document"
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                documentId:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                jsonProperty:
+                    type: string
+                    xml:
+                        name: xmlProperty
+                name:
+                    type: string
+            type: object
         UnreferencedTestEntity:
             properties:
                 description:
@@ -196,6 +222,36 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
             tags: ["TestEntity"]
+    /test-entities-address/{testEntityId}/test-entities-address:
+        get:
+            operationId: getTestEntitiesAddressTestEntityTestEntitiesAddressPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: testEntityId
+                  required: true
+                  schema:
+                      description:
+                          Test Entity Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestEntityAddress"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestEntityAddress"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["TestEntityAddress"]
     /test-entities/count:
         get:
             description:

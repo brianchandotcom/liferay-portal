@@ -2464,9 +2464,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			ListUtil.fromArray(oldLanguageIdsArray),
 			ListUtil.fromArray(StringUtil.split(newLanguageIds)));
 
-		if (ListUtil.isEmpty(removedLanguageIds)) {
-			return;
-		}
+		List<String> addedLanguageIds = ListUtil.remove(
+			ListUtil.fromArray(StringUtil.split(newLanguageIds)),
+			ListUtil.fromArray(oldLanguageIdsArray));
 
 		List<Group> groups = _groupLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -2480,9 +2480,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					GroupTable.INSTANCE.active.eq(true)
 				).and(
 					GroupTable.INSTANCE.site.eq(true)
-				).and(
-					GroupTable.INSTANCE.typeSettings.like(
-						"%inheritLocales=false%")
 				)
 			));
 
@@ -2490,31 +2487,66 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			UnicodeProperties groupTypeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
+			boolean inheritLocales = GetterUtil.getBoolean(
+				groupTypeSettingsUnicodeProperties.getProperty(
+					"inheritLocales"));
+
+			if (inheritLocales) {
+				_updateGroupLocales(
+					group, groupTypeSettingsUnicodeProperties, newLanguageIds);
+
+				return;
+			}
+
 			String[] groupLanguageIds = StringUtil.split(
 				groupTypeSettingsUnicodeProperties.getProperty(
 					PropsKeys.LOCALES));
 
 			boolean updateLocales = false;
 
-			for (String removedLanguageId : removedLanguageIds) {
-				if (ArrayUtil.contains(groupLanguageIds, removedLanguageId)) {
-					groupLanguageIds = ArrayUtil.remove(
-						groupLanguageIds, removedLanguageId);
+			if (ListUtil.isNotEmpty(removedLanguageIds)) {
+				for (String removedLanguageId : removedLanguageIds) {
+					if (ArrayUtil.contains(
+							groupLanguageIds, removedLanguageId)) {
 
-					updateLocales = true;
+						groupLanguageIds = ArrayUtil.remove(
+							groupLanguageIds, removedLanguageId);
+
+						updateLocales = true;
+					}
+				}
+			}
+			else {
+				for (String addedLanguageId : addedLanguageIds) {
+					if (!ArrayUtil.contains(
+							groupLanguageIds, addedLanguageId)) {
+
+						groupLanguageIds = ArrayUtil.append(
+							groupLanguageIds, addedLanguageId);
+
+						updateLocales = true;
+					}
 				}
 			}
 
 			if (updateLocales) {
-				LanguageUtil.resetAvailableGroupLocales(group.getGroupId());
-
-				groupTypeSettingsUnicodeProperties.setProperty(
-					PropsKeys.LOCALES,
+				_updateGroupLocales(
+					group, groupTypeSettingsUnicodeProperties,
 					StringUtil.merge(groupLanguageIds, StringPool.COMMA));
-
-				_groupLocalService.updateGroup(group);
 			}
 		}
+	}
+
+	private void _updateGroupLocales(
+		Group group, UnicodeProperties groupTypeSettingsUnicodeProperties,
+		String newLanguageIds) {
+
+		LanguageUtil.resetAvailableGroupLocales(group.getGroupId());
+
+		groupTypeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES, newLanguageIds);
+
+		_groupLocalService.updateGroup(group);
 	}
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";

@@ -48,28 +48,22 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 					ExpandoTableConstants.DEFAULT_TABLE_NAME);
 			}
 
-			addExpandoColumn(
-				expandoTable, "lastSuccessfulNotificationDate",
+			ExpandoColumn expandoColumn =
+				_expandoColumnLocalService.fetchColumn(
+					expandoTable.getTableId(),
+					"lastSuccessfulNotificationDate");
+
+			if (expandoColumn != null) {
+				return;
+			}
+
+			_expandoColumnLocalService.addColumn(
+				expandoTable.getTableId(), "lastSuccessfulNotificationDate",
 				ExpandoColumnConstants.DATE);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(companyId);
 		}
-	}
-
-	protected void addExpandoColumn(
-			ExpandoTable expandoTable, String name, int type)
-		throws Exception {
-
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
-			expandoTable.getTableId(), name);
-
-		if (expandoColumn != null) {
-			return;
-		}
-
-		_expandoColumnLocalService.addColumn(
-			expandoTable.getTableId(), name, type);
 	}
 
 	@Reference

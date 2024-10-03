@@ -44,7 +44,9 @@ export class PageEditorPage {
 		this.experienceSelector = page.locator(
 			'.page-editor__experience-selector'
 		);
-		this.languageSelector = page.getByLabel('Select a language');
+		this.languageSelector = page
+			.locator('.page-editor__toolbar')
+			.getByLabel('Select a language');
 		this.publishButton = page.getByLabel('Publish', {exact: true}).or(
 			page.getByLabel('Submit for Workflow', {
 				exact: true,

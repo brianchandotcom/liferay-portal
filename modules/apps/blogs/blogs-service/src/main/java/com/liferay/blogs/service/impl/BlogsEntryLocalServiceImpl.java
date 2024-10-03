@@ -27,6 +27,7 @@ import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.EntryIdComparator;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -162,17 +163,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			InputStream inputStream)
 		throws PortalException {
 
-		Folder folder = addAttachmentsFolder(userId, entry.getGroupId());
+		return addAttachmentFileEntry(
+			null, userId, entry.getGroupId(), fileName, mimeType, inputStream);
+	}
 
-		String uniqueFileName = _uniqueFileNameProvider.provide(
-			fileName,
-			curFileName -> _hasFileEntry(
-				entry.getGroupId(), folder.getFolderId(), curFileName));
+	@Override
+	public FileEntry addAttachmentFileEntry(
+			String externalReferenceCode, long userId, long groupId,
+			String fileName, String mimeType, InputStream inputStream)
+		throws PortalException {
+
+		Folder folder = addAttachmentsFolder(userId, groupId);
 
 		return _portletFileRepository.addPortletFileEntry(
-			null, entry.getGroupId(), userId, null, 0,
+			externalReferenceCode, groupId, userId, null, 0,
 			BlogsConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
-			uniqueFileName, mimeType, true);
+			_getUniqueFileName(groupId, fileName, folder.getFolderId()),
+			mimeType, true);
 	}
 
 	@Override
@@ -602,6 +609,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteAttachmentFileEntry(long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+			fileEntryId);
+
+		_validateAttachmentFileEntry(fileEntry);
+
+		_portletFileRepository.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public BlogsEntry deleteBlogsEntry(BlogsEntry blogsEntry) {
 		try {
 			return blogsEntryLocalService.deleteEntry(blogsEntry);
@@ -745,6 +765,32 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		return blogsEntryPersistence.fetchByG_UT(groupId, urlTitle);
+	}
+
+	@Override
+	public FileEntry getAttachmentFileEntry(long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+			fileEntryId);
+
+		_validateAttachmentFileEntry(fileEntry);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry getAttachmentFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FileEntry fileEntry =
+			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		_validateAttachmentFileEntry(fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -2400,6 +2446,24 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (content.length() > contentMaxLength) {
 			throw new EntryContentException(
 				"Content has more than " + contentMaxLength + " characters");
+		}
+	}
+
+	private void _validateAttachmentFileEntry(FileEntry fileEntry)
+		throws PortalException {
+
+		Repository repository = _portletFileRepository.getPortletRepository(
+			fileEntry.getGroupId(), BlogsConstants.SERVICE_NAME);
+
+		Folder folder = _portletFileRepository.getPortletFolder(
+			repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			BlogsConstants.SERVICE_NAME);
+
+		if (fileEntry.getFolderId() != folder.getFolderId()) {
+			throw new NoSuchFileEntryException(
+				"Not a valid blog attachment file {fileEntryId=" +
+					fileEntry.getFileEntryId() + "}");
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -42,6 +43,8 @@ import com.liferay.rss.model.SyndFeed;
 import com.liferay.rss.model.SyndLink;
 import com.liferay.rss.model.SyndModelFactory;
 import com.liferay.rss.util.RSSUtil;
+
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,6 +71,20 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	service = AopService.class
 )
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
+
+	@Override
+	public FileEntry addAttachmentFileEntry(
+			String externalReferenceCode, long groupId, String fileName,
+			String mimeType, InputStream inputStream)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_ENTRY);
+
+		return blogsEntryLocalService.addAttachmentFileEntry(
+			externalReferenceCode, getUserId(), groupId, fileName, mimeType,
+			inputStream);
+	}
 
 	@Override
 	public Folder addAttachmentsFolder(long groupId) throws PortalException {
@@ -126,6 +143,19 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteAttachmentFileEntry(long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = blogsEntryLocalService.getAttachmentFileEntry(
+			fileEntryId);
+
+		_fileEntryModelResourcePermission.check(
+			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
+
+		blogsEntryLocalService.deleteAttachmentFileEntry(fileEntryId);
+	}
+
+	@Override
 	public void deleteEntry(long entryId) throws PortalException {
 		_blogsEntryModelResourcePermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
@@ -147,6 +177,35 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 
 		return blogsEntry;
+	}
+
+	@Override
+	public FileEntry getAttachmentFileEntry(long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = blogsEntryLocalService.getAttachmentFileEntry(
+			fileEntryId);
+
+		_fileEntryModelResourcePermission.check(
+			getPermissionChecker(), fileEntry, ActionKeys.VIEW);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry getAttachmentFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FileEntry fileEntry =
+			blogsEntryLocalService.
+				getAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		_fileEntryModelResourcePermission.check(
+			getPermissionChecker(), fileEntry, ActionKeys.VIEW);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -717,6 +776,12 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

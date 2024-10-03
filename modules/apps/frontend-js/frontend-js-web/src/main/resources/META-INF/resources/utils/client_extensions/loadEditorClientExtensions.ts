@@ -24,7 +24,7 @@ export default function loadEditorClientExtensions({
 				})
 			),
 			onLoad: (bindingContexts) => {
-				let transformedConfig = config;
+				let transformedConfig = JSON.parse(JSON.stringify(config));
 
 				bindingContexts.forEach(
 					({binding: editorTransformer, error}) => {

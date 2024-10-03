@@ -7,7 +7,8 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
+<%@ page import="com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %><%@

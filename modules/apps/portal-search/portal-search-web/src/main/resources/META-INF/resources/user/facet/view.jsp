@@ -101,7 +101,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 												class="custom-control-input facet-term"
 												data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>"
 												disabled
-												id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
+												id="<portlet:namespace />term_<%= i %>"
 												name="<portlet:namespace />term_<%= i %>"
 												type="checkbox"
 											/>

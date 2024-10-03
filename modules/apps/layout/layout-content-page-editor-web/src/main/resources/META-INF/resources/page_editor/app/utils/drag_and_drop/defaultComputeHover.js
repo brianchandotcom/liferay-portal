@@ -29,6 +29,7 @@ export default function defaultComputeHover({
 	monitor,
 	siblingItem = null,
 	sourceItem,
+	state,
 	targetItem,
 	targetRefs,
 }) {
@@ -105,7 +106,8 @@ export default function defaultComputeHover({
 	if (
 		!siblingItem &&
 		validDropInsideTarget &&
-		!itemIsAncestor(sourceItem, targetItem, layoutDataRef)
+		!itemIsAncestor(sourceItem, targetItem, layoutDataRef) &&
+		stateHasChanged(state, sourceItem, targetItem, targetPositionWithMiddle)
 	) {
 		return dispatch({
 			dropItem: sourceItem,
@@ -135,7 +137,13 @@ export default function defaultComputeHover({
 		siblingItem &&
 		!shouldBeIgnoredInElevation(parent) &&
 		validElevation(siblingItem, orientation, layoutDataRef) &&
-		!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
+		!itemIsAncestor(sourceItem, siblingItem, layoutDataRef) &&
+		stateHasChanged(
+			state,
+			sourceItem,
+			siblingItem,
+			targetPositionWithMiddle
+		)
 	) {
 		return dispatch({
 			dropItem: sourceItem,
@@ -229,6 +237,7 @@ export default function defaultComputeHover({
 				monitor,
 				siblingItem,
 				sourceItem,
+				state,
 				targetItem: elevatedTargetItem,
 				targetRefs,
 			});
@@ -338,4 +347,18 @@ function validElevation(siblingItem, orientation, layoutDataRef) {
 	return orientation === ORIENTATIONS.horizontal
 		? isItemContainerFlex(targetItemParent)
 		: !isItemContainerFlex(targetItemParent);
+}
+
+function stateHasChanged(state, sourceItem, targetItem, position) {
+	if (
+		state.dropItem?.itemId === sourceItem.itemId &&
+		state.dropTargetItem?.itemId === targetItem.itemId &&
+		state.dropTargetItem?.collectionItemIndex ===
+			targetItem.collectionItemIndex &&
+		state.targetPositionWithMiddle === position
+	) {
+		return false;
+	}
+
+	return true;
 }

@@ -657,6 +657,7 @@ function computeHover({
 	monitor,
 	siblingItem = null,
 	sourceItem,
+	state,
 	targetItem,
 	targetRefs,
 }) {
@@ -728,7 +729,11 @@ function computeHover({
 		);
 	})();
 
-	if (!siblingItem && validDropInsideTarget) {
+	if (
+		!siblingItem &&
+		validDropInsideTarget &&
+		stateHasChanged(state, sourceItem, targetItem, targetPositionWithMiddle)
+	) {
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
@@ -750,7 +755,15 @@ function computeHover({
 	// - dropItem should be child of dropTargetItem
 	// - dropItem should be sibling of siblingItem
 
-	if (siblingItem) {
+	if (
+		siblingItem &&
+		stateHasChanged(
+			state,
+			sourceItem,
+			siblingItem,
+			targetPositionWithMiddle
+		)
+	) {
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
@@ -815,6 +828,7 @@ function computeHover({
 				monitor,
 				siblingItem,
 				sourceItem,
+				state,
 				targetItem: elevatedTargetItem,
 			});
 		}
@@ -859,4 +873,16 @@ function isRestricted(item, node, restrictedItemIds) {
 	}
 
 	return false;
+}
+
+function stateHasChanged(state, sourceItem, targetItem, position) {
+	if (
+		state.dropItem?.itemId === sourceItem.itemId &&
+		state.dropTargetItem?.itemId === targetItem.itemId &&
+		state.targetPositionWithMiddle === position
+	) {
+		return false;
+	}
+
+	return true;
 }

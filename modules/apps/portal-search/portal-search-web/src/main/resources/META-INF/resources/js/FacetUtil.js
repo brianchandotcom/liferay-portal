@@ -95,11 +95,19 @@ export const FacetUtil = {
 					// termId is 'custom-range' and the parameters are
 					// prefixed with 'from' and 'to'.
 
+					// Set an empty range if a non-custom-range facet
+					// was selected. It should serve as a placeholder to grab
+					// the existing range from the URL parameters.
+
+					if (currentSelectedTermId !== CUSTOM_RANGE_BUCKET_TEXT) {
+						return [];
+					}
+
 					if (
 						form.querySelector('.aggregation-type').value ===
 						'range'
 					) {
-						return [0, 1];
+						return [0, 0];
 					}
 
 					// If no min-max values are set, assume it's a date
@@ -264,6 +272,21 @@ export const FacetUtil = {
 
 		selections.forEach((item) => {
 			if (Array.isArray(item)) {
+				if (!item.length) {
+
+					// With empty ranges, grab the existing range
+					// from parameterArray.
+
+					const from = parameterArray.find((param) =>
+						param.includes(key + 'From')
+					);
+					const to = parameterArray.find((param) =>
+						param.includes(key + 'To')
+					);
+
+					item = [from.split('=')[1], to.split('=')[1]];
+				}
+
 				newParameters = this.addURLParameter(
 					key + 'From',
 					item[0],

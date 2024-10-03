@@ -66,7 +66,8 @@ public class FaroProjectModelImpl
 		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"accountKey", Types.VARCHAR},
 		{"accountName", Types.VARCHAR}, {"corpProjectName", Types.VARCHAR},
-		{"corpProjectUuid", Types.VARCHAR}, {"ipAddresses", Types.VARCHAR},
+		{"corpProjectUuid", Types.VARCHAR},
+		{"dataSourceConnected", Types.BOOLEAN}, {"ipAddresses", Types.VARCHAR},
 		{"incidentReportEmailAddresses", Types.VARCHAR},
 		{"lastAccessTime", Types.BIGINT},
 		{"recommendationsEnabled", Types.BOOLEAN},
@@ -93,6 +94,7 @@ public class FaroProjectModelImpl
 		TABLE_COLUMNS_MAP.put("accountName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("corpProjectName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("corpProjectUuid", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dataSourceConnected", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("ipAddresses", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("incidentReportEmailAddresses", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastAccessTime", Types.BIGINT);
@@ -107,7 +109,7 @@ public class FaroProjectModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroProject (mvccVersion LONG default 0 not null,faroProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,name VARCHAR(75) null,accountKey VARCHAR(75) null,accountName VARCHAR(75) null,corpProjectName VARCHAR(75) null,corpProjectUuid VARCHAR(75) null,ipAddresses STRING null,incidentReportEmailAddresses STRING null,lastAccessTime LONG,recommendationsEnabled BOOLEAN,serverLocation VARCHAR(75) null,services STRING null,state_ VARCHAR(75) null,subscription STRING null,subscriptionModifiedTime LONG,timeZoneId VARCHAR(75) null,weDeployKey VARCHAR(75) null)";
+		"create table OSBFaro_FaroProject (mvccVersion LONG default 0 not null,faroProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,name VARCHAR(75) null,accountKey VARCHAR(75) null,accountName VARCHAR(75) null,corpProjectName VARCHAR(75) null,corpProjectUuid VARCHAR(75) null,dataSourceConnected BOOLEAN,ipAddresses STRING null,incidentReportEmailAddresses STRING null,lastAccessTime LONG,recommendationsEnabled BOOLEAN,serverLocation VARCHAR(75) null,services STRING null,state_ VARCHAR(75) null,subscription STRING null,subscriptionModifiedTime LONG,timeZoneId VARCHAR(75) null,weDeployKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroProject";
@@ -293,6 +295,8 @@ public class FaroProjectModelImpl
 			attributeGetterFunctions.put(
 				"corpProjectUuid", FaroProject::getCorpProjectUuid);
 			attributeGetterFunctions.put(
+				"dataSourceConnected", FaroProject::getDataSourceConnected);
+			attributeGetterFunctions.put(
 				"ipAddresses", FaroProject::getIpAddresses);
 			attributeGetterFunctions.put(
 				"incidentReportEmailAddresses",
@@ -371,6 +375,10 @@ public class FaroProjectModelImpl
 				"corpProjectUuid",
 				(BiConsumer<FaroProject, String>)
 					FaroProject::setCorpProjectUuid);
+			attributeSetterBiConsumers.put(
+				"dataSourceConnected",
+				(BiConsumer<FaroProject, Boolean>)
+					FaroProject::setDataSourceConnected);
 			attributeSetterBiConsumers.put(
 				"ipAddresses",
 				(BiConsumer<FaroProject, String>)FaroProject::setIpAddresses);
@@ -671,6 +679,20 @@ public class FaroProjectModelImpl
 	}
 
 	@Override
+	public Boolean getDataSourceConnected() {
+		return _dataSourceConnected;
+	}
+
+	@Override
+	public void setDataSourceConnected(Boolean dataSourceConnected) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_dataSourceConnected = dataSourceConnected;
+	}
+
+	@Override
 	public String getIpAddresses() {
 		if (_ipAddresses == null) {
 			return "";
@@ -958,6 +980,7 @@ public class FaroProjectModelImpl
 		faroProjectImpl.setAccountName(getAccountName());
 		faroProjectImpl.setCorpProjectName(getCorpProjectName());
 		faroProjectImpl.setCorpProjectUuid(getCorpProjectUuid());
+		faroProjectImpl.setDataSourceConnected(getDataSourceConnected());
 		faroProjectImpl.setIpAddresses(getIpAddresses());
 		faroProjectImpl.setIncidentReportEmailAddresses(
 			getIncidentReportEmailAddresses());
@@ -1005,6 +1028,8 @@ public class FaroProjectModelImpl
 			this.<String>getColumnOriginalValue("corpProjectName"));
 		faroProjectImpl.setCorpProjectUuid(
 			this.<String>getColumnOriginalValue("corpProjectUuid"));
+		faroProjectImpl.setDataSourceConnected(
+			this.<Boolean>getColumnOriginalValue("dataSourceConnected"));
 		faroProjectImpl.setIpAddresses(
 			this.<String>getColumnOriginalValue("ipAddresses"));
 		faroProjectImpl.setIncidentReportEmailAddresses(
@@ -1165,6 +1190,12 @@ public class FaroProjectModelImpl
 			faroProjectCacheModel.corpProjectUuid = null;
 		}
 
+		Boolean dataSourceConnected = getDataSourceConnected();
+
+		if (dataSourceConnected != null) {
+			faroProjectCacheModel.dataSourceConnected = dataSourceConnected;
+		}
+
 		faroProjectCacheModel.ipAddresses = getIpAddresses();
 
 		String ipAddresses = faroProjectCacheModel.ipAddresses;
@@ -1315,6 +1346,7 @@ public class FaroProjectModelImpl
 	private String _accountName;
 	private String _corpProjectName;
 	private String _corpProjectUuid;
+	private Boolean _dataSourceConnected;
 	private String _ipAddresses;
 	private String _incidentReportEmailAddresses;
 	private long _lastAccessTime;
@@ -1370,6 +1402,7 @@ public class FaroProjectModelImpl
 		_columnOriginalValues.put("accountName", _accountName);
 		_columnOriginalValues.put("corpProjectName", _corpProjectName);
 		_columnOriginalValues.put("corpProjectUuid", _corpProjectUuid);
+		_columnOriginalValues.put("dataSourceConnected", _dataSourceConnected);
 		_columnOriginalValues.put("ipAddresses", _ipAddresses);
 		_columnOriginalValues.put(
 			"incidentReportEmailAddresses", _incidentReportEmailAddresses);
@@ -1433,27 +1466,29 @@ public class FaroProjectModelImpl
 
 		columnBitmasks.put("corpProjectUuid", 4096L);
 
-		columnBitmasks.put("ipAddresses", 8192L);
+		columnBitmasks.put("dataSourceConnected", 8192L);
 
-		columnBitmasks.put("incidentReportEmailAddresses", 16384L);
+		columnBitmasks.put("ipAddresses", 16384L);
 
-		columnBitmasks.put("lastAccessTime", 32768L);
+		columnBitmasks.put("incidentReportEmailAddresses", 32768L);
 
-		columnBitmasks.put("recommendationsEnabled", 65536L);
+		columnBitmasks.put("lastAccessTime", 65536L);
 
-		columnBitmasks.put("serverLocation", 131072L);
+		columnBitmasks.put("recommendationsEnabled", 131072L);
 
-		columnBitmasks.put("services", 262144L);
+		columnBitmasks.put("serverLocation", 262144L);
 
-		columnBitmasks.put("state_", 524288L);
+		columnBitmasks.put("services", 524288L);
 
-		columnBitmasks.put("subscription", 1048576L);
+		columnBitmasks.put("state_", 1048576L);
 
-		columnBitmasks.put("subscriptionModifiedTime", 2097152L);
+		columnBitmasks.put("subscription", 2097152L);
 
-		columnBitmasks.put("timeZoneId", 4194304L);
+		columnBitmasks.put("subscriptionModifiedTime", 4194304L);
 
-		columnBitmasks.put("weDeployKey", 8388608L);
+		columnBitmasks.put("timeZoneId", 8388608L);
+
+		columnBitmasks.put("weDeployKey", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

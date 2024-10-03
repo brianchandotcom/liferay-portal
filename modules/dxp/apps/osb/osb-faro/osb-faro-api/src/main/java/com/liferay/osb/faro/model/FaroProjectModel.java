@@ -254,6 +254,20 @@ public interface FaroProjectModel
 	public void setCorpProjectUuid(String corpProjectUuid);
 
 	/**
+	 * Returns the data source connected of this faro project.
+	 *
+	 * @return the data source connected of this faro project
+	 */
+	public Boolean getDataSourceConnected();
+
+	/**
+	 * Sets the data source connected of this faro project.
+	 *
+	 * @param dataSourceConnected the data source connected of this faro project
+	 */
+	public void setDataSourceConnected(Boolean dataSourceConnected);
+
+	/**
 	 * Returns the ip addresses of this faro project.
 	 *
 	 * @return the ip addresses of this faro project

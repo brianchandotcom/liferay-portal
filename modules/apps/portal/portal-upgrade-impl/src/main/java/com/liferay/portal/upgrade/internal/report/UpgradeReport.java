@@ -717,7 +717,7 @@ public class UpgradeReport {
 	private String _getReportHeader(String key) {
 		if (key.equals("longest.running.sqls")) {
 			return String.format(
-				"Top %d longest SQL queries above %d milliseconds",
+				"Top %d longest running SQLs above %d milliseconds",
 				_LONGEST_RUNNING_SQLS_COUNT,
 				PropsValues.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
 		}

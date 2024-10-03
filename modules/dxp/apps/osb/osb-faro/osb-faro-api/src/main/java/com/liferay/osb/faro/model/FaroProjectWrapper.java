@@ -45,6 +45,7 @@ public class FaroProjectWrapper
 		attributes.put("accountName", getAccountName());
 		attributes.put("corpProjectName", getCorpProjectName());
 		attributes.put("corpProjectUuid", getCorpProjectUuid());
+		attributes.put("dataSourceConnected", getDataSourceConnected());
 		attributes.put("ipAddresses", getIpAddresses());
 		attributes.put(
 			"incidentReportEmailAddresses", getIncidentReportEmailAddresses());
@@ -140,6 +141,13 @@ public class FaroProjectWrapper
 
 		if (corpProjectUuid != null) {
 			setCorpProjectUuid(corpProjectUuid);
+		}
+
+		Boolean dataSourceConnected = (Boolean)attributes.get(
+			"dataSourceConnected");
+
+		if (dataSourceConnected != null) {
+			setDataSourceConnected(dataSourceConnected);
 		}
 
 		String ipAddresses = (String)attributes.get("ipAddresses");
@@ -275,6 +283,16 @@ public class FaroProjectWrapper
 	@Override
 	public long getCreateTime() {
 		return model.getCreateTime();
+	}
+
+	/**
+	 * Returns the data source connected of this faro project.
+	 *
+	 * @return the data source connected of this faro project
+	 */
+	@Override
+	public Boolean getDataSourceConnected() {
+		return model.getDataSourceConnected();
 	}
 
 	/**
@@ -565,6 +583,16 @@ public class FaroProjectWrapper
 	@Override
 	public void setCreateTime(long createTime) {
 		model.setCreateTime(createTime);
+	}
+
+	/**
+	 * Sets the data source connected of this faro project.
+	 *
+	 * @param dataSourceConnected the data source connected of this faro project
+	 */
+	@Override
+	public void setDataSourceConnected(Boolean dataSourceConnected) {
+		model.setDataSourceConnected(dataSourceConnected);
 	}
 
 	/**

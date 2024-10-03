@@ -57,6 +57,7 @@
 		<field name="accountName" type="String" />
 		<field name="corpProjectName" type="String" />
 		<field name="corpProjectUuid" type="String" />
+		<field name="dataSourceConnected" type="Boolean" />
 		<field name="ipAddresses" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

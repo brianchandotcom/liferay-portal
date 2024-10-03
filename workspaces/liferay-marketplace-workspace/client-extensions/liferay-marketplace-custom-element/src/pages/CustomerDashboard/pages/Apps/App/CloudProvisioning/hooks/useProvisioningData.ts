@@ -74,7 +74,7 @@ const useProvisioningData = (orderId: string) => {
 						productLicenseType
 					),
 					host: '',
-					id: i,
+					id: deployment?.id,
 					orderItem: orderItem.id,
 					project,
 					startDate: format(

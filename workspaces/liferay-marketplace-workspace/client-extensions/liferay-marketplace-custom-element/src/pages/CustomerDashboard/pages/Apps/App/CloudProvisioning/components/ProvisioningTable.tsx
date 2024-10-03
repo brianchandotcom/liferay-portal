@@ -14,6 +14,7 @@ import Table from '../../../../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import i18n from '../../../../../../../i18n';
 import {Liferay} from '../../../../../../../liferay/liferay';
+import consoleOAuth2 from '../../../../../../../services/oauth/Console';
 import {cloudConsoleURLs} from '../../../../../../../utils/link';
 import useProvisioningData from '../hooks/useProvisioningData';
 import {InstallStatus} from '../types';
@@ -36,6 +37,7 @@ type DetailsData = {
 	};
 	isExpired: boolean;
 	isInstalled: boolean;
+	order: PlacedOrder;
 	orderItem: OrderItem;
 };
 
@@ -55,6 +57,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 	const modal = useModal();
 	const uninstallModal = useModal();
 	const detailsModal = useModal();
+	const [loading, setLoading] = useState<boolean>();
 
 	const onOpenDetailsModal = (orderItem: OrderItem) => {
 		const isExpired = orderItem.status === InstallStatus.EXPIRED;
@@ -69,6 +72,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 			},
 			isExpired,
 			isInstalled,
+			order,
 			orderItem,
 		});
 
@@ -83,8 +87,15 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 		navigate(`/order/${order?.id}/cloud-provisioning/install`);
 	};
 
-	const uninstall = async () => {
+	const uninstall = async (detailsData: DetailsData) => {
+		setLoading(true);
+
 		try {
+			await consoleOAuth2.uninstallApp(detailsData.order.id, {
+				id: detailsData.orderItem.id,
+				orderItemId: detailsData.orderItem.orderItem,
+			});
+
 			await mutateOrder((items) => items, {revalidate: true});
 
 			Liferay.Util.openToast({
@@ -102,6 +113,8 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 				type: 'danger',
 			});
 		}
+
+		setLoading(false);
 	};
 
 	return (
@@ -262,11 +275,35 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 
 											{isInstalled && (
 												<ClayDropDown.Item
-													onClick={() =>
+													onClick={() => {
+														const isExpired =
+															orderItem.status ===
+															InstallStatus.EXPIRED;
+														const isInstalled =
+															orderItem.status ===
+															InstallStatus.INSTALLED;
+
+														setDetailsData({
+															headerInfo: {
+																image: order
+																	.placedOrderItems[0]
+																	.thumbnail,
+																licenseType: `${orderItem?.type} License for ${myUserAccount.name}`,
+																myUserAccount,
+																name: order
+																	.placedOrderItems[0]
+																	.name,
+															},
+															isExpired,
+															isInstalled,
+															order,
+															orderItem,
+														});
+
 														uninstallModal.onOpenChange(
 															true
-														)
-													}
+														);
+													}}
 												>
 													{i18n.translate(
 														'uninstall'
@@ -330,8 +367,11 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 				last={
 					<ClayButton
 						className="ml-2 rounded-lg"
+						disabled={loading}
 						displayType="danger"
-						onClick={async () => await uninstall()}
+						onClick={async () =>
+							await uninstall(detailsData as DetailsData)
+						}
 						size="sm"
 					>
 						{i18n.translate('confirm-uninstall')}
@@ -376,9 +416,10 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 							<ClayButton
 								className="border border-danger ml-2 rounded-lg text-danger"
 								displayType="secondary"
-								onClick={async () => {
-									await uninstall();
+								onClick={() => {
 									detailsModal.onClose();
+
+									uninstallModal.onOpenChange(true);
 								}}
 								size="sm"
 							>

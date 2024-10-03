@@ -11,6 +11,16 @@ class ConsoleOAuth2 extends MarketplaceSpringBootOAuth2 {
 		return this.get<ConsoleProjectsUsage>('/projects-usage');
 	}
 
+	async uninstallApp(
+		orderId: number,
+		data: {
+			id: string;
+			orderItemId: number;
+		}
+	): Promise<void> {
+		return this.post(`/uninstall-app/${orderId}`, data);
+	}
+
 	async provisioning(
 		orderId: number,
 		data: {orderItemId: number; projectId: string}

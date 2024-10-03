@@ -2733,8 +2733,8 @@ public interface PropsKeys {
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";
 
-	public static final String UPGRADE_REPORT_SQL_QUERY_THRESHOLD =
-		"upgrade.report.sql.query.threshold";
+	public static final String UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD =
+		"upgrade.report.sql.statement.threshold";
 
 	public static final String UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD =
 		"upgrade.report.upgrade.process.threshold";

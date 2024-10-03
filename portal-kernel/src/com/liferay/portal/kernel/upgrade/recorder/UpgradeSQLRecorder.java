@@ -219,7 +219,7 @@ public class UpgradeSQLRecorder {
 
 				long duration = System.currentTimeMillis() - startTime;
 
-				if (duration >= _UPGRADE_REPORT_SQL_QUERY_THRESHOLD) {
+				if (duration >= _UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD) {
 					if (Validator.isBlank(_upgradeProcessClassName)) {
 						_sqlExecutionTimes.put(sql, duration);
 					}
@@ -384,9 +384,9 @@ public class UpgradeSQLRecorder {
 		};
 	}
 
-	private static final long _UPGRADE_REPORT_SQL_QUERY_THRESHOLD =
+	private static final long _UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD =
 		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD));
+			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD));
 
 	private static boolean _enabled;
 	private static final List<String> _failedSQLs =

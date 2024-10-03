@@ -23,6 +23,8 @@ jest.mock(
 );
 
 const IDS = {
+	collection: 'collection',
+	collectionItem: 'collectionItem',
 	container: 'container',
 	form: 'form-id',
 	formStep: 'form-step-id',
@@ -30,6 +32,25 @@ const IDS = {
 	fragment: 'fragment-id',
 	grid: 'grid-id',
 };
+
+function getCollection() {
+	return {
+		children: [IDS.collectionItem],
+		config: {},
+		itemId: IDS.collection,
+		type: LAYOUT_DATA_ITEM_TYPES.collection,
+	};
+}
+
+function getCollectionItem() {
+	return {
+		children: [],
+		config: {},
+		itemId: IDS.collectionItem,
+		parentId: IDS.collection,
+		type: LAYOUT_DATA_ITEM_TYPES.collectionItem,
+	};
+}
 
 function getContainer() {
 	return {
@@ -48,6 +69,7 @@ function getFragment(
 		isWidget = false,
 		itemId,
 		parentId,
+		portletId,
 	} = {
 		fieldTypes: [],
 		fragmentEntryType: 'component',
@@ -64,6 +86,7 @@ function getFragment(
 		isWidget,
 		itemId: itemId || IDS.fragment,
 		parentId,
+		portletId,
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
 }
@@ -323,6 +346,45 @@ describe('checkAllowedChild', () => {
 					layoutData,
 					fragmentEntryLinks,
 					() => []
+				)
+			).toBe(false);
+		});
+	});
+
+	describe('Widgets', () => {
+		it('it is not possible to add a non-instanceable widget in a collection display', () => {
+			const widget = getFragment({
+				isWidget: true,
+				portletId: 'non-instanceable-widget',
+			});
+
+			const collectionItem = getCollectionItem();
+
+			const layoutData = {
+				items: {
+					[IDS.collection]: getCollection(),
+					[IDS.collectionItem]: collectionItem,
+				},
+			};
+
+			const widgets = [
+				{
+					portlets: [
+						{
+							instanceable: false,
+							portletId: 'non-instanceable-widget',
+						},
+					],
+				},
+			];
+
+			expect(
+				checkAllowedChild(
+					widget,
+					collectionItem,
+					layoutData,
+					{},
+					() => widgets
 				)
 			).toBe(false);
 		});

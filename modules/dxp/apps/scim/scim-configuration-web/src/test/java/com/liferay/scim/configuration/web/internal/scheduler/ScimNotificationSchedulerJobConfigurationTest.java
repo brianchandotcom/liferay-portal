@@ -32,15 +32,15 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		Date tokenExpiryDate = new Date(System.currentTimeMillis() + Time.YEAR);
 
 		_testNotificationDuration(
-			tokenExpiryDate, tokenExpiryDate.getTime() - (Time.DAY * 30));
+			tokenExpiryDate.getTime() - (Time.DAY * 30), tokenExpiryDate);
 
 		_testNotificationDuration(
-			tokenExpiryDate, tokenExpiryDate.getTime() - (Time.DAY * 10));
+			tokenExpiryDate.getTime() - (Time.DAY * 10), tokenExpiryDate);
 
 		_testNotificationDuration(
-			tokenExpiryDate, tokenExpiryDate.getTime() - Time.DAY);
+			tokenExpiryDate.getTime() - Time.DAY, tokenExpiryDate);
 
-		_testNotificationDuration(tokenExpiryDate, tokenExpiryDate.getTime());
+		_testNotificationDuration(tokenExpiryDate.getTime(), tokenExpiryDate);
 	}
 
 	private ScimNotificationSchedulerJobConfiguration
@@ -56,27 +56,27 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	}
 
 	private void _testNotificationDuration(
-		Date tokenExpiryDate, long notificationDurationMillis) {
+		long notificationDurationMillis, Date tokenExpiryDate) {
 
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				tokenExpiryDate, _NO_NOTIFICATION_YET,
-				notificationDurationMillis));
+				notificationDurationMillis, _NO_NOTIFICATION_YET,
+				tokenExpiryDate));
 
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				tokenExpiryDate, new Date(notificationDurationMillis - 1),
-				notificationDurationMillis));
+				notificationDurationMillis,
+				new Date(notificationDurationMillis - 1), tokenExpiryDate));
 
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				tokenExpiryDate, new Date(notificationDurationMillis),
-				notificationDurationMillis));
+				notificationDurationMillis,
+				new Date(notificationDurationMillis), tokenExpiryDate));
 
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				tokenExpiryDate, new Date(notificationDurationMillis + 1),
-				notificationDurationMillis));
+				notificationDurationMillis,
+				new Date(notificationDurationMillis + 1), tokenExpiryDate));
 	}
 
 	private static final Date _NO_NOTIFICATION_YET = new Date(0);

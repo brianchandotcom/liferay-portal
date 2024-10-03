@@ -97,16 +97,16 @@ public class ScimNotificationSchedulerJobConfiguration
 		Date oAuth2AccessTokenExpirationDate, Date lastNotificationDate,
 		long currentTime) {
 
-		long millisUntilExpiry =
+		long toExpiryMillis =
 			oAuth2AccessTokenExpirationDate.getTime() - currentTime;
 
-		long millisToExpiryAtLastNotification =
+		long toExpiryAtLastNotificationMillis =
 			oAuth2AccessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
 		for (long notificationDurationMillis : _NOTIFICATION_DURATION_MILLIS) {
-			if ((notificationDurationMillis >= millisUntilExpiry) &&
-				(millisToExpiryAtLastNotification >
+			if ((notificationDurationMillis >= toExpiryMillis) &&
+				(toExpiryAtLastNotificationMillis >
 					notificationDurationMillis)) {
 
 				return true;

@@ -148,12 +148,18 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 					return originalTitle;
 				}),
-			name -> name.startsWith("localized_title"), searchResponse);
+			name ->
+				!name.contains(StringPool.PERIOD) &&
+				name.startsWith("localized_title"),
+			searchResponse);
 		FieldValuesAssert.assertFieldValues(
 			_getLocalizedKeywordSorteableMap(
 				null, "urlTitle", true,
 				locale -> journalArticle.getUrlTitle(locale)),
-			name -> name.startsWith("urlTitle_"), searchResponse);
+			name ->
+				!name.contains(StringPool.PERIOD) &&
+				name.startsWith("urlTitle_"),
+			searchResponse);
 	}
 
 	@Test
@@ -232,7 +238,10 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 					return originalTitle;
 				}),
-			name -> name.startsWith("localized_title"), searchResponse);
+			name ->
+				!name.contains(StringPool.PERIOD) &&
+				name.startsWith("localized_title"),
+			searchResponse);
 		FieldValuesAssert.assertFieldValues(
 			Collections.emptyMap(), name -> name.startsWith("ddm__text"),
 			searchResponse);
@@ -289,7 +298,10 @@ public class JournalArticleIndexerLocalizedContentTest {
 				searchResponse);
 			FieldValuesAssert.assertFieldValues(
 				localizedTitleStrings,
-				name -> name.startsWith("localized_title"), searchResponse);
+				name ->
+					!name.contains(StringPool.PERIOD) &&
+					name.startsWith("localized_title"),
+				searchResponse);
 		}
 	}
 

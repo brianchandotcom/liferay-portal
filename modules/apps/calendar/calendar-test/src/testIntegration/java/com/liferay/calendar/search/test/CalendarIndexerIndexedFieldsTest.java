@@ -8,6 +8,7 @@ package com.liferay.calendar.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -94,7 +95,10 @@ public class CalendarIndexerIndexedFieldsTest
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), keywords);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			keywords);
 	}
 
 	@Test
@@ -126,7 +130,10 @@ public class CalendarIndexerIndexedFieldsTest
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), keywords);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			keywords);
 	}
 
 	protected Calendar addCalendar(

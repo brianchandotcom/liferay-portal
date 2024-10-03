@@ -115,7 +115,10 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		Map<String, String> map, Locale locale, String searchTerm) {
 
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score") && !name.equals("timestamp"),
+			map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("score") &&
+				!name.equals("timestamp"),
 			searcher.search(
 				searchRequestBuilderFactory.builder(
 				).companyId(

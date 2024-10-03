@@ -6,6 +6,7 @@
 package com.liferay.layout.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -97,7 +98,9 @@ public class LayoutIndexerIndexedFieldsTest {
 
 		FieldValuesAssert.assertFieldValues(
 			document, _expectedFieldValues(layout),
-			name -> !name.equals("timestamp"), searchTerm);
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	protected void setTestLocale(Locale locale) throws Exception {

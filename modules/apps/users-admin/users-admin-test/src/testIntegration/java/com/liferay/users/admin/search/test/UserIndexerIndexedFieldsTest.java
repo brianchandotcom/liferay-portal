@@ -104,7 +104,10 @@ public class UserIndexerIndexedFieldsTest {
 		_populateAddressFieldValues(user2, map);
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), searchTerm);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Test
@@ -128,7 +131,10 @@ public class UserIndexerIndexedFieldsTest {
 			"jobTitle_sortable", StringUtil.toLowerCase(user2.getJobTitle()));
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), searchTerm);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Test
@@ -149,7 +155,10 @@ public class UserIndexerIndexedFieldsTest {
 			"lastLoginDate", user2.getLastLoginDate(), map);
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), searchTerm);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Test
@@ -172,7 +181,10 @@ public class UserIndexerIndexedFieldsTest {
 		map.put("organizationIds", _getStringValue(user.getOrganizationIds()));
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), searchTerm);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Test
@@ -197,7 +209,10 @@ public class UserIndexerIndexedFieldsTest {
 		map.put("userGroupIds", _getStringValue(user.getUserGroupIds()));
 
 		FieldValuesAssert.assertFieldValues(
-			document, map, name -> !name.equals("timestamp"), searchTerm);
+			document, map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Rule

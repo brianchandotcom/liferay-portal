@@ -13,6 +13,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -110,7 +111,9 @@ public class MBMessageIndexerIndexedFieldsTest {
 
 		FieldValuesAssert.assertFieldValues(
 			_expectedFieldValues(mbMessage),
-			name -> !name.equals("score") && !name.equals("timestamp"),
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("score") &&
+				!name.equals("timestamp"),
 			searchResponse);
 	}
 

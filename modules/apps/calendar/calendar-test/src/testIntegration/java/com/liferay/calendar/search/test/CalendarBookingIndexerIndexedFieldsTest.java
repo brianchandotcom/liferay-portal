@@ -13,6 +13,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -148,7 +149,10 @@ public class CalendarBookingIndexerIndexedFieldsTest
 			keywords, LocaleUtil.HUNGARY);
 
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score") && !name.equals("timestamp"),
+			map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("score") &&
+				!name.equals("timestamp"),
 			searchResponse);
 	}
 

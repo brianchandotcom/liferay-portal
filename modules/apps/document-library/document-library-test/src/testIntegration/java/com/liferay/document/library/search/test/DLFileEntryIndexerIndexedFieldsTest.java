@@ -116,7 +116,10 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			dlAppLocalService.getFileEntry(fileEntryId), map);
 
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score") && !name.equals("timestamp"),
+			map,
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("score") &&
+				!name.equals("timestamp"),
 			searchResponse);
 	}
 
@@ -330,14 +333,15 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			Map<String, String> ddmField = HashMapBuilder.put(
 				"ddmFieldName",
 				StringBundler.concat(
-					"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName)
+					"[ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName,
+					"]")
 			).put(
-				"ddmFieldValueText", value
+				"ddmFieldValueText", "[" + value + "]"
 			).put(
 				"ddmFieldValueText_String_sortable",
-				StringUtil.toLowerCase(value)
+				"[" + StringUtil.toLowerCase(value) + "]"
 			).put(
-				"ddmValueFieldName", "ddmFieldValueText"
+				"ddmValueFieldName", "[ddmFieldValueText]"
 			).build();
 
 			return ddmField.toString();

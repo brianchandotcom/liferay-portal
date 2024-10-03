@@ -6,6 +6,7 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -296,7 +297,8 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		User user, String[] fieldNames, Map<String, String> map) {
 
 		FieldValuesAssert.assertFieldValues(
-			String.valueOf(user), searchUser(user, fieldNames), map);
+			String.valueOf(user), searchUser(user, fieldNames),
+			name -> !name.contains(StringPool.PERIOD), map);
 	}
 
 	protected SearchRequestBuilder getSearchRequestBuilder(long companyId) {

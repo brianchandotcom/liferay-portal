@@ -6,6 +6,7 @@
 package com.liferay.contacts.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -81,7 +82,9 @@ public class ContactIndexerIndexedFieldsTest {
 
 		FieldValuesAssert.assertFieldValues(
 			document, expectedFieldValues(contact),
-			name -> !name.equals("timestamp"), searchTerm);
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Rule

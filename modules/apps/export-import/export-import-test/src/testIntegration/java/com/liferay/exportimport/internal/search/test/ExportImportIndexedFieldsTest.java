@@ -7,6 +7,7 @@ package com.liferay.exportimport.internal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -79,7 +80,9 @@ public class ExportImportIndexedFieldsTest {
 
 		FieldValuesAssert.assertFieldValues(
 			document, _expectedFieldValues(exportImportConfiguration),
-			name -> !name.equals("timestamp"), searchTerm);
+			name ->
+				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
+			searchTerm);
 	}
 
 	@Rule

@@ -33,11 +33,23 @@ public class PublicationsTimelineHistoryTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"ctCollectionName", "publication",
+			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"view-change"
 			).setContentRenderer(
 				"actionLink"
+			).setLocalizeLabel(
+				true
+			).setSortable(
+				true
+			)
+		).add(
+			"changeType", "changed",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"ctCollectionName", "publication",
+			fdsTableSchemaField -> fdsTableSchemaField.setLocalizeLabel(
+				true
 			).setSortable(
 				true
 			)
@@ -52,9 +64,6 @@ public class PublicationsTimelineHistoryTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"ctCollectionStatusUserName", "published-by",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"changeType", "changed",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			"ctCollectionStatusDate", "published-date",

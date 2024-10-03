@@ -17,7 +17,7 @@ const DeactivateButton = ({
 	deactivateKeysStatus,
 	filterCheckedActivationKeys,
 	handleDeactivate,
-	sessionId,
+	oauthToken,
 	setDeactivateKeysStatus,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
@@ -37,7 +37,7 @@ const DeactivateButton = ({
 		const response = await putDeactivateKeys(
 			provisioningServerAPI,
 			filterCheckedActivationKeys,
-			sessionId
+			oauthToken
 		);
 
 		if (response.status === STATUS_CODE.successNoContent) {

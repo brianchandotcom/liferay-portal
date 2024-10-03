@@ -14,8 +14,7 @@ import {createNetworkStatusNotifier} from 'react-apollo-network-status';
 
 import {Liferay} from '../../services/liferay';
 import {liferayTypePolicies} from '../../services/liferay/graphql/typePolicies';
-import {getCurrentSession} from '../../services/okta/rest/getCurrentSession';
-import {refreshCurrentSession} from '../../services/okta/rest/refreshCurrentSession';
+import {getOrRequestToken} from '../../services/liferay/security/auth/getOrRequestToken';
 import {networkIndicator} from './networkIndicator';
 
 const LiferayURI = `${Liferay.ThemeDisplay.getPortalURL()}/o`;
@@ -52,31 +51,29 @@ const raySourceErrorLink = onError(({forward, networkError, operation}) => {
 	}
 });
 
-const getRaysourceAuthLink = (oktaSessionAPI) =>
+const getRaysourceAuthLink = (oauthTokenAPI) =>
 	setContext(async (_, {headers, sessionOperation, ...context}) => {
-		let sessionId = Liferay.Util.SessionStorage.getItem(
-			'okta-session-id',
+		let oauthToken = Liferay.Util.SessionStorage.getItem(
+			'oauth-token',
 			Liferay.Util.SessionStorage.TYPES.NECESSARY
 		);
 
 		if (sessionOperation === 'refresh') {
-			const session = await refreshCurrentSession(oktaSessionAPI);
+			const oauthToken = await getOrRequestToken(oauthTokenAPI);
 
-			sessionId = session.id;
 			Liferay.Util.SessionStorage.setItem(
-				'okta-session-id',
-				session.id,
+				'oauth-token',
+				oauthToken,
 				Liferay.Util.SessionStorage.TYPES.NECESSARY
 			);
 		}
 
-		if (!sessionId) {
-			const session = await getCurrentSession(oktaSessionAPI);
+		if (!oauthToken) {
+			const oauthToken = await getOrRequestToken(oauthTokenAPI);
 
-			sessionId = session.id;
 			Liferay.Util.SessionStorage.setItem(
-				'okta-session-id',
-				sessionId,
+				'oauth-token',
+				oauthToken,
 				Liferay.Util.SessionStorage.TYPES.NECESSARY
 			);
 		}
@@ -84,7 +81,7 @@ const getRaysourceAuthLink = (oktaSessionAPI) =>
 		return {
 			headers: {
 				...headers,
-				'Okta-Session-ID': sessionId,
+				'OAuth-Token': oauthToken,
 			},
 			sessionOperation: 'get',
 			...context,
@@ -96,7 +93,7 @@ const getRaysourceRestLink = (uri) =>
 		uri,
 	});
 
-export default function useApollo(provisioningServerAPI, oktaSessionAPI) {
+export default function useApollo(provisioningServerAPI, oauthTokenAPI) {
 	const [client, setClient] = useState();
 	const networkStatus = useApolloNetworkStatusReducer(reducer, initialState);
 
@@ -124,7 +121,7 @@ export default function useApollo(provisioningServerAPI, oktaSessionAPI) {
 					(operation) =>
 						operation.getContext().type === 'raysource-rest',
 					raySourceErrorLink.concat(
-						getRaysourceAuthLink(oktaSessionAPI).concat(
+						getRaysourceAuthLink(oauthTokenAPI).concat(
 							getRaysourceRestLink(provisioningServerAPI)
 						)
 					),
@@ -141,7 +138,7 @@ export default function useApollo(provisioningServerAPI, oktaSessionAPI) {
 		};
 
 		init();
-	}, [provisioningServerAPI, oktaSessionAPI]);
+	}, [provisioningServerAPI, oauthTokenAPI]);
 
 	return {client, networkStatus};
 }

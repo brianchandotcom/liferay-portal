@@ -23,7 +23,7 @@ const TeamMembersTableHeader = ({
 	loading,
 	onSearch,
 	searching,
-	sessionId,
+	oauthToken,
 }) => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [clearSearchTerm, setClearSearchTerm] = useState(false);
@@ -45,7 +45,7 @@ const TeamMembersTableHeader = ({
 							id:
 								koroneikiAccount?.r_accountEntryToKoroneikiAccount_accountEntryId,
 						}}
-						sessionId={sessionId}
+						oauthToken={oauthToken}
 					/>
 				</ClayModal>
 			)}

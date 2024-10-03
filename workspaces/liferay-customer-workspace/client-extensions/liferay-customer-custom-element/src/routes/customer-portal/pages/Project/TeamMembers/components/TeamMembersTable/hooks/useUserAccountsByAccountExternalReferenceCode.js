@@ -135,7 +135,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		currentAccountRoles,
 		newAccountRoleItem,
 		provisioningServerAPI,
-		sessionId,
+		oauthToken,
 		project,
 		assignUserAccountWithAccountRole,
 		setCurrentUserEditing
@@ -330,7 +330,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								lastName,
 								provisioningServerAPI,
 								roleName: oldAccountRoleRaysourceName,
-								sessionId,
+								oauthToken,
 							});
 
 							await assignUserAccountWithAccountRole({

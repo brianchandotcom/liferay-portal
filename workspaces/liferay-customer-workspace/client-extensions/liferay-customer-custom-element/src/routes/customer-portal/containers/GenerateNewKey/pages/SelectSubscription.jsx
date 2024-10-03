@@ -32,7 +32,7 @@ const SelectSubscription = ({
 	hasComplimentaryKey,
 	productGroupName,
 	selectedKeyData,
-	sessionId,
+	oauthToken,
 	setExpirationRenewDate,
 	setHasComplimentaryKey,
 	setLicenseEntryTypeName,
@@ -66,7 +66,7 @@ const SelectSubscription = ({
 				accountKey,
 				provisioningServerAPI,
 				productGroupName,
-				sessionId
+				oauthToken
 			);
 
 			if (data) {
@@ -74,10 +74,10 @@ const SelectSubscription = ({
 			}
 		};
 
-		if (sessionId) {
+		if (oauthToken) {
 			fetchGenerateFormData();
 		}
-	}, [accountKey, provisioningServerAPI, productGroupName, sessionId]);
+	}, [accountKey, provisioningServerAPI, productGroupName, oauthToken]);
 
 	const [selectedSubscription, setSelectedSubscription] = useState(
 		selectedKeyData?.selectedSubscription
@@ -332,7 +332,7 @@ const SelectSubscription = ({
 		}
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, sessionId);
+			return putSubscriptionInKey(provisioningServerAPI, id, oauthToken);
 		};
 
 		const generateLicenseKey = async (item) => {
@@ -449,7 +449,7 @@ const SelectSubscription = ({
 		selectedSubscription?.productPurchaseKey,
 		selectedSubscription?.provisionedCount,
 		selectedSubscription?.startDate,
-		sessionId,
+		oauthToken,
 		state.activationKeys,
 		urlPreviousPage,
 	]);
@@ -533,7 +533,7 @@ const SelectSubscription = ({
 		);
 	};
 
-	if (!generateFormValues || !accountKey || !sessionId) {
+	if (!generateFormValues || !accountKey || !oauthToken) {
 		return <GenerateNewKeySkeleton />;
 	}
 

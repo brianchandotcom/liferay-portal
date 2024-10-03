@@ -31,7 +31,7 @@ const ActivationKeysTableHeader = ({
 	project,
 	setRenewKeysFilterChecked,
 	productName,
-	sessionId,
+	oauthToken,
 	loading,
 	filterState: [filters, setFilters],
 }) => {
@@ -172,7 +172,7 @@ const ActivationKeysTableHeader = ({
 												handleDeactivate={
 													handleDeactivate
 												}
-												sessionId={sessionId}
+												oauthToken={oauthToken}
 												setDeactivateKeysStatus={(
 													value
 												) =>
@@ -228,7 +228,7 @@ const ActivationKeysTableHeader = ({
 								isAdminUserAccount={isAdminUserAccount}
 								productName={productName}
 								project={project}
-								sessionId={sessionId}
+								oauthToken={oauthToken}
 								setStatus={setStatus}
 							/>
 						)}

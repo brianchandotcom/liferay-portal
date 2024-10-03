@@ -15,7 +15,7 @@ import {
 	getLiferayExperienceCloudEnvironments,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {getCurrentSession} from '../../../common/services/okta/rest/getCurrentSession';
+import {getOrRequestToken} from '../../../common/services/liferay/security/auth/getOrRequestToken';
 import {ROLE_TYPES, ROUTE_TYPES} from '../../../common/utils/constants';
 import {getAccountKey} from '../../../common/utils/getAccountKey';
 import {isValidPage} from '../../../common/utils/page.validation';
@@ -25,14 +25,14 @@ import reducer, {actionTypes} from './reducer';
 const AppContext = createContext();
 
 const AppContextProvider = ({children}) => {
-	const {client, oktaSessionAPI} = useAppPropertiesContext();
+	const {client, oauthTokenAPI} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
 		analyticsCloudActivationSubmittedStatus: undefined,
 		dxpCloudActivationSubmittedStatus: undefined,
 		koroneikiAccount: {},
 		liferayExperienceCloudActivationSubmittedStatus: undefined,
 		project: undefined,
-		sessionId: '',
+		oauthToken: '',
 		step: ONBOARDING_STEP_TYPES.welcome,
 		subscriptionGroups: undefined,
 		userAccount: undefined,
@@ -111,13 +111,13 @@ const AppContextProvider = ({children}) => {
 			}
 		};
 
-		const getSessionId = async () => {
-			const session = await getCurrentSession(oktaSessionAPI);
+		const getOAuthToken = async () => {
+			const oauthToken = await getOrRequestToken(oauthTokenAPI);
 
-			if (session) {
+			if (oauthToken) {
 				dispatch({
-					payload: session.id,
-					type: actionTypes.UPDATE_SESSION_ID,
+					payload: oauthToken,
+					type: actionTypes.UPDATE_OAUTH_TOKEN,
 				});
 			}
 		};
@@ -238,7 +238,7 @@ const AppContextProvider = ({children}) => {
 					getLiferayExperienceCloudActivationStatus(
 						projectExternalReferenceCode
 					);
-					getSessionId();
+					getOAuthToken();
 
 					client.mutate({
 						context: {
@@ -262,7 +262,7 @@ const AppContextProvider = ({children}) => {
 		};
 
 		fetchData();
-	}, [client, oktaSessionAPI]);
+	}, [client, oauthTokenAPI]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

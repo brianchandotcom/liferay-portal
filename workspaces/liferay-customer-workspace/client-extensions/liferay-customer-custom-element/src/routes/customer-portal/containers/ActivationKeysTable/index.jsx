@@ -46,7 +46,7 @@ const ActivationKeysTable = ({
 	isRenewTable,
 	productName,
 	project,
-	sessionId,
+	oauthToken,
 	setActivationKeysChecked,
 	setKeysSelectedCount,
 	setRenewKeysFilterChecked,
@@ -184,7 +184,7 @@ const ActivationKeysTable = ({
 					onClick={() =>
 						getActivationKeyDownload(
 							provisioningServerAPI,
-							sessionId,
+							oauthToken,
 							handleAlertStatus,
 							activationKey,
 							project.name
@@ -213,7 +213,7 @@ const ActivationKeysTable = ({
 			keyType: <KeyTypeColumn activationKey={activationKey} />,
 			status: <StatusColumn activationKey={activationKey} />,
 		}),
-		[handleAlertStatus, provisioningServerAPI, project.name, sessionId]
+		[handleAlertStatus, provisioningServerAPI, project.name, oauthToken]
 	);
 
 	return (
@@ -226,7 +226,7 @@ const ActivationKeysTable = ({
 					observer={observer}
 					onClose={onClose}
 					project={project}
-					sessionId={sessionId}
+					oauthToken={oauthToken}
 				/>
 			)}
 			<ClayTooltipProvider
@@ -279,7 +279,7 @@ const ActivationKeysTable = ({
 							loading={loading}
 							productName={productName}
 							project={project}
-							sessionId={sessionId}
+							oauthToken={oauthToken}
 							setRenewKeysFilterChecked={
 								setRenewKeysFilterChecked
 							}

@@ -30,7 +30,7 @@ const ActivationKeysInputs = ({
 	accountSubscriptionGroupName,
 	productTitle,
 	projectName,
-	sessionId,
+	oauthToken,
 }) => {
 	const [{project, userAccount}] = useCustomerPortal();
 
@@ -125,7 +125,7 @@ const ActivationKeysInputs = ({
 			selectedAccountSubscriptionName.toLowerCase(),
 			provisioningServerAPI,
 			encodeURI(productTitle),
-			sessionId
+			oauthToken
 		);
 
 		const formatText = (text) =>

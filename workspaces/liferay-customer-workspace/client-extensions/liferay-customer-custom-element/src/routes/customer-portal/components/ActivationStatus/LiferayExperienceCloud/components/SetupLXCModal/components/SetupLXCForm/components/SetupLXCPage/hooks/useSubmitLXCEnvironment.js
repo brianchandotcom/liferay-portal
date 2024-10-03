@@ -49,9 +49,9 @@ export default function useSubmitLXCEnvironment(
 
 	const onboardingContext = useOnboarding();
 
-	const sessionId =
-		customerPortalContext?.[0].sessionId ||
-		onboardingContext?.[0].sessionId;
+	const oauthToken =
+		customerPortalContext?.[0].oauthToken ||
+		onboardingContext?.[0].oauthToken;
 
 	const [createLiferayExperienceCloudEnvironment] =
 		useCreateLiferayExperienceCloudEnvironments();
@@ -198,7 +198,7 @@ export default function useSubmitLXCEnvironment(
 						addContactRoleRaysource,
 						addHighPriorityContactList,
 						project,
-						sessionId,
+						oauthToken,
 						provisioningServerAPI
 					);
 
@@ -227,7 +227,7 @@ export default function useSubmitLXCEnvironment(
 					removeContactRoleRaysource,
 					removeHighPriorityContactList,
 					project,
-					sessionId,
+					oauthToken,
 					provisioningServerAPI
 				);
 

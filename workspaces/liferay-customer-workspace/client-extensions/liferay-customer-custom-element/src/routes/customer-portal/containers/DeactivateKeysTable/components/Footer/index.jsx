@@ -16,7 +16,7 @@ const DeactivateKeysTableFooter = ({
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,
 	productName,
-	sessionId,
+	oauthToken,
 }) => {
 	const [status, setStatus] = useState({
 		deactivate: '',
@@ -73,7 +73,7 @@ const DeactivateKeysTableFooter = ({
 				deactivateKeysStatus={status.deactivate}
 				filterCheckedActivationKeys={filterCheckedActivationKeys}
 				handleDeactivate={handleDeactivate}
-				sessionId={sessionId}
+				oauthToken={oauthToken}
 				setDeactivateKeysStatus={(value) =>
 					setStatus((previousStatus) => ({
 						...previousStatus,

@@ -16,7 +16,7 @@ import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
 export async function downloadActivationLicenseKey(
 	licenseKey,
 	provisioningServerAPI,
-	sessionId,
+	oauthToken,
 	activationKeyName,
 	activationKeyVersion,
 	projectName
@@ -24,7 +24,7 @@ export async function downloadActivationLicenseKey(
 	const license = await getActivationDownloadKey(
 		licenseKey,
 		provisioningServerAPI,
-		sessionId
+		oauthToken
 	);
 
 	if (license.status === STATUS_CODE.success) {
@@ -49,14 +49,14 @@ export async function downloadActivationLicenseKey(
 export async function downloadAggregatedActivationKey(
 	selectedKeysIDs,
 	provisioningServerAPI,
-	sessionId,
+	oauthToken,
 	selectedKeysObjects,
 	projectName
 ) {
 	const license = await getAggregatedActivationDownloadKey(
 		selectedKeysIDs,
 		provisioningServerAPI,
-		sessionId
+		oauthToken
 	);
 
 	const DIFFERENT_AGGREGATED_NAMES = 'multiple-products';
@@ -110,13 +110,13 @@ export async function downloadAggregatedActivationKey(
 export async function downloadMultipleActivationKey(
 	selectedKeysIDs,
 	provisioningServerAPI,
-	sessionId,
+	oauthToken,
 	projectName
 ) {
 	const license = await getMultipleActivationDownloadKey(
 		selectedKeysIDs,
 		provisioningServerAPI,
-		sessionId
+		oauthToken
 	);
 
 	const projectFileName = projectName.replaceAll(' ', '').toLowerCase();
@@ -136,12 +136,12 @@ export async function downloadMultipleActivationKey(
 export async function downloadSelectedKeysDetails(
 	selectedKeysIDs,
 	provisioningServerAPI,
-	sessionId
+	oauthToken
 ) {
 	const license = await getExportedSelectedLicenseKeys(
 		selectedKeysIDs,
 		provisioningServerAPI,
-		sessionId
+		oauthToken
 	);
 
 	if (license.status === STATUS_CODE.success) {
@@ -156,13 +156,13 @@ export async function downloadSelectedKeysDetails(
 export async function downloadAllKeysDetails(
 	accountKey,
 	provisioningServerAPI,
-	sessionId,
+	oauthToken,
 	productName
 ) {
 	const license = await getExportedLicenseKeys(
 		accountKey,
 		provisioningServerAPI,
-		sessionId,
+		oauthToken,
 		productName
 	);
 

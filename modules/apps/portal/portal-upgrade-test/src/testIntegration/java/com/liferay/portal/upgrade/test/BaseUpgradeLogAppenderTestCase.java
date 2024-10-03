@@ -416,53 +416,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testLongestUpgradeProcessesThresholdSorted() throws Exception {
-		_appender.start();
-
-		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
-
-		String fasterUpgradeProcessName =
-			"com.liferay.portal.FasterUpgradeTest";
-
-		log.info(
-			StringBundler.concat(
-				"Completed upgrade process ", fasterUpgradeProcessName, " in ",
-				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD, " ms"));
-
-		String slowerUpgradeProcessName =
-			"com.liferay.portal.SlowerUpgradeTest";
-
-		log.info(
-			StringBundler.concat(
-				"Completed upgrade process ", slowerUpgradeProcessName, " in ",
-				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
-				" ms"));
-
-		String underThresholdUpgradeProcessName =
-				"com.liferay.portal.SlowerUpgradeTest";
-
-		log.info(
-				StringBundler.concat(
-						"Completed upgrade process ", underThresholdUpgradeProcessName, " in ",
-						PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
-						" ms"));
-
-		_appender.stop();
-
-		String longestUpgradeProcessesValue = _getLogContextValueDiagnostics(
-			"upgrade.report.longest.upgrade.processes");
-
-		Assert.assertFalse(
-			StringUtil.contains(
-				longestUpgradeProcessesValue, underThresholdUpgradeProcessName,
-				StringPool.BLANK));
-
-		Assert.assertTrue(
-			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
-				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
-	}
-
-	@Test
 	public void testJVMArguments() throws Exception {
 		_appender.start();
 
@@ -512,6 +465,54 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"com.liferay.portal.UpgradeTest took " +
 				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD +
 					" ms to complete");
+	}
+
+	@Test
+	public void testLongestUpgradeProcessesThresholdSorted() throws Exception {
+		_appender.start();
+
+		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
+
+		String fasterUpgradeProcessName =
+			"com.liferay.portal.FasterUpgradeTest";
+
+		log.info(
+			StringBundler.concat(
+				"Completed upgrade process ", fasterUpgradeProcessName, " in ",
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD, " ms"));
+
+		String slowerUpgradeProcessName =
+			"com.liferay.portal.SlowerUpgradeTest";
+
+		log.info(
+			StringBundler.concat(
+				"Completed upgrade process ", slowerUpgradeProcessName, " in ",
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
+				" ms"));
+
+		String underThresholdUpgradeProcessName =
+			"com.liferay.portal.SlowerUpgradeTest";
+
+		log.info(
+			StringBundler.concat(
+				"Completed upgrade process ", underThresholdUpgradeProcessName,
+				" in ",
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
+				" ms"));
+
+		_appender.stop();
+
+		String longestUpgradeProcessesValue = _getLogContextValueDiagnostics(
+			"upgrade.report.longest.upgrade.processes");
+
+		Assert.assertFalse(
+			StringUtil.contains(
+				longestUpgradeProcessesValue, underThresholdUpgradeProcessName,
+				StringPool.BLANK));
+
+		Assert.assertTrue(
+			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
+				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
 	}
 
 	@Test

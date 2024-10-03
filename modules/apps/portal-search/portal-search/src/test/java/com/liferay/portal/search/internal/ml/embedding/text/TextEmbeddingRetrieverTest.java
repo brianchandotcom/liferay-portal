@@ -18,7 +18,6 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,32 +42,8 @@ public class TextEmbeddingRetrieverTest {
 			new String[] {LocaleUtil.toLanguageId(LocaleUtil.US)},
 			new String[] {BlogsEntry.class.getName()});
 		_setUpTextEmbeddingProvider();
+		_setUpTextEmbeddingProvidersHolderImpl();
 		_setUpTextEmbeddingRetrieverImpl();
-	}
-
-	@Test
-	public void testDisabledProvider() {
-		String providerName = RandomTestUtil.randomString();
-
-		_textEmbeddingRetrieverImpl.addProvider(
-			new String[] {providerName}, providerName,
-			Mockito.mock(TextEmbeddingProvider.class));
-
-		List<String> availableProviderNames =
-			_textEmbeddingRetrieverImpl.getAvailableProviderNames();
-
-		Assert.assertFalse(availableProviderNames.contains(providerName));
-	}
-
-	@Test
-	public void testGetAvailableProviderNames() {
-		List<String> availableProviderNames =
-			_textEmbeddingRetrieverImpl.getAvailableProviderNames();
-
-		Assert.assertEquals(
-			availableProviderNames.toString(), 1,
-			availableProviderNames.size());
-		Assert.assertTrue(availableProviderNames.contains(_TEST_PROVIDER_NAME));
 	}
 
 	@Test
@@ -262,6 +237,17 @@ public class TextEmbeddingRetrieverTest {
 		);
 	}
 
+	private void _setUpTextEmbeddingProvidersHolderImpl() {
+		_textEmbeddingProvidersHolderImpl =
+			new TextEmbeddingProvidersHolderImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_textEmbeddingProvidersHolderImpl, "_textEmbeddingProviders",
+			HashMapBuilder.put(
+				_TEST_PROVIDER_NAME, _textEmbeddingProvider
+			).build());
+	}
+
 	private void _setUpTextEmbeddingRetrieverImpl() {
 		_textEmbeddingRetrieverImpl = new TextEmbeddingRetrieverImpl();
 
@@ -269,10 +255,8 @@ public class TextEmbeddingRetrieverTest {
 			_textEmbeddingRetrieverImpl, "_semanticSearchConfigurationProvider",
 			_semanticSearchConfigurationProvider);
 		ReflectionTestUtil.setFieldValue(
-			_textEmbeddingRetrieverImpl, "_textEmbeddingProviders",
-			HashMapBuilder.put(
-				_TEST_PROVIDER_NAME, _textEmbeddingProvider
-			).build());
+			_textEmbeddingRetrieverImpl, "_textEmbeddingProvidersHolder",
+			_textEmbeddingProvidersHolderImpl);
 	}
 
 	private static final String _TEST_PROVIDER_NAME =
@@ -283,6 +267,7 @@ public class TextEmbeddingRetrieverTest {
 			SemanticSearchConfigurationProvider.class);
 	private final TextEmbeddingProvider _textEmbeddingProvider = Mockito.mock(
 		TextEmbeddingProvider.class);
+	private TextEmbeddingProvidersHolderImpl _textEmbeddingProvidersHolderImpl;
 	private TextEmbeddingRetrieverImpl _textEmbeddingRetrieverImpl;
 
 }

@@ -192,7 +192,7 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(16);
 		String id = StringUtil.randomId();
 
 		sb.append("<label><input id=\"");
@@ -210,11 +210,10 @@ public class RowChecker {
 				httpServletRequest));
 		sb.append(">document.getElementById('");
 		sb.append(id);
-		sb.append("').onclick=function(){");
-		sb.append("Liferay.Util.checkAll(AUI().one(this).ancestor('.table'), ");
+		sb.append("').onclick=function(){Liferay.Util.checkAll(AUI().");
+		sb.append("one(this).ancestor('.table'), ");
 		sb.append(checkBoxRowIds);
-		sb.append(", this, 'tr:not(.d-none)');");
-		sb.append("}</script>");
+		sb.append(", this, 'tr:not(.d-none)');}</script>");
 
 		return sb.toString();
 	}

@@ -258,14 +258,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									<c:otherwise>
 
 										<%
-										id = StringUtil.randomId();
+										String randomId = StringUtil.randomId();
 										%>
 
-										<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= id %>">
+										<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= randomId %>">
 
 										<c:if test="<%= forcePost %>">
 											<aui:script>
-												document.getElementById('<%= id %>').onclick = function() {
+												document.getElementById('<%= randomId %>').onclick = function() {
 													<%= _getOnClick(namespace, curParam, i) %>
 												}
 											</aui:script>
@@ -288,14 +288,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							String randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 2, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>2</a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 2, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>2</a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, 2) %>
 									}
 								</aui:script>
@@ -304,14 +304,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 3, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>3</a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 3, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>3</a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, 3) %>
 									}
 								</aui:script>
@@ -337,14 +337,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 										<li>
 
 											<%
-											id = StringUtil.randomId();
+											randomId = StringUtil.randomId();
 											%>
 
-											<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+											<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 
 											<c:if test="<%= forcePost %>">
 												<aui:script>
-													document.getElementById('<%= id %>').onclick = function() {
+													document.getElementById('<%= randomId %>').onclick = function() {
 														<%= _getOnClick(namespace, curParam, i) %>
 													}
 												</aui:script>
@@ -361,14 +361,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages %></a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages %></a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, pages) %>
 									}
 								</aui:script>
@@ -379,14 +379,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							String randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, 1) %>
 									}
 								</aui:script>
@@ -409,14 +409,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 										<li>
 
 											<%
-											id = StringUtil.randomId();
+											randomId = StringUtil.randomId();
 											%>
 
-											<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+											<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 
 											<c:if test="<%= forcePost %>">
 												<aui:script>
-													document.getElementById('<%= id %>').onclick = function() {
+													document.getElementById('<%= randomId %>').onclick = function() {
 														<%= _getOnClick(namespace, curParam, i) %>
 													}
 												</aui:script>
@@ -433,14 +433,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages - 2, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages - 2 %></a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages - 2, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages - 2 %></a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, pages - 2) %>
 									}
 								</aui:script>
@@ -449,14 +449,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages - 1, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages - 1 %></a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages - 1, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages - 1 %></a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, pages - 1) %>
 									}
 								</aui:script>
@@ -470,14 +470,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							String randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, 1) %>
 									}
 								</aui:script>
@@ -503,14 +503,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<li class="<%= ((cur - 3) > 1) ? "" : "page-item" %>">
 
 								<%
-								id = StringUtil.randomId();
+								randomId = StringUtil.randomId();
 								%>
 
-								<a class="<%= ((cur - 3) > 1) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+								<a class="<%= ((cur - 3) > 1) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 
 								<c:if test="<%= forcePost %>">
 									<aui:script>
-										document.getElementById('<%= id %>').onclick = function() {
+										document.getElementById('<%= randomId %>').onclick = function() {
 											<%= _getOnClick(namespace, curParam, i) %>
 										}
 									</aui:script>
@@ -531,14 +531,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<li class="page-item">
 
 								<%
-								id = StringUtil.randomId();
+								randomId = StringUtil.randomId();
 								%>
 
-								<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= cur - 1 %></a>
+								<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= cur - 1 %></a>
 
 								<c:if test="<%= forcePost %>">
 									<aui:script>
-										document.getElementById('<%= id %>').onclick = function() {
+										document.getElementById('<%= randomId %>').onclick = function() {
 											<%= _getOnClick(namespace, curParam, cur - 1) %>
 										}
 									</aui:script>
@@ -554,14 +554,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<li class="page-item">
 
 								<%
-								id = StringUtil.randomId();
+								randomId = StringUtil.randomId();
 								%>
 
-								<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= cur + 1 %></a>
+								<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= cur + 1 %></a>
 
 								<c:if test="<%= forcePost %>">
 									<aui:script>
-										document.getElementById('<%= id %>').onclick = function() {
+										document.getElementById('<%= randomId %>').onclick = function() {
 											<%= _getOnClick(namespace, curParam, cur + 1) %>
 										}
 									</aui:script>
@@ -590,14 +590,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<li class="<%= ((cur + 3) < pages) ? "" : "page-item" %>">
 
 								<%
-								id = StringUtil.randomId();
+								randomId = StringUtil.randomId();
 								%>
 
-								<a class="<%= ((cur + 3) < pages) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+								<a class="<%= ((cur + 3) < pages) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 
 								<c:if test="<%= forcePost %>">
 									<aui:script>
-										document.getElementById('<%= id %>').onclick = function() {
+										document.getElementById('<%= randomId %>').onclick = function() {
 											<%= _getOnClick(namespace, curParam, i) %>
 										}
 									</aui:script>
@@ -617,14 +617,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item">
 
 							<%
-							id = StringUtil.randomId();
+							randomId = StringUtil.randomId();
 							%>
 
-							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" id="<%= id %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages %></a>
+							<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" id="<%= randomId %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages %></a>
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, pages) %>
 									}
 								</aui:script>
@@ -638,14 +638,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<c:when test="<%= cur < pages %>">
 
 							<%
-							id = StringUtil.randomId();
+							String randomId = StringUtil.randomId();
 							%>
 
-							<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" id="<%= id %>" title="<%= LanguageUtil.get(request, "next-page") %>">
+							<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" id="<%= randomId %>" title="<%= LanguageUtil.get(request, "next-page") %>">
 
 							<c:if test="<%= forcePost %>">
 								<aui:script>
-									document.getElementById('<%= id %>').onclick = function() {
+									document.getElementById('<%= randomId %>').onclick = function() {
 										<%= _getOnClick(namespace, curParam, cur + 1) %>
 									}
 								</aui:script>

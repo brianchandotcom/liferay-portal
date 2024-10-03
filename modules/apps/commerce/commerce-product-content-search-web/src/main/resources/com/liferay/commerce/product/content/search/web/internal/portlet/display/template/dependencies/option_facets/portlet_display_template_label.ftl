@@ -28,6 +28,7 @@
 					<button
 						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
 						data-term-id="${entry.getTerm()}"
+						id="${id}"
 						name="${name + entry?index}"
 						type="button"
 					>

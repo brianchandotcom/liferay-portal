@@ -159,9 +159,8 @@ public class AlertTag extends BaseContainerTag {
 					getRequest()));
 			jspWriter.write(">document.getElementById('");
 			jspWriter.write(id);
-			jspWriter.write("').onclick=function(event){");
-			jspWriter.write("event.target.closest('[role=alert]').remove()");
-			jspWriter.write("}</script>");
+			jspWriter.write("').onclick=function(event){event.target.closest(");
+			jspWriter.write("'[role=alert]').remove()}</script>");
 		}
 
 		if (Validator.isNotNull(_variant) && _variant.equals("stripe")) {

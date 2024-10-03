@@ -240,7 +240,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	protected String getDateFormatOriginalSQL() {
-		return "select foo from Foo where DATE2SEC(foo)";
+		return "select foo from Foo where TRUNCATE_TO_SECONDS(foo)";
 	}
 
 	protected String getDateFormatTransformedSQL() {

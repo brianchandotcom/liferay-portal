@@ -105,7 +105,8 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected Pattern getDateFormatPattern() {
-		return Pattern.compile("DATE2SEC\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+		return Pattern.compile(
+			"TRUNCATE_TO_SECONDS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	}
 
 	protected Function<String, String> getDropTableIfExistsTextFunction() {

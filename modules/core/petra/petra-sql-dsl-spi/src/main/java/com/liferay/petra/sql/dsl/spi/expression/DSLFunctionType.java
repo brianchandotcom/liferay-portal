@@ -29,9 +29,6 @@ public class DSLFunctionType {
 	public static final DSLFunctionType CONCAT = new DSLFunctionType(
 		"CONCAT(", ")");
 
-	public static final DSLFunctionType DATE2SEC = new DSLFunctionType(
-		"DATE2SEC(", ")");
-
 	public static final DSLFunctionType DIVISION = new DSLFunctionType(" / ");
 
 	public static final DSLFunctionType LOWER = new DSLFunctionType(
@@ -42,6 +39,9 @@ public class DSLFunctionType {
 
 	public static final DSLFunctionType SUBTRACTION = new DSLFunctionType(
 		" - ");
+
+	public static final DSLFunctionType TRUNCATE_TO_SECONDS =
+		new DSLFunctionType("TRUNCATE_TO_SECONDS(", ")");
 
 	public static final DSLFunctionType WITH_PARENTHESES = new DSLFunctionType(
 		"(", ")");

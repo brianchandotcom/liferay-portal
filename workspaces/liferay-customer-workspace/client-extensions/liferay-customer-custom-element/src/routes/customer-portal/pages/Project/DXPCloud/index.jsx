@@ -15,7 +15,7 @@ import {LIST_TYPES, PRODUCT_TYPES} from '../../../utils/constants';
 
 const DXPCloud = () => {
 	const [
-		{project, sessionId, subscriptionGroups, userAccount},
+		{project, oAuthToken, subscriptionGroups, userAccount},
 	] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
@@ -71,7 +71,7 @@ const DXPCloud = () => {
 					listType={LIST_TYPES.dxpVersion}
 					productName="DXP"
 					projectName={project.name}
-					sessionId={sessionId}
+					oAuthToken={oAuthToken}
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>
 		</div>

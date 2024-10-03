@@ -80,9 +80,9 @@ const SetupDXPCloudPage = ({
 
 	const onboardingContext = useOnboarding();
 
-	const sessionId =
-		customerPortalContext?.[0].sessionId ||
-		onboardingContext?.[0].sessionId;
+	const oAuthToken =
+		customerPortalContext?.[0].oAuthToken ||
+		onboardingContext?.[0].oAuthToken;
 	const [addHighPriorityContact, setAddHighPriorityContact] = useState([]);
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState(
 		[]
@@ -303,7 +303,7 @@ const SetupDXPCloudPage = ({
 							addContactRoleRaysource,
 							addHighPriorityContact,
 							project,
-							sessionId,
+							oAuthToken,
 							provisioningServerAPI
 						);
 
@@ -332,7 +332,7 @@ const SetupDXPCloudPage = ({
 						removeContactRoleRaysource,
 						removeHighPriorityContact,
 						project,
-						sessionId,
+						oAuthToken,
 						provisioningServerAPI
 					);
 

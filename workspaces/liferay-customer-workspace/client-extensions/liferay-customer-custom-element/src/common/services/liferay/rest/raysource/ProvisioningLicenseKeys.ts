@@ -9,7 +9,7 @@ import {baseFetcher} from '../../fetcher';
 
 type ProvisioningLicenseKeysConstructor = {
 	provisioningServerAPI: string;
-	sessionId: string;
+	oAuthToken: string;
 };
 
 class ProvisioningLicenseKeys {
@@ -18,7 +18,7 @@ class ProvisioningLicenseKeys {
 	constructor(props: ProvisioningLicenseKeysConstructor) {
 		this.fetcher = baseFetcher(props.provisioningServerAPI, {
 			headers: {
-				'Okta-Session-ID': props.sessionId,
+				'OAuth-Token': props.oAuthToken,
 			},
 		});
 	}

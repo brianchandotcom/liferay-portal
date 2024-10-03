@@ -49,7 +49,7 @@ const TeamMembersTable = ({
 
 	const provisioningKeys = useProvisioningLicenseKeys();
 
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, oAuthToken}] = useCustomerPortal();
 
 	const [assignUserAccountWithAccountRole] = useMutation(
 		assignUserAccountWithAccountAndAccountRole,
@@ -274,7 +274,7 @@ const TeamMembersTable = ({
 			currentAccountRoles,
 			selectedAccountRoleItem,
 			provisioningServerAPI,
-			sessionId,
+			oAuthToken,
 			project,
 			assignUserAccountWithAccountRole,
 			setCurrentUserEditing
@@ -414,7 +414,7 @@ const TeamMembersTable = ({
 				loading={loading}
 				onSearch={(term) => search(term)}
 				searching={searching}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 			/>
 
 			<div className="cp-team-members-table-wrapper">

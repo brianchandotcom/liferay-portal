@@ -32,7 +32,7 @@ const DeveloperKeysInputs = ({
 	listType,
 	productName,
 	projectName,
-	sessionId,
+	oAuthToken,
 }) => {
 	const {
 		articleDeployingActivationKeysURL,
@@ -76,7 +76,7 @@ const DeveloperKeysInputs = ({
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
 			provisioningServerAPI,
-			sessionId,
+			oAuthToken,
 			encodeURI(selectedVersionSplitted),
 			productName
 		);

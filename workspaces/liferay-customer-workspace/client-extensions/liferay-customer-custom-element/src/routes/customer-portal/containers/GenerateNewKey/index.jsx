@@ -24,7 +24,7 @@ const GenerateNewKey = ({
 }) => {
 	const {state} = useLocation();
 	const {data: myAccount} = useGetMyUserAccount();
-	const [{project, sessionId, userAccount}] = useCustomerPortal();
+	const [{project, oAuthToken, userAccount}] = useCustomerPortal();
 	const [selectedKeyData, setSelectedKeyData] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
 	const {setHasSideMenu} = useOutletContext();
@@ -68,7 +68,7 @@ const GenerateNewKey = ({
 				licenseEntryTypeName={licenseEntryTypeName}
 				purposeDescription={purposeDescription}
 				selectedKeyData={selectedKeyData}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 				setStep={setStep}
 				startRenewDate={startRenewDate}
 				state={state}
@@ -85,7 +85,7 @@ const GenerateNewKey = ({
 				identifier
 				productGroupName={productGroupName}
 				selectedKeyData={selectedKeyData}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 				setExpirationRenewDate={setExpirationRenewDate}
 				setHasComplimentaryKey={setHasComplimentaryKey}
 				setLicenseEntryTypeName={setLicenseEntryTypeName}
@@ -105,7 +105,7 @@ const GenerateNewKey = ({
 				productGroupName={productGroupName}
 				purposeDescription={purposeDescription}
 				selectedKeyData={selectedKeyData}
-				sessionId={sessionId}
+				oAuthToken={oAuthToken}
 				setDeactivateKeysStatus={(value) =>
 					setStatus((previousStatus) => ({
 						...previousStatus,

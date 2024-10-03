@@ -32,7 +32,7 @@ const addContactRoleLiferay = async (item, project, client) => {
 const addContactRoleRaysource = (
 	item,
 	project,
-	sessionId,
+	oAuthToken,
 	provisioningServerAPI
 ) => {
 	return addContactRoleNameByEmailByProject({
@@ -42,7 +42,7 @@ const addContactRoleRaysource = (
 		lastName: item.label,
 		provisioningServerAPI,
 		roleName: item.category.role,
-		sessionId,
+		oAuthToken,
 	});
 };
 
@@ -97,7 +97,7 @@ const removeContactRoleLiferay = async (item, project, client) => {
 const removeContactRoleRaysource = async (
 	item,
 	project,
-	sessionId,
+	oAuthToken,
 	provisioningServerAPI
 ) => {
 	return await deleteContactRoleNameByEmailByProject({
@@ -105,7 +105,7 @@ const removeContactRoleRaysource = async (
 		emailURI: encodeURI(item.email),
 		provisioningServerAPI,
 		rolesToDelete: item.filter,
-		sessionId,
+		oAuthToken,
 	});
 };
 
@@ -122,12 +122,12 @@ const updateRaysourceContact = (
 	fn,
 	contacts,
 	project,
-	sessionId,
+	oAuthToken,
 	provisioningServerAPI
 ) =>
 	Promise.all(
 		contacts?.map((item) =>
-			fn(item, project, sessionId, provisioningServerAPI)
+			fn(item, project, oAuthToken, provisioningServerAPI)
 		)
 	);
 

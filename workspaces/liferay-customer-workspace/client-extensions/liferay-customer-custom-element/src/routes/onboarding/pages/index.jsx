@@ -26,7 +26,7 @@ const Pages = () => {
 			dxpCloudActivationSubmittedStatus,
 			liferayExperienceCloudActivationSubmittedStatus,
 			project,
-			sessionId,
+			oAuthToken,
 			step,
 			subscriptionGroups,
 		},
@@ -116,7 +116,7 @@ const Pages = () => {
 					handlePage={invitesPageHandle}
 					leftButton={i18n.translate('skip-for-now')}
 					project={project}
-					sessionId={sessionId}
+					oAuthToken={oAuthToken}
 				/>
 			),
 		},

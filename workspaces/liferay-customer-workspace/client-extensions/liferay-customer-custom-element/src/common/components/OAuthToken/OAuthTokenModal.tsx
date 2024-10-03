@@ -7,13 +7,13 @@ import {Button} from '@clayui/core';
 import ClayModal from '@clayui/modal';
 import i18n from '~/common/I18n';
 
-type OktaSessionModalProps = {
+type OAuthTokenModalProps = {
 	observer: any;
 	onClick: () => void;
 	onClose: () => void;
 };
 
-const OktaSessionModal: React.FC<OktaSessionModalProps> = ({
+const OAuthTokenModal: React.FC<OAuthTokenModalProps> = ({
 	observer,
 	onClick,
 	onClose,
@@ -51,4 +51,4 @@ const OktaSessionModal: React.FC<OktaSessionModalProps> = ({
 	</ClayModal>
 );
 
-export default OktaSessionModal;
+export default OAuthTokenModal;

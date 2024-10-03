@@ -15,9 +15,9 @@ const useProvisioningLicenseKeys = () => {
 
 	const onboardingContext = useOnboarding();
 
-	const sessionId =
-		customerPortalContext?.[0].sessionId ||
-		onboardingContext?.[0].sessionId;
+	const oAuthToken =
+		customerPortalContext?.[0].oAuthToken ||
+		onboardingContext?.[0].oAuthToken;
 
 	const {provisioningServerAPI} = useAppPropertiesContext();
 
@@ -25,9 +25,9 @@ const useProvisioningLicenseKeys = () => {
 		() =>
 			new ProvisioningLicenseKeys({
 				provisioningServerAPI,
-				sessionId,
+				oAuthToken,
 			}),
-		[provisioningServerAPI, sessionId]
+		[provisioningServerAPI, oAuthToken]
 	);
 
 	return provisioningLicenseKeysService;

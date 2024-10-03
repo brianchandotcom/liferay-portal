@@ -19,7 +19,7 @@ const DeactivateButton = ({
 	deactivateKeysStatus,
 	filterCheckedActivationKeys,
 	handleDeactivate,
-	sessionId,
+	oAuthToken,
 	setDeactivateKeysStatus,
 	urlPreviousPage,
 }) => {
@@ -41,7 +41,7 @@ const DeactivateButton = ({
 		const response = await putDeactivateKeys(
 			provisioningServerAPI,
 			filterCheckedActivationKeys,
-			sessionId
+			oAuthToken
 		);
 
 		if (response.status === STATUS_CODE.successNoContent) {

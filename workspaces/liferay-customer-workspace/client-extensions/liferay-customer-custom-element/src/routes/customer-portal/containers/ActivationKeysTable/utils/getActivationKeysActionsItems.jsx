@@ -10,7 +10,7 @@ import {downloadAllKeysDetails} from './downloadActivationLicenseKey';
 export function getActivationKeysActionsItems(
 	accountKey,
 	provisioningServerAPI,
-	sessionId,
+	oAuthToken,
 	handleAlertStatus,
 	handleRedirectPage,
 	handleDeactivatePage,
@@ -65,7 +65,7 @@ export function getActivationKeysActionsItems(
 			const downloadedAggregated = await downloadAllKeysDetails(
 				accountKey,
 				provisioningServerAPI,
-				sessionId,
+				oAuthToken,
 				productName
 			);
 

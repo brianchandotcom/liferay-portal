@@ -23,7 +23,7 @@ const AutoSelect = ({itemId}) => {
 	return null;
 };
 
-const renderComponent = ({multiSelect, activeItemId, activeItemIds = []}) => {
+const renderComponent = ({multiSelect, activeItemIds = []}) => {
 	return render(
 		<StoreMother.Component
 			getState={() => ({
@@ -103,7 +103,7 @@ const renderComponent = ({multiSelect, activeItemId, activeItemIds = []}) => {
 						multiSelect,
 					}}
 				>
-					<AutoSelect itemId={activeItemId} />
+					<AutoSelect itemId={activeItemIds[0]} />
 
 					<LayoutBreadcrumbs />
 				</ControlsProvider>
@@ -129,39 +129,35 @@ describe('LayoutBreadcrumbs', () => {
 	});
 
 	it('renders item in breadcrumbs when selecting it', () => {
-		renderComponent({activeItemId: 'item-1'});
+		renderComponent({activeItemIds: ['item-1']});
 
-		expect(screen.queryAllByText('Item 1')[0]).toBeInTheDocument();
+		expect(screen.getByText('Item 1')).toBeInTheDocument();
 	});
 
 	it('renders ancestors in breadcrumbs when selecting an item', () => {
-		renderComponent({activeItemId: 'item-3'});
+		renderComponent({activeItemIds: ['item-3']});
 
-		expect(screen.queryAllByText('Item 3')[0]).toBeInTheDocument();
-
-		expect(screen.queryAllByText('Item 2')[0]).toBeInTheDocument();
-
-		expect(screen.queryAllByText('Item 1')[0]).toBeInTheDocument();
+		expect(screen.getByText('Item 3')).toBeInTheDocument();
+		expect(screen.getByText('Item 2')).toBeInTheDocument();
+		expect(screen.getByText('Item 1')).toBeInTheDocument();
 	});
 
 	it('does not render children in breadcrumbs when selecting an item', () => {
-		renderComponent({activeItemId: 'item-2'});
+		renderComponent({activeItemIds: ['item-2']});
 
 		expect(screen.queryByText('Item 3')).not.toBeInTheDocument();
 	});
 
-	it('does not render columns in breadcrumbs even if they are in the path', () => {
-		renderComponent({activeItemId: 'item-4'});
+	it('renders column as Module in breadcrumbs even if they are in the path', () => {
+		renderComponent({activeItemIds: ['item-4']});
 
-		expect(screen.queryAllByText('Item 4')[0]).toBeInTheDocument();
-		expect(screen.queryAllByText('grid')[0]).toBeInTheDocument();
-
-		expect(screen.queryByText('column')).not.toBeInTheDocument();
+		expect(screen.getByText('Item 4')).toBeInTheDocument();
+		expect(screen.getByText('grid')).toBeInTheDocument();
+		expect(screen.getByText('module')).toBeInTheDocument();
 	});
 
 	it('does not render anything when multiple elements are selected', () => {
 		renderComponent({
-			activeItemId: 'item-4',
 			activeItemIds: ['item-1'],
 			multiSelect: 'simple',
 		});

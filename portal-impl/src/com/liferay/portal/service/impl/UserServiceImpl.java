@@ -1165,7 +1165,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 	@Override
 	public User fetchUserByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		User user = userLocalService.fetchUserByExternalReferenceCode(
@@ -1535,6 +1535,20 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	@Override
 	public User getUserByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		User user = userLocalService.getUserByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
+		return user;
+	}
+
+	@Override
+	public User getUserByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		User user = userLocalService.getUserByExternalReferenceCode(

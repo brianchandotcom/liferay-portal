@@ -4,27 +4,17 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ObjectFolderCardHeader from '../../components/ViewObjectDefinitions/ObjectFolderCardHeader';
 import {getObjectFolderActions} from '../../components/ViewObjectDefinitions/objectDefinitionUtil';
 
-const defaultFolderHTTPMethods = {
-	objectDefinitionActions: {
-		create: {href: '', method: 'POST'},
-	},
-	objectFolderActions: {
-		get: {href: '', method: 'GET'},
-		permissions: {href: '', method: 'PATCH'},
-	},
-};
-
-const selectedObjectFolderMock: Partial<ObjectFolder> = {
-	externalReferenceCode: 'ticket',
-	label: {en_US: 'Ticket'},
-	name: 'ticket',
+const mockSelectedObjectFolder = {
+	externalReferenceCode: 'TST123',
+	label: {en_US: 'Test Folder'},
+	name: 'test-folder',
 };
 
 const ticketFolderHTTPMethods = {
@@ -38,6 +28,21 @@ const ticketFolderHTTPMethods = {
 		update: {href: '', method: 'PUT'},
 	},
 };
+
+const mockItems = [
+	{
+		label: 'Edit',
+		onClick: jest.fn(),
+		value: 'edit',
+	},
+	{
+		label: 'Delete',
+		onClick: jest.fn(),
+		value: 'delete',
+	},
+];
+
+const mockModelBuilderURL = 'http://localhost:8080/model-builder';
 
 describe('The ObjectFolderCardHeader component should', () => {
 	it('render all object folder actions', () => {
@@ -62,7 +67,7 @@ describe('The ObjectFolderCardHeader component should', () => {
 					}) as IItem[]
 				}
 				modelBuilderURL=""
-				selectedObjectFolder={selectedObjectFolderMock}
+				selectedObjectFolder={mockSelectedObjectFolder}
 			></ObjectFolderCardHeader>
 		);
 
@@ -85,44 +90,93 @@ describe('The ObjectFolderCardHeader component should', () => {
 		expect(menuItem[4]).toHaveAttribute('value', 'deleteObjectFolder');
 	});
 
-	it('not render delete and edit object folder actions on default object folder', () => {
+	it('renders with selected object folder and items', () => {
 		render(
 			<ObjectFolderCardHeader
-				items={
-					getObjectFolderActions({
-						actions: {
-							objectDefinitionActions:
-								defaultFolderHTTPMethods.objectDefinitionActions,
-							objectFolderActions:
-								defaultFolderHTTPMethods.objectFolderActions,
-						},
-						baseResourceURL: '',
-						importObjectDefinitionURL: '',
-						objectFolderExternalReferenceCode: '',
-						objectFolderId: 2,
-						objectFolderPermissionsURL: '',
-						portletNamespace: '',
-						setModalImportProperties: () => {},
-						setShowModal: () => {},
-					}) as IItem[]
-				}
-				modelBuilderURL=""
-				selectedObjectFolder={selectedObjectFolderMock}
-			></ObjectFolderCardHeader>
+				items={mockItems}
+				modelBuilderURL={mockModelBuilderURL}
+				selectedObjectFolder={mockSelectedObjectFolder}
+			/>
 		);
 
-		userEvent.click(
-			screen.getByRole('button', {name: 'object-folder-actions'})
+		expect(screen.getByText('Test Folder')).toBeInTheDocument();
+		expect(screen.getByText('erc:')).toBeInTheDocument();
+		expect(screen.getByText('TST123')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('object-folder-actions')
+		).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('view-in-model-builder')
+		).toBeInTheDocument();
+	});
+
+	it('renders without a selected object folder', () => {
+		render(
+			<ObjectFolderCardHeader
+				items={mockItems}
+				modelBuilderURL={mockModelBuilderURL}
+			/>
 		);
 
-		const menuItem = screen.getAllByRole('menuitem');
+		expect(
+			screen.queryByLabelText('object-folder-actions')
+		).not.toBeInTheDocument();
+		expect(screen.queryByText('erc:')).toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('view-in-model-builder')
+		).not.toBeInTheDocument();
+	});
 
-		expect(menuItem).toHaveLength(3);
+	it('opens dropdown menu when trigger is clicked', () => {
+		render(
+			<ObjectFolderCardHeader
+				items={mockItems}
+				modelBuilderURL={mockModelBuilderURL}
+				selectedObjectFolder={mockSelectedObjectFolder}
+			/>
+		);
 
-		expect(menuItem[0]).toHaveAttribute('value', 'exportObjectFolder');
+		const dropdownTrigger = screen.getByLabelText('object-folder-actions');
+		fireEvent.click(dropdownTrigger);
 
-		expect(menuItem[1]).toHaveAttribute('value', 'importObjectDefinition');
+		mockItems.forEach((item) => {
+			expect(screen.getByText(item.label)).toBeInTheDocument();
+		});
+	});
 
-		expect(menuItem[2]).toHaveAttribute('value', 'objectFolderPermissions');
+	it('displays empty external reference code if not provided', () => {
+		const mockSelectedObjectFolder = {
+			label: {en_US: 'Test Folder'},
+			name: 'test-folder',
+		};
+
+		render(
+			<ObjectFolderCardHeader
+				items={mockItems}
+				modelBuilderURL={mockModelBuilderURL}
+				selectedObjectFolder={mockSelectedObjectFolder}
+			/>
+		);
+
+		expect(screen.getByText('erc:')).toBeInTheDocument();
+		expect(screen.queryByText('TST123')).not.toBeInTheDocument();
+	});
+
+	it('displays folder name if label is not provided', () => {
+		const mockSelectedObjectFolder = {
+			externalReferenceCode: 'TST123',
+			name: 'test-folder',
+		};
+
+		render(
+			<ObjectFolderCardHeader
+				items={mockItems}
+				modelBuilderURL={mockModelBuilderURL}
+				selectedObjectFolder={mockSelectedObjectFolder}
+			/>
+		);
+
+		expect(screen.getByText('test-folder')).toBeInTheDocument();
+		expect(screen.getByText('TST123')).toBeInTheDocument();
 	});
 });

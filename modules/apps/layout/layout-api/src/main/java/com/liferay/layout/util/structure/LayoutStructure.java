@@ -479,61 +479,57 @@ public class LayoutStructure {
 
 		int position = 0;
 
-		if (!itemIds.contains(parentItemId) &&
-			(parentLayoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem)) {
-
-			List<String> childrenItemIds =
-				parentLayoutStructureItem.getChildrenItemIds();
-
-			if (ListUtil.isEmpty(childrenItemIds)) {
-				throw new UnsupportedOperationException(
-					"Unable to copy items because collection does not have " +
-						"collection items");
-			}
-
-			parentItemId = childrenItemIds.get(0);
-		}
-		else if (parentLayoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem ||
-				 parentLayoutStructureItem instanceof
-					 RowStyledLayoutStructureItem) {
-
-			String oldParentItemId = parentItemId;
-
-			parentItemId = parentLayoutStructureItem.getParentItemId();
-
-			LayoutStructureItem newParentLayoutStructureItem =
-				_layoutStructureItems.get(parentItemId);
-
-			List<String> childrenItemIds =
-				newParentLayoutStructureItem.getChildrenItemIds();
-
-			position = childrenItemIds.indexOf(oldParentItemId) + 1;
-		}
-
 		List<LayoutStructureItem> copiedLayoutStructureItems =
 			new ArrayList<>();
 
 		for (String itemId : itemIds) {
 			if (Objects.equals(itemId, parentItemId)) {
-				String oldParentItemId = parentItemId;
+				parentLayoutStructureItem = _layoutStructureItems.get(
+					parentItemId);
+			}
 
-				parentItemId = parentLayoutStructureItem.getParentItemId();
+			String currentParentItemId = parentLayoutStructureItem.getItemId();
 
-				LayoutStructureItem newParentLayoutStructureItem =
-					_layoutStructureItems.get(parentItemId);
+			if (Objects.equals(itemId, parentItemId) ||
+				(parentLayoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) ||
+				(parentLayoutStructureItem instanceof
+					RowStyledLayoutStructureItem)) {
+
+				String oldParentItemId = parentLayoutStructureItem.getItemId();
+
+				currentParentItemId =
+					parentLayoutStructureItem.getParentItemId();
+
+				parentLayoutStructureItem = _layoutStructureItems.get(
+					currentParentItemId);
 
 				List<String> childrenItemIds =
-					newParentLayoutStructureItem.getChildrenItemIds();
+					parentLayoutStructureItem.getChildrenItemIds();
 
 				position = childrenItemIds.indexOf(oldParentItemId) + 1;
+			}
+			else if (parentLayoutStructureItem instanceof
+						CollectionStyledLayoutStructureItem) {
+
+				List<String> childrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
+				if (ListUtil.isEmpty(childrenItemIds)) {
+					throw new UnsupportedOperationException(
+						"Unable to copy items because collection does not " +
+							"have collection items");
+				}
+
+				currentParentItemId = childrenItemIds.get(0);
+
+				position = 0;
 			}
 
 			List<String> childrenItemIds =
 				LayoutStructureItemUtil.getChildrenItemIds(itemId, this);
 
-			if (childrenItemIds.contains(parentItemId)) {
+			if (childrenItemIds.contains(currentParentItemId)) {
 				throw new UnsupportedOperationException(
 					"Unable to copy items because parent item ID cannot be a " +
 						"child of item ID");
@@ -556,10 +552,13 @@ public class LayoutStructure {
 						" cannot be copied"));
 			}
 
-			copiedLayoutStructureItems.addAll(
-				_duplicateLayoutStructureItem(itemId, parentItemId, position));
+			List<LayoutStructureItem> duplicatedLayoutStructureItems =
+				_duplicateLayoutStructureItem(
+					itemId, currentParentItemId, position);
 
-			position++;
+			copiedLayoutStructureItems.addAll(duplicatedLayoutStructureItems);
+
+			parentLayoutStructureItem = duplicatedLayoutStructureItems.get(0);
 		}
 
 		return copiedLayoutStructureItems;

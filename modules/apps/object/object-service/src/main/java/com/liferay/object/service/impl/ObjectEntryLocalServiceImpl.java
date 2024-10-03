@@ -156,8 +156,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
@@ -185,7 +183,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -1216,7 +1213,7 @@ public class ObjectEntryLocalServiceImpl
 				)
 			).leftJoinOn(
 				dynamicObjectDefinitionLocalizationTable,
-				_getLeftJoinLocalizationTablePredicate(
+				ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
 					dynamicObjectDefinitionLocalizationTable,
 					dynamicObjectDefinitionTable)
 			).where(
@@ -1295,7 +1292,7 @@ public class ObjectEntryLocalServiceImpl
 				rootDynamicObjectDefinitionTable)
 		).leftJoinOn(
 			dynamicObjectDefinitionLocalizationTable,
-			_getLeftJoinLocalizationTablePredicate(
+			ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable)
 		).where(
@@ -1388,7 +1385,7 @@ public class ObjectEntryLocalServiceImpl
 				rootDynamicObjectDefinitionTable)
 		).leftJoinOn(
 			dynamicObjectDefinitionLocalizationTable,
-			_getLeftJoinLocalizationTablePredicate(
+			ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable)
 		).where(
@@ -2764,40 +2761,6 @@ public class ObjectEntryLocalServiceImpl
 			PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
 	}
 
-	private Predicate _getLeftJoinLocalizationTablePredicate(
-			DynamicObjectDefinitionLocalizationTable
-				dynamicObjectDefinitionLocalizationTable,
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
-		throws PortalException {
-
-		if (dynamicObjectDefinitionLocalizationTable == null) {
-			return null;
-		}
-
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		if (locale == null) {
-			locale = LocaleThreadLocal.getSiteDefaultLocale();
-		}
-
-		if (locale == null) {
-			User user = GuestOrUserUtil.getGuestOrUser(
-				CompanyThreadLocal.getCompanyId());
-
-			locale = user.getLocale();
-		}
-
-		return dynamicObjectDefinitionLocalizationTable.getForeignKeyColumn(
-		).eq(
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
-		).and(
-			dynamicObjectDefinitionLocalizationTable.getLanguageIdColumn(
-			).eq(
-				LocaleUtil.toLanguageId(locale)
-			)
-		);
-	}
-
 	private Set<Locale> _getLocales(
 		long companyId, List<ObjectField> objectFields,
 		Map<String, Serializable> values) {
@@ -2898,7 +2861,7 @@ public class ObjectEntryLocalServiceImpl
 			)
 		).leftJoinOn(
 			dynamicObjectDefinitionLocalizationTable,
-			_getLeftJoinLocalizationTablePredicate(
+			ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable)
 		).leftJoinOn(
@@ -3012,7 +2975,7 @@ public class ObjectEntryLocalServiceImpl
 				rootDynamicObjectDefinitionTable)
 		).leftJoinOn(
 			dynamicObjectDefinitionLocalizationTable,
-			_getLeftJoinLocalizationTablePredicate(
+			ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable)
 		).where(

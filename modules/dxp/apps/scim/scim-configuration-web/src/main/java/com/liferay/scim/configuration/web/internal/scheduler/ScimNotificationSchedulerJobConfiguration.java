@@ -83,12 +83,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		_body = StringUtil.read(getClass(), "dependencies/body.tmpl");
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	protected boolean hasToSendNotification(
 		long currentTime, Date lastNotificationDate,
 		Date oAuth2AccessTokenExpirationDate) {

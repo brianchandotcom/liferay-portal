@@ -744,11 +744,11 @@ public class UserServiceUtil {
 	}
 
 	public static User fetchUserByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().fetchUserByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static List<User> getCompanyUsers(long companyId, int start, int end)
@@ -990,6 +990,14 @@ public class UserServiceUtil {
 
 		return getService().getUserByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	public static User getUserByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getUserByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -111,10 +110,7 @@ public class TestrayTestFlowResourceImpl
 		if (Validator.isNotNull(testrayComponentIds)) {
 			sb.append("and c.c_componentId_ in (");
 			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayComponentIds, ",", 0L))));
+				TestrayUtil.interpolateParams(params, testrayComponentIds));
 			sb.append(") ");
 		}
 
@@ -125,11 +121,7 @@ public class TestrayTestFlowResourceImpl
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and t.c_teamId_ in (");
-			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayTeamIds, ",", 0L))));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
@@ -185,10 +177,7 @@ public class TestrayTestFlowResourceImpl
 		if (Validator.isNotNull(testrayComponentIds)) {
 			sb.append("and c.c_componentId_ in (");
 			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayComponentIds, ",", 0L))));
+				TestrayUtil.interpolateParams(params, testrayComponentIds));
 			sb.append(") ");
 		}
 
@@ -199,11 +188,7 @@ public class TestrayTestFlowResourceImpl
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and t.c_teamId_ in (");
-			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayTeamIds, ",", 0L))));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 

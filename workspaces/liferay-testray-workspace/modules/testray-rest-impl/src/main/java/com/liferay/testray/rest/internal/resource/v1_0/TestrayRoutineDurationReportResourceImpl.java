@@ -6,7 +6,6 @@
 package com.liferay.testray.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -74,11 +73,7 @@ public class TestrayRoutineDurationReportResourceImpl
 
 		if (Validator.isNotNull(priority)) {
 			sb.append("and c.priority_ in (");
-			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(priority, ",", 0L))));
+			sb.append(TestrayUtil.interpolateParams(params, priority));
 			sb.append(") ");
 		}
 
@@ -89,31 +84,20 @@ public class TestrayRoutineDurationReportResourceImpl
 
 		if (Validator.isNotNull(testrayCaseTypeIds)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
-			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayCaseTypeIds, ",", 0L))));
+			sb.append(TestrayUtil.interpolateParams(params, priority));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayComponentIds)) {
 			sb.append("and cr.r_componentToCaseResult_c_componentId in (");
 			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayComponentIds, ",", 0L))));
+				TestrayUtil.interpolateParams(params, testrayComponentIds));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(
-						StringUtil.split(testrayTeamIds, ",", 0L))));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 

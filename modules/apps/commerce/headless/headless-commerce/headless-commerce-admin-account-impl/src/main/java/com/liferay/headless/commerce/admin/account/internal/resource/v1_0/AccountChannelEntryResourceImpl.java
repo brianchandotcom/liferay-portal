@@ -1195,8 +1195,8 @@ public class AccountChannelEntryResourceImpl
 		}
 		else if (type == CommerceChannelAccountEntryRelConstants.TYPE_USER) {
 			User user = _userService.fetchUserByExternalReferenceCode(
-				contextCompany.getCompanyId(),
-				accountChannelEntry.getClassExternalReferenceCode());
+				accountChannelEntry.getClassExternalReferenceCode(),
+				contextCompany.getCompanyId());
 
 			if (user == null) {
 				user = _userService.getUserById(

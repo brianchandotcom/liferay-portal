@@ -168,6 +168,10 @@ public class DataSourceController extends BaseFaroController {
 			_tokenManager.clearToken(token);
 		}
 
+		faroProject.setDataSourceConnected(true);
+
+		faroProject = faroProjectLocalService.updateFaroProject(faroProject);
+
 		TokenCredentials tokenCredentials =
 			(TokenCredentials)dataSource.getCredentials();
 
@@ -380,6 +384,10 @@ public class DataSourceController extends BaseFaroController {
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
 		contactsEngineClient.disconnectDataSources(faroProject);
+
+		faroProject.setDataSourceConnected(false);
+
+		faroProjectLocalService.updateFaroProject(faroProject);
 	}
 
 	@GET

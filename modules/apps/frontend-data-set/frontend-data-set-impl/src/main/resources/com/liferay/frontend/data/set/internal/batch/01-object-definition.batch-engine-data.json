@@ -535,6 +535,22 @@
 					"type": "String"
 				},
 				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "REQUEST_BODY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Request Body"
+					},
+					"localized": false,
+					"name": "requestBody",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "SUCCESS_MESSAGE",
@@ -581,22 +597,6 @@
 					"state": false,
 					"system": true,
 					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "REQUEST_BODY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Request Body"
-					},
-					"localized": false,
-					"name": "requestBody",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Clob"
 				},
 				{
 					"DBType": "Clob",

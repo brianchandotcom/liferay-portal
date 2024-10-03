@@ -469,7 +469,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testLongestRunningSQLsThreshold() throws Exception {
-		long originalUpgradeReportSqlStatementThreshold =
+		long originalUpgradeReportSQLStatementThreshold =
 			ReflectionTestUtil.getAndSetFieldValue(
 				UpgradeSQLRecorder.class,
 				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0L);
@@ -514,7 +514,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			ReflectionTestUtil.setFieldValue(
 				UpgradeSQLRecorder.class,
 				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD",
-				originalUpgradeReportSqlStatementThreshold);
+				originalUpgradeReportSQLStatementThreshold);
 		}
 	}
 
@@ -524,20 +524,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
-		String fasterUpgradeProcessName =
+		String fasterUpgradeProcessClassName =
 			"com.liferay.portal.FasterUpgradeTest";
 
 		log.info(
 			StringBundler.concat(
-				"Completed upgrade process ", fasterUpgradeProcessName, " in ",
-				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD, " ms"));
+				"Completed upgrade process ", fasterUpgradeProcessClassName,
+				" in ", PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD,
+				" ms"));
 
-		String slowerUpgradeProcessName =
+		String slowerUpgradeProcessClassName =
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			StringBundler.concat(
-				"Completed upgrade process ", slowerUpgradeProcessName, " in ",
+				"Completed upgrade process ", slowerUpgradeProcessClassName,
+				" in ",
 				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
 				" ms"));
 
@@ -561,9 +563,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				longestUpgradeProcessesValue, belowThresholdUpgradeProcessName,
 				StringPool.BLANK));
 
-		Assert.assertTrue(
-			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
-				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
+		int index1 = longestUpgradeProcessesValue.indexOf(
+			slowerUpgradeProcessClassName);
+		int index2 = longestUpgradeProcessesValue.indexOf(
+			fasterUpgradeProcessClassName);
+
+		Assert.assertTrue(index1 < index2);
 	}
 
 	@Test
@@ -610,12 +615,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"upgrade.report.longest.upgrade.processes", "[]");
 		_assertLogContextDiagnostics("upgrade.report.warnings", "[]");
 		_assertReportDiagnostics("Errors: Nothing registered");
-
 		_assertReportDiagnostics(
 			"Top 10 longest upgrade processes above " +
 				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD +
 					" milliseconds: Nothing registered");
-
 		_assertReportDiagnostics("Warnings: Nothing registered");
 	}
 
@@ -793,7 +796,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				}
 			});
 
-		long originalUpgradeReportSqlStatementThreshold =
+		long originalUpgradeReportSQLStatementThreshold =
 			ReflectionTestUtil.getAndSetFieldValue(
 				UpgradeSQLRecorder.class,
 				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0L);
@@ -850,7 +853,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			ReflectionTestUtil.setFieldValue(
 				UpgradeSQLRecorder.class,
 				"_UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD",
-				originalUpgradeReportSqlStatementThreshold);
+				originalUpgradeReportSQLStatementThreshold);
 		}
 	}
 

@@ -212,33 +212,41 @@ public class UpgradeSQLRecorder {
 			throw sqlException;
 		}
 		finally {
-			String sql = _extractSQL(object);
+			_executeFinally(object, startTime);
+		}
+	}
 
-			if (sql != null) {
-				sql += StringPool.SEMICOLON;
+	private static void _executeFinally(Object object, long startTime) {
+		String sql = _extractSQL(object);
 
-				long duration = System.currentTimeMillis() - startTime;
+		if (sql == null) {
+			return;
+		}
 
-				if (duration >= _UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD) {
-					if (Validator.isBlank(_upgradeProcessClassName)) {
-						_sqlExecutionTimes.put(sql, duration);
-					}
-					else if (DBPartition.isPartitionEnabled()) {
-						_sqlExecutionTimes.put(
-							StringBundler.concat(
-								_upgradeProcessClassName, StringPool.AT,
-								String.valueOf(
-									CompanyThreadLocal.getCompanyId()),
-								StringPool.PIPE, sql),
-							duration);
-					}
-					else {
-						_sqlExecutionTimes.put(
-							_upgradeProcessClassName + StringPool.PIPE + sql,
-							duration);
-					}
-				}
-			}
+		sql += StringPool.SEMICOLON;
+
+		long duration = System.currentTimeMillis() - startTime;
+
+		if (duration < _UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD) {
+			return;
+		}
+
+		if (Validator.isBlank(_upgradeProcessClassName)) {
+			_sqlExecutionTimes.put(sql, duration);
+		}
+		else if (DBPartition.isPartitionEnabled()) {
+			_sqlExecutionTimes.put(
+				StringBundler.concat(
+					_upgradeProcessClassName, StringPool.AT,
+					String.valueOf(
+						CompanyThreadLocal.getCompanyId()),
+					StringPool.PIPE, sql),
+				duration);
+		}
+		else {
+			_sqlExecutionTimes.put(
+				_upgradeProcessClassName + StringPool.PIPE + sql,
+				duration);
 		}
 	}
 

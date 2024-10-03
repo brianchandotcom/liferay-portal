@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -102,6 +103,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -4605,6 +4607,101 @@ public class ObjectEntryResourceTest {
 				"type", InvalidFilterException.class.getSimpleName()
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.STRICT);
+	}
+
+	@Test
+	public void testFilterObjectEntriesByRelatedLocalizedObjectEntriesFields()
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 = _publishLocalizedObjectDefinition(
+			_OBJECT_FIELD_NAME_1);
+
+		ObjectEntry objectEntry1 = _addLocalizedObjectEntry(
+			objectDefinition1, _OBJECT_FIELD_NAME_1,
+			new String[] {
+				String.valueOf(_OBJECT_FIELD_VALUE_1),
+				String.valueOf(_OBJECT_FIELD_VALUE_2)
+			});
+
+		ObjectDefinition objectDefinition2 = _publishLocalizedObjectDefinition(
+			_OBJECT_FIELD_NAME_2);
+
+		ObjectEntry objectEntry2 = _addLocalizedObjectEntry(
+			objectDefinition2, _OBJECT_FIELD_NAME_2,
+			new String[] {
+				String.valueOf(_OBJECT_FIELD_VALUE_3),
+				String.valueOf(_OBJECT_FIELD_VALUE_4)
+			});
+
+		ObjectRelationship objectRelationship =
+			_addObjectRelationshipAndRelateObjectEntries(
+				objectDefinition1, objectDefinition2,
+				objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		User user = GuestOrUserUtil.getGuestOrUser();
+
+		String languageId = user.getLanguageId();
+
+		try {
+
+			// Many to one relationship
+
+			user.setLanguageId("en_US");
+
+			user = _userLocalService.updateUser(user);
+
+			_testFilterObjectEntriesByRelatedLocalizedObjectEntriesFields(
+				String.format(
+					"%s/%s eq '%s'", objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1),
+				objectDefinition2, objectEntry2);
+
+			user.setLanguageId("es_ES");
+
+			user = _userLocalService.updateUser(user);
+
+			_testFilterObjectEntriesByRelatedLocalizedObjectEntriesFields(
+				String.format(
+					"%s/%s eq '%s'", objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2),
+				objectDefinition2, objectEntry2);
+
+			// One to many relationship
+
+			user.setLanguageId("en_US");
+
+			user = _userLocalService.updateUser(user);
+
+			_testFilterObjectEntriesByRelatedLocalizedObjectEntriesFields(
+				String.format(
+					"%s/%s eq '%s'", objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_3),
+				objectDefinition1, objectEntry1);
+
+			user.setLanguageId("es_ES");
+
+			user = _userLocalService.updateUser(user);
+
+			_testFilterObjectEntriesByRelatedLocalizedObjectEntriesFields(
+				String.format(
+					"%s/%s eq '%s'", objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_4),
+				objectDefinition1, objectEntry1);
+		}
+		finally {
+			user.setLanguageId(languageId);
+
+			_userLocalService.updateUser(user);
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition1);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition2);
+		}
 	}
 
 	@Test
@@ -11675,6 +11772,23 @@ public class ObjectEntryResourceTest {
 			fileEntry.getFileEntryId());
 	}
 
+	private ObjectEntry _addLocalizedObjectEntry(
+			ObjectDefinition objectDefinition, String objectFieldName,
+			String[] objectFieldValues)
+		throws Exception {
+
+		return ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName + "_i18n",
+				HashMapBuilder.<String, Serializable>put(
+					"en_US", objectFieldValues[0]
+				).put(
+					"es_ES", objectFieldValues[1]
+				).build()
+			).build());
+	}
+
 	private void _addModelResourcePermissions(
 			String[] actionIds, String className, long objectEntryId,
 			long userId)
@@ -12560,6 +12674,26 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 	}
 
+	private ObjectDefinition _publishLocalizedObjectDefinition(
+			String objectFieldName)
+		throws Exception {
+
+		return ObjectDefinitionTestUtil.publishObjectDefinition(
+			true, ObjectDefinitionTestUtil.getRandomName(),
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					objectFieldName
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUserId());
+	}
+
 	private JSONObject _putCustomObjectEntryPermissionsPage(
 			long id, JSONArray permissionsJSONArray)
 		throws Exception {
@@ -12606,6 +12740,27 @@ public class ObjectEntryResourceTest {
 			});
 
 		objectEntry.setProperties(properties);
+	}
+
+	private void _testFilterObjectEntriesByRelatedLocalizedObjectEntriesFields(
+			String filterString, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			objectDefinition.getRESTContextPath() + "?filter=" +
+				_escape(filterString),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			itemJSONObject.getLong("id"), objectEntry.getObjectEntryId());
 	}
 
 	private void _testFilterObjectEntriesByRelatedSystemObjectEntriesFields(
@@ -14743,6 +14898,10 @@ public class ObjectEntryResourceTest {
 		_systemObjectDefinitionManagerRegistry;
 
 	private JSONObject _userAccountJSONObject;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
 	private ObjectDefinition _userSystemObjectDefinition;
 
 	@DeleteAfterTestRun

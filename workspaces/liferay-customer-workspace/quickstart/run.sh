@@ -57,8 +57,6 @@ function main {
 
 	./gradlew clean build
 
-	rm ./bundles/osgi/client-extensions/*
-
 	popd > /dev/null
 
 	docker compose up --detach database liferay
@@ -69,7 +67,7 @@ function main {
 
 	pushd .. > /dev/null
 
-	./gradlew deploy
+	./gradlew deploy "-Ddeploy.docker.container.id=${container_id}"
 
 	popd > /dev/null
 

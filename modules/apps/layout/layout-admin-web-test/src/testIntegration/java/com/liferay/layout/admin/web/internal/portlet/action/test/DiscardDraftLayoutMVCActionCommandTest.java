@@ -6,6 +6,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.manager.LayoutLockManager;
@@ -202,8 +203,9 @@ public class DiscardDraftLayoutMVCActionCommandTest {
 		long segmentsExperienceId = segmentsExperienceJSONObject.getLong(
 			"segmentsExperienceId");
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			"{}", draftLayout, segmentsExperienceId);
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", draftLayout, segmentsExperienceId);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -231,6 +233,10 @@ public class DiscardDraftLayoutMVCActionCommandTest {
 
 		Assert.assertTrue(
 			MapUtil.isEmpty(layoutStructure.getFragmentLayoutStructureItems()));
+
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

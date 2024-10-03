@@ -221,7 +221,7 @@ public class UpgradeSQLRecorder {
 
 				long sqlQueryThresholdDuration = GetterUtil.getLong(
 					PropsUtil.get(
-						PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION));
+						PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD));
 
 				if (duration >= sqlQueryThresholdDuration) {
 					if (Validator.isBlank(_upgradeProcessClassName)) {

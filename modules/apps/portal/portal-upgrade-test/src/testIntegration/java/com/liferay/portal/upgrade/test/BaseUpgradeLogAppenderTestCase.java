@@ -547,7 +547,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_assertReportDiagnostics(
 			"Top 10 longest upgrade processes above " +
-				PropsValues.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION +
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD +
 					" milliseconds: Nothing registered");
 
 		_assertReportDiagnostics("Warnings: Nothing registered");
@@ -692,11 +692,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	@Test
 	public void testSQLQueryThresholdDuration() throws Exception {
 		String originalUpgradeReportSqlQueryThresholdDuration = PropsUtil.get(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION);
+			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
 
 		PropsUtil.set(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION,
-			String.valueOf(2));
+			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD, String.valueOf(2));
 
 		try {
 			UpgradeProcess upgradeProcess1 = UpgradeProcessFactory.runSQL(
@@ -716,8 +715,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			long duration = 0;
 
 			long sqlQueryThresholdDuration = GetterUtil.getLong(
-				PropsUtil.get(
-					PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION));
+				PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD));
 
 			Pattern pattern = _durationPattern.compile("(\\d+) ms");
 
@@ -741,7 +739,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 		finally {
 			PropsUtil.set(
-				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION,
+				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD,
 				originalUpgradeReportSqlQueryThresholdDuration);
 		}
 	}
@@ -785,11 +783,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			});
 
 		String originalUpgradeReportSqlQueryThresholdDuration = PropsUtil.get(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION);
+			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
 
 		PropsUtil.set(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION,
-			String.valueOf(0));
+			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD, String.valueOf(0));
 
 		try {
 			_appender.start();
@@ -841,7 +838,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 		finally {
 			PropsUtil.set(
-				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION,
+				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD,
 				originalUpgradeReportSqlQueryThresholdDuration);
 		}
 	}
@@ -856,7 +853,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"com.liferay.portal.FasterUpgradeTest";
 
 		long fasterUpgradeProcessDuration =
-			PropsValues.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION - 100;
+			PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD - 100;
 
 		log.info(
 			StringBundler.concat(
@@ -867,7 +864,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		long slowerUpgradeProcessDuration =
-			PropsValues.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION + 100;
+			PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 100;
 
 		log.info(
 			StringBundler.concat(

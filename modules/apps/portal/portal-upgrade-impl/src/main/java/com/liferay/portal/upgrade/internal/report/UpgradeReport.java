@@ -590,7 +590,7 @@ public class UpgradeReport {
 
 					if (duration >=
 							PropsValues.
-								UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION) {
+								UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD) {
 
 						upgradeProcessDurations.put(className, duration);
 					}
@@ -719,14 +719,14 @@ public class UpgradeReport {
 			return String.format(
 				"Top %d longest SQL queries above %d milliseconds",
 				_LONGEST_RUNNING_SQLS_COUNT,
-				PropsValues.UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION);
+				PropsValues.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
 		}
 
 		if (key.equals("longest.upgrade.processes")) {
 			return String.format(
 				"Top %d longest upgrade processes above %d milliseconds",
 				_LONGEST_UPGRADE_PROCESSES_COUNT,
-				PropsValues.UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION);
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD);
 		}
 
 		if (key.startsWith("tables.")) {

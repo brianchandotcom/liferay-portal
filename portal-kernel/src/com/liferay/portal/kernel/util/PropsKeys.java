@@ -2733,11 +2733,11 @@ public interface PropsKeys {
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";
 
-	public static final String UPGRADE_REPORT_PROCESS_THRESHOLD_DURATION =
-		"upgrade.report.process.threshold.duration";
+	public static final String UPGRADE_REPORT_SQL_QUERY_THRESHOLD =
+		"upgrade.report.sql.query.threshold";
 
-	public static final String UPGRADE_REPORT_SQL_QUERY_THRESHOLD_DURATION =
-		"upgrade.report.sql.query.threshold.duration";
+	public static final String UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD =
+		"upgrade.report.upgrade.process.threshold";
 
 	public static final String USER_GROUPS_NAME_ALLOW_NUMERIC =
 		"user.groups.name.allow.numeric";

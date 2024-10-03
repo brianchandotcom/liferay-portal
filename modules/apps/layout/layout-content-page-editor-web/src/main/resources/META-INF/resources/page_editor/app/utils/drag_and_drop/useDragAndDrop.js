@@ -272,7 +272,7 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const isOverTarget =
 		state.dropTargetItem &&
 		targetItem &&
-		state.dropTargetItem.toControlsId(state.dropTargetItem.itemId) ===
+		state.dropTargetItem.toControlsId?.(state.dropTargetItem.itemId) ===
 			targetItem.toControlsId(targetItem.itemId);
 
 	const [, setDropTargetRef] = useDrop({
@@ -288,6 +288,7 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 				layoutDataRef,
 				monitor,
 				sourceItem: source,
+				state,
 				targetItem,
 				targetRefs,
 				toControlsId,
@@ -317,7 +318,7 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	return {
 		isOverTarget,
 		sourceItem: state.dropItem,
-		targetItemId: state.dropTargetItem?.toControlsId(
+		targetItemId: state.dropTargetItem?.toControlsId?.(
 			state.dropTargetItem.itemId
 		),
 		targetPosition: state.targetPositionWithMiddle,

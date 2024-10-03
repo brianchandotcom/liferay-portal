@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -468,6 +467,56 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testLongestRunningSQLsThreshold() throws Exception {
+		long originalUpgradeReportSqlQueryThreshold =
+			ReflectionTestUtil.getAndSetFieldValue(
+				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
+				0);
+
+		try {
+			_appender.start();
+
+			String aboveThresholdSQL =
+				"insert into UpgradeReportTable1 (id_) values (2)";
+
+			UpgradeProcess aboveThresholdUpgradeProcess =
+				UpgradeProcessFactory.runSQL(aboveThresholdSQL);
+
+			aboveThresholdUpgradeProcess.upgrade();
+
+			ReflectionTestUtil.setFieldValue(
+				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
+				60000);
+
+			String belowThresholdSQL =
+				"delete from UpgradeReportTable1 where id_ = 2";
+
+			UpgradeProcess belowThresholdUpgradeProcess =
+				UpgradeProcessFactory.runSQL(belowThresholdSQL);
+
+			belowThresholdUpgradeProcess.upgrade();
+
+			_appender.stop();
+
+			String longestRunningSQLs = _getLogContextValueDiagnostics(
+				"upgrade.report.longest.running.sqls");
+
+			Assert.assertFalse(
+				StringUtil.contains(
+					longestRunningSQLs, belowThresholdSQL, StringPool.BLANK));
+
+			Assert.assertTrue(
+				StringUtil.contains(
+					longestRunningSQLs, aboveThresholdSQL, StringPool.BLANK));
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				UpgradeSQLRecorder.class, "_UPGRADE_REPORT_SQL_QUERY_THRESHOLD",
+				originalUpgradeReportSqlQueryThreshold);
+		}
+	}
+
+	@Test
 	public void testLongestUpgradeProcessesThresholdSorted() throws Exception {
 		_appender.start();
 
@@ -490,12 +539,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
 				" ms"));
 
-		String underThresholdUpgradeProcessName =
+		String belowThresholdUpgradeProcessName =
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			StringBundler.concat(
-				"Completed upgrade process ", underThresholdUpgradeProcessName,
+				"Completed upgrade process ", belowThresholdUpgradeProcessName,
 				" in ",
 				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD + 1,
 				" ms"));
@@ -507,7 +556,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Assert.assertFalse(
 			StringUtil.contains(
-				longestUpgradeProcessesValue, underThresholdUpgradeProcessName,
+				longestUpgradeProcessesValue, belowThresholdUpgradeProcessName,
 				StringPool.BLANK));
 
 		Assert.assertTrue(
@@ -702,61 +751,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"Portal expected build number: ", ReleaseInfo.getBuildNumber(),
 				StringPool.NEW_LINE, "Portal expected schema version: ",
 				latestSchemaVersion, StringPool.NEW_LINE));
-	}
-
-	@Test
-	public void testSQLQueryThresholdDuration() throws Exception {
-		String originalUpgradeReportSqlQueryThresholdDuration = PropsUtil.get(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD);
-
-		PropsUtil.set(
-			PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD, String.valueOf(2));
-
-		try {
-			UpgradeProcess upgradeProcess1 = UpgradeProcessFactory.runSQL(
-				"insert into UpgradeReportTable1 (id_) values (2)");
-
-			UpgradeProcess upgradeProcess2 = UpgradeProcessFactory.runSQL(
-				"delete from UpgradeReportTable1 where id_ = 2");
-
-			_appender.start();
-
-			upgradeProcess1.upgrade();
-
-			upgradeProcess2.upgrade();
-
-			_appender.stop();
-
-			long duration = 0;
-
-			long sqlQueryThresholdDuration = GetterUtil.getLong(
-				PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD));
-
-			Pattern pattern = _durationPattern.compile("(\\d+) ms");
-
-			Matcher matcher = pattern.matcher(
-				_getLogContextValueDiagnostics(
-					"upgrade.report.longest.running.sqls"));
-
-			while (matcher.find()) {
-				duration = GetterUtil.getLong(matcher.group(1));
-
-				Assert.assertTrue(duration >= sqlQueryThresholdDuration);
-			}
-
-			matcher = pattern.matcher(_getReportContentDiagnostics());
-
-			while (matcher.find()) {
-				duration = GetterUtil.getLong(matcher.group(1));
-
-				Assert.assertTrue(duration >= sqlQueryThresholdDuration);
-			}
-		}
-		finally {
-			PropsUtil.set(
-				PropsKeys.UPGRADE_REPORT_SQL_QUERY_THRESHOLD,
-				originalUpgradeReportSqlQueryThresholdDuration);
-		}
 	}
 
 	@Test
@@ -1237,8 +1231,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private static DB _db;
-	private static final Pattern _durationPattern = Pattern.compile(
-		"(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");

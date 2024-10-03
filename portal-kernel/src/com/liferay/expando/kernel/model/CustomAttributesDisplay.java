@@ -12,6 +12,10 @@ public interface CustomAttributesDisplay {
 
 	public String getClassName();
 
+	public default String getFeatureFlagKey() {
+		return null;
+	}
+
 	public String getIconCssClass();
 
 	public String getPortletId();

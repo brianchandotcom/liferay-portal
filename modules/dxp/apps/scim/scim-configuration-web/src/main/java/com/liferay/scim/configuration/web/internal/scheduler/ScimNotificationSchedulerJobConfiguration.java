@@ -11,7 +11,6 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -140,8 +139,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 			List<OAuth2Authorization> applicationOAuth2Authorizations =
 				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
-					oAuth2Application.getOAuth2ApplicationId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					oAuth2Application.getOAuth2ApplicationId(), 0, 1,
 					getOrderByComparator());
 
 			if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {

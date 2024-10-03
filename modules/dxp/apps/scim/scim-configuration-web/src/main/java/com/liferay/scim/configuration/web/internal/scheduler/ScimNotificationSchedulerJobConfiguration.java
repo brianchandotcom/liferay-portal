@@ -72,11 +72,11 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	public boolean hasToSendNotification(
-		Date oAuth2AccessTokenExpirationDate, Date lastNotificationDate) {
+		Date lastNotificationDate, Date oAuth2AccessTokenExpirationDate) {
 
 		return hasToSendNotification(
-			oAuth2AccessTokenExpirationDate, lastNotificationDate,
-			System.currentTimeMillis());
+			System.currentTimeMillis(), lastNotificationDate,
+			oAuth2AccessTokenExpirationDate);
 	}
 
 	@Activate
@@ -94,8 +94,8 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	protected boolean hasToSendNotification(
-		Date oAuth2AccessTokenExpirationDate, Date lastNotificationDate,
-		long currentTime) {
+		long currentTime, Date lastNotificationDate,
+		Date oAuth2AccessTokenExpirationDate) {
 
 		long toExpiryMillis =
 			oAuth2AccessTokenExpirationDate.getTime() - currentTime;
@@ -161,13 +161,13 @@ public class ScimNotificationSchedulerJobConfiguration
 				applicationOAuth2Authorization.getExpandoBridge();
 
 			if (hasToSendNotification(
-					accessTokenExpirationDate,
 					(Date)expandoBridge.getAttribute(
-						"lastSuccessfulNotificationDate", false))) {
+						"lastSuccessfulNotificationDate", false),
+					accessTokenExpirationDate)) {
 
 				try {
 					_sendNotification(
-						company.getCompanyId(), accessTokenExpirationDate);
+						accessTokenExpirationDate, company.getCompanyId());
 
 					expandoBridge.setAttribute(
 						"lastSuccessfulNotificationDate", new Date(), false);
@@ -182,7 +182,7 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private void _sendNotification(
-			long companyId, Date accessTokenExpirationDate)
+			Date accessTokenExpirationDate, long companyId)
 		throws Exception {
 
 		Role role = _roleLocalService.getRole(

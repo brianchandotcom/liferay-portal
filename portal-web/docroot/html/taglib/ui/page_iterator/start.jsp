@@ -195,7 +195,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)} %>" key="showing-x-to-x-of-x-entries" />
 		</p>
 
-		<nav aria-label="pagination">
+		<nav aria-label="<liferay-ui:message key="pagination" />">
 			<ul class="pagination">
 				<li class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
 					<c:choose>

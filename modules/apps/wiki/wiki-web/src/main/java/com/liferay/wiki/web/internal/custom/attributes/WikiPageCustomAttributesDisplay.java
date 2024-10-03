@@ -28,6 +28,11 @@ public class WikiPageCustomAttributesDisplay
 	}
 
 	@Override
+	public String getFeatureFlagKey() {
+		return "LPD-35013";
+	}
+
+	@Override
 	public String getIconCssClass() {
 		return "wiki-page";
 	}

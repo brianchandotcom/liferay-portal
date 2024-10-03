@@ -56,10 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ScimNotificationSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
-	public static final long[] NOTIFICATION_DURATION_MILLIS = {
-		30 * Time.DAY, 10 * Time.DAY, Time.DAY, 0
-	};
-
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompany(this::_process);
@@ -108,7 +104,7 @@ public class ScimNotificationSchedulerJobConfiguration
 			oAuth2AccessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
-		for (long notificationDurationMillis : NOTIFICATION_DURATION_MILLIS) {
+		for (long notificationDurationMillis : _NOTIFICATION_DURATION_MILLIS) {
 			if ((notificationDurationMillis >= millisUntilExpiry) &&
 				(millisToExpiryAtLastNotification >
 					notificationDurationMillis)) {
@@ -224,6 +220,10 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		subscriptionSender.flushNotifications();
 	}
+
+	private static final long[] _NOTIFICATION_DURATION_MILLIS = {
+		30 * Time.DAY, 10 * Time.DAY, Time.DAY, 0
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScimNotificationSchedulerJobConfiguration.class);

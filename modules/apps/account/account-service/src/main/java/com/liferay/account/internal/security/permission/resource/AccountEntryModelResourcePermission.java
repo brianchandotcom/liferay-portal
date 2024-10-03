@@ -123,9 +123,9 @@ public class AccountEntryModelResourcePermission
 					userOrganizationIds, organization.getOrganizationId());
 
 				if (!Objects.equals(
-						actionId, AccountActionKeys.UPDATE_ORGANIZATIONS) &&
-					!Objects.equals(
 						actionId, AccountActionKeys.MANAGE_ORGANIZATIONS) &&
+					!Objects.equals(
+						actionId, AccountActionKeys.UPDATE_ORGANIZATIONS) &&
 					organizationMember &&
 					OrganizationPermissionUtil.contains(
 						permissionChecker, organization.getOrganizationId(),

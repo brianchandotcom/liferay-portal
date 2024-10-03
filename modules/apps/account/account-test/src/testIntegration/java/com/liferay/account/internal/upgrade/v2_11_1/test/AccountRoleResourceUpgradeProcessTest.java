@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -38,37 +39,46 @@ public class AccountRoleResourceUpgradeProcessTest {
 
 	@Test
 	public void testAccountRoleResourceUpgradeProcess() throws Exception {
+		_resourceActionLocalService.addResourceAction(
+			AccountEntry.class.getName(), "EDIT_ORGANIZATIONS",
+			RandomTestUtil.randomLong());
+
+		_resourceActionLocalService.addResourceAction(
+			Organization.class.getName(), "EDIT_SUBORGANIZATIONS",
+			RandomTestUtil.randomLong());
+
+		_resourceActionLocalService.addResourceAction(
+			Organization.class.getName(), "EDIT_SUBORGANIZATION_ACCOUNTS",
+			RandomTestUtil.randomLong());
+
 		_runUpgrade();
 
 		CacheRegistryUtil.clear();
 
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				AccountEntry.class.getName(), "EDIT_ORGANIZATIONS"));
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				AccountEntry.class.getName(),
 				AccountActionKeys.UPDATE_ORGANIZATIONS));
 
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				Organization.class.getName(), "EDIT_SUBORGANIZATIONS"));
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),
 				ActionKeys.UPDATE_SUBORGANIZATIONS));
 
-		Assert.assertNotNull(
-			_resourceActionLocalService.fetchResourceAction(
-				Organization.class.getName(),
-				AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS));
-
-		Assert.assertNull(
-			_resourceActionLocalService.fetchResourceAction(
-				AccountEntry.class.getName(), "EDIT_ORGANIZATIONS"));
-
-		Assert.assertNull(
-			_resourceActionLocalService.fetchResourceAction(
-				Organization.class.getName(), "EDIT_SUBORGANIZATIONS"));
-
 		Assert.assertNull(
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),
 				"EDIT_SUBORGANIZATIONS_ACCOUNTS"));
+		Assert.assertNotNull(
+			_resourceActionLocalService.fetchResourceAction(
+				Organization.class.getName(),
+				AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS));
 	}
 
 	private void _runUpgrade() throws Exception {

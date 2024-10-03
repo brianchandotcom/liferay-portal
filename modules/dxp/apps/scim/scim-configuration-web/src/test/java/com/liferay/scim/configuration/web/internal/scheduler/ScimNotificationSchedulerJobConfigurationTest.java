@@ -43,6 +43,18 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		_testNotificationDuration(tokenExpiryDate, tokenExpiryDate.getTime());
 	}
 
+	private ScimNotificationSchedulerJobConfiguration
+		_prepareScimNotificationSchedulerJobConfiguration() {
+
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+
+		return new ScimNotificationSchedulerJobConfiguration();
+	}
+
 	private void _testNotificationDuration(
 		Date tokenExpiryDate, long notificationDurationMillis) {
 
@@ -70,17 +82,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	private static final Date _NO_NOTIFICATION_YET = new Date(0);
 
 	private final ScimNotificationSchedulerJobConfiguration
-		_scimNotificationSchedulerJobConfiguration;
-
-	{
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
 		_scimNotificationSchedulerJobConfiguration =
-			new ScimNotificationSchedulerJobConfiguration();
-	}
+			_prepareScimNotificationSchedulerJobConfiguration();
 
 }

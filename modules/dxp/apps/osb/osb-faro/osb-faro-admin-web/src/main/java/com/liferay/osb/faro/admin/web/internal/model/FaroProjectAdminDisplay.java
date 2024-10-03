@@ -41,6 +41,9 @@ public class FaroProjectAdminDisplay {
 			_log.error(exception);
 		}
 
+		_dataSourceConnected = GetterUtil.getBoolean(
+			document.get("dataSourceConnected"));
+
 		_faroProjectId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 		_groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 		_individualsLimit = GetterUtil.getLong(
@@ -167,6 +170,10 @@ public class FaroProjectAdminDisplay {
 		return _weDeployKey;
 	}
 
+	public boolean isDataSourceConnected() {
+		return _dataSourceConnected;
+	}
+
 	public boolean isOffline() {
 		return _offline;
 	}
@@ -183,6 +190,10 @@ public class FaroProjectAdminDisplay {
 		if (createDate != null) {
 			_createDate = new Date(createDate.getTime());
 		}
+	}
+
+	public void setDataSourceConnected(boolean dataSourceConnected) {
+		_dataSourceConnected = dataSourceConnected;
 	}
 
 	public void setFaroProjectId(long faroProjectId) {
@@ -285,6 +296,7 @@ public class FaroProjectAdminDisplay {
 	private String _corpProjectName;
 	private String _corpProjectUuid;
 	private Date _createDate;
+	private boolean _dataSourceConnected;
 	private long _faroProjectId;
 	private long _groupId;
 	private long _individualsCount;

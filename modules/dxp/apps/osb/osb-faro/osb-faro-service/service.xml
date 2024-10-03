@@ -157,6 +157,7 @@
 		<column name="accountName" type="String" />
 		<column name="corpProjectName" type="String" />
 		<column name="corpProjectUuid" type="String" />
+		<column name="dataSourceConnected" type="Boolean" />
 		<column name="ipAddresses" type="String" />
 		<column name="incidentReportEmailAddresses" type="String" />
 		<column name="lastAccessTime" type="long" />

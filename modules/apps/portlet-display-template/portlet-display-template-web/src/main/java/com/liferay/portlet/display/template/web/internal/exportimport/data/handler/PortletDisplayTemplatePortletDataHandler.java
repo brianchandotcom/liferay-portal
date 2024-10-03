@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -26,7 +27,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -37,7 +38,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,6 +59,12 @@ public class PortletDisplayTemplatePortletDataHandler
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
 		return _getStagedModelTypes();
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
 	}
 
 	@Override
@@ -85,14 +91,20 @@ public class PortletDisplayTemplatePortletDataHandler
 	}
 
 	@Override
+	public PortletDataHandlerControl[] getImportControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
 
-	@Activate
-	protected void activate() {
-		setExportControls(_getPortletDataHandlerControls());
-		setStagingControls(getExportControls());
+	@Override
+	public PortletDataHandlerControl[] getStagingControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
 	}
 
 	@Override
@@ -176,7 +188,7 @@ public class PortletDisplayTemplatePortletDataHandler
 		List<Long> classNameIds = new ArrayList<>();
 
 		for (TemplateHandler templateHandler :
-				_templateHandlerRegistry.getTemplateHandlers()) {
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
 
 			ClassName className = _classNameLocalService.fetchClassName(
 				templateHandler.getClassName());
@@ -243,7 +255,7 @@ public class PortletDisplayTemplatePortletDataHandler
 				NAMESPACE, "application-display-templates", true, true));
 
 		for (TemplateHandler templateHandler :
-				_templateHandlerRegistry.getTemplateHandlers()) {
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
 
 			ClassName className = _classNameLocalService.fetchClassName(
 				templateHandler.getClassName());
@@ -273,7 +285,7 @@ public class PortletDisplayTemplatePortletDataHandler
 					DDMTemplate.class);
 
 				for (long classNameId :
-						_templateHandlerRegistry.getClassNameIds()) {
+						TemplateHandlerRegistryUtil.getClassNameIds()) {
 
 					stagedModelTypes.add(
 						new StagedModelType(
@@ -296,10 +308,10 @@ public class PortletDisplayTemplatePortletDataHandler
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private Staging _staging;
+	private final DCLSingleton<PortletDataHandlerControl[]>
+		_portletDataHandlerControlsDCLSingleton = new DCLSingleton<>();
 
 	@Reference
-	private TemplateHandlerRegistry _templateHandlerRegistry;
+	private Staging _staging;
 
 }

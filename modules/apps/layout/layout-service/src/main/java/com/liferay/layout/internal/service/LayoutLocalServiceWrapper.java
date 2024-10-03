@@ -86,6 +86,7 @@ import com.liferay.sites.kernel.util.Sites;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -340,6 +341,9 @@ public class LayoutLocalServiceWrapper
 			_getFragmentEntryLinksMap(
 				sourceLayout, segmentsExperiencesIds, targetLayout);
 
+		Set<Long> targetFragmentEntryLinkIds = _getTargetFragmentEntryLinkIds(
+			segmentsExperiencesIds, targetLayout);
+
 		LayoutPageTemplateStructure targetLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -373,13 +377,17 @@ public class LayoutLocalServiceWrapper
 
 			JSONObject dataJSONObject = _processDataJSONObject(
 				LayoutStructure.of(data), sourceLayout, targetLayout,
-				fragmentEntryLinksMap, entry.getValue(), user);
+				fragmentEntryLinksMap, targetFragmentEntryLinkIds,
+				entry.getValue(), user);
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					targetLayout.getGroupId(), targetLayout.getPlid(),
 					entry.getValue(), dataJSONObject.toString());
 		}
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+			ArrayUtil.toLongArray(targetFragmentEntryLinkIds));
 	}
 
 	private void _copyLayoutPageTemplateStructureFromSegmentsExperience(
@@ -399,6 +407,9 @@ public class LayoutLocalServiceWrapper
 			return;
 		}
 
+		Set<Long> targetFragmentEntryLinkIds = _getTargetFragmentEntryLinkIds(
+			new long[] {sourceSegmentsExperienceId}, targetLayout);
+
 		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
@@ -413,12 +424,15 @@ public class LayoutLocalServiceWrapper
 			_getFragmentEntryLinksMap(
 				sourceLayout, new long[] {sourceSegmentsExperienceId},
 				targetLayout),
-			targetSegmentsExperienceId, user);
+			targetFragmentEntryLinkIds, targetSegmentsExperienceId, user);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				targetLayout.getGroupId(), targetLayout.getPlid(),
 				targetSegmentsExperienceId, dataJSONObject.toString());
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+			ArrayUtil.toLongArray(targetFragmentEntryLinkIds));
 	}
 
 	private void _copyLayoutSEOEntry(
@@ -774,6 +788,18 @@ public class LayoutLocalServiceWrapper
 		return segmentsExperienceIdsMap;
 	}
 
+	private Set<Long> _getTargetFragmentEntryLinkIds(
+		long[] segmentsExperiencesIds, Layout targetLayout) {
+
+		return new HashSet<>(
+			ListUtil.toList(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						targetLayout.getGroupId(), segmentsExperiencesIds,
+						targetLayout.getPlid()),
+				FragmentEntryLink.FRAGMENT_ENTRY_LINK_ID_ACCESSOR));
+	}
+
 	private String _getTypeSettings(Layout sourceLayout, Layout targetLayout) {
 		if (!sourceLayout.isDraftLayout() && !targetLayout.isDraftLayout()) {
 			return sourceLayout.getTypeSettings();
@@ -882,7 +908,8 @@ public class LayoutLocalServiceWrapper
 	private JSONObject _processDataJSONObject(
 			LayoutStructure layoutStructure, Layout sourceLayout,
 			Layout targetLayout,
-			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
+			Map<Long, FragmentEntryLink> sourceFragmentEntryLinksMap,
+			Set<Long> targetFragmentEntryLinkIds,
 			long targetSegmentsExperienceId, User user)
 		throws Exception {
 
@@ -903,7 +930,7 @@ public class LayoutLocalServiceWrapper
 					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
 			FragmentEntryLink sourceLayoutfragmentEntryLink =
-				fragmentEntryLinksMap.get(
+				sourceFragmentEntryLinksMap.get(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
 			if (sourceLayoutfragmentEntryLink == null) {
@@ -1002,6 +1029,9 @@ public class LayoutLocalServiceWrapper
 			}
 
 			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
+				newFragmentEntryLink.getFragmentEntryLinkId());
+
+			targetFragmentEntryLinkIds.remove(
 				newFragmentEntryLink.getFragmentEntryLinkId());
 
 			_commentManager.copyDiscussion(

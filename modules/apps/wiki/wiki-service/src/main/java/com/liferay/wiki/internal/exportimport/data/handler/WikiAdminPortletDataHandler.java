@@ -18,9 +18,7 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -68,28 +66,6 @@ public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getExportControls() {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-35013")) {
-
-			return new PortletDataHandlerControl[0];
-		}
-
-		return super.getExportControls();
-	}
-
-	@Override
-	public PortletDataHandlerControl[] getExportMetadataControls() {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-35013")) {
-
-			return new PortletDataHandlerControl[0];
-		}
-
-		return super.getExportMetadataControls();
-	}
-
-	@Override
 	public String getNamespace() {
 		return NAMESPACE;
 	}
@@ -107,17 +83,6 @@ public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getServiceName() {
 		return WikiConstants.SERVICE_NAME;
-	}
-
-	@Override
-	public PortletDataHandlerControl[] getStagingControls() {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-35013")) {
-
-			return new PortletDataHandlerControl[0];
-		}
-
-		return super.getStagingControls();
 	}
 
 	@Override

@@ -55,9 +55,9 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.NAME, Field.UID, Field.USER_ID,
 			"corpProjectName", "corpProjectUuid", "createDate",
-			"individualsLimit", "individualsUsage", "lastAccessDate", "offline",
-			"pageViewsLimit", "pageViewsUsage", "subscription",
-			"subscriptionName");
+			"dataSourceConnected", "individualsLimit", "individualsUsage",
+			"lastAccessDate", "offline", "pageViewsLimit", "pageViewsUsage",
+			"subscription", "subscriptionName");
 	}
 
 	@Override
@@ -188,6 +188,8 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			_log.error(exception);
 		}
 
+		document.addKeyword(
+			"dataSourceConnected", faroProject.getDataSourceConnected());
 		document.addDate(
 			"lastAnniversaryDate",
 			faroSubscriptionDisplay.getLastAnniversaryDate());

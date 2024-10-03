@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -111,6 +112,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -142,6 +144,7 @@ import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -744,6 +747,20 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		return kbArticles.get(0);
+	}
+
+	@Override
+	public PersistedModel fetchPersistedModel(Serializable primaryKeyObj) {
+		PersistedModel persistedModel = kbArticlePersistence.fetchByPrimaryKey(
+			primaryKeyObj);
+
+		if (persistedModel == null) {
+			persistedModel = fetchLatestKBArticle(
+				GetterUtil.getLong(primaryKeyObj),
+				WorkflowConstants.STATUS_APPROVED);
+		}
+
+		return persistedModel;
 	}
 
 	@Override

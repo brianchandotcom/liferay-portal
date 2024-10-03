@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
@@ -2058,6 +2059,20 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return articles.get(0);
+	}
+
+	@Override
+	public PersistedModel fetchPersistedModel(Serializable primaryKeyObj) {
+		PersistedModel persistedModel =
+			journalArticlePersistence.fetchByPrimaryKey(primaryKeyObj);
+
+		if (persistedModel == null) {
+			persistedModel = fetchLatestArticle(
+				GetterUtil.getLong(primaryKeyObj),
+				WorkflowConstants.STATUS_APPROVED, true);
+		}
+
+		return persistedModel;
 	}
 
 	/**

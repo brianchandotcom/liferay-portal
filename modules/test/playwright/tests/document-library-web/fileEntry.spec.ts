@@ -322,7 +322,7 @@ test(
 test(
 	'Replace option does not work on Categories Selector',
 	{
-		tag: '@LPD-27899',
+		tag: ['@LPD-27899', '@LPSA-74819'],
 	},
 
 	async ({

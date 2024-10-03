@@ -81,10 +81,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Activate
 	protected void activate() throws IOException {
-		_body = StringUtil.read(
-			getClassLoader(),
-			"com/liferay/scim/configuration/web/internal/dependencies" +
-				"/body.tmpl");
+		_body = StringUtil.read(getClass(), "dependencies/body.tmpl");
 	}
 
 	protected ClassLoader getClassLoader() {

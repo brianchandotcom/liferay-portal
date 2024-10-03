@@ -26,6 +26,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
+import {deepEqual} from '../../utils/checkDeepEqual';
 import {collectionIsMapped} from '../../utils/collectionIsMapped';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
@@ -75,7 +76,9 @@ export function fromControlsId(controlsItemId) {
 		return null;
 	}
 	else if (Array.isArray(controlsItemId)) {
-		return controlsItemId.map(getItemIdFromControlsId);
+		const nextIds = controlsItemId.map(getItemIdFromControlsId);
+
+		return deepEqual(nextIds, controlsItemId) ? controlsItemId : nextIds;
 	}
 	else {
 		return getItemIdFromControlsId(controlsItemId);

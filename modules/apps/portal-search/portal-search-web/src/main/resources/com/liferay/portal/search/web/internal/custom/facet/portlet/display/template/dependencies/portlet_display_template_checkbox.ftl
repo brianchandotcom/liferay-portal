@@ -106,6 +106,7 @@
 									id="fromInput"
 									name="fromInput"
 									type="number"
+									value=customFacetDisplayContext.getFromParameterValue()
 								/>
 							</@>
 						</div>
@@ -117,6 +118,7 @@
 									id="toInput"
 									name="toInput"
 									type="number"
+									value=customFacetDisplayContext.getToParameterValue()
 								/>
 							</@>
 						</div>

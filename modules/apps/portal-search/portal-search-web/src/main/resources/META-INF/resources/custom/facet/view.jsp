@@ -183,13 +183,13 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 									<div class="<%= !customRangeBucketDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> date-custom-range" id="<portlet:namespace />customRange">
 										<div class="col-md-6" id="<portlet:namespace />customRangeFrom">
 											<aui:field-wrapper>
-												<aui:input id="fromInput" label="from" name="fromInput" type="number" />
+												<aui:input id="fromInput" label="from" name="fromInput" type="number" value="<%= customFacetDisplayContext.getFromParameterValue() %>" />
 											</aui:field-wrapper>
 										</div>
 
 										<div class="col-md-6" id="<portlet:namespace />customRangeTo">
 											<aui:field-wrapper>
-												<aui:input id="toInput" label="to" name="toInput" type="number" />
+												<aui:input id="toInput" label="to" name="toInput" type="number" value="<%= customFacetDisplayContext.getToParameterValue() %>" />
 											</aui:field-wrapper>
 										</div>
 

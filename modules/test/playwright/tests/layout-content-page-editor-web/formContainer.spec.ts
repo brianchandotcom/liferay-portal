@@ -1387,7 +1387,7 @@ test.describe('Multistep', () => {
 });
 
 test.describe('Edit mode language changes', () => {
-	test('Input fragments show correct label when switching language', async ({
+	test('Input fragments show correct label, help text and placeholder when switching language', async ({
 		apiHelpers,
 		page,
 		pageEditorPage,
@@ -1402,8 +1402,17 @@ test.describe('Edit mode language changes', () => {
 			id: formId,
 		});
 
+		const languageSelectorDefinition = getWidgetDefinition({
+			id: getRandomString(),
+			widgetName:
+				'com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet',
+		});
+
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([formDefinition]),
+			pageDefinition: getPageDefinition([
+				formDefinition,
+				languageSelectorDefinition,
+			]),
 			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
@@ -1412,20 +1421,31 @@ test.describe('Edit mode language changes', () => {
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-		await pageEditorPage.mapFormFragment(formId, 'Lemon', [
-			'Lemon Size',
-			'Lemon Basket to Lemons',
-		]);
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', ['Lemon Size']);
 
 		const fragmentId = await pageEditorPage.getFragmentId('Text');
 
-		// Add translation to label
+		// Add translations to label, help text and placeholder
 
 		await pageEditorPage.changeFragmentConfiguration({
 			fieldLabel: 'Label',
 			fragmentId,
 			tab: 'General',
 			value: 'English Label',
+		});
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Help Text',
+			fragmentId,
+			tab: 'General',
+			value: 'English Help Text',
+		});
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Placeholder',
+			fragmentId,
+			tab: 'General',
+			value: 'English Placeholder',
 		});
 
 		await pageEditorPage.switchLanguage('es-ES');
@@ -1437,15 +1457,70 @@ test.describe('Edit mode language changes', () => {
 			value: 'Spanish Label',
 		});
 
-		// Check labels are correctly displayed
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Show Help Text',
+			fragmentId,
+			tab: 'General',
+			value: true,
+		});
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Help Text',
+			fragmentId,
+			tab: 'General',
+			value: 'Spanish Help Text',
+		});
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Marcador de posición',
+			fragmentId,
+			tab: 'General',
+			value: 'Spanish Placeholder',
+		});
+
+		// Check that the translations are correctly displayed
 
 		await pageEditorPage.switchLanguage('en-US');
 
-		await expect(page.getByLabel('English Label')).toBeVisible();
+		const englishLabel = page.getByLabel('English Label');
+		const englishHelpText = page.getByText('English Help Text');
+		const englishPlaceholder = page.getByPlaceholder('English Placeholder');
+
+		const spanishLabel = page.getByLabel('Spanish Label');
+		const spanishHelpText = page.getByText('Spanish Help Text');
+		const spanishPlaceholder = page.getByPlaceholder('Spanish Placeholder');
+
+		await expect(englishLabel).toBeVisible();
+		await expect(englishHelpText).toBeVisible();
+		await expect(englishPlaceholder).toBeVisible();
 
 		await pageEditorPage.switchLanguage('es-ES');
 
-		await expect(page.getByLabel('Spanish Label')).toBeVisible();
+		await expect(spanishLabel).toBeVisible();
+		await expect(spanishHelpText).toBeVisible();
+		await expect(spanishPlaceholder).toBeVisible();
+
+		// Check the translations in the view mode
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(englishLabel).toBeVisible();
+		await expect(englishHelpText).toBeVisible();
+		await expect(englishPlaceholder).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'español-España'}),
+			trigger: page.getByTitle('Select a Language', {exact: true}),
+		});
+
+		await expect(spanishLabel).toBeVisible();
+		await expect(spanishHelpText).toBeVisible();
+		await expect(spanishPlaceholder).toBeVisible();
 	});
 });
 

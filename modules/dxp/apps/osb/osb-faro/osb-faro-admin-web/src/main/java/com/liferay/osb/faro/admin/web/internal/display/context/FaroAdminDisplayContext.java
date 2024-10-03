@@ -81,7 +81,8 @@ public class FaroAdminDisplayContext {
 			}
 		).add(
 			dropdownItem -> {
-				dropdownItem.setDisabled(true);
+				dropdownItem.setDisabled(
+					!faroProjectAdminDisplay.isDataSourceConnected());
 				dropdownItem.setHref(
 					StringBundler.concat(
 						"javascript:Liferay.Util.openConfirmModal({message: '",

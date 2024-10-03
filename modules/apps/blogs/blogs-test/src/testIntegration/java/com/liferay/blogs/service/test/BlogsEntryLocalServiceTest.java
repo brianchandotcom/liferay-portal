@@ -20,6 +20,7 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -280,19 +281,11 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddDuplicateAttachmentFileEntry() throws Exception {
-		BlogsEntry entry = addEntry(false);
-
 		String fileName = StringUtil.randomString();
 
-		FileEntry fileEntry1 = _blogsEntryLocalService.addAttachmentFileEntry(
-			entry, entry.getUserId(), fileName,
-			ContentTypes.APPLICATION_OCTET_STREAM,
-			new UnsyncByteArrayInputStream(new byte[0]));
+		FileEntry fileEntry1 = _addAttachmentFileEntry(null, fileName);
 
-		FileEntry fileEntry2 = _blogsEntryLocalService.addAttachmentFileEntry(
-			entry, entry.getUserId(), fileName,
-			ContentTypes.APPLICATION_OCTET_STREAM,
-			new UnsyncByteArrayInputStream(new byte[0]));
+		FileEntry fileEntry2 = _addAttachmentFileEntry(null, fileName);
 
 		Assert.assertNotEquals(
 			fileEntry1.getFileName(), fileEntry2.getFileName());
@@ -620,6 +613,25 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteAttachmentFileEntry() throws Exception {
+		FileEntry fileEntry = _addAttachmentFileEntry(
+			null, StringUtil.randomString());
+
+		_blogsEntryLocalService.deleteAttachmentFileEntry(
+			fileEntry.getFileEntryId());
+
+		try {
+			_blogsEntryLocalService.getAttachmentFileEntry(
+				fileEntry.getFileEntryId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof NoSuchFileEntryException);
+		}
+	}
+
+	@Test
 	public void testDeleteDiscussion() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -648,13 +660,20 @@ public class BlogsEntryLocalServiceTest {
 				BlogsEntry.class.getName(), entry.getEntryId()));
 	}
 
-	@Test(expected = NoSuchEntryException.class)
+	@Test
 	public void testDeleteEntry() throws Exception {
 		BlogsEntry entry = addEntry(false);
 
 		_blogsEntryLocalService.deleteEntry(entry);
 
-		_blogsEntryLocalService.getEntry(entry.getEntryId());
+		try {
+			_blogsEntryLocalService.getEntry(entry.getEntryId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof NoSuchEntryException);
+		}
 	}
 
 	@Test
@@ -685,6 +704,37 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertNull(
 			_blogsEntryLocalService.fetchAttachmentsFolder(
 				TestPropsValues.getUserId(), _group.getGroupId()));
+	}
+
+	@Test
+	public void testGetAttachmentFileEntry() throws Exception {
+		FileEntry fileEntry1 = _addAttachmentFileEntry(
+			null, StringUtil.randomString());
+
+		FileEntry fileEntry2 = _blogsEntryLocalService.getAttachmentFileEntry(
+			fileEntry1.getFileEntryId());
+
+		Assert.assertEquals(fileEntry1, fileEntry2);
+	}
+
+	@Test
+	public void testGetAttachmentFileEntryByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		FileEntry fileEntry1 = _addAttachmentFileEntry(
+			externalReferenceCode, StringUtil.randomString());
+
+		Assert.assertEquals(
+			externalReferenceCode, fileEntry1.getExternalReferenceCode());
+
+		FileEntry fileEntry2 =
+			_blogsEntryLocalService.
+				getAttachmentFileEntryByExternalReferenceCode(
+					externalReferenceCode, fileEntry1.getGroupId());
+
+		Assert.assertEquals(fileEntry1, fileEntry2);
 	}
 
 	@Test
@@ -1599,6 +1649,16 @@ public class BlogsEntryLocalServiceTest {
 			_organization.getOrganizationId(), new Date(), queryDefinition);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	private FileEntry _addAttachmentFileEntry(
+			String externalReferenceCode, String fileName)
+		throws Exception {
+
+		return _blogsEntryLocalService.addAttachmentFileEntry(
+			externalReferenceCode, _user.getUserId(), _group.getGroupId(),
+			fileName, ContentTypes.APPLICATION_OCTET_STREAM,
+			new UnsyncByteArrayInputStream(new byte[0]));
 	}
 
 	private MBMessage _addMBMessage(

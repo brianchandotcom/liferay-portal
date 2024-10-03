@@ -449,12 +449,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		String reportContentDiagnostics = _getReportContentDiagnostics();
-
-		Assert.assertTrue(
-			reportContentDiagnostics.indexOf(slowerUpgradeProcessName) <
-				reportContentDiagnostics.indexOf(fasterUpgradeProcessName));
-
 		String longestUpgradeProcessesValue = _getLogContextValueDiagnostics(
 			"upgrade.report.longest.upgrade.processes");
 

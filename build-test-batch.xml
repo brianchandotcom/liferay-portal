@@ -5622,7 +5622,7 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="modules-functional-jdk8">
+	<target name="modules-functional">
 		<run-batch-test>
 			<test-action>
 				<antcall target="run-selenium-test">

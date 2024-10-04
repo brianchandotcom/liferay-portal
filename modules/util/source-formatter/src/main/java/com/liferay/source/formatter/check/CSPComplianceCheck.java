@@ -11,7 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -96,7 +96,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					continue;
 				}
 
-				List<String> ignoredTagPrefixes = new ArrayList<>();
+				List<String> ignoredTagPrefixes = Collections.emptyList();
 
 				if (lowerCaseFileName.endsWith(".ftl")) {
 					ignoredTagPrefixes = getAttributeValues(

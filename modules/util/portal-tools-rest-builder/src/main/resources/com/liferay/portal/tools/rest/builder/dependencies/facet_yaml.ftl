@@ -3,15 +3,15 @@ Facet:
 		facetCriteria:
 			type: string
 		facetValues:
-			type: array
 			items:
 				$ref: '#/components/schemas/FacetValue'
+			type: array
 	type: object
 FacetValue:
 	properties:
 		numberOfOccurrences:
-			type: integer
 			format: int32
+			type: integer
 		term:
 			type: string
 	type: object

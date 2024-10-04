@@ -70,8 +70,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		Date accessTokenExpirationDate, long currentTime,
 		Date lastNotificationDate) {
 
-		long toExpiryMillis =
-			accessTokenExpirationDate.getTime() - currentTime;
+		long toExpiryMillis = accessTokenExpirationDate.getTime() - currentTime;
 
 		long toExpiryAtLastNotificationMillis =
 			accessTokenExpirationDate.getTime() -

@@ -30,16 +30,6 @@ export class AccessibilityMenuPage {
 		this.underlinedLinksToggle = page.getByLabel('Underlined Links');
 	}
 
-	async openAccessibilityMenu() {
-		await this.page.keyboard.press('Tab');
-
-		await this.page.keyboard.press('Tab');
-
-		await this.page.keyboard.press('Enter');
-
-		expect(this.page.getByLabel('Accessibility Menu')).toBeVisible();
-	}
-
 	async enableAccessibilityMenu() {
 		if (
 			!(await this.enableAccessibilityMenuCheckbox.isChecked())
@@ -50,6 +40,16 @@ export class AccessibilityMenuPage {
 
 			await waitForAlert(this.page);
 		}
+	}
+
+	async openAccessibilityMenu() {
+		await this.page.keyboard.press('Tab');
+
+		await this.page.keyboard.press('Tab');
+
+		await this.page.keyboard.press('Enter');
+
+		expect(this.page.getByLabel('Accessibility Menu')).toBeVisible();
 	}
 
 	async toggleUnderlinedLinks(check: boolean) {

@@ -5,6 +5,7 @@
 
 package com.liferay.users.admin.internal.search;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -36,13 +37,21 @@ public class UserLastLoginDateCallback implements Indexable.Callback {
 
 		Document document = new DocumentImpl();
 
-		document.add(
-			new Field(Field.ENTRY_CLASS_NAME, user.getModelClassName()));
-		document.add(
-			new Field(Field.ENTRY_CLASS_PK, String.valueOf(user.getUserId())));
-		document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
+		if (FeatureFlagManagerUtil.isEnabled("LPD-36010")) {
+			document.addKeyword("activated", true);
+		}
+		else {
+			document.add(
+				new Field(Field.ENTRY_CLASS_NAME, user.getModelClassName()));
+			document.add(
+				new Field(
+					Field.ENTRY_CLASS_PK, String.valueOf(user.getUserId())));
+			document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
+
+			document.addDate("lastLoginDate", user.getLastLoginDate());
+		}
+
 		document.addKeyword(Field.UID, _uidFactory.getUID(user));
-		document.addDate("lastLoginDate", user.getLastLoginDate());
 
 		_updateDocumentIndexWriter.updateDocumentPartially(
 			user.getCompanyId(), document, false);

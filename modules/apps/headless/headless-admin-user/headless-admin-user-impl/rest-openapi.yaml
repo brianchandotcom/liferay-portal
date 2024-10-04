@@ -167,8 +167,6 @@ components:
                     type: string
                 type:
                     enum: [business, guest, person, supplier]
-            required:
-                - name
             type: object
         AccountBrief:
             description:
@@ -4145,6 +4143,105 @@ paths:
                                     $ref: "#/components/schemas/WebUrl"
                                 type: array
             tags: ["WebUrl"]
+    "/organizations/by-external-reference-code/{organizationExternalReferenceCode}/accounts/by-external-reference-code":
+        delete:
+            parameters:
+                - in: path
+                  name: organizationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                description:
+                    An array of account external reference codes to remove from an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Account"]
+        get:
+            description:
+                Retrieves the organization's members (accounts) by external reference code. Results can be paginated,
+                filtered, searched, and sorted.
+            parameters:
+                - in: path
+                  name: organizationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+            tags: ["Account"]
+        post:
+            parameters:
+                - in: path
+                  name: organizationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                description:
+                    An array of account external reference codes to add to an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Account"]
     "/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}":
         patch:
             operationId: patchOrganizationMoveAccounts

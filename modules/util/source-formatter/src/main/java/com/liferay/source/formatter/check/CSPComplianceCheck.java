@@ -92,7 +92,12 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					break;
 				}
 
-				if (Character.isWhitespace(content.charAt(x - 1))) {
+				char previousChar = content.charAt(x - 1);
+
+				if ((previousChar != CharPool.NEW_LINE) &&
+					(previousChar != CharPool.SPACE) &&
+					(previousChar != CharPool.TAB)) {
+
 					continue;
 				}
 

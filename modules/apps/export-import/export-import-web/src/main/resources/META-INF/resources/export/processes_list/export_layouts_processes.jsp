@@ -145,22 +145,9 @@ PortletURL portletURL = exportLayoutsProcessesDisplayContext.getPortletURL();
 
 						<c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">
 							<span class="background-task-status-row">
-
-								<%
-								String id = StringUtil.randomId();
-								%>
-
-								<a class="details-link" href="javascript:void(0);" id="<%= id %>">
+								<a class="details-link" href="javascript:void(0);" onclick="<portlet:namespace />viewBackgroundTaskDetails(<%= backgroundTask.getBackgroundTaskId() %>);">
 									<liferay-ui:message key="see-more-details" />
 								</a>
-
-								<aui:script>
-									document.getElementById('<%= id %>').onclick = function () {
-										<portlet:namespace />viewBackgroundTaskDetails(
-											<%= backgroundTask.getBackgroundTaskId() %>
-										);
-									};
-								</aui:script>
 							</span>
 
 							<div class="background-task-status-message hide" id="<portlet:namespace />backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>">

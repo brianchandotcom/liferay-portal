@@ -210,20 +210,9 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 							<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 								<c:choose>
 									<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
-
-										<%
-										String id = StringUtil.randomId();
-										%>
-
-										<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" id="<%= id %>" type="button">
+										<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" onclick="<%= randomNamespace %>showPostReplyEditor(<%= index %>);" type="button">
 											<liferay-ui:message key="reply" />
 										</button>
-
-										<aui:script>
-											document.getElementById('<%= id %>').onclick = function () {
-												<%= randomNamespace %>showPostReplyEditor(<%= index %>);
-											};
-										</aui:script>
 									</c:when>
 									<c:otherwise>
 										<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= themeDisplay.getURLSignIn() %>">

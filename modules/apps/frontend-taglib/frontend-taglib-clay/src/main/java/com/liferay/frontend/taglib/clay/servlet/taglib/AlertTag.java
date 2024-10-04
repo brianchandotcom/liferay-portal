@@ -7,9 +7,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -136,16 +134,14 @@ public class AlertTag extends BaseContainerTag {
 		jspWriter.write("</div></div>");
 
 		if (_dismissible) {
-			String id = StringUtil.randomId();
-
 			jspWriter.write("<button aria-label=\"");
 			jspWriter.write(
 				LanguageUtil.get(
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					"close"));
-			jspWriter.write("\" class=\"close\" id=\"");
-			jspWriter.write(id);
-			jspWriter.write("\" type=\"button\">");
+			jspWriter.write("\" class=\"close\" onclick=\"");
+			jspWriter.write("event.target.closest('[role=alert]').remove()\"");
+			jspWriter.write(" type=\"button\">");
 
 			IconTag iconTag = new IconTag();
 
@@ -153,15 +149,7 @@ public class AlertTag extends BaseContainerTag {
 
 			iconTag.doTag(pageContext);
 
-			jspWriter.write("</button><script");
-			jspWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					getRequest()));
-			jspWriter.write(">document.getElementById('");
-			jspWriter.write(id);
-			jspWriter.write("').onclick=function(event){");
-			jspWriter.write("event.target.closest('[role=alert]').remove()");
-			jspWriter.write("}</script>");
+			jspWriter.write("</button>");
 		}
 
 		if (Validator.isNotNull(_variant) && _variant.equals("stripe")) {

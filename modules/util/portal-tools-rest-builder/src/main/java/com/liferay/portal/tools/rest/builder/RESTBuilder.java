@@ -2040,14 +2040,12 @@ public class RESTBuilder {
 			baseClientJSDir.getPath(),
 			"/src/main/resources/META-INF/resources/", targetClientType);
 
-		// TODO Sort args, use only -- (replace -y)
-
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
-				_getNPMPathString(), "exec", "-y", "--prefix", _getNodePrefix(),
-				"openapi-typescript-codegen@0.27.0", "--", "--input",
-				openAPIYAMLFile.getPath(), "--output", outputPathString,
-				"--client", targetClientType, "--name", clientName,
+				_getNPMPathString(), "exec", "--prefix", _getNodePrefix(),
+				"--yes", "openapi-typescript-codegen@0.27.0", "--", "--client",
+				targetClientType, "--input", openAPIYAMLFile.getPath(),
+				"--name", clientName, "--output", outputPathString,
 				"--useOptions", "--useUnionTypes"));
 
 		Process process = processBuilder.start();

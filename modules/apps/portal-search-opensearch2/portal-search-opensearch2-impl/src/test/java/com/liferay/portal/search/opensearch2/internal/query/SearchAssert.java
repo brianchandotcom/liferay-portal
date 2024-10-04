@@ -104,10 +104,10 @@ public class SearchAssert {
 		SearchRequest.Builder searchRequestBuilder =
 			new SearchRequest.Builder();
 
-		searchRequestBuilder.query(query);
 		searchRequestBuilder.fields(
 			FieldAndFormat.of(
 				fieldAndFormat -> fieldAndFormat.field(StringPool.STAR)));
+		searchRequestBuilder.query(query);
 
 		return search(openSearchClient, searchRequestBuilder.build());
 	}

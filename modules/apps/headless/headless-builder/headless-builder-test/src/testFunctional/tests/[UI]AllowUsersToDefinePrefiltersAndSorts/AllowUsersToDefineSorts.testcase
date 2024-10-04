@@ -73,8 +73,6 @@ definition {
 
 	@priority = 4
 	test CanApplySortingAndSortParameter {
-		property portal.acceptance = "true";
-
 		task ("And Given setting the Sorting to 'age:asc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
@@ -110,8 +108,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanResetSorting {
-		property portal.acceptance = "true";
-
 		task ("And Given setting the Sorting to 'age:desc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:desc",
@@ -157,8 +153,6 @@ definition {
 
 	@priority = 5
 	test SortingAndSortParameterReturnTheSameData {
-		property portal.acceptance = "true";
-
 		task ("And Given setting the Sorting to 'age:asc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
@@ -227,8 +221,6 @@ definition {
 
 	@priority = 5
 	test SortingIsPresentInEndpointConfiguration {
-		property portal.acceptance = "true";
-
 		task ("When navigating to the endpoint Configuration tab") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
 				entity = "Endpoints",
@@ -248,8 +240,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test SortingWorksWithMainObjectFieldsThatAreNotPartOfSchemaProperties {
-		property portal.acceptance = "true";
-
 		task ("When setting the Sorting to 'dateCreated:asc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "dateCreated:asc",
@@ -276,8 +266,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test SortingWorksWithSchemaPropertiesMadeOfMainObjectFields {
-		property portal.acceptance = "true";
-
 		task ("When setting the Sorting to 'age:asc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",

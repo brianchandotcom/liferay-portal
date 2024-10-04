@@ -25,7 +25,6 @@ definition {
 
 	@priority = 5
 	test CanGenerateOpenAPIFromAPIApplicationDefinition {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -83,7 +82,6 @@ definition {
 
 	@priority = 4
 	test CanHideAPIApplicationOnRestApplicationsListByUnbublishing {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -120,7 +118,6 @@ definition {
 
 	@priority = 4
 	test CannotSeeUnpublishedAPIApplicationListedAsRestApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -158,7 +155,6 @@ definition {
 
 	@priority = 4
 	test CanSeePublishedAPIApplicationListedAsRestApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

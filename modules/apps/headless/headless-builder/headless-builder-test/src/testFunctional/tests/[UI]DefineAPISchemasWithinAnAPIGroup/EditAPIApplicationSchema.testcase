@@ -73,8 +73,6 @@ definition {
 
 	@priority = 4
 	test CanEditSchemaNameAndDescriptionInPublishedAPIApplication {
-		property portal.acceptance = "true";
-
 		task ("When I publish changed name and description") {
 			APIBuilderUI.updateSchemaNameAndDescription(
 				entity = "Schemas",
@@ -104,8 +102,6 @@ definition {
 
 	@priority = 4
 	test CanEditSchemaNameAndDescriptionInUnpublishedAPIApplication {
-		property portal.acceptance = "true";
-
 		task ("When I save changed name and description") {
 			APIBuilderUI.updateSchemaNameAndDescription(
 				entity = "Schemas",
@@ -136,8 +132,6 @@ definition {
 
 	@priority = 4
 	test CannotEditSchemaRelatedObject {
-		property portal.acceptance = "true";
-
 		task ("When I edit the schema in Edit API Application > Schemas") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
 				entity = "Schemas",
@@ -156,8 +150,6 @@ definition {
 
 	@priority = 4
 	test CanSeeUpdatedSchemaInAPIExplorer {
-		property portal.acceptance = "true";
-
 		task ("And Given I update the schema Name and description") {
 			APIBuilderUI.updateSchemaNameAndDescription(
 				entity = "Schemas",

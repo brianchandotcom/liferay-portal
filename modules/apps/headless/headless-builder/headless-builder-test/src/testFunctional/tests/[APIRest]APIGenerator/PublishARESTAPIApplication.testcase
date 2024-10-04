@@ -32,8 +32,6 @@ definition {
 
 	@priority = 4
 	test CanSeeNewAPIEndpointAndAPISchemaInPublishedAPIApplicationPage {
-		property portal.acceptance = "true";
-
 		task ("And Given an API Schema 'AppTest' related to an Application by post request postAPISchema") {
 			var response = SchemaAPI.createAPISchema(
 				apiApplicationERC = "App-test",
@@ -73,8 +71,6 @@ definition {
 
 	@priority = 4
 	test CanSeeNewAPIEndpointInPublishedAPIApplicationPage {
-		property portal.acceptance = "true";
-
 		task ("And Given an API endpoint 'AppTest' related to an Application by post request postAPIEndpoint") {
 			EndpointAPI.createAPIEndpoint(
 				apiApplicationERC = "App-test",
@@ -98,8 +94,6 @@ definition {
 
 	@priority = 4
 	test CanSeeNewSchemaInPublishedAPIApplicationPage {
-		property portal.acceptance = "true";
-
 		task ("And Given an API Schema 'AppTest' related to an Application by post request postAPISchema") {
 			SchemaAPI.createAPISchema(
 				apiApplicationERC = "App-test",

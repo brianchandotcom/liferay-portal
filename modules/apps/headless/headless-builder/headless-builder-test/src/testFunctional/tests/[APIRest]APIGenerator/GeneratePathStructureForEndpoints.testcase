@@ -25,7 +25,6 @@ definition {
 
 	@priority = 4
 	test APIUrlIsPresentInAPIExplorerRestApplications {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -80,7 +79,6 @@ definition {
 
 	@priority = 4
 	test CanCreateEndpointWithValidPath {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -125,7 +123,6 @@ definition {
 
 	@priority = 4
 	test CanLoadAPIApplicationURL {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -150,7 +147,6 @@ definition {
 
 	@priority = 4
 	test CanValidatePathInAPIEndpoint {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -195,7 +191,6 @@ definition {
 
 	@priority = 4
 	test PathIsPresentInEndpointsWithEditAPIApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -223,7 +218,6 @@ definition {
 
 	@priority = 4
 	test PathIsPresentUnderGetEndpointPage {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

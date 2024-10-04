@@ -31,7 +31,6 @@ definition {
 
 	@priority = 3
 	test CanBackToAPIBuilderAfterCancel {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -52,7 +51,6 @@ definition {
 
 	@priority = 4
 	test CanGetPublishedStatusInResponse {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -75,7 +73,6 @@ definition {
 
 	@priority = 4
 	test CanPromptCancelChangesDialog {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -102,7 +99,6 @@ definition {
 
 	@priority = 4
 	test CanPublishAPIApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -120,7 +116,6 @@ definition {
 
 	@priority = 4
 	test CanPublishAPIApplicationWithChangePublicationStatus {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -138,7 +133,6 @@ definition {
 
 	@priority = 4
 	test CanUpdateTitleAfterRePublish {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -172,7 +166,6 @@ definition {
 
 	@priority = 3
 	test GetAvailableButtonsAfterPublish {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -189,7 +182,6 @@ definition {
 
 	@priority = 3
 	test GetAvailableButtonsBeforePublish {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

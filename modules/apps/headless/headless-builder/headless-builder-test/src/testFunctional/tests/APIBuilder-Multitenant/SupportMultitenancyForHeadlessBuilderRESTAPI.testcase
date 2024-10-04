@@ -50,7 +50,6 @@ definition {
 
 	@priority = 4
 	test CannotSeeAppliationOfOtherInstanceUnderAPIBuilder {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -70,7 +69,6 @@ definition {
 
 	@priority = 4
 	test CannotSeeApplicationOfOtherInstanceUnderRestApplications {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

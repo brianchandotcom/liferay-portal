@@ -37,7 +37,6 @@ definition {
 
 	@priority = 4
 	test CanCreateAPIApplicationWithUIOnVirtualInstance {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -56,7 +55,6 @@ definition {
 
 	@priority = 4
 	test CanCreatePublishedAPIApplicationWithAPIOnVirtualInstance {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -89,7 +87,6 @@ definition {
 
 	@priority = 5
 	test CanLoadHeadlessBuilderAPIsOnVirtualInstance {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -117,7 +114,6 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CannotCreateSchemaWithAPIIdOfOtherInstance {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -157,7 +153,6 @@ definition {
 
 	@priority = 4
 	test CanPublishAPIApplicationWithUIOnVirtualInstance {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -178,7 +173,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIObjectDefinitionsOnVirtualInstance {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

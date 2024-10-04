@@ -517,11 +517,15 @@ public class DLReferencesExportImportContentProcessor
 	}
 
 	private boolean _isStyleReference(String content, int beginPos) {
+		beginPos = _skipWhiteSpacePos(content, beginPos);
+
 		if (content.regionMatches(beginPos - 1, StringPool.APOSTROPHE, 0, 1) ||
 			content.regionMatches(beginPos - 1, StringPool.QUOTE, 0, 1)) {
 
 			beginPos = beginPos - 1;
 		}
+
+		beginPos = _skipWhiteSpacePos(content, beginPos);
 
 		String url = "url(";
 
@@ -886,6 +890,18 @@ public class DLReferencesExportImportContentProcessor
 
 		return _fileEntryFriendlyURLResolver.resolveFriendlyURL(
 			group.getGroupId(), friendlyURL);
+	}
+
+	private int _skipWhiteSpacePos(String content, int beginPos) {
+		while (content.regionMatches(beginPos - 1, StringPool.NEW_LINE, 0, 1) ||
+			   content.regionMatches(beginPos - 1, StringPool.RETURN, 0, 1) ||
+			   content.regionMatches(beginPos - 1, StringPool.SPACE, 0, 1) ||
+			   content.regionMatches(beginPos - 1, StringPool.TAB, 0, 1)) {
+
+			beginPos = beginPos - 1;
+		}
+
+		return beginPos;
 	}
 
 	private void _validateDLReferences(long groupId, String content)

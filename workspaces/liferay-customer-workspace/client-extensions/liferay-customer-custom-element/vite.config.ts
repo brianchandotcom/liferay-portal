@@ -5,8 +5,7 @@
 
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
-import {defineConfig} from 'vite';
-import {UserConfigExport} from 'vitest/config';
+import {defineConfig, UserConfigExport} from 'vite';
 
 export default defineConfig({
 	build: {
@@ -35,16 +34,5 @@ export default defineConfig({
 	},
 	server: {
 		port: 3000,
-	},
-	test: {
-		coverage: {
-			all: true,
-			include: [path.resolve(__dirname), 'src'],
-		},
-		environment: 'jsdom',
-		exclude: ['node_modules', 'build'],
-		globals: true,
-		include: ['**/(*.)?{test,spec}.{ts,tsx,js,jsx}'],
-		setupFiles: ['./src/setupTests.ts'],
 	},
 } as UserConfigExport);

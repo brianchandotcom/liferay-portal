@@ -114,7 +114,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, objectEntry,
 				objectEntry, user);
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+			if (!FeatureFlagManagerUtil.isEnabled(
+					objectEntry.getCompanyId(), "LPS-187142")) {
+
 				return;
 			}
 

@@ -236,7 +236,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public boolean isRootDescendantNode() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPS-187142")) {
 			return false;
 		}
 
@@ -249,7 +249,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public boolean isRootNode() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPS-187142")) {
 			return false;
 		}
 

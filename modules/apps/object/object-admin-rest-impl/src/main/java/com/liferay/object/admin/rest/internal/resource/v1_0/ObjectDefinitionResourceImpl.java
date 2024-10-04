@@ -505,7 +505,8 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.getRootObjectDefinitionExternalReferenceCode();
 
 		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode) &&
-			FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+			FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPS-187142")) {
 
 			_validateRootObjectDefinition(
 				serviceBuilderObjectDefinition.getStatus(),
@@ -1332,7 +1333,8 @@ public class ObjectDefinitionResourceImpl
 			() -> HashMapBuilder.put(
 				"bind",
 				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+					if (!FeatureFlagManagerUtil.isEnabled(
+							contextCompany.getCompanyId(), "LPS-187142") ||
 						(rootObjectDefinitionId != 0) ||
 						serviceBuilderObjectDefinition.isApproved() ||
 						serviceBuilderObjectDefinition.isSystem()) {
@@ -1360,7 +1362,8 @@ public class ObjectDefinitionResourceImpl
 			).put(
 				"exportBoundObjectDefinitions",
 				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+					if (!FeatureFlagManagerUtil.isEnabled(
+							contextCompany.getCompanyId(), "LPS-187142") ||
 						!serviceBuilderObjectDefinition.isRootNode()) {
 
 						return null;

@@ -65,7 +65,10 @@ public class ObjectRelationshipDTOConverter
 						serviceBuilderObjectRelationship.getDeletionType()));
 				setEdge(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectRelationship.getCompanyId(),
+								"LPS-187142")) {
+
 							return null;
 						}
 

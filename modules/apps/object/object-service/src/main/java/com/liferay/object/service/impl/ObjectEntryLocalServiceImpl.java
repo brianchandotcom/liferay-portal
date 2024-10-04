@@ -2129,7 +2129,8 @@ public class ObjectEntryLocalServiceImpl
 				preferredLanguageId, user),
 			user.getUserId());
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPS-187142") ||
 			(!objectDefinition.isRootDescendantNode() &&
 			 (!objectDefinition.isRootNode() ||
 			  StringUtil.equals(

@@ -224,7 +224,10 @@ public class ObjectDefinitionUtil {
 				setRestContextPath(() -> finalRESTContextPath);
 				setRootObjectDefinitionExternalReferenceCode(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPS-187142")) {
+
 							return null;
 						}
 

@@ -229,7 +229,8 @@ public class ObjectRelationshipResourceImpl
 		throws Exception {
 
 		if (Validator.isNotNull(objectRelationship.getEdge()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+			!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPS-187142")) {
 
 			throw new UnsupportedOperationException();
 		}

@@ -78,7 +78,6 @@
 		<suppress checks="CSPComplianceCheck" files="modules/dxp/apps/commerce-demo-pack/commerce-theme-minium/commerce-theme-minium-full-site-initializer/.*\.ftl" />
 		<suppress checks="CSPComplianceCheck" files="modules/dxp/apps/osb/osb-site-initializer/.*\.ftl" />
 		<suppress checks="CSPComplianceCheck" files="portal-impl/src/com/liferay/portal/tools/propertiesdoc/dependencies/properties\.ftl" />
-		<suppress checks="CSPComplianceCheck" files="portal-web/docroot/html/taglib/ui/page_iterator/deprecated/start\.jsp" />
 		<suppress checks="CSPComplianceCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/.*\.ftl" />
 		<suppress checks="CSPComplianceCheck" files="workspaces/.*" />
 		<suppress checks="GetterUtilCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/GetterUtilTest\.java" />

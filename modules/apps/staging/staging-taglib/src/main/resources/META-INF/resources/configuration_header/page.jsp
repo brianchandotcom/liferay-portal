@@ -14,7 +14,7 @@
 
 	<aui:input label="title" name="name" showRequiredLabel="<%= true %>">
 		<aui:validator name="required">
-			function() {
+			function () {
 				var nameRequiredInput = document.getElementById('<portlet:namespace />nameRequired');
 
 				if (nameRequiredInput) {

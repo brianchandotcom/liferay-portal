@@ -87,7 +87,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 <aui:script use="aui-base,aui-io-request-deprecated,aui-template-deprecated">
 	var eventHandlers = [];
 
-	var detachHandlers = function() {
+	var detachHandlers = function () {
 		(new A.EventHandle(eventHandlers)).detach();
 	};
 
@@ -202,7 +202,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 			instance.checkStatus();
 		},
 
-		checkStatus: function() {
+		checkStatus: function () {
 			var instance = this;
 
 			A.io.request(
@@ -235,13 +235,13 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 			);
 		},
 
-		clearFinishTimeout: function() {
+		clearFinishTimeout: function () {
 			var instance = this;
 
 			clearTimeout(instance.finishTimeout);
 		},
 
-		finishLogout: function() {
+		finishLogout: function () {
 			detachHandlers();
 
 			location.href = '?cmd=finish';

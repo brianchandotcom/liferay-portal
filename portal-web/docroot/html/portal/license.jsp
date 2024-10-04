@@ -463,7 +463,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 									success(data);
 								}
 							).catch(
-								function() {
+								function () {
 									var errorMessage = A.Lang.sub('<liferay-ui:message key="error-contacting-x" />', [ip]);
 
 									if (port != '-1') {

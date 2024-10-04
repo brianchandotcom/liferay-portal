@@ -29,7 +29,7 @@ if (progressTracker != null) {
 <html>
 	<body>
 		<aui:script type="text/javascript">
-			;(function() {
+			;(function () {
 				var progressId = parent['<%= HtmlUtil.escapeJS(progressId) %>'];
 
 				if (progressId && (typeof progressId.set == 'function')) {

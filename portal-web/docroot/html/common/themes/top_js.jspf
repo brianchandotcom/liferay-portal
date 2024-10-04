@@ -10,7 +10,7 @@
 		var Liferay = Liferay || {};
 
 		Liferay.Browser = {
-			acceptsGzip: function() {
+			acceptsGzip: function () {
 				return <%= BrowserSnifferUtil.acceptsGzip(request) %>;
 			},
 
@@ -24,14 +24,14 @@
 			}
 			%>
 
-			getMajorVersion: function() {
+			getMajorVersion: function () {
 				return <%= majorVersion %>;
 			},
 
-			getRevision: function() {
+			getRevision: function () {
 				return '<%= BrowserSnifferUtil.getRevision(request) %>';
 			},
-			getVersion: function() {
+			getVersion: function () {
 				return '<%= version %>';
 			},
 
@@ -39,55 +39,55 @@
 			BrowserMetadata browserMetadata = BrowserSnifferUtil.getBrowserMetadata(request);
 			%>
 
-			isAir: function() {
+			isAir: function () {
 				return <%= browserMetadata.isAir() %>;
 			},
-			isChrome: function() {
+			isChrome: function () {
 				return <%= browserMetadata.isChrome() %>;
 			},
-			isEdge: function() {
+			isEdge: function () {
 				return <%= BrowserSnifferUtil.isEdge(request) %>;
 			},
-			isFirefox: function() {
+			isFirefox: function () {
 				return <%= browserMetadata.isFirefox() %>;
 			},
-			isGecko: function() {
+			isGecko: function () {
 				return <%= browserMetadata.isGecko() %>;
 			},
-			isIe: function() {
+			isIe: function () {
 				return <%= browserMetadata.isIe() %>;
 			},
-			isIphone: function() {
+			isIphone: function () {
 				return <%= browserMetadata.isIphone() %>;
 			},
-			isLinux: function() {
+			isLinux: function () {
 				return <%= browserMetadata.isLinux() %>;
 			},
-			isMac: function() {
+			isMac: function () {
 				return <%= browserMetadata.isMac() %>;
 			},
-			isMobile: function() {
+			isMobile: function () {
 				return <%= browserMetadata.isMobile() %>;
 			},
-			isMozilla: function() {
+			isMozilla: function () {
 				return <%= browserMetadata.isMozilla() %>;
 			},
-			isOpera: function() {
+			isOpera: function () {
 				return <%= browserMetadata.isOpera() %>;
 			},
-			isRtf: function() {
+			isRtf: function () {
 				return <%= browserMetadata.isRtf(version) %>;
 			},
-			isSafari: function() {
+			isSafari: function () {
 				return <%= browserMetadata.isSafari() %>;
 			},
-			isSun: function() {
+			isSun: function () {
 				return <%= browserMetadata.isSun() %>;
 			},
-			isWebKit: function() {
+			isWebKit: function () {
 				return <%= browserMetadata.isWebKit() %>;
 			},
-			isWindows: function() {
+			isWindows: function () {
 				return <%= browserMetadata.isWindows() %>;
 			}
 		};
@@ -100,7 +100,7 @@
 
 		Liferay.Data.NAV_SELECTOR_MOBILE = '#navigationCollapse';
 
-		Liferay.Data.isCustomizationView = function() {
+		Liferay.Data.isCustomizationView = function () {
 			return <%= layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE) %>;
 		};
 
@@ -184,7 +184,7 @@
 			%>
 
 			<c:if test="<%= layout != null %>">
-				getLayoutId: function() {
+				getLayoutId: function () {
 					return '<%= layout.getLayoutId() %>';
 				},
 
@@ -192,34 +192,34 @@
 				Layout controlPanelLayout = themeDisplay.getControlPanelLayout();
 				%>
 
-				getLayoutRelativeControlPanelURL: function() {
+				getLayoutRelativeControlPanelURL: function () {
 					return '<%= PortalUtil.getLayoutRelativeURL(new VirtualLayout(controlPanelLayout, scopeGroup), themeDisplay) %>';
 				},
 
-				getLayoutRelativeURL: function() {
+				getLayoutRelativeURL: function () {
 					return '<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>';
 				},
-				getLayoutURL: function() {
+				getLayoutURL: function () {
 					return '<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>';
 				},
-				getParentLayoutId: function() {
+				getParentLayoutId: function () {
 					return '<%= layout.getParentLayoutId() %>';
 				},
-				isControlPanel: function() {
+				isControlPanel: function () {
 					return <%= layout.isTypeControlPanel() %>;
 				},
-				isPrivateLayout: function() {
+				isPrivateLayout: function () {
 					return '<%= layout.isPrivateLayout() %>';
 				},
-				isVirtualLayout: function() {
+				isVirtualLayout: function () {
 					return <%= layout instanceof VirtualLayout %>;
 				},
 			</c:if>
 
-			getBCP47LanguageId: function() {
+			getBCP47LanguageId: function () {
 				return '<%= LanguageUtil.getBCP47LanguageId(request) %>';
 			},
-			getCanonicalURL: function() {
+			getCanonicalURL: function () {
 
 				<%
 				LayoutSEOLinkManager layoutSEOLinkManager = LayoutSEOLinkManagerUtil.getLayoutSEOLinkManager();
@@ -231,107 +231,107 @@
 
 				return '<%= HtmlUtil.escapeJS(layoutSEOLink.getHref()) %>';
 			},
-			getCDNBaseURL: function() {
+			getCDNBaseURL: function () {
 				return '<%= themeDisplay.getCDNBaseURL() %>';
 			},
-			getCDNDynamicResourcesHost: function() {
+			getCDNDynamicResourcesHost: function () {
 				return '<%= themeDisplay.getCDNDynamicResourcesHost() %>';
 			},
-			getCDNHost: function() {
+			getCDNHost: function () {
 				return '<%= themeDisplay.getCDNHost() %>';
 			},
-			getCompanyGroupId: function() {
+			getCompanyGroupId: function () {
 				return '<%= themeDisplay.getCompanyGroupId() %>';
 			},
-			getCompanyId: function() {
+			getCompanyId: function () {
 				return '<%= themeDisplay.getCompanyId() %>';
 			},
-			getDefaultLanguageId: function() {
+			getDefaultLanguageId: function () {
 				return '<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>';
 			},
-			getDoAsUserIdEncoded: function() {
+			getDoAsUserIdEncoded: function () {
 				return '<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>';
 			},
-			getLanguageId: function() {
+			getLanguageId: function () {
 				return '<%= LanguageUtil.getLanguageId(request) %>';
 			},
-			getParentGroupId: function() {
+			getParentGroupId: function () {
 				return '<%= themeDisplay.getSiteGroupId() %>';
 			},
-			getPathContext: function() {
+			getPathContext: function () {
 				return '<%= themeDisplay.getPathContext() %>';
 			},
-			getPathImage: function() {
+			getPathImage: function () {
 				return '<%= themeDisplay.getPathImage() %>';
 			},
-			getPathJavaScript: function() {
+			getPathJavaScript: function () {
 				return '<%= themeDisplay.getPathJavaScript() %>';
 			},
-			getPathMain: function() {
+			getPathMain: function () {
 				return '<%= themeDisplay.getPathMain() %>';
 			},
-			getPathThemeImages: function() {
+			getPathThemeImages: function () {
 				return '<%= themeDisplay.getPathThemeImages() %>';
 			},
-			getPathThemeRoot: function() {
+			getPathThemeRoot: function () {
 				return '<%= themeDisplay.getPathThemeRoot() %>';
 			},
-			getPlid: function() {
+			getPlid: function () {
 				return '<%= themeDisplay.getPlid() %>';
 			},
-			getPortalURL: function() {
+			getPortalURL: function () {
 				return '<%= themeDisplay.getPortalURL() %>';
 			},
-			getRealUserId: function() {
+			getRealUserId: function () {
 				return '<%= themeDisplay.getRealUserId() %>';
 			},
-			getRemoteAddr: function() {
+			getRemoteAddr: function () {
 				return '<%= themeDisplay.getRemoteAddr() %>';
 			},
-			getRemoteHost: function() {
+			getRemoteHost: function () {
 				return '<%= themeDisplay.getRemoteHost() %>';
 			},
-			getScopeGroupId: function() {
+			getScopeGroupId: function () {
 				return '<%= scopeGroup.getGroupId() %>';
 			},
-			getScopeGroupIdOrLiveGroupId: function() {
+			getScopeGroupIdOrLiveGroupId: function () {
 				return '<%= liveGroup.getGroupId() %>';
 			},
-			getSessionId: function() {
+			getSessionId: function () {
 				return '<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID ? session.getId() : StringPool.BLANK %>';
 			},
-			getSiteAdminURL: function() {
+			getSiteAdminURL: function () {
 				return '<%= PortalUtil.getSiteAdminURL(themeDisplay, StringPool.BLANK, null) %>';
 			},
-			getSiteGroupId: function() {
+			getSiteGroupId: function () {
 				return '<%= themeDisplay.getSiteGroupId() %>';
 			},
-			getURLControlPanel: function() {
+			getURLControlPanel: function () {
 				return '<%= themeDisplay.getURLControlPanel() %>';
 			},
-			getURLHome: function() {
+			getURLHome: function () {
 				return '<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>';
 			},
-			getUserEmailAddress: function() {
+			getUserEmailAddress: function () {
 				return '<%= themeDisplay.isSignedIn() ? HtmlUtil.escapeJS(user.getEmailAddress()) : StringPool.BLANK %>';
 			},
-			getUserId: function() {
+			getUserId: function () {
 				return '<%= themeDisplay.getUserId() %>';
 			},
-			getUserName: function() {
+			getUserName: function () {
 				return '<%= themeDisplay.isSignedIn() ? UnicodeFormatter.toString(user.getFullName()) : StringPool.BLANK %>';
 			},
-			isAddSessionIdToURL: function() {
+			isAddSessionIdToURL: function () {
 				return <%= themeDisplay.isAddSessionIdToURL() %>;
 			},
-			isImpersonated: function() {
+			isImpersonated: function () {
 				return <%= themeDisplay.isImpersonated() %>;
 			},
-			isSignedIn: function() {
+			isSignedIn: function () {
 				return <%= themeDisplay.isSignedIn() %>;
 			},
 
-			isStagedPortlet: function() {
+			isStagedPortlet: function () {
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(themeDisplay.getPpid()) %>">
 						return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
@@ -342,13 +342,13 @@
 				</c:choose>
 			},
 
-			isStateExclusive: function() {
+			isStateExclusive: function () {
 				return <%= themeDisplay.isStateExclusive() %>;
 			},
-			isStateMaximized: function() {
+			isStateMaximized: function () {
 				return <%= themeDisplay.isStateMaximized() %>;
 			},
-			isStatePopUp: function() {
+			isStatePopUp: function () {
 				return <%= themeDisplay.isStatePopUp() %>;
 			}
 		};
@@ -361,19 +361,19 @@
 			long jsLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
 			%>
 
-			getCombine: function() {
+			getCombine: function () {
 				return <%= themeDisplay.isThemeJsFastLoad() %>;
 			},
-			getComboPath: function() {
+			getComboPath: function () {
 				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", jsLastModified) %>&';
 			},
-			getDateFormat: function() {
+			getDateFormat: function () {
 				return '<%= _getDateFormatPattern(locale) %>';
 			},
-			getEditorCKEditorPath: function() {
+			getEditorCKEditorPath: function () {
 				return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';
 			},
-			getFilter: function() {
+			getFilter: function () {
 				var filter = 'raw';
 
 				<c:choose>
@@ -387,7 +387,7 @@
 
 				return filter;
 			},
-			getFilterConfig: function() {
+			getFilterConfig: function () {
 				var instance = this;
 
 				var filterConfig = null;
@@ -401,13 +401,13 @@
 
 				return filterConfig;
 			},
-			getJavaScriptRootPath: function() {
+			getJavaScriptRootPath: function () {
 				return '<%= themeDisplay.getPathJavaScript() %>';
 			},
-			getPortletRootPath: function() {
+			getPortletRootPath: function () {
 				return '<%= themeDisplay.getPathContext() %>/html/portlet';
 			},
-			getStaticResourceURLParams: function() {
+			getStaticResourceURLParams: function () {
 				return '<%= PortalUtil.getStaticResourceURL(request, StringPool.BLANK, "minifierType=", jsLastModified) %>';
 			}
 		};
@@ -481,7 +481,7 @@ for (String analyticsType : analyticsTypes) {
 					(function(i, s, o, g, r, a, m) {
 						i['GoogleAnalyticsObject'] = r;
 
-						i[r] = i[r] || function() {
+						i[r] = i[r] || function () {
 							var arrayValue = i[r].q || [];
 
 							i[r].q = arrayValue;

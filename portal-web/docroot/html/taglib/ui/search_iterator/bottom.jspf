@@ -87,7 +87,7 @@
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
 			var inModal = window !== Liferay.Util.getOpener();
 
-			var initFixedHeaderSync = function() {
+			var initFixedHeaderSync = function () {
 				var contentBox = searchContainer.get('contentBox');
 
 				var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
@@ -127,7 +127,7 @@
 
 						Liferay.on(
 							'destroyPortlet',
-							function() {
+							function () {
 								verticalScrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
 								horizontalScrollingContainer.removeEventListener('scroll', syncScrollingContainers);
 							}
@@ -137,7 +137,7 @@
 			}
 
 			if (inModal) {
-				Liferay.Util.getOpener().Liferay.on('modalIframeLoaded', function() {
+				Liferay.Util.getOpener().Liferay.on('modalIframeLoaded', function () {
 					initFixedHeaderSync();
 				});
 			}

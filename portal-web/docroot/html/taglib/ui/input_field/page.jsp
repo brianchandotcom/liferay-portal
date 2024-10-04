@@ -279,7 +279,7 @@ if (hints != null) {
 					if (checkbox) {
 						checkbox.once(
 							'click',
-							function() {
+							function () {
 								Liferay.component('<portlet:namespace /><%= fieldParam %>DatePicker');
 							}
 						);

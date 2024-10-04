@@ -348,7 +348,7 @@ if (iteratorURL != null) {
 
 <c:if test="<%= (rowChecker != null) && !resultRows.isEmpty() && Validator.isNotNull(rowChecker.getAllRowsId()) && allRowsIsChecked %>">
 	<aui:script>
-		(function() {
+		(function () {
 			var form = document.<%= rowChecker.getFormName() %>;
 
 			var allRowsIdCheckbox = form.querySelector('#<%= namespace + id %>SearchContainer input[name="<%= rowChecker.getAllRowsId() %>"]');

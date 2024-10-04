@@ -41,7 +41,7 @@
 
 	toggler.on(
 		'expandedChange',
-		function() {
+		function () {
 			var expanded = !toggler.get('expanded');
 
 			advancedSearchNode.val(expanded);

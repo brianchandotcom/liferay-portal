@@ -128,7 +128,7 @@
 
 		Liferay.component(
 			'<%= namespace + id %>',
-			function() {
+			function () {
 				if (!translationManager) {
 					translationManager = new Liferay.TranslationManager(
 						{

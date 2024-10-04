@@ -15,7 +15,7 @@ String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REME
 			({openToast}) => {
 				AUI().use(
 					'liferay-session',
-					function() {
+					function () {
 						Liferay.Session = new Liferay.SessionBase(
 							{
 								autoExtend: <%= !themeDisplay.isSignedIn() || SessionTimeoutUtil.isAutoExtend(request) %>,

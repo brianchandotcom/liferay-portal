@@ -133,7 +133,7 @@ if (layout != null) {
 
 		Liferay.once(
 			'initNavigation',
-			function() {
+			function () {
 				new Liferay.Navigation(
 					{
 						navBlock: navBlock
@@ -159,7 +159,7 @@ if (layout != null) {
 			else {
 				navBlock.once(
 					['gesturemovestart', 'mousemove'],
-					function() {
+					function () {
 						Liferay.fire('initNavigation');
 					}
 				);
@@ -168,7 +168,7 @@ if (layout != null) {
 
 		A.on(
 			'io:complete',
-			function() {
+			function () {
 				Liferay.fire('io:complete');
 			}
 		);

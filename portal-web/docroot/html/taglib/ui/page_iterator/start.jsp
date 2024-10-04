@@ -124,7 +124,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</div>
 
 			<aui:script senna="temporary" type="text/javascript">
-				(function() {
+				(function () {
 					var dropdown = document.getElementById("<%= ariaPagination %>");
 
 					var button = dropdown.querySelector('.dropdown-toggle');

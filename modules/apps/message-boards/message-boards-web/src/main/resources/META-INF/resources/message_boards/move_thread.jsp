@@ -69,7 +69,7 @@ if (portletTitleBasedNavigation) {
 					<div class="hide" id="<portlet:namespace />explanationPost">
 						<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
 							<aui:validator name="required">
-								function() {
+								function () {
 									var addExplanationPostCheckbox = document.getElementById('<portlet:namespace />addExplanationPost');
 
 									if (addExplanationPostCheckbox) {

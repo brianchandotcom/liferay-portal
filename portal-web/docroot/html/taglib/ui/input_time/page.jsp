@@ -77,7 +77,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(_SIMPLE_DATE_FORMA
 <aui:script use="aui-timepicker-native">
 	Liferay.component(
 		'<%= nameId %>TimePicker',
-		function() {
+		function () {
 			var timePicker = new A.TimePickerNative(
 				{
 					container: '#<%= randomNamespace %>displayTime',
@@ -103,7 +103,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(_SIMPLE_DATE_FORMA
 				}
 			);
 
-			timePicker.getTime = function() {
+			timePicker.getTime = function () {
 				var instance = this;
 
 				var container = instance.get('container');

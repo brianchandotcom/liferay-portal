@@ -27,7 +27,7 @@ else {
 
 	inputField.addEventListener(
 		'click',
-		function() {
+		function () {
 			this.select();
 			this.setSelectionRange(0, 9999);
 		}

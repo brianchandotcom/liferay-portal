@@ -29,18 +29,23 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 	@Test
 	public void testIsSendNotification() {
-		Date accessTokenExpirationDate = new Date(System.currentTimeMillis() + Time.YEAR);
+		Date accessTokenExpirationDate = new Date(
+			System.currentTimeMillis() + Time.YEAR);
 
 		_testIsSendNotification(
-			accessTokenExpirationDate.getTime() - (Time.DAY * 30), accessTokenExpirationDate);
+			accessTokenExpirationDate.getTime() - (Time.DAY * 30),
+			accessTokenExpirationDate);
 
 		_testIsSendNotification(
-			accessTokenExpirationDate.getTime() - (Time.DAY * 10), accessTokenExpirationDate);
+			accessTokenExpirationDate.getTime() - (Time.DAY * 10),
+			accessTokenExpirationDate);
 
 		_testIsSendNotification(
-			accessTokenExpirationDate.getTime() - Time.DAY, accessTokenExpirationDate);
+			accessTokenExpirationDate.getTime() - Time.DAY,
+			accessTokenExpirationDate);
 
-		_testIsSendNotification(accessTokenExpirationDate.getTime(), accessTokenExpirationDate);
+		_testIsSendNotification(
+			accessTokenExpirationDate.getTime(), accessTokenExpirationDate);
 	}
 
 	private ScimNotificationSchedulerJobConfiguration

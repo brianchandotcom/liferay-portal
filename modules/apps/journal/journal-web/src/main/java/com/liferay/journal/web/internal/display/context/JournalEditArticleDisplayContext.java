@@ -38,6 +38,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.util.RecentGroupManagerUtil;
@@ -126,6 +127,9 @@ public class JournalEditArticleDisplayContext {
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
+		_journalWebConfiguration =
+			(JournalWebConfiguration)httpServletRequest.getAttribute(
+				JournalWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -1474,19 +1478,32 @@ public class JournalEditArticleDisplayContext {
 	private String _getDDMStructureDefaultLanguageId() {
 		DDMStructure ddmStructure = getDDMStructure();
 
-		if (ddmStructure != null) {
-			try {
-				JournalArticle ddmStructureJournalArticle =
-					JournalArticleServiceUtil.getArticle(
-						ddmStructure.getGroupId(), DDMStructure.class.getName(),
-						ddmStructure.getStructureId());
+		if (!_journalWebConfiguration.changeableDefaultLanguage() ||
+			(ddmStructure == null)) {
 
-				return ddmStructureJournalArticle.getDefaultLanguageId();
+			return null;
+		}
+
+		try {
+			JournalArticle ddmStructureJournalArticle =
+				JournalArticleServiceUtil.getArticle(
+					ddmStructure.getGroupId(), DDMStructure.class.getName(),
+					ddmStructure.getStructureId());
+
+			String defaultLanguageId =
+				ddmStructureJournalArticle.getDefaultLanguageId();
+
+			List<String> availableLocales = TransformUtil.transform(
+				getAvailableLocales(),
+				availableLocale -> LocaleUtil.toLanguageId(availableLocale));
+
+			if (availableLocales.contains(defaultLanguageId)) {
+				return defaultLanguageId;
 			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 		}
 
@@ -1762,6 +1779,7 @@ public class JournalEditArticleDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private Long _inheritedWorkflowDDMStructuresFolderId;
 	private final ItemSelector _itemSelector;
+	private final JournalWebConfiguration _journalWebConfiguration;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _neverExpire;
 	private Boolean _neverReview;

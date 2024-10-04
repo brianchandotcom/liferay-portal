@@ -41,7 +41,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			fileName, content, illegalAttributeNames);
 	}
 
-	protected int getTagStartPosition(String content, int x) {
+	protected String getEnclosingTagStart(String content, int x) {
 		int startIndex = x;
 
 		for (startIndex = x; startIndex >= 0; startIndex--) {
@@ -54,10 +54,17 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 				continue;
 			}
 
-			return startIndex;
+			if (StringUtil.equals(
+					content.substring(startIndex, startIndex + 18),
+					"<portlet:namespace")) {
+
+				break;
+			}
+
+			return content.substring(startIndex, x);
 		}
 
-		return -1;
+		return null;
 	}
 
 	private String _checkIllegalAttributes(
@@ -83,17 +90,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					continue;
 				}
 
-				int tagStartPosition = getTagStartPosition(content, x);
+				String tagString = getEnclosingTagStart(content, x);
 
-				if (tagStartPosition == -1) {
-					continue;
-				}
-
-				String tagString = getTag(content, tagStartPosition);
-
-				if (Validator.isNull(tagString) ||
-					tagString.startsWith("<portlet:namespace")) {
-
+				if (tagString == null) {
 					continue;
 				}
 

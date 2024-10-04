@@ -9,11 +9,14 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
+import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
+import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
+import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../utils/performLogin';
 
@@ -23,7 +26,8 @@ export const test = mergeTests(
 	}),
 	loginTest(),
 	applicationsMenuPageTest,
-	serverAdministrationPageTest
+	serverAdministrationPageTest,
+	usersAndOrganizationsPagesTest
 );
 
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
@@ -408,5 +412,56 @@ test('LPD-34644: Check if the token expiration warning message appears in the SC
 
 	await expect(scimConfigurationPage.alertMessage).toBeVisible();
 
+	await scimConfigurationPage.resetClientData();
+});
+
+test('LPD-37452 verify expando field is not visible for user added to SCIM', async ({
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	const randomNumber = getRandomInt();
+
+	const newUser = {
+		active: true,
+		emails: [
+			{
+				primary: true,
+				type: 'default',
+				value: `able${randomNumber}@liferay.com`,
+			},
+		],
+		name: {
+			familyName: `Baker ${randomNumber}`,
+			givenName: `Able ${randomNumber}`,
+		},
+		userName: `able${randomNumber}.baker`,
+	};
+
+	const apiHelper = new ApiHelpers(page);
+
+	await apiHelper.scim.postUser(newUser);
+
+	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(page);
+
+	await usersAndOrganizationsPage.goToUsers(true);
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(newUser.userName)
+	).click();
+
+	editUserPage = await new EditUserPage(page);
+
+	await expect(
+		await editUserPage.customField('scimClientId')
+	).not.toBeVisible();
+
+	await scimConfigurationPage.goTo();
 	await scimConfigurationPage.resetClientData();
 });

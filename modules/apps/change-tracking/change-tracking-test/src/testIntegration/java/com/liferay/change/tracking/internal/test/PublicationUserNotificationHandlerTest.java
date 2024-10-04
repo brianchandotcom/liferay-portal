@@ -165,6 +165,8 @@ public class PublicationUserNotificationHandlerTest {
 		finally {
 			if (bundle != null) {
 				bundle.start();
+
+				Thread.sleep(3000);
 			}
 		}
 	}
@@ -251,6 +253,8 @@ public class PublicationUserNotificationHandlerTest {
 		finally {
 			if (bundle != null) {
 				bundle.start();
+
+				Thread.sleep(3000);
 			}
 		}
 	}

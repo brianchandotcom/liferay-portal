@@ -78,14 +78,14 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	private String _checkIllegalAttributes(
 		String fileName, String content, List<String> illegalAttributeNames) {
 
-		String lowerCaseContent = StringUtil.toLowerCase(content);
-		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
+		String lowercaseContent = StringUtil.toLowerCase(content);
+		String lowercaseFileName = StringUtil.toLowerCase(fileName);
 
 		for (String illegalAttributeName : illegalAttributeNames) {
 			int x = -1;
 
 			while (true) {
-				x = lowerCaseContent.indexOf(
+				x = lowercaseContent.indexOf(
 					illegalAttributeName + StringPool.EQUAL, x + 1);
 
 				if (x == -1) {
@@ -113,12 +113,12 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				List<String> ignoredTagPrefixes = Collections.emptyList();
 
-				if (lowerCaseFileName.endsWith(".ftl")) {
+				if (lowercaseFileName.endsWith(".ftl")) {
 					ignoredTagPrefixes = _ignoredFTLTagPrefixes;
 				}
-				else if (lowerCaseFileName.endsWith(".jsp") ||
-						 lowerCaseFileName.endsWith(".jspf") ||
-						 lowerCaseFileName.endsWith(".jspx")) {
+				else if (lowercaseFileName.endsWith(".jsp") ||
+						 lowercaseFileName.endsWith(".jspf") ||
+						 lowercaseFileName.endsWith(".jspx")) {
 
 					ignoredTagPrefixes = _ignoredJSPTagPrefixes;
 				}
@@ -151,8 +151,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	private String _checkIllegalTags(
 		String fileName, String content, List<String> illegalTagNamesData) {
 
-		String lowerCaseContent = StringUtil.toLowerCase(content);
-		String lowerCaseFileName = StringUtil.toLowerCase(fileName);
+		String lowercaseContent = StringUtil.toLowerCase(content);
+		String lowercaseFileName = StringUtil.toLowerCase(fileName);
 
 		for (String illegalTagNameData : illegalTagNamesData) {
 			String[] parts = StringUtil.split(
@@ -169,7 +169,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			int x = -1;
 
 			while (true) {
-				x = lowerCaseContent.indexOf("<" + tagName, x + 1);
+				x = lowercaseContent.indexOf("<" + tagName, x + 1);
 
 				if (x == -1) {
 					break;
@@ -186,9 +186,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				int lineNumber = getLineNumber(content, x);
 
-				if (lowerCaseFileName.endsWith(".jsp") ||
-					lowerCaseFileName.endsWith(".jspf") ||
-					lowerCaseFileName.endsWith(".jspx")) {
+				if (lowercaseFileName.endsWith(".jsp") ||
+					lowercaseFileName.endsWith(".jspf") ||
+					lowercaseFileName.endsWith(".jspx")) {
 
 					addMessage(
 						fileName,
@@ -197,12 +197,12 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 							">, see LPD-18227"),
 						lineNumber);
 				}
-				else if (lowerCaseFileName.endsWith(".ftl")) {
+				else if (lowercaseFileName.endsWith(".ftl")) {
 					_checkMissingAttribute(
 						fileName, tagName, "${nonceAttribute}", tagString,
 						lineNumber);
 				}
-				else if (lowerCaseFileName.endsWith(".vm")) {
+				else if (lowercaseFileName.endsWith(".vm")) {
 					_checkMissingAttribute(
 						fileName, tagName, "$nonceAttribute", tagString,
 						lineNumber);

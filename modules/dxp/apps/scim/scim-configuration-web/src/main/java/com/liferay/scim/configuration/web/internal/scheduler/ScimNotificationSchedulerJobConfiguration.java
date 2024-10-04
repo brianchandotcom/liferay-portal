@@ -136,22 +136,24 @@ public class ScimNotificationSchedulerJobConfiguration
 			ExpandoBridge expandoBridge =
 				applicationOAuth2Authorization.getExpandoBridge();
 
-			if (_isSendNotification(
+			if (!_isSendNotification(
 					(Date)expandoBridge.getAttribute(
 						"lastSuccessfulNotificationDate", false),
 					accessTokenExpirationDate)) {
 
-				try {
-					_sendNotification(
-						accessTokenExpirationDate, company.getCompanyId());
+				continue;
+			}
 
-					expandoBridge.setAttribute(
-						"lastSuccessfulNotificationDate", new Date(), false);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(exception);
-					}
+			try {
+				_sendNotification(
+					accessTokenExpirationDate, company.getCompanyId());
+
+				expandoBridge.setAttribute(
+					"lastSuccessfulNotificationDate", new Date(), false);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
 				}
 			}
 		}

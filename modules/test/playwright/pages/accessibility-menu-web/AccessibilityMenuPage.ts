@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import { waitForAlert } from '../../utils/waitForAlert';
 
 export class AccessibilityMenuPage {
 	readonly closeButton: Locator;
@@ -49,7 +49,7 @@ export class AccessibilityMenuPage {
 
 			await this.updateButton.click();
 
-			await waitForSuccessAlert(this.page);
+			await waitForAlert(this.page);
 		}
 	}
 

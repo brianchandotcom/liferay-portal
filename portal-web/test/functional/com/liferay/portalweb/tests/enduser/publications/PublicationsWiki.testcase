@@ -1,10 +1,11 @@
 @component-name = "portal-publications"
 definition {
 
-	property custom.properties = "feature.flag.LPD-35013=true";
+	property custom.properties = "feature.flag.LPD-35013=false";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
-	property portal.release = "true";
+	property osgi.modules.includes = "wiki";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.component.names = "Wiki";
 	property testray.main.component.name = "Publications";
@@ -13,6 +14,23 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Enable Wiki") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Deprecation",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Wiki",
+				toggle_state = "Disabled");
+		}
 	}
 
 	tearDown {
@@ -357,9 +375,7 @@ definition {
 	@description = "Assert that the search results shows only wiki pages from the active publication"
 	@priority = 3
 	test ViewSearchResultsFromActivePublication {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.addCP(wikiNodeName = "Wiki Node");
 

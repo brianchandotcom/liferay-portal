@@ -138,7 +138,7 @@ public class ScimNotificationSchedulerJobConfiguration
 			if (!_isSendNotification(
 					accessTokenExpirationDate,
 					(Date)expandoBridge.getAttribute(
-						"lastSuccessfulNotificationDate", false))) {
+						"lastNotificationDate", false))) {
 
 				continue;
 			}
@@ -148,7 +148,7 @@ public class ScimNotificationSchedulerJobConfiguration
 					accessTokenExpirationDate, company.getCompanyId());
 
 				expandoBridge.setAttribute(
-					"lastSuccessfulNotificationDate", new Date(), false);
+					"lastNotificationDate", new Date(), false);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

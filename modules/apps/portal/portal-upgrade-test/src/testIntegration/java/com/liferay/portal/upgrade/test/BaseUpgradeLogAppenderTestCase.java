@@ -1090,9 +1090,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Assert.assertTrue(reportFile.exists());
 
+		String forwardSlashPathString = reportFile.toURI(
+		).getPath();
+
+		Assert.assertTrue(forwardSlashPathString.contains(_upgradeReportDir));
+
 		String pathString = reportFile.getAbsolutePath();
 
-		Assert.assertTrue(pathString.contains(_upgradeReportDir));
 		Assert.assertTrue(
 			StringUtil.contains(
 				String.valueOf(logCapture.getLogEntries()),

@@ -82,107 +82,319 @@ public class LocaleUtil {
 	public static final Locale US = Locale.US;
 
 	public static boolean equals(Locale locale1, Locale locale2) {
-		return _localeUtil._equals(locale1, locale2);
+		String languageId1 = toLanguageId(locale1);
+		String languageId2 = toLanguageId(locale2);
+
+		return StringUtil.equalsIgnoreCase(languageId1, languageId2);
 	}
 
 	public static Locale fromLanguageId(String languageId) {
-		return _localeUtil._fromLanguageId(languageId, true);
+		return fromLanguageId(languageId, true);
 	}
 
 	public static Locale fromLanguageId(String languageId, boolean validate) {
-		return _localeUtil._fromLanguageId(languageId, validate);
+		return fromLanguageId(languageId, validate, true);
 	}
 
 	public static Locale fromLanguageId(
 		String languageId, boolean validate, boolean useDefault) {
 
-		return _localeUtil._fromLanguageId(languageId, validate, useDefault);
+		if (languageId == null) {
+			if (useDefault) {
+				return getDefault();
+			}
+
+			return null;
+		}
+
+		Locale locale = _fromLanguageId(languageId);
+
+		if (validate) {
+			boolean languageCode = false;
+
+			if ((languageId.indexOf(CharPool.UNDERLINE) < 0) &&
+				(languageId.indexOf(CharPool.MINUS) < 0)) {
+
+				languageCode = true;
+			}
+
+			if ((languageCode &&
+				 !LanguageUtil.isAvailableLanguageCode(languageId)) ||
+				(!languageCode && !LanguageUtil.isAvailableLocale(locale))) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(languageId + " is not a valid language id");
+				}
+
+				if (useDefault) {
+					return getDefault();
+				}
+
+				return null;
+			}
+		}
+
+		return locale;
 	}
 
 	public static Locale[] fromLanguageIds(List<String> languageIds) {
-		return _localeUtil._fromLanguageIds(languageIds);
+		Locale[] locales = new Locale[languageIds.size()];
+
+		for (int i = 0; i < languageIds.size(); i++) {
+			locales[i] = fromLanguageId(languageIds.get(i), true);
+		}
+
+		return locales;
 	}
 
 	public static Locale[] fromLanguageIds(String[] languageIds) {
-		return _localeUtil._fromLanguageIds(languageIds);
+		Locale[] locales = new Locale[languageIds.length];
+
+		for (int i = 0; i < languageIds.length; i++) {
+			locales[i] = fromLanguageId(languageIds[i], true);
+		}
+
+		return locales;
 	}
 
 	public static Locale getDefault() {
-		return _localeUtil._getDefault();
+		Locale locale = LocaleThreadLocal.getDefaultLocale();
+
+		if (locale != null) {
+			return locale;
+		}
+
+		return _locale;
 	}
 
 	public static Map<String, String> getISOLanguages(Locale locale) {
-		return _localeUtil._getISOLanguages(locale);
+		Map<String, String> isoLanguages = new TreeMap<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		for (String isoLanguageId : Locale.getISOLanguages()) {
+			Locale isoLocale = fromLanguageId(isoLanguageId, true);
+
+			isoLanguages.put(
+				isoLocale.getDisplayLanguage(locale), isoLanguageId);
+		}
+
+		return isoLanguages;
 	}
 
 	public static String getLocaleDisplayName(
 		Locale displayLocale, Locale locale) {
 
-		return _localeUtil._getLocaleDisplayName(displayLocale, locale);
+		String key = "language." + displayLocale.getLanguage();
+
+		String displayName = LanguageUtil.get(locale, key);
+
+		if (displayName.equals(key)) {
+			return displayLocale.getDisplayName(locale);
+		}
+
+		String country = _getDisplayCountry(displayLocale, locale);
+
+		if (Validator.isNull(country)) {
+			return displayName;
+		}
+
+		return StringBundler.concat(
+			displayName, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, country,
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	public static String getLongDisplayName(
 		Locale locale, Set<String> duplicateLanguages) {
 
-		return _localeUtil._getLongDisplayName(locale, duplicateLanguages);
+		return _getDisplayName(
+			locale.getDisplayLanguage(locale),
+			_getDisplayCountry(locale, locale), locale, duplicateLanguages);
 	}
 
 	public static Locale getMostRelevantLocale() {
-		return _localeUtil._getMostRelevantLocale();
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		if (locale == null) {
+			locale = getDefault();
+		}
+
+		return locale;
 	}
 
 	public static String getShortDisplayName(
 		Locale locale, Set<String> duplicateLanguages) {
 
-		return _localeUtil._getShortDisplayName(locale, duplicateLanguages);
+		String language = locale.getDisplayLanguage(locale);
+
+		if (language.length() > 3) {
+			language = locale.getLanguage();
+			language = StringUtil.toUpperCase(language);
+		}
+
+		return _getDisplayName(
+			language, StringUtil.toUpperCase(locale.getCountry()), locale,
+			duplicateLanguages);
 	}
 
 	public static Locale getSiteDefault() {
-		return _localeUtil._getSiteDefault();
+		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
+
+		if (locale != null) {
+			return locale;
+		}
+
+		return getDefault();
 	}
 
 	public static void setDefault(
 		String userLanguage, String userCountry, String userVariant) {
 
-		_localeUtil._setDefault(userLanguage, userCountry, userVariant);
+		if (Validator.isNotNull(userLanguage) &&
+			Validator.isNull(userCountry) && Validator.isNull(userVariant)) {
+
+			_locale = new Locale(userLanguage);
+		}
+		else if (Validator.isNotNull(userLanguage) &&
+				 Validator.isNotNull(userCountry) &&
+				 Validator.isNull(userVariant)) {
+
+			_locale = new Locale(userLanguage, userCountry);
+		}
+		else if (Validator.isNotNull(userLanguage) &&
+				 Validator.isNotNull(userCountry) &&
+				 Validator.isNotNull(userVariant)) {
+
+			_locale = new Locale(userLanguage, userCountry, userVariant);
+		}
+
+		LocaleThreadLocal.setDefaultLocale(_locale);
 	}
 
 	public static String toBCP47LangTag(Locale locale) {
-		return _localeUtil._toBCP47LangTag(locale);
+		String languageId = toLanguageId(locale);
+
+		if (languageId.equals("zh_CN")) {
+			return "zh-Hans";
+		}
+		else if (languageId.equals("zh_TW")) {
+			return "zh-Hant";
+		}
+
+		return toBCP47LanguageId(languageId);
 	}
 
 	public static String toBCP47LanguageId(Locale locale) {
-		return _localeUtil._toBCP47LanguageId(locale);
+		return toBCP47LanguageId(toLanguageId(locale));
 	}
 
 	public static String toBCP47LanguageId(String languageId) {
-		return _localeUtil._toBCP47LanguageId(languageId);
+		if (languageId.equals("zh_CN")) {
+			return "zh-Hans-CN";
+		}
+		else if (languageId.equals("zh_TW")) {
+			return "zh-Hant-TW";
+		}
+
+		return StringUtil.replace(
+			languageId, CharPool.UNDERLINE, CharPool.MINUS);
 	}
 
 	public static String[] toBCP47LanguageIds(Locale[] locales) {
-		return _localeUtil._toBCP47LanguageIds(locales);
+		return toBCP47LanguageIds(toLanguageIds(locales));
 	}
 
 	public static String[] toBCP47LanguageIds(String[] languageIds) {
-		return _localeUtil._toBCP47LanguageIds(languageIds);
+		String[] bcp47LanguageIds = new String[languageIds.length];
+
+		for (int i = 0; i < languageIds.length; i++) {
+			bcp47LanguageIds[i] = toBCP47LanguageId(languageIds[i]);
+		}
+
+		return bcp47LanguageIds;
 	}
 
 	public static String[] toDisplayNames(
 		Collection<Locale> locales, Locale locale) {
 
-		return _localeUtil._toDisplayNames(locales, locale);
+		String[] displayNames = new String[locales.size()];
+
+		int i = 0;
+
+		for (Locale curLocale : locales) {
+			displayNames[i++] = curLocale.getDisplayName(locale);
+		}
+
+		return displayNames;
 	}
 
 	public static String toLanguageId(Locale locale) {
-		return _localeUtil._toLanguageId(locale);
+		if (locale == null) {
+			locale = _locale;
+		}
+
+		String country = locale.getCountry();
+
+		boolean hasCountry = false;
+
+		if (country.length() != 0) {
+			hasCountry = true;
+		}
+
+		String variant = locale.getVariant();
+
+		boolean hasVariant = false;
+
+		if (variant.length() != 0) {
+			hasVariant = true;
+		}
+
+		if (!hasCountry && !hasVariant) {
+			return locale.getLanguage();
+		}
+
+		int length = 3;
+
+		if (hasCountry && hasVariant) {
+			length = 5;
+		}
+
+		StringBundler sb = new StringBundler(length);
+
+		sb.append(locale.getLanguage());
+
+		if (hasCountry) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(country);
+		}
+
+		if (hasVariant) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(variant);
+		}
+
+		return sb.toString();
 	}
 
 	public static String[] toLanguageIds(Collection<Locale> locales) {
-		return _localeUtil._toLanguageIds(locales);
+		String[] languageIds = new String[locales.size()];
+
+		int i = 0;
+
+		for (Locale locale : locales) {
+			languageIds[i++] = toLanguageId(locale);
+		}
+
+		return languageIds;
 	}
 
 	public static String[] toLanguageIds(Locale[] locales) {
-		return _localeUtil._toLanguageIds(locales);
+		String[] languageIds = new String[locales.length];
+
+		for (int i = 0; i < locales.length; i++) {
+			languageIds[i] = toLanguageId(locales[i]);
+		}
+
+		return languageIds;
 	}
 
 	public static Map<String, Object> toMap(Locale locale) {
@@ -218,33 +430,29 @@ public class LocaleUtil {
 	}
 
 	public static String toW3cLanguageId(Locale locale) {
-		return _localeUtil._toW3cLanguageId(locale);
+		return toW3cLanguageId(toLanguageId(locale));
 	}
 
 	public static String toW3cLanguageId(String languageId) {
-		return _localeUtil._toW3cLanguageId(languageId);
+		return StringUtil.replace(
+			languageId, CharPool.UNDERLINE, CharPool.MINUS);
 	}
 
 	public static String[] toW3cLanguageIds(Locale[] locales) {
-		return _localeUtil._toW3cLanguageIds(locales);
+		return toW3cLanguageIds(toLanguageIds(locales));
 	}
 
 	public static String[] toW3cLanguageIds(String[] languageIds) {
-		return _localeUtil._toW3cLanguageIds(languageIds);
+		String[] w3cLanguageIds = new String[languageIds.length];
+
+		for (int i = 0; i < languageIds.length; i++) {
+			w3cLanguageIds[i] = toW3cLanguageId(languageIds[i]);
+		}
+
+		return w3cLanguageIds;
 	}
 
-	private LocaleUtil() {
-		_locale = new Locale("en", "US");
-	}
-
-	private boolean _equals(Locale locale1, Locale locale2) {
-		String languageId1 = _toLanguageId(locale1);
-		String languageId2 = _toLanguageId(locale2);
-
-		return StringUtil.equalsIgnoreCase(languageId1, languageId2);
-	}
-
-	private Locale _fromLanguageId(String languageId) {
+	private static Locale _fromLanguageId(String languageId) {
 		Locale locale = _locales.get(languageId);
 
 		if (locale != null) {
@@ -293,82 +501,9 @@ public class LocaleUtil {
 		return locale;
 	}
 
-	private Locale _fromLanguageId(String languageId, boolean validate) {
-		return _fromLanguageId(languageId, validate, true);
-	}
+	private static String _getDisplayCountry(
+		Locale displayLocale, Locale locale) {
 
-	private Locale _fromLanguageId(
-		String languageId, boolean validate, boolean useDefault) {
-
-		if (languageId == null) {
-			if (useDefault) {
-				return _getDefault();
-			}
-
-			return null;
-		}
-
-		Locale locale = _fromLanguageId(languageId);
-
-		if (validate) {
-			boolean languageCode = false;
-
-			if ((languageId.indexOf(CharPool.UNDERLINE) < 0) &&
-				(languageId.indexOf(CharPool.MINUS) < 0)) {
-
-				languageCode = true;
-			}
-
-			if ((languageCode &&
-				 !LanguageUtil.isAvailableLanguageCode(languageId)) ||
-				(!languageCode && !LanguageUtil.isAvailableLocale(locale))) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(languageId + " is not a valid language id");
-				}
-
-				if (useDefault) {
-					return _getDefault();
-				}
-
-				return null;
-			}
-		}
-
-		return locale;
-	}
-
-	private Locale[] _fromLanguageIds(List<String> languageIds) {
-		Locale[] locales = new Locale[languageIds.size()];
-
-		for (int i = 0; i < languageIds.size(); i++) {
-			locales[i] = _fromLanguageId(languageIds.get(i), true);
-		}
-
-		return locales;
-	}
-
-	private Locale[] _fromLanguageIds(String[] languageIds) {
-		Locale[] locales = new Locale[languageIds.length];
-
-		for (int i = 0; i < languageIds.length; i++) {
-			locales[i] = _fromLanguageId(languageIds[i], true);
-		}
-
-		return locales;
-	}
-
-	private Locale _getDefault() {
-		Locale locale = LocaleThreadLocal.getDefaultLocale();
-
-		if (locale != null) {
-			return locale;
-		}
-
-		return _locale;
-	}
-
-	private String _getDisplayCountry(Locale displayLocale, Locale locale) {
 		String country = displayLocale.getDisplayCountry(locale);
 		String variant = displayLocale.getDisplayVariant(locale);
 
@@ -380,7 +515,7 @@ public class LocaleUtil {
 			new String[] {country, variant}, StringPool.COMMA_AND_SPACE);
 	}
 
-	private String _getDisplayName(
+	private static String _getDisplayName(
 		String language, String country, Locale locale,
 		Set<String> duplicateLanguages) {
 
@@ -403,266 +538,11 @@ public class LocaleUtil {
 		return displayName;
 	}
 
-	private Map<String, String> _getISOLanguages(Locale locale) {
-		Map<String, String> isoLanguages = new TreeMap<>(
-			String.CASE_INSENSITIVE_ORDER);
-
-		for (String isoLanguageId : Locale.getISOLanguages()) {
-			Locale isoLocale = _fromLanguageId(isoLanguageId, true);
-
-			isoLanguages.put(
-				isoLocale.getDisplayLanguage(locale), isoLanguageId);
-		}
-
-		return isoLanguages;
-	}
-
-	private String _getLocaleDisplayName(Locale displayLocale, Locale locale) {
-		String key = "language." + displayLocale.getLanguage();
-
-		String displayName = LanguageUtil.get(locale, key);
-
-		if (displayName.equals(key)) {
-			return displayLocale.getDisplayName(locale);
-		}
-
-		String country = _getDisplayCountry(displayLocale, locale);
-
-		if (Validator.isNull(country)) {
-			return displayName;
-		}
-
-		return StringBundler.concat(
-			displayName, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, country,
-			StringPool.CLOSE_PARENTHESIS);
-	}
-
-	private String _getLongDisplayName(
-		Locale locale, Set<String> duplicateLanguages) {
-
-		return _getDisplayName(
-			locale.getDisplayLanguage(locale),
-			_getDisplayCountry(locale, locale), locale, duplicateLanguages);
-	}
-
-	private Locale _getMostRelevantLocale() {
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		if (locale == null) {
-			locale = _getDefault();
-		}
-
-		return locale;
-	}
-
-	private String _getShortDisplayName(
-		Locale locale, Set<String> duplicateLanguages) {
-
-		String language = locale.getDisplayLanguage(locale);
-
-		if (language.length() > 3) {
-			language = locale.getLanguage();
-			language = StringUtil.toUpperCase(language);
-		}
-
-		return _getDisplayName(
-			language, StringUtil.toUpperCase(locale.getCountry()), locale,
-			duplicateLanguages);
-	}
-
-	private Locale _getSiteDefault() {
-		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
-
-		if (locale != null) {
-			return locale;
-		}
-
-		return _getDefault();
-	}
-
-	private void _setDefault(
-		String userLanguage, String userCountry, String userVariant) {
-
-		if (Validator.isNotNull(userLanguage) &&
-			Validator.isNull(userCountry) && Validator.isNull(userVariant)) {
-
-			_locale = new Locale(userLanguage);
-		}
-		else if (Validator.isNotNull(userLanguage) &&
-				 Validator.isNotNull(userCountry) &&
-				 Validator.isNull(userVariant)) {
-
-			_locale = new Locale(userLanguage, userCountry);
-		}
-		else if (Validator.isNotNull(userLanguage) &&
-				 Validator.isNotNull(userCountry) &&
-				 Validator.isNotNull(userVariant)) {
-
-			_locale = new Locale(userLanguage, userCountry, userVariant);
-		}
-
-		LocaleThreadLocal.setDefaultLocale(_locale);
-	}
-
-	private String _toBCP47LangTag(Locale locale) {
-		return _toBCP47LangTag(_toLanguageId(locale));
-	}
-
-	private String _toBCP47LangTag(String languageId) {
-		if (languageId.equals("zh_CN")) {
-			return "zh-Hans";
-		}
-		else if (languageId.equals("zh_TW")) {
-			return "zh-Hant";
-		}
-
-		return _toBCP47LanguageId(languageId);
-	}
-
-	private String _toBCP47LanguageId(Locale locale) {
-		return _toBCP47LanguageId(_toLanguageId(locale));
-	}
-
-	private String _toBCP47LanguageId(String languageId) {
-		if (languageId.equals("zh_CN")) {
-			return "zh-Hans-CN";
-		}
-		else if (languageId.equals("zh_TW")) {
-			return "zh-Hant-TW";
-		}
-
-		return StringUtil.replace(
-			languageId, CharPool.UNDERLINE, CharPool.MINUS);
-	}
-
-	private String[] _toBCP47LanguageIds(Locale[] locales) {
-		return _toBCP47LanguageIds(_toLanguageIds(locales));
-	}
-
-	private String[] _toBCP47LanguageIds(String[] languageIds) {
-		String[] bcp47LanguageIds = new String[languageIds.length];
-
-		for (int i = 0; i < languageIds.length; i++) {
-			bcp47LanguageIds[i] = _toBCP47LanguageId(languageIds[i]);
-		}
-
-		return bcp47LanguageIds;
-	}
-
-	private String[] _toDisplayNames(
-		Collection<Locale> locales, Locale locale) {
-
-		String[] displayNames = new String[locales.size()];
-
-		int i = 0;
-
-		for (Locale curLocale : locales) {
-			displayNames[i++] = curLocale.getDisplayName(locale);
-		}
-
-		return displayNames;
-	}
-
-	private String _toLanguageId(Locale locale) {
-		if (locale == null) {
-			locale = _locale;
-		}
-
-		String country = locale.getCountry();
-
-		boolean hasCountry = false;
-
-		if (country.length() != 0) {
-			hasCountry = true;
-		}
-
-		String variant = locale.getVariant();
-
-		boolean hasVariant = false;
-
-		if (variant.length() != 0) {
-			hasVariant = true;
-		}
-
-		if (!hasCountry && !hasVariant) {
-			return locale.getLanguage();
-		}
-
-		int length = 3;
-
-		if (hasCountry && hasVariant) {
-			length = 5;
-		}
-
-		StringBundler sb = new StringBundler(length);
-
-		sb.append(locale.getLanguage());
-
-		if (hasCountry) {
-			sb.append(StringPool.UNDERLINE);
-			sb.append(country);
-		}
-
-		if (hasVariant) {
-			sb.append(StringPool.UNDERLINE);
-			sb.append(variant);
-		}
-
-		return sb.toString();
-	}
-
-	private String[] _toLanguageIds(Collection<Locale> locales) {
-		String[] languageIds = new String[locales.size()];
-
-		int i = 0;
-
-		for (Locale locale : locales) {
-			languageIds[i++] = _toLanguageId(locale);
-		}
-
-		return languageIds;
-	}
-
-	private String[] _toLanguageIds(Locale[] locales) {
-		String[] languageIds = new String[locales.length];
-
-		for (int i = 0; i < locales.length; i++) {
-			languageIds[i] = _toLanguageId(locales[i]);
-		}
-
-		return languageIds;
-	}
-
-	private String _toW3cLanguageId(Locale locale) {
-		return _toW3cLanguageId(_toLanguageId(locale));
-	}
-
-	private String _toW3cLanguageId(String languageId) {
-		return StringUtil.replace(
-			languageId, CharPool.UNDERLINE, CharPool.MINUS);
-	}
-
-	private String[] _toW3cLanguageIds(Locale[] locales) {
-		return _toW3cLanguageIds(_toLanguageIds(locales));
-	}
-
-	private String[] _toW3cLanguageIds(String[] languageIds) {
-		String[] w3cLanguageIds = new String[languageIds.length];
-
-		for (int i = 0; i < languageIds.length; i++) {
-			w3cLanguageIds[i] = _toW3cLanguageId(languageIds[i]);
-		}
-
-		return w3cLanguageIds;
-	}
-
 	private static final String _BETA_SUFFIX = " [Beta]";
 
 	private static final Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
 
-	private static final LocaleUtil _localeUtil = new LocaleUtil();
-
-	private Locale _locale;
-	private final Map<String, Locale> _locales = new HashMap<>();
+	private static Locale _locale = new Locale("en", "US");
+	private static final Map<String, Locale> _locales = new HashMap<>();
 
 }

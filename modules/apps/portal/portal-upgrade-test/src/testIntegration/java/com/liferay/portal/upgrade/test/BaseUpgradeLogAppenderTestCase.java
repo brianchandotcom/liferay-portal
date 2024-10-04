@@ -608,6 +608,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testNoLogEvents() throws Exception {
 		_appender.start();
 
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
 		_appender.stop();
 
 		_assertLogContextDiagnostics("upgrade.report.errors", "[]");
@@ -616,9 +619,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertLogContextDiagnostics("upgrade.report.warnings", "[]");
 		_assertReportDiagnostics("Errors: Nothing registered");
 		_assertReportDiagnostics(
-			"Top 10 longest upgrade processes above " +
-				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD +
-					" milliseconds: Nothing registered");
+			String.format(
+				"Top %d longest upgrade processes above %d milliseconds: " +
+					"Nothing registered",
+				ReflectionTestUtil.getFieldValue(
+					upgradeReport, "_LONGEST_UPGRADE_PROCESSES_COUNT"),
+				PropsValues.UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD));
+
 		_assertReportDiagnostics("Warnings: Nothing registered");
 	}
 

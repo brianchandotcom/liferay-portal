@@ -6,7 +6,6 @@
 package com.liferay.portal.webdav.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
@@ -52,12 +51,9 @@ public class WebDAVServletTest {
 	}
 
 	@Test
-	public void testSessionContainsAuthenticatedUserData()
-		throws PortalException {
-
+	public void testHttpSessionContainsAuthenticatedUser() throws Exception {
 		ProtectedServletRequest protectedServletRequest =
 			_createProtectedServletRequest();
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -72,35 +68,27 @@ public class WebDAVServletTest {
 		User user = (User)httpSession.getAttribute(WebKeys.USER);
 
 		Assert.assertNotNull(user);
+		Assert.assertNotNull(user.getDigest());
 		Assert.assertEquals(TestPropsValues.getUserId(), user.getUserId());
 		Assert.assertTrue(user.isActive());
-
-		Assert.assertNotNull(user.getDigest());
 	}
 
 	private ProtectedServletRequest _createProtectedServletRequest()
-		throws PortalException {
+		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setContextPath(_CONTEXT_PATH);
+		mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, "litmus");
+		mockHttpServletRequest.setContextPath("/webdav");
 		mockHttpServletRequest.setMethod(Method.PROPFIND);
-		mockHttpServletRequest.setPathInfo(_PATH_INFO_PREFACE);
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.USER_AGENT, _DEFAULT_USER_AGENT);
+		mockHttpServletRequest.setPathInfo(
+			"/guest/document_library/Provided by Liferay/stars.png");
 
 		return new ProtectedServletRequest(
 			mockHttpServletRequest, String.valueOf(TestPropsValues.getUserId()),
 			HttpServletRequest.DIGEST_AUTH);
 	}
-
-	private static final String _CONTEXT_PATH = "/webdav";
-
-	private static final String _DEFAULT_USER_AGENT = "litmus";
-
-	private static final String _PATH_INFO_PREFACE =
-		"/guest/document_library/Provided by Liferay/stars.png";
 
 	private final WebDAVServlet _webDAVServlet = new WebDAVServlet();
 

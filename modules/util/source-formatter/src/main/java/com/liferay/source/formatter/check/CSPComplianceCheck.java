@@ -190,7 +190,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 			if ((c == CharPool.LESS_THAN) &&
 				(content.charAt(x + 1) != CharPool.PERCENT) &&
-				!isJavaSource(content, x, true)) {
+				!isJavaSource(content, x)) {
 
 				return x;
 			}

@@ -101,7 +101,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
@@ -140,7 +141,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
@@ -196,7 +198,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
@@ -244,7 +247,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
@@ -267,7 +271,8 @@ public class JournalEditArticleDisplayContextTest {
 	public void testIsShowSelectFolderAddActionFalseParamValue() {
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Mockito.when(
 			_httpServletRequest.getParameter("showSelectFolder")
@@ -289,7 +294,8 @@ public class JournalEditArticleDisplayContextTest {
 	public void testIsShowSelectFolderAddActionMissingParam() {
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Mockito.when(
 			_httpServletRequest.getParameter("showSelectFolder")
@@ -311,7 +317,8 @@ public class JournalEditArticleDisplayContextTest {
 	public void testIsShowSelectFolderAddActionTrueParamValue() {
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Mockito.when(
 			_httpServletRequest.getParameter("showSelectFolder")
@@ -333,7 +340,8 @@ public class JournalEditArticleDisplayContextTest {
 	public void testIsShowSelectFolderEditActionDoesntMatterParamValue() {
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, _journalArticle);
+				_httpServletRequest, _liferayPortletResponse, _journalArticle,
+				null, null, null);
 
 		Assert.assertFalse(
 			_journalEditArticleDisplayContext.isShowSelectFolder());
@@ -349,7 +357,8 @@ public class JournalEditArticleDisplayContextTest {
 	public void testShowSelectFolderValueIsCached() {
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Mockito.when(
 			_httpServletRequest.getParameter("showSelectFolder")
@@ -417,7 +426,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, journalArticle);
+				_httpServletRequest, _liferayPortletResponse, journalArticle,
+				null, null, null);
 
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
@@ -544,7 +554,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Assert.assertEquals(
 			defaultLanguageId,
@@ -576,7 +587,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, null);
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
 
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.UK),

@@ -9,6 +9,9 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -69,6 +72,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -119,11 +123,17 @@ public class JournalEditArticleDisplayContext {
 
 	public JournalEditArticleDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, JournalArticle article) {
+		LiferayPortletResponse liferayPortletResponse, JournalArticle article,
+		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
+		DepotEntryLocalService depotEntryLocalService,
+		GroupLocalService groupLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_article = article;
+		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
+		_groupLocalService = groupLocalService;
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
@@ -228,45 +238,65 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"sites",
 			() -> {
-				RecentGroupManager recentGroupManager =
-					RecentGroupManagerUtil.getRecentGroupManager();
+				Group scopeGroup = _groupLocalService.getGroup(getGroupId());
 
-				List<Group> recentGroups = ListUtil.subList(
-					recentGroupManager.getRecentGroups(_httpServletRequest), 0,
-					_MAX_SITES);
+				List<Group> groups;
 
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+				int max = _MAX_SITES;
 
-				for (Group group : recentGroups) {
-					if (group.isCompany()) {
-						continue;
+				if (scopeGroup.isDepot()) {
+					groups = _groupLocalService.getGroups(
+						TransformUtil.transformToLongArray(
+							_depotEntryGroupRelLocalService.
+								getDepotEntryGroupRels(
+									_depotEntryLocalService.getDepotEntry(
+										scopeGroup.getClassPK())),
+							DepotEntryGroupRel::getGroupId));
+				}
+				else {
+					RecentGroupManager recentGroupManager =
+						RecentGroupManagerUtil.getRecentGroupManager();
+
+					List<Group> recentGroups = ListUtil.subList(
+						recentGroupManager.getRecentGroups(_httpServletRequest),
+						0, _MAX_SITES);
+
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+					for (Group group : recentGroups) {
+						if (group.isCompany()) {
+							continue;
+						}
+
+						jsonArray.put(
+							JSONUtil.put(
+								"groupId", group.getGroupId()
+							).put(
+								"name",
+								group.getDescriptiveName(
+									_themeDisplay.getLocale())
+							));
 					}
 
-					jsonArray.put(
-						JSONUtil.put(
-							"groupId", group.getGroupId()
-						).put(
-							"name",
-							group.getDescriptiveName(_themeDisplay.getLocale())
-						));
+					if (recentGroups.size() == _MAX_SITES) {
+						return jsonArray;
+					}
+
+					max = _MAX_SITES - recentGroups.size();
+
+					groups = GroupServiceUtil.getGroups(
+						_themeDisplay.getCompanyId(),
+						GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
 				}
 
-				if (recentGroups.size() == _MAX_SITES) {
-					return jsonArray;
-				}
-
-				int max = _MAX_SITES - recentGroups.size();
-
-				List<Group> groups = GroupServiceUtil.getGroups(
-					_themeDisplay.getCompanyId(),
-					GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				for (Group group : groups) {
 					if (max < 0) {
 						break;
 					}
 
-					if (recentGroups.contains(group) || group.isCompany()) {
+					if (group.isCompany()) {
 						continue;
 					}
 
@@ -291,6 +321,15 @@ public class JournalEditArticleDisplayContext {
 						ActionKeys.VIEW)) {
 
 					return 0;
+				}
+
+				Group scopeGroup = _groupLocalService.getGroup(getGroupId());
+
+				if (scopeGroup.isDepot()) {
+					return _depotEntryGroupRelLocalService.
+						getDepotEntryGroupRelsCount(
+							_depotEntryLocalService.getDepotEntry(
+								scopeGroup.getClassPK()));
 				}
 
 				int groupsCount = GroupServiceUtil.getGroupsCount(
@@ -1771,11 +1810,15 @@ public class JournalEditArticleDisplayContext {
 	private String _ddmTemplateKey;
 	private String _defaultArticleLanguageId;
 	private LayoutPageTemplateEntry _defaultLayoutPageTemplateEntry;
+	private final DepotEntryGroupRelLocalService
+		_depotEntryGroupRelLocalService;
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private Integer _displayPageType;
 	private Long _folderId;
 	private String _folderName;
 	private String _friendlyURLDuplicatedWarningMessage;
 	private Long _groupId;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _inheritedWorkflowDDMStructuresFolderId;
 	private final ItemSelector _itemSelector;

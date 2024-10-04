@@ -10,13 +10,16 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -74,9 +78,42 @@ public class BlogsEntryServiceTest {
 	}
 
 	@Test
+	public void testAddAttachmentFileEntryWithAddEntryPermission()
+		throws Exception {
+
+		_addResourcePermission(
+			ActionKeys.ADD_ENTRY, BlogsConstants.RESOURCE_NAME);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.addAttachmentFileEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				new UnsyncByteArrayInputStream(new byte[0]));
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testAddAttachmentFileEntryWithoutAddEntryPermission()
+		throws Exception {
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.addAttachmentFileEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				new UnsyncByteArrayInputStream(new byte[0]));
+		}
+	}
+
+	@Test
 	public void testAddEntryWithAddEntryPermission1() throws Exception {
 		_addResourcePermission(
-			ActionKeys.ADD_ENTRY, BlogsConstants.SERVICE_NAME);
+			ActionKeys.ADD_ENTRY, BlogsConstants.RESOURCE_NAME);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, _permissionChecker)) {
@@ -88,7 +125,7 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testAddEntryWithAddEntryPermission2() throws Exception {
 		_addResourcePermission(
-			ActionKeys.ADD_ENTRY, BlogsConstants.SERVICE_NAME);
+			ActionKeys.ADD_ENTRY, BlogsConstants.RESOURCE_NAME);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, _permissionChecker)) {
@@ -116,6 +153,37 @@ public class BlogsEntryServiceTest {
 	}
 
 	@Test
+	public void testDeleteAttachmentFileEntryWithDeletePermission()
+		throws Exception {
+
+		FileEntry fileEntry = _addAttachmentFileEntry();
+
+		_addResourcePermission(
+			ActionKeys.ADD_ENTRY, BlogsConstants.RESOURCE_NAME);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.deleteAttachmentFileEntry(
+				fileEntry.getFileEntryId());
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testDeleteAttachmentFileEntryWithoutDeletePermission()
+		throws Exception {
+
+		FileEntry fileEntry = _addAttachmentFileEntry();
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.deleteAttachmentFileEntry(
+				fileEntry.getFileEntryId());
+		}
+	}
+
+	@Test
 	public void testDeleteEntryWithDeletePermission() throws Exception {
 		BlogsEntry entry = _addEntry();
 
@@ -136,6 +204,66 @@ public class BlogsEntryServiceTest {
 				_groupUser, _permissionChecker)) {
 
 			_blogsEntryService.deleteEntry(entry.getEntryId());
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testGetAttachmentFileEntryByExternalReferenceCodeWithoutViewPermission()
+		throws Exception {
+
+		FileEntry fileEntry = _addAttachmentFileEntry();
+
+		_removeViewResourcePermission(fileEntry);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.getAttachmentFileEntryByExternalReferenceCode(
+				fileEntry.getExternalReferenceCode(), fileEntry.getGroupId());
+		}
+	}
+
+	@Test
+	public void testGetAttachmentFileEntryByExternalReferenceCodeWithViewPermission()
+		throws Exception {
+
+		FileEntry fileEntry = _addAttachmentFileEntry();
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.getAttachmentFileEntryByExternalReferenceCode(
+				fileEntry.getExternalReferenceCode(), fileEntry.getGroupId());
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testGetAttachmentFileEntryWithoutViewPermission()
+		throws Exception {
+
+		FileEntry fileEntry = _addAttachmentFileEntry();
+
+		_removeViewResourcePermission(fileEntry);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.getAttachmentFileEntry(
+				fileEntry.getFileEntryId());
+		}
+	}
+
+	@Test
+	public void testGetAttachmentFileEntryWithViewPermission()
+		throws Exception {
+
+		FileEntry fileEntry = _addAttachmentFileEntry();
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, _permissionChecker)) {
+
+			_blogsEntryService.getAttachmentFileEntry(
+				fileEntry.getFileEntryId());
 		}
 	}
 
@@ -948,6 +1076,14 @@ public class BlogsEntryServiceTest {
 		}
 	}
 
+	private FileEntry _addAttachmentFileEntry() throws Exception {
+		return _blogsEntryLocalService.addAttachmentFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			new UnsyncByteArrayInputStream(new byte[0]));
+	}
+
 	private BlogsEntry _addEntry() throws Exception {
 		return _addEntry(new Date());
 	}
@@ -1010,6 +1146,20 @@ public class BlogsEntryServiceTest {
 	private void _removeViewResourcePermission(BlogsEntry entry)
 		throws Exception {
 
+		_removeViewResourcePermission(
+			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
+	private void _removeViewResourcePermission(FileEntry fileEntry)
+		throws Exception {
+
+		_removeViewResourcePermission(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+	}
+
+	private void _removeViewResourcePermission(String name, long primKey)
+		throws Exception {
+
 		for (Role role :
 				_roleLocalService.getRoles(TestPropsValues.getCompanyId())) {
 
@@ -1018,11 +1168,9 @@ public class BlogsEntryServiceTest {
 			}
 
 			_resourcePermissionLocalService.removeResourcePermission(
-				TestPropsValues.getCompanyId(),
-				"com.liferay.blogs.model.BlogsEntry",
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(entry.getEntryId()), role.getRoleId(),
-				ActionKeys.VIEW);
+				TestPropsValues.getCompanyId(), name,
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(primKey),
+				role.getRoleId(), ActionKeys.VIEW);
 		}
 	}
 

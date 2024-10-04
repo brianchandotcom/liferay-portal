@@ -30,7 +30,7 @@
 		[
 			<a href="javascript:void(0);" id="${portletNamespace}${namespacedFieldName}ToggleImage">${languageUtil.get(locale, "show")}</a>
 
-			<script ${nonceAttribute}>
+			<script>
 				document.getElementById('${portletNamespace}${namespacedFieldName}ToggleImage').onclick = function() {
 					${portletNamespace}${namespacedFieldName}ToggleImage();
 				};

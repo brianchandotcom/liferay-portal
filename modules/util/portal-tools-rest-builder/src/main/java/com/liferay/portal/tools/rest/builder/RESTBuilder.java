@@ -2034,7 +2034,7 @@ public class RESTBuilder {
 			String targetClientType)
 		throws Exception {
 
-		String outputDirPath = StringBundler.concat(
+		String outputPathString = StringBundler.concat(
 			baseClientJSDir.getPath(), "/src/main/resources/META-INF/resources/",
 			targetClientType);
 
@@ -2042,19 +2042,19 @@ public class RESTBuilder {
 			Arrays.asList(
 				_getNPMPathString(), "exec", "-y", "--prefix", _getNodePrefix(),
 				"openapi-typescript-codegen@0.27.0", "--", "--input",
-				openAPIYAMLFile.getPath(), "--output", outputDirPath,
+				openAPIYAMLFile.getPath(), "--output", outputPathString,
 				"--client", targetClientType, "--name", clientName,
 				"--useOptions", "--useUnionTypes"));
 
 		Process process = processBuilder.start();
 
 		System.out.printf(
-			"Invoking Typescript %s client generator%n", targetClientType);
+			"Invoking TypeScript %s client generator%n", targetClientType);
 
 		process.waitFor();
 
 		if (process.exitValue() > 0) {
-			System.out.println("Typescript client generator failed");
+			System.out.println("TypeScript client generator failed");
 
 			Scanner scanner = new Scanner(process.getErrorStream());
 
@@ -2066,7 +2066,7 @@ public class RESTBuilder {
 		}
 		else {
 			System.out.printf(
-				"Typescript client generated at %s%n", outputDirPath);
+				"TypeScript client generated at %s%n", outputPathString);
 		}
 	}
 
@@ -2202,11 +2202,10 @@ public class RESTBuilder {
 			BufferedWriter bufferedWriter = new BufferedWriter(
 				new FileWriter(outputOpenAPIYAMLFile))) {
 
-			String line;
-
 			Application application = _configYAML.getApplication();
-
 			Info info = openAPIYAML.getInfo();
+
+			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.startsWith("    \"/")) {

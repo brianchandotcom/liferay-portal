@@ -38,11 +38,7 @@ export class AccessibilityMenuPage {
 	}
 
 	async enableAccessibilityMenu() {
-		const isEnabled =
-			await this.enableAccessibilityMenuCheckbox.isEnabled();
-
 		if (
-			isEnabled &&
 			!(await this.enableAccessibilityMenuCheckbox.isChecked())
 		) {
 			await this.enableAccessibilityMenuCheckbox.check();

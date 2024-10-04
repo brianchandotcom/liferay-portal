@@ -36,7 +36,7 @@ public class TextHTMLDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				StringBundler sb = new StringBundler(12);
+				StringBundler sb = new StringBundler(13);
 				String id = StringUtil.randomId();
 
 				sb.append("<a href=\"javascript:void(0);\" id=\"");
@@ -52,7 +52,8 @@ public class TextHTMLDDMFormFieldValueRenderer
 				sb.append("').onclick=function() {Liferay.DDLUtil.");
 				sb.append("openPreviewDialog('");
 				sb.append(HtmlUtil.escapeJS(value.getString(locale)));
-				sb.append("');}</script>");
+				sb.append("');");
+				sb.append("}</script>");
 
 				return sb.toString();
 			}

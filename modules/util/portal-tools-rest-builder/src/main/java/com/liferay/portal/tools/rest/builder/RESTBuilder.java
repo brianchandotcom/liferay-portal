@@ -2106,7 +2106,7 @@ public class RESTBuilder {
 		_invokeClientJSGenerator(
 			baseClientJSDir, clientName, openAPIYAMLFile, "node");
 
-		FileUtil.delete(openAPIYAMLFile);
+		Files.delete(openAPIYAMLFile.toPath());
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {

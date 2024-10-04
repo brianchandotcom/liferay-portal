@@ -5,11 +5,14 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.internal.display.context.JournalEditArticleDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -48,7 +51,9 @@ public class EditArticleMVCRenderCommand implements MVCRenderCommand {
 				new JournalEditArticleDisplayContext(
 					httpServletRequest,
 					_portal.getLiferayPortletResponse(renderResponse),
-					ActionUtil.getArticle(httpServletRequest)));
+					ActionUtil.getArticle(httpServletRequest),
+					_depotEntryGroupRelLocalService, _depotEntryLocalService,
+					_groupLocalService));
 
 			return "/edit_article.jsp";
 		}
@@ -68,6 +73,15 @@ public class EditArticleMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditArticleMVCRenderCommand.class);
+
+	@Reference
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

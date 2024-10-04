@@ -138,13 +138,13 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					sb.append("</a>");
 
 					if (forcePost) {
-						sb.append("<script");
-						sb.append(ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(request));
-						sb.append(">document.getElementById('");
+						sb.append("<script>");
+						sb.append("document.getElementById('");
 						sb.append(randomId);
 						sb.append("').onclick = function() {");
 						sb.append(_getOnClick(namespace, curParam, i));
-						sb.append("};</script>");
+						sb.append("};");
+						sb.append("</script>");
 					}
 				}
 

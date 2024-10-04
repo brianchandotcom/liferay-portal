@@ -40,7 +40,9 @@ public class ButtonSearchEntry extends TextSearchEntry {
 		writer.write(id);
 		writer.write("\" type=\"button\" value=\"");
 		writer.write(getName());
-		writer.write("\"><script");
+		writer.write("\">");
+
+		writer.write("<script");
 		writer.write(
 			ContentSecurityPolicyNonceProviderUtil.getNonce(
 				httpServletRequest));

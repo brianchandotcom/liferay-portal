@@ -30,13 +30,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
-
-import java.io.IOException;
 
 import java.text.Format;
 
@@ -44,7 +41,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -68,11 +64,6 @@ public class ScimNotificationSchedulerJobConfiguration
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
 		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
-	}
-
-	@Activate
-	protected void activate() throws IOException {
-		_body = StringUtil.read(getClass(), "dependencies/body.tmpl");
 	}
 
 	protected boolean hasToSendNotification(
@@ -183,9 +174,9 @@ public class ScimNotificationSchedulerJobConfiguration
 				user.getEmailAddress(), user.getFullName())
 		);
 
-		String body = StringUtil.replace(
-			_body, new String[] {"[$ACCESS_TOKEN_EXPIRATION_DATE$]"},
-			new String[] {_format.format(accessTokenExpirationDate)});
+		String body =
+			"The access token for the SCIM client will expire at " +
+				_format.format(accessTokenExpirationDate);
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -212,8 +203,6 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScimNotificationSchedulerJobConfiguration.class);
-
-	private String _body;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

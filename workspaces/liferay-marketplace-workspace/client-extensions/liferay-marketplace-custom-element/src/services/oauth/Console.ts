@@ -11,6 +11,13 @@ class ConsoleOAuth2 extends MarketplaceSpringBootOAuth2 {
 		return this.get<ConsoleProjectsUsage>('/projects-usage');
 	}
 
+	async provisioning(
+		orderId: number,
+		data: {orderItemId: number; projectId: string}
+	): Promise<void> {
+		return this.post(`/provisioning/${orderId}`, data);
+	}
+
 	async uninstallApp(
 		orderId: number,
 		data: {
@@ -19,13 +26,6 @@ class ConsoleOAuth2 extends MarketplaceSpringBootOAuth2 {
 		}
 	): Promise<void> {
 		return this.post(`/uninstall-app/${orderId}`, data);
-	}
-
-	async provisioning(
-		orderId: number,
-		data: {orderItemId: number; projectId: string}
-	): Promise<void> {
-		return this.post(`/provisioning/${orderId}`, data);
 	}
 }
 

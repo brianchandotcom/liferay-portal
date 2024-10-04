@@ -89,16 +89,16 @@ public class ScimNotificationSchedulerJobConfiguration
 		return false;
 	}
 
+	private boolean _isEnabled() {
+		return FeatureFlagManagerUtil.isEnabled("LPS-96845");
+	}
+
 	private boolean _isSendNotification(
 		Date lastNotificationDate, Date oAuth2AccessTokenExpirationDate) {
 
 		return isSendNotification(
 			System.currentTimeMillis(), lastNotificationDate,
 			oAuth2AccessTokenExpirationDate);
-	}
-
-	private boolean _isEnabled() {
-		return FeatureFlagManagerUtil.isEnabled("LPS-96845");
 	}
 
 	private void _process(Company company) {

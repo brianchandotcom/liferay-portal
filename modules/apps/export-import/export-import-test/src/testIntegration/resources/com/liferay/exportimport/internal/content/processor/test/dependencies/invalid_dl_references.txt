@@ -53,12 +53,27 @@ Style references with double quotes:
 background: url("/documents/");
 background: url("/documents/d/[$GROUP_NAME$]/");
 
+Style references with double quotes and whitespaces:
+
+background: url(	 " 	/documents/");
+background: url(	 " 	/documents/d/[$GROUP_NAME$]/");
+
 Style references with no quotes:
 
 background: url(/documents/);
 background: url(/documents/d/[$GROUP_NAME$]/);
 
+Style references with no quotes and whitespaces:
+
+background: url(	 /documents/);
+background: url(	 /documents/d/[$GROUP_NAME$]/);
+
 Style references with single quotes:
 
 background: url('/documents/');
 background: url('/documents/d/[$GROUP_NAME$]/');
+
+Style references with single quotes and whitespaces:
+
+background: url(	 ' 	/documents/');
+background: url(	 ' 	/documents/d/[$GROUP_NAME$]/');

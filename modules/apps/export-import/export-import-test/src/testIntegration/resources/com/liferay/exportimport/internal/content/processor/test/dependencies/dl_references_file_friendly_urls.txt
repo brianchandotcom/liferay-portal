@@ -53,12 +53,27 @@ Style references with double quotes:
 background: url("/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
 background: url("[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
 
+Style references with double quotes with whitespaces:
+
+background: url(	 " 	/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
+background: url(	 " 	[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]");
+
 Style references with no quotes:
 
 background: url(/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
 background: url([$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
 
+Style references with no quotes and whitespaces:
+
+background: url(	 /documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
+background: url(	 [$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]);
+
 Style references with single quotes:
 
 background: url('/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]');
 background: url('[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]');
+
+Style references with single quotes and whitespaces:
+
+background: url(	 '/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]');
+background: url(	 '[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]');

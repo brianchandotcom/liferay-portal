@@ -32,6 +32,7 @@ export class AccessibilityMenuPage {
 
 	async openAccessibilityMenu() {
 		await this.page.keyboard.press('Tab');
+
 		await this.page.keyboard.press('Tab');
 
 		await this.page.keyboard.press('Enter');

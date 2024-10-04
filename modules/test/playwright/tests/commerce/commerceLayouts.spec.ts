@@ -1588,7 +1588,7 @@ test('LPD-32230 Billing and shipping address order info box fragment configurati
 		await commerceLayoutsPage.infoBoxLabelInput.fill('Billing Address');
 		await commerceLayoutsPage.publishButton.click();
 
-		await waitForSuccessAlert(
+		await waitForAlert(
 			page,
 			'The display page template was published successfully.'
 		);
@@ -1596,7 +1596,7 @@ test('LPD-32230 Billing and shipping address order info box fragment configurati
 		await commerceLayoutsPage.moreActionsButton.click();
 		await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
-		await waitForSuccessAlert(page);
+		await waitForAlert(page);
 
 		await expect(
 			commerceLayoutsPage.defaultDisplayPageTemplateIcon
@@ -1659,7 +1659,7 @@ test('LPD-32230 Billing and shipping address order info box fragment configurati
 		await commerceLayoutsPage.infoBoxLabelInput.fill('Shipping Address');
 		await commerceLayoutsPage.publishButton.click();
 
-		await waitForSuccessAlert(
+		await waitForAlert(
 			page,
 			'The display page template was published successfully.'
 		);

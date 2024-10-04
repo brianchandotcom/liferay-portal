@@ -885,35 +885,16 @@ export class PageEditorPage {
 		await fragment.click();
 
 		// Click the tree node again to make sure we activate it
-		// if it's a collection
 
-		const isCollection = await fragment.evaluate((element) =>
-			element.classList.contains('lfr-layout-structure-item-collection')
+		await this.goToSidebarTab('Browser');
+
+		const treeNode = this.page.locator(
+			`.treeview-link[data-id$="${fragmentId}"]`
 		);
 
-		const isContainer = await fragment.evaluate((element) =>
-			element.classList.contains('lfr-layout-structure-item-container')
-		);
+		await treeNode.click();
 
-		const isForm = await fragment.evaluate((element) =>
-			element.classList.contains('lfr-layout-structure-item-form')
-		);
-
-		const isGrid = await fragment.evaluate((element) =>
-			element.classList.contains('lfr-layout-structure-item-row')
-		);
-
-		if (isCollection || isContainer || isForm || isGrid) {
-			await this.goToSidebarTab('Browser');
-
-			const treeNode = this.page.locator(
-				`.treeview-link[data-id$="${fragmentId}"]`
-			);
-
-			await treeNode.click();
-
-			await expect(treeNode).toHaveClass(/focus/);
-		}
+		await expect(treeNode).toHaveClass(/focus/);
 	}
 
 	async selectEditable(

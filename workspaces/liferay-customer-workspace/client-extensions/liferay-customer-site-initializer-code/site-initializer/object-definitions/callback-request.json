@@ -63,6 +63,16 @@
 			},
 			"name": "countryCode",
 			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Related Ticket IDs"
+			},
+			"name": "relatedTicketIDs",
+			"required": false
 		}
 	],
 	"panelCategoryKey": "applications_menu.applications.content",

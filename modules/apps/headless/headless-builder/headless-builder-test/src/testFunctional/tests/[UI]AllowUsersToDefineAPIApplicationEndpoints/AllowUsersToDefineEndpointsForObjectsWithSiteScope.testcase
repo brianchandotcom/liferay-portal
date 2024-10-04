@@ -38,8 +38,6 @@ definition {
 
 	@priority = 4
 	test CanExecuteGetSiteScopeEndpointInAPIExplorer {
-		property portal.acceptance = "true";
-
 		task ("Given with postAPIApplication to create a published api Application with site scope endpoint with related schema") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
@@ -85,8 +83,6 @@ definition {
 
 	@priority = 4
 	test CannotSeeUnpublishedAPIApplicationWithSiteScopedEndpoint {
-		property portal.acceptance = "true";
-
 		task ("Given with postAPIApplication to create an unpublished api Application with site scope endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
@@ -110,8 +106,6 @@ definition {
 
 	@priority = 4
 	test CanSeePublishedAPIApplicationWithSiteAndCompanyScopedEndpointsWithoutSchemas {
-		property portal.acceptance = "true";
-
 		task ("Given with postAPIApplication to create a published api Application with site scope endpoint and company scope endpoint") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
@@ -153,8 +147,6 @@ definition {
 
 	@priority = 4
 	test CanSeePublishedAPIApplicationWithSiteAndCompanyScopedEndpointsWithSchemas {
-		property portal.acceptance = "true";
-
 		task ("Given created an published api application with site scope endpoint and company scope endpoint with related request and response schemas") {
 			var responseFromApplication = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",

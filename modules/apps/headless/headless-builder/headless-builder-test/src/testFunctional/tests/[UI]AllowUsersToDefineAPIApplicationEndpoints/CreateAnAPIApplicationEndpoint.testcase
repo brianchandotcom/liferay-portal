@@ -37,8 +37,6 @@ definition {
 
 	@priority = 5
 	test CanCreateEndpointWithCompanyScope {
-		property portal.acceptance = "true";
-
 		task ("And Given adding new endpoint with Company scope") {
 			APIBuilderUI.createAPIEndpoint(
 				method = "GET",
@@ -63,8 +61,6 @@ definition {
 
 	@priority = 5
 	test CanCreateEndpointWithSiteScope {
-		property portal.acceptance = "true";
-
 		task ("And Given adding new endpoint with Site scope") {
 			APIBuilderUI.createAPIEndpoint(
 				method = "GET",
@@ -122,8 +118,6 @@ definition {
 
 	@priority = 4
 	test CanSeeAllFieldsInCreationModal {
-		property portal.acceptance = "true";
-
 		task ("When I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
 		}
@@ -145,8 +139,6 @@ definition {
 
 	@priority = 4
 	test CanSeeInfoOfCreatedEndpoint {
-		property portal.acceptance = "true";
-
 		task ("When I enter a path to create the API endpoint") {
 			APIBuilderUI.createAPIEndpoint(
 				method = "GET",
@@ -173,8 +165,6 @@ definition {
 
 	@priority = 4
 	test CanSeeInfoOfCreatedEndpointWithDescription {
-		property portal.acceptance = "true";
-
 		task ("When I enter a path and Scope to create the API endpoint through add by plus wizard") {
 			APIBuilderUI.createAPIEndpoint(
 				addByPlus = "true",
@@ -204,8 +194,6 @@ definition {
 
 	@priority = 4
 	test CanSeePathOfPathFields {
-		property portal.acceptance = "true";
-
 		task ("When I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
 		}
@@ -229,8 +217,6 @@ definition {
 
 	@priority = 4
 	test CanSeeValidationMessageForRequiredFields {
-		property portal.acceptance = "true";
-
 		task ("And Given I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
 		}
@@ -276,8 +262,6 @@ definition {
 
 	@priority = 4
 	test EndpointFieldsAreVisibleInCreationModal {
-		property portal.acceptance = "true";
-
 		task ("Then 'Add API Enpoint' and plus buttons are present") {
 			AssertElementPresent(locator1 = "Button#PLUS");
 
@@ -293,8 +277,6 @@ definition {
 
 	@priority = 4
 	test EndpointIsNotCreatedAfterClickingCancel {
-		property portal.acceptance = "true";
-
 		task ("And Given I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
 		}
@@ -319,8 +301,6 @@ definition {
 
 	@priority = 4
 	test PicklistScopeHasCorrectOptions {
-		property portal.acceptance = "true";
-
 		task ("When adding new endpoint") {
 			Click(locator1 = "Button#PLUS");
 

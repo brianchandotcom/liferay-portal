@@ -104,8 +104,6 @@ definition {
 
 	@priority = 4
 	test CanRelateEndpointWithSchema {
-		property portal.acceptance = "true";
-
 		task ("And Given API Schema in API Application") {
 			SchemaAPI.createAPISchema(
 				apiApplicationERC = "My-app",
@@ -130,8 +128,6 @@ definition {
 
 	@priority = 4
 	test CanRelateSchemaOfRelatedObjectsWithEndpoint {
-		property portal.acceptance = "true";
-
 		task ("Given Student, University objects of scope 'Company' created with text field 'name'") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "student",
@@ -219,8 +215,6 @@ definition {
 
 	@priority = 4
 	test CanRelateSchemaWithManyEndpoints {
-		property portal.acceptance = "true";
-
 		task ("Given API Application with two endpoints created") {
 			EndpointAPI.createAPIEndpoint(
 				apiApplicationERC = "My-app",
@@ -266,8 +260,6 @@ definition {
 
 	@priority = 4
 	test CanUpdateEndpoint {
-		property portal.acceptance = "true";
-
 		task ("When editing Path and Description of an endpoint") {
 			APIBuilderUI.addAndPublishEndpointInfo(
 				description = "This is an updated endpoint",

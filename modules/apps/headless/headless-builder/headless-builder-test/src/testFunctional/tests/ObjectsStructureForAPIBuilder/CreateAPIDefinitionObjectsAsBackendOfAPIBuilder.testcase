@@ -25,7 +25,6 @@ definition {
 
 	@priority = 4
 	test CanChangeAPIApplicationStatus {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -63,7 +62,6 @@ definition {
 
 	@priority = 5
 	test CanCreateAPIApplicationWithValidBaseUrl {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -93,7 +91,6 @@ definition {
 
 	@priority = 5
 	test CanCreateUnpublishedAPIApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -121,7 +118,6 @@ definition {
 
 	@priority = 5
 	test CanDeleteAPIApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -164,7 +160,6 @@ definition {
 
 	@priority = 5
 	test CannotCreateAPIApplicationWithInvalidBaseUrl {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -204,7 +199,6 @@ definition {
 
 	@priority = 4
 	test CannotModifyAPIApplicationWithInvalidStatusValue {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -244,7 +238,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIApplicationSchema {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -263,7 +256,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIApplicationSchemaFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -282,7 +274,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIApplicationSchemaNestedFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -301,7 +292,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIEndpointSchema {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -320,7 +310,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIEndpointSchemaFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -339,7 +328,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIEndpointSchemaNestedFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -358,7 +346,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIPropertySchema {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -377,7 +364,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIPropertySchemaFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -396,7 +382,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPIPropertySchemaNestedFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -415,7 +400,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPISchemaSchema {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -434,7 +418,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPISchemaSchemaFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -453,7 +436,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAPISchemaSchemaNestedFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -472,7 +454,6 @@ definition {
 
 	@priority = 5
 	test CanSeeHeadlessBuilderApplications {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

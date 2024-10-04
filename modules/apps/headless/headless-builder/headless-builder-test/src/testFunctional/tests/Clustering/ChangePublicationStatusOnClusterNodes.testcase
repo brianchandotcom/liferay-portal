@@ -73,7 +73,6 @@ definition {
 		property cluster.enabled = "true";
 		property database.types = "mysql, postgresql";
 		property minimum.slave.ram = "24";
-		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -137,7 +136,6 @@ definition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property minimum.slave.ram = "24";
-		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

@@ -79,7 +79,6 @@ definition {
 
 	@priority = 4
 	test CannotSeeSchemaInAPIExplorerAfterDelete {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -114,7 +113,6 @@ definition {
 
 	@priority = 4
 	test CanSeeWarningMessageBeforeSchemaIsDeleted {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

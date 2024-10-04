@@ -31,7 +31,6 @@ definition {
 
 	@priority = 5
 	test CanClickAddNewSchemaButtons {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -54,7 +53,6 @@ definition {
 
 	@priority = 4
 	test CanFilterSchemaByCreationDateAsLastUpdated {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -87,7 +85,6 @@ definition {
 
 	@priority = 4
 	test CanFilterSchemaByDateBeforeCreationAsLastUpdated {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -119,7 +116,6 @@ definition {
 
 	@priority = 5
 	test CanListExistingSchemaInEditAPIApplication {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -145,7 +141,6 @@ definition {
 
 	@priority = 4
 	test CanOrderSchemasByLastUpdated {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -176,7 +171,6 @@ definition {
 
 	@priority = 4
 	test CanOrderSchemasByName {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -207,7 +201,6 @@ definition {
 
 	@priority = 4
 	test CanPaginateAPISchemas {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -246,7 +239,6 @@ definition {
 
 	@priority = 4
 	test CanSearchAPISchema {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -272,7 +264,6 @@ definition {
 
 	@priority = 5
 	test CanSeeAvailableFieldsAndActions {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -312,7 +303,6 @@ definition {
 
 	@priority = 4
 	test CanSeeNoAPISchemaAndAddSchemaButton {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

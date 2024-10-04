@@ -120,8 +120,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanApplyPrefilterAndFilter {
-		property portal.acceptance = "true";
-
 		task ("And Given setting the Filters to 'contains(name,'abc')'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(name,'abc')",
@@ -155,8 +153,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanResetPrefiltering {
-		property portal.acceptance = "true";
-
 		task ("And Given setting the Filters to 'contains(studentSubjects/name,'abc')'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc')",
@@ -207,8 +203,6 @@ definition {
 
 	@priority = 5
 	test FiltersIsPresentInEndpointConfiguration {
-		property portal.acceptance = "true";
-
 		task ("When navigating to the endpoint Configuration tab") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
 				entity = "Endpoints",
@@ -228,8 +222,6 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test PrefilterAndFilterReturnTheSameData {
-		property portal.acceptance = "true";
-
 		task ("And Given setting the Filters to 'contains(studentSubjects/name,'abc') and name eq 'zzzz'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc') and name eq 'zzzz'",
@@ -278,8 +270,6 @@ definition {
 
 	@priority = 4
 	test PrefilteringWorksWithMainObjectFieldsThatAreNotPartOfSchemaProperties {
-		property portal.acceptance = "true";
-
 		task ("When setting the Filters to 'externalReferenceCode eq 'abc''") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "externalReferenceCode eq 'abc'",
@@ -300,8 +290,6 @@ definition {
 
 	@priority = 4
 	test PrefilteringWorksWithSchemaPropertiesMadeOfMainObjectFields {
-		property portal.acceptance = "true";
-
 		task ("When setting the Filters to 'contains(name,'abc')'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(name,'abc')",
@@ -322,8 +310,6 @@ definition {
 
 	@priority = 4
 	test PrefilteringWorksWithSchemaPropertiesMadeOfObjectFieldsRelatedWithOneToManyRelationship {
-		property portal.acceptance = "true";
-
 		task ("When setting the Filters to 'contains(studentSubjects/name,'abc')'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc')",
@@ -344,8 +330,6 @@ definition {
 
 	@priority = 3
 	test PrefilterIsLimitedByODataCharacterLimit {
-		property portal.acceptance = "true";
-
 		task ("When setting the Filters with 1001 characters") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "ddLoremipsumdolorsitametconsecteturadipisicingelitSeddoeiusmodtemporincididuntutlaboretolaborumExcepteursintoccaecatcupidatatnonproidentsuntinculpaquiofficiadeseruntmollitanimidestlaborumggggggggggggggggggggggfhddfghdfContrarytopopularbelief,LoremIpsumisnotsimplyrandomtext.IthasrootsinapieceofclassicalLatinliteraturefrom45BC,makingitover2000yearsold.RichardMcClintock,aLatinprofessoratHampdenyCollegeinVirginia,lookeduponeofthemoreobscureLatinwords,consectetur,fromaLoremIpsumpassage,andgoingthroughthecitesofthewordinclassicalliterature,discoveredtheundoubtablesource.LoremIpsumcomesfromsections1.10.32and1.10.33ofttdeFinibusBonorumetMalorum(TheExtremesofGoodandEvil)byCicero,writtenin45BC.Thisbookisatreatiseonthetheoryofethics,verypopularduringtheRenaissance.ThefirstlineofLoremIpsum,ttLoremipsumdolorsitamet..tt,comesfromalineinsection1.10.3extoftheprintingaggggggvcxxdsafaertgertrwryrttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttbdff",

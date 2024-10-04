@@ -1526,14 +1526,10 @@ public class ObjectRelationshipLocalServiceImpl
 			boolean edge, ObjectRelationship objectRelationship)
 		throws PortalException {
 
-<<<<<<< HEAD
 		if (!edge ||
 			!FeatureFlagManagerUtil.isEnabled(
 				objectRelationship.getCompanyId(), "LPS-187142")) {
 
-=======
-		if (!edge || !FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
->>>>>>> da4fd5b (LPD-35168 Add feature flag)
 			return;
 		}
 

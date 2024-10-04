@@ -353,7 +353,7 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "document_1",
+			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content new",
 			entrySubtitle = "Blogs Entry Subtitle new",
 			entryTitle = "Blogs Entry Title new",

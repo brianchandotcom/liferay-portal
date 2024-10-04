@@ -12,8 +12,8 @@ export class AccessibilityMenuPage {
 	readonly enableAccessibilityMenuCheckbox: Locator;
 	readonly openAccessibilityMenuButton: Locator;
 	readonly page: Page;
+	readonly saveButton: Locator;
 	readonly underlinedLinksToggle: Locator;
-	readonly updateButton: Locator;
 
 	constructor(page: Page) {
 		this.closeButton = page.getByLabel('close', {exact: true});
@@ -24,8 +24,10 @@ export class AccessibilityMenuPage {
 			name: 'Open Accessibility Menu',
 		});
 		this.page = page;
+		this.saveButton = page
+			.getByRole('button', { name: 'Save' })
+			.or(page.getByRole('button', { name: 'Update' }));
 		this.underlinedLinksToggle = page.getByLabel('Underlined Links');
-		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
 	async openAccessibilityMenu() {
@@ -43,7 +45,7 @@ export class AccessibilityMenuPage {
 		) {
 			await this.enableAccessibilityMenuCheckbox.check();
 
-			await this.updateButton.click();
+			await this.saveButton.click();
 
 			await waitForAlert(this.page);
 		}

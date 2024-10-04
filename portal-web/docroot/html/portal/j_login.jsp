@@ -46,7 +46,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 				<aui:link cssClass="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(themeDisplay.getClayCSSURL()) %>" rel="stylesheet" type="text/css" />
 			</head>
 
-			<body>
+			<body onLoad="setTimeout('document.fm.submit()', 100);">
 				<center>
 					<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
 						<tr>
@@ -67,12 +67,6 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 						</tr>
 					</table>
 				</center>
-
-				<aui:script type="text/javascript">
-					window.body.onload = function() {
-						setTimeout('document.fm.submit()', 100);
-					}
-				</aui:script>
 			</body>
 		</html>
 
@@ -113,12 +107,8 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 				<meta content="0" http-equiv="Expires" />
 			</head>
 
-			<body>
-				<aui:script type="text/javascript">
-					window.body.onload = function() {
-						window.location.replace('<%= themeDisplay.getPathMain() %>');
-					}
-				</aui:script>
+			<body onLoad="javascript:location.replace('<%= themeDisplay.getPathMain() %>')">
+
 			</body>
 		</html>
 	</c:otherwise>

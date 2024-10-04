@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>DETAILS_TOGGLE</td>
-	<td>//button[@type='button']/span[contains(text(), 'Details')]</td>
+	<td>//span[contains(text(), 'Details')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -127,14 +127,12 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					sb.append("</strong>");
 				}
 				else {
+					String randomId = StringUtil.randomId();
+
 					sb.append("<a class='journal-article-page-number' href='");
 					sb.append(_getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor));
 					sb.append("' id='");
-
-					String randomId = StringUtil.randomId();
-
 					sb.append(randomId);
-
 					sb.append("'>");
 					sb.append(i);
 					sb.append("</a>");

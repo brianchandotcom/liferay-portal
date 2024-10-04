@@ -110,6 +110,7 @@ definition {
 	@priority = 4
 	test AllSystemObjectFieldsAreAvailableToExport {
 		property custom.properties = "feature.flag.LPS-186620=true";
+
 		task ("When 'Account (v1.0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.selectEntity(entityType = "Account (v1.0 - Liferay Headless Admin User)");
 		}

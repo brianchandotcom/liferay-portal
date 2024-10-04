@@ -121,7 +121,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExcludeFieldsFromImport {
-			task ("Given the user is importing CSV file with account data") {
+		task ("Given the user is importing CSV file with account data") {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.gotoImport();

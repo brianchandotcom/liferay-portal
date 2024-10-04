@@ -36,6 +36,7 @@
 								"paddingLeft": "6",
 								"paddingRight": "6",
 								"paddingTop": "5",
+								"shadow": "boxShadowLg",
 								"width": "680px"
 							},
 							"indexed": true,
@@ -288,12 +289,16 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_relatedTicketIDs",
+										"inputHelpText": {
+											"en_US": "If this issue is related to an existing ticket, please enter the ticket ID(s) here."
+										},
 										"inputLabel": {
 											"en_US": "Related Ticket IDs"
 										},
 										"showCharactersCount": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
@@ -309,6 +314,9 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_description",
+										"inputHelpText": {
+											"en_US": "Please briefly describe the nature of this request."
+										},
 										"inputLabel": {
 											"en_US": "Description"
 										},

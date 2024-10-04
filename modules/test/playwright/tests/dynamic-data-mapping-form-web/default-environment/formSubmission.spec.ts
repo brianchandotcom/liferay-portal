@@ -6,9 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {deleteItems} from './utils/deleteItems';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {deleteItems} from '../utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 

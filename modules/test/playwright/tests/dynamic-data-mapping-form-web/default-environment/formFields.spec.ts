@@ -5,10 +5,10 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import {deleteItems} from './utils/deleteItems';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import {deleteItems} from '../utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 

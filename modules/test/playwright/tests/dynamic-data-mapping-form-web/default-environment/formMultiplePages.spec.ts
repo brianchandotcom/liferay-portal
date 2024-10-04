@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getGridDefinition from '../layout-content-page-editor-web/utils/getGridDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {deleteItems} from './utils/deleteItems';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getGridDefinition from '../../layout-content-page-editor-web/utils/getGridDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {deleteItems} from '../utils/deleteItems';
 
 declare global {
 	interface Window {

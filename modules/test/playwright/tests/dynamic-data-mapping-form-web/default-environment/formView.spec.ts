@@ -5,12 +5,12 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {getRandomInt} from '../../utils/getRandomInt';
+import {ObjectAdminRestClient} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

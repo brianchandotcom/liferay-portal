@@ -53,19 +53,7 @@ String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUB
 				</aui:fieldset>
 			</c:when>
 			<c:otherwise>
-
-				<%
-				String id = StringUtil.randomId();
-				%>
-
-				<a id="<%= id %>"><liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escapeAttribute(samlSubjectScreenName) + "</strong>" %>' key="not-x" /></a>
-
-				<aui:script>
-					document.getElementById('<%= id %>').onclick = function () {
-						this.closest('form').submit();
-						return false;
-					};
-				</aui:script>
+				<a onClick="this.closest('form').submit(); return false;"><liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escapeAttribute(samlSubjectScreenName) + "</strong>" %>' key="not-x" /></a>
 			</c:otherwise>
 		</c:choose>
 	</aui:form>

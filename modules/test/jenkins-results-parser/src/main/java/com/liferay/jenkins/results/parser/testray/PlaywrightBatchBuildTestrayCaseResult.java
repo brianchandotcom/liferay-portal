@@ -22,10 +22,10 @@ import java.util.List;
 /**
  * @author Kenji Heigel
  */
-public class PlaywrightJUnitBatchBuildTestrayCaseResult
+public class PlaywrightBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult {
 
-	public PlaywrightJUnitBatchBuildTestrayCaseResult(
+	public PlaywrightBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
 		TestClassMethod testClassMethod) {

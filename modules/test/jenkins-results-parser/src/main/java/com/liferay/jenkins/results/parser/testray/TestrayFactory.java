@@ -194,7 +194,7 @@ public class TestrayFactory {
 			else if (axisTestClassGroup instanceof
 						PlaywrightAxisTestClassGroup) {
 
-				return new PlaywrightJUnitBatchBuildTestrayCaseResult(
+				return new PlaywrightBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass,
 					testClassMethod);
 			}

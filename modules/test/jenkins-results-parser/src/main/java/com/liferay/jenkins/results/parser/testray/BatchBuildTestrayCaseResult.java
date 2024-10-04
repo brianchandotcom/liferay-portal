@@ -356,7 +356,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return null;
 	}
 
-	public long getTestResultDuration() {
+	protected long getTestResultDuration() {
 		TestResult testResult = getTestResult();
 
 		if (testResult == null) {
@@ -409,7 +409,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		if (errorMessage.contains("\n")) {
 			errorMessage = errorMessage.substring(
-			0, errorMessage.indexOf("\n"));
+				0, errorMessage.indexOf("\n"));
 		}
 
 		errorMessage = errorMessage.trim();
@@ -434,7 +434,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			String result = build.getResult();
 
 			if ((result == null) || result.equals("SUCCESS") ||
-			result.equals("UNSTABLE")) {
+				result.equals("UNSTABLE")) {
 
 				return Status.UNTESTED;
 			}

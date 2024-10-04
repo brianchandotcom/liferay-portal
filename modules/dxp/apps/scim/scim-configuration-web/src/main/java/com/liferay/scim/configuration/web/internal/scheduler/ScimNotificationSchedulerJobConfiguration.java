@@ -70,14 +70,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
 	}
 
-	private boolean _hasToSendNotification(
-		Date lastNotificationDate, Date oAuth2AccessTokenExpirationDate) {
-
-		return hasToSendNotification(
-			System.currentTimeMillis(), lastNotificationDate,
-			oAuth2AccessTokenExpirationDate);
-	}
-
 	@Activate
 	protected void activate() throws IOException {
 		_body = StringUtil.read(getClass(), "dependencies/body.tmpl");
@@ -104,6 +96,14 @@ public class ScimNotificationSchedulerJobConfiguration
 		}
 
 		return false;
+	}
+
+	private boolean _hasToSendNotification(
+		Date lastNotificationDate, Date oAuth2AccessTokenExpirationDate) {
+
+		return hasToSendNotification(
+			System.currentTimeMillis(), lastNotificationDate,
+			oAuth2AccessTokenExpirationDate);
 	}
 
 	private boolean _isEnabled() {

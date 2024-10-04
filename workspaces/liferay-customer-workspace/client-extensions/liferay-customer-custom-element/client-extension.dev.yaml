@@ -2,4 +2,4 @@ liferay-customer-custom-element:
     urls:
         - http://localhost:3000/@vite/client
         - http://localhost:3000/@vite/refresh.js
-        - http://localhost:3000/src/index.tsx
+        - http://localhost:3000/src/main.tsx

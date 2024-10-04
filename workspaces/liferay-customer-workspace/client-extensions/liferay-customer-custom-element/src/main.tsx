@@ -9,16 +9,16 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
-import './common/styles/global.scss';
 
-import SWRCacheProvider from './SWRCacheProvider';
+import './common/styles/global.scss';
 import OktaStatus from './common/components/OktaSession';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
 import {Liferay} from './common/services/liferay';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
-import AttachmentFileUploader from './routes/attachment-file-uploader';
+import swrCacheProvider from './common/utils/swrCacheProvider';
+import AttachmentFileUploader from './routes/attachment-uploader';
 import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
 import Onboarding from './routes/onboarding';
@@ -158,7 +158,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
 					<SWRConfig
 						value={{
-							provider: SWRCacheProvider,
+							provider: swrCacheProvider,
 							revalidateOnFocus: false,
 						}}
 					>

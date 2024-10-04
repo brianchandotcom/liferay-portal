@@ -4,8 +4,8 @@
  */
 
 import './styles/app.scss';
-import './app.scss';
 
+import './app.scss';
 import {AppContextProvider} from './context';
 import Pages from './pages';
 

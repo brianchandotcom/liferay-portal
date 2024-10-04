@@ -48,7 +48,7 @@ definition {
 
 				let __LFR_TRACKED_EVENTS__ = {};
 
-				Liferay.on(TRACKED_EVENTS, function(event) {
+				Liferay.on(TRACKED_EVENTS, function(event){
 					{
 						const eventLog = __LFR_TRACKED_EVENTS__[event.type]
 							? __LFR_TRACKED_EVENTS__[event.type].concat(event)

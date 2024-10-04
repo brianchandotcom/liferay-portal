@@ -136,17 +136,15 @@ public class AlertTag extends BaseContainerTag {
 		jspWriter.write("</div></div>");
 
 		if (_dismissible) {
+			String id = StringUtil.randomId();
+
 			jspWriter.write("<button aria-label=\"");
 			jspWriter.write(
 				LanguageUtil.get(
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					"close"));
 			jspWriter.write("\" class=\"close\" id=\"");
-
-			String id = StringUtil.randomId();
-
 			jspWriter.write(id);
-
 			jspWriter.write("\" type=\"button\">");
 
 			IconTag iconTag = new IconTag();
@@ -161,8 +159,8 @@ public class AlertTag extends BaseContainerTag {
 					getRequest()));
 			jspWriter.write(">document.getElementById('");
 			jspWriter.write(id);
-			jspWriter.write("').onclick=function(event) {event.target.");
-			jspWriter.write("closest('[role=alert]').remove()}</script>");
+			jspWriter.write("').onclick=function(event){event.target.closest(");
+			jspWriter.write("'[role=alert]').remove()}</script>");
 		}
 
 		if (Validator.isNotNull(_variant) && _variant.equals("stripe")) {

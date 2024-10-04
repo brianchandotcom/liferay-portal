@@ -217,6 +217,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "putAccountBatch"));
 					put(
+						"mutation#deleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"deleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode"));
+					put(
+						"mutation#createOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"postOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode"));
+					put(
 						"mutation#patchOrganizationMoveAccounts",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
@@ -1010,6 +1020,11 @@ public class ServletDataImpl implements ServletData {
 						"query#account",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "getAccount"));
+					put(
+						"query#organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePage"));
 					put(
 						"query#organizationAccounts",
 						new ObjectValuePair<>(

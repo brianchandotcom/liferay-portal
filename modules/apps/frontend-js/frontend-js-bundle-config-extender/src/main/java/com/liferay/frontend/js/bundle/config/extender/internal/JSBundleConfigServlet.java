@@ -82,7 +82,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 			JSBundleConfigRegistryUtil.getJSConfigs();
 
 		if (!jsConfigs.isEmpty()) {
-			printWriter.print("(function() {");
+			printWriter.print("(function(){");
 
 			for (JSBundleConfigRegistryUtil.JSConfig jsConfig : jsConfigs) {
 				try {

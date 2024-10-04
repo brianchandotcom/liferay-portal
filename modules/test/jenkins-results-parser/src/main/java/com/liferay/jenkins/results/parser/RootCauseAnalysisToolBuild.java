@@ -402,7 +402,7 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("$(document).ready(function() {\n");
-		sb.append("$('[data-toggle=\"toggle\"]').change(function() {\n");
+		sb.append("$('[data-toggle=\"toggle\"]').change(function(){\n");
 		sb.append("$(this).parents().next('.hidden-row').toggle();\n");
 		sb.append("var label = $(this).parent('td').find('label');\n");
 		sb.append("var text = label.text();\n");

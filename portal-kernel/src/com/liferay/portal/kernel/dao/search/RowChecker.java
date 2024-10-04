@@ -213,7 +213,7 @@ public class RowChecker {
 				httpServletRequest));
 		sb.append(">document.getElementById('");
 		sb.append(id);
-		sb.append("').onclick=function() {Liferay.Util.checkAll(AUI().");
+		sb.append("').onclick=function(){Liferay.Util.checkAll(AUI().");
 		sb.append("one(this).ancestor('.table'), ");
 		sb.append(checkBoxRowIds);
 		sb.append(", this, 'tr:not(.d-none)');}</script>");

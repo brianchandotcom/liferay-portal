@@ -69,7 +69,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		for (String illegalAttributeName : illegalAttributeNames) {
 			int x = -1;
 
-			outerLoop:
 			while (true) {
 				x = lowerCaseContent.indexOf(
 					illegalAttributeName + StringPool.EQUAL, x + 1);
@@ -112,10 +111,18 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 						_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
 				}
 
+				boolean skip = false;
+
 				for (String ignoredTagPrefix : ignoredTagPrefixes) {
 					if (tagString.startsWith(ignoredTagPrefix)) {
-						continue outerLoop;
+						skip = true;
+
+						break;
 					}
+				}
+
+				if (skip) {
+					continue;
 				}
 
 				addMessage(

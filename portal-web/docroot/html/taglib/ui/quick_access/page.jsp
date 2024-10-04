@@ -43,22 +43,16 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 							<li>
 								<c:choose>
 									<c:when test="<%= Validator.isNull(quickAccessEntry.getURL()) %>">
-										<button class="<%= linkClass %> btn btn-link btn-unstyled text-nowrap" id="<%= randomNamespace + quickAccessEntry.getId() %>">
+										<button class="<%= linkClass %> btn btn-link btn-unstyled text-nowrap" id="<%= randomNamespace + quickAccessEntry.getId() %>" onclick="<%= quickAccessEntry.getOnClick() %>">
 											<%= quickAccessEntry.getContent() %>
 										</button>
 									</c:when>
 									<c:otherwise>
-										<a class="<%= linkClass %>" href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>">
+										<a class="<%= linkClass %>" href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>" onclick="<%= quickAccessEntry.getOnClick() %>">
 											<%= quickAccessEntry.getContent() %>
 										</a>
 									</c:otherwise>
 								</c:choose>
-
-								<aui:script>
-									document.getElementById('<%= randomNamespace + quickAccessEntry.getId() %>').onclick = function() {
-										<%= quickAccessEntry.getOnClick() %>
-									}
-								</aui:script>
 							</li>
 
 						<%

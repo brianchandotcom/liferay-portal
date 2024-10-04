@@ -119,15 +119,9 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					}
 				</aui:script>
 
-				<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" type="button">
+				<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" onclick="<%= uniqueNamespace %>inputPermissionsToggle();" type="button">
 					<%= inputPermissionsShowOptions ? LanguageUtil.get(request, "hide-options") : LanguageUtil.get(request, "more-options") %>
 				</button>
-
-				<aui:script>
-					document.getElementById('<%= uniqueNamespace %>inputPermissionsOptionsButton').onclick = function() {
-						<%= uniqueNamespace %>inputPermissionsToggle();
-					}
-				</aui:script>
 
 				<span class="mt-3 <%= inputPermissionsShowOptions ? "hide" : "" %>" id="<%= uniqueNamespace %>inputPermissionsShowOptionsHelp">
 					<liferay-ui:icon-help message="input-permissions-more-options-help" />

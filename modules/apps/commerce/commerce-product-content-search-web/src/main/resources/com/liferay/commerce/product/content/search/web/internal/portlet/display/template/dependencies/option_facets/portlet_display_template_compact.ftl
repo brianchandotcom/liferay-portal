@@ -24,13 +24,11 @@
 			<#if entries?has_content>
 				<#list entries as entry>
 					<li class="facet-value">
-						<#assign id = stringUtil.randomId() />
-
 						<button
 							class="btn btn-link btn-unstyled facet-term term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}"
 							data-term-id="${entry.getTerm()}"
 							name="${name + entry?index}"
-							id="${id}"
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						>
 							${htmlUtil.escape(entry.getTerm())}
 								<#if showFrequencies>
@@ -39,12 +37,6 @@
 									</small>
 								</#if>
 						</button>
-
-						<@liferay_aui.script>
-							document.getElementById('${id}').onclick = function() {
-								Liferay.Search.FacetUtil.changeSelection(event);
-							}
-						</@liferay_aui.script>
 					</li>
 				</#list>
 			</#if>

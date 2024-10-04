@@ -717,17 +717,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 			<c:when test="<%= orderProducts != null %>">
 				<input class="btn btn-secondary" type="submit" value="<liferay-ui:message key="register" />" />
 
-				<%
-				String id = StringUtil.randomId();
-				%>
-
-				<input id="<%= id %>" type="button" value="<liferay-ui:message key="cancel" />" />
-
-				<aui:script>
-					document.getElementById('<%= id %>').onclick = function() {
-						location.href='<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>';
-					}
-				</aui:script>
+				<input onClick="location.href='<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
 			</c:when>
 			<c:otherwise>
 				<input class="btn btn-secondary" type="submit" value="<liferay-ui:message key="query" />" />

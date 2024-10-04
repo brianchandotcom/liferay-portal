@@ -152,6 +152,7 @@ boolean choiceField = checkboxField || radioField;
 			<%= disabled ? "disabled" : StringPool.BLANK %>
 			id="<%= namespace + id %>"
 			name="<%= namespace + name %>"
+			onClick="<%= onClick %>"
 			<%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %>
 			type="checkbox"
 			<%= Validator.isNotNull(valueString) ? ("value=\"" + HtmlUtil.escapeAttribute(valueString)) + "\"" : StringPool.BLANK %>
@@ -163,14 +164,6 @@ boolean choiceField = checkboxField || radioField;
 			<aui:script>
 				document.getElementById('<%= namespace + id %>').onchange = function() {
 					<%= onChange %>
-				}
-			</aui:script>
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(onClick) %>">
-			<aui:script>
-				document.getElementById('<%= namespace + id %>').onclick = function() {
-					<%= onClick %>
 				}
 			</aui:script>
 		</c:if>
@@ -249,6 +242,7 @@ boolean choiceField = checkboxField || radioField;
 			<%= disabled ? "disabled" : StringPool.BLANK %>
 			id="<%= namespace + id %>"
 			name="<%= namespace + name %>"
+			<%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %>
 			<%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %>
 			type="radio"
 			value="<%= HtmlUtil.escapeAttribute(valueString) %>"
@@ -260,14 +254,6 @@ boolean choiceField = checkboxField || radioField;
 			<aui:script>
 				document.getElementById('<%= namespace + id %>').onchange = function() {
 					<%= onChange %>
-				}
-			</aui:script>
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(onClick) %>">
-			<aui:script>
-				document.getElementById('<%= namespace + id %>').onclick = function() {
-					<%= onClick %>
 				}
 			</aui:script>
 		</c:if>
@@ -374,6 +360,7 @@ boolean choiceField = checkboxField || radioField;
 					id="<%= namespace + id %>"
 					<%= multiple ? "multiple" : StringPool.BLANK %>
 					name="<%= namespace + (Validator.isBlank(fieldParam) ? name : fieldParam) %>"
+					<%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %>
 					<%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %>
 					<%= (storedDimensions.length > 1) ? "style=\"height: " + storedDimensions[0] + "; width: " + storedDimensions[1] + ";" + title + "\"" : StringPool.BLANK %>
 					<%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %>
@@ -385,14 +372,6 @@ boolean choiceField = checkboxField || radioField;
 					<aui:script>
 						document.getElementById('<%= namespace + id %>').onchange = function() {
 							<%= onChange %>
-						}
-					</aui:script>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(onClick) %>">
-					<aui:script>
-						document.getElementById('<%= namespace + id %>').onclick = function() {
-							<%= onClick %>
 						}
 					</aui:script>
 				</c:if>
@@ -435,6 +414,7 @@ boolean choiceField = checkboxField || radioField;
 					<%= (min != null) ? "min=\"" + min + "\"": StringPool.BLANK %>
 					<%= multiple ? "multiple" : StringPool.BLANK %>
 					name="<%= namespace + name %>"
+					<%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %>
 					<%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %>
 					<%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %>
 					type="<%= Validator.isNull(type) ? "text" : type %>"
@@ -447,14 +427,6 @@ boolean choiceField = checkboxField || radioField;
 					<aui:script>
 						document.getElementById('<%= namespace + id %>').onchange = function() {
 							<%= onChange %>
-						}
-					</aui:script>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(onClick) %>">
-					<aui:script>
-						document.getElementById('<%= namespace + id %>').onclick = function() {
-							<%= onClick %>
 						}
 					</aui:script>
 				</c:if>

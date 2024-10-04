@@ -66,7 +66,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
 	}
 
-	protected boolean hasToSendNotification(
+	protected boolean isSendNotification(
 		long currentTime, Date lastNotificationDate,
 		Date oAuth2AccessTokenExpirationDate) {
 
@@ -89,10 +89,10 @@ public class ScimNotificationSchedulerJobConfiguration
 		return false;
 	}
 
-	private boolean _hasToSendNotification(
+	private boolean _isSendNotification(
 		Date lastNotificationDate, Date oAuth2AccessTokenExpirationDate) {
 
-		return hasToSendNotification(
+		return isSendNotification(
 			System.currentTimeMillis(), lastNotificationDate,
 			oAuth2AccessTokenExpirationDate);
 	}
@@ -136,7 +136,7 @@ public class ScimNotificationSchedulerJobConfiguration
 			ExpandoBridge expandoBridge =
 				applicationOAuth2Authorization.getExpandoBridge();
 
-			if (_hasToSendNotification(
+			if (_isSendNotification(
 					(Date)expandoBridge.getAttribute(
 						"lastSuccessfulNotificationDate", false),
 					accessTokenExpirationDate)) {

@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -62,24 +60,7 @@ public class FaroAdminDisplayContext {
 			return Collections.emptyList();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_renderResponse.createActionURL()
-		).setRedirect(
-			ParamUtil.getString(
-				_httpServletRequest, "redirect", _themeDisplay.getURLCurrent())
-		).buildPortletURL();
-
 		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					portletURL, ActionRequest.ACTION_NAME,
-					"/faro_admin/deactivate_project", "faroProjectId",
-					faroProjectAdminDisplay.getFaroProjectId());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "deactivate-project"));
-			}
-		).add(
 			dropdownItem -> {
 				dropdownItem.setDisabled(
 					!faroProjectAdminDisplay.isDataSourceConnected());
@@ -105,24 +86,6 @@ public class FaroAdminDisplayContext {
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "disconnect-data-sources"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					portletURL, ActionRequest.ACTION_NAME,
-					"/faro_admin/refresh_liferay", "faroProjectId",
-					faroProjectAdminDisplay.getFaroProjectId());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "refresh-liferay"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					portletURL, ActionRequest.ACTION_NAME,
-					"/faro_admin/refresh_project", "groupId",
-					faroProjectAdminDisplay.getGroupId());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "refresh-project"));
 			}
 		).build();
 	}

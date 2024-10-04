@@ -25,7 +25,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('Fails to duplicate a container', async ({
+test('Fails to duplicate a container if it has a not instanceable widget', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

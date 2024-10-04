@@ -145,6 +145,22 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
+	public void
+			deleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode(
+				String organizationExternalReferenceCode,
+				String[] externalReferenceCodes)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(),
+				organizationExternalReferenceCode);
+
+		deleteOrganizationAccountsByExternalReferenceCode(
+			organization.getOrganizationId(), externalReferenceCodes);
+	}
+
+	@Override
 	public Account getAccount(Long accountId) throws Exception {
 		return _toAccount(_accountEntryService.getAccountEntry(accountId));
 	}
@@ -296,6 +312,23 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
+	public Page<Account>
+			getOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePage(
+				String organizationExternalReferenceCode, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(),
+				organizationExternalReferenceCode);
+
+		return getOrganizationAccountsPage(
+			String.valueOf(organization.getOrganizationId()), search, filter,
+			pagination, sorts);
+	}
+
+	@Override
 	public Account patchAccount(Long accountId, Account account)
 		throws Exception {
 
@@ -332,94 +365,21 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				account.getExternalReferenceCode(),
 				accountEntry.getExternalReferenceCode()));
 
-		_addAddresses(accountId, account);
-
-		_accountEntryLocalService.updateDefaultBillingAddressId(
-			accountId,
-			_getDefaultBillingAddressId(
-				account, accountEntry.getDefaultBillingAddressId()));
-
-		_accountEntryLocalService.updateDefaultShippingAddressId(
-			accountId,
-			_getDefaultShippingAddressId(
-				account, accountEntry.getDefaultShippingAddressId()));
-
-		long[] organizationIds = _getOrganizationIds(account);
-
-		if (organizationIds != null) {
-			_accountEntryOrganizationRelLocalService.
-				setAccountEntryOrganizationRels(accountId, organizationIds);
-		}
-
-		UserAccount[] userAccounts = account.getAccountUserAccounts();
-
-		if (userAccounts != null) {
-			_accountEntryUserRelLocalService.setAccountEntryUserRels(
-				accountId,
-				transformToLongArray(
-					Arrays.asList(userAccounts), UserAccount::getId));
-		}
-
-		AccountContactInformation accountContactInformation =
-			account.getAccountContactInformation();
-
-		if (accountContactInformation != null) {
-			UsersAdminUtil.updateAddresses(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getContactAddresses(account, accountEntry));
-			UsersAdminUtil.updateEmailAddresses(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getEmailAddresses(account, accountEntry));
-			UsersAdminUtil.updatePhones(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getPhones(account, accountEntry));
-			UsersAdminUtil.updateWebsites(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getWebsites(account, accountEntry));
-
-			Contact contact = accountEntry.fetchContact();
-
-			if (contact == null) {
-				_addOrUpdateContact(
-					0, contextUser.getUserId(), AccountEntry.class.getName(),
-					accountEntry.getAccountEntryId(), null, null, null, null, 0,
-					0, true, 0, 1, 1970,
-					GetterUtil.getString(accountContactInformation.getSms()),
-					GetterUtil.getString(
-						accountContactInformation.getFacebook()),
-					GetterUtil.getString(accountContactInformation.getJabber()),
-					GetterUtil.getString(accountContactInformation.getSkype()),
-					GetterUtil.getString(
-						accountContactInformation.getTwitter()),
-					null);
-			}
-			else {
-				_addOrUpdateContact(
-					contact.getContactId(), contact.getUserId(),
-					contact.getClassName(), contact.getClassPK(),
-					contact.getEmailAddress(), contact.getFirstName(),
-					contact.getMiddleName(), contact.getLastName(),
-					contact.getPrefixListTypeId(),
-					contact.getSuffixListTypeId(), contact.isMale(), 0, 1, 1970,
-					GetterUtil.getString(
-						accountContactInformation.getSms(), contact.getSmsSn()),
-					GetterUtil.getString(
-						accountContactInformation.getFacebook(),
-						contact.getFacebookSn()),
-					GetterUtil.getString(
-						accountContactInformation.getJabber(),
-						contact.getJabberSn()),
-					GetterUtil.getString(
-						accountContactInformation.getSkype(),
-						contact.getSkypeSn()),
-					GetterUtil.getString(
-						accountContactInformation.getTwitter(),
-						contact.getTwitterSn()),
-					contact.getJobTitle());
-			}
-		}
+		accountEntry = _updateNestedResources(account, accountEntry, accountId);
 
 		return _toAccount(accountEntry);
+	}
+
+	@Override
+	public Account patchAccountByExternalReferenceCode(
+			String externalReferenceCode, Account account)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return patchAccount(accountEntry.getAccountEntryId(), account);
 	}
 
 	@Override
@@ -545,32 +505,31 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
+	public void
+			postOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode(
+				String organizationExternalReferenceCode,
+				String[] externalReferenceCodes)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(),
+				organizationExternalReferenceCode);
+
+		postOrganizationAccountsByExternalReferenceCode(
+			organization.getOrganizationId(), externalReferenceCodes);
+	}
+
+	@Override
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
-		AccountEntry accountEntry =
-			_accountEntryService.updateExternalReferenceCode(
-				accountId, account.getExternalReferenceCode());
+		AccountEntry accountEntry = _accountEntryService.fetchAccountEntry(
+			accountId);
 
-		_accountEntryLocalService.updateDefaultBillingAddressId(
-			accountId,
-			_getDefaultBillingAddressId(
-				account, accountEntry.getDefaultBillingAddressId()));
-
-		_accountEntryLocalService.updateDefaultShippingAddressId(
-			accountId,
-			_getDefaultShippingAddressId(
-				account, accountEntry.getDefaultShippingAddressId()));
-
-		long[] organizationIds = _getOrganizationIds(account);
-
-		if (organizationIds != null) {
-			_accountEntryOrganizationRelLocalService.
-				setAccountEntryOrganizationRels(accountId, organizationIds);
+		if (accountEntry == null) {
+			return postAccount(account);
 		}
-
-		_accountEntryUserRelLocalService.setAccountEntryUserRels(
-			accountId, _getAccountUserAccountIds(account));
 
 		accountEntry = _accountEntryService.updateAccountEntry(
 			accountId,
@@ -585,51 +544,10 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			_getLogoBytes(account, accountEntry, false), account.getTaxId(),
 			_getStatus(account), _createServiceContext(account));
 
-		UsersAdminUtil.updateAddresses(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getContactAddresses(account, null));
-		UsersAdminUtil.updateEmailAddresses(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getEmailAddresses(account, null));
-		UsersAdminUtil.updatePhones(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getPhones(account, null));
-		UsersAdminUtil.updateWebsites(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getWebsites(account, null));
+		_accountEntryService.updateExternalReferenceCode(
+			accountId, account.getExternalReferenceCode());
 
-		long contactId = 0;
-
-		Contact contact = accountEntry.fetchContact();
-
-		if (contact != null) {
-			contactId = contact.getContactId();
-		}
-
-		AccountContactInformation accountContactInformation =
-			account.getAccountContactInformation();
-
-		if (accountContactInformation != null) {
-			_addOrUpdateContact(
-				contactId, contextUser.getUserId(),
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				null, null, null, null, 0, 0, true, 0, 1, 1970,
-				GetterUtil.getString(accountContactInformation.getSms()),
-				GetterUtil.getString(accountContactInformation.getFacebook()),
-				GetterUtil.getString(accountContactInformation.getJabber()),
-				GetterUtil.getString(accountContactInformation.getSkype()),
-				GetterUtil.getString(accountContactInformation.getTwitter()),
-				null);
-		}
-		else {
-			_addOrUpdateContact(
-				contactId, contextUser.getUserId(),
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				null, null, null, null, 0, 0, true, 0, 1, 1970, null, null,
-				null, null, null, null);
-		}
-
-		_addAddresses(accountId, account);
+		accountEntry = _updateNestedResources(account, accountEntry, accountId);
 
 		return _toAccount(accountEntry);
 	}
@@ -640,88 +558,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.addOrUpdateAccountEntry(
-				externalReferenceCode, contextUser.getUserId(),
-				_getParentAccountId(
-					account, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
-				account.getName(), account.getDescription(),
-				_getDomains(account), null,
-				_getLogoBytes(
-					account,
-					_accountEntryService.
-						fetchAccountEntryByExternalReferenceCode(
-							contextUser.getCompanyId(), externalReferenceCode),
-					false),
-				null, _getType(account), _getStatus(account),
-				_createServiceContext(account));
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
-		_accountEntryLocalService.updateDefaultBillingAddressId(
-			accountEntry.getAccountEntryId(),
-			_getDefaultBillingAddressId(
-				account, accountEntry.getDefaultBillingAddressId()));
-
-		_accountEntryLocalService.updateDefaultShippingAddressId(
-			accountEntry.getAccountEntryId(),
-			_getDefaultShippingAddressId(
-				account, accountEntry.getDefaultShippingAddressId()));
-
-		long[] organizationIds = _getOrganizationIds(account);
-
-		if (organizationIds != null) {
-			_accountEntryOrganizationRelLocalService.
-				setAccountEntryOrganizationRels(
-					accountEntry.getAccountEntryId(), organizationIds);
+		if (accountEntry == null) {
+			return putAccount(0L, account);
 		}
 
-		_accountEntryUserRelLocalService.setAccountEntryUserRels(
-			accountEntry.getAccountEntryId(),
-			_getAccountUserAccountIds(account));
-
-		UsersAdminUtil.updateAddresses(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getContactAddresses(account, null));
-		UsersAdminUtil.updateEmailAddresses(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getEmailAddresses(account, null));
-		UsersAdminUtil.updatePhones(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getPhones(account, null));
-		UsersAdminUtil.updateWebsites(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			_getWebsites(account, null));
-
-		long contactId = 0;
-
-		Contact contact = accountEntry.fetchContact();
-
-		if (contact != null) {
-			contactId = contact.getContactId();
-		}
-
-		AccountContactInformation accountContactInformation =
-			account.getAccountContactInformation();
-
-		if (accountContactInformation != null) {
-			_addOrUpdateContact(
-				contactId, contextUser.getUserId(),
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				null, null, null, null, 0, 0, true, 0, 1, 1970,
-				GetterUtil.getString(accountContactInformation.getSms()),
-				GetterUtil.getString(accountContactInformation.getFacebook()),
-				GetterUtil.getString(accountContactInformation.getJabber()),
-				GetterUtil.getString(accountContactInformation.getSkype()),
-				GetterUtil.getString(accountContactInformation.getTwitter()),
-				null);
-		}
-		else {
-			_addOrUpdateContact(
-				contactId, contextUser.getUserId(),
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				null, null, null, null, 0, 0, true, 0, 1, 1970, null, null,
-				null, null, null, null);
-		}
-
-		return _toAccount(accountEntry);
+		return putAccount(accountEntry.getAccountEntryId(), account);
 	}
 
 	private void _addAddresses(Long accountId, Account account)
@@ -1246,6 +1090,100 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				_dtoConverterRegistry, accountId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
+	}
+
+	private AccountEntry _updateNestedResources(
+			Account account, AccountEntry accountEntry, Long accountId)
+		throws Exception {
+
+		_addAddresses(accountId, account);
+
+		accountEntry = _accountEntryLocalService.updateDefaultBillingAddressId(
+			accountId,
+			_getDefaultBillingAddressId(
+				account, accountEntry.getDefaultBillingAddressId()));
+
+		accountEntry = _accountEntryLocalService.updateDefaultShippingAddressId(
+			accountId,
+			_getDefaultShippingAddressId(
+				account, accountEntry.getDefaultShippingAddressId()));
+
+		long[] organizationIds = _getOrganizationIds(account);
+
+		if (organizationIds != null) {
+			_accountEntryOrganizationRelLocalService.
+				setAccountEntryOrganizationRels(accountId, organizationIds);
+		}
+
+		UserAccount[] userAccounts = account.getAccountUserAccounts();
+
+		if (userAccounts != null) {
+			_accountEntryUserRelLocalService.setAccountEntryUserRels(
+				accountId,
+				transformToLongArray(
+					Arrays.asList(userAccounts), UserAccount::getId));
+		}
+
+		AccountContactInformation accountContactInformation =
+			account.getAccountContactInformation();
+
+		if (accountContactInformation != null) {
+			UsersAdminUtil.updateAddresses(
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				_getContactAddresses(account, accountEntry));
+			UsersAdminUtil.updateEmailAddresses(
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				_getEmailAddresses(account, accountEntry));
+			UsersAdminUtil.updatePhones(
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				_getPhones(account, accountEntry));
+			UsersAdminUtil.updateWebsites(
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				_getWebsites(account, accountEntry));
+
+			Contact contact = accountEntry.fetchContact();
+
+			if (contact == null) {
+				_addOrUpdateContact(
+					0, contextUser.getUserId(), AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId(), null, null, null, null, 0,
+					0, true, 0, 1, 1970,
+					GetterUtil.getString(accountContactInformation.getSms()),
+					GetterUtil.getString(
+						accountContactInformation.getFacebook()),
+					GetterUtil.getString(accountContactInformation.getJabber()),
+					GetterUtil.getString(accountContactInformation.getSkype()),
+					GetterUtil.getString(
+						accountContactInformation.getTwitter()),
+					null);
+			}
+			else {
+				_addOrUpdateContact(
+					contact.getContactId(), contact.getUserId(),
+					contact.getClassName(), contact.getClassPK(),
+					contact.getEmailAddress(), contact.getFirstName(),
+					contact.getMiddleName(), contact.getLastName(),
+					contact.getPrefixListTypeId(),
+					contact.getSuffixListTypeId(), contact.isMale(), 0, 1, 1970,
+					GetterUtil.getString(
+						accountContactInformation.getSms(), contact.getSmsSn()),
+					GetterUtil.getString(
+						accountContactInformation.getFacebook(),
+						contact.getFacebookSn()),
+					GetterUtil.getString(
+						accountContactInformation.getJabber(),
+						contact.getJabberSn()),
+					GetterUtil.getString(
+						accountContactInformation.getSkype(),
+						contact.getSkypeSn()),
+					GetterUtil.getString(
+						accountContactInformation.getTwitter(),
+						contact.getTwitterSn()),
+					contact.getJobTitle());
+			}
+		}
+
+		return accountEntry;
 	}
 
 	@Reference

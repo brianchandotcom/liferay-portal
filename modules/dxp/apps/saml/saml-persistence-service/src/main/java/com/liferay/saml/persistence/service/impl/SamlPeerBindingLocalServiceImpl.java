@@ -48,6 +48,7 @@ public class SamlPeerBindingLocalServiceImpl
 		samlPeerBinding.setUserId(user.getUserId());
 		samlPeerBinding.setUserName(user.getFullName());
 		samlPeerBinding.setSamlNameIdFormat(samlNameIdFormat);
+		samlPeerBinding.setSamlNameIdNameQualifier(samlNameIdNameQualifier);
 		samlPeerBinding.setSamlNameIdSpNameQualifier(samlNameIdSpNameQualifier);
 		samlPeerBinding.setSamlNameIdSpProvidedId(samlNameIdSpProvidedId);
 		samlPeerBinding.setSamlNameIdValue(samlNameIdValue);

@@ -5,5 +5,5 @@
 
 export const config = {
 	name: 'dynamic-data-mapping-form-web',
-	testDir: 'tests/dynamic-data-mapping-form-web',
+	testDir: 'tests/dynamic-data-mapping-form-web/default-environment',
 };

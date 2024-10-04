@@ -3930,6 +3930,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("hasLoginDate", additionalAssertFieldName)) {
+				if (userAccount.getHasLoginDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("honorificPrefix", additionalAssertFieldName)) {
 				if (userAccount.getHonorificPrefix() == null) {
 					valid = false;
@@ -4628,6 +4636,17 @@ public abstract class BaseOrganizationResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getGivenName(),
 						userAccount2.getGivenName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("hasLoginDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getHasLoginDate(),
+						userAccount2.getHasLoginDate())) {
 
 					return false;
 				}
@@ -5486,6 +5505,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				externalReferenceCode = RandomTestUtil.randomString();
 				familyName = RandomTestUtil.randomString();
 				givenName = RandomTestUtil.randomString();
+				hasLoginDate = RandomTestUtil.randomBoolean();
 				honorificPrefix = RandomTestUtil.randomString();
 				honorificSuffix = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();

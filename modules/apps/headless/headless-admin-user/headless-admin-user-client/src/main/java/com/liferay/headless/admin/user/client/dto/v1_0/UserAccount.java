@@ -322,6 +322,27 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected String givenName;
 
+	public Boolean getHasLoginDate() {
+		return hasLoginDate;
+	}
+
+	public void setHasLoginDate(Boolean hasLoginDate) {
+		this.hasLoginDate = hasLoginDate;
+	}
+
+	public void setHasLoginDate(
+		UnsafeSupplier<Boolean, Exception> hasLoginDateUnsafeSupplier) {
+
+		try {
+			hasLoginDate = hasLoginDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean hasLoginDate;
+
 	public String getHonorificPrefix() {
 		return honorificPrefix;
 	}

@@ -647,6 +647,51 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
+	@Schema(
+		description = "A flag that indicates whether the user has been signed in."
+	)
+	public Boolean getHasLoginDate() {
+		if (_hasLoginDateSupplier != null) {
+			hasLoginDate = _hasLoginDateSupplier.get();
+
+			_hasLoginDateSupplier = null;
+		}
+
+		return hasLoginDate;
+	}
+
+	public void setHasLoginDate(Boolean hasLoginDate) {
+		this.hasLoginDate = hasLoginDate;
+
+		_hasLoginDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setHasLoginDate(
+		UnsafeSupplier<Boolean, Exception> hasLoginDateUnsafeSupplier) {
+
+		_hasLoginDateSupplier = () -> {
+			try {
+				return hasLoginDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether the user has been signed in."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean hasLoginDate;
+
+	@JsonIgnore
+	private Supplier<Boolean> _hasLoginDateSupplier;
+
 	@Schema(description = "The user's title (e.g., Dr., Mr., Mrs, Ms., etc.).")
 	public String getHonorificPrefix() {
 		if (_honorificPrefixSupplier != null) {
@@ -1756,6 +1801,18 @@ public class UserAccount implements Serializable {
 			sb.append(_escape(givenName));
 
 			sb.append("\"");
+		}
+
+		Boolean hasLoginDate = getHasLoginDate();
+
+		if (hasLoginDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hasLoginDate\": ");
+
+			sb.append(hasLoginDate);
 		}
 
 		String honorificPrefix = getHonorificPrefix();

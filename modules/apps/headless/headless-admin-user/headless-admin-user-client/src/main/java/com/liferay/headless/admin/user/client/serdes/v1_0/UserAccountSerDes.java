@@ -265,6 +265,16 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getHasLoginDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hasLoginDate\": ");
+
+			sb.append(userAccount.getHasLoginDate());
+		}
+
 		if (userAccount.getHonorificPrefix() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -707,6 +717,14 @@ public class UserAccountSerDes {
 			map.put("givenName", String.valueOf(userAccount.getGivenName()));
 		}
 
+		if (userAccount.getHasLoginDate() == null) {
+			map.put("hasLoginDate", null);
+		}
+		else {
+			map.put(
+				"hasLoginDate", String.valueOf(userAccount.getHasLoginDate()));
+		}
+
 		if (userAccount.getHonorificPrefix() == null) {
 			map.put("honorificPrefix", null);
 		}
@@ -925,6 +943,9 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "givenName")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "hasLoginDate")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "honorificPrefix")) {
 				return false;
 			}
@@ -1100,6 +1121,11 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "givenName")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setGivenName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "hasLoginDate")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setHasLoginDate((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "honorificPrefix")) {

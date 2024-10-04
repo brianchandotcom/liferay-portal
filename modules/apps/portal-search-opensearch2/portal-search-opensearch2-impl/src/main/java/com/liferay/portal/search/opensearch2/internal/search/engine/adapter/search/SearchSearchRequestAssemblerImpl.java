@@ -122,12 +122,11 @@ public class SearchSearchRequestAssemblerImpl
 			searchSearchRequest.getSelectedFieldNames();
 
 		if (!ArrayUtil.isEmpty(selectedFieldNames)) {
-			searchRequestBuilder.fields(
-				_toFieldAndFormatList(selectedFieldNames));
+			searchRequestBuilder.fields(_toFieldAndFormats(selectedFieldNames));
 		}
 		else {
 			searchRequestBuilder.fields(
-				_toFieldAndFormatList(new String[] {StringPool.STAR}));
+				_toFieldAndFormats(new String[] {StringPool.STAR}));
 		}
 	}
 
@@ -290,13 +289,13 @@ public class SearchSearchRequestAssemblerImpl
 			searchRequestBuilder::version, searchSearchRequest.getVersion());
 	}
 
-	private List<FieldAndFormat> _toFieldAndFormatList(String[] fields) {
+	private List<FieldAndFormat> _toFieldAndFormats(String[] fieldNames) {
 		List<FieldAndFormat> fieldAndFormats = new ArrayList<>();
 
-		for (String field : fields) {
+		for (String fieldName : fieldNames) {
 			fieldAndFormats.add(
 				FieldAndFormat.of(
-					fieldAndFormat -> fieldAndFormat.field(field)));
+					fieldAndFormat -> fieldAndFormat.field(fieldName)));
 		}
 
 		return fieldAndFormats;

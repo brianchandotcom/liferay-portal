@@ -87,8 +87,6 @@ definition {
 
 	@priority = 4
 	test CanCreateAndUpdateExistingObjectEntriesWithSameFile {
-		property portal.acceptance = "true";
-
 		task ("When importing .jsonl file as 'Student' Entity Type with default settings") {
 			ImportExport.replaceAttachmentIdAndHrefInFile(
 				en_US_plural_label = "students",
@@ -128,8 +126,6 @@ definition {
 
 	@priority = 5
 	test CanCreateObjectEntry {
-		property portal.acceptance = "true";
-
 		task ("When importing .json file as 'Student' Entity Type with default setting") {
 			ImportExport.replaceAttachmentIdAndHrefInFile(
 				en_US_plural_label = "students",
@@ -160,8 +156,6 @@ definition {
 
 	@priority = 4
 	test CanCreateObjectEntryFromFileContainingExistingAndNewWithUncheckedStopImportOnError {
-		property portal.acceptance = "true";
-
 		task ("When importing .jsonl file as 'Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {
 			ImportExport.replaceAttachmentIdAndHrefInFile(
 				en_US_plural_label = "students",
@@ -187,8 +181,6 @@ definition {
 
 	@priority = 4
 	test CannotCreateObjectEntryWithoutRequiredFields {
-		property portal.acceptance = "true";
-
 		task ("When importing .json file as 'Student' Entity Type with default setting") {
 			ImportExport.importFile(
 				entityType = "Student (v1.0 - Liferay Object REST)",
@@ -207,8 +199,6 @@ definition {
 
 	@priority = 4
 	test CanUpdateObjectEntry {
-		property portal.acceptance = "true";
-
 		task ("When importing .jsonl file as 'Student' Entity Type with default setting") {
 			ImportExport.importFile(
 				entityType = "Student (v1.0 - Liferay Object REST)",

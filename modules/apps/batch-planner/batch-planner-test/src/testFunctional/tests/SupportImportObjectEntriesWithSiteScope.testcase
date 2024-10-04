@@ -93,8 +93,6 @@ definition {
 
 	@priority = 4
 	test CanCreateAndUpdateExistingSiteScopedObjectEntriesWithSameFile {
-		property portal.acceptance = "true";
-
 		task ("When importing .jsonl file as 'Student' Entity Type with default settings") {
 			ImportExport.replaceAttachmentIdAndHrefInFile(
 				en_US_plural_label = "students",
@@ -138,8 +136,6 @@ definition {
 
 	@priority = 4
 	test CanCreateSiteScopedObjectEntryFromFileContainingExistingAndNewWithUncheckedStopImportOnError {
-		property portal.acceptance = "true";
-
 		task ("When importing .json file as 'Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {
 			ImportExport.importFile(
 				entityType = "Student (v1.0 - Liferay Object REST)",
@@ -164,8 +160,6 @@ definition {
 
 	@priority = 4
 	test CannotCreateSiteScopedObjectEntryWithoutRequiredFields {
-		property portal.acceptance = "true";
-
 		task ("When importing .json file as 'Student' Entity Type with default setting") {
 			ImportExport.importFile(
 				entityType = "Student (v1.0 - Liferay Object REST)",
@@ -185,8 +179,6 @@ definition {
 
 	@priority = 4
 	test CanSeeScopeSelecterInImportFile {
-		property portal.acceptance = "true";
-
 		task ("When 'Student' as Entity Type in Data Migration Center -> Import File") {
 			ImportExport.openImportExportAdmin();
 
@@ -208,8 +200,6 @@ definition {
 
 	@priority = 4
 	test CanUpdateSiteScopedObjectEntry {
-		property portal.acceptance = "true";
-
 		task ("When importing .jsonl file as 'Student' Entity Type with default setting") {
 			ImportExport.importFile(
 				entityType = "Student (v1.0 - Liferay Object REST)",

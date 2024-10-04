@@ -77,8 +77,6 @@ definition {
 
 	@priority = 4
 	test CanPartialUpdateAndCreateEntriesFromJsonWithAddOrUpdateRecordsUpdateChangedRecordFields {
-		property portal.acceptance = "true";
-
 		task ("Given an account without description field value is created") {
 			AccountAPI.createAccount(
 				externalReferenceCode = 101,
@@ -125,8 +123,6 @@ definition {
 
 	@priority = 4
 	test CanUpdateAndCreateEntriesFromJsonWithAddOrUpdateRecordsOverwrite {
-		property portal.acceptance = "true";
-
 		task ("Given an account with description field value is created") {
 			AccountAPI.createAccount(
 				description = "Test Business Account Description",

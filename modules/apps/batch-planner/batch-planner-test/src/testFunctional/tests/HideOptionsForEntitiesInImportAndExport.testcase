@@ -126,8 +126,6 @@ definition {
 
 	@priority = 4
 	test CanConfigImportWithTwoImportStrategiesAndTwoUpdateStrategies {
-		property portal.acceptance = "true";
-
 		task ("Given a custom object Student is created and published") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "Student",
@@ -178,8 +176,6 @@ definition {
 
 	@priority = 4
 	test CannotDisplayIncludeHeaderWithExportBlogPostingJOSNLFormat {
-		property portal.acceptance = "true";
-
 		task ("When I select JSONL format to export BlogPosting") {
 			ImportExport.gotoExport();
 
@@ -197,8 +193,6 @@ definition {
 
 	@priority = 4
 	test CannotDisplayWithExportObjectDefinitionJOSNTFormat {
-		property portal.acceptance = "true";
-
 		task ("When I select JSONT format to export ObjectDefinition") {
 			ImportExport.gotoExport();
 
@@ -216,8 +210,6 @@ definition {
 
 	@priority = 4
 	test CannotDisplyIncludeHeadersWithExportAccountJOSNFormat {
-		property portal.acceptance = "true";
-
 		task ("When I select JSON format to export Account") {
 			ImportExport.gotoExport();
 

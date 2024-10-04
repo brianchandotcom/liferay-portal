@@ -27,8 +27,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanDownloadOriginalImportFile {
-		property portal.acceptance = "true";
-
 		task ("Given a completed import") {
 			ImportExport.importFile(
 				entityType = "Account (v1.0 - Liferay Headless Admin User)",
@@ -64,8 +62,6 @@ definition {
 	@description = "Verify users can download a sample file for a selected entity so that they can fill it with data and import it"
 	@priority = 3
 	test CanDownloadSampleImportFile {
-		property portal.acceptance = "true";
-
 		task ("Given the user is in the import page") {
 			ImportExport.openImportExportAdmin();
 
@@ -93,8 +89,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExcludeCSVFieldsFromExport {
-		property portal.acceptance = "true";
-
 		task ("Given several channels") {
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "Test Channel 1",
@@ -127,9 +121,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExcludeFieldsFromImport {
-		property portal.acceptance = "true";
-
-		task ("Given the user is importing CSV file with account data") {
+			task ("Given the user is importing CSV file with account data") {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.gotoImport();
@@ -180,8 +172,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExportCSVFiles {
-		property portal.acceptance = "true";
-
 		task ("Given several accounts") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Business Account Description",
@@ -220,8 +210,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExportCSVFileWithoutHeaders {
-		property portal.acceptance = "true";
-
 		task ("Given several accounts") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Business Account Description",
@@ -260,8 +248,6 @@ definition {
 	@description = "Verify users can filter Import/Export executions by Action."
 	@priority = 3
 	test CanFilterExecutionsByAction {
-		property portal.acceptance = "true";
-
 		task ("Given Object Definition import and export") {
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
@@ -296,8 +282,6 @@ definition {
 	@description = "Verify users can filter Import/Export templates by Action."
 	@priority = 3
 	test CanFilterTemplatesByAction {
-		property portal.acceptance = "true";
-
 		task ("Given object definition import and export templates") {
 			ImportExport.openImportExportAdmin();
 
@@ -337,8 +321,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanImportCSVFiles {
-		property portal.acceptance = "true";
-
 		task ("Given a CSV file with data on multiple accounts") {
 			ImportExport.openImportExportAdmin();
 
@@ -389,8 +371,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanImportCSVFileWithoutHeaders {
-		property portal.acceptance = "true";
-
 		task ("Given a CSV file without headers and account data") {
 			ImportExport.openImportExportAdmin();
 
@@ -448,8 +428,6 @@ definition {
 
 	@priority = 4
 	test CanImportObjectDefinitionWithApprovedStatus {
-		property portal.acceptance = "true";
-
 		task ("Given in import and export center I create an import file task") {
 			ImportExport.openImportExportAdmin();
 
@@ -489,8 +467,6 @@ definition {
 
 	@priority = 4
 	test CanImportObjectDefinitionWithDraftStatus {
-		property portal.acceptance = "true";
-
 		task ("Given in import and export center I create an import file task") {
 			ImportExport.openImportExportAdmin();
 
@@ -531,8 +507,6 @@ definition {
 	@description = "Verify users can order Import/Export executions by Create Date."
 	@priority = 3
 	test CanOrderExecutionsByCreateDate {
-		property portal.acceptance = "true";
-
 		task ("Given Object Definition import and export") {
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
@@ -579,8 +553,6 @@ definition {
 	@description = "Verify users can recall a template during an export."
 	@priority = 3
 	test CanRecallExportTemplate {
-		property portal.acceptance = "true";
-
 		task ("Given an object defnition export template") {
 			ImportExport.openImportExportAdmin();
 
@@ -616,8 +588,6 @@ definition {
 	@description = "Verify users can recall a template during an import."
 	@priority = 3
 	test CanRecallImportTemplate {
-		property portal.acceptance = "true";
-
 		task ("Given object definition import template") {
 			ImportExport.openImportExportAdmin();
 
@@ -650,8 +620,6 @@ definition {
 	@description = "Verify users can save export configuration as a template during the export process"
 	@priority = 3
 	test CanSaveTemplateDuringExport {
-		property portal.acceptance = "true";
-
 		task ("Given the user has configured an export") {
 			ImportExport.openImportExportAdmin();
 
@@ -679,8 +647,6 @@ definition {
 	@description = "Verify users can save import configuration as a template during the import process"
 	@priority = 3
 	test CanSaveTemplateDuringImport {
-		property portal.acceptance = "true";
-
 		task ("Given the user has configured an import") {
 			ImportExport.openImportExportAdmin();
 
@@ -812,8 +778,6 @@ definition {
 	@description = "Verify users can search Import/Exports templates by name and action."
 	@priority = 3
 	test CanSearchTemplates {
-		property portal.acceptance = "true";
-
 		task ("Given object definition import and export templates") {
 			ImportExport.openImportExportAdmin();
 
@@ -864,7 +828,6 @@ definition {
 	@priority = 3
 	test CanShareTemplates {
 		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "true";
 
 		task ("Given a power user") {
 			JSONUser.addUserWithRole(
@@ -948,8 +911,6 @@ definition {
 	@description = "Verify users receive a notification when an export is triggered."
 	@priority = 3
 	test CanViewExportNotifications {
-		property portal.acceptance = "true";
-
 		task ("Given a failed export") {
 			ImportExport.openImportExportAdmin();
 
@@ -1009,8 +970,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanViewImportErrorReport {
-		property portal.acceptance = "true";
-
 		task ("Given a failed account import due to an invalid account type in the second row") {
 			ImportExport.openImportExportAdmin();
 
@@ -1056,8 +1015,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanViewImportNotifications {
-		property portal.acceptance = "true";
-
 		task ("Given a failed import") {
 			ImportExport.openImportExportAdmin();
 
@@ -1128,8 +1085,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ContinueImportOnError {
-		property portal.acceptance = "true";
-
 		task ("Given the user is importing a file with an invalid field in one of the rows") {
 			ImportExport.openImportExportAdmin();
 
@@ -1181,8 +1136,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CSVFieldsAreAutoMapped {
-		property portal.acceptance = "true";
-
 		task ("Given a CSV file with field names that are the same as fields in Liferay is being imported") {
 			ImportExport.openImportExportAdmin();
 
@@ -1202,8 +1155,6 @@ definition {
 
 	@priority = 4
 	test GetExportFileAvailableEntityTypes {
-		property portal.acceptance = "true";
-
 		task ("Given navigate to import and export center") {
 			ImportExport.openImportExportAdmin();
 		}
@@ -1224,8 +1175,6 @@ definition {
 
 	@priority = 4
 	test GetImportFileAvailableEntityTypes {
-		property portal.acceptance = "true";
-
 		task ("Given navigate to import and export center") {
 			ImportExport.openImportExportAdmin();
 		}
@@ -1242,8 +1191,6 @@ definition {
 	@description = "Verify JSON fields are automatically mapped to fields in Liferay when the names are the same"
 	@priority = 3
 	test JSONFieldsAreAutoMapped {
-		property portal.acceptance = "true";
-
 		task ("Given a JSON file with field names that are the same as fields in Liferay is being imported") {
 			ImportExport.openImportExportAdmin();
 
@@ -1264,8 +1211,6 @@ definition {
 	@description = "Verify JSONL fields are automatically mapped to fields in Liferay when the names are the same"
 	@priority = 3
 	test JSONLFieldsAreAutoMapped {
-		property portal.acceptance = "true";
-
 		task ("Given a JSONL file with field names that are the same as fields in Liferay is being imported") {
 			ImportExport.openImportExportAdmin();
 
@@ -1287,8 +1232,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test StopImportOnError {
-		property portal.acceptance = "true";
-
 		task ("Given the user is importing a file with an invalid field in one of the rows") {
 			ImportExport.openImportExportAdmin();
 
@@ -1328,8 +1271,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewCSVFirstRowPreview {
-		property portal.acceptance = "true";
-
 		task ("Given the user is importing a CSV file") {
 			ImportExport.openImportExportAdmin();
 
@@ -1353,8 +1294,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewCSVImportPreview {
-		property portal.acceptance = "true";
-
 		task ("Given the user has configured an import for a CSV file") {
 			ImportExport.openImportExportAdmin();
 
@@ -1391,8 +1330,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewImportedRows {
-		property portal.acceptance = "true";
-
 		task ("Given a failed account import in which one of 3 rows was skipped due to an error in the second row") {
 			ImportExport.importFile(
 				entityType = "Account (v1.0 - Liferay Headless Admin User)",
@@ -1421,8 +1358,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewJSONFirstRowPreview {
-		property portal.acceptance = "true";
-
 		task ("Given the user is importing a JSON file") {
 			ImportExport.openImportExportAdmin();
 
@@ -1446,8 +1381,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewJSONImportPreview {
-		property portal.acceptance = "true";
-
 		task ("Given the user has configured an import for a JSON file") {
 			ImportExport.openImportExportAdmin();
 
@@ -1480,8 +1413,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewJSONLFirstRowPreview {
-		property portal.acceptance = "true";
-
 		task ("Given the user is importing a JSONL file") {
 			ImportExport.openImportExportAdmin();
 
@@ -1505,8 +1436,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewJSONLImportPreview {
-		property portal.acceptance = "true";
-
 		task ("Given the user has configured an import for a JSONL file") {
 			ImportExport.openImportExportAdmin();
 
@@ -1539,8 +1468,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewRequiredImportFields {
-		property portal.acceptance = "true";
-
 		task ("Given the user is configuring an import") {
 			ImportExport.openImportExportAdmin();
 

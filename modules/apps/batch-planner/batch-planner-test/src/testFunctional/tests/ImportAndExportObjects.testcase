@@ -62,8 +62,6 @@ definition {
 
 	@priority = 4
 	test ExportCustomObjectEntryWithManyToManyRelationship {
-		property portal.acceptance = "true";
-
 		task ("Given two custom objects published") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "university",
@@ -121,8 +119,6 @@ definition {
 
 	@priority = 4
 	test ExportCustomObjectEntryWithOneToManyRelationship {
-		property portal.acceptance = "true";
-
 		task ("Given two custom objects published") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "university",
@@ -180,8 +176,6 @@ definition {
 
 	@priority = 4
 	test ExportCustomObjectWithObjectEntry {
-		property portal.acceptance = "true";
-
 		task ("Given a custom object is published") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "student",
@@ -302,8 +296,6 @@ definition {
 
 	@priority = 4
 	test SelectCustomObjectAsEntityType {
-		property portal.acceptance = "true";
-
 		task ("Given a custom object is published") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "student",

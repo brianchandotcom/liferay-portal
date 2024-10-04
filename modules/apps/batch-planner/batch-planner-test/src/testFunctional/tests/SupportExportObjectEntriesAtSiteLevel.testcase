@@ -102,8 +102,6 @@ definition {
 
 	@priority = 5
 	test CanDownloadFileWithAllFieldsSelected {
-		property portal.acceptance = "true";
-
 		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
@@ -149,8 +147,6 @@ definition {
 
 	@priority = 4
 	test CanExportSpecificFieldsWithJSONTConfigurationNode {
-		property portal.acceptance = "true";
-
 		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type and current site as Scope in Data Migration Center --> Export File") {
 			var scope = TestCase.getSiteName();
 
@@ -190,8 +186,6 @@ definition {
 
 	@priority = 4
 	test CannotSeeScopeSelectorForObjectDefinitionsScopedByCompany {
-		property portal.acceptance = "true";
-
 		task ("When 'University (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.selectEntity(entityType = "University (v1.0 - Liferay Object REST)");
 		}
@@ -203,8 +197,6 @@ definition {
 
 	@priority = 5
 	test CanSeeCreatedSiteInScopeSelector {
-		property portal.acceptance = "true";
-
 		task ("And Given a new site named test") {
 			HeadlessSite.addSite(siteName = "test");
 		}
@@ -226,8 +218,6 @@ definition {
 
 	@priority = 4
 	test CanSelectAllExistingFields {
-		property portal.acceptance = "true";
-
 		task ("When selecting 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
@@ -241,8 +231,6 @@ definition {
 
 	@priority = 4
 	test CanSelectGlobalSiteAsScope {
-		property portal.acceptance = "true";
-
 		task ("When 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}

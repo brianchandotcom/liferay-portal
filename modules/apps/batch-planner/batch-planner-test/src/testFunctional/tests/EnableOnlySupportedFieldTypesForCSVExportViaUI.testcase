@@ -51,8 +51,6 @@ definition {
 
 	@priority = 4
 	test CanSeeDisabledFieldsDetailsWithExportObjectCsv {
-		property portal.acceptance = "true";
-
 		task ("When selecting custom object entity type with CSV format") {
 			ImportExport.configureExport(
 				entityType = "Test (v1.0 - Liferay Object REST)",
@@ -74,8 +72,6 @@ definition {
 
 	@priority = 4
 	test CanSelectAllSupportedFieldsWithCheckedAttributeCode {
-		property portal.acceptance = "true";
-
 		task ("And Given selecting custom object entity type with CSV format") {
 			ImportExport.configureExport(
 				entityType = "Test (v1.0 - Liferay Object REST)",
@@ -99,8 +95,6 @@ definition {
 
 	@priority = 4
 	test CanSelectSupportedFieldsWithExportCsv {
-		property portal.acceptance = "true";
-
 		task ("When selecting custom object entity type with CSV format") {
 			ImportExport.configureExport(
 				entityType = "Test (v1.0 - Liferay Object REST)",

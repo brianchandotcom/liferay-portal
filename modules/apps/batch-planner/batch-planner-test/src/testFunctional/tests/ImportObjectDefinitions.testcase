@@ -27,8 +27,6 @@ definition {
 
 	@priority = 4
 	test CanCreateNewObjectDefinitionAndUpdateExistingObjectDefinitionWithImportJSONFile {
-		property portal.acceptance = "true";
-
 		task ("Given a student object with a custom field name") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "Student",
@@ -62,8 +60,6 @@ definition {
 
 	@priority = 4
 	test CanImportJSONFileWithOnlyNewRecordsImportStrategy {
-		property portal.acceptance = "true";
-
 		task ("Given JSON file with an existing object definition valid data and a new object definition valid data") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "Student",
@@ -89,8 +85,6 @@ definition {
 
 	@priority = 4
 	test CanImportJSONLFile {
-		property portal.acceptance = "true";
-
 		task ("When I use import/export center to import the object definition with JSONL file") {
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
@@ -104,8 +98,6 @@ definition {
 
 	@priority = 4
 	test CanImportObjectDefinitionWithExportedJSONLFile {
-		property portal.acceptance = "true";
-
 		task ("Given a student object with a custom field name") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "Student",
@@ -138,8 +130,6 @@ definition {
 
 	@priority = 4
 	test CanMappedAllMandatoryFieldsWithImportFile {
-		property portal.acceptance = "true";
-
 		task ("When importing the object definition with fields externalReferenceCode,name,label,pluralLabel,scope,status and custom text field in the JSON file") {
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
@@ -154,8 +144,6 @@ definition {
 
 	@priority = 4
 	test CannotUpdateExistingObjectDefinitionWhendSelectingOnlyAddNewRecords {
-		property portal.acceptance = "true";
-
 		task ("Given a student object definition with custom text field name is created") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "Student",

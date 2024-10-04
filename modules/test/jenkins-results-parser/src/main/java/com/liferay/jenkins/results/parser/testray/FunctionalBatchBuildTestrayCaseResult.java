@@ -47,69 +47,12 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 	@Override
 	public long getDuration() {
-		TestResult testResult = getTestResult();
-
-		if (testResult == null) {
-			return 0;
-		}
-
-		return testResult.getDuration();
+		return getTestResultDuration();
 	}
 
 	@Override
 	public String getErrors() {
-		TestResult testResult = getTestResult();
-
-		Build build = getBuild();
-
-		if (testResult == null) {
-			if (build == null) {
-				return "Unable to run build on CI";
-			}
-
-			String result = build.getResult();
-
-			if (result == null) {
-				return "Unable to finish build on CI";
-			}
-
-			if (result.equals("ABORTED")) {
-				return build.getJobName() + " timed out after 2 hours";
-			}
-
-			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
-				return "Unable to run test on CI";
-			}
-
-			return "Failed prior to running test";
-		}
-
-		if (!testResult.isFailing()) {
-			return null;
-		}
-
-		String errorMessage = testResult.getErrorDetails();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
-			errorMessage = build.getFailureMessage();
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
-			return "Failed for unknown reason";
-		}
-
-		if (errorMessage.contains("\n")) {
-			errorMessage = errorMessage.substring(
-				0, errorMessage.indexOf("\n"));
-		}
-
-		errorMessage = errorMessage.trim();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
-			return "Failed for unknown reason";
-		}
-
-		return errorMessage;
+		return getTestResultErrors();
 	}
 
 	@Override
@@ -131,31 +74,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 	@Override
 	public Status getStatus() {
-		Build build = getBuild();
-
-		if (build == null) {
-			return Status.UNTESTED;
-		}
-
-		TestResult testResult = getTestResult();
-
-		if (testResult == null) {
-			String result = build.getResult();
-
-			if ((result == null) || result.equals("SUCCESS") ||
-				result.equals("UNSTABLE")) {
-
-				return Status.UNTESTED;
-			}
-
-			return Status.FAILED;
-		}
-
-		if (testResult.isFailing()) {
-			return Status.FAILED;
-		}
-
-		return Status.PASSED;
+		return getTestResultStatus();
 	}
 
 	@Override
@@ -182,6 +101,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 		return testrayAttachments;
 	}
 
+	@Override
 	public TestResult getTestResult() {
 		Build build = getBuild();
 

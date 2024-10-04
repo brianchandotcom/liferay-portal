@@ -54,66 +54,70 @@ export default function LeftSidebarTreeView({
 		objectDefinitionId: number;
 		objectFolderName: string;
 	}) => {
-		const {items: objectFolders} = await API.getAllObjectFolders();
+		const allObjectFolders = await API.getAllObjectFolders();
 
-		const currentObjectFolder = objectFolders.find(
-			(objectFolder) => objectFolder.name === objectFolderName
-		);
+		if (allObjectFolders) {
+			const {items: objectFolders} = allObjectFolders;
 
-		const currentObjectFolderObjectDefinitions =
-			await API.getObjectDefinitions(
-				`filter=objectFolderExternalReferenceCode eq '${currentObjectFolder?.externalReferenceCode}'`
+			const currentObjectFolder = objectFolders.find(
+				(objectFolder) => objectFolder.name === objectFolderName
 			);
 
-		let objectDefinitionToBeMoved =
-			currentObjectFolderObjectDefinitions.find(
-				(currentObjectFolderObjectDefinition) =>
-					currentObjectFolderObjectDefinition.id ===
-					objectDefinitionId
-			);
+			const currentObjectFolderObjectDefinitions =
+				await API.getObjectDefinitions(
+					`filter=objectFolderExternalReferenceCode eq '${currentObjectFolder?.externalReferenceCode}'`
+				);
 
-		if (objectDefinitionToBeMoved) {
-			objectDefinitionToBeMoved = {
-				...objectDefinitionToBeMoved,
-				objectFolderExternalReferenceCode:
-					selectedObjectFolder.externalReferenceCode,
-			};
+			let objectDefinitionToBeMoved =
+				currentObjectFolderObjectDefinitions.find(
+					(currentObjectFolderObjectDefinition) =>
+						currentObjectFolderObjectDefinition.id ===
+						objectDefinitionId
+				);
 
-			try {
-				(await API.save({
-					item: objectDefinitionToBeMoved,
-					method: 'PATCH',
-					returnValue: true,
-					url: `/o/object-admin/v1.0/object-definitions/${objectDefinitionToBeMoved?.id}`,
-				})) as ObjectDefinition;
+			if (objectDefinitionToBeMoved) {
+				objectDefinitionToBeMoved = {
+					...objectDefinitionToBeMoved,
+					objectFolderExternalReferenceCode:
+						selectedObjectFolder.externalReferenceCode,
+				};
 
-				setTimeout(async () => {
-					const payload =
-						await getUpdatedModelBuilderStructurePayload(
-							baseResourceURL,
-							selectedObjectFolder.name
-						);
+				try {
+					(await API.save({
+						item: objectDefinitionToBeMoved,
+						method: 'PATCH',
+						returnValue: true,
+						url: `/o/object-admin/v1.0/object-definitions/${objectDefinitionToBeMoved?.id}`,
+					})) as ObjectDefinition;
 
-					dispatch({
-						payload: {...payload, dispatch},
-						type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+					setTimeout(async () => {
+						const payload =
+							await getUpdatedModelBuilderStructurePayload(
+								baseResourceURL,
+								selectedObjectFolder.name
+							);
+
+						dispatch({
+							payload: {...payload, dispatch},
+							type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+						});
+					}, 200);
+
+					openToast({
+						message: sub(
+							Liferay.Language.get('x-was-moved-successfully'),
+							`<strong>${Liferay.Util.escapeHTML(
+								stringUtils.getLocalizableLabel(
+									objectDefinitionToBeMoved.defaultLanguageId,
+									objectDefinitionToBeMoved.label
+								)
+							)}</strong>`
+						),
+						type: 'success',
 					});
-				}, 200);
-
-				openToast({
-					message: sub(
-						Liferay.Language.get('x-was-moved-successfully'),
-						`<strong>${Liferay.Util.escapeHTML(
-							stringUtils.getLocalizableLabel(
-								objectDefinitionToBeMoved.defaultLanguageId,
-								objectDefinitionToBeMoved.label
-							)
-						)}</strong>`
-					),
-					type: 'success',
-				});
+				}
+				catch (error) {}
 			}
-			catch (error) {}
 		}
 	};
 

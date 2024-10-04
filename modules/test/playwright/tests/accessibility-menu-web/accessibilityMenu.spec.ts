@@ -26,7 +26,7 @@ test('Verify that the default value is displayed when the user has never changed
 	accessibilityMenuPage,
 	apiHelpers,
 	instanceSettingsPage,
-	page
+	page,
 }) => {
 	await instanceSettingsPage.goToInstanceSetting(
 		'Accessibility',
@@ -46,68 +46,73 @@ test('Verify that the default value is displayed when the user has never changed
 	try {
 		await test.step('Verify that the "underlined links" toggle is off when logged out, then turn it on', async () => {
 			await performLogout(page);
-	
+
 			await accessibilityMenuPage.openAccessibilityMenu();
-	
+
 			await expect(
 				accessibilityMenuPage.underlinedLinksToggle
 			).not.toBeChecked();
-	
+
 			await accessibilityMenuPage.toggleUnderlinedLinks(true);
 		});
-	
+
 		await test.step('Login as a new user and assert that the "underlined links" guest preference is copied to the user', async () => {
 			await performLogin(page, userAccount.alternateName);
-	
+
 			await accessibilityMenuPage.openAccessibilityMenu();
-	
-			await expect(accessibilityMenuPage.underlinedLinksToggle).toBeChecked();
-		});
-	
-		await test.step('Verify that the "underlined links" toggle is on when logged out, then turn it off', async () => {
-			await performLogout(page);
-	
-			await accessibilityMenuPage.openAccessibilityMenu();
-	
-			await accessibilityMenuPage.toggleUnderlinedLinks(false);
-		});
-	
-		await test.step('Confirm that the "underlined links" toggle is off when logged in, since user did not change the preference', async () => {
-			await performLogin(page, userAccount.alternateName);
-	
-			await accessibilityMenuPage.openAccessibilityMenu();
-	
-			await expect(
-				accessibilityMenuPage.underlinedLinksToggle
-			).not.toBeChecked();
-		});
-	
-		await test.step('Then, change the "underlined links" preference for that user for the first time', async () => {
-			await accessibilityMenuPage.toggleUnderlinedLinks(true);
-		});
-	
-		await test.step('Ensure that the "underlined links" toggle is off after logging out', async () => {
-			await performLogout(page);
-	
-			await accessibilityMenuPage.openAccessibilityMenu();
-	
-			await expect(
-				accessibilityMenuPage.underlinedLinksToggle
-			).not.toBeChecked();
-		});
-	
-		await test.step('Confirm that the "underlined links" toggle is on after logging in', async () => {
-			await performLogin(page, userAccount.alternateName);
-	
-			await accessibilityMenuPage.openAccessibilityMenu();
-	
+
 			await expect(
 				accessibilityMenuPage.underlinedLinksToggle
 			).toBeChecked();
-	
-			await expect(accessibilityMenuPage.underlinedLinksToggle).toBeChecked();
 		});
-	} finally {
+
+		await test.step('Verify that the "underlined links" toggle is on when logged out, then turn it off', async () => {
+			await performLogout(page);
+
+			await accessibilityMenuPage.openAccessibilityMenu();
+
+			await accessibilityMenuPage.toggleUnderlinedLinks(false);
+		});
+
+		await test.step('Confirm that the "underlined links" toggle is off when logged in, since user did not change the preference', async () => {
+			await performLogin(page, userAccount.alternateName);
+
+			await accessibilityMenuPage.openAccessibilityMenu();
+
+			await expect(
+				accessibilityMenuPage.underlinedLinksToggle
+			).not.toBeChecked();
+		});
+
+		await test.step('Then, change the "underlined links" preference for that user for the first time', async () => {
+			await accessibilityMenuPage.toggleUnderlinedLinks(true);
+		});
+
+		await test.step('Ensure that the "underlined links" toggle is off after logging out', async () => {
+			await performLogout(page);
+
+			await accessibilityMenuPage.openAccessibilityMenu();
+
+			await expect(
+				accessibilityMenuPage.underlinedLinksToggle
+			).not.toBeChecked();
+		});
+
+		await test.step('Confirm that the "underlined links" toggle is on after logging in', async () => {
+			await performLogin(page, userAccount.alternateName);
+
+			await accessibilityMenuPage.openAccessibilityMenu();
+
+			await expect(
+				accessibilityMenuPage.underlinedLinksToggle
+			).toBeChecked();
+
+			await expect(
+				accessibilityMenuPage.underlinedLinksToggle
+			).toBeChecked();
+		});
+	}
+	finally {
 		await test.step('Delete new user', async () => {
 			await apiHelpers.headlessAdminUser.deleteUserAccount(
 				Number(userAccount.id)

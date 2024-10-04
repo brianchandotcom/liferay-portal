@@ -214,9 +214,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		LAR.exportPortlet(
-			larFileName = "Wiki.portlet.lar",
-			wikiPortlet = "true");
+		LAR.exportPortlet(larFileName = "Wiki.portlet.lar");
 
 		HeadlessSite.addSite(siteName = "Second Site");
 
@@ -232,9 +230,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Second Site");
 
-		LAR.importPortlet(
-			larFileName = "Wiki.portlet.lar",
-			wikiPortlet = "true");
+		LAR.importPortlet(larFileName = "Wiki.portlet.lar");
 
 		WikiNavigator.openToWikiPage(
 			layoutURLKey = "wiki-page",

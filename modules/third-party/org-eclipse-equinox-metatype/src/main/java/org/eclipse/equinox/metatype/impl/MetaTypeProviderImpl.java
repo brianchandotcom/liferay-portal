@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2013 IBM Corporation and others.
+ * Copyright (c) 2005, 2017 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,7 +13,6 @@ package org.eclipse.equinox.metatype.impl;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.function.Supplier;
 import javax.xml.parsers.SAXParser;
 import org.eclipse.equinox.metatype.EquinoxObjectClassDefinition;
 import org.eclipse.osgi.util.NLS;
@@ -39,25 +38,25 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 
 	Bundle _bundle;
 
-	Map<String, ObjectClassDefinitionImpl> _allPidOCDs = new HashMap<>();
-	Map<String, ObjectClassDefinitionImpl> _allFPidOCDs = new HashMap<>();
+	Hashtable<String, ObjectClassDefinitionImpl> _allPidOCDs = new Hashtable<String, ObjectClassDefinitionImpl>(7);
+	Hashtable<String, ObjectClassDefinitionImpl> _allFPidOCDs = new Hashtable<String, ObjectClassDefinitionImpl>(7);
 
 	String[] _locales;
 	boolean _isThereMeta = false;
 
 	// Give access to subclasses.
-	protected final LogService logger;
+	protected final LogTracker logger;
 
 	/**
 	 * Constructor of class MetaTypeProviderImpl.
 	 */
-	MetaTypeProviderImpl(Bundle bundle, Supplier<SAXParser> parserSupplier, LogService logger) {
+	MetaTypeProviderImpl(Bundle bundle, SAXParser parser, LogTracker logger) {
 
 		this._bundle = bundle;
 		this.logger = logger;
 
 		// read all bundle's metadata files and build internal data structures
-		_isThereMeta = readMetaFiles(bundle, parserSupplier);
+		_isThereMeta = readMetaFiles(bundle, parser);
 
 		if (!_isThereMeta) {
 			logger.log(LogService.LOG_DEBUG, NLS.bind(MetaTypeMsg.METADATA_NOT_FOUND, bundle.getSymbolicName(), bundle.getBundleId()));
@@ -85,7 +84,7 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 	 * @return void
 	 * @throws IOException If there are errors accessing the metadata.xml file
 	 */
-	private boolean readMetaFiles(Bundle bundle, Supplier<SAXParser> saxParserSupplier) {
+	private boolean readMetaFiles(Bundle bundle, SAXParser saxParser) {
 		Enumeration<URL> entries = bundle.findEntries(MetaTypeService.METATYPE_DOCUMENTS_LOCATION, "*", false); //$NON-NLS-1$
 		if (entries == null)
 			return false;
@@ -93,7 +92,7 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 		for (URL entry : Collections.list(entries)) {
 			if (entry.getPath().endsWith("/")) //$NON-NLS-1$
 				continue;
-			DataParser parser = new DataParser(bundle, entry, saxParserSupplier.get(), logger);
+			DataParser parser = new DataParser(bundle, entry, saxParser, logger);
 			try {
 				Collection<Designate> designates = parser.doParse();
 				if (!designates.isEmpty()) {
@@ -107,7 +106,7 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 					}
 				}
 			} catch (Exception e) {
-				logger.log(LogService.LOG_ERROR, NLS.bind(MetaTypeMsg.METADATA_FILE_PARSE_ERROR, new Object[] {entry, bundle.getBundleId(), bundle.getSymbolicName()}), e);
+				logger.log(LogService.LOG_WARNING, NLS.bind(MetaTypeMsg.METADATA_FILE_PARSE_ERROR, new Object[] {entry, bundle.getBundleId(), bundle.getSymbolicName()}), e);
 			}
 		}
 		return result;
@@ -169,13 +168,17 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 			return checkForDefault(_locales);
 		Vector<String> localizationFiles = new Vector<String>(7);
 		// get all the localization resources for PIDS
-		for (ObjectClassDefinitionImpl ocd : _allPidOCDs.values()) {
+		Enumeration<ObjectClassDefinitionImpl> ocds = _allPidOCDs.elements();
+		while (ocds.hasMoreElements()) {
+			ObjectClassDefinitionImpl ocd = ocds.nextElement();
 			String localization = ocd.getLocalization();
 			if (localization != null && !localizationFiles.contains(localization))
 				localizationFiles.add(localization);
 		}
 		// get all the localization resources for FPIDS
-		for (ObjectClassDefinitionImpl ocd : _allFPidOCDs.values()) {
+		ocds = _allFPidOCDs.elements();
+		while (ocds.hasMoreElements()) {
+			ObjectClassDefinitionImpl ocd = ocds.nextElement();
 			String localization = ocd.getLocalization();
 			if (localization != null && !localizationFiles.contains(localization))
 				localizationFiles.add(localization);
@@ -227,4 +230,3 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 		return locales;
 	}
 }
-/* @generated */

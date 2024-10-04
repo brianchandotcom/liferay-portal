@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2013 IBM Corporation and others.
+ * Copyright (c) 2005, 2017 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,9 +12,7 @@ package org.eclipse.equinox.metatype.impl;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Hashtable;
 import javax.xml.parsers.*;
 import org.eclipse.equinox.metatype.EquinoxMetaTypeInformation;
 import org.eclipse.equinox.metatype.EquinoxMetaTypeService;
@@ -30,18 +28,18 @@ import org.xml.sax.SAXException;
 public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousBundleListener {
 
 	SAXParserFactory _parserFactory;
-	private final Map<Long, EquinoxMetaTypeInformation> _mtps = new ConcurrentHashMap<>();
+	private Hashtable<Long, EquinoxMetaTypeInformation> _mtps = new Hashtable<Long, EquinoxMetaTypeInformation>(7);
 
-	private final LogService logger;
-	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
+	private final LogTracker logger;
+	private final ServiceTracker<Object, Object> metaTypeProviderTracker;
 
 	/**
 	 * Constructor of class MetaTypeServiceImpl.
 	 */
-	public MetaTypeServiceImpl(SAXParserFactory parserFactory, LogService logger, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
+	public MetaTypeServiceImpl(SAXParserFactory parserFactory, LogTracker logger, ServiceTracker<Object, Object> metaTypeProviderTracker) {
 		this._parserFactory = parserFactory;
 		this.logger = logger;
-		_metaTypeProviders = metaTypeProviders;
+		this.metaTypeProviderTracker = metaTypeProviderTracker;
 	}
 
 	/*
@@ -58,16 +56,9 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 	 */
 	private EquinoxMetaTypeInformation getMetaTypeProvider(final Bundle b) {
 		// Avoid synthetic accessor method warnings.
-		final LogService loggerTemp = this.logger;
-		final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders = _metaTypeProviders;
+		final LogTracker loggerTemp = this.logger;
+		final ServiceTracker<Object, Object> tracker = this.metaTypeProviderTracker;
 		Long bID = Long.valueOf(b.getBundleId());
-
-		EquinoxMetaTypeInformation equinoxMetaTypeInformation = _mtps.get(bID);
-
-		if (equinoxMetaTypeInformation != null) {
-			return equinoxMetaTypeInformation;
-		}
-
 		synchronized (_mtps) {
 			if (_mtps.containsKey(bID))
 				return _mtps.get(bID);
@@ -75,12 +66,12 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 				public EquinoxMetaTypeInformation run() {
 					MetaTypeInformationImpl impl = null;
 					try {
-						impl = new MetaTypeInformationImpl(b, () -> newParser(), loggerTemp);
+						impl = new MetaTypeInformationImpl(b, newParser(), loggerTemp);
 					} catch (Exception e) {
 						loggerTemp.log(LogService.LOG_ERROR, NLS.bind(MetaTypeMsg.METADATA_PARSE_ERROR, b.getBundleId(), b.getSymbolicName()), e);
 					}
 					if (impl == null || !impl._isThereMeta)
-						return new MetaTypeProviderTracker(b, loggerTemp, metaTypeProviders);
+						return new MetaTypeProviderTracker(b, loggerTemp, tracker);
 					return impl;
 				}
 			});
@@ -89,7 +80,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 		}
 	}
 
-	SAXParser newParser() {
+	SAXParser newParser() throws ParserConfigurationException, SAXException {
 		boolean namespaceAware = _parserFactory.isNamespaceAware();
 		boolean validating = _parserFactory.isValidating();
 		// Always want a non-validating parser.
@@ -110,11 +101,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 				_parserFactory.setNamespaceAware(false);
 				return _parserFactory.newSAXParser();
 			}
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-		finally {
+		} finally {
 			// Restore the previous settings in all cases.
 			_parserFactory.setNamespaceAware(namespaceAware);
 			_parserFactory.setValidating(validating);
@@ -146,4 +133,3 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 		}
 	}
 }
-/* @generated */

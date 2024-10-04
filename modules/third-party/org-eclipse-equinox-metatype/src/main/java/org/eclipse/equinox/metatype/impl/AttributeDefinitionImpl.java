@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2013 IBM Corporation and others.
+ * Copyright (c) 2005, 2017 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,17 +33,17 @@ public class AttributeDefinitionImpl extends LocalizationElement implements Equi
 	Vector<String> _values = new Vector<String>(7);
 	Vector<String> _labels = new Vector<String>(7);
 
-	private final LogService logger;
+	private final LogTracker logger;
 	private final ExtendableHelper helper;
 
 	/**
 	 * Constructor of class AttributeDefinitionImpl.
 	 */
-	public AttributeDefinitionImpl(String id, String name, String description, int type, int cardinality, Object min, Object max, boolean isRequired, String localization, LogService logger, Map<String, Map<String, String>> extensionAttributes) {
+	public AttributeDefinitionImpl(String id, String name, String description, int type, int cardinality, Object min, Object max, boolean isRequired, String localization, LogTracker logger, Map<String, Map<String, String>> extensionAttributes) {
 		this(id, name, description, type, cardinality, min, max, isRequired, localization, logger, new ExtendableHelper(extensionAttributes));
 	}
 
-	private AttributeDefinitionImpl(String id, String name, String description, int type, int cardinality, Object min, Object max, boolean isRequired, String localization, LogService logger, ExtendableHelper helper) {
+	private AttributeDefinitionImpl(String id, String name, String description, int type, int cardinality, Object min, Object max, boolean isRequired, String localization, LogTracker logger, ExtendableHelper helper) {
 		super(localization);
 		this._id = id;
 		this._name = name;

@@ -65,6 +65,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 }
 
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
 <portlet:actionURL name="/dynamic_data_mapping/add_template" var="addTemplateURL">
@@ -114,7 +115,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<c:if test='<%= ParamUtil.getBoolean(request, "showHeader", true) %>'>
+			<c:if test="<%= showHeader %>">
 
 				<%
 				String title = StringPool.BLANK;

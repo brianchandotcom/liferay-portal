@@ -28,19 +28,19 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testNotifications() {
+	public void testIsSendNotification() {
 		Date tokenExpiryDate = new Date(System.currentTimeMillis() + Time.YEAR);
 
-		_testNotificationDuration(
+		_testIsSendNotification(
 			tokenExpiryDate.getTime() - (Time.DAY * 30), tokenExpiryDate);
 
-		_testNotificationDuration(
+		_testIsSendNotification(
 			tokenExpiryDate.getTime() - (Time.DAY * 10), tokenExpiryDate);
 
-		_testNotificationDuration(
+		_testIsSendNotification(
 			tokenExpiryDate.getTime() - Time.DAY, tokenExpiryDate);
 
-		_testNotificationDuration(tokenExpiryDate.getTime(), tokenExpiryDate);
+		_testIsSendNotification(tokenExpiryDate.getTime(), tokenExpiryDate);
 	}
 
 	private ScimNotificationSchedulerJobConfiguration
@@ -55,7 +55,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		return new ScimNotificationSchedulerJobConfiguration();
 	}
 
-	private void _testNotificationDuration(
+	private void _testIsSendNotification(
 		long notificationDurationMillis, Date tokenExpiryDate) {
 
 		Assert.assertTrue(

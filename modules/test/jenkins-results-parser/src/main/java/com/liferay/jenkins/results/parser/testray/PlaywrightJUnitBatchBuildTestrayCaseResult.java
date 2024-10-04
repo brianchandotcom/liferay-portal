@@ -16,7 +16,6 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,17 +23,39 @@ import java.util.List;
  * @author Kenji Heigel
  */
 public class PlaywrightJUnitBatchBuildTestrayCaseResult
-	extends JUnitBatchBuildTestrayCaseResult {
+	extends BatchBuildTestrayCaseResult {
 
 	public PlaywrightJUnitBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
 		TestClassMethod testClassMethod) {
 
-		super(testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
+		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
 		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 		_playwrightTestClassMethod = (PlaywrightTestClassMethod)testClassMethod;
+	}
+
+	@Override
+	public String getComponentName() {
+		String componentName =
+			_playwrightJUnitTestClass.getTestrayMainComponentName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
+			return super.getComponentName();
+		}
+
+		return componentName;
+	}
+
+	@Override
+	public long getDuration() {
+		return getTestResultDuration();
+	}
+
+	@Override
+	public String getErrors() {
+		return getTestResultErrors();
 	}
 
 	@Override
@@ -44,6 +65,11 @@ public class PlaywrightJUnitBatchBuildTestrayCaseResult
 		}
 
 		return _playwrightTestClassMethod.getName();
+	}
+
+	@Override
+	public Status getStatus() {
+		return getTestResultStatus();
 	}
 
 	@Override
@@ -58,68 +84,43 @@ public class PlaywrightJUnitBatchBuildTestrayCaseResult
 		return testrayAttachments;
 	}
 
-	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {
-		return getTestrayAttachment(
-			getBuild(), "Playwright Report",
-			getAxisBuildURLPath() + "/playwright-report/index.html");
-	}
-
 	@Override
-	protected List<TestClassResult> getTestClassResults() {
-		if (_testClassResults != null) {
-			return _testClassResults;
-		}
-
+	public TestResult getTestResult() {
 		Build build = getBuild();
 
 		if (build == null) {
 			return null;
 		}
 
-		_testClassResults = new ArrayList<>();
+		TestClassResult testClassResult = build.getTestClassResult(
+			_playwrightJUnitTestClass.getSpecFilePath());
 
-		for (TestClassResult testClassResult : build.getTestClassResults()) {
-			String testClassName = testClassResult.getClassName();
+		if (testClassResult == null) {
+			return null;
+		}
 
-			for (TestResult testResult : testClassResult.getTestResults()) {
-				String fullTestName = JenkinsResultsParserUtil.combine(
-					testClassName, " > ", testResult.getTestName());
+		for (TestResult testResult : testClassResult.getTestResults()) {
+			String fullTestName = JenkinsResultsParserUtil.combine(
+				testClassResult.getClassName(), " > ",
+				testResult.getTestName());
 
-				if (fullTestName.equals(getName())) {
-					_testClassResults.add(testClassResult);
-
-					break;
-				}
+			if (fullTestName.equals(getName())) {
+				return testResult;
 			}
 		}
 
-		return _testClassResults;
+		System.out.println("Unable to find test result for: " + getName());
+
+		return null;
 	}
 
-	@Override
-	protected List<TestResult> getTestResults() {
-		List<TestResult> testResults = new ArrayList<>();
-
-		for (TestClassResult testClassResult : getTestClassResults()) {
-			String testClassName = testClassResult.getClassName();
-
-			List<TestResult> results = testClassResult.getTestResults();
-
-			for (TestResult testResult : results) {
-				String testName = JenkinsResultsParserUtil.combine(
-					testClassName, " > ", testResult.getTestName());
-
-				if (testName.equals(getName())) {
-					testResults.add(testResult);
-				}
-			}
-		}
-
-		return testResults;
+	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {
+		return getTestrayAttachment(
+			getBuild(), "Playwright Report",
+			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
 
 	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
 	private final PlaywrightTestClassMethod _playwrightTestClassMethod;
-	private List<TestClassResult> _testClassResults;
 
 }

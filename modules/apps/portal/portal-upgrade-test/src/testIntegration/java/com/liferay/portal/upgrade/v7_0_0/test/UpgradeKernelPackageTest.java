@@ -69,7 +69,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	}
 
 	@Test
-	public void testDoUpgrade() throws Exception {
+	public void testUpgrade() throws Exception {
 
 		// For code coverage
 

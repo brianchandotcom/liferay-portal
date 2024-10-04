@@ -77,7 +77,7 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDoUpgradeSafeResources() throws Exception {
+	public void testUpgradeSafeResources() throws Exception {
 		try (Closeable closeable =
 				ScriptManagementConfigurationTestUtil.saveWithCloseable(true)) {
 
@@ -126,10 +126,10 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDoUpgradeUnsafeResourceActiveGroovyObjectAction()
+	public void testUpgradeUnsafeResourceActiveGroovyObjectAction()
 		throws Exception {
 
-		_testDoUpgrade(
+		_testUpgrade(
 			() -> _addObjectAction(
 				true, StringUtil.randomId(),
 				ObjectActionExecutorConstants.KEY_GROOVY, _objectDefinition,
@@ -137,10 +137,10 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDoUpgradeUnsafeResourceActiveGroovyObjectValidation()
+	public void testUpgradeUnsafeResourceActiveGroovyObjectValidation()
 		throws Exception {
 
-		_testDoUpgrade(
+		_testUpgrade(
 			() -> _addObjectValidationRule(
 				true, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 				StringUtil.randomId(), _objectDefinition,
@@ -148,10 +148,10 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDoUpgradeUnsafeResourcePublishedGroovyWorkflowDefinition()
+	public void testUpgradeUnsafeResourcePublishedGroovyWorkflowDefinition()
 		throws Exception {
 
-		_testDoUpgrade(
+		_testUpgrade(
 			() -> _workflowDefinitionManager.deployWorkflowDefinition(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				StringUtil.randomId(), StringUtil.randomId(),
@@ -159,10 +159,10 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDoUpgradeUnsafeResourcePublishedJavaWorkflowDefinition()
+	public void testUpgradeUnsafeResourcePublishedJavaWorkflowDefinition()
 		throws Exception {
 
-		_testDoUpgrade(
+		_testUpgrade(
 			() -> _workflowDefinitionManager.deployWorkflowDefinition(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				StringUtil.randomId(), StringUtil.randomId(),
@@ -275,7 +275,7 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 		}
 	}
 
-	private void _testDoUpgrade(
+	private void _testUpgrade(
 			UnsafeSupplier<Object, Exception> unsafeSupplier)
 		throws Exception {
 

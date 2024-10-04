@@ -61,7 +61,7 @@ public class UpgradePortletIdTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDoUpgrade() throws Exception {
+	public void testUpgrade() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		Group group = GroupTestUtil.addGroup();

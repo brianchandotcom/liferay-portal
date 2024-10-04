@@ -142,7 +142,7 @@ public class DDLFormRecordToDDMFormInstanceRecordUpgradeClassNamesTest {
 	}
 
 	@Test
-	public void testDoUpgrade() throws Exception {
+	public void testUpgrade() throws Exception {
 		_assertClassNames(_CLASS_NAME_DDL_FORM_RECORD);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

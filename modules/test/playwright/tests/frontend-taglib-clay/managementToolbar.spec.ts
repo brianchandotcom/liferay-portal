@@ -58,6 +58,20 @@ test.beforeEach(
 	}
 );
 
+test.describe('Management Toolbar Default State', () => {
+	test('Assert the New button is displayed as a text button @LPS-144540', async ({
+		page,
+	}) => {
+		await test.step('Check that the new button text is "New"', async () => {
+			await expect(
+				page
+					.locator('#managementToolbarDefaultState')
+					.getByRole('button', {name: 'New'})
+			).toBeVisible();
+		});
+	});
+});
+
 test.describe('Management Toolbar With Results', () => {
 	test('Clear button has a cursor of type pointer', async ({page}) => {
 		let clearButton: Locator;

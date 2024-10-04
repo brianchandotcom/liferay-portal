@@ -84,16 +84,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144540. Assert the New button is displayed as a text button"
-	@priority = 5
-	test NewButtonRender {
-		task ("Assert the new button is displayed as a text button") {
-			AssertTextEquals(
-				locator1 = "ManagementBar#NEW_BUTTON",
-				value1 = "New");
-		}
-	}
-
 	@description = "LPS-144536. Assert a tooltip message will be displayed when hovered over the order toggle button"
 	@priority = 3
 	test OrderButtonAsAToggleCanDisplayTooltip {

@@ -249,10 +249,10 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -277,10 +277,10 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -336,10 +336,10 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -349,10 +349,10 @@ const filterSchema = {
 			overrides(baseFilters.component, {
 				isCustomFilter: true,
 				name: 'testrayComponentIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/components?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -536,10 +536,10 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -563,10 +563,10 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -1063,10 +1063,10 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
@@ -1076,10 +1076,10 @@ const filterSchema = {
 			overrides(baseFilters.component, {
 				isCustomFilter: true,
 				name: 'testrayComponentIds',
-				resource: ({buildId}) => {
+				resource: ({projectId}) => {
 					const filter = `${SearchBuilder.eq(
-						'componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId as string
+						'projectId',
+						projectId as string
 					)}`;
 
 					return `/components?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;

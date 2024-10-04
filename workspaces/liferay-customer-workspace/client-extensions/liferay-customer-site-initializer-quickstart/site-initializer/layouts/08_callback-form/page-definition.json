@@ -4,7 +4,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "colorNeutral1",
+						"backgroundColor": "colorNeutral0",
 						"paddingLeft": "5",
 						"paddingRight": "5",
 						"paddingTop": "5"
@@ -130,7 +130,8 @@
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
-									"indexed": true
+									"indexed": true,
+									"name": "Callback Form Name Input"
 								},
 								"type": "Fragment"
 							},
@@ -151,7 +152,8 @@
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
-									"indexed": true
+									"indexed": true,
+									"name": "Callback Form Email Input"
 								},
 								"type": "Fragment"
 							},
@@ -282,6 +284,27 @@
 							{
 								"definition": {
 									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_relatedTicketIDs",
+										"inputLabel": {
+											"en_US": "Related Ticket IDs"
+										},
+										"showCharactersCount": false
+									},
+									"fragmentFields": [],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"name": "Related Ticket IDs Input"
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
 										"key": "INPUTS-textarea"
 									},
 									"fragmentConfig": {
@@ -290,14 +313,15 @@
 											"en_US": "Description"
 										},
 										"numberOfCharacters": 2000,
-										"showCharactersCount": true
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
 										"marginBottom": "4"
 									},
-									"indexed": true
+									"indexed": true,
+									"name": "Description Textarea"
 								},
 								"id": "ec177ef0-36ee-a3b1-9e01-7a9e8b7d5447",
 								"type": "Fragment"

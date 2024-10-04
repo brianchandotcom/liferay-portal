@@ -142,6 +142,51 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@Schema(
+		description = "A flag that indicates whether the user has been signed in."
+	)
+	public Boolean getActivated() {
+		if (_activatedSupplier != null) {
+			activated = _activatedSupplier.get();
+
+			_activatedSupplier = null;
+		}
+
+		return activated;
+	}
+
+	public void setActivated(Boolean activated) {
+		this.activated = activated;
+
+		_activatedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setActivated(
+		UnsafeSupplier<Boolean, Exception> activatedUnsafeSupplier) {
+
+		_activatedSupplier = () -> {
+			try {
+				return activatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether the user has been signed in."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean activated;
+
+	@JsonIgnore
+	private Supplier<Boolean> _activatedSupplier;
+
 	@Schema(description = "The user's additional name (e.g., middle name).")
 	public String getAdditionalName() {
 		if (_additionalNameSupplier != null) {
@@ -1558,6 +1603,18 @@ public class UserAccount implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Boolean activated = getActivated();
+
+		if (activated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"activated\": ");
+
+			sb.append(activated);
 		}
 
 		String additionalName = getAdditionalName();

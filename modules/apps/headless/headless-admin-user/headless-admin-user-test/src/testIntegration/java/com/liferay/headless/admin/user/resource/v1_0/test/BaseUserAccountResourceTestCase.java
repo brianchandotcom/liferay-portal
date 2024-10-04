@@ -4676,6 +4676,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (userAccount.getActivated() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("additionalName", additionalAssertFieldName)) {
 				if (userAccount.getAdditionalName() == null) {
 					valid = false;
@@ -5053,6 +5061,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!equals(
 						(Map)userAccount1.getActions(),
 						(Map)userAccount2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getActivated(),
+						userAccount2.getActivated())) {
 
 					return false;
 				}
@@ -5531,6 +5550,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("activated")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -6582,6 +6606,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected UserAccount randomUserAccount() throws Exception {
 		return new UserAccount() {
 			{
+				activated = RandomTestUtil.randomBoolean();
 				additionalName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				alternateName = StringUtil.toLowerCase(

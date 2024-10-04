@@ -3848,6 +3848,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (userAccount.getActivated() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("additionalName", additionalAssertFieldName)) {
 				if (userAccount.getAdditionalName() == null) {
 					valid = false;
@@ -4494,6 +4502,17 @@ public abstract class BaseOrganizationResourceTestCase {
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getActions(), userAccount2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("activated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getActivated(),
+						userAccount2.getActivated())) {
 
 					return false;
 				}
@@ -5475,6 +5494,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	protected UserAccount randomUserAccount() throws Exception {
 		return new UserAccount() {
 			{
+				activated = RandomTestUtil.randomBoolean();
 				additionalName = RandomTestUtil.randomString();
 				alternateName = RandomTestUtil.randomString();
 				birthDate = RandomTestUtil.nextDate();

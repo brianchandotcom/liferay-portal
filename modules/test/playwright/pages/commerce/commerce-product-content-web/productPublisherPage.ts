@@ -9,7 +9,7 @@ import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class ProductPublisherPage {
 	readonly closeButton: Locator;
-	readonly configurationFilterLink: Locator;
+	readonly configurationFilterButton: Locator;
 	readonly configurationFrame: FrameLocator;
 	readonly configurationMenuItem: Locator;
 	readonly configurationOrderingLink: Locator;
@@ -24,11 +24,11 @@ export class ProductPublisherPage {
 
 	constructor(page: Page) {
 		this.closeButton = page.getByLabel('close', {exact: true});
-		this.configurationFilterLink = page
+		this.configurationFilterButton = page
 			.frameLocator(
 				'iframe[title*="Product Publisher"][title*="Configuration"]'
 			)
-			.getByRole('link', {exact: true, name: 'Filter'});
+			.getByRole('button', {exact: true, name: 'Filter'});
 		this.configurationFrame = page.frameLocator(
 			'iframe[title*="Product Publisher"][title*="Configuration"]'
 		);
@@ -68,10 +68,10 @@ export class ProductPublisherPage {
 		await this.configurationMenuItem.click();
 
 		const expanded =
-			await this.configurationFilterLink.getAttribute('aria-expanded');
+			await this.configurationFilterButton.getAttribute('aria-expanded');
 
 		if (expanded === 'false') {
-			await this.configurationFilterLink.click();
+			await this.configurationFilterButton.click();
 		}
 
 		await this.configurationFrame.getByLabel('add-rule').click();

@@ -139,7 +139,7 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 		%>
 
 		<c:choose>
-			<c:when test="<%= (commerceOrder.getStatus() != 0) && commerceCartContentTotalDisplayContext.hasPermission(ActionKeys.UPDATE) && commerceCartContentTotalDisplayContext.isValidCommerceOrder() %>">
+			<c:when test="<%= (commerceOrder != null) && (commerceOrder.getStatus() != 0) && commerceCartContentTotalDisplayContext.hasPermission(ActionKeys.UPDATE) && commerceCartContentTotalDisplayContext.isValidCommerceOrder() %>">
 				<liferay-commerce:order-transitions
 					commerceOrderId="<%= commerceCartContentTotalDisplayContext.getCommerceOrderId() %>"
 					cssClass="btn btn-fixed btn-primary"

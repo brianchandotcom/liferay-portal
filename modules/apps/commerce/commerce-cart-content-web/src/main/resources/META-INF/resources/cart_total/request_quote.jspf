@@ -20,10 +20,10 @@ boolean manageRestrictedNotesPermission = commerceCartContentTotalDisplayContext
 
 	<div class="hide" id="<portlet:namespace />requestQuoteNote">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="requestQuote" />
-		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceCartContentTotalDisplayContext.getCommerceOrderId() %>" />
 
 		<c:choose>
-			<c:when test="<%= commerceOrder.isGuestOrder() %>">
+			<c:when test="<%= (commerceOrder != null) && commerceOrder.isGuestOrder() %>">
 				<div>
 					<aui:input label="" name="emailAddress" placeholder="enter-an-email-address" required="<%= true %>" type="text">
 						<aui:validator name="email" />

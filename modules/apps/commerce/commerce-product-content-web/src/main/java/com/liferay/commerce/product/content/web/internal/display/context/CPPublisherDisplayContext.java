@@ -311,6 +311,10 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 						(CommerceContext)httpServletRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT);
 
+					if (commerceContext == null) {
+						return null;
+					}
+
 					AccountEntry accountEntry =
 						commerceContext.getAccountEntry();
 

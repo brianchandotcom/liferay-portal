@@ -194,7 +194,12 @@ public class CommerceOrderContentDisplayContext {
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
 
-		_accountEntry = _commerceContext.getAccountEntry();
+		if (_commerceContext == null) {
+			_accountEntry = null;
+		}
+		else {
+			_accountEntry = _commerceContext.getAccountEntry();
+		}
 
 		_commerceOrderNoteId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderNoteId");
@@ -1139,6 +1144,10 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public boolean isCommerceSiteTypeB2C() {
+		if (_commerceContext == null) {
+			return false;
+		}
+
 		if (_commerceContext.getCommerceSiteType() ==
 				CommerceChannelConstants.SITE_TYPE_B2C) {
 

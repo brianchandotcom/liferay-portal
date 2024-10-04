@@ -68,11 +68,15 @@ public class CPCompareContentMiniDisplayContext {
 				CPCompareContentMiniPortletInstanceConfiguration.class,
 				_cpRequestHelper.getThemeDisplay());
 
+		AccountEntry accountEntry = null;
+
 		CommerceContext commerceContext =
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		AccountEntry accountEntry = commerceContext.getAccountEntry();
+		if (commerceContext != null) {
+			accountEntry = commerceContext.getAccountEntry();
+		}
 
 		if (accountEntry != null) {
 			HttpServletRequest originalHttpServletRequest =
@@ -230,6 +234,10 @@ public class CPCompareContentMiniDisplayContext {
 		CommerceContext commerceContext =
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		if (commerceContext == null) {
+			return false;
+		}
 
 		long commerceChannelId = commerceContext.getCommerceChannelId();
 

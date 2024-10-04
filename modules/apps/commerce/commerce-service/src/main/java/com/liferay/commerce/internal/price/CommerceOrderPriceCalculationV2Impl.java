@@ -8,6 +8,7 @@ package com.liferay.commerce.internal.price;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.model.CommerceOrder;
@@ -18,6 +19,7 @@ import com.liferay.commerce.price.CommerceOrderPriceImpl;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.math.BigDecimal;
 
@@ -37,6 +39,12 @@ public class CommerceOrderPriceCalculationV2Impl
 			CommerceOrder commerceOrder, boolean secure,
 			CommerceContext commerceContext)
 		throws PortalException {
+
+		if (commerceContext == null) {
+			return getEmptyCommerceOrderPrice(
+				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+					CompanyThreadLocal.getCompanyId()));
+		}
 
 		if (commerceOrder == null) {
 			return getEmptyCommerceOrderPrice(
@@ -403,6 +411,9 @@ public class CommerceOrderPriceCalculationV2Impl
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommerceDiscountCalculation _commerceDiscountCalculation;

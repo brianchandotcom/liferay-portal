@@ -102,7 +102,7 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public CommerceOrder getCommerceOrder() {
-		if (_commerceOrder != null) {
+		if ((_commerceOrder != null) || (commerceContext == null)) {
 			return _commerceOrder;
 		}
 
@@ -135,6 +135,10 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public String getCommercePriceDisplayType() throws PortalException {
+		if (commerceContext == null) {
+			return CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE;
+		}
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannel(
 				commerceContext.getCommerceChannelId());
@@ -406,7 +410,9 @@ public class CommerceCartContentDisplayContext {
 			_getCommerceOrderFieldsConfiguration()
 		throws PortalException {
 
-		if (_commerceOrderFieldsConfiguration != null) {
+		if ((_commerceOrderFieldsConfiguration != null) ||
+			(commerceContext == null)) {
+
 			return _commerceOrderFieldsConfiguration;
 		}
 

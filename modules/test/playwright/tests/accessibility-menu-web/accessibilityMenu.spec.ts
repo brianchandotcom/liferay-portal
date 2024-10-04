@@ -24,9 +24,12 @@ const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test('Enable accessibility menu', async ({
+test('Verify that the default value is displayed when the user has never changed the accessibility setting, regardless of the login status', async ({
 	accessibilityMenuPage,
+	apiHelpers,
 	instanceSettingsPage,
+	page,
+	site,
 }) => {
 	await instanceSettingsPage.goToInstanceSetting(
 		'Accessibility',
@@ -34,14 +37,7 @@ test('Enable accessibility menu', async ({
 	);
 
 	await accessibilityMenuPage.enableAccessibilityMenu();
-});
 
-test('Verify that the default value is displayed when the user has never changed the accessibility setting, regardless of the login status', async ({
-	accessibilityMenuPage,
-	apiHelpers,
-	page,
-	site,
-}) => {
 	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
 
 	userData[userAccount.alternateName] = {

@@ -217,6 +217,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "putAccountBatch"));
 					put(
+						"mutation#deleteOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"deleteOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode"));
+					put(
+						"mutation#createOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"postOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode"));
+					put(
 						"mutation#patchOrganizationMoveAccounts",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
@@ -1006,6 +1016,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "getAccount"));
 					put(
+						"query#organizationByExternalReferenceCodeAccounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getOrganizationByExternalReferenceCodeAccountsPage"));
+					put(
 						"query#organizationAccounts",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
@@ -1621,6 +1636,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PhoneResourceImpl.class,
 							"getUserAccountByExternalReferenceCodePhonesPage"));
+					put(
+						"query#Account.organizationByExternalReferenceCodeAccounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getOrganizationByExternalReferenceCodeAccountsPage"));
 					put(
 						"query#Account.byExternalReferenceCodePostalAddresses",
 						new ObjectValuePair<>(

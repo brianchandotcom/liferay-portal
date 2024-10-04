@@ -347,6 +347,44 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean
+			deleteOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource ->
+				accountResource.
+					deleteOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode(
+						externalReferenceCode, strings));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean
+			createOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource ->
+				accountResource.
+					postOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode(
+						externalReferenceCode, strings));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean patchOrganizationMoveAccounts(
 			@GraphQLName("sourceOrganizationId") Long sourceOrganizationId,
 			@GraphQLName("targetOrganizationId") Long targetOrganizationId,

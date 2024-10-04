@@ -108,6 +108,21 @@ public interface AccountResource {
 	public Response putAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void
+			deleteOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode(
+				String externalReferenceCode, String[] strings)
+		throws Exception;
+
+	public Page<Account> getOrganizationByExternalReferenceCodeAccountsPage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public void
+			postOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode(
+				String externalReferenceCode, String[] strings)
+		throws Exception;
+
 	public void patchOrganizationMoveAccounts(
 			Long sourceOrganizationId, Long targetOrganizationId, Long[] longs)
 		throws Exception;

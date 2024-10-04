@@ -107,11 +107,7 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isEnabled() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-96845")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled("LPS-96845");
 	}
 
 	private void _process(Company company) {

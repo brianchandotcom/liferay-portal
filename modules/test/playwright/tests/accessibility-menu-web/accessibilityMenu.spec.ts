@@ -53,6 +53,10 @@ test('Verify that the default value is displayed when the user has never changed
 
 		await accessibilityMenuPage.openAccessibilityMenu();
 
+		await expect(
+			accessibilityMenuPage.underlinedLinksToggle
+		).not.toBeChecked();
+
 		await accessibilityMenuPage.toggleUnderlinedLinks(true);
 	});
 

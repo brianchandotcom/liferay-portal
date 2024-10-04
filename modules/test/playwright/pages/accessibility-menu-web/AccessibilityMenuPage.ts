@@ -53,9 +53,11 @@ export class AccessibilityMenuPage {
 	}
 
 	async toggleUnderlinedLinks(check: boolean) {
-		await this.underlinedLinksToggle.setChecked(check);
-
-		await expect(this.underlinedLinksToggle).toBeChecked({checked: check});
+		await expect(async () => {
+			await this.underlinedLinksToggle.setChecked(check);
+	
+			await expect(this.underlinedLinksToggle).toBeChecked({checked: check});
+		}).toPass();
 
 		await this.closeButton.click();
 	}

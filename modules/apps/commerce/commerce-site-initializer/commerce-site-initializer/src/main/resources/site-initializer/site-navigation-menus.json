@@ -13,6 +13,11 @@
 				"type": "layout"
 			},
 			{
+				"friendlyURL": "/returns",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
 				"menuItems": [
 					{
 						"friendlyURL": "/pending-orders",

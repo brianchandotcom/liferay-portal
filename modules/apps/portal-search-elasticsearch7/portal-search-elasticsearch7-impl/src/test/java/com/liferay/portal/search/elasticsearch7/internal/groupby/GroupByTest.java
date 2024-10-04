@@ -208,8 +208,6 @@ public class GroupByTest extends BaseGroupByTestCase {
 	protected Collection<String> getFieldNames(Hits hits) {
 		Set<String> fieldNames = new HashSet<>();
 
-		Assert.assertNotNull(hits);
-
 		Assert.assertNotEquals(0, hits.getLength());
 
 		Document document = hits.doc(0);

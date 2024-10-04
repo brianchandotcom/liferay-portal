@@ -111,10 +111,6 @@ public class LocaleUtil {
 		return _localeUtil._getDefault();
 	}
 
-	public static LocaleUtil getInstance() {
-		return _localeUtil;
-	}
-
 	public static Map<String, String> getISOLanguages(Locale locale) {
 		return _localeUtil._getISOLanguages(locale);
 	}

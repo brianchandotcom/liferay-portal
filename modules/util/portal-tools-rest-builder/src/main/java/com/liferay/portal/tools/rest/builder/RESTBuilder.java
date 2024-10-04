@@ -481,7 +481,7 @@ public class RESTBuilder {
 						"\\$ref: \"#/components/schemas/", returnSchemaName,
 						"\"\n[ \t]+type: array"),
 					StringBundler.concat(
-						"schema:\n", _GROUP_1,
+						"schema:\n", _REGEX_GROUP_1,
 						"\\$ref: \"#/components/schemas/Page", returnSchemaName,
 						"\""));
 
@@ -555,12 +555,12 @@ public class RESTBuilder {
 	private String _addSchema(String schemaYAMLString, String yamlString) {
 		schemaYAMLString = StringUtil.replace(
 			schemaYAMLString, new String[] {"$", "\t", "\n"},
-			new String[] {"\\$", _GROUP_1, "\n" + _GROUP_1 + _GROUP_1});
+			new String[] {"\\$", _REGEX_GROUP_1, "\n" + _REGEX_GROUP_1 + _REGEX_GROUP_1});
 
 		return yamlString.replaceAll(
 			"([ \\t]+)schemas:",
 			StringBundler.concat(
-				_GROUP_1, "schemas:\n", _GROUP_1, _GROUP_1, schemaYAMLString));
+				_REGEX_GROUP_1, "schemas:\n", _REGEX_GROUP_1, _REGEX_GROUP_1, schemaYAMLString));
 	}
 
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
@@ -2345,7 +2345,7 @@ public class RESTBuilder {
 
 	private static final int _DESCRIPTION_MAX_LINE_LENGTH = 120;
 
-	private static final String _GROUP_1 = "$1";
+	private static final String _REGEX_GROUP_1 = "$1";
 
 	private static final Log _log = LogFactoryUtil.getLog(RESTBuilder.class);
 

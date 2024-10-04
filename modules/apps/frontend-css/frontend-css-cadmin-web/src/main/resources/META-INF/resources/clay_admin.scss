@@ -887,6 +887,7 @@ html#{$cadmin-selector} {
 									sm,
 									$cadmin-grid-breakpoints
 								) {
+									background-color: $cadmin-table-head-bg;
 									left: 0;
 									position: absolute;
 									right: 15px;

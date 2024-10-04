@@ -57,6 +57,7 @@ $table-responsive-margin-left-md: 375px !default;
 
 					&:first-child {
 						@include media-breakpoint-up(sm) {
+							background-color: $table-head-bg;
 							left: 0;
 							position: absolute;
 							right: 15px;

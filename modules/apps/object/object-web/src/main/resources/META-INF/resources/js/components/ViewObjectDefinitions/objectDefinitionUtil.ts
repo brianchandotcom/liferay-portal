@@ -464,120 +464,131 @@ export async function getUpdatedModelBuilderStructurePayload(
 	baseResourceURL: string,
 	currentObjectFolderName: string
 ) {
-	const {items: objectFolders} = await API.getAllObjectFolders();
+	const allObjectFolders = await API.getAllObjectFolders();
 
-	const currentObjectFolder = objectFolders.find(
-		(objectFolder) => objectFolder.name === currentObjectFolderName
-	) as ObjectFolder;
+	if (allObjectFolders) {
+		const {items: objectFolders} = allObjectFolders;
 
-	const objectFoldersWithObjectDefinitions: ObjectFolder[] =
-		await Promise.all(
-			objectFolders.map(async (objectFolder) => {
-				const objectFolderWithObjectDefinitions: ObjectDefinitionNodeData[] =
-					[];
+		const currentObjectFolder = objectFolders.find(
+			(objectFolder) => objectFolder.name === currentObjectFolderName
+		) as ObjectFolder;
 
-				const objectDefinitionsFilteredByObjectFolder =
-					await API.getObjectDefinitions(
-						`filter=objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`
+		const objectFoldersWithObjectDefinitions: ObjectFolder[] =
+			await Promise.all(
+				objectFolders.map(async (objectFolder) => {
+					const objectFolderWithObjectDefinitions: ObjectDefinitionNodeData[] =
+						[];
+
+					const objectDefinitionsFilteredByObjectFolder =
+						await API.getObjectDefinitions(
+							`filter=objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`
+						);
+
+					const linkedObjectDefinitions: ObjectDefinition[] = [];
+
+					await Promise.all(
+						objectFolder.objectFolderItems
+							.filter(
+								(objectFolderItem) =>
+									objectFolderItem.linkedObjectDefinition
+							)
+							.map(async (objectFolderItem) => {
+								linkedObjectDefinitions.push(
+									await API.getObjectDefinitionByExternalReferenceCode(
+										objectFolderItem.objectDefinitionExternalReferenceCode
+									)
+								);
+							})
 					);
 
-				const linkedObjectDefinitions: ObjectDefinition[] = [];
+					const updateObjectFolderObjectDefinitions = async ({
+						linkedObjectDefinition,
+						objectDefinitions,
+					}: {
+						linkedObjectDefinition: boolean;
+						objectDefinitions: ObjectDefinition[];
+					}) => {
+						for await (const objectDefinition of objectDefinitions) {
+							const objectFolderItem =
+								objectFolder.objectFolderItems.find(
+									(objectFolderItem) =>
+										objectFolderItem.objectDefinitionExternalReferenceCode ===
+										objectDefinition.externalReferenceCode
+								);
 
-				await Promise.all(
-					objectFolder.objectFolderItems
-						.filter(
-							(objectFolderItem) =>
-								objectFolderItem.linkedObjectDefinition
-						)
-						.map(async (objectFolderItem) => {
-							linkedObjectDefinitions.push(
-								await API.getObjectDefinitionByExternalReferenceCode(
-									objectFolderItem.objectDefinitionExternalReferenceCode
-								)
-							);
-						})
-				);
-
-				const updateObjectFolderObjectDefinitions = async ({
-					linkedObjectDefinition,
-					objectDefinitions,
-				}: {
-					linkedObjectDefinition: boolean;
-					objectDefinitions: ObjectDefinition[];
-				}) => {
-					for await (const objectDefinition of objectDefinitions) {
-						const objectFolderItem =
-							objectFolder.objectFolderItems.find(
-								(objectFolderItem) =>
-									objectFolderItem.objectDefinitionExternalReferenceCode ===
-									objectDefinition.externalReferenceCode
-							);
-
-						const dbTableName = await getDbTableName({
-							baseResourceURL,
-							objectDefinitionId: objectDefinition.id,
-						});
-
-						if (objectFolderItem) {
-							objectFolderWithObjectDefinitions.push({
-								...objectDefinition,
-								dbTableName,
-								hasObjectDefinitionDeleteResourcePermission:
-									!!objectDefinition.actions.delete,
-								hasObjectDefinitionManagePermissionsResourcePermission:
-									!!objectDefinition.actions.permissions,
-								hasObjectDefinitionUpdateResourcePermission:
-									!!objectDefinition.actions.update,
-								hasObjectDefinitionViewResourcePermission:
-									!!objectDefinition.actions.get,
-								linkedObjectDefinition,
-								objectFields: objectDefinition.objectFields.map(
-									({
-										businessType,
-										externalReferenceCode,
-										id,
-										label,
-										name,
-										required,
-									}) =>
-										({
-											businessType,
-											externalReferenceCode,
-											id,
-											label,
-											name,
-											primaryKey: name === 'id',
-											required,
-											selected: false,
-										}) as ObjectFieldNodeRow
-								),
-								selected: false,
-								showAllObjectFields: false,
+							const dbTableName = await getDbTableName({
+								baseResourceURL,
+								objectDefinitionId: objectDefinition.id,
 							});
+
+							if (objectFolderItem) {
+								objectFolderWithObjectDefinitions.push({
+									...objectDefinition,
+									dbTableName,
+									hasObjectDefinitionDeleteResourcePermission:
+										!!objectDefinition.actions.delete,
+									hasObjectDefinitionManagePermissionsResourcePermission:
+										!!objectDefinition.actions.permissions,
+									hasObjectDefinitionUpdateResourcePermission:
+										!!objectDefinition.actions.update,
+									hasObjectDefinitionViewResourcePermission:
+										!!objectDefinition.actions.get,
+									linkedObjectDefinition,
+									objectFields:
+										objectDefinition.objectFields.map(
+											({
+												businessType,
+												externalReferenceCode,
+												id,
+												label,
+												name,
+												required,
+											}) =>
+												({
+													businessType,
+													externalReferenceCode,
+													id,
+													label,
+													name,
+													primaryKey: name === 'id',
+													required,
+													selected: false,
+												}) as ObjectFieldNodeRow
+										),
+									selected: false,
+									showAllObjectFields: false,
+								});
+							}
 						}
-					}
-				};
+					};
 
-				await updateObjectFolderObjectDefinitions({
-					linkedObjectDefinition: false,
-					objectDefinitions: objectDefinitionsFilteredByObjectFolder,
-				});
+					await updateObjectFolderObjectDefinitions({
+						linkedObjectDefinition: false,
+						objectDefinitions:
+							objectDefinitionsFilteredByObjectFolder,
+					});
 
-				await updateObjectFolderObjectDefinitions({
-					linkedObjectDefinition: true,
-					objectDefinitions: linkedObjectDefinitions,
-				});
+					await updateObjectFolderObjectDefinitions({
+						linkedObjectDefinition: true,
+						objectDefinitions: linkedObjectDefinitions,
+					});
 
-				return {
-					...objectFolder,
-					objectDefinitions: objectFolderWithObjectDefinitions,
-				};
-			})
-		);
+					return {
+						...objectFolder,
+						objectDefinitions: objectFolderWithObjectDefinitions,
+					};
+				})
+			);
+
+		return {
+			objectFolders: objectFoldersWithObjectDefinitions,
+			selectedObjectFolderName: currentObjectFolder.name,
+		};
+	}
 
 	return {
-		objectFolders: objectFoldersWithObjectDefinitions,
-		selectedObjectFolderName: currentObjectFolder.name,
+		objectFolders: [],
+		selectedObjectFolderName: '',
 	};
 }
 

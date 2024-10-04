@@ -14,9 +14,9 @@ public class UpgradeJavaBaseModelListenerCheck extends BaseModelListener<t> {
 
 	@Override
 	public void onAfterCreate(t model) {
-		t originalModel = (t)model.clone();
+		super.onAfterUpdate((t)model.clone(), model);
 
-		super.onAfterUpdate(originalModel, model);
+		super.onAfterUpdate((t)model.clone(), model);
 	}
 
 	@Override
@@ -26,9 +26,7 @@ public class UpgradeJavaBaseModelListenerCheck extends BaseModelListener<t> {
 
 	@Override
 	public void onAfterRemove(t model) {
-		t originalModel = (t)model.clone();
-
-		super.onBeforeUpdate(originalModel, model);
+		super.onBeforeUpdate((t)model.clone(), model);
 	}
 
 	@Override
@@ -38,6 +36,8 @@ public class UpgradeJavaBaseModelListenerCheck extends BaseModelListener<t> {
 
 	@Override
 	public void onAfterUpdate(t originalModel, t model) {
+		super.onAfterUpdate(originalModel, model);
+
 		super.onAfterUpdate(originalModel, model);
 	}
 

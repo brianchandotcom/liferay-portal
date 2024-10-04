@@ -266,7 +266,9 @@ public class UserManagerImpl implements UserManager {
 
 		if (scimClientOAuth2ApplicationConfiguration == null) {
 			return ReflectionUtil.throwException(
-				new NotFoundException("Scim Client Configuration Not Found"));
+				new NotFoundException(
+					"SCIM not configured for company " +
+						serviceContext.getCompanyId()));
 		}
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
@@ -349,7 +351,9 @@ public class UserManagerImpl implements UserManager {
 
 		if (scimClientOAuth2ApplicationConfiguration == null) {
 			return ReflectionUtil.throwException(
-				new NotFoundException("Scim Client Configuration Not Found"));
+				new NotFoundException(
+					"SCIM not configured for company " +
+						serviceContext.getCompanyId()));
 		}
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
@@ -473,7 +477,8 @@ public class UserManagerImpl implements UserManager {
 					company.getCompanyId());
 
 		if (scimClientOAuth2ApplicationConfiguration == null) {
-			throw new NotFoundException("Scim Client Configuration Not Found");
+			throw new NotFoundException(
+				"SCIM not configured for company " + company.getCompanyId());
 		}
 
 		com.liferay.portal.kernel.model.User portalUser = _fetchPortalUser(
@@ -540,7 +545,8 @@ public class UserManagerImpl implements UserManager {
 					company.getCompanyId());
 
 		if (scimClientOAuth2ApplicationConfiguration == null) {
-			throw new NotFoundException("Scim Client Configuration Not Found");
+			throw new NotFoundException(
+				"SCIM not configured for company " + company.getCompanyId());
 		}
 
 		UserGroup userGroup = _fetchUserGroup(

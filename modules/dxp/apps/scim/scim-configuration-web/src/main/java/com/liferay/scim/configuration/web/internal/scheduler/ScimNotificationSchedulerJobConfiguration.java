@@ -68,13 +68,13 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	protected boolean isSendNotification(
 		long currentTime, Date lastNotificationDate,
-		Date oAuth2AccessTokenExpirationDate) {
+		Date accessTokenExpirationDate) {
 
 		long toExpiryMillis =
-			oAuth2AccessTokenExpirationDate.getTime() - currentTime;
+			accessTokenExpirationDate.getTime() - currentTime;
 
 		long toExpiryAtLastNotificationMillis =
-			oAuth2AccessTokenExpirationDate.getTime() -
+			accessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
 		for (long notificationDurationMillis : _NOTIFICATION_DURATION_MILLIS) {
@@ -94,11 +94,11 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isSendNotification(
-		Date lastNotificationDate, Date oAuth2AccessTokenExpirationDate) {
+		Date lastNotificationDate, Date accessTokenExpirationDate) {
 
 		return isSendNotification(
 			System.currentTimeMillis(), lastNotificationDate,
-			oAuth2AccessTokenExpirationDate);
+			accessTokenExpirationDate);
 	}
 
 	private void _process(Company company) {

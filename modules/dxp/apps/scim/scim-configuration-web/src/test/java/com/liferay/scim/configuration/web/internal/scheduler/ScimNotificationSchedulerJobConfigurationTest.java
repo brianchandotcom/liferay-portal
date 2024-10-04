@@ -29,18 +29,18 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 	@Test
 	public void testIsSendNotification() {
-		Date tokenExpiryDate = new Date(System.currentTimeMillis() + Time.YEAR);
+		Date accessTokenExpirationDate = new Date(System.currentTimeMillis() + Time.YEAR);
 
 		_testIsSendNotification(
-			tokenExpiryDate.getTime() - (Time.DAY * 30), tokenExpiryDate);
+			accessTokenExpirationDate.getTime() - (Time.DAY * 30), accessTokenExpirationDate);
 
 		_testIsSendNotification(
-			tokenExpiryDate.getTime() - (Time.DAY * 10), tokenExpiryDate);
+			accessTokenExpirationDate.getTime() - (Time.DAY * 10), accessTokenExpirationDate);
 
 		_testIsSendNotification(
-			tokenExpiryDate.getTime() - Time.DAY, tokenExpiryDate);
+			accessTokenExpirationDate.getTime() - Time.DAY, accessTokenExpirationDate);
 
-		_testIsSendNotification(tokenExpiryDate.getTime(), tokenExpiryDate);
+		_testIsSendNotification(accessTokenExpirationDate.getTime(), accessTokenExpirationDate);
 	}
 
 	private ScimNotificationSchedulerJobConfiguration
@@ -56,27 +56,27 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	}
 
 	private void _testIsSendNotification(
-		long notificationDurationMillis, Date tokenExpiryDate) {
+		long notificationDurationMillis, Date accessTokenExpirationDate) {
 
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				notificationDurationMillis, _NO_NOTIFICATION_YET,
-				tokenExpiryDate));
+				accessTokenExpirationDate));
 
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				notificationDurationMillis,
-				new Date(notificationDurationMillis - 1), tokenExpiryDate));
+				new Date(notificationDurationMillis - 1), accessTokenExpirationDate));
 
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				notificationDurationMillis,
-				new Date(notificationDurationMillis), tokenExpiryDate));
+				new Date(notificationDurationMillis), accessTokenExpirationDate));
 
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				notificationDurationMillis,
-				new Date(notificationDurationMillis + 1), tokenExpiryDate));
+				new Date(notificationDurationMillis + 1), accessTokenExpirationDate));
 	}
 
 	private static final Date _NO_NOTIFICATION_YET = new Date(0);

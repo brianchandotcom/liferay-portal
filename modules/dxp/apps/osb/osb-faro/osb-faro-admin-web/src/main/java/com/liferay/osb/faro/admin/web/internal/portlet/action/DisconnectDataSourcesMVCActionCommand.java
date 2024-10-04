@@ -8,14 +8,17 @@ package com.liferay.osb.faro.admin.web.internal.portlet.action;
 import com.liferay.osb.faro.admin.web.internal.constants.FaroAdminPortletKeys;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -54,11 +57,14 @@ public class DisconnectDataSourcesMVCActionCommand
 
 			Http.Options options = new Http.Options();
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			options.setLocation(
-				String.format(
-					"http://localhost:8080/o/faro/contacts/%s/data_source" +
-						"/disconnect-all",
-					faroProject.getGroupId()));
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), "/o/faro/contacts/",
+					faroProject.getGroupId(), "/data_source/disconnect-all"));
+
 			options.setPost(true);
 			options.setHeaders(getHeaders(actionRequest));
 

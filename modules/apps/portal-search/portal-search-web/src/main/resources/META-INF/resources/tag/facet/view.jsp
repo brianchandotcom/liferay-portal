@@ -103,15 +103,9 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 												disabled
 												id="<portlet:namespace />term_<%= i %>"
 												name="<portlet:namespace />term_<%= i %>"
+												onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 												type="checkbox"
 											/>
-
-											<aui:script>
-												document.getElementById('<portlet:namespace />term_<%= i %>').onchange =
-													function (event) {
-														Liferay.Search.FacetUtil.changeSelection(event);
-													};
-											</aui:script>
 
 											<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 												<span class="custom-control-label-text">

@@ -46,7 +46,7 @@ test('Verify that the default value is displayed when the user has never changed
 		surname: userAccount.familyName,
 	};
 
-	await test.step('Verify that the underlined links toggle is off when logged out, then turn it on', async () => {
+	await test.step('Verify that the "underlined links" toggle is off when logged out, then turn it on', async () => {
 		await performLogout(page);
 
 		await page.goto(site.friendlyUrlPath);
@@ -60,7 +60,7 @@ test('Verify that the default value is displayed when the user has never changed
 		await accessibilityMenuPage.toggleUnderlinedLinks(true);
 	});
 
-	await test.step('Login as a new user and check if enable underlined toggle is enabled to mantain guest configurations', async () => {
+	await test.step('Login as a new user and assert that the "underlined links" guest preference is copied to the user', async () => {
 		await performLogin(page, userAccount.alternateName);
 
 		await page.goto(site.friendlyUrlPath);
@@ -70,7 +70,7 @@ test('Verify that the default value is displayed when the user has never changed
 		await expect(accessibilityMenuPage.underlinedLinksToggle).toBeChecked();
 	});
 
-	await test.step('Verify that the underlined links toggle is on when logged out, then turn it off', async () => {
+	await test.step('Verify that the "underlined links" toggle is on when logged out, then turn it off', async () => {
 		await performLogout(page);
 
 		await page.goto(site.friendlyUrlPath);
@@ -80,7 +80,7 @@ test('Verify that the default value is displayed when the user has never changed
 		await accessibilityMenuPage.toggleUnderlinedLinks(false);
 	});
 
-	await test.step('Confirm that the underlined links toggle is off when logged in, since user did not change the configurations, and change the configurations for the first time', async () => {
+	await test.step('Confirm that the "underlined links" toggle is off when logged in, since user did not change the preference', async () => {
 		await performLogin(page, userAccount.alternateName);
 
 		await page.goto(site.friendlyUrlPath);
@@ -90,11 +90,13 @@ test('Verify that the default value is displayed when the user has never changed
 		await expect(
 			accessibilityMenuPage.underlinedLinksToggle
 		).not.toBeChecked();
+	});
 
+	await test.step('Then, change the "underlined links" preference for that user for the first time', async () => {
 		await accessibilityMenuPage.toggleUnderlinedLinks(true);
 	});
 
-	await test.step('Ensure that the underlined links toggle is off after logging out', async () => {
+	await test.step('Ensure that the "underlined links" toggle is off after logging out', async () => {
 		await performLogout(page);
 
 		await page.goto(site.friendlyUrlPath);
@@ -106,7 +108,7 @@ test('Verify that the default value is displayed when the user has never changed
 		).not.toBeChecked();
 	});
 
-	await test.step('Confirm that the underlined links toggle is on after logging in', async () => {
+	await test.step('Confirm that the "underlined links" toggle is on after logging in', async () => {
 		await performLogin(page, userAccount.alternateName);
 
 		await page.goto(site.friendlyUrlPath);

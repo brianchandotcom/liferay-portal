@@ -100,17 +100,10 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = (CPOptio
 												data-term-id="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>"
 												id="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
 												name="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
+												onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 												type="checkbox"
 												<%= cpOptionsSearchFacetDisplayContext.isCPOptionValueSelected(companyId, facet.getFieldName(), termCollector.getTerm()) ? "checked" : "" %>
 											/>
-
-											<aui:script>
-												document.getElementById(
-													'<portlet:namespace />term_<%= facet.getFieldName() + i %>'
-												).onchange = function (event) {
-													Liferay.Search.FacetUtil.changeSelection(event);
-												};
-											</aui:script>
 
 											<span class="custom-control-label term-name <%= cpOptionsSearchFacetDisplayContext.isCPOptionValueSelected(companyId, facet.getFieldName(), termCollector.getTerm()) ? "facet-term-selected" : "facet-term-unselected" %>">
 												<span class="custom-control-label-text"><%= HtmlUtil.escape(termCollector.getTerm()) %></span>

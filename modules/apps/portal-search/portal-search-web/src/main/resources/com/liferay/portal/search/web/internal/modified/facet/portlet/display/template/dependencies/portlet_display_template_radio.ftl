@@ -35,15 +35,10 @@
 									disabled
 									id="${namespace}${entry.getBucketText()}"
 									name="${namespace}${entry.getBucketText()}"
+									onChange='${"window.location.href = \"${entry.getFilterValue()}\";"}'
 									role="radio"
 									type="radio"
 								/>
-
-								<@liferay_aui.script>
-									document.getElementById('${namespace}${entry.getBucketText()}').onchange = function() {
-										window.location.href = "${entry.getFilterValue()}";
-									}
-								</@liferay_aui.script>
 
 								<span class="custom-control-label term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 									<span class="custom-control-label-text">
@@ -73,15 +68,10 @@
 							disabled
 							id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
 							name="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
+							onChange='${"window.location.href = \"${customRangeBucketDisplayContext.getFilterValue()}\";"}'
 							role="radio"
 							type="radio"
 						/>
-
-						<@liferay_aui.script>
-							document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onchange = function() {
-								window.location.href = "${customRangeBucketDisplayContext.getFilterValue()}";
-							}
-						</@liferay_aui.script>
 
 						<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 							<span class="custom-control-label-text">

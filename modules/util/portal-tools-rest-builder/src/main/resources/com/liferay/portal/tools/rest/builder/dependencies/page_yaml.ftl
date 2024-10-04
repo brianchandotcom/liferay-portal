@@ -1,29 +1,29 @@
 Page${schemaName}:
 	properties:
 		actions:
-			type: object
 			additionalProperties:
-				type: object
 				additionalProperties:
 					type: string
+				type: object
+			type: object
 		facets:
-			type: array
 			items:
-				$ref: '#/components/schemas/Facet'
+				$ref: "#/components/schemas/Facet"
+			type: array
 		items:
-			type: array
 			items:
-				$ref: '#/components/schemas/${schemaName}'
+				$ref: "#/components/schemas/${schemaName}"
+			type: array
 		lastPage:
-			type: integer
 			format: int64
-		pageSize:
 			type: integer
-			format: int64
 		page:
-			type: integer
 			format: int64
+			type: integer
+		pageSize:
+			format: int64
+			type: integer
 		totalCount:
-			type: integer
 			format: int64
+			type: integer
 	type: object

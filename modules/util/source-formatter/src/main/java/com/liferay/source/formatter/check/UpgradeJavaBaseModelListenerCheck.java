@@ -32,10 +32,9 @@ public class UpgradeJavaBaseModelListenerCheck extends BaseUpgradeCheck {
 
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
-		List<String> implementedClassNames =
-			javaClass.getImplementedClassNames();
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
 
-		if (implementedClassNames.contains("BaseModelListener")) {
+		if (!extendedClassNames.contains("BaseModelListener")) {
 			return content;
 		}
 

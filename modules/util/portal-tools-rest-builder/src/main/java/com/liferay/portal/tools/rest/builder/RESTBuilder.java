@@ -411,7 +411,6 @@ public class RESTBuilder {
 		throws Exception {
 
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
-
 		Set<String> processedSchemaNames = new HashSet<>();
 
 		FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
@@ -461,7 +460,7 @@ public class RESTBuilder {
 					}
 				}
 
-				int startIndex = StringUtil.indexOfAny(
+				int index = StringUtil.indexOfAny(
 					yamlString,
 					new String[] {
 						"\"" + javaMethodSignature.getPath() + "\":",
@@ -471,14 +470,12 @@ public class RESTBuilder {
 				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
 					javaMethodSignature.getOperation());
 
-				startIndex = yamlString.indexOf(httpMethod + ":", startIndex);
+				index = yamlString.indexOf(httpMethod + ":", index);
 
-				int endIndex = yamlString.indexOf("tags:", startIndex);
+				String oldYAMLString = yamlString.substring(
+					index, yamlString.indexOf("tags:", index));
 
-				String endpointYamlString = yamlString.substring(
-					startIndex, endIndex);
-
-				String pageEndpointYamlString = endpointYamlString.replaceAll(
+				String newYAMLString = oldYAMLString.replaceAll(
 					StringBundler.concat(
 						"schema:\n([ \t]+)items:\n[ \t]+",
 						"\\$ref: \"#/components/schemas/", returnSchemaName,
@@ -489,7 +486,7 @@ public class RESTBuilder {
 						"\""));
 
 				yamlString = StringUtil.replace(
-					yamlString, endpointYamlString, pageEndpointYamlString);
+					yamlString, oldYAMLString, newYAMLString);
 			}
 		}
 
@@ -555,15 +552,15 @@ public class RESTBuilder {
 			descriptionBlock);
 	}
 
-	private String _addSchema(String yamlSchemaString, String yamlString) {
-		yamlSchemaString = StringUtil.replace(
-			yamlSchemaString, new String[] {"$", "\t", "\n"},
+	private String _addSchema(String schemaYAMLString, String yamlString) {
+		schemaYAMLString = StringUtil.replace(
+			schemaYAMLString, new String[] {"$", "\t", "\n"},
 			new String[] {"\\$", _GROUP_1, "\n" + _GROUP_1 + _GROUP_1});
 
 		return yamlString.replaceAll(
 			"([ \\t]+)schemas:",
 			StringBundler.concat(
-				_GROUP_1, "schemas:\n", _GROUP_1, _GROUP_1, yamlSchemaString));
+				_GROUP_1, "schemas:\n", _GROUP_1, _GROUP_1, schemaYAMLString));
 	}
 
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
@@ -1267,13 +1264,13 @@ public class RESTBuilder {
 			String[] enumItemsParts = StringUtil.split(enumItems, ",");
 
 			for (int i = 0; i < enumItemsParts.length; i++) {
-				String enumItem = StringUtil.trim(enumItemsParts[i]);
+				String enumItemsPart = StringUtil.trim(enumItemsParts[i]);
 
-				if (!enumItem.startsWith("\"")) {
-					enumItem = "\"" + enumItem + "\"";
+				if (!enumItemsPart.startsWith("\"")) {
+					enumItemsPart = "\"" + enumItemsPart + "\"";
 				}
 
-				enumItemsParts[i] = enumItem;
+				enumItemsParts[i] = enumItemsPart;
 			}
 
 			yamlString =
@@ -1983,19 +1980,19 @@ public class RESTBuilder {
 		return tempPath.toString();
 	}
 
-	private String _getNpmPath() {
-		String absolutePath = _configDir.getAbsolutePath();
+	private String _getNPMPathString() {
+		String absolutePathString = _configDir.getAbsolutePath();
 
-		int index = absolutePath.indexOf("/liferay-portal/");
+		int index = absolutePathString.indexOf("/liferay-portal/");
 
-		if (index != -1) {
-			return String.valueOf(
-				Paths.get(
-					absolutePath.substring(0, index), "liferay-portal", "build",
-					"node", "bin", "npm"));
+		if (index == -1) {
+			return "npm";
 		}
 
-		return "npm";
+		return String.valueOf(
+			Paths.get(
+				absolutePathString.substring(0, index), "liferay-portal",
+				"build", "node", "bin", "npm"));
 	}
 
 	private Set<String> _getRelatedSchemaNames(
@@ -2043,7 +2040,7 @@ public class RESTBuilder {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
-				_getNpmPath(), "exec", "-y", "--prefix", _getNodePrefix(),
+				_getNPMPathString(), "exec", "-y", "--prefix", _getNodePrefix(),
 				"openapi-typescript-codegen@0.27.0", "--", "--input",
 				openAPIYAMLFile.getPath(), "--output", outputDirPath,
 				"--client", targetClientType, "--name", clientName,

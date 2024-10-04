@@ -167,8 +167,6 @@ components:
                     type: string
                 type:
                     enum: [business, guest, person, supplier]
-            required:
-                - name
             type: object
         AccountBrief:
             description:
@@ -1393,7 +1391,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.68'."
+        'com.liferay.headless.admin.user.client', and version '4.0.69'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -4028,6 +4026,108 @@ paths:
                     description:
                         "Organization successfully replaced"
             tags: ["Organization"]
+    "/organizations/by-external-reference-code/{externalReferenceCode}/accounts/by-external-reference-code":
+        delete:
+            operationId: deleteOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                description:
+                    An array of account external reference codes to remove from an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Account"]
+        get:
+            description:
+                Retrieves the organization's members (accounts) by external reference code. Results can be paginated,
+                filtered, searched, and sorted.
+            operationId: getOrganizationByExternalReferenceCodeAccountsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+            tags: ["Account"]
+        post:
+            operationId: postOrganizationByExternalReferenceCodeAccountsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                description:
+                    An array of account external reference codes to add to an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Account"]
     "/organizations/by-external-reference-code/{externalReferenceCode}/email-addresses":
         get:
             description:

@@ -35,7 +35,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		<aui:link cssClass="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(themeDisplay.getClayCSSURL()) %>" rel="stylesheet" type="text/css" />
 	</head>
 
-	<body>
+	<body onLoad="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
 		<center>
 			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
 				<tr>
@@ -49,11 +49,5 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 				</tr>
 			</table>
 		</center>
-
-		<aui:script type="text/javascript">
-			window.body.onload = function() {
-				window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
-			}
-		</aui:script>
 	</body>
 </html>

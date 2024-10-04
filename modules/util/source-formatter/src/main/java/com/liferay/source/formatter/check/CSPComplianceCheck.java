@@ -74,8 +74,11 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					break;
 				}
 
-				if ((x == 0) ||
-					!Character.isWhitespace(content.charAt(x - 1)) ||
+				if (x == 0) {
+					continue;
+				}
+
+				if (!Character.isWhitespace(content.charAt(x - 1)) ||
 					isJavaSource(content, x)) {
 
 					continue;

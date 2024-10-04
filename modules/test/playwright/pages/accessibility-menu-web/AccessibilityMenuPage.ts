@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import { waitForAlert } from '../../utils/waitForAlert';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export class AccessibilityMenuPage {
 	readonly closeButton: Locator;
@@ -25,15 +25,13 @@ export class AccessibilityMenuPage {
 		});
 		this.page = page;
 		this.saveButton = page
-			.getByRole('button', { name: 'Save' })
-			.or(page.getByRole('button', { name: 'Update' }));
+			.getByRole('button', {name: 'Save'})
+			.or(page.getByRole('button', {name: 'Update'}));
 		this.underlinedLinksToggle = page.getByLabel('Underlined Links');
 	}
 
 	async enableAccessibilityMenu() {
-		if (
-			!(await this.enableAccessibilityMenuCheckbox.isChecked())
-		) {
+		if (!(await this.enableAccessibilityMenuCheckbox.isChecked())) {
 			await this.enableAccessibilityMenuCheckbox.check();
 
 			await this.saveButton.click();
@@ -57,8 +55,10 @@ export class AccessibilityMenuPage {
 	async toggleUnderlinedLinks(check: boolean) {
 		await expect(async () => {
 			await this.underlinedLinksToggle.setChecked(check);
-	
-			await expect(this.underlinedLinksToggle).toBeChecked({checked: check});
+
+			await expect(this.underlinedLinksToggle).toBeChecked({
+				checked: check,
+			});
 		}).toPass();
 
 		await this.closeButton.click();

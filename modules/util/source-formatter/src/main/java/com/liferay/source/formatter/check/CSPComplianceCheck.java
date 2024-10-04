@@ -28,13 +28,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		String lowerCaseContent = StringUtil.toLowerCase(content);
+		content = _checkIllegalTags(fileName, absolutePath, content);
 
-		content = _checkIllegalTags(
-			fileName, absolutePath, content, lowerCaseContent);
-
-		return _checkIllegalAttributes(
-			fileName, absolutePath, content, lowerCaseContent);
+		return _checkIllegalAttributes(fileName, absolutePath, content);
 	}
 
 	protected int getTagStartPosition(String content, int x) {
@@ -57,8 +53,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _checkIllegalAttributes(
-		String fileName, String absolutePath, String content,
-		String lowerCaseContent) {
+		String fileName, String absolutePath, String content) {
+
+		String lowerCaseContent = StringUtil.toLowerCase(content);
 
 		List<String> illegalAttributeNames = getAttributeValues(
 			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);
@@ -100,8 +97,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 						_IGNORED_FTL_TAG_PREFIXES_KEY, absolutePath);
 				}
 				else if (fileName.endsWith(".jsp") ||
-						 fileName.endsWith(".jspf") ||
-						 fileName.endsWith(".jspx")) {
+						fileName.endsWith(".jspf") ||
+						fileName.endsWith(".jspx")) {
 
 					ignoredTagPrefixes = getAttributeValues(
 						_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
@@ -125,8 +122,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _checkIllegalTags(
-		String fileName, String absolutePath, String content,
-		String lowerCaseContent) {
+		String fileName, String absolutePath, String content) {
+
+		String lowerCaseContent = StringUtil.toLowerCase(content);
 
 		List<String> illegalTagNamesData = getAttributeValues(
 			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
@@ -163,8 +161,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				int lineNumber = getLineNumber(content, x);
 
-				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
-					fileName.endsWith(".jspx")) {
+				if (fileName.endsWith(".jsp") ||
+						fileName.endsWith(".jspf") ||
+						fileName.endsWith(".jspx")) {
 
 					addMessage(
 						fileName,

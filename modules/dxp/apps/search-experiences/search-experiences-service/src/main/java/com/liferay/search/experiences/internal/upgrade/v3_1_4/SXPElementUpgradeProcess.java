@@ -24,13 +24,10 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 					"update SXPElement set elementDefinitionJSON = ? where " +
 						"externalReferenceCode = ?")) {
 
-			for (String elementExternalReferenceCode :
-					_ELEMENT_EXTERNAL_REFERENCE_CODES) {
-
+			for (String externalReferenceCode : _EXTERNAL_REFERENCE_CODES) {
 				preparedStatement.setString(
-					1, _getElementDefinitionJSON(elementExternalReferenceCode));
-
-				preparedStatement.setString(2, elementExternalReferenceCode);
+					1, _getElementDefinitionJSON(externalReferenceCode));
+				preparedStatement.setString(2, externalReferenceCode);
 
 				preparedStatement.addBatch();
 			}
@@ -39,16 +36,14 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _getElementDefinitionJSON(
-		String elementExternalReferenceCode) {
-
+	private String _getElementDefinitionJSON(String externalReferenceCode) {
 		return StringUtil.read(
 			getClass(),
-			"dependencies/" +
-				StringUtil.toLowerCase(elementExternalReferenceCode) + ".json");
+			"dependencies/" + StringUtil.toLowerCase(externalReferenceCode) +
+				".json");
 	}
 
-	private static final String[] _ELEMENT_EXTERNAL_REFERENCE_CODES = {
+	private static final String[] _EXTERNAL_REFERENCE_CODES = {
 		"BOOST_CONTENTS_IN_A_CATEGORY",
 		"BOOST_CONTENTS_IN_A_CATEGORY_BY_KEYWORD_MATCH",
 		"BOOST_CONTENTS_IN_A_CATEGORY_FOR_A_PERIOD_OF_TIME",

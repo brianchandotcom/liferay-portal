@@ -6,7 +6,7 @@
 					"widgetInstance": {
 						"widgetConfig": {
 						},
-						"widgetName": "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet"
+						"widgetName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
 					}
 				},
 				"type": "Widget"
@@ -15,9 +15,8 @@
 		"type": "Root"
 	},
 	"settings": {
-		"masterPage": {
-			"key": "commerce-classic-master"
-		}
+		"colorSchemeName": "01",
+		"themeName": "Classic"
 	},
 	"version": 1.1
 }

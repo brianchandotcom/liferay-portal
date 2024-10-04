@@ -117,7 +117,10 @@ public class DocumentFieldsTranslator {
 			return _getGeoLocationPoint((Map<String, Object>)value1);
 		}
 
-		return _getGeoLocationPointFromGeoHash(value2);
+		GeoPoint geoPoint = GeoPoint.fromGeohash(value2);
+
+		return _geoBuilders.geoLocationPoint(
+			geoPoint.getLat(), geoPoint.getLon());
 	}
 
 	private GeoLocationPoint _getGeoLocationPoint(
@@ -130,13 +133,6 @@ public class DocumentFieldsTranslator {
 		List<Double> list = (List<Double>)map.get("coordinates");
 
 		return _geoBuilders.geoLocationPoint(list.get(1), list.get(0));
-	}
-
-	private GeoLocationPoint _getGeoLocationPointFromGeoHash(String geoHash) {
-		GeoPoint geoPoint = GeoPoint.fromGeohash(geoHash);
-
-		return _geoBuilders.geoLocationPoint(
-			geoPoint.getLat(), geoPoint.getLon());
 	}
 
 	private boolean _translateGeoLocationPoint(

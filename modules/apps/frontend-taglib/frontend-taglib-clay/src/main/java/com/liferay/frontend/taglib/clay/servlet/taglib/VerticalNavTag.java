@@ -210,16 +210,16 @@ public class VerticalNavTag extends BaseContainerTag {
 			int depth)
 		throws Exception {
 
-		jspWriter.write("<ul aria-orientation=\"vertical\" role=\"menubar\"");
-
-		jspWriter.write(" class=\"nav ");
+		jspWriter.write("<ul aria-orientation=\"vertical\" class=\"nav ");
 
 		if (depth == 0) {
-			jspWriter.write("nav-nested\">");
+			jspWriter.write("nav-nested");
 		}
 		else {
-			jspWriter.write("nav-stacked\">");
+			jspWriter.write("nav-stacked");
 		}
+
+		jspWriter.write("\" role=\"menubar\">");
 
 		for (VerticalNavItem verticalNavItem : verticalNavItems) {
 			VerticalNavItemList items =

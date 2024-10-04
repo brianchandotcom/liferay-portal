@@ -36,7 +36,7 @@ test('Enable accessibility menu', async ({
 	await accessibilityMenuPage.enableAccessibilityMenu();
 });
 
-test('Verify that the default value is displayed when the user has never changed the accessibility setting, regardless of sign-in status.', async ({
+test('Verify that the default value is displayed when the user has never changed the accessibility setting, regardless of the login status', async ({
 	accessibilityMenuPage,
 	apiHelpers,
 	page,
@@ -60,7 +60,7 @@ test('Verify that the default value is displayed when the user has never changed
 		await accessibilityMenuPage.toggleUnderlinedLinks(true);
 	});
 
-	await test.step('Log in as a new user and check if enable underlined toggle is enabled to mantain guest configurations ', async () => {
+	await test.step('Login as a new user and check if enable underlined toggle is enabled to mantain guest configurations', async () => {
 		await performLogin(page, userAccount.alternateName);
 
 		await page.goto(site.friendlyUrlPath);
@@ -80,7 +80,7 @@ test('Verify that the default value is displayed when the user has never changed
 		await accessibilityMenuPage.toggleUnderlinedLinks(false);
 	});
 
-	await test.step('Confirm that the underlined links toggle is off when signed in, since user did not change the configurations, and change the configurations for the first time', async () => {
+	await test.step('Confirm that the underlined links toggle is off when logged in, since user did not change the configurations, and change the configurations for the first time', async () => {
 		await performLogin(page, userAccount.alternateName);
 
 		await page.goto(site.friendlyUrlPath);
@@ -94,7 +94,7 @@ test('Verify that the default value is displayed when the user has never changed
 		await accessibilityMenuPage.toggleUnderlinedLinks(true);
 	});
 
-	await test.step('Ensure that the underlined links toggle is off after signing out', async () => {
+	await test.step('Ensure that the underlined links toggle is off after logging out', async () => {
 		await performLogout(page);
 
 		await page.goto(site.friendlyUrlPath);
@@ -106,7 +106,7 @@ test('Verify that the default value is displayed when the user has never changed
 		).not.toBeChecked();
 	});
 
-	await test.step('Confirm that the underlined links toggle is on when signed in', async () => {
+	await test.step('Confirm that the underlined links toggle is on after logging in', async () => {
 		await performLogin(page, userAccount.alternateName);
 
 		await page.goto(site.friendlyUrlPath);

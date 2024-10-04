@@ -36,9 +36,14 @@
 									disabled
 									id="${namespace}${entry.getBucketText()}"
 									name="${namespace}${entry.getBucketText()}"
-									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
 									type="checkbox"
 								/>
+
+								<@liferay_aui.script>
+									document.getElementById('${namespace}${entry.getBucketText()}').onchange = function() {
+										Liferay.Search.FacetUtil.changeSelection(event);
+									}
+								</@liferay_aui.script>
 
 								<span class="custom-control-label term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 									<span class="custom-control-label-text">
@@ -73,9 +78,14 @@
 									disabled
 									id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
 									name="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
-									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
 									type="checkbox"
 								/>
+
+								<@liferay_aui.script>
+									document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onchange = function() {
+										Liferay.Search.FacetUtil.changeSelection(event);
+									}
+								</@liferay_aui.script>
 
 								<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 									<span class="custom-control-label-text">

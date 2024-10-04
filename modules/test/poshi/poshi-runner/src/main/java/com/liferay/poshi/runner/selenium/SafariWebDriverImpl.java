@@ -43,7 +43,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
 			try {
 				javascriptExecutor.executeScript(
-					"confirm = function() {return true;};");
+					"confirm = function(){return true;};");
 
 				javaScriptClick(locator);
 			}

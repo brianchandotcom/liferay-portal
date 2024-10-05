@@ -4658,18 +4658,6 @@ public class ObjectEntryResourceTest {
 
 		User creatorUser = UserTestUtil.addUser(_group.getGroupId());
 
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.addListTypeDefinition(
-				null, creatorUser.getUserId(),
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				false,
-				Arrays.asList(
-					ListTypeEntryUtil.createListTypeEntry(
-						"listTypeEntryKey1",
-						Collections.singletonMap(
-							LocaleUtil.US, "List Type Entry Key 1"))));
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				creatorUser.getUserId(), 0, false, true, false, false,
@@ -4712,9 +4700,6 @@ public class ObjectEntryResourceTest {
 			creatorExternalReferenceCode);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
-			listTypeDefinition);
 	}
 
 	@Test

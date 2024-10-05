@@ -15,10 +15,11 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../liferay.config';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
-import {performLogout} from '../../utils/performLogin';
+import performLogin, {performLogout} from '../../utils/performLogin';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
@@ -544,6 +545,74 @@ test.describe('SEO configuration', () => {
 		await expect(page.locator('.preview-seo-description')).toContainText(
 			spanishLanguageDescription
 		);
+	});
+
+	test('User can customize canonical url', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create page
+
+		const pageName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: pageName,
+		});
+
+		// Assert canonical url
+
+		await performLogout(page);
+
+		await page.goto(`/web${site.friendlyUrlPath}/${pageName}`);
+
+		expect(
+			await page.locator('link[rel="canonical"]').getAttribute('href')
+		).toBe(
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}`
+		);
+
+		await performLogin(page, 'test');
+
+		// Go to SEO
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(pageName, 'SEO');
+
+		// Configure custom canonical url
+
+		await page.getByLabel('Use Custom Canonical URL').check();
+
+		await expect(
+			page.getByText('Due to the customization of the canonical URL')
+		).toBeAttached();
+
+		const canonicalURL = page.getByLabel('Canonical URL', {exact: true});
+
+		await expect(canonicalURL).toHaveValue(
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}`
+		);
+
+		await canonicalURL.fill('http://mycustomizedurl.com/mydesiredurl');
+
+		// Save configuration
+
+		await pageConfigurationPage.save();
+
+		// Assert custom canonical url
+
+		await performLogout(page);
+
+		await page.goto(`/web${site.friendlyUrlPath}/${pageName}`);
+
+		expect(
+			await page.locator('link[rel="canonical"]').getAttribute('href')
+		).toBe('http://mycustomizedurl.com/mydesiredurl');
 	});
 
 	test('User can customize custom meta tags', async ({

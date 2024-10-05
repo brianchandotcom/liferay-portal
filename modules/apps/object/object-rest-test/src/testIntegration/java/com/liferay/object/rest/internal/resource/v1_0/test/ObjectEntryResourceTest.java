@@ -4656,11 +4656,9 @@ public class ObjectEntryResourceTest {
 	public void testGetCreatorExternalReferenceCodeFromObjectEntry()
 		throws Exception {
 
-		User creatorUser = UserTestUtil.addUser(_group.getGroupId());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				creatorUser.getUserId(), 0, false, true, false, false,
+				TestPropsValues.getUserId(), 0, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -4673,7 +4671,10 @@ public class ObjectEntryResourceTest {
 						"Test Field", "testField", true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			creatorUser.getUserId(), objectDefinition.getObjectDefinitionId());
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		User creatorUser = UserTestUtil.addUser(_group.getGroupId());
 
 		ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
@@ -4687,7 +4688,7 @@ public class ObjectEntryResourceTest {
 		long objectEntryId = serviceBuilderObjectEntry.getObjectEntryId();
 
 		ObjectEntryResource objectEntryResource = _getObjectEntryResource(
-			objectDefinition, creatorUser);
+			objectDefinition, TestPropsValues.getUser());
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 			objectEntryResource.getObjectEntry(objectEntryId);

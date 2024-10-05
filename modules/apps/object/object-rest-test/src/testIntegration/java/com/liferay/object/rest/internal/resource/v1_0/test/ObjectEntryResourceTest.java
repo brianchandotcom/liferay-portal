@@ -4674,12 +4674,11 @@ public class ObjectEntryResourceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		User creatorUser = UserTestUtil.addUser(_group.getGroupId());
+		User user = UserTestUtil.addUser(_group.getGroupId());
 
 		ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
-				creatorUser.getUserId(), 0,
-				objectDefinition.getObjectDefinitionId(),
+				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"testField", true
 				).build(),
@@ -4697,8 +4696,7 @@ public class ObjectEntryResourceTest {
 		).getExternalReferenceCode();
 
 		Assert.assertEquals(
-			creatorUser.getExternalReferenceCode(),
-			creatorExternalReferenceCode);
+			user.getExternalReferenceCode(), creatorExternalReferenceCode);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

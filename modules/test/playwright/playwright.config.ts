@@ -26,6 +26,7 @@ import {config as depotWebConfig} from './tests/depot-web/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
 import {config as dynamicDataMappingFormWebDefaultEnvironmentConfig} from './tests/dynamic-data-mapping-form-web/default-environment/config';
+import {config as dynamicDataMappingFormWebLxcEnvironmentConfig} from './tests/dynamic-data-mapping-form-web/lxc-environment/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
 import {config as featureFlagWebConfig} from './tests/feature-flag-web/config';
 import {config as fragmentWebConfig} from './tests/fragment-web/config';
@@ -122,6 +123,7 @@ export default defineConfig({
 		dispatchWebConfig,
 		documentLibraryWebConfig,
 		dynamicDataMappingFormWebDefaultEnvironmentConfig,
+		dynamicDataMappingFormWebLxcEnvironmentConfig,
 		exportImportWebConfig,
 		featureFlagWebConfig,
 		fragmentWebConfig,

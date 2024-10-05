@@ -546,6 +546,120 @@ test.describe('SEO configuration', () => {
 		);
 	});
 
+	test('User can customize custom meta tags', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create page
+
+		const pageName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: pageName,
+		});
+
+		// Configure custom meta tags
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(pageName, 'Custom Meta Tags');
+
+		// Edit custom meta tags
+
+		const property1 = page.getByLabel('Property', {exact: true}).nth(0);
+
+		await property1.waitFor();
+
+		const property1Name = getRandomString();
+
+		await property1.fill(property1Name);
+
+		const content1 = page.getByLabel('Content', {exact: true}).nth(0);
+
+		const content1DefaultValue = getRandomString();
+
+		await content1.fill(content1DefaultValue);
+
+		// Add new custom meta tag
+
+		await page.getByLabel('Add Custom Tags').click();
+
+		// Edit new custom meta tag
+
+		const property2 = page.getByLabel('Property', {exact: true}).nth(1);
+
+		await property2.waitFor();
+
+		const property2Name = getRandomString();
+
+		await property2.fill(property2Name);
+
+		const content2 = page.getByLabel('Content', {exact: true}).nth(1);
+
+		const content2DefaultValue = getRandomString();
+
+		await content2.fill(content2DefaultValue);
+
+		// Switch language
+
+		await page.getByRole('button').filter({hasText: 'en-US'}).click();
+
+		await page.getByRole('link').filter({hasText: 'es-ES'}).click();
+
+		// Translate custom meta tags
+
+		const content1SpanishValue = getRandomString();
+
+		await content1.fill(content1SpanishValue);
+
+		const content2SpanishValue = getRandomString();
+
+		await content2.fill(content2SpanishValue);
+
+		// Save configuration
+
+		await pageConfigurationPage.save();
+
+		// Assert spanish language custom meta tags
+
+		await performLogout(page);
+
+		await page.goto(`/es/web${site.friendlyUrlPath}/${pageName}`);
+
+		await expect(
+			page.locator(
+				`meta[property="${property1Name}"][content="${content1SpanishValue}"]`
+			)
+		).toBeAttached();
+
+		await expect(
+			page.locator(
+				`meta[property="${property2Name}"][content="${content2SpanishValue}"]`
+			)
+		).toBeAttached();
+
+		// Assert default language custom meta tags
+
+		await page.goto(`/en/web${site.friendlyUrlPath}/${pageName}`);
+
+		await expect(
+			page.locator(
+				`meta[property="${property1Name}"][content="${content1DefaultValue}"]`
+			)
+		).toBeAttached();
+
+		await expect(
+			page.locator(
+				`meta[property="${property2Name}"][content="${content2DefaultValue}"]`
+			)
+		).toBeAttached();
+	});
+
 	test(
 		'User can customize open graph tags',
 		{

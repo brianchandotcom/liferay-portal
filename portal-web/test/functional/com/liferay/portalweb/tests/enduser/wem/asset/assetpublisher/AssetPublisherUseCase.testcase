@@ -1158,6 +1158,8 @@ definition {
 	@description = "View assets filter by tag or category in Asset Publisher."
 	@priority = 4
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {
+		property custom.properties = "feature.flag.LPD-35013=true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

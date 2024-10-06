@@ -101,6 +101,8 @@ export class TemplatesPage {
 		);
 
 		await this.saveTemplate();
+
+		await this.saveTemplate();
 	}
 
 	async deleteInformationTemplate(title: string) {

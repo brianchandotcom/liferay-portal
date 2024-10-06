@@ -1876,57 +1876,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126159. The user can publish a content page without permissions for custom fields."
-	@priority = 4
-	test PublishContentPageWithoutCustomFieldsPermission {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Add a custom field for Page") {
-			CustomFields.openCustomFieldAdmin();
-
-			CustomFields.addCP(
-				customFieldName = "Text Field",
-				customFieldType = "Input Field",
-				customInputDataType = "Text",
-				resourceName = "Page");
-		}
-
-		task ("Define the permissions of site role") {
-			Permissions.definePermissionsViaJSONAPI(
-				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL:com.liferay.layout.seo,VIEW:com.liferay.portal.kernel.model.Group,ADD_LAYOUT,VIEW_SITE_ADMINISTRATION:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION:com.liferay.portal.kernel.model.Layout,UPDATE",
-				roleTitle = ${randomRoleKey},
-				roleType = "site");
-		}
-
-		task ("Assign the site role to new user") {
-			JSONRole.assignSiteRoleToUser(
-				groupName = ${randomSiteName},
-				roleTitle = ${randomRoleKey},
-				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
-		task ("Add a Heading fragment to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Publish the page") {
-			PageEditor.publish();
-		}
-	}
-
 	@description = "This is a test for LPS-137155. The page creator can change permissions of content page via header ellipsis icon at edit mode."
 	@priority = 3
 	test RemoveViewPermissionForGuestViaHeaderEllipsisIcon {

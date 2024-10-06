@@ -28,6 +28,12 @@ export class TemplatesPage {
 		);
 	}
 
+	async gotoWidgetTemplates(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.widgetTemplates}`
+		);
+	}
+
 	async clickAction(action: string, title: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -77,6 +83,24 @@ export class TemplatesPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(this.page);
+	}
+
+	async createWidgetTemplate(name: string, type: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: type,
+			}),
+			trigger: this.page.getByRole('button', {name: 'New'}),
+		});
+
+		await fillAndClickOutside(
+			this.page,
+			this.page.getByPlaceholder('Untitled Template'),
+			name
+		);
+
+		await this.saveTemplate();
 	}
 
 	async deleteInformationTemplate(title: string) {

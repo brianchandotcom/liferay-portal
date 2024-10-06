@@ -169,3 +169,68 @@ test(
 		);
 	}
 );
+
+test(
+	'Edit a widget template',
+	{
+		tag: '@LPS-137903',
+	},
+	async ({page, site, templatesPage}) => {
+		const elements = [
+			'Asset Entries*',
+			'Asset Entry',
+			'Asset Publisher Helper',
+			'Current URL',
+			'HTTP Request',
+			'Locale',
+			'Portlet Preferences',
+			'Render Request',
+			'Render Response',
+			'Template ID',
+			'Theme Display',
+		];
+
+		const properties = ['Template Key', 'URL', 'WebDAV URL'];
+
+		// Go to widget templates administration
+
+		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+		// Create widget template
+
+		const widgetTemplateName = getRandomString();
+
+		await templatesPage.createWidgetTemplate(
+			widgetTemplateName,
+			'Asset Publisher Template'
+		);
+
+		// Edit widget template
+
+		await templatesPage.editTemplate(widgetTemplateName);
+
+		// Assert elements
+
+		for (const element of elements) {
+			await expect(page.getByLabel(element)).toBeVisible();
+		}
+
+		// Check properties tab
+
+		await page.getByLabel('Properties').click();
+
+		// Assert properties
+
+		await expect(page.getByLabel('Template Key')).toBeVisible();
+
+		await expect(page.getByLabel('URL', {exact: true})).toBeVisible();
+
+		await expect(
+			page.getByLabel('WebDAV URL', {exact: true})
+		).toBeVisible();
+
+		await expect(
+			page.getByTitle('small-image-source', {exact: true})
+		).toBeVisible();
+	}
+);

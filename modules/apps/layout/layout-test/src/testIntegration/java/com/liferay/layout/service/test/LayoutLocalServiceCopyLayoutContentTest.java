@@ -15,6 +15,12 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -55,11 +61,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -68,6 +76,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -75,6 +84,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -82,6 +92,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -241,6 +252,35 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			ListUtil.isNotEmpty(
 				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 					_group.getGroupId(), targetLayout.getPlid())));
+	}
+
+	@Test
+	public void testCopyContentLayoutWithExpandoValue() throws Exception {
+		Layout sourceLayout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addDefaultTable(
+			TestPropsValues.getCompanyId(), Layout.class.getName());
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING);
+
+		_expandoValueLocalService.addValue(
+			TestPropsValues.getCompanyId(),
+			PortalUtil.getClassName(expandoTable.getClassNameId()),
+			expandoTable.getName(), expandoColumn.getName(),
+			sourceLayout.getPlid(), RandomTestUtil.randomString());
+
+		Layout targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		User user = UserTestUtil.addGroupUser(
+			_group, RoleConstants.SITE_MEMBER);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+		}
 	}
 
 	@Test
@@ -1202,6 +1242,12 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 	@Inject
 	private EntityCache _entityCache;
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private ExpandoValueLocalService _expandoValueLocalService;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

@@ -87,7 +87,7 @@ export class TemplatesPage {
 		await waitForAlert(this.page);
 	}
 
-	async editInformationTemplate(name: string) {
+	async editTemplate(name: string) {
 		await this.page.getByRole('link', {exact: true, name}).click();
 	}
 
@@ -113,7 +113,7 @@ export class TemplatesPage {
 		await waitForAlert(this.page, `Success:${fileName} Imported`);
 	}
 
-	async saveInformationTemplate() {
+	async saveTemplate() {
 		await this.page
 			.getByRole('button', {exact: true, name: 'Save'})
 			.click();

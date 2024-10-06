@@ -39,11 +39,11 @@ test(
 			'information_template_blogs.ftl'
 		);
 
-		await templatesPage.saveInformationTemplate();
+		await templatesPage.saveTemplate();
 
 		// View the script content is shown in code mirror
 
-		await templatesPage.editInformationTemplate(informationTemplateName);
+		await templatesPage.editTemplate(informationTemplateName);
 
 		await expect(page.locator('.ddm_template_editor__App')).toContainText(
 			'coverImage.getData()'
@@ -155,11 +155,11 @@ test(
 
 		// Save information template
 
-		await templatesPage.saveInformationTemplate();
+		await templatesPage.saveTemplate();
 
 		// View the script content is shown in code mirror
 
-		await templatesPage.editInformationTemplate(informationTemplateName);
+		await templatesPage.editTemplate(informationTemplateName);
 
 		await expect(page.locator('.ddm_template_editor__App')).toContainText(
 			'${JournalArticle_title.getData()}'

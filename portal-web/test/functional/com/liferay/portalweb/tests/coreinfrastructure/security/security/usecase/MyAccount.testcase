@@ -1,0 +1,52 @@
+@component-name = "portal-security"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Security";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site and page in it") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a company Object with attachment fields") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Upload Object",
+				objectName = "UploadObject",
+				pluralLabelName = "Upload Object");
+		}
+	}
+
+	@description = "This is a use case for LPS-196035. A User can access the WebDAV link from Documents and Media, but a prompt has to be displayed about the password that can be created at My Account."
+	@priority = 4
+	test BluePromptInDocumentsAndMediasAccessFromDesktop {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: A User navigates to Documents and Media in Site Menu") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When: Clicks on the Kebab Menu and then on Access from Desktop, the WebDAV link and the notification prompt should be displayed") {
+			Portlet.gotoPortletOptions(portletOption = "Access from Desktop");
+		}
+
+		task ("Then: Verify that 'My Account' hyperlink is present by clicking it") {
+			ACUtils.clickGenericHyperlink(hyperlinkText = "My Account");
+		}
+	}
+
+}

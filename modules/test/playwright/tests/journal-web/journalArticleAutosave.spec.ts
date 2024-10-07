@@ -496,7 +496,25 @@ autoSaveUndoRedoTest(
 
 		await fillAndClickOutside(page, textField, text);
 
-		await historyButton.click();
+		const translationButton = page.getByLabel('Select a language, current');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not',
+			}),
+			trigger: translationButton,
+		});
+
+		await expect(async () => {
+			await journalEditArticlePage.fillTitle(getRandomString());
+
+			await historyButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Change Language'})
+			).toBeEnabled();
+		}).toPass();
 
 		await page.getByRole('menuitem', {name: 'Undo All'}).click();
 

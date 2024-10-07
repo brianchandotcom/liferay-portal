@@ -130,14 +130,7 @@ export class DisplayPageTemplatesPage {
 			.getByRole('button')
 			.click();
 
-		await this.page
-			.getByRole('button', {exact: true, name: 'Save'})
-			.click();
-
-		await waitForAlert(
-			this.page,
-			'Success:The page was updated successfully.'
-		);
+		await this.saveConfiguration();
 	}
 
 	async markAsDefault(name: string) {
@@ -158,6 +151,17 @@ export class DisplayPageTemplatesPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(this.page);
+	}
+
+	async saveConfiguration() {
+		await this.page
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
+
+		await waitForAlert(
+			this.page,
+			'Success:The page was updated successfully.'
+		);
 	}
 
 	async createFolder(name: string) {

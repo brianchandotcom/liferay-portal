@@ -12,6 +12,10 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -173,9 +177,25 @@ public class PublicationUserNotificationHandlerTest {
 
 	@Test
 	public void testGetLinkToViewConflicts() throws Exception {
-		CTCollection ctCollection =
-			CTCollectionTestUtil.createCTCollectionWithConflict(
-				TestPropsValues.getUser());
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			ddmStructure = _ddmStructureLocalService.updateStructure(
+				TestPropsValues.getUserId(), ddmStructure.getStructureId(),
+				ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+
+		_ddmStructureLocalService.deleteDDMStructure(
+			ddmStructure.getStructureId());
 
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			ctCollection.getCtCollectionId());
@@ -364,6 +384,9 @@ public class PublicationUserNotificationHandlerTest {
 	}
 
 	@Inject
+	private static Portal _portal;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -372,13 +395,13 @@ public class PublicationUserNotificationHandlerTest {
 	@Inject
 	private CTProcessLocalService _ctProcessLocalService;
 
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	private Group _group;
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private UserNotificationEventLocalService

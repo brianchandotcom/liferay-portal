@@ -18,7 +18,6 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {sub} from 'frontend-js-web';
-import moment from 'moment/min/moment-with-locales';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import './FieldBase.scss';
@@ -27,23 +26,12 @@ export function updateFieldNameLocale(editingLanguageId, locale, name) {
 	return name.replace(new RegExp(`${editingLanguageId}$`), locale);
 }
 
-function normalizeInputValue(fieldType, locale, value) {
+function normalizeInputValue(fieldType, value) {
 	if (!value) {
 		return '';
 	}
-	if (fieldType === 'date') {
-		const momentLocale = moment().locale(locale);
 
-		const date = moment(value, [
-			momentLocale.localeData().longDateFormat('L'),
-			'YYYY-MM-DD',
-		]).toDate();
-
-		if (moment(date).isValid()) {
-			return moment(date).format('YYYY-MM-DD');
-		}
-	}
-	else if (
+	if (
 		fieldType === 'document_library' ||
 		fieldType === 'geolocation' ||
 		fieldType === 'grid' ||
@@ -252,7 +240,7 @@ export default function FieldBase({
 						name
 					)}
 					type="hidden"
-					value={normalizeInputValue(type, locale, value)}
+					value={normalizeInputValue(type, value)}
 				/>
 			);
 		});

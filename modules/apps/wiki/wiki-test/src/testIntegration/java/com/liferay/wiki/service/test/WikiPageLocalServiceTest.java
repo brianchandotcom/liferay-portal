@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.DuplicateWikiPageExternalReferenceCodeException;
@@ -64,6 +66,7 @@ import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.test.util.WikiTestUtil;
 
@@ -623,6 +626,18 @@ public class WikiPageLocalServiceTest {
 		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			WikiPageLocalServiceUtil.getPage(childPage.getResourcePrimKey());
 		}
+	}
+
+	@Test
+	public void testFetchPersistedModelByResourcePrimKey() throws Exception {
+		WikiPage wikiPage = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		PersistedModel persistedModel =
+			_wikiPageLocalService.fetchPersistedModel(
+				wikiPage.getResourcePrimKey());
+
+		Assert.assertNotNull(persistedModel);
 	}
 
 	@Test
@@ -1414,6 +1429,9 @@ public class WikiPageLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private WikiPageLocalService _wikiPageLocalService;
 
 	private static class AssetCategoryTestException extends PortalException {
 	}

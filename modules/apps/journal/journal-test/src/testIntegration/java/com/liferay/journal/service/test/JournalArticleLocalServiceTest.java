@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -1166,6 +1167,45 @@ public class JournalArticleLocalServiceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			journalArticle.getArticleId(), true);
+	}
+
+	@Test
+	public void testFetchPersistedModelByResourcePrimKey() throws Exception {
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		PersistedModel persistedModel =
+			_journalArticleLocalService.fetchPersistedModel(
+				article.getResourcePrimKey());
+
+		Assert.assertNotNull(persistedModel);
+	}
+
+	@Test
+	public void testFetchPersistedModelByResourcePrimKeyReturnsLastApproved()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		JournalArticle approvedArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		JournalTestUtil.updateArticle(
+			approvedArticle, RandomTestUtil.randomString(),
+			approvedArticle.getContent(), false, false, serviceContext);
+
+		JournalArticle retrievedArticle =
+			(JournalArticle)_journalArticleLocalService.fetchPersistedModel(
+				approvedArticle.getResourcePrimKey());
+
+		Assert.assertNotNull(retrievedArticle);
+		Assert.assertEquals(retrievedArticle.getId(), approvedArticle.getId());
 	}
 
 	@Test

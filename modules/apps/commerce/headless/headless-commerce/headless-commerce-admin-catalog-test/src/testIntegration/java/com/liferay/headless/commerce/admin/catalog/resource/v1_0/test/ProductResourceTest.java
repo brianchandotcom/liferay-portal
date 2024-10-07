@@ -13,6 +13,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -33,15 +34,18 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
@@ -328,6 +332,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		_testPostProductVirtual();
 		_testPostProductWithProductAccountGroupExternalReferenceCode();
 		_testPostProductWithProductChannelExternalReferenceCode();
+		_testPostProductWithWorkflowSingleApprover();
 	}
 
 	@Override
@@ -674,6 +679,27 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			productChannel.getExternalReferenceCode());
 	}
 
+	private void _testPostProductWithWorkflowSingleApprover() throws Exception {
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), testCompany.getCompanyId(),
+			testCompany.getGroupId(), CPDefinition.class.getName(), 0, 0,
+			"Single Approver@1");
+
+		Product postProduct = productResource.postProduct(
+			_randomProductWithSku());
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			postProduct.getId());
+
+		CPInstance cpInstance = cpDefinition.getCPInstances(
+		).get(
+			0
+		);
+
+		Assert.assertEquals(
+			cpInstance.getStatus(), WorkflowConstants.STATUS_APPROVED);
+	}
+
 	@DeleteAfterTestRun
 	private AccountGroup _accountGroup;
 
@@ -697,5 +723,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

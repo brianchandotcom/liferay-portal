@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -236,6 +237,7 @@ public class CopyLayoutMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPS-192724")
 	public void testDoProcessActionCopyLayoutWithPermissions()
 		throws Exception {
 

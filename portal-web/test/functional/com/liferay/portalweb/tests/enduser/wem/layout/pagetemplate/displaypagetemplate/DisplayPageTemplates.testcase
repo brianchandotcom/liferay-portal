@@ -80,45 +80,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-192724. The site administrator could copy a display page template with permissions."
-	@priority = 4
-	test CopyDisplayPageTemplateWithPermissions {
-		task ("Given a page creator has a published display page template with permissions") {
-			PageEditor.publish();
-
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Permissions");
-
-			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-				addOrRemoveViewPermission = "Remove",
-				permissionsKeyList = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "Guest");
-
-			IFrame.closeFrame();
-		}
-
-		task ("When the page creator makes a copy of display page template") {
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Make a Copy");
-
-			MenuItem.click(menuItem = "Display Page With Permissions");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Then the copy of display page template should keep the permissions") {
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name (Copy)",
-				item = "Permissions");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			PermissionsInline.viewPermissionsRemoved(
-				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "Guest");
-		}
-	}
-
 }

@@ -78,7 +78,7 @@ const PublicationTimeline = ({
 			<ClayDropDown.Item key={timelineItem.id}>
 				<ClayLayout.ContentRow className="c-mb-1">
 					<ClayLayout.ContentCol expand>
-						{timelineClassPK === 0 ? (
+						{Number(timelineClassPK) === 0 ? (
 							<div className="text-weight-bold">
 								{timelineItem.title}
 							</div>

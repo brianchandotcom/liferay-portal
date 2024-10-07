@@ -91,7 +91,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					<aui:icon image="caret-double-l" markupView="lexicon" />
 				</button>
 
-				<ul class="dropdown-menu dropdown-menu-top" id="<%= ariaPaginationPicker %>" role="listbox" tabindex="-1">
+				<ul aria-labelledby="<%= ariaPagination %>" class="dropdown-menu dropdown-menu-top" id="<%= ariaPaginationPicker %>" role="listbox" tabindex="-1">
 
 					<%
 					for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

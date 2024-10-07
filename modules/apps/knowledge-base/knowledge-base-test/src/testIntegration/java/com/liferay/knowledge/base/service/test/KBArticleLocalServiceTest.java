@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1116,6 +1117,17 @@ public class KBArticleLocalServiceTest {
 			() -> _kbArticleLocalService.expireKBArticle(
 				_user.getUserId(), kbArticle.getResourcePrimKey(),
 				_serviceContext));
+	}
+
+	@Test
+	public void testFetchPersistedModelByResourcePrimKey() throws Exception {
+		KBArticle kBArticle = _addKbArticle();
+
+		PersistedModel persistedModel =
+			_kbArticleLocalService.fetchPersistedModel(
+				kBArticle.getResourcePrimKey());
+
+		Assert.assertNotNull(persistedModel);
 	}
 
 	@Test

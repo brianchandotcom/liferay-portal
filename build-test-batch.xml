@@ -8948,7 +8948,7 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
-	<target name="subrepository-assemble-jdk8">
+	<target name="subrepository-assemble">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<run-batch-test tomcat.gc.log="true">
@@ -8972,19 +8972,19 @@ information. Make sure to commit in all build services results.
 		<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="compileJava" />
 	</target>
 
-	<target name="subrepository-integration-mysql57-jdk8">
+	<target name="subrepository-integration-mysql57">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<run-modules-integration-test database.type="mysql" database.version="5.7" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
-	<target name="subrepository-integration-postgresql155-jdk8">
+	<target name="subrepository-integration-postgresql155">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<run-modules-integration-test database.type="postgresql" database.version="15.5" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
-	<target name="subrepository-pmd-jdk8">
+	<target name="subrepository-pmd">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
@@ -8995,7 +8995,7 @@ information. Make sure to commit in all build services results.
 		</gradle-execute>
 	</target>
 
-	<target name="subrepository-semantic-versioning-jdk8">
+	<target name="subrepository-semantic-versioning">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
@@ -9059,7 +9059,7 @@ information. Make sure to commit in all build services results.
 		</gradle-execute>
 	</target>
 
-	<target name="subrepository-unit-jdk8">
+	<target name="subrepository-unit">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<if>

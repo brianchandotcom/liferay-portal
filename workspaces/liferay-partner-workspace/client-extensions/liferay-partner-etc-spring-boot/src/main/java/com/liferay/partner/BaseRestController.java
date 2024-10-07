@@ -79,8 +79,7 @@ public abstract class BaseRestController {
 
 	protected String getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
-				"server");
+			"liferay-partner-etc-spring-boot-oaua");
 	}
 
 	protected WebClient getWebClient() {

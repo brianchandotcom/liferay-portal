@@ -6,6 +6,7 @@
 package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -60,6 +61,15 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		portletPreferences.setValue(
 			"siteNavigationMenuExternalReferenceCode",
 			siteNavigationMenu.getExternalReferenceCode());
+
+		String scopeExternalReferenceCode = getScopeExternalReferenceCode(
+			plid, siteNavigationMenu.getGroupId());
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			portletPreferences.setValue(
+				"siteNavigationMenuGroupExternalReferenceCode",
+				scopeExternalReferenceCode);
+		}
 
 		long rootMenuItemId = GetterUtil.getLong(
 			portletPreferences.getValue("rootMenuItemId", null));

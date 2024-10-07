@@ -438,6 +438,56 @@ test.describe('SEO configuration', () => {
 			)
 		).toBeAttached();
 	});
+
+	test(
+		'User can see friendly url and sitemap configuration in a default display page',
+		{
+			tag: ['@LPS-191986', '@LPS-193213'],
+		},
+		async ({apiHelpers, displayPageTemplatesPage, page, site}) => {
+
+			// Create a display page template for Basic Web Content and mark as default
+
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			const displayPageTemplateName = getRandomString();
+
+			await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+				apiHelpers,
+				String(contentStructureId),
+				displayPageTemplateName,
+				site
+			);
+
+			// Go to configuration
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Configure'
+			);
+
+			// Assert general configuration
+
+			await expect(page.getByLabel('Friendly URL')).toBeAttached();
+
+			// Assert sitemap configuration
+
+			await page
+				.locator('nav.menubar', {has: page.getByText('SEO')})
+				.click();
+
+			await expect(page.getByPlaceholder('Robots')).toBeAttached();
+
+			await expect(page.getByLabel('Include')).toBeAttached();
+
+			await expect(page.getByLabel('Page Priority')).toBeAttached();
+
+			await expect(page.getByLabel('Change Frequency')).toBeAttached();
+		}
+	);
 });
 
 test.describe('UI', () => {

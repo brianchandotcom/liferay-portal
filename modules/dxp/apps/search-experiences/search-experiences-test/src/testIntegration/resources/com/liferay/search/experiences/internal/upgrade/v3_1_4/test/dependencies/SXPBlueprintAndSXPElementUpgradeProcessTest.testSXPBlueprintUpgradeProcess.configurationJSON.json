@@ -1,0 +1,24 @@
+{
+	"advancedConfiguration": {
+	},
+	"aggregationConfiguration": {
+	},
+	"generalConfiguration": {
+		"clauseContributorsExcludes": [
+		],
+		"clauseContributorsIncludes": [
+			"*"
+		],
+		"searchableAssetTypes": [
+		]
+	},
+	"highlightConfiguration": {
+	},
+	"parameterConfiguration": {
+	},
+	"queryConfiguration": {
+		"applyIndexerClauses": true
+	},
+	"sortConfiguration": {
+	}
+}

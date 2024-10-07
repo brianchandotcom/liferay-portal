@@ -1,0 +1,1204 @@
+[
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetCategoryIds": [
+											"$ASSET_CATEGORY_ID_2$"
+										],
+										"boost": 15
+									}
+								}
+							}
+						],
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost and promote contents in a given category.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-description"
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"assetCategoryIds": "${configuration.asset_category_ids}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								],
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-ids",
+									"labelLocalized": "Asset Category Name (IDs)",
+									"name": "asset_category_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY",
+			"id": 102,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_ids": [
+				{
+					"label": "$ASSET_CATEGORY_LABEL_2$",
+					"value": "$ASSET_CATEGORY_ID_2$"
+				}
+			],
+			"boost": 15
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": "$ASSET_CATEGORY_ID_1$"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:15Z",
+			"description": "Hide contents in the given category.",
+			"description_i18n": {
+				"en-US": "hide-contents-in-a-category-description"
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetCategoryIds": {
+																"value": "${configuration.asset_category_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "HIDE_CONTENTS_IN_A_CATEGORY",
+			"id": 120,
+			"modifiedDate": "2024-10-03T20:22:15Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Hide Contents in a Category",
+			"title_i18n": {
+				"en-US": "hide-contents-in-a-category"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_1$",
+				"value": "$ASSET_CATEGORY_ID_1$"
+			}
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 15,
+											"value": "$ASSET_CATEGORY_ID_1$"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "keywords",
+								"value": [
+									"test"
+								]
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost contents in a category if the user's search keywords contain any of the given keywords.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-by-keyword-match-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "keywords",
+										"value": "${configuration.keywords}"
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "keywords",
+									"labelLocalized": "Keywords",
+									"name": "keywords",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_BY_KEYWORD_MATCH",
+			"id": 103,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category by Keyword Match",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category-by-keyword-match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_1$",
+				"value": "$ASSET_CATEGORY_ID_1$"
+			},
+			"boost": 15,
+			"keywords": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 15,
+											"value": "$ASSET_CATEGORY_ID_1$"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": 20241001,
+								"lte": 20241009,
+								"parameterName": "time.current_date"
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost contents in a category for the given period of time.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-for-a-period-of-time-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"range": {
+										"format": "yyyyMMdd",
+										"gte": "${configuration.start_date}",
+										"lte": "${configuration.end_date}",
+										"parameterName": "time.current_date"
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "date-from",
+									"labelLocalized": "Date: From",
+									"name": "start_date",
+									"type": "date",
+									"typeOptions": {
+										"format": "YYYYMMDD"
+									}
+								},
+								{
+									"label": "date-to",
+									"labelLocalized": "Date: To",
+									"name": "end_date",
+									"type": "date",
+									"typeOptions": {
+										"format": "YYYYMMDD"
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_A_PERIOD_OF_TIME",
+			"id": 104,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category for a Period of Time",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category-for-a-period-of-time"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_1$",
+				"value": "$ASSET_CATEGORY_ID_1$"
+			},
+			"boost": 15,
+			"end_date": 1728457200,
+			"start_date": 1727766000
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 25,
+											"value": "$ASSET_CATEGORY_ID_2$"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "user.active_segment_entry_ids",
+								"value": [
+									"1"
+								]
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost contents in a category for users belonging to the given user segments.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-for-user-segments-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "user.active_segment_entry_ids",
+										"value": "${configuration.user_segment_ids}"
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "user-segment-ids",
+									"labelLocalized": "User Segment IDs",
+									"name": "user_segment_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 20,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_USER_SEGMENTS",
+			"id": 105,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category for User Segments",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category-for-user-segments"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_2$",
+				"value": "$ASSET_CATEGORY_ID_2$"
+			},
+			"boost": 25,
+			"user_segment_ids": [
+				{
+					"label": "1",
+					"value": "1"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 25,
+											"value": "$ASSET_CATEGORY_ID_1$"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "user.is_signed_in",
+								"value": false
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost contents in a category if a user is not logged in.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-for-guest-users-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "user.is_signed_in",
+										"value": false
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"defaultValue": 20,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS",
+			"id": 106,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category for Guest Users",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category-for-guest-users"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_1$",
+				"value": "$ASSET_CATEGORY_ID_1$"
+			},
+			"boost": 25
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 25,
+											"value": "$ASSET_CATEGORY_ID_1$"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": "${time.current_date|modifier=-30d,date_format=yyyyMMdd}",
+								"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+								"parameterName": "user.create_date"
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost contents in a category for user accounts created within the given time.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-for-new-user-accounts-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"range": {
+										"format": "yyyyMMdd",
+										"gte": "${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
+										"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+										"parameterName": "user.create_date"
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"defaultValue": 30,
+									"label": "time-range",
+									"labelLocalized": "Time Range",
+									"name": "time_range",
+									"type": "number",
+									"typeOptions": {
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 20,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_NEW_USER_ACCOUNTS",
+			"id": 107,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category for New User Accounts",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category-for-new-user-accounts"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_1$",
+				"value": "$ASSET_CATEGORY_ID_1$"
+			},
+			"boost": 25,
+			"time_range": 30
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 25,
+											"value": "$ASSET_CATEGORY_ID_2$"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "time.time_of_day",
+								"value": "night"
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost contents in a category based on the time of day.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-for-the-time-of-day-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "time.time_of_day",
+										"value": "${configuration.time_of_day}"
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "time-of-day",
+									"labelLocalized": "Time of Day",
+									"name": "time_of_day",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Morning (4am - 12pm)",
+												"value": "morning"
+											},
+											{
+												"label": "Afternoon (12pm - 5pm)",
+												"value": "afternoon"
+											},
+											{
+												"label": "Evening (5pm - 8pm)",
+												"value": "evening"
+											},
+											{
+												"label": "Night (8pm - 4am)",
+												"value": "night"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 20,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_THE_TIME_OF_DAY",
+			"id": 108,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category for the Time of Day",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category-for-the-time-of-day"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_2$",
+				"value": "$ASSET_CATEGORY_ID_2$"
+			},
+			"boost": 25,
+			"time_of_day": "night"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": "$ASSET_CATEGORY_ID_1$"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "user.is_signed_in",
+								"value": false
+							}
+						},
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:15Z",
+			"description": "Hide contents in a category if the user is not logged in.",
+			"description_i18n": {
+				"en-US": "hide-contents-in-a-category-for-guest-users-description"
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetCategoryIds": {
+																"value": "${configuration.asset_category_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "user.is_signed_in",
+										"value": false
+									}
+								},
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-id",
+									"labelLocalized": "Asset Category Name (ID)",
+									"name": "asset_category_id",
+									"type": "number"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "HIDE_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS",
+			"id": 121,
+			"modifiedDate": "2024-10-03T20:22:15Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Hide Contents in a Category for Guest Users",
+			"title_i18n": {
+				"en-US": "hide-contents-in-a-category-for-guest-users"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": {
+				"label": "$ASSET_CATEGORY_LABEL_1$",
+				"value": "$ASSET_CATEGORY_ID_1$"
+			}
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetCategoryIds": [
+											"$ASSET_CATEGORY_ID_1$",
+											"$ASSET_CATEGORY_ID_2$"
+										],
+										"boost": 15
+									}
+								}
+							}
+						],
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-03T20:22:14Z",
+			"description": "Boost and promote contents in a given category.",
+			"description_i18n": {
+				"en-US": "boost-contents-in-a-category-description"
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"assetCategoryIds": "${configuration.asset_category_ids}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								],
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "asset-category-name-ids",
+									"labelLocalized": "Asset Category Name (IDs)",
+									"name": "asset_category_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "boost",
+									"labelLocalized": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY",
+			"id": 102,
+			"modifiedDate": "2024-10-03T20:22:14Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Boost Contents in a Category",
+			"title_i18n": {
+				"en-US": "boost-contents-in-a-category"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_ids": [
+				{
+					"label": "$ASSET_CATEGORY_LABEL_1$",
+					"value": "$ASSET_CATEGORY_ID_1$"
+				},
+				{
+					"label": "$ASSET_CATEGORY_LABEL_2$",
+					"value": "$ASSET_CATEGORY_ID_2$"
+				}
+			],
+			"boost": 15
+		}
+	}
+]

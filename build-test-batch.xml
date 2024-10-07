@@ -7236,7 +7236,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="pmd-jdk8">
+	<target name="pmd">
 		<local name="pmd.violations.count" />
 
 		<delete dir="pmd-reports" />

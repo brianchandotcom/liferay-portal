@@ -1941,6 +1941,10 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
+		Click(
+			key_name = "Publication",
+			locator1 = "PublicationsChanges#SORT_BUTTON");
+
 		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 1,Publication Name 2,Publication Name 3,Publication Name 4,Publication Name 5,Publication Name 6,Publication Name 7");
 
 		Pagination.viewResults(results = "Showing 1 to 7 of 7 entries.");

@@ -373,6 +373,9 @@ public class DBPartitionUtil {
 
 			DBInspector dbInspector = new DBInspector(connection);
 
+			List<Long> companyIds = ListUtil.fromArray(
+				PortalInstancePool.getCompanyIds());
+
 			try (ResultSet resultSet = databaseMetaData.getTables(
 					_dbPartitionDB.getCatalog(
 						connection, _defaultPartitionName),
@@ -383,11 +386,7 @@ public class DBPartitionUtil {
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");
 
-					if (dbInspector.isObjectTable(
-							ListUtil.fromArray(
-								PortalInstancePool.getCompanyIds()),
-							tableName)) {
-
+					if (dbInspector.isObjectTable(companyIds, tableName)) {
 						continue;
 					}
 

@@ -11,9 +11,11 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
@@ -37,7 +39,8 @@ const autoSaveTest = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
-	pagesAdminPagesTest
+	pagesAdminPagesTest,
+	systemSettingsPageTest
 );
 
 const autosaveWithoutPermissionsTest = mergeTests(
@@ -92,6 +95,88 @@ autoSaveTest(
 
 		expect(journalEditArticlePage.undoButton).not.toBeVisible();
 		expect(journalEditArticlePage.redoButton).not.toBeVisible();
+	}
+);
+
+autoSaveTest(
+	'Default Language can be changed when editing default values',
+	{
+		tag: '@LPD-38269',
+	},
+	async ({
+		apiHelpers,
+		journalEditStructureDefaultValuesPage,
+		page,
+		site,
+		systemSettingsPage,
+	}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Web Content',
+			'Administration'
+		);
+
+		await expect(
+			page.getByRole('heading', {name: 'Administration'})
+		).toBeVisible();
+
+		if (
+			!(await page.getByLabel('Changeable Default Language').isChecked())
+		) {
+			await page.getByLabel('Changeable Default Language').click();
+		}
+
+		const updateButton = page.getByRole('button', {
+			name: 'Update',
+		});
+
+		const saveButton = page.getByRole('button', {
+			name: 'Save',
+		});
+
+		if (await saveButton.isVisible()) {
+			await saveButton.click();
+		}
+		else if (await updateButton.isVisible()) {
+			await updateButton.click();
+		}
+
+		await waitForAlert(page);
+
+		const fieldName = 'Text1';
+		const structureName = 'Structure1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: fieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const defaultLanguageButton = page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_-change-default-language'
+			)
+			.getByRole('button', {name: 'Change'});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'ca_ES',
+			}),
+			trigger: defaultLanguageButton,
+		});
+
+		await page.getByLabel('Select a language, current').click();
+
+		await expect(
+			page.getByRole('option', {name: 'Catalan Language: Default'})
+		).toBeVisible();
 	}
 );
 

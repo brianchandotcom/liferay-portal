@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: generateLanguageBatchEngineData
+    - fromTask: writeLanguageBatchEngineData
       into: batch
 language-batch:
     name: Language Batch

@@ -1249,7 +1249,7 @@ test.describe('View', () => {
 	test(
 		'User can interact with widgets in a display page',
 		{
-			tag: ['@LPS-106776', '@ LPS-129360'],
+			tag: ['@LPS-106776', '@LPS-120504', '@ LPS-129360'],
 		},
 		async ({
 			apiHelpers,
@@ -1281,6 +1281,16 @@ test.describe('View', () => {
 				displayPageTemplateName,
 				'Edit'
 			);
+
+			// Add heading fragment and map it to title
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingId = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.selectEditable(headingId, 'element-text');
+
+			await page.getByLabel('Field').selectOption('Title');
 
 			// Add documents and media widget
 
@@ -1318,6 +1328,10 @@ test.describe('View', () => {
 				`web${site.friendlyUrlPath}/w/${journalArticleTitle}`
 			);
 
+			const headingFragment = page.locator('.component-heading');
+
+			await expect(headingFragment).toHaveText(journalArticleTitle);
+
 			await expect(
 				page.getByRole('link', {name: document.title})
 			).toBeAttached();
@@ -1327,6 +1341,8 @@ test.describe('View', () => {
 				target: page.getByRole('menuitem', {name: 'list'}),
 				trigger: page.getByLabel('Select View, Currently'),
 			});
+
+			await expect(headingFragment).toHaveText(journalArticleTitle);
 
 			await expect(
 				page.getByRole('link', {name: document.title})

@@ -2414,11 +2414,11 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+
 	private ObjectDefinition _objectDefinitionA;
 	private ObjectDefinition _objectDefinitionAA;
 	private ObjectDefinition _objectDefinitionAAA;
 	private ObjectDefinition _objectDefinitionAB;
-
 	private ObjectDefinitionTreeFactory _objectDefinitionTreeFactory;
 
 	@Inject

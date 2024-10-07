@@ -75,7 +75,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 				public EquinoxMetaTypeInformation run() {
 					MetaTypeInformationImpl impl = null;
 					try {
-						impl = new MetaTypeInformationImpl(b, newParser(), loggerTemp);
+						impl = new MetaTypeInformationImpl(b, () -> newParser(), loggerTemp);
 					} catch (Exception e) {
 						loggerTemp.log(LogService.LOG_ERROR, NLS.bind(MetaTypeMsg.METADATA_PARSE_ERROR, b.getBundleId(), b.getSymbolicName()), e);
 					}
@@ -89,7 +89,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 		}
 	}
 
-	SAXParser newParser() throws ParserConfigurationException, SAXException {
+	SAXParser newParser() {
 		boolean namespaceAware = _parserFactory.isNamespaceAware();
 		boolean validating = _parserFactory.isValidating();
 		// Always want a non-validating parser.
@@ -110,7 +110,11 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 				_parserFactory.setNamespaceAware(false);
 				return _parserFactory.newSAXParser();
 			}
-		} finally {
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+		finally {
 			// Restore the previous settings in all cases.
 			_parserFactory.setNamespaceAware(namespaceAware);
 			_parserFactory.setValidating(validating);

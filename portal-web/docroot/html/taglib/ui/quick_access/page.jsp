@@ -43,14 +43,18 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 							<li>
 								<c:choose>
 									<c:when test="<%= Validator.isNull(quickAccessEntry.getURL()) %>">
-										<button class="<%= linkClass %> btn btn-link btn-unstyled text-nowrap" id="<%= randomNamespace + quickAccessEntry.getId() %>" onclick="<%= quickAccessEntry.getOnClick() %>">
-											<%= quickAccessEntry.getContent() %>
-										</button>
+										<liferay-ui:csp>
+											<button class="<%= linkClass %> btn btn-link btn-unstyled text-nowrap" id="<%= randomNamespace + quickAccessEntry.getId() %>" onclick="<%= quickAccessEntry.getOnClick() %>">
+												<%= quickAccessEntry.getContent() %>
+											</button>
+										</liferay-ui:csp>
 									</c:when>
 									<c:otherwise>
-										<a class="<%= linkClass %>" href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>" onclick="<%= quickAccessEntry.getOnClick() %>">
-											<%= quickAccessEntry.getContent() %>
-										</a>
+										<liferay-ui:csp>
+											<a class="<%= linkClass %>" href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>" onclick="<%= quickAccessEntry.getOnClick() %>">
+												<%= quickAccessEntry.getContent() %>
+											</a>
+										</liferay-ui:csp>
 									</c:otherwise>
 								</c:choose>
 							</li>

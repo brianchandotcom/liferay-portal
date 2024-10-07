@@ -1,9 +1,9 @@
 @component-name = "portal-content-management"
 definition {
 
-	property custom.properties = "feature.flag.LPD-35013=true";
+	property custom.properties = "feature.flag.LPD-35013=false";
 	property portal.acceptance = "true";
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.component.names = "Roles";
 	property testray.main.component.name = "Wiki";
@@ -12,6 +12,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		WikiPortlet.enableWiki();
 	}
 
 	tearDown {

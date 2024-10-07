@@ -1,9 +1,10 @@
 @component-name = "portal-content-management"
 definition {
 
-	property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPD-35013=false{line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "wiki";
 	property portal.acceptance = "true";
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.component.names = "Notifications";
 	property testray.main.component.name = "Wiki";
@@ -15,6 +16,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		WikiPortlet.enableWiki();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

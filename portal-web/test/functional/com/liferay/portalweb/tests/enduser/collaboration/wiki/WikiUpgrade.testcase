@@ -1,9 +1,10 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property custom.properties = "feature.flag.LPD-35013=true";
+	property custom.properties = "feature.flag.LPD-35013=false";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
-	property portal.release = "true";
+	property osgi.modules.includes = "wiki";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
 	property test.liferay.virtual.instance = "false";
@@ -17,6 +18,8 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		WikiPortlet.enableWiki();
 
 		SearchAdministration.executeReindex();
 	}

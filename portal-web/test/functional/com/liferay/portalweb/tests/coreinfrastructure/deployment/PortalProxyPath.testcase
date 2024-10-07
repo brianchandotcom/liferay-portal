@@ -25,9 +25,7 @@ definition {
 		task ("When on default home page") {
 			Smoke.viewWelcomeContentPage();
 
-			Navigator.openSpecificURL(
-				url = "http://localhost:88/liferay/${variable}/liferay",
-				variable = "web");
+			Navigator.openSpecificURL(url = "http://localhost:88/liferay");
 
 			Smoke.viewWelcomeContentPage();
 		}

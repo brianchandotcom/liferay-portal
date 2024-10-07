@@ -15,6 +15,7 @@ export function ClassicEditor({
 	contents,
 	editorConfig,
 	onChange,
+	onReady,
 	ref,
 }: IClassicEditorProps): JSX.Element;
 
@@ -34,6 +35,7 @@ interface IClassicEditorProps {
 	initialToolbarSet?: string;
 	name: string;
 	onChange: (content: string) => void;
+	onReady: ({editor}: {editor: any}) => void;
 	ref: React.RefObject<IEditor>;
 	title?: string;
 }

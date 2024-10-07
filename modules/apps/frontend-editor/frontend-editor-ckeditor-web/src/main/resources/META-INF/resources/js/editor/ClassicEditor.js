@@ -18,6 +18,7 @@ const ClassicEditor = forwardRef(
 			editorConfig,
 			initialToolbarSet = 'simple',
 			name,
+			onReady = () => {},
 			title,
 			...otherProps
 		},
@@ -80,6 +81,8 @@ const ClassicEditor = forwardRef(
 						editor.setData(contents, {
 							callback: () => {
 								editor.resetUndo();
+
+								onReady({editor});
 							},
 							noSnapshot: true,
 						});

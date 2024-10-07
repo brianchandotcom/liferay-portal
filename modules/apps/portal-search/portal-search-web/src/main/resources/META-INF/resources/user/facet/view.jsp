@@ -101,10 +101,17 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 												class="custom-control-input facet-term"
 												data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>"
 												disabled
-												id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
-												onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+												id="<portlet:namespace />term_<%= i %>"
+												name="<portlet:namespace />term_<%= i %>"
 												type="checkbox"
 											/>
+
+											<aui:script position="inline">
+												document.getElementById('<portlet:namespace />term_<%= i %>').onchange =
+													function (event) {
+														Liferay.Search.FacetUtil.changeSelection(event);
+													};
+											</aui:script>
 
 											<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 												<span class="custom-control-label-text">

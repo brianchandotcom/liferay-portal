@@ -1,0 +1,29 @@
+diff --git a/org/eclipse/equinox/metatype/impl/ValueTokenizer.java b/org/eclipse/equinox/metatype/impl/ValueTokenizer.java
+index 2dfdfb6a46d5b..d647d868d2eea 100644
+--- a/org/eclipse/equinox/metatype/impl/ValueTokenizer.java
++++ b/org/eclipse/equinox/metatype/impl/ValueTokenizer.java
+@@ -27,10 +27,17 @@ public class ValueTokenizer {
+ 	/*
+ 	 * Constructor of class ValueTokenizer
+ 	 */
+-	public ValueTokenizer(String values_str, LogTracker logger) {
++	public ValueTokenizer(int cardinality, String values_str, LogTracker logger) {
+ 		this.logger = logger;
+ 		if (values_str == null)
+ 			return;
++
++		if (cardinality == 0) {
++			values.add(values_str);
++
++			return;
++		}
++
+ 		// The trick is to strip out unescaped whitespace characters before and
+ 		// after the input string as well as before and after each 
+ 		// individual token within the input string without losing any escaped 
+@@ -288,3 +295,4 @@ public class ValueTokenizer {
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

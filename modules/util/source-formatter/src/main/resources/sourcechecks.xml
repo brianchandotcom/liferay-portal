@@ -1506,6 +1506,10 @@
 			<category name="Styling" />
 			<description name="Sorts the properties in `dependencies.properties` file." />
 		</check>
+		<check name="PropertiesDuplicateKeysCheck">
+			<category name="Miscellaneous" />
+			<description name="Checks for duplicate property keys." />
+		</check>
 		<check name="PropertiesEmptyLinesCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />

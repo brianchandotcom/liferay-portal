@@ -6,7 +6,6 @@
 package com.liferay.portal.instances.service.impl;
 
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;

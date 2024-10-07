@@ -6,6 +6,8 @@
 package com.liferay.wiki.web.internal.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -66,6 +68,17 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	@Override
+	public boolean isVisible(Group group) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-35013")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -6,6 +6,7 @@
 package com.liferay.wiki.web.internal.portlet.display.template;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -92,6 +93,15 @@ public class WikiPortletDisplayTemplateHandler
 			wikiServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
+	}
+
+	@Override
+	public boolean isEnabled(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35013")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

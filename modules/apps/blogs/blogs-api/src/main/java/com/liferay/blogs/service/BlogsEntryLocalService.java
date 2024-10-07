@@ -76,6 +76,11 @@ public interface BlogsEntryLocalService
 			InputStream inputStream)
 		throws PortalException;
 
+	public FileEntry addAttachmentFileEntry(
+			String externalReferenceCode, long userId, long groupId,
+			String fileName, String mimeType, InputStream inputStream)
+		throws PortalException;
+
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException;
 
@@ -190,6 +195,9 @@ public interface BlogsEntryLocalService
 	 * @throws PortalException
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public void deleteAttachmentFileEntry(long fileEntryId)
 		throws PortalException;
 
 	/**
@@ -332,6 +340,15 @@ public interface BlogsEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileEntry getAttachmentFileEntry(long fileEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileEntry getAttachmentFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns a range of all the blogs entries.

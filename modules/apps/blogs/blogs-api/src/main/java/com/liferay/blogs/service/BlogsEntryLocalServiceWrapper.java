@@ -43,6 +43,19 @@ public class BlogsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			addAttachmentFileEntry(
+				String externalReferenceCode, long userId, long groupId,
+				String fileName, String mimeType,
+				java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryLocalService.addAttachmentFileEntry(
+			externalReferenceCode, userId, groupId, fileName, mimeType,
+			inputStream);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder
 			addAttachmentsFolder(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -270,6 +283,13 @@ public class BlogsEntryLocalServiceWrapper
 		return _blogsEntryLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteAttachmentFileEntry(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_blogsEntryLocalService.deleteAttachmentFileEntry(fileEntryId);
+	}
+
 	/**
 	 * Deletes the blogs entry from the database. Also notifies the appropriate model listeners.
 	 *
@@ -482,6 +502,25 @@ public class BlogsEntryLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _blogsEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentFileEntry(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryLocalService.getAttachmentFileEntry(fileEntryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentFileEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryLocalService.
+			getAttachmentFileEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

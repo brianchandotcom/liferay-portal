@@ -452,6 +452,39 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<AccountEntry> getCompanyAccountEntries(
+		long companyId, int status, int start, int end,
+		OrderByComparator<AccountEntry> orderByComparator) {
+
+		Set<Serializable> accountEntryIds = new HashSet<>(
+			dslQuery(
+				DSLQueryFactoryUtil.select(
+					AccountEntryTable.INSTANCE.accountEntryId
+				).from(
+					AccountEntryTable.INSTANCE
+				).where(
+					AccountEntryTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						AccountEntryTable.INSTANCE.status.eq(status)
+					)
+				).orderBy(
+					AccountEntryTable.INSTANCE, orderByComparator
+				).limit(
+					start, end
+				)));
+
+		Map<Serializable, AccountEntry> accountEntriesMap =
+			accountEntryPersistence.fetchByPrimaryKeys(accountEntryIds);
+
+		if (accountEntriesMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return new ArrayList<>(accountEntriesMap.values());
+	}
+
+	@Override
 	public AccountEntry getGuestAccountEntry(long companyId)
 		throws PortalException {
 

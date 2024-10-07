@@ -521,7 +521,7 @@ definition {
 			customHeading = "Title");
 
 		SearchFacets.updateFacetConfiguration(
-			displayTemplate = "Compact Layout",
+			displayTemplate = "Compact Layout (Multiselect)",
 			portletName = "Custom Facet");
 
 		Refresh();
@@ -549,7 +549,7 @@ definition {
 			locator1 = "Search#CLEAR_FACET_BUTTON");
 
 		SearchFacets.updateFacetConfiguration(
-			displayTemplate = "Label Layout",
+			displayTemplate = "Label Layout (Multiselect)",
 			portletName = "Custom Facet");
 
 		Refresh();

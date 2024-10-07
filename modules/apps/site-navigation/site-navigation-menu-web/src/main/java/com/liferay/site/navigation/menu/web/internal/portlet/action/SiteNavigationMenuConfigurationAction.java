@@ -9,7 +9,10 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -95,12 +98,16 @@ public class SiteNavigationMenuConfigurationAction
 			portletPreferences.reset("included-layouts");
 
 			_updateRootMenuItemPreferences(portletPreferences);
-			_updateSiteNavigationMenuPreferences(portletPreferences);
+			_updateSiteNavigationMenuPreferences(
+				portletPreferences, portletRequest);
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new SystemException(readOnlyException);
 		}
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected SiteNavigationMenuItemLocalService
@@ -141,7 +148,8 @@ public class SiteNavigationMenuConfigurationAction
 	}
 
 	private void _updateSiteNavigationMenuPreferences(
-			PortletPreferences portletPreferences)
+			PortletPreferences portletPreferences,
+			PortletRequest portletRequest)
 		throws PortalException, ReadOnlyException {
 
 		long siteNavigationMenuId = GetterUtil.getLong(
@@ -149,6 +157,8 @@ public class SiteNavigationMenuConfigurationAction
 
 		if (siteNavigationMenuId == 0) {
 			portletPreferences.reset("siteNavigationMenuExternalReferenceCode");
+			portletPreferences.reset(
+				"siteNavigationMenuGroupExternalReferenceCode");
 
 			return;
 		}
@@ -162,10 +172,31 @@ public class SiteNavigationMenuConfigurationAction
 				"siteNavigationMenuExternalReferenceCode",
 				siteNavigationMenu.getExternalReferenceCode());
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (siteNavigationMenu.getGroupId() ==
+					themeDisplay.getScopeGroupId()) {
+
+				portletPreferences.reset(
+					"assetListEntryGroupExternalReferenceCode");
+			}
+			else {
+				Group group = groupLocalService.getGroup(
+					siteNavigationMenu.getGroupId());
+
+				portletPreferences.setValue(
+					"siteNavigationMenuGroupExternalReferenceCode",
+					group.getExternalReferenceCode());
+			}
+
 			return;
 		}
 
 		portletPreferences.reset("siteNavigationMenuExternalReferenceCode");
+		portletPreferences.reset(
+			"siteNavigationMenuGroupExternalReferenceCode");
 	}
 
 	@Reference

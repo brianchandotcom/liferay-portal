@@ -221,8 +221,6 @@ definition {
 			menuItem = "Edit Web Content",
 			webContentTitle = "Web Content Title");
 
-		Panel.expandPanel(panel = "Friendly URL");
-
 		AssertTextEquals(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
@@ -276,8 +274,6 @@ definition {
 		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "Web Content Title");
-
-		Panel.expandPanel(panel = "Friendly URL");
 
 		AssertTextEquals(
 			inputFieldId = "friendlyURL",

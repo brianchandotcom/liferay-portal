@@ -440,8 +440,6 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		Panel.expandPanel(panel = "Friendly URL");
-
 		Type(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",

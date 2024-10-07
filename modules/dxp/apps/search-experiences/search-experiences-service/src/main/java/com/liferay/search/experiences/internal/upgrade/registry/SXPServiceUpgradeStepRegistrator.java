@@ -5,11 +5,13 @@
 
 package com.liferay.search.experiences.internal.upgrade.registry;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.search.experiences.internal.upgrade.v3_1_4.SXPBlueprintAndSXPElementUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -114,9 +116,12 @@ public class SXPServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.1.3", "3.1.4",
-			new com.liferay.search.experiences.internal.upgrade.v3_1_4.
-				SXPElementUpgradeProcess());
+			new SXPBlueprintAndSXPElementUpgradeProcess(
+				_assetCategoryLocalService, _groupLocalService, _jsonFactory));
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

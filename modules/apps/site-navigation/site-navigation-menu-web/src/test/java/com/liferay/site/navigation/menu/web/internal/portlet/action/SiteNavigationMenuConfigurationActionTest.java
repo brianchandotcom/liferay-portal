@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
@@ -121,15 +122,15 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 	@Test
 	public void testUpdateSiteNavigationMenuPreferences() throws Exception {
+		long groupId = RandomTestUtil.randomLong();
 		String siteNavigationMenuExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		_setUpSiteNavigationMenuConfigurationAction(
-			null, siteNavigationMenuExternalReferenceCode, null);
+			_getGroup(groupId), siteNavigationMenuExternalReferenceCode, null);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
-			_COMPANY_ID, _getMockActionRequest(RandomTestUtil.randomLong()),
-			_portletPreferences);
+			_COMPANY_ID, _getMockActionRequest(groupId), _portletPreferences);
 
 		Assert.assertEquals(
 			siteNavigationMenuExternalReferenceCode,
@@ -197,6 +198,10 @@ public class SiteNavigationMenuConfigurationActionTest {
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService =
 			Mockito.mock(SiteNavigationMenuItemLocalService.class);
 
+		if (Validator.isNull(siteNavigationMenuItemExternalReferenceCode)) {
+			return siteNavigationMenuItemLocalService;
+		}
+
 		SiteNavigationMenuItem siteNavigationMenuItem = Mockito.mock(
 			SiteNavigationMenuItem.class);
 
@@ -217,11 +222,15 @@ public class SiteNavigationMenuConfigurationActionTest {
 	}
 
 	private SiteNavigationMenuService _getSiteNavigationMenuService(
-			String siteNavigationMenuExternalReferenceCode)
+			Group group, String siteNavigationMenuExternalReferenceCode)
 		throws Exception {
 
 		SiteNavigationMenuService siteNavigationMenuService = Mockito.mock(
 			SiteNavigationMenuService.class);
+
+		if (Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
+			return siteNavigationMenuService;
+		}
 
 		SiteNavigationMenu siteNavigationMenu = Mockito.mock(
 			SiteNavigationMenu.class);
@@ -230,6 +239,18 @@ public class SiteNavigationMenuConfigurationActionTest {
 			siteNavigationMenu.getExternalReferenceCode()
 		).thenReturn(
 			siteNavigationMenuExternalReferenceCode
+		);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		if (group != null) {
+			groupId = group.getGroupId();
+		}
+
+		Mockito.when(
+			siteNavigationMenu.getGroupId()
+		).thenReturn(
+			groupId
 		);
 
 		Mockito.when(
@@ -303,7 +324,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 					siteNavigationMenuItemExternalReferenceCode);
 		_siteNavigationMenuConfigurationAction.siteNavigationMenuService =
 			_getSiteNavigationMenuService(
-				siteNavigationMenuExternalReferenceCode);
+				group, siteNavigationMenuExternalReferenceCode);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

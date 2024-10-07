@@ -541,7 +541,7 @@ export default function UndoRedo({
 							<ClayDropDown.Divider />
 
 							<ClayDropDown.Item
-								disabled={step <= 0}
+								disabled={step === 0}
 								onClick={() => {
 									Liferay.fire('journal:goto', {
 										step: 0,
@@ -563,7 +563,7 @@ export default function UndoRedo({
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('undo-all')}
 					className="btn-monospaced"
-					disabled={history.length <= 1}
+					disabled={step === 0}
 					displayType="secondary"
 					onClick={() => {
 						Liferay.fire('journal:goto', {

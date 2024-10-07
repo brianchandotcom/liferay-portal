@@ -46,7 +46,7 @@ definition {
 
 		Type(
 			key_text = "URL",
-			locator1 = "TextInput#ANY",
+			locator1 = "TextInput#ANY_SPECIFIC",
 			value1 = ${entryExternalURL});
 
 		Click(locator1 = "CKEditor#OK_BUTTON");

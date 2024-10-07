@@ -216,7 +216,97 @@ testInfoPanel.describe('InfoPanel', () => {
 	);
 });
 
-test.describe('SEO configuration', () => {
+test.describe('Configuration', () => {
+	test(
+		'User can configure header and footer in a display page',
+		{
+			tag: ['@LPS-86191', '@LPS-96438'],
+		},
+		async ({apiHelpers, displayPageTemplatesPage, page, site}) => {
+
+			// Create a display page template for Basic Web Content and mark as default
+
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			const displayPageTemplateName = getRandomString();
+
+			await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+				apiHelpers,
+				String(contentStructureId),
+				displayPageTemplateName,
+				site
+			);
+
+			// Go to configuration
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Edit'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page
+					.locator('.dropdown-menu')
+					.getByRole('menuitem', {name: 'Configure'}),
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
+			// Configure theme
+
+			await page
+				.locator('nav.menubar .nav-link', {
+					has: page.getByText('Design'),
+				})
+				.click();
+
+			await page
+				.getByLabel('Define a custom theme for this page.', {
+					exact: true,
+				})
+				.check();
+
+			await page.getByRole('checkbox', {name: 'Show Footer'}).uncheck();
+
+			await page
+				.getByRole('checkbox', {exact: true, name: 'Show Header'})
+				.uncheck();
+
+			await displayPageTemplatesPage.saveConfiguration();
+
+			await page.getByTitle(`Go to ${displayPageTemplateName}`).click();
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Create a Basic Web Content
+
+			const journalArticleTitle = getRandomString();
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId,
+				datePublished: null,
+				siteId: site.id,
+				title: journalArticleTitle,
+				viewableBy: 'Anyone',
+			});
+
+			// Assert header and footer are not visible
+
+			await page.goto(
+				`web${site.friendlyUrlPath}/w/${journalArticleTitle}`
+			);
+
+			await expect(page.locator('[id="banner"]')).not.toBeAttached();
+
+			await expect(page.locator('[id="footer"]')).not.toBeAttached();
+		}
+	);
+
 	test('User can map a web content to open graph meta tags in a display page', async ({
 		apiHelpers,
 		displayPageTemplatesPage,

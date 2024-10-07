@@ -29,6 +29,12 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	public String siteNavigationMenuExternalReferenceCode();
 
 	@Meta.AD(
+		name = "site-navigation-menu-group-external-reference-code",
+		required = false
+	)
+	public String siteNavigationMenuGroupExternalReferenceCode();
+
+	@Meta.AD(
 		description = "site-navigation-menu-id-description",
 		name = "site-navigation-menu-id", required = false
 	)

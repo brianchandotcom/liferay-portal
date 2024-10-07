@@ -8,8 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDisplayContext)request.getAttribute(CKEditorSampleWebKeys.CKEDITOR_SAMPLE_DISPLAY_CONTEXT);
-
 List<TabsItem> tabsItems = ckEditorSampleDisplayContext.getTabsItems();
 %>
 

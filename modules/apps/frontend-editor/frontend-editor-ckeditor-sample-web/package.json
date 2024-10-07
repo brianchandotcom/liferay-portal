@@ -1,6 +1,9 @@
 {
 	"dependencies": {
+		"frontend-editor-ckeditor-web": "*",
+		"react": "16.12.0"
 	},
+	"main": "js/index.ts",
 	"name": "@liferay/frontend-editor-ckeditor-sample-web",
 	"private": true,
 	"scripts": {

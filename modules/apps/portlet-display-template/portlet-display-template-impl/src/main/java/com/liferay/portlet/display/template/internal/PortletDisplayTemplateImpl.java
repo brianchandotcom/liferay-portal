@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -230,6 +231,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			TemplateHandlerRegistryUtil.getTemplateHandlers();
 
 		for (TemplateHandler templateHandler : templateHandlers) {
+			if (!templateHandler.isEnabled(CompanyThreadLocal.getCompanyId())) {
+				continue;
+			}
+
 			if (templateHandler instanceof BasePortletDisplayTemplateHandler) {
 				portletDisplayTemplateHandlers.add(templateHandler);
 			}

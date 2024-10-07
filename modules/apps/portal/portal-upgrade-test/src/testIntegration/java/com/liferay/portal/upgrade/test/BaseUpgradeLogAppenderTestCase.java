@@ -614,10 +614,21 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_appender.stop();
 
 		_assertLogContextDiagnostics("upgrade.report.errors", "[]");
+		_assertLogContextDiagnostics("upgrade.report.failed.sqls", "[]");
+		_assertLogContextDiagnostics(
+			"upgrade.report.longest.running.sqls", "[]");
 		_assertLogContextDiagnostics(
 			"upgrade.report.longest.upgrade.processes", "[]");
 		_assertLogContextDiagnostics("upgrade.report.warnings", "[]");
 		_assertReportDiagnostics("Errors: Nothing registered");
+		_assertReportDiagnostics("Failed sqls: Nothing registered");
+		_assertReportDiagnostics(
+			String.format(
+				"Top %d longest running SQLs above %d milliseconds: Nothing " +
+					"registered",
+				ReflectionTestUtil.getFieldValue(
+					upgradeReport, "_LONGEST_RUNNING_SQLS_COUNT"),
+				PropsValues.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD));
 		_assertReportDiagnostics(
 			String.format(
 				"Top %d longest upgrade processes above %d milliseconds: " +

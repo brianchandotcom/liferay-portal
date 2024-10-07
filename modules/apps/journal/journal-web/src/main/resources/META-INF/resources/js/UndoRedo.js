@@ -501,6 +501,12 @@ export default function UndoRedo({
 												disabled={step === index}
 												key={index}
 												onClick={() => {
+													Liferay.fire(
+														'journal:goto',
+														{
+															step: index,
+														}
+													);
 													if (index < step) {
 														let i = step;
 														while (i > index) {
@@ -515,13 +521,6 @@ export default function UndoRedo({
 															handleRedo(i);
 														}
 													}
-
-													Liferay.fire(
-														'journal:goto',
-														{
-															step: index,
-														}
-													);
 
 													setActive(false);
 												}}
@@ -545,14 +544,14 @@ export default function UndoRedo({
 							<ClayDropDown.Item
 								disabled={step <= 0}
 								onClick={() => {
-									let i = step;
-									while (i > 0) {
-										i--;
-										handleUndo(0);
-									}
 									Liferay.fire('journal:goto', {
 										step: 0,
 									});
+									let i = step;
+									while (i > 0) {
+										i--;
+										handleUndo(i);
+									}
 									setActive(false);
 								}}
 							>
@@ -568,14 +567,14 @@ export default function UndoRedo({
 					disabled={history.length <= 1}
 					displayType="secondary"
 					onClick={() => {
+						Liferay.fire('journal:goto', {
+							step: 0,
+						});
 						let i = step;
 						while (i > 0) {
 							i--;
 							handleUndo(i);
 						}
-						Liferay.fire('journal:goto', {
-							step: 0,
-						});
 					}}
 					size="sm"
 					symbol="time"

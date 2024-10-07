@@ -195,7 +195,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	private String _getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-partner-etc-cron-oauth-application-headless-server");
+			"liferay-partner-etc-cron-oahs");
 	}
 
 	private WebClient _getWebClient() {

@@ -1,10 +1,10 @@
 liferay-partner-site-initializer-code:
     name: Liferay Partner Site Initializer Code
-    oAuthApplicationHeadlessServer: liferay-partner-site-initializer-code-oauth-application-headless-server
+    oAuthApplicationHeadlessServer: liferay-partner-site-initializer-code-oahs
     siteExternalReferenceCode: LIFERAY_PARTNER
     siteName: Liferay Partner
     type: siteInitializer
-liferay-partner-site-initializer-code-oauth-application-headless-server:
+liferay-partner-site-initializer-code-oahs:
     .serviceAddress: localhost:8080
     .serviceScheme: http
     name: Liferay Partner Site Initializer Code OAuth Application Headless Server

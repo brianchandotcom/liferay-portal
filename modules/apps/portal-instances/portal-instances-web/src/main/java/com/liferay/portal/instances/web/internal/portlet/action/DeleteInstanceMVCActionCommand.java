@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -54,6 +55,8 @@ public class DeleteInstanceMVCActionCommand extends BaseMVCActionCommand {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			jsonObject.put(
 				"error",

@@ -81,3 +81,63 @@ test(
 		});
 	}
 );
+
+test(
+	'Context menu is displayed when maximized',
+	{tag: '@LPD-38600'},
+	async ({apiHelpers, page, site}) => {
+		let layout: Layout;
+
+		await test.step('Create a content site and the ckeditor sample widget', async () => {
+			const widgetDefinition = getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
+			});
+
+			layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([widgetDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Select Maximized button and check context menu', async () => {
+			await page.goto(
+				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const ckeditorSampleWidgetClassicTab = page.getByRole('tab', {
+				name: 'Classic',
+			});
+
+			await ckeditorSampleWidgetClassicTab.waitFor({state: 'visible'});
+			await ckeditorSampleWidgetClassicTab.click();
+
+			const maximizedButton = page.getByLabel('Maximize');
+
+			await maximizedButton.waitFor({state: 'visible'});
+			await maximizedButton.click();
+
+			const ckeditorEditorBody = page
+				.getByRole('tabpanel', {name: 'Classic'})
+				.frameLocator('iframe[title="editor"]')
+				.getByRole('heading', {name: 'Classic Editor'});
+
+			await ckeditorEditorBody.click({button: 'right'});
+
+			const contextMenuZIndex = await page.evaluate(() => {
+				const stylesComboElement = document.querySelector(
+					'.cke_panel.cke_menu_panel'
+				);
+
+				const contextMenuElementStyles =
+					window.getComputedStyle(stylesComboElement);
+
+				return contextMenuElementStyles.getPropertyValue('z-index');
+			});
+
+			expect(contextMenuZIndex).toEqual('10001');
+		});
+	}
+);

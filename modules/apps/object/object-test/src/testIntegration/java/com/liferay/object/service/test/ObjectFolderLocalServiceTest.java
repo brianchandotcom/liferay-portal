@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -167,9 +168,13 @@ public class ObjectFolderLocalServiceTest {
 			objectFolder = _addObjectFolder(user);
 
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId());
+				objectFolder.getObjectFolderId(), false,
+				ObjectDefinitionTestUtil.getRandomName(),
+				Collections.emptyList(), user.getUserId());
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId());
+				objectFolder.getObjectFolderId(), false,
+				ObjectDefinitionTestUtil.getRandomName(),
+				Collections.emptyList(), user.getUserId());
 
 			Assert.assertNotNull(
 				_objectFolderLocalService.getObjectFolder(

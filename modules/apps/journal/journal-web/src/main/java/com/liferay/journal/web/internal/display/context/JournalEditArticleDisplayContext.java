@@ -53,6 +53,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -228,6 +229,46 @@ public class JournalEditArticleDisplayContext {
 
 				siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 					new URLItemSelectorReturnType());
+
+				Group scopeGroup = _groupLocalService.getGroup(getGroupId());
+
+				if (scopeGroup.isDepot()) {
+					List<Long> connectedGroupIds = TransformUtil.transform(
+						_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+							_depotEntryLocalService.getDepotEntry(
+								scopeGroup.getClassPK())),
+						DepotEntryGroupRel::getGroupId);
+
+					long[] excludedGroupsIds = null;
+
+					if (ListUtil.isNotEmpty(connectedGroupIds)) {
+						excludedGroupsIds = TransformUtil.transformToLongArray(
+							_groupLocalService.getGroups(
+								_themeDisplay.getCompanyId(),
+								GroupConstants.ANY_PARENT_GROUP_ID, true,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+							group -> {
+								if (!connectedGroupIds.contains(
+										group.getGroupId())) {
+
+									return group.getGroupId();
+								}
+
+								return null;
+							});
+					}
+					else {
+						excludedGroupsIds = TransformUtil.transformToLongArray(
+							_groupLocalService.getGroups(
+								_themeDisplay.getCompanyId(),
+								GroupConstants.ANY_PARENT_GROUP_ID, true,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+							Group::getGroupId);
+					}
+
+					siteItemSelectorCriterion.setExcludedGroupIds(
+						excludedGroupsIds);
+				}
 
 				return String.valueOf(
 					_itemSelector.getItemSelectorURL(

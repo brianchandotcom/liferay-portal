@@ -695,6 +695,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
+		int originalWorkflowAction = serviceContext.getWorkflowAction();
+
 		cpDefinition = _cpDefinitionService.addOrUpdateCPDefinition(
 			externalReferenceCode, commerceCatalog.getGroupId(),
 			LanguageUtils.getLocalizedMap(nameMap),
@@ -750,7 +752,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				cpDefinition.getPrimaryKey(), expando);
 		}
 
+		int currentWorkflowAction = serviceContext.getWorkflowAction();
+
+		serviceContext.setWorkflowAction(originalWorkflowAction);
+
 		_updateNestedResources(product, cpDefinition, serviceContext);
+
+		serviceContext.setWorkflowAction(currentWorkflowAction);
 
 		return cpDefinition;
 	}

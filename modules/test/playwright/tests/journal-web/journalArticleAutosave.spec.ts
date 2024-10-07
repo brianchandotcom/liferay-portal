@@ -115,30 +115,9 @@ autoSaveTest(
 			'Administration'
 		);
 
-		await expect(
-			page.getByRole('heading', {name: 'Administration'})
-		).toBeVisible();
+		await page.getByLabel('Changeable Default Language').check();
 
-		if (
-			!(await page.getByLabel('Changeable Default Language').isChecked())
-		) {
-			await page.getByLabel('Changeable Default Language').click();
-		}
-
-		const updateButton = page.getByRole('button', {
-			name: 'Update',
-		});
-
-		const saveButton = page.getByRole('button', {
-			name: 'Save',
-		});
-
-		if (await saveButton.isVisible()) {
-			await saveButton.click();
-		}
-		else if (await updateButton.isVisible()) {
-			await updateButton.click();
-		}
+		await page.getByRole('button', {name: /save|update/i}).click();
 
 		await waitForAlert(page);
 
@@ -159,9 +138,7 @@ autoSaveTest(
 		});
 
 		const defaultLanguageButton = page
-			.locator(
-				'#_com_liferay_journal_web_portlet_JournalPortlet_-change-default-language'
-			)
+			.getByRole('group', {name: 'Basic Information'})
 			.getByRole('button', {name: 'Change'});
 
 		await clickAndExpectToBeVisible({

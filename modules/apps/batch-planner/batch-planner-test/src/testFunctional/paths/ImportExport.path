@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ENTITY_TYPE</td>
-	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Entity Type')]]/select[not(@disabled)]</td>
+	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Entity Type')]]/select[not(@disabled)]/option[contains(.,'${key_entityType}')]</td>
 	<td></td>
 </tr>
 <tr>

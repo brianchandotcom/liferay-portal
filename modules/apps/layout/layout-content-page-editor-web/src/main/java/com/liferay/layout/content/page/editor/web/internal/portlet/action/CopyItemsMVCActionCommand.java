@@ -163,8 +163,14 @@ public class CopyItemsMVCActionCommand
 	}
 
 	@Override
-	protected String getActionLabel() {
-		return "copied";
+	protected String getNoninstanceablePortletExceptionMessage() {
+		return "the-layout-could-not-be-copied-because-it-contains-a-widget-" +
+			"x-that-can-only-appear-once-in-the-page";
+	}
+
+	@Override
+	protected String getNoSuchEntryLinkExceptionMessage() {
+		return "the-section-could-not-be-copied-because-it-no-longer-exists";
 	}
 
 	@Reference

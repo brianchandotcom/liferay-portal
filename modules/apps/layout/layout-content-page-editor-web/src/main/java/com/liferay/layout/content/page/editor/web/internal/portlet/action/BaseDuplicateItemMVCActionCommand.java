@@ -127,8 +127,6 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
 	}
 
-	protected abstract String getActionLabel();
-
 	protected JSONArray getFragmentEntryLinksJSONArray(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			Set<Long> duplicatedFragmentEntryLinkIds, long segmentsExperienceId,
@@ -155,6 +153,10 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		return jsonArray;
 	}
 
+	protected abstract String getNoninstanceablePortletExceptionMessage();
+
+	protected abstract String getNoSuchEntryLinkExceptionMessage();
+
 	@Override
 	protected JSONObject processException(
 		ActionRequest actionRequest, Exception exception) {
@@ -169,10 +171,9 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		String errorMessage = StringPool.BLANK;
 
 		if (exception instanceof NoSuchEntryLinkException) {
-			errorMessage = language.format(
+			errorMessage = language.get(
 				themeDisplay.getRequest(),
-				"the-section-could-not-be-x-because-it-no-longer-exists",
-				getActionLabel());
+				getNoSuchEntryLinkExceptionMessage());
 		}
 		else if (exception instanceof NoninstanceablePortletException) {
 			NoninstanceablePortletException noninstanceablePortletException =
@@ -189,10 +190,8 @@ public abstract class BaseDuplicateItemMVCActionCommand
 
 			errorMessage = language.format(
 				themeDisplay.getRequest(),
-				"the-layout-could-not-be-x-because-it-contains-a-widget-x-" +
-					"that-can-only-appear-once-in-the-page",
+				getNoninstanceablePortletExceptionMessage(),
 				new String[] {
-					getActionLabel(),
 					portal.getPortletTitle(
 						portlet, httpSession.getServletContext(),
 						themeDisplay.getLocale())

@@ -509,6 +509,10 @@ definition {
 		task ("When the site designer creates a web content in an Asset Library") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
 
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Test Site Name");
+
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 			WebContentNavigator.gotoAddCP();

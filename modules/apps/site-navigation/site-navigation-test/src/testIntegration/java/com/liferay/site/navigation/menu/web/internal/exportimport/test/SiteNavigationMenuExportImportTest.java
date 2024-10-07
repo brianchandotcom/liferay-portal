@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -100,6 +101,9 @@ public class SiteNavigationMenuExportImportTest
 			_siteNavigationMenu.getExternalReferenceCode(),
 			portletPreferences.getValue(
 				"siteNavigationMenuExternalReferenceCode", StringPool.BLANK));
+		Assert.assertNull(
+			portletPreferences.getValue(
+				"siteNavigationMenuGroupExternalReferenceCode", null));
 		Assert.assertEquals(
 			_siteNavigationMenuItem.getExternalReferenceCode(),
 			portletPreferences.getValue(
@@ -139,6 +143,67 @@ public class SiteNavigationMenuExportImportTest
 			"1",
 			portletPreferences.getValue(
 				"siteNavigationMenuType", StringPool.BLANK));
+	}
+
+	@Test
+	@TestInfo("LPD-37038")
+	public void testExportImportWithSiteNavigationMenuFromDifferentGroup()
+		throws Exception {
+
+		_setUpLocalStaging();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
+
+		Group curGroup = GroupTestUtil.addGroup();
+
+		_setUpSiteNavigationMenu(curGroup);
+
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			_layout, SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
+			HashMapBuilder.put(
+				"rootMenuItemExternalReferenceCode",
+				new String[] {
+					_siteNavigationMenuItem.getExternalReferenceCode()
+				}
+			).put(
+				"siteNavigationMenuExternalReferenceCode",
+				new String[] {_siteNavigationMenu.getExternalReferenceCode()}
+			).put(
+				"siteNavigationMenuGroupExternalReferenceCode",
+				new String[] {curGroup.getExternalReferenceCode()}
+			).build());
+
+		_publishLayouts();
+
+		Assert.assertNull(
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					_siteNavigationMenu.getExternalReferenceCode(),
+					_liveGroup.getGroupId()));
+
+		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			_layout.getUuid(), _liveGroup.getGroupId(),
+			_layout.isPrivateLayout());
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.getPreferences(
+				_liveGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId);
+
+		Assert.assertEquals(
+			_siteNavigationMenu.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"siteNavigationMenuExternalReferenceCode", StringPool.BLANK));
+		Assert.assertEquals(
+			curGroup.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"siteNavigationMenuGroupExternalReferenceCode",
+				StringPool.BLANK));
+		Assert.assertEquals(
+			_siteNavigationMenuItem.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"rootMenuItemExternalReferenceCode", StringPool.BLANK));
 	}
 
 	@Test

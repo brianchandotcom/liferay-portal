@@ -82,7 +82,11 @@ public class DisplayPageLayoutTypeController
 			return null;
 		}
 
-		if (friendlyURL.contains(StringPool.QUESTION)) {
+		if (friendlyURL.contains(Portal.FRIENDLY_URL_SEPARATOR)) {
+			friendlyURL = friendlyURL.substring(
+				0, friendlyURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR));
+		}
+		else if (friendlyURL.contains(StringPool.QUESTION)) {
 			friendlyURL = friendlyURL.substring(
 				0, friendlyURL.lastIndexOf(StringPool.QUESTION));
 		}

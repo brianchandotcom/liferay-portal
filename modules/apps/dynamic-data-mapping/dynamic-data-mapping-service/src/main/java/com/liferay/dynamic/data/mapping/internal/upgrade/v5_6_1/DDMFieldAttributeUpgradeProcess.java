@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_2;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v5_6_1;
 
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;

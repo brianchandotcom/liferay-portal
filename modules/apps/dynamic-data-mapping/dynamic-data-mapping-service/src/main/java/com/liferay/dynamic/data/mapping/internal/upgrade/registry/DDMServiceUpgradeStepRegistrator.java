@@ -570,8 +570,16 @@ public class DDMServiceUpgradeStepRegistrator
 			"5.4.4", "5.4.5",
 			new DDMTemplateLinkUpgradeProcess(_classNameLocalService));
 
+		registry.register("5.4.5", "5.5.0", new DummyUpgradeStep());
+
 		registry.register(
-			"5.4.5", "5.5.0",
+			"5.5.0", "5.5.1",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.
+				DDMFieldUpgradeProcess(),
+			new DDMFieldAttributeUpgradeProcess());
+
+		registry.register(
+			"5.5.1", "5.6.0",
 			new BaseExternalReferenceCodeUpgradeProcess() {
 
 				@Override
@@ -582,14 +590,8 @@ public class DDMServiceUpgradeStepRegistrator
 			});
 
 		registry.register(
-			"5.5.0", "5.5.1",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.
-				DDMFieldUpgradeProcess(),
-			new DDMFieldAttributeUpgradeProcess());
-
-		registry.register(
-			"5.5.1", "5.5.2",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_2.
+			"5.6.0", "5.6.1",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_6_1.
 				DDMFieldAttributeUpgradeProcess(
 					_classNameLocalService, _dlFileEntryLocalService,
 					_fileEntryFriendlyURLResolver, _groupLocalService,

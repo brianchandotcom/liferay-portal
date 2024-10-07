@@ -380,7 +380,7 @@ test('LPD-26155 Production conflict info is visible when new changes have been m
 	);
 	await prodConflictIcon.waitFor();
 	await expect(prodConflictIcon).toBeVisible();
-	await prodConflictIcon.click();
+	await prodConflictIcon.hover();
 
 	const prodConflictText = page.getByText('Production Conflict');
 	await prodConflictText.waitFor();

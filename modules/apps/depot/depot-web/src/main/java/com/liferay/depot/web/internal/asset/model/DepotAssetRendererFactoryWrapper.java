@@ -13,12 +13,16 @@ import com.liferay.asset.util.AssetRendererFactoryWrapper;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,12 +45,17 @@ public class DepotAssetRendererFactoryWrapper<T>
 		DepotApplicationController depotApplicationController,
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
+		LayoutPrototypeLocalService layoutPrototypeLocalService,
 		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider) {
 
 		_assetRendererFactory = assetRendererFactory;
 		_depotApplicationController = depotApplicationController;
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
+		_layoutPageTemplateEntryLocalService =
+			layoutPageTemplateEntryLocalService;
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
 	}
 
@@ -95,7 +104,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 		if (ArrayUtil.contains(
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						group.getGroupId()),
+						_getGroupId(group.getGroupId())),
 				groupId)) {
 
 			return assetRenderer;
@@ -298,10 +307,37 @@ public class DepotAssetRendererFactoryWrapper<T>
 		return _groupLocalService.fetchGroup(serviceContext.getScopeGroupId());
 	}
 
+	private long _getGroupId(long groupId) throws PortalException {
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (group.isLayoutPrototype()) {
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.getLayoutPrototype(
+					group.getClassPK());
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
+			if ((layoutPageTemplateEntry != null) &&
+				(layoutPageTemplateEntry.getGroupId() > 0)) {
+
+				group = _groupLocalService.getGroup(
+					layoutPageTemplateEntry.getGroupId());
+			}
+		}
+
+		return group.getGroupId();
+	}
+
 	private final AssetRendererFactory<T> _assetRendererFactory;
 	private final DepotApplicationController _depotApplicationController;
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
+	private final LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+	private final LayoutPrototypeLocalService _layoutPrototypeLocalService;
 	private final SiteConnectedGroupGroupProvider
 		_siteConnectedGroupGroupProvider;
 

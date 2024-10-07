@@ -5,6 +5,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -23,9 +27,12 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -96,6 +103,33 @@ public class GetFragmentEntryLinksMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, fragmentEntryLinksJSONArray);
+	}
+
+	private void _addLinkedAssetEntryId(
+		String className, long classPK, HttpServletRequest httpServletRequest) {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return;
+		}
+
+		try {
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				className, classPK);
+
+			if (assetEntry != null) {
+				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+					httpServletRequest, assetEntry.getEntryId());
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
 	}
 
 	private JSONObject _getFragmentEntryLinkJSONObject(
@@ -171,6 +205,9 @@ public class GetFragmentEntryLinksMVCResourceCommand
 				httpServletRequest.setAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
 					new InfoItemReference(itemClassName, infoItemIdentifier));
+
+				_addLinkedAssetEntryId(
+					itemClassName, itemClassPK, httpServletRequest);
 			}
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
@@ -211,6 +248,9 @@ public class GetFragmentEntryLinksMVCResourceCommand
 
 		return jsonObject;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetFragmentEntryLinksMVCResourceCommand.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

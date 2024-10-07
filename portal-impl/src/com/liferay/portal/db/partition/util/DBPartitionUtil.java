@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -55,7 +56,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -83,7 +83,7 @@ public class DBPartitionUtil {
 			_addDBPartition(companyId);
 		}
 
-		return _companyIds.add(companyId);
+		return true;
 	}
 
 	public static void checkDatabasePartitionSchemaNamePrefix()
@@ -110,7 +110,7 @@ public class DBPartitionUtil {
 
 		_copyDBPartition(fromCompanyId, toCompanyId);
 
-		return _companyIds.add(toCompanyId);
+		return true;
 	}
 
 	public static boolean extractDBPartition(long companyId)
@@ -129,7 +129,7 @@ public class DBPartitionUtil {
 			_extractDBPartition(companyId);
 		}
 
-		return _companyIds.remove(companyId);
+		return true;
 	}
 
 	public static void forEachCompanyId(
@@ -154,9 +154,9 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		List<Long> companyIds = _getCompanyIds();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
-		if (companyIds.isEmpty()) {
+		if (ArrayUtil.isEmpty(companyIds)) {
 			unsafeConsumer.accept(null);
 		}
 		else {
@@ -235,7 +235,7 @@ public class DBPartitionUtil {
 
 		_insertDBPartition(companyId);
 
-		return _companyIds.add(companyId);
+		return true;
 	}
 
 	public static boolean removeDBPartition(long companyId)
@@ -254,7 +254,7 @@ public class DBPartitionUtil {
 			_dropDBPartition(companyId);
 		}
 
-		return _companyIds.remove(companyId);
+		return true;
 	}
 
 	public static void replaceByTable(
@@ -309,16 +309,6 @@ public class DBPartitionUtil {
 		if (DBPartition.isPartitionEnabled()) {
 			_defaultCompanyId = companyId;
 		}
-	}
-
-	public static void synchronizeCompanyIds() {
-		List<Long> companyIds = new CopyOnWriteArrayList<>();
-
-		for (long companyId : PortalInstancePool.getCompanyIds()) {
-			companyIds.add(companyId);
-		}
-
-		_companyIds = companyIds;
 	}
 
 	public static DataSource wrapDataSource(DataSource dataSource)
@@ -394,7 +384,9 @@ public class DBPartitionUtil {
 					String tableName = resultSet.getString("TABLE_NAME");
 
 					if (dbInspector.isObjectTable(
-							_getCompanyIds(), tableName)) {
+							ListUtil.fromArray(
+								PortalInstancePool.getCompanyIds()),
+							tableName)) {
 
 						continue;
 					}
@@ -805,9 +797,9 @@ public class DBPartitionUtil {
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		try {
-			List<Long> companyIds = _getCompanyIds();
+			long[] companyIds = PortalInstancePool.getCompanyIds();
 
-			if (companyIds.isEmpty()) {
+			if (ArrayUtil.isEmpty(companyIds)) {
 				unsafeConsumer.accept(null);
 			}
 			else {
@@ -869,14 +861,6 @@ public class DBPartitionUtil {
 		}
 
 		return columnNames;
-	}
-
-	private static List<Long> _getCompanyIds() {
-		if (_companyIds.isEmpty()) {
-			synchronizeCompanyIds();
-		}
-
-		return _companyIds;
 	}
 
 	private static Connection _getConnectionWrapper(Connection connection) {
@@ -1355,7 +1339,7 @@ public class DBPartitionUtil {
 						return returnValue;
 					}
 
-					for (long companyId : _getCompanyIds()) {
+					for (long companyId : PortalInstancePool.getCompanyIds()) {
 						if (companyId == _defaultCompanyId) {
 							continue;
 						}
@@ -1392,7 +1376,6 @@ public class DBPartitionUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 
-	private static List<Long> _companyIds = new CopyOnWriteArrayList<>();
 	private static DBPartitionDB _dbPartitionDB;
 	private static volatile long _defaultCompanyId;
 	private static String _defaultPartitionName;

@@ -79,6 +79,7 @@ export default function ChangeTrackingIndicator({
 		hideContextChangeWarningDuration,
 		setHideContextChangeWarningDuration,
 	] = useState('24');
+	const [openPopover, setOpenPopover] = useState(false);
 	const [popoverCheckbox, setPopoverCheckbox] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [showWarning, setShowWarning] = useState(
@@ -438,13 +439,16 @@ export default function ChangeTrackingIndicator({
 	const renderConflictIcon = () => {
 		if (Liferay.FeatureFlags['LPD-20556'] && !!dangerIcon) {
 			return (
-				<ClayDropDown
-					alignmentPosition={Align.BottomCenter}
-					menuElementAttrs={{style: {maxWidth: '303px'}}}
+				<ClayPopover
+					alightPosition="bottom"
+					onShowChange={setOpenPopover}
+					show={openPopover}
 					trigger={
 						<ClayButton
 							aria-label="conflict-button"
 							className="change-tracking-conflict-button"
+							onMouseOut={() => setOpenPopover(false)}
+							onMouseOver={() => setOpenPopover(true)}
 						>
 							<ClayIcon
 								className={dangerIcon.conflictIconClass}
@@ -457,13 +461,14 @@ export default function ChangeTrackingIndicator({
 					<ClayAlert
 						displayType="danger"
 						spritemap={spritemap}
+						style={{margin: '0px'}}
 						title={
 							Liferay.Language.get('production-conflict') + ': '
 						}
 					>
 						{Liferay.Language.get(dangerIcon.conflictIconLabel)}
 					</ClayAlert>
-				</ClayDropDown>
+				</ClayPopover>
 			);
 		}
 		else if (conflictIconClass && conflictIconName) {
@@ -762,9 +767,9 @@ export default function ChangeTrackingIndicator({
 						<div
 							className="c-inner"
 							style={{
-								margin: '2px',
-								padding: '1px',
-								width: '16px',
+								margin: '2px !important',
+								padding: '1px !important',
+								width: '16px !important',
 							}}
 							tabIndex="-1"
 							title={conflictIconLabel}
@@ -804,13 +809,15 @@ export default function ChangeTrackingIndicator({
 					<ClayLayout.ContentCol>
 						<div
 							className="c-inner"
+							data-qa-id={Liferay.Language.get(
+								'production-conflict'
+							)}
 							style={{
 								margin: '2px',
 								padding: '1px',
-								width: '16px',
+								width: '16px !important',
 							}}
 							tabIndex="-1"
-							title={Liferay.Language.get('production-conflict')}
 						>
 							{renderConflictIcon()}
 						</div>

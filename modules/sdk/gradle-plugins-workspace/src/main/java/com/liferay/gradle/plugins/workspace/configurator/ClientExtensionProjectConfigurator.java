@@ -29,11 +29,10 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildC
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.JsonNodeUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.LanguageBatchUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.copy.HashifyAction;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
-import com.liferay.gradle.plugins.workspace.task.GenerateLanguageBatchEngineDataTask;
+import com.liferay.gradle.plugins.workspace.task.WriteLanguageBatchEngineDataTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -42,10 +41,12 @@ import groovy.lang.Closure;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -110,14 +111,14 @@ public class ClientExtensionProjectConfigurator
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
 
-	public static final String GENERATE_LANGUAGE_BATCH_ENGINE_DATA_TASK_NAME =
-		"generateLanguageBatchEngineData";
-
 	public static final String VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME =
 		"validateClientExtensionIds";
 
 	public static final String VALIDATE_CLIENT_EXTENSIONS_TASK_NAME =
 		"validateClientExtensions";
+
+	public static final String WRITE_LANGUAGE_BATCH_ENGINE_DATA_TASK_NAME =
+		"writeLanguageBatchEngineData";
 
 	public static String getClientExtensionBuildDir(Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
@@ -310,7 +311,9 @@ public class ClientExtensionProjectConfigurator
 
 		_configureLiferayRoutes(project, workspaceExtension);
 
-		if (LanguageBatchUtil.isLanguageProject(project)) {
+		if (_isLanguageProject(project)) {
+			GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
+
 			_configureLanguageProject(project);
 		}
 	}
@@ -343,9 +346,7 @@ public class ClientExtensionProjectConfigurator
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (LanguageBatchUtil.isLanguageProject(
-							rootDir, dirPath.toFile())) {
-
+					if (_isLanguageProject(rootDir, dirPath.toFile())) {
 						projectDirs.add(dirPath.toFile());
 
 						return FileVisitResult.SKIP_SUBTREE;
@@ -614,9 +615,9 @@ public class ClientExtensionProjectConfigurator
 	private Map<String, JsonNode> _configureClientExtensionJsonNodes(
 		Project project, TaskProvider<?>... taskProviders) {
 
-		if (LanguageBatchUtil.isLanguageProject(project)) {
+		if (_isLanguageProject(project)) {
 			InputStream inputStream =
-				GenerateLanguageBatchEngineDataTask.class.getResourceAsStream(
+				WriteLanguageBatchEngineDataTask.class.getResourceAsStream(
 					"dependencies/templates/language/client-extension.yaml");
 
 			try {
@@ -624,8 +625,7 @@ public class ClientExtensionProjectConfigurator
 					"default", _yamlObjectMapper.readTree(inputStream));
 			}
 			catch (IOException ioException) {
-				throw new GradleException(
-					"Unable to create language client extension", ioException);
+				throw new UncheckedIOException(ioException);
 			}
 		}
 
@@ -937,26 +937,22 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private void _configureLanguageProject(Project project) {
-		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
-
 		TaskProvider<BuildLangTask> buildLangTaskProvider =
 			GradleUtil.getTaskProvider(
-				project, "buildLang", BuildLangTask.class);
+				project, LangBuilderPlugin.BUILD_LANG_TASK_NAME,
+				BuildLangTask.class);
 
 		buildLangTaskProvider.configure(
-			buildLangTask -> {
-				buildLangTask.setLangDir(project.file("lang"));
-				buildLangTask.setLangFileName("Language");
-			});
+			task -> task.setLangDir(project.file("lang")));
 
-		TaskProvider<GenerateLanguageBatchEngineDataTask>
-			generateLanguageBatchEngineDataTaskProvider =
+		TaskProvider<WriteLanguageBatchEngineDataTask>
+			writeLanguageBatchEngineDataTaskProvider =
 				GradleUtil.addTaskProvider(
-					project, GENERATE_LANGUAGE_BATCH_ENGINE_DATA_TASK_NAME,
-					GenerateLanguageBatchEngineDataTask.class);
+					project, WRITE_LANGUAGE_BATCH_ENGINE_DATA_TASK_NAME,
+					WriteLanguageBatchEngineDataTask.class);
 
-		_configureTaskGenerateLanguageBatchEngineData(
-			buildLangTaskProvider, generateLanguageBatchEngineDataTaskProvider);
+		writeLanguageBatchEngineDataTaskProvider.configure(
+			task -> task.dependsOn(buildLangTaskProvider));
 	}
 
 	private void _configureLiferayExtension(
@@ -1112,20 +1108,6 @@ public class ClientExtensionProjectConfigurator
 		copy.from(buildClientExtensionZipTaskProvider);
 	}
 
-	private void _configureTaskGenerateLanguageBatchEngineData(
-		TaskProvider<BuildLangTask> buildLangTaskProvider,
-		TaskProvider<GenerateLanguageBatchEngineDataTask>
-			generateLanguageBatchEngineDataTaskProvider) {
-
-		generateLanguageBatchEngineDataTaskProvider.configure(
-			generateLanguageBatchEngineDataTask -> {
-				generateLanguageBatchEngineDataTask.setGroup("hidden");
-
-				generateLanguageBatchEngineDataTask.dependsOn(
-					buildLangTaskProvider);
-			});
-	}
-
 	private String _getDockerImageId(Project project) {
 		String propertyName = "imageId";
 
@@ -1164,6 +1146,25 @@ public class ClientExtensionProjectConfigurator
 		return false;
 	}
 
+	private boolean _isLanguageProject(File rootDir, File projectDir) {
+		Path dirPath = projectDir.toPath();
+
+		if (Objects.equals(rootDir.toPath(), dirPath.getParent()) &&
+			dirPath.endsWith(Paths.get("language")) &&
+			Files.exists(
+				Paths.get(dirPath.toString(), "lang", "Language.properties"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isLanguageProject(Project project) {
+		return _isLanguageProject(
+			project.getRootDir(), project.getProjectDir());
+	}
+
 	private void _registerClientExtensionId(
 		Project project, String clientExtensionId) {
 
@@ -1184,7 +1185,7 @@ public class ClientExtensionProjectConfigurator
 		ClientExtension clientExtension, Project project) {
 
 		if (Objects.equals(clientExtension.type, "batch")) {
-			if (!LanguageBatchUtil.isLanguageProject(project)) {
+			if (!_isLanguageProject(project)) {
 				_validateRequiredDirectory(clientExtension, project, "batch");
 			}
 

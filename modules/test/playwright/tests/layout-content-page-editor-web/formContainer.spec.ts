@@ -1535,7 +1535,7 @@ test.describe('Edit mode language changes', () => {
 		});
 
 		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Marcador de posición',
+			fieldLabel: 'Placeholder',
 			fragmentId,
 			tab: 'General',
 			value: 'Spanish Placeholder',

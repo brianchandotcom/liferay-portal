@@ -75,8 +75,6 @@ public class PortalInstancesLocalServiceImpl
 			_companyLocalService.forEachCompanyId(
 				companyId -> PortalInstances.removeCompany(companyId),
 				ArrayUtil.toLongArray(removeableCompanyIds));
-
-			DBPartitionUtil.synchronizeCompanyIds();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -21,9 +21,9 @@
 		"sourceCodeURL": "",
 		"type": "oAuthApplicationHeadlessServer",
 		"typeSettings": [
+			".serviceAddress=localhost:8080",
 			".serviceScheme=http",
-			"scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything",
-			".serviceAddress=localhost:8080"
+			"scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"
 		],
 		"webContextPath": "/language"
 	}

@@ -6,61 +6,42 @@ runGradleTest {
 	dependsOn ":language:build"
 
 	doLast {
-		Project languageProject = project(":language")
-
 		JsonSlurper jsonSlurper = new JsonSlurper()
 
-		_compareObjects(
-			"language.client-extension-config.json",
-			jsonSlurper.parse(project.file("expected-client-extension-config.json")),
-			jsonSlurper.parse(languageProject.file("build/liferay-client-extension-build/language.client-extension-config.json")),
-			"")
-
-		_compareObjects(
-			"language.batch-engine-data.json",
-			jsonSlurper.parse(project.file("expected-batch-engine-data.json")),
-			jsonSlurper.parse(languageProject.file("build/liferay-client-extension-build/batch/language.batch-engine-data.json")),
-			"")
+		_compareObjects("batch-engine-data.json", jsonSlurper.parse(project.file("expected/batch-engine-data.json")), jsonSlurper.parse(project.file("language/build/liferay-client-extension-build/batch/language.batch-engine-data.json")))
+		_compareObjects("client-extension-config.json", jsonSlurper.parse(project.file("expected/client-extension-config.json")), jsonSlurper.parse(project.file("language/build/liferay-client-extension-build/language.client-extension-config.json")))
 	}
 }
 
-private void _compareObjects(String fileName, Object object1, Object object2, String path) {
+private void _compareObjects(String fileName, Object object1, Object object2) {
 	if (object1 instanceof Map) {
 		assert object2 instanceof Map
-
-		assert object1.size() == object2.size() : "${fileName}: Object sizes do not match at property path ${path}"
+		assert (object1.size() == object2.size()) : "${fileName}"
 
 		object1.each {
-			key, value1 ->
+			Object key, Object value ->
 
-			assert object2.containsKey(key) : "${fileName}: No key found at property path ${path}"
+			assert object2.containsKey(key) : "${fileName}: No key found"
 
-			if (key.equals("buildTimestamp")) {
-				return
+			if (!key.equals("buildTimestamp")) {
+				_compareObjects(fileName, value, object2.get(key))
 			}
-
-			_compareObjects(fileName, value1, object2.get(key), "${path}['${key}']")
 		}
-
-		return
 	}
-
-	if (object1 instanceof List) {
+	else if (object1 instanceof List) {
 		assert object2 instanceof List
-
-		assert object1.size() == object2.size() : "${fileName}: Array sizes do not match at property path ${path}"
+		assert (object1.size() == object2.size()) : "${fileName}"
 
 		object1.sort()
 		object2.sort()
 
 		object1.eachWithIndex {
-			item1, i ->
+			Object value, int index ->
 
-			_compareObjects(fileName, item1, object2[i], "${path}[${i}]")
+			_compareObjects(fileName, value, object2[index])
 		}
-
-		return
 	}
-
-	assert object1 == object2 : "${fileName}: Wrong value at property path ${path}"
+	else {
+		assert (object1 == object2) : "${fileName}"
+	}
 }

@@ -42,7 +42,6 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -60,29 +59,14 @@ public class SiteNavigationMenuExportImportTest
 			RandomTestUtil.randomString());
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_liveGroup = GroupTestUtil.addGroup();
-
-		GroupTestUtil.enableLocalStaging(
-			_liveGroup, TestPropsValues.getUserId());
-
-		_stagingGroup = _liveGroup.getStagingGroup();
+	@Test
+	public void testExportImport() throws Exception {
+		_setUpLocalStaging();
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
 
-		_siteNavigationMenu = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_stagingGroup);
+		_setUpSiteNavigationMenu(_stagingGroup);
 
-		_siteNavigationMenuItem =
-			SiteNavigationMenuItemTestUtil.addSiteNavigationMenuItem(
-				_siteNavigationMenu);
-	}
-
-	@Test
-	public void testExportImport() throws Exception {
 		String portletId = LayoutTestUtil.addPortletToLayout(
 			_layout, SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
 			HashMapBuilder.put(
@@ -129,6 +113,10 @@ public class SiteNavigationMenuExportImportTest
 
 	@Test
 	public void testExportImportEmptyPortletPreferences() throws Exception {
+		_setUpLocalStaging();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
+
 		String portletId = LayoutTestUtil.addPortletToLayout(
 			_layout, SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
 			HashMapBuilder.put(
@@ -231,6 +219,24 @@ public class SiteNavigationMenuExportImportTest
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			_liveGroup.getGroupId(), false, parameterMap);
+	}
+
+	private void _setUpLocalStaging() throws Exception {
+		_liveGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.enableLocalStaging(
+			_liveGroup, TestPropsValues.getUserId());
+
+		_stagingGroup = _liveGroup.getStagingGroup();
+	}
+
+	private void _setUpSiteNavigationMenu(Group stagingGroup) throws Exception {
+		_siteNavigationMenu = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+			stagingGroup);
+
+		_siteNavigationMenuItem =
+			SiteNavigationMenuItemTestUtil.addSiteNavigationMenuItem(
+				_siteNavigationMenu);
 	}
 
 	private Layout _layout;

@@ -198,11 +198,15 @@ public class SiteNavigationMenuDisplayContext {
 			_siteNavigationMenuPortletInstanceConfiguration.
 				rootMenuItemExternalReferenceCode());
 
+		if (Validator.isNull(rootMenuItemExternalReferenceCode)) {
+			return StringPool.BLANK;
+		}
+
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			SiteNavigationMenuItemLocalServiceUtil.
 				fetchSiteNavigationMenuItemByExternalReferenceCode(
 					rootMenuItemExternalReferenceCode,
-					_themeDisplay.getScopeGroupId());
+					_getSiteNavigationMenuGroupId());
 
 		if (siteNavigationMenuItem == null) {
 			return StringPool.BLANK;
@@ -345,11 +349,13 @@ public class SiteNavigationMenuDisplayContext {
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuExternalReferenceCode());
 
-		_siteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.
-				fetchSiteNavigationMenuByExternalReferenceCode(
-					siteNavigationMenuExternalReferenceCode,
-					_themeDisplay.getScopeGroupId());
+		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+			_siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.
+					fetchSiteNavigationMenuByExternalReferenceCode(
+						siteNavigationMenuExternalReferenceCode,
+						_getSiteNavigationMenuGroupId());
+		}
 
 		return _siteNavigationMenu;
 	}
@@ -517,6 +523,39 @@ public class SiteNavigationMenuDisplayContext {
 		return 0;
 	}
 
+	private long _getSiteNavigationMenuGroupId() {
+		if (_siteNavigationMenuGroupId != null) {
+			return _siteNavigationMenuGroupId;
+		}
+
+		String siteNavigationMenuGroupExternalReferenceCode =
+			ParamUtil.getString(
+				_httpServletRequest,
+				"siteNavigationMenuGroupExternalReferenceCode",
+				_siteNavigationMenuPortletInstanceConfiguration.
+					siteNavigationMenuGroupExternalReferenceCode());
+
+		long siteNavigationMenuGroupId = 0;
+
+		if (Validator.isNull(siteNavigationMenuGroupExternalReferenceCode)) {
+			siteNavigationMenuGroupId = _themeDisplay.getScopeGroupId();
+		}
+		else {
+			Group group =
+				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+					siteNavigationMenuGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+
+			if (group != null) {
+				siteNavigationMenuGroupId = group.getGroupId();
+			}
+		}
+
+		_siteNavigationMenuGroupId = siteNavigationMenuGroupId;
+
+		return _siteNavigationMenuGroupId;
+	}
+
 	private long _getSiteNavigationMenuId() {
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
 
@@ -589,6 +628,7 @@ public class SiteNavigationMenuDisplayContext {
 	private Integer _rootMenuItemLevel;
 	private String _rootMenuItemType;
 	private SiteNavigationMenu _siteNavigationMenu;
+	private Long _siteNavigationMenuGroupId;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuPortletInstanceConfiguration
 		_siteNavigationMenuPortletInstanceConfiguration;

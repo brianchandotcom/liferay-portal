@@ -2247,6 +2247,9 @@ public interface PropsKeys {
 	public static final String ROBOTS_TXT_WITHOUT_SITEMAP =
 		"robots.txt.without.sitemap";
 
+	public static final String ROLES_MAPPING_TABLE_QUERY_LIMIT =
+		"roles.mapping.table.query.limit";
+
 	public static final String ROLES_NAME_ALLOW_NUMERIC =
 		"roles.name.allow.numeric";
 

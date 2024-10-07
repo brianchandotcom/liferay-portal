@@ -1975,6 +1975,9 @@ public class PropsValues {
 	public static final String ROBOTS_TXT_WITHOUT_SITEMAP = PropsUtil.get(
 		PropsKeys.ROBOTS_TXT_WITHOUT_SITEMAP);
 
+	public static int ROLES_MAPPING_TABLE_QUERY_LIMIT = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.ROLES_MAPPING_TABLE_QUERY_LIMIT));
+
 	public static boolean ROLES_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.ROLES_NAME_ALLOW_NUMERIC));
 

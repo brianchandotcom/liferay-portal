@@ -109,6 +109,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -1224,72 +1225,66 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, long[] groupIds) {
-		Set<Role> roles = new LinkedHashSet<>();
-
-		List<Role> userRoles = dslQuery(
-			DSLQueryFactoryUtil.select(
-				RoleTable.INSTANCE
-			).from(
-				RoleTable.INSTANCE
-			).innerJoinON(
-				Users_RolesTable.INSTANCE,
-				Users_RolesTable.INSTANCE.roleId.eq(RoleTable.INSTANCE.roleId)
-			).where(
-				Users_RolesTable.INSTANCE.userId.eq(userId)
-			));
-
-		if (!userRoles.isEmpty()) {
-			roles.addAll(userRoles);
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return userPersistence.getRoles(userId);
 		}
 
-		if (ArrayUtil.isNotEmpty(groupIds)) {
-			JoinStep joinStep = DSLQueryFactoryUtil.select(
-				RoleTable.INSTANCE
-			).from(
-				RoleTable.INSTANCE
-			).innerJoinON(
-				Groups_RolesTable.INSTANCE,
-				Groups_RolesTable.INSTANCE.roleId.eq(RoleTable.INSTANCE.roleId)
-			);
+		Set<Role> roles = new HashSet<>(userPersistence.getRoles(userId));
 
-			List<Role> groupRoles = new ArrayList<>();
-
-			int chunk = 2000;
-
-			for (int i = 0; i < groupIds.length; i += chunk) {
-
-				// We cannot use an "in" clause because more than 1000 items in
-				// a list causes a syntax error in Oracle. See LPS-173475 and
-				// ORA-01795.
-
-				/*groupRoles.addAll(
-					dslQuery(
-						joinStep.where(
-							Groups_RolesTable.INSTANCE.groupId.in(
-								ArrayUtil.toLongArray(
-									Arrays.copyOfRange(
-										groupIds, i, i + chunk))))));*/
-
-				Predicate predicate = null;
-
-				long[] curGroupIds = Arrays.copyOfRange(
-					groupIds, i, Math.min(groupIds.length, i + chunk));
-
-				for (long curGroupId : curGroupIds) {
-					predicate = Predicate.or(
-						predicate,
-						Groups_RolesTable.INSTANCE.groupId.eq(curGroupId));
-				}
-
-				if (predicate != null) {
-					groupRoles.addAll(
-						dslQuery(joinStep.where(predicate.withParentheses())));
-				}
+		if (groupIds.length <= PropsValues.ROLES_MAPPING_TABLE_QUERY_LIMIT) {
+			for (long groupId : groupIds) {
+				roles.addAll(groupPersistence.getRoles(groupId));
 			}
 
-			if (!groupRoles.isEmpty()) {
-				roles.addAll(groupRoles);
+			return new ArrayList<>(roles);
+		}
+
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			RoleTable.INSTANCE
+		).from(
+			RoleTable.INSTANCE
+		).innerJoinON(
+			Groups_RolesTable.INSTANCE,
+			Groups_RolesTable.INSTANCE.roleId.eq(RoleTable.INSTANCE.roleId)
+		);
+
+		List<Role> groupRoles = new ArrayList<>();
+
+		int chunk = 2000;
+
+		for (int i = 0; i < groupIds.length; i += chunk) {
+
+			// We cannot use an "in" clause because more than 1000 items in
+			// a list causes a syntax error in Oracle. See LPS-173475 and
+			// ORA-01795.
+
+			/*groupRoles.addAll(
+				dslQuery(
+					joinStep.where(
+						Groups_RolesTable.INSTANCE.groupId.in(
+							ArrayUtil.toLongArray(
+								Arrays.copyOfRange(
+									groupIds, i, i + chunk))))));*/
+
+			Predicate predicate = null;
+
+			long[] curGroupIds = Arrays.copyOfRange(
+				groupIds, i, Math.min(groupIds.length, i + chunk));
+
+			for (long curGroupId : curGroupIds) {
+				predicate = Predicate.or(
+					predicate,
+					Groups_RolesTable.INSTANCE.groupId.eq(curGroupId));
 			}
+
+			if (predicate != null) {
+				groupRoles.addAll(
+					dslQuery(joinStep.where(predicate.withParentheses())));
+			}
+		}
+
+		if (!groupRoles.isEmpty()) {
+			roles.addAll(groupRoles);
 		}
 
 		return new ArrayList<>(roles);

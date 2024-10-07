@@ -142,17 +142,18 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			File file = new File(
+			File module = new File(
 				getPortalDir() + "/modules/test/playwright/tests/" +
 					moduleName);
 
-			if (!file.exists()) {
+			if (!module.exists()) {
 				return content;
 			}
 
-			file = new File(file, "test.properties");
+			File configFile = new File(module, "config.ts");
+			File propertiesFile = new File(module, "test.properties");
 
-			if (!file.exists()) {
+			if (!propertiesFile.exists() && configFile.exists()) {
 				addMessage(
 					fileName,
 					"Missing test.properties in playwright/tests/" +

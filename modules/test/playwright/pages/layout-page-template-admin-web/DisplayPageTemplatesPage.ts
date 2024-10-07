@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -41,6 +42,25 @@ export class DisplayPageTemplatesPage {
 				name: actionName,
 			})
 			.click();
+	}
+
+	async copyTemplate(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: this.page.getByRole('menuitem', {name: 'Make a Copy'}),
+			trigger: this.page
+				.locator('.card-page-item')
+				.filter({hasText: name})
+				.getByLabel('More actions'),
+		});
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByText('Display Page', {exact: true}).nth(1),
+			trigger: this.page.getByRole('menuitem', {name: 'Make a Copy'}),
+		});
+
+		await waitForAlert(this.page);
 	}
 
 	async deleteTemplate(name: string) {

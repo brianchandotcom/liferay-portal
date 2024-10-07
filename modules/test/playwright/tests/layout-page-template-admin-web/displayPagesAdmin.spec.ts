@@ -11,6 +11,7 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
@@ -33,7 +34,8 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	journalPagesTest,
-	loginTest()
+	loginTest(),
+	pageEditorPagesTest
 );
 
 const testInfoPanel = mergeTests(
@@ -574,6 +576,71 @@ test.describe('UI', () => {
 			page.getByLabel(`Select ${displayPageTemplateName}`)
 		).toBeVisible();
 	});
+
+	test(
+		'User can copy a display page',
+		{
+			tag: '@LPS-192724',
+		},
+		async ({displayPageTemplatesPage, page, pageEditorPage, site}) => {
+
+			// Create a display page template for Blogs Entry
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Blogs Entry',
+				name: displayPageTemplateName,
+			});
+
+			// Add fragment and select editable
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingId = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.selectEditable(headingId, 'element-text');
+
+			await page.getByLabel('Field').selectOption('Title');
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Copy display page template
+
+			await displayPageTemplatesPage.copyTemplate(
+				displayPageTemplateName
+			);
+
+			// Assert copy display page template
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: `${displayPageTemplateName} (Copy)`,
+				})
+			).toBeVisible();
+
+			// Go to copied display page template edit mode
+
+			await displayPageTemplatesPage.editTemplate(
+				`${displayPageTemplateName} (Copy)`
+			);
+
+			const copyHeadingId = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.selectEditable(copyHeadingId, 'element-text');
+
+			await expect(page.getByLabel('Field')).toHaveValue(
+				'BlogsEntry_title'
+			);
+		}
+	);
 
 	test('User can delete default display page template', async ({
 		displayPageTemplatesPage,

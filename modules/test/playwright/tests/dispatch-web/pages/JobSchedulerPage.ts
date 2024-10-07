@@ -17,7 +17,7 @@ export class JobSchedulerPage {
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.exportAnalyticsDxpEntitiesItem = page.getByRole('menuitem', {
-			name: 'export-analytics-dxp-entities',
+			name: 'Export Analytics DXP Entities',
 		});
 		this.newJobSchedulerTriggerButton = page.getByRole('button', {
 			name: 'New',

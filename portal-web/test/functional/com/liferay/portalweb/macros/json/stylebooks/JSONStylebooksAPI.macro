@@ -13,7 +13,8 @@ definition {
 				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d name=${styleBookEntryName} \
-				-d styleBookEntryKey=
+				-d styleBookEntryKey= \
+				-d themeId=''
 		''';
 
 		var styleBookEntryId = JSONCurlUtil.post(${curl}, "$.styleBookEntryId");

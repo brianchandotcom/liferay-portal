@@ -14,6 +14,8 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,22 +80,13 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 				"Unable to export portlet permissions", portalException);
 		}
 
-		String siteNavigationMenuExternalReferenceCode =
-			portletPreferences.getValue(
-				"siteNavigationMenuExternalReferenceCode", null);
+		SiteNavigationMenu siteNavigationMenu = _getSiteNavigationMenu(
+			portletDataContext, portletPreferences);
 
-		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
-			SiteNavigationMenu siteNavigationMenu =
-				_siteNavigationMenuLocalService.
-					fetchSiteNavigationMenuByExternalReferenceCode(
-						siteNavigationMenuExternalReferenceCode,
-						portletDataContext.getScopeGroupId());
-
-			if (siteNavigationMenu != null) {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletDataContext.getPortletId(),
-					siteNavigationMenu);
-			}
+		if (siteNavigationMenu != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletDataContext.getPortletId(),
+				siteNavigationMenu);
 		}
 
 		return portletPreferences;
@@ -120,6 +113,8 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
 			String siteNavigationMenuExternalReferenceCode = StringPool.BLANK;
+			String siteNavigationMenuGroupExternalReferenceCode =
+				StringPool.BLANK;
 
 			long originalPlid = MapUtil.getLong(
 				portletDataContext.getParameterMap(), "portletPreferencePlid");
@@ -159,6 +154,10 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 						originalPortletPreferences.getValue(
 							"siteNavigationMenuExternalReferenceCode",
 							StringPool.BLANK);
+					siteNavigationMenuGroupExternalReferenceCode =
+						originalPortletPreferences.getValue(
+							"siteNavigationMenuGroupExternalReferenceCode",
+							StringPool.BLANK);
 				}
 			}
 
@@ -166,6 +165,10 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 				portletPreferences.setValue(
 					"siteNavigationMenuExternalReferenceCode",
 					String.valueOf(siteNavigationMenuExternalReferenceCode));
+				portletPreferences.setValue(
+					"siteNavigationMenuGroupExternalReferenceCode",
+					String.valueOf(
+						siteNavigationMenuGroupExternalReferenceCode));
 			}
 			catch (ReadOnlyException readOnlyException) {
 				PortletDataException portletDataException =
@@ -180,6 +183,42 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		_importSiteNavigationMenuReference(portletDataContext);
 
 		return portletPreferences;
+	}
+
+	private SiteNavigationMenu _getSiteNavigationMenu(
+		PortletDataContext portletDataContext,
+		PortletPreferences portletPreferences) {
+
+		String siteNavigationMenuExternalReferenceCode =
+			portletPreferences.getValue(
+				"siteNavigationMenuExternalReferenceCode", null);
+
+		if (Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
+			return null;
+		}
+
+		String siteNavigationMenuGroupExternalReferenceCode =
+			portletPreferences.getValue(
+				"siteNavigationMenuGroupExternalReferenceCode", null);
+
+		if (Validator.isNull(siteNavigationMenuGroupExternalReferenceCode)) {
+			return _siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					siteNavigationMenuExternalReferenceCode,
+					portletDataContext.getScopeGroupId());
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			siteNavigationMenuGroupExternalReferenceCode,
+			portletDataContext.getCompanyId());
+
+		if (group == null) {
+			return null;
+		}
+
+		return _siteNavigationMenuLocalService.
+			fetchSiteNavigationMenuByExternalReferenceCode(
+				siteNavigationMenuExternalReferenceCode, group.getGroupId());
 	}
 
 	private void _importSiteNavigationMenuReference(
@@ -214,6 +253,9 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	private Capability _exportCapability;
+
+	@Reference(unbind = "-")
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	private Capability _importCapability;

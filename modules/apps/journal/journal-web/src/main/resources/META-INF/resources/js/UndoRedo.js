@@ -92,11 +92,10 @@ export default function UndoRedo({
 	const handleUndo = (newStep) => {
 		const nextStep = history[newStep];
 
-		if (nextStep.selectedLanguageId !== selectedLanguageId) {
-			const selectedLanguageIdInput = document.getElementById(
-				`${portletNamespace}languageId`
-			);
-
+		const selectedLanguageIdInput = document.getElementById(
+			`${portletNamespace}languageId`
+		);
+		if (nextStep.selectedLanguageId !== selectedLanguageIdInput.value) {
 			descriptionInputComponent
 				.get('translatedLanguages')
 				.values()
@@ -109,7 +108,7 @@ export default function UndoRedo({
 							.remove(lang);
 						descriptionInputComponent.removeInputLanguage(lang);
 						descriptionInputComponent._updateTranslationStatus(
-							selectedLanguageId
+							selectedLanguageIdInput.value
 						);
 					}
 				});
@@ -126,7 +125,7 @@ export default function UndoRedo({
 							.remove(lang);
 						friendlyURLInputComponent.removeInputLanguage(lang);
 						friendlyURLInputComponent._updateTranslationStatus(
-							selectedLanguageId
+							selectedLanguageIdInput.value
 						);
 					}
 				});
@@ -141,7 +140,7 @@ export default function UndoRedo({
 							.remove(lang);
 						titleInputComponent.removeInputLanguage(lang);
 						titleInputComponent._updateTranslationStatus(
-							selectedLanguageId
+							selectedLanguageIdInput.value
 						);
 					}
 				});
@@ -163,11 +162,11 @@ export default function UndoRedo({
 	const handleRedo = (newStep) => {
 		const nextStep = history[newStep];
 
-		if (nextStep.selectedLanguageId !== selectedLanguageId) {
-			const selectedLanguageIdInput = document.getElementById(
-				`${portletNamespace}languageId`
-			);
+		const selectedLanguageIdInput = document.getElementById(
+			`${portletNamespace}languageId`
+		);
 
+		if (nextStep.selectedLanguageId !== selectedLanguageIdInput.value) {
 			selectedLanguageIdInput.value = nextStep.selectedLanguageId;
 
 			nextStep.descriptionTranslatedLanguages.map((lang) => {

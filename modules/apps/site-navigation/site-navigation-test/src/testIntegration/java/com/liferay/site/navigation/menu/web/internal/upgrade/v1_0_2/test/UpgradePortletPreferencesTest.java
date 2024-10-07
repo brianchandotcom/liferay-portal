@@ -7,9 +7,11 @@ package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -128,6 +130,71 @@ public class UpgradePortletPreferencesTest
 			).build(),
 			HashMapBuilder.put(
 				"rootMenuItemId", rootMenuItemId
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build());
+	}
+
+	@Test
+	@TestInfo("LPD-37038")
+	public void testUpgradeWithSiteNavigationMenuFromDifferentGroup()
+		throws Exception {
+
+		Group curGroup = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(curGroup);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				curGroup.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), curGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				null, TestPropsValues.getUserId(), curGroup.getGroupId(),
+				siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"groupId", String.valueOf(curGroup.getGroupId())
+				).put(
+					"layoutUuid", layout.getUuid()
+				).put(
+					"privateLayout", false
+				).put(
+					"title", RandomTestUtil.randomString()
+				).buildString(),
+				serviceContext);
+
+		testUpgrade(
+			HashMapBuilder.put(
+				"rootMenuItemExternalReferenceCode",
+				siteNavigationMenuItem.getExternalReferenceCode()
+			).put(
+				"rootMenuItemId",
+				String.valueOf(
+					siteNavigationMenuItem.getSiteNavigationMenuItemId())
+			).put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuGroupExternalReferenceCode",
+				curGroup.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build(),
+			HashMapBuilder.put(
+				"rootMenuItemId",
+				String.valueOf(
+					siteNavigationMenuItem.getSiteNavigationMenuItemId())
 			).put(
 				"siteNavigationMenuId",
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())

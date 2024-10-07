@@ -210,6 +210,8 @@ public class FragmentEntryLinkManager {
 				);
 			}
 
+			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
+
 			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);
 

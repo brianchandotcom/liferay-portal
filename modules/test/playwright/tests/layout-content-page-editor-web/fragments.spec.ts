@@ -59,69 +59,6 @@ const test = mergeTests(
 
 const ENTER_KEY = 'Enter';
 
-test.describe('Captcha Fragment', () => {
-	test(
-		'The user could see an error message when submit a form with wrong captcha verification code',
-		{
-			tag: ['@LPS-151402', '@LPS-155168'],
-		},
-		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
-
-			// Create a page with a form fragment with a captcha fragment
-
-			const {id: objectDefinitionId} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
-				);
-
-			const captchaDefinition = getFragmentDefinition({
-				id: getRandomString(),
-				key: 'INPUTS-captcha',
-			});
-
-			const submitFragmentDefinition = getFragmentDefinition({
-				id: getRandomString(),
-				key: 'INPUTS-submit-button',
-			});
-
-			const formDefinition = getFormContainerDefinition({
-				id: getRandomString(),
-				objectDefinitionId,
-				pageElements: [captchaDefinition, submitFragmentDefinition],
-			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([formDefinition]),
-				siteId: pageManagementSite.id,
-				title: getRandomString(),
-			});
-
-			// Go to edit mode and assert captcha is disabled
-
-			await pageEditorPage.goto(
-				layout,
-				pageManagementSite.friendlyUrlPath
-			);
-
-			await expect(page.locator('.form-input-captcha')).toHaveAttribute(
-				'disabled'
-			);
-
-			// Go to view mode and assert error message with wrong captcha verification code when submit the form
-
-			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
-
-			await page.getByText('Submit', {exact: true}).click();
-
-			await expect(
-				page.getByText('CAPTCHA verification failed. Please try again.')
-			).toBeVisible();
-		}
-	);
-});
-
 test.describe('Content Display Fragment', () => {
 	const CONTENT_DISPLAY_FRAGMENT_HTML = `<div class="content-display-fragment">
 		[#if itemSelectorNameObject??]

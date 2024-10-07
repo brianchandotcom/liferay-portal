@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
+
 import java.util.List;
 
 /**
@@ -31,6 +33,16 @@ public class BlogsEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.blogs.service.impl.BlogsEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			addAttachmentFileEntry(
+				String externalReferenceCode, long groupId, String fileName,
+				String mimeType, InputStream inputStream)
+		throws PortalException {
+
+		return getService().addAttachmentFileEntry(
+			externalReferenceCode, groupId, fileName, mimeType, inputStream);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder
 			addAttachmentsFolder(long groupId)
 		throws PortalException {
@@ -80,6 +92,12 @@ public class BlogsEntryServiceUtil {
 			smallImageImageSelector, serviceContext);
 	}
 
+	public static void deleteAttachmentFileEntry(long fileEntryId)
+		throws PortalException {
+
+		getService().deleteAttachmentFileEntry(fileEntryId);
+	}
+
 	public static void deleteEntry(long entryId) throws PortalException {
 		getService().deleteEntry(entryId);
 	}
@@ -90,6 +108,22 @@ public class BlogsEntryServiceUtil {
 
 		return getService().fetchBlogsEntryByExternalReferenceCode(
 			groupId, externalReferenceCode);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentFileEntry(long fileEntryId)
+		throws PortalException {
+
+		return getService().getAttachmentFileEntry(fileEntryId);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentFileEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getAttachmentFileEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static BlogsEntry getBlogsEntryByExternalReferenceCode(

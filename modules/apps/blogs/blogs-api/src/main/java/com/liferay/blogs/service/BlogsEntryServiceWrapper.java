@@ -27,6 +27,17 @@ public class BlogsEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			addAttachmentFileEntry(
+				String externalReferenceCode, long groupId, String fileName,
+				String mimeType, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.addAttachmentFileEntry(
+			externalReferenceCode, groupId, fileName, mimeType, inputStream);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder
 			addAttachmentsFolder(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,6 +90,13 @@ public class BlogsEntryServiceWrapper
 	}
 
 	@Override
+	public void deleteAttachmentFileEntry(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_blogsEntryService.deleteAttachmentFileEntry(fileEntryId);
+	}
+
+	@Override
 	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -92,6 +110,24 @@ public class BlogsEntryServiceWrapper
 
 		return _blogsEntryService.fetchBlogsEntryByExternalReferenceCode(
 			groupId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentFileEntry(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.getAttachmentFileEntry(fileEntryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentFileEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.getAttachmentFileEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

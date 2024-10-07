@@ -4,6 +4,8 @@
  */
 
 import {Page, expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
@@ -1240,6 +1242,94 @@ test.describe('View', () => {
 				page.locator(
 					`link[href*="zh/web${site.friendlyUrlPath}/w/${journalArticleTitle}"][hreflang="zh-CN"][rel="alternate"]`
 				)
+			).toBeAttached();
+		}
+	);
+
+	test(
+		'User can interact with widgets in a display page',
+		{
+			tag: ['@LPS-106776', '@ LPS-129360'],
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Create a display page template for Basic Web Content and mark as default
+
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			const displayPageTemplateName = getRandomString();
+
+			await addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
+				apiHelpers,
+				String(contentStructureId),
+				displayPageTemplateName,
+				site
+			);
+
+			// Go to configuration
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Edit'
+			);
+
+			// Add documents and media widget
+
+			await pageEditorPage.addWidget(
+				'Highlighted',
+				'Documents and Media'
+			);
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Create a Basic Web Content
+
+			const journalArticleTitle = getRandomString();
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId,
+				datePublished: null,
+				siteId: site.id,
+				title: journalArticleTitle,
+				viewableBy: 'Anyone',
+			});
+
+			// Create a basic document
+
+			const document = await apiHelpers.headlessDelivery.postDocument(
+				site.id,
+				createReadStream(
+					path.join(__dirname, '/dependencies/image.jpg')
+				)
+			);
+
+			// Assert can change display style of documents and media
+
+			await page.goto(
+				`web${site.friendlyUrlPath}/w/${journalArticleTitle}`
+			);
+
+			await expect(
+				page.getByRole('link', {name: document.title})
+			).toBeAttached();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'list'}),
+				trigger: page.getByLabel('Select View, Currently'),
+			});
+
+			await expect(
+				page.getByRole('link', {name: document.title})
 			).toBeAttached();
 		}
 	);

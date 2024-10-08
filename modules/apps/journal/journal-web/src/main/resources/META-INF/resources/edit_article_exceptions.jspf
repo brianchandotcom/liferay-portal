@@ -69,6 +69,7 @@
 	<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(fileSizeException.getMaxSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= FriendlyURLLocalizationUrlTitleException.MustNotHaveTrailingSlash.class %>" message="please-enter-a-friendly-url-that-does-not-end-with-a-slash" />
 <liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
 
 <liferay-ui:error exception="<%= LiferayFileItemException.class %>">

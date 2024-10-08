@@ -218,10 +218,9 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 					_language.get(httpServletRequest, "edit"), null, null,
 					"link"),
 				new FDSActionDropdownItem(
-					"/o/headless-commerce-delivery-cart/v1.0/cart-items/{id}",
-					"trash", "delete",
+					StringPool.BLANK, "trash", "delete",
 					_language.get(httpServletRequest, "remove"), "delete", null,
-					"async"));
+					"link"));
 		}
 		else if (fdsName.equals(
 					CommerceOrderFragmentFDSNames.PLACED_ORDER_ITEMS)) {

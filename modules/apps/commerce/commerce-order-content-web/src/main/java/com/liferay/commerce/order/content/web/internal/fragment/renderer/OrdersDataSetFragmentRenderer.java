@@ -207,6 +207,24 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 		return StringPool.BLANK;
 	}
 
+	private AccountEntry _getCommerceAccount(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+			return _commerceAccountHelper.getCurrentAccountEntry(
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
+				httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return null;
+		}
+	}
+
 	private String _getCommerceOrderFriendlyURL(
 		HttpServletRequest httpServletRequest) {
 
@@ -307,21 +325,19 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Map<String, Object> _getFDSAdditionalProps(
-			CommerceChannel commerceChannel, String fdsName,
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		CommerceChannel commerceChannel, String fdsName,
+		HttpServletRequest httpServletRequest) {
 
 		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS)) {
 			return HashMapBuilder.<String, Object>put(
 				"accountId",
 				() -> {
-					long groupId = _portal.getScopeGroupId(httpServletRequest);
+					AccountEntry accountEntry = _getCommerceAccount(
+						httpServletRequest);
 
-					AccountEntry accountEntry =
-						_commerceAccountHelper.getCurrentAccountEntry(
-							_commerceChannelLocalService.
-								getCommerceChannelGroupIdBySiteGroupId(groupId),
-							httpServletRequest);
+					if (accountEntry == null) {
+						return null;
+					}
 
 					return accountEntry.getAccountEntryId();
 				}
@@ -371,7 +387,9 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	private CreationMenu _getFDSCreationMenu(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS)) {
+		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS) &&
+			(_getCommerceAccount(httpServletRequest) != null)) {
+
 			return CreationMenuBuilder.addPrimaryDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref("addCommerceOrder");

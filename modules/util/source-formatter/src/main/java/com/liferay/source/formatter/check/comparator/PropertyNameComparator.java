@@ -87,10 +87,10 @@ public class PropertyNameComparator extends NaturalOrderStringComparator {
 	}
 
 	private static final char[][] _REVERSE_ORDER_CHARACTERS = {
-		{CharPool.OPEN_BRACKET, CharPool.PERIOD},
 		{CharPool.CLOSE_BRACKET, CharPool.DASH},
 		{CharPool.CLOSE_BRACKET, CharPool.OPEN_PARENTHESIS},
-		{CharPool.CLOSE_BRACKET, CharPool.PERIOD}
+		{CharPool.CLOSE_BRACKET, CharPool.PERIOD},
+		{CharPool.OPEN_BRACKET, CharPool.PERIOD}
 	};
 
 }

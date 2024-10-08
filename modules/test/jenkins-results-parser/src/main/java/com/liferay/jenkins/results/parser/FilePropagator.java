@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -418,7 +420,8 @@ public class FilePropagator {
 			List<FilePropagatorTask> filePropagatorTasks =
 				_filePropagator._filePropagatorTasks;
 
-			List<String> commands = new ArrayList<>(filePropagatorTasks.size());
+			List<String> commands = new ArrayList<>(
+				filePropagatorTasks.size() * 2);
 
 			for (FilePropagatorTask filePropagatorTask : filePropagatorTasks) {
 				commands.add(

@@ -58,9 +58,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 				<li class="tbar-item tbar-item-expand">
 					<div class="autofit-row sidebar-section">
 						<div class="autofit-col d-flex flex-row">
-							<div class="inline-item px-6 py-2">
-								<span aria-hidden="true" class="loading-animation"></span>
-							</div>
+							<span aria-hidden="true" class="loading-animation mx-4 my-2"></span>
 
 							<react:component
 								module="{TranslationManager} from journal-web"
@@ -82,10 +80,6 @@ journalEditArticleDisplayContext.setViewAttributes();
 
 						<c:if test="<%= !JournalUtil.isEditDefaultValues(article) %>">
 							<div class="c-ml-2">
-								<div class="inline-item my-5 p-5 w-100">
-									<span aria-hidden="true" class="loading-animation"></span>
-								</div>
-
 								<react:component
 									module="{TranslationOptions} from journal-web"
 									props='<%=

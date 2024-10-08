@@ -99,7 +99,7 @@ public class FilePropagator {
 
 			long duration = 0;
 
-			while (!_targetSlaves.isEmpty() || !_busySlaves.isEmpty() ||
+			while ((!_targetSlaves.isEmpty() || !_busySlaves.isEmpty()) &&
 				   !executorService.isShutdown()) {
 
 				duration =

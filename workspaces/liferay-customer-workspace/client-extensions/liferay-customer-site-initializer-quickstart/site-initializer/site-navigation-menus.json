@@ -185,7 +185,7 @@
 									"pt_BR": "Contate-nos"
 								},
 								"type": "url",
-								"url": "/contact-us",
+								"url": "/callback-form",
 								"useNewTab": false
 							}
 						],

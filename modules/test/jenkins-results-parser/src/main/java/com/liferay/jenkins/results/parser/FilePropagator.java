@@ -315,8 +315,7 @@ public class FilePropagator {
 
 		StringBuffer sb = new StringBuffer();
 
-		sb.append("ssh -o ConnectTimeout=");
-		sb.append(_timeout / (60 * 1000));
+		sb.append("ssh -o ConnectTimeout=60");
 		sb.append(" -o NumberOfPasswordPrompts=0 ");
 		sb.append(targetSlave);
 		sb.append(" '");
@@ -342,7 +341,7 @@ public class FilePropagator {
 		sb.append("'");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			_timeout * 60 * 1000, sb.toString());
+			sb.toString());
 
 		return process.exitValue();
 	}

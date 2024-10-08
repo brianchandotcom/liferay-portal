@@ -894,8 +894,7 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		_validateEdge(
-			edge, objectDefinition1, objectDefinition2,
-			objectRelationship.getObjectRelationshipId(),
+			edge, objectDefinition1, objectDefinition2, objectRelationship,
 			objectRelationship.getType());
 
 		if (objectRelationship.compareType(
@@ -1115,7 +1114,7 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
 
-		_validateEdge(edge, objectDefinition1, objectDefinition2, 0L, type);
+		_validateEdge(edge, objectDefinition1, objectDefinition2, null, type);
 		_validateName(objectDefinition1, objectDefinition2, name);
 		_validateType(
 			objectDefinition1, objectDefinition2, name, parameterObjectFieldId,
@@ -1480,11 +1479,12 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private void _validateEdge(
 			boolean edge, ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, long objectRelationshipId,
-			String type)
+			ObjectDefinition objectDefinition2,
+			ObjectRelationship objectRelationship, String type)
 		throws PortalException {
 
 		if (!edge ||
+			((objectRelationship != null) && objectRelationship.isEdge()) ||
 			!FeatureFlagManagerUtil.isEnabled(
 				objectDefinition1.getCompanyId(), "LPS-187142")) {
 
@@ -1524,12 +1524,14 @@ public class ObjectRelationshipLocalServiceImpl
 					"reference in a root context");
 		}
 
-		if ((objectRelationshipId != 0) && objectDefinition1.isApproved() &&
-			objectDefinition2.isApproved()) {
+		if ((objectRelationship != null) &&
+			(objectRelationship.getObjectRelationshipId() != 0) &&
+			objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
 
 			int relatedObjectEntriesCount =
 				_objectEntryLocalService.getOneToManyObjectEntriesCount(
-					0, objectRelationshipId, 0L, false, null);
+					0, objectRelationship.getObjectRelationshipId(), 0L, false,
+					null);
 
 			if (relatedObjectEntriesCount > 0) {
 				throw new ObjectRelationshipEdgeException(

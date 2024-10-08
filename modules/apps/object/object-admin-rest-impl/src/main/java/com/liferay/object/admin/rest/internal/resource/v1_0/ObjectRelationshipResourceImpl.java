@@ -320,25 +320,9 @@ public class ObjectRelationshipResourceImpl
 			_objectFolderLocalService.getOrAddDefaultObjectFolder(
 				contextCompany.getCompanyId());
 
-		long rootObjectDefinitionId = 0;
-
-		if (GetterUtil.getBoolean(objectRelationship.getEdge())) {
-			com.liferay.object.model.ObjectDefinition
-				serviceBuilderObjectDefinition1 =
-					_objectDefinitionLocalService.
-						getObjectDefinitionByExternalReferenceCode(
-							objectRelationship.
-								getObjectDefinitionExternalReferenceCode1(),
-							contextCompany.getCompanyId());
-
-			rootObjectDefinitionId =
-				serviceBuilderObjectDefinition1.getRootObjectDefinitionId();
-		}
-
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
 			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(),
-			rootObjectDefinitionId,
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(

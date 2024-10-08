@@ -97,24 +97,38 @@ public class FilePropagator {
 			String previousString = null;
 			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-			while (!_targetSlaves.isEmpty() || !_busySlaves.isEmpty()) {
-				synchronized (this) {
-					for (String mirrorSlave : _mirrorSlaves) {
-						if (_targetSlaves.isEmpty()) {
-							break;
+			long duration = 0;
+
+			while (!_targetSlaves.isEmpty() || !_busySlaves.isEmpty() ||
+				   !executorService.isShutdown()) {
+
+				duration =
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+
+				if (duration >= _timeout) {
+					log("Timeout limit exceeded.");
+
+					executorService.shutdownNow();
+				}
+				else {
+					synchronized (this) {
+						for (String mirrorSlave : _mirrorSlaves) {
+							if (_targetSlaves.isEmpty()) {
+								break;
+							}
+
+							String targetSlave = _targetSlaves.remove(0);
+
+							executorService.execute(
+								new FilePropagatorThread(
+									this, mirrorSlave, targetSlave));
+
+							_busySlaves.add(mirrorSlave);
+							_busySlaves.add(targetSlave);
 						}
 
-						String targetSlave = _targetSlaves.remove(0);
-
-						executorService.execute(
-							new FilePropagatorThread(
-								this, mirrorSlave, targetSlave));
-
-						_busySlaves.add(mirrorSlave);
-						_busySlaves.add(targetSlave);
+						_mirrorSlaves.removeAll(_busySlaves);
 					}
-
-					_mirrorSlaves.removeAll(_busySlaves);
 				}
 
 				StringBuffer sb = new StringBuffer();
@@ -132,30 +146,23 @@ public class FilePropagator {
 
 				String currentString = sb.toString();
 
-				if (Objects.equals(previousString, currentString)) {
-					continue;
+				if (!Objects.equals(previousString, currentString) ||
+					executorService.isShutdown()) {
+
+					sb.append("\nTotal duration: ");
+
+					sb.append(
+						JenkinsResultsParserUtil.toDurationString(duration));
+
+					sb.append("\n");
+
+					log(sb.toString());
+
+					previousString = currentString;
 				}
-
-				sb.append("\nTotal duration: ");
-
-				long currentTime =
-					JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-				sb.append(
-					JenkinsResultsParserUtil.toDurationString(
-						currentTime - start));
-
-				sb.append("\n");
-
-				log(sb.toString());
-
-				previousString = currentString;
 
 				JenkinsResultsParserUtil.sleep(5000);
 			}
-
-			long duration =
-				JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 			log(
 				JenkinsResultsParserUtil.combine(
@@ -169,7 +176,9 @@ public class FilePropagator {
 			}
 		}
 		finally {
-			executorService.shutdown();
+			if (!executorService.isShutdown()) {
+				executorService.shutdown();
+			}
 		}
 	}
 

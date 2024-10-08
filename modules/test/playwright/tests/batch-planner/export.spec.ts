@@ -438,3 +438,17 @@ test('can see correct custom object name in dropdown', async ({
 		objectDefinitionId: objectDefinition.id,
 	});
 });
+
+test('can see ObjectDefinition entity type in dropdown', async ({
+	dataMigrationCenterPage,
+}) => {
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToExportFile();
+	await dataMigrationCenterPage.exportFileFormatSelector.selectOption('JSON');
+
+	expect(
+		await dataMigrationCenterPage.page
+			.getByLabel('Entity Type')
+			.textContent()
+	).toContain('ObjectDefinition (v1.0 - Liferay Object Admin REST)');
+});

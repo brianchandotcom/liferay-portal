@@ -1,17 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertAvailableEntityTypes(entityTypes = null) {
-		Click(locator1 = "ImportExport#ENTITY_TYPE");
-
-		for (var entityType : list ${entityTypes}) {
-			AssertTextEquals(
-				locator1 = "ImportExport#ENTITY_TYPE",
-				value1 = ${entityType});
-		}
-	}
-
-	@summary = "Default summary"
 	macro assertDownloadedFileName() {
 		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = ${downloadedFile});
 

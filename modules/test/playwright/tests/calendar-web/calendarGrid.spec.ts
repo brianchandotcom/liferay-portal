@@ -89,3 +89,24 @@ test('can move between gridcell child buttons using arrow keys', async ({
 		).toHaveAttribute('tabIndex', '0');
 	}
 });
+
+test('ensure that accessibility properties are maintained after changing months', async ({
+	calendarWidgetPage,
+}) => {
+	await calendarWidgetPage.calendarNextMonthButton.click();
+
+	await expect(calendarWidgetPage.calendarBase).toHaveAttribute(
+		'role',
+		'dialog'
+	);
+
+	await expect(calendarWidgetPage.calendarHeaderLabel).toHaveAttribute(
+		'role',
+		'paragraph'
+	);
+
+	await expect(calendarWidgetPage.calendarHeaderLabel).toHaveAttribute(
+		'aria-live',
+		'polite'
+	);
+});

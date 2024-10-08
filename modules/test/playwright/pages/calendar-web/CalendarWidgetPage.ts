@@ -11,7 +11,10 @@ import {ModalRecurrencePage} from './ModalRecurrencePage';
 export class CalendarWidgetPage {
 	readonly addEventButton: Locator;
 	readonly allDayCheckbox: Locator;
+	readonly calendarBase: Locator;
 	readonly calendarGrid: Locator;
+	readonly calendarHeaderLabel: Locator;
+	readonly calendarNextMonthButton: Locator;
 	readonly calendarWidget: Locator;
 	readonly closeConfigurationButton: Locator;
 	readonly configurationMenuItem: Locator;
@@ -34,7 +37,10 @@ export class CalendarWidgetPage {
 				exact: true,
 				name: 'All Day',
 			});
+		this.calendarBase = page.locator('.yui3-calendarbase');
 		this.calendarGrid = page.locator('.yui3-calendar-grid');
+		this.calendarHeaderLabel = page.locator('.yui3-calendar-header-label');
+		this.calendarNextMonthButton = page.getByRole('button', {name: 'Go to next month'});
 		this.calendarWidget = page.locator(
 			'.lfr-layout-structure-item-com-liferay-calendar-web-portlet-calendarportlet'
 		);

@@ -8,6 +8,9 @@ package com.liferay.portal.db.partition.db;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -108,13 +111,52 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 	@Override
 	public String getCreateTableSQL(
-		String fromPartitionName, String toPartitionName, String fromTableName,
-		String toTableName) {
+			Connection connection, String fromPartitionName,
+			String toPartitionName, String fromTableName, String toTableName)
+		throws SQLException {
 
-		return StringBundler.concat(
-			"create table if not exists ", toPartitionName, StringPool.PERIOD,
-			toTableName, " (like ", fromPartitionName, StringPool.PERIOD,
-			fromTableName, " including all)");
+		StringBundler sb = new StringBundler();
+
+		sb.append(
+			StringBundler.concat(
+				"create table if not exists ", toPartitionName,
+				StringPool.PERIOD, toTableName, " (like ", fromPartitionName,
+				StringPool.PERIOD, fromTableName,
+				" including all excluding indexes);"));
+
+		sb.append(StringPool.NEW_LINE);
+
+		DB db = DBManagerUtil.getDB();
+
+		sb.append("alter table ");
+		sb.append(toPartitionName + StringPool.PERIOD + toTableName);
+		sb.append(" add primary key (");
+
+		for (String columnName :
+				db.getPrimaryKeyColumnNames(connection, fromTableName)) {
+
+			sb.append(columnName);
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(");");
+
+		for (IndexMetadata indexMetadata :
+				db.getIndexes(connection, fromTableName, null, false)) {
+
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append(
+				StringUtil.replace(
+					indexMetadata.getCreateSQL(null), "on " + fromTableName,
+					StringBundler.concat(
+						"on ", toPartitionName, StringPool.PERIOD,
+						toTableName)));
+		}
+
+		return sb.toString();
 	}
 
 	@Override

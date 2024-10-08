@@ -4,6 +4,7 @@
  */
 
 import React, {
+	ReactNode,
 	createContext,
 	useCallback,
 	useContext,
@@ -11,23 +12,30 @@ import React, {
 	useRef,
 } from 'react';
 
+import {FragmentEntryLink} from '../actions/addFragmentEntryLinks';
 import updateWidgets from '../actions/updateWidgets';
 import {
+	Thunk,
 	useDispatch,
 	useSelector,
 	useSelectorRef,
 } from '../contexts/StoreContext';
+import {Action} from '../reducers';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgetsThunk from '../thunks/loadWidgets';
+
+type Status = 'not-loaded' | 'loading' | 'loaded';
 
 const WidgetsContext = createContext({
 	getWidgets: () => {},
 	loadWidgets: () => {},
 });
 
-function WidgetsContextProvider({children}) {
-	const dispatch = useDispatch();
+function WidgetsContextProvider({children}: {children: ReactNode}) {
+	const dispatch = useDispatch() as (
+		thunkOrAction: Thunk | Action
+	) => Promise<void>;
 
 	const widgets = useSelector((state) => state.widgets);
 
@@ -46,11 +54,11 @@ function WidgetsContextProvider({children}) {
 			.join(',');
 	});
 
-	const fragmentEntryLinksRef = useSelectorRef(
+	const fragmentEntryLinksRef = useSelectorRef<FragmentEntryLink[]>(
 		selectWidgetFragmentEntryLinks
 	);
 
-	const statusRef = useRef('not-loaded');
+	const statusRef = useRef<Status>('not-loaded');
 
 	const loadWidgets = useCallback(() => {
 		if (fragmentEntryLinksRef.current) {

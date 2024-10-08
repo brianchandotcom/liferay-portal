@@ -403,6 +403,22 @@ public class FilePropagator {
 
 			_duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
+			String durationString = JenkinsResultsParserUtil.toDurationString(
+				_duration);
+
+			if (_successful) {
+				_filePropagator.log(
+					JenkinsResultsParserUtil.combine(
+						"Propagated to ", _targetSlave, " from ", _mirrorSlave,
+						" in ", durationString, "."));
+			}
+			else {
+				_filePropagator.log(
+					JenkinsResultsParserUtil.combine(
+						"Unable to propagate to ", _targetSlave, " from ",
+						_mirrorSlave, "."));
+			}
+
 			synchronized (_filePropagator) {
 				_filePropagator._busySlaves.remove(_mirrorSlave);
 				_filePropagator._busySlaves.remove(_targetSlave);

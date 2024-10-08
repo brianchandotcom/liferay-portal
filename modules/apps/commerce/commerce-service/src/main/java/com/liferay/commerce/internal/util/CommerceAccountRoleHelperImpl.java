@@ -199,15 +199,23 @@ public class CommerceAccountRoleHelperImpl
 			groupResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
-					"ADD_COMMERCE_ORDER", "APPROVE_OPEN_COMMERCE_ORDERS",
-					"CHECKOUT_OPEN_COMMERCE_ORDERS", "DELETE_COMMERCE_ORDERS",
-					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
-					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
-					"MANAGE_COMMERCE_ORDERS", "VIEW_BILLING_ADDRESS",
-					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER,
+					CommerceOrderActionKeys.APPROVE_OPEN_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.DELETE_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.VIEW_BILLING_ADDRESS,
+					CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS
 				});
 		}
 		else if (name.equals(
@@ -248,13 +256,19 @@ public class CommerceAccountRoleHelperImpl
 			groupResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
-					"ADD_COMMERCE_ORDER", "CHECKOUT_OPEN_COMMERCE_ORDERS",
-					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
-					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
-					"VIEW_BILLING_ADDRESS", "VIEW_COMMERCE_ORDERS",
-					"VIEW_OPEN_COMMERCE_ORDERS"
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER,
+					CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_MULTISHIPPING,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS,
+					CommerceOrderActionKeys.VIEW_BILLING_ADDRESS,
+					CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS
 				});
 		}
 		else if (name.equals(
@@ -267,15 +281,24 @@ public class CommerceAccountRoleHelperImpl
 			groupResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
-					"ADD_COMMERCE_ORDER", "APPROVE_OPEN_COMMERCE_ORDERS",
-					"CHECKOUT_OPEN_COMMERCE_ORDERS", "DELETE_COMMERCE_ORDERS",
-					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
-					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
-					"MANAGE_COMMERCE_ORDERS", "VIEW_BILLING_ADDRESS",
-					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER,
+					CommerceOrderActionKeys.APPROVE_OPEN_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.DELETE_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_MULTISHIPPING,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.VIEW_BILLING_ADDRESS,
+					CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS
 				});
 		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
@@ -310,14 +333,19 @@ public class CommerceAccountRoleHelperImpl
 			companyResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
-					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
-					"MANAGE_COMMERCE_ORDER_NOTES",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
-					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
-					"MANAGE_COMMERCE_ORDER_PRICES",
-					"MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES",
-					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS"
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PRICES,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS
 				});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.price.list",

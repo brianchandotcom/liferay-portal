@@ -258,9 +258,9 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 			Assert.fail();
 		}
 		catch (Problem.ProblemException problemException) {
-			String message = problemException.getMessage();
+			Problem problem = problemException.getProblem();
 
-			Assert.assertTrue(message.contains("must have UPDATE permission"));
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 		}
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);

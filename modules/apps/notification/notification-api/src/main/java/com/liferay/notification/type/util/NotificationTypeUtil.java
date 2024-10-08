@@ -49,7 +49,7 @@ public class NotificationTypeUtil {
 					content, termName,
 					notificationTermEvaluator.evaluate(
 						NotificationTermEvaluator.Context.CONTENT,
-						notificationContext.getTermValues(), termName));
+						notificationContext, termName));
 			}
 		}
 

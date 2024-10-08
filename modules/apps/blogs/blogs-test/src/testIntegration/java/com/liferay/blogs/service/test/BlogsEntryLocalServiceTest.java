@@ -201,7 +201,7 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntry.class.getName(), entry.getEntryId());
 
 		CommentManagerUtil.addComment(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId(),
 			StringUtil.randomString(),
 			new IdentityServiceContextFunction(serviceContext));
@@ -631,7 +631,7 @@ public class BlogsEntryLocalServiceTest {
 		_blogsEntries.add(entry);
 
 		CommentManagerUtil.addComment(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId(),
 			StringUtil.randomString(),
 			new IdentityServiceContextFunction(serviceContext));
@@ -684,7 +684,7 @@ public class BlogsEntryLocalServiceTest {
 	public void testFetchNullAttachmentsFolder() throws Exception {
 		Assert.assertNull(
 			_blogsEntryLocalService.fetchAttachmentsFolder(
-				TestPropsValues.getUserId(), TestPropsValues.getGroupId()));
+				TestPropsValues.getUserId(), _group.getGroupId()));
 	}
 
 	@Test

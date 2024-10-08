@@ -15,8 +15,10 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -125,6 +127,71 @@ public class LayoutPermissionsUpgradeProcessTest {
 			privateLayout1, privateLayout2, userGroupLayout1, userGroupLayout2);
 	}
 
+	@Test
+	@TestInfo("LPD-37372")
+	public void testUpgradeWithSkipUpgradeProcess() throws Exception {
+		Layout publicLayout1 = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout publicLayout2 = LayoutTestUtil.addTypePortletLayout(_group);
+
+		_assertResourcePermission(
+			_guestActions, _guestRole, publicLayout1, publicLayout2);
+
+		Layout privateLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_group, true);
+		Layout privateLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_group, true);
+
+		_assertResourcePermission(
+			_groupActions, _groupRole, publicLayout1, publicLayout2,
+			privateLayout1, privateLayout2);
+
+		Layout userGroupLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_user.getGroup());
+		Layout userGroupLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_user.getGroup());
+
+		_assertResourcePermission(
+			_ownerActions, _ownerRole, publicLayout1, publicLayout2,
+			privateLayout1, privateLayout2, userGroupLayout1, userGroupLayout2);
+
+		_deleteResourcePermissions(
+			privateLayout1, publicLayout1, userGroupLayout1);
+
+		_releaseLocalService.addRelease("com.liferay.layout.impl", "1.0.0");
+
+		int count =
+			_resourcePermissionLocalService.getResourcePermissionsCount();
+
+		_runUpgrade();
+
+		_assertResourcePermission(_guestActions, _guestRole, publicLayout2);
+		_assertResourcePermission(
+			_groupActions, _groupRole, publicLayout2, privateLayout2);
+		_assertResourcePermission(
+			_ownerActions, _ownerRole, publicLayout2, privateLayout2,
+			userGroupLayout2);
+
+		_assertEmptyResourcePermissions(
+			privateLayout1, publicLayout1, userGroupLayout1);
+
+		Assert.assertEquals(
+			count,
+			_resourcePermissionLocalService.getResourcePermissionsCount());
+	}
+
+	private void _assertEmptyResourcePermissions(Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			Assert.assertTrue(
+				ListUtil.isEmpty(
+					_resourcePermissionLocalService.getResourcePermissions(
+						layout.getCompanyId(), Layout.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(layout.getPlid()))));
+		}
+	}
+
 	private void _assertResourcePermission(
 			List<String> actions, Role role, Layout... layouts)
 		throws Exception {
@@ -202,6 +269,9 @@ public class LayoutPermissionsUpgradeProcessTest {
 
 	private List<String> _ownerActions;
 	private Role _ownerRole;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 	@Inject
 	private ResourceActions _resourceActions;

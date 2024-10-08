@@ -11,9 +11,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {HIGHLIGHTED_CATEGORY_ID} from '../../../../app/config/constants/highlightedCategoryId';
 import {HIGHLIGHTED_COLLECTION_ID} from '../../../../app/config/constants/highlightedCollectionId';
-import {useDispatch, useSelector} from '../../../../app/contexts/StoreContext';
-import selectWidgetFragmentEntryLinks from '../../../../app/selectors/selectWidgetFragmentEntryLinks';
-import loadWidgets from '../../../../app/thunks/loadWidgets';
+import {useSelector} from '../../../../app/contexts/StoreContext';
+import {useLoadWidgets} from '../../../../app/contexts/WidgetsContext';
 import {TABS_IDS} from '../../config/constants/tabsIds';
 import {ItemList} from './ItemList';
 
@@ -25,10 +24,7 @@ export function Tabs({updateLists}) {
 
 	const [activeTabId, setActiveTabId] = useState(TABS_IDS.fragments);
 
-	const dispatch = useDispatch();
-	const widgetFragmentEntryLinks = useSelector(
-		selectWidgetFragmentEntryLinks
-	);
+	const loadWidgets = useLoadWidgets();
 
 	const fragments = useSelector((state) =>
 		state.fragments
@@ -71,13 +67,9 @@ export function Tabs({updateLists}) {
 
 	useEffect(() => {
 		if (activeTabId === TABS_IDS.widgets && !widgets) {
-			dispatch(
-				loadWidgets({
-					fragmentEntryLinks: widgetFragmentEntryLinks,
-				})
-			);
+			loadWidgets();
 		}
-	}, [activeTabId, dispatch, widgetFragmentEntryLinks, widgets]);
+	}, [activeTabId, loadWidgets, widgets]);
 
 	return (
 		<>

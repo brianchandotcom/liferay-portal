@@ -37,6 +37,7 @@ import {
 	useSetOpenShorcutModal,
 } from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
+import {useGetWidgets} from '../contexts/WidgetsContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
@@ -91,7 +92,7 @@ export default function ShortcutManager() {
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
 	const {onRedo, onUndo} = useUndoRedoActions();
-	const {widgets} = state;
+	const getWidgets = useGetWidgets();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -258,7 +259,7 @@ export default function ShortcutManager() {
 								fragmentEntryLinks,
 								layoutData.items[activeItemId],
 								layoutData,
-								widgets
+								getWidgets
 							)
 					),
 				isKeyCombination: (event) =>
@@ -299,7 +300,7 @@ export default function ShortcutManager() {
 							fragmentEntryLinks,
 							layoutData.items[activeItemId],
 							layoutData,
-							widgets
+							getWidgets
 						)
 				),
 
@@ -366,7 +367,7 @@ export default function ShortcutManager() {
 								fragmentEntryLinks,
 								getParentItemId(),
 								layoutData,
-								widgets
+								getWidgets
 							)
 					) &&
 					copiedItemIds.every(
@@ -376,7 +377,7 @@ export default function ShortcutManager() {
 								fragmentEntryLinks,
 								layoutData.items[copiedItemId],
 								layoutData,
-								widgets
+								getWidgets
 							)
 					),
 				isKeyCombination: (event) =>

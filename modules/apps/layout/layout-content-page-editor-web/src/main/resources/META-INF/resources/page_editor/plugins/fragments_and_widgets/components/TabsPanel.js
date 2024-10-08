@@ -12,13 +12,6 @@ import React, {useEffect, useLayoutEffect, useRef} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {config} from '../../../app/config/index';
-import {
-	useDispatch,
-	useSelector,
-	useSelectorRef,
-} from '../../../app/contexts/StoreContext';
-import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
-import loadWidgets from '../../../app/thunks/loadWidgets';
 import {COLLECTION_IDS} from './FragmentsSidebar';
 import TabCollection from './TabCollection';
 
@@ -36,12 +29,6 @@ export default function TabsPanel({
 	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
 	const wrapperElementRef = useRef(null);
 
-	const dispatch = useDispatch();
-	const widgetFragmentEntryLinksRef = useSelectorRef(
-		selectWidgetFragmentEntryLinks
-	);
-	const widgets = useSelector((state) => state.widgets);
-
 	const [scrollPosition, setScrollPosition] = useSessionState(
 		`${config.portletNamespace}_fragments-sidebar_${activeTabId}_scroll-position`,
 		0
@@ -49,16 +36,6 @@ export default function TabsPanel({
 
 	const scrollPositionRef = useRef(scrollPosition);
 	scrollPositionRef.current = scrollPosition;
-
-	useEffect(() => {
-		if (activeTabId === COLLECTION_IDS.widgets && !widgets) {
-			dispatch(
-				loadWidgets({
-					fragmentEntryLinks: widgetFragmentEntryLinksRef.current,
-				})
-			);
-		}
-	}, [activeTabId, dispatch, widgetFragmentEntryLinksRef, widgets]);
 
 	useLayoutEffect(() => {
 		const wrapperElement = wrapperElementRef.current;

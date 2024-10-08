@@ -20,6 +20,7 @@ import {
 	useSelector,
 	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
+import {useGetWidgets} from '../../../../../app/contexts/WidgetsContext';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
@@ -40,7 +41,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 	const selectItems = useSelectMultipleItems();
 	const setCopiedItemIds = useSetCopiedItemIds();
 	const setMovementSources = useSetMovementSources();
-	const widgets = useSelector((state) => state.widgets);
+	const getWidgets = useGetWidgets();
 
 	const layoutData = layoutDataRef.current;
 
@@ -55,7 +56,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 				fragmentEntryLinks,
 				layoutData.items[activeItemId],
 				layoutData,
-				widgets
+				getWidgets
 			)
 		);
 

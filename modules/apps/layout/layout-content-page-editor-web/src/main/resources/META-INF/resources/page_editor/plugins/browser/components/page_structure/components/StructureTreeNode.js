@@ -652,13 +652,13 @@ const MoveButton = ({
 function computeHover({
 	dispatch,
 	fragmentEntryLinksRef,
+	getWidgets,
 	layoutDataRef,
 	monitor,
 	siblingItem = null,
 	sourceItem,
 	targetItem,
 	targetRefs,
-	widgetsRef,
 }) {
 
 	// Not dragging over direct child
@@ -737,7 +737,7 @@ function computeHover({
 				targetItem,
 				layoutDataRef.current,
 				fragmentEntryLinksRef.current,
-				widgetsRef.current
+				getWidgets
 			),
 			elevate: null,
 			targetPositionWithMiddle,
@@ -759,7 +759,7 @@ function computeHover({
 				targetItem,
 				layoutDataRef.current,
 				fragmentEntryLinksRef.current,
-				widgetsRef.current
+				getWidgets
 			),
 			elevate: true,
 			targetPositionWithMiddle,
@@ -810,13 +810,12 @@ function computeHover({
 			return computeHover({
 				dispatch,
 				fragmentEntryLinksRef,
+				getWidgets,
 				layoutDataRef,
 				monitor,
 				siblingItem,
 				sourceItem,
 				targetItem: elevatedTargetItem,
-				targetRefs,
-				widgetsRef,
 			});
 		}
 	}

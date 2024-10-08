@@ -10,9 +10,10 @@ import React from 'react';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useActiveItemIds} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
+import {useGetWidgets} from '../contexts/WidgetsContext';
 import getWidget from '../utils/getWidget';
 
-function getItemIcon(fragmentEntryLinks, fragments, item, widgets) {
+function getItemIcon(fragmentEntryLinks, fragments, item, getWidgets) {
 	if (!item) {
 		return null;
 	}
@@ -26,7 +27,7 @@ function getItemIcon(fragmentEntryLinks, fragments, item, widgets) {
 			fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
 		if (fragmentEntryLink.portletId) {
-			const widget = getWidget(widgets, fragmentEntryLink.portletId);
+			const widget = getWidget(getWidgets(), fragmentEntryLink.portletId);
 
 			return widget?.instanceable ? 'square-hole-multi' : 'square-hole';
 		}
@@ -45,15 +46,16 @@ export function getIcon({
 	activeItemIds,
 	fragmentEntryLinks,
 	fragments,
+	getWidgets,
 	item,
-	widgets,
 }) {
 	if (activeItemIds.length > 1) {
 		return null;
 	}
 
 	return (
-		item?.icon ?? getItemIcon(fragmentEntryLinks, fragments, item, widgets)
+		item?.icon ??
+		getItemIcon(fragmentEntryLinks, fragments, item, getWidgets)
 	);
 }
 
@@ -67,7 +69,7 @@ export default function DragPreviewWrapper() {
 	const activeItemIds = useActiveItemIds();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const fragments = useSelector((state) => state.fragments);
-	const widgets = useSelector((state) => state.widgets);
+	const getWidgets = useGetWidgets();
 
 	return (
 		<DragPreview
@@ -76,8 +78,8 @@ export default function DragPreviewWrapper() {
 					activeItemIds,
 					fragmentEntryLinks,
 					fragments,
+					getWidgets,
 					item,
-					widgets,
 				})
 			}
 			getLabel={(item) => getLabel({activeItemIds, item})}

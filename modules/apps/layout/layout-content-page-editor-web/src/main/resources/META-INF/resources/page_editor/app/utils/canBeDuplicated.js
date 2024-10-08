@@ -11,7 +11,7 @@ export default function canBeDuplicated(
 	fragmentEntryLinks,
 	item,
 	layoutData,
-	widgets
+	getWidgets
 ) {
 	switch (item.type) {
 		case LAYOUT_DATA_ITEM_TYPES.collection:
@@ -28,14 +28,16 @@ export default function canBeDuplicated(
 
 			const portletId = fragmentEntryLink?.editableValues.portletId;
 
-			const widget = portletId && getWidget(widgets, portletId);
-
 			if (hasDropZoneChild(item, layoutData)) {
 				return false;
 			}
 
-			if (widget && !widget.instanceable) {
-				return false;
+			if (portletId) {
+				const widget = getWidget(getWidgets(), portletId);
+
+				if (widget && !widget.instanceable) {
+					return false;
+				}
 			}
 
 			if (fragmentEntryLink.fieldTypes?.includes('stepper')) {

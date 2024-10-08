@@ -26,6 +26,7 @@ import {
 } from '../../contexts/CollectionItemContext';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelectorRef} from '../../contexts/StoreContext';
+import {useGetWidgets} from '../../contexts/WidgetsContext';
 import {isMultistepForm} from '../../utils/isMultistepForm';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
@@ -102,10 +103,6 @@ export const initialDragDrop = {
 	},
 
 	targetRefs: new Map(),
-
-	widgetsRef: {
-		current: [],
-	},
 };
 
 const DragAndDropContext = React.createContext(initialDragDrop);
@@ -143,16 +140,12 @@ export function NotDraggableArea({children}) {
 }
 
 export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
-	const {
-		canDrag,
-		dispatch,
-		fragmentEntryLinksRef,
-		layoutDataRef,
-		state,
-		widgetsRef,
-	} = useContext(DragAndDropContext);
+	const {canDrag, dispatch, fragmentEntryLinksRef, layoutDataRef, state} =
+		useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
 	const lastSourceItem = sourceItems[sourceItems.length - 1];
+
+	const getWidgets = useGetWidgets();
 
 	const item = {
 		...lastSourceItem,
@@ -179,11 +172,11 @@ export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
 			computeDrop({
 				dispatch,
 				fragmentEntryLinksRef,
+				getWidgets,
 				layoutDataRef,
 				onDragEnd,
 				sourceItems,
 				state,
-				widgetsRef,
 			});
 		},
 
@@ -259,14 +252,10 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const toControlsId = useToControlsId();
 	const parentToControlsId = useParentToControlsId();
 
-	const {
-		dispatch,
-		fragmentEntryLinksRef,
-		layoutDataRef,
-		state,
-		targetRefs,
-		widgetsRef,
-	} = useContext(DragAndDropContext);
+	const {dispatch, fragmentEntryLinksRef, layoutDataRef, state, targetRefs} =
+		useContext(DragAndDropContext);
+
+	const getWidgets = useGetWidgets();
 
 	const targetRef = useRef(null);
 
@@ -295,13 +284,13 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 			computeHover({
 				dispatch,
 				fragmentEntryLinksRef,
+				getWidgets,
 				layoutDataRef,
 				monitor,
 				sourceItem: source,
 				targetItem,
 				targetRefs,
 				toControlsId,
-				widgetsRef,
 			});
 		},
 	});
@@ -359,8 +348,6 @@ export function DragAndDropContextProvider({children}) {
 
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
-	const widgetsRef = useSelectorRef((state) => state.widgets);
-
 	const dragAndDropContext = useMemo(
 		() => ({
 			canDrag,
@@ -370,7 +357,6 @@ export function DragAndDropContextProvider({children}) {
 			setCanDrag,
 			state,
 			targetRefs,
-			widgetsRef,
 		}),
 		[
 			canDrag,
@@ -380,7 +366,6 @@ export function DragAndDropContextProvider({children}) {
 			state,
 			targetRefs,
 			setCanDrag,
-			widgetsRef,
 		]
 	);
 
@@ -394,11 +379,11 @@ export function DragAndDropContextProvider({children}) {
 function computeDrop({
 	dispatch,
 	fragmentEntryLinksRef,
+	getWidgets,
 	layoutDataRef,
 	onDragEnd,
 	sourceItems,
 	state,
-	widgetsRef,
 }) {
 	const {
 		dropItem,
@@ -433,7 +418,7 @@ function computeDrop({
 				layoutDataRef.current.items[dropItemId],
 				layoutDataRef.current,
 				fragmentEntryLinksRef.current,
-				widgetsRef.current
+				getWidgets
 			)
 		);
 	}
@@ -504,12 +489,14 @@ function computeDrop({
 					return false;
 				}
 
+				const widgets = getWidgets();
+
 				const widget = item.portletId
-					? getWidget(widgetsRef.current, item.portletId)
+					? getWidget(widgets, item.portletId)
 					: getItemWidget(
 							layoutDataRef.current.items[item.itemId],
 							fragmentEntryLinksRef.current,
-							widgetsRef.current
+							widgets
 						);
 
 				if (!widget.instanceable) {

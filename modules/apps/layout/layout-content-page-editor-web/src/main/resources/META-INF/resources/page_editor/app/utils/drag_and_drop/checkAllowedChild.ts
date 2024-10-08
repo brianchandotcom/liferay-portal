@@ -116,7 +116,7 @@ export default function checkAllowedChild(
 	parent: DragAndDropItem,
 	layoutData: LayoutData,
 	fragmentEntryLinks: FragmentEntryLinkMap,
-	widgets: WidgetSet[]
+	getWidgets: () => WidgetSet[]
 ) {
 	if (isUnmappedCollection(parent) || isUnmappedForm(parent)) {
 		return false;
@@ -163,6 +163,8 @@ export default function checkAllowedChild(
 
 			if (hasCollectionParent(parent, layoutData) && child.isWidget) {
 				const childItem = layoutData.items[child.itemId];
+
+				const widgets = getWidgets();
 
 				const widget = child.portletId
 					? getWidget(widgets, child.portletId)

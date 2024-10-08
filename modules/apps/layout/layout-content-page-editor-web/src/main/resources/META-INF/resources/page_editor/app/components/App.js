@@ -27,6 +27,7 @@ import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
 import {PortletContentContextProvider} from '../contexts/PortletContentContext';
 import {ShortcutContextProvider} from '../contexts/ShortcutContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
+import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
 import {DragAndDropContextProvider} from '../utils/drag_and_drop/useDragAndDrop';
@@ -41,7 +42,6 @@ import MultiSelectManager from './MultiSelectManager';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
-import WidgetsManager from './WidgetsManager';
 import KeyboardMovementManager from './keyboard_movement/KeyboardMovementManager';
 import KeyboardMovementPreview from './keyboard_movement/KeyboardMovementPreview';
 import KeyboardMovementText from './keyboard_movement/KeyboardMovementText';
@@ -59,51 +59,51 @@ export default function App({state}) {
 						<DragAndDropContextProvider>
 							<EditableProcessorContextProvider>
 								<DisplayPagePreviewItemContextProvider>
-									<AppHooks />
+									<WidgetsContextProvider>
+										<AppHooks />
 
-									<DisplayPagePreviewItemSelector dark />
+										<DisplayPagePreviewItemSelector dark />
 
-									<DragPreviewWrapper />
+										<DragPreviewWrapper />
 
-									<FocusManager />
+										<FocusManager />
 
-									<WidgetsManager />
+										<FormValidationContextProvider>
+											<Toolbar />
 
-									<FormValidationContextProvider>
-										<Toolbar />
+											<KeyboardMovementContextProvider>
+												<ClipboardContextProvider>
+													<ShortcutContextProvider>
+														<KeyboardManager />
 
-										<KeyboardMovementContextProvider>
-											<ClipboardContextProvider>
-												<ShortcutContextProvider>
-													<KeyboardManager />
+														<KeyboardMovementPreview />
 
-													<KeyboardMovementPreview />
+														<KeyboardMovementText />
 
-													<KeyboardMovementText />
+														<PortletContentContextProvider>
+															<LocalConfigContextProvider>
+																<GlobalContextProvider>
+																	<CommonStylesManager />
 
-													<PortletContentContextProvider>
-														<LocalConfigContextProvider>
-															<GlobalContextProvider>
-																<CommonStylesManager />
+																	<StyleBookContextProvider>
+																		<Sidebar />
 
-																<StyleBookContextProvider>
-																	<Sidebar />
+																		<LayoutKeyboardContextProvider>
+																			<LayoutViewport />
+																		</LayoutKeyboardContextProvider>
 
-																	<LayoutKeyboardContextProvider>
-																		<LayoutViewport />
-																	</LayoutKeyboardContextProvider>
+																		<LayoutBreadcrumbs />
 
-																	<LayoutBreadcrumbs />
-
-																	<ItemConfigurationSidebar />
-																</StyleBookContextProvider>
-															</GlobalContextProvider>
-														</LocalConfigContextProvider>
-													</PortletContentContextProvider>
-												</ShortcutContextProvider>
-											</ClipboardContextProvider>
-										</KeyboardMovementContextProvider>
-									</FormValidationContextProvider>
+																		<ItemConfigurationSidebar />
+																	</StyleBookContextProvider>
+																</GlobalContextProvider>
+															</LocalConfigContextProvider>
+														</PortletContentContextProvider>
+													</ShortcutContextProvider>
+												</ClipboardContextProvider>
+											</KeyboardMovementContextProvider>
+										</FormValidationContextProvider>
+									</WidgetsContextProvider>
 								</DisplayPagePreviewItemContextProvider>
 							</EditableProcessorContextProvider>
 						</DragAndDropContextProvider>

@@ -22,6 +22,7 @@ import {
 	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import {useGetWidgets} from '../../contexts/WidgetsContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
 import pasteItem from '../../thunks/pasteItem';
@@ -46,7 +47,7 @@ export default function TopperItemActions({disabled, item}) {
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const setCopiedItemIds = useSetCopiedItemIds();
-	const widgets = useSelector((state) => state.widgets);
+	const getWidgets = useGetWidgets();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -125,7 +126,12 @@ export default function TopperItemActions({disabled, item}) {
 			});
 
 			if (
-				canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
+				canBeDuplicated(
+					fragmentEntryLinks,
+					item,
+					layoutData,
+					getWidgets
+				)
 			) {
 				items.push({
 					action: () => setCopiedItemIds([item.itemId]),
@@ -136,7 +142,7 @@ export default function TopperItemActions({disabled, item}) {
 			}
 		}
 
-		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
+		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)) {
 			items.push({
 				action: () =>
 					dispatch(
@@ -158,7 +164,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
+			canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)
 		) {
 			items.push({
 				action: () => {
@@ -172,7 +178,7 @@ export default function TopperItemActions({disabled, item}) {
 									fragmentEntryLinks,
 									item.itemId,
 									layoutData,
-									widgets
+									getWidgets
 								)
 						)
 					) {
@@ -215,13 +221,13 @@ export default function TopperItemActions({disabled, item}) {
 		copiedItemIds,
 		dispatch,
 		fragmentEntryLinks,
+		getWidgets,
 		hasRequiredChild,
 		item,
 		layoutData,
 		selectedViewportSize,
 		setCopiedItemIds,
 		selectItems,
-		widgets,
 	]);
 
 	if (!dropdownItems.length) {

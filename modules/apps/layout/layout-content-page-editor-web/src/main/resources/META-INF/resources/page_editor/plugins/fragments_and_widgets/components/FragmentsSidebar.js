@@ -17,14 +17,10 @@ import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsD
 import {HIGHLIGHTED_COLLECTION_ID} from '../../../app/config/constants/highlightedCollectionId';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../app/config/index';
-import {
-	useDispatch,
-	useSelector,
-	useSelectorRef,
-} from '../../../app/contexts/StoreContext';
-import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
-import loadWidgets from '../../../app/thunks/loadWidgets';
+import {useSelector} from '../../../app/contexts/StoreContext';
+import {useLoadWidgets} from '../../../app/contexts/WidgetsContext';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import {TABS_IDS} from '../config/constants/tabsIds';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
 import {ReorderSetsModal} from './reorder_sets_modal/ReorderSetsModal';
@@ -132,10 +128,8 @@ export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
 
-	const dispatch = useDispatch();
-	const widgetFragmentEntryLinksRef = useSelectorRef(
-		selectWidgetFragmentEntryLinks
-	);
+	const loadWidgets = useLoadWidgets();
+
 	const [loadingWidgets, setLoadingWidgets] = useState(false);
 
 	const [activeTabId, setActiveTabId] = useSessionState(
@@ -209,16 +203,15 @@ export default function FragmentsSidebar() {
 	);
 
 	useEffect(() => {
-		if (searchValue && !widgets) {
+		if (widgets) {
+			setLoadingWidgets(false);
+		}
+		else if (searchValue || activeTabId === TABS_IDS.widgets) {
 			setLoadingWidgets(true);
 
-			dispatch(
-				loadWidgets({
-					fragmentEntryLinks: widgetFragmentEntryLinksRef.current,
-				})
-			).then(() => setLoadingWidgets(false));
+			loadWidgets();
 		}
-	}, [dispatch, searchValue, widgetFragmentEntryLinksRef, widgets]);
+	}, [activeTabId, loadWidgets, searchValue, widgets]);
 
 	const viewButtonLabel = sub(
 		Liferay.Language.get('switch-to-x-view'),

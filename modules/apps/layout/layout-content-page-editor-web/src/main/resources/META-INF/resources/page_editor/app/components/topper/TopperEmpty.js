@@ -30,6 +30,7 @@ import {
 	useSelector,
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
+import {useGetWidgets} from '../../contexts/WidgetsContext';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import pasteItem from '../../thunks/pasteItem';
@@ -251,7 +252,7 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 
 	const layoutData = useSelector((state) => state.layoutData);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const widgets = useSelector((state) => state.widgets);
+	const getWidgets = useGetWidgets();
 
 	const name = useSelectorCallback(
 		(state) => selectLayoutDataItemLabel(state, item),
@@ -311,7 +312,7 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 														fragmentEntryLinks,
 														item.itemId,
 														layoutData,
-														widgets
+														getWidgets
 													)
 											)
 										) {

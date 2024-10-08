@@ -29,6 +29,7 @@ import {
 	useSetMovementText,
 } from '../../contexts/KeyboardMovementContext';
 import {useDispatch, useSelectorRef} from '../../contexts/StoreContext';
+import {useGetWidgets} from '../../contexts/WidgetsContext';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import addFragment from '../../thunks/addFragment';
 import addItem from '../../thunks/addItem';
@@ -65,7 +66,6 @@ export default function KeyboardMovementManager() {
 		(state) => state.fragmentEntryLinks
 	);
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
-	const widgetsRef = useSelectorRef((state) => state.widgets);
 	const keymapRef = useRef({});
 
 	const disableMovement = useDisableKeyboardMovement();
@@ -74,6 +74,8 @@ export default function KeyboardMovementManager() {
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const dispatch = useDispatch();
+
+	const getWidgets = useGetWidgets();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -220,7 +222,7 @@ export default function KeyboardMovementManager() {
 					target,
 					fragmentEntryLinksRef,
 					layoutDataRef,
-					widgetsRef,
+					getWidgets,
 					DIRECTIONS.down
 				);
 
@@ -243,7 +245,7 @@ export default function KeyboardMovementManager() {
 					sources,
 					layoutDataRef,
 					fragmentEntryLinksRef,
-					widgetsRef
+					getWidgets
 				);
 
 				setTarget(nextTarget);
@@ -272,7 +274,7 @@ export default function KeyboardMovementManager() {
 					},
 					fragmentEntryLinksRef,
 					layoutDataRef,
-					widgetsRef,
+					getWidgets,
 					DIRECTIONS.down
 				);
 
@@ -296,7 +298,7 @@ export default function KeyboardMovementManager() {
 					target,
 					fragmentEntryLinksRef,
 					layoutDataRef,
-					widgetsRef,
+					getWidgets,
 					DIRECTIONS.up
 				);
 
@@ -340,7 +342,7 @@ export default function KeyboardMovementManager() {
 			sources,
 			layoutDataRef,
 			fragmentEntryLinksRef,
-			widgetsRef
+			getWidgets
 		);
 
 		if (initialTarget) {
@@ -365,13 +367,13 @@ export default function KeyboardMovementManager() {
 	}, [
 		disableMovement,
 		fragmentEntryLinksRef,
+		getWidgets,
 		lastSource,
 		layoutDataRef,
 		selectItem,
 		setTarget,
 		setText,
 		sources,
-		widgetsRef,
 	]);
 
 	return null;
@@ -381,7 +383,7 @@ export function getInitialTarget(
 	sources,
 	layoutDataRef,
 	fragmentEntryLinksRef,
-	widgetsRef
+	getWidgets
 ) {
 	const layoutData = layoutDataRef.current;
 	const fragmentEntryLinks = fragmentEntryLinksRef.current;
@@ -397,7 +399,7 @@ export function getInitialTarget(
 			root,
 			layoutDataRef.current,
 			fragmentEntryLinksRef.current,
-			widgetsRef.current
+			getWidgets
 		);
 
 		// Check root children to see if someone is targetable
@@ -437,7 +439,7 @@ export function getInitialTarget(
 						target,
 						fragmentEntryLinksRef,
 						layoutDataRef,
-						widgetsRef,
+						getWidgets,
 						DIRECTIONS.up
 					);
 				}
@@ -473,7 +475,7 @@ function getNextTarget(
 	target,
 	fragmentEntryLinksRef,
 	layoutDataRef,
-	widgetsRef,
+	getWidgets,
 	direction
 ) {
 	const fragmentEntryLinks = fragmentEntryLinksRef.current;
@@ -500,7 +502,7 @@ function getNextTarget(
 				nextTarget,
 				fragmentEntryLinksRef,
 				layoutDataRef,
-				widgetsRef,
+				getWidgets,
 				direction
 			);
 		}
@@ -518,7 +520,7 @@ function getNextTarget(
 					nextTargetParent,
 					layoutDataRef.current,
 					fragmentEntryLinksRef.current,
-					widgetsRef.current
+					getWidgets
 				)
 			) {
 				return getNextTarget(
@@ -526,7 +528,7 @@ function getNextTarget(
 					nextTarget,
 					fragmentEntryLinksRef,
 					layoutDataRef,
-					widgetsRef,
+					getWidgets,
 					direction
 				);
 			}
@@ -540,7 +542,7 @@ function getNextTarget(
 					nextTargetParent,
 					layoutDataRef.current,
 					fragmentEntryLinksRef.current,
-					widgetsRef.current
+					getWidgets
 				)
 			) {
 				return getNextTarget(
@@ -548,7 +550,7 @@ function getNextTarget(
 					nextTarget,
 					fragmentEntryLinksRef,
 					layoutDataRef,
-					widgetsRef,
+					getWidgets,
 					direction
 				);
 			}
@@ -562,7 +564,7 @@ function getNextTarget(
 					nextTargetItem,
 					layoutDataRef.current,
 					fragmentEntryLinksRef.current,
-					widgetsRef.current
+					getWidgets
 				)
 			) {
 				return getNextTarget(
@@ -570,7 +572,7 @@ function getNextTarget(
 					nextTarget,
 					fragmentEntryLinksRef,
 					layoutDataRef,
-					widgetsRef,
+					getWidgets,
 					direction
 				);
 			}

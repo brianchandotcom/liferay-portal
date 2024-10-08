@@ -24,13 +24,13 @@ const ORIENTATION_BORDER_SIZE = 80;
 export default function defaultComputeHover({
 	dispatch,
 	fragmentEntryLinksRef,
+	getWidgets,
 	layoutDataRef,
 	monitor,
 	siblingItem = null,
 	sourceItem,
 	targetItem,
 	targetRefs,
-	widgetsRef,
 }) {
 
 	// Not dragging over direct child
@@ -115,7 +115,7 @@ export default function defaultComputeHover({
 				targetItem,
 				layoutDataRef.current,
 				fragmentEntryLinksRef.current,
-				widgetsRef.current
+				getWidgets
 			),
 			elevate: null,
 			targetPositionWithMiddle,
@@ -145,7 +145,7 @@ export default function defaultComputeHover({
 				targetItem,
 				layoutDataRef.current,
 				fragmentEntryLinksRef.current,
-				widgetsRef.current
+				getWidgets
 			),
 			elevate: true,
 			targetPositionWithMiddle,
@@ -224,13 +224,13 @@ export default function defaultComputeHover({
 			return defaultComputeHover({
 				dispatch,
 				fragmentEntryLinksRef,
+				getWidgets,
 				layoutDataRef,
 				monitor,
 				siblingItem,
 				sourceItem,
 				targetItem: elevatedTargetItem,
 				targetRefs,
-				widgetsRef,
 			});
 		}
 	}

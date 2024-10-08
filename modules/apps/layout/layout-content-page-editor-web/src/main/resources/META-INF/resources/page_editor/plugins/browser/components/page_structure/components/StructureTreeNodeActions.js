@@ -31,6 +31,7 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../app/contexts/StoreContext';
+import {useGetWidgets} from '../../../../../app/contexts/WidgetsContext';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import pasteItem from '../../../../../app/thunks/pasteItem';
@@ -148,7 +149,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	const setCopiedItemIds = useSetCopiedItemIds();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setText = useSetMovementText();
-	const widgets = useSelector((state) => state.widgets);
+	const getWidgets = useGetWidgets();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -246,7 +247,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
+			canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)
 		) {
 			items.push({
 				action: () => {
@@ -260,7 +261,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
+		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)) {
 			items.push({
 				action: () => {
 					dispatch(
@@ -279,7 +280,12 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			(canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets) ||
+			(canBeDuplicated(
+				fragmentEntryLinks,
+				item,
+				layoutData,
+				getWidgets
+			) ||
 				item.type === LAYOUT_DATA_ITEM_TYPES.column ||
 				item.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone ||
 				item.type === LAYOUT_DATA_ITEM_TYPES.formStep)
@@ -296,7 +302,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 									fragmentEntryLinks,
 									item.id,
 									layoutData,
-									widgets
+									getWidgets
 								)
 						)
 					) {
@@ -353,12 +359,12 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		copiedItemIds,
 		dispatch,
 		fragmentEntryLinks,
+		getWidgets,
 		hasRequiredChild,
 		item,
 		layoutData,
 		selectedViewportSize,
 		selectItem,
-		widgets,
 		setCopiedItemIds,
 		setEditedNodeId,
 		setOpenSaveModal,

@@ -697,10 +697,10 @@ definition {
 				triggerProperties = '''batchPlannerPlanId=${templateId}
 					external-file-url=${filePath}''');
 
-			var currentMinute = DateUtil.getFormattedCurrentDate("mm", "UTC");
+			var cronExpression = DateUtil.getDateOffsetBySeconds(15, "ss mm HH ? * *");
 
 			JobScheduler.activateScheduleTrigger(
-				cronExpression = "0 ${currentMinute} * ? * *",
+				cronExpression = ${cronExpression},
 				trigger = "Scheduled Object Definition Import");
 		}
 

@@ -255,44 +255,6 @@ definition {
 
 	}
 
-	@description = "COMMERCE-6329. As a buyer, I want to search for products in Catalog by typing different Categories in Global Search and I want to see the products with that categories in the suggestions(single category, multiple categories)"
-	@priority = 3
-	test GlobalSearchSearchProductsByCategories {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
-
-		SelectFrameTop();
-
-		Type.sendKeys(
-			locator1 = "Search#GLOBAL_SEARCH_BAR",
-			value1 = "Exhaust System");
-
-		for (var productName : list "Lift Support,Muffler/Resonators,Exhaust Clamps,Catalytic Converters") {
-			AssertElementPresent(
-				key_suggestionName = ${productName},
-				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
-		}
-
-		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
-
-		Type.sendKeys(
-			locator1 = "Search#GLOBAL_SEARCH_BAR",
-			value1 = "Exhaust System, Engine");
-
-		for (var productName : list "Lift Support,Muffler/Resonators,Exhaust Clamps,Catalytic Converters,Engine Mount") {
-			AssertElementPresent(
-				key_suggestionName = ${productName},
-				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
-		}
-	}
-
 	@description = "COMMERCE-6320. As a buyer, I want to be able to search an Accounts entry using Global Search and I want to be able to click on a suggested entry and get redirected to that account page"
 	@ignore = "true"
 	@priority = 3

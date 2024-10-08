@@ -391,6 +391,16 @@ test.describe('Fragments Panel', () => {
 		await page.getByRole('tab', {exact: true, name: 'Fragments'}).click();
 
 		expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
+
+		// Refresh the page and check that order is maintained
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
+
+		await page.getByRole('tab', {exact: true, name: 'Widgets'}).click();
+
+		expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
 	});
 });
 

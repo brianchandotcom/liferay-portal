@@ -12,6 +12,7 @@
 		<frontend-data-set:headless-display
 			additionalProps="<%= additionalProps %>"
 			apiURL="<%= apiURL %>"
+			bulkActionDropdownItems="<%= bulkActionDropdownItems %>"
 			creationMenu="<%= fdsCreationMenu %>"
 			fdsActionDropdownItems="<%= fdsActionDropdownItems %>"
 			id="<%= name %>"

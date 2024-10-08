@@ -10,8 +10,11 @@
 <frontend-data-set:headless-display
 	additionalProps="<%= additionalProps %>"
 	apiURL="<%= apiURL %>"
+	bulkActionDropdownItems="<%= bulkActionDropdownItems %>"
 	fdsActionDropdownItems="<%= fdsActionDropdownItems %>"
 	id="<%= name %>"
 	propsTransformer="<%= propsTransformer %>"
+	selectedItemsKey="id"
+	selectionType="multiple"
 	style="<%= displayStyle %>"
 />

@@ -22,6 +22,7 @@ import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -163,6 +164,9 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:fdsActionDropdownItems",
 				_getFDSActionDropdownItems(fdsName, httpServletRequest));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-data-set:fdsBulkActionDropdownItems",
+				_getFDSBulkActionDropdownItems(fdsName, httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:fdsCreationMenu",
 				_getFDSCreationMenu(fdsName, httpServletRequest));
@@ -348,6 +352,20 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 		}
 
 		return Collections.emptyMap();
+	}
+
+	private List<DropdownItem> _getFDSBulkActionDropdownItems(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS)) {
+			return Arrays.asList(
+				new FDSActionDropdownItem(
+					StringPool.BLANK, "trash", "delete",
+					_language.get(httpServletRequest, "delete"), "delete", null,
+					"async"));
+		}
+
+		return Collections.emptyList();
 	}
 
 	private CreationMenu _getFDSCreationMenu(

@@ -15,6 +15,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -151,12 +152,16 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:additionalProps",
-				_getFDSAdditionalProps(httpServletRequest));
+				_getFDSAdditionalProps(
+					commerceOrder.getCommerceOrderId(), httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:displayStyle", displayStyle);
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:fdsActionDropdownItems",
 				_getFDSActionDropdownItems(fdsName, httpServletRequest));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-data-set:fdsBulkActionDropdownItems",
+				_getFDSBulkActionDropdownItems(fdsName, httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:propsTransformer",
 				"{OrderDataSetPropsTransformer} from " +
@@ -232,15 +237,31 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Map<String, Object> _getFDSAdditionalProps(
-		HttpServletRequest httpServletRequest) {
+		long commerceOrderId, HttpServletRequest httpServletRequest) {
 
 		return HashMapBuilder.<String, Object>put(
+			"commerceOrderId", commerceOrderId
+		).put(
 			"productURLSeparator",
 			_cpFriendlyURL.getProductURLSeparator(
 				_portal.getCompanyId(httpServletRequest))
 		).put(
 			"siteDefaultURL", _getSiteDefaultURL(httpServletRequest)
 		).build();
+	}
+
+	private List<DropdownItem> _getFDSBulkActionDropdownItems(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDER_ITEMS)) {
+			return Arrays.asList(
+				new FDSActionDropdownItem(
+					StringPool.BLANK, "trash", "delete",
+					_language.get(httpServletRequest, "delete"), "delete", null,
+					"async"));
+		}
+
+		return Collections.emptyList();
 	}
 
 	private String _getSiteDefaultURL(HttpServletRequest httpServletRequest) {

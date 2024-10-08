@@ -15,9 +15,10 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -112,63 +113,70 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 				PortletDataHandlerKeys.PORTLET_DATA) &&
 			MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
-			String siteNavigationMenuExternalReferenceCode = StringPool.BLANK;
+			String siteNavigationMenuExternalReferenceCode =
+				portletPreferences.getValue(
+					"siteNavigationMenuExternalReferenceCode",
+					StringPool.BLANK);
 			String siteNavigationMenuGroupExternalReferenceCode =
-				StringPool.BLANK;
+				portletPreferences.getValue(
+					"siteNavigationMenuGroupExternalReferenceCode",
+					StringPool.BLANK);
 
-			long originalPlid = MapUtil.getLong(
-				portletDataContext.getParameterMap(), "portletPreferencePlid");
+			SiteNavigationMenu siteNavigationMenu = _getSiteNavigationMenu(
+				portletDataContext, portletPreferences);
 
-			List<com.liferay.portal.kernel.model.PortletPreferences>
-				serviceBuilderPortletPreferencesList = null;
+			if ((siteNavigationMenu == null) &&
+				Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
 
-			if (originalPlid == PortletKeys.PREFS_PLID_SHARED) {
-				serviceBuilderPortletPreferencesList =
-					_portletPreferencesLocalService.getPortletPreferences(
-						PortletKeys.PREFS_PLID_SHARED,
-						portletDataContext.getPortletId());
-			}
-			else {
-				serviceBuilderPortletPreferencesList =
-					_portletPreferencesLocalService.getPortletPreferences(
-						portletDataContext.getPlid(),
-						portletDataContext.getPortletId());
-			}
+				try {
+					Layout layout = _layoutLocalService.getLayout(
+						portletDataContext.getPlid());
 
-			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
-				for (com.liferay.portal.kernel.model.PortletPreferences
-						serviceBuilderPortletPreferences :
-							serviceBuilderPortletPreferencesList) {
+					PortletPreferences existingPortletPreferences = null;
 
-					if (serviceBuilderPortletPreferences.getCompanyId() !=
-							portletDataContext.getCompanyId()) {
+					if (layout.isPortletEmbedded(
+							portletDataContext.getPortletId(),
+							layout.getGroupId())) {
 
-						continue;
+						existingPortletPreferences =
+							PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+								layout.getCompanyId(), layout.getGroupId(),
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								PortletKeys.PREFS_PLID_SHARED,
+								portletDataContext.getPortletId(), null);
+					}
+					else {
+						existingPortletPreferences =
+							PortletPreferencesFactoryUtil.getPortletSetup(
+								layout, portletDataContext.getPortletId(),
+								StringPool.BLANK);
 					}
 
-					PortletPreferences originalPortletPreferences =
-						_portletPreferenceValueLocalService.getPreferences(
-							serviceBuilderPortletPreferences);
-
 					siteNavigationMenuExternalReferenceCode =
-						originalPortletPreferences.getValue(
+						existingPortletPreferences.getValue(
 							"siteNavigationMenuExternalReferenceCode",
 							StringPool.BLANK);
+
 					siteNavigationMenuGroupExternalReferenceCode =
-						originalPortletPreferences.getValue(
+						existingPortletPreferences.getValue(
 							"siteNavigationMenuGroupExternalReferenceCode",
 							StringPool.BLANK);
+				}
+				catch (PortalException portalException) {
+					PortletDataException portletDataException =
+						new PortletDataException(portalException);
+
+					throw portletDataException;
 				}
 			}
 
 			try {
 				portletPreferences.setValue(
 					"siteNavigationMenuExternalReferenceCode",
-					String.valueOf(siteNavigationMenuExternalReferenceCode));
+					siteNavigationMenuExternalReferenceCode);
 				portletPreferences.setValue(
 					"siteNavigationMenuGroupExternalReferenceCode",
-					String.valueOf(
-						siteNavigationMenuGroupExternalReferenceCode));
+					siteNavigationMenuGroupExternalReferenceCode);
 			}
 			catch (ReadOnlyException readOnlyException) {
 				PortletDataException portletDataException =
@@ -260,12 +268,8 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	private Capability _importCapability;
 
-	@Reference(unbind = "-")
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference(unbind = "-")
-	private PortletPreferenceValueLocalService
-		_portletPreferenceValueLocalService;
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference(unbind = "-")
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

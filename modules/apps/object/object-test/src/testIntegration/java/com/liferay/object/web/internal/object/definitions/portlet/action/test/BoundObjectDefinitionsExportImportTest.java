@@ -187,9 +187,6 @@ public class BoundObjectDefinitionsExportImportTest
 						"TESTOBJECTDEFINITION1", "TESTOBJECTDEFINITION2",
 						"TestObjectDefinition2", "objectRelationship1"))
 			).put(
-				"rootObjectDefinitionExternalReferenceCode",
-				"TESTOBJECTDEFINITION1"
-			).put(
 				"status", statusJSONObject
 			),
 			jsonFactory.createJSONObject(
@@ -212,9 +209,6 @@ public class BoundObjectDefinitionsExportImportTest
 						"TESTOBJECTDEFINITION2", "TESTOBJECTDEFINITION3",
 						"TestObjectDefinition3", "objectRelationship2"))
 			).put(
-				"rootObjectDefinitionExternalReferenceCode",
-				"TESTOBJECTDEFINITION1"
-			).put(
 				"status", statusJSONObject
 			),
 			jsonFactory.createJSONObject(
@@ -230,9 +224,6 @@ public class BoundObjectDefinitionsExportImportTest
 
 					return "TestObjectDefinition3";
 				}
-			).put(
-				"rootObjectDefinitionExternalReferenceCode",
-				"TESTOBJECTDEFINITION1"
 			).put(
 				"status", statusJSONObject
 			));

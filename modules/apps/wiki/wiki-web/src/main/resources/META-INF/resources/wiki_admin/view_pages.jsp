@@ -251,7 +251,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smaller table-cell-minw-150"
 								name="user"
-								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curPage)) %>"
+								value="<%= HtmlUtil.escape(curPage.getUserName()) %>"
 							/>
 
 							<liferay-ui:search-container-column-date

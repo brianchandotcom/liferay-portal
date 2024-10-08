@@ -14,7 +14,20 @@ runGradleTest {
 }
 
 private void _compareObjects(String fileName, Object object1, Object object2) {
-	if (object1 instanceof Map) {
+	if (object1 instanceof List) {
+		assert object2 instanceof List
+		assert (object1.size() == object2.size()) : "${fileName}"
+
+		object1.sort()
+		object2.sort()
+
+		object1.eachWithIndex {
+			Object value, int index ->
+
+			_compareObjects(fileName, value, object2[index])
+		}
+	}
+	else if (object1 instanceof Map) {
 		assert object2 instanceof Map
 		assert (object1.size() == object2.size()) : "${fileName}"
 
@@ -26,19 +39,6 @@ private void _compareObjects(String fileName, Object object1, Object object2) {
 			if (!key.equals("buildTimestamp")) {
 				_compareObjects(fileName, value, object2.get(key))
 			}
-		}
-	}
-	else if (object1 instanceof List) {
-		assert object2 instanceof List
-		assert (object1.size() == object2.size()) : "${fileName}"
-
-		object1.sort()
-		object2.sort()
-
-		object1.eachWithIndex {
-			Object value, int index ->
-
-			_compareObjects(fileName, value, object2[index])
 		}
 	}
 	else {

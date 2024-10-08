@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -434,14 +432,21 @@ public class FilePropagator {
 							filePropagatorTask._targetFileName);
 			}
 
-			try {
-				int value = _filePropagator._executeBashCommands(
-					commands, _targetSlave);
+			Thread currentThread = Thread.currentThread();
 
-				_successful = value == 0;
-			}
-			catch (Exception exception) {
+			if (currentThread.isInterrupted()) {
 				_successful = false;
+			}
+			else {
+				try {
+					int value = _filePropagator._executeBashCommands(
+						commands, _targetSlave);
+
+					_successful = value == 0;
+				}
+				catch (Exception exception) {
+					_successful = false;
+				}
 			}
 
 			_duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;

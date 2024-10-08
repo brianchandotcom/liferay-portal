@@ -27,6 +27,9 @@ public class PropertiesDuplicateKeysCheck extends BaseFileCheck {
 
 		List<String> propertyKeys = new ArrayList<>();
 
+		List<String> allowedDuplicatePropertyKeys = getAttributeValues(
+			_ALLOWED_DUPLICATE_PROPERTY_KEYS, absolutePath);
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
@@ -61,6 +64,12 @@ public class PropertiesDuplicateKeysCheck extends BaseFileCheck {
 
 				propertyKey = line.substring(0, x);
 
+				if (allowedDuplicatePropertyKeys.contains(propertyKey)) {
+					previousLine = line;
+
+					continue;
+				}
+
 				if (propertyKeys.contains(propertyKey)) {
 					addMessage(
 						fileName,
@@ -76,5 +85,8 @@ public class PropertiesDuplicateKeysCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOWED_DUPLICATE_PROPERTY_KEYS =
+		"allowedDuplicatePropertyKeys";
 
 }

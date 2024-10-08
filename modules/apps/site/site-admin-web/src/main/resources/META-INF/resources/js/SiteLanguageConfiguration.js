@@ -131,9 +131,11 @@ export default function SiteLanguageConfiguration({
 						{Liferay.Language.get('available-languages')}
 					</div>
 
-					{initialCurrentLanguages
-						.map((language) => language.label)
-						.join(', ')}
+					<p>
+						{initialCurrentLanguages
+							.map((language) => language.label)
+							.join(', ')}
+					</p>
 				</div>
 			) : (
 				<fieldset>

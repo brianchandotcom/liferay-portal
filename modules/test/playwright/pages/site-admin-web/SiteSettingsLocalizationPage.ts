@@ -11,6 +11,7 @@ import {SiteSettingsPage} from './SiteSettingsPage';
 export class SiteSettingsLocalizationPage {
 	readonly page: Page;
 
+	readonly availableLanguages: Locator;
 	readonly customDefaultLanguageOption: Locator;
 	readonly defaultLanguageOption: Locator;
 	readonly defaultLanguageSingleSelect: Locator;
@@ -19,6 +20,9 @@ export class SiteSettingsLocalizationPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.availableLanguages = page.locator(
+			'[id="_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_siteLanguageConfiguration"]'
+		);
 		this.customDefaultLanguageOption = page.getByLabel(
 			'Define a custom default language and additional available languages for this site.'
 		);

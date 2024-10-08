@@ -6,6 +6,8 @@
 package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -18,28 +20,38 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,8 +61,18 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.portlet.GenericPortlet;
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +83,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -80,6 +107,10 @@ public class ConvertLayoutMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_bundleContext = bundle.getBundleContext();
+
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
@@ -88,10 +119,20 @@ public class ConvertLayoutMVCActionCommandTest {
 			_group, TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		_testPortletName = "TEST_PORTLET_" + RandomTestUtil.randomString();
 	}
 
 	@After
 	public void tearDown() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -136,6 +177,62 @@ public class ConvertLayoutMVCActionCommandTest {
 			new MockLiferayPortletActionResponse());
 
 		_validateLayoutConversion(originalLayout);
+	}
+
+	@Test
+	@TestInfo("LPS-98589")
+	public void testConvertWidgetLayoutToContentLayoutWithPortletDecorators()
+		throws Exception {
+
+		_registerTestPortlet(_testPortletName);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
+			).buildString());
+
+		LayoutTestUtil.addPortletToLayout(
+			layout, _testPortletName,
+			HashMapBuilder.put(
+				"portletSetupPortletDecoratorId", new String[] {"borderless"}
+			).build());
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(layout.getPlid()),
+			new MockLiferayPortletActionResponse());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Layout convertedLayout = _layoutLocalService.getLayout(
+			layout.getPlid());
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), convertedLayout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+
+		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
+
+		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		PortletPreferences portletPreferences =
+			_portletPreferenceValueLocalService.getPreferences(
+				_portletPreferencesLocalService.getPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					convertedLayout.getPlid(),
+					PortletIdCodec.encode(
+						editableValuesJSONObject.getString("portletId"),
+						editableValuesJSONObject.getString("instanceId"))));
+
+		Assert.assertEquals(
+			"borderless",
+			portletPreferences.getValue(
+				"portletSetupPortletDecoratorId", StringPool.BLANK));
 	}
 
 	@Test
@@ -276,6 +373,17 @@ public class ConvertLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private void _registerTestPortlet(String portletId) {
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
+				HashMapDictionaryBuilder.put(
+					"com.liferay.portlet.instanceable", "true"
+				).put(
+					"javax.portlet.name", portletId
+				).build()));
+	}
+
 	private void _validateLayoutConversion(Layout originalLayout)
 		throws Exception {
 
@@ -412,13 +520,20 @@ public class ConvertLayoutMVCActionCommandTest {
 			persistedPublishedLayout.getFriendlyURLMap());
 	}
 
+	private BundleContext _bundleContext;
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -434,8 +549,28 @@ public class ConvertLayoutMVCActionCommandTest {
 	private Portal _portal;
 
 	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
+
+	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new CopyOnWriteArrayList<>();
+	private String _testPortletName;
+
+	private class TestPortlet extends GenericPortlet {
+
+		@Override
+		protected void doView(
+				RenderRequest renderRequest, RenderResponse renderResponse)
+			throws IOException, PortletException {
+		}
+
+	}
 
 }

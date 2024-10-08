@@ -28,6 +28,7 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 import getBasicWebContentStructureId, {
 	getWebContentStructureId,
 } from '../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {
 	ANIMAL_DDM_STRUCTURE_KEY,
@@ -436,6 +437,142 @@ test.describe('Content Display Fragment', () => {
 			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
 				fragmentCollectionId
 			);
+		}
+	);
+});
+
+test.describe('Related Asset Fragment', () => {
+	test(
+		'Related Asset fragment displays linked web contents',
+		{
+			tag: '@LPD-38492',
+		},
+		async ({
+			apiHelpers,
+			context,
+			displayPageTemplatesPage,
+			journalEditArticlePage,
+			journalPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create two web contents
+
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			const journalArticleTitle1 = getRandomString();
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId,
+				datePublished: null,
+				description: getRandomString(),
+				siteId: pageManagementSite.id,
+				title: journalArticleTitle1,
+				viewableBy: 'Anyone',
+			});
+
+			const journalArticleTitle2 = getRandomString();
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId,
+				datePublished: null,
+				description: getRandomString(),
+				siteId: pageManagementSite.id,
+				title: journalArticleTitle2,
+				viewableBy: 'Anyone',
+			});
+
+			// Add related asset to the first web content
+
+			await journalPage.goto(pageManagementSite.friendlyUrlPath);
+
+			await journalEditArticlePage.editArticle(journalArticleTitle1);
+
+			await journalEditArticlePage.openRelatedAsset('Basic Web Content');
+
+			const row = page
+				.frameLocator('iframe[title="Select Basic Web Content"]')
+				.locator('.list-group-item', {hasText: journalArticleTitle2});
+
+			await row.getByRole('checkbox').check({trial: true});
+
+			await row.getByRole('checkbox').check();
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-dialog'),
+				trigger: page.getByRole('button', {name: 'Done'}),
+			});
+
+			await page
+				.getByRole('button', {exact: true, name: 'Publish'})
+				.click();
+
+			await waitForAlert(page, `was updated successfully.`);
+
+			// Create a display page template for Basic Web Content
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Basic Web Content',
+				contentType: 'Web Content Article',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Add related assets widget to the template
+
+			await pageEditorPage.addWidget(
+				'Content Management',
+				'Related Assets'
+			);
+
+			// Check that the related assets widget is displayed in the preview with feature
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Select Other Item',
+				}),
+				trigger: page.getByLabel('Preview With'),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-dialog'),
+				trigger: page
+					.frameLocator('iframe[title="Select"]')
+					.getByText(journalArticleTitle1, {exact: false}),
+			});
+
+			await expect(page.getByText(journalArticleTitle2)).toBeVisible();
+
+			// Check that the related assets widget is displayed in the preview in a new page
+
+			const pagePromise = context.waitForEvent('page');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Preview in a New Tab',
+				}),
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
+			const newPage = await pagePromise;
+
+			await expect(newPage.getByText(journalArticleTitle2)).toBeVisible();
 		}
 	);
 });

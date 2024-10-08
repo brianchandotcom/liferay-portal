@@ -88,7 +88,7 @@ public class DateUtil {
 
 	public static String getDateOffsetBySeconds(String offset, String pattern) {
 		return getFormattedDate(
-			Calendar.MINUTE, Integer.valueOf(offset), pattern);
+			Calendar.SECOND, Integer.valueOf(offset), pattern);
 	}
 
 	public static String getDateOffsetByYears(String offset, String pattern) {

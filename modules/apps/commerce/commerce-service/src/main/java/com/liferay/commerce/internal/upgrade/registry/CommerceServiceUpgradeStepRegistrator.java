@@ -720,6 +720,13 @@ public class CommerceServiceUpgradeStepRegistrator
 			new CommerceChannelRepositoryUpgradeProcess(
 				_commerceChannelLocalService));
 
+		registry.register(
+			"11.5.2", "11.5.3",
+			new com.liferay.commerce.internal.upgrade.v11_5_3.
+				CommercePermissionUpgradeProcess(
+					_companyLocalService, _resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

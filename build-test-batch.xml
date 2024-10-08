@@ -2799,9 +2799,11 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							int timeout = Integer.parseInt(project.getProperty("test.class.timeout.minutes"));
 
-							timeout = timeout + testCount;
+							timeout = timeout + testCount * 4;
 
 							try {
+								System.out.println("'gradle-execute-modules' will timeout in " + timeout);
+
 								AntUtil.callTargetWithTimeout(projectDir, "build-common.xml", "gradle-execute-modules", parameters, timeout, true);
 							}
 							catch(Exception exception) {

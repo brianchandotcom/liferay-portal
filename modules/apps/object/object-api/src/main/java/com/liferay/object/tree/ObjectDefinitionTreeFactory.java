@@ -48,8 +48,10 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 					ObjectDefinition objectDefinition2 = _getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
-					if (rootObjectDefinition.isApproved() !=
-							objectDefinition2.isApproved()) {
+					if ((rootObjectDefinition.isApproved() !=
+							objectDefinition2.isApproved()) ||
+						(rootObjectDefinition.getObjectDefinitionId() !=
+							objectDefinition2.getRootObjectDefinitionId())) {
 
 						return null;
 					}

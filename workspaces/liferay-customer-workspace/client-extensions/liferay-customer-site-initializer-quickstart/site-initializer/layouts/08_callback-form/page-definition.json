@@ -72,7 +72,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Callback Request"
+																"en_US": "Callback Request",
+																"es_ES": "Petición de devolución de llamada",
+																"ja_JP": "コールバック・リクエスト",
+																"pt_BR": "Solicitação de Retorno de Chamada"
 															}
 														}
 													}
@@ -97,7 +100,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Request a Support Engineer to contact you as soon as possible."
+																"en_US": "Request a Support Engineer to contact you as soon as possible.",
+																"es_ES": "Solicita que una persona de Soporte te contacte lo antes posible.",
+																"ja_JP": "サポートエンジニアにできるだけ早く貴社に連絡するよう依頼します。",
+																"pt_BR": "Solicite que um Engenheiro de Suporte entre em contato com você o mais rápido possível."
 															}
 														}
 													}
@@ -123,7 +129,10 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_name",
 										"inputLabel": {
-											"en_US": "Name"
+											"en_US": "Name",
+											"es_ES": "Nombre",
+											"ja_JP": "氏名",
+											"pt_BR": "Nome"
 										}
 									},
 									"fragmentFields": [
@@ -145,7 +154,10 @@
 										"fieldType": "email",
 										"inputFieldId": "ObjectField_emailAddress",
 										"inputLabel": {
-											"en_US": "Email Address"
+											"en_US": "Email Address",
+											"es_ES": "Correo electrónico",
+											"ja_JP": "メールアドレス",
+											"pt_BR": "Endereço de Email"
 										}
 									},
 									"fragmentFields": [
@@ -166,7 +178,10 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_r_koroneikiAccountToCallbackRequest_c_koroneikiAccountId",
 										"inputLabel": {
-											"en_US": "Organization"
+											"en_US": "Organization",
+											"es_ES": "Organización",
+											"ja_JP": "組織",
+											"pt_BR": "Organização"
 										},
 										"inputRequired": true
 									},
@@ -209,7 +224,10 @@
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_countryCode",
 														"inputLabel": {
-															"en_US": "Country Code"
+															"en_US": "Country Code",
+															"es_ES": "Prefijo de país",
+															"ja_JP": "国コード",
+															"pt_BR": "Código do País"
 														},
 														"placeholder": "+1",
 														"showCharactersCount": false
@@ -231,7 +249,10 @@
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_phoneNumber",
 														"inputLabel": {
-															"en_US": "Phone Number"
+															"en_US": "Phone Number",
+															"es_ES": "Número de teléfono",
+															"ja_JP": "電話番号",
+															"pt_BR": "Número de Telefone"
 														},
 														"placeholder": "(210) 283-2299",
 														"showCharactersCount": false
@@ -263,7 +284,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Please enter your phone number in international format, starting with a plus sign (+) followed by your country code, area code, and phone number."
+																"en_US": "Please enter your phone number in international format, starting with a plus sign (+) followed by your country code, area code, and phone number.",
+																"es_ES": "Introduce tu número de teléfono en formato internacional, empezando por el signo más (+) seguido del prefijo de tu país, el de la región y el número de teléfono.",
+																"ja_JP": "プラス記号(+)で始まり、国番号、市外局番、電話番号を国際形式で入力してください。",
+																"pt_BR": "Por favor, insira seu número de telefone no formato internacional, começando com um sinal de mais (+), seguido pelo código do seu país, código de área e número de telefone."
 															}
 														}
 													}
@@ -290,10 +314,16 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_relatedTicketIDs",
 										"inputHelpText": {
-											"en_US": "If this issue is related to an existing ticket, please enter the ticket ID(s) here."
+											"en_US": "If this issue is related to an existing ticket, please enter the ticket ID(s) here.",
+											"es_ES": "Si este problema está relacionado con un ticket existente, introduce aquí su ID.",
+											"ja_JP": "この問題が既存のチケットに関連している場合は、チケットIDをご入力ください。",
+											"pt_BR": "Se este problema estiver relacionado a um ticket existente, por favor insira o(s) ID(s) do ticket aqui."
 										},
 										"inputLabel": {
-											"en_US": "Related Ticket IDs"
+											"en_US": "Related Ticket ID(s)",
+											"es_ES": "ID de los tickets relacionados",
+											"ja_JP": "関連チケットID（複数可） ",
+											"pt_BR": "ID(s) do Ticket Relacionado(s)"
 										},
 										"showCharactersCount": false
 									},
@@ -315,10 +345,16 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_description",
 										"inputHelpText": {
-											"en_US": "Please briefly describe the nature of this request."
+											"en_US": "Please briefly describe the nature of this request.",
+											"es_ES": "Describe brevemente la naturaleza de la petición.",
+											"ja_JP": "このリクエストの内容を簡単にご説明ください。",
+											"pt_BR": "Por favor, descreva brevemente a natureza desta solicitação"
 										},
 										"inputLabel": {
-											"en_US": "Description"
+											"en_US": "Description",
+											"es_ES": "Descripción",
+											"ja_JP": "説明",
+											"pt_BR": "Descrição"
 										},
 										"numberOfCharacters": 2000,
 										"showCharactersCount": false
@@ -362,7 +398,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Cancel"
+																"en_US": "Cancel",
+																"es_ES": "Cancelar",
+																"ja_JP": "キャンセル",
+																"pt_BR": "Cancelar"
 															}
 														}
 													}
@@ -391,6 +430,14 @@
 													"id": "submit-button-text",
 													"value": {
 														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Submit",
+																"es_ES": "Enviar",
+																"ja_JP": "送信する",
+																"pt_BR": "Enviar"
+															}
 														}
 													}
 												}

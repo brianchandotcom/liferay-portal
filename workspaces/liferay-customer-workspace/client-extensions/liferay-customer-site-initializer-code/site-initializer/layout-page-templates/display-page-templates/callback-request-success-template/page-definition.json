@@ -74,7 +74,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Callback Request"
+																"en_US": "Callback Request",
+																"es_ES": "Petición de devolución de llamada",
+																"ja_JP": "コールバック・リクエスト",
+																"pt_BR": "Solicitação de Retorno de Chamada"
 															}
 														}
 													}
@@ -99,7 +102,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Request a Support Engineer to contact you as soon as possible."
+																"en_US": "Request a Support Engineer to contact you as soon as possible.",
+																"es_ES": "Solicita que una persona de Soporte te contacte lo antes posible.",
+																"ja_JP": "サポートエンジニアにできるだけ早く貴社に連絡するよう依頼します。",
+																"pt_BR": "Solicite que um Engenheiro de Suporte entre em contato com você o mais rápido possível."
 															}
 														}
 													}
@@ -154,7 +160,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Thank you for your submission."
+																"en_US": "Thank you for your submission.",
+																"es_ES": "Gracias por tu petición.",
+																"ja_JP": "ご送信いただきありがとうございました。",
+																"pt_BR": "Obrigado pelo seu envio."
 															}
 														}
 													}
@@ -226,7 +235,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Return to Home"
+																"en_US": "Return to Home",
+																"es_ES": "Volver a la página de inicio",
+																"ja_JP": "ホームへ戻る",
+																"pt_BR": "Voltar para a Página Inicial"
 															}
 														}
 													}

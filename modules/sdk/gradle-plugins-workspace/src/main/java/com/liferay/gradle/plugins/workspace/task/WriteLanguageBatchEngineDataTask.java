@@ -41,7 +41,7 @@ public class WriteLanguageBatchEngineDataTask extends DefaultTask {
 
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dir", project.file("lang"));
+		args.put("dir", project.getProjectDir());
 		args.put("include", "Language_*.properties");
 
 		return project.fileTree(args);

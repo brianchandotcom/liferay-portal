@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -67,7 +66,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Carolina Barbosa
  */
-@FeatureFlags("LPD-17965")
 @RunWith(Arquillian.class)
 public class SystemObjectEntryInfoItemFieldValuesProviderTest {
 

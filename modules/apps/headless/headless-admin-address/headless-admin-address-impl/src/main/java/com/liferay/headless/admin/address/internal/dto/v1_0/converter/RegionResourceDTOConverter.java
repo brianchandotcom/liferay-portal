@@ -6,10 +6,16 @@
 package com.liferay.headless.admin.address.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.address.dto.v1_0.Region;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -40,9 +46,33 @@ public class RegionResourceDTOConverter
 				setName(serviceBuilderRegion::getName);
 				setPosition(serviceBuilderRegion::getPosition);
 				setRegionCode(serviceBuilderRegion::getRegionCode);
-				setTitle_i18n(serviceBuilderRegion::getLanguageIdToTitleMap);
+				setTitle_i18n(
+					() -> {
+						Map<String, String> languageIdToTitleMap =
+							serviceBuilderRegion.getLanguageIdToTitleMap();
+
+						Map<String, String> regionNames = new HashMap<>();
+
+						for (Locale locale :
+								_language.getCompanyAvailableLocales(
+									serviceBuilderRegion.getCompanyId())) {
+
+							String languageId = _language.getLanguageId(locale);
+
+							if (languageIdToTitleMap.containsKey(languageId)) {
+								regionNames.put(
+									languageId,
+									languageIdToTitleMap.get(languageId));
+							}
+						}
+
+						return regionNames;
+					});
 			}
 		};
 	}
+
+	@Reference
+	private Language _language;
 
 }

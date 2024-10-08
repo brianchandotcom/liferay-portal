@@ -31,6 +31,8 @@ test('Form fields should not be wrapped in a tablist role @LPD-35819', async ({
 
 		await journalPage.goto(site.friendlyUrlPath);
 
+		await journalPage.changeView('cards');
+
 		await page
 			.locator(`.card-body:has-text('${webContentFolder.name}')`)
 			.getByLabel('More actions')

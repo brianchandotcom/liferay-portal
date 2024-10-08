@@ -253,6 +253,8 @@ public class EmailNotificationType extends BaseNotificationType {
 				notificationContext.getPreferredLanguageId());
 		}
 
+		notificationContext.setUserLocale(userLocale);
+
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 

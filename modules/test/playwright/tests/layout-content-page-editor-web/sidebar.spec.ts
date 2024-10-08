@@ -301,6 +301,97 @@ test.describe('Fragments Panel', () => {
 			page.getByRole('menuitem', {name: 'Favorites'})
 		).not.toBeVisible();
 	});
+
+	test('Fragment and widget sets are reordered', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const moveSet = async (setTitle: string) => {
+
+			// Move the set 2 positions down
+
+			await page.getByLabel(setTitle, {exact: true}).press('Enter');
+
+			await page.keyboard.press('ArrowDown');
+
+			await page.keyboard.press('ArrowDown');
+
+			await page.keyboard.press('ArrowDown');
+
+			await page.keyboard.press('Enter');
+		};
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open the "Fragments and Widgets" and get the first set of fragments
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		const tabpanel = page
+			.locator('.page-editor__sidebar__fragments-widgets-panel')
+			.getByRole('tabpanel');
+
+		const fragmentSets = tabpanel.first().locator('.panel-header');
+
+		const firstFragmentSet = await fragmentSets.first().textContent();
+
+		// Got to the Widgets tab and get the first set of widgets
+
+		await page.getByRole('tab', {exact: true, name: 'Widgets'}).click();
+
+		await page.getByText('Highlighted').waitFor();
+
+		const widgetSets = tabpanel
+			.last()
+			.locator('.panel-header', {hasNotText: 'Highlighted'});
+
+		const firstWidgetSet = await widgetSets.first().textContent();
+
+		// Open "Reorder Sets" modal and reorder the first set of fragments
+
+		await page.getByTitle('Reorder Sets', {exact: true}).click();
+
+		const modal = page.locator('.modal-body');
+
+		await modal
+			.getByText('Fragments and widgets sets can be ordered')
+			.waitFor();
+
+		await moveSet(firstFragmentSet);
+
+		// Go to the Widget tab and reorder the first set
+
+		await modal.getByRole('tab', {exact: true, name: 'Widgets'}).click();
+
+		await modal.getByText(firstWidgetSet).waitFor();
+
+		await moveSet(firstWidgetSet);
+
+		// Save
+
+		await page.getByText('Save', {exact: true}).click();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Check that the position of the first widget set has changed
+
+		expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
+
+		// Go back to the Fragments tab and check that the position of the first fragment has changed
+
+		await page.getByRole('tab', {exact: true, name: 'Fragments'}).click();
+
+		expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
+	});
 });
 
 test.describe('Page Contents Panel', () => {

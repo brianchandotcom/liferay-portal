@@ -113,8 +113,12 @@ definition {
 
 		task ("Then the available Import Strategy is Only Add New Records for CommerceAccount,Catalog") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Account (v1.0 - Liferay Headless Commerce Admin Account),Catalog (v1.0 - Liferay Headless Commerce Admin Catalog)",
+				entityTypes = "Account (v1.0 - Liferay Headless Commerce Admin Account)",
 				importStrategy = "Only Add New Records");
+
+			ImportExport.assertStrategiesForEntityTypes(
+				entityTypes = "Catalog (v1.0 - Liferay Headless Commerce Admin Catalog)",
+				importStrategy = "Only Add New Records Add or Update Records");
 		}
 
 		task ("And Then the available Update Strategy is empty for CommerceAccount,Catalog") {

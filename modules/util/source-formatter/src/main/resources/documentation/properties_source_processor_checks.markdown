@@ -7,6 +7,7 @@ PropertiesBuildIncludeDirsCheck | [Bug Prevention](bug_prevention_checks.markdow
 PropertiesCommentsCheck | [Styling](styling_checks.markdown#styling-checks) | Validates comments in `.properties` files. |
 PropertiesDefinitionKeysCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts definition keys in `liferay-plugin-package.properties` file. |
 PropertiesDependenciesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts the properties in `dependencies.properties` file. |
+PropertiesDuplicateKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Checks for duplicate property keys. |
 PropertiesEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
 PropertiesEnvironmentVariablesCheck | [Documentation](documentation_checks.markdown#documentation-checks) | Verifies that the environment property in the documentation matches the property name. |
 PropertiesFeatureFlagsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Generate feature flags in `portal.properties` file. |

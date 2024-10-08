@@ -247,8 +247,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro expandPropertyInActionsSchema(schema = null, property = null) {
-		Variables.assertDefined(parameterList = "${schema},${property}");
+	macro expandPropertiesInActionsSchema(schema = null, property = null) {
+		Variables.assertDefined(parameterList = "${schema},${property},${property2},${property3}");
 
 		Click(
 			locator1 = "OpenAPI#SCHEMA_COLLAPSED",
@@ -263,6 +263,20 @@ definition {
 			field = "actions",
 			locator1 = "OpenAPI#SCHEMA_PROPERTY_COLLAPSED",
 			property = ${property},
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_PROPERTY_PROPERTY_COLLAPSED",
+			property = ${property},
+			property2 = ${property2},
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_PROPERTY_PROPERTY_COLLAPSED",
+			property = ${property},
+			property2 = ${property3},
 			schema = ${schema});
 	}
 

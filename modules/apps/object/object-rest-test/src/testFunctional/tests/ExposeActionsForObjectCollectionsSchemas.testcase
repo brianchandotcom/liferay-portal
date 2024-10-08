@@ -39,8 +39,10 @@ definition {
 	@priority = 3
 	test IncludeCreateBatchInActionsForObjectCollectionSchema {
 		task ("When expand actions.createBatch in PageStudent schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "createBatch",
+				property2 = "method",
+				property3 = "href",
 				schema = "PageStudent");
 		}
 
@@ -56,8 +58,10 @@ definition {
 	@priority = 3
 	test IncludeCreateInActionsForObjectCollectionSchema {
 		task ("When expand actions.create in PageStudent schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "create",
+				property2 = "method",
+				property3 = "href",
 				schema = "PageStudent");
 		}
 
@@ -73,8 +77,10 @@ definition {
 	@priority = 3
 	test IncludeDeleteBatchInActionsForObjectCollectionSchema {
 		task ("When expand actions.deleteBatch in PageStudent schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "deleteBatch",
+				property2 = "method",
+				property3 = "href",
 				schema = "PageStudent");
 		}
 
@@ -92,8 +98,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When expand actions.updateBatch in PageStudent schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "updateBatch",
+				property2 = "method",
+				property3 = "href",
 				schema = "PageStudent");
 		}
 

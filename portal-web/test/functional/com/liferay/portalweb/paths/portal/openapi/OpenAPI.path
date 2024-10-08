@@ -43,6 +43,11 @@
 	<td>//div[(@id='model-${schema}')]//tr[contains(.,'${field}')]//tr[contains(.,'${property}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCHEMA_PROPERTY_PROPERTY_COLLAPSED</td>
+	<td>//div[(@id='model-${schema}')]//tr[contains(.,'${field}')]//tr[contains(.,'${property}')]//tr[contains(.,'${property2}')]//span[(@class='model-toggle collapsed')]</td>
+	<td></td>
+</tr>
 
 <!--SWAGGER-->
 

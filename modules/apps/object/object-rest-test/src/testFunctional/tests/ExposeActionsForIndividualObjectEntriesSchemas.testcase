@@ -39,8 +39,10 @@ definition {
 	@priority = 3
 	test IncludeDeleteInActionsForObjectEntitiesSchema {
 		task ("When expand actions.delete in Student schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "delete",
+				property2 = "method",
+				property3 = "href",
 				schema = "Student");
 		}
 
@@ -56,8 +58,10 @@ definition {
 	@priority = 3
 	test IncludeGetInActionsForObjectEntitiesSchema {
 		task ("When expand actions.get in Student schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "get",
+				property2 = "method",
+				property3 = "href",
 				schema = "Student");
 		}
 
@@ -75,8 +79,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When expand actions.permissions in Student schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "permissions",
+				property2 = "method",
+				property3 = "href",
 				schema = "Student");
 		}
 
@@ -92,8 +98,10 @@ definition {
 	@priority = 3
 	test IncludeReplaceInActionsForObjectEntitiesSchema {
 		task ("When expand actions.replace in Student schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "replace",
+				property2 = "method",
+				property3 = "href",
 				schema = "Student");
 		}
 
@@ -129,8 +137,10 @@ definition {
 		}
 
 		task ("When expand actions.myCustomAction in Student schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "myCustomAction",
+				property2 = "method",
+				property3 = "href",
 				schema = "Student");
 		}
 
@@ -146,8 +156,10 @@ definition {
 	@priority = 3
 	test IncludeUpdateInActionsForObjectEntitiesSchema {
 		task ("When expand actions.update in Student schema") {
-			APIExplorer.expandPropertyInActionsSchema(
+			APIExplorer.expandPropertiesInActionsSchema(
 				property = "update",
+				property2 = "method",
+				property3 = "href",
 				schema = "Student");
 		}
 

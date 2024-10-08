@@ -321,7 +321,7 @@ public class FilePropagator {
 		return "mkdir -p " + dirName;
 	}
 
-	private static final long _TIMEOUT_DEFAULT = 15 * 60 * 1000;
+	private static final long _TIMEOUT_DEFAULT = 1000 * 60 * 60 * 2;
 
 	private static Integer _instanceCount = 0;
 

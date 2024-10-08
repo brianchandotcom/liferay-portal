@@ -450,8 +450,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Edit a field', async () => {
 			await clickActionInRow({
 				actionName: 'Edit',
+				page,
 				rowName: sampleScalarField,
-				visualizationModesPage,
 			});
 
 			const sortableInput =
@@ -480,8 +480,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Check if object field has disabled sortable option', async () => {
 			await clickActionInRow({
 				actionName: 'Edit',
+				page,
 				rowName: `${sampleObjectField}.*`,
-				visualizationModesPage,
 			});
 
 			const sortableLabel =
@@ -783,8 +783,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Edit a field, change its label, cancel @LPS-176051 @LPS-178736 @LPS-179151', async () => {
 			await clickActionInRow({
 				actionName: 'Edit',
+				page,
 				rowName: sampleScalarField,
-				visualizationModesPage,
 			});
 
 			const labelInput = visualizationModesPage.page.getByLabel('Label');
@@ -812,8 +812,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Delete a field, cancel @LPS-185500', async () => {
 			await clickActionInRow({
 				actionName: 'Delete',
+				page,
 				rowName: sampleScalarField,
-				visualizationModesPage,
 			});
 
 			await visualizationModesPage.cancelAddFieldsModal();
@@ -906,8 +906,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Delete field', async () => {
 			await clickActionInRow({
 				actionName: 'Delete',
+				page,
 				rowName: SAMPLE_FIELD,
-				visualizationModesPage,
 			});
 
 			const deleteModal =
@@ -944,8 +944,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Open field edition modal, check that name field is not editable', async () => {
 			await clickActionInRow({
 				actionName: 'Edit',
+				page,
 				rowName: sampleScalarField,
-				visualizationModesPage,
 			});
 
 			const editModal =
@@ -974,8 +974,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await clickActionInRow({
 				actionName: 'Edit',
+				page,
 				rowName: sampleScalarField,
-				visualizationModesPage,
 			});
 
 			const rendererButton = page.getByRole('button', {name: 'Default'});
@@ -1059,8 +1059,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await test.step('Edit a field, change its label using the default language (en_US)', async () => {
 				await clickActionInRow({
 					actionName: 'Edit',
+					page,
 					rowName: SAMPLE_FIELD,
-					visualizationModesPage,
 				});
 
 				const labelInput =
@@ -1089,8 +1089,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await test.step('Edit a field, update the label using the pt_BR and es_ES languages', async () => {
 				await clickActionInRow({
 					actionName: 'Edit',
+					page,
 					rowName: SAMPLE_FIELD,
-					visualizationModesPage,
 				});
 
 				const labelInput =
@@ -1153,8 +1153,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await test.step('Check that the language dropdown shows the updated language as Translated', async () => {
 				await clickActionInRow({
 					actionName: 'Edit',
+					page,
 					rowName: SAMPLE_FIELD,
-					visualizationModesPage,
 				});
 
 				const localizationButton = await page
@@ -1320,6 +1320,77 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 		await test.step('Check there is no field added', async () => {
 			await visualizationModesPage.assertTableFieldRowCount(0);
+		});
+	});
+
+	test('Assert the CellRenderer is displayed', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const sampleScalarField = 'id';
+		const sampleObjectField = 'dataSetToDataSetTableSections';
+		const sampleObjectChildField = 'id';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.tableVisualizationModeContainer
+			).toBeVisible();
+		});
+
+		await test.step('Add fields', async () => {
+			await visualizationModesPage.openAddDataSourceFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: sampleScalarField,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${sampleObjectField}.*`,
+				fieldName: sampleObjectField,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${sampleObjectField}.${sampleObjectChildField}`,
+				fieldName: sampleObjectChildField,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Confirm that the cell renderer CX option is present when editing a field', async () => {
+			await clickActionInRow({
+				actionName: 'Edit',
+				page,
+				rowName: sampleScalarField,
+			});
+
+			const editFieldModal = page.locator('.modal');
+
+			await expect(editFieldModal).toBeInViewport();
+
+			const rendererSelect = editFieldModal
+				.locator('button', {
+					hasText: 'Default',
+				})
+				.first();
+
+			await expect(rendererSelect).toBeInViewport();
+
+			await rendererSelect.click();
+
+			const cellRendererOption = editFieldModal.locator('li', {
+				hasText: 'Liferay Sample Frontend Data Set Cell Renderer',
+			});
+
+			await expect(cellRendererOption).toBeInViewport();
 		});
 	});
 });

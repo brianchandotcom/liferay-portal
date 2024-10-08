@@ -516,7 +516,9 @@ definition {
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
-		Translations.viewUntranslatedStatus(locale = "es-ES");
+		Translations.viewUntranslatedStatus(
+			locale = "es-ES",
+			translated = "true");
 	}
 
 	@description = "This ensures that an imported translation can be Rejected and Resubmited through the workflow."

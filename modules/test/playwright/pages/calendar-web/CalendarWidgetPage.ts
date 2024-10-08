@@ -11,15 +11,15 @@ import {ModalRecurrencePage} from './ModalRecurrencePage';
 export class CalendarWidgetPage {
 	readonly addEventButton: Locator;
 	readonly allDayCheckbox: Locator;
-	readonly calendarBase: Locator;
-	readonly calendarGrid: Locator;
-	readonly calendarHeaderLabel: Locator;
-	readonly calendarNextMonthButton: Locator;
 	readonly calendarWidget: Locator;
 	readonly closeConfigurationButton: Locator;
 	readonly configurationMenuItem: Locator;
 	readonly endTime: Locator;
 	readonly modalRecurrencePage: ModalRecurrencePage;
+	readonly miniCalendarBase: Locator;
+	readonly miniCalendarGrid: Locator;
+	readonly miniCalendarHeaderLabel: Locator;
+	readonly miniCalendarNextMonthButton: Locator;
 	readonly page: Page;
 	readonly publishEventButton: Locator;
 	readonly repeatCheckbox: Locator;
@@ -37,10 +37,6 @@ export class CalendarWidgetPage {
 				exact: true,
 				name: 'All Day',
 			});
-		this.calendarBase = page.locator('.yui3-calendarbase');
-		this.calendarGrid = page.locator('.yui3-calendar-grid');
-		this.calendarHeaderLabel = page.locator('.yui3-calendar-header-label');
-		this.calendarNextMonthButton = page.getByRole('button', {name: 'Go to next month'});
 		this.calendarWidget = page.locator(
 			'.lfr-layout-structure-item-com-liferay-calendar-web-portlet-calendarportlet'
 		);
@@ -56,6 +52,14 @@ export class CalendarWidgetPage {
 			.frameLocator('iframe')
 			.getByLabel('Ends', {exact: true});
 		this.modalRecurrencePage = new ModalRecurrencePage(page);
+		this.miniCalendarBase = page.locator('.yui3-calendarbase');
+		this.miniCalendarGrid = page.locator('.yui3-calendar-grid');
+		this.miniCalendarHeaderLabel = page.locator(
+			'.yui3-calendar-header-label'
+		);
+		this.miniCalendarNextMonthButton = page.getByRole('button', {
+			name: 'Go to next month',
+		});
 		this.page = page;
 		this.publishEventButton = page
 			.frameLocator('iframe')

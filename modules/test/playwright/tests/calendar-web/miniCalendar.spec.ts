@@ -64,11 +64,11 @@ test.beforeEach(async ({apiHelpers, page, pageEditorPage, site}) => {
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 });
 
-test('can move between gridcell child buttons using arrow keys', async ({
+test('can move between mini calendar gridcell child buttons using arrow keys', async ({
 	calendarWidgetPage,
 	page,
 }) => {
-	await calendarWidgetPage.calendarGrid.focus();
+	await calendarWidgetPage.miniCalendarGrid.focus();
 
 	const gridMoviments = [
 		{date: '1', key: 'ArrowRight'},
@@ -90,22 +90,22 @@ test('can move between gridcell child buttons using arrow keys', async ({
 	}
 });
 
-test('ensure that accessibility properties are maintained after changing months', async ({
+test('ensure that mini calendar accessibility properties are maintained after changing months', async ({
 	calendarWidgetPage,
 }) => {
-	await calendarWidgetPage.calendarNextMonthButton.click();
+	await calendarWidgetPage.miniCalendarNextMonthButton.click();
 
-	await expect(calendarWidgetPage.calendarBase).toHaveAttribute(
+	await expect(calendarWidgetPage.miniCalendarBase).toHaveAttribute(
 		'role',
 		'dialog'
 	);
 
-	await expect(calendarWidgetPage.calendarHeaderLabel).toHaveAttribute(
+	await expect(calendarWidgetPage.miniCalendarHeaderLabel).toHaveAttribute(
 		'role',
 		'paragraph'
 	);
 
-	await expect(calendarWidgetPage.calendarHeaderLabel).toHaveAttribute(
+	await expect(calendarWidgetPage.miniCalendarHeaderLabel).toHaveAttribute(
 		'aria-live',
 		'polite'
 	);

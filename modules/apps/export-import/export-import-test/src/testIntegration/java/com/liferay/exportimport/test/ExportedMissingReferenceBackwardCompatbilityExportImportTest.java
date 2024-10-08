@@ -8,13 +8,13 @@ package com.liferay.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
 import com.liferay.exportimport.test.util.exportimport.data.handler.DummyFolderWithMissingDummyPortletDataHandler;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -95,13 +95,12 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 
 	@Test
 	public void testBackwardCompatibility() throws Exception {
-		List<PortletDataHandler> portletDataHandlers = setPortletDataHandler(
-			DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-			DummyFolderWithMissingDummyPortletDataHandler.class);
-
 		long[] layoutIds = {layout.getLayoutId()};
 
-		try {
+		try (SafeCloseable safeCloseable = setPortletDataHandler(
+				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+				DummyFolderWithMissingDummyPortletDataHandler.class)) {
+
 			exportImportLayouts(layoutIds, getExportParameterMap(), true);
 		}
 		catch (PortletDataException portletDataException) {
@@ -123,10 +122,6 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 				throw portletDataException;
 			}
 		}
-
-		setPortletDataHandler(
-			DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-			portletDataHandlers);
 	}
 
 	@Rule

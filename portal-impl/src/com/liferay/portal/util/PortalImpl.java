@@ -4226,14 +4226,7 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		List<PreferencesValidator> preferencesValidatorInstances =
-			portletBag.getPreferencesValidatorInstances();
-
-		if (preferencesValidatorInstances.isEmpty()) {
-			return null;
-		}
-
-		return preferencesValidatorInstances.get(0);
+		return portletBag.getPreferencesValidatorInstance();
 	}
 
 	@Override

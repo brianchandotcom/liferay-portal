@@ -656,14 +656,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return null;
 		}
 
-		List<ConfigurationAction> configurationActionInstances =
-			portletBag.getConfigurationActionInstances();
-
-		if (configurationActionInstances.isEmpty()) {
-			return null;
-		}
-
-		return configurationActionInstances.get(0);
+		return portletBag.getConfigurationActionInstance();
 	}
 
 	/**
@@ -729,14 +722,14 @@ public class PortletImpl extends PortletBaseImpl {
 			return _getDefaultControlPanelEntry();
 		}
 
-		List<ControlPanelEntry> controlPanelEntryInstances =
-			portletBag.getControlPanelEntryInstances();
+		ControlPanelEntry controlPanelEntry =
+			portletBag.getControlPanelEntryInstance();
 
-		if (controlPanelEntryInstances.isEmpty()) {
-			return _getDefaultControlPanelEntry();
+		if (controlPanelEntry == null) {
+			controlPanelEntry = _getDefaultControlPanelEntry();
 		}
 
-		return controlPanelEntryInstances.get(0);
+		return controlPanelEntry;
 	}
 
 	/**
@@ -1197,14 +1190,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public OpenSearch getOpenSearchInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<OpenSearch> openSearchInstances =
-			portletBag.getOpenSearchInstances();
-
-		if (openSearchInstances.isEmpty()) {
-			return null;
-		}
-
-		return openSearchInstances.get(0);
+		return portletBag.getOpenSearchInstance();
 	}
 
 	/**
@@ -1236,14 +1222,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public PermissionPropagator getPermissionPropagatorInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<PermissionPropagator> permissionPropagatorInstances =
-			portletBag.getPermissionPropagatorInstances();
-
-		if (permissionPropagatorInstances.isEmpty()) {
-			return null;
-		}
-
-		return permissionPropagatorInstances.get(0);
+		return portletBag.getPermissionPropagatorInstance();
 	}
 
 	/**
@@ -1295,14 +1274,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public MessageListener getPopMessageListenerInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<MessageListener> popMessageListenerInstances =
-			portletBag.getPopMessageListenerInstances();
-
-		if (popMessageListenerInstances.isEmpty()) {
-			return null;
-		}
-
-		return popMessageListenerInstances.get(0);
+		return portletBag.getPopMessageListenerInstance();
 	}
 
 	/**
@@ -1352,15 +1324,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return null;
 		}
 
-		List<PortletConfigurationListener>
-			portletConfigurationListenerInstances =
-				portletBag.getPortletConfigurationListenerInstances();
-
-		if (portletConfigurationListenerInstances.isEmpty()) {
-			return null;
-		}
-
-		return portletConfigurationListenerInstances.get(0);
+		return portletBag.getPortletConfigurationListenerInstance();
 	}
 
 	/**
@@ -1388,14 +1352,7 @@ public class PortletImpl extends PortletBaseImpl {
 			throw new IllegalStateException("No portlet bag for " + toString());
 		}
 
-		List<PortletDataHandler> portletDataHandlerInstances =
-			portletBag.getPortletDataHandlerInstances();
-
-		if (portletDataHandlerInstances.isEmpty()) {
-			return null;
-		}
-
-		return portletDataHandlerInstances.get(0);
+		return portletBag.getPortletDataHandlerInstance();
 	}
 
 	/**
@@ -1451,14 +1408,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return null;
 		}
 
-		List<PortletLayoutListener> portletLayoutListenerInstances =
-			portletBag.getPortletLayoutListenerInstances();
-
-		if (portletLayoutListenerInstances.isEmpty()) {
-			return null;
-		}
-
-		return portletLayoutListenerInstances.get(0);
+		return portletBag.getPortletLayoutListenerInstance();
 	}
 
 	/**
@@ -1828,14 +1778,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public SocialRequestInterpreter getSocialRequestInterpreterInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<SocialRequestInterpreter> socialRequestInterpreterInstances =
-			portletBag.getSocialRequestInterpreterInstances();
-
-		if (socialRequestInterpreterInstances.isEmpty()) {
-			return null;
-		}
-
-		return socialRequestInterpreterInstances.get(0);
+		return portletBag.getSocialRequestInterpreterInstance();
 	}
 
 	/**
@@ -1979,14 +1922,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public TemplateHandler getTemplateHandlerInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<TemplateHandler> templateHandlerInstances =
-			portletBag.getTemplateHandlerInstances();
-
-		if (templateHandlerInstances.isEmpty()) {
-			return null;
-		}
-
-		return templateHandlerInstances.get(0);
+		return portletBag.getTemplateHandlerInstance();
 	}
 
 	/**
@@ -2078,14 +2014,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return null;
 		}
 
-		List<URLEncoder> urlEncoderInstances =
-			portletBag.getURLEncoderInstances();
-
-		if (urlEncoderInstances.isEmpty()) {
-			return null;
-		}
-
-		return urlEncoderInstances.get(0);
+		return portletBag.getURLEncoderInstance();
 	}
 
 	/**
@@ -2192,14 +2121,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return null;
 		}
 
-		List<WebDAVStorage> webDAVStorageInstances =
-			portletBag.getWebDAVStorageInstances();
-
-		if (webDAVStorageInstances.isEmpty()) {
-			return null;
-		}
-
-		return webDAVStorageInstances.get(0);
+		return portletBag.getWebDAVStorageInstance();
 	}
 
 	/**
@@ -2269,14 +2191,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public Method getXmlRpcMethodInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<Method> xmlRpcMethodInstances =
-			portletBag.getXmlRpcMethodInstances();
-
-		if (xmlRpcMethodInstances.isEmpty()) {
-			return null;
-		}
-
-		return xmlRpcMethodInstances.get(0);
+		return portletBag.getXmlRpcMethodInstance();
 	}
 
 	/**

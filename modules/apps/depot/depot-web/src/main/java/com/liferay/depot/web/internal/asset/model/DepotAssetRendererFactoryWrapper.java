@@ -101,7 +101,8 @@ public class DepotAssetRendererFactoryWrapper<T>
 			return null;
 		}
 
-		if (ArrayUtil.contains(
+		if (group.isControlPanel() ||
+			ArrayUtil.contains(
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						_getGroupId(group.getGroupId())),

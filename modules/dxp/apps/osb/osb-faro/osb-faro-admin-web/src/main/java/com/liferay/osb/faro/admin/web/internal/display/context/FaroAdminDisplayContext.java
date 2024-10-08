@@ -71,7 +71,7 @@ public class FaroAdminDisplayContext {
 							_httpServletRequest,
 							"are-you-sure-you-want-to-disconnect-the-data-" +
 								"sources"),
-						"',onConfirm: (isConfirmed) => { if(isConfirmed) {",
+						"', onConfirm: (isConfirmed) => {if (isConfirmed) {",
 						"location.href='",
 						ActionURLBuilder.createActionURL(
 							_renderResponse

@@ -5,13 +5,15 @@
 
 package com.liferay.source.formatter.check;
 
-import java.io.IOException;
-import java.io.StringReader;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Enumeration;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Alan Huang
@@ -23,33 +25,52 @@ public class PropertiesDuplicateKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		Properties properties = new Properties();
+		List<String> propertyKeys = new ArrayList<>();
 
-		properties.load(new StringReader(content));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-		Enumeration<String> enumeration =
-			(Enumeration<String>)properties.propertyNames();
+			String line = null;
+			String previousLine = null;
+			String propertyKey = null;
 
-		while (enumeration.hasMoreElements()) {
-			int count = 0;
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
 
-			String key = enumeration.nextElement();
+				if (Validator.isBlank(line) ||
+					line.startsWith(StringPool.POUND)) {
 
-			Pattern pattern = Pattern.compile(
-				"^ *" + Pattern.quote(key) + " *=", Pattern.MULTILINE);
+					previousLine = line;
 
-			Matcher matcher = pattern.matcher(content);
+					continue;
+				}
 
-			while (matcher.find()) {
-				count++;
+				if ((previousLine != null) && previousLine.endsWith("\\")) {
+					previousLine = line;
 
-				if (count == 2) {
+					continue;
+				}
+
+				int x = line.indexOf('=');
+
+				if (x == -1) {
+					previousLine = line;
+
+					continue;
+				}
+
+				propertyKey = line.substring(0, x);
+
+				if (propertyKeys.contains(propertyKey)) {
 					addMessage(
 						fileName,
-						"Do not add duplicate property key '" + key + "'");
-
-					break;
+						"Do not add duplicate property key \"" + propertyKey +
+							"\"");
 				}
+
+				previousLine = line;
+
+				propertyKeys.add(propertyKey);
 			}
 		}
 

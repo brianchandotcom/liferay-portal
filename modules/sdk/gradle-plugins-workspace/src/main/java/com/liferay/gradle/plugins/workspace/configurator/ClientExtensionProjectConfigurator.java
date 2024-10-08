@@ -312,7 +312,8 @@ public class ClientExtensionProjectConfigurator
 		_configureLiferayRoutes(project, workspaceExtension);
 
 		if (_isLanguageProject(project)) {
-			GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
+			GradleUtil.applyPlugin(
+				project.getRootProject(), LangBuilderPlugin.class);
 
 			_configureLanguageProject(project);
 		}
@@ -939,11 +940,11 @@ public class ClientExtensionProjectConfigurator
 	private void _configureLanguageProject(Project project) {
 		TaskProvider<BuildLangTask> buildLangTaskProvider =
 			GradleUtil.getTaskProvider(
-				project, LangBuilderPlugin.BUILD_LANG_TASK_NAME,
-				BuildLangTask.class);
+				project.getRootProject(),
+				LangBuilderPlugin.BUILD_LANG_TASK_NAME, BuildLangTask.class);
 
 		buildLangTaskProvider.configure(
-			task -> task.setLangDir(project.file("lang")));
+			task -> task.setLangDir(project.getProjectDir()));
 
 		TaskProvider<WriteLanguageBatchEngineDataTask>
 			writeLanguageBatchEngineDataTaskProvider =
@@ -1152,7 +1153,7 @@ public class ClientExtensionProjectConfigurator
 		if (Objects.equals(rootDir.toPath(), dirPath.getParent()) &&
 			dirPath.endsWith(Paths.get("language")) &&
 			Files.exists(
-				Paths.get(dirPath.toString(), "lang", "Language.properties"))) {
+				Paths.get(dirPath.toString(), "Language.properties"))) {
 
 			return true;
 		}

@@ -5,6 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -32,12 +36,16 @@ const createdEntities = {
 };
 
 test.afterEach(async ({apiHelpers}) => {
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
 	const {objectDefinitions} = createdEntities;
 
 	for (const objectDefinition of objectDefinitions) {
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
 	}
 
 	createdEntities.objectDefinitions = [];
@@ -49,26 +57,33 @@ test.beforeEach(async ({apiHelpers}) => {
 		name: 'name',
 	});
 
-	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition({
-		active: true,
-		externalReferenceCode: getRandomString(),
-		label: {
-			en_US: 'Employee',
-		},
-		name: 'Employee',
-		objectFields: [objectField],
-		objectFolderExternalReferenceCode: 'default',
-		panelCategoryKey: 'control_panel.object',
-		pluralLabel: {
-			en_US: 'Employees',
-		},
-		portlet: true,
-		scope: 'company',
-		status: {
-			code: 0,
-		},
-		storageType: 'default',
-	});
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
+	const objectDefinition =
+		await objectAdminRestClient.objectDefinition.postObjectDefinition({
+			requestBody: {
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: 'Employee',
+				},
+				name: 'Employee',
+				objectFields: [objectField],
+				objectFolderExternalReferenceCode: 'default',
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'Employees',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+				storageType: 'default',
+			},
+		});
 
 	createdEntities.objectDefinitions.push(objectDefinition);
 });
@@ -81,27 +96,34 @@ test('Can create, read, update, and delete object entries that use the client ex
 	page,
 	viewObjectEntriesPage,
 }) => {
-	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition({
-		active: true,
-		externalReferenceCode: getRandomString(),
-		label: {
-			en_US: getRandomString(),
-		},
-		name: 'Name' + getRandomInt(),
-		objectFields: [],
-		objectFolderExternalReferenceCode: 'default',
-		panelCategoryKey: 'control_panel.object',
-		pluralLabel: {
-			en_US: getRandomString(),
-		},
-		portlet: true,
-		scope: 'company',
-		status: {
-			code: 1,
-		},
-		storageType:
-			'function#liferay-sample-etc-spring-boot-object-entry-manager-1',
-	});
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
+	const objectDefinition =
+		await objectAdminRestClient.objectDefinition.postObjectDefinition({
+			requestBody: {
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: getRandomString(),
+				},
+				name: 'Name' + getRandomInt(),
+				objectFields: [],
+				objectFolderExternalReferenceCode: 'default',
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: getRandomString(),
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 1,
+				},
+				storageType:
+					'function#liferay-sample-etc-spring-boot-object-entry-manager-1',
+			},
+		});
 
 	createdEntities.objectDefinitions.push(objectDefinition);
 

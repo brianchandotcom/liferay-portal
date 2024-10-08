@@ -7,14 +7,11 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.commerce.frontend.helper.CommerceOrderStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.content.web.internal.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -66,45 +63,18 @@ public class StepTrackerFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		CommerceOrder commerceOrder = null;
-
-		InfoItemReference infoItemReference =
-			(InfoItemReference)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
-
-		if (infoItemReference != null) {
-			try {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)
-						infoItemReference.getInfoItemIdentifier();
-
-				commerceOrder = _commerceOrderService.getCommerceOrder(
-					classPKInfoItemIdentifier.getClassPK());
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-
-				return;
-			}
-		}
+		CommerceOrder commerceOrder =
+			CommerceOrderInfoItemUtil.getCommerceOrder(
+				_commerceOrderService, httpServletRequest);
 
 		if (commerceOrder == null) {
-			Object infoItem = httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
-
-			if ((infoItem == null) || !(infoItem instanceof CommerceOrder)) {
-				if (_isEditMode(httpServletRequest)) {
-					_printPortletMessageInfo(
-						httpServletRequest, httpServletResponse,
-						"the-step-tracker-component-will-be-shown-here");
-				}
-
-				return;
+			if (_isEditMode(httpServletRequest)) {
+				_printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-step-tracker-component-will-be-shown-here");
 			}
 
-			commerceOrder = (CommerceOrder)infoItem;
+			return;
 		}
 
 		try {

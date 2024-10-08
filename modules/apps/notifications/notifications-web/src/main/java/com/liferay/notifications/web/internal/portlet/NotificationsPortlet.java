@@ -10,6 +10,8 @@ import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -370,6 +372,20 @@ public class NotificationsPortlet extends MVCPortlet {
 				userNotificationDelivery.getClassNameId(),
 				userNotificationDelivery.getNotificationType());
 
+		if (userNotificationDefinition == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"No user notification definition found for portlet " +
+							"%s, class name ID %d and notification type %d",
+						userNotificationDelivery.getPortletId(),
+						userNotificationDelivery.getClassNameId(),
+						userNotificationDelivery.getNotificationType()));
+			}
+
+			return;
+		}
+
 		UserNotificationDeliveryType userNotificationDeliveryType =
 			userNotificationDefinition.getUserNotificationDeliveryType(
 				userNotificationDelivery.getDeliveryType());
@@ -381,6 +397,9 @@ public class NotificationsPortlet extends MVCPortlet {
 		_userNotificationDeliveryLocalService.updateUserNotificationDelivery(
 			userNotificationDeliveryId, deliver);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NotificationsPortlet.class);
 
 	@Reference
 	private Language _language;

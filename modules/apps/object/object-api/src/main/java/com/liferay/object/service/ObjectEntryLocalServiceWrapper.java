@@ -748,12 +748,12 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public void updateRootObjectEntryIds(
 			com.liferay.object.model.ObjectDefinition objectDefinition1,
-			com.liferay.object.model.ObjectRelationship objectRelationship,
-			com.liferay.object.model.ObjectDefinition oldObjectDefinition2)
+			com.liferay.object.model.ObjectDefinition objectDefinition2,
+			com.liferay.object.model.ObjectRelationship objectRelationship)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_objectEntryLocalService.updateRootObjectEntryIds(
-			objectDefinition1, objectRelationship, oldObjectDefinition2);
+			objectDefinition1, objectDefinition2, objectRelationship);
 	}
 
 	@Override

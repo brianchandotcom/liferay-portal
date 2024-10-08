@@ -73,12 +73,11 @@ public class ObjectDefinitionLocalServiceUtil {
 
 	public static ObjectDefinition addObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			long rootObjectDefinitionId, boolean modifiable, boolean system)
+			boolean modifiable, boolean system)
 		throws PortalException {
 
 		return getService().addObjectDefinition(
-			externalReferenceCode, userId, objectFolderId,
-			rootObjectDefinitionId, modifiable, system);
+			externalReferenceCode, userId, objectFolderId, modifiable, system);
 	}
 
 	public static ObjectDefinition addOrUpdateSystemObjectDefinition(

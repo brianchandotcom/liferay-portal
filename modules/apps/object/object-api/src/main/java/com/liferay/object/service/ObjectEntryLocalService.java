@@ -495,8 +495,8 @@ public interface ObjectEntryLocalService
 
 	public void updateRootObjectEntryIds(
 			ObjectDefinition objectDefinition1,
-			ObjectRelationship objectRelationship,
-			ObjectDefinition oldObjectDefinition2)
+			ObjectDefinition objectDefinition2,
+			ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	public ObjectEntry updateStatus(

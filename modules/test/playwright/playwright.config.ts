@@ -16,6 +16,7 @@ import {config as assetPublisherWebConfig} from './tests/asset-publisher-web/con
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
 import {config as blogsWebConfig} from './tests/blogs-web/config';
 import {config as calendarWebConfig} from './tests/calendar-web/config';
+import {config as captchaWebConfig} from './tests/captcha-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
@@ -113,6 +114,7 @@ export default defineConfig({
 		batchPlannerConfig,
 		blogsWebConfig,
 		calendarWebConfig,
+		captchaWebConfig,
 		cookiesBannerWebConfig,
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,

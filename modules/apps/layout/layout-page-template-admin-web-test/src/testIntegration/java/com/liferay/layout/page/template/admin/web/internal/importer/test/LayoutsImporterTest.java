@@ -807,19 +807,20 @@ public class LayoutsImporterTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				layoutPageTemplateEntry.getPlid(), fragmentEntry.getCss(),
+				draftLayout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
 				fragmentEntry.getConfiguration(), editableValues,
 				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 				fragmentEntry.getType(), _serviceContext1);
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, layout.fetchDraftLayout(), null, 0,
-			segmentsExperienceId);
+			fragmentEntryLink, draftLayout, null, 0, segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 

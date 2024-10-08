@@ -123,7 +123,7 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 				).toString(),
 				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), layout,
+				fragmentEntry.getJs(), draftLayout,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				null, 0,
 				_segmentsExperienceLocalService.

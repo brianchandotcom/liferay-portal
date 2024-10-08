@@ -1,9 +1,10 @@
 @component-name = "portal-content-management"
 definition {
 
-	property custom.properties = "feature.flag.LPD-35013=true";
+	property custom.properties = "feature.flag.LPD-35013=false";
+	property osgi.modules.includes = "wiki";
 	property portal.acceptance = "true";
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Item Selector";
 
@@ -11,6 +12,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		WikiPortlet.enableWiki();
 	}
 
 	tearDown {

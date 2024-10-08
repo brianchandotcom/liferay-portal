@@ -15,22 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Enable Wiki") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Deprecation",
-				configurationScope = "Virtual Instance Scope");
-
-			Check.checkToggleSwitch(
-				locator1 = "FeatureFlag#TOGGLE_ROW",
-				title_row = "Wiki",
-				toggle_state = "Disabled");
-		}
+		WikiPortlet.enableWiki();
 	}
 
 	tearDown {

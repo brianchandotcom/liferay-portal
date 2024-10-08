@@ -308,14 +308,6 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<ClientExtensionEntryRel> findClientExtensionEntryRels(
-		String type) {
-
-		return _clientExtensionEntryRelLocalService.
-			findClientExtensionEntryRels(type);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -407,6 +399,14 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 			classNameId, classPK, type, start, end);
+	}
+
+	@Override
+	public java.util.List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		String type) {
+
+		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+			type);
 	}
 
 	/**

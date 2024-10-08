@@ -274,12 +274,6 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 			uuid, groupId);
 	}
 
-	public static List<ClientExtensionEntryRel> findClientExtensionEntryRels(
-		String type) {
-
-		return getService().findClientExtensionEntryRels(type);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -362,6 +356,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 		return getService().getClientExtensionEntryRels(
 			classNameId, classPK, type, start, end);
+	}
+
+	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		String type) {
+
+		return getService().getClientExtensionEntryRels(type);
 	}
 
 	/**

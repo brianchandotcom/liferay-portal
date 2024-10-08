@@ -239,9 +239,6 @@ public interface ClientExtensionEntryRelLocalService
 	public ClientExtensionEntryRel fetchClientExtensionEntryRelByUuidAndGroupId(
 		String uuid, long groupId);
 
-	public List<ClientExtensionEntryRel> findClientExtensionEntryRels(
-		String type);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -302,6 +299,10 @@ public interface ClientExtensionEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		long classNameId, long classPK, String type, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		String type);
 
 	/**
 	 * Returns all the client extension entry rels matching the UUID and company.

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.version.Version;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,5 +68,31 @@ public class LayoutPermissionsUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
+
+	@Override
+	protected boolean isSkipUpgradeProcess() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select schemaVersion from Release_ where servletContextName " +
+					"= 'com.liferay.layout.impl'")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return false;
+				}
+
+				Version version = Version.parseVersion(
+					resultSet.getString("schemaVersion"));
+
+				if (_MINIMUM_VERSION.compareTo(version) <= 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static final Version _MINIMUM_VERSION = Version.parseVersion(
+		"1.0.0");
 
 }

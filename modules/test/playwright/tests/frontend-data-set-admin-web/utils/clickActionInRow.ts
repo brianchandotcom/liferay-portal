@@ -5,17 +5,16 @@
 
 import {expect} from '@playwright/test';
 
-export default async function clickActionInRow({
-	actionName,
-	rowName,
-	visualizationModesPage,
-}) {
-	await visualizationModesPage
-		.getRowByText(rowName)
-		.locator('.actions-cell button')
-		.click();
+import getRowByText from './getRowByText';
 
-	const actionButton = visualizationModesPage.page.getByRole('menuitem', {
+export default async function clickActionInRow({actionName, page, rowName}) {
+	const row = await getRowByText({page, text: rowName});
+
+	await expect(row).toBeInViewport();
+
+	row.locator('.actions-cell button').click();
+
+	const actionButton = page.getByRole('menuitem', {
 		name: actionName,
 	});
 

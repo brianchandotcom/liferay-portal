@@ -334,3 +334,87 @@ test('COMMERCE-6321. As a buyer, I want to be able to search an Orders entry usi
 		page.getByText(`Order Id ${orders.items[0].id}`)
 	).toBeVisible();
 });
+
+test('COMMERCE-6329. As a buyer, I want to search for products in Catalog by typing different Categories in Global Search and I want to see the products with that categories in the suggestions even with multiple categories', async ({
+	apiHelpers,
+	commerceCatalogPage,
+	page,
+}) => {
+	const {site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
+
+	const exhaustSystemList = [
+		'Lift Support Product designed',
+		'Muffler/Resonators Product designed',
+		'Exhaust Clamps Product designed',
+		'Catalytic Converters Product designed',
+	];
+
+	await performLogout(page);
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceCatalogPage.focusGlobalSearchBarInput();
+	await commerceCatalogPage.search('Exhaust System');
+
+	for (let i = 0; i < exhaustSystemList.length; i++) {
+		await expect(
+			await commerceCatalogPage.globalSearchBarCommerceItemLink(
+				exhaustSystemList[i]
+			)
+		).toBeVisible();
+	}
+
+	await commerceCatalogPage.clearSearchButton.click();
+	await commerceCatalogPage.search('Exhaust System, Engine');
+
+	for (let i = 0; i < exhaustSystemList.length; i++) {
+		await expect(
+			await commerceCatalogPage.globalSearchBarCommerceItemLink(
+				exhaustSystemList[i]
+			)
+		).toBeVisible();
+	}
+
+	await expect(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'Engine Mount Product designed'
+		)
+	).toBeVisible();
+});

@@ -17,6 +17,7 @@ export {default as Autocomplete} from './autocomplete/entry';
 export {default as AutocompleteComponent} from './autocomplete/Autocomplete';
 export {default as compareCheckbox} from './compare_checkbox/entry';
 export {default as DropdownMenu} from './dropdown/entry';
+export {default as DropdownMenuComponent} from './dropdown/Dropdown';
 export {default as Gallery} from './gallery/entry';
 export {default as GalleryComponent} from './gallery/Gallery';
 export {default as ItemFinder} from './item_finder/entry';

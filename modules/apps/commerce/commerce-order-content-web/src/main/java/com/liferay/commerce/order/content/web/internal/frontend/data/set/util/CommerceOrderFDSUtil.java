@@ -138,6 +138,9 @@ public class CommerceOrderFDSUtil {
 			"commerceOrderImporterTypeKey",
 			CommerceOrdersCommerceOrderImporterTypeImpl.KEY
 		).setParameter(
+			"orderDetailURL",
+			ParamUtil.getString(httpServletRequest, "orderDetailURL")
+		).setParameter(
 			"selectedCommerceOrderId", order.getOrderId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
@@ -313,6 +316,9 @@ public class CommerceOrderFDSUtil {
 			CommerceWishListsCommerceOrderImporterTypeImpl.KEY
 		).setParameter(
 			"commerceWishListId", wishList.getWishListId()
+		).setParameter(
+			"orderDetailURL",
+			ParamUtil.getString(httpServletRequest, "orderDetailURL")
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();

@@ -15,6 +15,7 @@ export {
 	AutocompleteComponent,
 	compareCheckbox,
 	DropdownMenu,
+	DropdownMenuComponent,
 	Gallery,
 	GalleryComponent,
 	InfiniteScrollerComponent,

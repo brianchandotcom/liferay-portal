@@ -23,3 +23,16 @@
 		%>'
 	/>
 </div>
+
+<div>
+	<react:component
+		module="{DropdownMenuComponent} from commerce-frontend-js"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"items", dropdownItems
+			).put(
+				"spritemap", themeDisplay.getPathThemeSpritemap()
+			).build()
+		%>'
+	/>
+</div>

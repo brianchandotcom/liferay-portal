@@ -104,6 +104,15 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				_deleteCommerceOrders(actionRequest);
 
+				String orderDetailURL = ParamUtil.getString(
+					actionRequest, "orderDetailURL");
+
+				if (Validator.isNotNull(orderDetailURL)) {
+					sendRedirect(actionRequest, actionResponse, orderDetailURL);
+
+					return;
+				}
+
 				PortletURL openOrdersPortletURL =
 					PortletProviderUtil.getPortletURL(
 						actionRequest, CommerceOrder.class.getName(),

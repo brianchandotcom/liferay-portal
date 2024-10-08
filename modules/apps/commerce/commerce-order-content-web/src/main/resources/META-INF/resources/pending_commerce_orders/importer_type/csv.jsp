@@ -25,6 +25,7 @@
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
 		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= CSVCommerceOrderImporterTypeImpl.KEY %>" />
+		<aui:input name="orderDetailURL" type="hidden" value='<%= ParamUtil.getString(request, "orderDetailURL") %>' />
 
 		<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderImporterTypeException.class %>">
 

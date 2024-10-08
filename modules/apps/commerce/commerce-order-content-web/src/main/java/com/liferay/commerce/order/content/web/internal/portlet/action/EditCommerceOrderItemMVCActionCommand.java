@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -77,6 +78,13 @@ public class EditCommerceOrderItemMVCActionCommand
 			}
 			else if (cmd.equals(Constants.RESET)) {
 				_deleteCommerceOrderItems(actionRequest);
+
+				String orderDetailURL = ParamUtil.getString(
+					actionRequest, "orderDetailURL");
+
+				if (Validator.isNotNull(orderDetailURL)) {
+					sendRedirect(actionRequest, actionResponse, orderDetailURL);
+				}
 			}
 		}
 		catch (CommerceOrderValidatorException

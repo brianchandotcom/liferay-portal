@@ -224,11 +224,11 @@ export class JournalEditArticlePage {
 	}
 
 	async openFieldSet(assetType: string, fieldSetId: string) {
-		if (
-			!(await this.page.$eval('#' + fieldSetId + 'Content', (item) =>
-				item.classList.contains('show')
-			))
-		) {
+		const isOpened = await this.page
+			.locator(`#${fieldSetId}Content`)
+			.evaluate((element) => element.classList.contains('show'));
+
+		if (!isOpened) {
 			await this.page.getByRole('button', {name: assetType}).click();
 		}
 	}

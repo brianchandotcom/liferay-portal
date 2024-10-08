@@ -2477,7 +2477,8 @@ public class JenkinsResultsParserUtil {
 			JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 				matcher.group("jenkinsMasterName"));
 
-			if ((jenkinsMaster.getSlaveRAM() < minimumRAM) ||
+			if (jenkinsMaster.isBlackListed() ||
+				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
 				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
 
 				continue;

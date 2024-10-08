@@ -105,7 +105,7 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < _columnNames.length; i++) {
-			sb.append(_columnNames[i]);
+			sb.append(StringUtil.removeSubstring(_columnNames[i], "\""));
 
 			if ((lengths != null) && (lengths[i] > 0)) {
 				sb.append("[$COLUMN_LENGTH:");

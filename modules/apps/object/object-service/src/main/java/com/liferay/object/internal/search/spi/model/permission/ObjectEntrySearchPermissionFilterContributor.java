@@ -6,11 +6,12 @@
 package com.liferay.object.internal.search.spi.model.permission;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,16 +52,29 @@ public class ObjectEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		List<Long> accountEntryIds = TransformUtil.transform(
+		List<Long> accountEntryIds = new ArrayList<>();
+
+		List<AccountEntryUserRel> accountEntryUserRelList =
 			_accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(
-					permissionChecker.getUserId()),
-			accountEntryUserRel -> {
+					permissionChecker.getUserId());
+
+		for (AccountEntryUserRel accountEntryUserRel :
+				accountEntryUserRelList) {
+
+			try {
 				AccountEntry accountEntry =
 					accountEntryUserRel.getAccountEntry();
 
-				return accountEntry.getAccountEntryId();
-			});
+				if (!accountEntry.isInactive()) {
+					accountEntryIds.add(accountEntry.getAccountEntryId());
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+
 		List<Organization> organizations =
 			_organizationLocalService.getUserOrganizations(
 				permissionChecker.getUserId());

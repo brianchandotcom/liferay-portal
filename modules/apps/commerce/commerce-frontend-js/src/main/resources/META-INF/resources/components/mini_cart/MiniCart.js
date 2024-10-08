@@ -130,6 +130,7 @@ function MiniCart({
 					return latestCartState;
 				});
 
+				Liferay.fire('cart-updated', {order: updatedCart});
 				onAddToCart(latestActionURLs, latestCartState);
 			}
 			catch (error) {

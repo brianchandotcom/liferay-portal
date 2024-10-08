@@ -40,10 +40,8 @@ const ClayColorPickerWithState = ({
 	);
 
 	useEffect(() => {
-		if (inputValue) {
-			setColor(inputValue);
-		}
-	}, [inputValue]);
+		setColor(inputValue || customColors[0]);
+	}, [inputValue, customColors]);
 
 	return (
 		<>

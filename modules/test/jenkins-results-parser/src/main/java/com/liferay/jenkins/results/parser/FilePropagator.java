@@ -198,6 +198,20 @@ public class FilePropagator {
 				executorService.shutdown();
 			}
 		}
+
+		int totalSlaveCount =
+			_busySlaves.size() + _errorSlaves.size() + _mirrorSlaves.size() +
+				_targetSlaves.size();
+
+		if ((_mirrorSlaves.size() / totalSlaveCount) < 0.5F) {
+			throw new FilePropagatorRuntimeException(
+				this,
+				JenkinsResultsParserUtil.combine(
+					"Unable to propagate to ",
+					String.valueOf(totalSlaveCount - _mirrorSlaves.size()),
+					" out of ", String.valueOf(totalSlaveCount),
+					" slave nodes."));
+		}
 	}
 
 	protected void log(String message) {
@@ -359,6 +373,12 @@ public class FilePropagator {
 
 	private static class FilePropagatorRuntimeException
 		extends RuntimeException {
+
+		public FilePropagatorRuntimeException(
+			FilePropagator filePropagator, String message) {
+
+			super(filePropagator._id + " - " + message);
+		}
 
 		public FilePropagatorRuntimeException(
 			FilePropagator filePropagator, String message,

@@ -117,8 +117,8 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Incorrect order of properties: '", propertyKey,
-						"' should come before '", previousPropertyKey, "'"),
+						"Incorrect order of properties: \"", propertyKey,
+						"\" should come before \"", previousPropertyKey, "\""),
 					lineNumber);
 			}
 

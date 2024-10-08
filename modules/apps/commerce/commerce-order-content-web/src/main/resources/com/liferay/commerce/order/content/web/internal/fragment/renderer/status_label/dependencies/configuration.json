@@ -1,0 +1,26 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "orderStatusInfo",
+					"label": "status",
+					"name": "selectedStatus",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "order-status",
+								"value": "orderStatusInfo"
+							},
+							{
+								"label": "workflow-status",
+								"value": "workflowStatusInfo"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

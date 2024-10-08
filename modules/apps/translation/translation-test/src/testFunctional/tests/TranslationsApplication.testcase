@@ -70,7 +70,9 @@ definition {
 			siteURLKey = "guest",
 			webContentTitle = "WC WebContent Title");
 
-		Translations.viewUntranslatedStatus(locale = "es-ES");
+		Translations.viewUntranslatedStatus(
+			locale = "es-ES",
+			translated = "true");
 	}
 
 	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."

@@ -62,8 +62,8 @@ public class UpgradeProcessFactoryTest {
 			company -> _db.runSQL(
 				StringBundler.concat(
 					"create table ", _TABLE_NAME_1,
-					" (id LONG not null primary key, notNilColumn VARCHAR(75)",
-					"not null, nilColumn VARCHAR(75) null, typeBlob BLOB,",
+					" (id LONG not null primary key, notNilColumn VARCHAR(75) ",
+					"not null, nilColumn VARCHAR(75) null, typeBlob BLOB, ",
 					"typeBoolean BOOLEAN,typeDate DATE null, typeDouble ",
 					"DOUBLE, typeInteger INTEGER, typeLong LONG null, ",
 					"typeSBlob SBLOB, typeString STRING null, typeText TEXT ",

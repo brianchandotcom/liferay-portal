@@ -545,6 +545,177 @@ public class ClientExtensionEntryRelUtil {
 	}
 
 	/**
+	 * Returns all the client extension entry rels where type = &#63;.
+	 *
+	 * @param type the type
+	 * @return the matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByType(String type) {
+		return getPersistence().findByType(type);
+	}
+
+	/**
+	 * Returns a range of all the client extension entry rels where type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @return the range of matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByType(
+		String type, int start, int end) {
+
+		return getPersistence().findByType(type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entry rels where type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByType(
+		String type, int start, int end,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return getPersistence().findByType(type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entry rels where type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByType(
+		String type, int start, int end,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByType(
+			type, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first client extension entry rel in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching client extension entry rel
+	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel findByType_First(
+			String type,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryRelException {
+
+		return getPersistence().findByType_First(type, orderByComparator);
+	}
+
+	/**
+	 * Returns the first client extension entry rel in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel fetchByType_First(
+		String type,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return getPersistence().fetchByType_First(type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last client extension entry rel in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching client extension entry rel
+	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel findByType_Last(
+			String type,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryRelException {
+
+		return getPersistence().findByType_Last(type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last client extension entry rel in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel fetchByType_Last(
+		String type,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return getPersistence().fetchByType_Last(type, orderByComparator);
+	}
+
+	/**
+	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where type = &#63;.
+	 *
+	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next client extension entry rel
+	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
+	 */
+	public static ClientExtensionEntryRel[] findByType_PrevAndNext(
+			long clientExtensionEntryRelId, String type,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryRelException {
+
+		return getPersistence().findByType_PrevAndNext(
+			clientExtensionEntryRelId, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the client extension entry rels where type = &#63; from the database.
+	 *
+	 * @param type the type
+	 */
+	public static void removeByType(String type) {
+		getPersistence().removeByType(type);
+	}
+
+	/**
+	 * Returns the number of client extension entry rels where type = &#63;.
+	 *
+	 * @param type the type
+	 * @return the number of matching client extension entry rels
+	 */
+	public static int countByType(String type) {
+		return getPersistence().countByType(type);
+	}
+
+	/**
 	 * Returns all the client extension entry rels where companyId = &#63; and cetExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID

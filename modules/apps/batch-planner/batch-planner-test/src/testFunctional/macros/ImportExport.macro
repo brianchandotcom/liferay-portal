@@ -2,9 +2,10 @@ definition {
 
 	@summary = "Default summary"
 	macro assertAvailableEntityTypes(entityTypes = null) {
+		Click(locator1 = "ImportExport#ENTITY_TYPE");
+
 		for (var entityType : list ${entityTypes}) {
 			AssertTextEquals(
-				key_entityType = ${entityType},
 				locator1 = "ImportExport#ENTITY_TYPE",
 				value1 = ${entityType});
 		}

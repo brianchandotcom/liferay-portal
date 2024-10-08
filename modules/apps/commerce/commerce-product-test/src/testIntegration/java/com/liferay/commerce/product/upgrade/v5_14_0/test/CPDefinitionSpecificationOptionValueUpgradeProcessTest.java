@@ -94,7 +94,8 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 						RandomTestUtil.randomDouble(),
 						RandomTestUtil.randomLocaleStringMap(), serviceContext);
 
-		cpDefinitionSpecificationOptionValue1.setKey(null);
+		cpDefinitionSpecificationOptionValue1.setKey(
+			RandomTestUtil.randomString());
 
 		_cpDefinitionSpecificationOptionValueLocalService.
 			updateCPDefinitionSpecificationOptionValue(
@@ -111,7 +112,8 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 						RandomTestUtil.randomDouble(),
 						RandomTestUtil.randomLocaleStringMap(), serviceContext);
 
-		cpDefinitionSpecificationOptionValue2.setKey(null);
+		cpDefinitionSpecificationOptionValue2.setKey(
+			RandomTestUtil.randomString());
 
 		_cpDefinitionSpecificationOptionValueLocalService.
 			updateCPDefinitionSpecificationOptionValue(

@@ -146,6 +146,7 @@ public class HTTPTestUtil {
 			headers.forEach(options::addHeader);
 		}
 
+		options.setCookieSpec(Http.CookieSpec.STANDARD);
 		options.setLocation(_baseURL + "/o/" + endpoint);
 		options.setMethod(httpMethod);
 

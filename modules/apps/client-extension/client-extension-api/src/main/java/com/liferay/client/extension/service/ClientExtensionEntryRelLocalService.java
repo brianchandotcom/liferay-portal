@@ -239,6 +239,9 @@ public interface ClientExtensionEntryRelLocalService
 	public ClientExtensionEntryRel fetchClientExtensionEntryRelByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public List<ClientExtensionEntryRel> findClientExtensionEntryRels(
+		String type);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

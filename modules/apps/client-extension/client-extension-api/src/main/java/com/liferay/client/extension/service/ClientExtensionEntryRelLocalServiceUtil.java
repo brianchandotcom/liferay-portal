@@ -274,6 +274,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static List<ClientExtensionEntryRel> findClientExtensionEntryRels(
+		String type) {
+
+		return getService().findClientExtensionEntryRels(type);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

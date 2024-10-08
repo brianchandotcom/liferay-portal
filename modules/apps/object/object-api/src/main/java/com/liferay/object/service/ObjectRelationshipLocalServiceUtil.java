@@ -286,13 +286,6 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static ObjectRelationship enableEdge(
-			long objectRelationshipId, boolean edge)
-		throws PortalException {
-
-		return getService().enableEdge(objectRelationshipId, edge);
-	}
-
 	public static ObjectRelationship fetchObjectRelationship(
 		long objectRelationshipId) {
 

@@ -213,7 +213,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		String body = _read("notification_template_body_object_entry.ftl");
 
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			childObjectDefinition);
 
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
@@ -254,7 +255,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ActionKeys.VIEW);
 
 		objectAction = _addNotificationTemplateObjectAction(
-			body, ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			childObjectDefinition);
 
 		PermissionChecker originalPermissionChecker =
@@ -330,6 +332,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
 			_read("notification_template_body_commerce_order.ftl"),
+			NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 			DestinationNames.COMMERCE_PAYMENT_STATUS,
 			commerceOrderObjectDefinition);
 
@@ -348,6 +351,56 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_accountEntryLocalService.deleteAccountEntry(
 			_accountEntryLocalService.fetchPersonAccountEntry(
 				TestPropsValues.getUserId()));
+	}
+
+	@Test
+	public void testRichTextNotificationTemplateWithDifferentUserLocale()
+		throws Exception {
+
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			StringBundler.concat(
+				_getTermName(childObjectDefinition, "createDate"),
+				StringPool.COMMA,
+				_getTermName(childObjectDefinition, "modifiedDate")),
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			childObjectDefinition);
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			User user = UserTestUtil.addUser(
+				TestPropsValues.getGroupId(), LocaleUtil.FRENCH);
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+				dtoConverterContext, childObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.putAll(
+							childObjectEntryValues
+						).build();
+					}
+				},
+				group.getGroupKey());
+
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"EEE MMM dd HH:mm:ss zzz yyyy", LocaleUtil.FRENCH);
+
+			_assertNotificationQueueEntryBody(
+				StringBundler.concat(
+					dateFormat.format(objectEntry.getDateCreated()),
+					StringPool.COMMA,
+					dateFormat.format(objectEntry.getDateModified())));
+
+			_objectEntryLocalService.deleteObjectEntry(objectEntry.getId());
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+
+			_objectActionLocalService.deleteObjectAction(objectAction);
+		}
 	}
 
 	@Test
@@ -1183,7 +1236,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private ObjectAction _addNotificationTemplateObjectAction(
-			String body, String objectActionTriggerKey,
+			String body, String editorType, String objectActionTriggerKey,
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -1196,8 +1249,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectDefinition.getObjectDefinitionId());
 		notificationTemplate.setBody(body);
 		notificationTemplate.setDescription(RandomTestUtil.randomString());
-		notificationTemplate.setEditorType(
-			NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER);
+		notificationTemplate.setEditorType(editorType);
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setSubject(RandomTestUtil.randomString());
 		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
@@ -1441,6 +1493,16 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					ServiceContextThreadLocal.getServiceContext(
 					).getRequest())),
 			StringPool.NEW_LINE);
+	}
+
+	private String _getTermName(
+		ObjectDefinition objectDefinition, String objectFieldName) {
+
+		return StringBundler.concat(
+			"[%",
+			StringUtil.toUpperCase(
+				objectDefinition.getShortName() + "_" + objectFieldName),
+			"%]");
 	}
 
 	private String _read(String fileName) throws Exception {

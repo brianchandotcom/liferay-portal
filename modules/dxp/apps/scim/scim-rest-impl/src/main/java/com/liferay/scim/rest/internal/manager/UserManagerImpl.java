@@ -883,6 +883,10 @@ public class UserManagerImpl implements UserManager {
 				ExpandoColumnConstants.INDEX_TYPE,
 				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
 
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.PROPERTY_HIDDEN,
+				String.valueOf(Boolean.TRUE));
+
 			expandoColumn.setTypeSettingsProperties(unicodeProperties);
 
 			expandoColumn = _expandoColumnLocalService.updateExpandoColumn(

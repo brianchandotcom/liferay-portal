@@ -1362,8 +1362,8 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition2.isApproved()) {
 
 					_objectEntryLocalService.updateRootObjectEntryIds(
-						objectDefinition1, objectRelationship,
-						objectDefinition2);
+						objectDefinition1, objectDefinition2,
+						objectRelationship);
 				}
 			}
 

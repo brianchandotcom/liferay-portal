@@ -124,6 +124,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1633,39 +1634,38 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public void updateRootObjectEntryIds(
 			ObjectDefinition objectDefinition1,
-			ObjectRelationship objectRelationship,
-			ObjectDefinition oldObjectDefinition2)
+			ObjectDefinition objectDefinition2,
+			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
-		String sql1 =
-			"update ObjectEntry set rootObjectEntryId = ? where " +
-				"objectEntryId = ?";
-		String sql2 =
-			"update ObjectEntry set rootObjectEntryId = ? where " +
-				"rootObjectEntryId = ?";
-
 		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
 			objectRelationship.getObjectFieldId2());
 
-		String sql3 = StringBundler.concat(
-			"select ", oldObjectDefinition2.getPKObjectFieldDBColumnName(),
-			" from ", objectField.getDBTableName(), " where ",
-			objectField.getDBColumnName(), " = ?");
-
 		AtomicBoolean isObjectDefinition1RootNode = new AtomicBoolean(false);
 
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				sql1);
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				sql2);
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				sql3)) {
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select ",
+						objectDefinition2.getPKObjectFieldDBColumnName(),
+						" from ", objectField.getDBTableName(), " where ",
+						objectField.getDBColumnName(), " = ?"));
+			PreparedStatement updatePreparedStatement1 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update ObjectEntry set rootObjectEntryId = ? where " +
+						"objectEntryId = ?");
+			PreparedStatement updatePreparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update ObjectEntry set rootObjectEntryId = ? where " +
+						"rootObjectEntryId = ?")) {
 
-			long oldObjectDefinition2RootObjectDefinitionId =
-				oldObjectDefinition2.getRootObjectDefinitionId();
+			long objectDefinition2RootObjectDefinitionId =
+				objectDefinition2.getRootObjectDefinitionId();
 
 			_performActionableDynamicQuery(
 				objectDefinition1.getObjectDefinitionId(),
@@ -1677,46 +1677,47 @@ public class ObjectEntryLocalServiceImpl
 						if (rootObjectEntryId == 0) {
 							rootObjectEntryId = objectEntry.getObjectEntryId();
 
-							preparedStatement1.setLong(1, rootObjectEntryId);
+							updatePreparedStatement1.setLong(
+								1, rootObjectEntryId);
 
-							preparedStatement1.setLong(
+							updatePreparedStatement1.setLong(
 								2, objectEntry.getObjectEntryId());
 
-							preparedStatement1.addBatch();
+							updatePreparedStatement1.addBatch();
 
 							isObjectDefinition1RootNode.set(true);
 						}
 
-						preparedStatement3.setLong(
+						selectPreparedStatement.setLong(
 							1, objectEntry.getObjectEntryId());
 
 						try (ResultSet resultSet =
-								preparedStatement3.executeQuery()) {
+								selectPreparedStatement.executeQuery()) {
 
 							while (resultSet.next()) {
 								long relatedObjectEntryId = resultSet.getLong(
-									oldObjectDefinition2.
+									objectDefinition2.
 										getPKObjectFieldDBColumnName());
 
-								if (oldObjectDefinition2RootObjectDefinitionId ==
+								if (objectDefinition2RootObjectDefinitionId ==
 										0) {
 
-									preparedStatement1.setLong(
+									updatePreparedStatement1.setLong(
 										1, rootObjectEntryId);
-									preparedStatement1.setLong(
+									updatePreparedStatement1.setLong(
 										2, relatedObjectEntryId);
 
-									preparedStatement1.addBatch();
+									updatePreparedStatement1.addBatch();
 
 									continue;
 								}
 
-								preparedStatement2.setLong(
+								updatePreparedStatement2.setLong(
 									1, rootObjectEntryId);
-								preparedStatement2.setLong(
+								updatePreparedStatement2.setLong(
 									2, relatedObjectEntryId);
 
-								preparedStatement2.addBatch();
+								updatePreparedStatement2.addBatch();
 							}
 						}
 					}
@@ -1725,14 +1726,21 @@ public class ObjectEntryLocalServiceImpl
 					}
 				});
 
-			preparedStatement1.executeBatch();
+			updatePreparedStatement1.executeBatch();
 
-			if (oldObjectDefinition2RootObjectDefinitionId != 0) {
-				preparedStatement2.executeBatch();
+			if (objectDefinition2RootObjectDefinitionId != 0) {
+				updatePreparedStatement2.executeBatch();
 			}
 		}
 		catch (SQLException sqlException) {
 			throw new SystemException(sqlException);
+		}
+
+		long rootObjectDefinitionId =
+			objectRelationship.getObjectDefinitionId2();
+
+		if (isObjectDefinition1RootNode.get()) {
+			rootObjectDefinitionId = objectDefinition1.getObjectDefinitionId();
 		}
 
 		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
@@ -1740,14 +1748,8 @@ public class ObjectEntryLocalServiceImpl
 				_objectDefinitionPersistence,
 				_objectRelationshipLocalServiceSnapshot.get());
 
-		long objectDefinitionId = objectRelationship.getObjectDefinitionId2();
-
-		if (isObjectDefinition1RootNode.get()) {
-			objectDefinitionId = objectDefinition1.getObjectDefinitionId();
-		}
-
 		Tree objectDefinitionTree = objectDefinitionTreeFactory.create(
-			objectDefinitionId);
+			rootObjectDefinitionId);
 
 		Iterator<Node> iterator = objectDefinitionTree.iterator();
 

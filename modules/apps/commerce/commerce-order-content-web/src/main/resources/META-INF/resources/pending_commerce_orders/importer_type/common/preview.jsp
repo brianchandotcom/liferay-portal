@@ -27,6 +27,7 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderContentDisplayContext.getCommerceOrderId() %>" />
 		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= commerceOrderImporterTypeKey %>" />
+		<aui:input name="orderDetailURL" type="hidden" value='<%= ParamUtil.getString(request, "orderDetailURL") %>' />
 		<aui:input name="<%= commerceOrderImporterType.getCommerceOrderImporterItemParamName() %>" type="hidden" value="<%= commerceOrderImporterItemParamName %>" />
 
 		<div class="pb-6">

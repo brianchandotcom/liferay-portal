@@ -41,6 +41,7 @@ function Dropdown(props) {
 				closeOnSubmit: true,
 				id: dropdownSupportModalId,
 				size: resolveModalSize(target),
+				title: label,
 				url,
 			});
 		}

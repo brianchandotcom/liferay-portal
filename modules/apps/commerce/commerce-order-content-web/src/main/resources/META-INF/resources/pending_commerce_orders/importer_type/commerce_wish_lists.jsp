@@ -11,6 +11,8 @@
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
+		).put(
+			"orderDetailURL", ParamUtil.getString(request, "orderDetailURL")
 		).build()
 	%>'
 	dataProviderKey="<%= CommerceOrderFDSNames.WISH_LISTS %>"

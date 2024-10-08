@@ -5,21 +5,35 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.util.CommerceOrderInfoItemUtil;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,7 +41,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -92,6 +110,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:order-actions:commerceOrderId",
 				commerceOrder.getCommerceOrderId());
 			httpServletRequest.setAttribute(
+				"liferay-commerce:order-actions:dropdownItems",
+				_getDropdownItems(commerceOrder, httpServletRequest));
+			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:open", commerceOrder.isOpen());
 
 			httpServletRequest.setAttribute(
@@ -105,6 +126,173 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private List<CommerceOrderImporterType> _getCommerceImporterTypes(
+			CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return _commerceOrderImporterTypeRegistry.getCommerceOrderImporterTypes(
+			commerceOrder);
+	}
+
+	private List<DropdownItem> _getDropdownItems(
+		CommerceOrder commerceOrder, HttpServletRequest httpServletRequest) {
+
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
+		String commerceOrderFriendlyURL =
+			CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
+				_friendlyURLSeparatorProviderSnapshot.get(),
+				httpServletRequest);
+
+		try {
+			if (commerceOrder.isOpen()) {
+				for (CommerceOrderImporterType commerceOrderImporterType :
+						_getCommerceImporterTypes(commerceOrder)) {
+
+					dropdownItems.add(
+						DropdownItemBuilder.setHref(
+							PortletURLBuilder.create(
+								PortletURLFactoryUtil.create(
+									httpServletRequest,
+									CommercePortletKeys.
+										COMMERCE_OPEN_ORDER_CONTENT,
+									PortletRequest.RENDER_PHASE)
+							).setMVCRenderCommandName(
+								"/commerce_open_order_content" +
+									"/view_commerce_order_importer_type"
+							).setRedirect(
+								commerceOrderFriendlyURL
+							).setParameter(
+								"commerceOrderId",
+								commerceOrder.getCommerceOrderId()
+							).setParameter(
+								"commerceOrderImporterTypeKey",
+								commerceOrderImporterType.getKey()
+							).setParameter(
+								"orderDetailURL", commerceOrderFriendlyURL
+							).setWindowState(
+								LiferayWindowState.POP_UP
+							).buildString()
+						).setLabel(
+							_language.get(
+								httpServletRequest,
+								commerceOrderImporterType.getLabel(
+									_portal.getLocale(httpServletRequest)))
+						).setTarget(
+							"modal"
+						).build());
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		try {
+			if (commerceOrder.isOpen() &&
+				_hasModelPermission(commerceOrder, ActionKeys.DELETE)) {
+
+				dropdownItems.add(
+					DropdownItemBuilder.setData(
+						HashMapBuilder.<String, Object>put(
+							"confirmationMessage",
+							_language.format(
+								httpServletRequest,
+								"are-you-sure-you-want-to-delete-order-x",
+								String.valueOf(
+									commerceOrder.getCommerceOrderId()),
+								false)
+						).build()
+					).setHref(
+						PortletURLBuilder.create(
+							PortletURLFactoryUtil.create(
+								httpServletRequest,
+								CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+								PortletRequest.ACTION_PHASE)
+						).setActionName(
+							"/commerce_open_order_content/edit_commerce_order"
+						).setCMD(
+							Constants.DELETE
+						).setParameter(
+							"commerceOrderId",
+							commerceOrder.getCommerceOrderId()
+						).setParameter(
+							"orderDetailURL", commerceOrderFriendlyURL
+						).buildString()
+					).setLabel(
+						_language.get(httpServletRequest, "delete")
+					).setTarget(
+						"submitWithConfirmation"
+					).build());
+
+				dropdownItems.add(
+					DropdownItemBuilder.setData(
+						HashMapBuilder.<String, Object>put(
+							"confirmationMessage",
+							_language.get(
+								httpServletRequest,
+								"are-you-sure-you-want-to-remove-all-items")
+						).build()
+					).setHref(
+						PortletURLBuilder.create(
+							PortletURLFactoryUtil.create(
+								httpServletRequest,
+								CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+								PortletRequest.ACTION_PHASE)
+						).setActionName(
+							"/commerce_open_order_content" +
+								"/edit_commerce_order_item"
+						).setCMD(
+							Constants.RESET
+						).setParameter(
+							"commerceOrderId",
+							commerceOrder.getCommerceOrderId()
+						).setParameter(
+							"orderDetailURL", commerceOrderFriendlyURL
+						).buildString()
+					).setLabel(
+						_language.get(httpServletRequest, "remove-all-items")
+					).setTarget(
+						"submitWithConfirmation"
+					).build());
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		dropdownItems.add(
+			DropdownItemBuilder.setHref(
+				ResourceURLBuilder.createResourceURL(
+					PortletURLFactoryUtil.create(
+						httpServletRequest,
+						CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"commerceOrderId", commerceOrder.getCommerceOrderId()
+				).setParameter(
+					"orderDetailURL", commerceOrderFriendlyURL
+				).setResourceID(
+					"/commerce_order_content/export_commerce_order_report"
+				).buildString()
+			).setIcon(
+				"print"
+			).setLabel(
+				_language.get(httpServletRequest, "print")
+			).build());
+
+		return dropdownItems;
+	}
+
+	private boolean _hasModelPermission(
+			CommerceOrder commerceOrder, String action)
+		throws PortalException {
+
+		return _commerceOrderModelResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+			action);
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {
@@ -161,6 +349,16 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+
+	@Reference
+	private CommerceOrderImporterTypeRegistry
+		_commerceOrderImporterTypeRegistry;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

@@ -56,6 +56,8 @@ function OrderActions({checkoutURL, isOpen, orderId, reorderURL}) {
 
 			executeTransitions(orderId, action)
 				.then((response) => {
+					Liferay.fire('order-information-altered');
+
 					if (open !== response?.open) {
 						setOpen(response.open);
 					}

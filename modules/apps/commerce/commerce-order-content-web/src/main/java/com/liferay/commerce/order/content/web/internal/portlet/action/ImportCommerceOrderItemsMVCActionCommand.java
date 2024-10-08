@@ -23,8 +23,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -48,6 +48,7 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -157,10 +158,17 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			long commerceOrderId, ActionRequest actionRequest)
 		throws Exception {
 
+		String orderDetailURL = ParamUtil.getString(
+			actionRequest, "orderDetailURL");
+
+		if (Validator.isNotNull(orderDetailURL)) {
+			return orderDetailURL;
+		}
+
 		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				actionRequest, CommerceOrder.class.getName(),
-				PortletProvider.Action.EDIT)
+			PortletURLFactoryUtil.create(
+				actionRequest, CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_open_order_content/edit_commerce_order"
 		).setBackURL(

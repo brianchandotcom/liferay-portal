@@ -162,6 +162,22 @@ public class FilePropagator {
 
 					previousString = currentString;
 				}
+				else {
+					long millisSinceLastMessage =
+						System.currentTimeMillis() - _lastMessageTime;
+
+					if (millisSinceLastMessage > (1000 * 60 * 5)) {
+						log(
+							JenkinsResultsParserUtil.combine(
+								"No change in ",
+								JenkinsResultsParserUtil.toDurationString(
+									millisSinceLastMessage),
+								". Timeout will occur in ",
+								JenkinsResultsParserUtil.toDurationString(
+									_timeout - duration),
+								"."));
+					}
+				}
 
 				JenkinsResultsParserUtil.sleep(5000);
 			}
@@ -185,6 +201,8 @@ public class FilePropagator {
 	}
 
 	protected void log(String message) {
+		_lastMessageTime = System.currentTimeMillis();
+
 		System.out.print("File propagator ID: ");
 		System.out.print(_id);
 
@@ -330,6 +348,7 @@ public class FilePropagator {
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
 	private final String _id;
+	private long _lastMessageTime = System.currentTimeMillis();
 	private final List<String> _mirrorSlaves = new ArrayList<>();
 	private String _postDistCommand;
 	private String _preDistCommand;

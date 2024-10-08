@@ -632,12 +632,21 @@ public class JenkinsResultsParserUtil {
 
 		Process process = new BufferedProcess(2000000, processBuilder.start());
 
+		Thread currentThread = Thread.currentThread();
 		long duration = 0;
 		long start = System.currentTimeMillis();
 		int returnCode = -1;
 
 		while (true) {
 			try {
+				if (currentThread.isInterrupted()) {
+					returnCode = 1;
+
+					process.destroyForcibly();
+
+					break;
+				}
+
 				returnCode = process.exitValue();
 
 				if (returnCode == 0) {

@@ -668,7 +668,7 @@ const FrontendDataSet = ({
 			method,
 		};
 
-		if (method !== 'GET') {
+		if (method.toUpperCase() !== 'GET') {
 			requestOptions.body = requestBody ? requestBody : '{}';
 		}
 

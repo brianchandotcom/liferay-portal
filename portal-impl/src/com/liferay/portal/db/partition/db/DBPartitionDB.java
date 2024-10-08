@@ -40,15 +40,19 @@ public interface DBPartitionDB {
 	}
 
 	public default String getCreateTableSQL(
-		String fromPartitionName, String toPartitionName, String tableName) {
+			Connection connection, String fromPartitionName,
+			String toPartitionName, String tableName)
+		throws SQLException {
 
 		return getCreateTableSQL(
-			fromPartitionName, toPartitionName, tableName, tableName);
+			connection, fromPartitionName, toPartitionName, tableName,
+			tableName);
 	}
 
 	public String getCreateTableSQL(
-		String fromPartitionName, String toPartitionName, String toTableName,
-		String fromTableName);
+			Connection connection, String fromPartitionName,
+			String toPartitionName, String toTableName, String fromTableName)
+		throws SQLException;
 
 	public default String getCreateViewSQL(
 		String fromPartitionName, String toPartitionName, String viewName) {

@@ -213,6 +213,7 @@
 	"if-you-need-more-information-about-the-availability-of-your-x-activation-keys-please-ask-one-of-your-administrator-team-members-to-update-your-permissions-so-you-can-contact-liferay-support-alternatively-team-members-with-administrator-or-requester-role-can-submit-a-support-ticket-on-your-behalf": " If you need more information about the availability of your {0} activation keys, please ask one of your Administrator team members to update your permissions, so you can contact Liferay Support. Alternatively, team members with Administrator or Requester role can submit a support ticket on your behalf.",
 	"in-progress": "In Progress",
 	"inactive": "Inactive",
+	"incident-contact": "Incident Contact",
 	"incident-contacts": "Incident Contacts",
 	"incident-management-contacts-email-address": "Incident Management Contact's Email Address",
 	"incident-management-contacts-first-and-last-name": "Incident Management Contact's First and Last Name",

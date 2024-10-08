@@ -13,6 +13,7 @@ import {assignUserAccountWithAccountAndAccountRole} from '~/common/services/life
 import {getRolesFiltered} from '~/common/utils/getProjectRoles';
 import isSupportSeatRole from '~/common/utils/isSupportSeatRole';
 import {rolesHighPriorityContacts} from '~/routes/customer-portal/utils/getHighPriorityContacts';
+
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
@@ -71,13 +72,11 @@ const TeamMembersTable = ({
 	const [singleSubscribedKeys, setSingleSubscribedKeys] = useState('');
 	const [loadingModal, setLoadingModal] = useState(false);
 
-	const {
-		data: myUserAccountData,
-		loading: myUserAccountLoading,
-	} = useMyUserAccountByAccountExternalReferenceCode(
-		koroneikiAccountLoading,
-		koroneikiAccount?.accountKey
-	);
+	const {data: myUserAccountData, loading: myUserAccountLoading} =
+		useMyUserAccountByAccountExternalReferenceCode(
+			koroneikiAccountLoading,
+			koroneikiAccount?.accountKey
+		);
 
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
@@ -100,19 +99,18 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
-	const [
-		availableSupportSeatsCount,
-		setAvailableSupportSeatsCount,
-	] = useState(1);
+	const [availableSupportSeatsCount, setAvailableSupportSeatsCount] =
+		useState(1);
 
 	useEffect(() => {
 		let availableSupportSeats =
 			koroneikiAccount?.maxRequestors - supportSeatsCount;
-		availableSupportSeats = availableSupportSeats < 0 ? 0 : availableSupportSeats;
+		availableSupportSeats =
+			availableSupportSeats < 0 ? 0 : availableSupportSeats;
 
 		setAvailableSupportSeatsCount(
-			isUnlimitedSupportSeats 
-				? UNLIMITED_SUPPORT_SEATS 
+			isUnlimitedSupportSeats
+				? UNLIMITED_SUPPORT_SEATS
 				: availableSupportSeats
 		);
 	}, [koroneikiAccount, supportSeatsCount, isUnlimitedSupportSeats]);
@@ -123,9 +121,8 @@ const TeamMembersTable = ({
 	const totalUserAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.totalCount;
 
-	const {paginationConfig, teamMembersByStatusPaginated} = usePagination(
-		userAccounts
-	);
+	const {paginationConfig, teamMembersByStatusPaginated} =
+		usePagination(userAccounts);
 
 	const getHighPriorityContactsByFilter = useCallback(
 		(filter) => {
@@ -151,16 +148,18 @@ const TeamMembersTable = ({
 					)
 				);
 
-				const flattenedHighPriorityContacts = highPriorityContactsResults
-					.flat()
-					.filter((contact) => contact);
+				const flattenedHighPriorityContacts =
+					highPriorityContactsResults
+						.flat()
+						.filter((contact) => contact);
 
 				const highPriorityEmails = flattenedHighPriorityContacts.map(
 					(contact) => contact.email
 				);
 
 				setHighPriorityContactsNames(highPriorityEmails);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error('Error:', error);
 			}
 		};
@@ -168,14 +167,12 @@ const TeamMembersTable = ({
 		fetchHighPriorityContacts();
 	}, [getHighPriorityContactsByFilter, userAccountsData]);
 
-	const {
-		data: accountRolesData,
-		loading: accountRolesLoading,
-	} = useAccountRolesByAccountExternalReferenceCode(
-		koroneikiAccount,
-		koroneikiAccountLoading,
-		!loggedUserAccount?.selectedAccountSummary.hasAdministratorRole
-	);
+	const {data: accountRolesData, loading: accountRolesLoading} =
+		useAccountRolesByAccountExternalReferenceCode(
+			koroneikiAccount,
+			koroneikiAccountLoading,
+			!loggedUserAccount?.selectedAccountSummary.hasAdministratorRole
+		);
 
 	const availableAccountRoles = getRolesFiltered(
 		accountRolesData?.accountAccountRolesByExternalReferenceCode.items,
@@ -190,12 +187,11 @@ const TeamMembersTable = ({
 			try {
 				setLoadingModal(true);
 
-				const {
-					items,
-				} = await provisioningKeys.getSingleUserSubscriptions(
-					koroneikiAccount?.accountKey,
-					userAccount?.emailAddress
-				);
+				const {items} =
+					await provisioningKeys.getSingleUserSubscriptions(
+						koroneikiAccount?.accountKey,
+						userAccount?.emailAddress
+					);
 
 				const getLicensesKeyIds = items.map((licenseKey) => {
 					return licenseKey.id;
@@ -203,7 +199,8 @@ const TeamMembersTable = ({
 
 				setIsSingleSubscribedUser(items);
 				setSingleSubscribedKeys(getLicensesKeyIds);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error('Error:', error);
 			}
 			setLoadingModal(false);
@@ -239,25 +236,33 @@ const TeamMembersTable = ({
 	);
 
 	const checkIsValidRole = (userAccount) => {
-		const isInvalidRole = (role) => {
-			const invalidRoles = ['Security', 'Data', 'Critical'];
+		const isIncidentContactRole = (role) => {
+			const incidentRoles = ['Security', 'Data', 'Critical'];
 
-			return invalidRoles.some((keyword) => role.name.includes(keyword));
+			return incidentRoles.some((keyword) => role.name.includes(keyword));
 		};
 
 		const roles = getCurrentRoleBriefs(userAccount.selectedAccountSummary);
 
 		if (!roles.length) {
 			return ['User'];
-		} else {
-			return roles.map((role) => {
-				if (!isInvalidRole(role)) {
-					return role?.name;
-				}
-
-				return 'User';
-			});
 		}
+
+		const memberRoles = [];
+
+		roles.forEach((role) => {
+			let roleName = role?.name;
+
+			if (isIncidentContactRole(role)) {
+				roleName = 'Incident Contact';
+			}
+
+			if (!memberRoles.includes(roleName)) {
+				memberRoles.push(roleName);
+			}
+		});
+
+		return memberRoles;
 	};
 
 	const handleEdit = () => {
@@ -280,7 +285,8 @@ const TeamMembersTable = ({
 		singleSubscribedKeys?.forEach(async (singleSubscribeKey) => {
 			try {
 				await provisioningKeys.putSubscriptionInKey(singleSubscribeKey);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error('Error:', error);
 			}
 		});
@@ -290,15 +296,18 @@ const TeamMembersTable = ({
 		if (!selectedAccountRoleItem || updating) {
 			return true;
 		}
-	
+
 		if (isUnlimitedSupportSeats) {
 			return false;
 		}
-	
+
 		const noSupportSeatsAvailable = availableSupportSeatsCount === 0;
-		const selectedSupportSeatRole = isSupportSeatRole(selectedAccountRoleItem?.label);
-		const currentAccountRoles = currentUserEditing.selectedAccountSummary.roleBriefs;
-		
+		const selectedSupportSeatRole = isSupportSeatRole(
+			selectedAccountRoleItem?.label
+		);
+		const currentAccountRoles =
+			currentUserEditing.selectedAccountSummary.roleBriefs;
+
 		if (noSupportSeatsAvailable) {
 			for (const role of currentAccountRoles) {
 				if (isSupportSeatRole(role.name)) {
@@ -308,10 +317,9 @@ const TeamMembersTable = ({
 
 			return selectedSupportSeatRole;
 		}
-	
+
 		return availableSupportSeatsCount <= 0;
 	};
-	
 
 	return (
 		<>

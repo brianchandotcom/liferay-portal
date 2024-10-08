@@ -10,7 +10,7 @@ import {openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import InfoBoxModal from '../InfoBoxModal';
-import {formatValue, isEditable} from './util';
+import {formatValue, isEditable} from '../util';
 
 const DefaultView = ({
 	additionalProps,
@@ -57,11 +57,12 @@ const DefaultView = ({
 					.updatePlacedOrderById;
 
 		updateOrder(orderId, parseRequest(field, inputValue))
-			.then((response) => {
+			.then((order) => {
 				setCurrentValue(inputValue);
-				setValue(parseResponse(field, response));
+				setValue(parseResponse(field, order));
 
 				onOpenChange(false);
+				Liferay.fire('order-information-altered', {order});
 			})
 			.catch((error) => {
 				openToast({
@@ -90,39 +91,57 @@ const DefaultView = ({
 	}, [inputValue]);
 
 	return (
-		<div className={namespace + 'info-box'} id={elementId}>
-			<div className="align-items-center d-flex">
-				{label ? (
-					<div className="h5 info-box-label m-0">{label}</div>
-				) : null}
+		<>
+			<div className={`${namespace}info-box my-3`} id={elementId}>
+				<div className="align-items-center d-flex">
+					{label ? (
+						<div className="h5 info-box-label m-0">{label}</div>
+					) : null}
 
-				{hasPermission && !readOnly && isEditable(field, isOpen) ? (
-					<ClayButton
-						aria-controls={`${namespace}infoBoxModal`}
-						aria-label={
-							value
-								? sub(Liferay.Language.get('edit-x'), label)
-								: sub(Liferay.Language.get('add-x'), label)
-						}
-						className="ml-2"
-						data-qa-id={`${label}-infoBoxButton`}
-						displayType={buttonDisplayType}
-						onClick={() => {
-							setInputValue(currentValue);
+					{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+						<ClayButton
+							aria-controls={`${namespace}infoBoxModal`}
+							aria-label={
+								value
+									? sub(Liferay.Language.get('edit-x'), label)
+									: sub(Liferay.Language.get('add-x'), label)
+							}
+							className="ml-2"
+							data-qa-id={`${label}-infoBoxButton`}
+							displayType={buttonDisplayType}
+							onClick={() => {
+								setInputValue(currentValue);
 
-							onOpenChange(true);
-						}}
-						size="xs"
-					>
-						{value
-							? Liferay.Language.get('edit')
-							: Liferay.Language.get('add')}
-					</ClayButton>
-				) : null}
-			</div>
+								onOpenChange(true);
+							}}
+							size="xs"
+						>
+							{value
+								? Liferay.Language.get('edit')
+								: Liferay.Language.get('add')}
+						</ClayButton>
+					) : null}
+				</div>
 
-			<div className="info-box-value">
-				{formatValue(value, fieldValueType)}
+				<div className="info-box-value mt-1">
+					{value ? (
+						<span>{formatValue(value, fieldValueType)}</span>
+					) : (
+						<ClayButton
+							aria-label={Liferay.Language.get('not-set')}
+							className="border-bottom border-dashed btn-sm p-0 small text-black-50 text-decoration-none"
+							displayType="link"
+							onClick={() =>
+								hasPermission &&
+								!readOnly &&
+								isEditable(field, isOpen) &&
+								onOpenChange(true)
+							}
+						>
+							{Liferay.Language.get('not-set')}
+						</ClayButton>
+					)}
+				</div>
 			</div>
 
 			{hasPermission && !readOnly && isEditable(field, isOpen) ? (
@@ -146,7 +165,7 @@ const DefaultView = ({
 					submitOrder={submitOrder}
 				/>
 			) : null}
-		</div>
+		</>
 	);
 };
 

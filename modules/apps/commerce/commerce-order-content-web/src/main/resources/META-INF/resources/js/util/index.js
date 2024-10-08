@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {isObject} from 'frontend-js-web';
 import React from 'react';
 
@@ -55,4 +56,16 @@ export function isEditable(field, isOpen) {
 	}
 
 	return true;
+}
+
+export async function getOrder(isOpenOrder, order = null, orderId) {
+	if (order) {
+		return Promise.resolve(order);
+	}
+
+	return isOpenOrder
+		? CommerceServiceProvider.DeliveryCartAPI('v1').getCartById(orderId)
+		: CommerceServiceProvider.DeliveryOrderAPI('v1').getPlacedOrderById(
+				orderId
+			);
 }

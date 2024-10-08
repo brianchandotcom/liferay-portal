@@ -2381,8 +2381,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFriendlyURLCP(friendlyURL = null) {
-		Panel.expandPanel(panel = "Friendly URL");
-
 		AssertTextEquals(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",

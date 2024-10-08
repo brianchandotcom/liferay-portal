@@ -5,7 +5,6 @@
 
 package com.liferay.portal.servlet.filters.secure;
 
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControl;
@@ -13,15 +12,8 @@ import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -97,72 +89,6 @@ public class BaseAuthFilterTest {
 	@After
 	public void tearDown() {
 		AccessControlUtil.setAccessControlContext(null);
-	}
-
-	@Test
-	public void testDigestAuthWhenDigestIsNotUpdatedDuringTheSession()
-		throws Exception {
-
-		String digest = RandomTestUtil.randomString();
-
-		_mockHttpSession.setAttribute("DIGEST", digest);
-
-		_mockHttpServletRequest.setSession(_mockHttpSession);
-
-		_setUpCompany();
-
-		_setUpDigester(RandomTestUtil.randomString());
-
-		User user = _setUpUserForDigestRequest();
-
-		Mockito.when(
-			user.getDigest()
-		).thenReturn(
-			digest
-		);
-
-		_authFilter.digestAuth(
-			_mockHttpServletRequest, _mockHttpServletResponse);
-
-		Assert.assertEquals(200, _mockHttpServletResponse.getStatus());
-	}
-
-	@Test
-	public void testDigestAuthWhenDigestIsUpdatedDuringTheSession()
-		throws Exception {
-
-		String digest = RandomTestUtil.randomString();
-
-		_mockHttpSession.setAttribute("DIGEST", digest);
-
-		_mockHttpServletRequest.setSession(_mockHttpSession);
-
-		_setUpCompany();
-
-		String nonce = RandomTestUtil.randomString();
-
-		_setUpDigester(nonce);
-
-		User user = _setUpUserForDigestRequest();
-
-		Mockito.when(
-			user.getDigest()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		_authFilter.digestAuth(
-			_mockHttpServletRequest, _mockHttpServletResponse);
-
-		String responseHeader = _mockHttpServletResponse.getHeader(
-			HttpHeaders.WWW_AUTHENTICATE);
-
-		Assert.assertNotNull(responseHeader);
-		Assert.assertEquals(
-			"Digest realm=\"PortalRealm\", nonce=\"" + nonce + "\"",
-			responseHeader);
-
-		Assert.assertEquals(401, _mockHttpServletResponse.getStatus());
 	}
 
 	@Test
@@ -366,99 +292,14 @@ public class BaseAuthFilterTest {
 			PropsValues.class, propertyName, value);
 	}
 
-	private void _setUpCompany() throws Exception {
-		CompanyLocalServiceUtil companyLocalServiceUtil =
-			new CompanyLocalServiceUtil();
-
-		companyLocalServiceUtil.setService(_companyLocalService);
-
-		Company company = Mockito.mock(Company.class);
-
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.COMPANY_ID, company.getCompanyId());
-
-		Mockito.when(
-			companyLocalServiceUtil.getCompanyById(ArgumentMatchers.anyLong())
-		).thenReturn(
-			company
-		);
-
-		Mockito.when(
-			_companyLocalService.getCompany(ArgumentMatchers.anyLong())
-		).thenReturn(
-			company
-		);
-
-		Long companyId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			company.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
-		Mockito.when(
-			company.getKey()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-	}
-
-	private void _setUpDigester(String nonce) {
-		DigesterUtil digesterUtil = new DigesterUtil();
-
-		digesterUtil.setDigester(Mockito.mock(Digester.class));
-
-		Mockito.when(
-			digesterUtil.digestHex(
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString())
-		).thenReturn(
-			nonce
-		);
-	}
-
 	private User _setUpUser(int status) {
-		String digest = RandomTestUtil.randomString();
-
 		User user = new UserImpl();
 
-		user.setDigest(digest);
-
 		user.setStatus(status);
-
-		_mockHttpSession.setAttribute("DIGEST", digest);
 
 		_mockHttpSession.setAttribute(WebKeys.USER, user);
 
 		_mockHttpServletRequest.setSession(_mockHttpSession);
-
-		return user;
-	}
-
-	private User _setUpUserForDigestRequest() throws Exception {
-		UserLocalServiceUtil userLocalServiceUtil = new UserLocalServiceUtil();
-
-		UserLocalService mockUserLocalService = Mockito.mock(
-			UserLocalService.class);
-
-		userLocalServiceUtil.setService(mockUserLocalService);
-
-		User user = Mockito.mock(User.class);
-
-		_mockHttpSession.setAttribute(WebKeys.USER, user);
-
-		Mockito.when(
-			userLocalServiceUtil.getUser(ArgumentMatchers.anyLong())
-		).thenReturn(
-			user
-		);
-
-		Mockito.when(
-			user.isActive()
-		).thenReturn(
-			true
-		);
 
 		return user;
 	}
@@ -503,8 +344,6 @@ public class BaseAuthFilterTest {
 	private static final PortalImpl _testPortalImpl = new TestPortalImpl();
 
 	private TestAuthFilter _authFilter;
-	private final CompanyLocalService _companyLocalService = Mockito.mock(
-		CompanyLocalService.class);
 	private MockFilterChain _mockFilterChain;
 	private MockFilterConfig _mockFilterConfig;
 	private MockHttpServletRequest _mockHttpServletRequest;

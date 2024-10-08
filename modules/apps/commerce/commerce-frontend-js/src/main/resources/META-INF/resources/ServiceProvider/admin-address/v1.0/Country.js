@@ -16,6 +16,7 @@ function resolvePath(basePath = '') {
 export default function Account(basePath) {
 	return {
 		baseURL: resolvePath(basePath),
-		getCountries: (...params) => AJAX.GET(resolvePath(basePath), ...params),
+		getCountries: (...params) =>
+			AJAX.GET(resolvePath(basePath), {}, ...params),
 	};
 }

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -182,8 +183,13 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
 
-		Document document = Jsoup.parseBodyFragment(
-			layoutTemplate.getContent());
+		String content = layoutTemplate.getContent();
+
+		if (Validator.isNull(content)) {
+			return null;
+		}
+
+		Document document = Jsoup.parseBodyFragment(content);
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
 
@@ -196,6 +202,10 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 	private boolean _isLayoutTemplateParseable(Layout layout) {
 		Document layoutTemplateDocument = _getLayoutTemplateDocument(layout);
+
+		if (layoutTemplateDocument == null) {
+			return false;
+		}
 
 		Elements rowElements = layoutTemplateDocument.select(
 			".portlet-layout.row");

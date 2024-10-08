@@ -71,7 +71,9 @@ public class CustomFacetDisplayContextBuilderTest
 			new CustomFacetDisplayContextBuilder(
 				_AGGREGATION_TYPE_TERMS, getHttpServletRequest());
 
-		return customFacetDisplayContextBuilder.facet(
+		return customFacetDisplayContextBuilder.currentURL(
+			"/search"
+		).facet(
 			facet
 		).frequenciesVisible(
 			true
@@ -195,13 +197,13 @@ public class CustomFacetDisplayContextBuilderTest
 	public void testDateRangeAggregationBucketDisplayContexts()
 		throws Exception {
 
-		_mockFacetConfiguration(
-			"past-hour=[20180515225959 TO 20180515235959]",
-			"some-time-ago=[20180508235959 TO 20180514235959]");
-
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
 			_createCustomFacetDisplayContextBuilder(
 				_AGGREGATION_TYPE_DATE_RANGE);
+
+		_mockFacetConfiguration(
+			"past-hour=[20180515225959 TO 20180515235959]",
+			"some-time-ago=[20180508235959 TO 20180514235959]");
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			customFacetDisplayContextBuilder.build();
@@ -378,16 +380,52 @@ public class CustomFacetDisplayContextBuilderTest
 		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
 			0);
 
+		Assert.assertEquals(term, bucketDisplayContext.getBucketText());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertFalse(bucketDisplayContext.isSelected());
-		Assert.assertEquals(filterValue, bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertEquals(term, bucketDisplayContext.getBucketText());
 
 		Assert.assertTrue(facetDisplayContext.isNothingSelected());
 		Assert.assertTrue(facetDisplayContext.isRenderNothing());
 		Assert.assertEquals(
 			parameterValue, facetDisplayContext.getParameterValue());
+	}
+
+	@Override
+	@Test
+	public void testOneTermWithPreviousSelection() throws Exception {
+		String term = RandomTestUtil.randomString();
+
+		setUpAsset(term);
+
+		int frequency = RandomTestUtil.randomInt();
+
+		String filterValue = getFilterValue(term);
+
+		setUpTermCollectors(
+			facetCollector,
+			Collections.singletonList(
+				createTermCollector(filterValue, frequency)));
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			filterValue);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
+
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
+
+		Assert.assertEquals(term, bucketDisplayContext.getBucketText());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
+
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -580,18 +618,18 @@ public class CustomFacetDisplayContextBuilderTest
 			int[] frequencies, String order, String[] terms)
 		throws Exception {
 
-		_mockFacetConfiguration(
-			"past-hour=[20180515225959 TO 20180515235959]",
-			"past-week=[20180508235959 TO 20180508235959]",
-			"past-month=[20180508235959 TO 20180415235959]",
-			"past-24-hours=[20180508235959 TO 20180514235959]");
-
 		setUpTermCollectors(
 			facetCollector, getTermCollectors(terms, frequencies));
 
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
 			_createCustomFacetDisplayContextBuilder(
 				_AGGREGATION_TYPE_DATE_RANGE, order);
+
+		_mockFacetConfiguration(
+			"past-hour=[20180515225959 TO 20180515235959]",
+			"past-week=[20180508235959 TO 20180508235959]",
+			"past-month=[20180508235959 TO 20180415235959]",
+			"past-24-hours=[20180508235959 TO 20180514235959]");
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			customFacetDisplayContextBuilder.fromParameterValue(

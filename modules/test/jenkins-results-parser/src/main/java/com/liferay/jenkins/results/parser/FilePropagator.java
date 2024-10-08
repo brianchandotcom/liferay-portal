@@ -139,6 +139,8 @@ public class FilePropagator {
 						getAverageThreadDuration()));
 				sb.append("\nBusy slaves:");
 				sb.append(_busySlaves.size());
+				sb.append("\nError slaves:");
+				sb.append(_errorSlaves.size());
 				sb.append("\nMirror slaves:");
 				sb.append(_mirrorSlaves.size());
 				sb.append("\nTarget slaves:");

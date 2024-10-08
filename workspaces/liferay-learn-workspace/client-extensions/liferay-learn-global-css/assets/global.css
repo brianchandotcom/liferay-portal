@@ -1483,6 +1483,14 @@ pre[class*='language-'] {
 	}
 }
 
+.page-tabs{
+	@media (max-width: 768px) {
+		.d-md-none {
+			display: none !important;
+		}
+	}
+}
+
 .pagination-bar {
 	&,
 	.dropdown-toggle,

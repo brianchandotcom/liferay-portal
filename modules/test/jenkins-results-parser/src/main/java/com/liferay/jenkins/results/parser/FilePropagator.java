@@ -376,7 +376,7 @@ public class FilePropagator {
 		public FilePropagatorRuntimeException(
 			FilePropagator filePropagator, String message) {
 
-			super(filePropagator._id + " - " + message);
+			this(filePropagator, message, null);
 		}
 
 		public FilePropagatorRuntimeException(

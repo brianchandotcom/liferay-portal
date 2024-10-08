@@ -71,6 +71,10 @@ test('Verify that the default value is displayed when the user has never changed
 
 			await accessibilityMenuPage.openAccessibilityMenu();
 
+			await expect(
+				accessibilityMenuPage.underlinedLinksToggle
+			).toBeChecked();
+
 			await accessibilityMenuPage.toggleUnderlinedLinks(false);
 		});
 
@@ -102,10 +106,6 @@ test('Verify that the default value is displayed when the user has never changed
 			await performLogin(page, userAccount.alternateName);
 
 			await accessibilityMenuPage.openAccessibilityMenu();
-
-			await expect(
-				accessibilityMenuPage.underlinedLinksToggle
-			).toBeChecked();
 
 			await expect(
 				accessibilityMenuPage.underlinedLinksToggle

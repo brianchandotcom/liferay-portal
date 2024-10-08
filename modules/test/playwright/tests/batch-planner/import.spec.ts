@@ -493,6 +493,54 @@ const siteObjectDefinition: ObjectDefinition = {
 	status: {code: 0},
 };
 
+test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategies with duplicate ERCs', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+	page,
+}) => {
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
+
+	const objectDefinition =
+		await objectAdminRestClient.objectDefinition.postObjectDefinition({
+			requestBody: companyObjectDefinition,
+		});
+
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
+
+	await dataMigrationCenterPage.importFile(
+		OBJECT_ENTRY_ENTITY_TYPE,
+		path.join(__dirname, '/dependencies/object_entries.csv'),
+		'INSERT',
+		'PARTIAL_UPDATE'
+	);
+
+	await expect(
+		page.getByText('The import process completed successfully.')
+	).toBeVisible();
+
+	await page.getByRole('button', {exact: true, name: 'Close'}).click();
+
+	await dataMigrationCenterPage.importFile(
+		OBJECT_ENTRY_ENTITY_TYPE,
+		path.join(__dirname, '/dependencies/object_entry_same_erc.csv'),
+		'INSERT',
+		'PARTIAL_UPDATE'
+	);
+
+	await expect(
+		page.getByText(
+			'com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException'
+		)
+	).toBeVisible();
+
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
+});
+
 test('can import CSV file with an unexisting field', async ({
 	apiHelpers,
 	dataMigrationCenterPage,

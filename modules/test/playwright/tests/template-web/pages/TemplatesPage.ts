@@ -15,11 +15,13 @@ export class TemplatesPage {
 	readonly page: Page;
 
 	readonly newButton: Locator;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByRole('button', {name: 'Add'});
+		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -94,13 +96,15 @@ export class TemplatesPage {
 			trigger: this.page.getByRole('button', {name: 'New'}),
 		});
 
+		// Wait until the editor is loaded
+
+		await this.page.locator('.ddm_template_editor__App').waitFor();
+
 		await fillAndClickOutside(
 			this.page,
 			this.page.getByPlaceholder('Untitled Template'),
 			name
 		);
-
-		await this.saveTemplate();
 
 		await this.saveTemplate();
 	}
@@ -140,10 +144,12 @@ export class TemplatesPage {
 	}
 
 	async saveTemplate() {
-		await this.page
-			.getByRole('button', {exact: true, name: 'Save'})
-			.click();
+		await this.saveButton.click();
 
-		await waitForAlert(this.page);
+		// Wait for the redirection to the templates admin when the template is saved
+
+		await this.page.waitForURL(
+			(url) => !url.href.includes('ddmTemplateId=')
+		);
 	}
 }

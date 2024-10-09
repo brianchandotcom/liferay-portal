@@ -1614,10 +1614,6 @@ test.describe('Edit mode language changes', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await expect(englishLabel).toBeVisible();
-		await expect(englishHelpText).toBeVisible();
-		await expect(englishPlaceholder).toBeVisible();
-
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'español-España'}),
@@ -1627,6 +1623,16 @@ test.describe('Edit mode language changes', () => {
 		await expect(spanishLabel).toBeVisible();
 		await expect(spanishHelpText).toBeVisible();
 		await expect(spanishPlaceholder).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'english-United States'}),
+			trigger: page.getByTitle('Seleccionar un idioma', {exact: true}),
+		});
+
+		await expect(englishLabel).toBeVisible();
+		await expect(englishHelpText).toBeVisible();
+		await expect(englishPlaceholder).toBeVisible();
 	});
 });
 

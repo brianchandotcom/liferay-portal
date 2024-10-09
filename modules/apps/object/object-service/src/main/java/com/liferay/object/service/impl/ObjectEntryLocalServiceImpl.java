@@ -1644,21 +1644,19 @@ public class ObjectEntryLocalServiceImpl
 		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
 			objectRelationship.getObjectFieldId2());
 
-		AtomicBoolean isObjectDefinition1RootNode = new AtomicBoolean(false);
+		AtomicBoolean objectDefinition1RootNode = new AtomicBoolean(false);
 
-		try (PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					StringBundler.concat(
-						"select ",
-						objectDefinition2.getPKObjectFieldDBColumnName(),
-						" from ", objectField.getDBTableName(), " where ",
-						objectField.getDBColumnName(), " = ?"));
-			PreparedStatement updatePreparedStatement1 =
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select ", objectDefinition2.getPKObjectFieldDBColumnName(),
+					" from ", objectField.getDBTableName(), " where ",
+					objectField.getDBColumnName(), " = ?"));
+			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update ObjectEntry set rootObjectEntryId = ? where " +
 						"objectEntryId = ?");
-			PreparedStatement updatePreparedStatement2 =
+			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update ObjectEntry set rootObjectEntryId = ? where " +
@@ -1671,65 +1669,21 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition1.getObjectDefinitionId(),
 				(ObjectEntry objectEntry) -> {
 					try {
-						long rootObjectEntryId =
-							objectEntry.getRootObjectEntryId();
-
-						if (rootObjectEntryId == 0) {
-							rootObjectEntryId = objectEntry.getObjectEntryId();
-
-							updatePreparedStatement1.setLong(
-								1, rootObjectEntryId);
-
-							updatePreparedStatement1.setLong(
-								2, objectEntry.getObjectEntryId());
-
-							updatePreparedStatement1.addBatch();
-
-							isObjectDefinition1RootNode.set(true);
-						}
-
-						selectPreparedStatement.setLong(
-							1, objectEntry.getObjectEntryId());
-
-						try (ResultSet resultSet =
-								selectPreparedStatement.executeQuery()) {
-
-							while (resultSet.next()) {
-								long relatedObjectEntryId = resultSet.getLong(
-									objectDefinition2.
-										getPKObjectFieldDBColumnName());
-
-								if (objectDefinition2RootObjectDefinitionId ==
-										0) {
-
-									updatePreparedStatement1.setLong(
-										1, rootObjectEntryId);
-									updatePreparedStatement1.setLong(
-										2, relatedObjectEntryId);
-
-									updatePreparedStatement1.addBatch();
-
-									continue;
-								}
-
-								updatePreparedStatement2.setLong(
-									1, rootObjectEntryId);
-								updatePreparedStatement2.setLong(
-									2, relatedObjectEntryId);
-
-								updatePreparedStatement2.addBatch();
-							}
-						}
+						_updateRootObjectEntryIds(
+							objectDefinition1RootNode, objectDefinition2,
+							objectDefinition2RootObjectDefinitionId,
+							objectEntry, preparedStatement1, preparedStatement2,
+							preparedStatement3);
 					}
 					catch (SQLException sqlException) {
 						throw new SystemException(sqlException);
 					}
 				});
 
-			updatePreparedStatement1.executeBatch();
+			preparedStatement2.executeBatch();
 
 			if (objectDefinition2RootObjectDefinitionId != 0) {
-				updatePreparedStatement2.executeBatch();
+				preparedStatement3.executeBatch();
 			}
 		}
 		catch (SQLException sqlException) {
@@ -1739,7 +1693,7 @@ public class ObjectEntryLocalServiceImpl
 		long rootObjectDefinitionId =
 			objectRelationship.getObjectDefinitionId2();
 
-		if (isObjectDefinition1RootNode.get()) {
+		if (objectDefinition1RootNode.get()) {
 			rootObjectDefinitionId = objectDefinition1.getObjectDefinitionId();
 		}
 
@@ -4592,6 +4546,53 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCompanyId(), objectEntry.getGroupId(),
 			objectDefinition.getClassName(),
 			String.valueOf(objectEntry.getObjectEntryId()), modelPermissions);
+	}
+
+	private void _updateRootObjectEntryIds(
+			AtomicBoolean objectDefinition1RootNode,
+			ObjectDefinition objectDefinition2,
+			long objectDefinition2RootObjectDefinitionId,
+			ObjectEntry objectEntry, PreparedStatement preparedStatement1,
+			PreparedStatement preparedStatement2,
+			PreparedStatement preparedStatement3)
+		throws SQLException {
+
+		long rootObjectEntryId = objectEntry.getRootObjectEntryId();
+
+		if (rootObjectEntryId == 0) {
+			rootObjectEntryId = objectEntry.getObjectEntryId();
+
+			preparedStatement2.setLong(1, rootObjectEntryId);
+
+			preparedStatement2.setLong(2, objectEntry.getObjectEntryId());
+
+			preparedStatement2.addBatch();
+
+			objectDefinition1RootNode.set(true);
+		}
+
+		preparedStatement1.setLong(1, objectEntry.getObjectEntryId());
+
+		try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+			while (resultSet.next()) {
+				long relatedObjectEntryId = resultSet.getLong(
+					objectDefinition2.getPKObjectFieldDBColumnName());
+
+				if (objectDefinition2RootObjectDefinitionId == 0) {
+					preparedStatement2.setLong(1, rootObjectEntryId);
+					preparedStatement2.setLong(2, relatedObjectEntryId);
+
+					preparedStatement2.addBatch();
+
+					continue;
+				}
+
+				preparedStatement3.setLong(1, rootObjectEntryId);
+				preparedStatement3.setLong(2, relatedObjectEntryId);
+
+				preparedStatement3.addBatch();
+			}
+		}
 	}
 
 	private void _updateTable(

@@ -37,6 +37,11 @@ public class BaseTestReport implements TestReport {
 		return _jsonObject.getString("name");
 	}
 
+	@Override
+	public String getTestTaskName() {
+		return _jsonObject.optString("testTaskName");
+	}
+
 	protected BaseTestReport(
 		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
 

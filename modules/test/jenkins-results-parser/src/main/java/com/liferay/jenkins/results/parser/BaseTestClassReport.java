@@ -89,6 +89,21 @@ public abstract class BaseTestClassReport implements TestClassReport {
 		return _testReports;
 	}
 
+	@Override
+	public String getTestTaskName() {
+		if (_testReports.isEmpty()) {
+			return null;
+		}
+
+		TestReport testReport = _testReports.get(0);
+
+		if (testReport == null) {
+			return null;
+		}
+
+		return testReport.getTestTaskName();
+	}
+
 	protected BaseTestClassReport(
 		DownstreamBuildReport downstreamBuildReport, String testClassName) {
 

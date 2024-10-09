@@ -20,4 +20,6 @@ public interface TestReport {
 
 	public String getTestName();
 
+	public String getTestTaskName();
+
 }

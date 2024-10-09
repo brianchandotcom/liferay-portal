@@ -33,7 +33,17 @@ function OrdersTable({orders, selectOrderURL}) {
 				{orders.map((order) => (
 					<ClayTable.Row key={order.id}>
 						<ClayTable.Cell headingTitle>
-							<a href={formatActionUrl(selectOrderURL, order)}>
+							<a
+								href={
+									Liferay.FeatureFlags['LPD-20379']
+										? formatActionUrl(
+												selectOrderURL,
+												order,
+												{skipRedirect: true}
+											)
+										: formatActionUrl(selectOrderURL, order)
+								}
+							>
 								{order.id}
 							</a>
 						</ClayTable.Cell>

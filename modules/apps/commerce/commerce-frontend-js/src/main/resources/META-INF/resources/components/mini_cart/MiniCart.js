@@ -9,6 +9,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
 import {
+	CART_RESET,
+	CART_UPDATED,
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
@@ -89,13 +91,16 @@ function MiniCart({
 	const [replacementSKUList, setReplacementSKUList] = useState([]);
 
 	const resetCartState = useCallback(
-		({accountId = 0}) =>
-			setCartState({
-				accountId,
-				id: 0,
-				summary: {itemsQuantity: 0},
-			}),
-		[setCartState]
+		({accountId = 0, id = 0}) => {
+			if (cartState.accountId !== accountId || cartState.id === id) {
+				setCartState({
+					accountId,
+					id,
+					summary: {itemsQuantity: 0},
+				});
+			}
+		},
+		[cartState.accountId, cartState.id, setCartState]
 	);
 
 	const updateCartModel = useCallback(
@@ -130,7 +135,7 @@ function MiniCart({
 					return latestCartState;
 				});
 
-				Liferay.fire('cart-updated', {order: updatedCart});
+				Liferay.fire(CART_UPDATED, {order: updatedCart});
 				onAddToCart(latestActionURLs, latestCartState);
 			}
 			catch (error) {
@@ -176,6 +181,7 @@ function MiniCart({
 
 	useEffect(() => {
 		Liferay.on(CURRENT_ACCOUNT_UPDATED, resetCartState);
+		Liferay.on(CART_RESET, resetCartState);
 
 		return () => {
 			Liferay.detach(CURRENT_ACCOUNT_UPDATED, resetCartState);

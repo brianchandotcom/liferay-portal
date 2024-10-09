@@ -167,6 +167,17 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 
+				HttpServletRequest httpServletRequest =
+					_portal.getOriginalServletRequest(
+						_portal.getHttpServletRequest(actionRequest));
+
+				boolean skipRedirect = ParamUtil.getBoolean(
+					httpServletRequest, "skipRedirect");
+
+				if (skipRedirect) {
+					return;
+				}
+
 				sendRedirect(
 					actionRequest, actionResponse,
 					PortletURLBuilder.create(

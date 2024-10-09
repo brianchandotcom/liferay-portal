@@ -537,15 +537,17 @@ export default function UndoRedo({
 
 													setActive(false);
 												}}
-												symbolRight={
+												symbolLeft={
 													step === index
 														? 'check'
 														: ''
 												}
 											>
-												{METADATA_FIELD_NAME_HISTORY[
-													item.name
-												] || item.name}
+												<span className="ml-4 px-1">
+													{METADATA_FIELD_NAME_HISTORY[
+														item.name
+													] || item.name}
+												</span>
 											</ClayDropDown.Item>
 										)
 									);
@@ -574,7 +576,9 @@ export default function UndoRedo({
 									setActive(false);
 								}}
 							>
-								{Liferay.Language.get('undo-all')}
+								<span className="ml-4 px-1">
+									{Liferay.Language.get('undo-all')}
+								</span>
 							</ClayDropDown.Item>
 						</ClayDropDown.ItemList>
 					</ClayDropDown>

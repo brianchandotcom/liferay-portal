@@ -62,6 +62,10 @@ test(
 
 		// Bulk convert
 
+		await page
+			.getByLabel('Select All Items on the Page')
+			.check({trial: true});
+
 		await page.getByLabel('Select All Items on the Page').check();
 
 		await page

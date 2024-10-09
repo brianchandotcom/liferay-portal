@@ -96,6 +96,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -7421,7 +7422,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return HashMapBuilder.put(
-			defaultLocale, titleMap.get(defaultLocale)
+			defaultLocale, _removeTrailingSlashes(titleMap.get(defaultLocale))
 		).build();
 	}
 
@@ -8109,6 +8110,20 @@ public class JournalArticleLocalServiceImpl
 					ddmFormFieldValue.getNestedDDMFormFieldValues(), locale);
 			}
 		}
+	}
+
+	private String _removeTrailingSlashes(String title) {
+		if (Validator.isNull(title) || !title.endsWith(StringPool.SLASH)) {
+			return title;
+		}
+
+		int end = title.length();
+
+		while ((end > 0) && (title.charAt(end - 1) == CharPool.SLASH)) {
+			end--;
+		}
+
+		return title.substring(0, end);
 	}
 
 	private String _replaceTempImages(JournalArticle article, String content)

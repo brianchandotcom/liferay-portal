@@ -335,7 +335,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			<replacevalue><![CDATA[
 		functional-tomcat90-mysql57-chrome100,\
 		js-unit-jdk8,\
-		modules-integration-mysql57-jdk8,\
+		modules-integration-mysql57,\
 		unit-jdk8]]></replacevalue>
 		</replace>
 
@@ -384,7 +384,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.class\.names\.includes\[modules-integration-\*-jdk8\]=)(.*?\n)*?\n"
+			match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]=)(.*?\n)*?\n"
 			replace="\1\\\\${line.separator}${line.separator}"
 		/>
 
@@ -496,7 +496,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
-								match="(test\.batch\.class\.names\.includes\[modules-integration-\*-jdk8\]=\\\n)"
+								match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]=\\\n)"
 								replace="\1        **/testIntegration/**/${testcase.file.name}.java,\\\\${line.separator}"
 							/>
 						</then>
@@ -518,7 +518,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.class\.names\.includes\[modules-integration-\*-jdk8\]=\\\n.*?)((\n.*?)*)(,\\)(\n\n)"
+			match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]=\\\n.*?)((\n.*?)*)(,\\)(\n\n)"
 			replace="\1\2\5${line.separator}"
 		/>
 	</target>

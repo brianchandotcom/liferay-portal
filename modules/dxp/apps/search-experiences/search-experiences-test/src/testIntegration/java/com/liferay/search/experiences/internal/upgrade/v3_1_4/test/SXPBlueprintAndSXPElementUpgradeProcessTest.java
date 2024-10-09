@@ -38,8 +38,7 @@ import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,24 +61,40 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = TestPropsValues.getUser();
+		User user = TestPropsValues.getUser();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, _user.getUserId());
+			_group, user.getUserId());
 	}
 
 	@Test
 	public void testSXPBlueprintUpgradeProcess() throws Exception {
-		_addAssetCategories();
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
-		SXPBlueprint sxpBlueprint = _addSXPBlueprint();
+		Group globalGroup = company.getGroup();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			globalGroup.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
+
+		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
+			_getElementInstancesJSON(assetCategory1, assetCategory2));
 
 		_runUpgrade();
 
-		_assertSXPBlueprint(sxpBlueprint.getSXPBlueprintId());
+		_assertSXPBlueprint(
+			sxpBlueprint.getSXPBlueprintId(),
+			_getExpectedInstancesJSON(
+				globalGroup.getExternalReferenceCode(), assetCategory1,
+				assetCategory2));
 	}
 
 	@Test
@@ -102,52 +117,16 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	private void _addAssetCategories() throws Exception {
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		_globalGroup = company.getGroup();
-
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_globalGroup.getGroupId());
-
-		_assetCategory1 = AssetTestUtil.addCategory(
-			_globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
-
-		_assetCategory2 = AssetTestUtil.addCategory(
-			_globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
-	}
-
-	private SXPBlueprint _addSXPBlueprint() throws Exception {
-		Class<?> clazz = getClass();
-
-		String configurationJSON = StringUtil.read(
-			clazz,
-			StringBundler.concat(
-				"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".configurationJSON.json"));
-
-		String elementInstancesJSON = StringUtil.read(
-			clazz,
-			StringBundler.concat(
-				"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".before.json"));
-
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_ID_1$",
-			String.valueOf(_assetCategory1.getCategoryId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_ID_2$",
-			String.valueOf(_assetCategory2.getCategoryId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
-			_createAssetCategoryIDLabel(_assetCategory1));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_2$",
-			_createAssetCategoryIDLabel(_assetCategory2));
+	private SXPBlueprint _addSXPBlueprint(String elementInstancesJSON)
+		throws Exception {
 
 		return _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(), configurationJSON,
+			null, TestPropsValues.getUserId(),
+			StringUtil.read(
+				_clazz,
+				StringBundler.concat(
+					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".configurationJSON.json")),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			elementInstancesJSON, "1.1",
@@ -169,14 +148,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			JSONCompareMode.STRICT);
 	}
 
-	private void _assertSXPBlueprint(long sxpBlueprintId) throws Exception {
+	private void _assertSXPBlueprint(
+		long sxpBlueprintId, String expectedInstancesJSON) {
+
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
 			sxpBlueprintId);
 
-		Assert.assertNotNull(sxpBlueprint);
-
 		JSONAssert.assertEquals(
-			_getExpectedInstancesJSON(), sxpBlueprint.getElementInstancesJSON(),
+			expectedInstancesJSON, sxpBlueprint.getElementInstancesJSON(),
 			JSONCompareMode.STRICT);
 	}
 
@@ -221,43 +200,77 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		}
 	}
 
+	private String _extracted(
+		String globalGroupExternalReferenceCode,
+		String assetCategoryExternalReferenceCode) {
+
+		return globalGroupExternalReferenceCode + "&&" +
+			assetCategoryExternalReferenceCode;
+	}
+
+	private String _getElementInstancesJSON(
+		AssetCategory assetCategory1, AssetCategory assetCategory2) {
+
+		String elementInstancesJSON = StringUtil.read(
+			_clazz,
+			StringBundler.concat(
+				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+				testName.getMethodName(), ".before.json"));
+
+		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "$ASSET_CATEGORY_ID_1$",
+			String.valueOf(assetCategory1.getCategoryId()));
+		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "$ASSET_CATEGORY_ID_2$",
+			String.valueOf(assetCategory2.getCategoryId()));
+		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
+			_createAssetCategoryIDLabel(assetCategory1));
+		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_2$",
+			_createAssetCategoryIDLabel(assetCategory2));
+
+		return elementInstancesJSON;
+	}
+
 	private String _getExpectedElementDefinitionJSON(
 		String externalReferenceCode) {
 
-		Class<?> clazz = getClass();
-
 		return StringUtil.read(
-			clazz,
+			_clazz,
 			StringBundler.concat(
-				"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
 				testName.getMethodName(), StringPool.PERIOD,
 				StringUtil.toLowerCase(externalReferenceCode), ".json"));
 	}
 
-	private String _getExpectedInstancesJSON() {
-		Class<?> clazz = getClass();
+	private String _getExpectedInstancesJSON(
+		String globalGroupExternalReferenceCode, AssetCategory assetCategory1,
+		AssetCategory assetCategory2) {
 
 		String elementInstancesJSON = StringUtil.read(
-			clazz,
+			_clazz,
 			StringBundler.concat(
-				"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
 				testName.getMethodName(), ".after.json"));
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$",
-			_globalGroup.getExternalReferenceCode() + "&&" +
-				_assetCategory1.getExternalReferenceCode());
+			_extracted(
+				globalGroupExternalReferenceCode,
+				assetCategory1.getExternalReferenceCode()));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$",
-			_globalGroup.getExternalReferenceCode() + "&&" +
-				_assetCategory2.getExternalReferenceCode());
+			_extracted(
+				globalGroupExternalReferenceCode,
+				assetCategory2.getExternalReferenceCode()));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
-			_createAssetCategoryExternalReferenceCodeLabel(_assetCategory1));
+			_createAssetCategoryExternalReferenceCodeLabel(assetCategory1));
 
 		return StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_2$",
-			_createAssetCategoryExternalReferenceCodeLabel(_assetCategory2));
+			_createAssetCategoryExternalReferenceCodeLabel(assetCategory2));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -283,33 +296,28 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		"HIDE_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS"
 	};
 
+	@DeleteAfterTestRun
+	private static Group _group;
+
+	private static ServiceContext _serviceContext;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
-	private AssetCategory _assetCategory1;
-	private AssetCategory _assetCategory2;
+	private final Class<?> _clazz = getClass();
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private Group _globalGroup;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
 	@Inject
 	private MultiVMPool _multiVMPool;
-
-	private ServiceContext _serviceContext;
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@Inject
 	private SXPElementLocalService _sxpElementLocalService;
-
-	private User _user;
 
 }

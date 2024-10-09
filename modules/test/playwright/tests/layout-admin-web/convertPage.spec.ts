@@ -81,3 +81,81 @@ test(
 		await expect(page.locator('.portlet-asset-publisher')).toBeVisible();
 	}
 );
+
+test(
+	'Can convert a widget page to a content page via actions with nested applications widget',
+	{
+		tag: ['@LPS-105943', '@LPS-106198'],
+	},
+	async ({apiHelpers, page, pagesAdminPage, site, widgetPagePage}) => {
+
+		// Accept dialog
+
+		page.on('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		// Create a content page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: layoutTitle,
+		});
+
+		// Go to view mode and add asset publisher widget
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Nested Applications');
+
+		await widgetPagePage.addPortlet('Web Content Display');
+
+		await widgetPagePage.dragPortlet(
+			'Web Content Display',
+			page
+				.locator('.portlet-nested-portlets .portlet-dropzone.empty')
+				.first()
+		);
+
+		// Go to page administration
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		// Convert to content page
+
+		await pagesAdminPage.clickOnAction(
+			'Convert to content page...',
+			layoutTitle
+		);
+
+		// Assert info and warning messages in edit mode
+
+		await expect(
+			page
+				.locator('.alert-info')
+				.getByText(
+					'The page conversion is shown in the preview below. Make modifications needed before publishing the conversion, or discard the draft to leave the widget page in its original state.'
+				)
+		).toBeVisible();
+
+		await expect(
+			page
+				.locator('.alert-warning')
+				.getByText(
+					'This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.'
+				)
+		).toBeVisible();
+
+		await expect(page.locator('.portlet-journal-content')).toBeVisible();
+
+		// Assert status label
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page.locator('.miller-columns-item').filter({hasText: layoutTitle})
+		).toHaveText(/Conversion Draft/);
+	}
+);

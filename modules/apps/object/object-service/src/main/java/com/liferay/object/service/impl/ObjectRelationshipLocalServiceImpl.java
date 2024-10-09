@@ -1626,7 +1626,7 @@ public class ObjectRelationshipLocalServiceImpl
 		long newRootObjectDefinitionId1 = _getRootObjectDefinitionId(
 			objectDefinition1);
 
-		_updateObjectDefinition(
+		_updateRootObjectDefinitionId(
 			objectDefinition1, oldRootObjectDefinitionId1,
 			newRootObjectDefinitionId1);
 
@@ -1658,7 +1658,7 @@ public class ObjectRelationshipLocalServiceImpl
 		long newRootObjectDefinitionId2 = _getRootObjectDefinitionId(
 			objectDefinition2);
 
-		_updateObjectDefinition(
+		_updateRootObjectDefinitionId(
 			objectDefinition2, oldRootObjectDefinitionId2,
 			newRootObjectDefinitionId2);
 
@@ -1671,29 +1671,6 @@ public class ObjectRelationshipLocalServiceImpl
 		_updateObjectDefinitionTree(
 			objectDefinition2, oldRootObjectDefinitionId2,
 			newRootObjectDefinitionId2);
-	}
-
-	private void _updateObjectDefinition(
-			ObjectDefinition objectDefinition, long oldRootObjectDefinitionId,
-			long newRootObjectDefinitionId)
-		throws PortalException {
-
-		if (oldRootObjectDefinitionId == newRootObjectDefinitionId) {
-			_deployObjectDefinition(objectDefinition);
-
-			return;
-		}
-
-		String previousRESTContextPath = objectDefinition.getRESTContextPath();
-
-		objectDefinition.setRootObjectDefinitionId(newRootObjectDefinitionId);
-
-		objectDefinition = _objectDefinitionPersistence.update(
-			objectDefinition);
-
-		objectDefinition.setPreviousRESTContextPath(previousRESTContextPath);
-
-		_deployObjectDefinition(objectDefinition);
 	}
 
 	private void _updateObjectDefinitionTree(
@@ -1719,7 +1696,7 @@ public class ObjectRelationshipLocalServiceImpl
 				continue;
 			}
 
-			_updateObjectDefinition(
+			_updateRootObjectDefinitionId(
 				objectDefinition2, oldRootObjectDefinitionId,
 				newRootObjectDefinitionId);
 
@@ -1795,6 +1772,29 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);
+	}
+
+	private void _updateRootObjectDefinitionId(
+			ObjectDefinition objectDefinition, long oldRootObjectDefinitionId,
+			long newRootObjectDefinitionId)
+		throws PortalException {
+
+		if (oldRootObjectDefinitionId == newRootObjectDefinitionId) {
+			_deployObjectDefinition(objectDefinition);
+
+			return;
+		}
+
+		String previousRESTContextPath = objectDefinition.getRESTContextPath();
+
+		objectDefinition.setRootObjectDefinitionId(newRootObjectDefinitionId);
+
+		objectDefinition = _objectDefinitionPersistence.update(
+			objectDefinition);
+
+		objectDefinition.setPreviousRESTContextPath(previousRESTContextPath);
+
+		_deployObjectDefinition(objectDefinition);
 	}
 
 	private void _validateDeletionType(

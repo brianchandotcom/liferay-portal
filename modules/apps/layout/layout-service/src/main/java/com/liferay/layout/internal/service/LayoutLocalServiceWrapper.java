@@ -332,15 +332,13 @@ public class LayoutLocalServiceWrapper
 			Layout targetLayout, User user)
 		throws Exception {
 
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
+			_getFragmentEntryLinksMap(
+				sourceLayout, segmentsExperiencesIds, targetLayout);
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					sourceLayout.getGroupId(), sourceLayout.getPlid());
-
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
-			_getFragmentEntryLinksMap(
-				sourceLayout, segmentsExperiencesIds, targetLayout);
-
 		Set<Long> targetFragmentEntryLinkIds = _getTargetFragmentEntryLinkIds(
 			segmentsExperiencesIds, targetLayout);
 

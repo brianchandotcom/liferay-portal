@@ -803,11 +803,10 @@ public class LayoutsImporterTest {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
+		Layout draftLayout = layout.fetchDraftLayout();
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(

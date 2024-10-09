@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {CommerceServiceProvider} from 'commerce-frontend-js';
+import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 import {openConfirmModal, openToast, sub} from 'frontend-js-web';
 
 import {openOrderNameModal} from './util';
@@ -16,7 +16,7 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 		action: {
 			data: {id: actionId},
 		},
-		itemData: {id: cartId, name: orderName},
+		itemData: {accountId, id: cartId, name: orderName},
 		loadData,
 	}) => {
 		if (actionId === 'delete') {
@@ -37,6 +37,11 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 									'your-request-completed-successfully'
 								),
 								type: 'success',
+							});
+
+							Liferay.fire(commerceEvents.CART_RESET, {
+								accountId,
+								id: cartId,
 							});
 						})
 						.catch(() => {
@@ -128,6 +133,10 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 								'your-request-completed-successfully'
 							),
 							type: 'success',
+						});
+
+						Liferay.fire(commerceEvents.CART_RESET, {
+							accountId: props.additionalProps.accountId,
 						});
 					}, 500);
 				})

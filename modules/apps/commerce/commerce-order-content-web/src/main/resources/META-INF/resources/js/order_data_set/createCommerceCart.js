@@ -38,7 +38,7 @@ const openOrderTypeSelectionModal = (orderTypes) =>
 					type: 'button',
 				},
 				{
-					displayType: 'info',
+					displayType: 'primary',
 					label: Liferay.Language.get('submit'),
 					onClick: ({processClose}) => {
 						let orderTypeId = null;
@@ -62,7 +62,6 @@ const openOrderTypeSelectionModal = (orderTypes) =>
 			onClose: () => {
 				stop(new Error('cancel'));
 			},
-			status: 'info',
 			title: Liferay.Language.get('select-order-type'),
 		});
 	});

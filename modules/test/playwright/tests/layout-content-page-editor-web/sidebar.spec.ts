@@ -313,6 +313,63 @@ test.describe('Fragments Panel', () => {
 		).not.toBeVisible();
 	});
 
+	test('A widget marked as favorite in a content page is also marked in a widget page', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Go to the Widget tab a select one widget as favorite
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		await page.getByRole('tab', {exact: true, name: 'Widgets'}).click();
+
+		const highlightedSet = page
+			.locator('.page-editor__collapse')
+			.filter({hasText: 'Highlighted'});
+
+		await highlightedSet.waitFor();
+
+		const favoriteButton = page.getByTitle(
+			'Mark Reports Display as Favorite'
+		);
+
+		// If the widget is already marked as favorite, unmark it
+
+		if ((await favoriteButton.count()) > 1) {
+			await favoriteButton.first().click();
+
+			expect(favoriteButton).toHaveCount(1);
+		}
+
+		await favoriteButton.click();
+
+		// Check that the widget is inside Highlighted set
+
+		await expect(highlightedSet).toContainText('Reports Display');
+
+		// Check that the widget is also inside Highlighted set in a widget page
+
+		await page.goto(`/search`);
+
+		await page.getByLabel('Add').click();
+
+		await expect(
+			page.locator('.panel', {hasText: 'Highlighted'})
+		).toContainText('Reports Display');
+	});
+
 	test('Fragment and widget sets are reordered', async ({
 		apiHelpers,
 		page,

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
@@ -23,6 +24,7 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Eudaldo Alonso
@@ -36,10 +38,7 @@ public class LayoutActionsHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setGroup();
-		_setUpLayout();
 		_setUpLayoutLocalServiceUtil();
-		_setUpLayoutPermissionUtil();
 	}
 
 	@After
@@ -52,38 +51,50 @@ public class LayoutActionsHelperTest {
 	public void testIsShowDeleteActionForLastPublicPageOnDefaultSite()
 		throws PortalException {
 
+		Layout layout = _getLayout(_getGroup());
+
+		_setUpLayoutPermissionUtil(layout, ActionKeys.DELETE);
+
 		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
 			null, _themeDisplay, null);
 
-		Assert.assertFalse(layoutActionsHelper.isShowDeleteAction(_layout));
+		Assert.assertFalse(layoutActionsHelper.isShowDeleteAction(layout));
 	}
 
-	private void _setGroup() {
+	private Group _getGroup() {
+		Group group = Mockito.mock(Group.class);
+
 		Mockito.when(
-			_group.isGuest()
+			group.isGuest()
 		).thenReturn(
 			true
 		);
+
+		return group;
 	}
 
-	private void _setUpLayout() {
+	private Layout _getLayout(Group group) {
+		Layout layout = Mockito.mock(Layout.class);
+
 		Mockito.when(
-			_layout.getGroup()
+			layout.getGroup()
 		).thenReturn(
-			_group
+			group
 		);
 
 		Mockito.when(
-			_layout.isPrivateLayout()
+			layout.isPrivateLayout()
 		).thenReturn(
 			false
 		);
 
 		Mockito.when(
-			_layout.isRootLayout()
+			layout.isRootLayout()
 		).thenReturn(
 			true
 		);
+
+		return layout;
 	}
 
 	private void _setUpLayoutLocalServiceUtil() {
@@ -95,18 +106,21 @@ public class LayoutActionsHelperTest {
 		);
 	}
 
-	private void _setUpLayoutPermissionUtil() {
+	private void _setUpLayoutPermissionUtil(
+		Layout layout, String... actionIds) {
+
+		_layoutPermissionUtilMockedStatic.reset();
+
 		_layoutPermissionUtilMockedStatic.when(
 			() -> LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), _layout,
-				ActionKeys.DELETE)
-		).thenReturn(
-			true
+				Mockito.eq(_themeDisplay.getPermissionChecker()),
+				Mockito.eq(layout), Mockito.anyString())
+		).thenAnswer(
+			(Answer<Boolean>)invocationOnMock -> ArrayUtil.contains(
+				actionIds, invocationOnMock.getArgument(2, String.class))
 		);
 	}
 
-	private final Group _group = Mockito.mock(Group.class);
-	private final Layout _layout = Mockito.mock(Layout.class);
 	private final MockedStatic<LayoutLocalServiceUtil>
 		_layoutLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			LayoutLocalServiceUtil.class);

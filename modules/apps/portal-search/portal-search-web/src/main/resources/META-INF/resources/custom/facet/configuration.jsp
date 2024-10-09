@@ -190,7 +190,7 @@ JSONArray rangesJSONArray = customFacetPortletPreferences.getRangesJSONArray();
 					label="ranges-configuration"
 				>
 					<div class="form-text text-weight-normal">
-						<liferay-ui:message key="ranges-configuration-description" />
+						<liferay-ui:message arguments='<%= new String[] {"past-hour", "past-24-hours", "past-week", "past-month", "past-year", "*", "now"} %>' key="ranges-configuration-description" translateArguments="<%= false %>" />
 
 						<liferay-learn:message
 							key="custom-facet"

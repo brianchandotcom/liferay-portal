@@ -323,13 +323,6 @@ public class PortalTransactionManager
 		SuspendedResourcesHolder suspendedResourcesHolder =
 			(SuspendedResourcesHolder)suspendedResources;
 
-		SessionHolder sessionHolder =
-			SpringHibernateThreadLocalUtil.getResource(_sessionFactory);
-
-		if (sessionHolder != null) {
-			SpringHibernateThreadLocalUtil.setResource(_sessionFactory, null);
-		}
-
 		SpringHibernateThreadLocalUtil.setResource(
 			_sessionFactory, suspendedResourcesHolder._sessionHolder);
 

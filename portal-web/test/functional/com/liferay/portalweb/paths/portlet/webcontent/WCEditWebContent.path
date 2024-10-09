@@ -104,6 +104,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_WITH_PERMISSIONS_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Publish With Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_BUTTON_2</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='Select'])[2]</td>
 	<td></td>

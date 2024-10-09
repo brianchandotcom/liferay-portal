@@ -117,6 +117,7 @@ definition {
 				value1 = "/my-title-123/");
 
 			AssertTextEquals(
+				cell_name = "description",
 				key_text = "This is an application",
 				locator1 = "APIBuilder#DND_TD_WITH_TEXT",
 				value1 = "This is an application");

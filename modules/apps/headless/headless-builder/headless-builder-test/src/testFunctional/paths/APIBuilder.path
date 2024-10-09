@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>DND_TD_WITH_TEXT</td>
-	<td>//div[@class='dnd-td' and contains(.,'${key_text}')]</td>
+	<td>//div[@class='dnd-td cell-${cell_name}' and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

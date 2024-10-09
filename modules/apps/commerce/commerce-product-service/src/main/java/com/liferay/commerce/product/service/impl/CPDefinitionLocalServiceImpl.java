@@ -1140,9 +1140,16 @@ public class CPDefinitionLocalServiceImpl
 
 			newCPDefinitionSpecificationOptionValue.setUuid(
 				PortalUUIDUtil.generate());
+
+			long cpDefinitionSpecificationOptionValueId =
+				counterLocalService.increment();
+
+			newCPDefinitionSpecificationOptionValue.setExternalReferenceCode(
+				String.valueOf(cpDefinitionSpecificationOptionValueId));
 			newCPDefinitionSpecificationOptionValue.
 				setCPDefinitionSpecificationOptionValueId(
-					counterLocalService.increment());
+					cpDefinitionSpecificationOptionValueId);
+
 			newCPDefinitionSpecificationOptionValue.setCPDefinitionId(
 				newCPDefinitionId);
 

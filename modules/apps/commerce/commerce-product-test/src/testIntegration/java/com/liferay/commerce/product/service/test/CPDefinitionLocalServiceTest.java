@@ -12,12 +12,15 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
@@ -508,6 +511,57 @@ public class CPDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testCopyCPDefinition() throws PortalException {
+		frutillaRule.scenario(
+			"Copy a product"
+		).given(
+			"A product definition"
+		).when(
+			"the copy method is run"
+		).then(
+			"the copy is created without exception"
+		).and(
+			"ERCs of specification values are different"
+		);
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
+		CPSpecificationOption cpSpecificationOption =
+			CPTestUtil.addCPSpecificationOption(_commerceCatalog.getGroupId());
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue1 =
+				_cpDefinitionSpecificationOptionValueLocalService.
+					addCPDefinitionSpecificationOptionValue(
+						RandomTestUtil.randomString(),
+						cpDefinition1.getCPDefinitionId(),
+						cpSpecificationOption.getCPSpecificationOptionId(),
+						cpSpecificationOption.getCPOptionCategoryId(),
+						RandomTestUtil.randomDouble(),
+						RandomTestUtil.randomLocaleStringMap(),
+						ServiceContextTestUtil.getServiceContext(
+							_commerceCatalog.getGroupId()));
+
+		CPDefinition cpDefinition2 = _cpDefinitionLocalService.copyCPDefinition(
+			cpDefinition1.getCPDefinitionId());
+
+		Assert.assertNotNull(cpDefinition2);
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue2 =
+				cpDefinition2.getCPDefinitionSpecificationOptionValues(
+				).get(
+					0
+				);
+
+		Assert.assertNotEquals(
+			cpDefinitionSpecificationOptionValue1.getExternalReferenceCode(),
+			cpDefinitionSpecificationOptionValue2.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testDeleteCPDefinitionWithIgnoreSKUCombinationsAndDefaultInstance()
 		throws Exception {
 
@@ -716,6 +770,10 @@ public class CPDefinitionLocalServiceTest {
 	@Inject
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
+
+	@Inject
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;

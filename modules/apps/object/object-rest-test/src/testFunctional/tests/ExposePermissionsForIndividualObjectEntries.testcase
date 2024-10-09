@@ -122,7 +122,7 @@ definition {
 				objectEntryId = ${staticObjectId});
 		}
 
-		task ("Then I can see "Owner" as a unique assigned role") {
+		task ("Then I can see the empty page of roles and permissions") {
 			var updateResponseRole = JSONUtil.getWithJSONPath(${updateResponse}, "$.items");
 
 			TestUtils.assertEquals(

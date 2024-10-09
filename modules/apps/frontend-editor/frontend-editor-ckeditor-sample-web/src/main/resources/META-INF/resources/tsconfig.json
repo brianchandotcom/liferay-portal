@@ -1,5 +1,5 @@
 {
-	"@generated": "b114870406575eea5781fa4aa0c49e2bdd4de37b",
+	"@generated": "ac07c7ba2a7e6993e1ffdd07fe0a595504925840",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -12,6 +12,9 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"paths": {
+			"frontend-editor-ckeditor-web": [
+				"../../../../../../frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
 		},
 		"rootDir": "../../../../../../../..",
 		"skipLibCheck": true,
@@ -29,5 +32,8 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

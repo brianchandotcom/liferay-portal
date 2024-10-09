@@ -1576,7 +1576,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	private static final String[] _JUNIT_BATCH_NAMES = {
-		"integration-jdk8", "modules-integration", "modules-unit", "unit-jdk8"
+		"integration-jdk8", "modules-integration", "modules-unit", "unit"
 	};
 
 	private static final Integer _THREAD_COUNT = 10;

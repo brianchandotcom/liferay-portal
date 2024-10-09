@@ -324,7 +324,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.names\[acceptance-ce\]=\\)(\n.*?)*\sunit-jdk8"
+			match="(test\.batch\.names\[acceptance-ce\]=\\)(\n.*?)*\sunit"
 			replace="\1{temp.batches}"
 		/>
 
@@ -334,9 +334,9 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			<replacetoken><![CDATA[{temp.batches}]]></replacetoken>
 			<replacevalue><![CDATA[
 		functional-tomcat90-mysql57-chrome100,\
-		js-unit-jdk8,\
+		js-unit,\
 		modules-integration-mysql57,\
-		unit-jdk8]]></replacevalue>
+		unit]]></replacevalue>
 		</replace>
 
 		<replaceregexp

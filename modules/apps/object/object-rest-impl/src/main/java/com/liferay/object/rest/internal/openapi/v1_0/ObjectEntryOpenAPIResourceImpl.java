@@ -109,12 +109,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		Map<String, Field> fields = new HashMap<>();
 
-		List<String> requiredPropertySchemaNames =
-			_getRequiredPropertySchemaNames(schema);
-
-		Map<String, Schema> properties = schema.getProperties();
-
-		Map<String, String> relationshipFieldNames = new HashMap<>();
+		Map<String, String> relationshipNames = new HashMap<>();
 
 		for (DTOProperty dtoProperty :
 				objectEntryDTOProperty.getDTOProperties()) {
@@ -126,10 +121,15 @@ public class ObjectEntryOpenAPIResourceImpl
 			RelationshipDTOProperty relationshipDTOProperty =
 				(RelationshipDTOProperty)dtoProperty;
 
-			relationshipFieldNames.put(
+			relationshipNames.put(
 				relationshipDTOProperty.getName(),
 				relationshipDTOProperty.getRelationshipName());
 		}
+
+		List<String> requiredPropertySchemaNames =
+			_getRequiredPropertySchemaNames(schema);
+
+		Map<String, Schema> properties = schema.getProperties();
 
 		for (Map.Entry<String, Schema> schemaEntry : properties.entrySet()) {
 			String propertyName = schemaEntry.getKey();
@@ -138,8 +138,7 @@ public class ObjectEntryOpenAPIResourceImpl
 			fields.put(
 				propertyName,
 				Field.of(
-					MapUtil.getString(
-						relationshipFieldNames, propertyName, null),
+					MapUtil.getString(relationshipNames, propertyName, null),
 					propertySchema.getDescription(), propertyName,
 					GetterUtil.getBoolean(propertySchema.getReadOnly()),
 					_getRef(propertySchema),

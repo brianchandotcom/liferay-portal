@@ -1185,7 +1185,7 @@ definition {
 		}
 
 		task ("Then Modified Date column is present") {
-			FrontendDataSetCustomView.assertColumnPresent(key_field = "Modified Date");
+			ClientExtensionGeneral.assertColumnPresent(key_field = "Modified Date");
 		}
 
 		task ("And Then showing Label 'UI' is present") {

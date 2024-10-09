@@ -143,6 +143,13 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertColumnPresent(key_field = null) {
+		AssertElementPresent(
+			key_field = ${key_field},
+			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
+	}
+
+	@summary = "Default summary"
 	macro assertContentField(entryInformation = null, entryField = null) {
 		AssertTextEquals(
 			key_text = ${entryField},

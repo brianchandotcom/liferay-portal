@@ -94,12 +94,10 @@ baseTest(
 		await page.goto(`/fr/`);
 		await journalEditArticlePage.createBasicArticleWithFriendlyURL(
 			site,
-			page,
 			'Contenu web basique'
 		);
 		await journalEditArticlePage.createBasicArticleWithFriendlyURL(
 			site,
-			page,
 			'Contenu web basique'
 		);
 

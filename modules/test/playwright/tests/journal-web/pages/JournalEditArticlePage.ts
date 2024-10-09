@@ -168,19 +168,25 @@ export class JournalEditArticlePage {
 	}
 
 	async fillFriendlyURL(friendlyURL: string) {
-		await this.friendlyURLInput.fill(friendlyURL);
+		await fillAndClickOutside(
+			this.page,
+			this.friendlyURLInput,
+			friendlyURL
+		);
 	}
 
-	async createBasicArticleWithFriendlyURL(site, page, articleTitle?: string) {
+	async createBasicArticleWithFriendlyURL(site, structureName?: string) {
 		await this.journalPage.goto(site.friendlyUrlPath);
 		await this.journalPage.goToCreateArticle(
-			articleTitle || 'Basic Web Content'
+			structureName || 'Basic Web Content'
 		);
-		await this.fillFriendlyURL('test');
+
 		const title = getRandomString();
-		await this.titleInput.fill(title);
+		await fillAndClickOutside(this.page, this.titleInput, title);
+		await this.fillFriendlyURL('test');
+
 		await this.publishButton.click();
-		await expect(page.getByTitle(title, {exact: true})).toBeVisible();
+		await expect(this.page.getByTitle(title, {exact: true})).toBeVisible();
 	}
 
 	async createWCWithBasicPublishButton(articleTitle: string) {

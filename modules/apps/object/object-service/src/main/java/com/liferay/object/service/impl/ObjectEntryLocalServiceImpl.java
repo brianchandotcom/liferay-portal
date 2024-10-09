@@ -1641,10 +1641,9 @@ public class ObjectEntryLocalServiceImpl
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
+		AtomicBoolean objectDefinition1RootNode = new AtomicBoolean(false);
 		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
 			objectRelationship.getObjectFieldId2());
-
-		AtomicBoolean objectDefinition1RootNode = new AtomicBoolean(false);
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(

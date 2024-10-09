@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {SummaryComponent as Summary} from 'commerce-frontend-js';
+import {
+	SummaryComponent as Summary,
+	commerceEvents,
+} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -80,10 +83,13 @@ const OrderSummaryView = ({elementId, isOpen, label, namespace, orderId}) => {
 	}, []);
 
 	useEffect(() => {
-		Liferay.on('order-information-altered', onStatusChange);
+		Liferay.on(commerceEvents.ORDER_INFORMATION_ALTERED, onStatusChange);
 
 		return () => {
-			Liferay.detach('order-information-altered', onStatusChange);
+			Liferay.detach(
+				commerceEvents.ORDER_INFORMATION_ALTERED,
+				onStatusChange
+			);
 		};
 	}, [onStatusChange]);
 

@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {CommerceServiceProvider} from 'commerce-frontend-js';
+import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 import {openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -62,7 +62,7 @@ const DefaultView = ({
 				setValue(parseResponse(field, order));
 
 				onOpenChange(false);
-				Liferay.fire('order-information-altered', {order});
+				Liferay.fire(commerceEvents.ORDER_INFORMATION_ALTERED, {order});
 			})
 			.catch((error) => {
 				openToast({

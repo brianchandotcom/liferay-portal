@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {CommerceServiceProvider} from 'commerce-frontend-js';
+import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -56,7 +56,7 @@ function OrderActions({checkoutURL, isOpen, orderId, reorderURL}) {
 
 			executeTransitions(orderId, action)
 				.then((response) => {
-					Liferay.fire('order-information-altered');
+					Liferay.fire(commerceEvents.ORDER_INFORMATION_ALTERED);
 
 					if (open !== response?.open) {
 						setOpen(response.open);

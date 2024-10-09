@@ -695,17 +695,20 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 					richTextValues.add(richTextValue);
 
-					if (richTextValue.length() >
-							_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
-
-						richTextValue = richTextValue.substring(
-							0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
-					}
-
-					truncatedValues.add(richTextValue);
+					truncatedValues.add(_truncate(richTextValue));
 				}
 
 				valuesString = richTextValues.toArray(new String[0]);
+				truncatedValuesString = truncatedValues.toArray(new String[0]);
+			}
+			else if (type.equals(DDMFormFieldTypeConstants.TEXT)) {
+				List<String> truncatedValues = new ArrayList<>(
+					valuesString.length);
+
+				for (String valueString : valuesString) {
+					truncatedValues.add(_truncate(valueString));
+				}
+
 				truncatedValuesString = truncatedValues.toArray(new String[0]);
 			}
 
@@ -784,14 +787,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 			return;
 		}
 
-		if (sortableValueString.length() >
-				_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
-
-			sortableValueString = sortableValueString.substring(
-				0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
-		}
-
-		document.addKeyword(_getSortableFieldName(name), sortableValueString);
+		document.addKeyword(
+			_getSortableFieldName(name), _truncate(sortableValueString));
 	}
 
 	private void _extractIndexableAttribute(
@@ -964,6 +961,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 	private String[] _toStringArray(Object value) throws PortalException {
 		return ArrayUtil.toStringArray(
 			_jsonFactory.createJSONArray(String.valueOf(value)));
+	}
+
+	private String _truncate(String string) {
+		if (string.length() > _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
+			return string.substring(0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
+		}
+
+		return string;
 	}
 
 	private static final int _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH =

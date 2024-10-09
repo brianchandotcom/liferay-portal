@@ -210,7 +210,7 @@ public class FilePropagator {
 					"Unable to propagate to ",
 					String.valueOf(totalSlaveCount - _mirrorSlaves.size()),
 					" out of ", String.valueOf(totalSlaveCount),
-					" slave nodes."));
+					" slave nodes"));
 		}
 	}
 

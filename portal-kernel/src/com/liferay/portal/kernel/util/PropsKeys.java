@@ -2583,9 +2583,6 @@ public interface PropsKeys {
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT =
 			"staging.draft.export.import.configuration.clean.up.count";
 
-	public static final String STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT =
-		"staging.groups.in.memory.filter.limit";
-
 	public static final String STAGING_LIVE_GROUP_LOCKING_ENABLED =
 		"staging.live.group.locking.enabled";
 
@@ -2882,10 +2879,6 @@ public interface PropsKeys {
 
 	public static final String VIRTUAL_HOSTS_IGNORE_PATHS =
 		"virtual.hosts.ignore.paths";
-
-	public static final String
-		VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT =
-			"virtual.hosts.per.company.in.memory.filter.limit";
 
 	public static final String VIRTUAL_HOSTS_STRICT_ACCESS =
 		"virtual.hosts.strict.access";

@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.net.IDN;
@@ -125,15 +127,15 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public List<VirtualHost> getVirtualHosts(long companyId, long layoutSetId) {
-		if (_perCompanyInMemoryFilterLimit <= 0) {
+		if (_cacheableQueryLimitVirtualhosts <= 0) {
 			return virtualHostPersistence.findByC_L(companyId, layoutSetId);
 		}
 
 		List<VirtualHost> virtualHosts = virtualHostPersistence.findByCompanyId(
 			companyId);
 
-		if (virtualHosts.size() > _perCompanyInMemoryFilterLimit) {
-			_perCompanyInMemoryFilterLimit = 0;
+		if (virtualHosts.size() > _cacheableQueryLimitVirtualhosts) {
+			_cacheableQueryLimitVirtualhosts = 0;
 		}
 
 		List<VirtualHost> filteredVirtualHosts = null;
@@ -313,6 +315,10 @@ public class VirtualHostLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		VirtualHostLocalServiceImpl.class);
 
+	private volatile int _cacheableQueryLimitVirtualhosts =
+		GetterUtil.getInteger(
+			PropsUtil.get("cacheable.query.limit.virtualhosts"));
+
 	@BeanReference(type = CompanyPersistence.class)
 	private CompanyPersistence _companyPersistence;
 
@@ -321,8 +327,5 @@ public class VirtualHostLocalServiceImpl
 
 	@BeanReference(type = LayoutSetPersistence.class)
 	private LayoutSetPersistence _layoutSetPersistence;
-
-	private volatile int _perCompanyInMemoryFilterLimit =
-		PropsValues.VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT;
 
 }

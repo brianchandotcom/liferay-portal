@@ -2245,10 +2245,6 @@ public class PropsValues {
 				PropsKeys.
 					STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT));
 
-	public static final int STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT));
-
 	public static final boolean STAGING_LIVE_GROUP_LOCKING_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.STAGING_LIVE_GROUP_LOCKING_ENABLED));
@@ -2516,11 +2512,6 @@ public class PropsValues {
 
 	public static final String[] VIRTUAL_HOSTS_IGNORE_EXTENSIONS =
 		PropsUtil.getArray(PropsKeys.VIRTUAL_HOSTS_IGNORE_EXTENSIONS);
-
-	public static final int VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT));
 
 	public static final boolean VIRTUAL_HOSTS_STRICT_ACCESS =
 		GetterUtil.getBoolean(

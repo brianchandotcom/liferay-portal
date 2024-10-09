@@ -170,6 +170,7 @@ import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.initializer.kernel.util.SiteInitializerThreadLocal;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
@@ -1536,7 +1537,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
-		if (_stagingGroupsInMemoryFilterLimit <= 0) {
+		if (_cacheableQueryLimitStagingGroups <= 0) {
 			return GroupUtil.fetchByLiveGroupId(liveGroupId);
 		}
 
@@ -1544,8 +1545,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			_stagingGroupIdsDCLSingleton.getSingleton(
 				this::_getStagingGroupIds);
 
-		if (stagingGroupIds.size() > _stagingGroupsInMemoryFilterLimit) {
-			_stagingGroupsInMemoryFilterLimit = 0;
+		if (stagingGroupIds.size() > _cacheableQueryLimitStagingGroups) {
+			_cacheableQueryLimitStagingGroups = 0;
 
 			_stagingGroupIdsDCLSingleton.destroy(null);
 		}
@@ -5524,6 +5525,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupLocalServiceImpl.class);
 
+	private static volatile int _cacheableQueryLimitStagingGroups =
+		GetterUtil.getInteger(
+			PropsUtil.get("cacheable.query.limit.staging.groups"));
 	private static final MethodKey _checkRemoteStagingGroupMethodKey =
 		new MethodKey(
 			GroupServiceUtil.class, "checkRemoteStagingGroup",
@@ -5536,8 +5540,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		new Snapshot<>(GroupLocalServiceImpl.class, ReindexerBridge.class);
 	private static final DCLSingleton<Map<Long, Long>>
 		_stagingGroupIdsDCLSingleton = new DCLSingleton<>();
-	private static volatile int _stagingGroupsInMemoryFilterLimit =
-		PropsValues.STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT;
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

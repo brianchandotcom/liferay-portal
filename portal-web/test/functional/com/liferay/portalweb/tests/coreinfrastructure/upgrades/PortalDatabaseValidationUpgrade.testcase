@@ -59,11 +59,6 @@ definition {
 			SQL.executeSQLStatement(sqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
 
 			Portlet.startServer();
-
-			User.firstLoginPG(
-				password = PropsUtil.get("default.admin.password"),
-				userEmailAddress = "test@liferay.com",
-				virtualHostsURL = "http://localhost:8080");
 		}
 
 		task ("And a new partition is created to emulate the same enviroment as before") {

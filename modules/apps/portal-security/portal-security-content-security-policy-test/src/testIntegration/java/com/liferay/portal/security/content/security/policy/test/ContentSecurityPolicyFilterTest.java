@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -157,11 +158,17 @@ public class ContentSecurityPolicyFilterTest {
 			String content = _getContent(httpURLConnection);
 
 			Assert.assertTrue(
-				content.matches(".*<link [^>]*nonce=\"" + nonce + "\".*"));
+				content.matches(
+					".*<link [^>]*nonce=\"" + HtmlUtil.escapeJS(nonce) +
+						"\".*"));
 			Assert.assertTrue(
-				content.matches(".*<script [^>]*nonce=\"" + nonce + "\".*"));
+				content.matches(
+					".*<script [^>]*nonce=\"" + HtmlUtil.escapeJS(nonce) +
+						"\".*"));
 			Assert.assertTrue(
-				content.matches(".*<style [^>]*nonce=\"" + nonce + "\".*"));
+				content.matches(
+					".*<style [^>]*nonce=\"" + HtmlUtil.escapeJS(nonce) +
+						"\".*"));
 
 			httpURLConnection.disconnect();
 		}

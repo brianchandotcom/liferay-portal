@@ -4,6 +4,7 @@
  */
 
 import ClayLabel from '@clayui/label';
+import {commerceEvents} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -48,10 +49,13 @@ const StatusLabel = ({isOpenOrder, namespace, orderId, selectedStatus}) => {
 	}, []);
 
 	useEffect(() => {
-		Liferay.on('order-information-altered', onStatusChange);
+		Liferay.on(commerceEvents.ORDER_INFORMATION_ALTERED, onStatusChange);
 
 		return () => {
-			Liferay.detach('order-information-altered', onStatusChange);
+			Liferay.detach(
+				commerceEvents.ORDER_INFORMATION_ALTERED,
+				onStatusChange
+			);
 		};
 	}, [onStatusChange]);
 

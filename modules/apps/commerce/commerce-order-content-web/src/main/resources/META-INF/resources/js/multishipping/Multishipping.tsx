@@ -580,7 +580,7 @@ const Multishipping = ({
 	);
 
 	return (
-		<div className="data-set data-set-fluid multi-shipping-container">
+		<div className="data-set data-set-fluid multishipping-container">
 			{managementBar}
 
 			<div className="container-fluid container-fluid-max-xl">

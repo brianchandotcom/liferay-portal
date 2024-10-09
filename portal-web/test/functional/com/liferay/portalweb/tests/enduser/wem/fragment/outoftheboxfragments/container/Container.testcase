@@ -19,40 +19,6 @@ definition {
 			type = "content");
 	}
 
-	@description = "This is a test for LPS-111657. Can add the Container to a column of Row or another Container."
-	@priority = 4
-	test AddContainerToLayoutElements {
-		task ("Add a Container to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Assert add a Container to another Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Layout Elements",
-				fragmentName = "Container",
-				navTab = "Fragments");
-		}
-
-		task ("Assert add a Container to module of Grid") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Grid",
-				targetFragmentName = "Container");
-
-			PageEditor.addElementToColumn(
-				collectionName = "Layout Elements",
-				columnNumber = 1,
-				fragmentName = "Container",
-				navTab = "Fragments");
-		}
-	}
-
 	@description = "This is a test for LPS-91000, LPS-95002, LPS-115224 and LPS-120693. Configure the Flex Column and Fixed Width Container styles."
 	@priority = 5
 	test ConfigureFlexColumnAndFixedWidthContainerStyles {

@@ -413,6 +413,64 @@ test.describe('Fragments Panel', () => {
 
 		await expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
 	});
+
+	test('Save interactions with the panel when the page is refresh', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Change the view of the fragments to Cards
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		const firstSetList = page.locator('.page-editor__collapse ul').first();
+
+		await expect(firstSetList).toHaveClass(
+			/page-editor__fragments-widgets__tab-collection-list/
+		);
+
+		await page.getByTitle('Switch to Card View').click();
+
+		// Open Cookie Banner collapse
+
+		const menuDisplayFragmentSet = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Cookie Banner',
+		});
+
+		await expect(menuDisplayFragmentSet).toHaveClass(/collapsed/);
+
+		await menuDisplayFragmentSet.click();
+
+		// Refresh the page and check that everything remains the same
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		await expect(firstSetList).toHaveClass(
+			/page-editor__fragments-widgets__tab-collection-cards/
+		);
+
+		await expect(menuDisplayFragmentSet).not.toHaveClass(/collapsed/);
+
+		// Reset the panel
+
+		await page.getByTitle('Switch to List View').click();
+
+		await menuDisplayFragmentSet.click();
+	});
 });
 
 test.describe('Page Contents Panel', () => {

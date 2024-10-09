@@ -79,6 +79,7 @@ definition {
 			GDPR.filterByApplications(
 				applicationItemsCount = 4,
 				applications = "Objects",
+				customObject = "CustomObject186468",
 				totalItemsCount = 4);
 
 			PortletEntry.selectAll();
@@ -232,6 +233,7 @@ definition {
 			GDPR.filterByApplications(
 				applicationItemsCount = 4,
 				applications = "Objects",
+				customObject = "CustomObject186467",
 				totalItemsCount = 4);
 
 			PortletEntry.selectAll();

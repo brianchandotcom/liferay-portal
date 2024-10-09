@@ -1114,6 +1114,35 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		<attribute default="none" name="version" />
 
 		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					public String getUpstreamBranchName() {
+						String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("liferay.portal.branch");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("git.working.branch.name");
+						}
+
+						return upstreamBranchName.replace("-private", "");
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("java.jdk.default.runtime");
+					sb.append("[");
+					sb.append(getUpstreamBranchName());
+					sb.append("]");
+
+					project.setProperty("portal.upstream.branch.default.runtime.jdk", sb.toString());
+				]]>
+			</beanshell>
+
 			<var name="java.jdk.home" unset="true" />
 
 			<if>
@@ -1144,7 +1173,16 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						<elseif>
 							<equals arg1="@{version}" arg2="none" />
 							<then>
-								<propertycopy from="java.jdk.default.runtime" property="java.jdk.home" silent="true" />
+								<propertycopy from="portal.upstream.branch.default.runtime.jdk" property="java.jdk.home" silent="true" />
+
+								<if>
+									<not>
+										<isset property="java.jdk.home" />
+									</not>
+									<then>
+										<propertycopy from="java.jdk.default.runtime" property="java.jdk.home" silent="true" />
+									</then>
+								</if>
 							</then>
 						</elseif>
 						<else>

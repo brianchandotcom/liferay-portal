@@ -41,7 +41,7 @@ export function openOrderNameModal({dataSetId, isOpen, orderId, orderName}) {
 				type: 'button',
 			},
 			{
-				displayType: 'info',
+				displayType: 'primary',
 				label: Liferay.Language.get('save'),
 				onClick: ({processClose}) => {
 					const orderNameInputElement =
@@ -81,7 +81,6 @@ export function openOrderNameModal({dataSetId, isOpen, orderId, orderName}) {
 				type: 'button',
 			},
 		],
-		status: 'info',
 		title: Liferay.Language.get('rename-order'),
 	});
 }

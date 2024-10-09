@@ -16,7 +16,7 @@ import ProductURLDataRenderer from '../data_renderers/ProductURLDataRenderer';
 const DeliveryCartAPI = CommerceServiceProvider.DeliveryCartAPI('v1');
 
 const PendingOrderItemsFDSPropsTransformer = (props) => {
-	Liferay.on('cart-updated', () => {
+	Liferay.on(commerceEvents.CART_UPDATED, () => {
 		Liferay.fire('fds-update-display', {id: props.id});
 	});
 
@@ -60,9 +60,29 @@ const PendingOrderItemsFDSPropsTransformer = (props) => {
 			}
 
 			if (actionId === 'delete') {
-				Liferay.fire('current-order-updated', {
-					order: {id: props.additionalProps.commerceOrderId},
-				});
+				DeliveryCartAPI.deleteItemById(orderItemId)
+					.then(() => {
+						openToast({
+							message: Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+							type: 'success',
+						});
+
+						Liferay.fire(commerceEvents.CURRENT_ORDER_UPDATED, {
+							order: {id: props.additionalProps.commerceOrderId},
+						});
+					})
+					.catch((error) => {
+						openToast({
+							message:
+								error.message ||
+								Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
+							type: 'danger',
+						});
+					});
 			}
 		},
 		onBulkActionItemClick: ({
@@ -85,7 +105,7 @@ const PendingOrderItemsFDSPropsTransformer = (props) => {
 								type: 'success',
 							});
 
-							Liferay.fire('current-order-updated', {
+							Liferay.fire(commerceEvents.CURRENT_ORDER_UPDATED, {
 								order: {
 									id: props.additionalProps.commerceOrderId,
 								},

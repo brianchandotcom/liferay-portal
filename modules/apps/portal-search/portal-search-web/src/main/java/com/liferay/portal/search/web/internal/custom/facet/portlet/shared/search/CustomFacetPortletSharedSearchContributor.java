@@ -213,7 +213,7 @@ public class CustomFacetPortletSharedSearchContributor
 			).field(
 				fieldToAggregate
 			).format(
-				_DATE_FORMAT
+				"yyyyMMddHHmmss"
 			).frequencyThreshold(
 				customFacetPortletPreferences.getFrequencyThreshold()
 			).order(
@@ -408,7 +408,7 @@ public class CustomFacetPortletSharedSearchContributor
 			DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
 				portletSharedSearchSettings.getPortletId(), aggregationField);
 
-			dateRangeAggregation.setFormat(_DATE_FORMAT);
+			dateRangeAggregation.setFormat("yyyyMMddHHmmss");
 
 			return _withRanges(dateRangeAggregation, rangesJSONArray);
 		}
@@ -599,8 +599,6 @@ public class CustomFacetPortletSharedSearchContributor
 
 		return rangeAggregation;
 	}
-
-	private static final String _DATE_FORMAT = "yyyyMMddHHmmss";
 
 	@Reference
 	private Aggregations _aggregations;

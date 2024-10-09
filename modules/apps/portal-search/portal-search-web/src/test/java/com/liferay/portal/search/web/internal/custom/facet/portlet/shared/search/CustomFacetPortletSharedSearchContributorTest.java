@@ -437,11 +437,9 @@ public class CustomFacetPortletSharedSearchContributorTest {
 		ReflectionTestUtil.setFieldValue(
 			customFacetPortletSharedSearchContributor, "_aggregations",
 			new AggregationsImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			customFacetPortletSharedSearchContributor, "_filterBuilders",
 			new FilterBuildersImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			customFacetPortletSharedSearchContributor, "_language",
 			new LanguageImpl());
@@ -578,12 +576,11 @@ public class CustomFacetPortletSharedSearchContributorTest {
 			new DateRangeFacetSearchContributorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			dateRangeFacetSearchContributor, "_jsonFactory",
-			new JSONFactoryImpl());
-
-		ReflectionTestUtil.setFieldValue(
 			dateRangeFacetSearchContributor, "_dateRangeFacetFactory",
 			new DateRangeFacetFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			dateRangeFacetSearchContributor, "_jsonFactory",
+			new JSONFactoryImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			customFacetPortletSharedSearchContributor,
@@ -627,11 +624,9 @@ public class CustomFacetPortletSharedSearchContributorTest {
 		ReflectionTestUtil.setFieldValue(
 			nestedFacetSearchContributor, "aggregations",
 			new AggregationsImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			nestedFacetSearchContributor, "nestedFacetFactory",
 			new NestedFacetFactoryImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			nestedFacetSearchContributor, "queries", new QueriesImpl());
 
@@ -649,7 +644,6 @@ public class CustomFacetPortletSharedSearchContributorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			rangeFacetSearchContributor, "_jsonFactory", new JSONFactoryImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			rangeFacetSearchContributor, "_rangeFacetFactory",
 			new RangeFacetFactoryImpl());

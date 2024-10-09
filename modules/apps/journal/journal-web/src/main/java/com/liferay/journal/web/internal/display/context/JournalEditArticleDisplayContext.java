@@ -279,11 +279,10 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"sites",
 			() -> {
-				Group scopeGroup = _groupLocalService.getGroup(getGroupId());
-
-				List<Group> groups;
-
+				List<Group> groups = null;
 				int max = _MAX_SITES;
+
+				Group scopeGroup = _groupLocalService.getGroup(getGroupId());
 
 				if (scopeGroup.isDepot()) {
 					groups = _groupLocalService.getGroups(

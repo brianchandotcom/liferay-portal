@@ -344,20 +344,23 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					samlSsoRequestContext.getSAMLMessageContext();
 
 				InOutOperationContext<?, ?> inOutOperationContext =
-					messageContext.getSubcontext(InOutOperationContext.class);
+					messageContext.getSubcontext(
+						InOutOperationContext.class, false);
 
-				MessageContext<?> inboundMessageContext =
-					inOutOperationContext.getInboundMessageContext();
+				if (inOutOperationContext != null) {
+					MessageContext<?> inboundMessageContext =
+						inOutOperationContext.getInboundMessageContext();
 
-				SAMLMessageInfoContext samlMessageInfoContext =
-					inboundMessageContext.getSubcontext(
-						SAMLMessageInfoContext.class, true);
+					SAMLMessageInfoContext samlMessageInfoContext =
+						inboundMessageContext.getSubcontext(
+							SAMLMessageInfoContext.class, true);
 
-				if ((messageContext != null) &&
-					samlMessageId.equals(
-						samlMessageInfoContext.getMessageId())) {
+					if ((messageContext != null) &&
+						samlMessageId.equals(
+							samlMessageInfoContext.getMessageId())) {
 
-					return samlSsoRequestContext;
+						return samlSsoRequestContext;
+					}
 				}
 			}
 		}
@@ -1116,11 +1119,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String samlMessageId = ParamUtil.getString(
 			httpServletRequest, "saml_message_id");
-
-		if (Validator.isBlank(samlMessageId)) {
-			samlMessageId = ParamUtil.getString(
-				httpServletRequest, "idp_initiated_saml_message_id");
-		}
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -1994,16 +1992,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 		}
 		else if (samlPeerEntityContext.getEntityId() != null) {
-			String idpInitiatedSamlMessageId = generateIdentifier(20);
+			String samlMessageId = generateIdentifier(20);
 
 			_bindSamlSsoRequestContext(
-				idpInitiatedSamlMessageId, httpSession, samlSsoRequestContext);
+				samlMessageId, httpSession, samlSsoRequestContext);
 
 			redirectSB.append("?entityId=");
 			redirectSB.append(
 				URLCodec.encodeURL(samlPeerEntityContext.getEntityId()));
-			redirectSB.append("&idp_initiated_saml_message_id=");
-			redirectSB.append(idpInitiatedSamlMessageId);
+			redirectSB.append("&saml_message_id=");
+			redirectSB.append(samlMessageId);
 		}
 
 		sb.append(URLCodec.encodeURL(redirectSB.toString()));

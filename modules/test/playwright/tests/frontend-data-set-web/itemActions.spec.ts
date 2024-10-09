@@ -70,24 +70,20 @@ test.describe('Item Actions in frontend data set', () => {
 					.first()
 					.waitFor({state: 'attached'});
 
-				const tableRow = await page
-					.locator('.dnd-td.item-actions')
-					.first();
+				const tableRow = page.locator('.dnd-td.item-actions').first();
 
-				await expect(
+				expect(
 					tableRow.getByRole('button', {
 						exact: true,
 						name: 'Actions',
 					})
 				).toBeVisible;
 
-				const button = await tableRow.getByRole('button', {
+				const button = tableRow.getByRole('button', {
 					exact: true,
 					name: 'Actions',
 				});
-				const dropdownId = await button.evaluate((node) =>
-					node.getAttribute('aria-controls')
-				);
+				const dropdownId = await button.getAttribute('aria-controls');
 
 				await button.click();
 
@@ -107,7 +103,7 @@ test.describe('Item Actions in frontend data set', () => {
 
 		const itemActionButton =
 			await test.step('Check that the Item Action menu is present', async () => {
-				const button = await datasetRow.getByRole('button', {
+				const button = datasetRow.getByRole('button', {
 					exact: true,
 					name: 'Actions',
 				});
@@ -118,10 +114,8 @@ test.describe('Item Actions in frontend data set', () => {
 			});
 
 		await test.step('Side Panel action opens a side panel with content title', async () => {
-			const dropdownId = await itemActionButton.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
-
+			const dropdownId =
+				await itemActionButton.getAttribute('aria-controls');
 			await itemActionButton.click();
 
 			await page
@@ -139,7 +133,7 @@ test.describe('Item Actions in frontend data set', () => {
 
 			await page.getByRole('tabpanel').waitFor();
 
-			const sidePanel = await page.getByRole('tabpanel');
+			const sidePanel = page.getByRole('tabpanel');
 
 			await expect(sidePanel).toBeInViewport();
 
@@ -158,10 +152,8 @@ test.describe('Item Actions in frontend data set', () => {
 		});
 
 		await test.step('Side Panel action opens a side panel with action title', async () => {
-			const dropdownId = await itemActionButton.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
-
+			const dropdownId =
+				await itemActionButton.getAttribute('aria-controls');
 			await itemActionButton.click();
 
 			await page
@@ -179,7 +171,7 @@ test.describe('Item Actions in frontend data set', () => {
 
 			await page.getByRole('tabpanel').waitFor();
 
-			const sidePanel = await page.getByRole('tabpanel');
+			const sidePanel = page.getByRole('tabpanel');
 
 			await expect(sidePanel).toBeInViewport();
 
@@ -202,10 +194,8 @@ test.describe('Item Actions in frontend data set', () => {
 		});
 
 		await test.step('Side Panel action opens a side panel with duplicated title', async () => {
-			const dropdownId = await itemActionButton.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
-
+			const dropdownId =
+				await itemActionButton.getAttribute('aria-controls');
 			await itemActionButton.click();
 
 			await page
@@ -223,7 +213,7 @@ test.describe('Item Actions in frontend data set', () => {
 
 			await page.getByRole('tabpanel').waitFor();
 
-			const sidePanel = await page.getByRole('tabpanel');
+			const sidePanel = page.getByRole('tabpanel');
 
 			await expect(sidePanel).toBeInViewport();
 
@@ -249,10 +239,8 @@ test.describe('Item Actions in frontend data set', () => {
 		});
 
 		await test.step('Side Panel action opens a side panel without title', async () => {
-			const dropdownId = await itemActionButton.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
-
+			const dropdownId =
+				await itemActionButton.getAttribute('aria-controls');
 			await itemActionButton.click();
 
 			await page
@@ -270,7 +258,7 @@ test.describe('Item Actions in frontend data set', () => {
 
 			await page.getByRole('tabpanel').waitFor();
 
-			const sidePanel = await page.getByRole('tabpanel');
+			const sidePanel = page.getByRole('tabpanel');
 
 			await expect(sidePanel).toBeInViewport();
 
@@ -281,7 +269,7 @@ test.describe('Item Actions in frontend data set', () => {
 				.locator('.fds-side-panel-title')
 				.allInnerTexts();
 
-			await expect(panelTitle).toEqual(['']);
+			expect(panelTitle).toEqual(['']);
 
 			const iframeElement = await sidePanel
 				.locator('iframe')

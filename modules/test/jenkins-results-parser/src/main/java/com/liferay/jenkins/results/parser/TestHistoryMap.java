@@ -144,6 +144,8 @@ public class TestHistoryMap {
 					"testCount", testClassHistory.getTestCount()
 				).put(
 					"testName", testClassHistory.getTestClassName()
+				).put(
+					"testTaskName", testClassHistory.getTestTaskName()
 				);
 
 				TestrayCaseResult testrayCaseResult =
@@ -673,6 +675,20 @@ public class TestHistoryMap {
 
 		public TestrayCaseResult getTestrayCaseResult() {
 			return _testrayCaseResult;
+		}
+
+		public String getTestTaskName() {
+			if (_testClassReports.isEmpty()) {
+				return null;
+			}
+
+			TestClassReport testClassReport = _testClassReports.get(0);
+
+			if (testClassReport == null) {
+				return null;
+			}
+
+			return testClassReport.getTestTaskName();
 		}
 
 		public void setTestrayCaseResult(TestrayCaseResult testrayCaseResult) {

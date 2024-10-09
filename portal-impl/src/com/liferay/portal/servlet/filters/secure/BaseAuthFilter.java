@@ -172,7 +172,7 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 					httpServletRequest, httpSession, user1,
 					HttpServletRequest.DIGEST_AUTH);
 
-				httpSession.setAttribute("DIGEST", user1.getDigest());
+				httpSession.setAttribute(WebKeys.DIGEST, user1.getDigest());
 			}
 			else {
 				HttpAuthManagerUtil.generateChallenge(
@@ -226,7 +226,7 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		User user = (User)httpSession.getAttribute(WebKeys.USER);
 
 		if (user != null) {
-			String digest = (String)httpSession.getAttribute("DIGEST");
+			String digest = (String)httpSession.getAttribute(WebKeys.DIGEST);
 
 			user = UserLocalServiceUtil.getUser(user.getUserId());
 

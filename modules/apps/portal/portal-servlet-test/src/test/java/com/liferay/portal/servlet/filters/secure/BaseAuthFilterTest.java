@@ -321,7 +321,7 @@ public class BaseAuthFilterTest {
 
 		_mockHttpSession.setAttribute(WebKeys.USER, user);
 
-		_mockHttpSession.setAttribute("DIGEST", digest);
+		_mockHttpSession.setAttribute(WebKeys.DIGEST, digest);
 
 		_mockHttpServletRequest.setSession(_mockHttpSession);
 

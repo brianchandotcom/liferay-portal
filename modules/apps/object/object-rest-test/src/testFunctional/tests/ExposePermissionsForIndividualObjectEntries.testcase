@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("And Given with putStudentPermissionsPage I update "Test" role with no actionIds") {
-			CustomObjectAPI.updateObjectPermissions(
+			var updateResponse = CustomObjectAPI.updateObjectPermissions(
 				actionIds = "",
 				en_US_plural_label = "students",
 				objectEntryId = ${staticObjectId},
@@ -115,16 +115,22 @@ definition {
 		}
 
 		task ("When requesting getStudentPermissionsPage with created {studentId}") {
-			var response = CustomObjectAPI.getObjectPermissions(
+			var getResponse = CustomObjectAPI.getObjectPermissions(
 				en_US_plural_label = "students",
 				objectEntryId = ${staticObjectId});
 		}
 
 		task ("Then I can see "Owner" as a unique assigned role") {
-			var actualRole = JSONUtil.getWithJSONPath(${response}, "$.items");
+			var updateResponseRole = JSONUtil.getWithJSONPath(${updateResponse}, "$.items");
 
 			TestUtils.assertEquals(
-				actual = ${actualRole},
+				actual = ${updateResponseRole},
+				expected = "");
+
+			var getResponseRole = JSONUtil.getWithJSONPath(${getResponse}, "$.items");
+
+			TestUtils.assertEquals(
+				actual = ${getResponseRole},
 				expected = "");
 		}
 	}

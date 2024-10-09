@@ -102,7 +102,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		for (String elementExternalReferenceCode :
 				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
 
-			_createOldElement(elementExternalReferenceCode);
+			_addOldElement(elementExternalReferenceCode);
 		}
 
 		_runUpgrade();
@@ -116,6 +116,31 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Rule
 	public TestName testName = new TestName();
+
+	private void _addOldElement(String externalReferenceCode) throws Exception {
+		SXPElement sxpElement =
+			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+				externalReferenceCode, TestPropsValues.getCompanyId());
+
+		if (sxpElement != null) {
+			sxpElement.setElementDefinitionJSON(RandomTestUtil.randomString());
+
+			_sxpElementLocalService.updateSXPElement(sxpElement);
+		}
+		else {
+			_sxpElementLocalService.addSXPElement(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, true, StringPool.BLANK,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				0,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		}
+	}
 
 	private SXPBlueprint _addSXPBlueprint(String elementInstancesJSON)
 		throws Exception {
@@ -144,7 +169,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		JSONAssert.assertEquals(
 			sxpElement.getElementDefinitionJSON(),
-			_getExpectedElementDefinitionJSON(externalReferenceCode),
+			StringUtil.read(
+				_clazz,
+				StringBundler.concat(
+					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), StringPool.PERIOD,
+					StringUtil.toLowerCase(externalReferenceCode), ".json")),
 			JSONCompareMode.STRICT);
 	}
 
@@ -159,6 +189,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			JSONCompareMode.STRICT);
 	}
 
+	private String _createAssetCategoryExternalReferenceCode(
+		String globalGroupExternalReferenceCode,
+		String assetCategoryExternalReferenceCode) {
+
+		return globalGroupExternalReferenceCode + "&&" +
+			assetCategoryExternalReferenceCode;
+	}
+
 	private String _createAssetCategoryExternalReferenceCodeLabel(
 		AssetCategory assetCategory) {
 
@@ -171,41 +209,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		return StringBundler.concat(
 			assetCategory.getName(), " (ID: ", assetCategory.getCategoryId(),
 			")");
-	}
-
-	private void _createOldElement(String externalReferenceCode)
-		throws Exception {
-
-		SXPElement sxpElement =
-			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
-				externalReferenceCode, TestPropsValues.getCompanyId());
-
-		if (sxpElement != null) {
-			sxpElement.setElementDefinitionJSON(RandomTestUtil.randomString());
-
-			_sxpElementLocalService.updateSXPElement(sxpElement);
-		}
-		else {
-			_sxpElementLocalService.addSXPElement(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				StringPool.BLANK, true, StringPool.BLANK,
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()),
-				0,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(),
-					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-		}
-	}
-
-	private String _extracted(
-		String globalGroupExternalReferenceCode,
-		String assetCategoryExternalReferenceCode) {
-
-		return globalGroupExternalReferenceCode + "&&" +
-			assetCategoryExternalReferenceCode;
 	}
 
 	private String _getElementInstancesJSON(
@@ -233,17 +236,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		return elementInstancesJSON;
 	}
 
-	private String _getExpectedElementDefinitionJSON(
-		String externalReferenceCode) {
-
-		return StringUtil.read(
-			_clazz,
-			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), StringPool.PERIOD,
-				StringUtil.toLowerCase(externalReferenceCode), ".json"));
-	}
-
 	private String _getExpectedInstancesJSON(
 		String globalGroupExternalReferenceCode, AssetCategory assetCategory1,
 		AssetCategory assetCategory2) {
@@ -256,12 +248,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$",
-			_extracted(
+			_createAssetCategoryExternalReferenceCode(
 				globalGroupExternalReferenceCode,
 				assetCategory1.getExternalReferenceCode()));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$",
-			_extracted(
+			_createAssetCategoryExternalReferenceCode(
 				globalGroupExternalReferenceCode,
 				assetCategory2.getExternalReferenceCode()));
 		elementInstancesJSON = StringUtil.replace(

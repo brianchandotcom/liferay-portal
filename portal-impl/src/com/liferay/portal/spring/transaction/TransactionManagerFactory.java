@@ -17,7 +17,6 @@ import jodd.bean.BeanUtil;
 
 import org.hibernate.SessionFactory;
 
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 /**
@@ -28,7 +27,7 @@ public class TransactionManagerFactory {
 	public static AbstractPlatformTransactionManager createTransactionManager(
 		DataSource dataSource, SessionFactory sessionFactory) {
 
-		HibernateTransactionManager hibernateTransactionManager =
+		PortalTransactionManager portalTransactionManager =
 			new PortalTransactionManager();
 
 		Properties properties = PropsUtil.getProperties(
@@ -42,13 +41,13 @@ public class TransactionManagerFactory {
 
 			String value = properties.getProperty(key);
 
-			BeanUtil.pojo.setProperty(hibernateTransactionManager, key, value);
+			BeanUtil.pojo.setProperty(portalTransactionManager, key, value);
 		}
 
-		hibernateTransactionManager.setDataSource(dataSource);
-		hibernateTransactionManager.setSessionFactory(sessionFactory);
+		portalTransactionManager.setDataSource(dataSource);
+		portalTransactionManager.setSessionFactory(sessionFactory);
 
-		return hibernateTransactionManager;
+		return portalTransactionManager;
 	}
 
 }

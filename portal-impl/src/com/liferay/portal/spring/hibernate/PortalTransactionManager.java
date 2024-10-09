@@ -18,8 +18,7 @@ import org.springframework.orm.hibernate5.SessionHolder;
 /**
  * @author Shuyang Zhou
  */
-public class PortalTransactionManager
-	extends HibernateTransactionManager {
+public class PortalTransactionManager extends HibernateTransactionManager {
 
 	@Override
 	protected Object doGetTransaction() {

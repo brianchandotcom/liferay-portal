@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.spring.hibernate.PortalTransactionManager;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
@@ -36,7 +37,6 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
@@ -199,7 +199,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 			if (InfrastructureUtil.getDataSource() == liferayDataSource) {
 				return new PortletTransactionManager(
-					(HibernateTransactionManager)
+					(PortalTransactionManager)
 						InfrastructureUtil.getTransactionManager(),
 					liferayHibernateSessionFactory);
 			}

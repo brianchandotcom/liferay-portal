@@ -8,6 +8,7 @@ package com.liferay.layout.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -327,6 +329,36 @@ public class LayoutPermissionTest {
 	}
 
 	@Test
+	@TestInfo("LPS-140136")
+	public void testContainsWithPreviewDraftPermissionWithLocalStaging()
+		throws Exception {
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			ActionKeys.PREVIEW_DRAFT);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				permissionChecker, layout));
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Layout stagingLayout = _layoutLocalService.fetchLayout(
+			layout.getUuid(), stagingGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				permissionChecker, stagingLayout));
+	}
+
+	@Test
 	public void testContainsWithUpdateLayoutAdvancedOptionsPermission()
 		throws Exception {
 
@@ -422,6 +454,48 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutUpdatePermission(
 				permissionChecker, layout));
+	}
+
+	@Test
+	@TestInfo("LPS-140136")
+	public void testContainsWithUpdatePermissionWithLocalStaging()
+		throws Exception {
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			ActionKeys.UPDATE);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+
+		Assert.assertFalse(
+			_layoutPermission.contains(
+				permissionChecker, layout, ActionKeys.UPDATE));
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, layout));
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutUpdatePermission(
+				permissionChecker, layout));
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Layout stagingLayout = _layoutLocalService.fetchLayout(
+			layout.getUuid(), stagingGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		Assert.assertTrue(
+			_layoutPermission.contains(
+				permissionChecker, stagingLayout, ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, stagingLayout));
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutUpdatePermission(
+				permissionChecker, stagingLayout));
 	}
 
 	@Test
@@ -667,6 +741,9 @@ public class LayoutPermissionTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

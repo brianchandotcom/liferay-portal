@@ -384,23 +384,23 @@ test.describe('Fragments Panel', () => {
 
 		// Check that the position of the first widget set has changed
 
-		expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
+		await expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
 
 		// Go back to the Fragments tab and check that the position of the first fragment has changed
 
 		await page.getByRole('tab', {exact: true, name: 'Fragments'}).click();
 
-		expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
+		await expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
 
 		// Refresh the page and check that order is maintained
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
+		await expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
 
 		await page.getByRole('tab', {exact: true, name: 'Widgets'}).click();
 
-		expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
+		await expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
 	});
 });
 

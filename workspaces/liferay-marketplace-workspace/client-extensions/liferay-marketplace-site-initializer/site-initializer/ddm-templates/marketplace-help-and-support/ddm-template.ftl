@@ -74,10 +74,9 @@
 <#if product.productSpecifications?has_content>
 	<#assign
 		productSpecifications = product.productSpecifications
-
+		publisherUrlFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "publisherwebsiteurl"))
 		supportEmailFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supportemailaddress"))
-		supportUrlFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supporturl"))
-		supporPhoneFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supportphone"))
+		supportPhoneFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supportphone"))
 	/>
 
 	<#if supportEmailFiltered?has_content>
@@ -86,19 +85,19 @@
 		/>
 	</#if>
 
-	<#if supportUrlFiltered?has_content>
-		<#assign supportUrl = supportUrlFiltered[0].value?trim?replace(' ', '') />
+	<#if publisherUrlFiltered?has_content>
+		<#assign publisherUrl = publisherUrlFiltered[0].value?trim?replace(' ', '') />
 
-		<#if supportUrl?starts_with("http://") || supportUrl?starts_with("https://")>
-			<#assign sanitizedUrl = supportUrl />
+		<#if publisherUrl?starts_with("http://") || publisherUrl?starts_with("https://")>
+			<#assign sanitizedUrl = publisherUrl />
 		<#else>
-			<#assign sanitizedUrl = "https://" + supportUrl />
+			<#assign sanitizedUrl = "https://" + publisherUrl />
 		</#if>
 	</#if>
 
-	<#if supporPhoneFiltered?has_content>
+	<#if supportPhoneFiltered?has_content>
 		<#assign
-			supporPhone = supporPhoneFiltered[0].value
+			supportPhone = supportPhoneFiltered[0].value
 		/>
 	</#if>
 </#if>
@@ -183,7 +182,7 @@
 				</div>
 			</#if>
 
-			<#if sanitizedUrl?has_content && supportUrl?has_content>
+			<#if sanitizedUrl?has_content && publisherUrl?has_content>
 				<div class="align-items-center d-flex flex-row mb-3">
 					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; width:40px;">
 						<@clay["icon"]
@@ -195,11 +194,9 @@
 					<div class="d-flex flex-column">
 						<span class="text-black-50">Publisher website URL</span>
 
-						<#if supportUrl?has_content>
-							<a href="${sanitizedUrl}" target="_blank" class="font-weight-bold">
-								${sanitizedUrl}
-							</a>
-						</#if>
+						<a href="${sanitizedUrl}" target="_blank" class="font-weight-bold">
+							${publisherUrl}
+						</a>
 					</div>
 				</div>
 			</#if>
@@ -213,16 +210,14 @@
 					<div class="d-flex flex-column">
 						<span class="text-black-50">Support Email</span>
 
-						<#if supportEmail?has_content>
-							<a class="font-weight-bold" href="mailto:${supportEmail}" target="_blank">
-								${supportEmail}
-							</a>
-						</#if>
+						<a class="font-weight-bold" href="mailto:${supportEmail}" target="_blank">
+							${supportEmail}
+						</a>
 					</div>
 				</div>
 			</#if>
 
-			<#if supporPhone?has_content>
+			<#if supportPhone?has_content>
 				<div class="d-flex flex-row align-items-center mb-3">
 					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; width:40px;">
 						<@clay["icon"]
@@ -234,11 +229,9 @@
 					<div class="d-flex flex-column">
 						<span class="text-black-50">Phone</span>
 
-						<#if supporPhone?has_content>
-							<a class="font-weight-bold" href="tel:${supporPhone}" target="_blank">
-								${supporPhone}
-							</a>
-						</#if>
+						<a class="font-weight-bold" href="tel:${supportPhone}" target="_blank">
+							${supportPhone}
+						</a>
 					</div>
 				</div>
 			</#if>

@@ -227,6 +227,17 @@ test.describe('Fragments Panel', () => {
 
 		await expect(page.getByText(unpublishedFragmentName)).not.toBeVisible();
 
+		// Check that the new set appears in the last position
+
+		const lastFragmentSet = page
+			.getByLabel('Fragments', {exact: true})
+			.locator('.panel-header')
+			.last();
+
+		await expect(lastFragmentSet).toContainText(
+			'Page Management Fragments'
+		);
+
 		// Delete unpublished fragment
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);

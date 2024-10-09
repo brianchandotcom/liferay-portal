@@ -481,6 +481,41 @@ test.describe('Fragments Panel', () => {
 
 		await menuDisplayFragmentSet.click();
 	});
+
+	test('List fragment is disabled when dragging', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Check that the list fragment is disabled when dragging
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		const fragment = page
+			.locator('.page-editor__fragments-widgets__tab-list-item')
+			.filter({hasText: 'External Video'});
+
+		await fragment.hover();
+
+		await page.mouse.down();
+
+		await page
+			.getByText('Drag and drop fragments or widgets here.')
+			.hover();
+
+		expect(fragment).toHaveClass(/disabled/);
+	});
 });
 
 test.describe('Page Contents Panel', () => {

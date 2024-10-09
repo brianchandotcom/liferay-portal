@@ -48,7 +48,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 		JUnitTestBatch jUnitTestBatch = null;
 
-		for (TestBatch testBatch : relevantTestSuite.getTestBatches()) {
+		for (TestBatch testBatch : relevantTestSuite.getTestBatches(false)) {
 			if (testBatch instanceof JUnitTestBatch) {
 				jUnitTestBatch = (JUnitTestBatch)testBatch;
 
@@ -96,7 +96,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 		PlaywrightTestBatch playwrightTestBatch = null;
 
-		for (TestBatch testBatch : relevantTestSuite.getTestBatches()) {
+		for (TestBatch testBatch : relevantTestSuite.getTestBatches(false)) {
 			if (testBatch instanceof PlaywrightTestBatch) {
 				playwrightTestBatch = (PlaywrightTestBatch)testBatch;
 
@@ -140,7 +140,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 		PoshiTestBatch poshiTestBatch = null;
 
-		for (TestBatch testBatch : relevantTestSuite.getTestBatches()) {
+		for (TestBatch testBatch : relevantTestSuite.getTestBatches(false)) {
 			if (testBatch instanceof PoshiTestBatch) {
 				poshiTestBatch = (PoshiTestBatch)testBatch;
 

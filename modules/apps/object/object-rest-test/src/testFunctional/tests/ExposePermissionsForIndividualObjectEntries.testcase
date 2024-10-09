@@ -42,6 +42,8 @@ definition {
 		}
 		else {
 			ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+
+			JSONRole.deleteRole(roleTitle = "Test");
 		}
 	}
 

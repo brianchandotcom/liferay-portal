@@ -1551,10 +1551,9 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition.getObjectDefinitionId(),
 			StringUtil.randomId(), Collections.emptyList());
 
-		modifiableSystemObjectDefinition =
-			_objectDefinitionLocalService.publishSystemObjectDefinition(
-				TestPropsValues.getUserId(),
-				modifiableSystemObjectDefinition.getObjectDefinitionId());
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
 
 		AssertUtils.assertFailure(
 			RequiredObjectFieldException.class,

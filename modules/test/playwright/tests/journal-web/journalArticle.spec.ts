@@ -112,6 +112,30 @@ baseTest(
 );
 
 baseTest(
+	'Check error message on invalid friendly URL',
+	{
+		tag: '@LPD-38754',
+	},
+	async ({journalEditArticlePage, site}) => {
+		await journalEditArticlePage.journalPage.goto(site.friendlyUrlPath);
+		await journalEditArticlePage.journalPage.goToCreateArticle();
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+		await journalEditArticlePage.fillFriendlyURL(title + '/' || 'test');
+		await journalEditArticlePage.publishButton.waitFor();
+		await journalEditArticlePage.publishButton.click();
+
+		await expect(
+			journalEditArticlePage.alertErrorMessage.getByText(
+				'Please enter a friendly URL that does not end with a slash'
+			)
+		).toBeVisible();
+	}
+);
+
+baseTest(
 	'Select web content display template with the Preview feature',
 	{
 		tag: '@LPD-31427',

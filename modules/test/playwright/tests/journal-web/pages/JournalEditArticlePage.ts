@@ -31,9 +31,13 @@ export class JournalEditArticlePage {
 	readonly submitForWorkflowButton: Locator;
 	readonly titleInput: Locator;
 	readonly undoButton: Locator;
+	readonly alertErrorMessage: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+		this.alertErrorMessage = page.locator(
+			'div.article-content-content >> div.alert-danger'
+		);
 		this.changesSavedIndicator = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
 		);

@@ -54,21 +54,20 @@ public class ObjectEntrySearchPermissionFilterContributor
 
 		List<Long> accountEntryIds = new ArrayList<>();
 
-		List<AccountEntryUserRel> accountEntryUserRelList =
-			_accountEntryUserRelLocalService.
-				getAccountEntryUserRelsByAccountUserId(
-					permissionChecker.getUserId());
-
 		for (AccountEntryUserRel accountEntryUserRel :
-				accountEntryUserRelList) {
+				_accountEntryUserRelLocalService.
+					getAccountEntryUserRelsByAccountUserId(
+						permissionChecker.getUserId())) {
 
 			try {
 				AccountEntry accountEntry =
 					accountEntryUserRel.getAccountEntry();
 
-				if (!accountEntry.isInactive()) {
-					accountEntryIds.add(accountEntry.getAccountEntryId());
+				if (accountEntry.isInactive()) {
+					continue;
 				}
+
+				accountEntryIds.add(accountEntry.getAccountEntryId());
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);

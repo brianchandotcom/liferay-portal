@@ -440,16 +440,16 @@ public class CustomFacetDisplayContextBuilder {
 	}
 
 	private String _getCustomDateRangeURL() {
-		DateFormat format = DateFormatFactoryUtil.getSimpleDateFormat(
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(_timeZone);
 
-		String to = format.format(calendar.getTime());
+		String to = dateFormat.format(calendar.getTime());
 
 		calendar.add(Calendar.DATE, -1);
 
-		String from = format.format(calendar.getTime());
+		String from = dateFormat.format(calendar.getTime());
 
 		String rangeURL = HttpComponentsUtil.removeParameter(
 			_currentURL, _paginationStartParameterName);

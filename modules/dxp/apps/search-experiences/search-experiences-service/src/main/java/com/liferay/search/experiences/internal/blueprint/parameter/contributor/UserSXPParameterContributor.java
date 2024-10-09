@@ -556,10 +556,10 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	}
 
 	private int _getAge(Date date) {
-		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
-		int x = GetterUtil.getInteger(formatter.format(date));
-		int y = GetterUtil.getInteger(formatter.format(new Date()));
+		int x = GetterUtil.getInteger(dateFormat.format(date));
+		int y = GetterUtil.getInteger(dateFormat.format(new Date()));
 
 		return (y - x) / 10000;
 	}

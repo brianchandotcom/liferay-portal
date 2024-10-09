@@ -78,13 +78,13 @@ public class FrontendTokenDefinitionRegistryTest {
 		_layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_group.getGroupId(), false);
 
-		_layoutSet.setThemeId(_THEME_ID_LAYOUT_SET);
+		_layoutSet.setThemeId(_TEST_LAYOUT_SET_THEME_ID);
 
 		User user = UserTestUtil.addUser();
 
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				_THEME_ID_CLIENT_EXTENSION_ENTRY, user.getUserId(),
+				_CLIENT_EXTENSION_ENTRY_THEME_ID, user.getUserId(),
 				StringPool.BLANK,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -119,14 +119,14 @@ public class FrontendTokenDefinitionRegistryTest {
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet),
-			_THEME_ID_CLIENT_EXTENSION_ENTRY);
+			_CLIENT_EXTENSION_ENTRY_THEME_ID);
 
 		_layoutSet.setLayoutSetId(RandomTestUtil.randomLong());
 
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet),
-			_THEME_ID_LAYOUT_SET);
+			_TEST_LAYOUT_SET_THEME_ID);
 	}
 
 	@Test
@@ -140,19 +140,19 @@ public class FrontendTokenDefinitionRegistryTest {
 				frontendTokenDefinitions,
 				frontendTokenDefinition -> Objects.equals(
 					frontendTokenDefinition.getThemeId(),
-					_THEME_ID_CLIENT_EXTENSION_ENTRY)));
+					_CLIENT_EXTENSION_ENTRY_THEME_ID)));
 
 		Assert.assertTrue(
 			ListUtil.exists(
 				frontendTokenDefinitions,
 				frontendTokenDefinition -> Objects.equals(
 					frontendTokenDefinition.getThemeId(),
-					_THEME_ID_LAYOUT_SET)));
+					_TEST_LAYOUT_SET_THEME_ID)));
 	}
 
 	private void _assertFrontendTokenDefinition(
 		FrontendTokenDefinition frontendTokenDefinition,
-		String frontendTokenDefinitionName) {
+		String expectedFrontendTokenDefinitionThemeId) {
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -211,13 +211,13 @@ public class FrontendTokenDefinitionRegistryTest {
 				frontendTokenMapping.getJSONObject(LocaleUtil.ENGLISH)));
 
 		Assert.assertEquals(
-			frontendTokenDefinitionName, frontendTokenDefinition.getThemeId());
+			expectedFrontendTokenDefinitionThemeId, frontendTokenDefinition.getThemeId());
 	}
 
-	private static final String _THEME_ID_CLIENT_EXTENSION_ENTRY =
+	private static final String _CLIENT_EXTENSION_ENTRY_THEME_ID =
 		RandomTestUtil.randomString();
 
-	private static final String _THEME_ID_LAYOUT_SET =
+	private static final String _TEST_LAYOUT_SET_THEME_ID =
 		"testfrontendtokendefinition";
 
 	private ClientExtensionEntry _clientExtensionEntry;

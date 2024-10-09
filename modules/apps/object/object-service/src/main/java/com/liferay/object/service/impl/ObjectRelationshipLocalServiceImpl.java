@@ -977,7 +977,10 @@ public class ObjectRelationshipLocalServiceImpl
 
 			_bindObjectDefinitions(objectRelationship);
 		}
-		else if (!edge && objectRelationship.isEdge()) {
+		else if (!edge && objectRelationship.isEdge() &&
+				 FeatureFlagManagerUtil.isEnabled(
+					 objectRelationship.getCompanyId(), "LPS-187142")) {
+
 			_unbindObjectDefinitions(objectRelationship);
 		}
 

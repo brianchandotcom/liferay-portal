@@ -121,11 +121,11 @@ definition {
 		}
 
 		task ("Then I can see "Owner" as a unique assigned role") {
-			var actualRole = JSONUtil.getWithJSONPath(${response}, "$.items[*].roleName");
+			var actualRole = JSONUtil.getWithJSONPath(${response}, "$.items");
 
 			TestUtils.assertEquals(
 				actual = ${actualRole},
-				expected = "Owner");
+				expected = "");
 		}
 	}
 

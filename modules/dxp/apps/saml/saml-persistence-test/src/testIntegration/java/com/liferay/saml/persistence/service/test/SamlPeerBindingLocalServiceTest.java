@@ -37,9 +37,7 @@ public class SamlPeerBindingLocalServiceTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testAddSamlPeerBindingWithLongSamlNameIdNameQualifier()
-		throws Exception {
-
+	public void testAddSamlPeerBinding() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		String samlNameIdNameQualifier = StringUtil.randomString(1024);

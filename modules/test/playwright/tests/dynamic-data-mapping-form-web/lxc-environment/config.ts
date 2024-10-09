@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'dynamic-data-mapping-form-web',
+	name: 'dynamic-data-mapping-form-web/lxc-environment',
 	testDir: 'tests/dynamic-data-mapping-form-web/lxc-environment',
 };

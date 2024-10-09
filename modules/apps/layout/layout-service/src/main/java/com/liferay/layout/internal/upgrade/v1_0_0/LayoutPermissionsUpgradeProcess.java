@@ -83,7 +83,7 @@ public class LayoutPermissionsUpgradeProcess extends UpgradeProcess {
 				Version version = Version.parseVersion(
 					resultSet.getString("schemaVersion"));
 
-				if (_MINIMUM_VERSION.compareTo(version) <= 0) {
+				if (_VERSION.compareTo(version) <= 0) {
 					return true;
 				}
 			}
@@ -92,7 +92,6 @@ public class LayoutPermissionsUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
-	private static final Version _MINIMUM_VERSION = Version.parseVersion(
-		"1.0.0");
+	private static final Version _VERSION = Version.parseVersion("1.0.0");
 
 }

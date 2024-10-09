@@ -27,8 +27,8 @@ public class TransactionManagerFactory {
 	public static AbstractPlatformTransactionManager createTransactionManager(
 		DataSource dataSource, SessionFactory sessionFactory) {
 
-		PortalTransactionManager portalTransactionManager =
-			new PortalTransactionManager();
+		AbstractPlatformTransactionManager abstractPlatformTransactionManager =
+			new PortalTransactionManager(dataSource, sessionFactory);
 
 		Properties properties = PropsUtil.getProperties(
 			"transaction.manager.property.", true);
@@ -41,13 +41,11 @@ public class TransactionManagerFactory {
 
 			String value = properties.getProperty(key);
 
-			BeanUtil.pojo.setProperty(portalTransactionManager, key, value);
+			BeanUtil.pojo.setProperty(
+				abstractPlatformTransactionManager, key, value);
 		}
 
-		portalTransactionManager.setDataSource(dataSource);
-		portalTransactionManager.setSessionFactory(sessionFactory);
-
-		return portalTransactionManager;
+		return abstractPlatformTransactionManager;
 	}
 
 }

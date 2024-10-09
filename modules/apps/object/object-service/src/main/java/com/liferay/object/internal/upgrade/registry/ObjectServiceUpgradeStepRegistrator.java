@@ -484,6 +484,11 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"10.0.0", "10.0.1", new ObjectDefinitionPortletIdUpgradeProcess());
+
+		registry.register(
+			"10.0.1", "10.1.0",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectEntry", "externalReferenceCode", "VARCHAR(255)"));
 	}
 
 	@Reference

@@ -84,38 +84,41 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Page<Field> page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
-			_getObjectDefinitionInternalClassName(objectDefinition1.getName()),
+			"com.liferay.object.rest.dto.v1_0.ObjectEntry%23" +
+				objectDefinition1.getName(),
 			null);
 
 		String manyToOneObjectRelationship1Name =
 			manyToOneObjectRelationship1.getName();
 
-		String manyToOneObjectRelationship1IdFieldName = StringBundler.concat(
-			"r_", manyToOneObjectRelationship1Name, "_",
-			objectDefinition2.getPKObjectFieldName());
+		String manyToOneObjectRelationship1PKObjectFieldName =
+			StringBundler.concat(
+				"r_", manyToOneObjectRelationship1Name, "_",
+				objectDefinition2.getPKObjectFieldName());
 
-		String manyToOneObjectRelationship1ERCFieldName =
+		String manyToOneObjectRelationship1ERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 				ObjectFieldLocalServiceUtil.getObjectField(
 					objectDefinition1.getObjectDefinitionId(),
-					manyToOneObjectRelationship1IdFieldName));
+					manyToOneObjectRelationship1PKObjectFieldName));
 
 		String manyToOneObjectRelationship2Name =
 			manyToOneObjectRelationship2.getName();
 
-		String manyToOneObjectRelationship2IdFieldName = StringBundler.concat(
-			"r_", manyToOneObjectRelationship2Name, "_",
-			objectDefinition2.getPKObjectFieldName());
+		String manyToOneObjectRelationship2PKObjectFieldName =
+			StringBundler.concat(
+				"r_", manyToOneObjectRelationship2Name, "_",
+				objectDefinition2.getPKObjectFieldName());
 
-		String manyToOneObjectRelationship2ERCFieldName =
+		String manyToOneObjectRelationship2ERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 				ObjectFieldLocalServiceUtil.getObjectField(
 					objectDefinition1.getObjectDefinitionId(),
-					manyToOneObjectRelationship2IdFieldName));
+					manyToOneObjectRelationship2PKObjectFieldName));
 
 		assertEqualsIgnoringOrder(
 			ListUtil.fromArray(
@@ -135,23 +138,23 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					manyToOneObjectRelationship1Name, false, "object", null),
 				_toField(
 					manyToOneObjectRelationship1Name,
-					manyToOneObjectRelationship1IdFieldName, false, "integer",
-					null),
+					manyToOneObjectRelationship1PKObjectFieldName, false,
+					"integer", null),
 				_toField(
 					manyToOneObjectRelationship1Name,
-					manyToOneObjectRelationship1ERCFieldName, false, "string",
-					null),
+					manyToOneObjectRelationship1ERCObjectFieldName, false,
+					"string", null),
 				_toField(
 					manyToOneObjectRelationship2Name,
 					manyToOneObjectRelationship2Name, false, "object", null),
 				_toField(
 					manyToOneObjectRelationship2Name,
-					manyToOneObjectRelationship2IdFieldName, false, "integer",
-					null),
+					manyToOneObjectRelationship2PKObjectFieldName, false,
+					"integer", null),
 				_toField(
 					manyToOneObjectRelationship2Name,
-					manyToOneObjectRelationship2ERCFieldName, false, "string",
-					null)),
+					manyToOneObjectRelationship2ERCObjectFieldName, false,
+					"string", null)),
 			ListUtil.fromCollection(page.getItems()));
 	}
 
@@ -160,13 +163,6 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 		return new String[] {
 			"anyOfGroup", "name", "required", "type", "unsupportedFormats"
 		};
-	}
-
-	private String _getObjectDefinitionInternalClassName(
-		String objectDefinitionName) {
-
-		return "com.liferay.object.rest.dto.v1_0.ObjectEntry%23" +
-			objectDefinitionName;
 	}
 
 	private Field _toField(

@@ -21,7 +21,6 @@ import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.internal.SessionImpl;
 import org.hibernate.jdbc.Work;
 
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.SessionHolder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -35,19 +34,18 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 public class PortletTransactionManager implements PlatformTransactionManager {
 
 	public PortletTransactionManager(
-		HibernateTransactionManager portalHibernateTransactionManager,
+		PortalTransactionManager portalTransactionManager,
 		SessionFactoryImplementor sessionFactoryImplementor) {
 
-		this(
-			portalHibernateTransactionManager, () -> sessionFactoryImplementor);
+		this(portalTransactionManager, () -> sessionFactoryImplementor);
 	}
 
 	public PortletTransactionManager(
-		HibernateTransactionManager portalHibernateTransactionManager,
+		PortalTransactionManager portalTransactionManager,
 		Supplier<SessionFactoryImplementor>
 			portletSessionFactoryImplementorSupplier) {
 
-		_portalHibernateTransactionManager = portalHibernateTransactionManager;
+		_portalTransactionManager = portalTransactionManager;
 		_portletSessionFactoryImplementorSupplier =
 			portletSessionFactoryImplementorSupplier;
 	}
@@ -57,7 +55,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		throws TransactionException {
 
 		if (!(transactionStatus instanceof TransactionStatusWrapper)) {
-			_portalHibernateTransactionManager.commit(transactionStatus);
+			_portalTransactionManager.commit(transactionStatus);
 
 			return;
 		}
@@ -79,10 +77,10 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		}
 		finally {
 			if (throwable1 == null) {
-				_portalHibernateTransactionManager.commit(transactionStatus);
+				_portalTransactionManager.commit(transactionStatus);
 			}
 			else {
-				_portalHibernateTransactionManager.rollback(transactionStatus);
+				_portalTransactionManager.rollback(transactionStatus);
 			}
 		}
 	}
@@ -97,12 +95,11 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		throws TransactionException {
 
 		TransactionStatus portalTransactionStatus =
-			_portalHibernateTransactionManager.getTransaction(
-				transactionDefinition);
+			_portalTransactionManager.getTransaction(transactionDefinition);
 
 		SessionHolder portalSessionHolder =
 			(SessionHolder)SpringHibernateThreadLocalUtil.getResource(
-				_portalHibernateTransactionManager.getSessionFactory());
+				_portalTransactionManager.getSessionFactory());
 
 		if (portalSessionHolder == null) {
 			return portalTransactionStatus;
@@ -165,7 +162,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		throws TransactionException {
 
 		if (!(transactionStatus instanceof TransactionStatusWrapper)) {
-			_portalHibernateTransactionManager.rollback(transactionStatus);
+			_portalTransactionManager.rollback(transactionStatus);
 
 			return;
 		}
@@ -179,7 +176,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 			transactionStatusWrapper.reset();
 		}
 		finally {
-			_portalHibernateTransactionManager.rollback(transactionStatus);
+			_portalTransactionManager.rollback(transactionStatus);
 		}
 	}
 
@@ -232,8 +229,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		return connectionHolder.getConnection();
 	}
 
-	private final HibernateTransactionManager
-		_portalHibernateTransactionManager;
+	private final PortalTransactionManager _portalTransactionManager;
 	private final Supplier<SessionFactoryImplementor>
 		_portletSessionFactoryImplementorSupplier;
 

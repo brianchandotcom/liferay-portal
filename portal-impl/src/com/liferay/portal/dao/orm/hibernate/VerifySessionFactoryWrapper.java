@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.hibernate.PortalTransactionManager;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutorThreadLocal;
@@ -28,7 +29,6 @@ import java.util.function.Function;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.metamodel.spi.MetamodelImplementor;
 
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
@@ -139,13 +139,13 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 		SessionFactoryImplementor targetSessionFactoryImplementor =
 			_sessionFactoryImpl.getSessionFactoryImplementor();
 
-		if (platformTransactionManager instanceof HibernateTransactionManager) {
-			HibernateTransactionManager hibernateTransactionManager =
-				(HibernateTransactionManager)platformTransactionManager;
+		if (platformTransactionManager instanceof PortalTransactionManager) {
+			PortalTransactionManager portalTransactionManager =
+				(PortalTransactionManager)platformTransactionManager;
 
 			SessionFactoryImplementor currentSessionFactoryImplementor =
 				(SessionFactoryImplementor)
-					hibernateTransactionManager.getSessionFactory();
+					portalTransactionManager.getSessionFactory();
 
 			if (targetSessionFactoryImplementor ==
 					currentSessionFactoryImplementor) {

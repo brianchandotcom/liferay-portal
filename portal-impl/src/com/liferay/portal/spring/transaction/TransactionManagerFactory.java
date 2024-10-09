@@ -5,7 +5,7 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.spring.hibernate.LastSessionRecorderHibernateTransactionManager;
+import com.liferay.portal.spring.hibernate.PortalTransactionManager;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Enumeration;
@@ -29,7 +29,7 @@ public class TransactionManagerFactory {
 		DataSource dataSource, SessionFactory sessionFactory) {
 
 		HibernateTransactionManager hibernateTransactionManager =
-			new LastSessionRecorderHibernateTransactionManager();
+			new PortalTransactionManager();
 
 		Properties properties = PropsUtil.getProperties(
 			"transaction.manager.property.", true);

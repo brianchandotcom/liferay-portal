@@ -18,7 +18,7 @@ import org.springframework.orm.hibernate5.SessionHolder;
 /**
  * @author Shuyang Zhou
  */
-public class LastSessionRecorderHibernateTransactionManager
+public class PortalTransactionManager
 	extends HibernateTransactionManager {
 
 	@Override

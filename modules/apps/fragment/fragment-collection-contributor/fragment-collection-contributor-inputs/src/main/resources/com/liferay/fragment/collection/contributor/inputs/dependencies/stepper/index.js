@@ -19,7 +19,7 @@ function saveActiveIndexInSession(index) {
 	);
 }
 
-function setActiveStep(index, {sendEvent = true} = {}) {
+function setActiveStep(stepIndex, {sendEvent = true} = {}) {
 
 	// Deactivate current active step if it exists
 
@@ -27,9 +27,13 @@ function setActiveStep(index, {sendEvent = true} = {}) {
 
 	activeStep?.classList.remove('active');
 
-	// Set new active step, save index in session if it's edit mode
+	// Get step from event or get the last one if it does not exist
+
+	const index = stepIndex < steps.length ? stepIndex : steps.length - 1;
 
 	const step = steps[index];
+
+	// Set new active step, save index in session if it's edit mode
 
 	step.classList.add('active');
 

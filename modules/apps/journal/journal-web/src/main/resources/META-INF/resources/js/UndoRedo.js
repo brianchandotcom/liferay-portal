@@ -506,15 +506,20 @@ export default function UndoRedo({
 									return (
 										index > 0 && (
 											<ClayDropDown.Item
-												disabled={step === index}
+												active={step === index}
 												key={index}
 												onClick={() => {
+													if (index === step) {
+														return;
+													}
+
 													Liferay.fire(
 														'journal:goto',
 														{
 															step: index,
 														}
 													);
+
 													if (index < step) {
 														let i = step;
 														while (i > index) {
@@ -550,16 +555,22 @@ export default function UndoRedo({
 							<ClayDropDown.Divider />
 
 							<ClayDropDown.Item
-								disabled={step === 0}
+								active={step === 0}
 								onClick={() => {
+									if (step === 0) {
+										return;
+									}
+
 									Liferay.fire('journal:goto', {
 										step: 0,
 									});
+
 									let i = step;
 									while (i > 0) {
 										i--;
 										handleUndo(i);
 									}
+
 									setActive(false);
 								}}
 							>

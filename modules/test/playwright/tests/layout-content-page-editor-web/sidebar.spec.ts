@@ -412,6 +412,16 @@ test.describe('Fragments Panel', () => {
 		await page.getByRole('tab', {exact: true, name: 'Widgets'}).click();
 
 		await expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
+
+		// Check that the order is maintained on the widget page
+
+		await page.goto(`/search`);
+
+		await page.getByLabel('Add').click();
+
+		await expect(
+			page.locator('.panel-header', {hasNotText: 'Highlighted'}).nth(2)
+		).toContainText(firstWidgetSet);
 	});
 
 	test('Save interactions with the panel when the page is refresh', async ({

@@ -17,14 +17,18 @@ import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -34,7 +38,9 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.core.Response;
 
@@ -61,6 +67,14 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Override
+	@Test
+	public void testGetRegion() throws Exception {
+		super.testGetRegion();
+
+		_testGetRegionNames();
 	}
 
 	@Override
@@ -387,6 +401,44 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		}
 	}
 
+	private void _testGetRegionNames() throws Exception {
+		Region region = testGetRegion_addRegion();
+
+		Set<Locale> originalAvailableLocales =
+			_language.getCompanyAvailableLocales(
+				TestPropsValues.getCompanyId());
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Locale locale : originalAvailableLocales) {
+			sb.append(
+				locale.toString()
+			).append(
+				","
+			);
+		}
+
+		_companyLocalService.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			UnicodePropertiesBuilder.put(
+				"locales", "en_US,pt_BR"
+			).build());
+
+		Region getRegion = regionResource.getRegion(region.getId());
+
+		_companyLocalService.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			UnicodePropertiesBuilder.put(
+				"locales", sb.toString()
+			).build());
+
+		Map<String, String> titleMap = getRegion.getTitle_i18n();
+
+		Assert.assertEquals(titleMap.toString(), 2, titleMap.size());
+		Assert.assertTrue(titleMap.containsKey("en_US"));
+		Assert.assertTrue(titleMap.containsKey("pt_BR"));
+	}
+
 	private <T extends Exception> void _testPostCountryRegionProblem(
 			Region region, Class<T> exceptionClass)
 		throws Exception {
@@ -406,6 +458,9 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 			() -> regionResource.putRegionHttpResponse(regionId, region));
 	}
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	@DeleteAfterTestRun
 	private Country _country;
 
@@ -414,6 +469,9 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private RegionLocalService _regionLocalService;

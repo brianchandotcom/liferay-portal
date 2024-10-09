@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -39,6 +40,8 @@ public class LayoutActionsHelperTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpLayoutLocalServiceUtil();
+
+		_layoutPermissionUtilMockedStatic.reset();
 	}
 
 	@After
@@ -59,6 +62,105 @@ public class LayoutActionsHelperTest {
 			null, _themeDisplay, null);
 
 		Assert.assertFalse(layoutActionsHelper.isShowDeleteAction(layout));
+	}
+
+	@Test
+	@TestInfo("LPS-140136")
+	public void testIsShowDiscardDraftAction() throws PortalException {
+		Layout layout = _getLayout(_getGroup());
+
+		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
+			null, _themeDisplay, null);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowDiscardDraftActions(layout));
+
+		_setUpLayoutPermissionUtil(layout, ActionKeys.UPDATE);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowDiscardDraftActions(layout));
+
+		Mockito.when(
+			layout.isTypeContent()
+		).thenReturn(
+			true
+		);
+
+		Layout draftLayout = _getLayout(layout.getGroup());
+
+		Mockito.when(
+			layout.fetchDraftLayout()
+		).thenReturn(
+			draftLayout
+		);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowDiscardDraftActions(layout));
+
+		Mockito.when(
+			draftLayout.isDraft()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			layoutActionsHelper.isShowDiscardDraftActions(layout));
+
+		_setUpLayoutPermissionUtil(layout);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowDiscardDraftActions(layout));
+	}
+
+	@Test
+	@TestInfo("LPS-140136")
+	public void testIsShowPreviewDraftAction() throws PortalException {
+		Layout layout = _getLayout(_getGroup());
+
+		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
+			null, _themeDisplay, null);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowPreviewDraftActions(layout));
+
+		_setUpPreviewDraftPermission(layout);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowPreviewDraftActions(layout));
+
+		Layout draftLayout = _getLayout(layout.getGroup());
+
+		Mockito.when(
+			layout.fetchDraftLayout()
+		).thenReturn(
+			draftLayout
+		);
+
+		Assert.assertTrue(
+			layoutActionsHelper.isShowPreviewDraftActions(layout));
+
+		Mockito.when(
+			layout.isPublished()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowPreviewDraftActions(layout));
+
+		Mockito.when(
+			draftLayout.isDraft()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			layoutActionsHelper.isShowPreviewDraftActions(layout));
+
+		_layoutPermissionUtilMockedStatic.reset();
+
+		Assert.assertFalse(
+			layoutActionsHelper.isShowPreviewDraftActions(layout));
 	}
 
 	private Group _getGroup() {
@@ -109,8 +211,6 @@ public class LayoutActionsHelperTest {
 	private void _setUpLayoutPermissionUtil(
 		Layout layout, String... actionIds) {
 
-		_layoutPermissionUtilMockedStatic.reset();
-
 		_layoutPermissionUtilMockedStatic.when(
 			() -> LayoutPermissionUtil.contains(
 				Mockito.eq(_themeDisplay.getPermissionChecker()),
@@ -118,6 +218,15 @@ public class LayoutActionsHelperTest {
 		).thenAnswer(
 			(Answer<Boolean>)invocationOnMock -> ArrayUtil.contains(
 				actionIds, invocationOnMock.getArgument(2, String.class))
+		);
+	}
+
+	private void _setUpPreviewDraftPermission(Layout layout) {
+		_layoutPermissionUtilMockedStatic.when(
+			() -> LayoutPermissionUtil.containsLayoutPreviewDraftPermission(
+				_themeDisplay.getPermissionChecker(), layout)
+		).thenReturn(
+			true
 		);
 	}
 

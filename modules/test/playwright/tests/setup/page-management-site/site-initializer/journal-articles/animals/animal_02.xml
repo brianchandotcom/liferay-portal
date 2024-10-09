@@ -23,6 +23,14 @@
 		<dynamic-content language-id="en_US"><![CDATA[Japan]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[Japon]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="k5O9gJvu" name="Link" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[https://en.wikipedia.org/wiki/Cat]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="MainImage" index-type="text" instance-id="pkc7g3J9" name="MainImage" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/cats.jpg$]]]>
+		</dynamic-content>
+	</dynamic-element>
 	<dynamic-element field-reference="Species" index-type="" instance-id="usr27yce" name="Species" type="fieldset">
 		<dynamic-element field-reference="SpeciesName" index-type="text" instance-id="pqm3qtun" name="SpeciesName" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[Sphynx]]></dynamic-content>

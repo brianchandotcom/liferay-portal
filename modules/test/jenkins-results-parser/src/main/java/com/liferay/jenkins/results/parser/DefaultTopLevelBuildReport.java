@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -238,9 +240,41 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			"name", testResult.getDisplayName()
 		).put(
 			"status", testResult.getStatus()
+		).put(
+			"testTaskName", _getTestTaskName(testResult)
 		);
 
 		return testResultJSONObject;
+	}
+
+	private String _getTestTaskName(TestResult testResult) {
+		if (!(testResult instanceof JUnitTestResult)) {
+			return null;
+		}
+
+		TestClassResult testClassResult = testResult.getTestClassResult();
+
+		if (testClassResult == null) {
+			return null;
+		}
+
+		TestClass testClass = testClassResult.getTestClass();
+
+		if (testClass == null) {
+			return null;
+		}
+
+		Matcher matcher = _testClassFilePathPattern.matcher(
+			String.valueOf(testClass.getTestClassFile()));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String relativePath = matcher.group("relativePath");
+
+		return JenkinsResultsParserUtil.combine(
+			relativePath.replaceAll("\\/", ":"), ":", matcher.group("type"));
 	}
 
 	private static final long _TIMEOUT = 60L * 60L * 6L;
@@ -249,6 +283,8 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		"(?<batchName>[^/]+)/[^/]+/[^/]+");
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
+	private static final Pattern _testClassFilePathPattern = Pattern.compile(
+		".+/modules(?<relativePath>/.+)/src/(?<type>test|testIntegration)/.*");
 
 	private final File _jenkinsConsoleLocalFile;
 	private final TopLevelBuild _topLevelBuild;

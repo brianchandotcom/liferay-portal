@@ -3,11 +3,6 @@
 		"addNewPages": "Yes",
 		"menuItems": [
 			{
-				"friendlyURL": "/account-management",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
 				"friendlyURL": "/catalog",
 				"privateLayout": false,
 				"type": "layout"
@@ -42,6 +37,16 @@
 				"privateLayout": false,
 				"title": "Orders",
 				"type": "node"
+			},
+			{
+				"friendlyURL": "/returns",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/account-management",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "Commerce Classic Primary Navigation"

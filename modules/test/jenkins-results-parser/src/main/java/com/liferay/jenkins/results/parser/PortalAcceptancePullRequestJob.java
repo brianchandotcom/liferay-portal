@@ -161,7 +161,7 @@ public class PortalAcceptancePullRequestJob
 
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(this);
 
-		List<TestBatch> testBatches = relevantTestSuite.getTestBatches();
+		List<TestBatch> testBatches = relevantTestSuite.getTestBatches(true);
 
 		recordJobProperties(relevantTestSuite.getTestBatchNamesJobProperties());
 

@@ -39,7 +39,7 @@ public class RelevantTestSuite {
 			portalAcceptancePullRequestJob);
 	}
 
-	public List<TestBatch> getTestBatches() {
+	public List<TestBatch> getTestBatches(boolean runValidationLogic) {
 		File baseTestPropertiesFile = new File(
 			_relevantRuleEngine.getBaseDir(), "test.properties");
 
@@ -54,10 +54,19 @@ public class RelevantTestSuite {
 					baseTestPropertiesFile);
 		}
 
+		List<RelevantRule> relevantRules =
+				_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
+
+		Collections.sort(relevantRules);
+
 		try {
-			RelevantRuleValidation.validate(
-				_portalGitWorkingDirectory.getGitRepositoryName(),
-				_portalGitWorkingDirectory.getUpstreamBranchName());
+			if (runValidationLogic) {
+				RelevantRuleValidation.validate(
+						_portalGitWorkingDirectory.getGitRepositoryName(),
+						_portalGitWorkingDirectory.getUpstreamBranchName());
+			} else {
+				RelevantRuleValidation.validate(relevantRules);
+			}
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -67,11 +76,6 @@ public class RelevantTestSuite {
 			testBatchNamesPropertyValue.split(","));
 
 		List<TestBatch> testBatches = new ArrayList<>();
-
-		List<RelevantRule> relevantRules =
-			_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
-
-		Collections.sort(relevantRules);
 
 		System.out.println(
 			"There are " + relevantRules.size() + " matching relevant rules: " +

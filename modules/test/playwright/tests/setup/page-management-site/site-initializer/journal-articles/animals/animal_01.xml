@@ -23,6 +23,14 @@
 		<dynamic-content language-id="en_US"><![CDATA[United Kingdom]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[Reino Unido]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="k5O9gJvu" name="Link" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[https://en.wikipedia.org/wiki/Dog]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="MainImage" index-type="text" instance-id="6tF6cZDv" name="MainImage" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/dogs.jpg$]]]>
+		</dynamic-content>
+	</dynamic-element>
 	<dynamic-element field-reference="Species" index-type="" instance-id="usr27yce" name="Species" type="fieldset">
 		<dynamic-element field-reference="SpeciesName" index-type="text" instance-id="pqm3qtun" name="SpeciesName" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[Poodle]]></dynamic-content>

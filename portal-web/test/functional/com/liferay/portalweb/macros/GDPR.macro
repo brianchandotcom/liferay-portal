@@ -295,7 +295,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterByApplications(totalItemsCount = null, webContent = null, applicationItemsCount = null, applications = null) {
+	macro filterByApplications(totalItemsCount = null, customObject = null, webContent = null, applicationItemsCount = null, applications = null) {
 		Click.clickNoWaitForVisible(
 			key_selectData = ${applications},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
@@ -303,6 +303,12 @@ definition {
 		if (isSet(webContent)) {
 			Click.clickNoWaitForVisible(
 				key_selectData = ${webContent},
+				locator1 = "DataErasure#REVIEW_DATA_SELECT");
+		}
+
+		if (isSet(customObject)) {
+			Click.clickNoWaitForVisible(
+				key_selectData = ${customObject},
 				locator1 = "DataErasure#REVIEW_DATA_SELECT");
 		}
 

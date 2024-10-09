@@ -181,6 +181,40 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testAddArticleWithoutFriendlyURLWithTitleWithTrailingSlashes()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		Locale defaultLocale = _portal.getSiteDefaultLocale(
+			_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			null, _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true,
+			HashMapBuilder.put(
+				defaultLocale, "test///"
+			).build(),
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			RandomTestUtil.randomLocaleStringMap(), null, defaultLocale, null,
+			null, true, true, serviceContext);
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		Assert.assertFalse(friendlyURLMap.isEmpty());
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			Assert.assertEquals("test", entry.getValue());
+		}
+	}
+
+	@Test
 	public void testAddArticleWithURLWithURLWithConsecutiveSlashes()
 		throws Exception {
 

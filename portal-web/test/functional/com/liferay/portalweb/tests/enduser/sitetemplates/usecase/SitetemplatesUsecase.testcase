@@ -633,9 +633,13 @@ definition {
 
 			PortletEntry.inputTitle(title = "Web Content Title");
 
+			var cleanEntryExternalURL = StringUtil.replace(${entryExternalURL}, "http://", "");
+
+			WaitForVisible(locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
+
 			CKEditor.addEntryExternalURL(
 				displayText = ${entryExternalURL},
-				entryExternalURL = ${entryExternalURL},
+				entryExternalURL = ${cleanEntryExternalURL},
 				fieldLabel = "Content");
 
 			PortletEntry.publish();

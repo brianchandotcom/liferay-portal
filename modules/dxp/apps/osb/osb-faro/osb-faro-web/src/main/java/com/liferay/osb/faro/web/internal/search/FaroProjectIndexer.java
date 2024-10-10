@@ -162,6 +162,15 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 		document.addKeyword(
 			"corpProjectUuid", faroProject.getCorpProjectUuid());
 		document.addDate("createDate", new Date(faroProject.getCreateTime()));
+		document.addKeyword(
+			"dataSourceConnected", faroProject.getDataSourceConnected());
+		document.addNumber(
+			"individualsLimit", faroSubscriptionDisplay.getIndividualsLimit());
+		document.addDate(
+			"lastAnniversaryDate",
+			faroSubscriptionDisplay.getLastAnniversaryDate());
+		document.addDate(
+			"lastAccessDate", new Date(faroProject.getLastAccessTime()));
 
 		FaroSubscriptionDisplay faroSubscriptionDisplay = JSONUtil.readValue(
 			faroProject.getSubscription(), FaroSubscriptionDisplay.class);
@@ -188,15 +197,6 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			_log.error(exception);
 		}
 
-		document.addKeyword(
-			"dataSourceConnected", faroProject.getDataSourceConnected());
-		document.addDate(
-			"lastAnniversaryDate",
-			faroSubscriptionDisplay.getLastAnniversaryDate());
-		document.addNumber(
-			"individualsLimit", faroSubscriptionDisplay.getIndividualsLimit());
-		document.addDate(
-			"lastAccessDate", new Date(faroProject.getLastAccessTime()));
 		document.addNumber(
 			"pageViewsLimit", faroSubscriptionDisplay.getPageViewsLimit());
 		document.addKeyword(

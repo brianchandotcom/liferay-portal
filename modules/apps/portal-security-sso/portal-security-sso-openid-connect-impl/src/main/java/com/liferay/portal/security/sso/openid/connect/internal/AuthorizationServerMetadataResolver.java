@@ -58,10 +58,6 @@ public class AuthorizationServerMetadataResolver {
 				httpResponse.getStatusMessage());
 		}
 
-		if (metadataCacheInSecs == 0) {
-			metadataCacheInSecs = Integer.MAX_VALUE;
-		}
-
 		oidcProviderMetadata = OIDCProviderMetadata.parse(
 			httpResponse.getContent());
 

@@ -80,20 +80,6 @@ public class IndexActionsDisplayContextBuilder {
 
 		indexActionsDisplayContext.setData(getData());
 
-		if (_isStatsInformationAvailable()) {
-			StatsInformation statsInformation =
-				_statsInformationFactory.getStatsInformation();
-
-			indexActionsDisplayContext.setAvailableDiskSpace(
-				statsInformation.getAvailableDiskSpace());
-			indexActionsDisplayContext.setCurrentDiskSpaceUsed(
-				statsInformation.getUsedDiskSpace());
-			indexActionsDisplayContext.setIsLowOnDiskSpace(
-				_isLowOnDiskSpace(
-					statsInformation.getAvailableDiskSpace(),
-					statsInformation.getSizeOfLargestIndex()));
-		}
-
 		return indexActionsDisplayContext;
 	}
 

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -70,10 +71,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		long assetCategoryId = assetCategoryIdJSONObject.getLong("value");
 
-		JSONObject groupAssetCategoryExternalReferenceCodesJSONObject =
-			_jsonFactory.createJSONObject();
-
-		return groupAssetCategoryExternalReferenceCodesJSONObject.put(
+		return JSONUtil.put(
 			"label", _getLabel(assetCategoryId)
 		).put(
 			"value", _getExternalReferenceCode(assetCategoryId)
@@ -201,15 +199,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 						mustNotJSONObject.remove("term");
 
-						JSONObject termsJSONObject =
-							_jsonFactory.createJSONObject();
-
-						termsJSONObject.put(
-							"groupAssetCategoryExternalReferenceCodes",
-							"${configuration.group_asset_category_external_" +
-								"reference_codes}");
-
-						mustNotJSONObject.put("terms", termsJSONObject);
+						mustNotJSONObject.put(
+							"terms",
+							JSONUtil.put(
+								"groupAssetCategoryExternalReferenceCodes",
+								"${configuration.group_asset_category_" +
+									"external_reference_codes}"));
 
 						break;
 					}
@@ -217,18 +212,15 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				else {
 					queryJSONObject.remove("term");
 
-					JSONObject termsJSONObject =
-						_jsonFactory.createJSONObject();
-
-					termsJSONObject.put(
-						"boost", "${configuration.boost}"
-					).put(
-						"groupAssetCategoryExternalReferenceCodes",
-						"${configuration." +
-							"group_asset_category_external_reference_codes}"
-					);
-
-					queryJSONObject.put("terms", termsJSONObject);
+					queryJSONObject.put(
+						"terms",
+						JSONUtil.put(
+							"boost", "${configuration.boost}"
+						).put(
+							"groupAssetCategoryExternalReferenceCodes",
+							"${configuration." +
+								"group_asset_category_external_reference_codes}"
+						));
 				}
 			}
 		}
@@ -276,11 +268,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONObject queryJSONObject)
 		throws Exception {
 
-		JSONObject groupAssetCategoryExternalReferenceCodesJSONObject =
-			_jsonFactory.createJSONObject();
-
-		long[] assetCategoryIds;
-		double boost;
+		long[] assetCategoryIds = null;
+		double boost = 0;
 
 		if (queryJSONObject.has("term")) {
 			JSONObject termJSONObject = queryJSONObject.getJSONObject("term");
@@ -300,15 +289,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			boost = termsJSONObject.getDouble("boost");
 		}
 
-		groupAssetCategoryExternalReferenceCodesJSONObject.put(
-			"boost", boost
-		).put(
-			"groupAssetCategoryExternalReferenceCodes",
-			_translateIdsToExternalReferencesCodes(assetCategoryIds)
-		);
-
 		queryJSONObject.put(
-			"terms", groupAssetCategoryExternalReferenceCodesJSONObject);
+			"terms",
+			JSONUtil.put(
+				"boost", boost
+			).put(
+				"groupAssetCategoryExternalReferenceCodes",
+				_translateIdsToExternalReferencesCodes(assetCategoryIds)
+			));
 	}
 
 	private void _upgradeConfigurationEntryForHideElements(
@@ -328,15 +316,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			mustNotJSONObject.remove("term");
 
-			JSONObject groupAssetCategoryExternalReferenceCodesJSONObject =
-				_jsonFactory.createJSONObject();
-
-			groupAssetCategoryExternalReferenceCodesJSONObject.put(
-				"groupAssetCategoryExternalReferenceCodes",
-				_translateIdsToExternalReferencesCodes(assetCategoryIds));
-
 			mustNotJSONObject.put(
-				"terms", groupAssetCategoryExternalReferenceCodesJSONObject);
+				"terms",
+				JSONUtil.put(
+					"groupAssetCategoryExternalReferenceCodes",
+					_translateIdsToExternalReferencesCodes(assetCategoryIds)));
 		}
 	}
 

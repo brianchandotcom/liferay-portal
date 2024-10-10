@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -20,6 +22,7 @@ import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -31,9 +34,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.encryptor.Encryptor;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,6 +56,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.security.Key;
 
@@ -60,6 +71,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Andrea Sbarra
  * @author Alessio Antonio Rendina
+ * @author Gianmarco Brunialti Masera
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/placed-order.properties",
@@ -119,6 +131,61 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		return getChannelAccountPlacedOrdersPage(
 			accountEntry.getAccountEntryId(),
 			commerceChannel.getCommerceChannelId(), pagination);
+	}
+
+	@Override
+	public Page<PlacedOrder> getChannelByExternalReferenceCodePlacedOrdersPage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return getChannelPlacedOrdersPage(
+			commerceChannel.getCommerceChannelId(), search, filter, pagination,
+			sorts);
+	}
+
+	@Override
+	public Page<PlacedOrder> getChannelPlacedOrdersPage(
+			Long channelId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
+
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			filter, CommerceOrder.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"commerceAccountIds",
+					_getCommerceAccountIds(commerceChannel.getGroupId()));
+				searchContext.setAttribute("negateOrderStatuses", Boolean.TRUE);
+				searchContext.setAttribute(
+					"orderStatuses",
+					new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN});
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(
+					new long[] {commerceChannel.getGroupId()});
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+
+				searchContext.setUserId(0);
+			},
+			sorts,
+			document -> _toPlacedOrder(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -266,6 +333,22 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		return _toPlacedOrder(commerceOrder.getCommerceOrderId());
 	}
 
+	private long[] _getCommerceAccountIds(long groupId) throws PortalException {
+		PortletResourcePermission portletResourcePermission =
+			_commerceOrderModelResourcePermission.
+				getPortletResourcePermission();
+
+		if (!portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), groupId,
+				CommerceOrderActionKeys.MANAGE_ALL_ACCOUNTS)) {
+
+			return _commerceAccountHelper.getUserCommerceAccountIds(
+				contextUser.getUserId(), groupId);
+		}
+
+		return null;
+	}
+
 	private String _getPlacedOrderConfirmationCheckoutStepURL(
 			CommerceOrder commerceOrder)
 		throws Exception {
@@ -381,6 +464,9 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 	private AccountEntryService _accountEntryService;
 
 	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
@@ -391,6 +477,12 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

@@ -23,5 +23,6 @@ String checkoutURL = (String)request.getAttribute("liferay-commerce:order-action
 long commerceOrderId = (long)request.getAttribute("liferay-commerce:order-actions:commerceOrderId");
 List<DropdownItem> dropdownItems = (List<DropdownItem>)request.getAttribute("liferay-commerce:order-actions:dropdownItems");
 boolean open = (boolean)request.getAttribute("liferay-commerce:order-actions:open");
+String orderSummaryURL = (String)request.getAttribute("liferay-commerce:order-actions:orderSummaryURL");
 String reorderURL = (String)request.getAttribute("liferay-commerce:order-actions:reorderURL");
 %>

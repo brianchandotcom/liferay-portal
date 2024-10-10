@@ -18,6 +18,8 @@
 			).put(
 				"orderId", commerceOrderId
 			).put(
+				"orderSummaryURL", orderSummaryURL
+			).put(
 				"reorderURL", reorderURL
 			).build()
 		%>'

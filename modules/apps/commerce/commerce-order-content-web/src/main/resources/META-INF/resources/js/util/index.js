@@ -14,6 +14,7 @@ const EDITABLE_FIELDS = [
 	'shippingAddress',
 	'shippingMethod',
 ];
+export const PAYMENT_METHOD_TYPE_OFFLINE = 2;
 
 export function formatValue(value, type) {
 	if (type === 'address' && value) {

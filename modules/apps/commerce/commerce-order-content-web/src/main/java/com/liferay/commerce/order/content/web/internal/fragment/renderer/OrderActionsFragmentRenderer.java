@@ -12,6 +12,8 @@ import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOr
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceCheckoutStep;
+import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -114,6 +118,25 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				_getDropdownItems(commerceOrder, httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:open", commerceOrder.isOpen());
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-actions:orderSummaryURL",
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest,
+						CommercePortletKeys.COMMERCE_CHECKOUT,
+						PortletProvider.Action.VIEW)
+				).setParameter(
+					"checkoutStepName",
+					() -> {
+						CommerceCheckoutStep commerceCheckoutStep =
+							_commerceCheckoutStepRegistry.
+								getCommerceCheckoutStep("order-summary");
+
+						return commerceCheckoutStep.getName();
+					}
+				).setParameter(
+					"commerceOrderUuid", commerceOrder.getUuid()
+				).buildString());
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:reorderURL",
 				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
@@ -352,6 +375,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			OrderActionsFragmentRenderer.class,
 			FriendlyURLSeparatorProvider.class);
+
+	@Reference
+	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;

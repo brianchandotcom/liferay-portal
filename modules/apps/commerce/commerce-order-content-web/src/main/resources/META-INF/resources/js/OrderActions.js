@@ -9,33 +9,82 @@ import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {handleOrderActionRedirect} from './orderActionRedirectHelper';
+import {PAYMENT_METHOD_TYPE_OFFLINE, getOrder} from './util';
 
-function OrderActions({checkoutURL, isOpen, orderId, reorderURL}) {
-	const [open, setOpen] = useState(isOpen);
+function OrderActions({
+	checkoutURL,
+	isOpen,
+	orderId,
+	orderSummaryURL,
+	reorderURL,
+}) {
 	const [actions, setActions] = useState([]);
+	const [currentOrder, setCurrentOrder] = useState({});
+	const [open, setOpen] = useState(isOpen);
 
-	const getActions = useCallback(() => {
-		const getTransitions = open
-			? CommerceServiceProvider.DeliveryCartAPI('v1')
-					.getCartTransitionsById
-			: CommerceServiceProvider.DeliveryOrderAPI('v1')
-					.getOrderTransitionsById;
+	const getActions = useCallback(
+		({order}) => {
+			const getTransitions = open
+				? CommerceServiceProvider.DeliveryCartAPI('v1')
+						.getCartTransitionsById
+				: CommerceServiceProvider.DeliveryOrderAPI('v1')
+						.getOrderTransitionsById;
 
-		getTransitions(orderId)
-			.then((response) => {
-				setActions(response.items);
-			})
-			.catch((error) => {
-				openToast({
-					message:
-						error.message ||
-						Liferay.Language.get('an-unexpected-error-occurred'),
-					type: 'danger',
+			getTransitions(orderId)
+				.then((response) => {
+					const quickCheckoutTransition = response.items.find(
+						(item) => item.name === 'quick-checkout'
+					);
+
+					setActions(
+						open && !quickCheckoutTransition
+							? [
+									...response.items,
+									{
+										disabled: true,
+										label: Liferay.Language.get(
+											'quick-checkout'
+										),
+										name: 'quick-checkout',
+									},
+								]
+							: response.items
+					);
+
+					setCurrentOrder(order);
+				})
+				.catch((error) => {
+					openToast({
+						message:
+							error.message ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						type: 'danger',
+					});
 				});
-			});
-	}, [orderId, open]);
+		},
+		[orderId, open]
+	);
 
-	useEffect(() => getActions(), [getActions]);
+	useEffect(() => {
+		getOrder(open, null, orderId).then((order) => setCurrentOrder(order));
+	}, [open, orderId]);
+
+	useEffect(() => getActions({}), [getActions]);
+
+	useEffect(() => {
+		Liferay.on(commerceEvents.CART_UPDATED, getActions);
+		Liferay.on(commerceEvents.ORDER_INFORMATION_ALTERED, getActions);
+
+		return () => {
+			Liferay.detach(commerceEvents.CART_UPDATED, getActions);
+			Liferay.detach(
+				commerceEvents.ORDER_INFORMATION_ALTERED,
+				getActions
+			);
+		};
+	}, [getActions]);
 
 	const onClick = (event, action) => {
 		event.preventDefault();
@@ -44,8 +93,31 @@ function OrderActions({checkoutURL, isOpen, orderId, reorderURL}) {
 			handleOrderActionRedirect({
 				checkoutURL,
 				id: action.name,
-				reorderURL,
 			});
+		}
+		else if (action.name === 'quick-checkout') {
+			if (
+				currentOrder?.paymentMethodType === PAYMENT_METHOD_TYPE_OFFLINE
+			) {
+				CommerceServiceProvider.DeliveryCartAPI('v1')
+					.checkoutCartById(orderId)
+					.then(() => {
+						window.location.reload();
+					})
+					.catch((error) => {
+						openToast({
+							message:
+								error.message ||
+								Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
+							type: 'danger',
+						});
+					});
+			}
+			else {
+				window.location.href = orderSummaryURL;
+			}
 		}
 		else {
 			const executeTransitions = open
@@ -62,12 +134,11 @@ function OrderActions({checkoutURL, isOpen, orderId, reorderURL}) {
 						setOpen(response.open);
 					}
 					else {
-						getActions();
+						getActions({});
 					}
 
 					if (action.name === 'reorder') {
 						handleOrderActionRedirect({
-							checkoutURL,
 							id: response.name,
 							orderId: response.orderId,
 							reorderURL,
@@ -94,6 +165,7 @@ function OrderActions({checkoutURL, isOpen, orderId, reorderURL}) {
 					<ClayButton
 						aria-label={action.label}
 						className="mx-1"
+						disabled={action?.disabled}
 						displayType="primary"
 						onClick={(event) => onClick(event, action)}
 					>

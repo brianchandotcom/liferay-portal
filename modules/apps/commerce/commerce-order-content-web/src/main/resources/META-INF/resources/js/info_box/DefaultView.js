@@ -62,6 +62,7 @@ const DefaultView = ({
 				setValue(parseResponse(field, order));
 
 				onOpenChange(false);
+
 				Liferay.fire(commerceEvents.ORDER_INFORMATION_ALTERED, {order});
 			})
 			.catch((error) => {

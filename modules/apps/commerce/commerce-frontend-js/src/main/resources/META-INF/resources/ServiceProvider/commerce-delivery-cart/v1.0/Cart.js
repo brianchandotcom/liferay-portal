@@ -53,6 +53,9 @@ export default function Cart(basePath) {
 				channelId
 			),
 
+		checkoutCartById: (cartId) =>
+			AJAX.POST(`${resolveCartsPath(basePath, cartId)}/checkout`),
+
 		createCartByChannelId: (channelId, json) =>
 			AJAX.POST(
 				`${resolveChannelsPath(

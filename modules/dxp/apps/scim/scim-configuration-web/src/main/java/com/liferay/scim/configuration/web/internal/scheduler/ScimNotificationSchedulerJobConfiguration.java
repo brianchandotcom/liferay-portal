@@ -70,29 +70,25 @@ public class ScimNotificationSchedulerJobConfiguration
 		Date accessTokenExpirationDate, long currentTime,
 		Date lastNotificationDate) {
 
-		long timeLeftToExpiryAccessTokenMillis =
+		long accessTokenExpirationDurationMillis =
 			accessTokenExpirationDate.getTime() - currentTime;
 
-		long timeSinceLastNotificationsMillis =
+		long lastNotificationDurationMillis =
 			accessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
-		if (_isSendNotificationNeeded(
-				_DAY_FIRST_NOTIFICATION_MILLIS,
-				timeLeftToExpiryAccessTokenMillis,
-				timeSinceLastNotificationsMillis) ||
-			_isSendNotificationNeeded(
-				_DAY_SECOND_NOTIFICATION_MILLIS,
-				timeLeftToExpiryAccessTokenMillis,
-				timeSinceLastNotificationsMillis) ||
-			_isSendNotificationNeeded(
-				_DAY_THIRD_NOTIFICATION_MILLIS,
-				timeLeftToExpiryAccessTokenMillis,
-				timeSinceLastNotificationsMillis) ||
-			_isSendNotificationNeeded(
-				_DAY_EXPIRED_NOTIFICATION_MILLIS,
-				timeLeftToExpiryAccessTokenMillis,
-				timeSinceLastNotificationsMillis)) {
+		if (_isSendNotification(
+				30 * Time.DAY, accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis) ||
+			_isSendNotification(
+				10 * Time.DAY, accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis) ||
+			_isSendNotification(
+				Time.DAY, accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis) ||
+			_isSendNotification(
+				0, accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis)) {
 
 			return true;
 		}
@@ -112,12 +108,14 @@ public class ScimNotificationSchedulerJobConfiguration
 			lastNotificationDate);
 	}
 
-	private boolean _isSendNotificationNeeded(
-		long dayNotificationMillis, long timeLeftToExpireTokenMillis,
-		long timeSinceLastNotificationMillis) {
+	private boolean _isSendNotification(
+		long notificationDurationMillis,
+		long accessTokenExpirationDurationMillis,
+		long lastNotificationDurationMillis) {
 
-		if ((dayNotificationMillis >= timeLeftToExpireTokenMillis) &&
-			(timeSinceLastNotificationMillis > dayNotificationMillis)) {
+		if ((notificationDurationMillis >=
+				accessTokenExpirationDurationMillis) &&
+			(lastNotificationDurationMillis > notificationDurationMillis)) {
 
 			return true;
 		}
@@ -222,14 +220,6 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		subscriptionSender.flushNotifications();
 	}
-
-	private static final long _DAY_EXPIRED_NOTIFICATION_MILLIS = 0;
-
-	private static final long _DAY_FIRST_NOTIFICATION_MILLIS = 30 * Time.DAY;
-
-	private static final long _DAY_SECOND_NOTIFICATION_MILLIS = 10 * Time.DAY;
-
-	private static final long _DAY_THIRD_NOTIFICATION_MILLIS = Time.DAY;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScimNotificationSchedulerJobConfiguration.class);

@@ -42,7 +42,10 @@ export class SiteSettingsLocalizationPage {
 		await this.defaultLanguageOption.click();
 	}
 
-	async setCustomDefaultLanguage(languageOption: string, siteUrl?: Site['friendlyUrlPath']) {
+	async setCustomDefaultLanguage(
+		languageOption: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
 		if (siteUrl) {
 			this.goto(siteUrl);
 		}

@@ -6,8 +6,8 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import { PORTLET_URLS } from '../../utils/portletUrls';
-import { waitForAlert } from '../../utils/waitForAlert';
+import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export class SiteSettingsPage {
 	readonly page: Page;
@@ -19,8 +19,9 @@ export class SiteSettingsPage {
 		this.page = page;
 
 		this.productMenuPage = new ProductMenuPage(page);
-		this.saveButton = page.getByRole('button', { name: 'Save' })
-			.or(page.getByRole('button', { name: 'Update' }));
+		this.saveButton = page
+			.getByRole('button', {name: 'Save'})
+			.or(page.getByRole('button', {name: 'Update'}));
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

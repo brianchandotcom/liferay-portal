@@ -9,7 +9,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import { siteSettingsPagesTest } from '../../fixtures/siteSettingsPagesTest';
+import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
 import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -112,9 +112,9 @@ export const test = mergeTests(
 	clientExtensionsPageTest,
 	editJSClientExtensionsPageTest,
 	isolatedSiteTest,
-	siteSettingsPagesTest,
 	loginTest(),
-	pagesAdminPagesTest
+	pagesAdminPagesTest,
+	siteSettingsPagesTest
 );
 
 test('Create a new JS client extension with a script element attribute', async ({

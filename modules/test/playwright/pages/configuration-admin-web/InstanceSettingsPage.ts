@@ -33,7 +33,11 @@ export class InstanceSettingsPage {
 		await this.page.getByRole('menuitem', {name: 'Export'}).click();
 	}
 
-	async goToInstanceSetting(categoryKey: string, configurationName: string, nthChild?: number) {
+	async goToInstanceSetting(
+		categoryKey: string,
+		configurationName: string,
+		nthChild?: number
+	) {
 		await this.goto();
 
 		await this.page
@@ -43,18 +47,17 @@ export class InstanceSettingsPage {
 			})
 			.click();
 
-		const configurationMenuItem = this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: configurationName,
-			});
+		const configurationMenuItem = this.page.getByRole('menuitem', {
+			exact: true,
+			name: configurationName,
+		});
 
-        if (nthChild === undefined) {
-            await configurationMenuItem.first().click()
-        } else {    
-            await configurationMenuItem.nth(nthChild).click()
-        }
-
+		if (nthChild === undefined) {
+			await configurationMenuItem.first().click();
+		}
+		else {
+			await configurationMenuItem.nth(nthChild).click();
+		}
 	}
 
 	async goToSSO() {
@@ -62,17 +65,15 @@ export class InstanceSettingsPage {
 		await this.page.getByRole('link', {name: 'SSO'}).click();
 	}
 
-	async saveAndWaitForAlert(
-		{
-			autoClose,
-            text = 'Success:Your request completed successfully.',
-			type,
-		}: {
-			autoClose?: boolean;
-            text?: string,
-			type?: 'success' | 'info' | 'warning' | 'danger';
-		}
-	) {
+	async saveAndWaitForAlert({
+		autoClose,
+		text = 'Success:Your request completed successfully.',
+		type,
+	}: {
+		autoClose?: boolean;
+		text?: string;
+		type?: 'success' | 'info' | 'warning' | 'danger';
+	}) {
 		await this.saveButton.click();
 
 		await waitForAlert(this.page, text, {autoClose, type});

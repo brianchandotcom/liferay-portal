@@ -70,19 +70,31 @@ public class ScimNotificationSchedulerJobConfiguration
 		Date accessTokenExpirationDate, long currentTime,
 		Date lastNotificationDate) {
 
-		long toExpiryMillis = accessTokenExpirationDate.getTime() - currentTime;
+		long timeLeftToExpiryAccessTokenMillis =
+			accessTokenExpirationDate.getTime() - currentTime;
 
-		long toExpiryAtLastNotificationMillis =
+		long timeSinceLastNotificationsMillis =
 			accessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
-		for (long notificationDurationMillis : _NOTIFICATION_DURATION_MILLIS) {
-			if ((notificationDurationMillis >= toExpiryMillis) &&
-				(toExpiryAtLastNotificationMillis >
-					notificationDurationMillis)) {
+		if (_isSendNotificationNeeded(
+				_DAY_FIRST_NOTIFICATION_MILLIS,
+				timeLeftToExpiryAccessTokenMillis,
+				timeSinceLastNotificationsMillis) ||
+			_isSendNotificationNeeded(
+				_DAY_SECOND_NOTIFICATION_MILLIS,
+				timeLeftToExpiryAccessTokenMillis,
+				timeSinceLastNotificationsMillis) ||
+			_isSendNotificationNeeded(
+				_DAY_THIRD_NOTIFICATION_MILLIS,
+				timeLeftToExpiryAccessTokenMillis,
+				timeSinceLastNotificationsMillis) ||
+			_isSendNotificationNeeded(
+				_DAY_EXPIRED_NOTIFICATION_MILLIS,
+				timeLeftToExpiryAccessTokenMillis,
+				timeSinceLastNotificationsMillis)) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;
@@ -98,6 +110,19 @@ public class ScimNotificationSchedulerJobConfiguration
 		return isSendNotification(
 			accessTokenExpirationDate, System.currentTimeMillis(),
 			lastNotificationDate);
+	}
+
+	private boolean _isSendNotificationNeeded(
+		long dayNotificationMillis, long timeLeftToExpireTokenMillis,
+		long timeSinceLastNotificationMillis) {
+
+		if ((dayNotificationMillis >= timeLeftToExpireTokenMillis) &&
+			(timeSinceLastNotificationMillis > dayNotificationMillis)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _process(Company company) {
@@ -198,9 +223,13 @@ public class ScimNotificationSchedulerJobConfiguration
 		subscriptionSender.flushNotifications();
 	}
 
-	private static final long[] _NOTIFICATION_DURATION_MILLIS = {
-		30 * Time.DAY, 10 * Time.DAY, Time.DAY, 0
-	};
+	private static final long _DAY_EXPIRED_NOTIFICATION_MILLIS = 0;
+
+	private static final long _DAY_FIRST_NOTIFICATION_MILLIS = 30 * Time.DAY;
+
+	private static final long _DAY_SECOND_NOTIFICATION_MILLIS = 10 * Time.DAY;
+
+	private static final long _DAY_THIRD_NOTIFICATION_MILLIS = Time.DAY;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScimNotificationSchedulerJobConfiguration.class);

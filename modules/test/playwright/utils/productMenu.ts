@@ -9,7 +9,7 @@ export async function openProductMenu(page: Page) {
 	const button = page.getByLabel('Open Product Menu');
 
 	if (await button.isVisible()) {
-		button.click();
+		await button.click();
 
 		await button.waitFor({state: 'hidden'});
 	}
@@ -19,7 +19,7 @@ export async function closeProductMenu(page: Page) {
 	const button = page.getByLabel('Close Product Menu');
 
 	if (await button.isVisible()) {
-		button.click();
+		await button.click();
 
 		await button.waitFor({state: 'hidden'});
 	}

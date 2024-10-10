@@ -10,9 +10,9 @@ import {EXECUTION_MODES} from '../constants';
 
 function DiskSpaceUsageBar({
 	availableDiskSpace,
-	currentDiskSpaceUsed,
 	isLowOnDiskSpace,
 	totalDiskSpace,
+	usedDiskSpace,
 	usedPercentage,
 }) {
 	return (
@@ -36,7 +36,7 @@ function DiskSpaceUsageBar({
 				<span>
 					{Liferay.Util.sub(
 						Liferay.Language.get('used-x-of-x-gb'),
-						currentDiskSpaceUsed.toFixed(1),
+						usedDiskSpace.toFixed(1),
 						totalDiskSpace.toFixed(1)
 					)}
 				</span>
@@ -52,7 +52,7 @@ function DiskSpaceUsageBar({
 	);
 }
 
-function DiskSpaceWarning({availableDiskSpace, currentDiskSpaceUsed}) {
+function DiskSpaceWarning({availableDiskSpace, usedDiskSpace}) {
 	return (
 		<div className="c-mt-2 text-secondary">
 			<span>
@@ -73,7 +73,7 @@ function DiskSpaceWarning({availableDiskSpace, currentDiskSpaceUsed}) {
 				<li>
 					{Liferay.Util.sub(
 						Liferay.Language.get('current-disk-space-used-x'),
-						currentDiskSpaceUsed.toFixed(1)
+						usedDiskSpace.toFixed(1)
 					)}
 				</li>
 			</ul>
@@ -132,18 +132,17 @@ function InfoDescription({cmd, executionMode}) {
 export default function ConfirmationModalBody({
 	availableDiskSpace,
 	cmd,
-	currentDiskSpaceUsed,
 	executionMode,
 	isLowOnDiskSpace,
 	portletNamespace,
+	usedDiskSpace,
 }) {
 	const [expand, setExpand] = useState(false);
 
-	const totalDiskSpace = availableDiskSpace + currentDiskSpaceUsed;
+	const totalDiskSpace = availableDiskSpace + usedDiskSpace;
 
 	const usedPercentage =
-		(currentDiskSpaceUsed / (availableDiskSpace + currentDiskSpaceUsed)) *
-		100;
+		(usedDiskSpace / (availableDiskSpace + usedDiskSpace)) * 100;
 
 	return (
 		<div className="reindex-actions-confirmation-modal-body">
@@ -152,15 +151,15 @@ export default function ConfirmationModalBody({
 					<>
 						<DiskSpaceUsageBar
 							availableDiskSpace={availableDiskSpace}
-							currentDiskSpaceUsed={currentDiskSpaceUsed}
 							isLowOnDiskSpace={isLowOnDiskSpace}
 							totalDiskSpace={totalDiskSpace}
+							usedDiskSpace={usedDiskSpace}
 							usedPercentage={usedPercentage}
 						/>
 
 						<DiskSpaceWarning
 							availableDiskSpace={availableDiskSpace}
-							currentDiskSpaceUsed={currentDiskSpaceUsed}
+							usedDiskSpace={usedDiskSpace}
 						/>
 					</>
 				) : (
@@ -185,11 +184,9 @@ export default function ConfirmationModalBody({
 								<div className="c-pl-0 c-pr-0 panel-body">
 									<DiskSpaceUsageBar
 										availableDiskSpace={availableDiskSpace}
-										currentDiskSpaceUsed={
-											currentDiskSpaceUsed
-										}
 										isLowOnDiskSpace={isLowOnDiskSpace}
 										totalDiskSpace={totalDiskSpace}
+										usedDiskSpace={usedDiskSpace}
 										usedPercentage={usedPercentage}
 									/>
 								</div>

@@ -92,8 +92,7 @@ public class IndexActionsDisplayContextTest {
 		Assert.assertEquals(
 			16.0, (double)elasticSearchDiskSpace.get("availableDiskSpace"), 0);
 		Assert.assertEquals(
-			20.0, (double)elasticSearchDiskSpace.get("currentDiskSpaceUsed"),
-			0);
+			20.0, (double)elasticSearchDiskSpace.get("usedDiskSpace"), 0);
 		Assert.assertFalse(
 			(boolean)elasticSearchDiskSpace.get("isLowOnDiskSpace"));
 

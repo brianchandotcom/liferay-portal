@@ -131,12 +131,12 @@ public class IndexActionsDisplayContextBuilder {
 			elasticSearchDiskSpace.put(
 				"availableDiskSpace", statsInformation.getAvailableDiskSpace());
 			elasticSearchDiskSpace.put(
-				"currentDiskSpaceUsed", statsInformation.getUsedDiskSpace());
-			elasticSearchDiskSpace.put(
 				"isLowOnDiskSpace",
 				_isLowOnDiskSpace(
 					statsInformation.getAvailableDiskSpace(),
 					statsInformation.getSizeOfLargestIndex()));
+			elasticSearchDiskSpace.put(
+				"usedDiskSpace", statsInformation.getUsedDiskSpace());
 		}
 
 		return elasticSearchDiskSpace;

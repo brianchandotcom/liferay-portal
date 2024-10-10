@@ -80,8 +80,8 @@ function IndexActions({
 	controlMenuCategoryKey,
 	elasticSearchDiskSpace = {
 		availableDiskSpace: 0,
-		currentDiskSpaceUsed: 0,
 		isLowOnDiskSpace: false,
+		usedDiskSpace: 0,
 	},
 	indexersMap = {},
 	initialCompanyIds,
@@ -325,14 +325,12 @@ function IndexActions({
 								elasticSearchDiskSpace.availableDiskSpace
 							}
 							cmd={data.cmd}
-							currentDiskSpaceUsed={
-								elasticSearchDiskSpace.currentDiskSpaceUsed
-							}
 							executionMode={executionMode}
 							isLowOnDiskSpace={
 								elasticSearchDiskSpace.isLowOnDiskSpace
 							}
 							portletNamespace={portletNamespace}
+							usedDiskSpace={elasticSearchDiskSpace.usedDiskSpace}
 						/>
 					),
 					footer: [

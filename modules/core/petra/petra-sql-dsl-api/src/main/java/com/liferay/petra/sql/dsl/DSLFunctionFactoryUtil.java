@@ -145,12 +145,6 @@ public class DSLFunctionFactoryUtil {
 		return _DSL_FUNCTION_FACTORY.sum(expression);
 	}
 
-	public static Expression<String> truncateToSeconds(
-		Expression<?> expression) {
-
-		return _DSL_FUNCTION_FACTORY.truncateToSeconds(expression);
-	}
-
 	public static Expression<Long> withParentheses(Expression<?> expression) {
 		return _DSL_FUNCTION_FACTORY.withParentheses(expression);
 	}

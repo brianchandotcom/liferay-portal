@@ -68,7 +68,6 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -569,11 +568,6 @@ public class SQLDSLTest {
 			String.valueOf(
 				DSLFunctionFactoryUtil.sum(
 					MainExampleTable.INSTANCE.mainExampleIdColumn)));
-		Assert.assertEquals(
-			"TRUNCATE_TO_SECONDS(MainExample.date)",
-			String.valueOf(
-				DSLFunctionFactoryUtil.truncateToSeconds(
-					MainExampleTable.INSTANCE.dateColumn)));
 		Assert.assertEquals(
 			"(MainExample.mainExampleId + ReferenceExample.referenceExampleId)",
 			String.valueOf(
@@ -1098,15 +1092,9 @@ public class SQLDSLTest {
 
 		columns = (Collection<Column<?, ?>>)table4.getColumns();
 
-		Assert.assertEquals(columns.toString(), 5, columns.size());
+		Assert.assertEquals(columns.toString(), 4, columns.size());
 
 		iterator = columns.iterator();
-
-		column = iterator.next();
-
-		Assert.assertSame(table4, column.getTable());
-		Assert.assertEquals(
-			MainExampleTable.INSTANCE.dateColumn.getName(), column.getName());
 
 		column = iterator.next();
 
@@ -1512,7 +1500,7 @@ public class SQLDSLTest {
 		Collection<Column<MainExampleTable, ?>> columns =
 			MainExampleTable.INSTANCE.getColumns();
 
-		Assert.assertEquals(columns.toString(), 5, columns.size());
+		Assert.assertEquals(columns.toString(), 4, columns.size());
 
 		Assert.assertTrue(
 			columns.contains(MainExampleTable.INSTANCE.mainExampleIdColumn));
@@ -1522,8 +1510,6 @@ public class SQLDSLTest {
 			columns.contains(MainExampleTable.INSTANCE.descriptionColumn));
 		Assert.assertTrue(
 			columns.contains(MainExampleTable.INSTANCE.flagColumn));
-		Assert.assertTrue(
-			columns.contains(MainExampleTable.INSTANCE.dateColumn));
 
 		try {
 			columns.remove(MainExampleTable.INSTANCE.mainExampleIdColumn);
@@ -1624,8 +1610,6 @@ public class SQLDSLTest {
 
 		public static final MainExampleTable INSTANCE = new MainExampleTable();
 
-		public final Column<MainExampleTable, Date> dateColumn = createColumn(
-			"date", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 		public final Column<MainExampleTable, Clob> descriptionColumn =
 			createColumn(
 				"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);

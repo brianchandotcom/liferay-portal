@@ -27,6 +27,7 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.string.StringBundler;
@@ -635,7 +636,8 @@ public class PredicateExpressionVisitorImpl
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.DATE_TIME)) {
 			return BinaryExpressionConverterUtil.getExpressionPredicate(
-				(DSLFunction)DSLFunctionFactoryUtil.truncateToSeconds(
+				new DSLFunction<>(
+					new DSLFunctionType("TRUNCATE_TO_SECONDS(", ")"),
 					_getColumn(left, objectDefinition)),
 				operation, _getValue(left, objectDefinition, right));
 		}

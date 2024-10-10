@@ -40,9 +40,6 @@ public class DSLFunctionType {
 	public static final DSLFunctionType SUBTRACTION = new DSLFunctionType(
 		" - ");
 
-	public static final DSLFunctionType TRUNCATE_TO_SECONDS =
-		new DSLFunctionType("TRUNCATE_TO_SECONDS(", ")");
-
 	public static final DSLFunctionType WITH_PARENTHESES = new DSLFunctionType(
 		"(", ")");
 

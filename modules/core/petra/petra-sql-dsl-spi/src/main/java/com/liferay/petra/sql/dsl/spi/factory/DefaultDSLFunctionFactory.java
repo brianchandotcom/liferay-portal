@@ -168,12 +168,6 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 	}
 
 	@Override
-	public Expression<String> truncateToSeconds(Expression<?> expression) {
-		return new DSLFunction<>(
-			DSLFunctionType.TRUNCATE_TO_SECONDS, expression);
-	}
-
-	@Override
 	public Expression<Long> withParentheses(Expression<?> expression) {
 		return new DSLFunction<>(DSLFunctionType.WITH_PARENTHESES, expression);
 	}

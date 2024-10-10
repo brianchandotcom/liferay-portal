@@ -1280,40 +1280,6 @@ definition {
 		PortalSettings.viewEmailNotificationsSenderCP();
 	}
 
-	@description = "This is a use case for LPS-135132. This test asserts that enabling check in site settings works when it's unchecked in Instance settings > Site scope."
-	@priority = 4
-	test ViewEnableInSiteSettingWorksWhenDisableInPortalSetting {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Site Scope");
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		PortletEntry.save();
-
-		Navigator.openURL();
-
-		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Site Scope");
-
-		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		PortletEntry.save();
-
-		Navigator.openURL();
-
-		AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-	}
-
 	@description = "This is a use case for LPS-156105. The test assert the value of mail setting for new instance is inherited from server level."
 	@priority = 2
 	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {

@@ -10,6 +10,9 @@ export const ANIMAL_DDM_TEMPLATE_NAME = 'Animal Template';
 
 export const ANIMALS_COLLECTION_NAME = 'Animals';
 
+export const ANIMAL_01_FRIENDLY_URL = 'animal-01-dogs-and-cats-categories';
+export const ANIMAL_02_FRIENDLY_URL = 'animal-02-dogs-category';
+
 export const LEMON_OBJECT_ERC = 'lemon-object-erc';
 export const LEMON_BASKET_OBJECT_ERC = 'lemon-basket-object-erc';
 export const POTATO_OBJECT_ERC = 'potato-object-erc';

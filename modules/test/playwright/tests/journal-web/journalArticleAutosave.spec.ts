@@ -597,9 +597,7 @@ autoSaveTest(
 
 		await journalEditArticlePage.fillTitle(title);
 
-		await expect(
-			journalEditArticlePage.changesSavedIndicator
-		).toBeVisible();
+		await journalEditArticlePage.changesSavedIndicator.waitFor();
 
 		await openFieldset(page, 'Basic Information');
 

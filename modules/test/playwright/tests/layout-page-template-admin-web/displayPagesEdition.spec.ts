@@ -264,6 +264,98 @@ test(
 );
 
 test(
+	'Allow mapping link',
+	{
+		tag: '@LPS-98030',
+	},
+	async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create display page template for Animal and mark as default
+
+		const displayPageTemplateName = getRandomString();
+
+		await addDefaultAnimalDisplayPageTemplate(
+			apiHelpers,
+			displayPageTemplateName,
+			pageManagementSite
+		);
+
+		// Go to edit display page template
+
+		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		// Map link to header fragment
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		await displayPageTemplatesPage.mapLink(
+			'element-text',
+			'More Info Link',
+			'Heading'
+		);
+
+		// Map link to image fragment
+
+		await pageEditorPage.addFragment('Basic Components', 'Image');
+
+		await displayPageTemplatesPage.mapLink(
+			'image-square',
+			'More Info Link',
+			'Image'
+		);
+
+		// Map link to button fragment
+
+		await pageEditorPage.addFragment('Basic Components', 'Button');
+
+		await displayPageTemplatesPage.mapLink(
+			'link',
+			'More Info Link',
+			'Button'
+		);
+
+		// Publish display page template
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		// Assert mapped link in view mode
+
+		await page.goto(
+			`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+		);
+
+		expect(
+			await page
+				.locator('.component-heading')
+				.getByRole('link')
+				.getAttribute('href')
+		).toContain('https://en.wikipedia.org/wiki/Dog');
+
+		expect(
+			await page
+				.locator('.component-image')
+				.getByRole('link')
+				.getAttribute('href')
+		).toContain('https://en.wikipedia.org/wiki/Dog');
+
+		expect(
+			await page
+				.locator('.component-button')
+				.getByRole('link')
+				.getAttribute('href')
+		).toContain('https://en.wikipedia.org/wiki/Dog');
+	}
+);
+
+test(
 	'Allow mapping text fields and image fields',
 	{
 		tag: ['@LPS-86550', '@LPS-182999'],

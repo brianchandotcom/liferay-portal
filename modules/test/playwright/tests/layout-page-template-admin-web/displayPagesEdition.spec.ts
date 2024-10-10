@@ -260,6 +260,16 @@ test(
 				'.lfr-layout-structure-item-container[style*="dogs.jpg"]'
 			)
 		).toBeAttached();
+
+		// Delete default display page template
+
+		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
+
+		await expect(
+			page.getByText(displayPageTemplateName, {exact: true})
+		).not.toBeVisible();
 	}
 );
 
@@ -352,6 +362,16 @@ test(
 				.getByRole('link')
 				.getAttribute('href')
 		).toContain('https://en.wikipedia.org/wiki/Dog');
+
+		// Delete default display page template
+
+		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
+
+		await expect(
+			page.getByText(displayPageTemplateName, {exact: true})
+		).not.toBeVisible();
 	}
 );
 
@@ -425,5 +445,15 @@ test(
 		).toBeVisible();
 
 		await expect(page.getByRole('img', {name: 'Test Test'})).toBeVisible();
+
+		// Delete default display page template
+
+		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
+
+		await expect(
+			page.getByText(displayPageTemplateName, {exact: true})
+		).not.toBeVisible();
 	}
 );

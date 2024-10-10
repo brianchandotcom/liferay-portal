@@ -72,17 +72,16 @@ public class ObjectDefinitionNotificationTermEvaluator
 			String termName)
 		throws PortalException {
 
-		Locale locale = notificationContext.getUserLocale();
-
 		Map<String, Object> termValues = notificationContext.getTermValues();
+
+		Locale locale = notificationContext.getUserLocale();
 
 		if (locale != null) {
 			if (_isObjectFieldTermName("createDate", termName)) {
-				return _formatDate((Date)termValues.get("createDate"), locale);
+				return _format((Date)termValues.get("createDate"), locale);
 			}
 			else if (_isObjectFieldTermName("modifiedDate", termName)) {
-				return _formatDate(
-					(Date)termValues.get("modifiedDate"), locale);
+				return _format((Date)termValues.get("modifiedDate"), locale);
 			}
 		}
 
@@ -357,7 +356,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 				parentObjectField, values.get(parentObjectField.getName())));
 	}
 
-	private String _formatDate(Date date, Locale locale) {
+	private String _format(Date date, Locale locale) {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE MMM dd HH:mm:ss zzz yyyy", locale);
 

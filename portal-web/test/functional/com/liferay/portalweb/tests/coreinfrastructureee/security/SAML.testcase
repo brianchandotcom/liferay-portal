@@ -459,7 +459,7 @@ definition {
 
 			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:8080");
 
-			AssertElementPresent(locator1 = "CPSAMLAdmin#SAML_ROLE_SELECT_DISABLED");
+			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "CPSAMLAdmin#SAML_ROLE_SELECT_DISABLED");
 		}
 	}
 
@@ -2842,7 +2842,7 @@ definition {
 		task ("Assert certificate is migrated.") {
 			SAML.goToSAMLAdmin();
 
-			AssertElementPresent(
+			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
 				key_certificateUsage = "SIGNING",
 				locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
 		}

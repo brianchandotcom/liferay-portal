@@ -621,7 +621,7 @@ definition {
 		if (${autoLogin} == "true") {
 			Open.openNoError(value1 = ${idpInitiatedSsourl});
 
-			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 		else {
 			User.firstLoginUI(
@@ -641,7 +641,7 @@ definition {
 		if (${autoLogin} == "true") {
 			Navigator.openSpecificURL(url = ${spURL});
 
-			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 		else if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
@@ -927,7 +927,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewEmailInputPresent() {
-		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+		AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "TextInput#EMAIL_ADDRESS");
 	}
 
 	@summary = "Default summary"
@@ -943,7 +943,7 @@ definition {
 	macro viewNoAttributeMappingSelectedForUserMatching() {
 		AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
 
-		AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
+		AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
 	}
 
 	@summary = "Default summary"

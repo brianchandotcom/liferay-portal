@@ -84,6 +84,10 @@ public class StopWatchRecordsGroup implements Iterable<StopWatchRecord> {
 		return _stopWatchRecordsMap.get(name);
 	}
 
+	public List<StopWatchRecord> getAllStopWatchRecords() {
+		return new ArrayList<>(_stopWatchRecordsMap.values());
+	}
+
 	public JSONArray getJSONArray() {
 		JSONArray jsonArray = new JSONArray();
 

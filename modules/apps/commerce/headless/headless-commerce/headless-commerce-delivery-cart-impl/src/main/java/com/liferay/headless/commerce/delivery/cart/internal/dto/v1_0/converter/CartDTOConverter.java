@@ -17,6 +17,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.payment.method.CommercePaymentMethod;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -181,21 +184,37 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 						String paymentMethodKey =
 							commerceOrder.getCommercePaymentMethodKey();
 
-						if ((paymentMethodKey != null) &&
-							!paymentMethodKey.isEmpty()) {
-
-							CommercePaymentMethodGroupRel
-								commercePaymentMethodGroupRel =
-									_commercePaymentMethodGroupRelLocalService.
-										getCommercePaymentMethodGroupRel(
-											commerceOrder.getGroupId(),
-											paymentMethodKey);
-
-							return commercePaymentMethodGroupRel.getName(
-								locale);
+						if (Validator.isNull(paymentMethodKey)) {
+							return null;
 						}
 
-						return null;
+						CommercePaymentMethodGroupRel
+							commercePaymentMethodGroupRel =
+								_commercePaymentMethodGroupRelLocalService.
+									getCommercePaymentMethodGroupRel(
+										commerceOrder.getGroupId(),
+										paymentMethodKey);
+
+						return commercePaymentMethodGroupRel.getName(locale);
+					});
+				setPaymentMethodType(
+					() -> {
+						String paymentMethodKey =
+							commerceOrder.getCommercePaymentMethodKey();
+
+						if (Validator.isNull(paymentMethodKey)) {
+							return null;
+						}
+
+						CommercePaymentMethod commercePaymentMethod =
+							_commercePaymentMethodRegistry.
+								getCommercePaymentMethod(paymentMethodKey);
+
+						if (commercePaymentMethod == null) {
+							return null;
+						}
+
+						return commercePaymentMethod.getPaymentType();
 					});
 				setPaymentStatus(commerceOrder::getPaymentStatus);
 				setPaymentStatusInfo(
@@ -763,6 +782,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
+
+	@Reference
+	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

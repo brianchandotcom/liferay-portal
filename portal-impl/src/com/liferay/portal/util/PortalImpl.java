@@ -1488,7 +1488,7 @@ public class PortalImpl implements Portal {
 			int pos = -1;
 
 			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						themeDisplay.getCompanyId())) {
 
 				for (String urlSeparator :

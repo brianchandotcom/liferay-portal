@@ -86,15 +86,15 @@ public class IndexActionsDisplayContextTest {
 
 		Map<String, Object> data = indexActionsDisplayContext.getData();
 
-		Map<String, Object> elasticSearchDiskSpace =
-			(Map<String, Object>)data.get("elasticSearchDiskSpace");
+		Map<String, Object> searchEngineDiskSpace =
+			(Map<String, Object>)data.get("searchEngineDiskSpace");
 
 		Assert.assertEquals(
-			16.0, (double)elasticSearchDiskSpace.get("availableDiskSpace"), 0);
+			16.0, (double)searchEngineDiskSpace.get("availableDiskSpace"), 0);
 		Assert.assertEquals(
-			20.0, (double)elasticSearchDiskSpace.get("usedDiskSpace"), 0);
+			20.0, (double)searchEngineDiskSpace.get("usedDiskSpace"), 0);
 		Assert.assertFalse(
-			(boolean)elasticSearchDiskSpace.get("isLowOnDiskSpace"));
+			(boolean)searchEngineDiskSpace.get("isLowOnDiskSpace"));
 
 		indexActionsDisplayContextBuilder.setStatsInformationFactory(
 			getStatsInformationFactory(14.0, 10.0, 20.0));
@@ -103,11 +103,11 @@ public class IndexActionsDisplayContextTest {
 
 		data = indexActionsDisplayContext.getData();
 
-		elasticSearchDiskSpace = (Map<String, Object>)data.get(
-			"elasticSearchDiskSpace");
+		searchEngineDiskSpace = (Map<String, Object>)data.get(
+			"searchEngineDiskSpace");
 
 		Assert.assertTrue(
-			(boolean)elasticSearchDiskSpace.get("isLowOnDiskSpace"));
+			(boolean)searchEngineDiskSpace.get("isLowOnDiskSpace"));
 	}
 
 	protected StatsInformationFactory getStatsInformationFactory(

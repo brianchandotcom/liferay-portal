@@ -55,12 +55,7 @@ function DiskSpaceUsageBar({
 function DiskSpaceWarning({availableDiskSpace, usedDiskSpace}) {
 	return (
 		<div className="c-mt-2 text-secondary">
-			<span>
-				{Liferay.Language.get(
-					'reindex-elasticsearch-disk-space-warning'
-				)}
-				:
-			</span>
+			<span>{Liferay.Language.get('reindex-disk-space-warning')}:</span>
 
 			<ul>
 				<li>

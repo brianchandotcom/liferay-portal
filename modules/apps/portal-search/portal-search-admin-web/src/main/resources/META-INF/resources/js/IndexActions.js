@@ -78,11 +78,6 @@ function IndexerListItem({
 
 function IndexActions({
 	controlMenuCategoryKey,
-	elasticSearchDiskSpace = {
-		availableDiskSpace: 0,
-		isLowOnDiskSpace: false,
-		usedDiskSpace: 0,
-	},
 	indexersMap = {},
 	initialCompanyIds,
 	initialExecutionMode,
@@ -94,6 +89,11 @@ function IndexActions({
 	portletNamespace,
 	redirectURL = '',
 	reindexURL = '',
+	searchEngineDiskSpace = {
+		availableDiskSpace: 0,
+		isLowOnDiskSpace: false,
+		usedDiskSpace: 0,
+	},
 }) {
 	const [backgroundTaskMap, setBackgroundTaskMap] = useState({});
 	const [executionMode, setExecutionMode] = useState(
@@ -304,7 +304,7 @@ function IndexActions({
 			executionMode === EXECUTION_MODES.CONCURRENT.value;
 
 		const status =
-			isConcurrentMode && elasticSearchDiskSpace.isLowOnDiskSpace
+			isConcurrentMode && searchEngineDiskSpace.isLowOnDiskSpace
 				? 'warning'
 				: 'info';
 
@@ -315,22 +315,22 @@ function IndexActions({
 
 		if (
 			!hideModal ||
-			(isConcurrentMode && elasticSearchDiskSpace.isLowOnDiskSpace)
+			(isConcurrentMode && searchEngineDiskSpace.isLowOnDiskSpace)
 		) {
 			dispatch({
 				payload: {
 					body: (
 						<ConfirmationModalBody
 							availableDiskSpace={
-								elasticSearchDiskSpace.availableDiskSpace
+								searchEngineDiskSpace.availableDiskSpace
 							}
 							cmd={data.cmd}
 							executionMode={executionMode}
 							isLowOnDiskSpace={
-								elasticSearchDiskSpace.isLowOnDiskSpace
+								searchEngineDiskSpace.isLowOnDiskSpace
 							}
 							portletNamespace={portletNamespace}
-							usedDiskSpace={elasticSearchDiskSpace.usedDiskSpace}
+							usedDiskSpace={searchEngineDiskSpace.usedDiskSpace}
 						/>
 					),
 					footer: [
@@ -362,10 +362,8 @@ function IndexActions({
 					],
 					header:
 						isConcurrentMode &&
-						elasticSearchDiskSpace.isLowOnDiskSpace
-							? Liferay.Language.get(
-									'reindex-elasticsearch-disk-space-warning'
-								)
+						searchEngineDiskSpace.isLowOnDiskSpace
+							? Liferay.Language.get('reindex-disk-space-warning')
 							: data.id === 'spellCheckDictionaries'
 								? Liferay.Language.get(
 										'reindex-spell-check-dictionaries'
@@ -653,13 +651,13 @@ export default function ({
 	const {
 		concurrentModeSupported,
 		controlMenuCategoryKey,
-		elasticSearchDiskSpace,
 		indexReindexerNames,
 		indexersMap,
 		initialCompanyIds,
 		initialExecutionMode,
 		initialScope,
 		omniadmin,
+		searchEngineDiskSpace,
 		virtualInstances,
 	} = data;
 
@@ -668,7 +666,6 @@ export default function ({
 			<IndexActions
 				concurrentModeSupported={concurrentModeSupported}
 				controlMenuCategoryKey={controlMenuCategoryKey}
-				elasticSearchDiskSpace={elasticSearchDiskSpace}
 				indexReindexerNames={indexReindexerNames}
 				indexersMap={indexersMap}
 				initialCompanyIds={initialCompanyIds}
@@ -678,6 +675,7 @@ export default function ({
 				portletNamespace={portletNamespace}
 				redirectURL={redirectURL}
 				reindexURL={reindexURL}
+				searchEngineDiskSpace={searchEngineDiskSpace}
 				virtualInstances={virtualInstances}
 			/>
 		</ClayModalProvider>

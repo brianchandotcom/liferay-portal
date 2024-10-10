@@ -866,7 +866,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 			String[] fieldNameList = StringUtil.split(
 				StringUtil.replace(
-					String.valueOf(properties.get("name")), "[]",
+					String.valueOf(properties.get("fieldName")), "[]",
 					StringPool.PERIOD),
 				CharPool.PERIOD);
 

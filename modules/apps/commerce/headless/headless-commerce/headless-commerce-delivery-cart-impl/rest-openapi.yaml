@@ -197,6 +197,10 @@ components:
                 paymentMethodLabel:
                     readOnly: true
                     type: string
+                paymentMethodType:
+                    format: int32
+                    readOnly: true
+                    type: integer
                 paymentStatus:
                     format: int32
                     readOnly: true

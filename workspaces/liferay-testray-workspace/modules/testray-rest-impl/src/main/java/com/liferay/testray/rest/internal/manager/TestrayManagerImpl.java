@@ -211,7 +211,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			long companyId, OffsetDateTime offsetDateTime, long testrayCaseId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(12);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("select cr.r_caseToCaseResult_c_caseId, sum(case when ");
 		sb.append("cr.previousStatus != cr.dueStatus_ and cr.previousStatus ");
@@ -219,12 +219,15 @@ public class TestrayManagerImpl implements TestrayManager {
 		sb.append("count(c_caseResultId_) as totalCases from (select ");
 		sb.append("c_caseResultId_, r_caseToCaseResult_c_caseId, dueStatus_, ");
 		sb.append("lag(dueStatus_) over (partition by ");
-		sb.append("r_caseToCaseResult_c_caseId order by c_caseResultId_) ");
-		sb.append("previousStatus from O_[%COMPANY_ID%]_CaseResult where ");
-		sb.append("r_caseToCaseResult_c_caseId = ? and (dueStatus_ = ");
-		sb.append("'PASSED' or dueStatus_ ='FAILED') and startDate_ is not ");
-		sb.append("null and startDate_ >= ? order by c_caseResultId_) as cr ");
-		sb.append("group by r_caseToCaseResult_c_caseId");
+		sb.append("r_caseToCaseResult_c_caseId order by r.name_, ");
+		sb.append("crr.c_caseResultId_) previousStatus from ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult crr, O_[%COMPANY_ID%]_Run r ");
+		sb.append("where crr.r_runtocaseresult_c_runid = r.c_runId_ and ");
+		sb.append("crr.r_caseToCaseResult_c_caseId = ? and (crr.dueStatus_ = ");
+		sb.append("'PASSED' or crr.dueStatus_ ='FAILED') and crr.startDate_ ");
+		sb.append("is not null and crr.startDate_ >= ? order by r.name_, ");
+		sb.append("crr.c_caseResultId_) as cr group by ");
+		sb.append("r_caseToCaseResult_c_caseId");
 
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			StringUtil.replace(

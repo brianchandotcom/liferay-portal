@@ -164,6 +164,95 @@ test('Allow mapping editables to fields of related object', async ({
 });
 
 test(
+	'Allow mapping background image',
+	{
+		tag: '@LPS-98030',
+	},
+	async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create display page template for Animal and mark as default
+
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				'com.liferay.journal.model.JournalArticle'
+			);
+
+		const animalWebContentStructureId = await getWebContentStructureId(
+			apiHelpers,
+			pageManagementSite.id,
+			ANIMAL_DDM_STRUCTURE_KEY
+		);
+
+		const displayPageTemplateName = getRandomString();
+
+		const displayPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					classTypeId: String(animalWebContentStructureId),
+					groupId: pageManagementSite.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId:
+					displayPage.layoutPageTemplateEntryId,
+			}
+		);
+
+		// Go to edit display page template
+
+		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		// Map background image
+
+		await pageEditorPage.addFragment('Layout Elements', 'Container');
+
+		const containerId = await pageEditorPage.getFragmentId('Container');
+
+		await pageEditorPage.selectFragment(containerId);
+
+		await page.getByRole('tab', {exact: true, name: 'Styles'}).click();
+
+		await page
+			.getByLabel('Image Source', {exact: true})
+			.selectOption({label: 'Mapping'});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await page
+			.getByLabel('Field', {exact: true})
+			.selectOption({label: 'Main Image'});
+
+		// Publish display page template
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		// Assert background image in view mode
+
+		await page.goto(
+			`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+		);
+
+		await expect(
+			page.locator(
+				'.lfr-layout-structure-item-container[style*="dogs.jpg"]'
+			)
+		).toBeAttached();
+	}
+);
+
+test(
 	'Allow mapping text fields and image fields',
 	{
 		tag: ['@LPS-86550', '@LPS-182999'],

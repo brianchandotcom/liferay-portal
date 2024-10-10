@@ -137,6 +137,8 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 
 	// Check if sidebars are not visible when Product Menu is open
 
+	await panel.waitFor({state: 'visible'});
+
 	await openProductMenu(page);
 
 	await expect(panel).not.toBeVisible();

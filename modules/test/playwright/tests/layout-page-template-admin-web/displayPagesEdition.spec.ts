@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -12,8 +13,14 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {getWebContentStructureId} from '../../utils/structured-content/getBasicWebContentStructureId';
+import {
+	ANIMAL_01_FRIENDLY_URL,
+	ANIMAL_DDM_STRUCTURE_KEY,
+} from '../setup/page-management-site/constants';
 
 const test = mergeTests(
+	apiHelpersTest,
 	displayPageTemplatesPagesTest,
 	pageEditorPagesTest,
 	loginTest(),
@@ -155,3 +162,98 @@ test('Allow mapping editables to fields of related object', async ({
 
 	await expect(editable).toHaveClass(/page-editor__editable--mapped/);
 });
+
+test(
+	'Allow mapping text fields and image fields',
+	{
+		tag: ['@LPS-86550', '@LPS-182999'],
+	},
+	async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create display page template for Animal and mark as default
+
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				'com.liferay.journal.model.JournalArticle'
+			);
+
+		const animalWebContentStructureId = await getWebContentStructureId(
+			apiHelpers,
+			pageManagementSite.id,
+			ANIMAL_DDM_STRUCTURE_KEY
+		);
+
+		const displayPageTemplateName = getRandomString();
+
+		const displayPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					classTypeId: String(animalWebContentStructureId),
+					groupId: pageManagementSite.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId:
+					displayPage.layoutPageTemplateEntryId,
+			}
+		);
+
+		// Go to edit display page template
+
+		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		// Map author name
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		const headingFragmentId = await pageEditorPage.getFragmentId('Heading');
+
+		await pageEditorPage.selectEditable(headingFragmentId, 'element-text');
+
+		await page.getByLabel('Field').selectOption('Author Name');
+
+		// Map author profile image
+
+		await pageEditorPage.addFragment('Basic Components', 'Image');
+
+		const imageFragmentId = await pageEditorPage.getFragmentId('Image');
+
+		await pageEditorPage.selectEditable(imageFragmentId, 'image-square');
+
+		await page
+			.getByLabel('Source Selection', {exact: true})
+			.selectOption('Mapping');
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await page.getByLabel('Field').selectOption('Author Profile Image');
+
+		// Publish display page template
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		// Assert mapped fields in view mode
+
+		await page.goto(
+			`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: 'Test Test'})
+		).toBeVisible();
+
+		await expect(page.getByRole('img', {name: 'Test Test'})).toBeVisible();
+	}
+);

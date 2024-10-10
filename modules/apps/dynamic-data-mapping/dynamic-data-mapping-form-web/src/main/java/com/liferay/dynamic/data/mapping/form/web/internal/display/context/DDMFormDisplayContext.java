@@ -350,7 +350,7 @@ public class DDMFormDisplayContext {
 		}
 
 		try {
-			_ddmFormInstance = _ddmFormInstanceService.fetchFormInstance(
+			_ddmFormInstance = _ddmFormInstanceLocalService.fetchFormInstance(
 				getFormInstanceId());
 
 			if ((_ddmFormInstance != null) && !isPreview()) {

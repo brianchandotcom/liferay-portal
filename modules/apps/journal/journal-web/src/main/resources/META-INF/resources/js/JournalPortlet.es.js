@@ -164,8 +164,6 @@ export default function _JournalPortlet({
 	};
 
 	const handleDDMFormError = (event) => {
-		lockHolder.lock?.unlock(true);
-
 		if (event.error?.statusCode) {
 			showAlert(event.error.message);
 		}
@@ -225,24 +223,26 @@ export default function _JournalPortlet({
 			availableLocalesInput.value = availableLocales;
 
 			if (autoSaveDraftEnabled && !redirectOnSave) {
-				Liferay.componentReady(`${namespace}dataEngineLayoutRenderer`)
-					.then((dataEngineLayoutRenderer) => {
-						const dataEngineLayoutRendererRef =
-							dataEngineLayoutRenderer?.reactComponentRef;
+				if (showErrors) {
+					Liferay.componentReady(
+						`${namespace}dataEngineLayoutRenderer`
+					)
+						.then((dataEngineLayoutRenderer) => {
+							const dataEngineLayoutRendererRef =
+								dataEngineLayoutRenderer?.reactComponentRef;
 
-						return dataEngineLayoutRendererRef.current.validate();
-					})
-					.then((validForm) => {
-						if (validForm) {
-							removeAlert();
-							submitAsyncForm(form, {redirectOnSave});
-						}
-						else {
-							Liferay.fire('ddmFormError', {
-								formWrapperId: formId,
-							});
-						}
-					});
+							return dataEngineLayoutRendererRef.current.validate();
+						})
+						.then((validForm) => {
+							if (validForm) {
+								removeAlert();
+								submitAsyncForm(form, {redirectOnSave});
+							}
+						});
+				}
+				else {
+					submitAsyncForm(form, {redirectOnSave});
+				}
 			}
 			else {
 				form.submit();
@@ -263,9 +263,13 @@ export default function _JournalPortlet({
 			lockHolder.lock?.unlock(true);
 		}
 		else {
-			Liferay.Form.get(formId).formValidator.validate();
-			validateRequiredDDMFields();
-
+			showAlert(
+				Liferay.Language.get(
+					'please-ensure-all-mandatory-fields-are-completed-to-enable-autosave'
+				),
+				Liferay.Language.get('info'),
+				'info'
+			);
 			lockHolder.lock?.unlock(true);
 		}
 	};
@@ -451,11 +455,18 @@ export default function _JournalPortlet({
 
 					formDateInput.value = data.modifiedDate;
 					lockHolder.lock?.unlock();
+					removeAlert();
 				}
 				else {
 					formDateInput.value = data.modifiedDate;
 					lockHolder.lock?.unlock(true);
-					showAlert(data.errorMessage);
+					showAlert(
+						Liferay.Language.get(
+							'please-ensure-all-mandatory-fields-are-completed-to-enable-autosave'
+						),
+						Liferay.Language.get('info'),
+						'info'
+					);
 				}
 			})
 			.catch((error) => {
@@ -555,7 +566,7 @@ export default function _JournalPortlet({
 
 					handleDDMFormValid({
 						redirectOnSave: false,
-						showErrors: true,
+						showErrors: false,
 					});
 				},
 				namespace

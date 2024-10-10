@@ -98,13 +98,13 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return sqlFunctionTransformer::transform;
 	}
 
-	protected Function<String, String> getDateFormatFunction() {
-		Pattern pattern = getDateFormatPattern();
+	protected Function<String, String> getTruncateToSecondsFunction() {
+		Pattern pattern = getTruncateToSecondsPattern();
 
-		return (String sql) -> replaceDateFormat(pattern.matcher(sql));
+		return (String sql) -> replaceTruncateToSeconds(pattern.matcher(sql));
 	}
 
-	protected Pattern getDateFormatPattern() {
+	protected Pattern getTruncateToSecondsPattern() {
 		return Pattern.compile(
 			"TRUNCATE_TO_SECONDS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	}
@@ -235,7 +235,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return matcher.replaceAll("$1");
 	}
 
-	protected String replaceDateFormat(Matcher matcher) {
+	protected String replaceTruncateToSeconds(Matcher matcher) {
 		return matcher.replaceAll("$1");
 	}
 

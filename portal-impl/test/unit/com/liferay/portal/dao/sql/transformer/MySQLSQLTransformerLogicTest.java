@@ -105,7 +105,7 @@ public class MySQLSQLTransformerLogicTest
 	}
 
 	@Override
-	protected String getDateFormatTransformedSQL() {
+	protected String getTruncateToSecondsTransformedSQL() {
 		return "select foo from Foo where DATE_FORMAT(foo, " +
 			"'%Y-%m-%dT%H:%i:%sZ') = 2024-10-04 12:34:56";
 	}

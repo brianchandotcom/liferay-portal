@@ -23,7 +23,7 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 			getAggregationFunction(), getBitwiseCheckFunction(),
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(),
-			getDateFormatFunction(), getDropTableIfExistsTextFunction(),
+			getTruncateToSecondsFunction(), getDropTableIfExistsTextFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction()
 		};
 
@@ -35,7 +35,7 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	@Override
-	protected String replaceDateFormat(Matcher matcher) {
+	protected String replaceTruncateToSeconds(Matcher matcher) {
 		return matcher.replaceAll("DATE_FORMAT($1, '%Y-%m-%dT%H:%i:%sZ')");
 	}
 

@@ -23,10 +23,10 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		super(db);
 
 		Function[] functions = {
-			getDateFormatFunction(), getAggregationFunction(),
+			getTruncateToSecondsFunction(), getAggregationFunction(),
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(), getDateFormatFunction(),
+			getCastTextFunction(), getConcatFunction(), getTruncateToSecondsFunction(),
 			getDropTableIfExistsTextFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction(), _getCrossJoinFunction(),

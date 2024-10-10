@@ -1300,16 +1300,10 @@ test.describe('Multistep', () => {
 
 			await pageEditorPage.selectFragment(stepperId);
 
-			const stepperTreeItem = page
-				.locator('.treeview-link')
-				.getByLabel('Select Stepper');
-
-			const secondFormTreeItem = page
-				.locator('.treeview-link')
-				.getByLabel('Select Form Container')
-				.last();
-
-			stepperTreeItem.dragTo(secondFormTreeItem);
+			await pageEditorPage.dragTreeNode({
+				source: {label: 'Stepper'},
+				target: {label: 'Form Container', nth: 1},
+			});
 
 			await page
 				.locator('.modal-title', {hasText: 'Convert to Multistep Form'})

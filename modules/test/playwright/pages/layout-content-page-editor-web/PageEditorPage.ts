@@ -435,6 +435,57 @@ export class PageEditorPage {
 		await this.page.keyboard.press('Backspace');
 	}
 
+	async dragTreeNode({
+		source,
+		target,
+	}: {
+		source: {
+			label: string;
+			nth?: number;
+		};
+		target: {
+			label: string;
+			nth?: number;
+		};
+	}) {
+		await this.goToSidebarTab('Browser');
+
+		const sourceNode = this.page
+			.locator('.page-editor__page-structure__tree-node')
+			.filter({hasText: source.label})
+			.nth(source.nth || 0);
+
+		const targetNode = this.page
+			.locator('.page-editor__page-structure__tree-node')
+			.filter({hasText: target.label})
+			.nth(target.nth || 0);
+
+		await sourceNode.hover();
+
+		await this.page.mouse.down();
+
+		await expect(async () => {
+			await targetNode.hover();
+
+			await expect(targetNode).toHaveClass(/drag-over-middle/, {
+				timeout: 1000,
+			});
+		}).toPass();
+
+		const boundingClientRect = await targetNode.evaluate(
+			(element: HTMLDivElement) => element.getBoundingClientRect()
+		);
+
+		await targetNode.hover({
+			position: {
+				x: boundingClientRect.width / 2,
+				y: boundingClientRect.height / 2,
+			},
+		});
+
+		await this.page.mouse.up();
+	}
+
 	async duplicateExperience(experience: string) {
 		await this.openExperienceSelector();
 

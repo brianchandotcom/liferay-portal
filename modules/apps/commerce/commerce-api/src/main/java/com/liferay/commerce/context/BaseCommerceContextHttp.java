@@ -204,27 +204,18 @@ public class BaseCommerceContextHttp implements CommerceContext {
 				return null;
 			}
 
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(_httpServletRequest);
-
-			HttpSession httpSession = originalHttpServletRequest.getSession();
-
-			long groupId = commerceChannel.getGroupId();
-
-			String uuid = (String)httpSession.getAttribute(
-				CommerceOrder.class.getName() + StringPool.POUND + groupId);
-
-			_commerceOrder =
-				_commerceOrderHttpHelper.fetchCommerceOrderByUuidAndGroupId(
-					uuid, groupId);
-
-			if (_commerceOrder == null) {
-				_commerceOrder =
-					_commerceOrderHttpHelper.getCurrentCommerceOrder(
-						_httpServletRequest);
-			}
+			_commerceOrder = _commerceOrderHttpHelper.getCurrentCommerceOrder(
+				_httpServletRequest);
 
 			if (_commerceOrder != null) {
+				HttpServletRequest originalHttpServletRequest =
+					_portal.getOriginalServletRequest(_httpServletRequest);
+
+				long groupId = commerceChannel.getGroupId();
+
+				HttpSession httpSession =
+					originalHttpServletRequest.getSession();
+
 				if (_commerceOrder.isGuestOrder()) {
 					httpSession.removeAttribute(
 						CommerceOrder.class.getName() + StringPool.POUND +

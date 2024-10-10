@@ -75,15 +75,15 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			globalGroup.getGroupId());
+			companyGroup.getGroupId());
 
 		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
-			globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
+			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
-			globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
+			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());
 
 		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
 			_getElementInstancesJSON(assetCategory1, assetCategory2));
@@ -93,7 +93,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_assertSXPBlueprint(
 			sxpBlueprint.getSXPBlueprintId(),
 			_getExpectedInstancesJSON(
-				globalGroup.getExternalReferenceCode(), assetCategory1,
+				companyGroup.getExternalReferenceCode(), assetCategory1,
 				assetCategory2));
 	}
 
@@ -190,10 +190,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private String _createAssetCategoryExternalReferenceCode(
-		String globalGroupExternalReferenceCode,
+		String companyGroupExternalReferenceCode,
 		String assetCategoryExternalReferenceCode) {
 
-		return globalGroupExternalReferenceCode + "&&" +
+		return companyGroupExternalReferenceCode + "&&" +
 			assetCategoryExternalReferenceCode;
 	}
 
@@ -237,7 +237,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private String _getExpectedInstancesJSON(
-		String globalGroupExternalReferenceCode, AssetCategory assetCategory1,
+		String companyGroupExternalReferenceCode, AssetCategory assetCategory1,
 		AssetCategory assetCategory2) {
 
 		String elementInstancesJSON = StringUtil.read(
@@ -249,12 +249,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$",
 			_createAssetCategoryExternalReferenceCode(
-				globalGroupExternalReferenceCode,
+				companyGroupExternalReferenceCode,
 				assetCategory1.getExternalReferenceCode()));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$",
 			_createAssetCategoryExternalReferenceCode(
-				globalGroupExternalReferenceCode,
+				companyGroupExternalReferenceCode,
 				assetCategory2.getExternalReferenceCode()));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",

@@ -431,6 +431,16 @@ public class CommerceTermEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int getDeliveryCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId) {
+
+		return _commerceTermEntryLocalService.
+			getDeliveryCommerceTermEntriesCount(
+				companyId, commerceOrderTypeId, commerceShippingOptionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -466,6 +476,17 @@ public class CommerceTermEntryLocalServiceWrapper
 
 		return _commerceTermEntryLocalService.getPaymentCommerceTermEntries(
 			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
+	}
+
+	@Override
+	public int getPaymentCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId) {
+
+		return _commerceTermEntryLocalService.
+			getPaymentCommerceTermEntriesCount(
+				companyId, commerceOrderTypeId,
+				commercePaymentMethodGroupRelId);
 	}
 
 	/**

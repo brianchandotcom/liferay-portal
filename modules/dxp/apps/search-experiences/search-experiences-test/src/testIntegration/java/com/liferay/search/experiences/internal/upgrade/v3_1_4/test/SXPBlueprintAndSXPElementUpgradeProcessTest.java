@@ -190,8 +190,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private String _createAssetCategoryExternalReferenceCode(
-		String companyGroupExternalReferenceCode,
-		String assetCategoryExternalReferenceCode) {
+		String assetCategoryExternalReferenceCode,
+		String companyGroupExternalReferenceCode) {
 
 		return companyGroupExternalReferenceCode + "&&" +
 			assetCategoryExternalReferenceCode;
@@ -249,13 +249,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$",
 			_createAssetCategoryExternalReferenceCode(
-				companyGroupExternalReferenceCode,
-				assetCategory1.getExternalReferenceCode()));
+				assetCategory1.getExternalReferenceCode(),
+				companyGroupExternalReferenceCode));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$",
 			_createAssetCategoryExternalReferenceCode(
-				companyGroupExternalReferenceCode,
-				assetCategory2.getExternalReferenceCode()));
+				assetCategory2.getExternalReferenceCode(),
+				companyGroupExternalReferenceCode));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
 			_createAssetCategoryExternalReferenceCodeLabel(assetCategory1));

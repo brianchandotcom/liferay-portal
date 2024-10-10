@@ -83,8 +83,7 @@ public class CTTableMapperHelper {
 	}
 
 	public void publish(
-			long fromCTCollectionId, long toCTCollectionId,
-			PortalCacheManager<?, ?> portalCacheManager)
+			long ctCollectionId, PortalCacheManager<?, ?> portalCacheManager)
 		throws Exception {
 
 		if (_rightColumnName == null) {
@@ -95,8 +94,7 @@ public class CTTableMapperHelper {
 		}
 
 		int count = _ctService.updateWithUnsafeFunction(
-			ctPersistence -> _publish(
-				ctPersistence, fromCTCollectionId, toCTCollectionId));
+			ctPersistence -> _publish(ctPersistence, ctCollectionId));
 
 		if (count != 0) {
 			_clearCache(
@@ -214,9 +212,7 @@ public class CTTableMapperHelper {
 		return mappingChanges;
 	}
 
-	private int _publish(
-			CTPersistence<?> ctPersistence, long fromCTCollectionId,
-			long toCTCollectionId)
+	private int _publish(CTPersistence<?> ctPersistence, long ctCollectionId)
 		throws Exception {
 
 		Connection connection = CurrentConnectionUtil.getConnection(
@@ -228,7 +224,7 @@ public class CTTableMapperHelper {
 				StringBundler.concat(
 					"select ", _leftColumnName, ", ", _rightColumnName,
 					" from ", _tableName, " where ctCollectionId = ",
-					fromCTCollectionId))) {
+					ctCollectionId))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -246,9 +242,7 @@ public class CTTableMapperHelper {
 
 			sb.append("delete from ");
 			sb.append(_tableName);
-			sb.append(" where ctCollectionId = ");
-			sb.append(toCTCollectionId);
-			sb.append(" and ((");
+			sb.append(" where ctCollectionId = 0 and ((");
 
 			for (Map.Entry<Long, Long> entry : entries) {
 				sb.append(_leftColumnName);
@@ -277,10 +271,10 @@ public class CTTableMapperHelper {
 					", ctCollectionId) select t1.companyId, t1.",
 					_leftColumnName, ", t1.", _rightColumnName,
 					", 0 as ctCollectionId from ", _tableName, " t1 left join ",
-					_tableName, " t2 on t2.ctCollectionId = ", toCTCollectionId,
-					" and t2.", _leftColumnName, " = t1.", _leftColumnName,
-					" and t2.", _rightColumnName, " = t1.", _rightColumnName,
-					" where t1.ctCollectionId = ", fromCTCollectionId,
+					_tableName, " t2 on t2.ctCollectionId = 0 and t2.",
+					_leftColumnName, " = t1.", _leftColumnName, " and t2.",
+					_rightColumnName, " = t1.", _rightColumnName,
+					" where t1.ctCollectionId = ", ctCollectionId,
 					" and t1.ctChangeType = ?"))) {
 
 			preparedStatement.setBoolean(1, true);

@@ -208,9 +208,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			_updateCTCollectionId(
 				connection, tableName, primaryKeyName,
 				_modificationCTEntries.values(), _targetCTCollectionId,
-				_sourceCTCollectionId, true,
-				_targetCTCollectionId ==
-					CTConstants.CT_COLLECTION_ID_PRODUCTION);
+				_sourceCTCollectionId, true, true);
 		}
 
 		if (_additionCTEntries != null) {

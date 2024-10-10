@@ -122,12 +122,10 @@ public class GetPublicationStatusMVCResourceCommand
 
 			throw new PortalException(
 				StringBundler.concat(
-					"The selected changes cannot be moved to the destination ",
-					"change tracking collection ",
-					taskContextMap.get("toCTCollectionId"),
-					" because one or more of your selected changes from the ",
+					"The selected changes cannot be published to production ",
+					"because one or more of your selected changes from the ",
 					"source change tracking collection ",
-					taskContextMap.get("fromCTCollectionId"),
+					taskContextMap.get("ctCollectionId"),
 					" conflicts with a preexisting change in the destination ",
 					"change tracking collection"));
 		}

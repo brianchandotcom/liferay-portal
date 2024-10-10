@@ -1391,6 +1391,13 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await expect(cellRendererOption).toBeInViewport();
+
+			const cellRendererOptionLabel =
+				cellRendererOption.locator('.label-item');
+
+			await expect(cellRendererOptionLabel).toHaveText(
+				'Client Extension'
+			);
 		});
 	});
 });

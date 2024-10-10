@@ -203,7 +203,9 @@ public class FilePropagator {
 			_busySlaves.size() + _errorSlaves.size() + _mirrorSlaves.size() +
 				_targetSlaves.size();
 
-		if ((_mirrorSlaves.size() / (float)totalSlaveCount) < 0.5F) {
+		if ((totalSlaveCount > 0) &&
+			((_mirrorSlaves.size() / (float)totalSlaveCount) < 0.5F)) {
+
 			throw new FilePropagatorRuntimeException(
 				this,
 				JenkinsResultsParserUtil.combine(

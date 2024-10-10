@@ -898,10 +898,10 @@ definition {
 		var downloadedFile = FileUtil.exists("${tempDir}/${fileName}");
 
 		if (${downloadedFile} == "true") {
-			echo("This is a correct file name.");
+			echo("There is a file named ${fileName} in temp folder ${tempDir}");
 		}
 		else {
-			fail("FAIL!");
+			fail("There is no file named ${fileName} in temp folder ${tempDir}");
 		}
 	}
 

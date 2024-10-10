@@ -50,8 +50,7 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 
 			ExpandoColumn expandoColumn =
 				_expandoColumnLocalService.fetchColumn(
-					expandoTable.getTableId(),
-					"lastNotificationDate");
+					expandoTable.getTableId(), "lastNotificationDate");
 
 			if (expandoColumn != null) {
 				return;

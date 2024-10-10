@@ -57,7 +57,7 @@ definition {
 
 		MenuItem.click(menuItem = "Checkout");
 
-		while ((IsTextEqual(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS", value1 = "Draft")) && (maxIterations = "6")) {
+		while ((IsElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS_DRAFT")) && (maxIterations = "6")) {
 			Refresh();
 		}
 

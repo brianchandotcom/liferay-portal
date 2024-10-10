@@ -5,6 +5,7 @@ import {Accessor, AssetAppearsOnCard} from '../AssetAppearsOnCard';
 import {ApolloProvider} from '@apollo/react-hooks';
 import {AssetTypes} from 'shared/util/constants';
 import {cleanup, render} from '@testing-library/react';
+import {EmptyStateLink, EmptyStateText} from '../AssetAppearsOnCard';
 import {
 	mockAssetAppearsOnReq,
 	mockPreferenceReq,
@@ -48,6 +49,8 @@ const WrappedComponent = ({accessors, assetType}) => (
 					<AssetAppearsOnCard
 						accessors={accessors}
 						assetType={assetType}
+						emptyStateLink={EmptyStateLink.Blog}
+						emptyStateText={EmptyStateText.Blog}
 					/>
 				</MockedProvider>
 			</StaticRouter>

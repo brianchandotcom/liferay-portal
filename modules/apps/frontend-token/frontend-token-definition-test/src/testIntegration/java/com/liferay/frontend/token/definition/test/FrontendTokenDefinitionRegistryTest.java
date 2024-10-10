@@ -117,16 +117,16 @@ public class FrontendTokenDefinitionRegistryTest {
 	@Test
 	public void testGetFrontendTokenDefinition() {
 		_assertFrontendTokenDefinition(
+			_CLIENT_EXTENSION_ENTRY_THEME_ID,
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_layoutSet),
-			_CLIENT_EXTENSION_ENTRY_THEME_ID);
+				_layoutSet));
 
 		_layoutSet.setLayoutSetId(RandomTestUtil.randomLong());
 
 		_assertFrontendTokenDefinition(
+			_TEST_LAYOUT_SET_THEME_ID,
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_layoutSet),
-			_TEST_LAYOUT_SET_THEME_ID);
+				_layoutSet));
 	}
 
 	@Test
@@ -151,8 +151,8 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	private void _assertFrontendTokenDefinition(
-		FrontendTokenDefinition frontendTokenDefinition,
-		String expectedFrontendTokenDefinitionThemeId) {
+		String expectedFrontendTokenDefinitionThemeId,
+		FrontendTokenDefinition frontendTokenDefinition) {
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -211,7 +211,8 @@ public class FrontendTokenDefinitionRegistryTest {
 				frontendTokenMapping.getJSONObject(LocaleUtil.ENGLISH)));
 
 		Assert.assertEquals(
-			expectedFrontendTokenDefinitionThemeId, frontendTokenDefinition.getThemeId());
+			expectedFrontendTokenDefinitionThemeId,
+			frontendTokenDefinition.getThemeId());
 	}
 
 	private static final String _CLIENT_EXTENSION_ENTRY_THEME_ID =

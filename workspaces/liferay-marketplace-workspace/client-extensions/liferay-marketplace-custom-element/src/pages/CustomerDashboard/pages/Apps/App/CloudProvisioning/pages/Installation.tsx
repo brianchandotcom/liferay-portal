@@ -11,7 +11,7 @@ import Loading from '../../../../../../../components/Loading';
 import ProductPurchase from '../../../../../../../components/ProductPurchase';
 import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import i18n from '../../../../../../../i18n';
-import {cloudConsoleURLs} from '../../../../../../../utils/link';
+import {cloudConsoleURLs, openLink} from '../../../../../../../utils/link';
 import {CloudProvisioningOutletContext} from './CloudProvisioningOutlet';
 
 enum Statuses {
@@ -118,7 +118,7 @@ const CloudProvisioningInstallation = () => {
 				continueButtonProps: {
 					children: 'View App In Cloud',
 					onClick: () =>
-						window.open(
+						openLink(
 							cloudConsoleURLs.getProjectServices(
 								cloudConsoleURL,
 								environment.projectId

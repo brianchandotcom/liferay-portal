@@ -210,7 +210,7 @@ export function NextSteps() {
 							? 'download-app'
 							: properties.featureFlags?.includes('LPD-34129')
 								? 'continue-to-install'
-								: 'go-to-console'
+								: 'go-to-cloud-console'
 					)}
 					onClickBack={() => {
 						return CommerceSelectAccountImpl.selectAccount(

@@ -258,14 +258,21 @@ public interface FaroProjectModel
 	 *
 	 * @return the data source connected of this faro project
 	 */
-	public Boolean getDataSourceConnected();
+	public boolean getDataSourceConnected();
 
 	/**
-	 * Sets the data source connected of this faro project.
+	 * Returns <code>true</code> if this faro project is data source connected.
+	 *
+	 * @return <code>true</code> if this faro project is data source connected; <code>false</code> otherwise
+	 */
+	public boolean isDataSourceConnected();
+
+	/**
+	 * Sets whether this faro project is data source connected.
 	 *
 	 * @param dataSourceConnected the data source connected of this faro project
 	 */
-	public void setDataSourceConnected(Boolean dataSourceConnected);
+	public void setDataSourceConnected(boolean dataSourceConnected);
 
 	/**
 	 * Returns the ip addresses of this faro project.

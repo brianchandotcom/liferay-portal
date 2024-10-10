@@ -45,7 +45,7 @@ public class FaroProjectWrapper
 		attributes.put("accountName", getAccountName());
 		attributes.put("corpProjectName", getCorpProjectName());
 		attributes.put("corpProjectUuid", getCorpProjectUuid());
-		attributes.put("dataSourceConnected", getDataSourceConnected());
+		attributes.put("dataSourceConnected", isDataSourceConnected());
 		attributes.put("ipAddresses", getIpAddresses());
 		attributes.put(
 			"incidentReportEmailAddresses", getIncidentReportEmailAddresses());
@@ -291,7 +291,7 @@ public class FaroProjectWrapper
 	 * @return the data source connected of this faro project
 	 */
 	@Override
-	public Boolean getDataSourceConnected() {
+	public boolean getDataSourceConnected() {
 		return model.getDataSourceConnected();
 	}
 
@@ -506,6 +506,16 @@ public class FaroProjectWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this faro project is data source connected.
+	 *
+	 * @return <code>true</code> if this faro project is data source connected; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDataSourceConnected() {
+		return model.isDataSourceConnected();
+	}
+
+	/**
 	 * Returns <code>true</code> if this faro project is recommendations enabled.
 	 *
 	 * @return <code>true</code> if this faro project is recommendations enabled; <code>false</code> otherwise
@@ -586,12 +596,12 @@ public class FaroProjectWrapper
 	}
 
 	/**
-	 * Sets the data source connected of this faro project.
+	 * Sets whether this faro project is data source connected.
 	 *
 	 * @param dataSourceConnected the data source connected of this faro project
 	 */
 	@Override
-	public void setDataSourceConnected(Boolean dataSourceConnected) {
+	public void setDataSourceConnected(boolean dataSourceConnected) {
 		model.setDataSourceConnected(dataSourceConnected);
 	}
 

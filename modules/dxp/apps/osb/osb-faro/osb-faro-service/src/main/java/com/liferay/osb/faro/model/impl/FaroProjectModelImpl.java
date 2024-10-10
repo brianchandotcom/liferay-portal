@@ -679,12 +679,17 @@ public class FaroProjectModelImpl
 	}
 
 	@Override
-	public Boolean getDataSourceConnected() {
+	public boolean getDataSourceConnected() {
 		return _dataSourceConnected;
 	}
 
 	@Override
-	public void setDataSourceConnected(Boolean dataSourceConnected) {
+	public boolean isDataSourceConnected() {
+		return _dataSourceConnected;
+	}
+
+	@Override
+	public void setDataSourceConnected(boolean dataSourceConnected) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -980,7 +985,7 @@ public class FaroProjectModelImpl
 		faroProjectImpl.setAccountName(getAccountName());
 		faroProjectImpl.setCorpProjectName(getCorpProjectName());
 		faroProjectImpl.setCorpProjectUuid(getCorpProjectUuid());
-		faroProjectImpl.setDataSourceConnected(getDataSourceConnected());
+		faroProjectImpl.setDataSourceConnected(isDataSourceConnected());
 		faroProjectImpl.setIpAddresses(getIpAddresses());
 		faroProjectImpl.setIncidentReportEmailAddresses(
 			getIncidentReportEmailAddresses());
@@ -1190,11 +1195,7 @@ public class FaroProjectModelImpl
 			faroProjectCacheModel.corpProjectUuid = null;
 		}
 
-		Boolean dataSourceConnected = getDataSourceConnected();
-
-		if (dataSourceConnected != null) {
-			faroProjectCacheModel.dataSourceConnected = dataSourceConnected;
-		}
+		faroProjectCacheModel.dataSourceConnected = isDataSourceConnected();
 
 		faroProjectCacheModel.ipAddresses = getIpAddresses();
 
@@ -1346,7 +1347,7 @@ public class FaroProjectModelImpl
 	private String _accountName;
 	private String _corpProjectName;
 	private String _corpProjectUuid;
-	private Boolean _dataSourceConnected;
+	private boolean _dataSourceConnected;
 	private String _ipAddresses;
 	private String _incidentReportEmailAddresses;
 	private long _lastAccessTime;

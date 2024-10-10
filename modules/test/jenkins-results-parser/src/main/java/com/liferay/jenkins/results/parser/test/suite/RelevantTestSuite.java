@@ -55,16 +55,17 @@ public class RelevantTestSuite {
 		}
 
 		List<RelevantRule> relevantRules =
-				_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
+			_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
 
 		Collections.sort(relevantRules);
 
 		try {
 			if (runValidationLogic) {
 				RelevantRuleValidation.validate(
-						_portalGitWorkingDirectory.getGitRepositoryName(),
-						_portalGitWorkingDirectory.getUpstreamBranchName());
-			} else {
+					_portalGitWorkingDirectory.getGitRepositoryName(),
+					_portalGitWorkingDirectory.getUpstreamBranchName());
+			}
+			else {
 				RelevantRuleValidation.validate(relevantRules);
 			}
 		}

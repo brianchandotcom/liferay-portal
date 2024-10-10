@@ -39,7 +39,8 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 				_getRelevantPortalAcceptancePullRequestJob());
 
-			List<TestBatch> testBatches = relevantTestSuite.getTestBatches(true);
+			List<TestBatch> testBatches = relevantTestSuite.getTestBatches(
+				true);
 
 			return testBatches.isEmpty();
 		}

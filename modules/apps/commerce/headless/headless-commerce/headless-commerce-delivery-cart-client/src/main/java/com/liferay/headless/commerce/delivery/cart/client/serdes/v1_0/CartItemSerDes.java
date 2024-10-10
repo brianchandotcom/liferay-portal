@@ -389,6 +389,20 @@ public class CartItemSerDes {
 			sb.append("\"");
 		}
 
+		if (cartItem.getUnitOfMeasure() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasure\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cartItem.getUnitOfMeasure()));
+
+			sb.append("\"");
+		}
+
 		if (cartItem.getValid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -632,6 +646,14 @@ public class CartItemSerDes {
 			map.put("thumbnail", String.valueOf(cartItem.getThumbnail()));
 		}
 
+		if (cartItem.getUnitOfMeasure() == null) {
+			map.put("unitOfMeasure", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasure", String.valueOf(cartItem.getUnitOfMeasure()));
+		}
+
 		if (cartItem.getValid() == null) {
 			map.put("valid", null);
 		}
@@ -747,6 +769,9 @@ public class CartItemSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "valid")) {
@@ -936,6 +961,11 @@ public class CartItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					cartItem.setThumbnail((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
+				if (jsonParserFieldValue != null) {
+					cartItem.setUnitOfMeasure((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "valid")) {

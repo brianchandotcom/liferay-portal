@@ -1181,6 +1181,47 @@ public class CartItem implements Serializable {
 	private Supplier<String> _thumbnailSupplier;
 
 	@Schema
+	public String getUnitOfMeasure() {
+		if (_unitOfMeasureSupplier != null) {
+			unitOfMeasure = _unitOfMeasureSupplier.get();
+
+			_unitOfMeasureSupplier = null;
+		}
+
+		return unitOfMeasure;
+	}
+
+	public void setUnitOfMeasure(String unitOfMeasure) {
+		this.unitOfMeasure = unitOfMeasure;
+
+		_unitOfMeasureSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasure(
+		UnsafeSupplier<String, Exception> unitOfMeasureUnsafeSupplier) {
+
+		_unitOfMeasureSupplier = () -> {
+			try {
+				return unitOfMeasureUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String unitOfMeasure;
+
+	@JsonIgnore
+	private Supplier<String> _unitOfMeasureSupplier;
+
+	@Schema
 	public Boolean getValid() {
 		if (_validSupplier != null) {
 			valid = _validSupplier.get();
@@ -1641,6 +1682,22 @@ public class CartItem implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(thumbnail));
+
+			sb.append("\"");
+		}
+
+		String unitOfMeasure = getUnitOfMeasure();
+
+		if (unitOfMeasure != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasure\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasure));
 
 			sb.append("\"");
 		}

@@ -466,6 +466,47 @@ public class PlacedOrder implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
+	public String getFriendlyURLSeparator() {
+		if (_friendlyURLSeparatorSupplier != null) {
+			friendlyURLSeparator = _friendlyURLSeparatorSupplier.get();
+
+			_friendlyURLSeparatorSupplier = null;
+		}
+
+		return friendlyURLSeparator;
+	}
+
+	public void setFriendlyURLSeparator(String friendlyURLSeparator) {
+		this.friendlyURLSeparator = friendlyURLSeparator;
+
+		_friendlyURLSeparatorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFriendlyURLSeparator(
+		UnsafeSupplier<String, Exception> friendlyURLSeparatorUnsafeSupplier) {
+
+		_friendlyURLSeparatorSupplier = () -> {
+			try {
+				return friendlyURLSeparatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String friendlyURLSeparator;
+
+	@JsonIgnore
+	private Supplier<String> _friendlyURLSeparatorSupplier;
+
+	@Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -666,6 +707,47 @@ public class PlacedOrder implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Status> _orderStatusInfoSupplier;
+
+	@Schema
+	public String getOrderType() {
+		if (_orderTypeSupplier != null) {
+			orderType = _orderTypeSupplier.get();
+
+			_orderTypeSupplier = null;
+		}
+
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+
+		_orderTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOrderType(
+		UnsafeSupplier<String, Exception> orderTypeUnsafeSupplier) {
+
+		_orderTypeSupplier = () -> {
+			try {
+				return orderTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String orderType;
+
+	@JsonIgnore
+	private Supplier<String> _orderTypeSupplier;
 
 	@Schema(example = "AB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
@@ -1829,6 +1911,22 @@ public class PlacedOrder implements Serializable {
 			sb.append("\"");
 		}
 
+		String friendlyURLSeparator = getFriendlyURLSeparator();
+
+		if (friendlyURLSeparator != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyURLSeparator\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(friendlyURLSeparator));
+
+			sb.append("\"");
+		}
+
 		Long id = getId();
 
 		if (id != null) {
@@ -1899,6 +1997,22 @@ public class PlacedOrder implements Serializable {
 			sb.append("\"orderStatusInfo\": ");
 
 			sb.append(String.valueOf(orderStatusInfo));
+		}
+
+		String orderType = getOrderType();
+
+		if (orderType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderType));
+
+			sb.append("\"");
 		}
 
 		String orderTypeExternalReferenceCode =

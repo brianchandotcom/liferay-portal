@@ -189,6 +189,20 @@ public class PlacedOrderSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrder.getFriendlyURLSeparator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyURLSeparator\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrder.getFriendlyURLSeparator()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrder.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -252,6 +266,20 @@ public class PlacedOrderSerDes {
 			sb.append("\"orderStatusInfo\": ");
 
 			sb.append(String.valueOf(placedOrder.getOrderStatusInfo()));
+		}
+
+		if (placedOrder.getOrderType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrder.getOrderType()));
+
+			sb.append("\"");
 		}
 
 		if (placedOrder.getOrderTypeExternalReferenceCode() != null) {
@@ -649,6 +677,15 @@ public class PlacedOrderSerDes {
 				String.valueOf(placedOrder.getExternalReferenceCode()));
 		}
 
+		if (placedOrder.getFriendlyURLSeparator() == null) {
+			map.put("friendlyURLSeparator", null);
+		}
+		else {
+			map.put(
+				"friendlyURLSeparator",
+				String.valueOf(placedOrder.getFriendlyURLSeparator()));
+		}
+
 		if (placedOrder.getId() == null) {
 			map.put("id", null);
 		}
@@ -689,6 +726,13 @@ public class PlacedOrderSerDes {
 			map.put(
 				"orderStatusInfo",
 				String.valueOf(placedOrder.getOrderStatusInfo()));
+		}
+
+		if (placedOrder.getOrderType() == null) {
+			map.put("orderType", null);
+		}
+		else {
+			map.put("orderType", String.valueOf(placedOrder.getOrderType()));
 		}
 
 		if (placedOrder.getOrderTypeExternalReferenceCode() == null) {
@@ -938,6 +982,11 @@ public class PlacedOrderSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyURLSeparator")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -953,6 +1002,9 @@ public class PlacedOrderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderStatusInfo")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderType")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -1112,6 +1164,14 @@ public class PlacedOrderSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyURLSeparator")) {
+
+				if (jsonParserFieldValue != null) {
+					placedOrder.setFriendlyURLSeparator(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					placedOrder.setId(
@@ -1141,6 +1201,11 @@ public class PlacedOrderSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrder.setOrderStatusInfo(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderType")) {
+				if (jsonParserFieldValue != null) {
+					placedOrder.setOrderType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

@@ -173,6 +173,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		placedOrderItem.setShippingAddressExternalReferenceCode(regex);
 		placedOrderItem.setSku(regex);
 		placedOrderItem.setThumbnail(regex);
+		placedOrderItem.setUnitOfMeasure(regex);
 		placedOrderItem.setUnitOfMeasureKey(regex);
 
 		String json = PlacedOrderItemSerDes.toJSON(placedOrderItem);
@@ -192,6 +193,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			regex, placedOrderItem.getShippingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, placedOrderItem.getSku());
 		Assert.assertEquals(regex, placedOrderItem.getThumbnail());
+		Assert.assertEquals(regex, placedOrderItem.getUnitOfMeasure());
 		Assert.assertEquals(regex, placedOrderItem.getUnitOfMeasureKey());
 	}
 
@@ -1467,6 +1469,14 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasure", additionalAssertFieldName)) {
+				if (placedOrderItem.getUnitOfMeasure() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
 				if (placedOrderItem.getUnitOfMeasureKey() == null) {
 					valid = false;
@@ -1891,6 +1901,17 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				if (!Objects.deepEquals(
 						placedOrderItem1.getThumbnail(),
 						placedOrderItem2.getThumbnail())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unitOfMeasure", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrderItem1.getUnitOfMeasure(),
+						placedOrderItem2.getUnitOfMeasure())) {
 
 					return false;
 				}
@@ -2568,6 +2589,52 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("unitOfMeasure")) {
+			Object object = placedOrderItem.getUnitOfMeasure();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("unitOfMeasureKey")) {
 			Object object = placedOrderItem.getUnitOfMeasureKey();
 
@@ -2695,6 +2762,8 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				skuId = RandomTestUtil.randomLong();
 				subscription = RandomTestUtil.randomBoolean();
 				thumbnail = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				unitOfMeasure = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

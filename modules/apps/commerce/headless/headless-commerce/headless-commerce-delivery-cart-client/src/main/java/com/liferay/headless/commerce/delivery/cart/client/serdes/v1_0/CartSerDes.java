@@ -240,6 +240,20 @@ public class CartSerDes {
 			sb.append("\"");
 		}
 
+		if (cart.getFriendlyURLSeparator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyURLSeparator\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getFriendlyURLSeparator()));
+
+			sb.append("\"");
+		}
+
 		if (cart.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -321,6 +335,20 @@ public class CartSerDes {
 			sb.append("\"orderStatusInfo\": ");
 
 			sb.append(String.valueOf(cart.getOrderStatusInfo()));
+		}
+
+		if (cart.getOrderType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getOrderType()));
+
+			sb.append("\"");
 		}
 
 		if (cart.getOrderTypeExternalReferenceCode() != null) {
@@ -709,6 +737,15 @@ public class CartSerDes {
 				String.valueOf(cart.getExternalReferenceCode()));
 		}
 
+		if (cart.getFriendlyURLSeparator() == null) {
+			map.put("friendlyURLSeparator", null);
+		}
+		else {
+			map.put(
+				"friendlyURLSeparator",
+				String.valueOf(cart.getFriendlyURLSeparator()));
+		}
+
 		if (cart.getId() == null) {
 			map.put("id", null);
 		}
@@ -754,6 +791,13 @@ public class CartSerDes {
 		else {
 			map.put(
 				"orderStatusInfo", String.valueOf(cart.getOrderStatusInfo()));
+		}
+
+		if (cart.getOrderType() == null) {
+			map.put("orderType", null);
+		}
+		else {
+			map.put("orderType", String.valueOf(cart.getOrderType()));
 		}
 
 		if (cart.getOrderTypeExternalReferenceCode() == null) {
@@ -987,6 +1031,11 @@ public class CartSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyURLSeparator")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -1005,6 +1054,9 @@ public class CartSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderStatusInfo")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderType")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -1187,6 +1239,13 @@ public class CartSerDes {
 					cart.setExternalReferenceCode((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyURLSeparator")) {
+
+				if (jsonParserFieldValue != null) {
+					cart.setFriendlyURLSeparator((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					cart.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -1230,6 +1289,11 @@ public class CartSerDes {
 				if (jsonParserFieldValue != null) {
 					cart.setOrderStatusInfo(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderType")) {
+				if (jsonParserFieldValue != null) {
+					cart.setOrderType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

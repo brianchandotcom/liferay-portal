@@ -208,6 +208,7 @@ export default {
 		'If you are requesting the account on behalf of a business, please note the business name.',
 	'important-images-will-be-displayed-following-the-numerical-order-above':
 		'Important: Images will be displayed following the numerical order above',
+	'in-progress': 'In Progress',
 	'in-the-future-you-will-be-able-to-submit-your-app-directly-from-liferay-experience-cloud-projects':
 		'In the future, you will be able to submit your app directly from Liferay SaaS projects.',
 	'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay':

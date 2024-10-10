@@ -163,7 +163,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			"corpProjectUuid", faroProject.getCorpProjectUuid());
 		document.addDate("createDate", new Date(faroProject.getCreateTime()));
 		document.addKeyword(
-			"dataSourceConnected", faroProject.getDataSourceConnected());
+			"dataSourceConnected", faroProject.isDataSourceConnected());
 		document.addNumber(
 			"individualsLimit", faroSubscriptionDisplay.getIndividualsLimit());
 		document.addDate(

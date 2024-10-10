@@ -369,16 +369,16 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 
 		User user = (User)httpSession.getAttribute(WebKeys.USER);
 
-		if (user != null) {
-			String digest = (String)httpSession.getAttribute(
-				WebKeys.USER_DIGEST);
-
-			user = UserLocalServiceUtil.getUser(user.getUserId());
-
-			return !StringUtil.equals(digest, user.getDigest());
+		if (user == null) {
+			return false;
 		}
 
-		return false;
+		String digest = (String)httpSession.getAttribute(
+			WebKeys.USER_DIGEST);
+
+		user = UserLocalServiceUtil.getUser(user.getUserId());
+
+		return !StringUtil.equals(digest, user.getDigest());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseAuthFilter.class);

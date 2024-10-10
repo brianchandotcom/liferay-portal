@@ -9,15 +9,17 @@ import {useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
+import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import useModalContext from '../../../../../../../hooks/useModalContext';
 import i18n from '../../../../../../../i18n';
 import {Liferay} from '../../../../../../../liferay/liferay';
 import consoleOAuth2 from '../../../../../../../services/oauth/Console';
+import {cloudConsoleURLs, openLink} from '../../../../../../../utils/link';
 import ProvisioningDetails from '../components/ProvisioningDetails';
 import {InstallStatus} from '../types';
 import useProvisioningData, {ProvisioningRow} from './useProvisioningData';
 
-type UseProvisioningActionsProp = {
+type UseProvisioningActionsProps = {
 	mutateOrder: KeyedMutator<{
 		placedOrder: PlacedOrder;
 		product: DeliveryProduct;
@@ -29,12 +31,22 @@ type UseProvisioningActionsProp = {
 	selectedAccount: Account;
 };
 
+const getProvisioningStatus = (provisioningRow: ProvisioningRow) => ({
+	inProgress: provisioningRow.status === InstallStatus.IN_PROGRESS,
+	isExpired: provisioningRow.status === InstallStatus.EXPIRED,
+	isInstalled: provisioningRow.status === InstallStatus.INSTALLED,
+	readyToInstall: provisioningRow.status === InstallStatus.READY_TO_INSTALL,
+});
+
 const useProvisioningActions = ({
 	mutateOrder,
 	order,
 	resourceRequirements,
 	selectedAccount,
-}: UseProvisioningActionsProp) => {
+}: UseProvisioningActionsProps) => {
+	const {
+		properties: {cloudConsoleURL},
+	} = useMarketplaceContext();
 	const {onClose, onOpenModal} = useModalContext();
 	const [loading, setLoading] = useState(false);
 	const [selectedProvisioningRow, setSelectedProvisioningRow] =
@@ -110,16 +122,6 @@ const useProvisioningActions = ({
 		setLoading(false);
 	};
 
-	function checkOrderItemStatus(provisioningRow: ProvisioningRow) {
-		return {
-			inProgress: provisioningRow.status === InstallStatus.IN_PROGRESS,
-			isExpired: provisioningRow.status === InstallStatus.EXPIRED,
-			isInstalled: provisioningRow.status === InstallStatus.INSTALLED,
-			readyToInstall:
-				provisioningRow.status === InstallStatus.READY_TO_INSTALL,
-		};
-	}
-
 	const openUninstallModal = (provisioningRow: ProvisioningRow) => {
 		setSelectedProvisioningRow(provisioningRow);
 
@@ -128,7 +130,7 @@ const useProvisioningActions = ({
 
 	const onOpenDetailsModal = (provisioningRow: ProvisioningRow) => {
 		const {inProgress, isInstalled, readyToInstall} =
-			checkOrderItemStatus(provisioningRow);
+			getProvisioningStatus(provisioningRow);
 
 		onOpenModal({
 			body: (
@@ -208,9 +210,21 @@ const useProvisioningActions = ({
 		},
 		{
 			action: (provisioningRow: ProvisioningRow) =>
+				openLink(
+					cloudConsoleURLs.getProjectServices(
+						cloudConsoleURL,
+						`${provisioningRow.project}-${provisioningRow.environment}`
+					)
+				),
+			show: (provisioningRow: ProvisioningRow) =>
+				provisioningRow.status === InstallStatus.INSTALLED,
+			title: i18n.translate('go-to-cloud-console'),
+		},
+		{
+			action: (provisioningRow: ProvisioningRow) =>
 				openUninstallModal(provisioningRow),
 			show: (provisioningRow: ProvisioningRow) => {
-				const {isInstalled} = checkOrderItemStatus(provisioningRow);
+				const {isInstalled} = getProvisioningStatus(provisioningRow);
 
 				return isInstalled;
 			},

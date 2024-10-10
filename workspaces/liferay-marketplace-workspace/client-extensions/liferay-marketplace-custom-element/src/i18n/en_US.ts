@@ -188,7 +188,7 @@ export default {
 	'get-started': 'Get Started',
 	'go-back-to-marketplace': 'Go Back to Marketplace',
 	'go-to-app-provisioning': 'Go to App Provisioning',
-	'go-to-console': 'Go to Console',
+	'go-to-cloud-console': 'Go to Cloud Console',
 	'go-to-dashboard': 'Go to Dashboard',
 	'go-to-dxp': 'Go to DXP',
 	'go-to-marketplace': 'Go to Marketplace',

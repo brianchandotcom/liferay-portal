@@ -25,13 +25,16 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -110,6 +113,23 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 					});
 				setExternalReferenceCode(
 					commerceOrder::getExternalReferenceCode);
+				setFriendlyURLSeparator(
+					() -> {
+						if (FeatureFlagManagerUtil.isEnabled("COMMERCE-9410")) {
+							FriendlyURLSeparatorProvider
+								friendlyURLSeparatorProvider =
+									_friendlyURLSeparatorProvider.get();
+
+							if (friendlyURLSeparatorProvider != null) {
+								return friendlyURLSeparatorProvider.
+									getFriendlyURLSeparator(
+										commerceOrder.getCompanyId(),
+										CommerceOrder.class.getName());
+							}
+						}
+
+						return null;
+					});
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);
@@ -685,6 +705,10 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			}
 		};
 	}
+
+	private static final Snapshot<FriendlyURLSeparatorProvider>
+		_friendlyURLSeparatorProvider = new Snapshot<>(
+			CartDTOConverter.class, FriendlyURLSeparatorProvider.class);
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

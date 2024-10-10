@@ -655,7 +655,6 @@ function computeHover({
 	getWidgets,
 	layoutDataRef,
 	monitor,
-	siblingItem = null,
 	sourceItem,
 	state,
 	targetItem,
@@ -684,7 +683,7 @@ function computeHover({
 	// nesting validation
 
 	const [targetPositionWithMiddle, targetPositionWithoutMiddle, elevation] =
-		getItemPosition(siblingItem || targetItem, monitor, targetRefs);
+		getItemPosition(targetItem, monitor, targetRefs);
 
 	// Drop inside target
 
@@ -730,7 +729,6 @@ function computeHover({
 	})();
 
 	if (
-		!siblingItem &&
 		validDropInsideTarget &&
 		stateHasChanged(state, sourceItem, targetItem, targetPositionWithMiddle)
 	) {
@@ -748,36 +746,6 @@ function computeHover({
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
 			type: DRAG_DROP_TARGET_TYPE.INSIDE,
-		});
-	}
-
-	// Valid elevation:
-	// - dropItem should be child of dropTargetItem
-	// - dropItem should be sibling of siblingItem
-
-	if (
-		siblingItem &&
-		stateHasChanged(
-			state,
-			sourceItem,
-			siblingItem,
-			targetPositionWithMiddle
-		)
-	) {
-		return dispatch({
-			dropItem: sourceItem,
-			dropTargetItem: siblingItem,
-			droppable: checkAllowedChild(
-				sourceItem,
-				targetItem,
-				layoutDataRef.current,
-				fragmentEntryLinksRef.current,
-				getWidgets
-			),
-			elevate: true,
-			targetPositionWithMiddle,
-			targetPositionWithoutMiddle,
-			type: DRAG_DROP_TARGET_TYPE.ELEVATE,
 		});
 	}
 
@@ -820,17 +788,36 @@ function computeHover({
 			getElevatedTargetItem(targetItem);
 
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
-			return computeHover({
-				dispatch,
-				fragmentEntryLinksRef,
-				getWidgets,
-				layoutDataRef,
-				monitor,
-				siblingItem,
-				sourceItem,
-				state,
-				targetItem: elevatedTargetItem,
-			});
+
+			// Valid elevation:
+			// - dropItem should be child of dropTargetItem
+			// - dropItem should be sibling of siblingItem
+
+			if (
+				siblingItem &&
+				stateHasChanged(
+					state,
+					sourceItem,
+					siblingItem,
+					targetPositionWithMiddle
+				)
+			) {
+				return dispatch({
+					dropItem: sourceItem,
+					dropTargetItem: siblingItem,
+					droppable: checkAllowedChild(
+						sourceItem,
+						elevatedTargetItem,
+						layoutDataRef.current,
+						fragmentEntryLinksRef.current,
+						getWidgets
+					),
+					elevate: true,
+					targetPositionWithMiddle,
+					targetPositionWithoutMiddle,
+					type: DRAG_DROP_TARGET_TYPE.ELEVATE,
+				});
+			}
 		}
 	}
 }

@@ -54,7 +54,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		</div>
 	</c:when>
 	<c:otherwise>
-		<form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" id="<%= randomNamespace %>fm" method="get" name="<%= randomNamespace %>fm">
+		<form action="<%= HtmlUtil.escapeAttribute(searchBarPortletDisplayContext.getSearchURL()) %>" id="<%= randomNamespace %>fm" method="get" name="<%= randomNamespace %>fm">
 			<c:if test="<%= !Validator.isBlank(searchBarPortletDisplayContext.getPaginationStartParameterName()) %>">
 				<input class="search-bar-reset-start-page" name="<%= searchBarPortletDisplayContext.getPaginationStartParameterName() %>" type="hidden" value="0" />
 			</c:if>

@@ -55,7 +55,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Eric Yan
  */
 @RunWith(Arquillian.class)
-public class JspServletPerformanceTest {
+public class JspServletBenchmarkTest {
 
 	@ClassRule
 	@Rule
@@ -69,13 +69,12 @@ public class JspServletPerformanceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			JspServletPerformanceTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(JspServletBenchmarkTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_bundle = bundleContext.installBundle(
-			JspServletPerformanceTest.class.getName(), _createBundle());
+			JspServletBenchmarkTest.class.getName(), _createBundle());
 
 		_bundle.start();
 
@@ -157,7 +156,7 @@ public class JspServletPerformanceTest {
 			attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 			attributes.putValue(
 				Constants.BUNDLE_SYMBOLICNAME,
-				JspServletPerformanceTest.class.getName());
+				JspServletBenchmarkTest.class.getName());
 			attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
 			attributes.putValue("Manifest-Version", "1.0");
 			attributes.putValue("Web-ContextPath", _WEB_CONTEXT_PATH);

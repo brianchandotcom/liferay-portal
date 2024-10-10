@@ -4,7 +4,7 @@
  */
 
 import {addYears, format} from 'date-fns';
-import {useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import {ORDER_CUSTOM_FIELDS} from '../../../../../../../enums/Order';
 import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../../enums/Product';
@@ -12,8 +12,12 @@ import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOr
 import i18n from '../../../../../../../i18n';
 import {getSpecificationByKey} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
+import {LicenseType} from '../../../../../../GetApp/enums/licenseType';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
 import {InstallStatus} from '../types';
+
+const ACTIVE_REFRESH_INTERVAL = 60 * 1000;
+const DEFAULT_REFRESH_INTERVAL = 240 * 1000;
 
 const getExpirationDate = (createdDate: Date, licenseType: string) => {
 	if (licenseType === 'Perpetual') {
@@ -23,10 +27,40 @@ const getExpirationDate = (createdDate: Date, licenseType: string) => {
 	return format(addYears(createdDate, 1), 'MMM dd, yyyy');
 };
 
-const useProvisioningData = (orderId: string) => {
-	const {data, mutate: mutateOrder} = useGetProductByOrderId(orderId);
+const getStatus = (
+	deployment: any,
+	licenseType: string,
+	order: PlacedOrder
+) => {
+	if (deployment?.loading) {
+		return InstallStatus.IN_PROGRESS;
+	}
 
-	const order = data?.placedOrder || ({} as PlacedOrder);
+	if (
+		licenseType.toLowerCase() === LicenseType.Subscription &&
+		new Date(order.createDate) > addYears(new Date(order.createDate), 1)
+	) {
+		return InstallStatus.EXPIRED;
+	}
+
+	return deployment
+		? InstallStatus.INSTALLED
+		: InstallStatus.READY_TO_INSTALL;
+};
+
+const useProvisioningData = (orderId: string) => {
+	const [refreshInterval, setRefreshInterval] = useState(
+		DEFAULT_REFRESH_INTERVAL
+	);
+
+	const {data, mutate: mutateOrder} = useGetProductByOrderId(orderId, {
+		refreshInterval,
+	});
+
+	const order = useMemo(
+		() => data?.placedOrder || ({} as PlacedOrder),
+		[data?.placedOrder]
+	);
 	const orderItems = order.placedOrderItems;
 	const product = data?.product;
 
@@ -74,23 +108,32 @@ const useProvisioningData = (orderId: string) => {
 						productLicenseType
 					),
 					host: '',
-					id: deployment?.id,
+					id: deployment?.id || i,
+					loading: deployment?.loading,
 					orderItem: orderItem.id,
 					project,
 					startDate: format(
 						new Date(order.createDate),
 						'MMM dd, yyyy'
 					),
-					status: deployment
-						? InstallStatus.INSTALLED
-						: InstallStatus.READY_TO_INSTALL,
+					status: getStatus(deployment, productLicenseType, order),
 					type: productLicenseType,
 				});
 			}
 		}
 
 		return items;
-	}, [order.createDate, order.customFields, orderItems, productLicenseType]);
+	}, [order, orderItems, productLicenseType]);
+
+	useEffect(() => {
+		const refresh = provisioningTableData.some(
+			(provisioning) => provisioning.loading === true
+		);
+
+		if (refresh) {
+			setRefreshInterval(ACTIVE_REFRESH_INTERVAL);
+		}
+	}, [provisioningTableData]);
 
 	return {
 		mutateOrder,

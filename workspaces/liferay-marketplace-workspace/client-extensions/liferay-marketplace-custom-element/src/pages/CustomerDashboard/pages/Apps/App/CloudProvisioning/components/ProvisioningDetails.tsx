@@ -13,20 +13,16 @@ import useProvisioningData from '../hooks/useProvisioningData';
 import {InstallStatus} from '../types';
 
 import './index.scss';
-import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
-import en_US from '../../../../../../../i18n/en_US';
 
 type ProvisioningDetailsProps = {
+	account: Account;
 	headerInfo?: {
 		image?: string;
 		licenseType?: string;
-		myUserAccount: ReturnType<
-			typeof useMarketplaceContext
-		>['myUserAccount'];
 		name?: string;
 	};
 	onClose: () => void;
-	orderItem?: ReturnType<
+	orderItem: ReturnType<
 		typeof useProvisioningData
 	>['provisioningTableData'][0];
 };
@@ -39,6 +35,8 @@ type InfoBadgeProps = {
 
 const badgeStatus = {
 	[InstallStatus.EXPIRED]: 'provisioning-details-info-badge-expired',
+	[InstallStatus.IN_PROGRESS]:
+		'provisioning-details-info-badge-ready-to-install',
 	[InstallStatus.INSTALLED]: 'provisioning-details-info-badge-installed',
 	[InstallStatus.READY_TO_INSTALL]:
 		'provisioning-details-info-badge-ready-to-install',
@@ -64,6 +62,7 @@ const InfoBadge: React.FC<InfoBadgeProps> = ({children, status, title}) => (
 );
 
 const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
+	account,
 	headerInfo,
 	onClose,
 	orderItem,
@@ -94,7 +93,7 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 					name={headerInfo?.name}
 				/>
 
-				<AccountEmailInfo userAccount={headerInfo?.myUserAccount} />
+				<AccountEmailInfo userAccount={account} />
 			</div>
 
 			<div className="d-flex flex-row mb-7 mt-5">
@@ -121,9 +120,7 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 						status={orderItem?.status}
 						title={i18n.translate('status')}
 					>
-						{i18n.translate(
-							orderItem?.status as keyof typeof en_US
-						)}
+						{i18n.translate(orderItem?.status as any)}
 					</InfoBadge>
 
 					<InfoBadge title={i18n.translate('project')}>

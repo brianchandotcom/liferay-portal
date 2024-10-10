@@ -18,6 +18,7 @@ const InstallationStatus = ({children, status}: InstallationStatusProps) => (
 		<ClayIcon
 			className={classNames('mr-2', {
 				'text-danger': status === InstallStatus.EXPIRED,
+				'text-info': status === InstallStatus.IN_PROGRESS,
 				'text-primary': status === InstallStatus.READY_TO_INSTALL,
 				'text-success': status === InstallStatus.INSTALLED,
 			})}

@@ -6,9 +6,10 @@
 import {ReactNode} from 'react';
 
 export enum InstallStatus {
-	EXPIRED = 'expired',
-	INSTALLED = 'installed',
-	READY_TO_INSTALL = 'ready to install',
+	EXPIRED = 'Expired',
+	INSTALLED = 'Installed',
+	IN_PROGRESS = 'In Progress',
+	READY_TO_INSTALL = 'Ready to Install',
 }
 
 export enum StepCloudInstallation {

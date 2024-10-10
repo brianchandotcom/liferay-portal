@@ -1677,19 +1677,19 @@ test.describe('can rely on anyOf form validation', () => {
 		);
 
 		await expect(
-			page.getByLabel('r_studentSubjects1_c_studentERC')
+			page.getByLabel('r_studentSubjects1_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
 			page.getByLabel('r_studentSubjects1_c_studentId', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects2_c_studentERC')
+			page.getByLabel('r_studentSubjects2_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
 			page.getByLabel('r_studentSubjects2_c_studentId', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects3_c_studentERC')
+			page.getByLabel('r_studentSubjects3_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
 			page.getByLabel('r_studentSubjects3_c_studentId', {exact: true})
@@ -1743,19 +1743,19 @@ test.describe('can rely on anyOf form validation', () => {
 		);
 
 		await expect(
-			page.getByLabel('r_studentSubjects1_c_studentERC')
+			page.getByLabel('r_studentSubjects1_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
 			page.getByLabel('r_studentSubjects1_c_studentId', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects2_c_studentERC')
+			page.getByLabel('r_studentSubjects2_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
 			page.getByLabel('r_studentSubjects2_c_studentId', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects3_c_studentERC')
+			page.getByLabel('r_studentSubjects3_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
 			page.getByLabel('r_studentSubjects3_c_studentId', {exact: true})
@@ -1817,22 +1817,22 @@ test.describe('can rely on anyOf form validation', () => {
 		);
 
 		await expect(
-			page.getByLabel('r_studentSubjects1_c_studentERC')
+			page.getByLabel('r_studentSubjects1_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects1_c_studentId')
+			page.getByLabel('r_studentSubjects1_c_studentId', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects2_c_studentERC')
+			page.getByLabel('r_studentSubjects2_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects2_c_studentId')
+			page.getByLabel('r_studentSubjects2_c_studentId', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects3_c_studentERC')
+			page.getByLabel('r_studentSubjects3_c_studentERC', {exact: true})
 		).toBeEmpty();
 		await expect(
-			page.getByLabel('r_studentSubjects3_c_studentId')
+			page.getByLabel('r_studentSubjects3_c_studentId', {exact: true})
 		).toBeEmpty();
 
 		await dataMigrationCenterPage.selectFile(

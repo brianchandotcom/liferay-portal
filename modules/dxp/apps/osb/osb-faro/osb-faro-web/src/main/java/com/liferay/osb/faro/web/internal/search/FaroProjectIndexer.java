@@ -154,6 +154,9 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, faroProject);
 
+		FaroSubscriptionDisplay faroSubscriptionDisplay = JSONUtil.readValue(
+			faroProject.getSubscription(), FaroSubscriptionDisplay.class);
+
 		document.addKeyword(Field.GROUP_ID, faroProject.getGroupId());
 		document.addKeyword(Field.NAME, faroProject.getName());
 		document.addKeyword(Field.USER_ID, faroProject.getUserId());
@@ -171,9 +174,6 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			faroSubscriptionDisplay.getLastAnniversaryDate());
 		document.addDate(
 			"lastAccessDate", new Date(faroProject.getLastAccessTime()));
-
-		FaroSubscriptionDisplay faroSubscriptionDisplay = JSONUtil.readValue(
-			faroProject.getSubscription(), FaroSubscriptionDisplay.class);
 
 		try {
 			if (!StringUtil.equals(

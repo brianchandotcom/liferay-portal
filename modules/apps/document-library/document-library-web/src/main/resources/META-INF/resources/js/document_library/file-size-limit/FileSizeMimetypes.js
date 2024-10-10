@@ -144,9 +144,7 @@ const FileSizePerMimeType = ({
 
 	return (
 		<>
-			<p className="mb-4 text-3 text-secondary">
-				{Liferay.Language.get(description)}
-			</p>
+			<p className="mb-4 text-3 text-secondary">{description}</p>
 
 			{sizesList.map((item, index) => (
 				<FileSizeField

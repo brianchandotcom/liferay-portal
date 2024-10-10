@@ -579,7 +579,7 @@
 			<message key="method.incorrect.ending" value="Name of method returning type &quot;{0}&quot; should end with &quot;{1}&quot;" />
 			<message key="method.rename" value="Rename method &quot;{0}&quot; to &quot;{1}&quot;" />
 			<message key="search.method.incorrect" value="Incorrect name of method &quot;{0}&quot;. Name should equal &quot;search&quot; or start with &quot;searchBy&quot;." />
-			<message key="set.safe.closeable.method.incorrect" value="Incorrect name of method ''{0}''. Name should include the context and end with ''WithSafeCloseable''." />
+			<message key="set.safe.closeable.method.incorrect" value="Incorrect name of method ''{0}''. Name should include a word of context between ''set'' and ''WithSafeCloseable''." />
 			<property name="enforceTypeNames" value="" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MissingAuthorCheck">

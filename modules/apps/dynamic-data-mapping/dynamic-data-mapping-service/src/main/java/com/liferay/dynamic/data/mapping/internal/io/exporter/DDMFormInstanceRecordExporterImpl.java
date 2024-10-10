@@ -141,8 +141,12 @@ public class DDMFormInstanceRecordExporterImpl
 
 			if (value != null) {
 				sb.append(value);
-				sb.append(StringPool.COMMA_AND_SPACE);
 			}
+			else {
+				sb.append(StringPool.BLANK);
+			}
+
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
 		sb.setIndex(sb.index() - 1);

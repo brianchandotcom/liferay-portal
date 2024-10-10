@@ -50,6 +50,7 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -1895,6 +1896,34 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipEdgeException(
 				"Unable to bind the object definitions when they have " +
 					"different scopes");
+		}
+
+		int height = 1;
+
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				_objectDefinitionPersistence, objectRelationshipLocalService);
+
+		if (objectDefinition1.getRootObjectDefinitionId() != 0) {
+			Tree tree = objectDefinitionTreeFactory.create(
+				objectDefinition1.getRootObjectDefinitionId());
+
+			Node node = tree.getNode(objectDefinition1.getObjectDefinitionId());
+
+			height += node.getDepth();
+		}
+
+		if (objectDefinition2.getRootObjectDefinitionId() != 0) {
+			Tree tree = objectDefinitionTreeFactory.create(
+				objectDefinition2.getRootObjectDefinitionId());
+
+			height += tree.getHeight(tree.getRootNode());
+		}
+
+		if (height > TreeConstants.MAX_HEIGHT) {
+			throw new ObjectRelationshipEdgeException(
+				"Object relationship cannot be an edge because the tree max " +
+					"height will be exceeded");
 		}
 	}
 

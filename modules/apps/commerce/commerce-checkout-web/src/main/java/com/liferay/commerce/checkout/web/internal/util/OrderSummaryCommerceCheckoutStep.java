@@ -42,9 +42,7 @@ import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,7 +66,6 @@ import javax.portlet.ActionResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,7 +104,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		try {
 			_validateCommerceOrder(actionRequest);
 
-			_checkoutCommerceOrder(actionRequest, actionResponse);
+			_checkoutCommerceOrder(actionRequest);
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();
@@ -218,8 +215,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		}
 	}
 
-	private void _checkoutCommerceOrder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _checkoutCommerceOrder(ActionRequest actionRequest)
 		throws Exception {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -257,28 +253,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 				}
 			}
 
-			CommerceOrder checkedOutCommerceOrder =
-				_commerceOrderEngine.checkoutCommerceOrder(
-					commerceOrder, _portal.getUserId(httpServletRequest));
-
-			if (!checkedOutCommerceOrder.isOpen()) {
-				CookiesManagerUtil.deleteCookies(
-					CookiesManagerUtil.getDomain(httpServletRequest),
-					httpServletRequest,
-					_portal.getHttpServletResponse(actionResponse),
-					CommerceOrder.class.getName() + StringPool.POUND +
-						commerceOrder.getGroupId());
-
-				HttpServletRequest originalHttpServletRequest =
-					_portal.getOriginalServletRequest(httpServletRequest);
-
-				HttpSession httpSession =
-					originalHttpServletRequest.getSession();
-
-				httpSession.removeAttribute(
-					CommerceOrder.class.getName() + StringPool.POUND +
-						commerceOrder.getGroupId());
-			}
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _portal.getUserId(httpServletRequest));
 		}
 	}
 

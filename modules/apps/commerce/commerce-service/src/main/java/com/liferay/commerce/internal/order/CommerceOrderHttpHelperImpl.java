@@ -432,6 +432,29 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					uuid, groupId);
 		}
 
+		if ((commerceOrder != null) && !commerceOrder.isOpen()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			CookiesManagerUtil.deleteCookies(
+				CookiesManagerUtil.getDomain(httpServletRequest),
+				httpServletRequest, themeDisplay.getResponse(),
+				CommerceOrder.class.getName() + StringPool.POUND +
+					commerceOrder.getGroupId());
+
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			httpSession.removeAttribute(
+				CommerceOrder.class.getName() + StringPool.POUND +
+					commerceOrder.getGroupId());
+
+			commerceOrder = null;
+		}
+
 		if (commerceOrder == null) {
 			commerceOrder = _getCurrentCommerceOrder(
 				commerceContext, httpServletRequest);

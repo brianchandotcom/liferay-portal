@@ -319,6 +319,11 @@ public interface CommerceTermEntryLocalService
 		long commerceShippingOptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDeliveryCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -334,6 +339,11 @@ public interface CommerceTermEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPaymentCommerceTermEntriesCount(
 		long companyId, long commerceOrderTypeId,
 		long commercePaymentMethodGroupRelId);
 

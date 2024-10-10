@@ -374,6 +374,14 @@ public class CommerceTermEntryLocalServiceUtil {
 			companyId, commerceOrderTypeId, commerceShippingOptionId);
 	}
 
+	public static int getDeliveryCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId) {
+
+		return getService().getDeliveryCommerceTermEntriesCount(
+			companyId, commerceOrderTypeId, commerceShippingOptionId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -403,6 +411,14 @@ public class CommerceTermEntryLocalServiceUtil {
 		long commercePaymentMethodGroupRelId) {
 
 		return getService().getPaymentCommerceTermEntries(
+			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
+	}
+
+	public static int getPaymentCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId) {
+
+		return getService().getPaymentCommerceTermEntriesCount(
 			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
 	}
 

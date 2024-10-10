@@ -7,7 +7,11 @@ import {openToast} from 'frontend-js-web';
 
 import removeAlert from './removeAlert';
 
-export default function showAlert(message) {
+export default function showAlert(
+	message,
+	title = Liferay.Language.get('error'),
+	type = 'danger'
+) {
 	removeAlert();
 
 	const articleContentWrapper = document.querySelector(
@@ -24,7 +28,7 @@ export default function showAlert(message) {
 		container: alertContainer,
 		message,
 		onClose: () => alertContainer.remove(),
-		title: Liferay.Language.get('error'),
-		type: 'danger',
+		title,
+		type,
 	});
 }

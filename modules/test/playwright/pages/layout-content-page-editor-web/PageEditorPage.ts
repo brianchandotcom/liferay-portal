@@ -874,9 +874,7 @@ export class PageEditorPage {
 	}
 
 	async selectFragment(fragmentId: string, isDesktop = true) {
-		const isActive = await this.isActive(fragmentId, isDesktop);
-
-		if (isActive) {
+		if (await this.isActive(fragmentId, isDesktop)) {
 			return;
 		}
 
@@ -884,17 +882,19 @@ export class PageEditorPage {
 
 		await fragment.click();
 
-		// Click the tree node again to make sure we activate it
+		// Click the tree node again if it wasn't activated
 
-		await this.goToSidebarTab('Browser');
+		if (!(await this.isActive(fragmentId, isDesktop))) {
+			await this.goToSidebarTab('Browser');
 
-		const treeNode = this.page.locator(
-			`.treeview-link[data-id$="${fragmentId}"]`
-		);
+			const treeNode = this.page.locator(
+				`.treeview-link[data-id$="${fragmentId}"]`
+			);
 
-		await treeNode.click();
+			await treeNode.click();
 
-		await expect(treeNode).toHaveClass(/focus/);
+			await expect(treeNode).toHaveClass(/focus/);
+		}
 	}
 
 	async selectEditable(

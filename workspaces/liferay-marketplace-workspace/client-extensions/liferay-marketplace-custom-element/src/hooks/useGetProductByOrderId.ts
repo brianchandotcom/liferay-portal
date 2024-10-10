@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import useSWR from 'swr';
+import useSWR, {SWRConfiguration} from 'swr';
 
 import {Liferay} from '../liferay/liferay';
 import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
 import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerceDeliveryOrder';
 
-const useGetProductByOrderId = (orderId: string, swrOptions?: any) => {
+const useGetProductByOrderId = (
+	orderId: string,
+	swrOptions?: SWRConfiguration
+) => {
 	return useSWR(
 		`/placed-order/${orderId}`,
 		async () => {

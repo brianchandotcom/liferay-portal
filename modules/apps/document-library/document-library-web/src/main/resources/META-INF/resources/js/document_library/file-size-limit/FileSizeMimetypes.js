@@ -117,7 +117,7 @@ const FileSizeField = ({
 	);
 };
 
-const FileSizePerMimeType = ({
+const FileSizeMimetypes = ({
 	description = Liferay.Language.get('file-size-mime-type-description'),
 	portletNamespace,
 	sizeList: initialSizeList,
@@ -161,7 +161,7 @@ const FileSizePerMimeType = ({
 	);
 };
 
-FileSizePerMimeType.propTypes = {
+FileSizeMimetypes.propTypes = {
 	description: PropTypes.string,
 	portletNamespace: PropTypes.string.isRequired,
 	sizeList: PropTypes.arrayOf(
@@ -172,4 +172,4 @@ FileSizePerMimeType.propTypes = {
 	),
 };
 
-export default FileSizePerMimeType;
+export default FileSizeMimetypes;

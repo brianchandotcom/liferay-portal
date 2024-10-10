@@ -29,6 +29,14 @@ export enum Accessor {
 	PreviewsMetric = 'previewsMetric'
 }
 
+export enum EmptyStateLink {
+	Asset = URLConstants.AssetsCustomAssetsListDocumentation,
+	Blog = URLConstants.AssetsAppearsBlogsOnDocumentation,
+	Document = URLConstants.AssetsAppearsDocumentsAndMediaOnDocumentation,
+	Form = URLConstants.AssetsAppearsFormsOnDocumentation,
+	Journal = URLConstants.AssetsAppearsWebContentOnDocumentation
+}
+
 interface IAssetAppearsOnCardProps {
 	accessors: Accessor[];
 	assetType: AssetTypes;

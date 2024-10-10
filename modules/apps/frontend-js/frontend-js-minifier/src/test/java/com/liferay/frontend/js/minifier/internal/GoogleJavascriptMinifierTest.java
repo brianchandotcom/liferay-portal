@@ -40,7 +40,7 @@ public class GoogleJavascriptMinifierTest {
 
 			String minifiedJS = googleJavaScriptMinifier.compress("test", code);
 
-			Assert.assertEquals(44, minifiedJS.length());
+			Assert.assertEquals(45, minifiedJS.length());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

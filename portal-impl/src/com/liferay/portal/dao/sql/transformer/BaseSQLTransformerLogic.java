@@ -98,16 +98,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return sqlFunctionTransformer::transform;
 	}
 
-	protected Function<String, String> getDateFormatFunction() {
-		Pattern pattern = getDateFormatPattern();
-
-		return (String sql) -> replaceDateFormat(pattern.matcher(sql));
-	}
-
-	protected Pattern getDateFormatPattern() {
-		return Pattern.compile("DATE2SEC\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	}
-
 	protected Function<String, String> getDropTableIfExistsTextFunction() {
 		Pattern pattern = getDropTableIfExistsTextPattern();
 
@@ -232,10 +222,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
-	}
-
-	protected String replaceDateFormat(Matcher matcher) {
-		return matcher.replaceAll("DATE_FORMAT($1, '%Y-%m-%dT%H:%i:%sZ')");
 	}
 
 	protected String replaceDropTableIfExistsText(Matcher matcher) {

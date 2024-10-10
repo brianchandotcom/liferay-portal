@@ -291,22 +291,36 @@ public class FilePropagator {
 			commands.add("ls -al " + targetDirName);
 		}
 
-		String targetSlave = _targetSlaves.remove(0);
+		synchronized (this) {
+			String targetSlave = _targetSlaves.remove(0);
 
-		try {
-			if (_executeBashCommands(commands, targetSlave) != 0) {
-				_errorSlaves.add(targetSlave);
+			_busySlaves.add(targetSlave);
 
-				_copyFromSource();
+			try {
+				int result = _executeBashCommands(commands, targetSlave);
+
+				_busySlaves.remove(targetSlave);
+
+				if (result != 0) {
+					_errorSlaves.add(targetSlave);
+
+					_copyFromSource();
+				}
+				else {
+					_mirrorSlaves.add(targetSlave);
+				}
 			}
-			else {
-				_mirrorSlaves.add(targetSlave);
+			catch (Exception exception) {
+				_busySlaves.remove(targetSlave);
+
+				if (!_errorSlaves.contains(targetSlave)) {
+					_errorSlaves.add(targetSlave);
+				}
+
+				throw new FilePropagatorRuntimeException(
+					this, "Unable to copy from source. Executed: " + commands,
+					exception);
 			}
-		}
-		catch (Exception exception) {
-			throw new FilePropagatorRuntimeException(
-				this, "Unable to copy from source. Executed: " + commands,
-				exception);
 		}
 
 		log("Finished copying from source.");

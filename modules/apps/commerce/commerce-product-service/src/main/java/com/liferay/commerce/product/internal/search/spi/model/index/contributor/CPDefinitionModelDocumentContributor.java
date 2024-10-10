@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -301,7 +302,9 @@ public class CPDefinitionModelDocumentContributor
 
 			document.addText(
 				Field.DESCRIPTION,
-				cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
+				_htmlParser.extractText(
+					cpDefinition.getDescription(
+						cpDefinitionDefaultLanguageId)));
 			document.addKeyword(
 				Field.HIDDEN, _isHidden(cpDefinition, cProduct));
 			document.addText(
@@ -706,6 +709,9 @@ public class CPDefinitionModelDocumentContributor
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Language _language;

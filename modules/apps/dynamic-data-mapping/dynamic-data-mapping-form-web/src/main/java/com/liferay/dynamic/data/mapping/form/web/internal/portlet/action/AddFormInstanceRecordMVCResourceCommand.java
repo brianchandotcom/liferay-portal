@@ -16,9 +16,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -103,7 +103,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 			resourceRequest, "formInstanceId");
 
 		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceService.getFormInstance(formInstanceId);
+			_ddmFormInstanceLocalService.getFormInstance(formInstanceId);
 
 		try {
 			AddFormInstanceRecordMVCCommandUtil.validateExpirationStatus(
@@ -189,14 +189,14 @@ public class AddFormInstanceRecordMVCResourceCommand
 		_ddmFormBuilderContextToDDMFormValues;
 
 	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
-
-	@Reference
-	private DDMFormInstanceService _ddmFormInstanceService;
 
 	@Reference
 	private Language _language;

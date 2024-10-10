@@ -118,9 +118,21 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 
-		_friendlyURLSeparatorConfigurationManager.
-			updateFriendlyURLSeparatorCompanyConfiguration(
-				_companyId, friendlyURLSeparatorsJSONObject.toString());
+		ConfigurationTestUtil.updateConfiguration(
+			FriendlyURLSeparatorCompanyConfiguration.class.getName(),
+			() -> {
+				_friendlyURLSeparatorConfigurationManager.
+					updateFriendlyURLSeparatorCompanyConfiguration(
+						_companyId, friendlyURLSeparatorsJSONObject.toString());
+
+				Configuration configuration =
+					_configurationAdmin.getConfiguration(
+						FriendlyURLSeparatorCompanyConfiguration.class.
+							getName(),
+						StringPool.QUESTION);
+
+				configuration.update();
+			});
 
 		FriendlyURLSeparatorCompanyConfiguration
 			friendlyURLSeparatorCompanyConfiguration =

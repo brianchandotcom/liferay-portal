@@ -246,19 +246,9 @@ test('Check drag and drop from Page Structure Tree', async ({
 
 	await pageEditorPage.selectFragment(gridId);
 
-	const assetPublisherNode = page.locator(
-		`.treeview-link[data-id$="${assetPublisherId}"]`
-	);
-
-	const moduleNode = page
-		.locator('.treeview-link')
-		.filter({hasText: 'Module'})
-		.first();
-
-	await dragAndDropElement({
-		dragTarget: assetPublisherNode,
-		dropTarget: moduleNode,
-		page,
+	await pageEditorPage.dragTreeNode({
+		source: {label: 'Asset Publisher'},
+		target: {label: 'Module'},
 	});
 
 	expect(
@@ -335,10 +325,9 @@ test(
 
 		await page.keyboard.up('Control');
 
-		await dragAndDropElement({
-			dragTarget: page.getByLabel('Select Text').first(),
-			dropTarget: page.getByLabel('Select Step 2'),
-			page,
+		await pageEditorPage.dragTreeNode({
+			source: {label: 'Text'},
+			target: {label: 'Step 2'},
 		});
 
 		await pageEditorPage.waitForChangesSaved();

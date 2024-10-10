@@ -51,7 +51,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		</center>
 
 		<aui:script position="inline">
-			window.body.onload = function() {
+			document.body.onload = function() {
 				window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
 			}
 		</aui:script>

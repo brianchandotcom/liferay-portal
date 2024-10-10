@@ -69,7 +69,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 				</center>
 
 				<aui:script position="inline">
-					window.body.onload = function() {
+					document.body.onload = function() {
 						setTimeout('document.fm.submit()', 100);
 					}
 				</aui:script>
@@ -115,7 +115,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 
 			<body>
 				<aui:script position="inline">
-					window.body.onload = function() {
+					document.body.onload = function() {
 						window.location.replace('<%= themeDisplay.getPathMain() %>');
 					}
 				</aui:script>

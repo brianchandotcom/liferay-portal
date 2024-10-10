@@ -745,7 +745,8 @@ public class OrganizationLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ModelListenerException.class,
-			ObjectValidationRuleEngineException.class.getName(),
+			ObjectValidationRuleEngineException.class.getName() +
+				": This name is invalid.",
 			() -> _organizationLocalService.addOrganization(
 				user.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,

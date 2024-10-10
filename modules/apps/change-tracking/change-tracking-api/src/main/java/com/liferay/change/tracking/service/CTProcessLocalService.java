@@ -70,12 +70,6 @@ public interface CTProcessLocalService
 	public CTProcess addCTProcess(long userId, long ctCollectionId)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public CTProcess addCTProcess(
-			long userId, long fromCTCollectionId, long toCTCollectionId,
-			long[] ctEntryIds)
-		throws PortalException;
-
 	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *

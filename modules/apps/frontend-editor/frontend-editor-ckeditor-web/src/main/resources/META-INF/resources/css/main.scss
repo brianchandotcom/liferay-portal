@@ -250,16 +250,16 @@
 	}
 }
 
-.cke_combopanel.lfr-maximized {
-	z-index: 10000 !important;
-}
-
 .cke_editable_inline a {
 	cursor: pointer;
 }
 
 .cke_panel.cke_combopanel {
 	width: 220px;
+}
+
+.cke_panel.cke_combopanel.lfr-maximized {
+	z-index: 10000 !important;
 }
 
 .cke_panel.cke_panel,

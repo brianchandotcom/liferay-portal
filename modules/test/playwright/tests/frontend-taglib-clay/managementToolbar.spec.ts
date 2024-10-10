@@ -66,8 +66,57 @@ test.describe('Management Toolbar Default State', () => {
 			await expect(
 				page
 					.locator('#managementToolbarDefaultState')
-					.getByRole('button', {name: 'New'})
+					.getByRole('button')
+					.filter({hasText: 'New'})
 			).toBeVisible();
+		});
+	});
+
+	test('Assert the tooltip message is displayed when hovered over the new button in responsive mode @LPS-144540', async ({
+		page,
+	}) => {
+		await test.step('Set the window size to phone size', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+		});
+
+		await test.step('Hover over the "New" button', async () => {
+			await page
+				.locator('#managementToolbarDefaultState')
+				.getByRole('button', {name: 'New'})
+				.hover();
+		});
+
+		await test.step('Check the tooltip text displays "New"', async () => {
+			await expect(
+				page.locator('.tooltip-inner').getByText('New')
+			).toBeVisible();
+		});
+	});
+
+	test('Assert the view button displays a double caret icon @LPS-144535', async ({
+		page,
+	}) => {
+		await test.step('Check that the double caret icon is visible', async () => {
+			await expect(
+				page.locator(
+					'#managementToolbarDefaultState .lexicon-icon-caret-double-l'
+				)
+			).toBeVisible();
+		});
+	});
+
+	test('Assert the tooltip message is displayed when hovered over the view button @LPS-144535', async ({
+		page,
+	}) => {
+		await test.step('Hover over the view button', async () => {
+			await page
+				.locator('#managementToolbarDefaultState')
+				.getByLabel(/Select View/)
+				.hover();
+		});
+
+		await test.step('Check the tooltip text is displayed', async () => {
+			await expect(page.getByText(/Select View/)).toBeVisible();
 		});
 	});
 });

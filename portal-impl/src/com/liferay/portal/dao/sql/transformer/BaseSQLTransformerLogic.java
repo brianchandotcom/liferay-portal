@@ -98,17 +98,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return sqlFunctionTransformer::transform;
 	}
 
-	protected Function<String, String> getTruncateToSecondsFunction() {
-		Pattern pattern = getTruncateToSecondsPattern();
-
-		return (String sql) -> replaceTruncateToSeconds(pattern.matcher(sql));
-	}
-
-	protected Pattern getTruncateToSecondsPattern() {
-		return Pattern.compile(
-			"TRUNCATE_TO_SECONDS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	}
-
 	protected Function<String, String> getDropTableIfExistsTextFunction() {
 		Pattern pattern = getDropTableIfExistsTextPattern();
 
@@ -215,6 +204,17 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 			Pattern.CASE_INSENSITIVE);
 	}
 
+	protected Function<String, String> getTruncateToSecondsFunction() {
+		Pattern pattern = getTruncateToSecondsPattern();
+
+		return (String sql) -> replaceTruncateToSeconds(pattern.matcher(sql));
+	}
+
+	protected Pattern getTruncateToSecondsPattern() {
+		return Pattern.compile(
+			"TRUNCATE_TO_SECONDS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	}
+
 	protected String replaceAggregation(Matcher matcher) {
 		return matcher.replaceAll("$2($3)");
 	}
@@ -232,10 +232,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("$1");
-	}
-
-	protected String replaceTruncateToSeconds(Matcher matcher) {
 		return matcher.replaceAll("$1");
 	}
 
@@ -257,6 +253,10 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceSubstr(Matcher matcher) {
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+	}
+
+	protected String replaceTruncateToSeconds(Matcher matcher) {
+		return matcher.replaceAll("$1");
 	}
 
 	protected void setFunctions(Function... functions) {

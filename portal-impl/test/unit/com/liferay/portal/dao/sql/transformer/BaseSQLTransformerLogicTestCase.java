@@ -83,13 +83,6 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
-	public void testReplaceTruncateToSeconds() {
-		Assert.assertEquals(
-			getTruncateToSecondsTransformedSQL(),
-			sqlTransformer.transform(getTruncateToSecondsOriginalSQL()));
-	}
-
-	@Test
 	public void testReplaceDropTableIfExistsText() {
 		Assert.assertEquals(
 			getDropTableIfExistsTextTransformedSQL(),
@@ -172,6 +165,13 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
+	public void testReplaceTruncateToSeconds() {
+		Assert.assertEquals(
+			getTruncateToSecondsTransformedSQL(),
+			sqlTransformer.transform(getTruncateToSecondsOriginalSQL()));
+	}
+
+	@Test
 	public void testTransform() {
 		String sql = "select * from Foo";
 
@@ -239,15 +239,6 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		return getCrossJoinOriginalSQL();
 	}
 
-	protected String getTruncateToSecondsOriginalSQL() {
-		return "select foo from Foo where TRUNCATE_TO_SECONDS(foo) = " +
-			"2024-10-04 12:34:56";
-	}
-
-	protected String getTruncateToSecondsTransformedSQL() {
-		return "select foo from Foo where foo = 2024-10-04 12:34:56";
-	}
-
 	protected String getDropTableIfExistsTextOriginalSQL() {
 		return "DROP_TABLE_IF_EXISTS(Foo)";
 	}
@@ -296,6 +287,15 @@ public abstract class BaseSQLTransformerLogicTestCase {
 
 	protected String getSubstrTransformedSQL() {
 		return getSubstrOriginalSQL();
+	}
+
+	protected String getTruncateToSecondsOriginalSQL() {
+		return "select foo from Foo where TRUNCATE_TO_SECONDS(foo) = " +
+			"2024-10-04 12:34:56";
+	}
+
+	protected String getTruncateToSecondsTransformedSQL() {
+		return "select foo from Foo where foo = 2024-10-04 12:34:56";
 	}
 
 	protected SQLTransformer sqlTransformer;

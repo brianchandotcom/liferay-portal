@@ -26,10 +26,10 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getAggregationFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(), getTruncateToSecondsFunction(),
-			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction(), _getEscapeFunction(),
-			_getNotEqualsBlankStringFunction()
+			getCastTextFunction(), getConcatFunction(),
+			getTruncateToSecondsFunction(), getDropTableIfExistsTextFunction(),
+			getIntegerDivisionFunction(), getNullDateFunction(),
+			_getEscapeFunction(), _getNotEqualsBlankStringFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

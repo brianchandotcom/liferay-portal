@@ -27,10 +27,10 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getAggregationFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(), getTruncateToSecondsFunction(),
-			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction(), _getCaseWhenThenFunction(),
-			_getLikeFunction(), _getSelectFunction()
+			getCastTextFunction(), getConcatFunction(),
+			getTruncateToSecondsFunction(), getDropTableIfExistsTextFunction(),
+			getIntegerDivisionFunction(), getNullDateFunction(),
+			_getCaseWhenThenFunction(), _getLikeFunction(), _getSelectFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

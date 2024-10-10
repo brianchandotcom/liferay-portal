@@ -105,12 +105,6 @@ public class MySQLSQLTransformerLogicTest
 	}
 
 	@Override
-	protected String getTruncateToSecondsTransformedSQL() {
-		return "select foo from Foo where DATE_FORMAT(foo, " +
-			"'%Y-%m-%dT%H:%i:%sZ') = 2024-10-04 12:34:56";
-	}
-
-	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo DIV bar from Foo";
 	}
@@ -118,6 +112,12 @@ public class MySQLSQLTransformerLogicTest
 	@Override
 	protected String getNullDateTransformedSQL() {
 		return "select NULL from Foo";
+	}
+
+	@Override
+	protected String getTruncateToSecondsTransformedSQL() {
+		return "select foo from Foo where DATE_FORMAT(foo, " +
+			"'%Y-%m-%dT%H:%i:%sZ') = 2024-10-04 12:34:56";
 	}
 
 }

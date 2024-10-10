@@ -35,13 +35,13 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	@Override
-	protected String replaceTruncateToSeconds(Matcher matcher) {
-		return matcher.replaceAll("DATE_FORMAT($1, '%Y-%m-%dT%H:%i:%sZ')");
+	protected String replaceIntegerDivision(Matcher matcher) {
+		return matcher.replaceAll("$1 DIV $2");
 	}
 
 	@Override
-	protected String replaceIntegerDivision(Matcher matcher) {
-		return matcher.replaceAll("$1 DIV $2");
+	protected String replaceTruncateToSeconds(Matcher matcher) {
+		return matcher.replaceAll("DATE_FORMAT($1, '%Y-%m-%dT%H:%i:%sZ')");
 	}
 
 }

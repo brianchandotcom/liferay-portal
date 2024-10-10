@@ -91,3 +91,9 @@
 		}
 	}
 }
+
+@include media-breakpoint-down(md) {
+	ul.pagination ul.inline-scroller {
+		max-height: inherit;
+	}
+}

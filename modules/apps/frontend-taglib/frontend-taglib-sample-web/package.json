@@ -1,0 +1,24 @@
+{
+	"dependencies": {
+		"@clayui/alert": "3.111.0",
+		"@clayui/button": "3.116.0",
+		"@clayui/core": "3.120.0",
+		"@clayui/drop-down": "3.120.0",
+		"@clayui/form": "3.119.0",
+		"@clayui/icon": "3.111.0",
+		"@clayui/sticker": "3.111.0",
+		"@clayui/tooltip": "3.119.0",
+		"@liferay/frontend-icons-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
+	},
+	"main": "js/index.js",
+	"name": "frontend-taglib-sample-web",
+	"private": true,
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "1.0.0"
+}

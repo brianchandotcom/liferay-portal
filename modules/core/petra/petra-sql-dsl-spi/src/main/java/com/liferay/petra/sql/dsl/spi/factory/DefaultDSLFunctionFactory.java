@@ -99,6 +99,11 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 	}
 
 	@Override
+	public Expression<String> date2sec(Expression<?> expression) {
+		return new DSLFunction<>(DSLFunctionType.DATE2SEC, expression);
+	}
+
+	@Override
 	public <N extends Number> Expression<N> divide(
 		Expression<N> expression1, Expression<N> expression2) {
 
@@ -165,12 +170,6 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 	@Override
 	public Expression<Number> sum(Expression<? extends Number> expression) {
 		return new AggregateExpression<>(false, expression, "sum");
-	}
-
-	@Override
-	public Expression<String> truncateToSeconds(Expression<?> expression) {
-		return new DSLFunction<>(
-			DSLFunctionType.TRUNCATE_TO_SECONDS, expression);
 	}
 
 	@Override

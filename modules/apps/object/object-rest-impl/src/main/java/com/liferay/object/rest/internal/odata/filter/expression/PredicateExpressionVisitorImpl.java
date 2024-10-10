@@ -638,7 +638,7 @@ public class PredicateExpressionVisitorImpl
 				EntityField.Type.DATE_TIME)) {
 
 			return BinaryExpressionConverterUtil.getExpressionPredicate(
-				(DSLFunction)DSLFunctionFactoryUtil.truncateToSeconds(
+				(DSLFunction)DSLFunctionFactoryUtil.date2sec(
 					_getColumn(left, objectDefinition)),
 				operation, _getValue(left, objectDefinition, right));
 		}

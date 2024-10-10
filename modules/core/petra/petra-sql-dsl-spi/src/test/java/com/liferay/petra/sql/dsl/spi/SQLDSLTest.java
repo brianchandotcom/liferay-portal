@@ -1515,15 +1515,15 @@ public class SQLDSLTest {
 		Assert.assertEquals(columns.toString(), 5, columns.size());
 
 		Assert.assertTrue(
-			columns.contains(MainExampleTable.INSTANCE.mainExampleIdColumn));
-		Assert.assertTrue(
-			columns.contains(MainExampleTable.INSTANCE.nameColumn));
+			columns.contains(MainExampleTable.INSTANCE.dateColumn));
 		Assert.assertTrue(
 			columns.contains(MainExampleTable.INSTANCE.descriptionColumn));
 		Assert.assertTrue(
 			columns.contains(MainExampleTable.INSTANCE.flagColumn));
 		Assert.assertTrue(
-			columns.contains(MainExampleTable.INSTANCE.dateColumn));
+			columns.contains(MainExampleTable.INSTANCE.mainExampleIdColumn));
+		Assert.assertTrue(
+			columns.contains(MainExampleTable.INSTANCE.nameColumn));
 
 		try {
 			columns.remove(MainExampleTable.INSTANCE.mainExampleIdColumn);

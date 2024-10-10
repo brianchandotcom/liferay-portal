@@ -35,7 +35,7 @@ test('Asserts that a user can export a configuration', async ({
 	try {
 		await emailDomainValidationSwitcher.check();
 
-		await instanceSettingsPage.saveButton.click();
+		await instanceSettingsPage.saveAndWaitForAlert({});
 
 		await expect(emailDomainValidationSwitcher).toBeChecked();
 
@@ -60,7 +60,7 @@ test('Asserts that a user can export a configuration', async ({
 	finally {
 		await emailDomainValidationSwitcher.uncheck();
 
-		await instanceSettingsPage.saveButton.click();
+		await instanceSettingsPage.saveAndWaitForAlert({});
 	}
 });
 

@@ -219,14 +219,32 @@ public abstract class FindStrutsAction implements StrutsAction {
 		String noSuchEntryRedirect = ParamUtil.getString(
 			httpServletRequest, "noSuchEntryRedirect");
 
-		if ((securityMode.equals("domain") &&
-			 ArrayUtil.contains(
-				 RedirectURLSettingsUtil.getAllowedDomains(companyId),
-				 HttpComponentsUtil.getDomain(noSuchEntryRedirect))) ||
-			(securityMode.equals("ip") &&
-			 ArrayUtil.contains(
-				 RedirectURLSettingsUtil.getAllowedIPs(companyId),
-				 HttpComponentsUtil.getIpAddress(noSuchEntryRedirect)))) {
+		if (securityMode.equals("domain")) {
+			String[] allowedDomains = RedirectURLSettingsUtil.getAllowedDomains(
+				companyId);
+
+			String domain = HttpComponentsUtil.getDomain(noSuchEntryRedirect);
+
+			if (ArrayUtil.contains(allowedDomains, domain)) {
+				return noSuchEntryRedirect;
+			}
+
+			for (String allowedDomain : allowedDomains) {
+				if (allowedDomain.startsWith("*.") &&
+					(allowedDomain.regionMatches(
+						1, domain,
+						domain.length() - (allowedDomain.length() - 1),
+						allowedDomain.length() - 1) ||
+					 allowedDomain.regionMatches(
+						 2, domain, 0, domain.length()))) {
+
+					return noSuchEntryRedirect;
+				}
+			}
+		}
+		else if (ArrayUtil.contains(
+					RedirectURLSettingsUtil.getAllowedIPs(companyId),
+					HttpComponentsUtil.getIpAddress(noSuchEntryRedirect))) {
 
 			return noSuchEntryRedirect;
 		}

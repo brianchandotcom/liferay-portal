@@ -1138,7 +1138,7 @@ test.describe('Multistep', () => {
 				pageManagementSite.friendlyUrlPath
 			);
 
-			// Check changing number of stepps in Form affects the Stepper
+			// Check changing number of steps in Form affects the Stepper
 
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Number of Steps',
@@ -1488,6 +1488,80 @@ test.describe('Multistep', () => {
 			await expect(
 				page.getByText('Your information was successfully received')
 			).toBeVisible();
+		}
+	);
+
+	test(
+		'The last step is selected when the active one is removed',
+		{tag: '@LPD-38514'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			const {id: objectDefinitionId} =
+				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
+					{
+						externalReferenceCode: LEMON_OBJECT_ERC,
+					}
+				);
+
+			// Create a form with a Stepper
+
+			const stepperId = getRandomString();
+
+			const stepperFragment = getFragmentDefinition({
+				fragmentConfig: {
+					numberOfSteps: 3,
+				},
+				id: stepperId,
+				key: 'INPUTS-stepper',
+			});
+
+			const headingDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionId,
+				pageElements: [stepperFragment],
+				steps: [[], [headingDefinition], []],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode of page and select third step
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await page.locator('.multi-step-indicator').nth(2).click();
+
+			await expect(page.getByText('Heading Example')).not.toBeVisible();
+
+			// Change the number of steps to 2 and check step 2 is selected
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Number of Steps',
+				fragmentId: formId,
+				tab: 'General',
+				value: '2',
+			});
+
+			await expect(page.getByText('Heading Example')).toBeVisible();
 		}
 	);
 });

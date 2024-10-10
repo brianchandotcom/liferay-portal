@@ -617,7 +617,7 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 
 	const scopeSection = configurationModal.locator('#scopeContent');
 	if (await scopeSection.isHidden()) {
-		await configurationModal.getByRole('link', {name: 'Scope'}).click();
+		await configurationModal.getByRole('button', {name: 'Scope'}).click();
 	}
 	await scopeSection.waitFor();
 
@@ -651,7 +651,7 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	);
 	if (await assetEntriesSection.isHidden()) {
 		await configurationModal
-			.getByRole('link', {name: 'Asset Entries'})
+			.getByRole('button', {name: 'Asset Entries'})
 			.click();
 	}
 	await assetEntriesSection.waitFor();

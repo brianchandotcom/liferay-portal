@@ -29,7 +29,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 		actions,
 		loading,
 		onOpenDetailsModal,
-		selectedOrderItem,
+		selectedProvisioningRow,
 		uninstall,
 		uninstallModal,
 	} = useProvisioningActions({
@@ -46,14 +46,14 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 				columns={[
 					{
 						key: 'type',
-						render: (type, provisioning) => (
+						render: (type, provisioningRow) => (
 							<>
 								<div className="dashboard-table-row-type font-weight-bold">
 									{type}
 								</div>
 
 								<div className="dashboard-table-row-type">
-									{provisioning.host}
+									{provisioningRow.host}
 								</div>
 							</>
 						),
@@ -71,14 +71,14 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					},
 					{
 						key: 'startDate',
-						render: (startDate, provisioning) => (
+						render: (startDate, provisioningRow) => (
 							<>
 								<div className="dashboard-table-row-type">
 									{startDate}
 								</div>
 
 								<div className="dashboard-table-row-type">
-									{provisioning.expirationDate}
+									{provisioningRow.expirationDate}
 								</div>
 							</>
 						),
@@ -96,13 +96,13 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					},
 					{
 						key: 'status',
-						render: (status: string, provisioning) => (
+						render: (status: string, provisioningRow) => (
 							<div className="align-items-center d-flex">
 								<InstallationStatus status={status}>
 									{status}
 								</InstallationStatus>
 
-								{provisioning.status ===
+								{provisioningRow.status ===
 									InstallStatus.IN_PROGRESS && (
 									<Loading
 										displayType="primary"
@@ -120,8 +120,8 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					},
 					{
 						key: 'project',
-						render: (project, provisioning) => {
-							const environment = provisioning.environment;
+						render: (project, provisioningRow) => {
+							const environment = provisioningRow.environment;
 
 							return (
 								<>
@@ -149,7 +149,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 					},
 					{
 						key: 'dropdown',
-						render: (_, orderItem) => (
+						render: (_, provisioningRow) => (
 							<div
 								className="d-flex justify-content-end"
 								onClick={(event) => event.stopPropagation()}
@@ -167,14 +167,16 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 									<ClayDropDown.ItemList>
 										{actions
 											.filter((action) =>
-												action.show(orderItem)
+												action.show(provisioningRow)
 											)
 											.map((action, index) => (
 												<ClayDropDown.Item
 													disabled={false}
 													key={index}
 													onClick={() =>
-														action.action(orderItem)
+														action.action(
+															provisioningRow
+														)
 													}
 												>
 													{action?.title}
@@ -189,11 +191,11 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({
 				onClickRow={(row) => onOpenDetailsModal(row)}
 				rows={provisioningTableData}
 			/>
-			{selectedOrderItem && (
+			{selectedProvisioningRow && (
 				<UninstallModal
 					loading={loading}
 					modal={uninstallModal}
-					orderItem={selectedOrderItem}
+					provisioningRow={selectedProvisioningRow}
 					uninstall={uninstall}
 				/>
 			)}

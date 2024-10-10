@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import i18n from '../../../../../../../i18n';
 import OrderDetailsHeader from '../../../../../components/OrderDetailsHeader';
 import AccountEmailInfo from '../../Licenses/CreateLicense/AccountInfo';
-import useProvisioningData from '../hooks/useProvisioningData';
+import {ProvisioningRow} from '../hooks/useProvisioningData';
 import {InstallStatus} from '../types';
 
 import './index.scss';
@@ -22,9 +22,7 @@ type ProvisioningDetailsProps = {
 		name?: string;
 	};
 	onClose: () => void;
-	orderItem: ReturnType<
-		typeof useProvisioningData
-	>['provisioningTableData'][0];
+	provisioningRow: ProvisioningRow;
 };
 
 type InfoBadgeProps = {
@@ -65,7 +63,7 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 	account,
 	headerInfo,
 	onClose,
-	orderItem,
+	provisioningRow,
 }) => {
 	return (
 		<div className="d-flex flex-column mb-9 provisioning-details">
@@ -103,11 +101,11 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 					</p>
 
 					<InfoBadge title={i18n.translate('start-date')}>
-						{orderItem?.startDate}
+						{provisioningRow?.startDate}
 					</InfoBadge>
 
 					<InfoBadge title={i18n.translate('expiration-date')}>
-						{orderItem?.expirationDate}
+						{provisioningRow?.expirationDate}
 					</InfoBadge>
 				</div>
 
@@ -117,18 +115,18 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 					</p>
 
 					<InfoBadge
-						status={orderItem?.status}
+						status={provisioningRow?.status}
 						title={i18n.translate('status')}
 					>
-						{i18n.translate(orderItem?.status as any)}
+						{i18n.translate(provisioningRow?.status as any)}
 					</InfoBadge>
 
 					<InfoBadge title={i18n.translate('project')}>
-						{orderItem?.project}
+						{provisioningRow?.project}
 					</InfoBadge>
 
 					<InfoBadge title={i18n.translate('environment')}>
-						{orderItem?.environment}
+						{provisioningRow?.environment}
 					</InfoBadge>
 				</div>
 			</div>

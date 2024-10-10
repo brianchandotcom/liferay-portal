@@ -16,6 +16,10 @@ import {LicenseType} from '../../../../../../GetApp/enums/licenseType';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
 import {InstallStatus} from '../types';
 
+export type ProvisioningRow = ReturnType<
+	typeof useProvisioningData
+>['provisioningTableData'][0];
+
 const ACTIVE_REFRESH_INTERVAL = 60 * 1000;
 const DEFAULT_REFRESH_INTERVAL = 240 * 1000;
 
@@ -110,7 +114,7 @@ const useProvisioningData = (orderId: string) => {
 					host: '',
 					id: deployment?.id || i,
 					loading: deployment?.loading,
-					orderItem: orderItem.id,
+					orderItemId: orderItem.id,
 					project,
 					startDate: format(
 						new Date(order.createDate),

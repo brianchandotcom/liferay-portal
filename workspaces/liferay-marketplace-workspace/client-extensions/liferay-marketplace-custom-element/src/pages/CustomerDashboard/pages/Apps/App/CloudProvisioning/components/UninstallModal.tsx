@@ -8,23 +8,19 @@ import {useModal} from '@clayui/modal';
 
 import Modal from '../../../../../../../components/Modal';
 import i18n from '../../../../../../../i18n';
-import useProvisioningData from '../hooks/useProvisioningData';
-
-type OrderItem = ReturnType<
-	typeof useProvisioningData
->['provisioningTableData'][0];
+import {ProvisioningRow} from '../hooks/useProvisioningData';
 
 type UninstallModalProps = {
 	loading: boolean;
 	modal: ReturnType<typeof useModal>;
-	orderItem: OrderItem;
-	uninstall: (orderItem: OrderItem) => void;
+	provisioningRow: ProvisioningRow;
+	uninstall: (provisioningRow: ProvisioningRow) => void;
 };
 
 const UninstallModal = ({
 	loading,
 	modal,
-	orderItem,
+	provisioningRow,
 	uninstall,
 }: UninstallModalProps) => {
 	return (
@@ -45,7 +41,7 @@ const UninstallModal = ({
 					disabled={loading}
 					displayType="danger"
 					onClick={async () => {
-						await uninstall(orderItem);
+						await uninstall(provisioningRow);
 
 						modal.onClose();
 					}}
@@ -73,4 +69,5 @@ const UninstallModal = ({
 		</Modal>
 	);
 };
+
 export default UninstallModal;

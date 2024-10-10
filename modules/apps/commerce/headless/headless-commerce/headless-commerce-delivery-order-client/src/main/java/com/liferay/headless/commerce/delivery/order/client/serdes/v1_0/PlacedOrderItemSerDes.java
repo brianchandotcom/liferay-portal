@@ -382,6 +382,20 @@ public class PlacedOrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderItem.getUnitOfMeasure() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasure\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderItem.getUnitOfMeasure()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderItem.getUnitOfMeasureKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -670,6 +684,15 @@ public class PlacedOrderItemSerDes {
 				"thumbnail", String.valueOf(placedOrderItem.getThumbnail()));
 		}
 
+		if (placedOrderItem.getUnitOfMeasure() == null) {
+			map.put("unitOfMeasure", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasure",
+				String.valueOf(placedOrderItem.getUnitOfMeasure()));
+		}
+
 		if (placedOrderItem.getUnitOfMeasureKey() == null) {
 			map.put("unitOfMeasureKey", null);
 		}
@@ -803,6 +826,9 @@ public class PlacedOrderItemSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
@@ -1000,6 +1026,12 @@ public class PlacedOrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setThumbnail((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItem.setUnitOfMeasure(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {

@@ -2429,11 +2429,11 @@ public class ObjectRelationshipLocalServiceTest {
 	@Inject
 	private EntityCache _entityCache;
 
-	@Inject
-	private ObjectActionLocalService _objectActionLocalService;
-
 	@DeleteAfterTestRun
 	private ObjectDefinition _modifiableSystemObjectDefinition;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;

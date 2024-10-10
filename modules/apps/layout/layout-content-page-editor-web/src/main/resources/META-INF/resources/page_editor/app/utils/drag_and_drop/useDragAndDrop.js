@@ -275,12 +275,26 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 		state.dropTargetItem.toControlsId?.(state.dropTargetItem.itemId) ===
 			targetItem.toControlsId(targetItem.itemId);
 
+	const coordsRef = useRef({x: 0, y: 0});
+
 	const [, setDropTargetRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
 		hover(source, monitor) {
 			if (source.origin !== targetItem.origin) {
 				return;
 			}
+
+			const monitorCoords = monitor.getSourceClientOffset();
+
+			if (
+				coordsRef.current.x === monitorCoords.x &&
+				coordsRef.current.y === monitorCoords.y
+			) {
+				return;
+			}
+
+			coordsRef.current = monitorCoords;
+
 			computeHover({
 				dispatch,
 				fragmentEntryLinksRef,

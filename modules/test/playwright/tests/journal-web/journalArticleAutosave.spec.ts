@@ -15,6 +15,7 @@ import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import {openFieldset} from '../../utils/openFieldset';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
@@ -600,7 +601,7 @@ autoSaveTest(
 			journalEditArticlePage.changesSavedIndicator
 		).toBeVisible();
 
-		await page.getByRole('link', {name: 'Basic Information'}).click();
+		await openFieldset(page, 'Basic Information');
 
 		await expect(page.getByText('1.0')).toBeVisible();
 
@@ -631,7 +632,7 @@ autoSaveTest(
 			).toBeVisible();
 		}).toPass();
 
-		await page.getByRole('link', {name: 'Basic Information'}).click();
+		await openFieldset(page, 'Basic Information');
 
 		await expect(page.getByText('1.1')).toBeVisible();
 

@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.delivery.cart.resource.v1_0.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
@@ -26,6 +27,10 @@ import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Price;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -121,6 +126,36 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLDeleteCartItem() throws Exception {
+	}
+
+	@Test
+	public void testPostCartByExternalReferenceCodeItem() throws Exception {
+		CartItem randomCartItem = randomCartItem();
+
+		CartItem postCartItem1 =
+			testPostCartByExternalReferenceCodeItem_addCartItem(randomCartItem);
+
+		assertEquals(randomCartItem, postCartItem1);
+		assertValid(postCartItem1);
+
+		// Test showSeparateOrderItems enabled
+
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				_commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue("show-separate-order-items", "true");
+
+		modifiableSettings.store();
+
+		CartItem postCartItem2 =
+			testPostCartByExternalReferenceCodeItem_addCartItem(randomCartItem);
+
+		Assert.assertNotEquals(postCartItem1.getId(), postCartItem2.getId());
 	}
 
 	@Override

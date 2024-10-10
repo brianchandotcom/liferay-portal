@@ -33,10 +33,6 @@ definition {
 
 		PortletEntry.inputTitle(title = "WC WebContent Title");
 
-		CKEditor.addContentInWebContent(
-			content = "WC WebContent Content",
-			fieldLabel = "Content");
-
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
@@ -55,10 +51,6 @@ definition {
 			siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = 4

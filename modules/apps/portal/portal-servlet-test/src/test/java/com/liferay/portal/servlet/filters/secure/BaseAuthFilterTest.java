@@ -93,7 +93,7 @@ public class BaseAuthFilterTest {
 	}
 
 	@Test
-	public void testDigestChange() {
+	public void testDigestModified() {
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
 		User user = _setUpUser(WorkflowConstants.STATUS_APPROVED);
@@ -311,9 +311,9 @@ public class BaseAuthFilterTest {
 	}
 
 	private User _setUpUser(int status) {
-		String digest = RandomTestUtil.randomString();
-
 		User user = new UserImpl();
+
+		String digest = RandomTestUtil.randomString();
 
 		user.setDigest(digest);
 

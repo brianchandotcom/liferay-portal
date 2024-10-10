@@ -344,6 +344,7 @@ test('can export as JSON with all field types mapped', async ({
 			creator: {
 				additionalName: '',
 				contentType: 'UserAccount',
+				externalReferenceCode: expect.any(String),
 				familyName: 'Test',
 				givenName: 'Test',
 				id: expect.any(Number),

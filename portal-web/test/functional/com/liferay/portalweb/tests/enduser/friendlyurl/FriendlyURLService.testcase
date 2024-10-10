@@ -275,11 +275,15 @@ definition {
 			pageName = "Test Source Page",
 			pageType = "Pages");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "prueba");
 
-		PortletEntry.changeLocale(locale = "ca-ES");
+		PortletEntry.changeLocale(
+			locale = "ca-ES",
+			translated = "true");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "prueba");
 
@@ -297,11 +301,15 @@ definition {
 			version = "1.1",
 			webContentTitle = "Web Content Article");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "");
 
-		PortletEntry.changeLocale(locale = "ca-ES");
+		PortletEntry.changeLocale(
+			locale = "ca-ES",
+			translated = "true");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "");
 
@@ -313,11 +321,15 @@ definition {
 			version = "1.1",
 			webContentTitle = "Web Content Article");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "prueba");
 
-		PortletEntry.changeLocale(locale = "ca-ES");
+		PortletEntry.changeLocale(
+			locale = "ca-ES",
+			translated = "true");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "prueba");
 

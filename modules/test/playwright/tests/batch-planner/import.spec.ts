@@ -1767,7 +1767,7 @@ test.describe('can rely on anyOf form validation', () => {
 
 		await page
 			.getByLabel('r_studentSubjects1_c_studentERC')
-			.selectOption('subjectName');
+			.selectOption('studentSubjects1_ERC');
 
 		await page.getByRole('button', {name: 'Next'}).click();
 
@@ -1841,10 +1841,10 @@ test.describe('can rely on anyOf form validation', () => {
 
 		await page
 			.getByLabel('r_studentSubjects1_c_studentERC')
-			.selectOption('subjectName');
+			.selectOption('studentSubjects1_ERC');
 		await page
 			.getByLabel('r_studentSubjects2_c_studentERC')
-			.selectOption('subjectName');
+			.selectOption('studentSubjects2_ERC');
 
 		await page.getByRole('button', {name: 'Next'}).click();
 

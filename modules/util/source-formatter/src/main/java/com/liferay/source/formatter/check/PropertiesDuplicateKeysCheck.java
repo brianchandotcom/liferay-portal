@@ -38,14 +38,9 @@ public class PropertiesDuplicateKeysCheck extends BaseFileCheck {
 				line = line.trim();
 
 				if (Validator.isBlank(line) ||
-					line.startsWith(StringPool.POUND)) {
+					line.startsWith(StringPool.POUND) ||
+					((previousLine != null) && previousLine.endsWith("\\"))) {
 
-					previousLine = line;
-
-					continue;
-				}
-
-				if ((previousLine != null) && previousLine.endsWith("\\")) {
 					previousLine = line;
 
 					continue;

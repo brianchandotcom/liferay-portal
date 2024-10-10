@@ -56,8 +56,8 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
 	@Override
 	public List<CTProcess> getCTProcesses(
-			long companyId, long userId, String keywords, int status, int type,
-			int start, int end, OrderByComparator<CTProcess> orderByComparator)
+			long companyId, long userId, String keywords, int status, int start,
+			int end, OrderByComparator<CTProcess> orderByComparator)
 		throws PortalException {
 
 		PortletPermissionUtil.check(
@@ -77,7 +77,7 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 			BackgroundTaskTable.INSTANCE.backgroundTaskId.eq(
 				CTProcessTable.INSTANCE.backgroundTaskId)
 		).where(
-			_getPredicate(companyId, keywords, status, type, userId)
+			_getPredicate(companyId, keywords, status, userId)
 		).orderBy(
 			orderByStep -> {
 				if (orderByComparator != null) {
@@ -103,28 +103,8 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 	}
 
 	@Override
-	public List<CTProcess> getCTProcesses(
-			long companyId, long userId, String keywords, int status, int start,
-			int end, OrderByComparator<CTProcess> orderByComparator)
-		throws PortalException {
-
-		return getCTProcesses(
-			companyId, userId, keywords, status, CTConstants.CT_PROCESS_PUBLISH,
-			start, end, orderByComparator);
-	}
-
-	@Override
 	public int getCTProcessesCount(
 		long companyId, long userId, String keywords, int status) {
-
-		return getCTProcessesCount(
-			companyId, userId, keywords, status,
-			CTConstants.CT_PROCESS_PUBLISH);
-	}
-
-	@Override
-	public int getCTProcessesCount(
-		long companyId, long userId, String keywords, int status, int type) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
 		).from(
@@ -138,14 +118,14 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 			BackgroundTaskTable.INSTANCE.backgroundTaskId.eq(
 				CTProcessTable.INSTANCE.backgroundTaskId)
 		).where(
-			_getPredicate(companyId, keywords, status, type, userId)
+			_getPredicate(companyId, keywords, status, userId)
 		);
 
 		return ctProcessPersistence.dslQueryCount(dslQuery);
 	}
 
 	private Predicate _getPredicate(
-		long companyId, String keywords, int status, int type, long userId) {
+		long companyId, String keywords, int status, long userId) {
 
 		Predicate predicate = CTProcessTable.INSTANCE.companyId.eq(
 			companyId
@@ -158,13 +138,8 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 				return null;
 			}
 		).and(
-			() -> {
-				if (type > -1) {
-					return CTProcessTable.INSTANCE.type.eq(type);
-				}
-
-				return null;
-			}
+			() -> CTProcessTable.INSTANCE.type.eq(
+				CTConstants.CT_PROCESS_PUBLISH)
 		).and(
 			() -> {
 				if (userId > 0) {

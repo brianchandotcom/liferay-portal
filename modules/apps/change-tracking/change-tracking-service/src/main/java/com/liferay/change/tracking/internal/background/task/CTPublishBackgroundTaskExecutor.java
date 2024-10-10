@@ -91,65 +91,30 @@ public class CTPublishBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long fromCTCollectionId = GetterUtil.getLong(
-			taskContextMap.get("fromCTCollectionId"));
+		long ctCollectionId = GetterUtil.getLong(
+			taskContextMap.get("ctCollectionId"));
 
-		CTCollection fromCTCollection =
-			_ctCollectionLocalService.getCTCollection(fromCTCollectionId);
-
-		String fromCTCollectionName = fromCTCollection.getName();
-
-		long toCTCollectionId = GetterUtil.getLong(
-			taskContextMap.get("toCTCollectionId"));
-
-		String toCTCollectionName;
-
-		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			toCTCollectionName = "Production";
-		}
-		else {
-			CTCollection toCTCollection =
-				_ctCollectionLocalService.getCTCollection(toCTCollectionId);
-
-			toCTCollectionName = toCTCollection.getName();
-		}
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctCollectionId);
 
 		if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
-				fromCTCollection.getSchemaVersionId())) {
+				ctCollection.getSchemaVersionId())) {
 
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Unable to publish from ", fromCTCollectionName, " to ",
-					toCTCollectionName,
+					"Unable to publish ", ctCollection.getName(),
 					" because it is out of date with the current release"));
 		}
 
-		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						fromCTCollectionId)) {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
 
-				_ctServiceRegistry.onBeforePublish(fromCTCollectionId);
-			}
-		}
-
-		List<CTEntry> ctEntries = null;
-
-		long[] ctEntryIds = (long[])taskContextMap.get("ctEntryIds");
-
-		if (ctEntryIds != null) {
-			ctEntries = _ctCollectionLocalService.getRelatedCTEntries(
-				fromCTCollectionId, ctEntryIds);
-		}
-		else {
-			ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
-				fromCTCollectionId);
+			_ctServiceRegistry.onBeforePublish(ctCollectionId);
 		}
 
 		Map<Long, List<ConflictInfo>> conflictInfosMap =
-			_ctCollectionLocalService.checkConflicts(
-				fromCTCollection.getCompanyId(), ctEntries, fromCTCollectionId,
-				fromCTCollectionName, toCTCollectionId, toCTCollectionName);
+			_ctCollectionLocalService.checkConflicts(ctCollection);
 
 		if (!conflictInfosMap.isEmpty()) {
 			List<ConflictInfo> unresolvedConflictInfos = new ArrayList<>();
@@ -167,12 +132,14 @@ public class CTPublishBackgroundTaskExecutor
 			if (!unresolvedConflictInfos.isEmpty()) {
 				throw new CTPublishConflictException(
 					StringBundler.concat(
-						"Unable to publish from ", fromCTCollectionName, " to ",
-						toCTCollectionName,
+						"Unable to publish ", ctCollection.getName(),
 						" because of unresolved conflicts: ",
 						unresolvedConflictInfos));
 			}
 		}
+
+		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
+			ctCollectionId);
 
 		Map<Long, CTServicePublisher<?>> ctServicePublishers = new HashMap<>();
 
@@ -187,14 +154,13 @@ public class CTPublishBackgroundTaskExecutor
 						if (ctService != null) {
 							return new CTServicePublisher<>(
 								_ctEntryLocalService, ctService,
-								modelClassNameId, fromCTCollectionId,
-								toCTCollectionId);
+								modelClassNameId, ctCollectionId,
+								CTConstants.CT_COLLECTION_ID_PRODUCTION);
 						}
 
 						throw new SystemException(
 							StringBundler.concat(
-								"Unable to publish from ", fromCTCollectionName,
-								" to ", toCTCollectionName,
+								"Unable to publish ", ctCollection.getName(),
 								" because service for ", modelClassNameId,
 								" is missing"));
 					});
@@ -212,30 +178,20 @@ public class CTPublishBackgroundTaskExecutor
 				_ctServiceRegistry.getCTTableMapperHelpers()) {
 
 			ctTableMapperHelper.publish(
-				fromCTCollectionId, toCTCollectionId,
-				_multiVMPool.getPortalCacheManager());
+				ctCollectionId, _multiVMPool.getPortalCacheManager());
 		}
 
-		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			Date modifiedDate = new Date();
+		Date modifiedDate = new Date();
 
-			fromCTCollection.setModifiedDate(modifiedDate);
+		ctCollection.setModifiedDate(modifiedDate);
 
-			fromCTCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
-			fromCTCollection.setStatusByUserId(backgroundTask.getUserId());
-			fromCTCollection.setStatusDate(modifiedDate);
+		ctCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
+		ctCollection.setStatusByUserId(backgroundTask.getUserId());
+		ctCollection.setStatusDate(modifiedDate);
 
-			_ctCollectionLocalService.updateCTCollection(fromCTCollection);
+		_ctCollectionLocalService.updateCTCollection(ctCollection);
 
-			_ctServiceRegistry.onAfterPublish(fromCTCollectionId);
-		}
-		else {
-			for (CTEntry ctEntry : ctEntries) {
-				ctEntry.setCtCollectionId(toCTCollectionId);
-
-				_ctEntryLocalService.updateCTEntry(ctEntry);
-			}
-		}
+		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -262,29 +218,28 @@ public class CTPublishBackgroundTaskExecutor
 			showConflicts = true;
 		}
 
-		long fromCTCollectionId = MapUtil.getLong(
-			backgroundTask.getTaskContextMap(), "fromCTCollectionId");
+		long ctCollectionId = MapUtil.getLong(
+			backgroundTask.getTaskContextMap(), "ctCollectionId");
 
 		try {
-			CTCollection fromCTCollection =
-				_ctCollectionLocalService.getCTCollection(fromCTCollectionId);
+			CTCollection ctCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 			_ctUserNotificationHelper.sendUserNotificationEvents(
-				fromCTCollection,
+				ctCollection,
 				JSONUtil.put(
 					"backgroundTaskId", backgroundTask.getBackgroundTaskId()
 				).put(
-					"ctCollectionId", fromCTCollectionId
+					"ctCollectionId", ctCollectionId
 				).put(
-					"ctCollectionName",
-					HtmlUtil.escape(fromCTCollection.getName())
+					"ctCollectionName", HtmlUtil.escape(ctCollection.getName())
 				).put(
 					"notificationType",
 					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY
 				).put(
 					"showConflicts", showConflicts
 				),
-				_getPublicationRolesUserIds(fromCTCollection, showConflicts));
+				_getPublicationRolesUserIds(ctCollection, showConflicts));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

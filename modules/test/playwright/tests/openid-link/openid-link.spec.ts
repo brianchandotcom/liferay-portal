@@ -6,18 +6,19 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {instanceSettingsPagesTest} from '../../fixtures/singleSignOnSettingsPagesTest';
-import {SingleSignOnSettingsPage} from '../../pages/portal-settings-authentication-openid-connect-web/SingleSignOnSettingsPage';
+import {OpenIdInstanceSettingsPage} from '../../pages/portal-settings-authentication-openid-connect-web/OpenIdInstanceSettingsPage';
+import {OpenIdSystemSettingsPage} from '../../pages/portal-settings-authentication-openid-connect-web/OpenIdSystemSettingsPage';
 import getRandomString from '../../utils/getRandomString';
 import performLogin from '../../utils/performLogin';
 import {utilityPagesPage} from '../login-web/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
+import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
 
 let providerName: string;
 let utilityPageTitle: string;
 
 const test = mergeTests(
-	instanceSettingsPagesTest,
+	openIdSettingsPagesTest,
 	featureFlagsTest({
 		'LPD-6378': true,
 	}),
@@ -25,12 +26,15 @@ const test = mergeTests(
 );
 
 async function setupOpenIdConnection(
-	singleSignOnSettingsPage: SingleSignOnSettingsPage
+	openIDInstanceSettingsPage: OpenIdInstanceSettingsPage,
+	openIDSystemSettingsPage: OpenIdSystemSettingsPage
 ) {
-	await singleSignOnSettingsPage.goto();
-	await singleSignOnSettingsPage.enableOpenIDConnect();
+	await openIDSystemSettingsPage.goTo();
+	await openIDSystemSettingsPage.enableOpenIDConnect();
+	await openIDInstanceSettingsPage.goto();
+	await openIDInstanceSettingsPage.enableOpenIDConnect();
 	providerName = getRandomString();
-	await singleSignOnSettingsPage.AddOpenIDConnectProviderConnectionConfiguration(
+	await openIDInstanceSettingsPage.AddOpenIDConnectProviderConnectionConfiguration(
 		providerName,
 		openIdConfig.openIdProvider
 	);
@@ -39,16 +43,19 @@ async function setupOpenIdConnection(
 test.afterEach(
 	async ({
 		loginInstanceSettingsPage,
+		openIDInstanceSettingsPage,
+		openIDSystemSettingsPage,
 		page,
-		singleSignOnSettingsPage,
 		utilityPagesPage,
 	}) => {
 		await performLogin(page, 'test');
 
 		if (providerName) {
-			await singleSignOnSettingsPage.goto();
-			await singleSignOnSettingsPage.disableOpenIDConnect();
-			await singleSignOnSettingsPage.removeOpenIDConnectProviderConnectionConfiguration(
+			await openIDSystemSettingsPage.goTo();
+			await openIDSystemSettingsPage.disableOpenIDConnect();
+			await openIDInstanceSettingsPage.goto();
+			await openIDInstanceSettingsPage.disableOpenIDConnect();
+			await openIDInstanceSettingsPage.removeOpenIDConnectProviderConnectionConfiguration(
 				providerName
 			);
 			providerName = null;
@@ -59,18 +66,22 @@ test.afterEach(
 			await utilityPagesPage.deletePage(utilityPageTitle);
 			utilityPageTitle = null;
 			await loginInstanceSettingsPage.goto();
-			await loginInstanceSettingsPage.disableLoginPrompt();
+			await loginInstanceSettingsPage.resetLoginPrompt();
 		}
 	}
 );
 
 test.describe('OpenID connect link', () => {
 	test('is visible on sign-in page when OpenID connection is enabled on NOT an utility page', async ({
+		openIDInstanceSettingsPage,
+		openIDSystemSettingsPage,
 		page,
-		singleSignOnSettingsPage,
 	}) => {
 		await performLogin(page, 'test');
-		await setupOpenIdConnection(singleSignOnSettingsPage);
+		await setupOpenIdConnection(
+			openIDInstanceSettingsPage,
+			openIDSystemSettingsPage
+		);
 		await page.getByLabel('Test Test User Profile').click();
 		await page.getByRole('menuitem', {name: 'Sign Out'}).click();
 		await page
@@ -82,8 +93,9 @@ test.describe('OpenID connect link', () => {
 
 	test('when openId connection is enabled on an utility page, then openId connect link is hidden on sign in page', async ({
 		loginInstanceSettingsPage,
+		openIDInstanceSettingsPage,
+		openIDSystemSettingsPage,
 		page,
-		singleSignOnSettingsPage,
 		utilityPagesPage,
 	}) => {
 		await performLogin(page, 'test');
@@ -94,7 +106,10 @@ test.describe('OpenID connect link', () => {
 		await utilityPagesPage.add(utilityPageTitle, 'Sign In');
 		await page.getByText(utilityPageTitle).waitFor({state: 'visible'});
 		await utilityPagesPage.markAsDefault(utilityPageTitle);
-		await setupOpenIdConnection(singleSignOnSettingsPage);
+		await setupOpenIdConnection(
+			openIDInstanceSettingsPage,
+			openIDSystemSettingsPage
+		);
 		await page.getByLabel('Test Test User Profile').click();
 		await page.getByRole('menuitem', {name: 'Sign Out'}).click();
 		await page.goto(openIdConfig.loginPortletLink);

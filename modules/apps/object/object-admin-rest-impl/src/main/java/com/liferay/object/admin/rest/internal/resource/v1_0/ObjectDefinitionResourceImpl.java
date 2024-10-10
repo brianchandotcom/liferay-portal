@@ -501,6 +501,12 @@ public class ObjectDefinitionResourceImpl
 
 		int statusInt = serviceBuilderObjectDefinition.getStatus();
 
+		if (objectDefinition.getStatus() != null) {
+			Status status = objectDefinition.getStatus();
+
+			statusInt = status.getCode();
+		}
+
 		if (serviceBuilderObjectDefinition.isUnmodifiableSystemObject()) {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.updateSystemObjectDefinition(

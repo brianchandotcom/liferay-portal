@@ -162,8 +162,6 @@ export default function useAccountInformation() {
 				) {
 					properties.arr = true;
 				}
-
-				properties.headcount = true;
 			}
 
 			return {

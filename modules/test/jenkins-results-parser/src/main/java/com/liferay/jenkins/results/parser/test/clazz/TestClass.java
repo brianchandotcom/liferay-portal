@@ -24,6 +24,8 @@ public interface TestClass extends Comparable<TestClass> {
 
 	public long getAverageOverheadDuration();
 
+	public long getAverageTestTaskDuration();
+
 	public JSONObject getJSONObject();
 
 	public String getName();
@@ -33,6 +35,8 @@ public interface TestClass extends Comparable<TestClass> {
 	public List<TestClassMethod> getTestClassMethods();
 
 	public TestHistory getTestHistory();
+
+	public String getTestTaskName();
 
 	public boolean hasTestClassMethods();
 

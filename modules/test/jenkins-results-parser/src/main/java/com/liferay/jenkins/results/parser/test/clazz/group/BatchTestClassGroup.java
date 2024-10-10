@@ -17,6 +17,7 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
 import com.liferay.jenkins.results.parser.TestHistory;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
+import com.liferay.jenkins.results.parser.TestTaskHistory;
 import com.liferay.jenkins.results.parser.job.property.GlobJobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
@@ -105,6 +106,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			testName, averageTestOverheadDuration);
 
 		return averageTestOverheadDuration;
+	}
+
+	public long getAverageTestTaskDuration(String testName) {
+		TestTaskHistory testTaskHistory = _getTestTaskHistory(testName);
+
+		if (testTaskHistory == null) {
+			return _getDefaultTestTaskDuration();
+		}
+
+		long averageDuration = testTaskHistory.getAverageDuration();
+
+		if (averageDuration == 0) {
+			return _getDefaultTestDuration();
+		}
+
+		return averageDuration;
 	}
 
 	public int getAxisCount() {
@@ -355,6 +372,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return sb.toString();
+	}
+
+	public String getTestTaskName(String testName) {
+		TestTaskHistory testTaskHistory = _getTestTaskHistory(testName);
+
+		if (testTaskHistory == null) {
+			return null;
+		}
+
+		return testTaskHistory.getTestTaskName();
 	}
 
 	public boolean testAnalyticsCloud() {
@@ -1007,6 +1034,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return Long.valueOf(jobPropertyValue);
 	}
 
+	private long _getDefaultTestTaskDuration() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.default.test.task.duration");
+
+		if (jobProperty == null) {
+			return 0L;
+		}
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return 0L;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return Long.valueOf(jobPropertyValue);
+	}
+
 	private Map<String, Properties> _getJobPropertiesMap() {
 		Map<String, Properties> batchProperties = new TreeMap<>();
 
@@ -1122,6 +1168,28 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return new ArrayList<>(requiredModuleDirs);
+	}
+
+	private TestTaskHistory _getTestTaskHistory(String testName) {
+		if (_testTaskHistories.containsKey(testName)) {
+			return _testTaskHistories.get(testName);
+		}
+
+		BatchHistory batchHistory = getBatchHistory();
+
+		if (batchHistory == null) {
+			return null;
+		}
+
+		TestHistory testHistory = batchHistory.getTestHistory(testName);
+
+		if (testHistory == null) {
+			return null;
+		}
+
+		_testTaskHistories.put(testName, testHistory.getTestTaskHistory());
+
+		return _testTaskHistories.get(testName);
 	}
 
 	private List<List<AxisTestClassGroup>> _partitionByMaxChildren(
@@ -1311,5 +1379,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
 		new ArrayList<>();
 	private Boolean _testAnalyticsCloud;
+	private final Map<String, TestTaskHistory> _testTaskHistories =
+		new HashMap<>();
 
 }

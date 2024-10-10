@@ -113,7 +113,7 @@ public class DepotAssetRendererFactoryWrapperTest {
 	}
 
 	@Test
-	public void testControlPanelIsImplicitlyConnectedToDepot()
+	public void testControlPanelIsImplicitlyConnectedToDepotEntry()
 		throws Exception {
 
 		AssetRenderer<Object> assetRenderer = Mockito.mock(AssetRenderer.class);

@@ -472,11 +472,11 @@ autoSaveUndoRedoTest(
 
 		await expect(
 			page.getByRole('menuitem', {name: 'Undo All'})
-		).toBeEnabled();
+		).toHaveClass('dropdown-item');
 
 		await expect(
 			page.getByRole('menuitem', {name: 'Edit Title'})
-		).toBeDisabled();
+		).toHaveClass('dropdown-item active');
 
 		await expect(async () => {
 			await journalEditArticlePage.fillFriendlyURL(friendlyURL);
@@ -485,12 +485,12 @@ autoSaveUndoRedoTest(
 
 			await expect(
 				page.getByRole('menuitem', {name: 'Edit Title'})
-			).toBeEnabled();
+			).toHaveClass('dropdown-item');
 		}).toPass();
 
 		await expect(
 			page.getByRole('menuitem', {name: 'Edit Friendly URL'})
-		).toBeDisabled();
+		).toHaveClass('dropdown-item active');
 
 		const textField = page.getByLabel(textFieldName);
 
@@ -513,10 +513,16 @@ autoSaveUndoRedoTest(
 
 			await expect(
 				page.getByRole('menuitem', {name: 'Change Language'})
-			).toBeEnabled();
-		}).toPass();
+			).toHaveClass('dropdown-item');
 
-		await page.getByRole('menuitem', {name: 'Undo All'}).click();
+			await page.getByRole('menuitem', {name: 'Undo All'}).click();
+
+			await expect(
+				page.locator(
+					'#_com_liferay_journal_web_portlet_JournalPortlet_lockErrorIndicator'
+				)
+			).toBeVisible();
+		}).toPass();
 
 		await expect(journalEditArticlePage.friendlyURLInput).toBeEmpty();
 

@@ -1177,7 +1177,7 @@ test('LPD-35558 Order Details - Order Summary', async ({
 	}
 });
 
-test('LPD-32237 Order actions and redirect fragments', async ({
+test('LPD-32237 Order actions fragment', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	checkoutPage,
@@ -1790,6 +1790,171 @@ test('LPD-35558 Order Data Sets and header fragments', async ({
 
 		await expect(page.getByText(cart.id.toString())).toBeVisible();
 		await expect(page.getByText(sku.toString())).toBeVisible();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-34399 Quick checkout from order actions fragment', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Heading');
+
+		await page.getByText('Heading Example', {exact: true}).dblclick();
+		await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
+
+		await commerceLayoutsPage.addFragment('Order Actions', 'Order');
+
+		await expect(
+			page.getByText('The order actions component will be shown here.')
+		).toBeVisible();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Quick Checkout')
+		).toBeDisabled();
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+
+		const shippingOption = getRandomString();
+
+		await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
+			channel.name,
+			'Flat Rate',
+			[shippingOption]
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.patchCart(
+			{
+				accountId: account.id,
+				billingAddressId: address.id,
+				paymentMethod: 'money-order',
+				shippingAddressId: address.id,
+				shippingMethod: 'fixed',
+				shippingOption,
+			},
+			cart.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Quick Checkout')
+		).toBeEnabled();
 	}
 	finally {
 		await systemSettingsPage.goToSystemSetting(

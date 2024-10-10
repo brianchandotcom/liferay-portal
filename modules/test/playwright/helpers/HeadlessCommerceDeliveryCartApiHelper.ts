@@ -26,6 +26,7 @@ type TCart = {
 	paymentMethod?: string;
 	shippingAddressId?: number;
 	shippingMethod?: string;
+	shippingOption?: string;
 };
 
 export class HeadlessCommerceDeliveryCartApiHelper {

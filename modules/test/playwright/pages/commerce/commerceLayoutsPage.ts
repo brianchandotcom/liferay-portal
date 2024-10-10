@@ -149,7 +149,7 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Cancel',
 		});
-		this.infoBoxFieldSelect = page.getByLabel('Field');
+		this.infoBoxFieldSelect = page.getByLabel('Field', {exact: true});
 		this.infoBoxLabelInput = page.getByLabel('Label');
 		this.infoBoxShippingMethodAlert = page.getByText('are no available');
 		this.infoBoxShippingMethodSelect = page.getByLabel('Choose Courier');
@@ -163,7 +163,7 @@ export class CommerceLayoutsPage {
 		});
 		this.moreActionsButton = page.getByLabel('More actions');
 		this.orderActionsButton = (orderActionName: string) =>
-			page.getByRole('button', {name: orderActionName});
+			page.getByRole('button', {exact: true, name: orderActionName});
 		this.openProductMenuButton = page.getByRole('tab', {
 			exact: true,
 			name: 'Open Product Menu',

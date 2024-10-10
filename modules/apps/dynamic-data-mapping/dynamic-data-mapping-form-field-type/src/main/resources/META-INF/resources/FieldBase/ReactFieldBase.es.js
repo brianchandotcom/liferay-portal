@@ -26,7 +26,7 @@ export function updateFieldNameLocale(editingLanguageId, locale, name) {
 	return name.replace(new RegExp(`${editingLanguageId}$`), locale);
 }
 
-function normalizeInputValue(fieldType, value) {
+export function normalizeInputValue(fieldType, value) {
 	if (!value) {
 		return '';
 	}

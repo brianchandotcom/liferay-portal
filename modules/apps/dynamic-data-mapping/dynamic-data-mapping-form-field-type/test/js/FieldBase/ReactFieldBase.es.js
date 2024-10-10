@@ -10,6 +10,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 
 import FieldBase, {
+	normalizeInputValue,
 	updateFieldNameLocale,
 } from '../../../src/main/resources/META-INF/resources/FieldBase/ReactFieldBase.es';
 
@@ -334,6 +335,51 @@ describe('ReactFieldBase', () => {
 			expect(
 				updateFieldNameLocale('en_US', 'co', defaultLanguageFieldName)
 			).toBe(customLanguageFieldName);
+		});
+	});
+
+	describe('normalizeInputValue function', () => {
+		it('checks if the value is being formatted according to their fieldType', () => {
+
+			// no value and any fieldType
+
+			expect(normalizeInputValue('text', null)).toBe('');
+
+			// text fieldType
+
+			const textValue = 'this is a text';
+
+			expect(normalizeInputValue('text', textValue)).toBe(textValue);
+
+			// date and date_time fieldType
+
+			const dateValue = '2024-12-25';
+			const dateTimeValue = '2024-12-25 21:00';
+
+			expect(normalizeInputValue('date', dateValue)).toBe(dateValue);
+
+			expect(normalizeInputValue('date_time', dateTimeValue)).toBe(
+				dateTimeValue
+			);
+
+			// image fieldType
+
+			const imageValue = {
+				alt: 'this is an alt text',
+				classNameId: 22222,
+				description: 'this is a description',
+				fileEntryId: '33333',
+				groupId: '10000',
+				height: 900,
+				title: 'my_image',
+				type: 'document',
+				url: '/documents/images/my_image',
+				width: 900,
+			};
+
+			expect(normalizeInputValue('image', imageValue)).toBe(
+				JSON.stringify(imageValue)
+			);
 		});
 	});
 });

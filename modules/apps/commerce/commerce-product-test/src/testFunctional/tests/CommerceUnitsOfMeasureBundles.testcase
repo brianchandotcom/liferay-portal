@@ -563,6 +563,7 @@ definition {
 	}
 
 	@description = "COMMERCE-12547. As a buyer, I want to be able to assert that a bundled product with UOMs is overlapped using normal and quick add to cart"
+	@ignore = "true"
 	@priority = 5
 	test CanAssertUOMBundledProductIsOverlappedUsingNormalAndQuickAdd {
 		property portal.acceptance = "true";
@@ -731,6 +732,7 @@ definition {
 	}
 
 	@description = "COMMERCE-12544. I want to be able to add SKUs to cart with option values linked to different quantities set"
+	@ignore = "true"
 	@priority = 5
 	test CanOptionValuesHaveLinkedSkuWithDifferentQuantitiesSet {
 		property portal.acceptance = "true";

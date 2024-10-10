@@ -57,9 +57,13 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_ctCollection = _ctCollectionLocalService.addCTCollection(
+		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, "P1", null);
+
+		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, "P2", null);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -76,7 +80,7 @@ public class GetConflictInfoMVCResourceCommandTest {
 	public void testGetConflictIconWithNoConflicts() throws Exception {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			_assertGetConflictInfo("change-tracking-conflict-icon", "check");
 
@@ -89,13 +93,9 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 	@Test
 	public void testGetConflictIconWithPossibleConflict() throws Exception {
-		CTCollection ctCollection2 = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, "P2", null);
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection2.getCtCollectionId())) {
+					_ctCollection2.getCtCollectionId())) {
 
 			JournalTestUtil.updateArticle(
 				_journalArticle, "testModifyJournalArticle");
@@ -103,7 +103,7 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			_journalArticle = JournalTestUtil.updateArticle(
 				_journalArticle, "testModifyJournalArticle");
@@ -119,7 +119,7 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			_journalArticle = JournalTestUtil.updateArticle(
 				_journalArticle, "testModifyJournalArticle");
@@ -134,7 +134,7 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			_assertGetConflictInfo(
 				"change-tracking-conflict-icon-danger", "warning-full");
@@ -152,7 +152,7 @@ public class GetConflictInfoMVCResourceCommandTest {
 			_getMockLiferayResourceRequest(
 				_portal.getClassNameId(JournalArticle.class),
 				_journalArticle.getPrimaryKey(),
-				_ctCollection.getCtCollectionId()),
+				_ctCollection1.getCtCollectionId()),
 			mockLiferayResourceResponse);
 
 		JSONObject jsonObject = _getConflictInfoJSONObject(
@@ -206,7 +206,10 @@ public class GetConflictInfoMVCResourceCommandTest {
 	}
 
 	@DeleteAfterTestRun
-	private static CTCollection _ctCollection;
+	private static CTCollection _ctCollection1;
+
+	@DeleteAfterTestRun
+	private static CTCollection _ctCollection2;
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

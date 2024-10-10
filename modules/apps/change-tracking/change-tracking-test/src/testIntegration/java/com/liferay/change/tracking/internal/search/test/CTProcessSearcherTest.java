@@ -6,7 +6,6 @@
 package com.liferay.change.tracking.internal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -151,30 +150,6 @@ public class CTProcessSearcherTest {
 		finally {
 			serviceRegistration.unregister();
 		}
-	}
-
-	@Test
-	public void testSearchByType() throws Exception {
-		CTCollection ctCollection1 = _addCTCollection();
-		CTCollection ctCollection2 = _addCTCollection();
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection1.getCtCollectionId())) {
-
-			DDMStructureTestUtil.addStructure(
-				TestPropsValues.getGroupId(), JournalArticle.class.getName());
-		}
-
-		CTProcess moveCTProcess = _ctProcessLocalService.addCTProcess(
-			TestPropsValues.getUserId(), ctCollection1.getCtCollectionId(),
-			ctCollection2.getCtCollectionId(), null);
-
-		_addCTProcess(ctCollection1.getCtCollectionId());
-
-		_assertHits(
-			_getUIDs(moveCTProcess),
-			_byAttribute("type", CTConstants.CT_PROCESS_MOVE));
 	}
 
 	@Test

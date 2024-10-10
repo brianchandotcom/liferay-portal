@@ -286,6 +286,30 @@ public class CommerceTermEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getDeliveryCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commerceShippingOptionId) {
+
+		int count = dslQueryCount(
+			_getDeliveryTermsEntryGroupByStep(
+				companyId,
+				(commerceOrderTypeId > 0) ? commerceOrderTypeId : null,
+				commerceShippingOptionId,
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceTermEntryTable.INSTANCE.commerceTermEntryId)));
+
+		if ((commerceOrderTypeId > 0) && (count == 0)) {
+			count = dslQueryCount(
+				_getDeliveryTermsEntryGroupByStep(
+					companyId, null, commerceShippingOptionId,
+					DSLQueryFactoryUtil.countDistinct(
+						CommerceTermEntryTable.INSTANCE.commerceTermEntryId)));
+		}
+
+		return count;
+	}
+
+	@Override
 	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
 		long companyId, long commerceOrderTypeId,
 		long commercePaymentMethodGroupRelId) {
@@ -317,6 +341,30 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 
 		return commerceTermEntries;
+	}
+
+	@Override
+	public int getPaymentCommerceTermEntriesCount(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId) {
+
+		int count = dslQueryCount(
+			_getPaymentTermsEntryGroupByStep(
+				companyId,
+				(commerceOrderTypeId > 0) ? commerceOrderTypeId : null,
+				commercePaymentMethodGroupRelId,
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceTermEntryTable.INSTANCE.commerceTermEntryId)));
+
+		if ((commerceOrderTypeId > 0) && (count == 0)) {
+			count = dslQueryCount(
+				_getPaymentTermsEntryGroupByStep(
+					companyId, null, commercePaymentMethodGroupRelId,
+					DSLQueryFactoryUtil.countDistinct(
+						CommerceTermEntryTable.INSTANCE.commerceTermEntryId)));
+		}
+
+		return count;
 	}
 
 	@Override

@@ -103,6 +103,7 @@ import java.security.Key;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -571,19 +572,17 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			skuUnitOfMeasureKey = skuUnitOfMeasure.getKey();
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
 		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
 			_configurationProvider.getConfiguration(
 				CommerceOrderCheckoutConfiguration.class,
 				new GroupServiceSettingsLocator(
-					commerceChannel.getGroupId(),
+					commerceOrder.getGroupId(),
 					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
+		CommerceOrderItem commerceOrderItem;
+
 		if (commerceOrderCheckoutConfiguration.showSeparateOrderItems()) {
-			_commerceOrderItemService.addCommerceOrderItem(
+			commerceOrderItem = _commerceOrderItemService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), cartItem.getOptions(),
 				BigDecimalUtil.get(cartItem.getQuantity(), BigDecimal.ONE),
@@ -592,13 +591,56 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				serviceContext);
 		}
 		else {
-			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), cartItem.getOptions(),
-				BigDecimalUtil.get(cartItem.getQuantity(), BigDecimal.ONE),
-				GetterUtil.getLong(cartItem.getReplacedSkuId()),
-				BigDecimal.ZERO, skuUnitOfMeasureKey, commerceContext,
-				serviceContext);
+			commerceOrderItem =
+				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
+					commerceOrder.getCommerceOrderId(),
+					cpInstance.getCPInstanceId(), cartItem.getOptions(),
+					BigDecimalUtil.get(cartItem.getQuantity(), BigDecimal.ONE),
+					GetterUtil.getLong(cartItem.getReplacedSkuId()),
+					BigDecimal.ZERO, skuUnitOfMeasureKey, commerceContext,
+					serviceContext);
+		}
+
+		long shippingAddressId = GetterUtil.getLong(
+			cartItem.getShippingAddressId());
+
+		if (shippingAddressId == 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.
+					fetchCommerceAddressByExternalReferenceCode(
+						cartItem.getShippingAddressExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+			if (commerceAddress != null) {
+				shippingAddressId = commerceAddress.getCommerceAddressId();
+			}
+			else {
+				shippingAddressId = commerceOrderItem.getShippingAddressId();
+			}
+		}
+
+		Date requestedDeliveryDate = cartItem.getRequestedDeliveryDate();
+
+		if (requestedDeliveryDate != null) {
+			Calendar requestedDeliveryDateCalendar =
+				CalendarFactoryUtil.getCalendar(
+					requestedDeliveryDate.getTime());
+
+			DateConfig requestedDeliveryDateConfig = new DateConfig(
+				requestedDeliveryDateCalendar);
+
+			_commerceOrderItemService.updateCommerceOrderItemInfo(
+				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
+				cartItem.getDeliveryGroup(), commerceOrderItem.getPrintedNote(),
+				requestedDeliveryDateConfig.getMonth(),
+				requestedDeliveryDateConfig.getDay(),
+				requestedDeliveryDateConfig.getYear());
+		}
+		else {
+			_commerceOrderItemService.updateCommerceOrderItemInfo(
+				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
+				cartItem.getDeliveryGroup(),
+				commerceOrderItem.getPrintedNote());
 		}
 	}
 

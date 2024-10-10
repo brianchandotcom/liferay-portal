@@ -407,11 +407,8 @@ public class UIItemsBuilder {
 
 	public DropdownItem createHistoryDropdownItem() {
 		return DropdownItemBuilder.setHref(
-			PortletURLBuilder.create(
-				_getRenderURL("/document_library/view_file_entry_history")
-			).setBackURL(
-				_getCurrentURL()
-			).buildPortletURL()
+			_getControlPanelRenderURL(
+				"/document_library/view_file_entry_history", _getCurrentURL())
 		).setIcon(
 			"date-time"
 		).setKey(

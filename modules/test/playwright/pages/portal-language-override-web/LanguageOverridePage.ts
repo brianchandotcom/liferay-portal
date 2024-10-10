@@ -63,6 +63,18 @@ export class LanguageOverridePage {
 		}
 	}
 
+	async assertKeyTranslations({key, values}: TTranslation) {
+		await this.page.getByRole('link', {name: key}).click();
+
+		await this.page.waitForLoadState();
+
+		for (const {languageId, value} of values) {
+			const input = this.page.getByLabel(languageId);
+
+			await expect(input).toHaveValue(value);
+		}
+	}
+
 	async assertTranslationInListView({key, values}: TTranslation) {
 		if (values.length) {
 			const normalizedLanguageIds = values.map(({languageId}) =>

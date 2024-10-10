@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class ProductDetailsPage {
@@ -211,6 +212,10 @@ export class ProductDetailsPage {
 
 	async addProductDetailsWidget() {
 		await this.layoutsPage.addWidgetToPage('Product Details');
+		await waitForAlert(
+			this.page,
+			'Success:The application was added to the page.'
+		);
 	}
 
 	async addSpecificationToProduct(

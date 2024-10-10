@@ -405,7 +405,7 @@ public class DDMFormDisplayContextTest {
 		ddmFormInstance.setSettings(expectedSettings);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
+			_ddmFormInstanceLocalService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -536,12 +536,6 @@ public class DDMFormDisplayContextTest {
 			ddmFormInstance
 		);
 
-		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
-		).thenReturn(
-			null
-		);
-
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext();
 
@@ -564,12 +558,6 @@ public class DDMFormDisplayContextTest {
 
 		Mockito.when(
 			_ddmFormInstanceLocalService.fetchFormInstance(Mockito.anyLong())
-		).thenReturn(
-			ddmFormInstance
-		);
-
-		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -909,7 +897,7 @@ public class DDMFormDisplayContextTest {
 		);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
+			_ddmFormInstanceLocalService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -933,7 +921,7 @@ public class DDMFormDisplayContextTest {
 		);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
+			_ddmFormInstanceLocalService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);

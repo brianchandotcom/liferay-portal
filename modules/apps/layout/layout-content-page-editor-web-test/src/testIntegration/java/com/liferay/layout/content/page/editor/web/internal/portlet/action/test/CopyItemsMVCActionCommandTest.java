@@ -13,6 +13,7 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -56,6 +57,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -304,6 +306,91 @@ public class CopyItemsMVCActionCommandTest {
 			childrenItemIds.toString(), 5, childrenItemIds.size());
 	}
 
+	@Test
+	public void testCopyNoninstantiableItemsMarkedForDeletion()
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_layout.getGroupId(), _layout.getPlid());
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
+		JSONObject editableValueJSONObject =
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				StringPool.BLANK, StringPool.BLANK);
+
+		String portletId = "com_liferay_login_web_portlet_LoginPortlet";
+
+		editableValueJSONObject.put(
+			"instanceId", StringPool.BLANK
+		).put(
+			"portletId", portletId
+		);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				0, 0, segmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				editableValueJSONObject.toString(),
+				RandomTestUtil.randomString(), 0, null,
+				FragmentConstants.TYPE_PORTLET, _serviceContext);
+
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				layoutStructure.getMainItemId(), 1);
+
+		layoutStructure.markLayoutStructureItemForDeletion(
+			Collections.singletonList(
+				fragmentStyledLayoutStructureItem.getItemId()),
+			Collections.singletonList(portletId));
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_layout.getGroupId(), _layout.getPlid(),
+				layoutStructure.toString());
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
+				rowStyledLayoutStructureItem.getItemId(), segmentsExperienceId),
+			new MockLiferayPortletActionResponse());
+
+		List<String> copiedItemIds = (List<String>)jsonObject.get(
+			"copiedItemIds");
+
+		Assert.assertEquals(copiedItemIds.toString(), 1, copiedItemIds.size());
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<String> childrenItemIds =
+			mainLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 2, childrenItemIds.size());
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink(
 			String editableValues, String html, String parentItemId,
 			long segmentsExperienceId)
@@ -427,6 +514,7 @@ public class CopyItemsMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		mockLiferayPortletActionRequest.setAttribute(WebKeys.LAYOUT, _layout);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
@@ -473,6 +561,9 @@ public class CopyItemsMVCActionCommandTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@DeleteAfterTestRun
 	private Group _group;

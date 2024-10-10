@@ -4,7 +4,13 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {Link, Outlet, useNavigate, useParams} from 'react-router-dom';
+import {
+	Link,
+	Outlet,
+	useNavigate,
+	useOutletContext,
+	useParams,
+} from 'react-router-dom';
 
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
@@ -13,11 +19,11 @@ import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import {ProductType} from '../../../../../enums/ProductType';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
+import {getSpecificationByKey} from '../../../../../utils/productUtils';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';
-import {getSpecificationByKey} from '../../../../../utils/productUtils';
 
 type ProductAndOrderPayload = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
@@ -38,6 +44,7 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 }) => {
 	const navigate = useNavigate();
 	const {orderId} = useParams();
+	const outletContext = useOutletContext();
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
 
 	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
@@ -78,7 +85,7 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 				}
 			/>
 
-			<Outlet context={data} />
+			<Outlet context={{...data, ...(outletContext || {})}} />
 		</PageRenderer>
 	);
 };

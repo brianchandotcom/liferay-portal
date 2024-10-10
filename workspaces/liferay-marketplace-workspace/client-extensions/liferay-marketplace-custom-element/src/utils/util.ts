@@ -355,3 +355,7 @@ export function safeJSONParse<T = any>(
 export function isCloudEnvironment() {
 	return window.location.protocol === 'https:';
 }
+
+export function waitTimeout(timer: number) {
+	return new Promise((resolve) => setTimeout(() => resolve(null), timer));
+}

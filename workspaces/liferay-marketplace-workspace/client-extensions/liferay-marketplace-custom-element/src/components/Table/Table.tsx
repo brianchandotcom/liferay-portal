@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import {ReactNode} from 'react';
 
 import './Table.scss';
-
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import classNames from 'classnames';
 
 type TableProps<T = any> = {
 	Actions?: React.FC<{row: T}>;
@@ -90,7 +89,7 @@ const Table: React.FC<TableProps> = ({
 								'cursor-pointer':
 									typeof onClickRow === 'function',
 							})}
-							key={row.id || rowIndex}
+							key={rowIndex}
 						>
 							{columns.map((column, columnIndex) => {
 								const data = row[column.key];

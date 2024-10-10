@@ -11,6 +11,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {searchPageTest} from '../../fixtures/searchPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../liferay.config';
 import {SearchPage} from '../../pages/portal-search-web/SearchPage';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 
@@ -23,6 +24,37 @@ export const test = mergeTests(
 	pagesPagesTest,
 	searchPageTest
 );
+
+test.describe('Search Bar prevents XSS vulnerability', () => {
+	test('SearchURL is encoded in search bar form @LPD-39110', async ({
+		page,
+		searchPage,
+	}) => {
+		await test.step('Check that an alert with message does not appear', async () => {
+			page.on('dialog', async (dialog) => {
+				dialog.accept();
+
+				expect(dialog.message(), 'test').toBeNull();
+			});
+
+			await page.goto(
+				liferayConfig.environment.baseUrl +
+					'/search;%22%3E%3Cscript%3Ealert("test");%3C%2Fscript%3E%3C'
+			);
+		});
+
+		await test.step('Check that text does not appear in searchbar', async () => {
+			await page.goto(
+				liferayConfig.environment.baseUrl +
+					'/search;%3B%3Cdiv%20id%3D%221%22%3EXSS%20Vulnerability%3C%2Fdiv%3E'
+			);
+
+			await expect(
+				searchPage.searchBarPortletInMainContent
+			).not.toHaveText(/XSS Vulnerability/);
+		});
+	});
+});
 
 test.describe('Search Bar directs to correct page', () => {
 	test('Retains impersonation parameter when suggestions is disabled @LPD-17509', async ({

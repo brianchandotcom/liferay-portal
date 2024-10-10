@@ -78,17 +78,17 @@ public class ScimNotificationSchedulerJobConfiguration
 				lastNotificationDate.getTime();
 
 		if (_isSendNotification(
-				30 * Time.DAY, accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis) ||
+				accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis, 30 * Time.DAY) ||
 			_isSendNotification(
-				10 * Time.DAY, accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis) ||
+				accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis, 10 * Time.DAY) ||
 			_isSendNotification(
-				Time.DAY, accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis) ||
+				accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis, Time.DAY) ||
 			_isSendNotification(
-				0, accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis)) {
+				accessTokenExpirationDurationMillis,
+				lastNotificationDurationMillis, 0)) {
 
 			return true;
 		}
@@ -109,9 +109,8 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isSendNotification(
-		long notificationDurationMillis,
 		long accessTokenExpirationDurationMillis,
-		long lastNotificationDurationMillis) {
+		long lastNotificationDurationMillis, long notificationDurationMillis) {
 
 		if ((notificationDurationMillis >=
 				accessTokenExpirationDurationMillis) &&

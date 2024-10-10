@@ -245,8 +245,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	protected String getDateFormatTransformedSQL() {
-		return "select foo from Foo where DATE_FORMAT(foo, " +
-			"'%Y-%m-%dT%H:%i:%sZ') = 2024-10-04 12:34:56";
+		return "select foo from Foo where foo = 2024-10-04 12:34:56";
 	}
 
 	protected String getDropTableIfExistsTextOriginalSQL() {

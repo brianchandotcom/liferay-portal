@@ -236,7 +236,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceDateFormat(Matcher matcher) {
-		return matcher.replaceAll("DATE_FORMAT($1, '%Y-%m-%dT%H:%i:%sZ')");
+		return matcher.replaceAll("$1");
 	}
 
 	protected String replaceDropTableIfExistsText(Matcher matcher) {

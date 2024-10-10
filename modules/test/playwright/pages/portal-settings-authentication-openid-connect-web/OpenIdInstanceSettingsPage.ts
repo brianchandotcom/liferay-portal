@@ -5,11 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
-export class SingleSignOnSettingsPage {
+export class OpenIdInstanceSettingsPage {
 	readonly page: Page;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly openIdConnectMenuItem: Locator;
@@ -91,11 +92,20 @@ export class SingleSignOnSettingsPage {
 	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();
 		await this.page.waitForLoadState('networkidle');
-		await this.page
-			.getByRole('row', {name: providerName + ' Actions'})
-			.getByTitle('Actions')
-			.click();
-		await this.page.getByText('Delete').click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('link', {
+				name: 'Delete',
+			}),
+			trigger: this.page
+				.getByRole('row', {
+					name: providerName,
+				})
+				.locator('div')
+				.first()
+				.locator('a')
+				.first(),
+		});
 		await waitForAlert(this.page);
 	}
 }

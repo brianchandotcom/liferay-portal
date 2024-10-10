@@ -207,9 +207,6 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, article);
-
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, article);
 		}
 
 		String defaultDDMTemplateKey = article.getDDMTemplateKey();

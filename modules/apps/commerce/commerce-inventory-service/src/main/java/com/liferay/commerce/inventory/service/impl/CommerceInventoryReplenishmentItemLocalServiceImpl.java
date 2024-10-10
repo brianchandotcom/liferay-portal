@@ -146,7 +146,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 			CommerceInventoryReplenishmentItemTable.INSTANCE.companyId.eq(
 				companyId
 			).and(
-				CommerceInventoryReplenishmentItemTable.INSTANCE.sku.eq(sku)
+				() -> {
+					if (Validator.isNull(sku)) {
+						return null;
+					}
+
+					return CommerceInventoryReplenishmentItemTable.INSTANCE.sku.
+						eq(sku);
+				}
 			).and(
 				() -> {
 					if (Validator.isNull(unitOfMeasureKey)) {

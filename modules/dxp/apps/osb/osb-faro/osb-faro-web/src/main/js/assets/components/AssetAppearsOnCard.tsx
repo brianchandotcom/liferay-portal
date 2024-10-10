@@ -37,6 +37,13 @@ export enum EmptyStateLink {
 	Journal = URLConstants.AssetsAppearsWebContentOnDocumentation
 }
 
+export enum EmptyStateText {
+	Blog = Liferay.Language.get('learn-more-about-blogs'),
+	Document = Liferay.Language.get('learn-more-about-documents-and-media'),
+	Form = Liferay.Language.get('learn-more-about-forms'),
+	Journal = Liferay.Language.get('learn-more-about-web-content')
+}
+
 interface IAssetAppearsOnCardProps {
 	accessors: Accessor[];
 	assetType: AssetTypes;

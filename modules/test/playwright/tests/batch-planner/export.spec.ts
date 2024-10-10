@@ -9,13 +9,13 @@ import {
 	ObjectAdminRestClient,
 	ObjectDefinition,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	dataMigrationCenterPagesTest,
 	featureFlagsTest({
 		'COMMERCE-8087': true,
@@ -69,6 +69,8 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 			requestBody: stockObjectDefinition,
 		});
 
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
 	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
@@ -115,10 +117,6 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 			},
 		],
 	});
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
 });
 
 test('can export as JSON with excluded fields', async ({
@@ -133,6 +131,8 @@ test('can export as JSON with excluded fields', async ({
 		await objectAdminRestClient.objectDefinition.postObjectDefinition({
 			requestBody: stockObjectDefinition,
 		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
@@ -149,10 +149,6 @@ test('can export as JSON with excluded fields', async ({
 			name: 'Stock Entry',
 		},
 	]);
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
 });
 
 test('can export as JSON with all field types mapped', async ({
@@ -171,6 +167,8 @@ test('can export as JSON with all field types mapped', async ({
 			},
 		}
 	);
+
+	apiHelpers.data.push({id: picklist.id, type: 'listTypeDefinition'});
 
 	await apiHelpers.post(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}/list-type-entries`,
@@ -307,6 +305,11 @@ test('can export as JSON with all field types mapped', async ({
 			},
 		});
 
+	apiHelpers.data.unshift({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
 	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			customAttachment: {
@@ -322,6 +325,11 @@ test('can export as JSON with all field types mapped', async ({
 		},
 		'c/stocks'
 	);
+
+	apiHelpers.data.unshift({
+		id: objectEntry.customAttachment.id,
+		type: 'document',
+	});
 
 	expect(
 		JSON.parse(
@@ -373,18 +381,6 @@ test('can export as JSON with all field types mapped', async ({
 			name: 'NameValue',
 		},
 	]);
-
-	await apiHelpers.delete(
-		`o/headless-delivery/v1.0/documents/${objectEntry.customAttachment.id}`
-	);
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
-
-	await apiHelpers.delete(
-		`o/headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}`
-	);
 });
 
 test('can export as JSONL with excluded fields', async ({
@@ -400,6 +396,8 @@ test('can export as JSONL with excluded fields', async ({
 			requestBody: stockObjectDefinition,
 		});
 
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
 	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
@@ -409,10 +407,6 @@ test('can export as JSONL with excluded fields', async ({
 			['name']
 		)
 	).toBe('{"name":"Stock Entry"}\n');
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
 });
 
 test('can see correct custom object name in dropdown', async ({
@@ -428,6 +422,8 @@ test('can see correct custom object name in dropdown', async ({
 			requestBody: stockObjectDefinition,
 		});
 
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
 	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	await dataMigrationCenterPage.goto();
@@ -438,10 +434,6 @@ test('can see correct custom object name in dropdown', async ({
 			.getByLabel('Entity Type')
 			.textContent()
 	).toContain('Stock (v1.0 - Liferay Object REST)');
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
 });
 
 test('can see ObjectDefinition entity type in dropdown', async ({

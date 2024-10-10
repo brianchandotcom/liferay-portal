@@ -384,6 +384,14 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'document':
+					await this.headlessDelivery.deleteDocument(item.id);
+
+					break;
+				case 'listTypeDefinition':
+					await this.listTypeAdmin.deleteListTypeDefinition(item.id);
+
+					break;
 				case 'objectDefinition': {
 					const objectAdminRESTClient = await this.buildRestClient(
 						ObjectAdminRestClient

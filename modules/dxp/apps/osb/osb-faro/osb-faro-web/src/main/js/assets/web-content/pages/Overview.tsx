@@ -5,7 +5,9 @@ import React from 'react';
 import WebContentMetricCard from 'assets/web-content/components/WebContentMetricCard';
 import {
 	Accessor,
-	AssetAppearsOnCard
+	AssetAppearsOnCard,
+	EmptyStateLink,
+	EmptyStateText
 } from 'assets/components/AssetAppearsOnCard';
 import {AssetTypes} from 'shared/util/constants';
 import {MetricName} from 'shared/types/MetricName';
@@ -56,6 +58,8 @@ const Overview = () => (
 				<AssetAppearsOnCard
 					accessors={[Accessor.ViewsMetric]}
 					assetType={AssetTypes.Journal}
+					emptyStateLink={EmptyStateLink.Journal}
+					emptyStateText={EmptyStateText.Journal}
 				/>
 			</div>
 		</div>

@@ -1446,6 +1446,8 @@ definition {
 
 		DMDocument.downloadPG(dmDocumentTitle = "/D/M/@!# Title");
 
+		DownloadTempFile();
+
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.doc");
 	}
 
@@ -1815,6 +1817,8 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.downloadPG(dmDocumentTitle = "Document_3.doc");
+
+		DownloadTempFile();
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_3.doc");
 

@@ -32,6 +32,10 @@ public class BatchHistory {
 		return _testHistories.get(key);
 	}
 
+	public TestTaskHistory getTestTaskHistory(String key) {
+		return _testTaskHistories.get(key);
+	}
+
 	protected BatchHistory(JobHistory jobHistory, JSONObject jsonObject) {
 		_jobHistory = jobHistory;
 
@@ -40,15 +44,27 @@ public class BatchHistory {
 
 		JSONArray testsJSONArray = jsonObject.optJSONArray("tests");
 
-		if ((testsJSONArray == JSONObject.NULL) || testsJSONArray.isEmpty()) {
-			return;
+		if ((testsJSONArray != JSONObject.NULL) && !testsJSONArray.isEmpty()) {
+			for (int i = 0; i < testsJSONArray.length(); i++) {
+				TestHistory testHistory = new TestHistory(
+					this, testsJSONArray.getJSONObject(i));
+
+				_testHistories.put(testHistory.getTestName(), testHistory);
+			}
 		}
 
-		for (int i = 0; i < testsJSONArray.length(); i++) {
-			TestHistory testHistory = new TestHistory(
-				this, testsJSONArray.getJSONObject(i));
+		JSONArray testTasksJSONArray = jsonObject.optJSONArray("testTasks");
 
-			_testHistories.put(testHistory.getTestName(), testHistory);
+		if ((testTasksJSONArray != JSONObject.NULL) &&
+			!testTasksJSONArray.isEmpty()) {
+
+			for (int i = 0; i < testTasksJSONArray.length(); i++) {
+				TestTaskHistory testTaskHistory = new TestTaskHistory(
+					this, testTasksJSONArray.getJSONObject(i));
+
+				_testTaskHistories.put(
+					testTaskHistory.getTestTaskName(), testTaskHistory);
+			}
 		}
 	}
 
@@ -56,5 +72,7 @@ public class BatchHistory {
 	private final String _batchName;
 	private final JobHistory _jobHistory;
 	private final Map<String, TestHistory> _testHistories = new HashMap<>();
+	private final Map<String, TestTaskHistory> _testTaskHistories =
+		new HashMap<>();
 
 }

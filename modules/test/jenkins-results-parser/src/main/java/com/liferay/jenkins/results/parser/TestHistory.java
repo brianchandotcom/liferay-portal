@@ -69,6 +69,14 @@ public class TestHistory {
 			String.valueOf(testrayCaseResultID), "/history");
 	}
 
+	public TestTaskHistory getTestTaskHistory() {
+		return _batchHistory.getTestTaskHistory(getTestTaskName());
+	}
+
+	public String getTestTaskName() {
+		return _testTaskName;
+	}
+
 	protected TestHistory(BatchHistory batchHistory, JSONObject jsonObject) {
 		_batchHistory = batchHistory;
 
@@ -80,6 +88,7 @@ public class TestHistory {
 		_testName = jsonObject.getString("testName");
 		_testCount = jsonObject.optInt("testCount");
 		_testrayCaseResultID = jsonObject.optLong("testrayCaseResultID");
+		_testTaskName = jsonObject.optString("testTaskName");
 	}
 
 	private final long _averageDuration;
@@ -90,5 +99,6 @@ public class TestHistory {
 	private final int _testCount;
 	private final String _testName;
 	private final long _testrayCaseResultID;
+	private final String _testTaskName;
 
 }

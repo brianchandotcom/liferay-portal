@@ -356,20 +356,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-144540. Assert the new button is displayed as an icon button in responsive mode"
-	@priority = 5
-	test ResponsiveModeNewButtonAsIconButton {
-		task ("Set window size to phone size") {
-			SetWindowSize(value1 = "360,720");
-		}
-
-		task ("Assert the new button is displayed as an icon button") {
-			AssertElementPresent(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
-
-			AssertTextNotEquals(
-				locator1 = "ManagementBar#NEW_BUTTON",
-				value1 = "New");
-		}
-	}
-
 }

@@ -72,6 +72,23 @@ test.describe('Management Toolbar Default State', () => {
 		});
 	});
 
+	test('Assert the new button is displayed as an icon button in responsive mode @LPS-144540', async ({
+		page,
+	}) => {
+		await test.step('Set the window size to phone size', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+		});
+
+		await test.step('Check the button is an icon', async () => {
+			await expect(
+				page
+					.locator('#managementToolbarDefaultState')
+					.getByRole('button', {name: 'New'})
+					.locator('.lexicon-icon-plus')
+			).toBeVisible();
+		});
+	});
+
 	test('Assert the tooltip message is displayed when hovered over the new button in responsive mode @LPS-144540', async ({
 		page,
 	}) => {

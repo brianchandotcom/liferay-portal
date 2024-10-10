@@ -68,7 +68,7 @@ test(
 
 			const stylesComboZIndex = await page.evaluate(() => {
 				const stylesComboElement = document.querySelector(
-					'.cke_combopanel.lfr-maximized'
+					'.cke_panel.cke_combopanel.lfr-maximized'
 				);
 
 				const stylesComboElementStyles =

@@ -43,7 +43,6 @@ public class FaroProjectAdminDisplay {
 
 		_dataSourceConnected = GetterUtil.getBoolean(
 			document.get("dataSourceConnected"));
-
 		_faroProjectId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 		_groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 		_individualsLimit = GetterUtil.getLong(

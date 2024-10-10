@@ -532,6 +532,76 @@ public class DDMFormInstanceRecordExporterImplTest {
 	}
 
 	@Test
+	public void testGetDDMFormFieldValueWithNull() throws Exception {
+		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
+			new DDMFormInstanceRecordExporterImpl();
+
+		ddmFormInstanceRecordExporterImpl.ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistry;
+
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer = Mockito.mock(
+			DDMFormFieldValueRenderer.class);
+
+		DDMFormField ddmFormField = new DDMFormField("field1", "text");
+
+		ddmFormField.setFieldReference("reference1");
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValueWithReference(
+				"field1", "reference1", null);
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
+			HashMapBuilder.<String, List<DDMFormFieldValue>>put(
+				"reference1", ListUtil.fromArray(ddmFormFieldValue)
+			).build();
+
+		Locale locale = new Locale("pt", "BR");
+
+		Mockito.when(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
+				"text")
+		).thenReturn(
+			ddmFormFieldValueRenderer
+		);
+
+		Mockito.when(
+			ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale)
+		).thenReturn(
+			null
+		);
+
+		MockedStatic<HtmlUtil> htmlUtilMockedStatic = Mockito.mockStatic(
+			HtmlUtil.class);
+
+		htmlUtilMockedStatic.when(
+			() -> HtmlUtil.unescape("")
+		).thenReturn(
+			""
+		);
+
+		String actualValue =
+			ddmFormInstanceRecordExporterImpl.getDDMFormFieldValue(
+				ddmFormField, ddmFormFieldValueMap, locale);
+
+		Assert.assertEquals("", actualValue);
+
+		Mockito.verify(
+			_ddmFormFieldTypeServicesRegistry, Mockito.times(1)
+		).getDDMFormFieldValueRenderer(
+			"text"
+		);
+
+		Mockito.verify(
+			ddmFormFieldValueRenderer, Mockito.times(1)
+		).render(
+			ddmFormFieldValue, locale
+		);
+
+		htmlUtilMockedStatic.verify(
+			() -> HtmlUtil.unescape(""), Mockito.times(1));
+	}
+
+	@Test
 	public void testGetDistinctFields() throws Exception {
 		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
 			Mockito.mock(DDMFormInstanceRecordExporterImpl.class);

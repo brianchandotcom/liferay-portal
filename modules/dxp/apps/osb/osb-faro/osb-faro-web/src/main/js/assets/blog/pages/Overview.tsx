@@ -5,7 +5,9 @@ import LocationsCard from 'assets/blog/hocs/LocationsCard';
 import React from 'react';
 import {
 	Accessor,
-	AssetAppearsOnCard
+	AssetAppearsOnCard,
+	EmptyStateLink,
+	EmptyStateText
 } from 'assets/components/AssetAppearsOnCard';
 import {AssetTypes} from 'shared/util/constants';
 import {MetricName} from 'shared/types/MetricName';
@@ -57,6 +59,8 @@ const Overview = () => (
 				<AssetAppearsOnCard
 					accessors={[Accessor.ViewsMetric]}
 					assetType={AssetTypes.Blog}
+					emptyStateLink={EmptyStateLink.Blog}
+					emptyStateText={EmptyStateText.Blog}
 				/>
 			</div>
 		</div>

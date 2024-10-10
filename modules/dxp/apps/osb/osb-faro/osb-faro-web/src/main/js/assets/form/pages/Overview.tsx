@@ -6,7 +6,9 @@ import LocationsCard from 'assets/form/hocs/LocationsCard';
 import React from 'react';
 import {
 	Accessor,
-	AssetAppearsOnCard
+	AssetAppearsOnCard,
+	EmptyStateLink,
+	EmptyStateText
 } from 'assets/components/AssetAppearsOnCard';
 import {AssetTypes, ENABLE_FORM_ABANDONMENT} from 'shared/util/constants';
 import {MetricName} from 'shared/types/MetricName';
@@ -76,6 +78,8 @@ const Overview = () => (
 						Accessor.ViewsMetric
 					]}
 					assetType={AssetTypes.Form}
+					emptyStateLink={EmptyStateLink.Form}
+					emptyStateText={EmptyStateText.Form}
 				/>
 			</div>
 		</div>

@@ -10,6 +10,7 @@ import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplates
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -26,6 +27,38 @@ const test = mergeTests(
 	loginTest(),
 	pageManagementSiteTest
 );
+
+async function addDefaultAnimalDisplayPageTemplate(
+	apiHelpers: ApiHelpers,
+	displayPageTemplateName: string,
+	site: Site
+) {
+	const className = await apiHelpers.jsonWebServicesClassName.fetchClassName(
+		'com.liferay.journal.model.JournalArticle'
+	);
+
+	const animalWebContentStructureId = await getWebContentStructureId(
+		apiHelpers,
+		site.id,
+		ANIMAL_DDM_STRUCTURE_KEY
+	);
+
+	const displayPage =
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+			{
+				classNameId: className.classNameId,
+				classTypeId: String(animalWebContentStructureId),
+				groupId: site.id,
+				name: displayPageTemplateName,
+			}
+		);
+
+	await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+		{
+			layoutPageTemplateEntryId: displayPage.layoutPageTemplateEntryId,
+		}
+	);
+}
 
 test('Allow mapping repeatable fields collection provider', async ({
 	displayPageTemplatesPage,
@@ -178,34 +211,12 @@ test(
 
 		// Create display page template for Animal and mark as default
 
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				'com.liferay.journal.model.JournalArticle'
-			);
-
-		const animalWebContentStructureId = await getWebContentStructureId(
-			apiHelpers,
-			pageManagementSite.id,
-			ANIMAL_DDM_STRUCTURE_KEY
-		);
-
 		const displayPageTemplateName = getRandomString();
 
-		const displayPage =
-			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-				{
-					classNameId: className.classNameId,
-					classTypeId: String(animalWebContentStructureId),
-					groupId: pageManagementSite.id,
-					name: displayPageTemplateName,
-				}
-			);
-
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
-			{
-				layoutPageTemplateEntryId:
-					displayPage.layoutPageTemplateEntryId,
-			}
+		await addDefaultAnimalDisplayPageTemplate(
+			apiHelpers,
+			displayPageTemplateName,
+			pageManagementSite
 		);
 
 		// Go to edit display page template
@@ -267,34 +278,12 @@ test(
 
 		// Create display page template for Animal and mark as default
 
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				'com.liferay.journal.model.JournalArticle'
-			);
-
-		const animalWebContentStructureId = await getWebContentStructureId(
-			apiHelpers,
-			pageManagementSite.id,
-			ANIMAL_DDM_STRUCTURE_KEY
-		);
-
 		const displayPageTemplateName = getRandomString();
 
-		const displayPage =
-			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-				{
-					classNameId: className.classNameId,
-					classTypeId: String(animalWebContentStructureId),
-					groupId: pageManagementSite.id,
-					name: displayPageTemplateName,
-				}
-			);
-
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
-			{
-				layoutPageTemplateEntryId:
-					displayPage.layoutPageTemplateEntryId,
-			}
+		await addDefaultAnimalDisplayPageTemplate(
+			apiHelpers,
+			displayPageTemplateName,
+			pageManagementSite
 		);
 
 		// Go to edit display page template

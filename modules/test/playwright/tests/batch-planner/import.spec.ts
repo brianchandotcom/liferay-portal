@@ -1456,9 +1456,14 @@ test('cannot see relationship nested field', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		companyObjectDefinition
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
 	);
+
+	const objectDefinition =
+		await objectAdminRestClient.objectDefinition.postObjectDefinition({
+			requestBody: companyObjectDefinition,
+		});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -1467,11 +1472,13 @@ test('cannot see relationship nested field', async ({
 
 	await expect(page.getByText('testRelationship')).not.toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test.describe('can rely on anyOf form validation', () => {
-	const studentObjectDefinition = {
+	const studentObjectDefinition: ObjectDefinition = {
 		active: true,
 		externalReferenceCode: 'student-definition',
 		label: {
@@ -1522,7 +1529,7 @@ test.describe('can rely on anyOf form validation', () => {
 						en_US: 'Student subjects 1',
 					},
 					name: 'r_studentSubjects1_c_studentId',
-					readOnly: false,
+					readOnly: 'false',
 					relationshipType: 'oneToMany',
 					required: true,
 					state: false,
@@ -1560,7 +1567,7 @@ test.describe('can rely on anyOf form validation', () => {
 						en_US: 'Student subjects 2',
 					},
 					name: 'r_studentSubjects2_c_studentId',
-					readOnly: false,
+					readOnly: 'false',
 					relationshipType: 'oneToMany',
 					required: true,
 					state: false,
@@ -1598,7 +1605,7 @@ test.describe('can rely on anyOf form validation', () => {
 						en_US: 'Student subjects 3',
 					},
 					name: 'r_studentSubjects3_c_studentId',
-					readOnly: false,
+					readOnly: 'false',
 					relationshipType: 'oneToMany',
 					required: false,
 					state: false,
@@ -1625,7 +1632,7 @@ test.describe('can rely on anyOf form validation', () => {
 		},
 	};
 
-	const subjectObjectDefinition = {
+	const subjectObjectDefinition: ObjectDefinition = {
 		active: true,
 		externalReferenceCode: 'subject-definition',
 		label: {
@@ -1668,14 +1675,18 @@ test.describe('can rely on anyOf form validation', () => {
 		dataMigrationCenterPage,
 		page,
 	}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const subjectResponse =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				subjectObjectDefinition
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: subjectObjectDefinition,
+			});
 		const studentResponse =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				studentObjectDefinition
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: studentObjectDefinition,
+			});
 
 		await dataMigrationCenterPage.goto();
 		await dataMigrationCenterPage.goToImportFile();
@@ -1713,8 +1724,12 @@ test.describe('can rely on anyOf form validation', () => {
 			)
 		).toBeVisible();
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
-		await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: studentResponse.id,
+		});
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: subjectResponse.id,
+		});
 	});
 
 	test('cannot preview fields with one required anyOf field missing', async ({
@@ -1722,14 +1737,18 @@ test.describe('can rely on anyOf form validation', () => {
 		dataMigrationCenterPage,
 		page,
 	}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const subjectResponse =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				subjectObjectDefinition
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: subjectObjectDefinition,
+			});
 		const studentResponse =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				studentObjectDefinition
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: studentObjectDefinition,
+			});
 
 		await dataMigrationCenterPage.goto();
 		await dataMigrationCenterPage.goToImportFile();
@@ -1775,8 +1794,12 @@ test.describe('can rely on anyOf form validation', () => {
 				.first()
 		).toBeVisible();
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
-		await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: studentResponse.id,
+		});
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: subjectResponse.id,
+		});
 	});
 
 	test('can preview import with all required anyOf fields selected', async ({
@@ -1784,14 +1807,18 @@ test.describe('can rely on anyOf form validation', () => {
 		dataMigrationCenterPage,
 		page,
 	}) => {
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
 		const subjectResponse =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				subjectObjectDefinition
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: subjectObjectDefinition,
+			});
 		const studentResponse =
-			await apiHelpers.objectAdmin.postObjectDefinition(
-				studentObjectDefinition
-			);
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: studentObjectDefinition,
+			});
 
 		await dataMigrationCenterPage.goto();
 		await dataMigrationCenterPage.goToImportFile();
@@ -1843,7 +1870,11 @@ test.describe('can rely on anyOf form validation', () => {
 				.getByRole('cell', {name: 'r_studentSubjects2_c_studentERC'})
 		).toBeVisible();
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
-		await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: studentResponse.id,
+		});
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: subjectResponse.id,
+		});
 	});
 });

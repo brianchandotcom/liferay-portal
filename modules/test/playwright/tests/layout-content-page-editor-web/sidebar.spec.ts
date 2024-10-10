@@ -14,7 +14,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
+import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
+import {performUserSwitch} from '../../utils/performLogin';
 import {closeProductMenu, openProductMenu} from '../../utils/productMenu';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -335,7 +337,7 @@ test.describe('Fragments Panel', () => {
 
 		await page.getByRole('tab', {exact: true, name: 'Widgets'}).click();
 
-		const highlightedSet = page
+		let highlightedSet = page
 			.locator('.page-editor__collapse')
 			.filter({hasText: 'Highlighted'});
 
@@ -365,9 +367,36 @@ test.describe('Fragments Panel', () => {
 
 		await page.getByLabel('Add').click();
 
-		await expect(
-			page.locator('.panel', {hasText: 'Highlighted'})
-		).toContainText('Reports Display');
+		highlightedSet = page.locator('.panel', {hasText: 'Highlighted'});
+
+		await expect(highlightedSet).toContainText('Reports Display');
+
+		// Check that a new user with update permissions cannot see the changes
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
+		await page.goto(`/search`);
+
+		await page.getByLabel('Add').click();
+
+		await expect(highlightedSet).not.toContainText('Reports Display');
 	});
 
 	test('Fragment and widget sets are reordered', async ({
@@ -418,7 +447,7 @@ test.describe('Fragments Panel', () => {
 
 		await page.getByText('Highlighted').waitFor();
 
-		const widgetSets = tabpanel
+		let widgetSets = tabpanel
 			.last()
 			.locator('.panel-header', {hasNotText: 'Highlighted'});
 
@@ -476,9 +505,51 @@ test.describe('Fragments Panel', () => {
 
 		await page.getByLabel('Add').click();
 
-		await expect(
-			page.locator('.panel-header', {hasNotText: 'Highlighted'}).nth(2)
-		).toContainText(firstWidgetSet);
+		widgetSets = page.locator('.sidebar-body__add-panel .panel-header', {
+			hasNotText: 'Highlighted',
+		});
+
+		await expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
+
+		// Check that a new user with update permissions cannot see the changes
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
+		await page.goto(`/search`);
+
+		await page.getByLabel('Add').click();
+
+		[
+			'Accounts',
+			'Business Intelligence & Reporting',
+			'Collaboration',
+			'Commerce',
+			'Community',
+			'Content Management',
+			'News',
+			'Object',
+			'Sample',
+			'Search',
+		].forEach(async (set, index) => {
+			await expect(widgetSets.nth(index)).toContainText(set);
+		});
 	});
 
 	test('Save interactions with the panel when the page is refresh', async ({

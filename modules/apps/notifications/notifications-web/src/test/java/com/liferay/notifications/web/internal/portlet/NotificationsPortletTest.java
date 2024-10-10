@@ -137,9 +137,9 @@ public class NotificationsPortletTest {
 		return String.format(
 			"No user notification definition found for class name ID %d, " +
 				"notification type %d, and portlet %s",
-			userNotificationDelivery.getPortletId(),
 			userNotificationDelivery.getClassNameId(),
-			userNotificationDelivery.getNotificationType());
+			userNotificationDelivery.getNotificationType(),
+			userNotificationDelivery.getPortletId());
 	}
 
 	private MockLiferayPortletActionRequest

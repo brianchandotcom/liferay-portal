@@ -631,9 +631,12 @@ public class PredicateExpressionVisitorImpl
 			return predicate;
 		}
 
-		EntityField entityField = _getEntityField(left, objectDefinition);
+		if (Objects.equals(
+				_getEntityField(
+					left, objectDefinition
+				).getType(),
+				EntityField.Type.DATE_TIME)) {
 
-		if (Objects.equals(entityField.getType(), EntityField.Type.DATE_TIME)) {
 			return BinaryExpressionConverterUtil.getExpressionPredicate(
 				(DSLFunction)DSLFunctionFactoryUtil.truncateToSeconds(
 					_getColumn(left, objectDefinition)),

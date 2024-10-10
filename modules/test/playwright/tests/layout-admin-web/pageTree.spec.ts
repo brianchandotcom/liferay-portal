@@ -10,9 +10,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
-import {getRandomInt} from '../../utils/getRandomInt';
+import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {performUserSwitch} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
 
 const test = mergeTests(
@@ -113,15 +113,15 @@ test(
 				.getByTitle('Add Page', {exact: true})
 		).toBeVisible();
 
-		// Add new user with permissions
+		// Switch to a new user with update page permissions and without edit segments entry permissions
 
 		const company =
 			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
 				'liferay.com'
 			);
 
-		const role = await apiHelpers.headlessAdminUser.postRole({
-			name: 'role' + getRandomInt(),
+		const user = await createUserWithPermissions({
+			apiHelpers,
 			rolePermissions: [
 				{
 					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
@@ -139,24 +139,7 @@ test(
 			],
 		});
 
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
-		await apiHelpers.headlessAdminUser.assignUserToRole(
-			role.externalReferenceCode,
-			user.id
-		);
-
-		// Logout and Login with the new user
-
-		await performLogout(page);
-
-		await performLogin(page, user.alternateName);
+		await performUserSwitch(page, user.alternateName);
 
 		// Open the Product Menu
 

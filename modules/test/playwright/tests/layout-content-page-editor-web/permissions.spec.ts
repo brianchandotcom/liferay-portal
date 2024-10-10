@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import getContainerDefinition from './utils/getContainerDefinition';
@@ -39,8 +40,8 @@ test(
 				'liferay.com'
 			);
 
-		const role = await apiHelpers.headlessAdminUser.postRole({
-			name: 'role' + getRandomInt(),
+		const user = await createUserWithPermissions({
+			apiHelpers,
 			rolePermissions: [
 				{
 					actionIds: ['UPDATE_LAYOUT_ADVANCED_OPTIONS'],
@@ -56,13 +57,6 @@ test(
 				},
 			],
 		});
-
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		await apiHelpers.headlessAdminUser.assignUserToRole(
-			role.externalReferenceCode,
-			user.id
-		);
 
 		// Create page
 

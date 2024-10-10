@@ -12,9 +12,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../utils/getRandomInt';
+import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {performUserSwitch} from '../../utils/performLogin';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -609,38 +609,6 @@ test(
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 
-		// Add new user with permissions update page permissions and without edit segments entry permissions
-
-		const company =
-			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-				'liferay.com'
-			);
-
-		const role = await apiHelpers.headlessAdminUser.postRole({
-			name: 'role' + getRandomInt(),
-			rolePermissions: [
-				{
-					actionIds: ['UPDATE'],
-					primaryKey: company.companyId,
-					resourceName: 'com.liferay.portal.kernel.model.Layout',
-					scope: 1,
-				},
-			],
-		});
-
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
-		await apiHelpers.headlessAdminUser.assignUserToRole(
-			role.externalReferenceCode,
-			user.id
-		);
-
 		// Create a new page
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -660,11 +628,26 @@ test(
 			page.getByRole('button', {name: 'New Segment'})
 		).toBeVisible();
 
-		// Logout and Login with the new user
+		// Switch to a new user with update page permissions and without edit segments entry permissions
 
-		await performLogout(page);
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
 
-		await performLogin(page, user.alternateName);
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
 
 		// Go to edit and assert New Segment button is not visible
 

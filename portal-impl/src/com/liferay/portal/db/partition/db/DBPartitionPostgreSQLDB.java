@@ -135,7 +135,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 				db.getPrimaryKeyColumnNames(connection, fromTableName)) {
 
 			sb.append(columnName);
-			sb.append(", ");
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
 		sb.setIndex(sb.index() - 1);

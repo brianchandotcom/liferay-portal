@@ -12,6 +12,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
 import com.liferay.portal.search.configuration.SemanticSearchConfigurationProvider;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingRetriever;
 import com.liferay.portal.search.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext;
 
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -138,17 +141,9 @@ public class SemanticSearchConfigurationFormRenderer
 	}
 
 	private List<String> _getAvailableEmbeddingVectorDimensions() {
-		return new ArrayList<String>() {
-			{
-				add("256");
-				add("384");
-				add("512");
-				add("768");
-				add("1024");
-				add("1536");
-				add("3072");
-			}
-		};
+		return Arrays.asList(
+			ArrayUtil.toStringArray(
+				_searchEngineInformation.getEmbeddingVectorDimensions()));
 	}
 
 	private Map<String, String> _getAvailableLanguageDisplayNames(
@@ -273,6 +268,9 @@ public class SemanticSearchConfigurationFormRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 	@Reference
 	private SemanticSearchConfigurationProvider

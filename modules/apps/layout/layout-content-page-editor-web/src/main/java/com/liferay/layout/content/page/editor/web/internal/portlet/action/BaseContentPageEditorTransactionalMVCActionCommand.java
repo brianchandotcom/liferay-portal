@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
+import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -102,7 +103,11 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 		else if (exception instanceof FragmentCompositionNameException) {
 			errorMessage = "please-enter-a-valid-fragment-composition-name";
 		}
-		else if (exception instanceof PortletIdException) {
+		else if ((exception instanceof NoninstanceablePortletException) ||
+				 (exception.getCause() instanceof
+					 NoninstanceablePortletException) ||
+				 (exception instanceof PortletIdException)) {
+
 			errorMessage =
 				"noninstanceable-widgets-can-be-embedded-only-once-on-the-" +
 					"same-page";

@@ -176,26 +176,17 @@ public abstract class BaseDuplicateItemMVCActionCommand
 				getNoSuchEntryLinkExceptionMessage());
 		}
 		else if (exception instanceof NoninstanceablePortletException) {
-			NoninstanceablePortletException noninstanceablePortletException =
-				(NoninstanceablePortletException)exception;
+			errorMessage = _getNoninstanceablePortletErrorMessage(
+				actionRequest, (NoninstanceablePortletException)exception,
+				themeDisplay);
+		}
+		else if (exception.getCause() instanceof
+					NoninstanceablePortletException) {
 
-			Portlet portlet = portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(),
-				noninstanceablePortletException.getPortletId());
-
-			HttpServletRequest httpServletRequest =
-				portal.getHttpServletRequest(actionRequest);
-
-			HttpSession httpSession = httpServletRequest.getSession();
-
-			errorMessage = language.format(
-				themeDisplay.getRequest(),
-				getNoninstanceablePortletExceptionMessage(),
-				new String[] {
-					portal.getPortletTitle(
-						portlet, httpSession.getServletContext(),
-						themeDisplay.getLocale())
-				});
+			errorMessage = _getNoninstanceablePortletErrorMessage(
+				actionRequest,
+				(NoninstanceablePortletException)exception.getCause(),
+				themeDisplay);
 		}
 		else {
 			errorMessage = language.get(
@@ -289,6 +280,30 @@ public abstract class BaseDuplicateItemMVCActionCommand
 			portletPreferencesIds.getPlid(),
 			PortletIdCodec.encode(portletId, newInstanceId), null,
 			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+	}
+
+	private String _getNoninstanceablePortletErrorMessage(
+		ActionRequest actionRequest,
+		NoninstanceablePortletException noninstanceablePortletException,
+		ThemeDisplay themeDisplay) {
+
+		Portlet portlet = portletLocalService.getPortletById(
+			themeDisplay.getCompanyId(),
+			noninstanceablePortletException.getPortletId());
+
+		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
+			actionRequest);
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		return language.format(
+			themeDisplay.getRequest(),
+			getNoninstanceablePortletExceptionMessage(),
+			new String[] {
+				portal.getPortletTitle(
+					portlet, httpSession.getServletContext(),
+					themeDisplay.getLocale())
+			});
 	}
 
 }

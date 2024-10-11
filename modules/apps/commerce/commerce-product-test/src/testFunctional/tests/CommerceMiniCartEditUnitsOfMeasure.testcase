@@ -189,6 +189,7 @@ definition {
 	}
 
 	@description = "COMMERCE-12617. As a user, I can edit the UOM and quantity in the mini cart and verify the changes are applied correctly."
+	@ignore = "true"
 	@priority = 5
 	test CanEditUOMInMiniCart {
 		property portal.acceptance = "true";

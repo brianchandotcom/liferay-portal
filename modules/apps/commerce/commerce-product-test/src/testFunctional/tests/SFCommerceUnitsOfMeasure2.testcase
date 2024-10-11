@@ -624,7 +624,7 @@ definition {
 		}
 
 		task ("And assert that the quantity selector pop-up does not show any error message") {
-			for (var parameterList : list "min:1,max:10000,multiple:0.6") {
+			for (var parameterList : list "min:1,max:10000,multiple:3") {
 				var parameter = StringUtil.extractFirst(${parameterList}, ":");
 				var quantity = StringUtil.extractLast(${parameterList}, ":");
 
@@ -670,10 +670,23 @@ definition {
 			Click(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 		}
 
-		task ("Then an error message “The specified quantity is not a multiple of 1.") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "The specified quantity is not a multiple of 1");
+		task ("Then an error message “Quantity must be a multiple of 3") {
+			for (var parameterList : list "min:1,max:10000,multiple:3") {
+				var parameter = StringUtil.extractFirst(${parameterList}, ":");
+				var quantity = StringUtil.extractLast(${parameterList}, ":");
+
+				if (${quantity} == 3) {
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "true",
+						quantity = ${quantity},
+						quantityConfiguration = ${parameter});
+				}
+				else {
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						quantity = ${quantity},
+						quantityConfiguration = ${parameter});
+				}
+			}
 		}
 
 		task ("When the buyer adds the SKU/UOM to cart with quantity 3") {
@@ -683,7 +696,7 @@ definition {
 		}
 
 		task ("Then assert that the quantity selector pop-up does not show any error message") {
-			for (var parameterList : list "min:1,max:10000,multiple:0.6") {
+			for (var parameterList : list "min:1,max:10000,multiple:3") {
 				var parameter = StringUtil.extractFirst(${parameterList}, ":");
 				var quantity = StringUtil.extractLast(${parameterList}, ":");
 

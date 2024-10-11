@@ -8,7 +8,6 @@ package com.liferay.portal.servlet.filters.secure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -364,9 +363,8 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		_usePermissionChecker = usePermissionChecker;
 	}
 
-
 	private boolean _isDigestModified(HttpSession httpSession)
-		throws PortalException {
+		throws Exception {
 
 		User user = (User)httpSession.getAttribute(WebKeys.USER);
 

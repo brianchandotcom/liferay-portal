@@ -99,7 +99,7 @@ public class CTEntryDTOConverter
 				});
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	private <T extends BaseModel<T>> CTEntry _toCTEntry(
@@ -129,7 +129,7 @@ public class CTEntryDTOConverter
 							return document.get("ctCollectionName");
 						}
 
-						return null;
+						return StringPool.BLANK;
 					});
 				setCtCollectionStatus(
 					() -> _toStatus(
@@ -149,7 +149,7 @@ public class CTEntryDTOConverter
 							return document.get("ctCollectionStatusUserName");
 						}
 
-						return null;
+						return StringPool.BLANK;
 					});
 				setDateCreated(ctEntry::getCreateDate);
 				setDateModified(ctEntry::getModifiedDate);
@@ -177,7 +177,7 @@ public class CTEntryDTOConverter
 								dtoConverterContext.getLocale());
 						}
 
-						return null;
+						return StringPool.BLANK;
 					});
 				setStatus(
 					() -> _toStatus(

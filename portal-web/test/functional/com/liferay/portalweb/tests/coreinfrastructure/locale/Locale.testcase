@@ -41,7 +41,11 @@ definition {
 			category = "Contenido",
 			portlet = "Formularios");
 
-		FormsAdminNavigator.gotoAddForm();
+		WaitForPageLoad();
+
+		Click.waitForMenuToggleJSClick(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
 
 		Form.editName();
 

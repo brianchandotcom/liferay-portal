@@ -303,6 +303,11 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	protected String getIndexColumnName(String indexColumnName) {
+		return StringUtil.replaceFirst(indexColumnName, "left\"(", "left(");
+	}
+
+	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

@@ -386,7 +386,9 @@ definition {
 		}
 
 		task ("Add the localized contents") {
-			PortletEntry.changeLocale(locale = "de-DE");
+			PortletEntry.changeLocale(
+				locale = "de-DE",
+				translated = "true");
 
 			WebContent.addCP(webContentTitle = "Netz Inhalt1 Titel");
 
@@ -404,7 +406,9 @@ definition {
 		}
 
 		task ("Add the localized contents") {
-			PortletEntry.changeLocale(locale = "de-DE");
+			PortletEntry.changeLocale(
+				locale = "de-DE",
+				translated = "true");
 
 			WebContent.addCP(webContentTitle = "Netz Inhalt2 Titel");
 
@@ -422,7 +426,9 @@ definition {
 		}
 
 		task ("Add the localized contents") {
-			PortletEntry.changeLocale(locale = "de-DE");
+			PortletEntry.changeLocale(
+				locale = "de-DE",
+				translated = "true");
 
 			WebContent.addCP(webContentTitle = "Netz Inhalt3 Titel");
 
@@ -1596,7 +1602,9 @@ definition {
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentenglish");
 
-		PortletEntry.changeLocale(locale = "de-DE");
+		PortletEntry.changeLocale(
+			locale = "de-DE",
+			translated = "true");
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent German Content",

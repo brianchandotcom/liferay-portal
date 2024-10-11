@@ -44,6 +44,26 @@ public class TreeTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testGetHeight() throws Exception {
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			false,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
+
+		Assert.assertEquals(2, tree.getHeight(tree.getRootNode()));
+	}
+
+	@Test
 	public void testIterator() throws Exception {
 
 		// Breadth first iterator

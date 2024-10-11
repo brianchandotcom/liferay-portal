@@ -91,10 +91,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_runUpgrade();
 
 		_assertSXPBlueprint(
-			sxpBlueprint.getSXPBlueprintId(),
 			_getExpectedInstancesJSON(
-				companyGroup.getExternalReferenceCode(), assetCategory1,
-				assetCategory2));
+				assetCategory1, assetCategory2,
+				companyGroup.getExternalReferenceCode()),
+			sxpBlueprint.getSXPBlueprintId());
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private void _assertSXPBlueprint(
-		long sxpBlueprintId, String expectedInstancesJSON) {
+		String expectedInstancesJSON, long sxpBlueprintId) {
 
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
 			sxpBlueprintId);
@@ -237,8 +237,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private String _getExpectedInstancesJSON(
-		String companyGroupExternalReferenceCode, AssetCategory assetCategory1,
-		AssetCategory assetCategory2) {
+		AssetCategory assetCategory1, AssetCategory assetCategory2,
+		String companyGroupExternalReferenceCode) {
 
 		String elementInstancesJSON = StringUtil.read(
 			_clazz,

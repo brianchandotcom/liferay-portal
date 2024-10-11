@@ -213,7 +213,7 @@ public class PortletDocumentFragmentEntryProcessor
 
 			for (String portletId :
 					_portletRegistry.getFragmentEntryLinkPortletIds(
-						document, fragmentEntryLink)) {
+						null, fragmentEntryLink)) {
 
 				portletNames.add(PortletIdCodec.decodePortletName(portletId));
 			}

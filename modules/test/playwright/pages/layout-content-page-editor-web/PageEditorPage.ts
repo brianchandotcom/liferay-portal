@@ -675,6 +675,26 @@ export class PageEditorPage {
 		await selectElement(tabElement);
 	}
 
+	async goToWidgetConfiguration(
+		layout: Layout,
+		site: Site,
+		widgetId: string
+	) {
+		await this.goto(layout, site.friendlyUrlPath);
+
+		const topper = this.getTopper(widgetId);
+
+		await topper.hover();
+
+		await expect(topper.locator('.portlet-options')).toBeVisible();
+
+		await topper.locator('.portlet-options').click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Configuration'})
+			.click();
+	}
+
 	async hideFragment(fragmentId: string, isDesktop = true) {
 		await this.clickFragmentOption(fragmentId, 'Hide Fragment', isDesktop);
 
@@ -803,26 +823,6 @@ export class PageEditorPage {
 		await this.goToConfigurationTab('Styles');
 
 		await this.page.getByLabel(spacingType, {exact: true}).click();
-	}
-
-	async goToWidgetConfiguration(
-		layout: Layout,
-		site: Site,
-		widgetId: string
-	) {
-		await this.goto(layout, site.friendlyUrlPath);
-
-		const topper = this.getTopper(widgetId);
-
-		await topper.hover();
-
-		await expect(topper.locator('.portlet-options')).toBeVisible();
-
-		await topper.locator('.portlet-options').click();
-
-		await this.page
-			.getByRole('menuitem', {exact: true, name: 'Configuration'})
-			.click();
 	}
 
 	async pasteFragment(fragmentId: string) {

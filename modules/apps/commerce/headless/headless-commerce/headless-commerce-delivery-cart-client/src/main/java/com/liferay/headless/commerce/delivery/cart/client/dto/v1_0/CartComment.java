@@ -10,6 +10,7 @@ import com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0.CartCommen
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -45,6 +46,48 @@ public class CartComment implements Cloneable, Serializable {
 	}
 
 	protected String author;
+
+	public Long getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
+	}
+
+	public void setAuthorId(
+		UnsafeSupplier<Long, Exception> authorIdUnsafeSupplier) {
+
+		try {
+			authorId = authorIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long authorId;
+
+	public String getAuthorPortraitURL() {
+		return authorPortraitURL;
+	}
+
+	public void setAuthorPortraitURL(String authorPortraitURL) {
+		this.authorPortraitURL = authorPortraitURL;
+	}
+
+	public void setAuthorPortraitURL(
+		UnsafeSupplier<String, Exception> authorPortraitURLUnsafeSupplier) {
+
+		try {
+			authorPortraitURL = authorPortraitURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String authorPortraitURL;
 
 	public String getContent() {
 		return content;
@@ -106,6 +149,27 @@ public class CartComment implements Cloneable, Serializable {
 	}
 
 	protected Long id;
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public void setModifiedDate(
+		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+
+		try {
+			modifiedDate = modifiedDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date modifiedDate;
 
 	public Long getOrderId() {
 		return orderId;

@@ -153,6 +153,12 @@ export class FragmentsPage {
 		});
 	}
 
+	async clickFragmentSetsAction(action: string) {
+		await this.page.getByLabel('Show Actions').click();
+
+		await this.page.getByRole('menuitem', {name: action}).click();
+	}
+
 	async createFragmentSet(name: string) {
 		await this.page.getByTitle('Add Fragment Set').click();
 

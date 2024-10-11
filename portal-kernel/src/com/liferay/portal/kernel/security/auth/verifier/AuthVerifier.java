@@ -17,10 +17,6 @@ public interface AuthVerifier {
 
 	public String getAuthType();
 
-	public default boolean isForceable() {
-		return false;
-	}
-
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException;

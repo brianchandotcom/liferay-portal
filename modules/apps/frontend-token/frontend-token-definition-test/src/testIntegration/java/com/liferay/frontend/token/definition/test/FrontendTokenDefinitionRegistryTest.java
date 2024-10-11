@@ -141,7 +141,6 @@ public class FrontendTokenDefinitionRegistryTest {
 				frontendTokenDefinition -> Objects.equals(
 					frontendTokenDefinition.getThemeId(),
 					_CLIENT_EXTENSION_ENTRY_THEME_ID)));
-
 		Assert.assertTrue(
 			ListUtil.exists(
 				frontendTokenDefinitions,

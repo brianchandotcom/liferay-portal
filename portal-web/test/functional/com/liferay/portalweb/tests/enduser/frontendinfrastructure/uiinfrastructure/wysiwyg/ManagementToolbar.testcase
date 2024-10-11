@@ -84,31 +84,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144536. Assert a tooltip message will be displayed when hovered over the order toggle button"
-	@priority = 3
-	test OrderButtonAsAToggleCanDisplayTooltip {
-		task ("When the user opens any section with the management toolbar") {
-
-			// Using message boards as workaround until LPS-150056
-
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-			MessageboardsCategory.addCP(categoryName = "Test Category");
-		}
-
-		task ("When mouse hover over order list icon") {
-			MouseOver(
-				key_text = "order-list",
-				locator1 = "ManagementBar#ANY_ICON");
-		}
-
-		task ("Then a tooltip message will be displayed") {
-			AssertTextEquals(
-				locator1 = "Message#TOOLTIP",
-				value1 = "Reverse Sort Direction");
-		}
-	}
-
 	@description = "LPS-144536. Assert the order button can display the correct icons"
 	@priority = 4
 	test OrderButtonCanDisplayCorrectOrderIcons {
@@ -313,46 +288,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
 				value1 = "Clear");
-		}
-	}
-
-	@description = "LPS-144536. Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode"
-	@priority = 4
-	test ResponsiveModeFilterAndOrderButtonsShouldDisplayAsIcons {
-		task ("Given a window size set to phone size") {
-			SetWindowSize(value1 = "360,720");
-		}
-
-		task ("Then the 'filter' and 'order' buttons will be displayed as icon buttons") {
-			AssertElementPresent(
-				key_icon = "filter",
-				key_title = "Show Filter Options",
-				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
-
-			AssertElementPresent(
-				key_icon = "order-list-down",
-				key_title = "Show Order Options",
-				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
-		}
-
-		task ("And a tooltip message will be displayed") {
-			MouseOver.javaScriptMouseOver(
-				key_icon = "filter",
-				key_title = "Show Filter Options",
-				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
-
-			AssertTextEquals(
-				locator1 = "Message#TOOLTIP",
-				value1 = "Show Filter Options");
-
-			MouseOver.javaScriptMouseOver(
-				key_icon = "order-list-down",
-				key_title = "Show Order Options",
-				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
-
-			AssertTextEquals(
-				locator1 = "Message#TOOLTIP",
-				value1 = "Show Order Options");
 		}
 	}
 

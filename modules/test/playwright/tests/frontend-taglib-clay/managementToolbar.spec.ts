@@ -110,6 +110,40 @@ test.describe('Management Toolbar Default State', () => {
 		});
 	});
 
+	test('Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode @LPS-144536', async ({
+		page,
+	}) => {
+		await test.step('Set the window size to phone size', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+		});
+
+		await test.step('Hover over the "Filter" button', async () => {
+			await page
+				.locator('#managementToolbarDefaultState')
+				.getByRole('button', {name: 'Filter'})
+				.hover();
+		});
+
+		await test.step('Check the tooltip text displays "Show Filter Options"', async () => {
+			await expect(
+				page.locator('.tooltip-inner').getByText('Show Filter Options')
+			).toBeVisible();
+		});
+
+		await test.step('Hover over the "Order" button', async () => {
+			await page
+				.locator('#managementToolbarDefaultState')
+				.getByRole('button', {name: 'Order'})
+				.hover();
+		});
+
+		await test.step('Check the tooltip text displays "Show Order Options"', async () => {
+			await expect(
+				page.locator('.tooltip-inner').getByText('Show Order Options')
+			).toBeVisible();
+		});
+	});
+
 	test('Assert the view button displays a double caret icon @LPS-144535', async ({
 		page,
 	}) => {

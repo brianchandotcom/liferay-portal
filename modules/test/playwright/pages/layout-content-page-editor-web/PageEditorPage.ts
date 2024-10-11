@@ -194,6 +194,31 @@ export class PageEditorPage {
 		await this.page.getByRole('option', {name: mode}).click();
 	}
 
+	async changeEditableConfiguration({
+		editableId,
+		fieldLabel,
+		fragmentId,
+		tab,
+		value,
+	}: {
+		editableId: string;
+		fieldLabel: string;
+		fragmentId: string;
+		tab: EditableConfigurationTab;
+		value?: string | boolean;
+	}) {
+
+		// Select editable and go to the configuration tab
+
+		await this.selectEditable(fragmentId, editableId);
+
+		await this.changeConfiguration({
+			fieldLabel,
+			tab,
+			value,
+		});
+	}
+
 	async changeFragmentConfiguration({
 		fieldLabel,
 		fragmentId,
@@ -205,18 +230,40 @@ export class PageEditorPage {
 		fieldLabel: string;
 		fragmentId: string;
 		isDesktop?: boolean;
-		tab: ConfigurationTab;
+		tab: FragmentConfigurationTab;
 		value?: string | boolean;
 		valueFromStylebook?: boolean;
 	}) {
 		await this.selectFragment(fragmentId, isDesktop);
+
+		await this.changeConfiguration({
+			fieldLabel,
+			tab,
+			value,
+			valueFromStylebook,
+		});
+	}
+
+	async changeConfiguration({
+		fieldLabel,
+		tab,
+		value,
+		valueFromStylebook,
+	}: {
+		fieldLabel: string;
+		tab: ConfigurationTab;
+		value: string | boolean;
+		valueFromStylebook?: boolean;
+	}) {
 		await this.goToConfigurationTab(tab);
 
 		// Change value in different way depending on field type
 
-		const field = this.page.getByLabel(fieldLabel, {
-			exact: true,
-		});
+		const field = this.page
+			.getByRole('tabpanel', {name: tab})
+			.getByLabel(fieldLabel, {
+				exact: true,
+			});
 
 		if (valueFromStylebook) {
 			await field

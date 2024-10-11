@@ -218,7 +218,7 @@ public class FrontendTokenDefinitionRegistryTest {
 		RandomTestUtil.randomString();
 
 	private static final String _THEME_ID_TEST_LAYOUT_SET =
-		RandomTestUtil.randomString();
+		"testfrontendtokendefinition";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

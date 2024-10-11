@@ -516,7 +516,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	private static final Map<Long, PortletPreferences> _portletPreferences =
 		new ConcurrentHashMap<>();
 	private static final MethodKey _removePortletPreferenceMethodKey =
-		new MethodKey(PrefsPropsImpl.class, "_removePortletPreference");
+		new MethodKey(
+			PrefsPropsImpl.class, "_removePortletPreference", long.class);
 
 	private final PortletPreferences _emptyPortletPreferences =
 		new PortletPreferencesImpl();

@@ -52,15 +52,15 @@ const AccountSubscriptionCard = ({
 		[accountSubscriptionUsageData]
 	);
 
+	let quantity = 0;
+
+    const now = new Date();
+
 	const [
 		{activePage, setActivePage},
 		itemsPerPage,
 		{data},
-	] = useOrderItems(accountSubscription.externalReferenceCode);
-
-	let quantity = 0;
-
-    const now = new Date();
+	] = useOrderItems(accountSubscription.externalReferenceCode, 1000);
 
     data?.orderItems?.items?.map((item) => {
         if (now > new Date(item.options?.startDate) && now < new Date(item.options?.endDate)) {

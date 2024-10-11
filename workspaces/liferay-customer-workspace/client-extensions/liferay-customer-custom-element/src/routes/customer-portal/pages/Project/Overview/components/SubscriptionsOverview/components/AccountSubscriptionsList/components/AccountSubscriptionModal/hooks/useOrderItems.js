@@ -12,7 +12,8 @@ const PAGE_SIZE = 5;
 const FIRST_PAGE = 1;
 
 export default function useOrderItems(
-	accountSubscriptionExternalReferenceCode, pageSize
+	accountSubscriptionExternalReferenceCode,
+	pageSize
 ) {
 	const [activePage, setActivePage] = useState(FIRST_PAGE);
 

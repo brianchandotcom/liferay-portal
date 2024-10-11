@@ -5,9 +5,13 @@
 
 package com.liferay.portal.search.web.internal.util.comparator;
 
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 
+import java.text.Collator;
+
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * @author Bryan Engler
@@ -34,9 +38,11 @@ public class BucketDisplayContextComparatorFactoryUtil {
 	}
 
 	private static int _compareBucketText(
-		String bucketText1, String bucketText2) {
+		String bucketText1, String bucketText2, Locale locale) {
 
-		return bucketText1.compareTo(bucketText2);
+		Collator collator = CollatorUtil.getInstance(locale);
+
+		return collator.compare(bucketText1, bucketText2);
 	}
 
 	private static final Comparator<BucketDisplayContext>
@@ -49,7 +55,8 @@ public class BucketDisplayContextComparatorFactoryUtil {
 
 				int result = _compareBucketText(
 					bucketDisplayContext1.getBucketText(),
-					bucketDisplayContext2.getBucketText());
+					bucketDisplayContext2.getBucketText(),
+					bucketDisplayContext1.getLocale());
 
 				if (result == 0) {
 					return bucketDisplayContext2.getFrequency() -
@@ -71,7 +78,8 @@ public class BucketDisplayContextComparatorFactoryUtil {
 
 				int result = _compareBucketText(
 					bucketDisplayContext2.getBucketText(),
-					bucketDisplayContext1.getBucketText());
+					bucketDisplayContext1.getBucketText(),
+					bucketDisplayContext1.getLocale());
 
 				if (result == 0) {
 					return bucketDisplayContext2.getFrequency() -
@@ -97,7 +105,8 @@ public class BucketDisplayContextComparatorFactoryUtil {
 				if (result == 0) {
 					return _compareBucketText(
 						bucketDisplayContext1.getBucketText(),
-						bucketDisplayContext2.getBucketText());
+						bucketDisplayContext2.getBucketText(),
+						bucketDisplayContext1.getLocale());
 				}
 
 				return result;
@@ -120,7 +129,8 @@ public class BucketDisplayContextComparatorFactoryUtil {
 				if (result == 0) {
 					return _compareBucketText(
 						bucketDisplayContext1.getBucketText(),
-						bucketDisplayContext2.getBucketText());
+						bucketDisplayContext2.getBucketText(),
+						bucketDisplayContext1.getLocale());
 				}
 
 				return result;

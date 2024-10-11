@@ -12,6 +12,7 @@ import InfoBoxModalAddressInput from './info_box/modal/InfoBoxModalAddressInput'
 import InfoBoxModalDateInput from './info_box/modal/InfoBoxModalDateInput';
 import InfoBoxModalPaymentMethodInput from './info_box/modal/InfoBoxModalPaymentMethodInput';
 import InfoBoxModalShippingMethodInput from './info_box/modal/InfoBoxModalShippingMethodInput';
+import InfoBoxModalTermInput from './info_box/modal/InfoBoxModalTermInput';
 import InfoBoxModalTextInput from './info_box/modal/InfoBoxModalTextInput';
 
 const getInputRendered = (field, fieldValueType) => {
@@ -21,6 +22,10 @@ const getInputRendered = (field, fieldValueType) => {
 
 	if (field === 'billingAddress' || field === 'shippingAddress') {
 		return InfoBoxModalAddressInput;
+	}
+
+	if (field === 'deliveryTermId' || field === 'paymentTermId') {
+		return InfoBoxModalTermInput;
 	}
 
 	if (field === 'paymentMethod') {
@@ -41,6 +46,7 @@ const InfoBoxModal = ({
 	handleSubmit,
 	id,
 	inputValue,
+	isOpen,
 	label,
 	observer,
 	onOpenChange,
@@ -74,6 +80,7 @@ const InfoBoxModal = ({
 									additionalProps={additionalProps}
 									field={field}
 									inputValue={inputValue}
+									isOpen={isOpen}
 									label={label}
 									orderId={orderId}
 									setHandleSubmit={setHandleSubmit}
@@ -87,25 +94,31 @@ const InfoBoxModal = ({
 							</ClayForm.Group>
 						</ClayModal.Body>
 
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										displayType="secondary"
-										onClick={() => onOpenChange(false)}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
+						{(field === 'deliveryTermId' ||
+							field === 'paymentTermId') &&
+						!isOpen ? (
+							<></>
+						) : (
+							<ClayModal.Footer
+								last={
+									<ClayButton.Group spaced>
+										<ClayButton
+											displayType="secondary"
+											onClick={() => onOpenChange(false)}
+										>
+											{Liferay.Language.get('cancel')}
+										</ClayButton>
 
-									<ClayButton
-										disabled={!isValid}
-										type="submit"
-									>
-										{Liferay.Language.get('save')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-						/>
+										<ClayButton
+											disabled={!isValid}
+											type="submit"
+										>
+											{Liferay.Language.get('save')}
+										</ClayButton>
+									</ClayButton.Group>
+								}
+							/>
+						)}
 					</ClayForm>
 				</ClayModal>
 			)}

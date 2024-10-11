@@ -44,6 +44,10 @@
 								"value": "channelName"
 							},
 							{
+								"label": "delivery-terms",
+								"value": "deliveryTermId"
+							},
+							{
 								"label": "notes",
 								"value": "notes"
 							},
@@ -62,6 +66,10 @@
 							{
 								"label": "payment-method",
 								"value": "paymentMethod"
+							},
+							{
+								"label": "payment-terms",
+								"value": "paymentTermId"
 							},
 							{
 								"label": "purchase-order-document",

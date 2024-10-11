@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -78,7 +79,8 @@ public class CompanyIndexHelper {
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
 			indexName, _jsonFactory, openSearchIndicesClient,
-			_openSearchConfigurationWrapper.overrideTypeMappings());
+			_openSearchConfigurationWrapper.overrideTypeMappings(),
+			_searchEngineInformation);
 
 		mappingsHelperImpl.setDefaultOrOverrideMappings(
 			builder, _openSearchConnectionManager.getJsonpMapper(null));
@@ -155,7 +157,8 @@ public class CompanyIndexHelper {
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
 			indexName, _jsonFactory, openSearchIndicesClient,
-			_openSearchConfigurationWrapper.overrideTypeMappings());
+			_openSearchConfigurationWrapper.overrideTypeMappings(),
+			_searchEngineInformation);
 
 		mappingsHelperImpl.putDefaultOrOverrideMappings();
 
@@ -429,8 +432,8 @@ public class CompanyIndexHelper {
 					companyId,
 					new MappingsHelperImpl(
 						indexName, _jsonFactory, openSearchIndicesClient,
-						_openSearchConfigurationWrapper.
-							overrideTypeMappings()));
+						_openSearchConfigurationWrapper.overrideTypeMappings(),
+						_searchEngineInformation));
 			},
 			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}
@@ -561,5 +564,8 @@ public class CompanyIndexHelper {
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 }

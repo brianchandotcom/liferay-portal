@@ -10,6 +10,9 @@ import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -42,10 +45,20 @@ public class NoteDTOConverter
 		return new CartComment() {
 			{
 				setAuthor(commerceOrderNote::getUserName);
+				setAuthorId(commerceOrderNote::getUserId);
+				setAuthorPortraitURL(
+					() -> {
+						User user = commerceOrderNote.getUser();
+
+						return UserConstants.getPortraitURL(
+							_portal.getPathImage(), user.isMale(),
+							user.getPortraitId(), user.getUserUuid());
+					});
 				setContent(commerceOrderNote::getContent);
 				setExternalReferenceCode(
 					commerceOrderNote::getExternalReferenceCode);
 				setId(commerceOrderNote::getCommerceOrderNoteId);
+				setModifiedDate(commerceOrderNote::getModifiedDate);
 				setOrderId(
 					() -> {
 						CommerceOrder commerceOrder =
@@ -64,5 +77,8 @@ public class NoteDTOConverter
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private Portal _portal;
 
 }

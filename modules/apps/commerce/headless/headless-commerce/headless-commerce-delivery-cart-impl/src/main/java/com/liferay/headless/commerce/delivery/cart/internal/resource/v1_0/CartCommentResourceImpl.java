@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0;
 
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.exception.NoSuchOrderNoteException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -15,6 +16,9 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -119,6 +123,27 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 	public Page<CartComment> getCartCommentsPage(
 			@NestedFieldId("id") Long cartId, Pagination pagination)
 		throws Exception {
+
+		PortletResourcePermission portletResourcePermission =
+			_modelResourcePermission.getPortletResourcePermission();
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			cartId);
+
+		if (portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES)) {
+
+			return Page.of(
+				_toOrderNotes(
+					_commerceOrderNoteService.getCommerceOrderNotes(
+						cartId, pagination.getStartPosition(),
+						pagination.getEndPosition())),
+				pagination,
+				_commerceOrderNoteService.getCommerceOrderNotesCount(
+					cartId, false));
+		}
 
 		return Page.of(
 			_toOrderNotes(
@@ -234,6 +259,11 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder> _modelResourcePermission;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.NoteDTOConverter)"

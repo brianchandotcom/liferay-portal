@@ -8,7 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {OpenIdInstanceSettingsPage} from '../../pages/portal-settings-authentication-openid-connect-web/OpenIdInstanceSettingsPage';
 import getRandomString from '../../utils/getRandomString';
-import performLogin from '../../utils/performLogin';
+import performLogin, {performLogout} from '../../utils/performLogin';
 import {utilityPagesPage} from '../login-web/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
 import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
@@ -71,8 +71,7 @@ test.describe('OpenID connect link', () => {
 	}) => {
 		await performLogin(page, 'test');
 		await setupOpenIdConnection(openIDInstanceSettingsPage);
-		await page.getByLabel('Test Test User Profile').click();
-		await page.getByRole('menuitem', {name: 'Sign Out'}).click();
+		await performLogout(page);
 		await page
 			.getByRole('button', {name: 'Search'})
 			.waitFor({state: 'visible'});
@@ -95,8 +94,7 @@ test.describe('OpenID connect link', () => {
 		await page.getByText(utilityPageTitle).waitFor({state: 'visible'});
 		await utilityPagesPage.markAsDefault(utilityPageTitle);
 		await setupOpenIdConnection(openIDInstanceSettingsPage);
-		await page.getByLabel('Test Test User Profile').click();
-		await page.getByRole('menuitem', {name: 'Sign Out'}).click();
+		await performLogout(page);
 		await page.goto(openIdConfig.loginPortletLink);
 		await expect(page.getByText(openIdConfig.openIdLink)).toBeHidden();
 	});

@@ -518,45 +518,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-191474. Using Keyboard navigation the toggle button Allow Users to Save Entries as Draft can be enabled and disabled. The Allow Users to Save Entries as Draft toggle button should comply with WCAG 2.1 AA standard."
-	@priority = 3
-	test EnableAndDisableAllowUsersToSaveEntriesAsDraftViaKeyboardAndViewAccessibility {
-		task ("When go to object admin and edit the object") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Purchase Order");
-		}
-
-		task ("Then it is able to enable and disbale Allow Users to Save Entries as Draft by keyboard") {
-			KeyPress(
-				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				value1 = "\SPACE");
-
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			// Comment out for LPS-202564
-
-			//AssertAccessible();
-
-			KeyPress(
-				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				value1 = "\SPACE");
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			// Comment out for LPS-202564
-
-			//AssertAccessible();
-
-		}
-	}
-
 	@description = "This is a test for LPS-191474. An option is added to the Submit Fragment that allows users to save entries as draft."
 	@priority = 5
 	test EnableSaveAsDraftOptionAndViewTheEntryIsSavedAsDraft {

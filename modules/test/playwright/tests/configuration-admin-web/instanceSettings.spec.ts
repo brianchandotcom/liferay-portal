@@ -35,7 +35,7 @@ test('Asserts that a user can export a configuration', async ({
 	try {
 		await emailDomainValidationSwitcher.check();
 
-		await instanceSettingsPage.saveAndWaitForAlert({});
+		await instanceSettingsPage.saveAndWaitForAlert();
 
 		await expect(emailDomainValidationSwitcher).toBeChecked();
 
@@ -60,7 +60,7 @@ test('Asserts that a user can export a configuration', async ({
 	finally {
 		await emailDomainValidationSwitcher.uncheck();
 
-		await instanceSettingsPage.saveAndWaitForAlert({});
+		await instanceSettingsPage.saveAndWaitForAlert();
 	}
 });
 
@@ -106,14 +106,14 @@ test('LPD-35562 Enter reserved screen name', async ({
 	});
 });
 
-test('LPD-38043 Assert that a site configuration overrides its instance version', async ({
+test('LPD-38043 Assert that a configuration at the site scope can override a falsy configuration at the instance scope', async ({
 	accessibilityMenuPage,
 	instanceSettingsPage,
 	page,
 	site,
 	siteSettingsPage,
 }) => {
-	await test.step('Make sure the instance accessibility configuration is disabled', async () => {
+	await test.step('Check that the instance scoped accessibility menu configuration is disabled', async () => {
 		await instanceSettingsPage.goToInstanceSetting(
 			'Accessibility',
 			'Accessibility Menu'
@@ -124,11 +124,11 @@ test('LPD-38043 Assert that a site configuration overrides its instance version'
 		) {
 			await accessibilityMenuPage.enableAccessibilityMenuCheckbox.uncheck();
 
-			await instanceSettingsPage.saveAndWaitForAlert({});
+			await instanceSettingsPage.saveAndWaitForAlert();
 		}
 	});
 
-	await test.step('Make sure the accessibility menu is not accessible in the site scope', async () => {
+	await test.step('Check that the accessibility menu is not accessible in the site scope', async () => {
 		await siteSettingsPage.goToSiteSetting(
 			'Accessibility',
 			'Accessibility Menu',
@@ -143,24 +143,16 @@ test('LPD-38043 Assert that a site configuration overrides its instance version'
 	});
 
 	await test.step('Enable the site accessibility configuration', async () => {
-		await expect(async () => {
-			await accessibilityMenuPage.enableAccessibilityMenuCheckbox.check();
-
-			await expect(
-				accessibilityMenuPage.enableAccessibilityMenuCheckbox
-			).toBeChecked();
-		}).toPass();
-
-		await siteSettingsPage.saveConfiguration();
+		await accessibilityMenuPage.enableAccessibilityMenu();
 	});
 
-	await test.step('Make sure the accessibility menu is accessible in the site scope', async () => {
+	await test.step('Check that the accessibility menu is accessible in the site scope', async () => {
 		await expect(
 			accessibilityMenuPage.openAccessibilityMenuButton
 		).toBeAttached();
 	});
 
-	await test.step('Make sure the accessibility menu is not accessible in the instance scope', async () => {
+	await test.step('Check that the accessibility menu is not accessible in the instance scope', async () => {
 		await instanceSettingsPage.goToInstanceSetting(
 			'Accessibility',
 			'Accessibility Menu'

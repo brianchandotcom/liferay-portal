@@ -30,18 +30,13 @@ export class SiteSettingsPage {
 		);
 	}
 
-	async saveConfiguration() {
-		await this.saveButton.click();
-
-		await waitForAlert(this.page);
-	}
-
 	async goToSiteSetting(
 		categoryKey: string,
 		configurationName?: string,
 		siteUrl?: Site['friendlyUrlPath']
 	) {
 		await this.goto(siteUrl);
+
 		await this.page
 			.getByRole('link', {
 				exact: true,
@@ -57,5 +52,11 @@ export class SiteSettingsPage {
 				})
 				.click();
 		}
+	}
+
+	async saveConfiguration() {
+		await this.saveButton.click();
+
+		await waitForAlert(this.page);
 	}
 }

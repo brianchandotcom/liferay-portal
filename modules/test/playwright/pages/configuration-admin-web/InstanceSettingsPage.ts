@@ -36,7 +36,7 @@ export class InstanceSettingsPage {
 	async goToInstanceSetting(
 		categoryKey: string,
 		configurationName: string,
-		nthChild?: number
+		nthMenuItem?: number
 	) {
 		await this.goto();
 
@@ -52,11 +52,11 @@ export class InstanceSettingsPage {
 			name: configurationName,
 		});
 
-		if (nthChild === undefined) {
-			await configurationMenuItem.first().click();
+		if (nthMenuItem) {
+			await configurationMenuItem.nth(nthMenuItem).click();
 		}
 		else {
-			await configurationMenuItem.nth(nthChild).click();
+			await configurationMenuItem.first().click();
 		}
 	}
 
@@ -73,7 +73,7 @@ export class InstanceSettingsPage {
 		autoClose?: boolean;
 		text?: string;
 		type?: 'success' | 'info' | 'warning' | 'danger';
-	}) {
+	} = {}) {
 		await this.saveButton.click();
 
 		await waitForAlert(this.page, text, {autoClose, type});

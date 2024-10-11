@@ -247,6 +247,10 @@ definition {
 
 			PageEditor.publish();
 
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Test Site Name");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 			NavItem.gotoStructures();

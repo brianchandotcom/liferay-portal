@@ -8,6 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.portal.search.elasticsearch7.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.helper.LiferayIndexCreationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import java.io.IOException;
 
@@ -96,6 +97,12 @@ public class IndexCreator {
 		_liferayMappingsAddedToIndex = liferayMappingsAddedToIndex;
 	}
 
+	protected void setSearchEngineInformation(
+		SearchEngineInformation searchEngineInformation) {
+
+		_searchEngineInformation = searchEngineInformation;
+	}
+
 	private IndexCreationHelper _getIndexCreationHelper() {
 		if (!_liferayMappingsAddedToIndex) {
 			if (_indexCreationHelper != null) {
@@ -106,7 +113,8 @@ public class IndexCreator {
 		}
 
 		LiferayIndexCreationHelper liferayIndexCreationHelper =
-			new LiferayIndexCreationHelper(_elasticsearchClientResolver);
+			new LiferayIndexCreationHelper(
+				_elasticsearchClientResolver, _searchEngineInformation);
 
 		if (_indexCreationHelper == null) {
 			return liferayIndexCreationHelper;
@@ -152,5 +160,6 @@ public class IndexCreator {
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 	private IndexCreationHelper _indexCreationHelper;
 	private boolean _liferayMappingsAddedToIndex;
+	private SearchEngineInformation _searchEngineInformation;
 
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
@@ -218,6 +219,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				setElasticsearchClientResolver(_elasticsearchFixture);
 				setIndexCreationHelper(_indexCreationHelper);
 				setLiferayMappingsAddedToIndex(_liferayMappingsAddedToIndex);
+				setSearchEngineInformation(_createSearchEngineInformation());
 			}
 		};
 
@@ -313,6 +315,19 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		);
 
 		return props;
+	}
+
+	private SearchEngineInformation _createSearchEngineInformation() {
+		SearchEngineInformation searchEngineInformation = Mockito.mock(
+			SearchEngineInformation.class);
+
+		Mockito.when(
+			searchEngineInformation.getEmbeddingVectorDimensions()
+		).thenReturn(
+			new int[] {256}
+		);
+
+		return searchEngineInformation;
 	}
 
 	private final long _companyId;

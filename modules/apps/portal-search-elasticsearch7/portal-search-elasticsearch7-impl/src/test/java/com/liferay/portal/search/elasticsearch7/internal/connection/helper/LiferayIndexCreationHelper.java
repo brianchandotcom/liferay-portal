@@ -11,6 +11,7 @@ import com.liferay.portal.search.elasticsearch7.internal.index.MappingsHelperImp
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.IndexSettingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -21,9 +22,11 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 	public LiferayIndexCreationHelper(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		SearchEngineInformation searchEngineInformation) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
+		_searchEngineInformation = searchEngineInformation;
 	}
 
 	@Override
@@ -32,7 +35,8 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 			_elasticsearchClientResolver.getRestHighLevelClient();
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
-			null, restHighLevelClient.indices(), new JSONFactoryImpl(), null);
+			null, restHighLevelClient.indices(), new JSONFactoryImpl(), null,
+			_searchEngineInformation);
 
 		mappingsHelperImpl.setDefaultOrOverrideMappings(createIndexRequest);
 	}
@@ -49,5 +53,6 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
+	private final SearchEngineInformation _searchEngineInformation;
 
 }

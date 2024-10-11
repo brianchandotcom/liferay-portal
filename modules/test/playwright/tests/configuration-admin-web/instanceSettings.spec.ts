@@ -141,6 +141,8 @@ test('LPD-38043 Assert that a configuration at the site scope can override a fal
 	});
 
 	await test.step('Enable the site accessibility configuration', async () => {
+		await page.waitForTimeout(1000);
+
 		await accessibilityMenuPage.enableAccessibilityMenu();
 	});
 

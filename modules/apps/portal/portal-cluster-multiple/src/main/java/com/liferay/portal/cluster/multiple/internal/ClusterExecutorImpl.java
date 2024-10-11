@@ -264,6 +264,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 						" that is not serializable")));
 		}
 		catch (Exception exception) {
+			_log.error("Unable to process cluster request", exception);
+
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
 				_localClusterNodeStatus.getClusterNode(),
 				clusterRequest.getUuid(), exception);

@@ -26,7 +26,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,8 +42,8 @@ public class DDMStructureClassTypeTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testGetClassTypeFields() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
@@ -63,16 +62,13 @@ public class DDMStructureClassTypeTest {
 						DDMStructureClassTypeTest.class,
 						"dependencies/data-definition.json")));
 
-		_ddmStructureClassType = new DDMStructureClassType(
+		DDMStructureClassType ddmStructureClassType = new DDMStructureClassType(
 			dataDefinition.getId(), StringUtil.randomString(),
 			_language.getLanguageId(LocaleUtil.US));
-	}
 
-	@Test
-	public void testGetClassTypeFields() throws Exception {
 		Assert.assertTrue(
 			ListUtil.exists(
-				_ddmStructureClassType.getClassTypeFields(),
+				ddmStructureClassType.getClassTypeFields(),
 				classTypeField -> Objects.equals(
 					classTypeField.getType(), "date_time")));
 	}
@@ -82,8 +78,6 @@ public class DDMStructureClassTypeTest {
 
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
-
-	private DDMStructureClassType _ddmStructureClassType;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

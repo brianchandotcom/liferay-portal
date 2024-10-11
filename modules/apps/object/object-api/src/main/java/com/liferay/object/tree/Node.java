@@ -5,6 +5,7 @@
 
 package com.liferay.object.tree;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +22,10 @@ public class Node {
 	}
 
 	public List<Node> getChildNodes() {
+		if (_childNodes == null) {
+			return Collections.emptyList();
+		}
+
 		return _childNodes;
 	}
 

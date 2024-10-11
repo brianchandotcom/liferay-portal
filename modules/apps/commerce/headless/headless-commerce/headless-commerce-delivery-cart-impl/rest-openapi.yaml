@@ -183,6 +183,12 @@ components:
                 customFields:
                     additionalProperties: true
                     type: object
+                deliveryTermId:
+                    format: int64
+                    type: integer
+                deliveryTermLabel:
+                    readOnly: true
+                    type: string
                 errorMessages:
                     items:
                         type: string
@@ -245,6 +251,12 @@ components:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
                 paymentStatusLabel:
+                    readOnly: true
+                    type: string
+                paymentTermId:
+                    format: int64
+                    type: integer
+                paymentTermLabel:
                     readOnly: true
                     type: string
                 printedNote:
@@ -687,6 +699,28 @@ components:
                 totalFormatted:
                     type: string
             type: object
+        Term:
+            properties:
+                description:
+                    example: description
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                label:
+                    example: label
+                    readOnly: true
+                    type: string
+                name:
+                    example: name
+                    readOnly: true
+                    type: string
 info:
     description:
         "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay',
@@ -2275,6 +2309,66 @@ paths:
                     description:
                         Unexpected error
             tags: ["Cart"]
+    /carts/by-externalReferenceCode/{externalReferenceCode}/delivery-terms:
+        get:
+            description:
+                Retrieve delivery terms available for the Cart.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                    description:
+                        Retrieve the available delivery terms for the order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Term"]
     /carts/by-externalReferenceCode/{externalReferenceCode}/items:
         get:
             description:
@@ -2473,6 +2567,66 @@ paths:
                     description:
                         Unexpected error
             tags: ["PaymentMethod"]
+    /carts/by-externalReferenceCode/{externalReferenceCode}/payment-terms:
+        get:
+            description:
+                Retrieve payment terms available for the Cart.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                    description:
+                        Retrieve the available payment terms for the order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Term"]
     /carts/by-externalReferenceCode/{externalReferenceCode}/payment-url:
         get:
             parameters:
@@ -3400,6 +3554,68 @@ paths:
                     description:
                         Unexpected error
             tags: ["Cart"]
+    /carts/{cartId}/delivery-terms:
+        get:
+            description:
+                Retrieve delivery terms available for the Cart.
+            operationId: getCartDeliveryTermsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                    description:
+                        Retrieve the available delivery terms for the order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Term"]
     /carts/{cartId}/items:
         get:
             description:
@@ -3604,6 +3820,68 @@ paths:
                     description:
                         Unexpected error
             tags: ["PaymentMethod"]
+    /carts/{cartId}/payment-terms:
+        get:
+            description:
+                Retrieve payment terms available for the Cart.
+            operationId: getCartPaymentTermsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Term"
+                                type: array
+                    description:
+                        Retrieve the available payment terms for the order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Term"]
     /carts/{cartId}/payment-url:
         get:
             operationId: getCartPaymentURL

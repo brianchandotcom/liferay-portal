@@ -174,21 +174,20 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
-				mustNotJSONObject.remove("term");
-
 				mustNotJSONObject.put(
 					"terms",
 					JSONUtil.put(
 						"groupAssetCategoryExternalReferenceCodes",
 						"${configuration.group_asset_category_" +
-							"external_reference_codes}"));
+							"external_reference_codes}")
+				).remove(
+					"term"
+				);
 
 				break;
 			}
 		}
 		else {
-			queryJSONObject.remove("term");
-
 			queryJSONObject.put(
 				"terms",
 				JSONUtil.put(
@@ -197,7 +196,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					"groupAssetCategoryExternalReferenceCodes",
 					"${configuration." +
 						"group_asset_category_external_reference_codes}"
-				));
+				)
+			).remove(
+				"term"
+			);
 		}
 	}
 
@@ -264,17 +266,17 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			queryJSONObject, "JSONObject/bool", "JSONArray/must_not",
 			"JSONObject/0");
 
-		JSONObject termJSONObject = mustNotJSONObject.getJSONObject("term");
-
-		long[] assetCategoryIds = _extractAssetCategoryIds(termJSONObject);
-
-		mustNotJSONObject.remove("term");
+		long[] assetCategoryIds = _extractAssetCategoryIds(
+			mustNotJSONObject.getJSONObject("term"));
 
 		mustNotJSONObject.put(
 			"terms",
 			JSONUtil.put(
 				"groupAssetCategoryExternalReferenceCodes",
-				_translateIdsToExternalReferencesCodes(assetCategoryIds)));
+				_translateIdsToExternalReferencesCodes(assetCategoryIds))
+		).remove(
+			"term"
+		);
 	}
 
 	private void _upgradeSXPBlueprints() throws Exception {
@@ -429,13 +431,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			_jsonFactory.createJSONArray();
 
 		if (uiConfigurationValuesJSONObject.has("asset_category_id")) {
-			JSONObject assetCategoryIdsJSONObject =
-				uiConfigurationValuesJSONObject.getJSONObject(
-					"asset_category_id");
-
 			groupAssetCategoryExternalReferenceCodesJSONArray.put(
 				_createGroupAssetCategoryExternalReferenceCodesJSONObject(
-					assetCategoryIdsJSONObject));
+					uiConfigurationValuesJSONObject.getJSONObject(
+						"asset_category_id")));
 
 			uiConfigurationValuesJSONObject.remove("asset_category_id");
 		}

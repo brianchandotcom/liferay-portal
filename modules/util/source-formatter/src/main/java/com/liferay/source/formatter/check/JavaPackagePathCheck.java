@@ -280,7 +280,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			if (packagePart.matches("V\\d*(_\\d+)+")) {
 				addMessage(
 					fileName,
-					"Use lower case \"v\" when it means version in the package");
+					"Use lower case \"v\" when it means version in the " +
+						"package");
 
 				return;
 			}
@@ -332,8 +333,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			if (packageName.contains(".api.") || packageName.endsWith(".api")) {
 				addMessage(
 					fileName,
-					"Do not use \"api\" in the package for classes in the API " +
-						"module");
+					"Do not use \"api\" in the package for classes in the " +
+						"API module");
 			}
 		}
 

@@ -110,8 +110,8 @@ public class JavaInitialRequestPortalInstanceLifecycleListenerCheck
 		addMessage(
 			fileName,
 			StringBundler.concat(
-				"Missing \"activate(BundleContext bundleContext)\" method with ",
-				"\"@Activate\" annotation that calls ",
+				"Missing \"activate(BundleContext bundleContext)\" method ",
+				"with \"@Activate\" annotation that calls ",
 				"\"super.activate(bundleContext)\""));
 	}
 

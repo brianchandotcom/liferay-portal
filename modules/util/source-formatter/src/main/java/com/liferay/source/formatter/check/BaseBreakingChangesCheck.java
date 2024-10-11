@@ -40,8 +40,9 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 					StringBundler.concat(
 						message,
 						"Each breaking change should have one, and only one ",
-						"\"# breaking\", \"## What\", \"## Why\" and ## (Optional). ",
-						"Use \"----\" to split each breaking change."));
+						"\"# breaking\", \"## What\", \"## Why\" and ## ",
+						"(Optional). Use \"----\" to split each breaking ",
+						"change."));
 
 				return;
 			}
@@ -58,8 +59,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					message +
-						"The correct order of headers should be \"## What\" | \"" +
-							"## Why\" | \"## Alternatives\"");
+						"The correct order of headers should be \"## What\" " +
+							"| \"## Why\" | \"## Alternatives\"");
 
 				return;
 			}

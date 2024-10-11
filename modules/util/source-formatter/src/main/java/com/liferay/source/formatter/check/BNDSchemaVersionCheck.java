@@ -79,8 +79,9 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		else if (schemaVersion != null) {
 			addMessage(
 				fileName,
-				"The header \"Liferay-Require-SchemaVersion\" can only be used " +
-					"when the header \"Liferay-Service\" has value \"true\"");
+				"The header \"Liferay-Require-SchemaVersion\" can only be " +
+					"used when the header \"Liferay-Service\" has value " +
+						"\"true\"");
 		}
 
 		if (fileName.endsWith("-web/bnd.bnd") &&

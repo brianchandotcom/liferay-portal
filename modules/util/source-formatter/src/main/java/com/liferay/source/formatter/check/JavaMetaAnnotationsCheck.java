@@ -67,7 +67,8 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 			if (!nameValue.endsWith("-configuration-name")) {
 				addMessage(
 					fileName,
-					"Value for \"name\" should end with \"-configuration-name\"",
+					"Value for \"name\" should end with \"-configuration-" +
+						"name\"",
 					getLineNumber(content, content.indexOf(matcher.group())));
 			}
 		}

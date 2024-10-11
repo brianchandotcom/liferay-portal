@@ -67,8 +67,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"Property value \"", testrayMainComponentName,
-						"\" does not exist in \"testray.team.*.component.names\" ",
-						"in ", SourceUtil.getRootDirName(absolutePath),
+						"\" does not exist in \"testray.team.*.component.",
+						"names\" in ", SourceUtil.getRootDirName(absolutePath),
 						"/test.properties"));
 			}
 

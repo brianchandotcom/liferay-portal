@@ -344,8 +344,8 @@ public class SourceFormatter {
 			System.out.println(
 				StringBundler.concat(
 					"WARNING: Setting property \"java.parser.enabled\" to ",
-					"\"false\" may prevent certain Java/JSP checks from working ",
-					"properly."));
+					"\"false\" may prevent certain Java/JSP checks from ",
+					"working properly."));
 		}
 
 		_sourceProcessors.add(new BNDRunSourceProcessor());

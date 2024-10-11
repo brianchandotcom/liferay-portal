@@ -143,9 +143,10 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 							fileName,
 							StringBundler.concat(
 								"Incorrect order \"", entityName,
-								"#lastPublishDate\". \"lastPublishDate\" column ",
-								"should come last (only followed by status ",
-								"columns) in the category 'Other fields'."));
+								"#lastPublishDate\". \"lastPublishDate\" ",
+								"column should come last (only followed by ",
+								"status columns) in the category 'Other ",
+								"fields'."));
 					}
 				}
 

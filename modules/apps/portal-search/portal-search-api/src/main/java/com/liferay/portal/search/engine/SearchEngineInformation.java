@@ -19,6 +19,8 @@ public interface SearchEngineInformation {
 
 	public List<ConnectionInformation> getConnectionInformationList();
 
+	public int[] getEmbeddingVectorDimensions();
+
 	public String getNodesString();
 
 	public String getVendorString();

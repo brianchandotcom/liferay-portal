@@ -8,6 +8,9 @@ package com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.client.json.BaseJSONParser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -46,6 +49,9 @@ public class CartCommentSerDes {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (cartComment.getAuthor() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -56,6 +62,30 @@ public class CartCommentSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(cartComment.getAuthor()));
+
+			sb.append("\"");
+		}
+
+		if (cartComment.getAuthorId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"authorId\": ");
+
+			sb.append(cartComment.getAuthorId());
+		}
+
+		if (cartComment.getAuthorPortraitURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"authorPortraitURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cartComment.getAuthorPortraitURL()));
 
 			sb.append("\"");
 		}
@@ -98,6 +128,21 @@ public class CartCommentSerDes {
 			sb.append(cartComment.getId());
 		}
 
+		if (cartComment.getModifiedDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(cartComment.getModifiedDate()));
+
+			sb.append("\"");
+		}
+
 		if (cartComment.getOrderId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -137,11 +182,30 @@ public class CartCommentSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (cartComment.getAuthor() == null) {
 			map.put("author", null);
 		}
 		else {
 			map.put("author", String.valueOf(cartComment.getAuthor()));
+		}
+
+		if (cartComment.getAuthorId() == null) {
+			map.put("authorId", null);
+		}
+		else {
+			map.put("authorId", String.valueOf(cartComment.getAuthorId()));
+		}
+
+		if (cartComment.getAuthorPortraitURL() == null) {
+			map.put("authorPortraitURL", null);
+		}
+		else {
+			map.put(
+				"authorPortraitURL",
+				String.valueOf(cartComment.getAuthorPortraitURL()));
 		}
 
 		if (cartComment.getContent() == null) {
@@ -165,6 +229,15 @@ public class CartCommentSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(cartComment.getId()));
+		}
+
+		if (cartComment.getModifiedDate() == null) {
+			map.put("modifiedDate", null);
+		}
+		else {
+			map.put(
+				"modifiedDate",
+				liferayToJSONDateFormat.format(cartComment.getModifiedDate()));
 		}
 
 		if (cartComment.getOrderId() == null) {
@@ -202,6 +275,12 @@ public class CartCommentSerDes {
 			if (Objects.equals(jsonParserFieldName, "author")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "authorId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "authorPortraitURL")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "content")) {
 				return false;
 			}
@@ -211,6 +290,9 @@ public class CartCommentSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderId")) {
@@ -233,6 +315,18 @@ public class CartCommentSerDes {
 					cartComment.setAuthor((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "authorId")) {
+				if (jsonParserFieldValue != null) {
+					cartComment.setAuthorId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "authorPortraitURL")) {
+				if (jsonParserFieldValue != null) {
+					cartComment.setAuthorPortraitURL(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "content")) {
 				if (jsonParserFieldValue != null) {
 					cartComment.setContent((String)jsonParserFieldValue);
@@ -250,6 +344,12 @@ public class CartCommentSerDes {
 				if (jsonParserFieldValue != null) {
 					cartComment.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				if (jsonParserFieldValue != null) {
+					cartComment.setModifiedDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderId")) {

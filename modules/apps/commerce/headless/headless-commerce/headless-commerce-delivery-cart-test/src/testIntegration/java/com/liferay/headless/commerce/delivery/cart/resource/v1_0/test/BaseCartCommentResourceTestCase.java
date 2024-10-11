@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -163,6 +164,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		CartComment cartComment = randomCartComment();
 
 		cartComment.setAuthor(regex);
+		cartComment.setAuthorPortraitURL(regex);
 		cartComment.setContent(regex);
 		cartComment.setExternalReferenceCode(regex);
 
@@ -173,6 +175,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		cartComment = CartCommentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, cartComment.getAuthor());
+		Assert.assertEquals(regex, cartComment.getAuthorPortraitURL());
 		Assert.assertEquals(regex, cartComment.getContent());
 		Assert.assertEquals(regex, cartComment.getExternalReferenceCode());
 	}
@@ -1261,6 +1264,24 @@ public abstract class BaseCartCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("authorId", additionalAssertFieldName)) {
+				if (cartComment.getAuthorId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"authorPortraitURL", additionalAssertFieldName)) {
+
+				if (cartComment.getAuthorPortraitURL() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("content", additionalAssertFieldName)) {
 				if (cartComment.getContent() == null) {
 					valid = false;
@@ -1273,6 +1294,14 @@ public abstract class BaseCartCommentResourceTestCase {
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (cartComment.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (cartComment.getModifiedDate() == null) {
 					valid = false;
 				}
 
@@ -1424,6 +1453,30 @@ public abstract class BaseCartCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("authorId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cartComment1.getAuthorId(),
+						cartComment2.getAuthorId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"authorPortraitURL", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cartComment1.getAuthorPortraitURL(),
+						cartComment2.getAuthorPortraitURL())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("content", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cartComment1.getContent(), cartComment2.getContent())) {
@@ -1450,6 +1503,17 @@ public abstract class BaseCartCommentResourceTestCase {
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cartComment1.getId(), cartComment2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cartComment1.getModifiedDate(),
+						cartComment2.getModifiedDate())) {
 
 					return false;
 				}
@@ -1631,6 +1695,57 @@ public abstract class BaseCartCommentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("authorId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("authorPortraitURL")) {
+			Object object = cartComment.getAuthorPortraitURL();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("content")) {
 			Object object = cartComment.getContent();
 
@@ -1728,6 +1843,37 @@ public abstract class BaseCartCommentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("modifiedDate")) {
+			if (operator.equals("between")) {
+				Date date = cartComment.getModifiedDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(cartComment.getModifiedDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("orderId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1784,10 +1930,14 @@ public abstract class BaseCartCommentResourceTestCase {
 		return new CartComment() {
 			{
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				authorId = RandomTestUtil.randomLong();
+				authorPortraitURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				content = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				modifiedDate = RandomTestUtil.nextDate();
 				orderId = RandomTestUtil.randomLong();
 				restricted = RandomTestUtil.randomBoolean();
 			}

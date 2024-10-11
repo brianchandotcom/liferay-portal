@@ -12,10 +12,14 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,15 +28,20 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -92,6 +101,64 @@ public class FragmentEntryLinkModelListener
 		_updateLayoutClassedModelUsage(fragmentEntryLink);
 
 		_updateDDMTemplateLink(fragmentEntryLink);
+	}
+
+	@Override
+	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
+		throws ModelListenerException {
+
+		_checkNoninstanceablePortletUsed(fragmentEntryLink);
+	}
+
+	private void _checkNoninstanceablePortletUsed(
+			FragmentEntryLink fragmentEntryLink)
+		throws ModelListenerException {
+
+		List<String> portletNames = TransformUtil.transform(
+			_portletRegistry.getFragmentEntryLinkPortletIds(
+				null, fragmentEntryLink),
+			portletId -> {
+				Portlet portlet = _portletLocalService.getPortletById(
+					fragmentEntryLink.getCompanyId(), portletId);
+
+				if (portlet.isInstanceable()) {
+					return null;
+				}
+
+				return PortletIdCodec.decodePortletName(portletId);
+			});
+
+		if (ListUtil.isEmpty(portletNames)) {
+			return;
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					fragmentEntryLink.getGroupId(),
+					fragmentEntryLink.getSegmentsExperienceId(),
+					fragmentEntryLink.getPlid());
+
+		for (FragmentEntryLink curFragmentEntryLink : fragmentEntryLinks) {
+			if (curFragmentEntryLink.getFragmentEntryLinkId() ==
+					fragmentEntryLink.getFragmentEntryLinkId()) {
+
+				continue;
+			}
+
+			for (String portletId :
+					_portletRegistry.getFragmentEntryLinkPortletIds(
+						null, curFragmentEntryLink)) {
+
+				String portletName = PortletIdCodec.decodePortletName(
+					portletId);
+
+				if (portletNames.contains(portletName)) {
+					throw new ModelListenerException(
+						new NoninstanceablePortletException(portletName));
+				}
+			}
+		}
 	}
 
 	private void _deleteDDMTemplateLinks(FragmentEntryLink fragmentEntryLink)
@@ -298,6 +365,9 @@ public class FragmentEntryLinkModelListener
 		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -306,5 +376,11 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 }

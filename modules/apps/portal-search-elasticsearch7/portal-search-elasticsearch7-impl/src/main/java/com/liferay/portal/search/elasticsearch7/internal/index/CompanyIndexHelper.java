@@ -24,6 +24,7 @@ import com.liferay.portal.search.elasticsearch7.internal.index.constants.IndexSe
 import com.liferay.portal.search.elasticsearch7.internal.index.util.IndexFactoryCompanyIdRegistryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.spi.index.configuration.contributor.CompanyIndexConfigurationContributor;
 import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
@@ -65,7 +66,8 @@ public class CompanyIndexHelper {
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
 			indexName, indicesClient, _jsonFactory,
-			_elasticsearchConfigurationWrapper.overrideTypeMappings());
+			_elasticsearchConfigurationWrapper.overrideTypeMappings(),
+			_searchEngineInformation);
 
 		mappingsHelperImpl.setDefaultOrOverrideMappings(createIndexRequest);
 
@@ -137,7 +139,8 @@ public class CompanyIndexHelper {
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
 			indexName, indicesClient, _jsonFactory,
-			_elasticsearchConfigurationWrapper.overrideTypeMappings());
+			_elasticsearchConfigurationWrapper.overrideTypeMappings(),
+			_searchEngineInformation);
 
 		mappingsHelperImpl.putDefaultOrOverrideMappings();
 
@@ -385,7 +388,8 @@ public class CompanyIndexHelper {
 					new MappingsHelperImpl(
 						indexName, indicesClient, _jsonFactory,
 						_elasticsearchConfigurationWrapper.
-							overrideTypeMappings()));
+							overrideTypeMappings(),
+						_searchEngineInformation));
 			},
 			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}
@@ -496,5 +500,8 @@ public class CompanyIndexHelper {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 }

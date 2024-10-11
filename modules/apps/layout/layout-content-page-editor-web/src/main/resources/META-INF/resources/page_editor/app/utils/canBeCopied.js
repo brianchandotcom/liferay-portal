@@ -22,6 +22,20 @@ const PARENT_TYPES = [
 ];
 
 function getItemTargetToPaste(item, layoutDataItems) {
+	if (
+		item.type === LAYOUT_DATA_ITEM_TYPES.form &&
+		item.config.formType === 'multistep'
+	) {
+		for (const childItemId of item.children) {
+			const layoutDataItem = layoutDataItems[childItemId];
+			if (
+				layoutDataItem.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer
+			) {
+				return layoutDataItems[layoutDataItem.children[0]];
+			}
+		}
+	}
+
 	if (PARENT_TYPES.some((type) => type === item.type)) {
 		return item;
 	}

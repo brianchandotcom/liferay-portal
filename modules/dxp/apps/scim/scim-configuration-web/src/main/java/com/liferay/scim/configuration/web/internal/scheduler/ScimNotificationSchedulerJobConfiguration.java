@@ -101,14 +101,6 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isSendNotification(
-		Date accessTokenExpirationDate, Date lastNotificationDate) {
-
-		return isSendNotification(
-			accessTokenExpirationDate, System.currentTimeMillis(),
-			lastNotificationDate);
-	}
-
-	private boolean _isSendNotification(
 		long accessTokenExpirationDurationMillis,
 		long lastNotificationDurationMillis, long notificationDurationMillis) {
 
@@ -157,8 +149,8 @@ public class ScimNotificationSchedulerJobConfiguration
 			ExpandoBridge expandoBridge =
 				applicationOAuth2Authorization.getExpandoBridge();
 
-			if (!_isSendNotification(
-					accessTokenExpirationDate,
+			if (!isSendNotification(
+					accessTokenExpirationDate, System.currentTimeMillis(),
 					(Date)expandoBridge.getAttribute(
 						"lastNotificationDate", false))) {
 

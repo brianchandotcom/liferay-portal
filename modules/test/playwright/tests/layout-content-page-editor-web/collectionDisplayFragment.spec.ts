@@ -296,155 +296,161 @@ test('Modifies inline text on all collection items', async ({
 	).toHaveCount(2);
 });
 
-test('Checks the different styles for the Display Collection', async ({
-	apiHelpers,
-	collectionsPage,
-	page,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
-	const checkStyleDisplay = async () => {
-		const listItem = page.locator(
-			'.lfr-layout-structure-item-collection ul'
+test(
+	'Checks the different styles for the Display Collection',
+	{
+		tag: '@LPS-114727',
+	},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+		const checkStyleDisplay = async () => {
+			const listItem = page.locator(
+				'.lfr-layout-structure-item-collection ul'
+			);
+
+			// Check the Bordered List style
+
+			await expect(listItem.first()).toHaveClass('list-group');
+			await expect(listItem.first().locator('li').first()).toHaveClass(
+				'list-group-item'
+			);
+
+			// Check the Bulleted List style
+
+			await expect(listItem.nth(1)).toHaveAttribute('class', '');
+			await expect(listItem.nth(1).locator('li').first()).toHaveAttribute(
+				'class',
+				''
+			);
+
+			// Check the Inline List style
+
+			await expect(listItem.nth(2)).toHaveClass('d-flex list-inline');
+			await expect(listItem.nth(2).locator('li').first()).toHaveClass(
+				'flex-grow-1'
+			);
+
+			// Check the Numbered List style
+
+			const orderedListItem = page.locator(
+				'.lfr-layout-structure-item-collection ol'
+			);
+
+			await expect(orderedListItem).not.toHaveAttribute('class');
+			await expect(
+				orderedListItem.locator('li').first()
+			).not.toHaveAttribute('class');
+
+			// Check the Unstyled List style
+
+			await expect(listItem.nth(3)).toHaveClass('list-unstyled');
+			await expect(listItem.nth(3).locator('li').first()).toHaveAttribute(
+				'class',
+				''
+			);
+		};
+
+		// Create several definitions with different Style Display
+
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
 		);
 
-		// Check the Bordered List style
+		const borderedListCollection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			listStyle: 'Bordered List (Collection Provider)',
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+		});
 
-		await expect(listItem.first()).toHaveClass('list-group');
-		await expect(listItem.first().locator('li').first()).toHaveClass(
-			'list-group-item'
+		const bulletedListCollection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			listStyle: 'Bulleted List (Collection Provider)',
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+		});
+
+		const inlineListCollection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			listStyle: 'Inline List',
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+		});
+
+		const numberedListCollection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			listStyle: 'Numbered List',
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+		});
+
+		const unstyledListCollection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			listStyle: 'Unstyled List',
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+		});
+
+		// Create a content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				borderedListCollection,
+				bulletedListCollection,
+				inlineListCollection,
+				numberedListCollection,
+				unstyledListCollection,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Check the Style Display in edit mode
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await checkStyleDisplay();
+
+		// Check the Style Display in view mode
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		// Check the Bulleted List style
-
-		await expect(listItem.nth(1)).toHaveAttribute('class', '');
-		await expect(listItem.nth(1).locator('li').first()).toHaveAttribute(
-			'class',
-			''
-		);
-
-		// Check the Inline List style
-
-		await expect(listItem.nth(2)).toHaveClass('d-flex list-inline');
-		await expect(listItem.nth(2).locator('li').first()).toHaveClass(
-			'flex-grow-1'
-		);
-
-		// Check the Numbered List style
-
-		const orderedListItem = page.locator(
-			'.lfr-layout-structure-item-collection ol'
-		);
-
-		await expect(orderedListItem).not.toHaveAttribute('class');
-		await expect(orderedListItem.locator('li').first()).not.toHaveAttribute(
-			'class'
-		);
-
-		// Check the Unstyled List style
-
-		await expect(listItem.nth(3)).toHaveClass('list-unstyled');
-		await expect(listItem.nth(3).locator('li').first()).toHaveAttribute(
-			'class',
-			''
-		);
-	};
-
-	// Create several definitions with different Style Display
-
-	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		ANIMALS_COLLECTION_NAME,
-		pageManagementSite.friendlyUrlPath
-	);
-
-	const borderedListCollection = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		listStyle: 'Bordered List (Collection Provider)',
-		pageElements: [
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		],
-	});
-
-	const bulletedListCollection = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		listStyle: 'Bulleted List (Collection Provider)',
-		pageElements: [
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		],
-	});
-
-	const inlineListCollection = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		listStyle: 'Inline List',
-		pageElements: [
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		],
-	});
-
-	const numberedListCollection = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		listStyle: 'Numbered List',
-		pageElements: [
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		],
-	});
-
-	const unstyledListCollection = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		listStyle: 'Unstyled List',
-		pageElements: [
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		],
-	});
-
-	// Create a content page and go to edit mode
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			borderedListCollection,
-			bulletedListCollection,
-			inlineListCollection,
-			numberedListCollection,
-			unstyledListCollection,
-		]),
-		siteId: pageManagementSite.id,
-		title: getRandomString(),
-	});
-
-	// Check the Style Display in edit mode
-
-	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
-
-	await checkStyleDisplay();
-
-	// Check the Style Display in view mode
-
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
-
-	await checkStyleDisplay();
-});
+		await checkStyleDisplay();
+	}
+);
 
 test('Checks that fragment ids used within a display collection are not repeated even if they are nested elements', async ({
 	apiHelpers,

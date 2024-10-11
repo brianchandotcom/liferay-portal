@@ -211,7 +211,7 @@ public class JournalArticleLayoutDisplayPageProviderTest {
 				_group.getGroupId(), _journalArticle.getUrlTitle()));
 	}
 
-	@FeatureFlags("LPS-203351")
+	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetURLSeparator() {
 		Assert.assertEquals(
@@ -219,7 +219,7 @@ public class JournalArticleLayoutDisplayPageProviderTest {
 			_layoutDisplayPageProvider.getURLSeparator());
 	}
 
-	@FeatureFlags("LPS-203351")
+	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetURLSeparatorWithConfiguredURLSeparator()
 		throws Exception {

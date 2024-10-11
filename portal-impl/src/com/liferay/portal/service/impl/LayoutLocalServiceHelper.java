@@ -464,13 +464,13 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			String urlSeparator = friendlyURLResolver.getURLSeparator();
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-203351") &&
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-11147") &&
 				urlSeparator.contains(friendlyURL)) {
 
 				keywordConflict = urlSeparator;
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-203351")) {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
 				if (urlSeparator.contains(friendlyURL) ||
 					friendlyURL.startsWith(urlSeparator)) {
 

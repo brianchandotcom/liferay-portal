@@ -96,7 +96,7 @@ public class FriendlyURLSeparatorPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible() {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-203351")) {
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
 				return false;
 			}
 

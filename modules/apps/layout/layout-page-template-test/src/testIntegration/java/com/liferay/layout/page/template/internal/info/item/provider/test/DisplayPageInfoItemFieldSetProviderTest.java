@@ -131,7 +131,7 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET);
 	}
 
-	@FeatureFlags("LPS-203351")
+	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetInfoFieldValuesWithConfiguredURLSeparator()
 		throws Exception {

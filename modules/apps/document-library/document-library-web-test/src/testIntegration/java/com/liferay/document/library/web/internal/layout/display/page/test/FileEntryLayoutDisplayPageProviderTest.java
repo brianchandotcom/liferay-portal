@@ -104,7 +104,7 @@ public class FileEntryLayoutDisplayPageProviderTest {
 				_fileEntry.getGroupId(), _fileEntry.getTitle()));
 	}
 
-	@FeatureFlags("LPS-203351")
+	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetURLSeparator() {
 		Assert.assertEquals(
@@ -112,7 +112,7 @@ public class FileEntryLayoutDisplayPageProviderTest {
 			_layoutDisplayPageProvider.getURLSeparator());
 	}
 
-	@FeatureFlags("LPS-203351")
+	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetURLSeparatorWithConfiguredURLSeparator()
 		throws Exception {

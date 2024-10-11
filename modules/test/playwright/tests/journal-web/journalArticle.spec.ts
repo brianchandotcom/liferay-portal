@@ -71,7 +71,7 @@ const keepTitlesUntranslated = mergeTests(baseTest);
 const prefixUrlTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
-		'LPS-203351': true,
+		'LPD-11147': true,
 	})
 );
 

@@ -61,7 +61,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPS-203351")
+@FeatureFlags("LPD-11147")
 @RunWith(Arquillian.class)
 @Sync
 public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {

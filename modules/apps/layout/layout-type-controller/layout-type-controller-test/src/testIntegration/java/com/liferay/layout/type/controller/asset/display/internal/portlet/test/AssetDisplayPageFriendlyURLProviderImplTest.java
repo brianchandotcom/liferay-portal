@@ -110,7 +110,7 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
 	}
 
-	@FeatureFlags("LPS-203351")
+	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetFriendlyURLWithConfiguredURLSeparator()
 		throws Exception {

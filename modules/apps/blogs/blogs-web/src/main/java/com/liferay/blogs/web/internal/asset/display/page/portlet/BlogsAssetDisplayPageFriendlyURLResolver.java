@@ -36,7 +36,7 @@ public class BlogsAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public boolean isURLSeparatorConfigurable() {
-		return FeatureFlagManagerUtil.isEnabled("LPS-203351");
+		return FeatureFlagManagerUtil.isEnabled("LPD-11147");
 	}
 
 	@Override

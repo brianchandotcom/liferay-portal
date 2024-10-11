@@ -7,12 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {
 	LEMON_OBJECT_ERC,
@@ -26,11 +30,13 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-10727': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),
+	objectPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
 );
@@ -227,7 +233,7 @@ test.describe('Numeric input field', () => {
 			title: getRandomString(),
 		});
 
-		// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Size" field
+		// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Weight" field
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
@@ -338,7 +344,7 @@ test.describe('Numeric input field', () => {
 			title: getRandomString(),
 		});
 
-		// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Size" field
+		// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Weight" field
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
@@ -463,6 +469,322 @@ test.describe('Submit button', () => {
 					'An error occurred while sending the form information.'
 				)
 			).toBeVisible();
+		}
+	);
+
+	test(
+		'It is not possible to change an object from approved status to draft status',
+		{tag: '@LPS-191474'},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			objectDetailsPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Get the object definition id of the Lemon object
+
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			const {id: objectDefinitionId} =
+				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
+					{
+						externalReferenceCode: LEMON_OBJECT_ERC,
+					}
+				);
+
+			const checkObjectFieldValue = async (
+				value: string,
+				status: string
+			) => {
+
+				// Go to the object page and check the value and status
+
+				await page.goto(
+					`/group${pageManagementSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
+				);
+
+				const row = page.locator('.dnd-tr').filter({hasText: value});
+
+				await expect(row).toContainText(status);
+			};
+
+			await test.step('Set the "Allow Users to Save Entries as Draft" configuration of the Lemon object to true', async () => {
+				await objectDetailsPage.goto('Lemon');
+
+				await objectDetailsPage.updateConfiguration({
+					fieldLabel: 'Allow Users to Save Entries as Draft',
+					value: true,
+				});
+			});
+
+			const displayPageTemplateName = getRandomString();
+
+			await test.step('Create a Display Page Template with a Form container mapped to Lemon object and two buttons, one to save as Draft and other to save as Approved', async () => {
+
+				// Create a Display page for the Lemon object
+
+				await displayPageTemplatesPage.goto(
+					pageManagementSite.friendlyUrlPath
+				);
+
+				await displayPageTemplatesPage.createTemplate({
+					contentType: 'Lemon',
+					name: displayPageTemplateName,
+				});
+
+				displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+				// Add a Form Container and map it to Lemon Weight field
+
+				await pageEditorPage.addFragment(
+					'Form Components',
+					'Form Container'
+				);
+
+				const fragmentId =
+					await pageEditorPage.getFragmentId('Form Container');
+
+				await pageEditorPage.mapFormFragment(
+					fragmentId,
+					'Lemon (Default)',
+					['Lemon Weight']
+				);
+
+				// Add another submit button with the "Submitted Entry Status" configuration as Draft
+
+				const dptSubmitButtonId =
+					await pageEditorPage.getFragmentId('Form Button');
+
+				await pageEditorPage.clickFragmentOption(
+					dptSubmitButtonId,
+					'Duplicate'
+				);
+
+				await pageEditorPage.editTextEditable(
+					dptSubmitButtonId,
+					'submit-button-text',
+					'Submit as draft'
+				);
+
+				await pageEditorPage.changeFragmentConfiguration({
+					fieldLabel: 'Submitted Entry Status',
+					fragmentId: dptSubmitButtonId,
+					tab: 'General',
+					value: 'Draft',
+				});
+
+				await displayPageTemplatesPage.publishTemplate();
+			});
+
+			const headingId = getRandomString();
+			const formId = getRandomString();
+			let layout = null;
+
+			await test.step('Create a Content page with a Form fragment mapped to Lemon object with a draft Submit Button and a Heading fragment', async () => {
+
+				// Create a Content page
+
+				const formDefinition = getFormContainerDefinition({
+					id: formId,
+				});
+
+				const headingDefinition = getFragmentDefinition({
+					id: headingId,
+					key: 'BASIC_COMPONENT-heading',
+				});
+
+				layout = await apiHelpers.headlessDelivery.createSitePage({
+					pageDefinition: getPageDefinition([
+						formDefinition,
+						headingDefinition,
+					]),
+					siteId: pageManagementSite.id,
+					title: getRandomString(),
+				});
+
+				// Go to edit mode
+
+				await pageEditorPage.goto(
+					layout,
+					pageManagementSite.friendlyUrlPath
+				);
+
+				// Map the form to Lemon Weight field
+
+				await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+					'Lemon Weight',
+				]);
+
+				// Change the "Submitted Entry Status" configuration to Draft
+
+				const submitButtonId =
+					await pageEditorPage.getFragmentId('Form Button');
+
+				await pageEditorPage.editTextEditable(
+					submitButtonId,
+					'submit-button-text',
+					'Submit as draft'
+				);
+
+				await pageEditorPage.changeFragmentConfiguration({
+					fieldLabel: 'Submitted Entry Status',
+					fragmentId: submitButtonId,
+					tab: 'General',
+					value: 'Draft',
+				});
+
+				await pageEditorPage.publishPage();
+			});
+
+			let input = null;
+			let submitDraftButton = null;
+
+			await test.step('Go to view mode and save the Lemon Weight field value as draft', async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				input = page.getByLabel('Lemon Weight');
+
+				submitDraftButton = page.getByText('Submit as draft', {
+					exact: true,
+				});
+
+				await input.fill('100');
+
+				await submitDraftButton.click();
+
+				await page
+					.getByText(
+						'Thank you. Your information was successfully received.'
+					)
+					.waitFor();
+
+				// Check the saved value
+
+				await checkObjectFieldValue('100', 'Draft');
+			});
+
+			await test.step('Go to edit mode and map the Heading to the draft entry number and select the DPT created before as Field', async () => {
+				await pageEditorPage.goto(
+					layout,
+					pageManagementSite.friendlyUrlPath
+				);
+
+				await pageEditorPage.changeEditableConfiguration({
+					editableId: 'element-text',
+					fieldLabel: 'Link',
+					fragmentId: headingId,
+					tab: 'Link',
+					value: 'Mapped URL',
+				});
+
+				await pageEditorPage.openMappingSelector();
+
+				const iframe = page.frameLocator('iframe[title="Select"]');
+
+				await iframe.getByPlaceholder('Search').waitFor();
+
+				await iframe.getByText('Lemons', {exact: true}).click();
+
+				await clickAndExpectToBeHidden({
+					target: iframe.locator('.lfr-item-viewer'),
+					trigger: iframe
+						.locator('.item-selector-list-row .entry')
+						.first(),
+				});
+
+				await pageEditorPage.changeEditableConfiguration({
+					editableId: 'element-text',
+					fieldLabel: 'Field',
+					fragmentId: headingId,
+					tab: 'Link',
+					value: displayPageTemplateName,
+				});
+
+				await pageEditorPage.publishPage();
+			});
+
+			const headingFragment = page.getByText('Heading Example', {
+				exact: true,
+			});
+
+			await test.step('Go to view mode, click in the Heading and save the field value as Draft', async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await headingFragment.click();
+
+				// Set new value and submit as draft
+
+				await input.fill('200');
+
+				await submitDraftButton.click();
+
+				await page
+					.getByText(
+						'Thank you. Your information was successfully received.'
+					)
+					.waitFor();
+
+				// Check the saved value
+
+				await checkObjectFieldValue('200', 'Draft');
+			});
+
+			await test.step('Go to view mode, click in the Heading and save the field value as Approved', async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await headingFragment.click();
+
+				// Set new value and submit as approved
+
+				await input.fill('300');
+
+				await page.getByText('Submit', {exact: true}).click();
+
+				await page
+					.getByText(
+						'Thank you. Your information was successfully received.'
+					)
+					.waitFor();
+
+				// Check the saved value
+
+				await checkObjectFieldValue('300', 'Approved');
+			});
+
+			await test.step('Go to view mode, click in the Heading and try to save the field value as Draft again', async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await headingFragment.click();
+
+				// Set new value and submit as draft
+
+				await input.fill('400');
+
+				await submitDraftButton.click();
+
+				await expect(
+					page.getByText(
+						'An error occurred while sending the form information.'
+					)
+				).toBeVisible();
+
+				// Check the saved value
+
+				await checkObjectFieldValue('300', 'Approved');
+			});
 		}
 	);
 });

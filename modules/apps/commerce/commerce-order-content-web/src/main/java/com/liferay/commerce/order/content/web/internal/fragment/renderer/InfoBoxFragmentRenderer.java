@@ -22,7 +22,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
-import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -71,7 +70,6 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -196,7 +194,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:info-box:additionalProps",
 				_getAdditionalProps(
 					commerceOrder, field, httpServletRequest,
-					fragmentRendererContext.getLocale(), permissionChecker));
+					permissionChecker));
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:commerceOrderId",
@@ -255,7 +253,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 	private Map<String, Object> _getAdditionalProps(
 			CommerceOrder commerceOrder, String field,
-			HttpServletRequest httpServletRequest, Locale locale,
+			HttpServletRequest httpServletRequest,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -283,18 +281,19 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				return Collections.emptyMap();
 			}
 
-			HashMap<String, Object> additionalProps =
-				HashMapBuilder.<String, Object>put(
-					"value", deliveryCommerceTermEntryId
-				).build();
+			return HashMapBuilder.<String, Object>put(
+				"termDescription",
+				() -> {
+					if (!commerceOrder.isOpen()) {
+						return commerceOrder.
+							getDeliveryCommerceTermEntryDescription();
+					}
 
-			if (!commerceOrder.isOpen()) {
-				additionalProps.put(
-					"termDescription",
-					commerceOrder.getDeliveryCommerceTermEntryDescription());
-			}
-
-			return additionalProps;
+					return null;
+				}
+			).put(
+				"value", deliveryCommerceTermEntryId
+			).build();
 		}
 		else if (field.equals("paymentMethod")) {
 			CommercePaymentMethod commercePaymentMethod =
@@ -328,18 +327,19 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				return Collections.emptyMap();
 			}
 
-			HashMap<String, Object> additionalProps =
-				HashMapBuilder.<String, Object>put(
-					"value", paymentCommerceTermEntryId
-				).build();
+			return HashMapBuilder.<String, Object>put(
+				"termDescription",
+				() -> {
+					if (!commerceOrder.isOpen()) {
+						return commerceOrder.
+							getPaymentCommerceTermEntryDescription();
+					}
 
-			if (!commerceOrder.isOpen()) {
-				additionalProps.put(
-					"termDescription",
-					commerceOrder.getPaymentCommerceTermEntryDescription());
-			}
-
-			return additionalProps;
+					return null;
+				}
+			).put(
+				"value", paymentCommerceTermEntryId
+			).build();
 		}
 		else if (field.equals("purchaseOrderDocument")) {
 			List<FileEntry> attachmentFileEntries =
@@ -662,9 +662,6 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
-
-	@Reference
-	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

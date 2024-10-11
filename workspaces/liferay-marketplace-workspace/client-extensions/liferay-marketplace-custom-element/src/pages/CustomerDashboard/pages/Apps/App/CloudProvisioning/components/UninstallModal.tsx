@@ -22,52 +22,50 @@ const UninstallModal = ({
 	modal,
 	provisioningRow,
 	uninstall,
-}: UninstallModalProps) => {
-	return (
-		<Modal
-			first={
-				<ClayButton
-					className="rounded-lg"
-					displayType="secondary"
-					onClick={() => modal.onClose()}
-					size="sm"
-				>
-					{i18n.translate('cancel')}
-				</ClayButton>
-			}
-			last={
-				<ClayButton
-					className="ml-2 rounded-lg"
-					disabled={loading}
-					displayType="danger"
-					onClick={async () => {
-						await uninstall(provisioningRow);
+}: UninstallModalProps) => (
+	<Modal
+		first={
+			<ClayButton
+				className="rounded-lg"
+				displayType="secondary"
+				onClick={() => modal.onClose()}
+				size="sm"
+			>
+				{i18n.translate('cancel')}
+			</ClayButton>
+		}
+		last={
+			<ClayButton
+				className="ml-2 rounded-lg"
+				disabled={loading}
+				displayType="danger"
+				onClick={async () => {
+					await uninstall(provisioningRow);
 
-						modal.onClose();
-					}}
-					size="sm"
-				>
-					{i18n.translate('confirm-uninstall')}
-				</ClayButton>
-			}
-			observer={modal.observer}
-			size={'md' as any}
-			title="Confirm Unstallation Terms"
-			visible={modal.open}
-		>
-			<p>
-				{i18n.translate(
-					'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license'
-				)}
-			</p>
+					modal.onClose();
+				}}
+				size="sm"
+			>
+				{i18n.translate('confirm-uninstall')}
+			</ClayButton>
+		}
+		observer={modal.observer}
+		size={'md' as any}
+		title={i18n.translate('confirm-uninstall-terms')}
+		visible={modal.open}
+	>
+		<p>
+			{i18n.translate(
+				'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license'
+			)}
+		</p>
 
-			<p>
-				{i18n.translate(
-					'a-request-to-uninstall-the-license-will-be-processed-and-it-will-no-longer-be-visible-in-your-account'
-				)}
-			</p>
-		</Modal>
-	);
-};
+		<p>
+			{i18n.translate(
+				'a-request-to-uninstall-the-license-will-be-processed-and-it-will-no-longer-be-visible-in-your-account'
+			)}
+		</p>
+	</Modal>
+);
 
 export default UninstallModal;

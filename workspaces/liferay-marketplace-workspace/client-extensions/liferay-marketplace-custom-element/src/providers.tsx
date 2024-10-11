@@ -18,21 +18,19 @@ type ProviderProps = {
 };
 
 const Providers: React.FC<ProviderProps> = ({children, properties}) => (
-	<SWRConfig
-		value={{
-			provider: SWRCacheProvider,
-			revalidateIfStale: true,
-			revalidateOnFocus: false,
-		}}
-	>
-		<ClayModalProvider>
+	<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+		<SWRConfig
+			value={{
+				provider: SWRCacheProvider,
+				revalidateIfStale: true,
+				revalidateOnFocus: false,
+			}}
+		>
 			<MarketplaceContextProvider properties={properties}>
-				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-					{children}
-				</ClayIconSpriteContext.Provider>
+				<ClayModalProvider>{children}</ClayModalProvider>
 			</MarketplaceContextProvider>
-		</ClayModalProvider>
-	</SWRConfig>
+		</SWRConfig>
+	</ClayIconSpriteContext.Provider>
 );
 
 export default Providers;

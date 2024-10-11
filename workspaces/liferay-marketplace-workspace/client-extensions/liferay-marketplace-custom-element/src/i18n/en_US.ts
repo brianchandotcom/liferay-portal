@@ -92,6 +92,7 @@ export default {
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'confirm-uninstall': 'Confirm & Uninstall',
+	'confirm-uninstall-terms': 'Confirm Uninstall Terms',
 	'contact-publisher': 'Contact Publisher',
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',

@@ -213,7 +213,7 @@ const useProvisioningActions = ({
 				openLink(
 					cloudConsoleURLs.getProjectServices(
 						cloudConsoleURL,
-						`${provisioningRow.project}-${provisioningRow.environment}`
+						`${provisioningRow.project}-${provisioningRow.environment}`.toLowerCase()
 					)
 				),
 			show: (provisioningRow: ProvisioningRow) =>

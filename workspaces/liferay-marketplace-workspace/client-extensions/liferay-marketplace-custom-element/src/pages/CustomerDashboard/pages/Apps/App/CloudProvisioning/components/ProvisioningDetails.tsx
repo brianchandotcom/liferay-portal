@@ -91,7 +91,9 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 					name={headerInfo?.name}
 				/>
 
-				<AccountEmailInfo userAccount={account} />
+				<AccountEmailInfo
+					userAccount={{...account, image: account.logoURL}}
+				/>
 			</div>
 
 			<div className="d-flex flex-row mb-7 mt-5">

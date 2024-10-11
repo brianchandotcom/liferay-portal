@@ -19,7 +19,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -63,63 +62,6 @@ JSONArray rangesJSONArray = customFacetPortletPreferences.getRangesJSONArray();
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<c:choose>
-			<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-153839") %>'>
-				<liferay-frontend:fieldset
-					collapsible="<%= true %>"
-					label="display-settings"
-				>
-					<div class="display-template">
-						<liferay-template:template-selector
-							className="<%= CustomFacetPortlet.class.getName() %>"
-							displayStyle="<%= customFacetPortletInstanceConfiguration.displayStyle() %>"
-							displayStyleGroupId="<%= customFacetDisplayContext.getDisplayStyleGroupId() %>"
-							refreshURL="<%= configurationRenderURL %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
-				</liferay-frontend:fieldset>
-
-				<liferay-frontend:fieldset
-					collapsible="<%= true %>"
-					label="advanced-configuration"
-				>
-					<div class="form-group">
-						<aui:input helpMessage="aggregation-field-help" label="aggregation-field" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD) %>" value="<%= customFacetPortletPreferences.getAggregationField() %>" wrapperCssClass="c-mb-0" />
-
-						<div class="form-feedback-group">
-							<div class="form-text">
-								<liferay-ui:message key="aggregation-field-input-help" />
-
-								<liferay-learn:message
-									key="custom-facet"
-									resource="portal-search-web"
-								/>
-							</div>
-						</div>
-					</div>
-
-					<aui:input helpMessage="custom-heading-help" label="custom-heading" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING) %>" value="<%= customFacetPortletPreferences.getCustomHeading() %>" />
-
-					<aui:input helpMessage="custom-parameter-name-help" label="custom-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= customFacetPortletPreferences.getParameterName() %>" />
-
-					<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= customFacetPortletPreferences.getMaxTerms() %>" />
-
-					<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= customFacetPortletPreferences.getFrequencyThreshold() %>" />
-
-					<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= customFacetPortletPreferences.getOrder() %>">
-						<aui:option label="term-frequency-descending" value="count:desc" />
-						<aui:option label="term-frequency-ascending" value="count:asc" />
-						<aui:option label="term-value-ascending" value="key:asc" />
-						<aui:option label="term-value-descending" value="key:desc" />
-					</aui:select>
-
-					<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= customFacetPortletPreferences.isFrequenciesVisible() %>" />
-
-					<aui:input helpMessage="enter-the-key-of-an-alternate-search-this-widget-is-participating-on-if-not-set-widget-participates-on-default-search" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= customFacetPortletPreferences.getFederatedSearchKey() %>" />
-				</liferay-frontend:fieldset>
-			</c:when>
-			<c:otherwise>
 				<liferay-frontend:fieldset
 					collapsible="<%= true %>"
 					label="aggregation-settings"
@@ -228,8 +170,6 @@ JSONArray rangesJSONArray = customFacetPortletPreferences.getRangesJSONArray();
 				>
 					<aui:input helpMessage="enter-the-key-of-an-alternate-search-this-widget-is-participating-on-if-not-set-widget-participates-on-default-search" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= customFacetPortletPreferences.getFederatedSearchKey() %>" />
 				</liferay-frontend:fieldset>
-			</c:otherwise>
-		</c:choose>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

@@ -93,7 +93,7 @@ definition {
 	macro checkSelectedCookieExpirationDate() {
 		Variables.assertDefined(parameterList = ${cookieName});
 
-		var javascriptForTargetDate = '''var targetDate = new Date( Date.now() - (1 * 24 * 60 * 60 * 1000) ); targetDate.setMonth(targetDate.getMonth() + 12); return targetDate.toISOString().slice(0,13);''';
+		var javascriptForTargetDate = '''var targetDate = new Date( Date.now()); targetDate.setDate(targetDate.getDate() + 365); return targetDate.toISOString().slice(0,13);''';
 
 		var targetDate = selenium.getEval(${javascriptForTargetDate});
 		var javascriptForCookieExpirationDate = '''var cookieName = "${cookieName}";

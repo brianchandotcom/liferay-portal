@@ -7,6 +7,8 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Locale;
+
 /**
  * @author Bryan Engler
  */
@@ -96,6 +98,10 @@ public class BucketDisplayContext {
 		return _bucketText;
 	}
 
+	public Locale getLocale() {
+		return _locale;
+	}
+
 	public int getPopularity() {
 		return _popularity;
 	}
@@ -164,6 +170,10 @@ public class BucketDisplayContext {
 		_frequencyVisible = frequencyVisible;
 	}
 
+	public void setLocale(Locale locale) {
+		_locale = locale;
+	}
+
 	public void setPopularity(int popularity) {
 		_popularity = popularity;
 	}
@@ -176,6 +186,7 @@ public class BucketDisplayContext {
 	private String _filterValue;
 	private int _frequency;
 	private boolean _frequencyVisible;
+	private Locale _locale;
 	private int _popularity;
 	private boolean _selected;
 

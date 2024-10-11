@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -128,6 +129,11 @@ public class ClusterableInvokerUtil {
 			context.put("groupId", GroupThreadLocal.getGroupId());
 		}
 
+		if (!context.containsKey("principalCompanyId")) {
+			context.put(
+				"principalCompanyId", PrincipalThreadLocal.getCompanyId());
+		}
+
 		if (!context.containsKey("principalName")) {
 			context.put("principalName", PrincipalThreadLocal.getName());
 		}
@@ -180,7 +186,11 @@ public class ClusterableInvokerUtil {
 		PermissionChecker permissionChecker = null;
 
 		if (Validator.isNotNull(principalName)) {
-			try {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						GetterUtil.getLong(
+							context.get("principalCompanyId")))) {
+
 				User user = UserLocalServiceUtil.fetchUser(
 					PrincipalThreadLocal.getUserId());
 

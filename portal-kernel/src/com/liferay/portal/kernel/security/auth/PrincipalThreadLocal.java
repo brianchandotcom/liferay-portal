@@ -9,14 +9,23 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PrincipalThreadLocal {
+
+	public static long getCompanyId() {
+		return _companyId.get();
+	}
 
 	public static String getName() {
 		String name = _name.get();
@@ -61,6 +70,7 @@ public class PrincipalThreadLocal {
 			_log.debug("setName " + name);
 		}
 
+		_companyId.set(_getCompanyId(name));
 		_name.set(name);
 
 		if (resetCTCollectionId) {
@@ -72,11 +82,40 @@ public class PrincipalThreadLocal {
 		_password.set(password);
 	}
 
+	private static Long _getCompanyId(String name) {
+		if ((name == null) || (GetterUtil.getLong(name) == 0L)) {
+			return CompanyConstants.SYSTEM;
+		}
+
+		Map<String, Long> namesCompanyId = _namesCompanyId.get();
+
+		return namesCompanyId.computeIfAbsent(
+			name,
+			key -> {
+				User user = UserLocalServiceUtil.fetchUser(
+					GetterUtil.getLong(key));
+
+				if (user != null) {
+					return user.getCompanyId();
+				}
+
+				return null;
+			});
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrincipalThreadLocal.class);
 
+	private static final CentralizedThreadLocal<Long> _companyId =
+		new CentralizedThreadLocal<>(
+			PrincipalThreadLocal.class + "._companyId",
+			() -> CompanyConstants.SYSTEM);
 	private static final ThreadLocal<String> _name =
 		new CentralizedThreadLocal<>(PrincipalThreadLocal.class + "._name");
+	private static final CentralizedThreadLocal<Map<String, Long>>
+		_namesCompanyId = new CentralizedThreadLocal<>(
+			PrincipalThreadLocal.class + "._namesCompanyId",
+			() -> new HashMap<>());
 	private static final ThreadLocal<String> _password =
 		new CentralizedThreadLocal<>(PrincipalThreadLocal.class + "._password");
 

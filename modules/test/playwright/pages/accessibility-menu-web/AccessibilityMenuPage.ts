@@ -30,6 +30,10 @@ export class AccessibilityMenuPage {
 		this.underlinedLinksToggle = page.getByLabel('Underlined Links');
 	}
 
+	async isAccessibilityMenuAttached() {
+		return (await this.openAccessibilityMenuButton.count()) === 1;
+	}
+
 	async enableAccessibilityMenu() {
 		if (!(await this.enableAccessibilityMenuCheckbox.isChecked())) {
 			await this.enableAccessibilityMenuCheckbox.check();

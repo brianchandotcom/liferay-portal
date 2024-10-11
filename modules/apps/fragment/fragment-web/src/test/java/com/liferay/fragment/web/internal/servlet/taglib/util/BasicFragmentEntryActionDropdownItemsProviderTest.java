@@ -6,6 +6,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
@@ -80,6 +81,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	}
 
 	@Test
+	@TestInfo("LPS-122082,LPS-122641")
 	public void testGetReactFragmentEntryActionDropdowns() throws Exception {
 		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false, true);

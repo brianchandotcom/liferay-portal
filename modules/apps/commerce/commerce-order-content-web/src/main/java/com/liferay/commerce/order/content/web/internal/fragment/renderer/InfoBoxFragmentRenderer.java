@@ -84,6 +84,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Gianmarco Brunialti Masera
  */
 @Component(service = FragmentRenderer.class)
 public class InfoBoxFragmentRenderer implements FragmentRenderer {
@@ -145,7 +146,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		boolean readOnly = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
+				getConfiguration(fragmentRendererContext),
 				fragmentEntryLink.getEditableValues(),
 				fragmentRendererContext.getLocale(), "readOnly"));
 

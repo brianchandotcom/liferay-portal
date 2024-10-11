@@ -171,7 +171,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 								"commerceOrderImporterTypeKey",
 								commerceOrderImporterType.getKey()
 							).setParameter(
-								"orderDetailURL", commerceOrderFriendlyURL
+								"orderDetailURL",
+								commerceOrderFriendlyURL +
+									commerceOrder.getCommerceOrderId()
 							).setWindowState(
 								LiferayWindowState.POP_UP
 							).buildString()
@@ -219,7 +221,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 							"commerceOrderId",
 							commerceOrder.getCommerceOrderId()
 						).setParameter(
-							"orderDetailURL", commerceOrderFriendlyURL
+							"orderDetailURL",
+							commerceOrderFriendlyURL +
+								commerceOrder.getCommerceOrderId()
 						).buildString()
 					).setLabel(
 						_language.get(httpServletRequest, "delete")
@@ -250,7 +254,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 							"commerceOrderId",
 							commerceOrder.getCommerceOrderId()
 						).setParameter(
-							"orderDetailURL", commerceOrderFriendlyURL
+							"orderDetailURL",
+							commerceOrderFriendlyURL +
+								commerceOrder.getCommerceOrderId()
 						).buildString()
 					).setLabel(
 						_language.get(httpServletRequest, "remove-all-items")
@@ -273,7 +279,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				).setParameter(
 					"commerceOrderId", commerceOrder.getCommerceOrderId()
 				).setParameter(
-					"orderDetailURL", commerceOrderFriendlyURL
+					"orderDetailURL",
+					commerceOrderFriendlyURL +
+						commerceOrder.getCommerceOrderId()
 				).setResourceID(
 					"/commerce_order_content/export_commerce_order_report"
 				).buildString()

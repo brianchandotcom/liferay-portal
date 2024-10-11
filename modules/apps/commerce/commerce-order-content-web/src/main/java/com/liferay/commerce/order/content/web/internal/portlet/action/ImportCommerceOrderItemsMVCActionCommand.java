@@ -162,7 +162,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			actionRequest, "orderDetailURL");
 
 		if (Validator.isNotNull(orderDetailURL)) {
-			return orderDetailURL;
+			return orderDetailURL + commerceOrderId;
 		}
 
 		return PortletURLBuilder.create(

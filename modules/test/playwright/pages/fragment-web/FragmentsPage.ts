@@ -154,9 +154,11 @@ export class FragmentsPage {
 	}
 
 	async clickFragmentSetsAction(action: string) {
-		await this.page.getByLabel('Show Actions').click();
-
-		await this.page.getByRole('menuitem', {name: action}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: this.page.getByLabel('Show Actions'),
+		});
 	}
 
 	async createFragmentSet(name: string) {

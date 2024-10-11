@@ -199,7 +199,7 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
+				getConfiguration(fragmentRendererContext),
 				fragmentEntryLink.getEditableValues(),
 				fragmentRendererContext.getLocale(), name));
 	}

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -267,7 +268,7 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
+				getConfiguration(fragmentRendererContext),
 				fragmentEntryLink.getEditableValues(),
 				fragmentRendererContext.getLocale(), name));
 	}
@@ -296,15 +297,20 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 					null, null));
 		}
 		else if (fdsName.equals(CommerceOrderFragmentFDSNames.PLACED_ORDERS)) {
-			List<FDSActionDropdownItem> fdsActionDropdownItems = Arrays.asList(
+			List<FDSActionDropdownItem> fdsActionDropdownItems =
+				new ArrayList<>();
+
+			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					_getCommerceOrderFriendlyURL(httpServletRequest) + "{id}",
 					"view", "view", _language.get(httpServletRequest, "view"),
-					null, null, "link"),
+					null, null, "link"));
+			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					StringPool.BLANK, "pencil", "rename",
 					_language.get(httpServletRequest, "rename"), null, null,
-					"link"),
+					"link"));
+			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					StringPool.BLANK, "reset", "reorder",
 					_language.get(httpServletRequest, "reorder"), null, null,
@@ -313,9 +319,9 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 			if (FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
 				fdsActionDropdownItems.add(
 					new FDSActionDropdownItem(
-						null, "return",
+						StringPool.BLANK, "undo", "return",
 						_language.get(httpServletRequest, "make-a-return"),
-						null, null, null, null));
+						null, null, "makeReturn"));
 			}
 
 			return fdsActionDropdownItems;

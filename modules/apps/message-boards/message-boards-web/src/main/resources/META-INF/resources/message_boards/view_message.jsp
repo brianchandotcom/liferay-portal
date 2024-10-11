@@ -59,6 +59,20 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		);
 
 		if (addQuickReplyContainer) {
+			var editorName = '<portlet:namespace />replyMessageBody' + messageId;
+
+			if (window[editorName]) {
+				addQuickReplyContainer.classList.remove('hide');
+				addQuickReplyContainer.scrollIntoView(true);
+
+				Liferay.Util.toggleDisabled(
+					'#<portlet:namespace />replyMessageButton' + messageId,
+					true
+				);
+
+				return;
+			}
+
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/message_boards/get_edit_message_quick" var="editMessageQuickURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</liferay-portlet:resourceURL>
@@ -103,9 +117,6 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 					if (parentMessageIdInput) {
 						parentMessageIdInput.value = messageId;
 					}
-
-					var editorName =
-						'<portlet:namespace />replyMessageBody' + messageId;
 
 					Liferay.componentReady(editorName).then((editor) => {
 						editor.focus();

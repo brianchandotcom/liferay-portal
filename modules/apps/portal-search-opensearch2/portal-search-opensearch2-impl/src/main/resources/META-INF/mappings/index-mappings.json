@@ -1334,69 +1334,6 @@
 			}
 		},
 		{
-			"template_text_embedding_256": {
-				"mapping": {
-					"dimension": 256,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_256*"
-			}
-		},
-		{
-			"template_text_embedding_384": {
-				"mapping": {
-					"dimension": 384,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_384*"
-			}
-		},
-		{
-			"template_text_embedding_512": {
-				"mapping": {
-					"dimension": 512,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_512*"
-			}
-		},
-		{
-			"template_text_embedding_768": {
-				"mapping": {
-					"dimension": 768,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_768*"
-			}
-		},
-		{
-			"template_text_embedding_1024": {
-				"mapping": {
-					"dimension": 1024,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_1024*"
-			}
-		},
-		{
-			"template_text_embedding_1536": {
-				"mapping": {
-					"dimension": 1536,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_1536*"
-			}
-		},
-		{
-			"template_text_embedding_3072": {
-				"mapping": {
-					"dimension": 3072,
-					"type": "knn_vector"
-				},
-				"path_match": "text_embedding_3072*"
-			}
-		},
-		{
 			"template_": {
 				"mapping": {
 					"type": "text"

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
@@ -180,6 +181,7 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 				setLiferayMappingsAddedToIndex(_liferayMappingsAddedToIndex);
 				setOpenSearchConnectionManager(
 					_testOpenSearchConnectionManager);
+				setSearchEngineInformation(_createSearchEngineInformation());
 			}
 		};
 
@@ -329,6 +331,19 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 		);
 
 		return props;
+	}
+
+	private SearchEngineInformation _createSearchEngineInformation() {
+		SearchEngineInformation searchEngineInformation = Mockito.mock(
+			SearchEngineInformation.class);
+
+		Mockito.when(
+			searchEngineInformation.getEmbeddingVectorDimensions()
+		).thenReturn(
+			new int[] {256}
+		);
+
+		return searchEngineInformation;
 	}
 
 	private void _deleteIndex() {

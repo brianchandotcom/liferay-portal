@@ -6,6 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.connection.helper;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.index.MappingsHelperImpl;
 import com.liferay.portal.search.opensearch2.internal.index.constants.IndexSettingsConstants;
@@ -22,9 +23,11 @@ import org.opensearch.client.opensearch.indices.CreateIndexRequest;
 public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 	public LiferayIndexCreationHelper(
-		OpenSearchConnectionManager openSearchConnectionManager) {
+		OpenSearchConnectionManager openSearchConnectionManager,
+		SearchEngineInformation searchEngineInformation) {
 
 		_openSearchConnectionManager = openSearchConnectionManager;
+		_searchEngineInformation = searchEngineInformation;
 	}
 
 	@Override
@@ -33,7 +36,8 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 			_openSearchConnectionManager.getOpenSearchClient();
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
-			null, new JSONFactoryImpl(), openSearchClient.indices(), null);
+			null, new JSONFactoryImpl(), openSearchClient.indices(), null,
+			_searchEngineInformation);
 
 		mappingsHelperImpl.setDefaultOrOverrideMappings(
 			builder, _openSearchConnectionManager.getJsonpMapper(null));
@@ -51,5 +55,6 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	}
 
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
+	private final SearchEngineInformation _searchEngineInformation;
 
 }

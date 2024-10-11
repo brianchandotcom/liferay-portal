@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapperImpl;
@@ -109,6 +110,9 @@ public class CompanyIndexFactoryFixture {
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexHelper, "_openSearchConnectionManager",
 			_openSearchConnectionManager);
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexHelper, "_searchEngineInformation",
+			_createSearchEngineInformation());
 
 		ReflectionTestUtil.invoke(
 			_companyIndexHelper, "activate",
@@ -183,6 +187,19 @@ public class CompanyIndexFactoryFixture {
 		);
 
 		return frameworkUtilMockedStatic;
+	}
+
+	private SearchEngineInformation _createSearchEngineInformation() {
+		SearchEngineInformation searchEngineInformation = Mockito.mock(
+			SearchEngineInformation.class);
+
+		Mockito.when(
+			searchEngineInformation.getEmbeddingVectorDimensions()
+		).thenReturn(
+			new int[] {256}
+		);
+
+		return searchEngineInformation;
 	}
 
 	private CompanyIndexFactory _companyIndexFactory;

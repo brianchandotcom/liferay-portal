@@ -52,9 +52,9 @@ public class Tree {
 		int maxHeight = -1;
 
 		for (Node childNode : node.getChildNodes()) {
-			int childHeight = getHeight(childNode);
+			int childNodeHeight = getHeight(childNode);
 
-			maxHeight = Math.max(maxHeight, childHeight);
+			maxHeight = Math.max(maxHeight, childNodeHeight);
 		}
 
 		return maxHeight + 1;

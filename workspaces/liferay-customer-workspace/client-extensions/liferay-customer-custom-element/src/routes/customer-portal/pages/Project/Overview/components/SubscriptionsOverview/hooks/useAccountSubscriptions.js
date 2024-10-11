@@ -14,26 +14,29 @@ export default function useAccountSubscriptions(
 	accountSubcriptionGroup,
 	accountSubscriptionGroupsLoading
 ) {
-	const [lastSubscriptionStatus, setLastSubscriptionStatus] =
-		useState([SUBSCRIPTIONS_STATUS.active]);
+	const [lastSubscriptionStatus, setLastSubscriptionStatus] = useState([
+		SUBSCRIPTIONS_STATUS.active,
+	]);
 
 	const [handleGetAccountSubscriptions, {called, data, loading}] =
 		useLazyGetAccountSubscriptions();
 
 	const getSubscriptionStatusFilter = (subscriptionStatuses) => {
-	    const filters = [];
+		const filters = [];
 
 		if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.active)) {
-			filters.push(`(endDate gt ${getCurrentDate} and startDate lt ${getCurrentDate})`);
+			filters.push(
+				`(endDate gt ${getCurrentDate} and startDate lt ${getCurrentDate})`
+			);
 		}
 
 		if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.expired)) {
-            filters.push(`endDate lt ${getCurrentDate}`);
-        }
+			filters.push(`endDate lt ${getCurrentDate}`);
+		}
 
-        if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.future)) {
-            filters.push(`startDate gt ${getCurrentDate}`);
-        }
+		if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.future)) {
+			filters.push(`startDate gt ${getCurrentDate}`);
+		}
 
 		return filters.join(' or ');
 	};

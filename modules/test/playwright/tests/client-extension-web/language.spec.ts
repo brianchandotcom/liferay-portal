@@ -8,6 +8,7 @@ import {mergeTests} from '@playwright/test';
 import {languageOverridePageTest} from '../../fixtures/LanguageOverridePageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {TLanguageKey} from '../../pages/portal-language-override-web/LanguageOverridePage';
 
 const test = mergeTests(
 	languageOverridePageTest,
@@ -17,9 +18,9 @@ const test = mergeTests(
 	loginTest()
 );
 
-const EXPECTED_TRANSLATION = {
+const EXPECTED_TRANSLATION: TLanguageKey = {
 	key: 'do-you-like-to-eat-pizza-with-anchovies',
-	values: [
+	translations: [
 		{
 			languageId: 'de-DE',
 			value: 'Magst du es, Pizza mit Sardellen zu essen?',
@@ -46,11 +47,13 @@ test('LPD-36494 assert that the language client extension is deployed', async ({
 
 	await languageOverridePage.changeFilter('Any Language');
 
-	await languageOverridePage.searchTranslation(EXPECTED_TRANSLATION.key);
+	await languageOverridePage.searchLanguageKey(EXPECTED_TRANSLATION.key);
 
-	await languageOverridePage.assertTranslationInListView(
+	await languageOverridePage.assertLanguageKeyInListView(
 		EXPECTED_TRANSLATION
 	);
 
-	await languageOverridePage.assertKeyTranslations(EXPECTED_TRANSLATION);
+	await languageOverridePage.assertLanguageKeyTranslations(
+		EXPECTED_TRANSLATION
+	);
 });

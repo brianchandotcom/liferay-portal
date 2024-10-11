@@ -447,9 +447,10 @@ public abstract class BaseDB implements DB {
 
 						columnNames = ArrayUtil.append(
 							columnNames,
-							dbInspector.normalizeName(
-								indexResultSet.getString("COLUMN_NAME"),
-								databaseMetaData));
+							getIndexColumnName(
+								dbInspector.normalizeName(
+									indexResultSet.getString("COLUMN_NAME"),
+									databaseMetaData)));
 					}
 
 					if ((previousIndexName != null) &&
@@ -1386,6 +1387,10 @@ public abstract class BaseDB implements DB {
 		return StringBundler.concat(
 			"create table ", newTableName, " as select * from ", tableName,
 			" where 1 = 0");
+	}
+
+	protected String getIndexColumnName(String indexColumnName) {
+		return indexColumnName;
 	}
 
 	protected String getRenameTableSQL(

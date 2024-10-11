@@ -8,9 +8,7 @@ package com.liferay.journal.web.internal.model.listener;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.exception.DDMStructureValidationModelListenerException;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -20,21 +18,15 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	configurationPid = "com.liferay.journal.web.internal.configuration.JournalWebConfiguration",
-	service = ModelListener.class
-)
+@Component(service = ModelListener.class)
 public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	@Override
@@ -63,13 +55,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
-			JournalWebConfiguration.class, properties);
-	}
-
 	@Reference
 	protected ConfigurationProvider configurationProvider;
 
@@ -91,8 +76,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureModelListener.class);
-
-	private volatile JournalWebConfiguration _journalWebConfiguration;
 
 	@Reference
 	private Portal _portal;

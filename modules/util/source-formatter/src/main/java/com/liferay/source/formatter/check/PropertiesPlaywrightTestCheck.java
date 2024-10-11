@@ -211,8 +211,9 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Missing property \"", playwrightTestProjectPropertyName,
-						"\"", additionalMessage));
+						"Missing property \"",
+						playwrightTestProjectPropertyName, "\"",
+						additionalMessage));
 			}
 			else if (!playwrightTestProjectList.contains(moduleName)) {
 				addMessage(

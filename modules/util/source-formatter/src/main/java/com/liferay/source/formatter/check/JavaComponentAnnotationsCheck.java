@@ -288,7 +288,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"The \"service\" attribute points to \"", fullyQualifiedName,
+					"The \"service\" attribute points to \"",
+					fullyQualifiedName,
 					"\", which is an internal class or interface"));
 
 			return;
@@ -319,7 +320,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"The \"service\" attribute points to \"", fullyQualifiedName,
+					"The \"service\" attribute points to \"",
+					fullyQualifiedName,
 					"\", which is an internal class or interface"));
 		}
 	}

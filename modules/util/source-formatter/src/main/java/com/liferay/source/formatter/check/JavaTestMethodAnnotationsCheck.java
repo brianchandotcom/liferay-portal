@@ -97,7 +97,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			}
 			else if (javaTerm.isStatic() != staticRequired) {
 				addMessage(
-					fileName, "Incorrect method type for \"" + methodName + "\"",
+					fileName,
+					"Incorrect method type for \"" + methodName + "\"",
 					javaTerm.getLineNumber());
 			}
 

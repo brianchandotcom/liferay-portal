@@ -139,7 +139,8 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Attribute \"", childElementName,
 						"\" is no longer a valid attribute for element \"",
-						elementName, "\" in version \"", upgradeToVersion, "\""));
+						elementName, "\" in version \"", upgradeToVersion,
+						"\""));
 			}
 
 			_checkElement(

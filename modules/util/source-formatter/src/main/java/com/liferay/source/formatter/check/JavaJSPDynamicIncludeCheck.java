@@ -84,7 +84,8 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 
 		if (!jspPath.startsWith("/dynamic_include/")) {
 			addMessage(
-				fileName, "The JSP path should start with \"/dynamic_include/\"");
+				fileName,
+				"The JSP path should start with \"/dynamic_include/\"");
 		}
 
 		return javaTerm.getContent();

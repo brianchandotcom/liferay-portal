@@ -141,8 +141,9 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Taglib \"", taglibName, "\" no longer exists in version \"",
-					upgradeToVersion, "\""),
+					"Taglib \"", taglibName,
+					"\" no longer exists in version \"", upgradeToVersion,
+					"\""),
 				lineNumber);
 		}
 
@@ -153,7 +154,8 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 				fileName,
 				StringBundler.concat(
 					"Tag \"", tag.getFullName(),
-					"\" no longer exists in version \"", upgradeToVersion, "\""),
+					"\" no longer exists in version \"", upgradeToVersion,
+					"\""),
 				lineNumber);
 		}
 

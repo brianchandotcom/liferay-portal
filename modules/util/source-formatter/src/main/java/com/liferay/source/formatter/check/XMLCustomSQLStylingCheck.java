@@ -167,7 +167,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					content.substring(endLineStartPos, endPos));
 
 				addMessage(
-					fileName, "There should be a line break after \"" + s + "\"",
+					fileName,
+					"There should be a line break after \"" + s + "\"",
 					endLineNumber);
 
 				continue;
@@ -199,8 +200,9 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Line starts with \"", endLineTabCount, "\" tabs, but \"",
-						startLineTabCount, "\" tabs are expected"),
+						"Line starts with \"", endLineTabCount,
+						"\" tabs, but \"", startLineTabCount,
+						"\" tabs are expected"),
 					endLineNumber);
 			}
 		}

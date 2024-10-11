@@ -77,7 +77,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 			if (trimmedLine.length() == 7) {
 				addMessage(
 					fileName,
-					message + "There should be one file path after \"## What\"");
+					message +
+						"There should be one file path after \"## What\"");
 
 				return;
 			}

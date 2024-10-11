@@ -352,7 +352,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Class \"" + className + "\" should be in \"internal\" package");
+				"Class \"" + className +
+					"\" should be in \"internal\" package");
 		}
 	}
 

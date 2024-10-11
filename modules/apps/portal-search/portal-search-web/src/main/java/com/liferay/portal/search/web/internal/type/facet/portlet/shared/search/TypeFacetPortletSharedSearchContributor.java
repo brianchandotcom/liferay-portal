@@ -19,6 +19,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +63,7 @@ public class TypeFacetPortletSharedSearchContributor
 
 		searchRequestBuilder.withSearchContext(
 			searchContext -> {
-				HashSet<String> assetEntryClassNamesSet = new HashSet<>(
+				Set<String> assetEntryClassNamesSet = new HashSet<>(
 					Arrays.asList(searchContext.getEntryClassNames()));
 
 				Collections.addAll(

@@ -76,7 +76,8 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 		addMessage(
 			fileName,
-			"The value \"" + componentName + "\" is not a valid OSGi component");
+			"The value \"" + componentName +
+				"\" is not a valid OSGi component");
 	}
 
 	@Override

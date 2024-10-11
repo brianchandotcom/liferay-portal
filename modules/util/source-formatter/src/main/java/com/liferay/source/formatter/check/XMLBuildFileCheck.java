@@ -121,7 +121,8 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 			if (!file.exists()) {
 				addMessage(
-					fileName, "Incorrect import file \"" + importFileName + "\"");
+					fileName,
+					"Incorrect import file \"" + importFileName + "\"");
 			}
 		}
 	}
@@ -144,7 +145,8 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		}
 
 		if (!targetNames.contains(targetName)) {
-			addMessage(fileName, "Target \"" + targetName + "\" does not exist");
+			addMessage(
+				fileName, "Target \"" + targetName + "\" does not exist");
 		}
 	}
 

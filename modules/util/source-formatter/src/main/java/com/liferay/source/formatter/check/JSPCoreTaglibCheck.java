@@ -90,7 +90,8 @@ public class JSPCoreTaglibCheck extends BaseJSPTermsCheck {
 
 					if (clauses.size() == 1) {
 						addMessage(
-							fileName, "Use \"c:if\" tag instead of if-statement",
+							fileName,
+							"Use \"c:if\" tag instead of if-statement",
 							firstClause.getStartLineNumber());
 					}
 					else {

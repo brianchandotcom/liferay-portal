@@ -30,7 +30,8 @@ public class JavaUnsafeCastingCheck extends BaseFileCheck {
 					break;
 				}
 
-				String message = "Unsafe casting for \"" + unsafeClassName + "\"";
+				String message =
+					"Unsafe casting for \"" + unsafeClassName + "\"";
 
 				addMessage(fileName, message, getLineNumber(content, pos));
 			}

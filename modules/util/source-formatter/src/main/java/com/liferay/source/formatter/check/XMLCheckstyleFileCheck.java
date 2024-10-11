@@ -95,8 +95,8 @@ public class XMLCheckstyleFileCheck extends BaseFileCheck {
 		addMessage(
 			fileName,
 			StringBundler.concat(
-				"Missing property \"", propertyName, "\" for check \"", moduleName,
-				"\""));
+				"Missing property \"", propertyName, "\" for check \"",
+				moduleName, "\""));
 	}
 
 }

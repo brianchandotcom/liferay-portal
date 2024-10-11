@@ -69,7 +69,8 @@ public class JavaComponentActivateCheck extends BaseJavaTermCheck {
 						fileName,
 						StringBundler.concat(
 							"Method with annotation \"", annotationName,
-							"\" should have name \"", expectedMethodName, "\""));
+							"\" should have name \"", expectedMethodName,
+							"\""));
 				}
 			}
 

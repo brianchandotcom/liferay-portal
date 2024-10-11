@@ -72,7 +72,8 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 			}
 
 			if (serviceXMLfile.exists()) {
-				addMessage(fileName, "Missing \"Liferay-Require-SchemaVersion\"");
+				addMessage(
+					fileName, "Missing \"Liferay-Require-SchemaVersion\"");
 			}
 		}
 		else if (schemaVersion != null) {

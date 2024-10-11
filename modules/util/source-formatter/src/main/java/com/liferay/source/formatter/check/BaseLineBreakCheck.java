@@ -39,7 +39,8 @@ public abstract class BaseLineBreakCheck extends BaseFileCheck {
 			(getLevel(trimmedLine) > 0)) {
 
 			addMessage(
-				fileName, "There should be a line break after \"(\"", lineNumber);
+				fileName, "There should be a line break after \"(\"",
+				lineNumber);
 		}
 
 		if (line.endsWith(" +") || line.endsWith(" -") || line.endsWith(" *") ||

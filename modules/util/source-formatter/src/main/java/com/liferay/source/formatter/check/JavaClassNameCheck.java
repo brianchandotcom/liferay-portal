@@ -72,7 +72,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 					fileName,
 					StringBundler.concat(
 						"Name of class in package \"", packageName,
-						"\" should end with \"", expectedClassNameEnding, "\""));
+						"\" should end with \"", expectedClassNameEnding,
+						"\""));
 			}
 		}
 
@@ -130,8 +131,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 					fileName,
 					StringBundler.concat(
 						"Name of class extending \"", enforceExtendedClassName,
-						"\" should end with \"", trimmedEnforceExtendedClassName,
-						"\""));
+						"\" should end with \"",
+						trimmedEnforceExtendedClassName, "\""));
 
 				break;
 			}
@@ -245,8 +246,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Typo in either class name \"", className, "\" or package \"",
-					packageName, "\""));
+					"Typo in either class name \"", className,
+					"\" or package \"", packageName, "\""));
 		}
 	}
 

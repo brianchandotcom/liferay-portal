@@ -45,7 +45,8 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Missing tag \"", tagName, "\" for check \"", checkName, "\""));
+					"Missing tag \"", tagName, "\" for check \"", checkName,
+					"\""));
 		}
 	}
 

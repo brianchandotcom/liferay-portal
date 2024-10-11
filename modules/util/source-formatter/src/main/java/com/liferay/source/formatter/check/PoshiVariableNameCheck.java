@@ -115,8 +115,8 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Rename variable \"", variableName, "\" to \"", expectedName,
-					"\" in \"", message, "\""));
+					"Rename variable \"", variableName, "\" to \"",
+					expectedName, "\" in \"", message, "\""));
 		}
 	}
 

@@ -71,8 +71,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 						fileName,
 						StringBundler.concat(
 							"Incorrect order \"", entityName, "\": Category \"",
-							previousCategory, "\" should come after \"", category,
-							"\""));
+							previousCategory, "\" should come after \"",
+							category, "\""));
 				}
 
 				previousCategoryIndex = categoryIndex;

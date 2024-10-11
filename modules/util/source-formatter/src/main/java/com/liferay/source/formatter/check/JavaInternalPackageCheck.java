@@ -108,8 +108,8 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Use \"internal\" instead of \"impl\" in package \"" + packageName +
-					"\"");
+				"Use \"internal\" instead of \"impl\" in package \"" +
+					packageName + "\"");
 		}
 	}
 

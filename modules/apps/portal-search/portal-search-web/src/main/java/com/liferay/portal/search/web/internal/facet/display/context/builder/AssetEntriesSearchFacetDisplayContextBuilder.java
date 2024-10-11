@@ -99,6 +99,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		bucketDisplayContext.setFilterValue(assetType);
 		bucketDisplayContext.setFrequency(frequency);
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setLocale(_locale);
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;

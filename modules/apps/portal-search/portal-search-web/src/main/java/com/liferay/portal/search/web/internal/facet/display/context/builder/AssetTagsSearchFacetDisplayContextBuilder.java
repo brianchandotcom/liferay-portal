@@ -24,6 +24,7 @@ import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayConte
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
@@ -99,6 +100,10 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		_frequencyThreshold = frequencyThreshold;
 	}
 
+	public void setLocale(Locale locale) {
+		_locale = locale;
+	}
+
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
 	}
@@ -148,6 +153,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		bucketDisplayContext.setFrequency(frequency);
 
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setLocale(_locale);
 
 		int popularity = (int)getPopularity(
 			frequency, minCount, maxCount, multiplier);
@@ -339,6 +345,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	private Facet _facet;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
+	private Locale _locale;
 	private int _maxTerms;
 	private String _order;
 	private String _paginationStartParameterName;

@@ -314,6 +314,7 @@ public class CustomFacetDisplayContextBuilder {
 		bucketDisplayContext.setFrequency(
 			getFrequency(_getCustomRangeTermCollector(selected)));
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setLocale(_locale);
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;

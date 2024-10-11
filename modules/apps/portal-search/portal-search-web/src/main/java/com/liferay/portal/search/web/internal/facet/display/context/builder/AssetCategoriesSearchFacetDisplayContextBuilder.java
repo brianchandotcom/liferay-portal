@@ -181,6 +181,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			String.valueOf(assetCategory.getCategoryId()));
 		bucketDisplayContext.setFrequency(frequency);
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setLocale(_locale);
 		bucketDisplayContext.setPopularity(popularity);
 		bucketDisplayContext.setSelected(selected);
 

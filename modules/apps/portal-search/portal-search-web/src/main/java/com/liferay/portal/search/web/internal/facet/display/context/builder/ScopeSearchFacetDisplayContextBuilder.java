@@ -150,6 +150,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		bucketDisplayContext.setFilterValue(String.valueOf(groupId));
 		bucketDisplayContext.setFrequency(count);
 		bucketDisplayContext.setFrequencyVisible(_showCounts);
+		bucketDisplayContext.setLocale(_locale);
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;

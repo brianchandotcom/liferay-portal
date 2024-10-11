@@ -8,6 +8,7 @@ package com.liferay.portlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -20,6 +21,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.Portlet;
 
@@ -55,58 +57,82 @@ public class PortletLocalServiceTest {
 
 	@Test
 	public void testGetCustomAttributesDisplaysWithCustomAttributesDisplayDisabled() {
-		Props props = null;
-
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		try {
+			PropsTestUtil.setProps(
+				"feature.flag.LPD-ENABLED", Boolean.TRUE.toString());
+
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					Portlet.class, new TestPortlet(),
 					MapUtil.singletonDictionary(
-						"javax.portlet.name",
-						"com_liferay_portal_kernel_service_TestPortlet")));
+						"javax.portlet.name", _TEST_PORTLET_NAME)));
 
-			TestCustomAttributesDisplay enabledTestCustomAttributesDisplay =
-				new TestCustomAttributesDisplay("LPD-XXXXX");
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					enabledTestCustomAttributesDisplay,
-					MapUtil.singletonDictionary(
-						"javax.portlet.name",
-						"com_liferay_portal_kernel_service_TestPortlet")));
-
-			TestCustomAttributesDisplay disabledTestCustomAttributesDisplay =
-				new TestCustomAttributesDisplay(null);
+			TestCustomAttributesDisplay
+				testCustomAttributesDisplayWithEnabledFeatureFlag =
+					new TestCustomAttributesDisplay("LPD-ENABLED");
 
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					CustomAttributesDisplay.class,
-					new TestCustomAttributesDisplay(null),
+					testCustomAttributesDisplayWithEnabledFeatureFlag,
 					MapUtil.singletonDictionary(
-						"javax.portlet.name",
-						"com_liferay_portal_kernel_service_TestPortlet")));
+						"javax.portlet.name", _TEST_PORTLET_NAME)));
 
-			props = PropsTestUtil.setProps(
-				"feature.flag.LPD-XXXXX", Boolean.TRUE.toString());
+			TestCustomAttributesDisplay
+				testCustomAttributesDisplayWithNullFeatureFlag =
+					new TestCustomAttributesDisplay(null);
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					CustomAttributesDisplay.class,
+					testCustomAttributesDisplayWithNullFeatureFlag,
+					MapUtil.singletonDictionary(
+						"javax.portlet.name", _TEST_PORTLET_NAME)));
+
+			TestCustomAttributesDisplay
+				testCustomAttributesDisplayWithDisabledFeatureFlag =
+					new TestCustomAttributesDisplay("LPD-DISABLED");
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					CustomAttributesDisplay.class,
+					testCustomAttributesDisplayWithDisabledFeatureFlag,
+					MapUtil.singletonDictionary(
+						"javax.portlet.name", _TEST_PORTLET_NAME)));
 
 			List<CustomAttributesDisplay> customAttributesDisplays =
-				_portletLocalService.getCustomAttributesDisplays();
+				TransformUtil.transform(
+					_portletLocalService.getCustomAttributesDisplays(),
+					customAttributesDisplay -> {
+						if (Objects.equals(
+								TestCustomAttributesDisplay.class.getName(),
+								customAttributesDisplay.getClassName())) {
+
+							return customAttributesDisplay;
+						}
+
+						return null;
+					});
 
 			Assert.assertTrue(
 				customAttributesDisplays.toString(),
 				customAttributesDisplays.contains(
-					enabledTestCustomAttributesDisplay));
+					testCustomAttributesDisplayWithEnabledFeatureFlag));
+			Assert.assertTrue(
+				customAttributesDisplays.toString(),
+				customAttributesDisplays.contains(
+					testCustomAttributesDisplayWithNullFeatureFlag));
 			Assert.assertFalse(
 				customAttributesDisplays.toString(),
 				customAttributesDisplays.contains(
-					disabledTestCustomAttributesDisplay));
+					testCustomAttributesDisplayWithDisabledFeatureFlag));
+			Assert.assertEquals(
+				customAttributesDisplays.toString(), 2,
+				customAttributesDisplays.size());
 		}
 		finally {
-			props = null;
-
 			PropsUtil.setProps(_props);
 
 			for (ServiceRegistration<?> serviceRegistration :
@@ -116,6 +142,8 @@ public class PortletLocalServiceTest {
 			}
 		}
 	}
+
+	private static final String _TEST_PORTLET_NAME = "TEST_PORTLET_NAME";
 
 	private BundleContext _bundleContext;
 
@@ -128,18 +156,18 @@ public class PortletLocalServiceTest {
 	private class TestCustomAttributesDisplay
 		extends BaseCustomAttributesDisplay {
 
-		public TestCustomAttributesDisplay(String featureFlagKey) {
-			_featureFlagKey = featureFlagKey;
-		}
-
 		@Override
 		public String getClassName() {
-			return "test";
+			return TestCustomAttributesDisplay.class.getName();
 		}
 
 		@Override
 		public String getFeatureFlagKey() {
 			return _featureFlagKey;
+		}
+
+		private TestCustomAttributesDisplay(String featureFlagKey) {
+			_featureFlagKey = featureFlagKey;
 		}
 
 		private final String _featureFlagKey;

@@ -1101,7 +1101,9 @@ export class PageEditorPage {
 
 		await this.setMappedItem({entity, entry, entryLocator, folder});
 
-		await this.page.getByLabel('Field').selectOption(field);
+		await this.page.getByLabel('Field', {exact: true}).selectOption(field);
+
+		await this.waitForChangesSaved();
 	}
 
 	async switchExperience(experience: string) {

@@ -125,12 +125,11 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 				" including all excluding indexes);"));
 
 		sb.append(StringPool.NEW_LINE);
-
-		DB db = DBManagerUtil.getDB();
-
 		sb.append("alter table ");
 		sb.append(toPartitionName + StringPool.PERIOD + toTableName);
 		sb.append(" add primary key (");
+
+		DB db = DBManagerUtil.getDB();
 
 		for (String columnName :
 				db.getPrimaryKeyColumnNames(connection, fromTableName)) {

@@ -306,7 +306,7 @@ test(
 
 		await pageEditorPage.addFragment('Basic Components', 'Heading');
 
-		await displayPageTemplatesPage.mapLink(
+		await pageEditorPage.mapLink(
 			'element-text',
 			'More Info Link',
 			'Heading'
@@ -316,21 +316,13 @@ test(
 
 		await pageEditorPage.addFragment('Basic Components', 'Image');
 
-		await displayPageTemplatesPage.mapLink(
-			'image-square',
-			'More Info Link',
-			'Image'
-		);
+		await pageEditorPage.mapLink('image-square', 'More Info Link', 'Image');
 
 		// Map link to button fragment
 
 		await pageEditorPage.addFragment('Basic Components', 'Button');
 
-		await displayPageTemplatesPage.mapLink(
-			'link',
-			'More Info Link',
-			'Button'
-		);
+		await pageEditorPage.mapLink('link', 'More Info Link', 'Button');
 
 		// Publish display page template
 

@@ -762,6 +762,22 @@ export class PageEditorPage {
 		);
 	}
 
+	async mapLink(editableId: string, fieldId: string, fragmentName: string) {
+		const buttonFragmentId = await this.getFragmentId(fragmentName);
+
+		await this.selectEditable(buttonFragmentId, editableId);
+
+		await this.page.getByRole('tab', {exact: true, name: 'Link'}).click();
+
+		await this.page.locator('select').selectOption({label: 'Mapped URL'});
+
+		await this.waitForChangesSaved();
+
+		await this.page
+			.getByLabel('Field', {exact: true})
+			.selectOption({label: fieldId});
+	}
+
 	async openExperienceSelector() {
 		await expandSection(this.experienceSelector);
 

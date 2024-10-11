@@ -9,20 +9,17 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
 export class DisplayPageTemplatesPage {
 	readonly page: Page;
 
 	readonly newButton: Locator;
-	readonly pageEditorPage: PageEditorPage;
 	readonly publishButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByText('New', {exact: true});
-		this.pageEditorPage = new PageEditorPage(this.page);
 		this.publishButton = page.getByLabel('Publish', {exact: true});
 	}
 
@@ -134,23 +131,6 @@ export class DisplayPageTemplatesPage {
 			.click();
 
 		await this.saveConfiguration();
-	}
-
-	async mapLink(editableId: string, fieldId: string, fragmentName: string) {
-		const buttonFragmentId =
-			await this.pageEditorPage.getFragmentId(fragmentName);
-
-		await this.pageEditorPage.selectEditable(buttonFragmentId, editableId);
-
-		await this.page.getByRole('tab', {exact: true, name: 'Link'}).click();
-
-		await this.page.locator('select').selectOption({label: 'Mapped URL'});
-
-		await this.pageEditorPage.waitForChangesSaved();
-
-		await this.page
-			.getByLabel('Field', {exact: true})
-			.selectOption({label: fieldId});
 	}
 
 	async markAsDefault(name: string) {

@@ -1685,3 +1685,120 @@ test('LPD-32230 Billing and shipping address order info box fragment configurati
 		}
 	}
 });
+
+test('LPD-35558 Order Data Sets and header fragments', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		await page.getByLabel('COMMERCE-9410').click();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Orders Data Set', 'Order');
+		await commerceLayoutsPage.addFragment('Order Items Data Set', 'Order');
+		await commerceLayoutsPage.addFragment('Order Status Label', 'Order');
+		await commerceLayoutsPage.addFragment(
+			'Order Inline Editable Order Field',
+			'Order'
+		);
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				skus: [
+					{
+						cost: 0,
+						price: 20,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText(cart.id.toString())).toBeVisible();
+		await expect(page.getByText(sku.toString())).toBeVisible();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});

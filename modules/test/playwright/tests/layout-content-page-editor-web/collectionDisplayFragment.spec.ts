@@ -699,3 +699,57 @@ test('Activate the first element when a fragment is added to a Collection Displa
 
 	expect(await pageEditorPage.isActive(collectionDisplayId)).toBe(true);
 });
+
+test(
+	'Content display title view in collection display',
+	{
+		tag: '@LPS-114727',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page with a collection display and go to edit mode
+
+		const collectionDefinition = getCollectionDefinition({
+			id: getRandomString(),
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer',
+				}),
+			],
+			provider: 'Highest Rated Assets',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Assert items in edit mode
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
+
+		await expect(
+			page.getByText('Animal 02 - Dogs category')
+		).toBeAttached();
+
+		// Assert items in view mode
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
+
+		await expect(
+			page.getByText('Animal 02 - Dogs category')
+		).toBeAttached();
+	}
+);

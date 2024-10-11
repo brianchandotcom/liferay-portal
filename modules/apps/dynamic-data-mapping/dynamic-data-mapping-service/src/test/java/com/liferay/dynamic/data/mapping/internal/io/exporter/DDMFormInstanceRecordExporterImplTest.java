@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordExporterException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -54,6 +56,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -76,8 +79,15 @@ public class DDMFormInstanceRecordExporterImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_setUpDDMFormFieldTypeServicesRegistry();
 		_setUpFastDateFormatFactoryUtil();
+		_setUpHtmlUtilMockedStatic();
 		_setUpLanguageUtil();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_htmlUtilMockedStatic.close();
 	}
 
 	@Test
@@ -304,74 +314,28 @@ public class DDMFormInstanceRecordExporterImplTest {
 
 	@Test
 	public void testGetDDMFormFieldValue() throws Exception {
-		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
-			new DDMFormInstanceRecordExporterImpl();
+		DDMFormFieldValue ddmFormFieldValue = Mockito.mock(
+			DDMFormFieldValue.class);
 
-		ddmFormInstanceRecordExporterImpl.ddmFormFieldTypeServicesRegistry =
-			_ddmFormFieldTypeServicesRegistry;
-
-		DDMFormFieldValueRenderer ddmFormFieldValueRenderer = Mockito.mock(
-			DDMFormFieldValueRenderer.class);
-
-		DDMFormField ddmFormField = new DDMFormField("field1", "text");
-
-		ddmFormField.setFieldReference("reference1");
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValueWithReference(
-				"field1", "reference1", new UnlocalizedValue("value1"));
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
-			HashMapBuilder.<String, List<DDMFormFieldValue>>put(
-				"reference1", ListUtil.fromArray(ddmFormFieldValue)
-			).build();
-
-		Locale locale = new Locale("pt", "BR");
+		String value = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
-				"text")
+			_ddmFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.BRAZIL)
 		).thenReturn(
-			ddmFormFieldValueRenderer
+			value
 		);
+
+		_testGetDDMFormFieldValue(ddmFormFieldValue, 1, value);
 
 		Mockito.when(
-			ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale)
+			_ddmFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.BRAZIL)
 		).thenReturn(
-			"value1"
+			null
 		);
 
-		MockedStatic<HtmlUtil> htmlUtilMockedStatic = Mockito.mockStatic(
-			HtmlUtil.class);
-
-		htmlUtilMockedStatic.when(
-			() -> HtmlUtil.unescape("value1")
-		).thenReturn(
-			"value1"
-		);
-
-		String actualValue =
-			ddmFormInstanceRecordExporterImpl.getDDMFormFieldValue(
-				ddmFormField, ddmFormFieldValueMap, locale);
-
-		Assert.assertEquals("value1", actualValue);
-
-		Mockito.verify(
-			_ddmFormFieldTypeServicesRegistry, Mockito.times(1)
-		).getDDMFormFieldValueRenderer(
-			"text"
-		);
-
-		Mockito.verify(
-			ddmFormFieldValueRenderer, Mockito.times(1)
-		).render(
-			ddmFormFieldValue, locale
-		);
-
-		htmlUtilMockedStatic.verify(
-			() -> HtmlUtil.unescape("value1"), Mockito.times(1));
-
-		htmlUtilMockedStatic.close();
+		_testGetDDMFormFieldValue(ddmFormFieldValue, 2, StringPool.BLANK);
 	}
 
 	@Test
@@ -529,76 +493,6 @@ public class DDMFormInstanceRecordExporterImplTest {
 		).getStatusMessage(
 			Mockito.anyInt(), Mockito.any(Locale.class)
 		);
-	}
-
-	@Test
-	public void testGetDDMFormFieldValueWithNull() throws Exception {
-		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
-			new DDMFormInstanceRecordExporterImpl();
-
-		ddmFormInstanceRecordExporterImpl.ddmFormFieldTypeServicesRegistry =
-			_ddmFormFieldTypeServicesRegistry;
-
-		DDMFormFieldValueRenderer ddmFormFieldValueRenderer = Mockito.mock(
-			DDMFormFieldValueRenderer.class);
-
-		DDMFormField ddmFormField = new DDMFormField("field1", "text");
-
-		ddmFormField.setFieldReference("reference1");
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValueWithReference(
-				"field1", "reference1", null);
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
-			HashMapBuilder.<String, List<DDMFormFieldValue>>put(
-				"reference1", ListUtil.fromArray(ddmFormFieldValue)
-			).build();
-
-		Locale locale = new Locale("pt", "BR");
-
-		Mockito.when(
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
-				"text")
-		).thenReturn(
-			ddmFormFieldValueRenderer
-		);
-
-		Mockito.when(
-			ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale)
-		).thenReturn(
-			null
-		);
-
-		MockedStatic<HtmlUtil> htmlUtilMockedStatic = Mockito.mockStatic(
-			HtmlUtil.class);
-
-		htmlUtilMockedStatic.when(
-			() -> HtmlUtil.unescape("")
-		).thenReturn(
-			""
-		);
-
-		String actualValue =
-			ddmFormInstanceRecordExporterImpl.getDDMFormFieldValue(
-				ddmFormField, ddmFormFieldValueMap, locale);
-
-		Assert.assertEquals("", actualValue);
-
-		Mockito.verify(
-			_ddmFormFieldTypeServicesRegistry, Mockito.times(1)
-		).getDDMFormFieldValueRenderer(
-			"text"
-		);
-
-		Mockito.verify(
-			ddmFormFieldValueRenderer, Mockito.times(1)
-		).render(
-			ddmFormFieldValue, locale
-		);
-
-		htmlUtilMockedStatic.verify(
-			() -> HtmlUtil.unescape(""), Mockito.times(1));
 	}
 
 	@Test
@@ -821,6 +715,20 @@ public class DDMFormInstanceRecordExporterImplTest {
 		);
 	}
 
+	private void _setUpDDMFormFieldTypeServicesRegistry() throws Exception {
+		Mockito.when(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
+				DDMFormFieldTypeConstants.TEXT)
+		).thenReturn(
+			_ddmFormFieldValueRenderer
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormInstanceRecordExporterImpl,
+			"ddmFormFieldTypeServicesRegistry",
+			_ddmFormFieldTypeServicesRegistry);
+	}
+
 	private void _setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
@@ -829,15 +737,60 @@ public class DDMFormInstanceRecordExporterImplTest {
 			new FastDateFormatFactoryImpl());
 	}
 
+	private void _setUpHtmlUtilMockedStatic() throws Exception {
+		_htmlUtilMockedStatic.when(
+			() -> HtmlUtil.unescape(Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArguments()[0]
+		);
+	}
+
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
 	}
 
+	private void _testGetDDMFormFieldValue(
+			DDMFormFieldValue ddmFormFieldValue, int expectedTimes,
+			String expectedValue)
+		throws Exception {
+
+		DDMFormField ddmFormField = new DDMFormField(
+			RandomTestUtil.randomString(), DDMFormFieldTypeConstants.TEXT);
+
+		Assert.assertEquals(
+			expectedValue,
+			_ddmFormInstanceRecordExporterImpl.getDDMFormFieldValue(
+				ddmFormField,
+				Collections.singletonMap(
+					ddmFormField.getFieldReference(),
+					ListUtil.fromArray(ddmFormFieldValue)),
+				LocaleUtil.BRAZIL));
+
+		Mockito.verify(
+			_ddmFormFieldTypeServicesRegistry, Mockito.times(expectedTimes)
+		).getDDMFormFieldValueRenderer(
+			DDMFormFieldTypeConstants.TEXT
+		);
+
+		Mockito.verify(
+			_ddmFormFieldValueRenderer, Mockito.times(expectedTimes)
+		).render(
+			ddmFormFieldValue, LocaleUtil.BRAZIL
+		);
+
+		_htmlUtilMockedStatic.verify(() -> HtmlUtil.unescape(expectedValue));
+	}
+
 	private final DDMFormFieldTypeServicesRegistry
 		_ddmFormFieldTypeServicesRegistry = Mockito.mock(
 			DDMFormFieldTypeServicesRegistry.class);
+	private final DDMFormFieldValueRenderer _ddmFormFieldValueRenderer =
+		Mockito.mock(DDMFormFieldValueRenderer.class);
+	private final DDMFormInstanceRecordExporterImpl
+		_ddmFormInstanceRecordExporterImpl =
+			new DDMFormInstanceRecordExporterImpl();
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService = Mockito.mock(
 			DDMFormInstanceRecordLocalService.class);
@@ -847,6 +800,8 @@ public class DDMFormInstanceRecordExporterImplTest {
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService = Mockito.mock(
 			DDMFormInstanceVersionLocalService.class);
+	private final MockedStatic<HtmlUtil> _htmlUtilMockedStatic =
+		Mockito.mockStatic(HtmlUtil.class);
 	private final Language _language = Mockito.mock(Language.class);
 
 }

@@ -372,8 +372,8 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Library '", packageName, ":", version,
-						"' contains known vulnerabilities(",
+						"Library \"", packageName, ":", version,
+						"\" contains known vulnerabilities(",
 						securityVulnerabilityNode.getSummary(), ", ",
 						securityVulnerabilityNode.getPermalink(), ")"));
 
@@ -418,8 +418,8 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Library '", packageName, ":", version,
-						"' contains known vulnerabilities(", parts[3], ", ",
+						"Library \"", packageName, ":", version,
+						"\" contains known vulnerabilities(", parts[3], ", ",
 						parts[4], ")"));
 
 				return;

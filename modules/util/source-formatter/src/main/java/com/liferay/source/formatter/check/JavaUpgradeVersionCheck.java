@@ -335,7 +335,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		addMessage(
 			fileName,
 			"The upgrade process from version 0.0.0 should be replaced by " +
-				"'registry.registerInitialization()'");
+				"\"registry.registerInitialization()\"");
 
 		return content;
 	}

@@ -87,10 +87,10 @@ public class JavaModuleInheritableVariableAccessModifierCheck
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The access modifier of variable '",
+						"The access modifier of variable \"",
 						javaVariable.getName(),
-						"' should be protected as the subclass has ",
-						"'-dsannotations-options: inherit' in bnd.bnd"),
+						"\" should be protected as the subclass has ",
+						"\"-dsannotations-options: inherit\" in bnd.bnd"),
 					javaVariable.getLineNumber());
 			}
 		}

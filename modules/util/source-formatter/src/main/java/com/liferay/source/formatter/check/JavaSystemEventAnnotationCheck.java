@@ -101,8 +101,8 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 			if (!localServiceImplContent.contains("@SystemEvent")) {
 				addMessage(
 					fileName,
-					"Missing deletion system event '" +
-						localServiceImplFileName + "', see LPS-46632");
+					"Missing deletion system event \"" +
+						localServiceImplFileName + "\", see LPS-46632");
 			}
 		}
 	}

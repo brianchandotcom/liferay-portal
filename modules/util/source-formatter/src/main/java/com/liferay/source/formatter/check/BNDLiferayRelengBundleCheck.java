@@ -63,9 +63,9 @@ public class BNDLiferayRelengBundleCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"DXP modules that have a 'app.bnd' file that contains ",
-					"'Liferay-Releng-Bundle: true' should have a ",
-					"'.lfrbuild-release-src' file"));
+					"DXP modules that have a \"app.bnd\" file that contains ",
+					"\"Liferay-Releng-Bundle: true\" should have a ",
+					"\".lfrbuild-release-src\" file"));
 		}
 
 		return content;

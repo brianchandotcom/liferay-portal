@@ -68,8 +68,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"The single-word key '", key,
-							"' should include a word of context at the end, ",
+							"The single-word key \"", key,
+							"\" should include a word of context at the end, ",
 							"within a [], to indicate specific meaning"),
 						lineNumber);
 				}
@@ -77,8 +77,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"The single-word key '", key,
-							"' should include a word of context at the end, ",
+							"The single-word key \"", key,
+							"\" should include a word of context at the end, ",
 							"within a [], like [noun] or [verb] to indicate ",
 							"specific meaning"),
 						lineNumber);
@@ -113,8 +113,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The context '", bracketsContent,
-						"' is invalid in the key '", key, "'"),
+						"The context \"", bracketsContent,
+						"\" is invalid in the key \"", key, "\""),
 					lineNumber);
 			}
 		}

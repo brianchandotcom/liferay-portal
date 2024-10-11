@@ -61,7 +61,7 @@ public class CETSourceProcessor extends BaseSourceProcessor {
 		if (!oldContent.equals(newContent)) {
 			FileUtil.write(jsonFile, newContent);
 
-			System.out.println("Updated '" + shortFileName + "'");
+			System.out.println("Updated \"" + shortFileName + "\"");
 		}
 	}
 

@@ -94,8 +94,8 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Property '", propertyKey,
-						"' should not be in the group for '", prefix, "*'"));
+						"Property \"", propertyKey,
+						"\" should not be in the group for \"", prefix, "*\""));
 
 				return;
 			}
@@ -106,8 +106,8 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Incorrect order of properties: '", propertyKey,
-						"' should come before '", previousPropertyKey, "'"));
+						"Incorrect order of properties: \"", propertyKey,
+						"\" should come before \"", previousPropertyKey, "\""));
 
 				return;
 			}
@@ -172,9 +172,9 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Incorrect order of properties: '", propertyKey,
-						"' should come before '", previousPropertyKey,
-						"', see the order in ", rootDirName,
+						"Incorrect order of properties: \"", propertyKey,
+						"\" should come before \"", previousPropertyKey,
+						"\", see the order in ", rootDirName,
 						"/source-formatter.properties"));
 
 				return;
@@ -287,8 +287,8 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Property value '", propertyFileName,
-							"' points to file or directory that does not ",
+							"Property value \"", propertyFileName,
+							"\" points to file or directory that does not ",
 							"exist"));
 				}
 			}

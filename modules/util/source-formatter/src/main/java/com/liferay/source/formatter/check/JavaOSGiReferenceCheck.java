@@ -193,9 +193,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName,
-						"Use super class variable '" +
+						"Use super class variable \"" +
 							serviceBaseJavaTerm.getName() +
-								"' instead of injection",
+								"\" instead of injection",
 						javaTerm.getLineNumber());
 				}
 			}
@@ -235,8 +235,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName,
-						"Use portal service reference instead of '" +
-							serviceReferenceUtilClassName + "' in modules");
+						"Use portal service reference instead of \"" +
+							serviceReferenceUtilClassName + "\" in modules");
 
 					return;
 				}
@@ -335,7 +335,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName,
-					"Add '-dsannotations-options: inherit' to '" +
+					"Add \"-dsannotations-options: inherit\" to " +
 						bndSettings.getFileName());
 			}
 		}

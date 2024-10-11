@@ -33,8 +33,8 @@ public class JSPFunctionNameCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Function '", functionName, "' much match pattern '",
-						_FUNCTION_NAME_REGEX, "'"),
+						"Function \"", functionName, "\" much match pattern \"",
+						_FUNCTION_NAME_REGEX, "\""),
 					getLineNumber(content, matcher.start(2)));
 			}
 		}

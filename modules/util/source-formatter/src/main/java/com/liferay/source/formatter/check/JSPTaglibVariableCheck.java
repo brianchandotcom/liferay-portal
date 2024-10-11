@@ -105,8 +105,8 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 
 						addMessage(
 							fileName,
-							"Variable '" + variableName +
-								"' should start with 'taglib'",
+							"Variable \"" + variableName +
+								"\" should start with \"taglib\"",
 							getLineNumber(content, matcher.start(1)));
 					}
 
@@ -156,8 +156,8 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"No need to declare variable '", variableName,
-							"', inline inside the tag."),
+							"No need to declare variable \"", variableName,
+							"\", inline inside the tag."),
 						getLineNumber(content, matcher.start(4)));
 				}
 			}

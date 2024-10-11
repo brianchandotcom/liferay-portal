@@ -39,7 +39,7 @@ public abstract class BaseLineBreakCheck extends BaseFileCheck {
 			(getLevel(trimmedLine) > 0)) {
 
 			addMessage(
-				fileName, "There should be a line break after '('", lineNumber);
+				fileName, "There should be a line break after \"(\"", lineNumber);
 		}
 
 		if (line.endsWith(" +") || line.endsWith(" -") || line.endsWith(" *") ||
@@ -52,7 +52,7 @@ public abstract class BaseLineBreakCheck extends BaseFileCheck {
 
 				if ((y == -1) || (x < y)) {
 					addMessage(
-						fileName, "There should be a line break after '='",
+						fileName, "There should be a line break after \"=\"",
 						lineNumber);
 				}
 			}
@@ -64,7 +64,7 @@ public abstract class BaseLineBreakCheck extends BaseFileCheck {
 
 				if ((y == -1) || (x < y)) {
 					addMessage(
-						fileName, "There should be a line break after '->'",
+						fileName, "There should be a line break after \"->\"",
 						lineNumber);
 				}
 			}

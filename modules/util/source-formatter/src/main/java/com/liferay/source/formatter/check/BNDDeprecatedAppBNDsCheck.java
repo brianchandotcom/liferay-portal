@@ -19,7 +19,7 @@ public class BNDDeprecatedAppBNDsCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Module in 'archived' directory should not have 'app.bnd'");
+				"Module in \"archived\" directory should not have \"app.bnd\"");
 		}
 
 		return content;

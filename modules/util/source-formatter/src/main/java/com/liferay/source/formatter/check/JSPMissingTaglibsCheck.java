@@ -47,7 +47,7 @@ public class JSPMissingTaglibsCheck extends BaseJSPTermsCheck {
 		for (String prefix : missingTaglibPrefixes) {
 			addMessage(
 				fileName,
-				"Missing taglib for tag with prefix '" + prefix + "'");
+				"Missing taglib for tag with prefix \"" + prefix + "\"");
 		}
 
 		return content;

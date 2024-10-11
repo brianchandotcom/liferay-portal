@@ -398,8 +398,8 @@ public class GenericTypeCheck extends BaseCheck {
 
 			System.out.println(
 				StringBundler.concat(
-					"Added '", fullyQualifiedTypeName, "' to '",
-					_GENERIC_TYPE_NAMES_FILE_NAME, "'"));
+					"Added \"", fullyQualifiedTypeName, "\" to \"",
+					_GENERIC_TYPE_NAMES_FILE_NAME, "\""));
 
 			_genericTypeNamesMap = null;
 			_genericTypeNamesTuple = null;

@@ -75,16 +75,16 @@ public class GradleRequiredDependenciesCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Remove dependency '", dependencyName,
-					"' since it is not used by any module"),
+					"Remove dependency \"", dependencyName,
+					"\" since it is not used by any module"),
 				lineNumber);
 		}
 		else {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Remove dependency '", dependencyName,
-					"' since it is only used by 1 module"),
+					"Remove dependency \"", dependencyName,
+					"\" since it is only used by 1 module"),
 				lineNumber);
 		}
 	}

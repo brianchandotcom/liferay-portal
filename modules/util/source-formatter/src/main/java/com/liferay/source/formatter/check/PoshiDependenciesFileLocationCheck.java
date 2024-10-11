@@ -78,8 +78,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Test dependencies file '", entry.getKey(),
-							"' is referenced by multiple modules, move it to ",
+							"Test dependencies file \"", entry.getKey(),
+							"\" is referenced by multiple modules, move it to ",
 							"global dependencies directory"));
 
 					break;
@@ -129,8 +129,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Test dependencies file '", entry.getKey(),
-						"' is only referenced by one module, move it to ",
+						"Test dependencies file \"", entry.getKey(),
+						"\" is only referenced by one module, move it to ",
 						"module dependencies directory"));
 			}
 		}

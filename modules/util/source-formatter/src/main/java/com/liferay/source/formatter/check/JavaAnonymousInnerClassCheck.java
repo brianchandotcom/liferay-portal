@@ -231,8 +231,8 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Variable '", variableName,
-					"' in the Anonymous Inner Class is already used in the ",
+					"Variable \"", variableName,
+					"\" in the Anonymous Inner Class is already used in the ",
 					"main method"),
 				javaTerm.getLineNumber());
 
@@ -247,8 +247,8 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Parameter '", parameterName,
-					"' in the Anonymous Inner Class is already used in the ",
+					"Parameter \"", parameterName,
+					"\" in the Anonymous Inner Class is already used in the ",
 					"main method"),
 				javaTerm.getLineNumber());
 

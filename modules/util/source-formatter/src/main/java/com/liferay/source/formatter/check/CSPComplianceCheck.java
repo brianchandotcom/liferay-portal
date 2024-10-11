@@ -95,7 +95,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Missing attribute '", attribute, "' in <", tagName,
+					"Missing attribute \"", attribute, "\" in <", tagName,
 					"> tag, see LPD-18227"),
 				lineNumber);
 		}

@@ -63,7 +63,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 		String componentAnnotation = matcher.group();
 
 		if (!componentAnnotation.contains("service =")) {
-			addMessage(fileName, "@Component requires 'service' parameter");
+			addMessage(fileName, "@Component requires \"service\" parameter");
 		}
 	}
 

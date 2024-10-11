@@ -86,7 +86,7 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 		if (!exportPackageNames.contains(packageName)) {
 			addMessage(
 				fileName,
-				"Classes that are not exported should be in 'internal' " +
+				"Classes that are not exported should be in \"internal\" " +
 					"package");
 		}
 	}
@@ -108,8 +108,8 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Use 'internal' instead of 'impl' in package '" + packageName +
-					"'");
+				"Use \"internal\" instead of \"impl\" in package \"" + packageName +
+					"\"");
 		}
 	}
 
@@ -131,7 +131,7 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Classes in service modules should be in 'internal' package");
+				"Classes in service modules should be in \"internal\" package");
 		}
 	}
 

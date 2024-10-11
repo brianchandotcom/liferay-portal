@@ -114,8 +114,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Class implementing '", implementedClassName,
-						"' should be in 'internal' package"));
+						"Class implementing \"", implementedClassName,
+						"\" should be in \"internal\" package"));
 			}
 
 			return;
@@ -190,15 +190,15 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Package for class implementing '", implementedClassName,
-					"' should end with '", expectedPackageName, "'"));
+					"Package for class implementing \"", implementedClassName,
+					"\" should end with \"", expectedPackageName, "\""));
 		}
 		else {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Package for class extending 'Base", implementedClassName,
-					"' should end with '", expectedPackageName, "'"));
+					"Package for class extending \"Base", implementedClassName,
+					"\" should end with \"", expectedPackageName, "\""));
 		}
 	}
 
@@ -236,11 +236,11 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Package should not contain '", bundleSymbolicName,
-						"'. It should contain '",
+						"Package should not contain \"", bundleSymbolicName,
+						"\". It should contain \"",
 						bundleSymbolicName.substring(
 							0, bundleSymbolicName.length() - 8),
-						"' (without .service)"));
+						"\" (without .service)"));
 
 				return;
 			}
@@ -280,7 +280,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			if (packagePart.matches("V\\d*(_\\d+)+")) {
 				addMessage(
 					fileName,
-					"Use lower case 'v' when it means version in the package");
+					"Use lower case \"v\" when it means version in the package");
 
 				return;
 			}
@@ -294,8 +294,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		if (!filePath.endsWith(packageName)) {
 			addMessage(
 				fileName,
-				"The declared package '" + packageName +
-					"' does not match the expected package");
+				"The declared package \"" + packageName +
+					"\" does not match the expected package");
 
 			return;
 		}
@@ -305,7 +305,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Do not use both 'impl' and 'internal' in the package");
+				"Do not use both \"impl\" and \"internal\" in the package");
 		}
 
 		List<String> allowedInternalPackageDirNames = getAttributeValues(
@@ -325,14 +325,14 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			if (matcher.find()) {
 				addMessage(
 					fileName,
-					"Do not use '" + matcher.group(1) +
-						"' package in API module");
+					"Do not use \"" + matcher.group(1) +
+						"\" package in API module");
 			}
 
 			if (packageName.contains(".api.") || packageName.endsWith(".api")) {
 				addMessage(
 					fileName,
-					"Do not use 'api' in the package for classes in the API " +
+					"Do not use \"api\" in the package for classes in the API " +
 						"module");
 			}
 		}
@@ -342,8 +342,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"The name of Class '" + className +
-					"' should be ending with 'DisplayContext'");
+				"The name of Class \"" + className +
+					"\" should be ending with \"DisplayContext\"");
 		}
 
 		if (isModulesFile(absolutePath) &&
@@ -352,7 +352,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Class '" + className + "' should be in 'internal' package");
+				"Class \"" + className + "\" should be in \"internal\" package");
 		}
 	}
 
@@ -387,9 +387,9 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Class '", className,
-							"' should be in package ending with '", array[1],
-							"'"));
+							"Class \"", className,
+							"\" should be in package ending with \"", array[1],
+							"\""));
 				}
 
 				continue;
@@ -401,8 +401,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Class '", className, "' should be in package .",
-						array[1], "'"));
+						"Class \"", className, "\" should be in package \".",
+						array[1], "\""));
 			}
 		}
 	}

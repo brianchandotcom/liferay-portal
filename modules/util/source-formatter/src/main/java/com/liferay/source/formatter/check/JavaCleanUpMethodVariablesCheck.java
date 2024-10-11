@@ -99,8 +99,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 				if (!isFinal && !javaTerm.isStatic()) {
 					addMessage(
 						fileName,
-						"Variable '" + variableName +
-							"' is missing in method 'cleanUp'");
+						"Variable \"" + variableName +
+							"\" is missing in method \"cleanUp\"");
 				}
 
 				continue;
@@ -159,8 +159,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 			if (!matcher.find()) {
 				addMessage(
 					fileName,
-					"Initial value for '" + variableName +
-						"' differs from value in cleanUp method");
+					"Initial value for \"" + variableName +
+						"\" differs from value in cleanUp method");
 			}
 		}
 

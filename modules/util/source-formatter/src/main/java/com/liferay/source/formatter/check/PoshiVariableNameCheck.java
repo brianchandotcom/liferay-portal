@@ -91,8 +91,8 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Variable '", variableName, "' in '", message,
-					"' should start with a lowercase letter"));
+					"Variable \"", variableName, "\" in \"", message,
+					"\" should start with a lowercase letter"));
 
 			return;
 		}
@@ -103,8 +103,8 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Rename variable '", variableName, "' to '", allCapsName,
-					"' in '", message));
+					"Rename variable \"", variableName, "\" to \"", allCapsName,
+					"\" in \"", message, "\""));
 
 			return;
 		}
@@ -115,8 +115,8 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Rename variable '", variableName, "' to '", expectedName,
-					"' in '", message));
+					"Rename variable \"", variableName, "\" to \"", expectedName,
+					"\" in \"", message, "\""));
 		}
 	}
 

@@ -79,7 +79,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 					value.matches("(?s).*<([a-zA-Z0-9]+)[^>]*>.*?<\\/\\1>.*")) {
 
 					addMessage(
-						fileName, "Remove HTML markup for '" + key + "'",
+						fileName, "Remove HTML markup for \"" + key + "\"",
 						getLineNumber(content, content.indexOf(line)));
 				}
 

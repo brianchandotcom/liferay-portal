@@ -155,7 +155,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 			if (version.equals("default")) {
 				addMessage(
-					fileName, "Do not use 'default' version for '" + name + "'",
+					fileName, "Do not use \"default\" version for \"" + name + "\"",
 					getLineNumber(content, pos));
 			}
 			else if (name.startsWith("com.liferay") &&
@@ -183,7 +183,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 				}
 
 				addMessage(
-					fileName, "Incorrect dependency '" + name + "'",
+					fileName, "Incorrect dependency \"" + name + "\"",
 					getLineNumber(content, pos));
 			}
 		}

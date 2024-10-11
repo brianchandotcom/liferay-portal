@@ -85,7 +85,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 			}
 
 			addMessage(
-				fileName, "Use '" + tag + ":defineObjects' or rename var",
+				fileName, "Use \"" + tag + ":defineObjects\" or rename var",
 				getLineNumber(content, x));
 		}
 	}

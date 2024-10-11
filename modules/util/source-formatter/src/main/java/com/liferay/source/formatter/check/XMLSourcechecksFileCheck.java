@@ -45,7 +45,7 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Missing tag '", tagName, "' for check '", checkName, "'"));
+					"Missing tag \"", tagName, "\" for check \"", checkName, "\""));
 		}
 	}
 
@@ -79,8 +79,8 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Name of class '", checkName,
-							"' should end with 'Check'"));
+							"Name of class \"", checkName,
+							"\" should end with \"Check\""));
 				}
 
 				_checkMissingTag(fileName, checkElement, checkName, "category");

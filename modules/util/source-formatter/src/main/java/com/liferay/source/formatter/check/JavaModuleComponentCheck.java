@@ -49,7 +49,7 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 
 				addMessage(
 					fileName,
-					"Do not use @Component in '-api' or '-spi' module");
+					"Do not use @Component in \"-api\" or \"-spi\" module");
 			}
 
 			return javaTerm.getContent();
@@ -77,8 +77,8 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"@Reference variable '", childJavaTerm.getName(),
-						"' should be protected instead of private in a class ",
+						"@Reference variable \"", childJavaTerm.getName(),
+						"\" should be protected instead of private in a class ",
 						"without @Component"),
 					childJavaTerm.getLineNumber());
 			}

@@ -80,7 +80,7 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 					(previousProperty.compareToIgnoreCase(property) > 0)) {
 
 					addMessage(
-						fileName, "Unsorted property '" + property + "'",
+						fileName, "Unsorted property \"" + property + "\"",
 						lineNumber);
 				}
 

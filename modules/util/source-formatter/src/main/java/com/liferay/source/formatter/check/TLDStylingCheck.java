@@ -41,7 +41,7 @@ public class TLDStylingCheck extends BaseFileCheck {
 				if (x == -1) {
 					addMessage(
 						fileName,
-						"Missing CDATA after 'replaced by' in the description",
+						"Missing CDATA after \"replaced by\" in the description",
 						SourceUtil.getLineNumber(content, matcher.start(1)));
 				}
 			}
@@ -58,7 +58,7 @@ public class TLDStylingCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName,
-						"Use CDATA to warp each '<code>' in the description",
+						"Use CDATA to warp each \"<code>\" in the description",
 						SourceUtil.getLineNumber(content, matcher.start(1)));
 
 					break;

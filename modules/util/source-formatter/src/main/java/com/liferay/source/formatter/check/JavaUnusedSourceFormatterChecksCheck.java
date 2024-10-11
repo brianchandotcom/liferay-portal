@@ -101,8 +101,8 @@ public class JavaUnusedSourceFormatterChecksCheck extends BaseJavaTermCheck {
 
 				addMessage(
 					fileName,
-					"Check is not configured in '" + configurationFileName +
-						"'");
+					"Check is not configured in \"" + configurationFileName +
+						"\"");
 			}
 		}
 	}

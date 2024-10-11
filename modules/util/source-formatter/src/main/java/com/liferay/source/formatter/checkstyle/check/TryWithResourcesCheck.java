@@ -346,8 +346,8 @@ public class TryWithResourcesCheck extends BaseCheck {
 
 				System.out.println(
 					StringBundler.concat(
-						"Added '", typeName, "' to '",
-						_CLOSEABLE_TYPE_NAMES_FILE_NAME, "'"));
+						"Added \"", typeName, "\" to \"",
+						_CLOSEABLE_TYPE_NAMES_FILE_NAME, "\""));
 
 				_closeableTypeNamesTuple = null;
 			}

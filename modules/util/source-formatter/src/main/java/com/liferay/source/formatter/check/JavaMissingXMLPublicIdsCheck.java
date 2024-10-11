@@ -59,7 +59,7 @@ public class JavaMissingXMLPublicIdsCheck extends BaseFileCheck {
 		if (content.indexOf(lpVersion + "//EN") == -1) {
 			addMessage(
 				fileName,
-				"Missing public id '" + lpVersion + "' for check XML files");
+				"Missing public id \"" + lpVersion + "\" for check XML files");
 		}
 
 		return content;

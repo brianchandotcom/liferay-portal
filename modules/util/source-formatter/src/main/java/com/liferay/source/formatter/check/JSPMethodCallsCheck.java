@@ -22,7 +22,7 @@ public class JSPMethodCallsCheck extends BaseStylingCheck {
 		while (matcher.find()) {
 			addMessage(
 				fileName,
-				"Use type 'LiferayPortletResponse' to call 'getNamespace()'",
+				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"",
 				getLineNumber(content, matcher.start()));
 		}
 

@@ -15,7 +15,7 @@ public class MarkdownFileExtensionCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith(".md")) {
-			addMessage(fileName, "Use extension 'markdown' instead of 'md'");
+			addMessage(fileName, "Use extension \"markdown\" instead of \"md\"");
 		}
 
 		return content;

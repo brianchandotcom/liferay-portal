@@ -72,14 +72,14 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 			}
 
 			if (serviceXMLfile.exists()) {
-				addMessage(fileName, "Missing 'Liferay-Require-SchemaVersion'");
+				addMessage(fileName, "Missing \"Liferay-Require-SchemaVersion\"");
 			}
 		}
 		else if (schemaVersion != null) {
 			addMessage(
 				fileName,
-				"The header 'Liferay-Require-SchemaVersion' can only be used " +
-					"when the header 'Liferay-Service' has value 'true'");
+				"The header \"Liferay-Require-SchemaVersion\" can only be used " +
+					"when the header \"Liferay-Service\" has value \"true\"");
 		}
 
 		if (fileName.endsWith("-web/bnd.bnd") &&

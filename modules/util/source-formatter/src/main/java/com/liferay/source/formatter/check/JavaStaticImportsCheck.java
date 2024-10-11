@@ -24,11 +24,11 @@ public class JavaStaticImportsCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("Do not import method '");
+			sb.append("Do not import method \"");
 			sb.append(matcher.group(1));
-			sb.append("', import class '");
+			sb.append("\", import class \"");
 			sb.append(matcher.group(2));
-			sb.append("' instead");
+			sb.append("\" instead");
 
 			addMessage(
 				fileName, sb.toString(), getLineNumber(content, matcher.end()));
@@ -39,11 +39,11 @@ public class JavaStaticImportsCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("Do not import constant '");
+			sb.append("Do not import constant \"");
 			sb.append(matcher.group(1));
-			sb.append("', import class '");
+			sb.append("\", import class \"");
 			sb.append(matcher.group(2));
-			sb.append("' instead or use Fully Qualified Name");
+			sb.append("\" instead or use Fully Qualified Name");
 
 			addMessage(
 				fileName, sb.toString(), getLineNumber(content, matcher.end()));

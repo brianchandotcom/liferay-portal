@@ -32,8 +32,8 @@ public class JavaTermStylingCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Create a new var for '" + StringUtil.trim(matcher.group(1)) +
-					"' for better readability",
+				"Create a new var for \"" + StringUtil.trim(matcher.group(1)) +
+					"\" for better readability",
 				getLineNumber(fileContent, pos));
 		}
 

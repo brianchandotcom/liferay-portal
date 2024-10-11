@@ -65,7 +65,7 @@ public class JavaModuleExposureCheck extends BaseJavaTermCheck {
 		if (exposedSPIType != null) {
 			addMessage(
 				fileName,
-				"Do not expose '" + exposedSPIType + "' in 'api' module");
+				"Do not expose \"" + exposedSPIType + "\" in \"api\" module");
 		}
 
 		return javaTerm.getContent();

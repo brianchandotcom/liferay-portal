@@ -114,8 +114,8 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Else statement is not needed because of the '",
-					exitStatementType, "' statement on line ",
+					"Else statement is not needed because of the \"",
+					exitStatementType, "\" statement on line ",
 					javaTerm.getLineNumber(x)),
 				javaTerm.getLineNumber(matcher1.start() + 3));
 		}

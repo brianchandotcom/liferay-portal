@@ -67,8 +67,8 @@ public class XMLCheckstyleFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Name of class '", moduleName,
-						"' should end with 'Check'"));
+						"Name of class \"", moduleName,
+						"\" should end with \"Check\""));
 			}
 
 			_checkMissingProperty(fileName, element, moduleName, "category");
@@ -95,8 +95,8 @@ public class XMLCheckstyleFileCheck extends BaseFileCheck {
 		addMessage(
 			fileName,
 			StringBundler.concat(
-				"Missing property '", propertyName, "' for check '", moduleName,
-				"'"));
+				"Missing property \"", propertyName, "\" for check \"", moduleName,
+				"\""));
 	}
 
 }

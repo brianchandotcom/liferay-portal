@@ -74,7 +74,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 
 			if (Objects.equals(formattedValue, defaultValue)) {
 				addMessage(
-					fileName, "No need to pass default value '" + value + "'",
+					fileName, "No need to pass default value \"" + value + "\"",
 					getLineNumber(content, matcher.start()));
 			}
 		}

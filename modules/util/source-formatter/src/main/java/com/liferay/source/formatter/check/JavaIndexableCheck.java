@@ -27,8 +27,8 @@ public class JavaIndexableCheck extends BaseJavaTermCheck {
 			if (Validator.isNull(signature.getReturnType())) {
 				addMessage(
 					fileName,
-					"Missing return type for method '" + javaTerm.getName() +
-						"' with @Indexable");
+					"Missing return type for method \"" + javaTerm.getName() +
+						"\" with @Indexable");
 			}
 		}
 

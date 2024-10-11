@@ -95,9 +95,9 @@ public class PropertiesArchivedModulesCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Remove dependency '", moduleName,
-							"' in property '", key,
-							"', since it points to an archived module"));
+							"Remove dependency \"", moduleName,
+							"\" in property \"", key,
+							"\", since it points to an archived module"));
 				}
 			}
 		}

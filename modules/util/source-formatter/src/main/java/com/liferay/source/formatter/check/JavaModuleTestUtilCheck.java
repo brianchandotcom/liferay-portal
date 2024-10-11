@@ -37,8 +37,8 @@ public class JavaModuleTestUtilCheck extends BaseFileCheck {
 		if (!packageName.endsWith(".test.util")) {
 			addMessage(
 				fileName,
-				"Name of class ending with 'TestUtil' should be in package " +
-					"ending with '.test.util'");
+				"Name of class ending with \"TestUtil\" should be in package " +
+					"ending with \".test.util\"");
 		}
 
 		return content;

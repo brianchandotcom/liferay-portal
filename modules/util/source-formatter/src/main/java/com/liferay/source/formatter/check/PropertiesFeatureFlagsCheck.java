@@ -80,8 +80,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			if (StringUtil.equals(value, "dev")) {
 				addMessage(
 					fileName,
-					"Remove unnecessary property '" + key +
-						"', since 'dev' is the default value");
+					"Remove unnecessary property \"" + key +
+						"\", since \"dev\" is the default value");
 			}
 		}
 	}
@@ -298,8 +298,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					if (properties.containsKey(featureFlagUIPropertyName)) {
 						addMessage(
 							fileName,
-							"Property '" + featureFlagUIPropertyName +
-								"' must be in Language.properties");
+							"Property \"" + featureFlagUIPropertyName +
+								"\" must be in Language.properties");
 					}
 
 					if (!portalLanguageProperties.containsKey(
@@ -307,8 +307,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 						addMessage(
 							fileName,
-							"Missing property '" + featureFlagUIPropertyName +
-								"' in Language.properties");
+							"Missing property \"" + featureFlagUIPropertyName +
+								"\" in Language.properties");
 					}
 				}
 			}

@@ -138,8 +138,8 @@ public class XMLServiceFinderNameCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Finder name '", entityName, "#", finderName,
-						"' should starts with the combination of comparator ",
+						"Finder name \"", entityName, "#", finderName,
+						"\" should starts with the combination of comparator ",
 						"prefix and finder colume name"));
 			}
 
@@ -182,10 +182,10 @@ public class XMLServiceFinderNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Finder name '", entityName, "#", finderName,
-					"' should be combined by finder colume names(",
+					"Finder name \"", entityName, "#", finderName,
+					"\" should be combined by finder colume names(",
 					"at least the first character) following by each ",
-					"comparator prefix with delimiter '_'"));
+					"comparator prefix with delimiter \"_\""));
 		}
 	}
 

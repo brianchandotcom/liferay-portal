@@ -288,8 +288,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"The 'service' attribute points to '", fullyQualifiedName,
-					"', which is an internal class or interface"));
+					"The \"service\" attribute points to \"", fullyQualifiedName,
+					"\", which is an internal class or interface"));
 
 			return;
 		}
@@ -319,8 +319,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"The 'service' attribute points to '", fullyQualifiedName,
-					"', which is an internal class or interface"));
+					"The \"service\" attribute points to \"", fullyQualifiedName,
+					"\", which is an internal class or interface"));
 		}
 	}
 
@@ -518,8 +518,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 			if (javaFile == null) {
 				String message = StringBundler.concat(
-					"Remove '", configurationClass,
-					"' from 'configurationPid' as the configuration class ",
+					"Remove \"", configurationClass,
+					"\" from \"configurationPid\" as the configuration class ",
 					"does not exist");
 
 				addMessage(fileName, message);
@@ -734,8 +734,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			if (!allowed) {
 				addMessage(
 					fileName,
-					"No need to register '" + className +
-						"' in @Component 'service' attribute");
+					"No need to register \"" + className +
+						"\" in @Component \"service\" attribute");
 			}
 		}
 

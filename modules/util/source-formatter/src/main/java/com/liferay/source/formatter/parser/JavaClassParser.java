@@ -565,8 +565,8 @@ public class JavaClassParser {
 
 				if (javaTermEndLineNumber == -1) {
 					throw new ParseException(
-						"Parsing error at line '" + StringUtil.trim(line) +
-							"'");
+						"Parsing error at line \"" + StringUtil.trim(line) +
+							"\"");
 				}
 
 				int z = SourceUtil.getLineStartPos(
@@ -580,8 +580,8 @@ public class JavaClassParser {
 
 				if (javaTerm == null) {
 					throw new ParseException(
-						"Parsing error at line '" + StringUtil.trim(line) +
-							"'");
+						"Parsing error at line \"" + StringUtil.trim(line) +
+							"\"");
 				}
 
 				javaClass.addChildJavaTerm(javaTerm);

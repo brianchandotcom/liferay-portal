@@ -45,9 +45,9 @@ public class BNDLiferayRelengCategoryCheck extends BaseFileCheck {
 				liferayRelengCategory)) {
 
 			String message = StringBundler.concat(
-				"The value for 'Liferay-Releng-Category' can be either blank ",
-				"or one of the following values '",
-				StringUtil.merge(allowedLiferayRelengCategoryNames, ", "), "'");
+				"The value for \"Liferay-Releng-Category\" can be either blank ",
+				"or one of the following values \"",
+				StringUtil.merge(allowedLiferayRelengCategoryNames, ", "), "\"");
 
 			addMessage(fileName, message);
 		}

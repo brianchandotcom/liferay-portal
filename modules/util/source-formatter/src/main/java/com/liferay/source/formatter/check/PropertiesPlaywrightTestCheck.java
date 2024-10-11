@@ -51,8 +51,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 			if (testrayMainComponentName == null) {
 				addMessage(
 					fileName,
-					"Missing property '" + _TESTRAY_MAIN_COMPONENT_NAME +
-						"' in test.properties");
+					"Missing property \"" + _TESTRAY_MAIN_COMPONENT_NAME +
+						"\" in test.properties");
 
 				return content;
 			}
@@ -66,8 +66,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Property value '", testrayMainComponentName,
-						"' does not exist in 'testray.team.*.component.names' ",
+						"Property value \"", testrayMainComponentName,
+						"\" does not exist in \"testray.team.*.component.names\" ",
 						"in ", SourceUtil.getRootDirName(absolutePath),
 						"/test.properties"));
 			}
@@ -183,8 +183,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		if (ListUtil.isEmpty(relevantRuleNames)) {
 			addMessage(
 				fileName,
-				"Missing property '" + _RELEVANT_RULE_NAMES +
-					"' in test.properties for Playwright tests");
+				"Missing property \"" + _RELEVANT_RULE_NAMES +
+					"\" in test.properties for Playwright tests");
 
 			return;
 		}
@@ -211,15 +211,15 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Missing property '", playwrightTestProjectPropertyName,
-						"'", additionalMessage));
+						"Missing property \"", playwrightTestProjectPropertyName,
+						"\"", additionalMessage));
 			}
 			else if (!playwrightTestProjectList.contains(moduleName)) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Missing property value '", moduleName, "' in '",
-						playwrightTestProjectPropertyName, "'",
+						"Missing property value \"", moduleName, "\" in \"",
+						playwrightTestProjectPropertyName, "\"",
 						additionalMessage));
 			}
 		}

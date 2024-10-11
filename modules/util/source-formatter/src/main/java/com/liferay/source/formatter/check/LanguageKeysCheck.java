@@ -157,7 +157,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 				}
 
 				addMessage(
-					fileName, "Missing language key '" + languageKey + "'");
+					fileName, "Missing language key \"" + languageKey + "\"");
 			}
 		}
 	}

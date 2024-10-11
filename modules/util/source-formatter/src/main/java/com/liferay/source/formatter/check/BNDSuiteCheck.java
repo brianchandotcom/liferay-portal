@@ -87,10 +87,10 @@ public class BNDSuiteCheck extends BaseFileCheck {
 				!allowedLiferayRelengSuiteNames.contains(value)) {
 
 				String message = StringBundler.concat(
-					"The 'Liferay-Releng-Suite' can be blank or one of the ",
-					"following values '",
+					"The \"Liferay-Releng-Suite\" can be blank or one of the ",
+					"following values \"",
 					StringUtil.merge(allowedLiferayRelengSuiteNames, ", "),
-					"'");
+					"\"");
 
 				addMessage(fileName, message);
 

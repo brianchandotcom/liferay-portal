@@ -79,7 +79,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			addMessage(
-				fileName, "Incorrect line break after ','",
+				fileName, "Incorrect line break after \",\"",
 				getLineNumber(content, matcher.start()));
 		}
 	}
@@ -92,8 +92,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			addMessage(
 				fileName,
-				"There should be a line break after '" +
-					StringUtil.trim(matcher.group(1)),
+				"There should be a line break after \"" +
+					StringUtil.trim(matcher.group(1)) + "\"",
 				getLineNumber(content, matcher.end()));
 		}
 	}
@@ -167,7 +167,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					content.substring(endLineStartPos, endPos));
 
 				addMessage(
-					fileName, "There should be a line break after '" + s,
+					fileName, "There should be a line break after \"" + s + "\"",
 					endLineNumber);
 
 				continue;
@@ -199,8 +199,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Line starts with '", endLineTabCount, "' tabs, but '",
-						startLineTabCount, "' tabs are expected"),
+						"Line starts with \"", endLineTabCount, "\" tabs, but \"",
+						startLineTabCount, "\" tabs are expected"),
 					endLineNumber);
 			}
 		}

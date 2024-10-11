@@ -52,8 +52,8 @@ public class XMLServiceAutoImportDefaultReferencesCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Attribute 'auto-import-default-references' should always be " +
-					"'false' in service.xml");
+				"Attribute \"auto-import-default-references\" should always be " +
+					"\"false\" in service.xml");
 		}
 
 		return content;

@@ -24,7 +24,7 @@ public class JSPIllegalSyntaxCheck extends BaseFileCheck {
 		if (!fileName.endsWith("test.jsp")) {
 			_checkIllegalSyntax(
 				fileName, content, "System.out.print",
-				"Do not call 'System.out.print'");
+				"Do not call \"System.out.print\"");
 		}
 
 		return content;

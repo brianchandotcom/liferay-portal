@@ -83,10 +83,10 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 		addMessage(
 			fileName,
 			StringBundler.concat(
-				"Incorrect value '", value, "'. Relative path to file (from ",
+				"Incorrect value \"", value, "\". Relative path to file (from ",
 				"location of suppressions file) expected for value of ",
-				"property 'files'. ", type, " '", expectedName,
-				"' does not exist."),
+				"property \"files\". ", type, " \"", expectedName,
+				"\" does not exist."),
 			x);
 	}
 

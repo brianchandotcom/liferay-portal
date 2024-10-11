@@ -58,8 +58,8 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Class '" + className +
-					"' should end with 'JSPDynamicInclude'");
+				"Class \"" + className +
+					"\" should end with \"JSPDynamicInclude\"");
 		}
 
 		if (!className.endsWith("JSPDynamicInclude")) {
@@ -76,15 +76,15 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 
 		if (jspPath.contains(bundleSymbolicName)) {
 			String message = StringBundler.concat(
-				"The JSP path should not contain '", bundleSymbolicName,
-				"'. This is only needed when hooking into another module.");
+				"The JSP path should not contain \"", bundleSymbolicName,
+				"\". This is only needed when hooking into another module.");
 
 			addMessage(fileName, message);
 		}
 
 		if (!jspPath.startsWith("/dynamic_include/")) {
 			addMessage(
-				fileName, "The JSP path should start with '/dynamic_include/'");
+				fileName, "The JSP path should start with \"/dynamic_include/\"");
 		}
 
 		return javaTerm.getContent();

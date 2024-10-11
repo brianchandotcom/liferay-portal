@@ -50,7 +50,7 @@ public class JavaConfigurationCategoryCheck extends BaseFileCheck {
 
 		if (!categoryKeys.isEmpty() && !categoryKeys.contains(categoryName)) {
 			addMessage(
-				fileName, "Invalid category name '" + categoryName + "'",
+				fileName, "Invalid category name \"" + categoryName + "\"",
 				getLineNumber(content, matcher.start(1)));
 		}
 

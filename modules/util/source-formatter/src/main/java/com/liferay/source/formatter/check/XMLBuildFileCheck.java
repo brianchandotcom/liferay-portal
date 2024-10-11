@@ -56,7 +56,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 		if (!projectName.equals(expectedProjectName)) {
 			addMessage(
-				fileName, "Incorrect project name '" + projectName + "'");
+				fileName, "Incorrect project name \"" + projectName + "\"");
 		}
 	}
 
@@ -121,7 +121,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 			if (!file.exists()) {
 				addMessage(
-					fileName, "Incorrect import file '" + importFileName + "'");
+					fileName, "Incorrect import file \"" + importFileName + "\"");
 			}
 		}
 	}
@@ -144,7 +144,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		}
 
 		if (!targetNames.contains(targetName)) {
-			addMessage(fileName, "Target '" + targetName + "' does not exist");
+			addMessage(fileName, "Target \"" + targetName + "\" does not exist");
 		}
 	}
 
@@ -251,8 +251,8 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName,
-					"Ant element points to nonexistent build file '" +
-						buildFileName + "'");
+					"Ant element points to nonexistent build file \"" +
+						buildFileName + "\"");
 			}
 
 			return null;

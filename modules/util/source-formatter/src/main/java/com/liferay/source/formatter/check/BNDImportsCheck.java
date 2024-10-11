@@ -105,8 +105,8 @@ public class BNDImportsCheck extends BaseFileCheck {
 
 			if (wildcardImport.matches("^!?com\\.liferay\\..+")) {
 				String message = StringBundler.concat(
-					"Do not use wildcard in ", instruction, ": '",
-					wildcardImport, "'");
+					"Do not use wildcard in ", instruction, ": \"",
+					wildcardImport, "\"");
 
 				addMessage(fileName, message);
 			}

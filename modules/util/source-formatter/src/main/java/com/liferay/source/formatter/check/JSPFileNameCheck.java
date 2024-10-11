@@ -39,7 +39,7 @@ public class JSPFileNameCheck extends BaseFileCheck {
 			if (!Character.isLetterOrDigit(c) && (c != CharPool.UNDERLINE)) {
 				addMessage(
 					fileName,
-					StringBundler.concat("Do not use '", c, "' in file name"));
+					StringBundler.concat("Do not use \"", c, "\" in file name"));
 			}
 		}
 

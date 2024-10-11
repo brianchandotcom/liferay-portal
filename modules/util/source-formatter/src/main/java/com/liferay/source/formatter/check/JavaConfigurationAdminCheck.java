@@ -46,11 +46,11 @@ public class JavaConfigurationAdminCheck extends BaseFileCheck {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("Incorrect call to '");
+			sb.append("Incorrect call to \"");
 			sb.append(matcher.group(1));
 			sb.append(StringPool.PERIOD);
 			sb.append(matcher.group(2));
-			sb.append(StringPool.APOSTROPHE);
+			sb.append("\"");
 
 			addMessage(
 				fileName, sb.toString(),

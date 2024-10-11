@@ -44,7 +44,7 @@ public class LocaleUtilCheck extends BaseFileCheck {
 
 			if (localeUtilTermNames.contains(matcher.group(1))) {
 				addMessage(
-					fileName, "Use 'LocaleUtil." + matcher.group(1) + "'",
+					fileName, "Use \"LocaleUtil." + matcher.group(1) + "\"",
 					getLineNumber(content, matcher.start()));
 			}
 		}

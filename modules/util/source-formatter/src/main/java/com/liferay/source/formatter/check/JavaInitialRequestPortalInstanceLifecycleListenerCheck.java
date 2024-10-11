@@ -99,8 +99,8 @@ public class JavaInitialRequestPortalInstanceLifecycleListenerCheck
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The 'activate' method must call 'super.activate(",
-						javaParameter.getParameterName(), ")'"),
+						"The \"activate\" method must call \"super.activate(",
+						javaParameter.getParameterName(), ")\""),
 					javaMethod.getLineNumber());
 			}
 
@@ -110,9 +110,9 @@ public class JavaInitialRequestPortalInstanceLifecycleListenerCheck
 		addMessage(
 			fileName,
 			StringBundler.concat(
-				"Missing 'activate(BundleContext bundleContext)' method with ",
-				"'@Activate' annotation that calls ",
-				"'super.activate(bundleContext)'"));
+				"Missing \"activate(BundleContext bundleContext)\" method with ",
+				"\"@Activate\" annotation that calls ",
+				"\"super.activate(bundleContext)\""));
 	}
 
 }

@@ -39,8 +39,8 @@ public class JSPVarNameCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Rename var '", varName, "' to '", expectedVarName,
-						"'"),
+						"Rename var \"", varName, "\" to \"", expectedVarName,
+						"\""),
 					getLineNumber(content, matcher.start()));
 			}
 		}

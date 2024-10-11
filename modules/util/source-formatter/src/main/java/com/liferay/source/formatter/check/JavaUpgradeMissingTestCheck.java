@@ -83,7 +83,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 		if ((file == null) || !file.exists()) {
 			addMessage(
 				fileName,
-				"Test class '" + expectedTestClassName + "' does not exist");
+				"Test class \"" + expectedTestClassName + "\" does not exist");
 		}
 	}
 

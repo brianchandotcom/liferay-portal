@@ -17,7 +17,7 @@ public class CodeownersFileLocationCheck extends BaseFileCheck {
 		if (!fileName.endsWith("/.github/CODEOWNERS")) {
 			addMessage(
 				fileName,
-				"CODEOWNERS file should be located in directory '.github'");
+				"CODEOWNERS file should be located in directory \".github\"");
 		}
 
 		return content;

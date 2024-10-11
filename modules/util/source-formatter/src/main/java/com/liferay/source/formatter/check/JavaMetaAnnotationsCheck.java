@@ -67,7 +67,7 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 			if (!nameValue.endsWith("-configuration-name")) {
 				addMessage(
 					fileName,
-					"Value for 'name' should end with '-configuration-name'",
+					"Value for \"name\" should end with \"-configuration-name\"",
 					getLineNumber(content, content.indexOf(matcher.group())));
 			}
 		}
@@ -89,13 +89,13 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("Value '");
+		sb.append("Value \"");
 		sb.append(value);
-		sb.append("' for key '");
+		sb.append("\" for key \"");
 		sb.append(key);
-		sb.append("' should use '");
+		sb.append("\" should use \"");
 		sb.append(correctDelimeter);
-		sb.append("' as delimeter");
+		sb.append("\" as delimeter");
 
 		addMessage(
 			fileName, sb.toString(),

@@ -41,8 +41,8 @@ public class JavaUpgradeIndexCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Do not execute '", matcher.group(),
-						"' in upgrade classes"),
+						"Do not execute \"", matcher.group(),
+						"\" in upgrade classes"),
 					getLineNumber(fileContent, matcher.start()));
 			}
 		}

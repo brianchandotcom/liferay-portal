@@ -27,8 +27,8 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			addMessage(
 				fileName,
-				"Do not use self-closing tag for attribute 'message' in '" +
-					"<echo>' tag",
+				"Do not use self-closing tag for attribute \"message\" in \"" +
+					"<echo>\" tag",
 				getLineNumber(content, matcher.start()));
 		}
 

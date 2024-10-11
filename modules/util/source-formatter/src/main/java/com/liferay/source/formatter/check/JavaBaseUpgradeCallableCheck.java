@@ -54,9 +54,9 @@ public class JavaBaseUpgradeCallableCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Do not use 'java.lang.Runnable' in '",
+					"Do not use \"java.lang.Runnable\" in \"",
 					packageNameMatcher.group(2),
-					"' classes, use 'BaseUpgradeCallable' instead."),
+					"\" classes, use \"BaseUpgradeCallable\" instead."),
 				getLineNumber(fileContent, runnableMatcher.start()));
 		}
 
@@ -70,9 +70,9 @@ public class JavaBaseUpgradeCallableCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Do not use '", importName, "' in '",
+						"Do not use \"", importName, "\" in \"",
 						packageNameMatcher.group(2),
-						"' classes, use 'BaseUpgradeCallable' instead."),
+						"\" classes, use \"BaseUpgradeCallable\" instead."),
 					getLineNumber(
 						fileContent, fileContent.indexOf(importName)));
 			}

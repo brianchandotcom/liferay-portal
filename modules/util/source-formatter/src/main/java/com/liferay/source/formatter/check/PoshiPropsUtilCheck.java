@@ -79,9 +79,9 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Pass '", matcher.group(2),
-						"' directly instead of assigning value to variable '",
-						variableName, "'"),
+						"Pass \"", matcher.group(2),
+						"\" directly instead of assigning value to variable \"",
+						variableName, "\""),
 					getLineNumber(content, matcher.start()) + 1);
 			}
 		}

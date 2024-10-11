@@ -20,7 +20,7 @@ public class XMLWorkflowDefinitionFileNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"The file name of workflow definition should end with " +
-					"'workflow-definition.xml'");
+					"\"workflow-definition.xml\"");
 		}
 
 		return content;

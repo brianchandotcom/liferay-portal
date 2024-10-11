@@ -67,41 +67,41 @@ public class PropertiesVerifyPropertiesCheck extends BaseFileCheck {
 			StringBundler sb = new StringBundler(10);
 
 			sb.append(legacyPropertyType.getValue());
-			sb.append(" property '");
+			sb.append(" property \"");
 			sb.append(legacyProperty.getLegacyPropertyName());
 
 			LegacyPropertyAction legacyActionType =
 				legacyProperty.getLegacyPropertyAction();
 
 			if (legacyActionType.equals(LegacyPropertyAction.MIGRATED)) {
-				sb.append("' was migrated to ");
+				sb.append("\" was migrated to ");
 
 				if (legacyPropertyType.equals(LegacyPropertyType.PORTAL)) {
-					sb.append("'system.properties'");
+					sb.append("\"system.properties\"");
 				}
 				else {
-					sb.append("'portal.properties'");
+					sb.append("\"portal.properties\"");
 				}
 			}
 			else if (legacyActionType.equals(
 						LegacyPropertyAction.MODULARIZED)) {
 
-				sb.append("' was modularized");
+				sb.append("\" was modularized");
 			}
 			else if (legacyActionType.equals(LegacyPropertyAction.OBSOLETE)) {
-				sb.append("' is obsolete");
+				sb.append("\" is obsolete");
 			}
 			else {
-				sb.append("' was renamed");
+				sb.append("\" was renamed");
 			}
 
-			sb.append(". See '");
+			sb.append(". See \"");
 			sb.append(
 				StringUtil.removeSubstring(
 					_VERIFY_PROPERTIES_FILE_NAME, ".java"));
 			sb.append("#");
 			sb.append(legacyProperty.getVariableName());
-			sb.append("'.");
+			sb.append("\".");
 
 			addMessage(fileName, sb.toString());
 		}

@@ -40,8 +40,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 					StringBundler.concat(
 						message,
 						"Each breaking change should have one, and only one ",
-						"'# breaking', '## What', '## Why' and ## (Optional). ",
-						"Use '----' to split each breaking change."));
+						"\"# breaking\", \"## What\", \"## Why\" and ## (Optional). ",
+						"Use \"----\" to split each breaking change."));
 
 				return;
 			}
@@ -58,8 +58,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					message +
-						"The correct order of headers should be '## What' | '" +
-							"## Why' | '## Alternatives'");
+						"The correct order of headers should be \"## What\" | \"" +
+							"## Why\" | \"## Alternatives\"");
 
 				return;
 			}
@@ -77,7 +77,7 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 			if (trimmedLine.length() == 7) {
 				addMessage(
 					fileName,
-					message + "There should be one file path after '## What'");
+					message + "There should be one file path after \"## What\"");
 
 				return;
 			}
@@ -108,8 +108,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 		if (!breakingChanges.endsWith("\n\n----")) {
 			addMessage(
 				fileName,
-				message + "The commit message contains '# breaking' should " +
-					"end with '\\n\\n----'");
+				message + "The commit message contains \"# breaking\" should " +
+					"end with \"\\n\\n----\"");
 		}
 
 		for (String header : _BREAKING_CHANGE_HEADER_NAMES) {
@@ -126,8 +126,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							message, "There should be a line break after ' ",
-							header, "'"));
+							message, "There should be a line break after \" ",
+							header, "\""));
 				}
 			}
 
@@ -145,9 +145,9 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						message,
-						"There should be an empty line after/before '----', ",
-						"'# breaking', '## What', '## Why' and '## ",
-						"Alternatives'"));
+						"There should be an empty line after/before \"----\", ",
+						"\"# breaking\", \"## What\", \"## Why\" and \"## ",
+						"Alternatives\""));
 			}
 		}
 	}
@@ -176,8 +176,8 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 					StringBundler.concat(
 						message,
 						"There should be at least a line containing an ",
-						"explanation after '## What', '## Why' and '## ",
-						"Alternatives'"));
+						"explanation after \"## What\", \"## Why\" and \"## ",
+						"Alternatives\""));
 			}
 		}
 	}

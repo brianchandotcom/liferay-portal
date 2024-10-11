@@ -24,7 +24,7 @@ public class JSLodashDependencyCheck extends BaseFileCheck {
 			}
 
 			addMessage(
-				fileName, "Do not use 'AUI._'", getLineNumber(content, x));
+				fileName, "Do not use \"AUI._\"", getLineNumber(content, x));
 		}
 	}
 

@@ -75,9 +75,9 @@ public class JavaSignatureParametersCheck extends BaseJavaTermCheck {
 						addMessage(
 							fileName,
 							StringBundler.concat(
-								"Parameter of type '", entry.getKey(),
-								"' should come before parameter of type '",
-								typeName, "'"),
+								"Parameter of type \"", entry.getKey(),
+								"\" should come before parameter of type \"",
+								typeName, "\""),
 							lineNumber);
 					}
 				}

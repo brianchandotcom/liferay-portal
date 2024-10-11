@@ -38,7 +38,7 @@ public class JavaIgnoreAnnotationCheck extends BaseJavaTermCheck {
 
 		if (classNames.contains(javaClass.getName(true))) {
 			addMessage(
-				fileName, "Do not ignore test in '" + javaClass.getName(),
+				fileName, "Do not ignore test in \"" + javaClass.getName() + "\"",
 				javaTerm.getLineNumber());
 		}
 

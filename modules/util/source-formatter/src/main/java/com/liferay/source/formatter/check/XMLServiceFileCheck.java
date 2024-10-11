@@ -70,9 +70,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect order '", entityName, "': Category '",
-							previousCategory, "' should come after '", category,
-							"'"));
+							"Incorrect order \"", entityName, "\": Category \"",
+							previousCategory, "\" should come after \"", category,
+							"\""));
 				}
 
 				previousCategoryIndex = categoryIndex;
@@ -126,9 +126,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect order '", entityName, "#",
-							previousColumnName, "'. Status columns should ",
-							"come last in the category 'Other fields'."));
+							"Incorrect order \"", entityName, "#",
+							previousColumnName, "\". Status columns should ",
+							"come last in the category \"Other fields\"."));
 				}
 				else if (previousColumnName.equals("lastPublishDate")) {
 					List<String> allowedIncorrectLastPublishDateEntities =
@@ -142,8 +142,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 						addMessage(
 							fileName,
 							StringBundler.concat(
-								"Incorrect order '", entityName,
-								"#lastPublishDate'. 'lastPublishDate' column ",
+								"Incorrect order \"", entityName,
+								"#lastPublishDate\". \"lastPublishDate\" column ",
 								"should come last (only followed by status ",
 								"columns) in the category 'Other fields'."));
 					}
@@ -174,8 +174,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		addMessage(
 			fileName,
-			"Attribute 'mvcc-enabled' should always be set in service.xml. " +
-				"Preferably, set 'mvcc-enabled=\"true\"'.");
+			"Attribute \"mvcc-enabled\" should always be set in service.xml. " +
+				"Preferably, set \"mvcc-enabled=\"true\"\".");
 	}
 
 	private void _checkServiceXML(
@@ -228,8 +228,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Entity '", entityName,
-							"' should have a column named 'companyId', See ",
+							"Entity \"", entityName,
+							"\" should have a column named \"companyId\", See ",
 							"LPS-107076"));
 				}
 			}

@@ -71,13 +71,13 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 						addMessage(
 							fileName,
 							"Missing a required JIRA project in comment " +
-								"before using 'Pause'",
+								"before using \"Pause\"",
 							lineNumber);
 					}
 				}
 				else {
 					addMessage(
-						fileName, "Missing a comment before using 'Pause'",
+						fileName, "Missing a comment before using \"Pause\"",
 						lineNumber);
 				}
 

@@ -46,7 +46,7 @@ public class BNDBundleActivatorCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Incorrect Bundle-Activator, it should end with " +
-					"'BundleActivator'");
+					"\"BundleActivator\"");
 
 			return;
 		}
@@ -72,7 +72,7 @@ public class BNDBundleActivatorCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Incorrect Bundle-Activator, it should match " +
-					"'Bundle-SymbolicName'");
+					"\"Bundle-SymbolicName\"");
 		}
 	}
 

@@ -68,11 +68,11 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 			if (javaClass.isAbstract()) {
 				addMessage(
 					fileName,
-					"Class name ending with 'Test' should not be abstract");
+					"Class name ending with \"Test\" should not be abstract");
 			}
 			else if (javaClass.isInterface()) {
 				addMessage(
-					fileName, "Interface name should not end with 'Test'");
+					fileName, "Interface name should not end with \"Test\"");
 			}
 		}
 
@@ -91,9 +91,9 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"'", className,
-						"' is not a real test class and therefore should not ",
-						"end with 'Test'"));
+						"\"", className,
+						"\" is not a real test class and therefore should not ",
+						"end with \"Test\""));
 			}
 
 			return;
@@ -103,11 +103,11 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 			if (!className.matches("Base.*TestCase")) {
 				addMessage(
 					fileName,
-					"Abstract class name should match 'Base.*TestCase'");
+					"Abstract class name should match \"Base.*TestCase\"");
 			}
 		}
 		else if (!className.endsWith("Test")) {
-			addMessage(fileName, "Test class should end with 'Test'");
+			addMessage(fileName, "Test class should end with \"Test\"");
 		}
 	}
 

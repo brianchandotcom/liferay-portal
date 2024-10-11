@@ -90,8 +90,8 @@ public class JavaTaglibMethodCheck extends BaseJavaTermCheck {
 			if (setterJavaMethod == null) {
 				addMessage(
 					fileName,
-					"Missing getter/setter methods for attribute '" +
-						tagAttributeName + "'");
+					"Missing getter/setter methods for attribute \"" +
+						tagAttributeName + "\"");
 
 				continue;
 			}
@@ -153,8 +153,8 @@ public class JavaTaglibMethodCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Missing getter method for attribute '" + tagAttributeName +
-					"'");
+				"Missing getter method for attribute \"" + tagAttributeName +
+					"\"");
 		}
 
 		return javaTerm.getContent();

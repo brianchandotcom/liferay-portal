@@ -60,8 +60,8 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 				if (!Validator.isNumber(portletNameText)) {
 					addMessage(
 						fileName,
-						"Nonstandard portlet-name element '" + portletNameText +
-							"'");
+						"Nonstandard portlet-name element \"" + portletNameText +
+							"\"");
 				}
 			}
 		}

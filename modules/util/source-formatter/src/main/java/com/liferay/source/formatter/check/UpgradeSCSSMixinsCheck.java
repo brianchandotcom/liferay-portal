@@ -76,7 +76,7 @@ public class UpgradeSCSSMixinsCheck extends BaseUpgradeCheck {
 
 		if (parameterNames.size() != 1) {
 			String message = StringBundler.concat(
-				"Do not use 'media-query' mixing, replace with its equivalent ",
+				"Do not use \"media-query\" mixing, replace with its equivalent ",
 				"(e.g., media-breakpoint-up, media-breakpoint-only, ",
 				"media-breakpoint-down, etc.), see LPS-194507.");
 

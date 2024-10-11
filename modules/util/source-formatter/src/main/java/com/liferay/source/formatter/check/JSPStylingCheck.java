@@ -96,7 +96,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		if ((x != -1) && (y != -1) && (x < y)) {
 			addMessage(
-				fileName, "'<%!...%>' block should come after <%...%> blcok",
+				fileName, "\"<%!...%>\" block should come after <%...%> block",
 				getLineNumber(content, x));
 
 			return content;
@@ -115,9 +115,9 @@ public class JSPStylingCheck extends BaseStylingCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Combine <%!...%> blocks at line '",
-						getLineNumber(content, x), "' and '",
-						getLineNumber(content, y), "'"));
+						"Combine <%!...%> blocks at line \"",
+						getLineNumber(content, x), "\" and \"",
+						getLineNumber(content, y), "\""));
 
 				return content;
 			}
@@ -218,7 +218,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		while (matcher.find()) {
 			if (!JSPSourceUtil.isJSSource(content, matcher.start(1))) {
 				addMessage(
-					fileName, "There should be a line break after '}'",
+					fileName, "There should be a line break after \"}\"",
 					getLineNumber(content, matcher.start(1)));
 			}
 		}
@@ -237,7 +237,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		while (matcher.find()) {
 			addMessage(
-				fileName, "There should be a line break after '<%='",
+				fileName, "There should be a line break after \"<%=\"",
 				getLineNumber(content, matcher.start()));
 		}
 
@@ -273,7 +273,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 			if (!line.endsWith("%>")) {
 				addMessage(
-					fileName, "There should be a line break after '<%'",
+					fileName, "There should be a line break after \"<%\"",
 					lineNumber);
 			}
 		}

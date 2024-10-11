@@ -47,8 +47,8 @@ public class BNDMultipleAppBNDsCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Redundant app.bnd. There is one already: '" +
-					portalAppBNDFileName + "'.");
+				"Redundant app.bnd. There is one already: \"" +
+					portalAppBNDFileName + "\".");
 		}
 	}
 

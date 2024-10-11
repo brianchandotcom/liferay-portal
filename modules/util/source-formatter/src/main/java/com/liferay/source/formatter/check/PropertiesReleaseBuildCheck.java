@@ -47,8 +47,8 @@ public class PropertiesReleaseBuildCheck extends BaseFileCheck {
 		if (!releaseInfoContent.contains(releaseInfoBuildValue)) {
 			addMessage(
 				fileName,
-				"release.info.build '" + releaseInfoBuildValue +
-					"' does not exist in ReleaseInfo.java");
+				"release.info.build \"" + releaseInfoBuildValue +
+					"\" does not exist in ReleaseInfo.java");
 		}
 
 		return content;

@@ -93,7 +93,7 @@ public abstract class BaseFileCheck
 
 					StringBundler sb = new StringBundler(9);
 
-					sb.append("Incorrect order '");
+					sb.append("Incorrect order \"");
 
 					if (Validator.isNotNull(parentElementName)) {
 						sb.append(parentElementName);
@@ -101,12 +101,12 @@ public abstract class BaseFileCheck
 					}
 
 					sb.append(elementName);
-					sb.append("': '");
+					sb.append("\": \"");
 					sb.append(
 						elementComparator.getElementName(previousElement));
-					sb.append("' should come after '");
+					sb.append("\" should come after \"");
 					sb.append(elementComparator.getElementName(curElement));
-					sb.append("'");
+					sb.append("\"");
 
 					addMessage(fileName, sb.toString());
 				}

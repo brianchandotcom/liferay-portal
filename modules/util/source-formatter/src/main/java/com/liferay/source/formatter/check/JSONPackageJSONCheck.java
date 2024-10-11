@@ -102,7 +102,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		String fileName, JSONObject jsonObject, String entryName) {
 
 		if (!jsonObject.isNull(entryName)) {
-			addMessage(fileName, "Entry '" + entryName + "' is not allowed");
+			addMessage(fileName, "Entry \"" + entryName + "\" is not allowed");
 		}
 	}
 
@@ -133,7 +133,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		if (scriptsJSONObject.isNull(key)) {
 			if (requiredScript) {
 				addMessage(
-					fileName, "Missing entry '" + key + "' in 'scripts'");
+					fileName, "Missing entry \"" + key + "\" in \"scripts\"");
 			}
 
 			return;
@@ -153,29 +153,29 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Value '", value, "' for entry '", key,
-					"' should end with '", allowedValues[0], "'"));
+					"Value \"", value, "\" for entry \"", key,
+					"\" should end with \"", allowedValues[0], "\""));
 
 			return;
 		}
 
 		StringBundler sb = new StringBundler((allowedValues.length * 4) + 5);
 
-		sb.append("Value '");
+		sb.append("Value \"");
 		sb.append(value);
-		sb.append("' for entry '");
+		sb.append("\" for entry \"");
 		sb.append(key);
 		sb.append(
-			"' should end with (or be exactly) one of the following values: ");
+			"\" should end with (or be exactly) one of the following values: ");
 
 		for (int i = 0; i < allowedValues.length; i++) {
 			if (i > 0) {
 				sb.append(", ");
 			}
 
-			sb.append(StringPool.APOSTROPHE);
+			sb.append(StringPool.QUOTE);
 			sb.append(allowedValues[i]);
-			sb.append(StringPool.APOSTROPHE);
+			sb.append(StringPool.QUOTE);
 		}
 
 		addMessage(fileName, sb.toString());

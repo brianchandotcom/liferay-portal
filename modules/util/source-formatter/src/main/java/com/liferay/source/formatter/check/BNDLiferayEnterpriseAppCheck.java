@@ -76,16 +76,16 @@ public class BNDLiferayEnterpriseAppCheck extends BaseFileCheck {
 			if (!matcher.find() || !Objects.equals(matcher.group(1), "true")) {
 				addMessage(
 					fileName,
-					"Enterprise apps in 'dxp/apps/' directory should always " +
-						"set 'dxp.only=true' in 'Liferay-Enterprise-App'");
+					"Enterprise apps in \"dxp/apps/\" directory should always " +
+						"set \"dxp.only=true\" in \"Liferay-Enterprise-App\"");
 			}
 		}
 		else {
 			if (matcher.find()) {
 				addMessage(
 					fileName,
-					"Enterprise apps not in 'dxp/apps/' directory should not " +
-						"set 'dxp.only' in 'Liferay-Enterprise-App'");
+					"Enterprise apps not in \"dxp/apps/\" directory should not " +
+						"set \"dxp.only\" in \"Liferay-Enterprise-App\"");
 			}
 		}
 	}

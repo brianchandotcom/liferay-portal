@@ -49,8 +49,8 @@ public class BNDDirectoryNameCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Module '", moduleName, "' should start with '",
-						applicationName, "'"));
+						"Module \"", moduleName, "\" should start with \"",
+						applicationName, "\""));
 			}
 		}
 
@@ -61,8 +61,8 @@ public class BNDDirectoryNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Rename module '", moduleName, "' to '", newModuleName,
-					"'"));
+					"Rename module \"", moduleName, "\" to \"", newModuleName,
+					"\""));
 		}
 	}
 

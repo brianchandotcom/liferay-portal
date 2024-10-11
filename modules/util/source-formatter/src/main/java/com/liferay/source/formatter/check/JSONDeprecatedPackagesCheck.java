@@ -43,8 +43,8 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName,
-					"Do not use deprecated package '" + deprecatedPackageName +
-						"'",
+					"Do not use deprecated package \"" + deprecatedPackageName +
+						"\"",
 					SourceUtil.getLineNumber(content, x));
 			}
 		}

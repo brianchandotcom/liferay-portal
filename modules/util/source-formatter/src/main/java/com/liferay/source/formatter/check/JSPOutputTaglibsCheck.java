@@ -82,8 +82,8 @@ public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The value for 'outputKey' in <", outputTaglibName,
-						"> should start with '", expectedValue, "'"),
+						"The value for \"outputKey\" in <", outputTaglibName,
+						"> should start with \"", expectedValue, "\""),
 					getLineNumber(content, x));
 			}
 		}

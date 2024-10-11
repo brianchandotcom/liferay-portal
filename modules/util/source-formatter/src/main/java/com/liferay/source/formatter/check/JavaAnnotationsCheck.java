@@ -50,7 +50,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		if (componentName.contains("*")) {
 			addMessage(
 				fileName,
-				"Do not use globs for the 'component.name'. Use the fully " +
+				"Do not use globs for the \"component.name\". Use the fully " +
 					"qualified name of the component class.");
 
 			return;
@@ -76,7 +76,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 		addMessage(
 			fileName,
-			"The value '" + componentName + "' is not a valid OSGi component");
+			"The value \"" + componentName + "\" is not a valid OSGi component");
 	}
 
 	@Override

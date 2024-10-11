@@ -71,8 +71,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Name of class in package '", packageName,
-						"' should end with '", expectedClassNameEnding, "'"));
+						"Name of class in package \"", packageName,
+						"\" should end with \"", expectedClassNameEnding, "\""));
 			}
 		}
 
@@ -129,9 +129,9 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Name of class extending '", enforceExtendedClassName,
-						"' should end with '", trimmedEnforceExtendedClassName,
-						"'"));
+						"Name of class extending \"", enforceExtendedClassName,
+						"\" should end with \"", trimmedEnforceExtendedClassName,
+						"\""));
 
 				break;
 			}
@@ -169,9 +169,9 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Name of class implementing '",
-						enforceImplementedClassName, "' should end with '",
-						enforceImplementedClassName, "'"));
+						"Name of class implementing \"",
+						enforceImplementedClassName, "\" should end with \"",
+						enforceImplementedClassName, "\""));
 
 				break;
 			}
@@ -196,9 +196,9 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Name of class not implementing '",
-						unimplementedClassName, "' should not end with '",
-						unimplementedClassName, "'"));
+						"Name of class not implementing \"",
+						unimplementedClassName, "\" should not end with \"",
+						unimplementedClassName, "\""));
 
 				break;
 			}
@@ -245,8 +245,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Typo in either class name '", className, "' or package '",
-					packageName, "'"));
+					"Typo in either class name \"", className, "\" or package \"",
+					packageName, "\""));
 		}
 	}
 

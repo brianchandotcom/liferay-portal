@@ -113,7 +113,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 				addMessage(
 					fileName,
-					"Use method 'StringBundler.concat' when concatenating " +
+					"Use method \"StringBundler.concat\" when concatenating " +
 						"more than 3 strings",
 					javaTerm.getLineNumber(startPos));
 			}

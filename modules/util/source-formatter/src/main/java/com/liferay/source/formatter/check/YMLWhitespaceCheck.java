@@ -171,8 +171,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			}
 			else {
 				String message = StringBundler.concat(
-					"Incorrect whitespace, expected '", expectedIndent,
-					"    '\n", oldNestedContent);
+					"Incorrect whitespace, expected \"", expectedIndent,
+					"    \"\n", oldNestedContent);
 
 				addMessage(fileName, message);
 			}

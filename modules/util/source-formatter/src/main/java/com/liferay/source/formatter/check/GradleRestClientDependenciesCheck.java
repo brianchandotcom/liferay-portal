@@ -46,8 +46,8 @@ public class GradleRestClientDependenciesCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName,
-						"Project dependencies '.*-rest-client' can only be " +
-							"used for 'testIntegrationImplementation'",
+						"Project dependencies \".*-rest-client\" can only be " +
+							"used for \"testIntegrationImplementation\"",
 						SourceUtil.getLineNumber(
 							content, content.indexOf(matched)));
 				}

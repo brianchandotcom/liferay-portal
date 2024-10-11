@@ -50,8 +50,8 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			if (getLevel(match, "<", ">") != 0) {
 				addMessage(
 					fileName,
-					"There should be a line break after '" + matcher.group(2) +
-						"'",
+					"There should be a line break after \"" + matcher.group(2) +
+						"\"",
 					getLineNumber(content, matcher.start(2)));
 
 				continue;

@@ -62,7 +62,7 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 					strippedBundleName, expectedBundleName)) {
 
 				addMessage(
-					fileName, "Incorrect Bundle-Name '" + bundleName + "'");
+					fileName, "Incorrect Bundle-Name \"" + bundleName + "\"");
 			}
 		}
 		else {
@@ -88,8 +88,8 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 			if (!bundleSymbolicName.equals(expectedBundleSymbolicName)) {
 				addMessage(
 					fileName,
-					"Incorrect Bundle-SymbolicName '" + bundleSymbolicName +
-						"'");
+					"Incorrect Bundle-SymbolicName \"" + bundleSymbolicName +
+						"\"");
 			}
 		}
 		else {
@@ -114,8 +114,8 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"'Bundle-Version' for *-test modules should always be " +
-					"'1.0.0', since we do not publish these");
+				"\"Bundle-Version\" for *-test modules should always be " +
+					"\"1.0.0\", since we do not publish these");
 		}
 	}
 

@@ -525,6 +525,56 @@ public class LayoutStructure {
 
 				position = 0;
 			}
+			else if (parentLayoutStructureItem instanceof
+						FormStyledLayoutStructureItem) {
+
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+					(FormStyledLayoutStructureItem)parentLayoutStructureItem;
+
+				if (Objects.equals(
+						formStyledLayoutStructureItem.getFormType(),
+						"multistep")) {
+
+					List<String> childrenItemIds =
+						parentLayoutStructureItem.getChildrenItemIds();
+
+					if (ListUtil.isEmpty(childrenItemIds)) {
+						throw new UnsupportedOperationException(
+							"Unable to copy items because form step does not " +
+								"have a form step container");
+					}
+
+					for (String childItemId : childrenItemIds) {
+						LayoutStructureItem layoutStructureItem =
+							_layoutStructureItems.get(childItemId);
+
+						if (layoutStructureItem instanceof
+								FormStepContainerStyledLayoutStructureItem) {
+
+							FormStepContainerStyledLayoutStructureItem
+								formStepContainerStyledLayoutStructureItem =
+									(FormStepContainerStyledLayoutStructureItem)
+										layoutStructureItem;
+
+							childrenItemIds =
+								formStepContainerStyledLayoutStructureItem.
+									getChildrenItemIds();
+
+							if (ListUtil.isEmpty(childrenItemIds)) {
+								throw new UnsupportedOperationException(
+									"Unable to copy items because form step " +
+										"does not have any step items");
+							}
+
+							currentParentItemId = childrenItemIds.get(0);
+
+							break;
+						}
+					}
+				}
+
+				position = 0;
+			}
 
 			List<String> childrenItemIds =
 				LayoutStructureItemUtil.getChildrenItemIds(itemId, this);

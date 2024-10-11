@@ -13,7 +13,11 @@ type ConfigurationSection =
 	| 'Spacing'
 	| 'Text';
 
-type ConfigurationTab = 'Advanced' | 'General' | 'Styles';
+type FragmentConfigurationTab = 'Advanced' | 'General' | 'Styles';
+
+type EditableConfigurationTab = 'Link' | 'Mapping';
+
+type ConfigurationTab = FragmentConfigurationTab | EditableConfigurationTab;
 
 type SidebarTab =
 	| 'Fragments and Widgets'

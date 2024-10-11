@@ -11,6 +11,7 @@ import com.liferay.marketplace.service.MarketplaceService;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -74,31 +75,30 @@ public class ConsoleRestController extends BaseRestController {
 
 		Order order = _marketplaceService.getOrder(orderId);
 
+		JSONObject jsonObject = new JSONObject(json);
+
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
-		JSONObject jsonObject = new JSONObject(json);
-
 		JSONArray cloudProvisioningJSONArray = new JSONArray(
-			customFields.get("cloud-provisioning"));
+			customFields.get(
+				"cloud-provisioning"
+			).toString());
 
-		_verifyAvailability(
-			cloudProvisioningJSONArray, jsonObject.getLong("orderItemId"));
+		JSONObject cloudProvisioningJSONObject =
+			_getCloudProvisioningJSONObject(
+				cloudProvisioningJSONArray, jsonObject.getLong("orderItemId"));
 
-		JSONObject appJSONObject = _consoleService.deployApp(
-			jwt.getClaimAsString("username"), String.valueOf(orderId),
+		_verifyAvailability(cloudProvisioningJSONObject);
+
+		String temporaryDeploymentId = _createTemporaryDeployment(
+			cloudProvisioningJSONArray, cloudProvisioningJSONObject, order,
 			jsonObject.getString("projectId"));
 
-		for (int i = 0; i < cloudProvisioningJSONArray.length(); i++) {
-			JSONObject cloudProvisioningJSONObject =
-				cloudProvisioningJSONArray.getJSONObject(i);
-
-			if (!Objects.equals(
-					cloudProvisioningJSONObject.getLong("orderItemId"),
-					jsonObject.getLong("orderItemId"))) {
-
-				continue;
-			}
+		try {
+			JSONObject appJSONObject = _consoleService.deployApp(
+				jwt.getClaimAsString("username"), String.valueOf(order.getId()),
+				jsonObject.getString("projectId"));
 
 			cloudProvisioningJSONObject.put(
 				"deployments",
@@ -112,6 +112,13 @@ public class ConsoleRestController extends BaseRestController {
 				cloudProvisioningJSONObject.getInt("shippedQuantity") + 1
 			);
 		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			_log.error("Unable to install app for order " + orderId);
+		}
+
+		_deleteDeployment(cloudProvisioningJSONObject, temporaryDeploymentId);
 
 		customFields.put(
 			"cloud-provisioning", cloudProvisioningJSONArray.toString());
@@ -138,42 +145,19 @@ public class ConsoleRestController extends BaseRestController {
 			JSONArray cloudProvisioningJSONArray = new JSONArray(
 				customFields.get("cloud-provisioning"));
 
-			for (int i = 0; i < cloudProvisioningJSONArray.length(); i++) {
-				JSONObject cloudProvisioningJSONObject =
-					cloudProvisioningJSONArray.getJSONObject(i);
+			JSONObject cloudProvisioningJSONObject =
+				_getCloudProvisioningJSONObject(
+					cloudProvisioningJSONArray,
+					jsonObject.getLong("orderItemId"));
 
-				if (!Objects.equals(
-						cloudProvisioningJSONObject.getLong("orderItemId"),
-						jsonObject.getLong("orderItemId"))) {
+			_deleteDeployment(
+				cloudProvisioningJSONObject, jsonObject.getString("id"));
 
-					continue;
-				}
-
-				JSONArray deploymentsJSONArray =
-					cloudProvisioningJSONObject.getJSONArray("deployments");
-
-				for (int j = 0; j < deploymentsJSONArray.length(); j++) {
-					JSONObject deploymentJSONObject =
-						deploymentsJSONArray.getJSONObject(j);
-
-					if (Objects.equals(
-							deploymentJSONObject.get("id"),
-							jsonObject.get("id"))) {
-
-						deploymentsJSONArray.remove(j);
-					}
-				}
-
-				cloudProvisioningJSONObject.put(
-					"deployments",
-					cloudProvisioningJSONObject.getJSONArray("deployments")
-				).put(
-					"shippedQuantity",
-					cloudProvisioningJSONObject.getJSONArray(
-						"deployments"
-					).length()
-				);
-			}
+			cloudProvisioningJSONObject.put(
+				"shippedQuantity",
+				cloudProvisioningJSONObject.getJSONArray(
+					"deployments"
+				).length());
 
 			customFields.put(
 				"cloud-provisioning", cloudProvisioningJSONArray.toString());
@@ -189,23 +173,82 @@ public class ConsoleRestController extends BaseRestController {
 			_log.error(exception);
 
 			_log.error("Unable to uninstall app for order " + orderId);
+
+			throw exception;
 		}
 	}
 
-	private void _verifyAvailability(JSONArray jsonArray, long orderItemId)
+	private String _createTemporaryDeployment(
+			JSONArray jsonArray, JSONObject jsonObject, Order order,
+			String projectId)
 		throws Exception {
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		String uuid = UUID.randomUUID(
+		).toString();
+
+		jsonObject.put(
+			"deployments",
+			jsonObject.getJSONArray(
+				"deployments"
+			).put(
+				new JSONObject(
+				).put(
+					"id", uuid
+				).put(
+					"loading", true
+				).put(
+					"projectId", projectId
+				)
+			));
+
+		customFields.put("cloud-provisioning", jsonArray.toString());
+
+		_marketplaceService.updateOrder(
+			customFields, order.getId(), order.getOrderStatus());
+
+		return uuid;
+	}
+
+	private void _deleteDeployment(JSONObject jsonObject, String id) {
+		JSONArray deploymentsJSONArray = jsonObject.getJSONArray("deployments");
+
+		for (int i = 0; i < deploymentsJSONArray.length(); i++) {
+			JSONObject deploymentJSONObject =
+				deploymentsJSONArray.getJSONObject(i);
+
+			if (Objects.equals(deploymentJSONObject.getString("id"), id)) {
+				deploymentsJSONArray.remove(i);
+			}
+		}
+	}
+
+	private JSONObject _getCloudProvisioningJSONObject(
+		JSONArray jsonArray, long orderItemId) {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			if ((orderItemId == jsonObject.getLong("orderItemId")) &&
-				(jsonObject.getLong("shippedQuantity") >= jsonObject.getLong(
-					"quantity"))) {
+			if (Objects.equals(
+					jsonObject.getLong("orderItemId"), orderItemId)) {
 
-				throw new Exception(
-					"Unable to install app for order item " + orderItemId +
-						" because there are no available resources");
+				return jsonObject;
 			}
+		}
+
+		return new JSONObject();
+	}
+
+	private void _verifyAvailability(JSONObject jsonObject) throws Exception {
+		if (jsonObject.getLong("shippedQuantity") >= jsonObject.getLong(
+				"quantity")) {
+
+			throw new Exception(
+				"Unable to install app for order item " +
+					jsonObject.getLong("orderItemId") +
+						" because there are no available resources");
 		}
 	}
 

@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRODUCT_ITEM_VALUE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_productItemValue}')]</td>
+	<td>//div[contains(@class,'dnd-td') and contains(normalize-space(text()),'${key_productItemValue}')]</td>
 	<td></td>
 </tr>
 <tr>

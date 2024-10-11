@@ -79,9 +79,6 @@ public class PortletDocumentFragmentEntryProcessor
 
 		Elements elements = document.getAllElements();
 
-		_validateFragmentEntryHTMLDocument(
-			elements, document, fragmentEntryProcessorContext.getLocale());
-
 		Set<String> processedPortletIds = new HashSet<>();
 
 		for (Element element : elements) {
@@ -367,81 +364,6 @@ public class PortletDocumentFragmentEntryProcessor
 			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),
 			portletPreferences.getPlid(), portletPreferences.getPortletId(),
 			jxPortletPreferences);
-	}
-
-	private void _validateFragmentEntryHTMLDocument(
-			Elements elements, Document document, Locale locale)
-		throws PortalException {
-
-		for (Element element : elements) {
-			String htmlTagName = element.tagName();
-
-			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {
-				continue;
-			}
-
-			String alias = StringUtil.removeSubstring(
-				htmlTagName, "lfr-widget-");
-
-			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
-				throw new FragmentEntryContentException(
-					_language.format(
-						locale, "there-is-no-widget-available-for-alias-x",
-						alias));
-			}
-
-			String id = element.id();
-
-			if (Validator.isNotNull(id) && !Validator.isAlphanumericName(id)) {
-				throw new FragmentEntryContentException(
-					_language.format(
-						locale,
-						"widget-id-must-contain-only-alphanumeric-characters",
-						alias));
-			}
-
-			if (Validator.isNotNull(id)) {
-				Elements idElements = document.select("#" + id);
-
-				if (idElements.size() > 1) {
-					throw new FragmentEntryContentException(
-						_language.get(locale, "widget-id-must-be-unique"));
-				}
-
-				if (id.length() > GetterUtil.getInteger(
-						ModelHintsConstants.TEXT_MAX_LENGTH)) {
-
-					throw new FragmentEntryContentException(
-						_language.format(
-							locale, "widget-id-cannot-exceed-x-characters",
-							ModelHintsConstants.TEXT_MAX_LENGTH));
-				}
-			}
-
-			Elements htmlTagNameElements = document.getElementsByTag(
-				htmlTagName);
-
-			if ((htmlTagNameElements.size() > 1) && Validator.isNull(id)) {
-				throw new FragmentEntryContentException(
-					_language.get(
-						locale,
-						"duplicate-widgets-within-the-same-fragment-must-" +
-							"have-an-id"));
-			}
-
-			if (htmlTagNameElements.size() > 1) {
-				Portlet portlet = _portletLocalService.getPortletById(
-					_portletRegistry.getPortletName(alias));
-
-				if (!portlet.isInstanceable()) {
-					throw new FragmentEntryContentException(
-						_language.format(
-							locale,
-							"you-cannot-add-the-widget-x-more-than-once",
-							alias));
-				}
-			}
-		}
 	}
 
 	@Reference

@@ -58,8 +58,8 @@ export class FormBuilderPage {
 		await this.formTitle.fill(title);
 	}
 
-	async goToNew() {
-		await this.formsPage.goTo();
+	async goToNew(siteUrl?: Site['friendlyUrlPath']) {
+		await this.formsPage.goTo(siteUrl);
 
 		await expect(this.formsPage.formsHeader).toBeVisible();
 

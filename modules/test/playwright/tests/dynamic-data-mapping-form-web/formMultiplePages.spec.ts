@@ -101,7 +101,7 @@ test.describe('Can render forms with multiple pages through page templates', () 
 
 		await pageEditorPage.publishPage();
 
-		await formBuilderPage.goToNew();
+		await formBuilderPage.goToNew(site.friendlyUrlPath);
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 

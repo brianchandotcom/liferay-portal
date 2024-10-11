@@ -759,3 +759,89 @@ test(
 		).toBeAttached();
 	}
 );
+
+testWithIsolatedSite(
+	'View collection display alert',
+	{
+		tag: '@LPS-160243',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a collection display and go to edit mode
+
+		const collectionId = getRandomString();
+
+		const collectionDefinition = getCollectionDefinition({
+			id: collectionId,
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+			provider: 'Highest Rated Assets',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Assert alert message in edit mode
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(
+			page.getByText(
+				'The collection is empty. To display your items, add them to the collection or choose a different collection.'
+			)
+		).toBeVisible();
+
+		await pageEditorPage.switchLanguage('es-ES');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Empty Collection Alert',
+			fragmentId: collectionId,
+			tab: 'General',
+			value: 'No se encontraron resultados',
+		});
+
+		await pageEditorPage.publishPage();
+
+		// Assert alert message in view mode
+
+		await page.goto(
+			`/es/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(
+			page.getByText('No se encontraron resultados')
+		).toBeVisible();
+
+		await page.goto(
+			`/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
+
+		// Disable alert message in edit mode
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Show Empty Collection Alert',
+			fragmentId: collectionId,
+			tab: 'General',
+			value: false,
+		});
+
+		await pageEditorPage.publishPage();
+
+		// Assert alert message in view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(page.getByText('No Results Found')).not.toBeVisible();
+	}
+);

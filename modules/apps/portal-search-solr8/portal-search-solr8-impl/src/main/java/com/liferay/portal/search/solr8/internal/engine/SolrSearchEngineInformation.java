@@ -87,6 +87,11 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 	}
 
 	@Override
+	public int[] getEmbeddingVectorDimensions() {
+		return new int[0];
+	}
+
+	@Override
 	public String getNodesString() {
 		try {
 			StringBundler sb = new StringBundler(5);

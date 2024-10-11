@@ -18,6 +18,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -226,6 +227,47 @@ public class LayoutStructureTest {
 
 		_assertParentLayoutStructureItem(
 			1, 2, 1, copiedLayoutStructureItems, rootLayoutStructureItem);
+	}
+
+	@Test
+	public void testCopyInsideFormStyledLayoutStructureItemWithMultistep()
+		throws Exception {
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem formStyledLayoutStructureItem =
+			layoutStructure.addFormStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		formStyledLayoutStructureItem.updateItemConfig(
+			_jsonFactory.createJSONObject("{formType : multistep}"));
+
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem formStepLayoutStructureItem =
+			layoutStructure.addFormStepLayoutStructureItem(
+				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				rootLayoutStructureItem.getItemId(), 0);
+
+		List<LayoutStructureItem> copiedLayoutStructureItems =
+			layoutStructure.copyLayoutStructureItems(
+				Collections.singletonList(
+					fragmentStyledLayoutStructureItem.getItemId()),
+				formStyledLayoutStructureItem.getItemId());
+
+		_assertParentLayoutStructureItem(
+			1, 1, 0, copiedLayoutStructureItems, formStepLayoutStructureItem);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -1073,6 +1115,9 @@ public class LayoutStructureTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
 

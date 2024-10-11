@@ -73,7 +73,13 @@ public class AuthVerifierPipeline {
 		_authVerifierConfigurations = new ArrayList<>(
 			authVerifierConfigurations);
 
+		ListUtil.sort(
+			_authVerifierConfigurations,
+			new AuthVerifierConfigurationComparator());
+
 		_contextPath = contextPath;
+
+		_buildURLPatternMapper();
 	}
 
 	public AuthVerifierResult verifyRequest(
@@ -83,12 +89,6 @@ public class AuthVerifierPipeline {
 		if (accessControlContext == null) {
 			throw new IllegalArgumentException(
 				"Access control context is null");
-		}
-
-		if ((_excludeURLPatternMapper == null) &&
-			(_includeURLPatternMapper == null)) {
-
-			_initialize();
 		}
 
 		HttpServletRequest httpServletRequest =
@@ -202,22 +202,6 @@ public class AuthVerifierPipeline {
 		}
 
 		return urlPattern.substring(0, urlPattern.length() - 1) + "/*";
-	}
-
-	private void _initialize() {
-		synchronized (this) {
-			if ((_excludeURLPatternMapper != null) &&
-				(_includeURLPatternMapper != null)) {
-
-				return;
-			}
-
-			ListUtil.sort(
-				_authVerifierConfigurations,
-				new AuthVerifierConfigurationComparator());
-
-			_buildURLPatternMapper();
-		}
 	}
 
 	private synchronized void _removeAuthVerifierConfiguration(

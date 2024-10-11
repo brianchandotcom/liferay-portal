@@ -117,16 +117,20 @@ const DefaultView = ({
 							}}
 							size="xs"
 						>
-							{value
-								? Liferay.Language.get('edit')
-								: Liferay.Language.get('add')}
+							{additionalProps?.termDescription
+								? Liferay.Language.get('read')
+								: value
+									? Liferay.Language.get('edit')
+									: Liferay.Language.get('add')}
 						</ClayButton>
 					) : null}
 				</div>
 
 				<div className="info-box-value mt-1">
 					{value ? (
-						<span>{formatValue(value, fieldValueType)}</span>
+						<span data-qa-id="infoBoxValue">
+							{formatValue(value, fieldValueType)}
+						</span>
 					) : (
 						<ClayButton
 							aria-label={Liferay.Language.get('not-set')}
@@ -153,6 +157,7 @@ const DefaultView = ({
 					handleSubmit={handleSubmit}
 					id={`${namespace}infoBoxModal`}
 					inputValue={inputValue}
+					isOpen={isOpen}
 					label={label}
 					observer={observer}
 					onOpenChange={onOpenChange}

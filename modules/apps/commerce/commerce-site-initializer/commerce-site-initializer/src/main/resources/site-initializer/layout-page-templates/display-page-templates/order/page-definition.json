@@ -759,24 +759,6 @@
 																									"name": "Purchase Order Number"
 																								},
 																								"type": "Fragment"
-																							},
-																							{
-																								"definition": {
-																									"fragment": {
-																										"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.InfoBoxFragmentRenderer"
-																									},
-																									"fragmentConfig": {
-																										"buttonStyle": "secondary",
-																										"field": "paymentTerm",
-																										"label": "Payment Terms",
-																										"readOnly": false
-																									},
-																									"fragmentFields": [
-																									],
-																									"indexed": true,
-																									"name": "Payment Terms"
-																								},
-																								"type": "Fragment"
 																							}
 																						],
 																						"type": "Section"
@@ -848,14 +830,14 @@
 																									},
 																									"fragmentConfig": {
 																										"buttonStyle": "secondary",
-																										"field": "deliveryTerm",
-																										"label": "Delivery Terms",
+																										"field": "shippingMethod",
+																										"label": "Shipping Method",
 																										"readOnly": false
 																									},
 																									"fragmentFields": [
 																									],
 																									"indexed": true,
-																									"name": "Delivery Terms"
+																									"name": "Shipping Method"
 																								},
 																								"type": "Fragment"
 																							},
@@ -866,14 +848,14 @@
 																									},
 																									"fragmentConfig": {
 																										"buttonStyle": "secondary",
-																										"field": "shippingMethod",
-																										"label": "Shipping Method",
+																										"field": "deliveryTermId",
+																										"label": "Delivery Terms",
 																										"readOnly": false
 																									},
 																									"fragmentFields": [
 																									],
 																									"indexed": true,
-																									"name": "Shipping Method"
+																									"name": "Delivery Terms"
 																								},
 																								"type": "Fragment"
 																							},
@@ -983,7 +965,7 @@
 																									},
 																									"fragmentConfig": {
 																										"buttonStyle": "secondary",
-																										"field": "paymentTerm",
+																										"field": "paymentTermId",
 																										"label": "Payment Terms",
 																										"readOnly": false
 																									},

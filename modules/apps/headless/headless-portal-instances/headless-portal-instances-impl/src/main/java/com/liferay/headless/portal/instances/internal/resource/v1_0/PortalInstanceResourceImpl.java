@@ -8,12 +8,14 @@ package com.liferay.headless.portal.instances.internal.resource.v1_0;
 import com.liferay.headless.portal.instances.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -183,9 +185,16 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	}
 
 	private void _synchronizePortalInstances() {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				_portalInstancesLocalService.synchronizePortalInstances();
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
+
+					_portalInstancesLocalService.synchronizePortalInstances();
+				}
 
 				return null;
 			});

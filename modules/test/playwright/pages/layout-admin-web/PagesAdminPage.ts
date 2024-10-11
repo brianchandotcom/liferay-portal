@@ -303,12 +303,7 @@ export class PagesAdminPage {
 
 		await iframe.getByRole('button', {exact: true, name: 'Add'}).click();
 
-		await this.configurationSaveButton.click();
-
-		await waitForAlert(
-			this.page,
-			'Success:The page was updated successfully.'
-		);
+		await this.saveConfiguration();
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {
@@ -474,6 +469,15 @@ export class PagesAdminPage {
 			.getByRole('menuitem')
 			.getByText('Global Templates', {exact: true})
 			.click();
+	}
+
+	async saveConfiguration() {
+		await this.configurationSaveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'Success:The page was updated successfully.'
+		);
 	}
 
 	async searchPage(keywords: string) {

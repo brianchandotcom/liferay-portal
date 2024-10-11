@@ -27,6 +27,8 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
@@ -123,6 +125,23 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 							commerceOrder.getExpandoBridge();
 
 						return expandoBridge.getAttributes();
+					});
+				setDeliveryTermId(
+					commerceOrder::getDeliveryCommerceTermEntryId);
+				setDeliveryTermLabel(
+					() -> {
+						if (commerceOrder.getDeliveryCommerceTermEntryId() <=
+								0) {
+
+							return null;
+						}
+
+						CommerceTermEntry commerceTermEntry =
+							_commerceTermEntryLocalService.getCommerceTermEntry(
+								commerceOrder.getDeliveryCommerceTermEntryId());
+
+						return commerceTermEntry.getLabel(
+							_language.getLanguageId(locale));
 					});
 				setExternalReferenceCode(
 					commerceOrder::getExternalReferenceCode);
@@ -242,6 +261,22 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 						CommerceOrderPaymentConstants.
 							getOrderPaymentStatusLabel(
 								commerceOrder.getPaymentStatus()));
+				setPaymentTermId(commerceOrder::getPaymentCommerceTermEntryId);
+				setPaymentTermLabel(
+					() -> {
+						if (commerceOrder.getPaymentCommerceTermEntryId() <=
+								0) {
+
+							return null;
+						}
+
+						CommerceTermEntry commerceTermEntry =
+							_commerceTermEntryLocalService.getCommerceTermEntry(
+								commerceOrder.getPaymentCommerceTermEntryId());
+
+						return commerceTermEntry.getLabel(
+							_language.getLanguageId(locale));
+					});
 				setPrintedNote(commerceOrder::getPrintedNote);
 				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
 				setRequestedDeliveryDate(
@@ -809,6 +844,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	@Reference
 	private Language _language;

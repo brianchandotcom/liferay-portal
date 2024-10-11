@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.connection;
 
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.opensearch2.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.opensearch2.internal.connection.helper.LiferayIndexCreationHelper;
 import com.liferay.portal.search.opensearch2.internal.settings.SettingsHelperImpl;
@@ -127,6 +128,12 @@ public class IndexCreator {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
+	protected void setSearchEngineInformation(
+		SearchEngineInformation searchEngineInformation) {
+
+		_searchEngineInformation = searchEngineInformation;
+	}
+
 	private IndexCreationHelper _getIndexCreationHelper() {
 		if (!_liferayMappingsAddedToIndex) {
 			if (_indexCreationHelper != null) {
@@ -137,7 +144,8 @@ public class IndexCreator {
 		}
 
 		LiferayIndexCreationHelper liferayIndexCreationHelper =
-			new LiferayIndexCreationHelper(_openSearchConnectionManager);
+			new LiferayIndexCreationHelper(
+				_openSearchConnectionManager, _searchEngineInformation);
 
 		if (_indexCreationHelper == null) {
 			return liferayIndexCreationHelper;
@@ -186,5 +194,6 @@ public class IndexCreator {
 	private IndexCreationHelper _indexCreationHelper;
 	private boolean _liferayMappingsAddedToIndex;
 	private OpenSearchConnectionManager _openSearchConnectionManager;
+	private SearchEngineInformation _searchEngineInformation;
 
 }

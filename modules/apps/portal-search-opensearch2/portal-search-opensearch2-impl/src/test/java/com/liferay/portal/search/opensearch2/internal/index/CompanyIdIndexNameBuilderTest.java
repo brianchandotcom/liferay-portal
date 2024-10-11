@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
@@ -173,6 +174,9 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexHelper, "_openSearchConnectionManager",
 			openSearchConnectionManager);
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexHelper, "_searchEngineInformation",
+			_createSearchEngineInformation());
 
 		ReflectionTestUtil.invoke(
 			_companyIndexHelper, "activate",
@@ -238,6 +242,19 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 						OpenSearchConfiguration.class, Collections.emptyMap()));
 			}
 		};
+	}
+
+	private SearchEngineInformation _createSearchEngineInformation() {
+		SearchEngineInformation searchEngineInformation = Mockito.mock(
+			SearchEngineInformation.class);
+
+		Mockito.when(
+			searchEngineInformation.getEmbeddingVectorDimensions()
+		).thenReturn(
+			new int[] {256}
+		);
+
+		return searchEngineInformation;
 	}
 
 	private void _deleteIndices(long companyId, String indexNamePrefix) {

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.index;
 
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexCreator;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -14,6 +15,8 @@ import com.liferay.portal.search.opensearch2.internal.indexing.OpenSearchIndexin
 import java.io.IOException;
 
 import java.util.Map;
+
+import org.mockito.Mockito;
 
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch.OpenSearchClient;
@@ -35,6 +38,7 @@ public class LiferayIndexFixture {
 			{
 				setLiferayMappingsAddedToIndex(true);
 				setOpenSearchConnectionManager(_openSearchConnectionManager);
+				setSearchEngineInformation(_createSearchEngineInformation());
 			}
 		};
 
@@ -82,6 +86,19 @@ public class LiferayIndexFixture {
 
 	public void tearDown() throws Exception {
 		_indexCreator.deleteIndex(_indexName);
+	}
+
+	private SearchEngineInformation _createSearchEngineInformation() {
+		SearchEngineInformation searchEngineInformation = Mockito.mock(
+			SearchEngineInformation.class);
+
+		Mockito.when(
+			searchEngineInformation.getEmbeddingVectorDimensions()
+		).thenReturn(
+			new int[] {256}
+		);
+
+		return searchEngineInformation;
 	}
 
 	private final IndexCreator _indexCreator;

@@ -9281,6 +9281,11 @@ ${output.content}</echo>
 					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 
+				<ant dir="util-taglib" inheritAll="false" target="test-class-group">
+					<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
+				</ant>
+
 				<lstopwatch action="total" name="test.execution.duration" />
 			</test-action>
 

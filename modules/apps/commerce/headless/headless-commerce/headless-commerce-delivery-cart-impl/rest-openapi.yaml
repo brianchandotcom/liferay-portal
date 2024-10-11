@@ -290,6 +290,13 @@ components:
                 author:
                     readOnly: true
                     type: string
+                authorId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                authorPortraitURL:
+                    readOnly: true
+                    type: string
                 content:
                     type: string
                 externalReferenceCode:
@@ -300,6 +307,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                modifiedDate:
+                    format: date
+                    readOnly: true
+                    type: string
                 orderId:
                     format: int64
                     readOnly: true

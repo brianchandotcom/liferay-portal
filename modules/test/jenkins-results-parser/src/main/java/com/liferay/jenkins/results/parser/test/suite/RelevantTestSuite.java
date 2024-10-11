@@ -39,7 +39,7 @@ public class RelevantTestSuite {
 			portalAcceptancePullRequestJob);
 	}
 
-	public List<TestBatch> getTestBatches(boolean runValidationLogic) {
+	public List<TestBatch> getTestBatches(boolean validateAllRules) {
 		File baseTestPropertiesFile = new File(
 			_relevantRuleEngine.getBaseDir(), "test.properties");
 
@@ -60,7 +60,7 @@ public class RelevantTestSuite {
 		Collections.sort(relevantRules);
 
 		try {
-			if (runValidationLogic) {
+			if (validateAllRules) {
 				RelevantRuleValidation.validate(
 					_portalGitWorkingDirectory.getGitRepositoryName(),
 					_portalGitWorkingDirectory.getUpstreamBranchName());

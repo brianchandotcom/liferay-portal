@@ -119,6 +119,27 @@ public class ElasticsearchSearchEngineInformation
 	}
 
 	@Override
+	public int[] getEmbeddingVectorDimensions() {
+		try {
+			Integer[] serverVersion = _getServerVersion();
+
+			if ((serverVersion != null) &&
+				((serverVersion[0] > 8) ||
+				 ((serverVersion[0] == 8) && (serverVersion[1] >= 11)))) {
+
+				return new int[] {
+					256, 384, 512, 768, 1024, 1536, 2048, 3072, 4096
+				};
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return new int[] {256, 384, 512, 768, 1024, 1536, 2048};
+	}
+
+	@Override
 	public String getNodesString() {
 		try {
 			String clusterNodesString = _getClusterNodesString(
@@ -332,6 +353,45 @@ public class ElasticsearchSearchEngineInformation
 
 			return StringBundler.concat("(Error: ", exception, ")");
 		}
+	}
+
+	private Integer[] _getServerVersion() throws Exception {
+		String serverVersionString = _getServerVersionString();
+
+		if (Validator.isBlank(serverVersionString)) {
+			return null;
+		}
+
+		String[] serverVersionParts = serverVersionString.split("\\.");
+
+		return new Integer[] {
+			GetterUtil.getInteger(serverVersionParts[0]),
+			GetterUtil.getInteger(serverVersionParts[1])
+		};
+	}
+
+	private String _getServerVersionString() throws Exception {
+		RestHighLevelClient restHighLevelClient =
+			elasticsearchConnectionManager.getRestHighLevelClient();
+
+		RestClient restClient = restHighLevelClient.getLowLevelClient();
+
+		Response response = restClient.performRequest(
+			new Request("GET", StringPool.SLASH));
+
+		String responseBody = EntityUtils.toString(response.getEntity());
+
+		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+			responseBody);
+
+		JSONObject versionJSONObject = responseJSONObject.getJSONObject(
+			"version");
+
+		if (versionJSONObject != null) {
+			return versionJSONObject.getString("number");
+		}
+
+		return null;
 	}
 
 	private void _setClusterAndNodeInformation(

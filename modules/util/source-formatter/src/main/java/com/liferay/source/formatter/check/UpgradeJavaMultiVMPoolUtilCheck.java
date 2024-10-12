@@ -41,7 +41,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck
 			addMessage(
 				fileName,
 				"Unable to resolve types for MultiVMPool.getPortalCache(). " +
-					"Replace 'TO_BE_REPLACED' with the correct type");
+					"Replace \"TO_BE_REPLACED\" with the correct type");
 		}
 
 		return StringUtil.replace(

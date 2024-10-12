@@ -24,14 +24,14 @@
 			<property name="description" value="Checks that local final variable names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/localfinalvariablename.html" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Local final variable ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Local final variable &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="LocalVariableNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that local, non-final variable names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/localvariablename.html" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Local non-final variable ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Local non-final variable &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="MemberNameCheck">
 			<property name="applyToPackage" value="false" />
@@ -40,7 +40,7 @@
 			<property name="description" value="Checks that instance variable names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/membername.html" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Protected or public non-static field ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Protected or public non-static field &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="MemberNameCheck">
 			<property name="applyToProtected" value="false" />
@@ -49,7 +49,7 @@
 			<property name="description" value="Checks that instance variable names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/membername.html" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Private non-static field ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Private non-static field &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="MethodNameCheck">
 			<property name="applyToPackage" value="false" />
@@ -58,7 +58,7 @@
 			<property name="description" value="Checks that method names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/methodname.html" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Protected or public method ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Protected or public method &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="MethodNameCheck">
 			<property name="applyToProtected" value="false" />
@@ -67,7 +67,7 @@
 			<property name="description" value="Checks that method names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/methodname.html" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
-			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Private method &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="MethodParamPadCheck">
 			<property name="category" value="Styling" />
@@ -122,7 +122,7 @@
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that method parameter names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/parametername.html" />
-			<message key="name.invalidPattern" value="Parameter ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Parameter &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="StaticVariableNameCheck">
 			<property name="applyToPackage" value="false" />
@@ -131,7 +131,7 @@
 			<property name="description" value="Checks that static, non-final variable names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/staticvariablename.html" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Protected or public static non-final field ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Protected or public static non-final field &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="StaticVariableNameCheck">
 			<property name="applyToProtected" value="false" />
@@ -140,7 +140,7 @@
 			<property name="description" value="Checks that static, non-final variable names conform to a specified pattern." />
 			<property name="documentationLocation" value="naming/staticvariablename.html" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Private static non-final field ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidPattern" value="Private static non-final field &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
 		<module name="StringLiteralEqualityCheck">
 			<property name="category" value="Styling" />
@@ -170,28 +170,28 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.AppendCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks instances where literal Strings are appended." />
-			<message key="end.character.invalid" value="When appending multiple literal strings, only the last literal string can end with ''{0}''" />
+			<message key="end.character.invalid" value="When appending multiple literal strings, only the last literal string can end with &quot;{0}&quot;" />
 			<message key="line.break.incorrect" value="Avoid using line break when appending multiple literal strings" />
-			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
-			<message key="literal.string.move" value="Add the string ''{0}'' to the {1} literal string" />
-			<message key="plus.incorrect" value="Incorrect use of ''+'' inside StringBundler" />
-			<message key="start.character.invalid" value="When appending multiple literal strings, only the first literal string can start with ''{0}''" />
-			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
+			<message key="literal.string.combine" value="Combine the literal strings &quot;{0}&quot; and &quot;{1}&quot;" />
+			<message key="literal.string.move" value="Add the string &quot;{0}&quot; to the {1} literal string" />
+			<message key="plus.incorrect" value="Incorrect use of &quot;+&quot; inside StringBundler" />
+			<message key="start.character.invalid" value="When appending multiple literal strings, only the first literal string can start with &quot;{0}&quot;" />
+			<message key="string.combine" value="Combine the literal string &quot;{0}&quot; with &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ArrayUtilCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for utilization of class `ArrayUtil`." />
 			<property name="enabled" value="false" />
-			<message key="array.util.is.empty.use" value="Use ''ArrayUtil.isEmpty({0})'' to simplify code" />
+			<message key="array.util.is.empty.use" value="Use &quot;ArrayUtil.isEmpty({0})&quot; to simplify code" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CamelCaseNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks variable names for correct use of `CamelCase`." />
 			<property name="enabled" value="false" />
-			<message key="following.underscore.incorrect" value="''{0}'' should not be followed by ''_'' for variable ''{1}''" />
-			<message key="following.uppercase.incorrect" value="''{0}'' should not be followed by an uppercase character for {1} ''{2}''" />
-			<message key="preceding.underscore.required" value="''{0}'' should be preceded by ''_'' for variable ''{1}''" />
-			<message key="starting.uppercase.required" value="''{0}'' should start with an uppercase character for {1} ''{2}''" />
+			<message key="following.underscore.incorrect" value="&quot;{0}&quot; should not be followed by &quot;_&quot; for variable &quot;{1}&quot;" />
+			<message key="following.uppercase.incorrect" value="&quot;{0}&quot; should not be followed by an uppercase character for {1} &quot;{2}&quot;" />
+			<message key="preceding.underscore.required" value="&quot;{0}&quot; should be preceded by &quot;_&quot; for variable &quot;{1}&quot;" />
+			<message key="starting.uppercase.required" value="&quot;{0}&quot; should start with an uppercase character for {1} &quot;{2}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ChainingCheck">
 			<property name="applyToTypeCast" value="true" />
@@ -199,39 +199,39 @@
 			<property name="description" value="Checks that method chaining can be used when possible." />
 			<message key="chaining.avoid.parentheses" value="Avoid chaining on expressions with parentheses" />
 			<message key="chaining.avoid.type.cast" value="Avoid chaining on Type Cast" />
-			<message key="chaining.required" value="Chaining on ''{0}'' is preferred" />
-			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
+			<message key="chaining.required" value="Chaining on &quot;{0}&quot; is preferred" />
+			<message key="response.unsorted" value="Method calls between &quot;Response.status&quot; and &quot;Response.build&quot; should be sorted" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CompanyIterationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies." />
 			<property name="enabled" value="false" />
-			<message key="company.local.service.use.for.loop" value="Use ''CompanyLocalService.{0}'' when iterating over ''{1}''" />
-			<message key="company.local.service.use.sql" value="Use ''CompanyLocalService.forEachCompany'' instead of SQL" />
-			<message key="portal.instances.use" value="Use ''PortalInstancePool.getCompanyIds'' instead to fetch company IDs" />
+			<message key="company.local.service.use.for.loop" value="Use &quot;CompanyLocalService.{0}&quot; when iterating over &quot;{1}&quot;" />
+			<message key="company.local.service.use.sql" value="Use &quot;CompanyLocalService.forEachCompany&quot; instead of SQL" />
+			<message key="portal.instances.use" value="Use &quot;PortalInstancePool.getCompanyIds&quot; instead to fetch company IDs" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConcatCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks for correct use of `StringBundler.concat`." />
-			<message key="end.character.invalid" value="When concatenating multiple literal strings, only the last literal string can end with ''{0}''" />
-			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
-			<message key="literal.string.move" value="Add the string ''{0}'' to the {1} literal string" />
-			<message key="plus.incorrect" value="Do not use ''+'' inside ''StringBundler.concat''" />
-			<message key="start.character.invalid" value="When concatenating multiple literal strings, only the first literal string can start with ''{0}''" />
-			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
+			<message key="end.character.invalid" value="When concatenating multiple literal strings, only the last literal string can end with &quot;{0}&quot;" />
+			<message key="literal.string.combine" value="Combine the literal strings &quot;{0}&quot; and &quot;{1}&quot;" />
+			<message key="literal.string.move" value="Add the string &quot;{0}&quot; to the {1} literal string" />
+			<message key="plus.incorrect" value="Do not use &quot;+&quot; inside &quot;StringBundler.concat&quot;" />
+			<message key="start.character.invalid" value="When concatenating multiple literal strings, only the first literal string can start with &quot;{0}&quot;" />
+			<message key="string.combine" value="Combine the literal string &quot;{0}&quot; with &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConstantNameCheck">
 			<property name="camelCaseTypeNames" value="AggregateTestRule,Atomic.*,CodeCoverageAssertor,LiferayIntegrationTestRule,Log,Pattern,TestRule" />
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that variable names of constants follow correct naming rules." />
 			<property name="immutableFieldTypes" value="boolean,byte,char,double,float,int,long,short,Boolean,Byte,Character,Class,Double,Float,Int,Long,Number,Short,String" />
-			<message key="name.invalidConstantPattern" value="{0} constant ''{1}'' must match pattern ''{2}''" />
-			<message key="name.invalidConstantTypePattern" value="{0} constant ''{1}'' of type ''{2}'' must match pattern ''{3}''" />
+			<message key="name.invalidConstantPattern" value="{0} constant &quot;{1}&quot; must match pattern &quot;{2}&quot;" />
+			<message key="name.invalidConstantTypePattern" value="{0} constant &quot;{1}&quot; of type &quot;{2}&quot; must match pattern &quot;{3}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ContractionsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds contractions in Strings (such as `can't` or `you're`)." />
-			<message key="contraction.avoid" value="Avoid using contraction ''{0}''" />
+			<message key="contraction.avoid" value="Avoid using contraction &quot;{0}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionMessageCheck">
 			<property name="category" value="Styling" />
@@ -241,33 +241,33 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.FactoryCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases where `*Factory` should be used when creating new instances of an object." />
-			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />
+			<message key="factory.use" value="Use &quot;{0}&quot; to create new instance of &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.GenericTypeCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that generics are always specified to provide compile-time checking and removing the risk of `ClassCastException` during runtime." />
 			<property name="enabled" value="false" />
 			<property name="populateTypeNames" value="false" />
-			<message key="generic.type.parameterize" value="Parameterize the generic {0} for ''{1}'" />
+			<message key="generic.type.parameterize" value="Parameterize the generic {0} for &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceofOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Check the order of `instanceof` calls." />
-			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />
+			<message key="instanceof.order" value="&quot;{0}&quot; should come before &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.JSONNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks if variable names follow naming conventions." />
-			<message key="variable.name.reserved" value="{0} name ending with ''{1}'' is reserved for object ''{2}''" />
-			<message key="variable.rename" value="Rename {0} ''{1}'' to ''{2}''" />
+			<message key="variable.name.reserved" value="{0} name ending with &quot;{1}&quot; is reserved for object &quot;{2}&quot;" />
+			<message key="variable.rename" value="Rename {0} &quot;{1}&quot; to &quot;{2}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.JSONUtilCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for utilization of class `JSONUtil`." />
-			<message key="json.util.put.all.use" value="Use ''JSONUtil.putAll'' instead of chaining on ''JSONUtil.put''" />
-			<message key="json.util.put.use" value="Combine calls ''{0}'' ({1}) and ''{2}'' ({3}) into single call ''{4}''" />
-			<message key="json.util.to.string.use.1" value="Use ''toString'' instead of ''String.valueOf''" />
-			<message key="json.util.to.string.use.2" value="Use ''toString'' instead of ''toJSONString''" />
+			<message key="json.util.put.all.use" value="Use &quot;JSONUtil.putAll&quot; instead of chaining on &quot;JSONUtil.put&quot;" />
+			<message key="json.util.put.use" value="Combine calls &quot;{0}&quot; ({1}) and &quot;{2}&quot; ({3}) into single call &quot;{4}&quot;" />
+			<message key="json.util.to.string.use.1" value="Use &quot;toString&quot; instead of &quot;String.valueOf&quot;" />
+			<message key="json.util.to.string.use.2" value="Use &quot;toString&quot; instead of &quot;toJSONString&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.LambdaCheck">
 			<property name="category" value="Styling" />
@@ -277,24 +277,24 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ListUtilCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for utilization of class `ListUtil`." />
-			<message key="array.unneeded" value="Pass arguments directly to ''ListUtil.fromArray'' instead of passing new array" />
-			<message key="list.util.from.array.use" value="Use ''ListUtil.fromArray'' to simplify code" />
-			<message key="list.util.is.empty.use" value="Use ''ListUtil.isEmpty({0})'' to simplify code" />
+			<message key="array.unneeded" value="Pass arguments directly to &quot;ListUtil.fromArray&quot; instead of passing new array" />
+			<message key="list.util.from.array.use" value="Use &quot;ListUtil.fromArray&quot; to simplify code" />
+			<message key="list.util.is.empty.use" value="Use &quot;ListUtil.isEmpty({0})&quot; to simplify code" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.LiteralStringEqualsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases where `Objects.equals` should be used." />
-			<message key="objects.equals.use.1" value="Use ''Objects.equals'' instead of calling ''equals'' on a literal String" />
-			<message key="objects.equals.use.2" value="Either use ''{0}'' or use ''Objects.equals'' if ''{1}'' can have a ''null'' value, instead of calling ''equals'' on a literal String" />
+			<message key="objects.equals.use.1" value="Use &quot;Objects.equals&quot; instead of calling &quot;equals&quot; on a literal String" />
+			<message key="objects.equals.use.2" value="Either use &quot;{0}&quot; or use &quot;Objects.equals&quot; if &quot;{1}&quot; can have a &quot;null&quot; value, instead of calling &quot;equals&quot; on a literal String" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MapBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible." />
 			<property name="enforceBuilderNames" value="" />
-			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3})" />
-			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
-			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
-			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
+			<message key="builder.include" value="Include method call &quot;{0}&quot; ({1}) in &quot;{2}&quot; ({3})" />
+			<message key="builder.use" value="Use &quot;{0}&quot; ({1}, {2})" />
+			<message key="builder.use.instead" value="Use &quot;{0}&quot; instead of new instance of &quot;{1}&quot;" />
+			<message key="null.value.incorrect" value="Null values are not allowed in &quot;{0}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MapIterationCheck">
 			<property name="category" value="Performance" />
@@ -304,35 +304,35 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.MethodEqualsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases where `Objects.equals` should be used." />
-			<message key="objects.equals.use" value="Use ''Objects.equals'' instead of calling ''equals'' on method" />
+			<message key="objects.equals.use" value="Use &quot;Objects.equals&quot; instead of calling &quot;equals&quot; on method" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MethodNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that method names follow naming conventions." />
-			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
+			<message key="method.rename" value="Rename method &quot;{0}&quot; to &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MissingDiamondOperatorCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks for missing diamond operator for types that require diamond operator." />
 			<property name="enforceDiamondOperatorClassNames" value="" />
-			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for type ''{0}''" />
-			<message key="generic.types.missing" value="Missing generic types ''{0}'' for type ''{1}''" />
+			<message key="diamond.operator.missing" value="Missing diamond operator &quot;&lt;&gt;&quot; for type &quot;{0}&quot;" />
+			<message key="generic.types.missing" value="Missing generic types &quot;{0}&quot; for type &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MissingEmptyLineCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for missing line breaks around variable declarations." />
-			<message key="empty.line.missing.after.method.name" value="There should be an empty line after ''{0}''" />
-			<message key="empty.line.missing.after.variable.definition" value="There should be an empty line after variable definition of type ''{0}''" />
-			<message key="empty.line.missing.after.variable.reference" value="There should be an empty line before line ''{0}'', as we finished referencing variable ''{1}''" />
-			<message key="empty.line.missing.before.variable.assign" value="There should be an empty line before assigning value to variable ''{0}''" />
-			<message key="empty.line.missing.before.variable.use" value="There should be an empty line between assigning and using variable ''{0}''" />
-			<message key="empty.line.missing.line.number" value="There should be an empty line {0} line ''{1}''" />
+			<message key="empty.line.missing.after.method.name" value="There should be an empty line after &quot;{0}&quot;" />
+			<message key="empty.line.missing.after.variable.definition" value="There should be an empty line after variable definition of type &quot;{0}&quot;" />
+			<message key="empty.line.missing.after.variable.reference" value="There should be an empty line before line &quot;{0}&quot;, as we finished referencing variable &quot;{1}&quot;" />
+			<message key="empty.line.missing.before.variable.assign" value="There should be an empty line before assigning value to variable &quot;{0}&quot;" />
+			<message key="empty.line.missing.before.variable.use" value="There should be an empty line between assigning and using variable &quot;{0}&quot;" />
+			<message key="empty.line.missing.line.number" value="There should be an empty line {0} line &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MissingParenthesesCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds missing parentheses in conditional statement." />
-			<message key="parentheses.missing.1" value="Missing parentheses between the ''{0}'' operator and the ''{1}'' operator" />
-			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the ''{1}'' operator" />
+			<message key="parentheses.missing.1" value="Missing parentheses between the &quot;{0}&quot; operator and the &quot;{1}&quot; operator" />
+			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the &quot;{1}&quot; operator" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.NestedIfStatementCheck">
 			<property name="category" value="Styling" />
@@ -342,44 +342,44 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.NumberSuffixCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that uppercase `D`, `F`, or `L` is used when denoting Double/Float/Long." />
-			<message key="suffix.incorrect" value="Use uppercase ''{0}'' as suffix for the type ''{1}''" />
+			<message key="suffix.incorrect" value="Use uppercase &quot;{0}&quot; as suffix for the type &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.OperatorOperandCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that operand do not go over too many lines and make the operator hard to read." />
 			<property name="enabled" value="false" />
-			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
+			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the &quot;{1}&quot; operator for better readability" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ParsePrimitiveTypeCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible." />
-			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
+			<message key="getter.util.method.use" value="Use &quot;GetterUtil.{0}&quot; or properly catch &quot;NumberFormatException&quot; when calling &quot;{1}.{2}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.PersistenceCallCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds illegal persistence calls across component boundaries." />
-			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
+			<message key="persistence.call.illegal" value="Illegal call to class &quot;{0}&quot;, see LPS-68923" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.PlusStatementCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Performs several checks to statements where `+` is used for concatenation." />
-			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
-			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
-			<message key="literal.string.move" value="Add the string ''{0}'' to the {1} literal string" />
-			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
-			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
+			<message key="end.character.invalid" value="When concatenating multiple literal strings using &quot;+&quot;, only the last literal string can end with &quot;{0}&quot;" />
+			<message key="literal.string.combine" value="Combine the literal strings &quot;{0}&quot; and &quot;{1}&quot;" />
+			<message key="literal.string.move" value="Add the string &quot;{0}&quot; to the {1} literal string" />
+			<message key="start.character.invalid" value="When concatenating multiple literal strings using &quot;+&quot;, only the first literal string can start with &quot;{0}&quot;" />
+			<message key="string.combine" value="Combine the literal string &quot;{0}&quot; with &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.PortletURLBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Checks that `PortletURLBuilder` is used when possible." />
 			<property name="enforceBuilderNames" value="" />
-			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3})" />
-			<message key="builder.inline.1" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3}), possibly by using a lambda function" />
-			<message key="builder.inline.2" value="Inline variable definition ''{0}'' ({1}) and dependent statements ({2}) inside ''{3}'' ({4}) by using a lambda function" />
-			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
-			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
-			<message key="keyword.reserved" value="Do not use ''{0}'' to set parameter ''{1}'', use ''{2}'' instead" />
-			<message key="string.cast.unneeded" value="No need to cast parameter to ''String'' when passing to method ''{0}''" />
+			<message key="builder.include" value="Include method call &quot;{0}&quot; ({1}) in &quot;{2}&quot; ({3})" />
+			<message key="builder.inline.1" value="Inline variable definition &quot;{0}&quot; ({1}) inside &quot;{2}&quot; ({3}), possibly by using a lambda function" />
+			<message key="builder.inline.2" value="Inline variable definition &quot;{0}&quot; ({1}) and dependent statements ({2}) inside &quot;{3}&quot; ({4}) by using a lambda function" />
+			<message key="builder.use" value="Use &quot;{0}&quot; ({1}, {2})" />
+			<message key="builder.use.instead" value="Use &quot;{0}&quot; instead of new instance of &quot;{1}&quot;" />
+			<message key="keyword.reserved" value="Do not use &quot;{0}&quot; to set parameter &quot;{1}&quot;, use &quot;{2}&quot; instead" />
+			<message key="string.cast.unneeded" value="No need to cast parameter to &quot;String&quot; when passing to method &quot;{0}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SemiColonCheck">
 			<property name="category" value="Styling" />
@@ -389,17 +389,17 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.SizeIsZeroCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases of calls like `list.size() == 0` (use `list.isEmpty()` instead)." />
-			<message key="method.use" value="Use method ''{0}'' instead" />
+			<message key="method.use" value="Use method &quot;{0}&quot; instead" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.StringBundlerNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming on variables of type 'StringBundler'." />
-			<message key="variable.name.incorrect" value="StringBundler {0} ''{1}'' should end with either ''sb'' or ''SB''" />
+			<message key="variable.name.incorrect" value="StringBundler {0} &quot;{1}&quot; should end with either &quot;sb&quot; or &quot;SB&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.StringCastCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where a redundant `toString()` is called on variable type `String`." />
-			<message key="string.cast.unneeded" value="No need to call ''.toString()'' on type String" />
+			<message key="string.cast.unneeded" value="No need to call &quot;.toString()&quot; on type String" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.TernaryOperatorCheck">
 			<property name="category" value="Styling" />
@@ -409,24 +409,24 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.UnnecessaryTypeCastCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary Type Casting." />
-			<message key="type.cast.unnecessary" value="No need to apply Type Cast to method ''{0}''" />
+			<message key="type.cast.unnecessary" value="No need to apply Type Cast to method &quot;{0}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ValidatorIsNullCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`." />
-			<message key="method.invalidName" value="Avoid using method ''{0}''" />
-			<message key="method.reserved" value="Method ''{0}'' should only be used for type ''Long'', ''Serializable'' or ''String''" />
+			<message key="method.invalidName" value="Avoid using method &quot;{0}&quot;" />
+			<message key="method.reserved" value="Method &quot;{0}&quot; should only be used for type &quot;Long&quot;, &quot;Serializable&quot; or &quot;String&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.VariableNameCheck">
 			<property name="allowedVariableNames" value="bitMode,metadata,superClass,userName" />
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that variable names follow naming conventions." />
 			<property name="enforceTypeNames" value="" />
-			<message key="variable.incorrect.count" value="Rename variable ''{0}'' to ''{1}'' (and increment counts for other variables ''{0}*'')" />
-			<message key="variable.incorrect.ending" value="Name of variable with type ''{0}'' should end with ''{1}''" />
-			<message key="variable.name.incorrect.for.statement" value="Use format ''curVariableName'' for variable ''{0}''" />
-			<message key="variable.rename" value="Rename variable ''{0}'' to ''{1}''" />
-			<message key="variable.typo" value="Typo in variable ''{0}'', expected variable name ''{1}''" />
+			<message key="variable.incorrect.count" value="Rename variable &quot;{0}&quot; to &quot;{1}&quot; (and increment counts for other variables &quot;{0}*&quot;)" />
+			<message key="variable.incorrect.ending" value="Name of variable with type &quot;{0}&quot; should end with &quot;{1}&quot;" />
+			<message key="variable.name.incorrect.for.statement" value="Use format &quot;curVariableName&quot; for variable &quot;{0}&quot;" />
+			<message key="variable.rename" value="Rename variable &quot;{0}&quot; to &quot;{1}&quot;" />
+			<message key="variable.typo" value="Typo in variable &quot;{0}&quot;, expected variable name &quot;{1}&quot;" />
 		</module>
 	</module>
 </module>

@@ -82,7 +82,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Use \"HashMapBuilder\" (43, 45)", 43
 			).addExpectedMessage(
-				"Use \"HashMapBuilder\" instead of new instance of \"HashMap\"", 49
+				"Use \"HashMapBuilder\" instead of new instance of \"HashMap\"",
+				49
 			));
 	}
 
@@ -178,9 +179,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"ExceptionVariableName.testjava"
 			).addExpectedMessage(
-				"Rename exception variable \"e\" to \"configurationException\"", 28
+				"Rename exception variable \"e\" to \"configurationException\"",
+				28
 			).addExpectedMessage(
-				"Rename exception variable \"e\" to \"configurationException\"", 41
+				"Rename exception variable \"e\" to \"configurationException\"",
+				41
 			).addExpectedMessage(
 				"Rename exception variable \"re\" to \"exception\"", 52
 			).addExpectedMessage(
@@ -522,9 +525,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MethodEquals.testjava"
 			).addExpectedMessage(
-				"Use \"Objects.equals\" instead of calling \"equals\" on method", 15
+				"Use \"Objects.equals\" instead of calling \"equals\" on method",
+				15
 			).addExpectedMessage(
-				"Use \"Objects.equals\" instead of calling \"equals\" on method", 21
+				"Use \"Objects.equals\" instead of calling \"equals\" on method",
+				21
 			));
 	}
 
@@ -544,7 +549,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing generic types \"<String, String>\" for type \"ArrayList\"",
 				38
 			).addExpectedMessage(
-				"Missing diamond operator \"<>\" for type \"ConcurrentHashMap\"", 44
+				"Missing diamond operator \"<>\" for type \"ConcurrentHashMap\"",
+				44
 			).addExpectedMessage(
 				"Missing diamond operator \"<>\" for type " +
 					"\"ConcurrentSkipListMap\"",
@@ -566,7 +572,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Missing diamond operator \"<>\" for type \"Hashtable\"", 63
 			).addExpectedMessage(
-				"Missing diamond operator \"<>\" for type \"IdentityHashMap\"", 65
+				"Missing diamond operator \"<>\" for type \"IdentityHashMap\"",
+				65
 			).addExpectedMessage(
 				"Missing diamond operator \"<>\" for type \"LinkedHashMap\"", 68
 			).addExpectedMessage(

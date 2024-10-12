@@ -78,9 +78,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectMethodCalls.testjsp"
 			).addExpectedMessage(
-				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"", 12
+				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"",
+				12
 			).addExpectedMessage(
-				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"", 19
+				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"",
+				19
 			));
 	}
 

@@ -16,7 +16,7 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testCombineJavaSourceBlocks() throws Exception {
 		test(
 			"CombineJavaSourceBlocks1.testjsp",
-			"\"<%!...%>\" block should come after <%...%> blcok", 10);
+			"\"<%!...%>\" block should come after <%...%> block", 10);
 		test(
 			"CombineJavaSourceBlocks2.testjsp",
 			"Combine <%!...%> blocks at line \"20\" and \"25\"");

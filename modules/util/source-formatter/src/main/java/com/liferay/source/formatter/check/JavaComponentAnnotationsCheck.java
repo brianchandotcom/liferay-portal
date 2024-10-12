@@ -206,7 +206,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 					addMessage(
 						fileName,
 						"@Component classes should only specify one service " +
-							"type in the 'service' attribute, see LPS-180838");
+							"type in the \"service\" attribute, see " +
+								"LPS-180838");
 
 					break;
 				}
@@ -421,7 +422,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 				addMessage(
 					fileName,
-					"Missing @Component 'configurationPid' attribute, see " +
+					"Missing @Component \"configurationPid\" attribute, see " +
 						"LPS-88783");
 
 				break;
@@ -711,7 +712,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		if (checkMismatchedServiceAttribute &&
 			!serviceAttributeValue.equals(expectedServiceAttributeValue)) {
 
-			addMessage(fileName, "Mismatched @Component 'service' attribute");
+			addMessage(fileName, "Mismatched @Component \"service\" attribute");
 		}
 
 		String className = javaClass.getName();

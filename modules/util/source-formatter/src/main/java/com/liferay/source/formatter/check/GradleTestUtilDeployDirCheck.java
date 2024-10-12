@@ -43,8 +43,8 @@ public class GradleTestUtilDeployDirCheck extends BaseFileCheck {
 			if (!lfrBuildPortalFile.exists()) {
 				addMessage(
 					fileName,
-					"Do not deploy to 'osgi/test' when '.lfrbuild-portal' " +
-						"does not exist");
+					"Do not deploy to \"osgi/test\" when \".lfrbuild-portal" +
+						"\" does not exist");
 			}
 		}
 

@@ -27,7 +27,7 @@ public class GradleMissingJarManifestTaskCheck extends BaseGradleFileCheck {
 
 		for (String task : tasks) {
 			if (task.startsWith("task jarPatched(")) {
-				addMessage(fileName, "Missing 'jarManifest' task");
+				addMessage(fileName, "Missing \"jarManifest\" task");
 			}
 		}
 

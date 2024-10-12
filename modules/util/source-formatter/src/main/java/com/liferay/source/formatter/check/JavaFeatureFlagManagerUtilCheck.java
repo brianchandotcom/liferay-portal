@@ -94,7 +94,8 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 
 			if (variableTypeName.equals("FeatureFlagManager")) {
 				addMessage(
-					fileName, "Use 'FeatureFlagManagerUtil.isEnabled' instead",
+					fileName,
+					"Use \"FeatureFlagManagerUtil.isEnabled\" instead",
 					getLineNumber(content, matcher.start()));
 			}
 		}

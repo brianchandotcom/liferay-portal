@@ -65,8 +65,8 @@ public class PropertiesDuplicateKeysCheck extends BaseFileCheck {
 				if (propertyKeys.contains(propertyKey)) {
 					addMessage(
 						fileName,
-						"Do not add duplicate property key '" + propertyKey +
-							"'");
+						"Do not add duplicate property key \"" + propertyKey +
+							"\"");
 				}
 
 				previousLine = line;

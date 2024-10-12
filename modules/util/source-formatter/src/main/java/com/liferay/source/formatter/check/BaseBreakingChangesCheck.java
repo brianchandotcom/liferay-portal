@@ -95,7 +95,7 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						message, StringUtil.quote(filePath),
-						" points to nonexistent file. '## What' should be ",
+						" points to nonexistent file. \"## What\" should be ",
 						"followed by only one path, which is from ",
 						_LIFERAY_PORTAL_MASTER_URL, "."));
 

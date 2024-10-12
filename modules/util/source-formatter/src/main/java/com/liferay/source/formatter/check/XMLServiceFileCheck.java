@@ -145,8 +145,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 								"Incorrect order \"", entityName,
 								"#lastPublishDate\". \"lastPublishDate\" ",
 								"column should come last (only followed by ",
-								"status columns) in the category 'Other ",
-								"fields'."));
+								"status columns) in the category \"Other ",
+								"fields\"."));
 					}
 				}
 

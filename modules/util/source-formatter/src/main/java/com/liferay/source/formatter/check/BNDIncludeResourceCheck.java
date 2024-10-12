@@ -50,7 +50,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Do not use 'test-classes/integration' in bnd.bnd in test " +
+				"Do not use \"test-classes/integration\" in bnd.bnd in test " +
 					"modules");
 		}
 	}

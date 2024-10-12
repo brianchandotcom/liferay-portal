@@ -190,7 +190,7 @@ public class QuartzUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithJobsFromDifferentCompany() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany(true);
 
 		long companyId2 = _company.getCompanyId();
 

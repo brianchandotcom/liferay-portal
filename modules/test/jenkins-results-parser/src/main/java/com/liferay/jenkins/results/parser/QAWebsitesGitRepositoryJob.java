@@ -71,7 +71,7 @@ public class QAWebsitesGitRepositoryJob
 		for (String projectName : getProjectNames()) {
 			if (projectName.equals("playwright")) {
 				return new HashSet<>(
-					Collections.singletonList("qa-websites-playwright-jdk8"));
+					Collections.singletonList("qa-websites-playwright"));
 			}
 		}
 

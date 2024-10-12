@@ -829,12 +829,11 @@ testWithIsolatedSite(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Show Empty Collection Alert',
-			fragmentId: collectionId,
-			tab: 'General',
-			value: false,
-		});
+		await pageEditorPage.selectFragment(collectionId);
+
+		await page
+			.getByText('Show Empty Collection Alert', {exact: true})
+			.click();
 
 		await pageEditorPage.publishPage();
 

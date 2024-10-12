@@ -182,7 +182,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"testjava",
 			StringBundler.concat(
 				"Unable to resolve variable className for new ",
-				"InfoItemReference(). Replace 'TO_BE_REPLACED_FOR_CLASSNAME' ",
+				"InfoItemReference(). Replace \"TO_BE_REPLACED_FOR_CLASSNAME\" ",
 				"with the correct type"));
 	}
 
@@ -210,7 +210,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"upgrade/UpgradeJavaMultiVMPoolUtilCheck.testjava",
 			"Unable to resolve types for MultiVMPool.getPortalCache(). " +
-				"Replace 'TO_BE_REPLACED' with the correct type");
+				"Replace \"TO_BE_REPLACED\" with the correct type");
 	}
 
 	@Test
@@ -286,7 +286,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"upgrade/UpgradeSCSSMixinsCheck.testscss",
 			StringBundler.concat(
-				"Do not use 'media-query' mixing, replace with its equivalent ",
+				"Do not use \"media-query\" mixing, replace with its equivalent ",
 				"(e.g., media-breakpoint-up, media-breakpoint-only, ",
 				"media-breakpoint-down, etc.), see LPS-194507."));
 	}

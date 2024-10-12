@@ -25,13 +25,13 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"FormatBndInstructions3/app.testbnd"
 			).addExpectedMessage(
-				"The 'Liferay-Releng-Restart-Required' can only be set to " +
+				"The \"Liferay-Releng-Restart-Required\" can only be set to " +
 					"false if a POSHI tests exists"
 			).addExpectedMessage(
 				StringBundler.concat(
-					"The 'Liferay-Releng-Suite' can be blank or one of the ",
-					"following values 'collaboration, commerce, ",
-					"forms-and-workflow, foundation, static, web-experience'")
+					"The \"Liferay-Releng-Suite\" can be blank or one of the ",
+					"following values \"collaboration, commerce, ",
+					"forms-and-workflow, foundation, static, web-experience\"")
 			));
 	}
 
@@ -53,14 +53,14 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectBundleActivator1/bnd.testbnd",
 			"Incorrect Bundle-Activator, it should match " +
-				"'Bundle-SymbolicName'");
+				"\"Bundle-SymbolicName\"");
 		test(
 			"IncorrectBundleActivator2/bnd.testbnd",
-			"Incorrect Bundle-Activator, it should end with 'BundleActivator'");
+			"Incorrect Bundle-Activator, it should end with \"BundleActivator\"");
 		test(
 			"IncorrectBundleActivator3/bnd.testbnd",
 			"Incorrect Bundle-Activator, it should match " +
-				"'Bundle-SymbolicName'");
+				"\"Bundle-SymbolicName\"");
 	}
 
 	@Test

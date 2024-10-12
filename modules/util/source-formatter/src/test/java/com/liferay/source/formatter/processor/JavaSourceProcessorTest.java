@@ -32,24 +32,24 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"AssignmentsAndSetCallsOrder.testjava"
 			).addExpectedMessage(
-				"The variable assignment for 'appDeployments' should come " +
-					"before the variable assignment for 'dataDefinitionId'",
+				"The variable assignment for \"appDeployments\" should come " +
+					"before the variable assignment for \"dataDefinitionId\"",
 				20
 			).addExpectedMessage(
-				"The variable assignment for 'settings' should come before " +
-					"the variable assignment for 'type'",
+				"The variable assignment for \"settings\" should come before " +
+					"the variable assignment for \"type\"",
 				24
 			).addExpectedMessage(
-				"The variable assignment for 'type' should come before the " +
-					"method calling 'setName'",
+				"The variable assignment for \"type\" should come before the " +
+					"method calling \"setName\"",
 				33
 			).addExpectedMessage(
-				"The variable assignment for 'settings' should come before " +
-					"the variable assignment for 'type'",
+				"The variable assignment for \"settings\" should come before " +
+					"the variable assignment for \"type\"",
 				39
 			).addExpectedMessage(
-				"The method calling 'setCompany' should come before the " +
-					"method calling 'setName'",
+				"The method calling \"setCompany\" should come before the " +
+					"method calling \"setName\"",
 				45
 			));
 	}
@@ -58,7 +58,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testBaseReferenceVariableWithoutComponent() throws Exception {
 		test(
 			"BaseReferenceVariableWithoutComponent.testjava",
-			"@Reference variable '_testField' should be protected instead of " +
+			"@Reference variable \"_testField\" should be protected instead of " +
 				"private in a class without @Component",
 			19);
 	}
@@ -69,20 +69,20 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"Builder.testjava"
 			).addExpectedMessage(
-				"Include method call 'hashMap.put' (23) in 'HashMapBuilder' " +
+				"Include method call \"hashMap.put\" (23) in \"HashMapBuilder\" " +
 					"(19)",
 				19
 			).addExpectedMessage(
-				"Inline variable definition 'company' (29) inside " +
-					"'HashMapBuilder' (31), possibly by using a lambda " +
+				"Inline variable definition \"company\" (29) inside " +
+					"\"HashMapBuilder\" (31), possibly by using a lambda " +
 						"function",
 				29
 			).addExpectedMessage(
-				"Null values are not allowed in 'HashMapBuilder'", 38
+				"Null values are not allowed in \"HashMapBuilder\"", 38
 			).addExpectedMessage(
-				"Use 'HashMapBuilder' (43, 45)", 43
+				"Use \"HashMapBuilder\" (43, 45)", 43
 			).addExpectedMessage(
-				"Use 'HashMapBuilder' instead of new instance of 'HashMap'", 49
+				"Use \"HashMapBuilder\" instead of new instance of \"HashMap\"", 49
 			));
 	}
 
@@ -90,7 +90,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testChainPutForOrgJSONObject() throws Exception {
 		test(
 			"ChainPutForOrgJSONObject.testjava",
-			"Chaining on 'jsonObject.put' is preferred", 18);
+			"Chaining on \"jsonObject.put\" is preferred", 18);
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("ElseStatement1.testjava");
 		test(
 			"ElseStatement2.testjava",
-			"Else statement is not needed because of the 'return' statement " +
+			"Else statement is not needed because of the \"return\" statement " +
 				"on line 17",
 			19);
 	}
@@ -161,7 +161,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testExceptionMapper() throws Exception {
 		test(
 			"ExceptionMapperService.testjava",
-			"The value of 'osgi.jaxrs.name' should end with 'ExceptionMapper'",
+			"The value of \"osgi.jaxrs.name\" should end with \"ExceptionMapper\"",
 			21);
 	}
 
@@ -169,7 +169,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testExceptionPrintStackTrace() throws Exception {
 		test(
 			"ExceptionPrintStackTrace.testjava",
-			"Avoid using method 'printStackTrace'", 22);
+			"Avoid using method \"printStackTrace\"", 22);
 	}
 
 	@Test
@@ -178,23 +178,23 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"ExceptionVariableName.testjava"
 			).addExpectedMessage(
-				"Rename exception variable 'e' to 'configurationException'", 28
+				"Rename exception variable \"e\" to \"configurationException\"", 28
 			).addExpectedMessage(
-				"Rename exception variable 'e' to 'configurationException'", 41
+				"Rename exception variable \"e\" to \"configurationException\"", 41
 			).addExpectedMessage(
-				"Rename exception variable 're' to 'exception'", 52
+				"Rename exception variable \"re\" to \"exception\"", 52
 			).addExpectedMessage(
-				"Rename exception variable 'ioe' to 'ioException1'", 57
+				"Rename exception variable \"ioe\" to \"ioException1\"", 57
 			).addExpectedMessage(
-				"Rename exception variable 'oie' to 'ioException2'", 61
+				"Rename exception variable \"oie\" to \"ioException2\"", 61
 			).addExpectedMessage(
-				"Rename exception variable 'ioe1' to 'ioException1'", 72
+				"Rename exception variable \"ioe1\" to \"ioException1\"", 72
 			).addExpectedMessage(
-				"Rename exception variable 'ioe2' to 'ioException2'", 76
+				"Rename exception variable \"ioe2\" to \"ioException2\"", 76
 			).addExpectedMessage(
-				"Rename exception variable 'ioe1' to 'ioException'", 87
+				"Rename exception variable \"ioe1\" to \"ioException\"", 87
 			).addExpectedMessage(
-				"Rename exception variable 'ioe2' to 'ioException'", 93
+				"Rename exception variable \"ioe2\" to \"ioException\"", 93
 			));
 	}
 
@@ -204,16 +204,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"FeatureFlagsAnnotationTest.testjava"
 			).addExpectedMessage(
-				"Use annotation '@FeatureFlags' instead of 'PropsUtil." +
-					"addProperties' for feature flag",
+				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
+					"addProperties\" for feature flag",
 				22
 			).addExpectedMessage(
-				"Use annotation '@FeatureFlags' instead of 'PropsUtil." +
-					"addProperties' for feature flag",
+				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
+					"addProperties\" for feature flag",
 				32
 			).addExpectedMessage(
-				"Use annotation '@FeatureFlags' instead of 'PropsUtil." +
-					"addProperties' for feature flag",
+				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
+					"addProperties\" for feature flag",
 				42
 			));
 	}
@@ -248,8 +248,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testGetFeatureFlag() throws Exception {
 		test(
 			"GetFeatureFlag.testjava",
-			"Use 'FeatureFlagManagerUtil.isEnabled' instead of " +
-				"'PropsUtil.get' for feature flag",
+			"Use \"FeatureFlagManagerUtil.isEnabled\" instead of " +
+				"\"PropsUtil.get\" for feature flag",
 			17);
 	}
 
@@ -267,7 +267,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testImmediateAttribute() throws Exception {
 		test(
 			"ImmediateAttribute.testjava",
-			"Do not use 'immediate = true' in @Component");
+			"Do not use \"immediate = true\" in @Component");
 	}
 
 	@Test
@@ -307,20 +307,20 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectInitialRequestPortalInstanceLifecycleListener1.testjava",
 			StringBundler.concat(
-				"Missing 'activate(BundleContext bundleContext)' method with ",
-				"'@Activate' annotation that calls ",
-				"'super.activate(bundleContext)'"));
+				"Missing \"activate(BundleContext bundleContext)\" method with ",
+				"\"@Activate\" annotation that calls ",
+				"\"super.activate(bundleContext)\""));
 
 		test(
 			SourceProcessorTestParameters.create(
 				"IncorrectInitialRequestPortalInstanceLifecycleListener2." +
 					"testjava"
 			).addExpectedMessage(
-				"The 'activate' method is missing the '@Override' annotation",
+				"The \"activate\" method is missing the \"@Override\" annotation",
 				22
 			).addExpectedMessage(
-				"The 'activate' method must call 'super.activate(" +
-					"bundleContext)'",
+				"The \"activate\" method must call \"super.activate(" +
+					"bundleContext)\"",
 				22
 			));
 	}
@@ -331,41 +331,41 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectOperatorOrder.testjava"
 			).addExpectedMessage(
-				"'3' should be on the right hand side of the operator", 44
+				"\"3\" should be on the right hand side of the operator", 44
 			).addExpectedMessage(
-				"'+3' should be on the right hand side of the operator", 48
+				"\"+3\" should be on the right hand side of the operator", 48
 			).addExpectedMessage(
-				"'-3' should be on the right hand side of the operator", 52
+				"\"-3\" should be on the right hand side of the operator", 52
 			).addExpectedMessage(
-				"'3' should be on the right hand side of the operator", 88
+				"\"3\" should be on the right hand side of the operator", 88
 			).addExpectedMessage(
-				"'+3' should be on the right hand side of the operator", 92
+				"\"+3\" should be on the right hand side of the operator", 92
 			).addExpectedMessage(
-				"'-3' should be on the right hand side of the operator", 96
+				"\"-3\" should be on the right hand side of the operator", 96
 			).addExpectedMessage(
-				"'3' should be on the right hand side of the operator", 132
+				"\"3\" should be on the right hand side of the operator", 132
 			).addExpectedMessage(
-				"'+3' should be on the right hand side of the operator", 136
+				"\"+3\" should be on the right hand side of the operator", 136
 			).addExpectedMessage(
-				"'-3' should be on the right hand side of the operator", 140
+				"\"-3\" should be on the right hand side of the operator", 140
 			).addExpectedMessage(
-				"'3' should be on the right hand side of the operator", 176
+				"\"3\" should be on the right hand side of the operator", 176
 			).addExpectedMessage(
-				"'+3' should be on the right hand side of the operator", 180
+				"\"+3\" should be on the right hand side of the operator", 180
 			).addExpectedMessage(
-				"'-3' should be on the right hand side of the operator", 184
+				"\"-3\" should be on the right hand side of the operator", 184
 			).addExpectedMessage(
-				"'3' should be on the right hand side of the operator", 220
+				"\"3\" should be on the right hand side of the operator", 220
 			).addExpectedMessage(
-				"'+3' should be on the right hand side of the operator", 224
+				"\"+3\" should be on the right hand side of the operator", 224
 			).addExpectedMessage(
-				"'-3' should be on the right hand side of the operator", 228
+				"\"-3\" should be on the right hand side of the operator", 228
 			).addExpectedMessage(
-				"'3' should be on the right hand side of the operator", 264
+				"\"3\" should be on the right hand side of the operator", 264
 			).addExpectedMessage(
-				"'+3' should be on the right hand side of the operator", 268
+				"\"+3\" should be on the right hand side of the operator", 268
 			).addExpectedMessage(
-				"'-3' should be on the right hand side of the operator", 272
+				"\"-3\" should be on the right hand side of the operator", 272
 			));
 	}
 
@@ -375,12 +375,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectParameterNames.testjava"
 			).addExpectedMessage(
-				"Parameter 'StringMap' must match pattern " +
-					"'^[a-z][_a-zA-Z0-9]*$'",
+				"Parameter \"StringMap\" must match pattern " +
+					"\"^[a-z][_a-zA-Z0-9]*$\"",
 				15
 			).addExpectedMessage(
-				"Parameter 'TestString' must match pattern " +
-					"'^[a-z][_a-zA-Z0-9]*$'",
+				"Parameter \"TestString\" must match pattern " +
+					"\"^[a-z][_a-zA-Z0-9]*$\"",
 				19
 			));
 	}
@@ -391,13 +391,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectReferenceCardinality.testjava"
 			).addExpectedMessage(
-				"Use Snapshot instead of 'cardinality = ReferenceCardinality." +
-					"OPTIONAL', see LPS-184625",
+				"Use Snapshot instead of \"cardinality = ReferenceCardinality." +
+					"OPTIONAL\", see LPS-184625",
 				20
 			).addExpectedMessage(
-				"When using 'cardinality = ReferenceCardinality.OPTIONAL' " +
-					"and 'policyOption = ReferencePolicyOption.GREEDY', " +
-						"always use 'policy = ReferencePolicy.DYNAMIC' as well",
+				"When using \"cardinality = ReferenceCardinality.OPTIONAL\" " +
+					"and \"policyOption = ReferencePolicyOption.GREEDY\", " +
+						"always use \"policy = ReferencePolicy.DYNAMIC\" as well",
 				20
 			));
 	}
@@ -408,29 +408,29 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectVariableNames1.testjava"
 			).addExpectedMessage(
-				"public constant '_TEST_1' of type 'int' must match pattern " +
-					"'^[A-Z0-9][_A-Z0-9]*$'",
+				"public constant \"_TEST_1\" of type \"int\" must match pattern " +
+					"\"^[A-Z0-9][_A-Z0-9]*$\"",
 				13
 			).addExpectedMessage(
-				"Protected or public non-static field '_test2' must match " +
-					"pattern '^[a-z0-9][_a-zA-Z0-9]*$'",
+				"Protected or public non-static field \"_test2\" must match " +
+					"pattern \"^[a-z0-9][_a-zA-Z0-9]*$\"",
 				19
 			));
 		test(
 			"IncorrectVariableNames2.testjava",
-			"private constant 'STRING_1' of type 'String' must match pattern " +
-				"'^_[A-Z0-9][_A-Z0-9]*$'",
+			"private constant \"STRING_1\" of type \"String\" must match pattern " +
+				"\"^_[A-Z0-9][_A-Z0-9]*$\"",
 			17);
 		test(
 			SourceProcessorTestParameters.create(
 				"IncorrectVariableNames3.testjava"
 			).addExpectedMessage(
-				"Local non-final variable 'TestMapWithARatherLongName' must " +
-					"match pattern '^[a-z0-9][_a-zA-Z0-9]*$'",
+				"Local non-final variable \"TestMapWithARatherLongName\" must " +
+					"match pattern \"^[a-z0-9][_a-zA-Z0-9]*$\"",
 				17
 			).addExpectedMessage(
-				"Local non-final variable 'TestString' must match pattern " +
-					"'^[a-z0-9][_a-zA-Z0-9]*$'",
+				"Local non-final variable \"TestString\" must match pattern " +
+					"\"^[a-z0-9][_a-zA-Z0-9]*$\"",
 				20
 			));
 	}
@@ -483,7 +483,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testListUtilUsages() throws Exception {
 		test(
 			"ListUtilUsages.testjava",
-			"Use 'ListUtil.isEmpty(list)' to simplify code", 16);
+			"Use \"ListUtil.isEmpty(list)\" to simplify code", 16);
 	}
 
 	@Test
@@ -522,9 +522,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MethodEquals.testjava"
 			).addExpectedMessage(
-				"Use 'Objects.equals' instead of calling 'equals' on method", 15
+				"Use \"Objects.equals\" instead of calling \"equals\" on method", 15
 			).addExpectedMessage(
-				"Use 'Objects.equals' instead of calling 'equals' on method", 21
+				"Use \"Objects.equals\" instead of calling \"equals\" on method", 21
 			));
 	}
 
@@ -539,48 +539,48 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MissingDiamondOperator.testjava"
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'ArrayList'", 36
+				"Missing diamond operator \"<>\" for type \"ArrayList\"", 36
 			).addExpectedMessage(
-				"Missing generic types '<String, String>' for type 'ArrayList'",
+				"Missing generic types \"<String, String>\" for type \"ArrayList\"",
 				38
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'ConcurrentHashMap'", 44
+				"Missing diamond operator \"<>\" for type \"ConcurrentHashMap\"", 44
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type " +
-					"'ConcurrentSkipListMap'",
+				"Missing diamond operator \"<>\" for type " +
+					"\"ConcurrentSkipListMap\"",
 				46
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type " +
-					"'ConcurrentSkipListSet'",
+				"Missing diamond operator \"<>\" for type " +
+					"\"ConcurrentSkipListSet\"",
 				48
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'CopyOnWriteArraySet'",
+				"Missing diamond operator \"<>\" for type \"CopyOnWriteArraySet\"",
 				50
 			).addExpectedMessage(
-				"Missing generic types '<Position, String>' for type 'EnumMap'",
+				"Missing generic types \"<Position, String>\" for type \"EnumMap\"",
 				52
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'HashMap'", 59
+				"Missing diamond operator \"<>\" for type \"HashMap\"", 59
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'HashSet'", 61
+				"Missing diamond operator \"<>\" for type \"HashSet\"", 61
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'Hashtable'", 63
+				"Missing diamond operator \"<>\" for type \"Hashtable\"", 63
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'IdentityHashMap'", 65
+				"Missing diamond operator \"<>\" for type \"IdentityHashMap\"", 65
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'LinkedHashMap'", 68
+				"Missing diamond operator \"<>\" for type \"LinkedHashMap\"", 68
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'LinkedHashSet'", 70
+				"Missing diamond operator \"<>\" for type \"LinkedHashSet\"", 70
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'LinkedList'", 72
+				"Missing diamond operator \"<>\" for type \"LinkedList\"", 72
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'Stack'", 74
+				"Missing diamond operator \"<>\" for type \"Stack\"", 74
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'TreeMap'", 76
+				"Missing diamond operator \"<>\" for type \"TreeMap\"", 76
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'TreeSet'", 78
+				"Missing diamond operator \"<>\" for type \"TreeSet\"", 78
 			).addExpectedMessage(
-				"Missing diamond operator '<>' for type 'Vector'", 80
+				"Missing diamond operator \"<>\" for type \"Vector\"", 80
 			));
 	}
 
@@ -595,11 +595,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MissingEmptyLinesAfterMethodCalls.testjava"
 			).addExpectedMessage(
-				"There should be an empty line after 'registry.register'", 14
+				"There should be an empty line after \"registry.register\"", 14
 			).addExpectedMessage(
-				"There should be an empty line after 'registry.register'", 15
+				"There should be an empty line after \"registry.register\"", 15
 			).addExpectedMessage(
-				"There should be an empty line after 'registry.register'", 25
+				"There should be an empty line after \"registry.register\"", 25
 			));
 	}
 
@@ -607,7 +607,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testMissingEmptyLinesBeforeMethodCalls() throws Exception {
 		test(
 			"MissingEmptyLinesBeforeMethodCalls.testjava",
-			"There should be an empty line before 'portletPreferences.store'",
+			"There should be an empty line before \"portletPreferences.store\"",
 			17);
 	}
 
@@ -615,7 +615,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testMissingEmptyLinesInInstanceInit() throws Exception {
 		test(
 			"MissingEmptyLinesInInstanceInit.testjava",
-			"There should be an empty line after line '18'", 18);
+			"There should be an empty line after line \"18\"", 18);
 	}
 
 	@Test
@@ -631,12 +631,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MoveUpgradeSteps.testjava"
 			).addExpectedMessage(
-				"Move 'alterTableAddColumn' call inside 'getPreUpgradeSteps' " +
+				"Move \"alterTableAddColumn\" call inside \"getPreUpgradeSteps\" " +
 					"method",
 				17
 			).addExpectedMessage(
-				"Move 'alterTableAddColumn' call inside " +
-					"'getPostUpgradeSteps' method",
+				"Move \"alterTableAddColumn\" call inside " +
+					"\"getPostUpgradeSteps\" method",
 				21
 			));
 	}
@@ -647,15 +647,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"NullAssertionInIfStatement.testjava"
 			).addExpectedMessage(
-				"Null check for variable 'list' should always be first in " +
+				"Null check for variable \"list\" should always be first in " +
 					"if-statement",
 				16
 			).addExpectedMessage(
-				"Null check for variable 'list' should always be first in " +
+				"Null check for variable \"list\" should always be first in " +
 					"if-statement",
 				24
 			).addExpectedMessage(
-				"Null check for variable 'nameList1' should always be first " +
+				"Null check for variable \"nameList1\" should always be first " +
 					"in if-statement",
 				37
 			));
@@ -670,7 +670,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testPackageName() throws Exception {
 		test(
 			"PackageName.testjava",
-			"The declared package 'com.liferay.source.formatter.hello.world' " +
+			"The declared package \"com.liferay.source.formatter.hello.world\" " +
 				"does not match the expected package");
 	}
 
@@ -688,11 +688,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"ReadabilityImprovement.testjava"
 			).addExpectedMessage(
 				"Create a new variable for the left hand side operand of the " +
-					"'+' operator for better readability",
+					"\"+\" operator for better readability",
 				14
 			).addExpectedMessage(
 				"Create a new variable for the left hand side operand of the " +
-					"'+' operator for better readability",
+					"\"+\" operator for better readability",
 				22
 			));
 	}
@@ -706,7 +706,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testRedundantLog() throws Exception {
 		test(
 			"RedundantLog.testjava",
-			"Redundant log between line '17' and line '22'.", 17);
+			"Redundant log between line \"17\" and line \"22\".", 17);
 	}
 
 	@Test
@@ -744,9 +744,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 		test(
 			"ServiceProxyFactoryNewServiceTrackedInstance.testjava",
-			"Pass 'ServiceProxyFactoryNewServiceTrackedInstance.class' as " +
+			"Pass \"ServiceProxyFactoryNewServiceTrackedInstance.class\" as " +
 				"the second parameter when calling method " +
-					"'ServiceProxyFactory.newServiceTrackedInstance'",
+					"\"ServiceProxyFactory.newServiceTrackedInstance\"",
 			21);
 	}
 
@@ -761,9 +761,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"SizeIsZero.testjava"
 			).addExpectedMessage(
-				"Use method '_testList.isEmpty()' instead", 19
+				"Use method \"_testList.isEmpty()\" instead", 19
 			).addExpectedMessage(
-				"Use method 'myList.isEmpty()' instead", 24
+				"Use method \"myList.isEmpty()\" instead", 24
 			));
 	}
 
@@ -813,14 +813,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"StringConcatenation.testjava"
 			).addExpectedMessage(
 				"When concatenating multiple literal strings, only the first " +
-					"literal string can start with ' '",
+					"literal string can start with \" \"",
 				19
 			).addExpectedMessage(
-				"Use method 'StringBundler.concat' when concatenating more " +
+				"Use method \"StringBundler.concat\" when concatenating more " +
 					"than 3 strings",
 				33
 			).addExpectedMessage(
-				"Do not use 'StringBundler.concat' when concatenating less " +
+				"Do not use \"StringBundler.concat\" when concatenating less " +
 					"than 3 elements",
 				41
 			));
@@ -837,13 +837,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"ToJSONStringMethodCalls.testjava"
 			).addExpectedMessage(
-				"Use 'toString' instead of 'toJSONString'", 21
+				"Use \"toString\" instead of \"toJSONString\"", 21
 			).addExpectedMessage(
-				"Use 'toString' instead of 'toJSONString'", 30
+				"Use \"toString\" instead of \"toJSONString\"", 30
 			).addExpectedMessage(
-				"Use 'toString' instead of 'toJSONString'", 34
+				"Use \"toString\" instead of \"toJSONString\"", 34
 			).addExpectedMessage(
-				"Use 'toString' instead of 'toJSONString'", 58
+				"Use \"toString\" instead of \"toJSONString\"", 58
 			));
 	}
 
@@ -856,7 +856,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testUnnecessaryConfigurationPolicy() throws Exception {
 		test(
 			"UnnecessaryConfigurationPolicy.testjava",
-			"Remove 'configurationPolicy = ConfigurationPolicy.OPTIONAL' as " +
+			"Remove \"configurationPolicy = ConfigurationPolicy.OPTIONAL\" as " +
 				"it is unnecessary",
 			14);
 	}
@@ -867,22 +867,22 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"UnnecessaryMethodCalls.testjava"
 			).addExpectedMessage(
-				"Use 'webCachePool' instead of calling method " +
-					"'_getWebCachePool'",
+				"Use \"webCachePool\" instead of calling method " +
+					"\"_getWebCachePool\"",
 				26
 			).addExpectedMessage(
-				"Use 'webCachePool' instead of calling method " +
-					"'_getWebCachePool'",
+				"Use \"webCachePool\" instead of calling method " +
+					"\"_getWebCachePool\"",
 				34
 			).addExpectedMessage(
-				"Use 'this.name' instead of calling method '_getName'", 38
+				"Use \"this.name\" instead of calling method \"_getName\"", 38
 			).addExpectedMessage(
-				"Use 'webCachePool' instead of calling method " +
-					"'_getWebCachePool'",
+				"Use \"webCachePool\" instead of calling method " +
+					"\"_getWebCachePool\"",
 				44
 			).addExpectedMessage(
-				"Use 'webCachePool_1' instead of calling method " +
-					"'getWebCachePool'",
+				"Use \"webCachePool_1\" instead of calling method " +
+					"\"getWebCachePool\"",
 				70
 			));
 	}
@@ -898,8 +898,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testUnnecessaryUpgradeProcessClass() throws Exception {
 		test(
 			"UnnecessaryUpgradeProcessClass.testjava",
-			"No need to create 'UnnecessaryUpgradeProcessClass' class. " +
-				"Replace it by inline calls to the 'UpgradeProcessFactory' " +
+			"No need to create \"UnnecessaryUpgradeProcessClass\" class. " +
+				"Replace it by inline calls to the \"UpgradeProcessFactory\" " +
 					"class in the registrator class",
 			13);
 	}
@@ -915,15 +915,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"UnusedMethods.testjava"
 			).addExpectedMessage(
-				"Method '_getInteger' is unused", 24
+				"Method \"_getInteger\" is unused", 24
 			).addExpectedMessage(
-				"Method '_getString' is unused", 32
+				"Method \"_getString\" is unused", 32
 			));
 	}
 
 	@Test
 	public void testUnusedParameter() throws Exception {
-		test("UnusedParameter.testjava", "Parameter 'color' is unused", 17);
+		test("UnusedParameter.testjava", "Parameter \"color\" is unused", 17);
 	}
 
 	@Test
@@ -932,11 +932,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"UnusedVariable.testjava"
 			).addExpectedMessage(
-				"Variable 'matcher' is unused", 17
+				"Variable \"matcher\" is unused", 17
 			).addExpectedMessage(
-				"Variable 'hello' is unused", 20
+				"Variable \"hello\" is unused", 20
 			).addExpectedMessage(
-				"Variable '_s' is unused", 32
+				"Variable \"_s\" is unused", 32
 			));
 	}
 
@@ -949,13 +949,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testUpgradeProcessUnnecessaryIfStatement() throws Exception {
 		test(
 			"UpgradeProcessUnnecessaryIfStatement1.testjava",
-			"No need to use if-statement to wrap 'alterColumn*' and " +
-				"'alterTable*' calls",
+			"No need to use if-statement to wrap \"alterColumn*\" and " +
+				"\"alterTable*\" calls",
 			17);
 		test(
 			"UpgradeProcessUnnecessaryIfStatement2.testjava",
-			"No need to use if-statement to wrap 'alterColumn*' and " +
-				"'alterTable*' calls",
+			"No need to use if-statement to wrap \"alterColumn*\" and " +
+				"\"alterTable*\" calls",
 			17);
 	}
 

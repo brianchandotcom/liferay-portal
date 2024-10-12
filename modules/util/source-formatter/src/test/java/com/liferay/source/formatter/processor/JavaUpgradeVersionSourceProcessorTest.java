@@ -52,7 +52,7 @@ public class JavaUpgradeVersionSourceProcessorTest
 		test(
 			"MissingRegisterInitialization3.testjava",
 			"The upgrade process from version 0.0.0 should be replaced by " +
-				"'registry.registerInitialization()'");
+				"\"registry.registerInitialization()\"");
 	}
 
 	@Override

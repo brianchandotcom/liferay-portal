@@ -23,9 +23,9 @@ public class TLDSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MissingCDATA.testtld"
 			).addExpectedMessage(
-				"Use CDATA to warp each '<code>' in the description", 14
+				"Use CDATA to warp each \"<code>\" in the description", 14
 			).addExpectedMessage(
-				"Missing CDATA after 'replaced by' in the description", 19
+				"Missing CDATA after \"replaced by\" in the description", 19
 			));
 	}
 

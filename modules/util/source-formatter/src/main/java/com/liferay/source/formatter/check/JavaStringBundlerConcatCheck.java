@@ -61,7 +61,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 			if (parameterList.size() < 3) {
 				addMessage(
 					fileName,
-					"Do not use 'StringBundler.concat' when concatenating " +
+					"Do not use \"StringBundler.concat\" when concatenating " +
 						"less than 3 elements",
 					javaTerm.getLineNumber(matcher.start()));
 			}

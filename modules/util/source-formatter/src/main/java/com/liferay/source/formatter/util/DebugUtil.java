@@ -74,11 +74,11 @@ public class DebugUtil {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("'");
+		sb.append("\"");
 		sb.append(checkName);
-		sb.append("' modified '");
+		sb.append("\" modified \"");
 		sb.append(fileName);
-		sb.append("':");
+		sb.append("\":");
 
 		System.out.println(sb.toString());
 
@@ -207,9 +207,9 @@ public class DebugUtil {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("\n");
-		sb.append("==== Processing Time Information for '");
+		sb.append("==== Processing Time Information for \"");
 		sb.append(checkType.getValue());
-		sb.append("' ====\n\n");
+		sb.append("\" ====\n\n");
 
 		System.out.println(sb.toString());
 

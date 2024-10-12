@@ -85,7 +85,7 @@ public class JavaInitialRequestPortalInstanceLifecycleListenerCheck
 			if (!javaMethod.hasAnnotation("Override")) {
 				addMessage(
 					fileName,
-					"The 'activate' method is missing the '@Override' " +
+					"The \"activate\" method is missing the \"@Override\" " +
 						"annotation",
 					javaMethod.getLineNumber());
 			}

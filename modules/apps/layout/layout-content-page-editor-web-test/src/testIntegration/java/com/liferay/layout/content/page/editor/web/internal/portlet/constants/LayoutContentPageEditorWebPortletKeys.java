@@ -10,6 +10,11 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.constants;
  */
 public class LayoutContentPageEditorWebPortletKeys {
 
+	public static final String
+		LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET =
+			"com_liferay_layout_content_page_editor_web_internal_portlet_" +
+				"LayoutContentPageEditorWebNoninstanceableTestPortlet";
+
 	public static final String LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET =
 		"com_liferay_layout_content_page_editor_web_internal_portlet_" +
 			"LayoutContentPageEditorWebTestPortlet";

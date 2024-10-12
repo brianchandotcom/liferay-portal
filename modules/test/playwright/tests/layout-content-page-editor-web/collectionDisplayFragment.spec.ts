@@ -33,76 +33,86 @@ const test = mergeTests(
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
-test('Allows adding a Collection Display with a manual collection into another Collection Display with Recent Content', async ({
-	apiHelpers,
-	collectionsPage,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
+test(
+	'Allows adding a Collection Display with a manual collection into another Collection Display with Recent Content',
+	{
+		tag: '@LPS-127024',
+	},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
-	// Create definition for a collection mapped to
-	// Recent Content provider with Bordered List style
+		// Create definition for a collection mapped to
+		// Recent Content provider with Bordered List style
 
-	const firstCollectionId = getRandomString();
+		const firstCollectionId = getRandomString();
 
-	const firstCollectionDefinition = getCollectionDefinition({
-		id: firstCollectionId,
-		listStyle: 'Bordered List (Collection Provider)',
-		provider: 'Recent Content',
-	});
+		const firstCollectionDefinition = getCollectionDefinition({
+			id: firstCollectionId,
+			listStyle: 'Bordered List (Collection Provider)',
+			provider: 'Recent Content',
+		});
 
-	// Create definition for a collection mapped to Animals collection
+		// Create definition for a collection mapped to Animals collection
 
-	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		ANIMALS_COLLECTION_NAME,
-		pageManagementSite.friendlyUrlPath
-	);
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
 
-	const animalsCollection = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		listStyle: 'Bulleted List (Journal)',
-	});
+		const animalsCollection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			listStyle: 'Bulleted List (Journal)',
+		});
 
-	// Create definition for another collection mapped to Recent Content provider
+		// Create definition for another collection mapped to Recent Content provider
 
-	const secondCollectionId = getRandomString();
+		const secondCollectionId = getRandomString();
 
-	const secondCollectionDefinition = getCollectionDefinition({
-		id: secondCollectionId,
-		pageElements: [animalsCollection],
-		provider: 'Recent Content',
-	});
+		const secondCollectionDefinition = getCollectionDefinition({
+			id: secondCollectionId,
+			pageElements: [animalsCollection],
+			provider: 'Recent Content',
+		});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			firstCollectionDefinition,
-			secondCollectionDefinition,
-		]),
-		siteId: pageManagementSite.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				firstCollectionDefinition,
+				secondCollectionDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
 
-	// Go to edit mode of page
+		// Go to edit mode of page
 
-	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-	// Calculate the number of recent contents
+		// Calculate the number of recent contents
 
-	const firstCollection = pageEditorPage.getFragment(firstCollectionId);
+		const firstCollection = pageEditorPage.getFragment(firstCollectionId);
 
-	const count = await firstCollection.locator('.list-group-item').count();
+		const count = await firstCollection.locator('.list-group-item').count();
 
-	// Expect second collection to display only Animal 01 and Animal 02 contents that times
+		// Expect second collection to display only Animal 01 and Animal 02 contents that times
 
-	const secondCollection = pageEditorPage.getFragment(secondCollectionId);
+		const secondCollection = pageEditorPage.getFragment(secondCollectionId);
 
-	await expect(secondCollection.locator('li')).toHaveCount(count * 2);
-	await expect(secondCollection.getByText('Animal 01')).toHaveCount(count);
-	await expect(secondCollection.getByText('Animal 02')).toHaveCount(count);
+		await expect(secondCollection.locator('li')).toHaveCount(count * 2);
+		await expect(secondCollection.getByText('Animal 01')).toHaveCount(
+			count
+		);
+		await expect(secondCollection.getByText('Animal 02')).toHaveCount(
+			count
+		);
 
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
-});
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+	}
+);
 
 testWithIsolatedSite(
 	'Checks the error message when trying to drag a fragment to an unmapped collection',

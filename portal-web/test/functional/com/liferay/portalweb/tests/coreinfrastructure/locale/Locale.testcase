@@ -928,7 +928,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		task ("Assert the default enabled locales in Web Content match what is normally available") {
-			Click(locator1 = "Button#LOCALIZATION_GENERIC");
+			Click(locator1 = "//div[@class='translation-manager']/button[contains(., 'en-US')]");
 
 			for (var language : list "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE") {
 				AssertElementPresent(

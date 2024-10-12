@@ -77,7 +77,7 @@ public class JavaModuleClassGetResourceCallCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName,
-					"Resource files should be in 'dependencies' directory",
+					"Resource files should be in \"dependencies\" directory",
 					getLineNumber(content, matcher.start()));
 			}
 		}

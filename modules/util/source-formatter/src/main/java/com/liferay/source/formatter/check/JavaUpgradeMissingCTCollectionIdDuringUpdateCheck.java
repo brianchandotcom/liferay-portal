@@ -154,7 +154,7 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 
 				addMessage(
 					fileName,
-					"Missing 'ctCollectionId' in where clause during update",
+					"Missing \"ctCollectionId\" in where clause during update",
 					getLineNumber(content, x));
 			}
 		}

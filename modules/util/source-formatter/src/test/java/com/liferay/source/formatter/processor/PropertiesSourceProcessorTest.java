@@ -26,8 +26,8 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"content/Language.testproperties"
 			).addExpectedMessage(
 				StringBundler.concat(
-					"The single-word key \"abstract\" should include a word of ",
-					"context at the end, within a [], to indicate specific ",
+					"The single-word key \"abstract\" should include a word ",
+					"of context at the end, within a [], to indicate specific ",
 					"meaning"),
 				1
 			).addExpectedMessage(

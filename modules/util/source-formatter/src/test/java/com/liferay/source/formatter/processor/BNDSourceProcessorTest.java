@@ -56,7 +56,8 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"\"Bundle-SymbolicName\"");
 		test(
 			"IncorrectBundleActivator2/bnd.testbnd",
-			"Incorrect Bundle-Activator, it should end with \"BundleActivator\"");
+			"Incorrect Bundle-Activator, it should end with " +
+				"\"BundleActivator\"");
 		test(
 			"IncorrectBundleActivator3/bnd.testbnd",
 			"Incorrect Bundle-Activator, it should match " +

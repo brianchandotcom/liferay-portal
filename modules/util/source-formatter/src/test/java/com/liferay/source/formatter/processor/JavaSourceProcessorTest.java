@@ -58,8 +58,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testBaseReferenceVariableWithoutComponent() throws Exception {
 		test(
 			"BaseReferenceVariableWithoutComponent.testjava",
-			"@Reference variable \"_testField\" should be protected instead of " +
-				"private in a class without @Component",
+			"@Reference variable \"_testField\" should be protected instead " +
+				"of private in a class without @Component",
 			19);
 	}
 
@@ -69,8 +69,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"Builder.testjava"
 			).addExpectedMessage(
-				"Include method call \"hashMap.put\" (23) in \"HashMapBuilder\" " +
-					"(19)",
+				"Include method call \"hashMap.put\" (23) in " +
+					"\"HashMapBuilder\" (19)",
 				19
 			).addExpectedMessage(
 				"Inline variable definition \"company\" (29) inside " +
@@ -148,8 +148,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("ElseStatement1.testjava");
 		test(
 			"ElseStatement2.testjava",
-			"Else statement is not needed because of the \"return\" statement " +
-				"on line 17",
+			"Else statement is not needed because of the \"return\" " +
+				"statement on line 17",
 			19);
 	}
 
@@ -162,7 +162,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testExceptionMapper() throws Exception {
 		test(
 			"ExceptionMapperService.testjava",
-			"The value of \"osgi.jaxrs.name\" should end with \"ExceptionMapper\"",
+			"The value of \"osgi.jaxrs.name\" should end with " +
+				"\"ExceptionMapper\"",
 			21);
 	}
 
@@ -310,8 +311,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectInitialRequestPortalInstanceLifecycleListener1.testjava",
 			StringBundler.concat(
-				"Missing \"activate(BundleContext bundleContext)\" method with ",
-				"\"@Activate\" annotation that calls ",
+				"Missing \"activate(BundleContext bundleContext)\" method ",
+				"with \"@Activate\" annotation that calls ",
 				"\"super.activate(bundleContext)\""));
 
 		test(
@@ -319,7 +320,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"IncorrectInitialRequestPortalInstanceLifecycleListener2." +
 					"testjava"
 			).addExpectedMessage(
-				"The \"activate\" method is missing the \"@Override\" annotation",
+				"The \"activate\" method is missing the \"@Override\" " +
+					"annotation",
 				22
 			).addExpectedMessage(
 				"The \"activate\" method must call \"super.activate(" +
@@ -394,13 +396,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectReferenceCardinality.testjava"
 			).addExpectedMessage(
-				"Use Snapshot instead of \"cardinality = ReferenceCardinality." +
-					"OPTIONAL\", see LPS-184625",
+				"Use Snapshot instead of \"cardinality = " +
+					"ReferenceCardinality.OPTIONAL\", see LPS-184625",
 				20
 			).addExpectedMessage(
-				"When using \"cardinality = ReferenceCardinality.OPTIONAL\" " +
-					"and \"policyOption = ReferencePolicyOption.GREEDY\", " +
-						"always use \"policy = ReferencePolicy.DYNAMIC\" as well",
+				StringBundler.concat(
+					"When using \"cardinality = ReferenceCardinality.",
+					"OPTIONAL\" and \"policyOption = ReferencePolicyOption.",
+					"GREEDY\", always use \"policy = ReferencePolicy.",
+					"DYNAMIC\" as well"),
 				20
 			));
 	}
@@ -411,8 +415,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectVariableNames1.testjava"
 			).addExpectedMessage(
-				"public constant \"_TEST_1\" of type \"int\" must match pattern " +
-					"\"^[A-Z0-9][_A-Z0-9]*$\"",
+				"public constant \"_TEST_1\" of type \"int\" must match " +
+					"pattern \"^[A-Z0-9][_A-Z0-9]*$\"",
 				13
 			).addExpectedMessage(
 				"Protected or public non-static field \"_test2\" must match " +
@@ -421,15 +425,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			));
 		test(
 			"IncorrectVariableNames2.testjava",
-			"private constant \"STRING_1\" of type \"String\" must match pattern " +
-				"\"^_[A-Z0-9][_A-Z0-9]*$\"",
+			"private constant \"STRING_1\" of type \"String\" must match " +
+				"pattern \"^_[A-Z0-9][_A-Z0-9]*$\"",
 			17);
 		test(
 			SourceProcessorTestParameters.create(
 				"IncorrectVariableNames3.testjava"
 			).addExpectedMessage(
-				"Local non-final variable \"TestMapWithARatherLongName\" must " +
-					"match pattern \"^[a-z0-9][_a-zA-Z0-9]*$\"",
+				"Local non-final variable \"TestMapWithARatherLongName\" " +
+					"must match pattern \"^[a-z0-9][_a-zA-Z0-9]*$\"",
 				17
 			).addExpectedMessage(
 				"Local non-final variable \"TestString\" must match pattern " +
@@ -525,10 +529,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MethodEquals.testjava"
 			).addExpectedMessage(
-				"Use \"Objects.equals\" instead of calling \"equals\" on method",
+				"Use \"Objects.equals\" instead of calling \"equals\" on " +
+					"method",
 				15
 			).addExpectedMessage(
-				"Use \"Objects.equals\" instead of calling \"equals\" on method",
+				"Use \"Objects.equals\" instead of calling \"equals\" on " +
+					"method",
 				21
 			));
 	}
@@ -546,10 +552,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Missing diamond operator \"<>\" for type \"ArrayList\"", 36
 			).addExpectedMessage(
-				"Missing generic types \"<String, String>\" for type \"ArrayList\"",
+				"Missing generic types \"<String, String>\" for type " +
+					"\"ArrayList\"",
 				38
 			).addExpectedMessage(
-				"Missing diamond operator \"<>\" for type \"ConcurrentHashMap\"",
+				"Missing diamond operator \"<>\" for type " +
+					"\"ConcurrentHashMap\"",
 				44
 			).addExpectedMessage(
 				"Missing diamond operator \"<>\" for type " +
@@ -560,10 +568,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"\"ConcurrentSkipListSet\"",
 				48
 			).addExpectedMessage(
-				"Missing diamond operator \"<>\" for type \"CopyOnWriteArraySet\"",
+				"Missing diamond operator \"<>\" for type " +
+					"\"CopyOnWriteArraySet\"",
 				50
 			).addExpectedMessage(
-				"Missing generic types \"<Position, String>\" for type \"EnumMap\"",
+				"Missing generic types \"<Position, String>\" for type " +
+					"\"EnumMap\"",
 				52
 			).addExpectedMessage(
 				"Missing diamond operator \"<>\" for type \"HashMap\"", 59
@@ -638,8 +648,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MoveUpgradeSteps.testjava"
 			).addExpectedMessage(
-				"Move \"alterTableAddColumn\" call inside \"getPreUpgradeSteps\" " +
-					"method",
+				"Move \"alterTableAddColumn\" call inside " +
+					"\"getPreUpgradeSteps\" method",
 				17
 			).addExpectedMessage(
 				"Move \"alterTableAddColumn\" call inside " +
@@ -662,8 +672,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"if-statement",
 				24
 			).addExpectedMessage(
-				"Null check for variable \"nameList1\" should always be first " +
-					"in if-statement",
+				"Null check for variable \"nameList1\" should always be " +
+					"first in if-statement",
 				37
 			));
 	}
@@ -677,8 +687,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testPackageName() throws Exception {
 		test(
 			"PackageName.testjava",
-			"The declared package \"com.liferay.source.formatter.hello.world\" " +
-				"does not match the expected package");
+			"The declared package \"com.liferay.source.formatter.hello." +
+				"world\" does not match the expected package");
 	}
 
 	@Test
@@ -863,8 +873,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testUnnecessaryConfigurationPolicy() throws Exception {
 		test(
 			"UnnecessaryConfigurationPolicy.testjava",
-			"Remove \"configurationPolicy = ConfigurationPolicy.OPTIONAL\" as " +
-				"it is unnecessary",
+			"Remove \"configurationPolicy = ConfigurationPolicy.OPTIONAL\" " +
+				"as it is unnecessary",
 			14);
 	}
 

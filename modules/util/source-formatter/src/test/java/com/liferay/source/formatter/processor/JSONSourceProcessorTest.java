@@ -25,8 +25,8 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new String[] {
 				"When using \"liferay-npm-scripts\", a script for \"csf\" is " +
 					"required",
-				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
-					"required"
+				"When using \"liferay-npm-scripts\", a script for \"format\" " +
+					"is required"
 			});
 
 		test(
@@ -34,8 +34,8 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new String[] {
 				"When using \"liferay-npm-scripts\", a script for \"csf\" is " +
 					"required",
-				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
-					"required"
+				"When using \"liferay-npm-scripts\", a script for \"format\" " +
+					"is required"
 			});
 
 		test(
@@ -43,15 +43,15 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new String[] {
 				"When using \"liferay-npm-scripts\", a script for \"csf\" is " +
 					"required",
-				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
-					"required"
+				"When using \"liferay-npm-scripts\", a script for \"format\" " +
+					"is required"
 			});
 
 		test(
 			"CheckMissingScripts4/package.testjson",
 			new String[] {
-				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
-					"required"
+				"When using \"liferay-npm-scripts\", a script for \"format\" " +
+					"is required"
 			});
 		*/
 	}

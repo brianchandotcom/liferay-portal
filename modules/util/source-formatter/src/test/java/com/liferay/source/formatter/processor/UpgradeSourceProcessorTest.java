@@ -182,8 +182,8 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"testjava",
 			StringBundler.concat(
 				"Unable to resolve variable className for new ",
-				"InfoItemReference(). Replace \"TO_BE_REPLACED_FOR_CLASSNAME\" ",
-				"with the correct type"));
+				"InfoItemReference(). Replace \"TO_BE_REPLACED_FOR_",
+				"CLASSNAME\" with the correct type"));
 	}
 
 	@Test
@@ -286,9 +286,9 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"upgrade/UpgradeSCSSMixinsCheck.testscss",
 			StringBundler.concat(
-				"Do not use \"media-query\" mixing, replace with its equivalent ",
-				"(e.g., media-breakpoint-up, media-breakpoint-only, ",
-				"media-breakpoint-down, etc.), see LPS-194507."));
+				"Do not use \"media-query\" mixing, replace with its ",
+				"equivalent (e.g., media-breakpoint-up, media-breakpoint-",
+				"only, media-breakpoint-down, etc.), see LPS-194507."));
 	}
 
 	@Test

@@ -78,10 +78,12 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectMethodCalls.testjsp"
 			).addExpectedMessage(
-				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"",
+				"Use type \"LiferayPortletResponse\" to call " +
+					"\"getNamespace()\"",
 				12
 			).addExpectedMessage(
-				"Use type \"LiferayPortletResponse\" to call \"getNamespace()\"",
+				"Use type \"LiferayPortletResponse\" to call " +
+					"\"getNamespace()\"",
 				19
 			));
 	}
@@ -103,7 +105,8 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"MissingTaglibAttributes.testjsp",
 			"When using <clay:dropdown-actions>, always specify one of the " +
-				"follwing attributes: \"aria-label\", \"aria-labelledby\", \"title\"",
+				"follwing attributes: \"aria-label\", \"aria-labelledby\", " +
+					"\"title\"",
 			10);
 	}
 

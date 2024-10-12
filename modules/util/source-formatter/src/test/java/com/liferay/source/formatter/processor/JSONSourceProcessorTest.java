@@ -23,34 +23,34 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"CheckMissingScripts1/package.testjson",
 			new String[] {
-				"When using 'liferay-npm-scripts', a script for 'csf' is " +
+				"When using \"liferay-npm-scripts\", a script for \"csf\" is " +
 					"required",
-				"When using 'liferay-npm-scripts', a script for 'format' is " +
+				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
 					"required"
 			});
 
 		test(
 			"CheckMissingScripts2/package.testjson",
 			new String[] {
-				"When using 'liferay-npm-scripts', a script for 'csf' is " +
+				"When using \"liferay-npm-scripts\", a script for \"csf\" is " +
 					"required",
-				"When using 'liferay-npm-scripts', a script for 'format' is " +
+				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
 					"required"
 			});
 
 		test(
 			"CheckMissingScripts3/package.testjson",
 			new String[] {
-				"When using 'liferay-npm-scripts', a script for 'csf' is " +
+				"When using \"liferay-npm-scripts\", a script for \"csf\" is " +
 					"required",
-				"When using 'liferay-npm-scripts', a script for 'format' is " +
+				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
 					"required"
 			});
 
 		test(
 			"CheckMissingScripts4/package.testjson",
 			new String[] {
-				"When using 'liferay-npm-scripts', a script for 'format' is " +
+				"When using \"liferay-npm-scripts\", a script for \"format\" is " +
 					"required"
 			});
 		*/
@@ -68,10 +68,10 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"JSONDeprecatedPackages/package.testjson"
 			).addExpectedMessage(
 				"Do not use deprecated package " +
-					"'liferay-module-config-generator'",
+					"\"liferay-module-config-generator\"",
 				4
 			).addExpectedMessage(
-				"Do not use deprecated package 'metal-cli'", 5
+				"Do not use deprecated package \"metal-cli\"", 5
 			));
 	}
 

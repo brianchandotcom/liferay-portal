@@ -26,33 +26,33 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"content/Language.testproperties"
 			).addExpectedMessage(
 				StringBundler.concat(
-					"The single-word key 'abstract' should include a word of ",
+					"The single-word key \"abstract\" should include a word of ",
 					"context at the end, within a [], to indicate specific ",
 					"meaning"),
 				1
 			).addExpectedMessage(
 				StringBundler.concat(
-					"The single-word key 'order' should include a word of ",
+					"The single-word key \"order\" should include a word of ",
 					"context at the end, within a [], to indicate specific ",
 					"meaning"),
 				6
 			).addExpectedMessage(
-				"The context '...' is invalid in the key 'order[...]'", 7
+				"The context \"...\" is invalid in the key \"order[...]\"", 7
 			).addExpectedMessage(
-				"The context '' is invalid in the key 'order[]'", 8
+				"The context \"\" is invalid in the key \"order[]\"", 8
 			).addExpectedMessage(
-				"The context '0' is invalid in the key 'order[0]'", 9
+				"The context \"0\" is invalid in the key \"order[0]\"", 9
 			).addExpectedMessage(
-				"The context '123' is invalid in the key 'order[123]'", 10
+				"The context \"123\" is invalid in the key \"order[123]\"", 10
 			).addExpectedMessage(
-				"The context 'abc' is invalid in the key 'order[abc]'", 11
+				"The context \"abc\" is invalid in the key \"order[abc]\"", 11
 			).addExpectedMessage(
-				"The context 'x' is invalid in the key 'order[x]'", 13
+				"The context \"x\" is invalid in the key \"order[x]\"", 13
 			).addExpectedMessage(
-				"The context 'xyz' is invalid in the key 'order[xyz]'", 14
+				"The context \"xyz\" is invalid in the key \"order[xyz]\"", 14
 			).addExpectedMessage(
 				StringBundler.concat(
-					"The single-word key 'view' should include a word of ",
+					"The single-word key \"view\" should include a word of ",
 					"context at the end, within a [], like [noun] or [verb] ",
 					"to indicate specific meaning"),
 				15

@@ -564,107 +564,113 @@ test('Checks that fragment ids used within a display collection are not repeated
 	await checkNonRepeatedFragmentIds();
 });
 
-test('Displays correct layout in other viewports', async ({
-	apiHelpers,
-	collectionsPage,
-	page,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
+test(
+	'Displays correct layout in other viewports',
+	{
+		tag: '@LPS-111561',
+	},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
-	// Create definition for a collection mapped to Animals collection
+		// Create definition for a collection mapped to Animals collection
 
-	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		ANIMALS_COLLECTION_NAME,
-		pageManagementSite.friendlyUrlPath
-	);
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
 
-	const headingId = getRandomString();
+		const headingId = getRandomString();
 
-	const collectionId = getRandomString();
+		const collectionId = getRandomString();
 
-	const collectionDefinition = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: collectionId,
-		pageElements: [
-			getFragmentDefinition({
-				id: headingId,
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		],
-	});
+		const collectionDefinition = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: collectionId,
+			pageElements: [
+				getFragmentDefinition({
+					id: headingId,
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+		});
 
-	// Create a content page and go to edit mode
+		// Create a content page and go to edit mode
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([collectionDefinition]),
-		siteId: pageManagementSite.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
 
-	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-	// Change layout to 4 columns in Desktop
+		// Change layout to 4 columns in Desktop
 
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Layout',
-		fragmentId: collectionId,
-		tab: 'General',
-		value: '4 Columns',
-	});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Layout',
+			fragmentId: collectionId,
+			tab: 'General',
+			value: '4 Columns',
+		});
 
-	await pageEditorPage.publishPage();
+		await pageEditorPage.publishPage();
 
-	// Go to view mode and check correct layout is displayed on each viewport
+		// Go to view mode and check correct layout is displayed on each viewport
 
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
 
-	const row = page.locator('.lfr-layout-structure-item-collection row');
+		const row = page.locator('.lfr-layout-structure-item-collection row');
 
-	for (const col of await row.locator('.col').all()) {
-		await expect(col).toHaveClass(/col-lg-3/);
-		await expect(col).toHaveClass(/col-md-12/);
-		await expect(col).toHaveClass(/col-sm-12/);
+		for (const col of await row.locator('.col').all()) {
+			await expect(col).toHaveClass(/col-lg-3/);
+			await expect(col).toHaveClass(/col-md-12/);
+			await expect(col).toHaveClass(/col-sm-12/);
+		}
+
+		// Edit the page again and change layout to 2 columns in Tablet and Mobile
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.switchViewport('Tablet');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Layout',
+			fragmentId: collectionId,
+			isDesktop: false,
+			tab: 'General',
+			value: '2 Columns',
+		});
+
+		await pageEditorPage.switchViewport('Portrait Phone');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Layout',
+			fragmentId: collectionId,
+			isDesktop: false,
+			tab: 'General',
+			value: '2 Columns',
+		});
+
+		// Go to view mode again and check correct layout is displayed on each viewport
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		for (const col of await row.locator('.col').all()) {
+			await expect(col).toHaveClass(/col-lg-3/);
+			await expect(col).toHaveClass(/col-md-6/);
+			await expect(col).toHaveClass(/col-sm-6/);
+		}
 	}
-
-	// Edit the page again and change layout to 2 columns in Tablet and Mobile
-
-	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
-
-	await pageEditorPage.switchViewport('Tablet');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Layout',
-		fragmentId: collectionId,
-		isDesktop: false,
-		tab: 'General',
-		value: '2 Columns',
-	});
-
-	await pageEditorPage.switchViewport('Portrait Phone');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Layout',
-		fragmentId: collectionId,
-		isDesktop: false,
-		tab: 'General',
-		value: '2 Columns',
-	});
-
-	// Go to view mode again and check correct layout is displayed on each viewport
-
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
-
-	for (const col of await row.locator('.col').all()) {
-		await expect(col).toHaveClass(/col-lg-3/);
-		await expect(col).toHaveClass(/col-md-6/);
-		await expect(col).toHaveClass(/col-sm-6/);
-	}
-});
+);
 
 test('Activate the first element when a fragment is added to a Collection Display and activates the Collection Display when the fragment is deleted', async ({
 	apiHelpers,

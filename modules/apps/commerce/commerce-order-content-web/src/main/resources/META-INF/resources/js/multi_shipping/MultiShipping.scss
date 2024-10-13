@@ -1,0 +1,29 @@
+.multi-shipping-container {
+	.order-items-table {
+		width: auto;
+
+		td,
+		th {
+			width: auto;
+
+			&.delivery-group {
+				min-width: 15rem;
+
+				.loading-animation {
+					margin-bottom: 0;
+					margin-top: 0;
+				}
+			}
+
+			.order-item-thumbnail {
+				width: 2rem;
+			}
+		}
+	}
+
+	.sku-name {
+		a {
+			color: var(--body-color, #1c1c24);
+		}
+	}
+}

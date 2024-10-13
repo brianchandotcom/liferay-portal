@@ -35,6 +35,60 @@ export interface IFieldError {
 	[key: string]: string;
 }
 
+export interface IOrderItemDeliveryGroup {
+	options: string;
+	orderItemId: number;
+	originalQuantity: number;
+	quantity: number;
+	replacedSkuId: number;
+	skuId: number;
+	skuUnitOfMeasure: any;
+}
+
+export interface IOrderItem {
+	cartItems?: Array<any>;
+	deliveryGroup?: string;
+	deliveryGroups?: {[key: string]: IOrderItemDeliveryGroup};
+	externalReferenceCode?: string;
+	id: number;
+	name?: string;
+	options: string;
+	price?: {
+		currency: string;
+		discount: number;
+		discountFormatted: string;
+		finalPrice: number;
+		finalPriceFormatted: string;
+		price: number;
+		priceFormatted: string;
+		priceOnApplication: boolean;
+	};
+	productId?: number;
+	quantity: number;
+	replacedSkuId: number;
+	requestedDeliveryDate: string;
+	settings?: {
+		allowedQuantities?: string;
+		maxQuantity: number;
+		minQuantity: number;
+		multipleQuantity: number;
+	};
+	shippingAddressId: number;
+	sku?: string;
+	skuId: number;
+	skuUnitOfMeasure: {
+		incrementalOrderQuantity: number;
+		key: string;
+		precision: number;
+	};
+	thumbnail?: string;
+}
+
+export interface IOrderItemAPIResponse {
+	cartItems: Array<IOrderItem>;
+	items: Array<IOrderItem>;
+}
+
 export interface IPostalAddress {
 	addressCountry?: string;
 	addressLocality?: string;

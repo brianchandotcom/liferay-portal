@@ -541,7 +541,7 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public boolean isMappedDisplayPage(JSONObject jsonObject) {
-		if (jsonObject.has("mappedField")) {
+		if (Validator.isNotNull(jsonObject.get("mappedField"))) {
 			return true;
 		}
 

@@ -8,6 +8,7 @@
 		"@clayui/icon": "3.111.0",
 		"@clayui/label": "3.111.0",
 		"@clayui/link": "3.111.0",
+		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/management-toolbar": "3.111.0",
 		"@clayui/modal": "3.119.0",
 		"@clayui/multi-step-nav": "3.120.0",
@@ -25,7 +26,7 @@
 	},
 	"jest": {
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/tests_utilities/"
+			"<rootDir>/test/utils/"
 		]
 	},
 	"main": "js/index.js",

@@ -44,10 +44,6 @@ const AddDeliveryGroupButton = ({
 				disabled={disabled}
 				displayType="primary"
 				onClick={() => {
-					if (disabled) {
-						return;
-					}
-
 					onOpenChange(true);
 				}}
 			>

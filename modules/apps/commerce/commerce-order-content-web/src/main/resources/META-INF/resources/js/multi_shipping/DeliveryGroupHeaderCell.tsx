@@ -60,6 +60,7 @@ const DeliveryGroupHeaderCell = ({
 	return (
 		<ClayTable.Cell
 			className="delivery-group"
+			data-qa-id={`deliveryGroup${deliveryGroup.id}`}
 			headingCell
 			key={deliveryGroup.id}
 		>
@@ -100,6 +101,7 @@ const DeliveryGroupHeaderCell = ({
 							trigger={
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('actions')}
+									data-qa-id={`deliveryGroup${deliveryGroup.id}Actions`}
 									disabled={disabled}
 									displayType="unstyled"
 									onClick={(event) => {

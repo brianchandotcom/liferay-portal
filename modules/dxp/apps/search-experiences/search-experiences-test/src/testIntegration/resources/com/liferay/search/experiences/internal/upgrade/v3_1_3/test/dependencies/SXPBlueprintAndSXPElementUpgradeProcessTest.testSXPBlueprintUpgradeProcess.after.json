@@ -1,0 +1,94 @@
+[
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupExternalReferenceCode": [
+											"$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$",
+											"$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-09T13:27:24Z",
+			"description": "Limit the search scope to the given sites.",
+			"description_i18n": {
+				"en-US": "limit-search-to-these-sites-description"
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"scopeGroupExternalReferenceCode": "${configuration.scope_group_external_reference_codes}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"helpText": "scope-group-external-reference-codes-help",
+									"label": "scope-group-external-reference-codes",
+									"name": "scope_group_external_reference_codes",
+									"type": "multiselect"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "LIMIT_SEARCH_TO_THESE_SITES",
+			"id": 131,
+			"modifiedDate": "2024-10-09T13:27:24Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Limit Search to These Sites",
+			"title_i18n": {
+				"en-US": "limit-search-to-these-sites"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"scope_group_external_reference_codes": [
+				{
+					"label": "$SCOPE_GROUP_LABEL_1$",
+					"value": "$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$"
+				},
+				{
+					"label": "$SCOPE_GROUP_LABEL_2$",
+					"value": "$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$"
+				}
+			]
+		}
+	}
+]

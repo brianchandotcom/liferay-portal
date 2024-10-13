@@ -25,6 +25,9 @@
 		"react-dom": "16.12.0"
 	},
 	"jest": {
+		"setupFiles": [
+			"<rootDir>/test/utils/setup.spec.ts"
+		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/utils/"
 		]

@@ -13,15 +13,39 @@ import {
 } from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, screen, waitFor} from '@testing-library/react';
+import {
+	RenderResult,
+	cleanup,
+	render,
+	screen,
+	waitFor,
+} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
 import AddDeliveryGroupButton from '../../../src/main/resources/META-INF/resources/js/multi_shipping/AddDeliveryGroupButton';
-import {
-	locateFields as deliveryGroupModalLocateFields,
-	setFieldValue,
-} from '../DeliveryGroupModal/DeliveryGroupModal.spec';
+import {setFieldValue} from '../../utils/utils.spec';
+
+interface ILocators {
+	addDeliveryGroupButton: HTMLButtonElement;
+	addressIdSelect: HTMLSelectElement;
+	cancelButton: HTMLButtonElement;
+	deliveryGroupNameInput: HTMLInputElement;
+	saveButton: HTMLButtonElement;
+}
+
+function getLocators(renderedComponent: RenderResult): ILocators {
+	return {
+		addDeliveryGroupButton: renderedComponent.queryByRole('button', {
+			name: 'add-delivery-group',
+		}),
+		addressIdSelect: renderedComponent.queryByLabelText('choose-x'),
+		cancelButton: renderedComponent.queryByRole('button', {name: 'cancel'}),
+		deliveryGroupNameInput:
+			renderedComponent.queryByLabelText('group-name'),
+		saveButton: renderedComponent.queryByRole('button', {name: 'save'}),
+	} as ILocators;
+}
 
 describe('AddDeliveryGroupButton', () => {
 	const handleSubmit = jest.fn();
@@ -101,21 +125,19 @@ describe('AddDeliveryGroupButton', () => {
 			/>
 		);
 
-		const addDeliveryGroupButton = renderedComponent.getByRole('button', {
-			name: 'add-delivery-group',
-		});
+		const {addDeliveryGroupButton} = getLocators(renderedComponent);
 
 		await act(async () => {
 			addDeliveryGroupButton.click();
 		});
 
 		await waitFor(() => {
-			expect(
-				renderedComponent.getByRole('button', {name: 'save'})
-			).toBeVisible();
+			const {saveButton} = getLocators(renderedComponent);
+
+			expect(saveButton).toBeVisible();
 		});
 
-		const {saveButton} = deliveryGroupModalLocateFields(renderedComponent);
+		const {saveButton} = getLocators(renderedComponent);
 
 		expect(saveButton).toBeVisible();
 	});
@@ -128,22 +150,19 @@ describe('AddDeliveryGroupButton', () => {
 			/>
 		);
 
-		const addDeliveryGroupButton = renderedComponent.getByRole('button', {
-			name: 'add-delivery-group',
-		});
+		const {addDeliveryGroupButton} = getLocators(renderedComponent);
 
 		await act(async () => {
 			addDeliveryGroupButton.click();
 		});
 
 		await waitFor(() => {
-			expect(
-				renderedComponent.getByRole('button', {name: 'cancel'})
-			).toBeVisible();
+			const {cancelButton} = getLocators(renderedComponent);
+
+			expect(cancelButton).toBeVisible();
 		});
 
-		const {cancelButton} =
-			deliveryGroupModalLocateFields(renderedComponent);
+		const {cancelButton} = getLocators(renderedComponent);
 
 		await act(async () => {
 			cancelButton.click();
@@ -162,22 +181,20 @@ describe('AddDeliveryGroupButton', () => {
 			/>
 		);
 
-		const addDeliveryGroupButton = renderedComponent.getByRole('button', {
-			name: 'add-delivery-group',
-		});
+		const {addDeliveryGroupButton} = getLocators(renderedComponent);
 
 		await act(async () => {
 			addDeliveryGroupButton.click();
 		});
 
 		await waitFor(() => {
-			expect(
-				renderedComponent.getByRole('button', {name: 'save'})
-			).toBeVisible();
+			const {saveButton} = getLocators(renderedComponent);
+
+			expect(saveButton).toBeVisible();
 		});
 
 		const {addressIdSelect, deliveryGroupNameInput, saveButton} =
-			deliveryGroupModalLocateFields(renderedComponent);
+			getLocators(renderedComponent);
 
 		await setFieldValue(addressIdSelect, String(101));
 		await setFieldValue(deliveryGroupNameInput, 'deliveryGroupName');

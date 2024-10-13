@@ -13,15 +13,35 @@ import {
 } from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, waitFor} from '@testing-library/react';
+import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
 import DeliveryGroupHeaderCell from '../../../src/main/resources/META-INF/resources/js/multi_shipping/DeliveryGroupHeaderCell';
-import {
-	locateFields as deliveryGroupModalLocateFields,
-	setFieldValue,
-} from '../DeliveryGroupModal/DeliveryGroupModal.spec';
+import {setFieldValue} from '../../utils/utils.spec';
+
+interface ILocators {
+	actionsButton: HTMLButtonElement;
+	deleteMenuItem: HTMLButtonElement;
+	deliveryGroupNameInput: HTMLInputElement;
+	editMenuItem: HTMLButtonElement;
+	saveButton: HTMLButtonElement;
+}
+
+function getLocators(renderedComponent: RenderResult): ILocators {
+	return {
+		actionsButton: renderedComponent.queryByRole('button', {
+			name: 'actions',
+		}),
+		deleteMenuItem: renderedComponent.queryByRole('menuitem', {
+			name: 'delete',
+		}),
+		deliveryGroupNameInput:
+			renderedComponent.queryByLabelText('group-name'),
+		editMenuItem: renderedComponent.queryByRole('menuitem', {name: 'edit'}),
+		saveButton: renderedComponent.queryByRole('button', {name: 'save'}),
+	} as ILocators;
+}
 
 describe('DeliveryGroupHeaderCell', () => {
 	const handleDelete = jest.fn();
@@ -114,23 +134,20 @@ describe('DeliveryGroupHeaderCell', () => {
 			/>
 		);
 
+		const {actionsButton, saveButton} = getLocators(renderedComponent);
+
 		expect(renderedComponent.getByText('deliveryGroupName')).toBeVisible();
 		expect(renderedComponent.getByText('12/12/24')).toBeVisible();
-
-		const actionsButton = renderedComponent.getByRole('button', {
-			name: 'actions',
-		}) as HTMLButtonElement;
 
 		await act(async () => {
 			actionsButton.click();
 		});
 
-		expect(
-			renderedComponent.getByRole('menuitem', {name: 'edit'})
-		).toBeVisible();
-		expect(
-			renderedComponent.getByRole('menuitem', {name: 'delete'})
-		).toBeVisible();
+		const {deleteMenuItem, editMenuItem} = getLocators(renderedComponent);
+
+		expect(saveButton).not.toBeInTheDocument();
+		expect(editMenuItem).toBeVisible();
+		expect(deleteMenuItem).toBeVisible();
 	});
 
 	it('Must delete the delivery group', async () => {
@@ -154,27 +171,23 @@ describe('DeliveryGroupHeaderCell', () => {
 			/>
 		);
 
-		const actionsButton = renderedComponent.getByRole('button', {
-			name: 'actions',
-		}) as HTMLButtonElement;
+		const {actionsButton} = getLocators(renderedComponent);
 
 		await act(async () => {
 			actionsButton.click();
 		});
 
-		const deleteButton = renderedComponent.getByRole('menuitem', {
-			name: 'delete',
-		}) as HTMLButtonElement;
+		const {deleteMenuItem} = getLocators(renderedComponent);
 
 		await act(async () => {
-			deleteButton.click();
+			deleteMenuItem.click();
 		});
 
 		expect(window.confirm).toHaveBeenCalled();
 		expect(handleDelete).not.toBeCalled();
 
 		await act(async () => {
-			deleteButton.click();
+			deleteMenuItem.click();
 		});
 
 		expect(window.confirm).toBeCalled();
@@ -198,30 +211,26 @@ describe('DeliveryGroupHeaderCell', () => {
 			/>
 		);
 
-		const actionsButton = renderedComponent.getByRole('button', {
-			name: 'actions',
-		}) as HTMLButtonElement;
+		const {actionsButton} = getLocators(renderedComponent);
 
 		await act(async () => {
 			actionsButton.click();
 		});
 
-		const editButton = renderedComponent.getByRole('menuitem', {
-			name: 'edit',
-		}) as HTMLButtonElement;
+		const {editMenuItem} = getLocators(renderedComponent);
 
 		await act(async () => {
-			editButton.click();
+			editMenuItem.click();
 		});
 
 		await waitFor(() => {
-			expect(
-				renderedComponent.getByRole('button', {name: 'save'})
-			).toBeVisible();
+			const {saveButton} = getLocators(renderedComponent);
+
+			expect(saveButton).toBeVisible();
 		});
 
 		const {deliveryGroupNameInput, saveButton} =
-			deliveryGroupModalLocateFields(renderedComponent);
+			getLocators(renderedComponent);
 
 		await setFieldValue(deliveryGroupNameInput, 'deliveryGroupName');
 
@@ -249,6 +258,71 @@ describe('DeliveryGroupHeaderCell', () => {
 			deliveryDate: '2024-12-12',
 			id: 100,
 			name: 'deliveryGroupName',
+		});
+	});
+
+	it('Must disable the action menu and the header click', async () => {
+		const renderedComponent = render(
+			<DeliveryGroupHeaderCell
+				accountId={10}
+				deliveryGroup={{
+					addressId: 101,
+					deliveryDate: '2024-12-12',
+					id: 100,
+					name: 'deliveryGroupName',
+				}}
+				disabled={true}
+				handleDeleteDeliveryGroup={handleDelete}
+				handleSubmitDeliveryGroup={handleSubmit}
+			/>
+		);
+
+		const {actionsButton} = getLocators(renderedComponent);
+		const deliveryGroupName =
+			renderedComponent.getByText('deliveryGroupName');
+
+		expect(deliveryGroupName).toBeVisible();
+		expect(renderedComponent.getByText('12/12/24')).toBeVisible();
+		expect(actionsButton).toBeDisabled();
+
+		await act(async () => {
+			deliveryGroupName.click();
+		});
+
+		const {saveButton} = getLocators(renderedComponent);
+
+		expect(saveButton).not.toBeInTheDocument();
+	});
+
+	it('Header should be clickable', async () => {
+		const renderedComponent = render(
+			<DeliveryGroupHeaderCell
+				accountId={10}
+				deliveryGroup={{
+					addressId: 101,
+					deliveryDate: '2024-12-12',
+					id: 100,
+					name: 'deliveryGroupName',
+				}}
+				handleDeleteDeliveryGroup={handleDelete}
+				handleSubmitDeliveryGroup={handleSubmit}
+			/>
+		);
+
+		const deliveryGroupName =
+			renderedComponent.getByText('deliveryGroupName');
+
+		expect(deliveryGroupName).toBeVisible();
+		expect(renderedComponent.getByText('12/12/24')).toBeVisible();
+
+		await act(async () => {
+			deliveryGroupName.click();
+		});
+
+		await waitFor(() => {
+			const {saveButton} = getLocators(renderedComponent);
+
+			expect(saveButton).toBeVisible();
 		});
 	});
 });

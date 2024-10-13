@@ -81,9 +81,9 @@ public class FeatureFlagsBag {
 	}
 
 	public boolean isEnabled(String key) {
-		if (_featureFlagsMap.containsKey(key)) {
-			FeatureFlag featureFlag = _featureFlagsMap.get(key);
+		FeatureFlag featureFlag = _featureFlagsMap.get(key);
 
+		if (featureFlag != null) {
 			return featureFlag.isEnabled();
 		}
 

@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,13 +45,7 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 
 	@Override
 	public boolean isEnabled(long companyId, String key) {
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(
-					FeatureFlagConstants.getKey(
-						key,
-						ExtendedObjectClassDefinition.Scope.SYSTEM.
-							getValue())))) {
-
+		if (_isSystemKey(key)) {
 			companyId = CompanyConstants.SYSTEM;
 		}
 
@@ -62,7 +58,20 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 		return isEnabled(CompanyThreadLocal.getCompanyId(), key);
 	}
 
+	private boolean _isSystemKey(String key) {
+		return _systemKeys.computeIfAbsent(
+			key,
+			curKey -> GetterUtil.getBoolean(
+				PropsUtil.get(
+					FeatureFlagConstants.getKey(
+						key,
+						ExtendedObjectClassDefinition.Scope.SYSTEM.
+							getValue()))));
+	}
+
 	@Reference
 	private FeatureFlagsBagProvider _featureFlagsBagProvider;
+
+	private final Map<String, Boolean> _systemKeys = new ConcurrentHashMap<>();
 
 }

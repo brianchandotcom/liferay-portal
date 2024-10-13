@@ -19,9 +19,9 @@ import React from 'react';
 
 import AddressSelector from '../../../src/main/resources/META-INF/resources/js/multi_shipping/AddressSelector';
 import * as ErrorMessage from '../../../src/main/resources/META-INF/resources/js/multi_shipping/ErrorMessage';
-import {setFieldValue} from '../DeliveryGroupModal/DeliveryGroupModal.spec';
+import {setFieldValue} from '../../utils/utils.spec';
 
-export interface IFormFields {
+interface ILocators {
 	addressCountrySelect: HTMLSelectElement;
 	addressIdSelect: HTMLSelectElement;
 	addressLocalityInput: HTMLInputElement;
@@ -32,6 +32,24 @@ export interface IFormFields {
 	streetAddressLine1Input: HTMLInputElement;
 	streetAddressLine2Input: HTMLInputElement;
 	streetAddressLine3Input: HTMLInputElement;
+}
+
+function getLocators(renderedComponent: RenderResult): ILocators {
+	return {
+		addressCountrySelect: renderedComponent.getByLabelText('country'),
+		addressIdSelect: renderedComponent.getByLabelText('choose-x'),
+		addressLocalityInput: renderedComponent.getByLabelText('city'),
+		addressRegionSelect: renderedComponent.getByLabelText('region'),
+		nameInput: renderedComponent.getByLabelText('address-name'),
+		phoneNumberInput: renderedComponent.getByLabelText('phone-number'),
+		postalCodeInput: renderedComponent.getByLabelText('zip'),
+		streetAddressLine1Input:
+			renderedComponent.getByLabelText('address-line-1'),
+		streetAddressLine2Input:
+			renderedComponent.getByLabelText('address-line-2'),
+		streetAddressLine3Input:
+			renderedComponent.getByLabelText('address-line-3'),
+	} as ILocators;
 }
 
 const POSTAL_ADDRESS_DATA: Array<IPostalAddress> = [
@@ -82,26 +100,6 @@ const POSTAL_ADDRESS_DATA: Array<IPostalAddress> = [
 		name: 'name4',
 	},
 ];
-
-export function locateFields(renderedComponent: RenderResult): IFormFields {
-	const fields = {
-		addressCountrySelect: renderedComponent.getByLabelText('country'),
-		addressIdSelect: renderedComponent.getByLabelText('choose-x'),
-		addressLocalityInput: renderedComponent.getByLabelText('city'),
-		addressRegionSelect: renderedComponent.getByLabelText('region'),
-		nameInput: renderedComponent.getByLabelText('address-name'),
-		phoneNumberInput: renderedComponent.getByLabelText('phone-number'),
-		postalCodeInput: renderedComponent.getByLabelText('zip'),
-		streetAddressLine1Input:
-			renderedComponent.getByLabelText('address-line-1'),
-		streetAddressLine2Input:
-			renderedComponent.getByLabelText('address-line-2'),
-		streetAddressLine3Input:
-			renderedComponent.getByLabelText('address-line-3'),
-	};
-
-	return fields as IFormFields;
-}
 
 describe('AddressSelector', () => {
 	const handleSubmit = jest.fn();
@@ -208,7 +206,7 @@ describe('AddressSelector', () => {
 			/>
 		);
 
-		const {addressCountrySelect} = locateFields(renderedComponent);
+		const {addressCountrySelect} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
@@ -224,7 +222,7 @@ describe('AddressSelector', () => {
 			/>
 		);
 
-		let {addressIdSelect} = locateFields(renderedComponent);
+		let {addressIdSelect} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressIdSelect?.options?.length).toBe(4);
@@ -241,7 +239,7 @@ describe('AddressSelector', () => {
 			/>
 		);
 
-		({addressIdSelect} = locateFields(renderedComponent));
+		({addressIdSelect} = getLocators(renderedComponent));
 
 		await waitFor(() => {
 			expect(addressIdSelect?.options?.length).toBe(3);
@@ -258,7 +256,7 @@ describe('AddressSelector', () => {
 		);
 
 		const {addressCountrySelect, addressRegionSelect} =
-			locateFields(renderedComponent);
+			getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
@@ -309,7 +307,7 @@ describe('AddressSelector', () => {
 			nameInput,
 			postalCodeInput,
 			streetAddressLine1Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
@@ -366,7 +364,7 @@ describe('AddressSelector', () => {
 			streetAddressLine1Input,
 			streetAddressLine2Input,
 			streetAddressLine3Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		const changeAddress = (
 			addressId: number,
@@ -489,7 +487,7 @@ describe('AddressSelector', () => {
 			streetAddressLine1Input,
 			streetAddressLine2Input,
 			streetAddressLine3Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
@@ -568,7 +566,7 @@ describe('AddressSelector', () => {
 			streetAddressLine1Input,
 			streetAddressLine2Input,
 			streetAddressLine3Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
@@ -606,7 +604,7 @@ describe('AddressSelector', () => {
 			/>
 		);
 
-		const {addressCountrySelect} = locateFields(renderedComponent);
+		const {addressCountrySelect} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
@@ -649,7 +647,7 @@ describe('AddressSelector', () => {
 			streetAddressLine1Input,
 			streetAddressLine2Input,
 			streetAddressLine3Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);

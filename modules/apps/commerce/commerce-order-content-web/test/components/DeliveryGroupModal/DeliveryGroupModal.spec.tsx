@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import userEvent from '@testing-library/user-event';
-
 // @ts-ignore
 
 import fetchMock from 'fetch-mock';
@@ -16,62 +14,50 @@ import {
 } from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	RenderResult,
-	cleanup,
-	fireEvent,
-	render,
-	waitFor,
-} from '@testing-library/react';
+import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
 import DeliveryGroupModal from '../../../src/main/resources/META-INF/resources/js/multi_shipping/DeliveryGroupModal';
-import {
-	IFormFields as IFormFieldsAddressLocator,
-	locateFields as addressSelectorLocateFields,
-} from '../AddressSelector/AddressSelector.spec';
+import {setFieldValue} from '../../utils/utils.spec';
 
-export interface IFormFields extends IFormFieldsAddressLocator {
+interface ILocators {
+	addressCountrySelect: HTMLSelectElement;
+	addressIdSelect: HTMLSelectElement;
+	addressLocalityInput: HTMLInputElement;
+	addressRegionSelect: HTMLSelectElement;
 	cancelButton: HTMLButtonElement;
 	deliveryDateInput: HTMLInputElement;
 	deliveryGroupNameInput: HTMLInputElement;
+	nameInput: HTMLInputElement;
+	phoneNumberInput: HTMLInputElement;
+	postalCodeInput: HTMLInputElement;
 	saveButton: HTMLButtonElement;
+	streetAddressLine1Input: HTMLInputElement;
+	streetAddressLine2Input: HTMLInputElement;
+	streetAddressLine3Input: HTMLInputElement;
 }
 
-export function locateFields(renderedComponent: RenderResult): IFormFields {
-	const fields = {
-		...addressSelectorLocateFields(renderedComponent),
+function getLocators(renderedComponent: RenderResult): ILocators {
+	return {
+		addressCountrySelect: renderedComponent.getByLabelText('country'),
+		addressIdSelect: renderedComponent.getByLabelText('choose-x'),
+		addressLocalityInput: renderedComponent.getByLabelText('city'),
+		addressRegionSelect: renderedComponent.getByLabelText('region'),
 		cancelButton: renderedComponent.getByRole('button', {name: 'cancel'}),
 		deliveryDateInput: renderedComponent.getByLabelText('date'),
 		deliveryGroupNameInput: renderedComponent.getByLabelText('group-name'),
+		nameInput: renderedComponent.getByLabelText('address-name'),
+		phoneNumberInput: renderedComponent.getByLabelText('phone-number'),
+		postalCodeInput: renderedComponent.getByLabelText('zip'),
 		saveButton: renderedComponent.getByRole('button', {name: 'save'}),
-	};
-
-	return fields as IFormFields;
-}
-
-export async function setFieldValue(
-	field: HTMLInputElement | HTMLSelectElement,
-	value: string
-) {
-	if (field instanceof HTMLSelectElement) {
-		userEvent.selectOptions(field, value);
-	}
-	else {
-		if (value) {
-			await userEvent.type(field, value);
-			field.value = value;
-		}
-		else {
-			field.value = '';
-		}
-	}
-	act(() => {
-		fireEvent.change(field);
-	});
-
-	expect(field).toHaveValue(value);
+		streetAddressLine1Input:
+			renderedComponent.getByLabelText('address-line-1'),
+		streetAddressLine2Input:
+			renderedComponent.getByLabelText('address-line-2'),
+		streetAddressLine3Input:
+			renderedComponent.getByLabelText('address-line-3'),
+	} as ILocators;
 }
 
 describe('DeliveryGroupModal', () => {
@@ -162,7 +148,7 @@ describe('DeliveryGroupModal', () => {
 			addressIdSelect,
 			deliveryGroupNameInput,
 			saveButton,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(2);
@@ -203,7 +189,7 @@ describe('DeliveryGroupModal', () => {
 			deliveryDateInput,
 			deliveryGroupNameInput,
 			saveButton,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(2);
@@ -253,7 +239,7 @@ describe('DeliveryGroupModal', () => {
 			deliveryDateInput,
 			deliveryGroupNameInput,
 			saveButton,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(2);
@@ -322,7 +308,7 @@ describe('DeliveryGroupModal', () => {
 			postalCodeInput,
 			saveButton,
 			streetAddressLine1Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(2);
@@ -402,7 +388,7 @@ describe('DeliveryGroupModal', () => {
 			postalCodeInput,
 			saveButton,
 			streetAddressLine1Input,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(2);
@@ -458,7 +444,7 @@ describe('DeliveryGroupModal', () => {
 			deliveryGroupNameInput,
 			nameInput,
 			saveButton,
-		} = locateFields(renderedComponent);
+		} = getLocators(renderedComponent);
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(2);

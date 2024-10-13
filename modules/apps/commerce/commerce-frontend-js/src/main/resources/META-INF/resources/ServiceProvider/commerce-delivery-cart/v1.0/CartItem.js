@@ -39,8 +39,9 @@ export default function CartItem(basePath) {
 		getItemById: (itemId) =>
 			AJAX.GET(resolveCartItemsPath(basePath, itemId)),
 
-		getItemsByCartId: (cartId) =>
-			AJAX.GET(resolveItemsPath(basePath, cartId)),
+		getItemsByCartId: (cartId, params) => {
+			return AJAX.GET(resolveItemsPath(basePath, cartId), {}, params);
+		},
 
 		replaceItemById: (itemId, json) =>
 			AJAX.PUT(resolveCartItemsPath(basePath, itemId), json),

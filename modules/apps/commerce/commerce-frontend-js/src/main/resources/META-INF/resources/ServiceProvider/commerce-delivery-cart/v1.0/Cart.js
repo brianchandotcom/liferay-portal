@@ -148,10 +148,12 @@ export default function Cart(basePath) {
 		replaceCartById: (cartId, json) =>
 			AJAX.PUT(resolveCartsPath(basePath, cartId), json),
 
-		updateCartById: (cartId, jsonProps) =>
+		updateCartById: (cartId, jsonProps, params) =>
 			AJAX.PATCH(
 				resolveCartsPath(basePath, cartId) + '?nestedFields=cartItems',
-				jsonProps
+				jsonProps,
+				{},
+				params
 			),
 	};
 }

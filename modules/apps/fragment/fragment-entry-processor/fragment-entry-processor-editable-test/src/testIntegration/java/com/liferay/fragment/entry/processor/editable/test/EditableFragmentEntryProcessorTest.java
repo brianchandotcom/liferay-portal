@@ -773,6 +773,15 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-34747")
+	public void testFragmentEntryProcessorEditableLinkInlineValueViewMode()
+		throws Exception {
+
+		_testFragmentEntryProcessorEditableLinkInlineValue(
+			"https://www.liferay.com", FragmentEntryLinkConstants.VIEW);
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableLinkWithNestedEditablesInHtml()
 		throws Exception {
 
@@ -1566,6 +1575,35 @@ public class EditableFragmentEntryProcessorTest {
 			_readFileToString(jsonFileName));
 
 		return jsonObject.toString();
+	}
+
+	private void _testFragmentEntryProcessorEditableLinkInlineValue(
+			String expectedHref, String mode)
+		throws Exception {
+
+		String editableValues = _readJSONFileToString(
+			"link/editable_values_link_inline.json");
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			editableValues, "link/fragment_entry_link.html");
+
+		String processedFragmentEntryLinkHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.getSiteDefault(), mode));
+
+		Document document = _getDocument(processedFragmentEntryLinkHTML);
+
+		Element body = document.body();
+
+		Elements elements = body.getElementsByTag("a");
+
+		Element element = elements.get(0);
+
+		Assert.assertEquals(expectedHref, element.attr("href"));
+		Assert.assertEquals(
+			"Default Editable Values Link Text", element.text());
 	}
 
 	private String _toJSON(FileEntry fileEntry) {

@@ -1,0 +1,15 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_link": {
+			"config": {
+				"classNameId": "",
+				"classPK": "",
+				"fieldId": "",
+				"href": "https://www.liferay.com",
+				"mappedField": "",
+				"mapperType": "link"
+			},
+			"defaultValue": "Default Editable Values Link Text"
+		}
+	}
+}

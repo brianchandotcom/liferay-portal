@@ -74,7 +74,7 @@ function AddressSelector({
 
 	const [addresses, setAddresses] = useState<Array<IPostalAddress>>([]);
 	const [countries, setCountries] = useState<Array<ICountry>>([]);
-	const [errors, setErrors] = useState(
+	const [errors, setErrors] = useState<IFieldError>(
 		MANDATORY_FIELDS.reduce((map: IFieldError, field: string) => {
 			map[field] = '';
 
@@ -129,7 +129,7 @@ function AddressSelector({
 				} as IPostalAddress;
 			});
 
-			if (MANDATORY_FIELDS.indexOf(fieldName) >= 0) {
+			if (MANDATORY_FIELDS.includes(fieldName)) {
 				setErrors((prevState) => {
 					if (
 						(!value && fieldName !== 'addressRegion') ||
@@ -165,16 +165,18 @@ function AddressSelector({
 				countries.find(
 					(country) => country.name === currentAddress.addressCountry
 				)?.regions || []
-			)
-				.filter((region) => region.active)
-				.map((region) => {
+			).reduce((data, region) => {
+				if (region.active) {
 					region.label =
 						region.title_i18n[
 							Liferay.ThemeDisplay.getLanguageId()
 						] || region.title_i18n['en_US'];
 
-					return region;
-				});
+					data.push(region);
+				}
+
+				return data;
+			}, [] as Array<IRegion>);
 
 			setRegions(data);
 		}
@@ -233,22 +235,21 @@ function AddressSelector({
 			.then((data: ICountryAPIResponse) => {
 				setCountries(
 					(data?.items || [])
-						.filter((country) => country.active)
-						.map((country) => {
-							country.name =
-								country.title_i18n[
-									Liferay.ThemeDisplay.getLanguageId()
-								] || country.title_i18n['en_US'];
+						.reduce((data, country) => {
+							if (country.active) {
+								country.name =
+									country.title_i18n[
+										Liferay.ThemeDisplay.getLanguageId()
+									] || country.title_i18n['en_US'];
 
-							return country;
-						})
-						.sort((a, b) => {
-							return a.name > b.name
-								? 1
-								: b.name > a.name
-									? -1
-									: 0;
-						})
+								data.push(country);
+							}
+
+							return data;
+						}, [] as Array<ICountry>)
+						.sort((item1, item2) =>
+							item1.name.localeCompare(item2.name)
+						)
 				);
 			})
 			.catch((error: IAPIResponseError) => {
@@ -305,6 +306,7 @@ function AddressSelector({
 				id={`${namespace}addressId`}
 				name="addressId"
 				onChange={handleAddressIdChange}
+				required={true}
 				value={currentAddress.id || 0}
 			>
 				{hasManageAddressesPermission && (
@@ -348,6 +350,7 @@ function AddressSelector({
 							id={`${namespace}name`}
 							name="name"
 							onChange={handleFieldChange}
+							required={!currentAddress.id}
 							type="text"
 							value={currentAddress?.name || ''}
 						/>
@@ -385,6 +388,7 @@ function AddressSelector({
 									};
 								}),
 							]}
+							required={!currentAddress.id}
 							value={currentAddress?.addressCountry || ''}
 						/>
 
@@ -412,6 +416,7 @@ function AddressSelector({
 							id={`${namespace}streetAddressLine1`}
 							name="streetAddressLine1"
 							onChange={handleFieldChange}
+							required={!currentAddress.id}
 							type="text"
 							value={currentAddress?.streetAddressLine1 || ''}
 						/>
@@ -487,6 +492,7 @@ function AddressSelector({
 							id={`${namespace}addressLocality`}
 							name="addressLocality"
 							onChange={handleFieldChange}
+							required={!currentAddress.id}
 							type="text"
 							value={currentAddress?.addressLocality || ''}
 						/>
@@ -528,6 +534,7 @@ function AddressSelector({
 									};
 								}),
 							]}
+							required={!currentAddress.id && !!regions.length}
 							value={currentAddress?.addressRegion || ''}
 						/>
 
@@ -559,6 +566,7 @@ function AddressSelector({
 							id={`${namespace}postalCode`}
 							name="postalCode"
 							onChange={handleFieldChange}
+							required={!currentAddress.id}
 							type="text"
 							value={currentAddress?.postalCode || ''}
 						/>

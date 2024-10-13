@@ -82,7 +82,7 @@ const DeliveryGroupModal = ({
 				[fieldName]: value,
 			}));
 
-			if (MANDATORY_FIELDS.indexOf(fieldName) >= 0) {
+			if (MANDATORY_FIELDS.includes(fieldName)) {
 				setErrors((prevState) => {
 					if (!value) {
 						return {
@@ -118,8 +118,6 @@ const DeliveryGroupModal = ({
 						address,
 						addressId: address.id,
 					};
-
-					setDeliveryGroupState(updatedDeliveryGroup);
 
 					handleSubmit(updatedDeliveryGroup);
 				}
@@ -168,6 +166,7 @@ const DeliveryGroupModal = ({
 							id={`${namespace}name`}
 							name="name"
 							onChange={handleFieldChange}
+							required={true}
 							type="text"
 							value={deliveryGroupState.name}
 						/>
@@ -208,7 +207,15 @@ const DeliveryGroupModal = ({
 								name="deliveryDate"
 								onChange={handleFieldChange}
 								type="date"
-								value={deliveryGroupState.deliveryDate}
+								value={
+									deliveryGroupState.deliveryDate
+										? new Date(
+												deliveryGroupState.deliveryDate
+											)
+												.toISOString()
+												.split('T')[0]
+										: ''
+								}
 							/>
 						</ClayForm.Group>
 					</div>

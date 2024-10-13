@@ -1,0 +1,96 @@
+[
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupId": [
+											"$SCOPE_GROUP_ID_1$",
+											"$SCOPE_GROUP_ID_2$"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-10-09T13:27:24Z",
+			"description": "Limit the search scope to the given sites.",
+			"description_i18n": {
+				"en-US": "limit-search-to-these-sites-description"
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"scopeGroupId": "${configuration.scope_group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"helpText": "group-ids-help",
+									"helpTextLocalized": "Select sites or enter the group IDs (site ID) manually.",
+									"label": "group-ids",
+									"labelLocalized": "Group IDs",
+									"name": "scope_group_ids",
+									"type": "multiselect"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "LIMIT_SEARCH_TO_THESE_SITES",
+			"id": 131,
+			"modifiedDate": "2024-10-09T13:27:24Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title": "Limit Search to These Sites",
+			"title_i18n": {
+				"en-US": "limit-search-to-these-sites"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"scope_group_ids": [
+				{
+					"label": "$SCOPE_GROUP_LABEL_1$",
+					"value": "$SCOPE_GROUP_ID_1$"
+				},
+				{
+					"label": "$SCOPE_GROUP_LABEL_2$",
+					"value": "$SCOPE_GROUP_ID_2$"
+				}
+			]
+		}
+	}
+]

@@ -1474,14 +1474,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		_batchProcessor = new BatchProcessor<>(
 			UserLocalServiceImpl.class.getName(),
 			users -> {
-				Map<Long, User> userMap = new HashMap<>();
+				Map<Long, User> usersMap = new HashMap<>();
 
 				for (User user : users) {
-					userMap.put(user.getUserId(), user);
+					usersMap.put(user.getUserId(), user);
 				}
 
 				List<User> deduplicatedUsers = new ArrayList<>(
-					userMap.values());
+					usersMap.values());
 
 				try {
 					TransactionInvokerUtil.invoke(

@@ -330,6 +330,7 @@ public class CustomFacetDisplayContextBuilder {
 		bucketDisplayContext.setFrequency(
 			getFrequency(getTermCollector(range)));
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setLocale(_locale);
 		bucketDisplayContext.setSelected(_parameterValues.contains(label));
 
 		return bucketDisplayContext;
@@ -401,6 +402,7 @@ public class CustomFacetDisplayContextBuilder {
 
 		bucketDisplayContext.setFrequency(termCollector.getFrequency());
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setLocale(_locale);
 		bucketDisplayContext.setSelected(isSelected(term));
 
 		return bucketDisplayContext;

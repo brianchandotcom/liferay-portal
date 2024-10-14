@@ -9,11 +9,12 @@ import com.liferay.jenkins.results.parser.BalancedListSplitter;
 
 /**
  * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public class TestClassBalancedListSplitter
+public class JUnitTestClassBalancedListSplitter
 	extends BalancedListSplitter<TestClass> {
 
-	public TestClassBalancedListSplitter(long maxListWeight) {
+	public JUnitTestClassBalancedListSplitter(long maxListWeight) {
 		super(maxListWeight);
 	}
 

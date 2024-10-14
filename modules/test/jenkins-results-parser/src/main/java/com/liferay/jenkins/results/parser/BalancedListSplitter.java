@@ -87,6 +87,10 @@ public abstract class BalancedListSplitter<T> {
 		return lists;
 	}
 
+	protected long getMaxListWeight() {
+		return _maxListWeight;
+	}
+
 	protected class ListItem implements Comparable<ListItem> {
 
 		public ListItem(BalancedListSplitter<T> balancedListSplitter, T item) {

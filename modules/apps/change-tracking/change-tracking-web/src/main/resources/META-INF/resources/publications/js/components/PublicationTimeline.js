@@ -152,7 +152,8 @@ const PublicationTimeline = ({
 								{timelineItem.actions ? (
 									<TimelineDropdownMenu
 										deleteURL={
-											timelineItem.status.code ===
+											timelineItem.ctCollectionStatus
+												.code ===
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.delete
 												? timelineItem.actions.delete
@@ -160,20 +161,23 @@ const PublicationTimeline = ({
 												: undefined
 										}
 										editURL={
-											timelineItem.status.code ===
+											timelineItem.ctCollectionStatus
+												.code ===
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.update
 												? getEditURL(timelineItem.id)
 												: undefined
 										}
 										revertURL={
-											timelineItem.status.code ===
+											timelineItem.ctCollectionStatus
+												.code ===
 											WORKFLOW_STATUS_APPROVED
 												? getRevertURL(timelineItem.id)
 												: undefined
 										}
 										reviewURL={
-											timelineItem.status.code !==
+											timelineItem.ctCollectionStatus
+												.code !==
 												WORKFLOW_STATUS_PENDING &&
 											!!timelineItem.actions.get
 												? getReviewURL(timelineItem.id)

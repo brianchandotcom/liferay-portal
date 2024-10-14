@@ -52,17 +52,7 @@ public class OpenAPIUtil {
 	}
 
 	public static String formatSingular(String s) {
-		Set<String> wordsExceptionsToKeepFormat = new HashSet<>();
-
-		wordsExceptionsToKeepFormat.add("address");
-
-		String[] words = s.split("(?=[A-Z])");
-
-		String lastWord = words[words.length - 1];
-
-		if (wordsExceptionsToKeepFormat.contains(
-				StringUtil.lowerCase(lastWord))) {
-
+		if (StringUtil.lowerCase(s).endsWith("address")){
 			return s;
 		}
 

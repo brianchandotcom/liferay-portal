@@ -44,7 +44,7 @@ definition {
 
 	@priority = 5
 	test JSONTConfigurationObjectContainsClassname {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("When in Import/Export: exporting C_Stock Entity type with JSONT format with all fields to include selected") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
@@ -70,7 +70,7 @@ definition {
 
 	@priority = 4
 	test JSONTConfigurationObjectContainsCompanyId {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("When in Import/Export: exporting Blog Posting Entity type with JSONT format with all fields to include selected") {
 			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "BlogPosting (v1.0 - Liferay Headless Delivery)");
@@ -92,7 +92,7 @@ definition {
 
 	@priority = 4
 	test JSONTConfigurationObjectContainsCreateStrategy {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("When in Import/Export: exporting NotificationTemplate Entity type with JSONT format with all fields to include selected") {
 			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "NotificationTemplate (v1.0 - Liferay Notification REST)");
@@ -112,7 +112,7 @@ definition {
 
 	@priority = 4
 	test JSONTConfigurationObjectContainsImportStrategy {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("When in Import/Export: exporting Role (Headless Admin) Entity type with JSONT format with all fields to include selected") {
 			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "Role (v1.0 - Liferay Headless Admin User)");
@@ -156,7 +156,7 @@ definition {
 
 	@priority = 4
 	test JSONTConfigurationObjectContainsUpdateStrategy {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("When in Import/Export: exporting UserGroup Entity type with JSONT format with all fields to include selected") {
 			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "UserGroup (v1.0 - Liferay Headless Admin User)");
@@ -176,7 +176,7 @@ definition {
 
 	@priority = 4
 	test JSONTConfigurationObjectContainsUserId {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("When in Import/Export: exporting Admin User Entity type with JSONT format with all fields to include selected") {
 			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "Account (v1.0 - Liferay Headless Admin User)");

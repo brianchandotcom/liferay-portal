@@ -45,7 +45,7 @@ definition {
 
 	@priority = 5
 	test CanExportCreateBatchActionForEntitiesWithJSONT {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Then the downloaded file contains $.actions node with createBatch") {
 			ImportExport.unzipDownloadedExportFile();

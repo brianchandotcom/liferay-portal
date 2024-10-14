@@ -10,6 +10,8 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.frontend.helper.CommerceOrderStepTrackerHelper;
+import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -25,7 +27,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Status;
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.Step;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Summary;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -221,6 +225,11 @@ public class PlacedOrderDTOConverter
 				setStatus(
 					() -> WorkflowConstants.getStatusLabel(
 						commerceOrder.getStatus()));
+				setSteps(
+					() -> TransformUtil.transformToArray(
+						_commerceOrderStepTrackerHelper.getCommerceOrderSteps(
+							commerceOrder, locale, true),
+						stepModel -> _toStep(stepModel), Step.class));
 				setSummary(() -> _getSummary(commerceOrder, locale));
 				setWorkflowStatusInfo(
 					() -> {
@@ -623,6 +632,16 @@ public class PlacedOrderDTOConverter
 		};
 	}
 
+	private Step _toStep(StepModel stepModel) {
+		return new Step() {
+			{
+				id = stepModel.getId();
+				label = stepModel.getLabel();
+				state = stepModel.getState();
+			}
+		};
+	}
+
 	private static final Snapshot<FriendlyURLSeparatorProvider>
 		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			PlacedOrderDTOConverter.class, FriendlyURLSeparatorProvider.class);
@@ -635,6 +654,9 @@ public class PlacedOrderDTOConverter
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderStepTrackerHelper _commerceOrderStepTrackerHelper;
 
 	@Reference
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;

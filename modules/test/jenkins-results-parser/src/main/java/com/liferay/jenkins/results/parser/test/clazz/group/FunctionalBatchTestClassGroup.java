@@ -14,8 +14,8 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.PoshiTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PoshiTestSelector;
+import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
-import com.liferay.jenkins.results.parser.test.clazz.TestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.util.PropsUtil;
@@ -395,13 +395,13 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				}
 
 				if (targetAxisDuration > 0) {
-					TestClassBalancedListSplitter
-						testClassBalancedListSplitter =
-							new TestClassBalancedListSplitter(
+					FunctionalTestClassBalancedListSplitter
+						functionalTestClassBalancedListSplitter =
+							new FunctionalTestClassBalancedListSplitter(
 								targetAxisDuration);
 
 					List<List<TestClass>> testClassLists =
-						testClassBalancedListSplitter.split(
+						functionalTestClassBalancedListSplitter.split(
 							poshiTestClassGroup);
 
 					for (List<TestClass> testClassList : testClassLists) {

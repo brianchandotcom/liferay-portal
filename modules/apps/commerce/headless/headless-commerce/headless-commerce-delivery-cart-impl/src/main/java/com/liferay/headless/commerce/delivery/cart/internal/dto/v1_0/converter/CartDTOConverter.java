@@ -10,6 +10,8 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.frontend.helper.CommerceOrderStepTrackerHelper;
+import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
@@ -29,7 +31,9 @@ import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Step;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
@@ -259,6 +263,11 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setStatus(
 					() -> WorkflowConstants.getStatusLabel(
 						commerceOrder.getStatus()));
+				setSteps(
+					() -> TransformUtil.transformToArray(
+						_commerceOrderStepTrackerHelper.getCommerceOrderSteps(
+							commerceOrder, locale, true),
+						stepModel -> _toStep(stepModel), Step.class));
 				setSummary(() -> _getSummary(commerceOrder, locale));
 				setWorkflowStatusInfo(
 					() -> {
@@ -722,6 +731,16 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		};
 	}
 
+	private Step _toStep(StepModel stepModel) {
+		return new Step() {
+			{
+				id = stepModel.getId();
+				label = stepModel.getLabel();
+				state = stepModel.getState();
+			}
+		};
+	}
+
 	private static final Snapshot<FriendlyURLSeparatorProvider>
 		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			CartDTOConverter.class, FriendlyURLSeparatorProvider.class);
@@ -734,6 +753,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderStepTrackerHelper _commerceOrderStepTrackerHelper;
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;

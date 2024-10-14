@@ -97,7 +97,7 @@ public class PortletFragmentEntryProcessorTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@Test(expected = FragmentEntryContentException.class)
+	@Test
 	public void testCanAddOneNoninstanceableWidget() throws Exception {
 		_addFragmentEntry(
 			"fragment_entry_with_noninstanceable_widget_tag.html");

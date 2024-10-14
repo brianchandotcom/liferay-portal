@@ -1,0 +1,38 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
+
+/**
+ * @author Kyle Miho
+ */
+@Component(
+	enabled = false, immediate = true,
+	property = "fds.data.provider.key=" + UpgradeJavaDataSetConstants.TEST_CONSTANT,
+	service = FDSDataProvider.class
+)
+public class UpgradeJavaCommerceDataSetDataProviderCheck implements FDSDataProvider<UpgradeJava> {
+
+	@Override
+	public List getItems(FDSKeywords filter, FDSPagination pagination, HttpServletRequest httpServletRequest, Sort sort)
+		throws PortalException {
+
+		return _original.getItems(filter, pagination, httpServletRequest, sort);
+	}
+
+	@Override
+	public int getItemsCount(FDSKeywords filter, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return _original.getItemsCount(filter, httpServletRequest);
+	}
+
+	private FDSDataProvider<?> _original;
+
+}

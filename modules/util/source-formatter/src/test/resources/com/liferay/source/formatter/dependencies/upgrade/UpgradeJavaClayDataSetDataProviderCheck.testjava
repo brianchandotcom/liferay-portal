@@ -1,0 +1,34 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+@Component(
+	enabled = false, immediate = true,
+	property = "clay.data.provider.key=" + UpgradeJavaDataSetConstants.TEST_CONSTANT,
+	service = ClayDataSetDataProvider.class
+)
+public class UpgradeJavaClayDataSetDataProviderCheck implements ClayDataSetDataProvider<UpgradeJava> {
+
+	@Override
+	public List getItems(HttpServletRequest httpServletRequest, Filter filter, Pagination pagination, Sort sort)
+		throws PortalException {
+
+		return _original.getItems(httpServletRequest, filter, pagination, sort);
+	}
+
+	@Override
+	public int getItemsCount(HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		return _original.getItemsCount(httpServletRequest, filter);
+	}
+
+	private FDSDataProvider<?> _original;
+
+}

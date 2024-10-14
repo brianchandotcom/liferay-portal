@@ -151,7 +151,8 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testUpgradeJavaFDSDataProviderCheck() throws Exception {
-		test("upgrade/UpgradeJavaFDSDataProviderCheck.testjava");
+		test("upgrade/UpgradeJavaCommerceDataSetDataProviderCheck.testjava");
+		test("upgrade/UpgradeJavaClayDataSetDataProviderCheck.testjava");
 	}
 
 	@Test

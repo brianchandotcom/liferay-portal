@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
@@ -64,6 +65,8 @@ public class ScopeSearchFacetDisplayContextTest
 		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
 			_groupLocalService);
+		scopeSearchFacetDisplayContextBuilder.setLocale(
+			LocaleUtil.getDefault());
 		scopeSearchFacetDisplayContextBuilder.setOrder(order);
 		scopeSearchFacetDisplayContextBuilder.setParameterValue(parameterValue);
 

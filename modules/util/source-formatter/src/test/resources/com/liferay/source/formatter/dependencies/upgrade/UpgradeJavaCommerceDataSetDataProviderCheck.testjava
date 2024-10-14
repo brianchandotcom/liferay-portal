@@ -5,6 +5,10 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+
 /**
  * @author Kyle Miho
  */
@@ -26,7 +30,7 @@ public class UpgradeJavaCommerceDataSetDataProviderCheck implements CommerceData
 	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		return _original.getItemsCount(httpServletRequest, filter);
+		return _original.countItems(httpServletRequest, filter);
 	}
 
 	private FDSDataProvider<?> _original;

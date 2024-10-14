@@ -5,6 +5,10 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+
 /**
  * @author Kyle Miho
  */

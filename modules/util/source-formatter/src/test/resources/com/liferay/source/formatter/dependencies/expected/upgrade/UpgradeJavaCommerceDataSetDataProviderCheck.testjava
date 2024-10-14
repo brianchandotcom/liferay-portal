@@ -20,17 +20,17 @@ import com.liferay.frontend.data.set.provider.search.FDSPagination;
 public class UpgradeJavaCommerceDataSetDataProviderCheck implements FDSDataProvider<UpgradeJava> {
 
 	@Override
-	public List getItems(FDSKeywords filter, FDSPagination pagination, HttpServletRequest httpServletRequest, Sort sort)
+	public List getItems(FDSKeywords fDSKeywords, FDSPagination fDSPagination, HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		return _original.getItems(filter, pagination, httpServletRequest, sort);
+		return _original.getItems(fDSKeywords, fDSPagination, httpServletRequest, sort);
 	}
 
 	@Override
-	public int getItemsCount(FDSKeywords filter, HttpServletRequest httpServletRequest)
+	public int getItemsCount(FDSKeywords fDSKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return _original.getItemsCount(filter, httpServletRequest);
+		return _original.getItemsCount(fDSKeywords, httpServletRequest);
 	}
 
 	private FDSDataProvider<?> _original;

@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * @author Kyle Miho
  * @author Michael Cavalcanti
  */
 public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
@@ -32,6 +33,12 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
 
 		List<String> implementedClassNames =
 			javaClass.getImplementedClassNames();
+
+		if (implementedClassNames.contains("FDSDataProvider")) {
+			content = _updateProviderKey(content);
+
+			content = _updateServiceClass(content);
+		}
 
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
@@ -117,6 +124,9 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
 				javaMethodContent = StringUtil.replace(
 					javaMethodContent, methodCall,
 					_reorderGetItemsCount(methodCall));
+
+				javaMethodContent = StringUtil.replace(
+					javaMethodContent, "countItems", "getItemsCount");
 			}
 		}
 
@@ -172,8 +182,34 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
 				parameterList.get(0)));
 	}
 
+	private String _updateProviderKey(String content) {
+		if (content.contains("clay.data.provider.key")) {
+			return StringUtil.replace(
+				content, "clay.data.provider.key", "fds.data.provider.key");
+		}
+		else if (content.contains("commerce.data.provider.key")) {
+			return StringUtil.replace(
+				content, "commerce.data.provider.key", "fds.data.provider.key");
+		}
+
+		return content;
+	}
+
+	private String _updateServiceClass(String content) {
+		Matcher matcher = _serviceClassPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replace(
+				content, matcher.group(),
+				matcher.group(1) + "FDSDataProvider.class");
+		}
+
+		return content;
+	}
+
 	private static final Pattern _methodCallGetItemsCountPattern =
-		Pattern.compile("\\w+\\.getItemsCount\\s*\\(\\s*.+,\\s*.+\\s*\\)");
+		Pattern.compile(
+			"\\w+\\.(getItemsCount|countItems)\\s*\\(\\s*.+,\\s*.+\\s*\\)");
 	private static final Pattern _methodCallGetItemsPattern = Pattern.compile(
 		"\\w+\\.getItems\\s*\\(\\s*.+,\\s*.+,\\s*.+,\\s*.+\\s*\\)");
 	private static final Pattern _methodGetItemsCountPattern = Pattern.compile(
@@ -181,5 +217,8 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
 	private static final Pattern _methodGetItemsPattern = Pattern.compile(
 		"getItems\\s*\\(\\s*HttpServletRequest\\s*.+,\\s*.+,\\s*.+,\\s*.+" +
 			"\\s*\\)");
+	private static final Pattern _serviceClassPattern = Pattern.compile(
+		"(service\\s*=\\s*)(ClayDataSetDataProvider|" +
+			"CommerceDataSetDataProvider)\\.class");
 
 }

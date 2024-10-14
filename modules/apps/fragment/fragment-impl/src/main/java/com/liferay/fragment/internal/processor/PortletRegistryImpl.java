@@ -249,7 +249,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 	private static final Pattern _liferayPortletRuntimePattern =
 		Pattern.compile(
-			"\\[@liferay_portlet\\[\"runtime\"\\]([\\s\\S]*)?" +
+			"\\[@liferay_portlet(?=\\.runtime|\\[\"runtime\"\\])([\\s\\S]*)?" +
 				"(portletName=\"\\w+\")([\\s\\S]*)?\\/\\]");
 
 	private final Map<String, String> _aliasPortletNames =

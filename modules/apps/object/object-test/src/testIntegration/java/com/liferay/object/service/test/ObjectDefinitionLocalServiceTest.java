@@ -1895,9 +1895,15 @@ public class ObjectDefinitionLocalServiceTest {
 		_testCreateObjectDefinitionTree(
 			false,
 			LinkedHashMapBuilder.put(
-				"AAA", new String[] {"AAAA"}
+				"AAA", new String[] {"AAAA", "AAAB"}
 			).put(
-				"AAAA", new String[0]
+				"AAAA", new String[] {"AAAAA"}
+			).put(
+				"AAAB", new String[] {"AAABA"}
+			).put(
+				"AAAAA", new String[0]
+			).put(
+				"AAABA", new String[0]
 			).build());
 
 		ObjectDefinition objectDefinitionAAA =
@@ -1929,9 +1935,15 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
-				"AAA", new String[] {"AAAA"}
+				"AAA", new String[] {"AAAA", "AAAB"}
 			).put(
-				"AAAA", new String[0]
+				"AAAA", new String[] {"AAAAA"}
+			).put(
+				"AAAB", new String[] {"AAABA"}
+			).put(
+				"AAAAA", new String[0]
+			).put(
+				"AAABA", new String[0]
 			).build(),
 			_objectDefinitionTreeFactory.create(
 				objectDefinitionAAA.getObjectDefinitionId()),
@@ -1953,9 +1965,39 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
+		ObjectDefinition objectDefinitionAAAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AAAA");
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"AAAA", new String[] {"AAAAA"}
+			).put(
+				"AAAAA", new String[0]
+			).build(),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionAAAA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionAAAB =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AAAB");
+
+		TreeTestUtil.assertObjectDefinitionTree(
+			LinkedHashMapBuilder.put(
+				"AAAB", new String[] {"AAABA"}
+			).put(
+				"AAABA", new String[0]
+			).build(),
+			_objectDefinitionTreeFactory.create(
+				objectDefinitionAAAB.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
-			new String[] {"C_AAAA", "C_AAA", "C_AA", "C_A"},
+			new String[] {
+				"C_AAABA", "C_AAAAA", "C_AAAB", "C_AAAA", "C_AAA", "C_AA", "C_A"
+			},
 			_objectEntryLocalService);
 	}
 

@@ -8,6 +8,7 @@ import {
 	navigate,
 	objectToFormData,
 	openSelectionModal,
+	openToast,
 } from 'frontend-js-web';
 
 import openDeleteVocabularyModal from './openDeleteVocabularyModal';
@@ -35,7 +36,33 @@ const ACTIONS = {
 										.join(','),
 								}),
 								method: 'POST',
-							}).then((response) => navigate(response.url));
+							})
+								.then((response) => {
+									if (response.ok) {
+										return response.json();
+									}
+									else {
+										showErorMessage();
+									}
+								})
+								.then((data) => {
+									if (data.success) {
+										navigate(itemData.redirectURL);
+
+										openToast({
+											message: Liferay.Language.get(
+												'your-request-completed-successfully'
+											),
+											type: 'success',
+										});
+									}
+									else {
+										showErorMessage(data.errorMessage);
+									}
+								})
+								.catch(() => {
+									showErorMessage();
+								});
 						},
 					});
 				}
@@ -44,6 +71,15 @@ const ACTIONS = {
 			url: itemData.viewVocabulariesURL,
 		});
 	},
+};
+
+const showErorMessage = (errorMessage) => {
+	openToast({
+		message:
+			errorMessage ||
+			Liferay.Language.get('an-unexpected-error-occurred'),
+		type: 'danger',
+	});
 };
 
 export default function propsTransformer({

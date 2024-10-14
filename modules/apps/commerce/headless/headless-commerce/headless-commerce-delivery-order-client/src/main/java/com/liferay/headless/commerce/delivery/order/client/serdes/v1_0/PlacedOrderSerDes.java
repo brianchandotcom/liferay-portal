@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderComment;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItem;
+import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.Step;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -537,6 +538,26 @@ public class PlacedOrderSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrder.getSteps() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"steps\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < placedOrder.getSteps().length; i++) {
+				sb.append(String.valueOf(placedOrder.getSteps()[i]));
+
+				if ((i + 1) < placedOrder.getSteps().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (placedOrder.getSummary() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -901,6 +922,13 @@ public class PlacedOrderSerDes {
 			map.put("status", String.valueOf(placedOrder.getStatus()));
 		}
 
+		if (placedOrder.getSteps() == null) {
+			map.put("steps", null);
+		}
+		else {
+			map.put("steps", String.valueOf(placedOrder.getSteps()));
+		}
+
 		if (placedOrder.getSummary() == null) {
 			map.put("summary", null);
 		}
@@ -1081,6 +1109,9 @@ public class PlacedOrderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "steps")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "summary")) {
@@ -1357,6 +1388,21 @@ public class PlacedOrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
 					placedOrder.setStatus((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "steps")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Step[] stepsArray = new Step[jsonParserFieldValues.length];
+
+					for (int i = 0; i < stepsArray.length; i++) {
+						stepsArray[i] = StepSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					placedOrder.setSteps(stepsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "summary")) {

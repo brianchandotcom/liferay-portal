@@ -333,11 +333,11 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		>
 			<replacetoken><![CDATA[{temp.batches}]]></replacetoken>
 			<replacevalue><![CDATA[
-		functional-tomcat-mysql57-jdk21_zulu,\
-		js-unit-jdk8,\
-		modules-integration-mysql57-jdk8,\
-		playwright-js-tomcat90-mysql57-jdk21_zulu,\
-		unit-jdk8]]></replacevalue>
+        functional-tomcat-mysql57-jdk21_zulu,\
+        js-unit,\
+        modules-integration-mysql57-jdk21_zulu,\
+        playwright-js-tomcat90-mysql57-jdk21_zulu,\
+        unit]]></replacevalue>
 		</replace>
 
 		<replaceregexp
@@ -388,6 +388,22 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]=)(.*?\n)*?\n"
 			replace="\1\\\\${line.separator}${line.separator}"
 		/>
+
+		<if>
+			<not>
+				<matches pattern=".*?/.*" string="@{custom.suite.testcase}" />
+			</not>
+			<then>
+				<replace
+					file="${project.dir}/test.properties"
+				>
+					<replacetoken><![CDATA[test.batch.run.property.query[functional-tomcat-mysql57-jdk21_zulu][portal-release-acceptance]=\]]></replacetoken>
+					<replacevalue><![CDATA[playwright.test.project[playwright-js-tomcat90-mysql57-jdk21_zulu][portal-release-acceptance]=\
+
+    test.batch.run.property.query[functional-tomcat-mysql57-jdk21_zulu][portal-release-acceptance]=\]]></replacevalue>
+				</replace>
+			</then>
+		</if>
 
 		<for delimiter="${line.separator}" list="${custom.suite.testcases}" param="custom.suite.testcase">
 			<sequential>
@@ -487,20 +503,11 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 								select="\1"
 							/>
 
-							<replace
-								file="${project.dir}/test.properties"
-							>
-								<replacetoken><![CDATA[test.batch.run.property.query[functional-tomcat-mysql57-jdk21_zulu][portal-release-acceptance]=\]]></replacetoken>
-								<replacevalue><![CDATA[test.batch.run.property.query[playwright-js-tomcat90-mysql57-jdk21_zulu][portal-release-acceptance]=\
-		playwright.testfile
-	test.batch.run.property.query[functional-tomcat-mysql57-jdk21_zulu][portal-release-acceptance]=\]]></replacevalue>
-							</replace>
-
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
-								match="(playwright\.testfile)"
-								replace="${testcase.file.name},\\\\${line.separator}"
+								match="(playwright\.test\.project\[playwright-js-tomcat90-mysql57-jdk21_zulu\]\[portal-release-acceptance\]=\\\n)"
+								replace="\1        ${testcase.file.name},\\\\${line.separator}"
 							/>
 						</then>
 					</elseif>

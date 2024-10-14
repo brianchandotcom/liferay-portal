@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -401,6 +402,50 @@ public class PublishLayoutMVCActionCommandTest {
 			_draftLayout,
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		Map<String, String> map = HashMapBuilder.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		).build();
+
+		_setUpPortletPreferences(
+			_draftLayout, map,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_assertPortletPreferences(
+			_layout, map,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+	}
+
+	@Test
+	@TestInfo("LPD-39258")
+	public void testPublishedLayoutWithNoninstanciablePortletWithZeroInstanceId()
+		throws Exception {
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addPortletToLayout(
+			_draftLayout,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		Assert.assertEquals(
+			StringPool.BLANK, editableValuesJSONObject.getString("instanceId"));
+
+		editableValuesJSONObject.put("instanceId", "0");
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
+			GetterUtil.getLong(
+				fragmentEntryLinkJSONObject.getString("fragmentEntryLinkId")),
+			editableValuesJSONObject.toString());
 
 		Map<String, String> map = HashMapBuilder.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString()

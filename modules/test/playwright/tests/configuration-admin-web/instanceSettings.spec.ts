@@ -113,8 +113,10 @@ test('LPD-38043 Assert that a configuration at the site scope can override a fal
 	site,
 	siteSettingsPage,
 }) => {
-	if (accessibilityMenuPage.isAccessibilityMenuAttached()) {
-		await test.step('Check that the instance scoped accessibility menu configuration is disabled', async () => {
+	await siteSettingsPage.goto(site.friendlyUrlPath);
+
+	if (await accessibilityMenuPage.isAccessibilityMenuAttached()) {
+		await test.step('Disable the instance scoped accessibility menu configuration', async () => {
 			await instanceSettingsPage.goToInstanceSetting(
 				'Accessibility',
 				'Accessibility Menu'
@@ -140,9 +142,7 @@ test('LPD-38043 Assert that a configuration at the site scope can override a fal
 		).not.toBeAttached();
 	});
 
-	await test.step('Enable the site accessibility configuration', async () => {
-		await page.waitForTimeout(1000);
-
+	await test.step('Enable the site accessibility menu configuration', async () => {
 		await accessibilityMenuPage.enableAccessibilityMenu();
 	});
 

@@ -18,6 +18,6 @@ ${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel())}
 
 <#include "notification_templates.ftl">
 
-<#include "object_definitions.ftl">
+<#include "system_object_definitions.ftl">
 
 <#include "object_actions.ftl">

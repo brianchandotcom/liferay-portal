@@ -1493,7 +1493,9 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		if (isSet(locale)) {
-			PortletEntry.changeLocale(locale = ${locale});
+			PortletEntry.changeLocale(
+				locale = ${locale},
+				translated = "true");
 		}
 
 		WebContent.addWithStructureCP(

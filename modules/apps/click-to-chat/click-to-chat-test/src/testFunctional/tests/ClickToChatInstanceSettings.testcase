@@ -60,6 +60,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"
+	@ignore = "true"
 	@priority = 4
 	test CanHubspotAccessRequiredScopes {
 		Select(

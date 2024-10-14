@@ -4765,6 +4765,11 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
+		Click(
+			key_linkContext = "element-sidebar",
+			key_linkText = "Learn more",
+			locator1 = "Blueprints#DOC_LINK_GENERIC");
+
 		SelectWindow(value1 = "Search Blueprints Elements Reference - Liferay Learn");
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

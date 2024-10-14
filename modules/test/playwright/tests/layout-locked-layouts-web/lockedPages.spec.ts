@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -16,7 +17,7 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	isolatedSiteTest,
+	instanceSettingsPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -24,7 +25,34 @@ export const test = mergeTests(
 	loginTest()
 );
 
+const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
+
 test(
+	'Time without autosave is a number between 1 and 99999',
+	{
+		tag: ['@LPS-182060'],
+	},
+	async ({instanceSettingsPage, page}) => {
+
+		// Go to locked pages in instance settings
+
+		await instanceSettingsPage.goToInstanceSetting('Pages', 'Locked Pages');
+
+		// Assert time without autosave is a number between 1 and 999999
+
+		await fillAndClickOutside(
+			page,
+			page.getByLabel('Time Without Autosave'),
+			'200000'
+		);
+
+		await expect(
+			page.getByText('Please enter a value less than or equal to 99999.')
+		).toBeVisible();
+	}
+);
+
+testWithIsolatedSite(
 	'User can search locked pages',
 	{
 		tag: ['@LPS-182024', '@LPS-194499'],

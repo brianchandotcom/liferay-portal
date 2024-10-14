@@ -9,6 +9,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
@@ -65,6 +66,8 @@ public class FolderSearchFacetDisplayContextTest
 			_folderTitleLookup);
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		folderSearchFacetDisplayContextBuilder.setLocale(
+			LocaleUtil.getDefault());
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
 		folderSearchFacetDisplayContextBuilder.setOrder(order);
 		folderSearchFacetDisplayContextBuilder.setParameterName(

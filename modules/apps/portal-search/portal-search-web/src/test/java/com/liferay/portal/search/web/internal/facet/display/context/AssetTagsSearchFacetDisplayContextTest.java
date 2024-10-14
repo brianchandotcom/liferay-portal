@@ -8,6 +8,7 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
@@ -54,6 +55,8 @@ public class AssetTagsSearchFacetDisplayContextTest
 					getRenderRequest());
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
+		assetTagsSearchFacetDisplayContextBuilder.setLocale(
+			LocaleUtil.getDefault());
 		assetTagsSearchFacetDisplayContextBuilder.setFacet(facet);
 		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);

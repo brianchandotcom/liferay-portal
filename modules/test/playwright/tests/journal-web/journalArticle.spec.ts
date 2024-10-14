@@ -658,6 +658,42 @@ baseTest(
 		await waitForAlert(page);
 	}
 );
+baseTest(
+	'It ensures that translate side by side shows the duplicate fields',
+	{
+		tag: '@LPS-142169',
+	},
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		const localizableFieldName = 'Text5678';
+		const structureName = 'Structure 1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: localizableFieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		const title = getRandomString();
+		await journalEditArticlePage.createArticleWithDuplicatedField(
+			structureName,
+			site,
+			title
+		);
+
+		await journalPage.goToJournalArticleAction('Translate', title);
+
+		const duplicateFields = page.locator(
+			'[id^="_com_liferay_translation_web_internal_portlet_TranslationPortlet_infoField--DDMStructure_Text"]'
+		);
+
+		await duplicateFields.first().waitFor({state: 'visible'});
+
+		expect(duplicateFields.nth(0)).toBeVisible();
+		expect(duplicateFields.nth(1)).toBeVisible();
+	}
+);
 
 baseTest(
 	'This is a test for reset translations button in web content',

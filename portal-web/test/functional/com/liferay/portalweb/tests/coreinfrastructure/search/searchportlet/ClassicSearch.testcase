@@ -16,6 +16,8 @@ definition {
 		User.firstLoginPG();
 
 		WikiPortlet.enableWiki();
+
+		Navigator.openURL();
 	}
 
 	tearDown {

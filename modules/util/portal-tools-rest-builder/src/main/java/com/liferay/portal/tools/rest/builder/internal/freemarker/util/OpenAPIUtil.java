@@ -17,7 +17,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +51,12 @@ public class OpenAPIUtil {
 	}
 
 	public static String formatSingular(String s) {
-		if (StringUtil.lowerCase(s).endsWith("address")){
+		if (StringUtil.lowerCase(
+				s
+			).endsWith(
+				"address"
+			)) {
+
 			return s;
 		}
 

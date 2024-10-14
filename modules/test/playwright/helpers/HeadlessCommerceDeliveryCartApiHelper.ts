@@ -44,6 +44,12 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 		);
 	}
 
+	async getComments(cartId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/comments`
+		);
+	}
+
 	async deleteCart(cartId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}`

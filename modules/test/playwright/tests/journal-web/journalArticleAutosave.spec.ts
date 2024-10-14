@@ -159,22 +159,22 @@ autoSaveTest(
 );
 
 autoSaveUndoRedoTest(
-	'After resetting the fields the user is warned about the missing friendly-url',
+	'Info message appears when autosave is failed due to missing required fields',
 	{
 		tag: '@LPD-34375',
 	},
 	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await journalEditArticlePage.fillTitle(getRandomString());
+		await expect(async () => {
+			await journalEditArticlePage.fillTitle(getRandomString());
+
+			await expect(journalEditArticlePage.undoButton).toBeEnabled();
+		}).toPass();
 
 		const savedIndicator = await page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
 		);
-
-		await expect(savedIndicator).toBeVisible();
-
-		await journalEditArticlePage.fillTitle(getRandomString());
 
 		await expect(savedIndicator).toBeVisible();
 
@@ -190,11 +190,9 @@ autoSaveUndoRedoTest(
 
 		await expect(errorIndicator).toBeVisible();
 
-		await journalEditArticlePage.fillTitle(getRandomString());
-
 		await expect(
 			page.getByText(
-				'You must define a friendly URL for the default language.'
+				'Please ensure all mandatory fields are completed to enable autosave.'
 			)
 		).toBeVisible();
 	}

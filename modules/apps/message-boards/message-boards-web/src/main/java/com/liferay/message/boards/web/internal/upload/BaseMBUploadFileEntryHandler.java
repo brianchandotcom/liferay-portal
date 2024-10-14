@@ -41,10 +41,14 @@ public abstract class BaseMBUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String fileName = _getFileName(uploadPortletRequest);
+
+		_dlValidator.validateFileExtension(fileName);
+
+		String contentType = _getContentType(uploadPortletRequest);
+
 		_dlValidator.validateFileSize(
-			themeDisplay.getScopeGroupId(),
-			uploadPortletRequest.getFileName(getParameterName()),
-			uploadPortletRequest.getContentType(getParameterName()),
+			themeDisplay.getScopeGroupId(), fileName, contentType,
 			uploadPortletRequest.getSize(getParameterName()));
 
 		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
@@ -55,9 +59,8 @@ public abstract class BaseMBUploadFileEntryHandler
 			return _mbMessageService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), categoryId,
 				MBMessageConstants.TEMP_FOLDER_NAME,
-				TempFileEntryUtil.getTempFileName(
-					_getFileName(uploadPortletRequest)),
-				inputStream, _getContentType(uploadPortletRequest));
+				TempFileEntryUtil.getTempFileName(fileName), inputStream,
+				contentType);
 		}
 	}
 

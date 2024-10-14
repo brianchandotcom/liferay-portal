@@ -54,7 +54,7 @@ const AccountSubscriptionCard = ({
 
 	let quantity = 0;
 
-    const now = new Date();
+	const now = new Date();
 
 	const [
 		{activePage, setActivePage},
@@ -62,11 +62,11 @@ const AccountSubscriptionCard = ({
 		{data},
 	] = useOrderItems(accountSubscription.externalReferenceCode, 1000);
 
-    data?.orderItems?.items?.map((item) => {
-        if (now > new Date(item.options?.startDate) && now < new Date(item.options?.endDate)) {
-            quantity += item.quantity;
-        }
-    });
+	data?.orderItems?.items?.map((item) => {
+		if (now > new Date(item.options?.startDate) && now < new Date(item.options?.endDate)) {
+			quantity += item.quantity;
+		}
+	});
 	const DisplayOnCard = {
 		Blank: null,
 		Purchased: (
@@ -81,12 +81,10 @@ const AccountSubscriptionCard = ({
 		PurchasedAndProvisioned: (
 			<span className="d-flex justify-content-start m-0">
 				{currentConsumption !== undefined
-					? `${currentConsumption} ${i18n.translate('of')} ${
-							quantity
-					  }`
-					: `0 ${i18n.translate('of')} ${
-							quantity
-					  }`}
+					? `${currentConsumption} ${i18n.translate('of')} ${quantity
+					}`
+					: `0 ${i18n.translate('of')} ${quantity
+					}`}
 			</span>
 		),
 	};
@@ -287,12 +285,12 @@ const AccountSubscriptionCard = ({
 
 								<p className="description-info-bottom">
 									{isPermanentLicenseKey &&
-									isValidPerpetualStartDate
+										isValidPerpetualStartDate
 										? i18n.translate('not-applicable')
 										: getDateCustomFormat(
-												accountSubscription.startDate,
-												FORMAT_DATE_TYPES.day2DMonthSYearN
-										  )}
+											accountSubscription.startDate,
+											FORMAT_DATE_TYPES.day2DMonthSYearN
+										)}
 								</p>
 							</div>
 						)
@@ -309,12 +307,12 @@ const AccountSubscriptionCard = ({
 
 								<p className="description-info-bottom">
 									{isPermanentLicenseKey &&
-									isValidPerpetualStartDate
+										isValidPerpetualStartDate
 										? i18n.translate('not-applicable')
 										: getDateCustomFormat(
-												accountSubscription.endDate,
-												FORMAT_DATE_TYPES.day2DMonthSYearN
-										  )}
+											accountSubscription.endDate,
+											FORMAT_DATE_TYPES.day2DMonthSYearN
+										)}
 								</p>
 							</div>
 						)

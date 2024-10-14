@@ -4,6 +4,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import {useConfig} from 'data-engine-js-components-web';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
@@ -35,6 +36,15 @@ const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX =
 	/<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
 const ON_ATTRIBUTE_REGEX = /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi;
 
+const ddmFormAdminPortlet =
+	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_';
+
+const fieldNeedsToFireOnChange = ['predefinedValue', 'text'];
+
+const skipsChangeValidation = (fieldName) => {
+	return !fieldNeedsToFireOnChange.includes(fieldName);
+};
+
 const RichText = ({
 	availableLocales,
 	defaultLocale = INITIAL_DEFAULT_LOCALE,
@@ -42,6 +52,7 @@ const RichText = ({
 	editingLanguageId,
 	editingLocale = INITIAL_EDITING_LOCALE,
 	editorConfig,
+	evaluable,
 	fieldName,
 	id,
 	label,
@@ -57,12 +68,14 @@ const RichText = ({
 	visible,
 	...otherProps
 }) => {
-	const editorRef = useRef();
-
 	const contents = useMemo(
 		() => (editable ? predefinedValue : value ?? predefinedValue),
 		[editable, predefinedValue, value]
 	);
+
+	const editorRef = useRef();
+
+	const {portletNamespace} = useConfig();
 
 	const [currentAvailableLocales, setCurrentAvailableLocales] =
 		useState(availableLocales);
@@ -160,6 +173,14 @@ const RichText = ({
 			};
 
 			setCurrentAvailableLocales(availableLocales);
+
+			if (
+				evaluable &&
+				portletNamespace === ddmFormAdminPortlet &&
+				skipsChangeValidation(fieldName)
+			) {
+				return;
+			}
 
 			if (
 				currentValue[currentEditingLocale?.localeId] ||

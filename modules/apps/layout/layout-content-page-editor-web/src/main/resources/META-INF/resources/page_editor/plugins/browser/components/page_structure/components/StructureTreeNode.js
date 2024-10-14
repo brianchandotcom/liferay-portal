@@ -729,8 +729,13 @@ function computeHover({
 	})();
 
 	if (
-		validDropInsideTarget &&
-		stateHasChanged(state, sourceItem, targetItem, targetPositionWithMiddle)
+		stateHasChanged(
+			state,
+			sourceItem,
+			targetItem,
+			targetPositionWithMiddle
+		) &&
+		validDropInsideTarget
 	) {
 		return dispatch({
 			dropItem: sourceItem,

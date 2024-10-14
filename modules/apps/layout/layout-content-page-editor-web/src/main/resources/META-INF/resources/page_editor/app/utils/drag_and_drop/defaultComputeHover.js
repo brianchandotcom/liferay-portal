@@ -98,9 +98,14 @@ export default function defaultComputeHover({
 	})();
 
 	if (
+		stateHasChanged(
+			state,
+			sourceItem,
+			targetItem,
+			targetPositionWithMiddle
+		) &&
 		validDropInsideTarget &&
-		!itemIsAncestor(sourceItem, targetItem, layoutDataRef) &&
-		stateHasChanged(state, sourceItem, targetItem, targetPositionWithMiddle)
+		!itemIsAncestor(sourceItem, targetItem, layoutDataRef)
 	) {
 		return dispatch({
 			dropItem: sourceItem,
@@ -196,15 +201,15 @@ export default function defaultComputeHover({
 
 			if (
 				siblingItem &&
-				!shouldBeIgnoredInElevation(parent) &&
-				validElevation(siblingItem, orientation, layoutDataRef) &&
-				!itemIsAncestor(sourceItem, siblingItem, layoutDataRef) &&
 				stateHasChanged(
 					state,
 					sourceItem,
 					siblingItem,
 					targetPositionWithMiddle
-				)
+				) &&
+				!shouldBeIgnoredInElevation(parent) &&
+				validElevation(siblingItem, orientation, layoutDataRef) &&
+				!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
 			) {
 				return dispatch({
 					dropItem: sourceItem,

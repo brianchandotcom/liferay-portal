@@ -24,6 +24,11 @@ export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_SOLUTION_TAGS = 'marketplace-solution-tags',
 }
 
+export enum PRODUCT_IMAGE_FALLBACK_CATEGORIES {
+    PRODUCT_IMAGE = 'productImage',
+    PRODUCT_ICON = 'productIcon',
+}
+
 export enum PRODUCT_PRICE_MODEL {
 	FREE = 'Free',
 	PAID = 'Paid',

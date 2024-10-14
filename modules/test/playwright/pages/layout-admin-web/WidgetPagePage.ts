@@ -151,6 +151,10 @@ export class WidgetPagePage {
 		await this.page.mouse.up();
 	}
 
+	async goto(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(`/web${siteUrl || '/guest'}${layout.friendlyURL}`);
+	}
+
 	async openAddPanel() {
 		const isOpen = await this.addButton.evaluate((element) =>
 			element.classList.contains('open')

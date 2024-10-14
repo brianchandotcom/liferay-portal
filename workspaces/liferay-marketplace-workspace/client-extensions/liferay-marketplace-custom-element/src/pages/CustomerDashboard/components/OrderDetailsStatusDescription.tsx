@@ -4,6 +4,7 @@
  */
 
 import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
 
 import purchasedAppIcon from '../../../assets/icons/purchased_app_icon.svg';
 import OrderStatus from '../../../components/OrderStatus';
@@ -39,9 +40,15 @@ const OrderDetailsStatusDescription = ({
 
 	return (
 		<div className="align-items-center d-flex">
-			<div className="order-details-publisher">{productOwner}</div>
+			<div
+				className={classNames(classNames, {
+					'order-details-publisher mr-3': productOwner,
+				})}
+			>
+				{productOwner}
+			</div>
 
-			<div className="align-items-center app-details-status d-flex mx-3">
+			<div className="align-items-center app-details-status d-flex mr-3">
 				<OrderStatus orderStatus={order?.orderStatusInfo.label}>
 					{order?.orderStatusInfo.label}
 				</OrderStatus>

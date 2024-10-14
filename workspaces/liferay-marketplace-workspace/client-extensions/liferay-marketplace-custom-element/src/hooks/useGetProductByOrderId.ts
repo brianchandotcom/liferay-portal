@@ -5,11 +5,14 @@
 
 import useSWR, {SWRConfiguration} from 'swr';
 
+import {PRODUCT_IMAGE_FALLBACK_CATEGORIES} from '../enums/Product';
 import {Liferay} from '../liferay/liferay';
 import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
 import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerceDeliveryOrder';
-import { getProductFallback, getProductImageFallback } from '../utils/productUtils';
-import { PRODUCT_IMAGE_FALLBACK_CATEGORIES } from '../enums/Product';
+import {
+	getProductFallback,
+	getProductImageFallback,
+} from '../utils/productUtils';
 
 const useGetProductByOrderId = (
 	orderId: string,
@@ -29,9 +32,9 @@ const useGetProductByOrderId = (
 			}
 
 			let product;
+
 			try {
-				product =
-				await HeadlessCommerceDeliveryCatalogImpl.getProduct(
+				product = await HeadlessCommerceDeliveryCatalogImpl.getProduct(
 					Liferay.CommerceContext.commerceChannelId,
 					placedOrder.placedOrderItems[0].productId,
 					new URLSearchParams({
@@ -43,10 +46,15 @@ const useGetProductByOrderId = (
 						'skus.accountId': '-1',
 					})
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error('Failed to fetch product:', error);
+
 				product = getProductFallback();
-				placedOrder.placedOrderItems[0].thumbnail = getProductImageFallback(PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_IMAGE);
+				placedOrder.placedOrderItems[0].thumbnail =
+					getProductImageFallback(
+						PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_IMAGE
+					);
 			}
 
 			return {

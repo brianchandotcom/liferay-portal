@@ -17,10 +17,10 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {Analytics} from '../../../core/Analytics';
 import {ORDER_TYPES} from '../../../enums/Order';
 import {OrderType} from '../../../enums/OrderType';
+import {PRODUCT_IMAGE_FALLBACK_CATEGORIES} from '../../../enums/Product';
 import i18n from '../../../i18n';
+import {getProductImageFallback} from '../../../utils/productUtils';
 import {safeJSONParse} from '../../../utils/util';
-import { PRODUCT_IMAGE_FALLBACK_CATEGORIES } from '../../../enums/Product';
-import { getProductImageFallback } from '../../../utils/productUtils';
 
 type AppsTableProps = {
 	items: Order[];
@@ -53,7 +53,12 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							<img
 								alt="App Image"
 								className="order-details-publisher-table-icon"
-								src={thumbnail || getProductImageFallback(PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_ICON)} 
+								src={
+									thumbnail ||
+									getProductImageFallback(
+										PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_IMAGE
+									)
+								}
 							/>
 
 							<span className="font-weight-semi-bold ml-2">

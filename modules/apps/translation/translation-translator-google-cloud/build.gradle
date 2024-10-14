@@ -5,7 +5,7 @@ configurations {
 }
 
 dependencies {
-	compileIncludePlatform group: "com.google.cloud", name: "google-cloud-translate", version: "2.20.0"
+	compileIncludePlatform group: "com.google.cloud", name: "google-cloud-translate", version: "2.51.0"
 	compileIncludePlatform platform("com.google.cloud:libraries-bom:26.4.0")
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"

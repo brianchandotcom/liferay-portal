@@ -44,7 +44,7 @@ public class BatchHistory {
 
 		JSONArray testsJSONArray = jsonObject.optJSONArray("tests");
 
-		if ((testsJSONArray != JSONObject.NULL) && !testsJSONArray.isEmpty()) {
+		if ((testsJSONArray != null) && !testsJSONArray.isEmpty()) {
 			for (int i = 0; i < testsJSONArray.length(); i++) {
 				TestHistory testHistory = new TestHistory(
 					this, testsJSONArray.getJSONObject(i));
@@ -55,9 +55,7 @@ public class BatchHistory {
 
 		JSONArray testTasksJSONArray = jsonObject.optJSONArray("testTasks");
 
-		if ((testTasksJSONArray != JSONObject.NULL) &&
-			!testTasksJSONArray.isEmpty()) {
-
+		if ((testTasksJSONArray != null) && !testTasksJSONArray.isEmpty()) {
 			for (int i = 0; i < testTasksJSONArray.length(); i++) {
 				TestTaskHistory testTaskHistory = new TestTaskHistory(
 					this, testTasksJSONArray.getJSONObject(i));

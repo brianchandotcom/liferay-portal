@@ -28,6 +28,8 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_portal_language_override_web_internal_portlet_PLOPortlet',
 	lockedItems:
 		'/~/control_panel/manage?p_p_id=com_liferay_locked_items_web_internal_portlet_LockedItemsPortlet',
+	lockedPages:
+		'/~/control_panel/manage?p_p_id=com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet',
 	masterPages:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=master-layouts',
 	messageBoardsAdmin:

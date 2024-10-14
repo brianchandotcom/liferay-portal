@@ -51,6 +51,7 @@ export class CommerceLayoutsPage {
 	readonly page: Page;
 	readonly pagesMenuItem: Locator;
 	readonly pageTemplatesMenuItem: Locator;
+	readonly paymentTermsSelect: Locator;
 	readonly pendingOrdersLink: Locator;
 	readonly previewItemSelectorButton: Locator;
 	readonly publishButton: Locator;
@@ -183,6 +184,9 @@ export class CommerceLayoutsPage {
 		this.pageTemplatesMenuItem = page
 			.getByTestId('app')
 			.filter({hasText: 'Page Templates'});
+		this.paymentTermsSelect = page.locator(
+			'#paymentTermId_infoBoxModalTermInput'
+		);
 		this.pendingOrdersLink = page.getByRole('link', {
 			exact: true,
 			name: 'Pending Orders',

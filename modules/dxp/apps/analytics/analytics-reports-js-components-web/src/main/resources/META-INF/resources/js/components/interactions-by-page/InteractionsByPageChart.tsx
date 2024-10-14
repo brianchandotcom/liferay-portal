@@ -8,6 +8,7 @@ import {Line} from 'recharts';
 
 import {AnalyticsReportsContext} from '../../AnalyticsReportsContext';
 import {MetricType} from '../../types/global';
+import {formatTooltipDate} from '../../utils/date';
 import {assetContent, metricNameByType} from '../../utils/metrics';
 import {CircleDot, DiamondDot, DotProps, SquareDot} from '../metrics/Dots';
 import MetricsChart, {DataKey} from '../metrics/MetricsChart';
@@ -80,71 +81,112 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 		.filter(Boolean);
 
 	return (
-		<MetricsChart
-			MetricsChartTooltip={InteractionsByPageChartTooltip}
-			activeTabIndex={activeTabIndex}
-			emptyChartProps={{
-				description: Liferay.Language.get(
-					'check-back-later-to-see-if-your-data-sources-are-populated-with-data'
-				),
-				link: {
-					title: Liferay.Language.get(
-						'learn-more-about-top-pages-asset-appears-on'
+		<>
+			<MetricsChart
+				MetricsChartTooltip={InteractionsByPageChartTooltip}
+				activeTabIndex={activeTabIndex}
+				emptyChartProps={{
+					description: Liferay.Language.get(
+						'check-back-later-to-see-if-your-data-sources-are-populated-with-data'
 					),
-					url: 'https://learn.liferay.com/w/dxp/content-authoring-and-management/content-dashboard/content-dashboard-interface',
-				},
-				show: !formattedData.combinedData.length,
-				title: Liferay.Language.get(
-					'there-is-no-data-for-top-pages-asset-appears-on'
-				),
-			}}
-			formattedData={formattedData}
-			legendItems={legendItems as IMetricsChartLegendProps['legendItems']}
-			onChartBlur={() => setActiveTabIndex(false)}
-			onChartFocus={() => setActiveTabIndex(true)}
-			onDatakeyChange={(dataKey) =>
-				setActiveLegendItem(dataKey as InteractionsByPageDataKey)
-			}
-			rangeSelector={filters.rangeSelector}
-			tooltipTitle={
-				assetContent[metricName].interactionsByPageTooltipTitle
-			}
-			xAxisDataKey={InteractionsByPageDataKey.Page1}
-		>
-			{Object.keys(formattedData.data).map((dataKey) => {
-				if (dataKey === DataKey.AxisX || dataKey === DataKey.AxisY) {
-					return null;
+					link: {
+						title: Liferay.Language.get(
+							'learn-more-about-top-pages-asset-appears-on'
+						),
+						url: 'https://learn.liferay.com/w/dxp/content-authoring-and-management/content-dashboard/content-dashboard-interface',
+					},
+					show: !formattedData.combinedData.length,
+					title: Liferay.Language.get(
+						'there-is-no-data-for-top-pages-asset-appears-on'
+					),
+				}}
+				formattedData={formattedData}
+				legendItems={
+					legendItems as IMetricsChartLegendProps['legendItems']
 				}
+				onChartBlur={() => setActiveTabIndex(false)}
+				onChartFocus={() => setActiveTabIndex(true)}
+				onDatakeyChange={(dataKey) =>
+					setActiveLegendItem(dataKey as InteractionsByPageDataKey)
+				}
+				rangeSelector={filters.rangeSelector}
+				tooltipTitle={
+					assetContent[metricName].interactionsByPageTooltipTitle
+				}
+				xAxisDataKey={InteractionsByPageDataKey.Page1}
+			>
+				{Object.keys(formattedData.data).map((dataKey) => {
+					if (
+						dataKey === DataKey.AxisX ||
+						dataKey === DataKey.AxisY
+					) {
+						return null;
+					}
 
-				const data =
-					formattedData.data[dataKey as InteractionsByPageDataKey];
+					const data =
+						formattedData.data[
+							dataKey as InteractionsByPageDataKey
+						];
 
-				const SelectedDot: React.JSXElementConstructor<DotProps> =
-					Dot[dataKey as InteractionsByPageDataKey];
+					const SelectedDot: React.JSXElementConstructor<DotProps> =
+						Dot[dataKey as InteractionsByPageDataKey];
 
-				return (
-					<Line
-						activeDot={
-							<SelectedDot stroke={data?.color ?? 'none'} />
-						}
-						animationDuration={100}
-						dataKey={dataKey}
-						dot={<SelectedDot stroke={data?.color ?? 'none'} />}
-						fill={data.color}
-						fillOpacity={getFillOpacity(dataKey, activeLegendItem)}
-						key={dataKey}
-						legendType="plainline"
-						stroke={data.color}
-						strokeOpacity={getFillOpacity(
-							dataKey,
-							activeLegendItem
-						)}
-						strokeWidth={2}
-						type="linear"
-					/>
-				);
-			})}
-		</MetricsChart>
+					return (
+						<Line
+							activeDot={
+								<SelectedDot stroke={data?.color ?? 'none'} />
+							}
+							animationDuration={100}
+							dataKey={dataKey}
+							dot={<SelectedDot stroke={data?.color ?? 'none'} />}
+							fill={data.color}
+							fillOpacity={getFillOpacity(
+								dataKey,
+								activeLegendItem
+							)}
+							key={dataKey}
+							legendType="plainline"
+							stroke={data.color}
+							strokeOpacity={getFillOpacity(
+								dataKey,
+								activeLegendItem
+							)}
+							strokeWidth={2}
+							type="linear"
+						/>
+					);
+				})}
+			</MetricsChart>
+
+			{/* Used on playwright to test data */}
+
+			<div
+				data-qa-page-1-chart-data={JSON.stringify(
+					formattedData.combinedData.map(
+						(dataKey) => dataKey[InteractionsByPageDataKey.Page1]
+					)
+				)}
+				data-qa-page-2-chart-data={JSON.stringify(
+					formattedData.combinedData.map(
+						(dataKey) => dataKey[InteractionsByPageDataKey.Page2]
+					)
+				)}
+				data-qa-page-3-chart-data={JSON.stringify(
+					formattedData.combinedData.map(
+						(dataKey) => dataKey[InteractionsByPageDataKey.Page3]
+					)
+				)}
+				data-qa-tooltip-formatted-date={JSON.stringify(
+					formatTooltipDate(
+						formattedData.combinedData[0]?.[
+							InteractionsByPageDataKey.AxisX
+						] as unknown as Date,
+						filters.rangeSelector
+					)
+				)}
+				data-testid="interactions-by-page-chart-data"
+			/>
+		</>
 	);
 };
 

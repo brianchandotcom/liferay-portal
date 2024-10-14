@@ -104,11 +104,11 @@ const StackedBarChart: React.FC<IStackedBarChartProps> = ({
 		<div
 			className={classNames('stacked-bar', {
 				'active': activeIndex >= 0,
-				'multiple-bars': data.total > 1,
+				'multiple-bars': data.data.length > 1,
 			})}
 		>
 			<div className="stacked-bar-chart">
-				{!data.total && (
+				{!data.data.length && (
 					<StackedBarChartItem
 						activeIndex={activeIndex}
 						color={Colors.Gray}
@@ -118,7 +118,7 @@ const StackedBarChart: React.FC<IStackedBarChartProps> = ({
 					/>
 				)}
 
-				{!!data.total &&
+				{!!data.data.length &&
 					data.data.map((item, index) => (
 						<StackedBarChartItem
 							activeIndex={activeIndex}
@@ -143,6 +143,13 @@ const StackedBarChart: React.FC<IStackedBarChartProps> = ({
 					title={tooltipTitle}
 				/>
 			)}
+
+			{/* Used on playwright to test data */}
+
+			<div
+				data-qa-chart-data={JSON.stringify(data)}
+				data-testid="stacked-bar-chart-data"
+			/>
 		</div>
 	);
 };

@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {AnalyticsReportsContext} from '../AnalyticsReportsContext';
-import {fetchAssetMetric} from '../apis/analytics-reports';
+import {AssetMetricProps, fetchAssetMetric} from '../apis/analytics-reports';
 import OverviewMetric, {
 	TrendClassification,
 } from '../components/OverviewMetric';
+import useFetch from '../hooks/useFetch';
 import {AssetTypes, MetricType} from '../types/global';
 import {assetMetrics} from '../utils/metrics';
 import StateRenderer from './StateRenderer';
@@ -81,58 +82,20 @@ const OverviewMetrics = () => {
 		AnalyticsReportsContext
 	);
 
-	const [data, setData] = useState<Data | null>(null);
-	const [error, setError] = useState('');
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		async function fetchData() {
-			setLoading(true);
-
-			try {
-				const response = await fetchAssetMetric({
-					assetId,
-					assetType: assetType || AssetTypes.Undefined,
-					groupId,
-					individual: filters.individual,
-					rangeSelector: filters.rangeSelector,
-					selectedMetrics:
-						assetMetrics[assetType || AssetTypes.Undefined],
-				});
-
-				if (!response.ok) {
-					throw new Error();
-				}
-
-				const data = await response.json();
-
-				if (data.error) {
-					throw new Error(data.error);
-				}
-
-				setData(data);
-				setLoading(false);
-				setError('');
-			}
-			catch (error: any) {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-
-				setData(null);
-				setLoading(false);
-				setError(error.toString());
-			}
+	const {data, error, loading} = useFetch<Data, AssetMetricProps>(
+		fetchAssetMetric,
+		{
+			variables: {
+				assetId,
+				assetType: assetType || AssetTypes.Undefined,
+				groupId,
+				individual: filters.individual,
+				rangeSelector: filters.rangeSelector,
+				selectedMetrics:
+					assetMetrics[assetType || AssetTypes.Undefined],
+			},
 		}
-
-		fetchData();
-	}, [
-		assetId,
-		assetType,
-		filters.individual,
-		filters.rangeSelector,
-		groupId,
-	]);
+	);
 
 	return (
 		<StateRenderer data={data} error={error} loading={loading}>

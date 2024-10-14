@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>ASTERISK_DATE_FIELD</td>
-	<td>//label[contains(.,'${key_fieldFieldLabel}')]//span[*[name()='svg'][contains(@class,'icon-asterisk')]] | //label[contains(.,'${key_fieldFieldLabel}')]//span[contains(.,'*')]</td>
+	<td>//label[contains(.,'${key_fieldFieldLabel}')]//*[name()='svg'][contains(@class,'lexicon-icon-asterisk')] | //label[contains(.,'${key_fieldFieldLabel}')]//span[contains(.,'*')] | //span[contains(@class, 'ddm-label-required') and contains(@class, 'reference-mark')]//*[name()='svg'][contains(@class,'lexicon-icon-asterisk')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -337,6 +338,7 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo({"LPD-39213", "LPS-202932"})
 	public void testPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortlet()
 		throws Exception {
 
@@ -375,6 +377,7 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo({"LPD-39213", "LPS-202932"})
 	public void testPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortletAndDynamicInstanceId()
 		throws Exception {
 

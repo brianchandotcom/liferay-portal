@@ -16,18 +16,12 @@ import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-sett
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 import {contentDashboardPagesTest} from '../content-dashboard-web/fixtures/contentDashboardPagesTest';
 import {
-	Individual,
 	createIndividuals,
 	generateIndividual,
 } from '../osb-faro-web/utils/individuals';
 import {Individuals, MetricType, RangeSelectors} from './types';
+import {formatDate} from './utils/date';
 import {createBlogsEventsForEveryDayByRangeSelector} from './utils/events';
-
-type IndividualIdentity = {
-	createDate: string;
-	id: string;
-	individualId: string;
-};
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -44,10 +38,10 @@ const test = mergeTests(
 
 const assetTitle = getRandomString();
 
-let assetId: string = null;
-let channel = null;
-let individualIdentities: IndividualIdentity[] | null = null;
-let individuals: Individual[] | null = null;
+let assetId;
+let channel;
+let individualIdentities;
+let individuals;
 
 async function expectMatchingChartData({
 	expectedResult,
@@ -95,18 +89,6 @@ async function expectMatchingChartData({
 	expect(chartData).toBe(expectedResult);
 
 	expect(JSON.parse(tooltipFormattedDate)).toEqual(formatDate(rangeSelector));
-}
-
-function formatDate(rangeSelector: RangeSelectors) {
-	const date = new Date();
-
-	date.setDate(date.getDate() - Number(rangeSelector));
-
-	const year = date.getFullYear();
-	const month = date.toLocaleString('en-US', {month: 'short'});
-	const day = date.getDate();
-
-	return `${year} ${month} ${day}`;
 }
 
 test.beforeEach(async ({apiHelpers, page, site}) => {

@@ -2084,7 +2084,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewAvailableLanguages(availableLanguageList = null, unavailableLanguageList = null) {
-		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+		Click(locator1 = "Button#LOCALIZATION_TRANSLATED");
 
 		for (var availableLanguage : list ${availableLanguageList}) {
 			AssertElementPresent(

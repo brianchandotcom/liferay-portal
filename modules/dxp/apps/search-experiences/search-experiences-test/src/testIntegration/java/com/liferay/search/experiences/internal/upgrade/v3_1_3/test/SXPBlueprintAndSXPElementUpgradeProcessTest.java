@@ -79,8 +79,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_runUpgrade();
 
 		_assertSXPBlueprint(
-			sxpBlueprint.getSXPBlueprintId(),
-			_getExpectedInstancesJSON(group1, group2));
+			_getExpectedInstancesJSON(group1, group2),
+			sxpBlueprint.getSXPBlueprintId());
 	}
 
 	@Test
@@ -141,7 +141,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private void _assertSXPBlueprint(
-		long sxpBlueprintId, String expectedInstancesJSON) {
+		String expectedInstancesJSON, long sxpBlueprintId) {
 
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
 			sxpBlueprintId);

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -41,10 +42,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		long groupId = scopeGroupIDJSONObject.getLong("value");
 
-		JSONObject scopeGroupExternalReferenceCodesJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		return scopeGroupExternalReferenceCodesJSONObject.put(
+		return JSONUtil.put(
 			"label", _getLabel(groupId)
 		).put(
 			"value", _getExternalReferenceCode(groupId)
@@ -52,16 +50,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long[] _extractScopeGroupIds(JSONObject termsJSONObject) {
-		JSONArray scopeGroupIdJSONArray = termsJSONObject.getJSONArray(
-			"scopeGroupId");
+		Object object = JSONUtil.getValue(
+			termsJSONObject, "Object/scopeGroupId");
 
-		long[] scopeGroupIds = new long[scopeGroupIdJSONArray.length()];
-
-		for (int i = 0; i < scopeGroupIdJSONArray.length(); i++) {
-			scopeGroupIds[i] = scopeGroupIdJSONArray.getLong(i);
-		}
-
-		return scopeGroupIds;
+		return JSONUtil.toLongArray((JSONArray)object);
 	}
 
 	private String _fixElementInstancesJSON(String elementInstanceJSON)
@@ -141,78 +133,42 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeConfiguration(JSONObject configurationJSONObject) {
-		JSONObject queryConfigurationJSONObject =
-			configurationJSONObject.getJSONObject("queryConfiguration");
+		JSONObject queryJSONObject = JSONUtil.getValueAsJSONObject(
+			configurationJSONObject, "JSONObject/queryConfiguration",
+			"JSONArray/queryEntries", "JSONObject/0", "JSONArray/clauses",
+			"JSONObject/0", "JSONObject/query");
 
-		JSONArray queryEntriesJSONArray =
-			queryConfigurationJSONObject.getJSONArray("queryEntries");
+		JSONObject termsJSONObject = queryJSONObject.getJSONObject("terms");
 
-		for (int i = 0; i < queryEntriesJSONArray.length(); i++) {
-			JSONObject queryEntryJSONObject =
-				queryEntriesJSONArray.getJSONObject(i);
-
-			JSONArray clausesJSONArray = queryEntryJSONObject.getJSONArray(
-				"clauses");
-
-			for (int j = 0; j < clausesJSONArray.length(); j++) {
-				JSONObject clauseJSONObject = clausesJSONArray.getJSONObject(j);
-
-				JSONObject queryJSONObject = clauseJSONObject.getJSONObject(
-					"query");
-
-				JSONObject termsJSONObject = queryJSONObject.getJSONObject(
-					"terms");
-
-				termsJSONObject.put(
-					"scopeGroupExternalReferenceCode",
-					"${configuration.scope_group_external_reference_codes}");
-				termsJSONObject.remove("scopeGroupId");
-			}
-		}
+		termsJSONObject.put(
+			"scopeGroupExternalReferenceCode",
+			"${configuration.scope_group_external_reference_codes}");
+		termsJSONObject.remove("scopeGroupId");
 	}
 
-	private void _upgradeConfigurationEntry(JSONObject jsonObject)
+	private void _upgradeConfigurationEntry(
+			JSONObject elementInstanceJSONObject)
 		throws Exception {
 
-		JSONObject configurationEntryJSONObject = jsonObject.getJSONObject(
-			"configurationEntry");
+		JSONObject configurationEntryJSONObject =
+			elementInstanceJSONObject.getJSONObject("configurationEntry");
 
-		JSONObject queryConfigurationJSONObject =
-			configurationEntryJSONObject.getJSONObject("queryConfiguration");
+		JSONObject queryJSONObject = JSONUtil.getValueAsJSONObject(
+			configurationEntryJSONObject, "JSONObject/queryConfiguration",
+			"JSONArray/queryEntries", "JSONObject/0", "JSONArray/clauses",
+			"JSONObject/0", "JSONObject/query");
 
-		JSONArray queryEntriesJSONArray =
-			queryConfigurationJSONObject.getJSONArray("queryEntries");
+		JSONObject termsJSONObject = queryJSONObject.getJSONObject("terms");
 
-		for (int i = 0; i < queryEntriesJSONArray.length(); i++) {
-			JSONObject queryEntriesJSONObject =
-				queryEntriesJSONArray.getJSONObject(i);
+		long[] groupIds = _extractScopeGroupIds(termsJSONObject);
 
-			JSONArray clausesJSONArray = queryEntriesJSONObject.getJSONArray(
-				"clauses");
+		queryJSONObject.remove("terms");
 
-			for (int k = 0; k < clausesJSONArray.length(); k++) {
-				JSONObject clausesJSONObject = clausesJSONArray.getJSONObject(
-					k);
-
-				JSONObject queryJSONObject = clausesJSONObject.getJSONObject(
-					"query");
-
-				JSONObject termsJSONObject = queryJSONObject.getJSONObject(
-					"terms");
-
-				long[] groupIds = _extractScopeGroupIds(termsJSONObject);
-
-				queryJSONObject.remove("terms");
-
-				queryJSONObject.put(
-					"terms",
-					JSONFactoryUtil.createJSONObject(
-					).put(
-						"scopeGroupExternalReferenceCode",
-						_translateIdsToExternalReferencesCodes(groupIds)
-					));
-			}
-		}
+		queryJSONObject.put(
+			"terms",
+			JSONUtil.put(
+				"scopeGroupExternalReferenceCode",
+				_translateIdsToExternalReferencesCodes(groupIds)));
 	}
 
 	private void _upgradeSXPBlueprint() throws Exception {
@@ -269,30 +225,24 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeUIConfiguration(JSONObject uiConfigurationJSONObject) {
-		JSONArray fieldSetsJSONArray = uiConfigurationJSONObject.getJSONArray(
-			"fieldSets");
+		JSONArray fieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			uiConfigurationJSONObject, "JSONArray/fieldSets", "JSONObject/0",
+			"JSONArray/fields");
 
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
+		for (int i = 0; i < fieldsJSONArray.length(); i++) {
+			JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
 
-			JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
-				"fields");
+			fieldJSONObject.put(
+				"helpText", "scope-group-external-reference-codes-help"
+			).put(
+				"label", "scope-group-external-reference-codes"
+			).put(
+				"name", "scope_group_external_reference_codes"
+			).remove(
+				"helpTextLocalized"
+			);
 
-			for (int j = 0; j < fieldsJSONArray.length(); j++) {
-				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
-
-				fieldJSONObject.put(
-					"helpText", "scope-group-external-reference-codes-help"
-				).put(
-					"label", "scope-group-external-reference-codes"
-				).put(
-					"name", "scope_group_external_reference_codes"
-				).remove(
-					"helpTextLocalized"
-				);
-
-				fieldJSONObject.remove("labelLocalized");
-			}
+			fieldJSONObject.remove("labelLocalized");
 		}
 	}
 

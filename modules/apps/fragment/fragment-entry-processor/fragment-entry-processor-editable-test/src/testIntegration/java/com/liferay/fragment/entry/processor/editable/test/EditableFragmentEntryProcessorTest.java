@@ -774,6 +774,15 @@ public class EditableFragmentEntryProcessorTest {
 
 	@Test
 	@TestInfo("LPD-34747")
+	public void testFragmentEntryProcessorEditableLinkInlineValueEditMode()
+		throws Exception {
+
+		_testFragmentEntryProcessorEditableLinkInlineValue(
+			"#", FragmentEntryLinkConstants.EDIT);
+	}
+
+	@Test
+	@TestInfo("LPD-34747")
 	public void testFragmentEntryProcessorEditableLinkInlineValueViewMode()
 		throws Exception {
 

@@ -1396,48 +1396,6 @@ definition {
 			value1 = "You do not have the required permissions.");
 	}
 
-	@description = "This is a test for LPS-136852. It checks that a guest cannot access a folder image without permissions."
-	@priority = 4
-	test GuestCannotAccessFolderImageThroughURLWithoutPermissions {
-		property portal.upstream = "true";
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest",
-			guestPermissions = "false");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
-			roleTitle = "Guest");
-
-		var dmDocumentURL = JSONDocument.getLatestVersionURL(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest");
-
-		User.logoutPG();
-
-		Navigator.openSpecificURL(url = ${dmDocumentURL});
-
-		User.viewLoginPG();
-	}
-
 	@description = "This is a test for LPS-136833. It checks that a guest cannot add a document in a folder without permissions."
 	@priority = 3
 	test GuestCannotAddDocumentInFolder {

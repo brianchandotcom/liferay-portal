@@ -12,6 +12,7 @@
 		"@clayui/layout": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/modal": "3.119.0",
+		"@clayui/popover": "3.119.0",
 		"@clayui/table": "3.111.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",

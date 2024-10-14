@@ -43,3 +43,4 @@ export {default as ImportScript} from './configuration/icon/ImportScript';
 export {default as ImageInput} from './ImageInput.es';
 export {default as showWarningAlert} from './showWarningAlert';
 export {default as UndoRedo} from './UndoRedo';
+export {default as LockErrorIndicator} from './LockErrorIndicator';

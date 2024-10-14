@@ -677,12 +677,13 @@ export class PageEditorPage {
 	 * so we make sure we get the id for the desired fragment
 	 *
 	 * @param fragmentName Name of the fragment
+	 * @param index Position of the fragment in the page (if there are more than one)
 	 */
 
-	async getFragmentId(fragmentName: string) {
+	async getFragmentId(fragmentName: string, index: number = 0) {
 		const topper = this.page
 			.locator(`.page-editor__topper[data-name="${fragmentName}"]`)
-			.first();
+			.nth(index);
 
 		const fragmentId = await topper.evaluate((element) =>
 			Array.from(element.classList)

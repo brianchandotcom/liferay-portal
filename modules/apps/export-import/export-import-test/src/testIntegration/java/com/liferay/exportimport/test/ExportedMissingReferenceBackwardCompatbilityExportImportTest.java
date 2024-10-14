@@ -97,9 +97,10 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 	public void testBackwardCompatibility() throws Exception {
 		long[] layoutIds = {layout.getLayoutId()};
 
-		try (SafeCloseable safeCloseable = setPortletDataHandler(
-				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-				DummyFolderWithMissingDummyPortletDataHandler.class)) {
+		try (SafeCloseable safeCloseable =
+				setPortletDataHandlerWithSafeCloseable(
+					DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+					DummyFolderWithMissingDummyPortletDataHandler.class)) {
 
 			exportImportLayouts(layoutIds, getExportParameterMap(), true);
 		}

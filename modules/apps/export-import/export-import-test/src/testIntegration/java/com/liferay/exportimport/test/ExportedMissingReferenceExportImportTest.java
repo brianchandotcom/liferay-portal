@@ -150,9 +150,10 @@ public class ExportedMissingReferenceExportImportTest
 
 	@Test
 	public void testMissingDummy() throws Exception {
-		try (SafeCloseable safeCloseable = setPortletDataHandler(
-				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-				DummyFolderWithMissingDummyPortletDataHandler.class)) {
+		try (SafeCloseable safeCloseable =
+				setPortletDataHandlerWithSafeCloseable(
+					DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+					DummyFolderWithMissingDummyPortletDataHandler.class)) {
 
 			exportImportLayouts(
 				new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -173,9 +174,10 @@ public class ExportedMissingReferenceExportImportTest
 
 	@Test
 	public void testMissingLayout() throws Exception {
-		try (SafeCloseable safeCloseable = setPortletDataHandler(
-				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-				DummyFolderWithMissingLayoutPortletDataHandler.class)) {
+		try (SafeCloseable safeCloseable =
+				setPortletDataHandlerWithSafeCloseable(
+					DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+					DummyFolderWithMissingLayoutPortletDataHandler.class)) {
 
 			exportImportLayouts(
 				new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -251,47 +253,6 @@ public class ExportedMissingReferenceExportImportTest
 		return portletDataHandlerInstance.getRank();
 	}
 
-	protected SafeCloseable setPortletDataHandler(
-			String portletId, Class<?> portletDataHandlerClass)
-		throws Exception {
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			ExportedMissingReferenceExportImportTest.class);
-
-		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
-			ServiceTrackerListFactory.open(
-				bundle.getBundleContext(), PortletDataHandler.class,
-				"(component.name=" + portletDataHandlerClass.getName() + ")");
-
-		Iterator<PortletDataHandler> iterator =
-			portletDataHandlerInstances.iterator();
-
-		return setPortletDataHandler(portletId, iterator.next());
-	}
-
-	protected SafeCloseable setPortletDataHandler(
-			String portletId, PortletDataHandler portletDataHandler)
-		throws Exception {
-
-		PortletBag portletBag = PortletBagPool.get(portletId);
-
-		Snapshot<PortletDataHandler> snapshot =
-			ReflectionTestUtil.getAndSetFieldValue(
-				portletBag, "_portletDataHandlerSnapshot",
-				new Snapshot<PortletDataHandler>(
-					PortletBag.class, PortletDataHandler.class) {
-
-					@Override
-					public PortletDataHandler get() {
-						return portletDataHandler;
-					}
-
-				});
-
-		return () -> ReflectionTestUtil.setFieldValue(
-			portletBag, "_portletDataHandlerSnapshot", snapshot);
-	}
-
 	protected void setPortletDataHandlerRank(
 		Class<?> portletDataHandlerClass, int rank) {
 
@@ -315,6 +276,48 @@ public class ExportedMissingReferenceExportImportTest
 		portletDataHandlerInstance.setRank(rank);
 	}
 
+	protected SafeCloseable setPortletDataHandlerWithSafeCloseable(
+			String portletId, Class<?> portletDataHandlerClass)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportedMissingReferenceExportImportTest.class);
+
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			ServiceTrackerListFactory.open(
+				bundle.getBundleContext(), PortletDataHandler.class,
+				"(component.name=" + portletDataHandlerClass.getName() + ")");
+
+		Iterator<PortletDataHandler> iterator =
+			portletDataHandlerInstances.iterator();
+
+		return setPortletDataHandlerWithSafeCloseable(
+			portletId, iterator.next());
+	}
+
+	protected SafeCloseable setPortletDataHandlerWithSafeCloseable(
+			String portletId, PortletDataHandler portletDataHandler)
+		throws Exception {
+
+		PortletBag portletBag = PortletBagPool.get(portletId);
+
+		Snapshot<PortletDataHandler> snapshot =
+			ReflectionTestUtil.getAndSetFieldValue(
+				portletBag, "_portletDataHandlerSnapshot",
+				new Snapshot<PortletDataHandler>(
+					PortletBag.class, PortletDataHandler.class) {
+
+					@Override
+					public PortletDataHandler get() {
+						return portletDataHandler;
+					}
+
+				});
+
+		return () -> ReflectionTestUtil.setFieldValue(
+			portletBag, "_portletDataHandlerSnapshot", snapshot);
+	}
+
 	private void _testMissingDummyOrder(boolean missingFirst) throws Exception {
 		int dummyFolderPortletDataHandlerRank = getPortletDataHandlerRank(
 			DummyFolderPortletDataHandler.class);
@@ -322,9 +325,10 @@ public class ExportedMissingReferenceExportImportTest
 			getPortletDataHandlerRank(
 				DummyFolderWithMissingDummyPortletDataHandler.class);
 
-		try (SafeCloseable safeCloseable = setPortletDataHandler(
-				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-				DummyFolderWithMissingDummyPortletDataHandler.class)) {
+		try (SafeCloseable safeCloseable =
+				setPortletDataHandlerWithSafeCloseable(
+					DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+					DummyFolderWithMissingDummyPortletDataHandler.class)) {
 
 			setPortletDataHandlerRank(
 				DummyFolderPortletDataHandler.class, missingFirst ? 200 : 100);

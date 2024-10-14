@@ -26,6 +26,16 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 		ObjectAdminRestClient
 	);
 
+	const {id: siteId} = await apiHelpers.headlessSite.getSiteByERC(
+		PAGE_MANAGEMENT_SITE_ERC
+	);
+
+	// Return if site does not exist, this is for cases in which this test is ran independently
+
+	if (!siteId) {
+		return;
+	}
+
 	// Delete object definitions
 
 	for (const ERC of [
@@ -51,15 +61,7 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 
 	// Delete site
 
-	const {id: siteId} = await apiHelpers.headlessSite.getSiteByERC(
-		PAGE_MANAGEMENT_SITE_ERC
-	);
-
-	if (siteId) {
-		await expect(
-			await apiHelpers.headlessSite.deleteSiteByERC(
-				PAGE_MANAGEMENT_SITE_ERC
-			)
-		).toBeOK();
-	}
+	await expect(
+		await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC)
+	).toBeOK();
 });

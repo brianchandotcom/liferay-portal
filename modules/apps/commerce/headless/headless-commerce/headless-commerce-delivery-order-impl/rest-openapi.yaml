@@ -171,6 +171,10 @@ components:
                 status:
                     readOnly: true
                     type: string
+                steps:
+                    items:
+                        $ref: "#/components/schemas/Step"
+                    type: array
                 summary:
                     $ref: "#/components/schemas/Summary"
                     readOnly: true
@@ -612,6 +616,17 @@ components:
                     readOnly: true
                     type: string
             type: object
+        Step:
+            properties:
+                id:
+                    readOnly: true
+                    type: string
+                label:
+                    readOnly: true
+                    type: string
+                state:
+                    readOnly: true
+                    type: string
         Summary:
             properties:
                 currency:

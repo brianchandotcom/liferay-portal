@@ -36,6 +36,15 @@ public class DummyFolderStagedModelDataHandler
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, DummyFolder dummyFolder)
 		throws Exception {
@@ -103,5 +112,7 @@ public class DummyFolderStagedModelDataHandler
 		target = "(model.class.name=com.liferay.exportimport.test.util.model.Dummy)"
 	)
 	private StagedModelRepository<Dummy> _dummyStagedModelRepository;
+
+	private boolean _enabled = true;
 
 }

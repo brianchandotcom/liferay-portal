@@ -44,6 +44,15 @@ public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
+	}
+
+	@Override
 	public boolean validateSchemaVersion(String schemaVersion) {
 		return _portletDataHandlerHelper.validateSchemaVersion(
 			schemaVersion, getSchemaVersion());
@@ -139,6 +148,8 @@ public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<DummyFolder>
 		_dummyFolderStagedModelRepository;
+
+	private boolean _enabled = true;
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;

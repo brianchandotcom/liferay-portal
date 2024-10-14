@@ -263,7 +263,7 @@ const testJSClientExtensionWithAttributes = async ({
 		type: 'globalJS',
 	});
 
-	await pagesAdminPage.javaScriptClientExtensionsTab.click();
+	await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
 
 	if (defaultSelectedLoadType) {
 		await assertDefaultSelectedLoadType(

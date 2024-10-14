@@ -388,6 +388,9 @@ test.describe('Container configuration', () => {
 		);
 
 		expect(styles.backgroundColor).toBe('rgb(218, 20, 20)');
+
+		// @ts-ignore
+
 		expect(styles.contentVisibility).toBe('auto');
 		expect(styles.height).toBe('200px');
 		expect(styles.width).toBe('100px');

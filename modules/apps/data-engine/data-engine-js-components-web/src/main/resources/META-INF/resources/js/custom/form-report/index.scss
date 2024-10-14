@@ -594,8 +594,8 @@
 
 	&--cards-shortcut {
 		align-self: flex-start;
-		margin-top: 24px;
-		padding-left: 24px;
+		max-height: 70vh;
+		overflow-y: auto;
 		position: sticky;
 		top: 112px;
 		width: 30%;

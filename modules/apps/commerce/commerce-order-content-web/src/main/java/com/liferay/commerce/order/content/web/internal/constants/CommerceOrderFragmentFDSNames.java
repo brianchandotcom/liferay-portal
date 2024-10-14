@@ -5,21 +5,24 @@
 
 package com.liferay.commerce.order.content.web.internal.constants;
 
+import com.liferay.commerce.constants.CommerceFragmentRendererKeys;
+
 /**
  * @author Gianmarco Brunialti Masera
  */
 public class CommerceOrderFragmentFDSNames {
 
 	public static final String PENDING_ORDER_ITEMS =
-		"order-fragment-fds-pendingOrderItems";
+		CommerceFragmentRendererKeys.ORDER_ITEMS_DATA_SET +
+			"-pendingOrderItems";
 
 	public static final String PENDING_ORDERS =
-		"order-fragment-fds-pendingOrders";
+		CommerceFragmentRendererKeys.ORDERS_DATA_SET + "-pendingOrders";
 
 	public static final String PLACED_ORDER_ITEMS =
-		"order-fragment-fds-placedOrderItems";
+		CommerceFragmentRendererKeys.ORDER_ITEMS_DATA_SET + "-placedOrderItems";
 
 	public static final String PLACED_ORDERS =
-		"order-fragment-fds-placedOrders";
+		CommerceFragmentRendererKeys.ORDERS_DATA_SET + "-placedOrders";
 
 }

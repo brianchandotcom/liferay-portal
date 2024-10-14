@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
+import {
+	CommerceServiceProvider,
+	QuantitySelectorComponent as QuantitySelector,
 
-// @ts-ignore
+	// @ts-ignore
 
-import {CommerceServiceProvider} from 'commerce-frontend-js';
+} from 'commerce-frontend-js';
 import {debounce} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
@@ -31,6 +33,7 @@ interface IOrderItemRowProps {
 	namespace?: string;
 	orderId: number;
 	orderItem: IOrderItem;
+	rowIndex?: number;
 	spritemap?: string;
 }
 
@@ -40,6 +43,7 @@ const OrderItemRow = ({
 	handleSubmit,
 	orderId,
 	orderItem: orderItemProp,
+	rowIndex = 0,
 	spritemap = 'OrderItemRow',
 }: IOrderItemRowProps) => {
 	const {observer, onOpenChange, open} = useModal();
@@ -252,7 +256,7 @@ const OrderItemRow = ({
 				)}
 			</ClayTable.Cell>
 
-			<ClayTable.Cell aria-label="quantity" className="text-center">
+			<ClayTable.Cell aria-label="quantity">
 				<span>{orderItem.quantity}</span>
 			</ClayTable.Cell>
 
@@ -262,24 +266,42 @@ const OrderItemRow = ({
 					data-qa-id={`orderItem${orderItem.id}-${deliveryGroup.id}`}
 					key={`${orderItem.id}_${deliveryGroup.id}`}
 				>
-					<ClayInput
+					<QuantitySelector
+						alignment={rowIndex > 0 ? 'top' : 'bottom'}
+						allowEmptyValue={true}
+						allowedQuantities={
+							orderItem?.settings?.allowedQuantities
+						}
 						data-qa-id={`orderItem${orderItem.id}-${deliveryGroup.id}Input`}
 						disabled={disabled}
-						min={0}
-						onChange={({
-							target: {value},
+						max={orderItem?.settings?.maxQuantity}
+						min={orderItem?.settings?.minQuantity || 0}
+						onUpdate={({
+							errors,
+							value,
 						}: {
-							target: {
-								value: boolean | number | string | undefined;
-							};
+							errors: any;
+							value: any;
 						}) => {
-							handleUpdateField(deliveryGroup.id, Number(value));
+							if (!errors.length) {
+								handleUpdateField(
+									deliveryGroup.id,
+									Number(value)
+								);
+							}
 						}}
-						type="number"
-						value={
+						quantity={
 							(orderItem.deliveryGroups || {})[deliveryGroup.id]
-								?.quantity || ''
+								?.quantity
 						}
+						step={
+							orderItem?.skuUnitOfMeasure
+								?.incrementalOrderQuantity ||
+							orderItem?.settings?.multipleQuantity ||
+							1
+						}
+						{...orderItem?.settings}
+						unitOfMeasure={orderItem?.skuUnitOfMeasure}
 					/>
 				</ClayTable.Cell>
 			))}

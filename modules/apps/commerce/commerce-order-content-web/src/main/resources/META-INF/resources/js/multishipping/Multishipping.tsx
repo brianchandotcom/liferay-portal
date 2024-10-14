@@ -536,7 +536,7 @@ const Multishipping = ({
 									pagination.pageSize,
 								pagination.currentPage * pagination.pageSize
 							)
-							.map((orderItem) => (
+							.map((orderItem, currentIndex) => (
 								<OrderItemRow
 									deliveryGroups={deliveryGroups}
 									disabled={readonly || saving}
@@ -544,6 +544,7 @@ const Multishipping = ({
 									key={orderItem.id}
 									orderId={orderId}
 									orderItem={orderItem}
+									rowIndex={currentIndex}
 								/>
 							))}
 					</ClayTable.Body>

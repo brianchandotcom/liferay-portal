@@ -8,21 +8,33 @@ import React, {forwardRef} from 'react';
 
 const ListQuantitySelector = forwardRef(
 	(
-		{allowedQuantities, className, disabled, name, onUpdate, quantity},
+		{
+			allowEmptyValue,
+			allowedQuantities,
+			className,
+			disabled,
+			name,
+			onUpdate,
+			quantity,
+			...props
+		},
 		_inputRef
 	) => {
 		return (
 			<ClaySelectWithOption
 				className={className}
+				data-qa-id={props['data-qa-id']}
 				disabled={disabled}
 				name={name}
 				onChange={({target}) => {
 					onUpdate({errors: [], value: Number(target.value)});
 				}}
-				options={allowedQuantities.map((value) => ({
-					label: String(value),
-					value,
-				}))}
+				options={(allowEmptyValue ? [''] : [])
+					.concat(allowedQuantities)
+					.map((value) => ({
+						label: String(value),
+						value,
+					}))}
 				value={quantity}
 			/>
 		);

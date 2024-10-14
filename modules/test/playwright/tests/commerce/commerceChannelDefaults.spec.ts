@@ -170,13 +170,11 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 
 	apiHelpers.data.push({id: account2.id, type: 'account'});
 
-	const deliveryTerms = await apiHelpers.headlessCommerceAdminOrder.postTerms(
-		{
-			type: 'delivery-terms',
-		}
-	);
+	const deliveryTerm = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+		type: 'delivery-terms',
+	});
 
-	const paymentTerms = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		type: 'payment-terms',
 	});
 
@@ -269,7 +267,7 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 
 	await expect(
 		commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntries.getByText(
-			deliveryTerms.label['en_US']
+			deliveryTerm.label['en_US']
 		)
 	).toBeVisible();
 
@@ -283,7 +281,7 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 
 	await expect(
 		commerceChannelDefaultsPage.defaultPaymentCommerceTermEntries.getByText(
-			paymentTerms.label['en_US']
+			paymentTerm.label['en_US']
 		)
 	).toBeVisible();
 

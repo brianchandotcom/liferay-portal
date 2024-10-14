@@ -2041,6 +2041,226 @@ test('LPD-35558 Order Data Sets and header fragments', async ({
 	}
 });
 
+test('LPD-37698 Payment and Delivery Terms order info box fragment configuration', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	test.setTimeout(180000);
+
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.uncheck();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'paymentTermId'
+		);
+		await commerceLayoutsPage.infoBoxLabelInput.fill('Payment Term');
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const paymentTerm1 =
+			await apiHelpers.headlessCommerceAdminOrder.postTerm({
+				label: {
+					en_US: 'MoneyA',
+				},
+				name: 'moneya',
+				priority: 0,
+				type: 'payment-terms',
+			});
+		const paymentTerm2 =
+			await apiHelpers.headlessCommerceAdminOrder.postTerm({
+				label: {
+					en_US: 'MoneyB',
+				},
+				name: 'moneyb',
+				priority: 1,
+				type: 'payment-terms',
+			});
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			paymentTerm1.name,
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			paymentTerm2.name,
+			'Payment Methods'
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				paymentMethod: 'money-order',
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Payment Term')).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Term').click();
+
+		await commerceLayoutsPage.paymentTermsSelect.selectOption(
+			String(paymentTerm1.id)
+		);
+
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(page.getByTestId('infoBoxValue')).toHaveText(
+			String(paymentTerm1.label.en_US)
+		);
+
+		await commerceLayoutsPage.infoBoxButton('Payment Term').click();
+
+		await commerceLayoutsPage.paymentTermsSelect.selectOption(
+			String(paymentTerm2.id)
+		);
+
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(page.getByTestId('infoBoxValue')).toHaveText(
+			String(paymentTerm2.label.en_US)
+		);
+
+		await page.reload();
+
+		await expect(page.getByTestId('infoBoxValue')).toHaveText(
+			String(paymentTerm2.label.en_US)
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.reload();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Term').click();
+
+		await expect(commerceLayoutsPage.saveButton).not.toBeVisible();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
 test('LPD-33490 Purchase Document in Open Order Details', async ({
 	apiHelpers,
 	commerceLayoutsPage,

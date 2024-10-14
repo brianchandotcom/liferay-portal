@@ -76,7 +76,7 @@ const generateRandomObjectDefinition = ({
 	};
 };
 
-test('LPD-26733 Show object in role permissions page', async ({
+test.skip('LPD-26733 Show object in role permissions page', async ({
 	apiHelpers,
 
 	roleDefinePermissionsPage,

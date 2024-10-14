@@ -12,7 +12,6 @@ import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import addDraftStructuredContent from '../../utils/structured-content/addDraftStructuredContent';
@@ -232,12 +231,6 @@ test.describe('Customization settings', () => {
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
 		const siteRole =
 			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
@@ -247,13 +240,11 @@ test.describe('Customization settings', () => {
 			user.id
 		);
 
-		await performLogout(page);
-
-		await performLogin(page, user.alternateName);
-
 		// Go to view mode
 
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyURL}?doAsUserId=${user.id}`
+		);
 
 		// Assert new user can add non instanceable blog portlet to customizable column
 

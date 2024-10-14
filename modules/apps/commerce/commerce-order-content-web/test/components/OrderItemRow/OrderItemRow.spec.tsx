@@ -22,9 +22,9 @@ import {setFieldValue} from '../../utils/utils.spec';
 
 interface ILocators {
 	deliveryGroup1Cell: HTMLElement | null;
-	deliveryGroup1Input: HTMLInputElement | null;
+	deliveryGroup1Input: HTMLInputElement | HTMLSelectElement | null;
 	deliveryGroup2Cell: HTMLElement | null;
-	deliveryGroup2Input: HTMLInputElement | null;
+	deliveryGroup2Input: HTMLInputElement | HTMLSelectElement | null;
 	image: HTMLImageElement;
 	quantityCell: HTMLElement;
 	skuNameCell: HTMLElement;
@@ -41,13 +41,13 @@ const getLocators = (
 		),
 		deliveryGroup1Input: renderedComponent.queryByTestId(
 			`orderItem${orderItemId}-${deliveryGroups[0]?.id}Input`
-		) as HTMLInputElement,
+		) as HTMLInputElement | HTMLSelectElement,
 		deliveryGroup2Cell: renderedComponent.queryByTestId(
 			`orderItem${orderItemId}-${deliveryGroups[1]?.id}`
 		),
 		deliveryGroup2Input: renderedComponent.queryByTestId(
 			`orderItem${orderItemId}-${deliveryGroups[1]?.id}Input`
-		) as HTMLInputElement,
+		) as HTMLInputElement | HTMLSelectElement,
 		image: renderedComponent.queryByRole('img') as HTMLImageElement,
 		quantityCell: renderedComponent.getByRole('cell', {name: 'quantity'}),
 		skuNameCell: renderedComponent.getByRole('cell', {name: 'sku-name'}),
@@ -897,6 +897,110 @@ describe('OrderItemRow', () => {
 			expect(
 				renderedComponent.getByText(`view ${orderItem.sku} details`)
 			).toBeVisible();
+		});
+	});
+
+	it('Must show quantity select', async () => {
+		fetchMock
+			.delete(
+				/headless-commerce-delivery-cart\/.*\/cart-items\/.*/i,
+				JSON.stringify({})
+			)
+			.post(
+				/headless-commerce-delivery-cart\/.*\/carts\/.*\/items/i,
+				(): IOrderItem => {
+					return {
+						deliveryGroup: '10000',
+						id: 300,
+						options: '[]',
+						quantity: 6,
+						replacedSkuId: 0,
+						requestedDeliveryDate: '',
+						shippingAddressId: 100,
+						skuId: 1001,
+					} as IOrderItem;
+				}
+			);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroup: 'DeliveryGroup1',
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 4,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				allowedQuantities: [2, 3, 4],
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 100,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {deliveryGroup1Input, quantityCell} = getLocators(
+			deliveryGroups,
+			orderItem.id,
+			renderedComponent
+		);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toBeInTheDocument();
+		expect(deliveryGroup1Input).toHaveValue(String(4));
+
+		await setFieldValue(deliveryGroup1Input, '');
+
+		await waitFor(() => {
+			expect(handleSubmit).toBeCalledWith({});
+		});
+
+		expect(quantityCell).toHaveTextContent(String(0));
+
+		await setFieldValue(deliveryGroup1Input, String(3));
+
+		expect(quantityCell).toHaveTextContent(String(3));
+
+		await waitFor(() => {
+			expect(quantityCell).toHaveTextContent(String(3));
 		});
 	});
 });

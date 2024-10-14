@@ -68,7 +68,7 @@ export interface IOrderItem {
 	replacedSkuId: number;
 	requestedDeliveryDate: string;
 	settings?: {
-		allowedQuantities?: string;
+		allowedQuantities?: Array<number>;
 		maxQuantity: number;
 		minQuantity: number;
 		multipleQuantity: number;

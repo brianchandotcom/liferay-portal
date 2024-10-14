@@ -61,6 +61,11 @@ public class TreeTest {
 			).build());
 
 		Assert.assertEquals(2, tree.getHeight(tree.getRootNode()));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_AAA", "C_AAB", "C_AA", "C_AB", "C_A"},
+			_objectEntryLocalService);
 	}
 
 	@Test

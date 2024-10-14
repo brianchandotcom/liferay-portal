@@ -2777,7 +2777,9 @@ definition {
 						translated = ${translated});
 				}
 				else {
-					PortletEntry.changeLocale(locale = ${webContentLocaleFieldLabel});
+					PortletEntry.changeLocale(
+						locale = ${webContentLocaleFieldLabel},
+						translated = "true");
 				}
 			}
 

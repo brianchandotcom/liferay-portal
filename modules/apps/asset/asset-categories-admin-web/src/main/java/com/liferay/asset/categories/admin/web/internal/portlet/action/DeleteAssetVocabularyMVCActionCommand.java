@@ -39,14 +39,6 @@ public class DeleteAssetVocabularyMVCActionCommand
 
 		if (vocabularyId > 0) {
 			_assetVocabularyService.deleteVocabulary(vocabularyId);
-
-			return;
-		}
-
-		for (long deleteVocabularyId :
-				ParamUtil.getLongValues(actionRequest, "rowIds")) {
-
-			_assetVocabularyService.deleteVocabulary(deleteVocabularyId);
 		}
 	}
 

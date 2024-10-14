@@ -85,7 +85,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -661,13 +660,11 @@ public class AssetCategoriesDisplayContext {
 
 	public List<DropdownItem> getVocabulariesDropdownItems() {
 		LiferayPortletURL deleteVocabulariesURL =
-			_renderResponse.createActionURL();
+			(LiferayPortletURL)_renderResponse.createResourceURL();
 
 		deleteVocabulariesURL.setCopyCurrentRenderParameters(false);
-		deleteVocabulariesURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/asset_categories_admin/delete_asset_vocabulary");
-		deleteVocabulariesURL.setParameter("redirect", getDefaultRedirect());
+		deleteVocabulariesURL.setResourceID(
+			"/asset_categories_admin/delete_asset_vocabularies");
 
 		ItemSelector itemSelector =
 			(ItemSelector)_httpServletRequest.getAttribute(
@@ -685,6 +682,7 @@ public class AssetCategoriesDisplayContext {
 				dropdownItem.putData("action", "deleteVocabularies");
 				dropdownItem.putData(
 					"deleteVocabulariesURL", deleteVocabulariesURL.toString());
+				dropdownItem.putData("redirectURL", getDefaultRedirect());
 				dropdownItem.putData(
 					"viewVocabulariesURL",
 					String.valueOf(

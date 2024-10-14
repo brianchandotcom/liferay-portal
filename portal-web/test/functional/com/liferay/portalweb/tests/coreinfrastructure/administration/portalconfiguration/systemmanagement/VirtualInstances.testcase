@@ -253,16 +253,6 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPage(pageName = "Wiki Page");
-
-		Navigator.gotoPage(pageName = "Wiki Page");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
 		PagesAdmin.addPage(pageName = "Language Page");
 
 		Navigator.gotoPage(pageName = "Language Page");
@@ -277,8 +267,6 @@ definition {
 			virtualHostsURL = "http://www.able.com:8080");
 
 		Page.viewNoPG(pageName = "Blogs Page");
-
-		Page.viewNoPG(pageName = "Wiki Page");
 
 		Page.viewNoPG(pageName = "Language Page");
 

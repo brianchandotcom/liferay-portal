@@ -87,9 +87,16 @@ public class StepTrackerFragmentRenderer implements FragmentRenderer {
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
-				"liferay-commerce:step-tracker:commerce-order-steps",
+				"liferay-commerce:step-tracker:commerceOrderId",
+				commerceOrder.getCommerceOrderId());
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:step-tracker:commerceOrderSteps",
 				_commerceOrderStepTrackerHelper.getCommerceOrderSteps(
 					commerceOrder, themeDisplay.getLocale(), true));
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:step-tracker:open", commerceOrder.isOpen());
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

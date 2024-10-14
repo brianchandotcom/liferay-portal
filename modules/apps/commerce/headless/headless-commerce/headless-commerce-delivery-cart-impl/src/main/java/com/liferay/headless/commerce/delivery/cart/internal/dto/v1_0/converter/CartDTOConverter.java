@@ -734,9 +734,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	private Step _toStep(StepModel stepModel) {
 		return new Step() {
 			{
-				id = stepModel.getId();
-				label = stepModel.getLabel();
-				state = stepModel.getState();
+				setId(stepModel::getId);
+				setLabel(stepModel::getLabel);
+				setState(stepModel::getState);
 			}
 		};
 	}

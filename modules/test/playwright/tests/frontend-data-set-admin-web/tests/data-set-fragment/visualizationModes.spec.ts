@@ -30,8 +30,7 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
-		additionalAPIURLParameters:
-			'&nestedFields=dataSetToDataSetTableSections',
+		additionalAPIURLParameters: '&sort=id:asc',
 		erc: dataSetERC,
 		label: dataSetLabel,
 	});
@@ -58,13 +57,20 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
 				fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
-				label_i18n: {en_US: 'Label'},
+				label_i18n: {en_US: 'Data Set Label'},
+				type: 'string',
+			});
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: `${SAMPLE_OBJECT_CHILD_FIELD}`,
+				label_i18n: {en_US: 'Table Section Label'},
 				type: 'string',
 			});
 			await dataSetManagerApiHelpers.createDataSetTableSection({
 				dataSetERC,
 				fieldName: `${SAMPLE_SCALAR_FIELD}`,
 				label_i18n: {en_US: 'Id'},
+				sortable: true,
 				type: 'string',
 			});
 		});
@@ -158,9 +164,7 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 				state: 'visible',
 			});
 
-			await expect(
-				await fdsFragmentPage.fdsTableWrapper
-			).toBeInViewport();
+			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
 
 			expect(
 				await page
@@ -168,7 +172,48 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 					.first()
 					.locator('.dnd-th')
 					.allInnerTexts()
-			).toEqual(['Label', 'Id', '']);
+			).toEqual(['Data Set Label', 'Table Section Label', 'Id', '']);
+		});
+
+		await test.step('Data Set request URL contains additionalAPIURLParameters and nestedFields', async () => {
+			const nestedFieldsValue =
+				'nestedFields=dataSetToDataSetTableSections';
+			const additionalAPIURLParameters = 'sort=id%3Aasc';
+
+			const datasetRequestPromise = page.waitForRequest((request) => {
+				return request
+					.url()
+					.includes(
+						`${nestedFieldsValue}&page=1&pageSize=20&${additionalAPIURLParameters}`
+					);
+			});
+
+			// Force data request
+
+			await fdsFragmentPage.sortBy(SAMPLE_SCALAR_FIELD);
+
+			const datasetRequest = await datasetRequestPromise;
+
+			let datasetRequestUrl: string;
+
+			if (datasetRequest) {
+				try {
+					datasetRequestUrl = datasetRequest.url();
+				}
+				catch (error) {
+					console.error(
+						'Error reading request datasetRequest.url:',
+						error
+					);
+				}
+			}
+			else {
+				console.error('Request not received within the timeout period');
+			}
+
+			expect(datasetRequestUrl).toContain(nestedFieldsValue);
+
+			expect(datasetRequestUrl).toContain(additionalAPIURLParameters);
 		});
 	});
 

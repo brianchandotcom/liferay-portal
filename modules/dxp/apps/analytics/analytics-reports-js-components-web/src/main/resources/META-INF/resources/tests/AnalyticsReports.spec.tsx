@@ -93,7 +93,7 @@ describe('AnalyticsReports Overview Metrics', () => {
 			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(4);
+		expect(mockedFetch).toHaveBeenCalledTimes(5);
 
 		expect(getByText('overview')).toBeTruthy();
 	});
@@ -126,7 +126,7 @@ describe('AnalyticsReports Overview Metrics', () => {
 			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(5);
+		expect(mockedFetch).toHaveBeenCalledTimes(6);
 
 		expect(getByText('comments')).toBeInTheDocument();
 		expect(getByText('views')).toBeInTheDocument();
@@ -160,7 +160,7 @@ describe('AnalyticsReports Overview Metrics', () => {
 			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(5);
+		expect(mockedFetch).toHaveBeenCalledTimes(6);
 
 		expect(getByText('downloads')).toBeInTheDocument();
 		expect(getByText('previews')).toBeInTheDocument();
@@ -199,7 +199,7 @@ describe('AnalyticsReports Overview Metrics', () => {
 			container.querySelector('.loading-animation')
 		);
 
-		expect(mockedFetch).toHaveBeenCalledTimes(5);
+		expect(mockedFetch).toHaveBeenCalledTimes(6);
 
 		expect(getByText('views')).toBeInTheDocument();
 	});

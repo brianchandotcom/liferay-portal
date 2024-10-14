@@ -76,7 +76,7 @@ public class MappingsHelperImpl implements MappingsHelper {
 		}
 
 		_putMappings(
-			_getMergedDynamicTemplatesMappingsJSONObject(
+			_getMappingsJSONObjectWithMergedDynamicTemplates(
 				_getCurrentMappings(_indexName), source));
 	}
 
@@ -171,11 +171,11 @@ public class MappingsHelperImpl implements MappingsHelper {
 			ResourceUtil.getResourceAsString(
 				getClass(), IndexMappingsConstants.INDEX_MAPPINGS_FILE_NAME));
 
-		return _getMergedDynamicTemplatesMappingsJSONObject(
+		return _getMappingsJSONObjectWithMergedDynamicTemplates(
 			StringPool.BLANK, defaultMappings);
 	}
 
-	private JSONObject _getMergedDynamicTemplatesMappingsJSONObject(
+	private JSONObject _getMappingsJSONObjectWithMergedDynamicTemplates(
 		String currentMappings, String putMappings) {
 
 		JSONObject currentMappingsJSONObject = _removeLegacyDocumentType(

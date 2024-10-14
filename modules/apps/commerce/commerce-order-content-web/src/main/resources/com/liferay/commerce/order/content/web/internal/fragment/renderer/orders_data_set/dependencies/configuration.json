@@ -3,7 +3,7 @@
 		{
 			"fields": [
 				{
-					"defaultValue": "order-fragment-fds-pendingOrders",
+					"defaultValue": "com_liferay_commerce_order_content_web_internal_fragment_renderer_OrdersDataSetFragmentRenderer-pendingOrders",
 					"label": "Order status",
 					"name": "fdsName",
 					"type": "select",
@@ -11,11 +11,11 @@
 						"validValues": [
 							{
 								"label": "Pending orders",
-								"value": "order-fragment-fds-pendingOrders"
+								"value": "com_liferay_commerce_order_content_web_internal_fragment_renderer_OrdersDataSetFragmentRenderer-pendingOrders"
 							},
 							{
 								"label": "Placed orders",
-								"value": "order-fragment-fds-placedOrders"
+								"value": "com_liferay_commerce_order_content_web_internal_fragment_renderer_OrdersDataSetFragmentRenderer-placedOrders"
 							}
 						]
 					}

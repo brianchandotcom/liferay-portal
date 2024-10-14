@@ -101,6 +101,7 @@
 		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.SessionErrors" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
+		<Logger level="INFO" name="com.liferay.portal.kernel.test.performance.PerformanceTimer" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.upgrade" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.util.ClassUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.util.JavaDetector" />

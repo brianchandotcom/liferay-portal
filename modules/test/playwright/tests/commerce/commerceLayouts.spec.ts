@@ -20,6 +20,7 @@ import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {customFormatDate, getDateCustomFormat} from './utils/date';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -1677,6 +1678,239 @@ test('LPD-32230 Billing and shipping address order info box fragment configurati
 		await expect(
 			commerceLayoutsPage.infoBoxButton('Shipping Address')
 		).toBeHidden();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-33503 Order Details - Questions & Answers', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['demo.unprivileged@liferay.com']
+		);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			user.emailAddress
+		);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.uncheck();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption('notes');
+
+		await commerceLayoutsPage.infoBoxLabelInput.fill('Order notes');
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Order notes')).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		const randomComment = getRandomString();
+
+		await commerceLayoutsPage.inputTextArea.fill(randomComment);
+
+		await commerceLayoutsPage.submitButton.click();
+
+		let comment = await apiHelpers.headlessCommerceDeliveryCart.getComments(
+			cart.id
+		);
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					comment.items[0].modifiedDate,
+					customFormatDate.DATE_AND_TIME
+				).replace(',', '')
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await expect(page.getByText(comment.items[0].author)).toBeVisible();
+		await expect(page.getByText(randomComment)).toBeVisible();
+
+		const randomComment2 = getRandomString();
+
+		await commerceLayoutsPage.inputTextArea.fill(randomComment2);
+
+		await page.getByLabel('Private').check();
+
+		await commerceLayoutsPage.submitButton.click();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await expect(page.getByText(randomComment2)).toBeVisible();
+		await expect(commerceLayoutsPage.iconLock).toBeVisible();
+
+		await commerceLayoutsPage.moreActionsButton.first().click();
+
+		page.once('dialog', async (dialog) => {
+			expect(dialog.message()).toContain(
+				'Are you sure you want to delete this? It will be deleted immediately.'
+			);
+			await dialog.accept();
+		});
+
+		await commerceLayoutsPage.deleteMenuItemModal.click();
+
+		const randomComment3 = getRandomString();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await commerceLayoutsPage.inputTextArea.fill(randomComment3);
+
+		await commerceLayoutsPage.submitButton.click();
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		comment = await apiHelpers.headlessCommerceDeliveryCart.getComments(
+			cart.id
+		);
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					comment.items[0].modifiedDate,
+					customFormatDate.DATE_AND_TIME
+				).replace(',', '')
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await expect(page.getByText(comment.items[0].author)).toBeVisible();
+		await expect(page.getByText(randomComment3)).toBeVisible();
+		await expect(commerceLayoutsPage.iconLock).toBeHidden();
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
 	}
 	finally {
 		await systemSettingsPage.goToSystemSetting(

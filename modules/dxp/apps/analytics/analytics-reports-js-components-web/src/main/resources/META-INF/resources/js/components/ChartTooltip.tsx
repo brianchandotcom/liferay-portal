@@ -5,8 +5,8 @@
 
 import React from 'react';
 
-import {Alignments, Weights} from '../../types/global';
-import TooltipTemplate from '../TooltipTemplate';
+import {Alignments, Weights} from '../types/global';
+import TooltipTemplate from './TooltipTemplate';
 
 export type Column = {
 	align?: Alignments;

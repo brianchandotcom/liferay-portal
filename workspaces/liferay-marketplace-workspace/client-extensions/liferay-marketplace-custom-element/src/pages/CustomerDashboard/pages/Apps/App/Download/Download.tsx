@@ -89,7 +89,13 @@ const Download = () => {
 					?.toLowerCase()
 					?.includes(search.toLowerCase())
 		);
-	}, [latestVersionSpecification, search, skus, virtualProducts]);
+	}, [
+		latestVersionSpecification,
+		outletContext?.product?.categories,
+		search,
+		skus,
+		virtualProducts,
+	]);
 
 	return (
 		<>

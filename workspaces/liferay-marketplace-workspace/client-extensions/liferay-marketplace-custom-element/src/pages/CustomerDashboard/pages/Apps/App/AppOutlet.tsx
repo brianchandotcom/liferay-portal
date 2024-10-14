@@ -70,7 +70,7 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 				className="d-flex flex-row justify-content-between pb-3 pt-5"
 				hasOrderDetails
 				image={placedOrderItems[0]?.thumbnail}
-				name={data?.product?.name}
+				name={placedOrderItems[0]?.name}
 				order={data?.placedOrder as unknown as Cart}
 				productOwner={productCreatorAccountName}
 			/>

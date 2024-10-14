@@ -25,8 +25,8 @@ export enum PRODUCT_CATEGORIES {
 }
 
 export enum PRODUCT_IMAGE_FALLBACK_CATEGORIES {
-    PRODUCT_IMAGE = 'productImage',
-    PRODUCT_ICON = 'productIcon',
+	PRODUCT_ICON = 'productIcon',
+	PRODUCT_IMAGE = 'productImage',
 }
 
 export enum PRODUCT_PRICE_MODEL {

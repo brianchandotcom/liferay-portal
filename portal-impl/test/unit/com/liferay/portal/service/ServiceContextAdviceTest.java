@@ -17,6 +17,7 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.junit.Assert;
@@ -48,6 +49,31 @@ public class ServiceContextAdviceTest {
 		_aopInvocationHandler = constructor.newInstance(
 			_testInterceptedClass,
 			new ChainableMethodAdvice[] {new ServiceContextAdvice()}, null);
+	}
+
+	@Test
+	public void testMisc() throws Throwable {
+
+		// For code coverage
+
+		TestExceptionServiceContextWrapper testExceptionServiceContextWrapper =
+			new TestExceptionServiceContextWrapper();
+
+		try {
+			AopMethodInvocation aopMethodInvocation =
+				_createTestMethodInvocation(
+					ReflectionTestUtil.getMethod(
+						TestInterceptedClass.class, "method",
+						TestExceptionServiceContextWrapper.class));
+
+			aopMethodInvocation.proceed(
+				new Object[] {testExceptionServiceContextWrapper});
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof InvocationTargetException);
+		}
 	}
 
 	@Test
@@ -146,6 +172,10 @@ public class ServiceContextAdviceTest {
 	private final TestInterceptedClass _testInterceptedClass =
 		new TestInterceptedClass();
 
+	private static class TestExceptionServiceContextWrapper
+		extends ServiceContext {
+	}
+
 	private static class TestInterceptedClass {
 
 		@SuppressWarnings("unused")
@@ -169,6 +199,14 @@ public class ServiceContextAdviceTest {
 					serviceContext,
 					ServiceContextThreadLocal.getServiceContext());
 			}
+		}
+
+		@SuppressWarnings("unused")
+		public void method(
+				TestExceptionServiceContextWrapper serviceContextWrapper)
+			throws InvocationTargetException {
+
+			throw new InvocationTargetException(null);
 		}
 
 		@SuppressWarnings("unused")

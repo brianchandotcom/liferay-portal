@@ -98,6 +98,12 @@ public class PortletFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testCanAddMoreThanOneInstanceableWidget() throws Exception {
+		_addFragmentEntry(
+			"fragment_entry_with_duplicate_instanceable_widget_tag.html");
+	}
+
+	@Test
 	public void testCanAddOneNoninstanceableWidget() throws Exception {
 		_addFragmentEntry(
 			"fragment_entry_with_noninstanceable_widget_tag.html");

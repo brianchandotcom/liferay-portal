@@ -2027,19 +2027,42 @@ public class ObjectDefinitionLocalServiceImpl
 
 		deployObjectDefinition(objectDefinition1);
 
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				objectDefinitionLocalService, _objectRelationshipLocalService);
+
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition objectDefinition2 =
 				objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId2());
 
 			if (!objectDefinition2.isApproved()) {
+				Tree tree = objectDefinitionTreeFactory.create(
+					false, objectDefinition1.getObjectDefinitionId());
+
+				Node rootNode = tree.getRootNode();
+
+				for (Node childNode : rootNode.getChildNodes()) {
+					Iterator<Node> iterator = tree.iterator(
+						childNode.getPrimaryKey());
+
+					while (iterator.hasNext()) {
+						Node node = iterator.next();
+
+						ObjectDefinition nodeObjectDefinition =
+							objectDefinitionLocalService.getObjectDefinition(
+								node.getPrimaryKey());
+
+						nodeObjectDefinition.setRootObjectDefinitionId(
+							childNode.getPrimaryKey());
+
+						objectDefinitionPersistence.update(
+							nodeObjectDefinition);
+					}
+				}
+
 				continue;
 			}
-
-			ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
-				new ObjectDefinitionTreeFactory(
-					objectDefinitionLocalService,
-					_objectRelationshipLocalService);
 
 			Tree tree = objectDefinitionTreeFactory.create(
 				objectRelationship.getObjectDefinitionId2());

@@ -1559,6 +1559,48 @@ public class PlacedOrder implements Serializable {
 
 	@Schema
 	@Valid
+	public Step[] getSteps() {
+		if (_stepsSupplier != null) {
+			steps = _stepsSupplier.get();
+
+			_stepsSupplier = null;
+		}
+
+		return steps;
+	}
+
+	public void setSteps(Step[] steps) {
+		this.steps = steps;
+
+		_stepsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSteps(
+		UnsafeSupplier<Step[], Exception> stepsUnsafeSupplier) {
+
+		_stepsSupplier = () -> {
+			try {
+				return stepsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Step[] steps;
+
+	@JsonIgnore
+	private Supplier<Step[]> _stepsSupplier;
+
+	@Schema
+	@Valid
 	public Summary getSummary() {
 		if (_summarySupplier != null) {
 			summary = _summarySupplier.get();
@@ -2304,6 +2346,28 @@ public class PlacedOrder implements Serializable {
 			sb.append(_escape(status));
 
 			sb.append("\"");
+		}
+
+		Step[] steps = getSteps();
+
+		if (steps != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"steps\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < steps.length; i++) {
+				sb.append(String.valueOf(steps[i]));
+
+				if ((i + 1) < steps.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		Summary summary = getSummary();

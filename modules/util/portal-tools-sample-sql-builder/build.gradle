@@ -32,6 +32,7 @@ dependencies {
 
 	compileInclude project(":apps:account:account-api")
 	compileInclude project(":apps:account:account-service")
+	compileInclude project(":apps:application-list:application-list-api")
 	compileInclude project(":apps:asset:asset-entry-rel-service")
 	compileInclude project(":apps:blogs:blogs-api")
 	compileInclude project(":apps:blogs:blogs-service")
@@ -96,6 +97,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-reflect")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }
 

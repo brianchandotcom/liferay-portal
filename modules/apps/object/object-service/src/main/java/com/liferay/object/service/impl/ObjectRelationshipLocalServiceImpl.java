@@ -1851,6 +1851,9 @@ public class ObjectRelationshipLocalServiceImpl
 					"object definitions to be an edge of a root context");
 		}
 
+		// Circular reference in a root context must be validated before
+		// the tree maximum height
+
 		if ((objectDefinition1.getRootObjectDefinitionId() != 0) &&
 			(objectDefinition1.getRootObjectDefinitionId() ==
 				objectDefinition2.getObjectDefinitionId())) {
@@ -1858,6 +1861,35 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipEdgeException(
 				"The object relationship must not create a circular " +
 					"reference in a root context");
+		}
+
+		int treeHeight = 1;
+
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				_objectDefinitionPersistence, objectRelationshipLocalService);
+
+		if (objectDefinition1.getRootObjectDefinitionId() != 0) {
+			Tree tree = objectDefinitionTreeFactory.create(
+				objectDefinition1.getRootObjectDefinitionId());
+
+			Node node = tree.getNode(objectDefinition1.getObjectDefinitionId());
+
+			treeHeight += node.getDepth();
+		}
+
+		if (objectDefinition2.getRootObjectDefinitionId() != 0) {
+			Tree tree = objectDefinitionTreeFactory.create(
+				objectDefinition2.getRootObjectDefinitionId());
+
+			treeHeight += tree.getHeight(tree.getRootNode());
+		}
+
+		if (treeHeight > TreeConstants.MAX_HEIGHT) {
+			throw new ObjectRelationshipEdgeException(
+				"The object relationship cannot be an edge in the root " +
+					"context because it would exceed the tree's maximum " +
+						"height");
 		}
 
 		if (objectDefinition1.isApproved() && objectDefinition2.isApproved() &&
@@ -1896,34 +1928,6 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipEdgeException(
 				"Unable to bind the object definitions when they have " +
 					"different scopes");
-		}
-
-		int height = 1;
-
-		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
-			new ObjectDefinitionTreeFactory(
-				_objectDefinitionPersistence, objectRelationshipLocalService);
-
-		if (objectDefinition1.getRootObjectDefinitionId() != 0) {
-			Tree tree = objectDefinitionTreeFactory.create(
-				objectDefinition1.getRootObjectDefinitionId());
-
-			Node node = tree.getNode(objectDefinition1.getObjectDefinitionId());
-
-			height += node.getDepth();
-		}
-
-		if (objectDefinition2.getRootObjectDefinitionId() != 0) {
-			Tree tree = objectDefinitionTreeFactory.create(
-				objectDefinition2.getRootObjectDefinitionId());
-
-			height += tree.getHeight(tree.getRootNode());
-		}
-
-		if (height > TreeConstants.MAX_HEIGHT) {
-			throw new ObjectRelationshipEdgeException(
-				"Object relationship cannot be an edge because the tree max " +
-					"height will be exceeded");
 		}
 	}
 

@@ -810,8 +810,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			"Object relationship cannot be an edge because the tree max " +
-				"height will be exceeded",
+			"The object relationship cannot be an edge in the root context " +
+				"because it would exceed the tree's maximum height",
 			() -> _bindObjectDefinitions(
 				objectDefinitionAAAAA.getObjectDefinitionId(),
 				objectDefinitionAAAAAA.getObjectDefinitionId()));
@@ -860,8 +860,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			"Object relationship cannot be an edge because the tree max " +
-				"height will be exceeded",
+			"The object relationship cannot be an edge in the root context " +
+				"because it would exceed the tree's maximum height",
 			() -> _bindObjectDefinitions(
 				objectDefinitionAAA.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId()));

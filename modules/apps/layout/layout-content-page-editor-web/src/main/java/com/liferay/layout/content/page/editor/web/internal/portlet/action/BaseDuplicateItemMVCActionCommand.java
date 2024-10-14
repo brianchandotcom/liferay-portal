@@ -170,12 +170,7 @@ public abstract class BaseDuplicateItemMVCActionCommand
 
 		String errorMessage = StringPool.BLANK;
 
-		if (exception instanceof NoSuchEntryLinkException) {
-			errorMessage = language.get(
-				themeDisplay.getRequest(),
-				getNoSuchEntryLinkExceptionMessage());
-		}
-		else if (exception instanceof NoninstanceablePortletException) {
+		if (exception instanceof NoninstanceablePortletException) {
 			errorMessage = _getNoninstanceablePortletErrorMessage(
 				actionRequest, (NoninstanceablePortletException)exception,
 				themeDisplay);
@@ -187,6 +182,11 @@ public abstract class BaseDuplicateItemMVCActionCommand
 				actionRequest,
 				(NoninstanceablePortletException)exception.getCause(),
 				themeDisplay);
+		}
+		else if (exception instanceof NoSuchEntryLinkException) {
+			errorMessage = language.get(
+				themeDisplay.getRequest(),
+				getNoSuchEntryLinkExceptionMessage());
 		}
 		else {
 			errorMessage = language.get(

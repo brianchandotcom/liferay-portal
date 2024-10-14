@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.model.impl.AccountEntryModelImpl;
 import com.liferay.account.model.impl.AccountEntryUserRelModelImpl;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
@@ -31,7 +32,6 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -170,6 +170,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelMode
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelModelImpl;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeDefinitionModel;
 import com.liferay.list.type.model.ListTypeEntryModel;
 import com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl;
@@ -201,14 +202,32 @@ import com.liferay.notification.model.impl.NotificationTemplateModelImpl;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectActionModel;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionModel;
+import com.liferay.object.model.ObjectEntryModel;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldModel;
+import com.liferay.object.model.ObjectFieldSettingModel;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectFolderModel;
+import com.liferay.object.model.ObjectRelationshipModel;
+import com.liferay.object.model.ObjectStateFlowModel;
+import com.liferay.object.model.ObjectStateModel;
+import com.liferay.object.model.ObjectStateTransitionModel;
 import com.liferay.object.model.impl.ObjectActionModelImpl;
-import com.liferay.object.model.impl.ObjectDefinitionModelImpl;
-import com.liferay.object.model.impl.ObjectFieldModelImpl;
+import com.liferay.object.model.impl.ObjectDefinitionImpl;
+import com.liferay.object.model.impl.ObjectEntryModelImpl;
+import com.liferay.object.model.impl.ObjectFieldImpl;
+import com.liferay.object.model.impl.ObjectFieldSettingModelImpl;
 import com.liferay.object.model.impl.ObjectFolderModelImpl;
+import com.liferay.object.model.impl.ObjectRelationshipModelImpl;
+import com.liferay.object.model.impl.ObjectStateFlowModelImpl;
+import com.liferay.object.model.impl.ObjectStateModelImpl;
+import com.liferay.object.model.impl.ObjectStateTransitionModelImpl;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -567,7 +586,11 @@ public class DataFactory {
 	}
 
 	public long getClassNameId(Class<?> clazz) {
-		ClassNameModel classNameModel = _classNameModels.get(clazz.getName());
+		return getClassNameId(clazz.getName());
+	}
+
+	public long getClassNameId(String className) {
+		ClassNameModel classNameModel = _classNameModels.get(className);
 
 		return classNameModel.getClassNameId();
 	}
@@ -602,12 +625,118 @@ public class DataFactory {
 		return _defaultDLDDMStructureId;
 	}
 
+	public long getDefaultObjectFolderId() {
+		return _defaultObjectFolderId;
+	}
+
 	public long getDLFileEntryClassNameId() {
 		return getClassNameId(DLFileEntry.class);
 	}
 
+	public String getDynamicObjectDefinitionTableCreateSQL(
+		ObjectDefinitionModel objectDefinitionModel,
+		List<ObjectFieldModel> objectFieldModels) {
+
+		List<ObjectField> objectFields = new ArrayList<>(
+			objectFieldModels.size());
+
+		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
+			if (objectFieldModel.isSystem()) {
+				continue;
+			}
+
+			objectFields.add((ObjectField)objectFieldModel);
+		}
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			new DynamicObjectDefinitionTable(
+				(ObjectDefinition)objectDefinitionModel, objectFields,
+				objectDefinitionModel.getDBTableName());
+
+		return dynamicObjectDefinitionTable.getCreateTableSQL();
+	}
+
+	public String getExtensionDynamicObjectDefinitionTableCreateSQL(
+		ObjectDefinitionModel objectDefinitionModel) {
+
+		ObjectDefinition objectDefinition =
+			(ObjectDefinition)objectDefinitionModel;
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			new DynamicObjectDefinitionTable(
+				objectDefinition, new ArrayList<>(),
+				objectDefinition.getExtensionDBTableName());
+
+		return dynamicObjectDefinitionTable.getCreateTableSQL();
+	}
+
 	public RoleModel getGuestRoleModel() {
 		return _guestRoleModel;
+	}
+
+	public String getInsertIntoDynamicExtensionObjectDefinitionTable(
+		ObjectDefinitionModel objectDefinition,
+		ObjectEntryModel objectEntryModel) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("insert into ");
+		sb.append(objectDefinition.getDBTableName());
+		sb.append("_x values (");
+		sb.append(objectEntryModel.getObjectEntryId());
+		sb.append(");");
+
+		return sb.toString();
+	}
+
+	public String getInsertIntoDynamicObjectDefinitionTable(
+		long fileEntryId, ObjectDefinitionModel objectDefinition,
+		ObjectEntryModel objectEntryModel,
+		List<ObjectFieldModel> objectFieldModels, long relatedObjectEntryId) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("insert into ");
+		sb.append(objectDefinition.getDBTableName());
+		sb.append(" values (");
+		sb.append(objectEntryModel.getObjectEntryId());
+
+		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
+			if (objectFieldModel.isSystem()) {
+				continue;
+			}
+
+			Object value =
+				objectFieldModel.getName() +
+					objectEntryModel.getObjectEntryId();
+
+			if (StringUtil.equals(
+					objectFieldModel.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				value = fileEntryId;
+			}
+			else if (StringUtil.equals(
+						objectFieldModel.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				value = _defaultListTypeEntryKey;
+			}
+			else if (StringUtil.equals(
+						objectFieldModel.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				value = (relatedObjectEntryId > 0) ? relatedObjectEntryId : 0;
+			}
+
+			sb.append(", '");
+			sb.append(value);
+			sb.append("'");
+		}
+
+		sb.append(");");
+
+		return sb.toString();
 	}
 
 	public long getJournalArticleClassNameId() {
@@ -1058,6 +1187,21 @@ public class DataFactory {
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
 			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
+	}
+
+	public AssetEntryModel newAssetEntryModel(
+		ObjectEntryModel objectEntryModel) {
+
+		return newAssetEntryModel(
+			objectEntryModel.getGroupId(), objectEntryModel.getCreateDate(),
+			objectEntryModel.getModifiedDate(),
+			getClassNameId(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+						objectEntryModel.getObjectDefinitionId()),
+			objectEntryModel.getObjectEntryId(), objectEntryModel.getUuid(), 0,
+			true, objectEntryModel.isApproved(), ContentTypes.TEXT_PLAIN,
+			String.valueOf(objectEntryModel.getObjectEntryId()));
 	}
 
 	public AssetEntryModel newAssetEntryModel(
@@ -3916,6 +4060,10 @@ public class DataFactory {
 			_counter.get(), groupId, parentFolderId, "", name);
 	}
 
+	public DLFolderModel newDLFolderModel(String name) {
+		return newDLFolderModel(_counter.get(), _globalGroupId, 0, "", name);
+	}
+
 	public List<DLFolderModel> newDLFolderModels(
 		long groupId, long parentFolderId, int depth) {
 
@@ -5163,9 +5311,11 @@ public class DataFactory {
 		return objectActionModel;
 	}
 
-	public ObjectDefinitionModel newObjectDefinitionModel(long objectFolderId) {
+	public ObjectDefinitionModel newObjectDefinitionModel(
+		String name, long objectFolderId) {
+
 		ObjectDefinitionModel objectDefinitionModel =
-			new ObjectDefinitionModelImpl();
+			new ObjectDefinitionImpl();
 
 		// PK fields
 
@@ -5179,58 +5329,121 @@ public class DataFactory {
 		objectDefinitionModel.setCreateDate(new Date());
 		objectDefinitionModel.setModifiedDate(new Date());
 
-		// Other field
+		// Other fields
 
-		objectDefinitionModel.setDescriptionObjectFieldId(0);
 		objectDefinitionModel.setObjectFolderId(objectFolderId);
-		objectDefinitionModel.setRootObjectDefinitionId(0);
-		objectDefinitionModel.setTitleObjectFieldId(_counter.get());
-		objectDefinitionModel.setAccountEntryRestricted(false);
 		objectDefinitionModel.setActive(true);
-		objectDefinitionModel.setLabel(
-			StringBundler.concat(
-				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
-				"default-locale=\"en_US\"><Label language-id=\"en_US\">",
-				"Commerce Order</Label></root>"));
-		objectDefinitionModel.setClassName(CommerceOrder.class.getName());
+		objectDefinitionModel.setDBTableName(
+			StringBundler.concat("O_", _companyId, StringPool.UNDERLINE, name));
+		objectDefinitionModel.setLabel(_getLabel(name));
+
+		String className =
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					objectDefinitionModel.getObjectDefinitionId();
+
+		objectDefinitionModel.setClassName(className);
+
 		objectDefinitionModel.setEnableCategorization(true);
-		objectDefinitionModel.setEnableComments(false);
-		objectDefinitionModel.setEnableIndexSearch(true);
+		objectDefinitionModel.setEnableComments(true);
+		objectDefinitionModel.setEnableIndexSearch(false);
 		objectDefinitionModel.setEnableLocalization(false);
 		objectDefinitionModel.setEnableObjectEntryDraft(false);
-		objectDefinitionModel.setEnableObjectEntryHistory(false);
-		objectDefinitionModel.setModifiable(false);
-		objectDefinitionModel.setName("CommerceOrder");
-		objectDefinitionModel.setPKObjectFieldDBColumnName("commerceOrderId");
-		objectDefinitionModel.setPKObjectFieldName("commerceOrderId");
-		objectDefinitionModel.setPluralLabel(
-			StringBundler.concat(
-				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
-				"default-locale=\"en_US\"><PluralLabel language-id=\"en_US\">",
-				"Commerce Orders</PluralLabel></root>"));
-		objectDefinitionModel.setPortlet(false);
+		objectDefinitionModel.setEnableObjectEntryHistory(true);
+		objectDefinitionModel.setModifiable(true);
+		objectDefinitionModel.setName(name);
+		objectDefinitionModel.setPanelAppOrder(null);
+		objectDefinitionModel.setPanelCategoryKey(
+			PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_CUSTOM_APPS);
+		objectDefinitionModel.setPKObjectFieldDBColumnName(
+			"c_" + StringUtil.toLowerCase(name) + "_");
+		objectDefinitionModel.setPKObjectFieldName(
+			"c_" + StringUtil.toLowerCase(name));
+		objectDefinitionModel.setPluralLabel(_getLabel(name));
+		objectDefinitionModel.setPortlet(true);
 		objectDefinitionModel.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinitionModel.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
-		objectDefinitionModel.setSystem(true);
+		objectDefinitionModel.setSystem(false);
 		objectDefinitionModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+		objectDefinitionModel.setVersion(0);
 
 		// Autogenerated fields
 
-		objectDefinitionModel.setUuid(SequentialUUID.generate());
-		objectDefinitionModel.setExternalReferenceCode("L_COMMERCE_ORDER");
+		String uuid = SequentialUUID.generate();
+
+		objectDefinitionModel.setExternalReferenceCode(uuid);
+		objectDefinitionModel.setUuid(uuid);
+
+		ClassNameModel classNameModel = new ClassNameModelImpl();
+
+		classNameModel.setClassNameId(_counter.get());
+		classNameModel.setValue(className);
+
+		_classNameModels.put(className, classNameModel);
 
 		return objectDefinitionModel;
 	}
 
-	public ObjectFieldModel newObjectFieldModel(
-		long objectFieldId, long objectDefinitionId) {
+	public ObjectEntryModel newObjectEntryModel(long objectDefinitionId) {
+		ObjectEntryModel objectEntryModel = new ObjectEntryModelImpl();
 
-		ObjectFieldModel objectFieldModel = new ObjectFieldModelImpl();
+		// External reference code
+
+		String uuid = SequentialUUID.generate();
+
+		objectEntryModel.setExternalReferenceCode(uuid);
+		objectEntryModel.setUuid(uuid);
 
 		// PK fields
 
-		objectFieldModel.setObjectFieldId(objectFieldId);
+		objectEntryModel.setObjectEntryId(_counter.get());
+
+		// Group instance
+
+		objectEntryModel.setGroupId(0);
+
+		// Audit fields
+
+		objectEntryModel.setCompanyId(_companyId);
+		objectEntryModel.setUserId(_sampleUserId);
+		objectEntryModel.setUserName(_SAMPLE_USER_NAME);
+		objectEntryModel.setCreateDate(new Date());
+		objectEntryModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		objectEntryModel.setObjectDefinitionId(objectDefinitionId);
+		objectEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+		objectEntryModel.setStatusByUserId(_sampleUserId);
+		objectEntryModel.setStatusDate(new Date());
+
+		return objectEntryModel;
+	}
+
+	public List<ObjectEntryModel> newObjectEntryModels(
+		long objectDefinitionId) {
+
+		List<ObjectEntryModel> objectEntryModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_OBJECT_ENTRY_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_OBJECT_ENTRY_COUNT; i++) {
+			objectEntryModels.add(newObjectEntryModel(objectDefinitionId));
+		}
+
+		return objectEntryModels;
+	}
+
+	public ObjectFieldModel newObjectFieldModel(
+		long listTypeDefinitionId, long objectDefinitionId, String businessType,
+		String dbColumnName, String dbTableName, String dbType, String label,
+		String name, boolean required, boolean state, boolean system) {
+
+		ObjectFieldModel objectFieldModel = new ObjectFieldImpl();
+
+		// PK fields
+
+		objectFieldModel.setObjectFieldId(_counter.get());
 
 		// Audit fields
 
@@ -5240,28 +5453,31 @@ public class DataFactory {
 		objectFieldModel.setCreateDate(new Date());
 		objectFieldModel.setModifiedDate(new Date());
 
-		// Other field
+		// Other fields
 
-		objectFieldModel.setListTypeDefinitionId(0);
+		objectFieldModel.setListTypeDefinitionId(listTypeDefinitionId);
 		objectFieldModel.setObjectDefinitionId(objectDefinitionId);
-		objectFieldModel.setBusinessType(
-			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER);
-		objectFieldModel.setDBColumnName("commerceOrderId");
-		objectFieldModel.setDBTableName("CommerceOrder");
-		objectFieldModel.setDBType(ObjectFieldConstants.DB_TYPE_LONG);
-		objectFieldModel.setIndexedAsKeyword(true);
-		objectFieldModel.setLabel(
-			StringBundler.concat(
-				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
-				"default-locale=\"en_US\"><Label language-id=\"en_US\">",
-				"ID</Label></root>"));
-		objectFieldModel.setLocalized(false);
-		objectFieldModel.setName("id");
-		objectFieldModel.setReadOnly("true");
-		objectFieldModel.setReadOnlyConditionExpression("");
-		objectFieldModel.setRequired(false);
-		objectFieldModel.setState(false);
-		objectFieldModel.setSystem(true);
+		objectFieldModel.setBusinessType(businessType);
+		objectFieldModel.setDBColumnName(dbColumnName);
+		objectFieldModel.setDBTableName(dbTableName);
+		objectFieldModel.setDBType(dbType);
+		objectFieldModel.setIndexedAsKeyword(name.equals("id"));
+		objectFieldModel.setLabel(_getLabel(label));
+		objectFieldModel.setName(name);
+		objectFieldModel.setReadOnly(
+			system ? ObjectFieldConstants.READ_ONLY_TRUE :
+				ObjectFieldConstants.READ_ONLY_FALSE);
+
+		if (businessType.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			objectFieldModel.setRelationshipType(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		}
+
+		objectFieldModel.setRequired(required);
+		objectFieldModel.setState(state);
+		objectFieldModel.setSystem(system);
 
 		// Autogenerated fields
 
@@ -5273,12 +5489,143 @@ public class DataFactory {
 		return objectFieldModel;
 	}
 
+	public List<ObjectFieldModel> newObjectFieldModels(
+		long listTypeDefinitionId, long objectDefinitionId,
+		String objectDefinitionDBTableName) {
+
+		List<ObjectFieldModel> objectFieldModels = newSystemObjectFieldModels(
+			objectDefinitionId, "ObjectEntry", "objectEntryId");
+
+		objectFieldModels.add(
+			newObjectFieldModel(
+				0, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT, "description_",
+				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_CLOB,
+				"Description", "description", true, false, false));
+		objectFieldModels.add(
+			newObjectFieldModel(
+				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				"subject_", objectDefinitionDBTableName,
+				ObjectFieldConstants.DB_TYPE_STRING, "Subject", "subject", true,
+				false, false));
+		objectFieldModels.add(
+			newObjectFieldModel(
+				0, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, "attachment_",
+				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_LONG,
+				"Attachment", "attachment", false, false, false));
+
+		if (listTypeDefinitionId > 0) {
+			objectFieldModels.add(
+				newObjectFieldModel(
+					listTypeDefinitionId, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
+					objectDefinitionDBTableName,
+					ObjectFieldConstants.DB_TYPE_STRING, "Support type",
+					"supportType", true, false, false));
+			objectFieldModels.add(
+				newObjectFieldModel(
+					listTypeDefinitionId, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+					"ticketStatus_", objectDefinitionDBTableName,
+					ObjectFieldConstants.DB_TYPE_STRING, "Ticket Status",
+					"ticketStatus", true, true, false));
+		}
+
+		return objectFieldModels;
+	}
+
+	public ObjectFieldSettingModel newObjectFieldSettingModel(
+		long objectFieldId, String name, String value) {
+
+		ObjectFieldSettingModel objectFieldSettingModel =
+			new ObjectFieldSettingModelImpl();
+
+		// PK fields
+
+		objectFieldSettingModel.setObjectFieldSettingId(_counter.get());
+
+		// Audit fields
+
+		objectFieldSettingModel.setCompanyId(_companyId);
+		objectFieldSettingModel.setUserId(_sampleUserId);
+		objectFieldSettingModel.setUserName(_SAMPLE_USER_NAME);
+		objectFieldSettingModel.setCreateDate(new Date());
+		objectFieldSettingModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		objectFieldSettingModel.setObjectFieldId(objectFieldId);
+		objectFieldSettingModel.setName(name);
+		objectFieldSettingModel.setValue(value);
+
+		return objectFieldSettingModel;
+	}
+
+	public List<ObjectFieldSettingModel> newObjectFieldSettingModels(
+		ObjectFieldModel objectFieldModel) {
+
+		List<ObjectFieldSettingModel> objectFieldSettingModels =
+			new ArrayList<>();
+
+		if (StringUtil.equals(
+				objectFieldModel.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
+					"jpeg, jpg, pdf, png, txt"));
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+					ObjectFieldSettingConstants.VALUE_USER_COMPUTER));
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "100"));
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.
+						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					Boolean.TRUE.toString()));
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+					String.valueOf(objectFieldModel.getObjectDefinitionId())));
+		}
+		else if (StringUtil.equals(
+					objectFieldModel.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+				 objectFieldModel.isState()) {
+
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+					_defaultListTypeEntryKey));
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldModel.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE));
+		}
+
+		return objectFieldSettingModels;
+	}
+
 	public ObjectFolderModel newObjectFolderModel() {
 		ObjectFolderModel objectFolderModel = new ObjectFolderModelImpl();
 
 		// PK fields
 
 		objectFolderModel.setObjectFolderId(_counter.get());
+
+		_defaultObjectFolderId = objectFolderModel.getObjectFolderId();
 
 		// Audit fields
 
@@ -5303,6 +5650,171 @@ public class DataFactory {
 		objectFolderModel.setExternalReferenceCode("default");
 
 		return objectFolderModel;
+	}
+
+	public ObjectRelationshipModel newObjectRelationshipModel(
+		long objectDefinitionId1, long objectDefinitionId2,
+		long objectFieldId2) {
+
+		ObjectRelationshipModel objectRelationshipModel =
+			new ObjectRelationshipModelImpl();
+
+		// External reference code
+
+		String uuid = SequentialUUID.generate();
+
+		objectRelationshipModel.setExternalReferenceCode(uuid);
+		objectRelationshipModel.setUuid(uuid);
+
+		// PK fields
+
+		objectRelationshipModel.setObjectRelationshipId(_counter.get());
+
+		// Audit fields
+
+		objectRelationshipModel.setCompanyId(_companyId);
+		objectRelationshipModel.setUserId(_sampleUserId);
+		objectRelationshipModel.setUserName(_SAMPLE_USER_NAME);
+		objectRelationshipModel.setCreateDate(new Date());
+		objectRelationshipModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		objectRelationshipModel.setObjectDefinitionId1(objectDefinitionId1);
+		objectRelationshipModel.setObjectDefinitionId2(objectDefinitionId2);
+		objectRelationshipModel.setObjectFieldId2(objectFieldId2);
+		objectRelationshipModel.setParameterObjectFieldId(0);
+		objectRelationshipModel.setDeletionType(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
+		objectRelationshipModel.setEdge(false);
+
+		String name =
+			"ObjectRelationship" + objectDefinitionId1 + objectDefinitionId2;
+
+		objectRelationshipModel.setLabel(_getLabel(name));
+		objectRelationshipModel.setName(name);
+
+		objectRelationshipModel.setReverse(false);
+		objectRelationshipModel.setSystem(false);
+		objectRelationshipModel.setType(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		return objectRelationshipModel;
+	}
+
+	public ObjectStateFlowModel newObjectStateFlowModel(long objectFieldId) {
+		ObjectStateFlowModel objectStateFlowModel =
+			new ObjectStateFlowModelImpl();
+
+		// PK fields
+
+		objectStateFlowModel.setObjectStateFlowId(_counter.get());
+
+		// Audit fields
+
+		objectStateFlowModel.setCompanyId(_companyId);
+		objectStateFlowModel.setUserId(_sampleUserId);
+		objectStateFlowModel.setUserName(_SAMPLE_USER_NAME);
+		objectStateFlowModel.setCreateDate(new Date());
+		objectStateFlowModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		objectStateFlowModel.setObjectFieldId(objectFieldId);
+
+		return objectStateFlowModel;
+	}
+
+	public ObjectStateModel newObjectStateModel(
+		long listTypeEntryId, long objectStateFlowId) {
+
+		ObjectStateModel objectStateModel = new ObjectStateModelImpl();
+
+		// PK fields
+
+		objectStateModel.setObjectStateId(_counter.get());
+
+		// Audit fields
+
+		objectStateModel.setCompanyId(_companyId);
+		objectStateModel.setUserId(_sampleUserId);
+		objectStateModel.setUserName(_SAMPLE_USER_NAME);
+		objectStateModel.setCreateDate(new Date());
+		objectStateModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		objectStateModel.setListTypeEntryId(listTypeEntryId);
+		objectStateModel.setObjectStateFlowId(objectStateFlowId);
+
+		return objectStateModel;
+	}
+
+	public List<ObjectStateModel> newObjectStateModels(
+		List<ListTypeEntryModel> listTypeEntryModels, long objectStateFlowId) {
+
+		List<ObjectStateModel> objectStateModels = new ArrayList<>(
+			listTypeEntryModels.size());
+
+		for (ListTypeEntryModel listTypeEntryModel : listTypeEntryModels) {
+			objectStateModels.add(
+				newObjectStateModel(
+					listTypeEntryModel.getListTypeEntryId(),
+					objectStateFlowId));
+		}
+
+		return objectStateModels;
+	}
+
+	public ObjectStateTransitionModel newObjectStateTransitionModel(
+		long objectStateFlowId, long sourceObjectStateId,
+		long targetObjectStateId) {
+
+		ObjectStateTransitionModel objectStateTransitionModel =
+			new ObjectStateTransitionModelImpl();
+
+		// PK fields
+
+		objectStateTransitionModel.setObjectStateTransitionId(_counter.get());
+
+		// Audit fields
+
+		objectStateTransitionModel.setCompanyId(_companyId);
+		objectStateTransitionModel.setUserId(_sampleUserId);
+		objectStateTransitionModel.setUserName(_SAMPLE_USER_NAME);
+		objectStateTransitionModel.setCreateDate(new Date());
+		objectStateTransitionModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		objectStateTransitionModel.setObjectStateFlowId(objectStateFlowId);
+		objectStateTransitionModel.setSourceObjectStateId(sourceObjectStateId);
+		objectStateTransitionModel.setTargetObjectStateId(targetObjectStateId);
+
+		return objectStateTransitionModel;
+	}
+
+	public List<ObjectStateTransitionModel> newObjectStateTransitionModels(
+		List<ObjectStateModel> objectStateModels) {
+
+		List<ObjectStateTransitionModel> objectStateTransitionModels =
+			new ArrayList<>();
+
+		for (ObjectStateModel sourceObjectState : objectStateModels) {
+			for (ObjectStateModel targetObjectState : objectStateModels) {
+				if (sourceObjectState.equals(targetObjectState)) {
+					continue;
+				}
+
+				objectStateTransitionModels.add(
+					newObjectStateTransitionModel(
+						sourceObjectState.getObjectStateFlowId(),
+						sourceObjectState.getObjectStateId(),
+						targetObjectState.getObjectStateId()));
+			}
+		}
+
+		return objectStateTransitionModels;
 	}
 
 	public <K, V> ObjectValuePair<K, V> newObjectValuePair(K key, V value) {
@@ -5666,6 +6178,15 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		ListTypeDefinitionModel listTypeDefinitionModel) {
+
+		return newResourcePermissionModels(
+			ListTypeDefinition.class.getName(),
+			String.valueOf(listTypeDefinitionModel.getListTypeDefinitionId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		MBCategoryModel mbCategoryModel) {
 
 		return newResourcePermissionModels(
@@ -5679,6 +6200,34 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			MBMessage.class.getName(),
 			String.valueOf(mbMessageModel.getMessageId()), _sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		ObjectDefinitionModel objectDefinitionModel) {
+
+		return newResourcePermissionModels(
+			ObjectDefinition.class.getName(),
+			String.valueOf(objectDefinitionModel.getObjectDefinitionId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		ObjectEntryModel objectEntryModel) {
+
+		return newResourcePermissionModels(
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					objectEntryModel.getObjectDefinitionId(),
+			String.valueOf(objectEntryModel.getObjectEntryId()), _sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		ObjectFolderModel objectFolderModel) {
+
+		return newResourcePermissionModels(
+			ObjectFolder.class.getName(),
+			String.valueOf(objectFolderModel.getObjectFolderId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -6058,6 +6607,94 @@ public class DataFactory {
 	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
 		return newSubscriptionModel(
 			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
+	}
+
+	public ObjectDefinitionModel newSystemObjectDefinitionModel(
+		long objectFolderId, String dbTableName, String label, String className,
+		String name, String pkObjectFieldName, String externalReferenceCode) {
+
+		ObjectDefinitionModel objectDefinitionModel =
+			new ObjectDefinitionImpl();
+
+		// PK fields
+
+		objectDefinitionModel.setObjectDefinitionId(_counter.get());
+
+		// Audit fields
+
+		objectDefinitionModel.setCompanyId(_companyId);
+		objectDefinitionModel.setUserId(_sampleUserId);
+		objectDefinitionModel.setUserName(_SAMPLE_USER_NAME);
+		objectDefinitionModel.setCreateDate(new Date());
+		objectDefinitionModel.setModifiedDate(new Date());
+
+		// Other field
+
+		objectDefinitionModel.setDescriptionObjectFieldId(0);
+		objectDefinitionModel.setObjectFolderId(objectFolderId);
+		objectDefinitionModel.setRootObjectDefinitionId(0);
+		objectDefinitionModel.setTitleObjectFieldId(_counter.get());
+		objectDefinitionModel.setAccountEntryRestricted(false);
+		objectDefinitionModel.setActive(true);
+		objectDefinitionModel.setDBTableName(dbTableName);
+		objectDefinitionModel.setLabel(_getLabel(label));
+		objectDefinitionModel.setClassName(className);
+		objectDefinitionModel.setEnableCategorization(true);
+		objectDefinitionModel.setEnableComments(false);
+		objectDefinitionModel.setEnableIndexSearch(true);
+		objectDefinitionModel.setEnableLocalization(false);
+		objectDefinitionModel.setEnableObjectEntryDraft(false);
+		objectDefinitionModel.setEnableObjectEntryHistory(false);
+		objectDefinitionModel.setModifiable(false);
+		objectDefinitionModel.setName(name);
+		objectDefinitionModel.setPKObjectFieldDBColumnName(pkObjectFieldName);
+		objectDefinitionModel.setPKObjectFieldName(pkObjectFieldName);
+		objectDefinitionModel.setPluralLabel(_getPluralLabel(label + "s"));
+		objectDefinitionModel.setPortlet(false);
+		objectDefinitionModel.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
+		objectDefinitionModel.setStorageType(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+		objectDefinitionModel.setSystem(true);
+		objectDefinitionModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		// Autogenerated fields
+
+		objectDefinitionModel.setUuid(SequentialUUID.generate());
+		objectDefinitionModel.setExternalReferenceCode(externalReferenceCode);
+
+		return objectDefinitionModel;
+	}
+
+	public List<ObjectFieldModel> newSystemObjectFieldModels(
+		long objectDefinitionId, String dbTableName, String idDBColumnName) {
+
+		return ListUtil.fromArray(
+			newObjectFieldModel(
+				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				"userName", dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
+				"Author", "creator", false, false, true),
+			newObjectFieldModel(
+				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				"modifiedDate", dbTableName, ObjectFieldConstants.DB_TYPE_DATE,
+				"Modified Date", "modifiedDate", false, false, true),
+			newObjectFieldModel(
+				0, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER, idDBColumnName,
+				dbTableName, ObjectFieldConstants.DB_TYPE_LONG, "ID", "id",
+				false, false, true),
+			newObjectFieldModel(
+				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				"externalReferenceCode", dbTableName,
+				ObjectFieldConstants.DB_TYPE_STRING, "External Reference Code",
+				"externalReferenceCode", false, false, true),
+			newObjectFieldModel(
+				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				"status", dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
+				"Status", "status", false, false, true),
+			newObjectFieldModel(
+				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				"createDate", dbTableName, ObjectFieldConstants.DB_TYPE_DATE,
+				"Create Date", "createDate", false, false, true));
 	}
 
 	public List<UserModel> newUserModels() {
@@ -7143,6 +7780,8 @@ public class DataFactory {
 		String key =
 			"picklist_value_" + listTypeEntryModel.getListTypeEntryId();
 
+		_defaultListTypeEntryKey = key;
+
 		listTypeEntryModel.setKey(key);
 		listTypeEntryModel.setName(
 			StringBundler.concat(
@@ -7709,11 +8348,11 @@ public class DataFactory {
 				else if (name.equals("CPDSpecificationOptionValueId")) {
 					name = "CPDefinitionSpecificationOptionValueId";
 				}
-				else if (name.equals("DbTableName")) {
-					name = "DBTableName";
-				}
 				else if (name.equals("DbColumnName")) {
 					name = "DBColumnName";
+				}
+				else if (name.equals("DbTableName")) {
+					name = "DBTableName";
 				}
 				else if (name.equals("DbType")) {
 					name = "DBType";
@@ -7905,6 +8544,20 @@ public class DataFactory {
 			StringBundler.concat(
 				"/com/liferay/fragment/collection/contributor/basic/component",
 				"/dependencies/", fragmentName, "/index.", suffix));
+	}
+
+	private String _getLabel(String label) {
+		return StringBundler.concat(
+			"<?xml version=\"1.0\" ?><root available-locales=\"en_US\" ",
+			"default-locale=\"en_US\"><Label language-id=\"en_US\">", label,
+			"</Label></root>");
+	}
+
+	private String _getPluralLabel(String label) {
+		return StringBundler.concat(
+			"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
+			"default-locale=\"en_US\"><PluralLabel language-id=\"en_US\">",
+			label, "</PluralLabel></root>");
 	}
 
 	private String _getResourcePermissionModelName(String... classNames) {
@@ -8116,6 +8769,8 @@ public class DataFactory {
 	private long _defaultJournalDDMStructureId;
 	private long _defaultJournalDDMStructureVersionId;
 	private long _defaultJournalDDMTemplateId;
+	private String _defaultListTypeEntryKey;
+	private long _defaultObjectFolderId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dlFileEntryIdCounter;

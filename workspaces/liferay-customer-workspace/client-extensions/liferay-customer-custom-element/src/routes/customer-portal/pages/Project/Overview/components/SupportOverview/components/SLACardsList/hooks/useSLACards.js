@@ -4,6 +4,7 @@
  */
 
 import {useMemo} from 'react';
+
 import {SLA_LABELS} from '../utils/constants/slaLabels';
 import getSLACard from '../utils/getSLACard';
 

@@ -4,6 +4,7 @@
  */
 
 import {useEffect, useState} from 'react';
+
 import {useGetActivationKeys} from '../../../../../common/services/liferay/graphql/activation-keys';
 
 const MAX_ITEMS = 9999;

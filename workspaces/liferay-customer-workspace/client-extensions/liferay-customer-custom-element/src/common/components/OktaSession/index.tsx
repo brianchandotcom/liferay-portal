@@ -7,6 +7,7 @@
 
 import {useModal} from '@clayui/core';
 import {useEffect, useState} from 'react';
+
 import {useAppPropertiesContext} from '../../contexts/AppPropertiesContext';
 import {Liferay} from '../../services/liferay';
 import {getCurrentSession} from '../../services/okta/rest/getCurrentSession';

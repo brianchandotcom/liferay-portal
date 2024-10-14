@@ -7,6 +7,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {Fragment} from 'react';
 import {IconBreadcrumbs} from '~/common/icons';
 import {Liferay} from '~/common/services/liferay';
+
 import ProjectNameTruncate from './ProjectNameTruncate';
 
 type DropdownItemsProps = {

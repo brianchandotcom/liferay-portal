@@ -4,6 +4,7 @@
  */
 
 import {useEffect, useState} from 'react';
+
 import {Liferay} from '../../../../../../../../../../../../common/services/liferay';
 
 export default function useIsTablet() {

@@ -4,6 +4,7 @@
  */
 
 import {useModal} from '@clayui/core';
+
 import {useCustomerPortal} from '../../../../context';
 import {actionTypes} from '../../../../context/reducer';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../utils/constants';

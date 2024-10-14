@@ -6,6 +6,7 @@
 import {useMemo} from 'react';
 import {useCustomerPortal} from '~/routes/customer-portal/context';
 import {useOnboarding} from '~/routes/onboarding/context';
+
 import {useAppPropertiesContext} from '../contexts/AppPropertiesContext';
 import ProvisioningLicenseKeys from '../services/liferay/rest/raysource/ProvisioningLicenseKeys';
 

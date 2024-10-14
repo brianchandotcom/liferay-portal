@@ -14,6 +14,7 @@ import {
 	updateRaysourceContact,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import {useOnboarding} from '~/routes/onboarding/context';
+
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import NotificationQueueService from '../../../../../../../../../../../../common/services/actions/notificationAction';
 import {

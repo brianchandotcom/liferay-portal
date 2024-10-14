@@ -4,6 +4,7 @@
  */
 
 import i18n from '~/common/I18n';
+
 import FetcherError from './FetchError';
 
 export async function fetcher<T = any>(

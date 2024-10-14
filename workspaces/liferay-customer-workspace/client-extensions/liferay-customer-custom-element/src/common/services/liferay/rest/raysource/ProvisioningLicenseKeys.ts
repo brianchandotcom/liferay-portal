@@ -4,6 +4,7 @@
  */
 
 import SearchBuilder from '~/common/core/SearchBuilder';
+
 import {baseFetcher} from '../../fetcher';
 
 type ProvisioningLicenseKeysConstructor = {

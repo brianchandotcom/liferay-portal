@@ -4,6 +4,7 @@
  */
 
 import {gql, useQuery} from '@apollo/client';
+
 import {CORE_USER_ACCOUNT_FIELDS} from '../fragments';
 
 const GET_USER_ACCOUNTS_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`

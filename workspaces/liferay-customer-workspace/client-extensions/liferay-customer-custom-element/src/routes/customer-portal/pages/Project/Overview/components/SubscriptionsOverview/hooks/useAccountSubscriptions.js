@@ -4,6 +4,7 @@
  */
 
 import {useEffect, useState} from 'react';
+
 import {useLazyGetAccountSubscriptions} from '../../../../../../../../common/services/liferay/graphql/account-subscriptions';
 
 export default function useAccountSubscriptions(

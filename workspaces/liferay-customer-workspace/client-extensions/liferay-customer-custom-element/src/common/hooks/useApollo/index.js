@@ -11,6 +11,7 @@ import {RestLink} from 'apollo-link-rest';
 import {SessionStorageWrapper, persistCache} from 'apollo3-cache-persist';
 import {useEffect, useState} from 'react';
 import {createNetworkStatusNotifier} from 'react-apollo-network-status';
+
 import {Liferay} from '../../services/liferay';
 import {liferayTypePolicies} from '../../services/liferay/graphql/typePolicies';
 import {getCurrentSession} from '../../services/okta/rest/getCurrentSession';

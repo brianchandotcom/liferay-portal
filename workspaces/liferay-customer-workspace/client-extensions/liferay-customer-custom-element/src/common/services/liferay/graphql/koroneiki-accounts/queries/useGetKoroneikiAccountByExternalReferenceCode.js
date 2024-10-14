@@ -4,6 +4,7 @@
  */
 
 import {gql, useQuery} from '@apollo/client';
+
 import {CORE_KORONEIKI_ACCOUNT_FIELDS} from '../fragments/coreKoroneikiAccountFields';
 
 const GET_KORONEIKI_ACCOUNT_BY_EXTERNAL_REFERENCE_CODE = gql`

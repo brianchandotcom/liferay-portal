@@ -5,6 +5,7 @@
 
 import {useEffect, useState} from 'react';
 import i18n from '~/common/I18n';
+
 import {ACTIVATION_STATUS} from '../../../utils/constants/activationStatus';
 import {INITIAL_FILTER} from '../../../utils/constants/initialFilter';
 

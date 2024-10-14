@@ -4,6 +4,7 @@
  */
 
 import {useMemo} from 'react';
+
 import {useGetMyUserAccount} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
 import isAccountAdministrator from '../../../../../../../../common/utils/isAccountAdministrator';
 import isSupportSeatRole from '../../../../../../../../common/utils/isSupportSeatRole';

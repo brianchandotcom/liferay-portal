@@ -4,7 +4,6 @@
  */
 
 import {PRODUCT_TYPES} from '../../../../../../../routes/customer-portal/utils/constants/productTypes';
-
 import {
 	AnalyticsIcon,
 	CommerceIcon,

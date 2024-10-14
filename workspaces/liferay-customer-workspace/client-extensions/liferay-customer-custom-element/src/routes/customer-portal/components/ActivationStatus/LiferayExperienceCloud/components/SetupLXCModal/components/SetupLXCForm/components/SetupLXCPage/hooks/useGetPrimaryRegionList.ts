@@ -5,6 +5,7 @@
 
 import {useMemo} from 'react';
 import SearchBuilder from '~/common/core/SearchBuilder';
+
 import {useGetListTypeDefinitions} from '../../../../../../../../../../../../common/services/liferay/graphql/list-type-definitions';
 import {LIST_TYPES} from '../../../../../../../../../../utils/constants';
 

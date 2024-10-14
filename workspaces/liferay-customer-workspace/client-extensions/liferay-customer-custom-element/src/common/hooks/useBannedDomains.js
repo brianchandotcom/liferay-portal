@@ -5,6 +5,7 @@
 
 import {useLazyQuery} from '@apollo/client';
 import {useEffect, useState} from 'react';
+
 import {getBannedEmailDomains} from '../services/liferay/graphql/queries';
 import useDebounce from './useDebounce';
 

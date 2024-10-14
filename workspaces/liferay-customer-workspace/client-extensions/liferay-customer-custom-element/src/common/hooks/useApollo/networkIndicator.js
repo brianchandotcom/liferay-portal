@@ -4,6 +4,7 @@
  */
 
 import {ActionTypes} from 'react-apollo-network-status';
+
 import isOperationType from '../../utils/isOperationType';
 
 const initialState = {

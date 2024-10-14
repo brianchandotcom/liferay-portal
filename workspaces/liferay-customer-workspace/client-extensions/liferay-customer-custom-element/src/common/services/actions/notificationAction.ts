@@ -6,6 +6,7 @@
  */
 
 import {ApolloClient} from '@apollo/client';
+
 import {
 	getNotificationTemplateByExternalRefenceCode,
 	notificationQueueEntry,

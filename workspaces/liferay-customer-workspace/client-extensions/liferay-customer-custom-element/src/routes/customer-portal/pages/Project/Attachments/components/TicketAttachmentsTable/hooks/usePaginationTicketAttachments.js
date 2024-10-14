@@ -5,6 +5,7 @@
 
 import {useMemo, useState} from 'react';
 import i18n from '~/common/I18n';
+
 import getSortedTicketAttachments from '../utils/getSortedTicketAttachments';
 
 export default function usePagination(sortConfig, ticketAttachments) {

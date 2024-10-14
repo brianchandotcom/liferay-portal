@@ -4,6 +4,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+
 import {useCustomerPortal} from '../context';
 import ProjectRoutes from './Project/routes/project.routes';
 

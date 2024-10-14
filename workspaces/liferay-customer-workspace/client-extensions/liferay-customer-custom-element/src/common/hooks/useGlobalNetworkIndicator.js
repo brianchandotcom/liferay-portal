@@ -4,6 +4,7 @@
  */
 
 import {useEffect} from 'react';
+
 import i18n from '../I18n';
 import {Liferay} from '../services/liferay';
 import isOperationType from '../utils/isOperationType';

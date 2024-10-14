@@ -5,6 +5,7 @@
 
 import {NetworkStatus} from '@apollo/client';
 import {useEffect, useMemo, useState} from 'react';
+
 import SearchBuilder from '../core/SearchBuilder';
 import {useGetKoroneikiAccounts} from '../services/liferay/graphql/koroneiki-accounts';
 import useSearchTerm from './useSearchTerm';

@@ -4,6 +4,7 @@
  */
 
 import ClayModal from '@clayui/modal';
+
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 

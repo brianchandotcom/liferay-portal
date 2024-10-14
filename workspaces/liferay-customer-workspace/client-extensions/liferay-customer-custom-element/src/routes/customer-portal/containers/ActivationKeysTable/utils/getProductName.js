@@ -5,7 +5,6 @@
 
 import i18n from '../../../../../common/I18n';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
-
 import {getPascalCase} from '../../../utils/getPascalCase';
 
 export function getProductName(activationKey) {

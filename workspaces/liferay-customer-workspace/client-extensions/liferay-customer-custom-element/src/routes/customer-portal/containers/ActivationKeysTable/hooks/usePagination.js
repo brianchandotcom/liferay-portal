@@ -4,6 +4,7 @@
  */
 
 import {useEffect, useMemo, useState} from 'react';
+
 import i18n from '../../../../../common/I18n';
 import {ACTIVATION_KEYS_LICENSE_FILTER_TYPES} from '../utils/constants';
 

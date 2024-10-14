@@ -9,6 +9,7 @@ import AppSetup from './components/AppSetup';
 import GlobalFilters from './components/GlobalFilters';
 import OverviewMetrics from './components/OverviewMetrics';
 import InteractionsByPage from './components/interactions-by-page/InteractionsByPage';
+import Technology from './components/technology/Technology';
 import VisitorsBehavior from './components/visitors-behavior/VisitorsBehavior';
 
 import '../css/main.scss';
@@ -35,6 +36,8 @@ const AnalyticsReports: React.FC<AnalyticsReports> = ({
 				<VisitorsBehavior />
 
 				<InteractionsByPage />
+
+				<Technology />
 			</AppSetup>
 		</div>
 	);

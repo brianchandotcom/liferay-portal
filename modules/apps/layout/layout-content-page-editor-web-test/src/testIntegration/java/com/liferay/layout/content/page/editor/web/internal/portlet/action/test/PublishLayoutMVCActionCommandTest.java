@@ -333,7 +333,7 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testPublishedLayoutFragmentEntryLinkWithFreemarketEmbeddedPortlet()
+	public void testPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortlet()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -383,7 +383,7 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testPublishedLayoutFragmentEntryLinkWithFreemarketEmbeddedPortletAndDynamicInstanceId()
+	public void testPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortletAndDynamicInstanceId()
 		throws Exception {
 
 		ServiceContext serviceContext =

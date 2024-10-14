@@ -8,6 +8,7 @@ package com.liferay.fragment.internal.processor;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -198,25 +199,14 @@ public class PortletRegistryImplTest {
 
 	@Test
 	public void testGetFragmentEntryLinkPortletIdsTypePortlet() {
-		String portletId = RandomTestUtil.randomString();
 		String instanceId = RandomTestUtil.randomString();
 
-		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
-			JSONUtil.put(
-				"instanceId", instanceId
-			).put(
-				"portletId", portletId
-			).toString(),
-			"<div class=\"fragment_1\"></div>", RandomTestUtil.randomString());
+		_assertGetFragmentEntryLinkPortletIdsTypePortlet(
+			instanceId, instanceId);
 
-		Mockito.when(
-			fragmentEntryLink.isTypePortlet()
-		).thenReturn(
-			true
-		);
-
-		_assertGetFragmentEntryLinkPortletIds(
-			fragmentEntryLink, PortletIdCodec.encode(portletId, instanceId));
+		_assertGetFragmentEntryLinkPortletIdsTypePortlet(
+			StringPool.BLANK, StringPool.BLANK);
+		_assertGetFragmentEntryLinkPortletIdsTypePortlet(StringPool.BLANK, "0");
 	}
 
 	@Test
@@ -301,6 +291,30 @@ public class PortletRegistryImplTest {
 			Assert.assertEquals(
 				portletIds[i], fragmentEntryLinkPortletIds.get(i));
 		}
+	}
+
+	private void _assertGetFragmentEntryLinkPortletIdsTypePortlet(
+		String expectedInstanceId, String instanceId) {
+
+		String portletId = RandomTestUtil.randomString();
+
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			JSONUtil.put(
+				"instanceId", instanceId
+			).put(
+				"portletId", portletId
+			).toString(),
+			"<div class=\"fragment_1\"></div>", RandomTestUtil.randomString());
+
+		Mockito.when(
+			fragmentEntryLink.isTypePortlet()
+		).thenReturn(
+			true
+		);
+
+		_assertGetFragmentEntryLinkPortletIds(
+			fragmentEntryLink,
+			PortletIdCodec.encode(portletId, expectedInstanceId));
 	}
 
 	private FragmentEntryLink _getFragmentEntryLink(

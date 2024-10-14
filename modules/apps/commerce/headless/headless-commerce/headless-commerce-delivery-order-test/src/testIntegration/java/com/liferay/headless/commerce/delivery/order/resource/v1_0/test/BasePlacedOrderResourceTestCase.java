@@ -2242,6 +2242,14 @@ public abstract class BasePlacedOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("steps", additionalAssertFieldName)) {
+				if (placedOrder.getSteps() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("summary", additionalAssertFieldName)) {
 				if (placedOrder.getSummary() == null) {
 					valid = false;
@@ -2807,6 +2815,16 @@ public abstract class BasePlacedOrderResourceTestCase {
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						placedOrder1.getStatus(), placedOrder2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("steps", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrder1.getSteps(), placedOrder2.getSteps())) {
 
 					return false;
 				}
@@ -3961,6 +3979,11 @@ public abstract class BasePlacedOrderResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("steps")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("summary")) {

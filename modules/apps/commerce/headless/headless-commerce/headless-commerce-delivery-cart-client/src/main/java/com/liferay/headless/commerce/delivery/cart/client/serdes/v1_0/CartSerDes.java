@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartItem;
+import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Step;
 import com.liferay.headless.commerce.delivery.cart.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -571,6 +572,26 @@ public class CartSerDes {
 			sb.append("\"");
 		}
 
+		if (cart.getSteps() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"steps\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < cart.getSteps().length; i++) {
+				sb.append(String.valueOf(cart.getSteps()[i]));
+
+				if ((i + 1) < cart.getSteps().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (cart.getSummary() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -937,6 +958,13 @@ public class CartSerDes {
 			map.put("status", String.valueOf(cart.getStatus()));
 		}
 
+		if (cart.getSteps() == null) {
+			map.put("steps", null);
+		}
+		else {
+			map.put("steps", String.valueOf(cart.getSteps()));
+		}
+
 		if (cart.getSummary() == null) {
 			map.put("summary", null);
 		}
@@ -1122,6 +1150,9 @@ public class CartSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "steps")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "summary")) {
@@ -1401,6 +1432,21 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
 					cart.setStatus((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "steps")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Step[] stepsArray = new Step[jsonParserFieldValues.length];
+
+					for (int i = 0; i < stepsArray.length; i++) {
+						stepsArray[i] = StepSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					cart.setSteps(stepsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "summary")) {

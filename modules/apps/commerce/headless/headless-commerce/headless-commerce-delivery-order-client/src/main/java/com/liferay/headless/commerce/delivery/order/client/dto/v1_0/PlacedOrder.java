@@ -803,6 +803,27 @@ public class PlacedOrder implements Cloneable, Serializable {
 
 	protected String status;
 
+	public Step[] getSteps() {
+		return steps;
+	}
+
+	public void setSteps(Step[] steps) {
+		this.steps = steps;
+	}
+
+	public void setSteps(
+		UnsafeSupplier<Step[], Exception> stepsUnsafeSupplier) {
+
+		try {
+			steps = stepsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Step[] steps;
+
 	public Summary getSummary() {
 		return summary;
 	}

@@ -1996,6 +1996,14 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("steps", additionalAssertFieldName)) {
+				if (cart.getSteps() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("summary", additionalAssertFieldName)) {
 				if (cart.getSummary() == null) {
 					valid = false;
@@ -2563,6 +2571,14 @@ public abstract class BaseCartResourceTestCase {
 
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(cart1.getStatus(), cart2.getStatus())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("steps", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(cart1.getSteps(), cart2.getSteps())) {
 					return false;
 				}
 
@@ -3835,6 +3851,11 @@ public abstract class BaseCartResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("steps")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("summary")) {

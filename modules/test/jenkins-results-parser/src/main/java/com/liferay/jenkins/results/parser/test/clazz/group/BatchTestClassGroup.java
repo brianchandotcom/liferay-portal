@@ -118,7 +118,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		long averageDuration = testTaskHistory.getAverageDuration();
 
 		if (averageDuration == 0) {
-			return _getDefaultTestDuration();
+			return _getDefaultTestTaskDuration();
 		}
 
 		return averageDuration;

@@ -97,7 +97,7 @@ public class CTEntryModelDocumentContributor
 				(ctCollection.getStatus() ==
 					WorkflowConstants.STATUS_SCHEDULED)) {
 
-				document.addDate(
+				document.addDateSortable(
 					"ctCollectionStatusDate",
 					_getCTCollectionStatusDate(ctCollection));
 

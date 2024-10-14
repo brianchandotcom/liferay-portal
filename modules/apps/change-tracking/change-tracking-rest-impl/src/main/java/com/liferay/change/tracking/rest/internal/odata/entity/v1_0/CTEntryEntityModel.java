@@ -26,7 +26,8 @@ public class CTEntryEntityModel implements EntityModel {
 			new BooleanEntityField("hideable", locale -> "hideable"),
 			new DateTimeEntityField(
 				"ctCollectionStatusDate",
-				locale -> Field.getSortableFieldName("ctCollectionStatusDate"),
+				locale -> Field.getSortableFieldName(
+					"ctCollectionStatusDate_Number"),
 				locale -> "ctCollectionStatusDate"),
 			new DateTimeEntityField(
 				"dateCreated",

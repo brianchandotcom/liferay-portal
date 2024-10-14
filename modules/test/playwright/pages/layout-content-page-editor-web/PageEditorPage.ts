@@ -238,11 +238,12 @@ export class PageEditorPage {
 				);
 
 				if (inputType === 'checkbox') {
-					if (value as boolean) {
-						await field.check();
-					}
-					else {
-						await field.uncheck();
+					const checked = await field.evaluate(
+						(element: HTMLInputElement) => element.checked
+					);
+
+					if (value !== checked) {
+						await field.click();
 					}
 
 					return;

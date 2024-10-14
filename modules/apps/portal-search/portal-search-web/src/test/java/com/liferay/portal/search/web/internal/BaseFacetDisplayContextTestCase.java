@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
@@ -218,7 +219,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		testOrderBy(
 			expectedFrequenciesFrequencyAscending,
 			expectedTermsFrequencyAscending, new int[] {6, 5, 5, 4},
-			"count:asc", new String[] {"charlie", "delta", "bravo", "alpha"});
+			"count:asc", new String[] {"Burro", "Caballo", "Árbol", "Abeja"});
 	}
 
 	@Test
@@ -226,7 +227,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		testOrderBy(
 			expectedFrequenciesFrequencyDescending,
 			expectedTermsFrequencyDescending, new int[] {4, 5, 5, 6},
-			"count:desc", new String[] {"alpha", "delta", "bravo", "charlie"});
+			"count:desc", new String[] {"Abeja", "Caballo", "Árbol", "Burro"});
 	}
 
 	@Test
@@ -234,7 +235,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		testOrderBy(
 			expectedFrequenciesValueAscending, expectedTermsValueAscending,
 			new int[] {2, 3, 4, 5}, "key:asc",
-			new String[] {"bravo", "alpha", "bravo", "charlie"});
+			new String[] {"Árbol", "Abeja", "Árbol", "Burro"});
 	}
 
 	@Test
@@ -242,7 +243,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		testOrderBy(
 			expectedFrequenciesValueDescending, expectedTermsValueDescending,
 			new int[] {2, 3, 4, 5}, "key:desc",
-			new String[] {"bravo", "alpha", "bravo", "charlie"});
+			new String[] {"Árbol", "Abeja", "Árbol", "Burro"});
 	}
 
 	protected static String buildExpectedNameFrequencyString(
@@ -341,6 +342,12 @@ public abstract class BaseFacetDisplayContextTestCase {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.doReturn(
+			LocaleUtil.getDefault()
+		).when(
+			themeDisplay
+		).getLocale();
+
+		Mockito.doReturn(
 			getPortletDisplay()
 		).when(
 			themeDisplay
@@ -426,16 +433,16 @@ public abstract class BaseFacetDisplayContextTestCase {
 	protected int[] expectedFrequenciesValueAscending = {3, 4, 2, 5};
 	protected int[] expectedFrequenciesValueDescending = {5, 4, 2, 3};
 	protected String[] expectedTermsFrequencyAscending = {
-		"alpha", "bravo", "delta", "charlie"
+		"Abeja", "Árbol", "Caballo", "Burro"
 	};
 	protected String[] expectedTermsFrequencyDescending = {
-		"charlie", "bravo", "delta", "alpha"
+		"Burro", "Árbol", "Caballo", "Abeja"
 	};
 	protected String[] expectedTermsValueAscending = {
-		"alpha", "bravo", "bravo", "charlie"
+		"Abeja", "Árbol", "Árbol", "Burro"
 	};
 	protected String[] expectedTermsValueDescending = {
-		"charlie", "bravo", "bravo", "alpha"
+		"Burro", "Árbol", "Árbol", "Abeja"
 	};
 	protected final Facet facet = Mockito.mock(Facet.class);
 	protected final FacetCollector facetCollector = Mockito.mock(

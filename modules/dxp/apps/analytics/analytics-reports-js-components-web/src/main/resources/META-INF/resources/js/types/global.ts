@@ -6,15 +6,26 @@
 export enum Colors {
 	Black = '#000000',
 	Blue = '#4b9fff',
+	Blue2 = '#66caff',
 	Cyan = '#5fc8ff',
+	Gray = '#e2e4ea',
 	Green = '#9be169',
 	Indigo = '#7785ff',
+	Indigo2 = '#6675ff',
 	Orange = '#ffb46e',
 	Pink = '#ff73c3',
+	Pink2 = '#ff73c3',
 	Purple = '#af78ff',
 	Red = '#ff5f5f',
 	Teal = '#50d2a0',
 	Yellow = '#ffd76e',
+	Yellow2 = '#ffd566',
+}
+
+export enum Textures {
+	DiagonalLines = 'M 10 0 L 0 10',
+	HorizontalLines = 'M 0 5 L 10 5',
+	VerticalLines = 'M 5 0 L 5 10',
 }
 
 export enum Individuals {

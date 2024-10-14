@@ -27,3 +27,14 @@ export function formatTooltipDate(date: Date, rangeSelectors: RangeSelectors) {
 
 	return moment.utc(date).format('YYYY MMM D');
 }
+
+export function getDateRange(rangeSelector: RangeSelectors) {
+	function getDate(value: number) {
+		return new Date(new Date().setDate(new Date().getDate() - value));
+	}
+
+	const startDate = getDate(1);
+	const endDate = getDate(Number(rangeSelector));
+
+	return {endDate, startDate};
+}

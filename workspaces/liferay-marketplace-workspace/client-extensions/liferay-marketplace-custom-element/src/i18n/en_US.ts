@@ -298,6 +298,7 @@ export default {
 		'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
 	'privacy-policy': 'Privacy Policy',
 	'product': 'Product',
+	'product-unavailable': 'Product Unavailable',
 	'profile': 'Profile',
 	'project': 'Project',
 	'project-selection': 'Project Selection',
@@ -425,6 +426,7 @@ export default {
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
+	'this-product-is-no-longer-available': 'This product is no longer available.',
 	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated':
 		'This submission is currently under review by Liferay. Once the process is complete the solution will be published automatically to the Marketplace. Meanwhile, any information or data from this solution submission cannot be updated.',
 	'timezone': 'Timezone',

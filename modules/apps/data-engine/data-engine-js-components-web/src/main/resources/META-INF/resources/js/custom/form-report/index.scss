@@ -602,6 +602,18 @@
 		top: 8rem;
 		width: 30%;
 
+		&::-webkit-scrollbar {
+			width: 5px;
+
+			&-track {
+				background: transparent;
+			}
+
+			&-thumb {
+				background: $gray-400;
+			}
+		}
+
 		ul {
 			float: right;
 			list-style-type: none;

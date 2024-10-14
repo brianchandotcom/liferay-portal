@@ -8,6 +8,8 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:portal:portal-upgrade-test-util")
+	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":dxp:apps:scim:scim-rest-api")
 	testIntegrationImplementation project(":dxp:apps:scim:scim-rest-client")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")

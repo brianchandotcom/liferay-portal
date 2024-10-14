@@ -13,6 +13,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
@@ -32,7 +33,8 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
-	pageManagementSiteTest
+	pageManagementSiteTest,
+	pageViewModePagesTest
 );
 
 const PANELS: SidebarTab[] = [
@@ -320,7 +322,7 @@ test.describe('Fragments Panel', () => {
 	test(
 		'A widget marked as favorite in a content page is also marked in a widget page',
 		{tag: '@LPS-161732'},
-		async ({apiHelpers, page, pageEditorPage, site}) => {
+		async ({apiHelpers, page, pageEditorPage, site, widgetPagePage}) => {
 
 			// Create content page and go to edit mode
 
@@ -361,11 +363,17 @@ test.describe('Fragments Panel', () => {
 
 			await expect(highlightedSet).toContainText('Reports Display');
 
-			// Check that the widget is also inside Highlighted set in a widget page
+			// Create a Widget page and check that the widget is also inside Highlighted set in a widget page
 
-			await page.goto(`/search`);
+			const widgetLayout =
+				await apiHelpers.jsonWebServicesLayout.addLayout({
+					groupId: site.id,
+					title: getRandomString(),
+				});
 
-			await page.getByLabel('Add').click();
+			await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
+
+			await widgetPagePage.openAddPanel();
 
 			highlightedSet = page.locator('.panel', {hasText: 'Highlighted'});
 
@@ -392,9 +400,9 @@ test.describe('Fragments Panel', () => {
 
 			await performUserSwitch(page, user.alternateName);
 
-			await page.goto(`/search`);
+			await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
 
-			await page.getByLabel('Add').click();
+			await widgetPagePage.openAddPanel();
 
 			await expect(highlightedSet).not.toContainText('Reports Display');
 		}
@@ -405,6 +413,7 @@ test.describe('Fragments Panel', () => {
 		page,
 		pageEditorPage,
 		site,
+		widgetPagePage,
 	}) => {
 		const moveSet = async (setTitle: string) => {
 
@@ -500,11 +509,16 @@ test.describe('Fragments Panel', () => {
 
 		await expect(widgetSets.nth(2)).toContainText(firstWidgetSet);
 
-		// Check that the order is maintained on the widget page
+		// Create a Widget page and check that the order is maintained on the widget page
 
-		await page.goto(`/search`);
+		const widgetLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
 
-		await page.getByLabel('Add').click();
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
+
+		await widgetPagePage.openAddPanel();
 
 		widgetSets = page.locator('.sidebar-body__add-panel .panel-header', {
 			hasNotText: 'Highlighted',
@@ -533,9 +547,9 @@ test.describe('Fragments Panel', () => {
 
 		await performUserSwitch(page, user.alternateName);
 
-		await page.goto(`/search`);
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
 
-		await page.getByLabel('Add').click();
+		await widgetPagePage.openAddPanel();
 
 		[
 			'Accounts',

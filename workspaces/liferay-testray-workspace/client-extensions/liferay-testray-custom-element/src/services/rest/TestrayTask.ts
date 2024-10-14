@@ -126,7 +126,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	}
 
 	protected async validate(task: TaskForm, id?: number) {
-		const searchBuilder = new SearchBuilder();
+		const searchBuilder = new SearchBuilder({useURIEncode: true});
 
 		if (id) {
 			searchBuilder.ne('id', id).and();

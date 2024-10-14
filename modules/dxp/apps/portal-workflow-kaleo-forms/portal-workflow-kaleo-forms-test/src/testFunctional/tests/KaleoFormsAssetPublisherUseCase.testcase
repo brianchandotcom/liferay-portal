@@ -1,0 +1,72 @@
+@component-name = "portal-bpm-ee"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+	}
+
+	@description = "This is a test for LPS-132428. The user could configure Asset Publisher after adding the Kaleo Forms admin portlet to blacklist."
+	@priority = 4
+	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Add the Kaleo Forms admin portlet to blacklist") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Module Container",
+				configurationName = "Component Blacklist",
+				configurationScope = "System Scope");
+
+			BundleBlacklist.blacklistModuleAndComponentConfiguration(
+				label = "Blacklist Component Names",
+				symbolicName = "com.liferay.portal.workflow.kaleo.forms.web.internal.portlet.KaleoFormsAdminPortlet");
+		}
+
+		task ("Configure the Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Print");
+		}
+
+		task ("View no NullPointerException thrown") {
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+		}
+	}
+
+}

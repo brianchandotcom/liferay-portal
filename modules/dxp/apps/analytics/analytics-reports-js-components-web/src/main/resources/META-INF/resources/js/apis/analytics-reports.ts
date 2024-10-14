@@ -9,6 +9,15 @@ import {Individuals, MetricName, RangeSelectors} from '../types/global';
 
 const API_PREFIX = '/o/analytics-reports-rest/v1.0';
 
+export type AssetMetricProps = {
+	assetId: string;
+	assetType: string;
+	groupId: string;
+	individual: Individuals;
+	rangeSelector: RangeSelectors;
+	selectedMetrics: MetricName[];
+};
+
 export function fetchAssetMetric({
 	assetId,
 	assetType,
@@ -16,14 +25,7 @@ export function fetchAssetMetric({
 	individual,
 	rangeSelector,
 	selectedMetrics,
-}: {
-	assetId: string;
-	assetType: string;
-	groupId: string;
-	individual: Individuals;
-	rangeSelector: RangeSelectors;
-	selectedMetrics: MetricName[];
-}) {
+}: AssetMetricProps) {
 	return fetch(
 		`${API_PREFIX}/${groupId}/asset-metrics/${assetType}?assetId=${assetId}&identityType=${individual}&rangeKey=${rangeSelector}&selectedMetrics=${selectedMetrics}`,
 		{
@@ -32,6 +34,15 @@ export function fetchAssetMetric({
 	);
 }
 
+export type AssetMetricHistogramProps = {
+	assetId: string;
+	assetType: string;
+	groupId: string;
+	individual: Individuals;
+	rangeSelector: RangeSelectors;
+	selectedMetrics: MetricName[];
+};
+
 export function fetchAssetMetricHistogram({
 	assetId,
 	assetType,
@@ -39,14 +50,7 @@ export function fetchAssetMetricHistogram({
 	individual,
 	rangeSelector,
 	selectedMetrics,
-}: {
-	assetId: string;
-	assetType: string;
-	groupId: string;
-	individual: Individuals;
-	rangeSelector: RangeSelectors;
-	selectedMetrics: MetricName[];
-}) {
+}: AssetMetricHistogramProps) {
 	return fetch(
 		`${API_PREFIX}/${groupId}/asset-metrics/${assetType}/histogram?assetId=${assetId}&identityType=${individual}&rangeKey=${rangeSelector}&selectedMetrics=${selectedMetrics}`,
 		{
@@ -55,21 +59,46 @@ export function fetchAssetMetricHistogram({
 	);
 }
 
+export type AssetAppearsOnHistogramProps = {
+	assetId: string;
+	assetType: string;
+	groupId: string;
+	individual: Individuals;
+	rangeSelector: RangeSelectors;
+};
+
 export function fetchAssetAppearsOnHistogram({
 	assetId,
 	assetType,
 	groupId,
 	individual,
 	rangeSelector,
-}: {
+}: AssetAppearsOnHistogramProps) {
+	return fetch(
+		`${API_PREFIX}/${groupId}/asset-metrics/${assetType}/appears-on/histogram?assetId=${assetId}&identityType=${individual}&rangeKey=${rangeSelector}`,
+		{
+			method: 'GET',
+		}
+	);
+}
+
+export type AssetDeviceMetric = {
 	assetId: string;
 	assetType: string;
 	groupId: string;
 	individual: Individuals;
 	rangeSelector: RangeSelectors;
-}) {
+};
+
+export function fetchAssetDeviceMetric({
+	assetId,
+	assetType,
+	groupId,
+	individual,
+	rangeSelector,
+}: AssetDeviceMetric) {
 	return fetch(
-		`${API_PREFIX}/${groupId}/asset-metrics/${assetType}/appears-on/histogram?assetId=${assetId}&identityType=${individual}&rangeKey=${rangeSelector}`,
+		`${API_PREFIX}/${groupId}/asset-metrics/${assetType}/devices?assetId=${assetId}&identityType=${individual}&rangeKey=${rangeSelector}`,
 		{
 			method: 'GET',
 		}

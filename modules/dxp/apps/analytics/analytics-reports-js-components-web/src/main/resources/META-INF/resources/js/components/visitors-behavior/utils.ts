@@ -9,7 +9,7 @@ import {Colors, MetricName} from '../../types/global';
 import {toUnix} from '../../utils/date';
 import {AssetMetricComplement} from '../../utils/metrics';
 import {FormattedData, formatter} from '../metrics/utils';
-import {Data, Histogram} from './VisitorsBehavior';
+import {Data, Histogram, PublishedVersionData} from './VisitorsBehavior';
 
 export enum VisitorsBehaviorDataKey {
 	Metric = 'METRIC_DATA_KEY',
@@ -22,6 +22,7 @@ export enum VisitorsBehaviorDataKey {
 interface FormatData extends AssetMetricComplement {
 	data: Data;
 	metricName: MetricName;
+	publishedVersionData: PublishedVersionData | null;
 }
 
 export function getSelectedHistogram(data: Data, metricName: MetricName) {
@@ -34,6 +35,7 @@ export function formatVisitorsBehaviorData({
 	data: initialData,
 	metricName,
 	metricType,
+	publishedVersionData,
 	visitorsBehaviorTooltipTitle,
 }: FormatData): FormattedData {
 	const selectedHistogram = getSelectedHistogram(initialData, metricName);
@@ -49,9 +51,7 @@ export function formatVisitorsBehaviorData({
 			color: Colors.Black,
 			format: formatter('long'),
 			title: Liferay.Language.get('published-version'),
-			total: formatter('number')(
-				initialData?.publishedVersionData?.total ?? 0
-			),
+			total: formatter('number')(publishedVersionData?.total ?? 0),
 		},
 		[VisitorsBehaviorDataKey.PublishedVersionValue]: {
 			title: Liferay.Language.get('published-version'),
@@ -81,12 +81,10 @@ export function formatVisitorsBehaviorData({
 				[VisitorsBehaviorDataKey.AxisX]: axisXData[i],
 				[VisitorsBehaviorDataKey.AxisY]: null,
 				[VisitorsBehaviorDataKey.Metric]: metricData[i],
-				[VisitorsBehaviorDataKey.PublishedVersionData]: initialData
-					?.publishedVersionData?.histogram?.[i]
-					? 0
-					: null,
+				[VisitorsBehaviorDataKey.PublishedVersionData]:
+					publishedVersionData?.histogram?.[i] ? 0 : null,
 				[VisitorsBehaviorDataKey.PublishedVersionValue]:
-					initialData?.publishedVersionData?.histogram?.[i] ?? null,
+					publishedVersionData?.histogram?.[i] ?? null,
 			});
 		}
 

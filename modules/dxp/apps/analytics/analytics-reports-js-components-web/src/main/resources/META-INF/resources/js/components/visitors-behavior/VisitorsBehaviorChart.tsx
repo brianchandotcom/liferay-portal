@@ -14,16 +14,18 @@ import {CircleDot, PublishedVersionDot} from '../metrics/Dots';
 import MetricsChart, {DataKey} from '../metrics/MetricsChart';
 import {IMetricsChartLegendProps} from '../metrics/MetricsChartLegend';
 import {formatter, getFillOpacity} from '../metrics/utils';
-import {Data} from './VisitorsBehavior';
+import {Data, PublishedVersionData} from './VisitorsBehavior';
 import VisitorsBehaviorChartTooltip from './VisitorsBehaviorChartTooltip';
 import {VisitorsBehaviorDataKey, formatVisitorsBehaviorData} from './utils';
 
 interface IVisitorsBehaviorChartProps {
 	data: Data;
+	publishedVersionData: PublishedVersionData | null;
 }
 
 const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 	data,
+	publishedVersionData,
 }) => {
 	const {filters} = useContext(AnalyticsReportsContext);
 
@@ -41,9 +43,10 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 			formatVisitorsBehaviorData({
 				data,
 				metricName,
+				publishedVersionData,
 				...assetContent[metricName],
 			}),
-		[data, metricName]
+		[data, metricName, publishedVersionData]
 	);
 
 	const metricsChartData = formattedData.data[VisitorsBehaviorDataKey.Metric];

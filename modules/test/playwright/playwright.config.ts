@@ -43,6 +43,7 @@ import {config as journalWebConfig} from './tests/journal-web/config';
 import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/config';
 import {config as layoutAdminWebConfig} from './tests/layout-admin-web/config';
 import {config as layoutContentPageEditorWebConfig} from './tests/layout-content-page-editor-web/config';
+import {config as layoutLockedLayoutsWebConfig} from './tests/layout-locked-layouts-web/config';
 import {config as layoutPageTemplateAdminWebConfig} from './tests/layout-page-template-admin-web/config';
 import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototype-web/config';
 import {config as lockedItemsWebConfig} from './tests/locked-items-web/config';
@@ -139,6 +140,7 @@ export default defineConfig({
 		knowledgeBaseWebConfig,
 		layoutAdminWebConfig,
 		layoutContentPageEditorWebConfig,
+		layoutLockedLayoutsWebConfig,
 		layoutSetPrototypeWebConfig,
 		layoutPageTemplateAdminWebConfig,
 		lockedItemsWebConfig,

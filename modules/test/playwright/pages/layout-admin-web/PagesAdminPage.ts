@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page, expect} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -16,29 +16,22 @@ export class PagesAdminPage {
 	readonly page: Page;
 
 	readonly addButton: Locator;
-	readonly addPageButton: Locator;
-	readonly addPageIFrame: FrameLocator;
-	readonly blankTypeButton: Locator;
-	readonly configurationSaveButton: Locator;
-	readonly javaScriptClientExtensionsTab: Locator;
 	readonly newButton: Locator;
-	readonly pageEditorPage: PageEditorPage;
-	readonly pageTitleBox: Locator;
-	readonly searchButton: Locator;
-	readonly searchInput: Locator;
+
+	private readonly configurationSaveButton: Locator;
+	private readonly javaScriptClientExtensionsTab: Locator;
+	private readonly pageEditorPage: PageEditorPage;
+	private readonly pageTitleBox: Locator;
+	private readonly searchButton: Locator;
+	private readonly searchInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.addPageButton = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Page',
-		});
-		this.addPageIFrame = page.frameLocator(
+		const addPageIFrame = page.frameLocator(
 			'iframe[id="addLayoutDialog_iframe_"]'
 		);
-		this.addButton = this.addPageIFrame.getByRole('button', {name: 'Add'});
-		this.blankTypeButton = page.getByRole('button', {name: 'Blank'});
+		this.addButton = addPageIFrame.getByRole('button', {name: 'Add'});
 		this.configurationSaveButton = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
@@ -50,7 +43,7 @@ export class PagesAdminPage {
 			.locator('.management-bar')
 			.getByRole('button', {name: 'New'});
 		this.pageEditorPage = new PageEditorPage(this.page);
-		this.pageTitleBox = this.addPageIFrame.locator(
+		this.pageTitleBox = addPageIFrame.locator(
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
 		);
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});

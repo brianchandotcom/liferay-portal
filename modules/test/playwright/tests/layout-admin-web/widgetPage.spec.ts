@@ -9,7 +9,10 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import addDraftStructuredContent from '../../utils/structured-content/addDraftStructuredContent';
@@ -22,6 +25,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPagesTest,
 	pageViewModePagesTest
 );
 
@@ -173,6 +177,158 @@ test.describe('Content tab add panel', () => {
 		await expect(
 			page.locator('.portlet-journal-content').getByText(webContentTitle)
 		).toBeVisible();
+	});
+});
+
+test.describe('Customization settings', () => {
+	test('Can customize page as site member', async ({
+		apiHelpers,
+		page,
+		pagesAdminPage,
+		site,
+		widgetPagePage,
+	}) => {
+
+		// Create page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: layoutTitle,
+		});
+
+		// Enable customization
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.clickOnAction('Configure', layoutTitle);
+
+		await page.getByLabel('Customizable', {exact: true}).check();
+
+		await page.getByTitle('column-1-customizable', {exact: true}).check();
+
+		await pagesAdminPage.saveConfiguration();
+
+		// Go to view mode and assert info customize message
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByText('You can customize this page.')
+		).toBeVisible();
+
+		// Add non instanceable blog portlet to customizable column
+
+		await widgetPagePage.addPortlet('Blogs');
+
+		const column1 = page.locator('#layout-column_column-1');
+
+		await expect(
+			column1.getByRole('heading', {name: 'Blogs'})
+		).toBeVisible();
+
+		// Add new site member user and login
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		// Go to view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		// Assert new user can add non instanceable blog portlet to customizable column
+
+		await expect(
+			column1.getByRole('heading', {name: 'Blogs'})
+		).not.toBeVisible();
+
+		await widgetPagePage.addPortlet('Blogs');
+
+		await expect(
+			column1.getByRole('heading', {name: 'Blogs'})
+		).toBeVisible();
+
+		// Add web content display portlet to customizable column
+
+		await widgetPagePage.addPortlet('Web Content Display');
+
+		await expect(
+			column1.getByRole('heading', {name: 'Web Content Display'})
+		).toBeVisible();
+
+		// Delete web content display portlet from customizable column
+
+		await widgetPagePage.deletePortlet('Web Content Display');
+
+		await expect(
+			column1.getByRole('heading', {name: 'Web Content Display'})
+		).not.toBeVisible();
+
+		// Click on view page without my customizations and assert blogs is not visible
+
+		await page
+			.locator('.sidebar')
+			.getByRole('button', {name: 'Close'})
+			.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'View Page without my customizations',
+			}),
+			trigger: page.getByRole('button', {name: 'Show Actions'}),
+		});
+
+		await expect(
+			column1.getByRole('heading', {name: 'Blogs'})
+		).not.toBeVisible();
+
+		// Click on view my customized page and assert blogs is visible
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'View My Customized Page',
+			}),
+			trigger: page.getByRole('button', {name: 'Show Actions'}),
+		});
+
+		await expect(
+			column1.getByRole('heading', {name: 'Blogs'})
+		).toBeVisible();
+
+		// Click on reset my customizations and assert blogs is not visible
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Reset My Customizations',
+			}),
+			trigger: page.getByRole('button', {name: 'Show Actions'}),
+		});
+
+		await expect(
+			column1.getByRole('heading', {name: 'Blogs'})
+		).not.toBeVisible();
 	});
 });
 

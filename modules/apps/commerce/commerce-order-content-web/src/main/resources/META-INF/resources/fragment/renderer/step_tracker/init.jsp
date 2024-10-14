@@ -16,5 +16,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 <liferay-theme:defineObjects />
 
 <%
-List<StepModel> stepModels = (List<StepModel>)request.getAttribute("liferay-commerce:step-tracker:commerce-order-steps");
+long commerceOrderId = (long)request.getAttribute("liferay-commerce:step-tracker:commerceOrderId");
+boolean open = (boolean)request.getAttribute("liferay-commerce:step-tracker:open");
+List<StepModel> stepModels = (List<StepModel>)request.getAttribute("liferay-commerce:step-tracker:commerceOrderSteps");
 %>

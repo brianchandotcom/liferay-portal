@@ -35,7 +35,9 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 		_objectDefinitionPersistence = objectDefinitionPersistence;
 	}
 
-	public Tree create(long objectDefinitionId) throws PortalException {
+	public Tree create(boolean excludeDifferentStatus, long objectDefinitionId)
+		throws PortalException {
+
 		ObjectDefinition rootObjectDefinition = _getObjectDefinition(
 			objectDefinitionId);
 
@@ -48,10 +50,11 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 					ObjectDefinition objectDefinition2 = _getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
-					if ((rootObjectDefinition.isApproved() !=
-							objectDefinition2.isApproved()) ||
-						(rootObjectDefinition.getObjectDefinitionId() !=
-							objectDefinition2.getRootObjectDefinitionId())) {
+					if ((rootObjectDefinition.getObjectDefinitionId() !=
+							objectDefinition2.getRootObjectDefinitionId()) &&
+						excludeDifferentStatus &&
+						(rootObjectDefinition.getStatus() !=
+							objectDefinition2.getStatus())) {
 
 						return null;
 					}
@@ -60,6 +63,10 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 						new Edge(objectRelationship.getObjectRelationshipId()),
 						node, objectRelationship.getObjectDefinitionId2());
 				}));
+	}
+
+	public Tree create(long objectDefinitionId) throws PortalException {
+		return create(true, objectDefinitionId);
 	}
 
 	private ObjectDefinition _getObjectDefinition(long objectDefinitionId)

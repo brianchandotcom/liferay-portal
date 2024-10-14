@@ -220,7 +220,7 @@ public class DownstreamBuild extends BaseBuild {
 		String batchName = getBatchName();
 
 		if (batchName.contains("playwright-js")) {
-			for (URL url : getTestrayAttachmentURLs()) {
+			for (URL url : getTestrayS3AttachmentURLs()) {
 				String urlString = url.toString();
 
 				if (urlString.contains("playwright-report/index.html")) {

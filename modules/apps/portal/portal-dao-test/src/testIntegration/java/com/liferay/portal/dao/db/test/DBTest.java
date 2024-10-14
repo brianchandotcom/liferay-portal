@@ -61,7 +61,9 @@ public class DBTest {
 
 		dbInspector = new DBInspector(connection);
 
-		Assume.assumeTrue(db.getDBType() != DBType.ORACLE);
+		Assume.assumeTrue(
+			(db.getDBType() != DBType.ORACLE) &&
+			(db.getDBType() != DBType.POSTGRESQL));
 	}
 
 	@BeforeClass

@@ -723,10 +723,12 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				serviceContext, servletContext);
 
 			_addOrUpdateCPOptionCategories(serviceContext, servletContext);
+
 			_addCPSpecificationOptions(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".specification.options.json"),
 				serviceContext, servletContext);
+
 			_addCPDefinitions(
 				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,

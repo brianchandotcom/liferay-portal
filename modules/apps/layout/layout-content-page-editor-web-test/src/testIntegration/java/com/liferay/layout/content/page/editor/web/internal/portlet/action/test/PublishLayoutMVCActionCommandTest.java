@@ -393,6 +393,32 @@ public class PublishLayoutMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testPublishedLayoutWithNoninstanciablePortlet()
+		throws Exception {
+
+		ContentLayoutTestUtil.addPortletToLayout(
+			_draftLayout,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		Map<String, String> map = HashMapBuilder.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		).build();
+
+		_setUpPortletPreferences(
+			_draftLayout, map,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_assertPortletPreferences(
+			_layout, map,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+	}
+
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(String html)
 		throws Exception {
 

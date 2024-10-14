@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {SiteSettingsPage} from './SiteSettingsPage';
 
 export class SiteSettingsLocalizationPage {
@@ -31,7 +32,11 @@ export class SiteSettingsLocalizationPage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.siteSettingsPage.goToSiteSetting('Localization', siteUrl);
+		await this.siteSettingsPage.goToSiteSetting(
+			'Localization',
+			'Languages',
+			siteUrl
+		);
 	}
 
 	async selectCustomDefaultLanguageOption() {
@@ -46,12 +51,19 @@ export class SiteSettingsLocalizationPage {
 		languageOption: string,
 		siteUrl?: Site['friendlyUrlPath']
 	) {
-		if (siteUrl) {
-			this.goto(siteUrl);
-		}
+		await this.goto(siteUrl);
 
-		await this.defaultLanguageSingleSelect.click();
+		await clickAndExpectToBeVisible({
+			target: this.defaultLanguageSingleSelect,
+			trigger: this.page.getByRole('radio', {
+				name: 'Define a custom default language',
+			}),
+		});
+
 		await this.defaultLanguageSingleSelect.selectOption(languageOption);
+
 		await this.siteSettingsPage.saveConfiguration();
+
+		await this.page.waitForLoadState();
 	}
 }

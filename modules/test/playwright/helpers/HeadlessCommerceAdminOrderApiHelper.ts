@@ -7,7 +7,7 @@ import {getRandomInt} from '../utils/getRandomInt';
 import getRandomString from '../utils/getRandomString';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
-type TTerms = {
+type TTerm = {
 	active?: boolean;
 	id?: number;
 	label?: {
@@ -156,7 +156,7 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		return patchOrder;
 	}
 
-	async postTerms(terms: TTerms) {
+	async postTerm(terms: TTerm) {
 		terms = {
 			active: true,
 			label: {

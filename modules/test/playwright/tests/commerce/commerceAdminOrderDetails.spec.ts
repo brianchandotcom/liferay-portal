@@ -266,23 +266,19 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 		channel
 	);
 
-	const deliveryTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerms(
-		{
-			type: 'delivery-terms',
-		}
-	);
+	const deliveryTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+		type: 'delivery-terms',
+	});
 
-	const deliveryTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerms(
-		{
-			type: 'delivery-terms',
-		}
-	);
+	const deliveryTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+		type: 'delivery-terms',
+	});
 
-	const paymentTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		type: 'payment-terms',
 	});
 
-	const paymentTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		type: 'payment-terms',
 	});
 

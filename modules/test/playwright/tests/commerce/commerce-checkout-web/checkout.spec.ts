@@ -169,7 +169,7 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 		siteGroupId: site.id,
 	});
 
-	const paymentTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		label: {
 			en_US: 'MoneyA',
 		},
@@ -177,7 +177,7 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 		priority: 0,
 		type: 'payment-terms',
 	});
-	const paymentTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		label: {
 			en_US: 'MoneyB',
 		},
@@ -185,7 +185,7 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 		priority: 1,
 		type: 'payment-terms',
 	});
-	const paymentTerm3 = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm3 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		label: {
 			en_US: 'PayPalA',
 		},
@@ -193,7 +193,7 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 		priority: 2,
 		type: 'payment-terms',
 	});
-	const paymentTerm4 = await apiHelpers.headlessCommerceAdminOrder.postTerms({
+	const paymentTerm4 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
 		label: {
 			en_US: 'MoneyC',
 		},

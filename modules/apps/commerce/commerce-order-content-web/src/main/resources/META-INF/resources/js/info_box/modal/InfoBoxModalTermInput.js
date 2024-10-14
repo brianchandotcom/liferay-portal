@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import '../../../css/index.scss';
 
@@ -27,20 +27,23 @@ const InfoBoxModalTermInput = ({
 	);
 	const [terms, setTerms] = useState([]);
 
-	const getTermsPage = (orderId) => {
-		if (field === 'deliveryTermId') {
-			return CommerceServiceProvider.DeliveryCartAPI(
-				'v1'
-			).getCartDeliveryTermsPage(orderId);
-		}
-		else if (field === 'paymentTermId') {
-			return CommerceServiceProvider.DeliveryCartAPI(
-				'v1'
-			).getCartPaymentTermsPage(orderId);
-		}
+	const getTermsPage = useCallback(
+		(orderId) => {
+			if (field === 'deliveryTermId') {
+				return CommerceServiceProvider.DeliveryCartAPI(
+					'v1'
+				).getCartDeliveryTermsPage(orderId);
+			}
+			else if (field === 'paymentTermId') {
+				return CommerceServiceProvider.DeliveryCartAPI(
+					'v1'
+				).getCartPaymentTermsPage(orderId);
+			}
 
-		return Promise.resolve({terms: []});
-	};
+			return Promise.resolve({terms: []});
+		},
+		[field]
+	);
 
 	const handleTermChange = (event) => {
 		const selectedId = Number(event.target.value);
@@ -101,7 +104,7 @@ const InfoBoxModalTermInput = ({
 					type: 'danger',
 				});
 			});
-	}, [orderId, field, setIsValid]);
+	}, [getTermsPage, field, orderId, setIsValid]);
 
 	return (
 		<>

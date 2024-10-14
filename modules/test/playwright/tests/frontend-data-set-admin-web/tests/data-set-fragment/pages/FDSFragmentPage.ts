@@ -205,4 +205,23 @@ export class FDSFragmentPage {
 
 		await fragmentSelectionArea.click();
 	}
+
+	async sortBy(columnName: string) {
+		await this.page
+			.locator('.dnd-table > .dnd-thead > .dnd-tr')
+			.getByRole('button', {name: columnName})
+			.waitFor();
+
+		await Promise.all([
+			this.page
+				.locator('.dnd-table > .dnd-thead > .dnd-tr')
+				.getByRole('button', {name: columnName})
+				.click(),
+			this.page.waitForResponse(
+				(response) =>
+					response.status() === 200 &&
+					response.url().includes('/data-set-admin/')
+			),
+		]);
+	}
 }

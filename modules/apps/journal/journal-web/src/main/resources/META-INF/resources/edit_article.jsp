@@ -124,9 +124,8 @@ journalEditArticleDisplayContext.setViewAttributes();
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") && !JournalUtil.isEditDefaultValues(article) %>'>
 								<div class="align-items-center d-none small" id="<portlet:namespace />lockErrorIndicator">
-									<clay:icon
-										cssClass="ml-2 mt-0"
-										symbol="exclamation-full"
+									<react:component
+										module="{LockErrorIndicator} from journal-web"
 									/>
 								</div>
 

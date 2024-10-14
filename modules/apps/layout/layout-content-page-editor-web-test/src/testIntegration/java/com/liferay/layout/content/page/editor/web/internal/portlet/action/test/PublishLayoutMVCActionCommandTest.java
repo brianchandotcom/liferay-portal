@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -73,6 +74,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.function.Function;
 
 import javax.portlet.PortletPreferences;
 
@@ -343,39 +346,17 @@ public class PublishLayoutMVCActionCommandTest {
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			String html = StringBundler.concat(
-				"<div class=\"fragment_1\">[@liferay_portlet[\"runtime\"]",
-				"portletName=\"com_liferay_journal_content_web_portlet_",
-				"JournalContentPortlet\" instanceId=\"myInstanceId\" ",
-				"persistSettings=false /]</div>");
-
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			Assert.assertNotNull(draftLayout);
-
-			_addFragmentEntryLinkToLayout(html, draftLayout, serviceContext);
-
-			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-				_dataDefinitionResourceFactory, _createDDMFormField(),
-				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
-				_group.getGroupId(), _journalConverter);
-
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey());
-
-			String portletId = PortletIdCodec.encode(
-				JournalContentPortletKeys.JOURNAL_CONTENT, "myInstanceId");
-
-			_setUpPortletPreferences(
-				assetEntry, journalArticle, draftLayout, portletId);
-
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-			_assertPortletPreferences(
-				assetEntry, journalArticle, layout, portletId);
+			_assertPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortlet(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">[@liferay_portlet[\"runtime\"]",
+					"portletName=\"com_liferay_journal_content_web_portlet_",
+					"JournalContentPortlet\" instanceId=\"myInstanceId\" ",
+					"persistSettings=false /]</div>"),
+				layout,
+				namespace -> PortletIdCodec.encode(
+					JournalContentPortletKeys.JOURNAL_CONTENT, "myInstanceId"));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -393,41 +374,18 @@ public class PublishLayoutMVCActionCommandTest {
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			String html = StringBundler.concat(
-				"<div class=\"fragment_1\">[@liferay_portlet[\"runtime\"]",
-				"portletName=\"com_liferay_journal_content_web_portlet_",
-				"JournalContentPortlet\" instanceId=\"",
-				"fragmentEntryLinkNamespace\" persistSettings=false /]</div>");
-
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			Assert.assertNotNull(draftLayout);
-
-			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-				_dataDefinitionResourceFactory, _createDDMFormField(),
-				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
-				_group.getGroupId(), _journalConverter);
-
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey());
-
-			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
-				html, draftLayout, serviceContext);
-
-			String portletId = PortletIdCodec.encode(
-				JournalContentPortletKeys.JOURNAL_CONTENT,
-				fragmentEntryLink.getNamespace());
-
-			_setUpPortletPreferences(
-				assetEntry, journalArticle, draftLayout, portletId);
-
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-			_assertPortletPreferences(
-				assetEntry, journalArticle, layout, portletId);
+			_assertPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortlet(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">[@liferay_portlet[\"runtime\"]",
+					"portletName=\"com_liferay_journal_content_web_portlet_",
+					"JournalContentPortlet\" instanceId=\"",
+					"fragmentEntryLinkNamespace\" persistSettings=false /]",
+					"</div>"),
+				layout,
+				namespace -> PortletIdCodec.encode(
+					JournalContentPortletKeys.JOURNAL_CONTENT, namespace));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -435,8 +393,11 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
-			String html, Layout layout, ServiceContext serviceContext)
+			String html, Layout layout)
 		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
@@ -517,21 +478,54 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	private void _assertPortletPreferences(
-		AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
-		String portletId) {
+		Layout layout, Map<String, String> map, String portletId) {
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
 
-		Assert.assertEquals(
-			String.valueOf(journalArticle.getArticleId()),
-			portletPreferences.getValue("articleId", null));
-		Assert.assertEquals(
-			String.valueOf(assetEntry.getEntryId()),
-			portletPreferences.getValue("assetEntryId", null));
-		Assert.assertEquals(
-			String.valueOf(journalArticle.getGroupId()),
-			portletPreferences.getValue("groupId", null));
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			Assert.assertEquals(
+				entry.getValue(),
+				portletPreferences.getValue(entry.getKey(), null));
+		}
+	}
+
+	private void
+			_assertPublishedLayoutFragmentEntryLinkWithFreemarkerEmbeddedPortlet(
+				String html, Layout layout,
+				Function<String, String> portletIdFunction)
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, _createDDMFormField(),
+			_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
+			_group.getGroupId(), _journalConverter);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Map<String, String> map = HashMapBuilder.put(
+			"articleId", String.valueOf(journalArticle.getArticleId())
+		).put(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId())
+		).put(
+			"groupId", String.valueOf(journalArticle.getGroupId())
+		).build();
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
+			html, draftLayout);
+
+		String portletId = portletIdFunction.apply(
+			fragmentEntryLink.getNamespace());
+
+		_setUpPortletPreferences(draftLayout, map, portletId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPortletPreferences(layout, map, portletId);
 	}
 
 	private DDMFormField _createDDMFormField() {
@@ -577,24 +571,19 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	private void _setUpPortletPreferences(
-			AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
-			String portletId)
+			Layout layout, Map<String, String> map, String portletId)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
 
-		portletPreferences.setValue(
-			"articleId", String.valueOf(journalArticle.getArticleId()));
-		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-		portletPreferences.setValue(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			portletPreferences.setValue(entry.getKey(), entry.getValue());
+		}
 
 		portletPreferences.store();
 
-		_assertPortletPreferences(
-			assetEntry, journalArticle, layout, portletId);
+		_assertPortletPreferences(layout, map, portletId);
 	}
 
 	@Inject

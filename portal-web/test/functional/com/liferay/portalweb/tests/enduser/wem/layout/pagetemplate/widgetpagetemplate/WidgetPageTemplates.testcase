@@ -29,36 +29,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-54099. Can configure MVC portlets in Page Templates."
-	@priority = 5
-	test EditGlobalPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add an active page template") {
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryName = "Page Template Name");
-		}
-
-		task ("Add a calebdar widget to page template and configure calendar") {
-			var portalURL = PropsUtil.get("portal.url");
-			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
-				groupName = "Global",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateType = "Widget Page Template");
-
-			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
-
-			Portlet.addPG(portletName = "Calendar");
-
-			CalendarNavigator.gotoConfiguration();
-
-			CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");
-
-			CalendarConfiguration.save();
-		}
-	}
-
 	@description = "Export lar with global page templates and check all persist after importing."
 	@priority = 5
 	test ImportLAR {

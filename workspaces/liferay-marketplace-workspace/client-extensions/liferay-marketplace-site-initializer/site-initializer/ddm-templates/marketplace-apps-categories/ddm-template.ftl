@@ -5,6 +5,7 @@
 
 	.app-container .app-category {
 		background-color: #e6ebf5;
+		color: #1c3667;
 		padding: 6px 8px 4px
 	}
 
@@ -37,7 +38,7 @@
 	PRODUCT_TYPE_DXP = "DXP"
 	PRODUCT_TYPE_FREE = "FREE"
 	PRODUCT_TYPE_PAID = "PAID"
-	VOCABULARY_PRODUCT_CATEGORY = "MARKETPLACE APP CATEGORY"
+	VOCABULARY_PRODUCT_CATEGORY = "MARKETPLACE-APP-CATEGORY"
 />
 
 <#if themeDisplay?has_content>
@@ -72,16 +73,6 @@
 
 <div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
 	<div class="d-flex">
-		<#if categories?has_content>
-			<#list categories as category>
-				<#if category.vocabulary?upper_case == VOCABULARY_PRODUCT_CATEGORY>
-					<div class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-1 rounded">
-						${category.name}
-					</div>
-				</#if>
-			</#list>
-		</#if>
-
 		<#if productSpecifications?has_content>
 
 			<#assign productTypes = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type")) />
@@ -106,6 +97,16 @@
 						</div>
 
 						<div class="bg-neutral-8">${type}</div>
+					</div>
+				</#if>
+			</#list>
+		</#if>
+
+		<#if categories?has_content>
+			<#list categories as category>
+				<#if category.vocabulary?replace(" ", "-")?upper_case == VOCABULARY_PRODUCT_CATEGORY>
+					<div class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded">
+						${category.name}
 					</div>
 				</#if>
 			</#list>

@@ -5,12 +5,12 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -18,6 +18,12 @@ export const test = mergeTests(
 	formsPagesTest,
 	loginTest()
 );
+
+test.afterEach(async ({formsPage, page}) => {
+	await formsPage.goTo();
+
+	await deleteItems(formsPage, page);
+});
 
 test.describe('FormView when form storage type is object', () => {
 	test.beforeEach(({page}) => {
@@ -44,16 +50,6 @@ test.describe('FormView when form storage type is object', () => {
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
-
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
-
-		await objectAdminRestClient.objectDefinition.postObjectDefinitionPublish(
-			{
-				objectDefinitionId: objectDefinition.id,
-			}
-		);
 
 		await formBuilderPage.goToNew();
 
@@ -89,9 +85,7 @@ test.describe('FormView when form storage type is object', () => {
 
 		await formBuilderPage.clickSaveButton();
 
-		await formBuilderPage.publishButton.click();
-
-		await formBuilderPage.clickOpenFormButton();
+		await formBuilderPage.openFormSubmission();
 
 		const newTabPage = await newTabPagePromise;
 
@@ -128,9 +122,7 @@ test.describe('FormView when form storage type is object', () => {
 			formBuilderPage.page.once('popup', resolve)
 		);
 
-		await formBuilderPage.publishButton.click();
-
-		await formBuilderPage.clickOpenFormButton();
+		await formBuilderPage.openFormSubmission();
 
 		const newTabPage2 = await newTabPagePromise2;
 
@@ -141,5 +133,7 @@ test.describe('FormView when form storage type is object', () => {
 				name: 'Submit for Workflow',
 			})
 		).toBeVisible();
+
+		await newTabPage2.close();
 	});
 });

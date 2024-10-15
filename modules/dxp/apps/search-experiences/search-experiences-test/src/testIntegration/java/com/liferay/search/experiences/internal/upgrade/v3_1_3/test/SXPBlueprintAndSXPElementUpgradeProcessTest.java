@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,7 +45,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
- * @author Joshua Cords
+ * @author Joshua Cords, Felipe Lorenz
  */
 @RunWith(Arquillian.class)
 public class SXPBlueprintAndSXPElementUpgradeProcessTest {
@@ -90,7 +89,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
 
 		if (sxpElement != null) {
-			sxpElement.setElementDefinitionJSON("{old value");
+			sxpElement.setElementDefinitionJSON(RandomTestUtil.randomString());
 
 			sxpElement = _sxpElementLocalService.updateSXPElement(sxpElement);
 		}
@@ -115,8 +114,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			sxpElement.getElementDefinitionJSON(),
-			_getExpectedElementDefinitionJSON());
+			_getExpectedElementDefinitionJSON(),
+			sxpElement.getElementDefinitionJSON());
 	}
 
 	@Rule
@@ -174,19 +173,18 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				testName.getMethodName(), ".before.json"));
 
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_ID_1$",
-			String.valueOf(group1.getGroupId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_ID_2$",
-			String.valueOf(group2.getGroupId()));
-		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$SCOPE_GROUP_LABEL_1$",
 			_createGroupIDLabel(group1));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$SCOPE_GROUP_LABEL_2$",
 			_createGroupIDLabel(group2));
+		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "$SCOPE_GROUP_ID_1$",
+			String.valueOf(group1.getGroupId()));
 
-		return elementInstancesJSON;
+		return StringUtil.replace(
+			elementInstancesJSON, "$SCOPE_GROUP_ID_2$",
+			String.valueOf(group2.getGroupId()));
 	}
 
 	private String _getExpectedElementDefinitionJSON() {
@@ -245,9 +243,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private final Class<?> _clazz = getClass();
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

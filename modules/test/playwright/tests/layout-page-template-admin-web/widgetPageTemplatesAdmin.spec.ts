@@ -10,6 +10,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {widgetPageTemplatesPagesTest} from '../../fixtures/widgetPageTemplatesPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
@@ -114,7 +115,7 @@ test('Add an active page template in global site and deactivate it', async ({
 test(
 	'Disable inherit changes and check it works',
 	{
-		tag: '@LPS-154130',
+		tag: ['@LPS-54099', '@LPS-154130'],
 	},
 	async ({
 		page,
@@ -171,7 +172,29 @@ test(
 			'Edit'
 		);
 
-		await widgetPagePage.addPortlet('Web Content Display');
+		await widgetPagePage.addPortlet('Language Selector');
+
+		// Assert portlet can be configured
+
+		await widgetPagePage.clickOnAction(
+			'Language Selector',
+			'Configuration'
+		);
+
+		const configurationIFrame = page.frameLocator(
+			'iframe[title*="Language Selector"]'
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: configurationIFrame.getByRole('option', {
+				exact: true,
+				name: 'Long Text',
+			}),
+			trigger: configurationIFrame.getByLabel('Display Template'),
+		});
+
+		await widgetPagePage.saveAndClose('Language Selector');
 
 		// Assert changes are not inherited
 
@@ -184,7 +207,7 @@ test(
 		await expect(
 			page
 				.locator('#layout-column_column-1')
-				.getByRole('heading', {name: 'Web Content Display'})
+				.getByRole('heading', {name: 'Language Selector'})
 		).not.toBeVisible();
 	}
 );

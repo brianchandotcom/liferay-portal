@@ -10,6 +10,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -55,9 +56,16 @@ test(
 			'iframe[title*="IFrame"]'
 		);
 
+		await configurationIFrame.getByLabel('Source URL').waitFor();
+
 		await configurationIFrame.getByLabel('Source URL').fill('/');
 
 		await configurationIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(
+			configurationIFrame,
+			'Success:You have successfully updated the setup.'
+		);
 
 		// Navigate to a new page and assert alert is not shown
 

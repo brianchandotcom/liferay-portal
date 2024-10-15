@@ -153,7 +153,6 @@ test(
 
 		await pagesAdminPage.addPage({
 			name: layoutTitle,
-			successMessage: 'Success:The page was created successfully.',
 			template: widgetPageTemplateName,
 		});
 

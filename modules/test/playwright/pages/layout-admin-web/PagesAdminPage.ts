@@ -178,8 +178,6 @@ export class PagesAdminPage {
 
 		await this.addPage({
 			name,
-			successMessage:
-				'Success:The collection page was created successfully',
 		});
 
 		// Publish is draft param is false
@@ -191,11 +189,9 @@ export class PagesAdminPage {
 
 	async addPage({
 		name,
-		successMessage,
 		template = 'Blank',
 	}: {
 		name: string;
-		successMessage: string;
 		template?: string;
 	}) {
 		await this.page
@@ -215,7 +211,7 @@ export class PagesAdminPage {
 		await this.addButton.hover();
 		await this.addButton.click();
 
-		await waitForAlert(this.page, successMessage);
+		await waitForAlert(this.page, 'page was created successfully.');
 	}
 
 	private async addThemeFaviconClientExtension(clientExtensionName: string) {
@@ -400,7 +396,6 @@ export class PagesAdminPage {
 
 		await this.addPage({
 			name,
-			successMessage: 'Success:The page was created successfully.',
 			template,
 		});
 

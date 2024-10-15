@@ -139,7 +139,6 @@ test(
 			await layoutSetPrototypePage.addTemplatePageButton.click();
 			await pagesAdminPage.addPage({
 				name: secondPageNameOnSiteTemplate,
-				successMessage: 'Success:The page was created successfully.',
 			});
 
 			await journalPage.goto('/global');
@@ -576,7 +575,6 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	await layoutSetPrototypePage.addTemplatePageButton.click();
 	await pagesAdminPage.addPage({
 		name: templateName,
-		successMessage: 'Success:The page was created successfully.',
 	});
 	await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
 
@@ -812,7 +810,6 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await layoutSetPrototypePage.addTemplatePageButton.click();
 	await pagesAdminPage.addPage({
 		name: templateName,
-		successMessage: 'Success:The page was created successfully.',
 	});
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');

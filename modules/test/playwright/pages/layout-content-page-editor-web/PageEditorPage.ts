@@ -828,7 +828,7 @@ export class PageEditorPage {
 
 		await this.page.getByRole('tab', {exact: true, name: 'Link'}).click();
 
-		this.setLinkConfiguration(linkConfiguration);
+		await this.setLinkConfiguration(linkConfiguration);
 	}
 
 	async openExperienceSelector() {
@@ -1166,7 +1166,9 @@ export class PageEditorPage {
 		// Select source and relationship if needed
 
 		if (source) {
-			await this.page.getByLabel('Source').selectOption(source);
+			await this.page
+				.getByLabel('Source', {exact: true})
+				.selectOption(source);
 		}
 
 		if (source === 'relationship') {

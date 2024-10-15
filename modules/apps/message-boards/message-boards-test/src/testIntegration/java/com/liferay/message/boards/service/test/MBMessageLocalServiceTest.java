@@ -89,6 +89,25 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddBBCodeSubjectWithLineBreakInBodyInBBCode()
+		throws Exception {
+
+		String subject = "<u>subject</u>";
+		String body = "a\nbc";
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "bbcode", inputStreamOVPs, false, 0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(body, message.getBody());
+	}
+
+	@Test
 	public void testAddHtmlSubjectWithEmptyBodyMessage() throws Exception {
 		String subject = "<u>subject</u>";
 		String body = StringPool.BLANK;

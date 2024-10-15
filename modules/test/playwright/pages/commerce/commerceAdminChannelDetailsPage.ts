@@ -10,6 +10,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 import {searchTableRowByValue} from './commerceDNDTablePage';
 
 export class CommerceAdminChannelDetailsPage {
+	readonly allowMultishippingToggle: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly channelNameLink: (channelName: string) => Locator;
 	readonly closeSidePanelFrame: (
@@ -71,6 +72,7 @@ export class CommerceAdminChannelDetailsPage {
 	readonly showSeparateOrderItemsToggle: Locator;
 
 	constructor(page: Page) {
+		this.allowMultishippingToggle = page.getByLabel('Allow Multishipping');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.channelNameLink = (channelName: string) =>
 			page.getByRole('link', {

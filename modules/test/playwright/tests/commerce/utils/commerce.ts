@@ -6,6 +6,19 @@ import {ORDER_WORKFLOW_STATUS_CODE} from '../../workspaces/liferay-workspace-mar
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+export async function classicCommerceSetUp(
+	apiHelpers: DataApiHelpers,
+	siteName: string
+) {
+	return initializerSetUp(
+		apiHelpers,
+		'com.liferay.commerce.site.initializer',
+		'Commerce Classic',
+		'Liferay Commerce Channel',
+		siteName
+	);
+}
+
 export async function commerceReturnSetUp(
 	apiHelpers: DataApiHelpers,
 	amount?: number,
@@ -211,27 +224,36 @@ export async function completedVirtualOrderItemSetUp(
 	};
 }
 
-export async function miniumSetUp(
+export async function initializerSetUp(
 	apiHelpers: DataApiHelpers,
+	templateKey: string,
+	catalogName?: string,
+	channelName?: string,
 	siteName?: string
 ) {
+	catalogName = catalogName || siteName;
+	channelName = channelName || siteName;
 	siteName = siteName || getRandomString();
 
 	const site = await apiHelpers.headlessSite.createSite({
 		name: siteName,
-		templateKey: 'minium-initializer',
+		templateKey,
 		templateType: 'site-initializer',
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channels =
-		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(siteName);
+		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
+			channelName
+		);
 
 	apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
 
 	const catalogs =
-		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(siteName);
+		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(
+			catalogName
+		);
 
 	apiHelpers.data.push({id: catalogs.items[0].id, type: 'catalog'});
 
@@ -287,4 +309,11 @@ export async function miniumSetUp(
 	}
 
 	return {catalog: catalogs.items[0], channel: channels.items[0], site};
+}
+
+export async function miniumSetUp(
+	apiHelpers: DataApiHelpers,
+	siteName?: string
+) {
+	return initializerSetUp(apiHelpers, 'minium-initializer', siteName);
 }

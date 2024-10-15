@@ -2851,10 +2851,14 @@ test('LPD-38261 All commerce widgets work in a content page', async ({
 test('LPD-36953 Order Multishipping fragment', async ({
 	apiHelpers,
 	applicationsMenuPage,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
 	commerceLayoutsPage,
 	displayPageTemplatesPage,
 	page,
 }) => {
+	test.setTimeout(180000);
+
 	try {
 		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
 
@@ -2950,8 +2954,37 @@ test('LPD-36953 Order Multishipping fragment', async ({
 				`/web/${site.name}/order/${cart.id}`
 		);
 
-		await expect(page.getByText(sku1.sku)).toBeVisible();
+		await expect(page.getByText(sku1.sku)).toHaveCount(0);
+		await expect(page.getByText(sku2.sku)).toHaveCount(0);
 
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.allowMultishippingToggle.setChecked(
+			true
+		);
+
+		await expect(
+			commerceAdminChannelDetailsPage.allowMultishippingToggle
+		).toBeChecked();
+
+		await commerceAdminChannelDetailsPage.saveButton.click();
+
+		await expect(
+			commerceAdminChannelDetailsPage.allowMultishippingToggle
+		).toBeChecked();
+
+		await waitForAlert(page);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText(sku1.sku)).toBeVisible();
 		await expect(page.getByText(sku2.sku)).toBeVisible();
 	}
 	finally {

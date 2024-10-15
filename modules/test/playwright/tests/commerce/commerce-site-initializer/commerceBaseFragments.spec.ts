@@ -11,6 +11,13 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../../liferay.config';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {classicCommerceSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -20,27 +27,15 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-20379': true,
 	}),
-	loginTest()
+	loginTest(),
+	systemSettingsPageTest
 );
 
 test('LPD-23780 Commerce Classic Header main fragment is correctly displayed', async ({
 	apiHelpers,
 	page,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: `classic-commerce`,
-		templateKey: 'com.liferay.commerce.site.initializer',
-		templateType: 'site-initializer',
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channels =
-		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-			'Liferay Commerce Channel'
-		);
-
-	apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
+	const {site} = await classicCommerceSetUp(apiHelpers, `classic-commerce`);
 
 	await page.goto(`/web${site.friendlyUrlPath}`);
 
@@ -72,4 +67,113 @@ test('LPD-23780 Commerce Classic Header main fragment is correctly displayed', a
 	);
 
 	await expect(commerceHeaderSearchPortlet).toBeVisible();
+});
+
+test('LPD-35323 Multishipping tab displays correctly when enabled', async ({
+	apiHelpers,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	test.setTimeout(180000);
+
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		const featureFlagEnabled = await page
+			.getByLabel('COMMERCE-9410')
+			.isChecked();
+
+		if (!featureFlagEnabled) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const {catalog, channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			getRandomString()
+		);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				skus: [
+					{
+						cost: 0,
+						price: 20,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		const orderDetailsPageURL =
+			liferayConfig.environment.baseUrl +
+			`/web/${site.name}/order/${cart.id}`;
+
+		await page.goto(orderDetailsPageURL);
+
+		const multishippingTab = page.getByRole('tab', {name: 'Multishipping'});
+
+		await expect(multishippingTab).toHaveCount(0);
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.allowMultishippingToggle.setChecked(
+			true
+		);
+
+		await expect(
+			commerceAdminChannelDetailsPage.allowMultishippingToggle
+		).toBeChecked();
+
+		await commerceAdminChannelDetailsPage.saveButton.click();
+
+		await expect(
+			commerceAdminChannelDetailsPage.allowMultishippingToggle
+		).toBeChecked();
+
+		await waitForAlert(page);
+
+		await page.goto(orderDetailsPageURL);
+
+		await expect(multishippingTab).toBeVisible();
+	}
+	finally {
+		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
 });

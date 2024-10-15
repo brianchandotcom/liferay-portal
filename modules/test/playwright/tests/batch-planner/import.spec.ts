@@ -1696,7 +1696,7 @@ test.describe('can rely on anyOf form validation', () => {
 		).toBeEmpty();
 
 		await dataMigrationCenterPage.selectFile(
-			path.join(__dirname, '/dependencies/c_subject.csv')
+			path.join(__dirname, '/dependencies/any_of_object_entries.csv')
 		);
 		await page.getByRole('button', {name: 'Next'}).click();
 		await expect(
@@ -1762,7 +1762,7 @@ test.describe('can rely on anyOf form validation', () => {
 		).toBeEmpty();
 
 		await dataMigrationCenterPage.selectFile(
-			path.join(__dirname, '/dependencies/c_subject.csv')
+			path.join(__dirname, '/dependencies/any_of_object_entries.csv')
 		);
 
 		await page
@@ -1836,7 +1836,7 @@ test.describe('can rely on anyOf form validation', () => {
 		).toBeEmpty();
 
 		await dataMigrationCenterPage.selectFile(
-			path.join(__dirname, '/dependencies/c_subject.csv')
+			path.join(__dirname, '/dependencies/any_of_object_entries.csv')
 		);
 
 		await page

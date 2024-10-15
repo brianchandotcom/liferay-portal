@@ -2097,6 +2097,23 @@ public class UserLocalServiceWrapper
 			companyId, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<User> getUsersByRoleId(
+			long roleId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.getUsersByRoleId(roleId, start, end);
+	}
+
+	@Override
+	public java.util.List<User> getUsersByRoleName(
+			long companyId, String roleName, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.getUsersByRoleName(
+			companyId, roleName, start, end);
+	}
+
 	/**
 	 * Returns the number of users.
 	 *

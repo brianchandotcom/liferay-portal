@@ -1532,6 +1532,15 @@ public interface UserLocalService
 		long companyId, int status, int start, int end,
 		OrderByComparator<User> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getUsersByRoleId(long roleId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getUsersByRoleName(
+			long companyId, String roleName, int start, int end)
+		throws PortalException;
+
 	/**
 	 * Returns the number of users.
 	 *

@@ -1893,6 +1893,19 @@ public class UserLocalServiceUtil {
 			companyId, status, start, end, orderByComparator);
 	}
 
+	public static List<User> getUsersByRoleId(long roleId, int start, int end)
+		throws PortalException {
+
+		return getService().getUsersByRoleId(roleId, start, end);
+	}
+
+	public static List<User> getUsersByRoleName(
+			long companyId, String roleName, int start, int end)
+		throws PortalException {
+
+		return getService().getUsersByRoleName(companyId, roleName, start, end);
+	}
+
 	/**
 	 * Returns the number of users.
 	 *

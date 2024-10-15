@@ -262,19 +262,10 @@ public class AuthVerifierPipeline {
 					continue;
 				}
 
-				AuthVerifierResult authVerifierResult =
-					_verifyWithAuthVerifierConfiguration(
-						_accessControlContext, authVerifierConfiguration);
+				_authVerifierResult = _verifyWithAuthVerifierConfiguration(
+					_accessControlContext, authVerifierConfiguration);
 
-				if (authVerifierResult == null) {
-					continue;
-				}
-
-				_authVerifierResult = authVerifierResult;
-
-				if (authVerifierResult.getState() !=
-						AuthVerifierResult.State.INVALID_CREDENTIALS) {
-
+				if (_authVerifierResult != null) {
 					return;
 				}
 			}

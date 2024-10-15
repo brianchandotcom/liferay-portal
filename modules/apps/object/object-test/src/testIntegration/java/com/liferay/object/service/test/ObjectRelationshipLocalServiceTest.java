@@ -784,8 +784,10 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
-	public void testBindObjectDefinitionsExceedMaxTreeHeight()
-		throws Exception {
+	public void testBindObjectDefinitionExceedTreeMaxHeight() throws Exception {
+
+		// Bind an object definition to a tree that has reached the maximum
+		// height
 
 		TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
@@ -823,11 +825,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinitionAAAAAA);
-	}
 
-	@Test
-	public void testBindObjectDefinitionTreesExceedTreeMaxHeight()
-		throws Exception {
+		// Bind two object definition trees into one so that the height
+		// of the new tree exceeds the maximum height
 
 		TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,

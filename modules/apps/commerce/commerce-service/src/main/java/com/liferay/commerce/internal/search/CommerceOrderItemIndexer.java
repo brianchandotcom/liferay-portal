@@ -7,6 +7,8 @@ package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -148,7 +150,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		Document document = getBaseModelDocument(CLASS_NAME, commerceOrderItem);
 
 		document.addLocalizedKeyword(
-			Field.NAME, commerceOrderItem.getNameMap());
+			Field.NAME, commerceOrderItem.getNameMap(), false, true);
 		document.addNumber(
 			FIELD_COMMERCE_ORDER_ID, commerceOrderItem.getCommerceOrderId());
 		document.addKeyword(
@@ -159,8 +161,26 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 			FIELD_PARENT_COMMERCE_ORDER_ITEM_ID,
 			commerceOrderItem.getParentCommerceOrderItemId());
 		document.addNumber(FIELD_QUANTITY, commerceOrderItem.getQuantity());
+		document.addNumberSortable(
+			FIELD_QUANTITY, commerceOrderItem.getQuantity());
 		document.addKeyword(FIELD_SKU, commerceOrderItem.getSku());
+		document.addKeywordSortable(FIELD_SKU, commerceOrderItem.getSku());
 		document.addNumber(FIELD_UNIT_PRICE, commerceOrderItem.getUnitPrice());
+
+		String unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
+
+		if (Validator.isNotNull(unitOfMeasureKey)) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						commerceOrderItem.getCPInstanceId(), unitOfMeasureKey);
+
+			if (cpInstanceUnitOfMeasure != null) {
+				document.addLocalizedText(
+					"cpInstanceUnitOfMeasure",
+					cpInstanceUnitOfMeasure.getNameMap(), true);
+			}
+		}
 
 		_expandoBridgeIndexer.addAttributes(
 			document, commerceOrderItem.getExpandoBridge());
@@ -238,6 +258,10 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private ExpandoBridgeIndexer _expandoBridgeIndexer;

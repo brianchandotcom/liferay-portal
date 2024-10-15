@@ -154,7 +154,7 @@ public class JournalArticleLayoutDisplayPageProvider
 
 		for (long connectedGroupId :
 				siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(groupId)) {
+					getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true)) {
 
 			JournalArticle article = null;
 

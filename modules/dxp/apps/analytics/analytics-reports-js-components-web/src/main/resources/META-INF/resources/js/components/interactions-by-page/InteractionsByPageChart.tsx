@@ -74,7 +74,7 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 				dataKey,
 				dotColor: data?.color ?? 'none',
 				title: data.title,
-				total: data?.format?.(Number(data.total)),
+				total: data.total,
 				url: data?.url,
 			};
 		})

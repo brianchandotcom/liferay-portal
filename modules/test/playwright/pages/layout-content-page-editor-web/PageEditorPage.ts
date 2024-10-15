@@ -1009,11 +1009,13 @@ export class PageEditorPage {
 		entity,
 		entry,
 		entryLocator,
+		field,
 		folder,
 	}: {
 		entity: string;
 		entry: string;
 		entryLocator?: Locator;
+		field?: string;
 		folder?: string;
 	}) {
 		await this.selectItemMappingButton.click();
@@ -1091,6 +1093,12 @@ export class PageEditorPage {
 		await expect(
 			this.page.locator('.page-editor__item-selector__content-input')
 		).toHaveValue(entry);
+
+		if (field) {
+			await this.page.getByLabel('Field').selectOption(field);
+
+			await this.waitForChangesSaved();
+		}
 	}
 
 	async setMappingConfiguration({
@@ -1132,11 +1140,7 @@ export class PageEditorPage {
 
 		// If source is content, select the item and the field
 
-		await this.setMappedItem({entity, entry, entryLocator, folder});
-
-		await this.page.getByLabel('Field', {exact: true}).selectOption(field);
-
-		await this.waitForChangesSaved();
+		await this.setMappedItem({entity, entry, entryLocator, field, folder});
 	}
 
 	async switchExperience(experience: string) {

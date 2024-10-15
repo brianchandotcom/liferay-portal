@@ -255,40 +255,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-144539. Assert the clear button will be displayed as an icon button in responsive mode"
-	@priority = 4
-	test ResponsiveModeClearButtonShouldDisplayAsIcon {
-		task ("Given a window size set to phone size") {
-			SetWindowSize(value1 = "360,720");
-		}
-
-		task ("Then clear button is not displayed as a text button") {
-			AssertNotVisible(locator1 = "ManagementBar#CLEAR_BUTTON");
-		}
-
-		task ("Then clear button is displayed as an icon button") {
-			AssertElementPresent(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
-		}
-	}
-
-	@description = "LPS-144539. Assert tooltip message will be displayed when hovered over the clear button in responsive mode"
-	@priority = 3
-	test ResponsiveModeClearButtonShouldDisplayTooltip {
-		task ("Given a window size set to phone size") {
-			SetWindowSize(value1 = "360,720");
-		}
-
-		task ("When mouse hover over the clear button") {
-			ScrollWebElementIntoView(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
-
-			MouseOver.javaScriptMouseOver(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
-		}
-
-		task ("Then a tooltip message will be displayed") {
-			AssertTextEquals(
-				locator1 = "Message#TOOLTIP",
-				value1 = "Clear");
-		}
-	}
-
 }

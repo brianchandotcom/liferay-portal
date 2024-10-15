@@ -95,6 +95,12 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public Set<String> getBatchNames() {
+		if (_batchNames != null) {
+			return _batchNames;
+		}
+
+		_batchNames = Collections.synchronizedSet(new TreeSet<String>());
+
 		Set<String> batchNames = new TreeSet<>();
 
 		for (BatchTestClassGroup batchTestClassGroup :
@@ -102,6 +108,8 @@ public abstract class BaseJob implements Job {
 
 			batchNames.add(batchTestClassGroup.getBatchName());
 		}
+
+		_batchNames.addAll(batchNames);
 
 		return batchNames;
 	}
@@ -1584,6 +1592,7 @@ public abstract class BaseJob implements Job {
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
+	private Set<String> _batchNames;
 	private final BuildProfile _buildProfile;
 	private String _companyDefaultLocale;
 	private Document _configDocument;

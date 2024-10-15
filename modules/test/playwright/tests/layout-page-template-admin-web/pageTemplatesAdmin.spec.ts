@@ -8,13 +8,17 @@ import path from 'path';
 
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPagesTest,
+	pageEditorPagesTest,
 	pageTemplatesPagesTest
 );
 
@@ -213,4 +217,66 @@ test('Add, rename and delete a page template collection', async ({
 			name: newPageTemplateCollectionName,
 		})
 	).not.toBeVisible();
+});
+
+test('Create a page based on a page template', async ({
+	page,
+	pageEditorPage,
+	pageTemplatesPage,
+	pagesAdminPage,
+	site,
+}) => {
+
+	// Go to page template administration
+
+	await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+	// Create page template collection
+
+	const pageTemplateCollectionName = getRandomString();
+
+	await pageTemplatesPage.addPageTemplateCollection(
+		pageTemplateCollectionName
+	);
+
+	// Create content page template
+
+	const pageTemplateName = getRandomString();
+
+	await pageTemplatesPage.addContentPageTemplate(pageTemplateName);
+
+	// Add heading fragment and publish
+
+	await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+	const headingId = await pageEditorPage.getFragmentId('Heading');
+
+	await pageEditorPage.editTextEditable(headingId, 'element-text', 'Edited');
+
+	await pageEditorPage.publishButton.click();
+
+	await waitForAlert(
+		page,
+		'Success:The page template was published successfully.'
+	);
+
+	// Add a new content page base on content page template
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await pagesAdminPage.gotoSelectTemplates(pageTemplateCollectionName);
+
+	const layoutTitle = getRandomString();
+
+	await pagesAdminPage.addPage({
+		name: layoutTitle,
+		successMessage: 'Success:The page was created successfully.',
+		template: pageTemplateName,
+	});
+
+	// Assert new content page in view mode
+
+	await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+	await expect(page.getByText('Edited')).toBeVisible();
 });

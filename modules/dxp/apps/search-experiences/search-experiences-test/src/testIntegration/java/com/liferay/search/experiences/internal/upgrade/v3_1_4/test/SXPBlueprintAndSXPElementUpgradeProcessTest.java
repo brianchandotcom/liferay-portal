@@ -168,14 +168,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				externalReferenceCode, TestPropsValues.getCompanyId());
 
 		JSONAssert.assertEquals(
-			sxpElement.getElementDefinitionJSON(),
 			StringUtil.read(
 				_clazz,
 				StringBundler.concat(
 					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
 					testName.getMethodName(), StringPool.PERIOD,
 					StringUtil.toLowerCase(externalReferenceCode), ".json")),
-			JSONCompareMode.STRICT);
+			sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
 	}
 
 	private void _assertSXPBlueprint(
@@ -229,11 +228,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
 			_createAssetCategoryIDLabel(assetCategory1));
-		elementInstancesJSON = StringUtil.replace(
+
+		return StringUtil.replace(
 			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_2$",
 			_createAssetCategoryIDLabel(assetCategory2));
-
-		return elementInstancesJSON;
 	}
 
 	private String _getExpectedInstancesJSON(

@@ -63,80 +63,6 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetProductByExternalReferenceCodeAttachmentsPage()
-		throws Exception {
-
-		super.testGetProductByExternalReferenceCodeAttachmentsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductByExternalReferenceCodeAttachmentsPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetProductByExternalReferenceCodeAttachmentsPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductByExternalReferenceCodeImagesPage()
-		throws Exception {
-
-		super.testGetProductByExternalReferenceCodeImagesPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductByExternalReferenceCodeImagesPageWithPagination()
-		throws Exception {
-
-		super.testGetProductByExternalReferenceCodeImagesPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductIdAttachmentsPage() throws Exception {
-		super.testGetProductIdAttachmentsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductIdAttachmentsPageWithPagination()
-		throws Exception {
-
-		super.testGetProductIdAttachmentsPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductIdImagesPage() throws Exception {
-		super.testGetProductIdImagesPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetProductIdImagesPageWithPagination() throws Exception {
-		super.testGetProductIdImagesPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLDeleteAttachment() throws Exception {
-		super.testGraphQLDeleteAttachment();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGraphQLGetAttachmentByExternalReferenceCode()
 		throws Exception {
 
@@ -170,24 +96,6 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		_testPostProductByExternalReferenceCodeAttachmentWithFileEntryExternalReferenceCode();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductByExternalReferenceCodeAttachmentByBase64()
-		throws Exception {
-
-		super.testPostProductByExternalReferenceCodeAttachmentByBase64();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductByExternalReferenceCodeAttachmentByUrl()
-		throws Exception {
-
-		super.testPostProductByExternalReferenceCodeAttachmentByUrl();
-	}
-
 	@Override
 	@Test
 	public void testPostProductByExternalReferenceCodeImage() throws Exception {
@@ -203,44 +111,12 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		_testPostProductByExternalReferenceCodeImageWithFileEntryExternalReferenceCode();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductByExternalReferenceCodeImageByBase64()
-		throws Exception {
-
-		super.testPostProductByExternalReferenceCodeImageByBase64();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductByExternalReferenceCodeImageByUrl()
-		throws Exception {
-
-		super.testPostProductByExternalReferenceCodeImageByUrl();
-	}
-
 	@Override
 	@Test
 	public void testPostProductIdAttachment() throws Exception {
 		super.testPostProductIdAttachment();
 
 		_testPostProductIdAttachmentWithFileEntryExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductIdAttachmentByBase64() throws Exception {
-		super.testPostProductIdAttachmentByBase64();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductIdAttachmentByUrl() throws Exception {
-		super.testPostProductIdAttachmentByUrl();
 	}
 
 	@Override
@@ -255,20 +131,6 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		assertValid(postAttachment);
 
 		_testPostProductIdImageWithFileEntryExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductIdImageByBase64() throws Exception {
-		super.testPostProductIdImageByBase64();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostProductIdImageByUrl() throws Exception {
-		super.testPostProductIdImageByUrl();
 	}
 
 	@Override
@@ -334,6 +196,75 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 
 	@Override
 	protected Attachment
+			testGetProductByExternalReferenceCodeAttachmentsPage_addAttachment(
+				String externalReferenceCode, Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductByExternalReferenceCodeAttachment(
+			externalReferenceCode, attachment);
+	}
+
+	@Override
+	protected String
+			testGetProductByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _cProduct.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Attachment
+			testGetProductByExternalReferenceCodeImagesPage_addAttachment(
+				String externalReferenceCode, Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductByExternalReferenceCodeImage(
+			externalReferenceCode, attachment);
+	}
+
+	@Override
+	protected String
+			testGetProductByExternalReferenceCodeImagesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _cProduct.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Attachment testGetProductIdAttachmentsPage_addAttachment(
+			Long id, Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdAttachment(id, attachment);
+	}
+
+	@Override
+	protected Long testGetProductIdAttachmentsPage_getId() throws Exception {
+		return _cProduct.getCProductId();
+	}
+
+	@Override
+	protected Attachment testGetProductIdImagesPage_addAttachment(
+			Long id, Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdImage(id, attachment);
+	}
+
+	@Override
+	protected Long testGetProductIdImagesPage_getId() throws Exception {
+		return _cProduct.getCProductId();
+	}
+
+	protected Attachment testGraphQLAttachment_addAttachment()
+		throws Exception {
+
+		return attachmentResource.postProductIdAttachment(
+			_cProduct.getCProductId(), randomAttachment());
+	}
+
+	@Override
+	protected Attachment
 			testPatchAttachmentByExternalReferenceCode_addAttachment()
 		throws Exception {
 
@@ -348,7 +279,27 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		throws Exception {
 
 		return attachmentResource.postProductByExternalReferenceCodeAttachment(
-			_cProduct.getExternalReferenceCode(), randomAttachment());
+			_cProduct.getExternalReferenceCode(), attachment);
+	}
+
+	@Override
+	protected Attachment
+			testPostProductByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdAttachment(
+			_cProduct.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment
+			testPostProductByExternalReferenceCodeAttachmentByUrl_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdAttachment(
+			_cProduct.getCProductId(), attachment);
 	}
 
 	@Override
@@ -362,12 +313,50 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	}
 
 	@Override
+	protected Attachment
+			testPostProductByExternalReferenceCodeImageByBase64_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdImage(
+			_cProduct.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment
+			testPostProductByExternalReferenceCodeImageByUrl_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdImage(
+			_cProduct.getCProductId(), attachment);
+	}
+
+	@Override
 	protected Attachment testPostProductIdAttachment_addAttachment(
 			Attachment attachment)
 		throws Exception {
 
 		return attachmentResource.postProductIdAttachment(
-			_cProduct.getCProductId(), randomAttachment());
+			_cProduct.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment testPostProductIdAttachmentByBase64_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdAttachment(
+			_cProduct.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment testPostProductIdAttachmentByUrl_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdAttachment(
+			_cProduct.getCProductId(), attachment);
 	}
 
 	@Override
@@ -377,6 +366,24 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 
 		return attachmentResource.postProductIdImage(
 			_cpDefinition.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment testPostProductIdImageByBase64_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdImage(
+			_cProduct.getCProductId(), attachment);
+	}
+
+	@Override
+	protected Attachment testPostProductIdImageByUrl_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdImage(
+			_cProduct.getCProductId(), attachment);
 	}
 
 	@Override

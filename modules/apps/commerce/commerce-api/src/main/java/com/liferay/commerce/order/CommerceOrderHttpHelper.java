@@ -62,6 +62,9 @@ public interface CommerceOrderHttpHelper {
 	public boolean isGuestCheckoutEnabled(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public boolean isMultishippingEnabled(
+		HttpServletRequest httpServletRequest);
+
 	public void setCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException;

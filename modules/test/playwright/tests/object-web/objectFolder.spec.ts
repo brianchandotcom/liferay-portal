@@ -11,37 +11,17 @@ import {
 	ObjectFolder,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
-
-const createdEntities = {
-	objectDefinitions: [],
-	objectFolders: [],
-} as {
-	objectDefinitions: ObjectDefinition[];
-	objectFolders: ObjectFolder[];
-};
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	for (const objectFolder of createdEntities.objectFolders) {
-		await objectAdminRestClient.objectFolder.deleteObjectFolder({
-			objectFolderId: objectFolder.id,
-		});
-	}
-
-	for (const objectDefinition of createdEntities.objectDefinitions) {
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
-	}
-});
+export const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
+	loginTest(),
+	objectPagesTest
+);
 
 test.describe('manage object definitions through model builder', () => {
 	test('can edit object folder label and ERC by Model Builder', async ({
@@ -53,7 +33,7 @@ test.describe('manage object definitions through model builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolders.push(objectFolder);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		await modelBuilderDiagramPage.goto({
 			objectFolderName: objectFolder.name,
@@ -94,7 +74,7 @@ test.describe('manage object definitions through model builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolders.push(objectFolder);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -103,7 +83,10 @@ test.describe('manage object definitions through model builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -164,11 +147,16 @@ test.describe('manage object definitions through model builder', () => {
 	}) => {
 		const objectFolders: ObjectFolder[] = await Promise.all(
 			Array.apply(null, Array(5)).map(async () => {
-				return await apiHelpers.objectAdmin.postRandomObjectFolder();
+				const objectFolder =
+					await apiHelpers.objectAdmin.postRandomObjectFolder();
+				apiHelpers.data.push({
+					id: objectFolder.id,
+					type: 'objectFolder',
+				});
+
+				return objectFolder;
 			})
 		);
-
-		createdEntities.objectFolders.push(...objectFolders);
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -208,7 +196,7 @@ test.describe('manage object definitions through view object definitions', () =>
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolders.push(objectFolder);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -248,6 +236,7 @@ test.describe('manage object definitions through view object definitions', () =>
 	});
 
 	test('created object folders are on the left side bar', async ({
+		apiHelpers,
 		viewObjectDefinitionsPage,
 	}) => {
 		await viewObjectDefinitionsPage.goto();
@@ -259,7 +248,7 @@ test.describe('manage object definitions through view object definitions', () =>
 			objectFolderExternalReferenceCode
 		);
 
-		createdEntities.objectFolders.push(objectFolder);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		await expect(
 			viewObjectDefinitionsPage.page
@@ -292,11 +281,16 @@ test.describe('manage object definitions through view object definitions', () =>
 	}) => {
 		const objectFolders: ObjectFolder[] = await Promise.all(
 			Array.apply(null, Array(5)).map(async () => {
-				return await apiHelpers.objectAdmin.postRandomObjectFolder();
+				const objectFolder =
+					await apiHelpers.objectAdmin.postRandomObjectFolder();
+				apiHelpers.data.push({
+					id: objectFolder.id,
+					type: 'objectFolder',
+				});
+
+				return objectFolder;
 			})
 		);
-
-		createdEntities.objectFolders.push(...objectFolders);
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -322,7 +316,7 @@ test.describe('manage object definitions through view object definitions', () =>
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolders.push(objectFolder);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -338,9 +332,9 @@ test.describe('manage object definitions through view object definitions', () =>
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitions.push(
-			objectDefinition1,
-			objectDefinition2
+		apiHelpers.data.push(
+			{id: objectDefinition1.id, type: 'objectDefinition'},
+			{id: objectDefinition2.id, type: 'objectDefinition'}
 		);
 
 		await viewObjectDefinitionsPage.goto();
@@ -353,8 +347,11 @@ test.describe('manage object definitions through view object definitions', () =>
 
 		await viewObjectDefinitionsPage.deleteObjectFolder(objectFolder.name);
 
-		createdEntities.objectFolders.splice(
-			createdEntities.objectFolders.indexOf(objectFolder)
+		apiHelpers.data.splice(
+			apiHelpers.data.findIndex(
+				(object) => object.id === objectFolder.id
+			),
+			1
 		);
 
 		await viewObjectDefinitionsPage.defaultObjectFolder.click();

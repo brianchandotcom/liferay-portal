@@ -36,10 +36,14 @@ public class ContentSecurityPolicyNonceManager {
 	}
 
 	public String getNonce(HttpServletRequest httpServletRequest) {
-		String nonce = GetterUtil.getString(_threadLocal.get());
+		String nonce = _threadLocal.get();
 
 		if (nonce != null) {
 			return nonce;
+		}
+
+		if (httpServletRequest == null) {
+			return StringPool.BLANK;
 		}
 
 		return GetterUtil.getString(httpServletRequest.getAttribute(_NONCE));

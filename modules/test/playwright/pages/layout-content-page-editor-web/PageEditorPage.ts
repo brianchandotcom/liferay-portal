@@ -23,6 +23,29 @@ const VIEWPORTS_CLASSNAMES = {
 	'Tablet': 'tablet',
 };
 
+type MappingItemConfiguration = {
+	entity: string;
+	entry: string;
+	entryLocator?: Locator;
+	field: string;
+	folder?: string;
+};
+
+type MappingConfiguration =
+	| {
+			mapping: MappingItemConfiguration;
+			source?: 'content';
+	  }
+	| {
+			mapping: {field: string};
+			relationship: string;
+			source: 'relationship';
+	  }
+	| {
+			mapping: {field: string};
+			source: 'structure';
+	  };
+
 export class PageEditorPage {
 	readonly page: Page;
 
@@ -1011,13 +1034,7 @@ export class PageEditorPage {
 		entryLocator,
 		field,
 		folder,
-	}: {
-		entity: string;
-		entry: string;
-		entryLocator?: Locator;
-		field?: string;
-		folder?: string;
-	}) {
+	}: Omit<MappingItemConfiguration, 'field'> & {field?: string}) {
 		await this.selectItemMappingButton.click();
 
 		const recentItem = this.page.getByRole('menuitem', {name: entry});
@@ -1095,28 +1112,31 @@ export class PageEditorPage {
 		).toHaveValue(entry);
 
 		if (field) {
-			await this.page.getByLabel('Field').selectOption(field);
+			await this.page
+				.getByLabel('Field', {exact: true})
+				.selectOption(field);
 
 			await this.waitForChangesSaved();
 		}
 	}
 
-	async setMappingConfiguration({
-		mapping,
-		relationship,
-		source,
-	}: {
-		mapping: {
-			entity?: string;
-			entry?: string;
-			entryLocator?: Locator;
-			field: string;
-			folder?: string;
-		};
-		relationship?: string;
-		source?: 'content' | 'relationship' | 'structure';
-	}) {
-		const {entity, entry, entryLocator, field, folder} = mapping;
+	async setMappingConfiguration(
+		mappingConfiguration:
+			| {
+					mapping: MappingItemConfiguration;
+					source?: 'content';
+			  }
+			| {
+					mapping: {field: string};
+					relationship: string;
+					source: 'relationship';
+			  }
+			| {
+					mapping: {field: string};
+					source: 'structure';
+			  }
+	) {
+		const {source} = mappingConfiguration;
 
 		// Select source and relationship if needed
 
@@ -1127,20 +1147,22 @@ export class PageEditorPage {
 		if (source === 'relationship') {
 			await this.page
 				.getByLabel('Relationship')
-				.selectOption(relationship);
+				.selectOption(mappingConfiguration.relationship);
 		}
 
 		// If source is not content, just select the field
 
-		if (source && source !== 'content') {
-			await this.page.getByLabel('Field').selectOption(field);
+		if (source === 'relationship' || source === 'structure') {
+			await this.page
+				.getByLabel('Field')
+				.selectOption(mappingConfiguration.mapping.field);
 
 			return;
 		}
 
 		// If source is content, select the item and the field
 
-		await this.setMappedItem({entity, entry, entryLocator, field, folder});
+		await this.setMappedItem(mappingConfiguration.mapping);
 	}
 
 	async switchExperience(experience: string) {

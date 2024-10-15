@@ -388,6 +388,85 @@ test.describe('Numeric input field', () => {
 	});
 });
 
+test.describe('Submit button', () => {
+	test(
+		"Cannot save a value as draft in the object when 'Allow Users to Save Entries as Draft' option is not enabled",
+		{tag: '@LPS-191474'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a Content page with a form
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map the form to Lemon Weight field
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+				'Lemon Weight',
+			]);
+
+			// Change the "Submitted Entry Status" configuration to Draft
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Submitted Entry Status',
+				fragmentId: await pageEditorPage.getFragmentId('Form Button'),
+				tab: 'General',
+				value: 'Draft',
+			});
+
+			// Publish with a draft submit button
+
+			await page.getByLabel('Publish', {exact: true}).click();
+
+			expect(
+				page.getByText(
+					'form does not allow creating entries as draft. Review the button configuration and set it to approved to generate valid entries.'
+				)
+			).toBeVisible();
+
+			await page
+				.locator('.modal')
+				.getByText('Publish', {exact: true})
+				.click();
+
+			await waitForAlert(
+				page,
+				'Success:The page was published successfully.'
+			);
+
+			// Go to view mode and check that the value cannot be saved
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByLabel('Lemon Weight').fill('200');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'An error occurred while sending the form information.'
+				)
+			).toBeVisible();
+		}
+	);
+});
+
 test.describe('Picklist input field', () => {
 	test('Shows correct options in picklist field selected as title in related object', async ({
 		apiHelpers,

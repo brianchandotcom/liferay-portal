@@ -14,6 +14,41 @@ import {
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 
 const ACTIONS = {
+	copyLayoutPageTemplateCollection(
+		{
+			itemSelectorURL,
+			layoutPageTemplateCollectionId,
+			layoutPageTemplateCollectionName,
+		},
+		portletNamespace
+	) {
+		openSelectionModal({
+			height: '70vh',
+			onSelect: (selectedItem) => {
+				const form = document.getElementById(
+					`${portletNamespace}actionEntriesFm`
+				);
+
+				setFormValues(form, {
+					copyPermissions: true,
+					layoutPageTemplateCollectionsIds:
+						layoutPageTemplateCollectionId,
+					layoutParentPageTemplateCollectionId:
+						selectedItem.resourceid,
+				});
+
+				submitForm(form);
+			},
+			selectEventName: 'selectFolder',
+			size: 'md',
+			title: sub(
+				Liferay.Language.get('copy-x-to'),
+				`"${layoutPageTemplateCollectionName}"`
+			),
+			url: itemSelectorURL,
+		});
+	},
+
 	deleteLayoutPageTemplateCollection({
 		deleteLayoutPageTemplateCollectionURL,
 		dialogTitle,

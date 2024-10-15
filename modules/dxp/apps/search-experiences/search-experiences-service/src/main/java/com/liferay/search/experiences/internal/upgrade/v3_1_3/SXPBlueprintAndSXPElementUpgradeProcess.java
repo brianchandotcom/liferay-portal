@@ -150,13 +150,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONObject elementInstanceJSONObject)
 		throws Exception {
 
-		JSONObject configurationEntryJSONObject =
-			elementInstanceJSONObject.getJSONObject("configurationEntry");
-
 		JSONObject queryJSONObject = JSONUtil.getValueAsJSONObject(
-			configurationEntryJSONObject, "JSONObject/queryConfiguration",
-			"JSONArray/queryEntries", "JSONObject/0", "JSONArray/clauses",
-			"JSONObject/0", "JSONObject/query");
+			elementInstanceJSONObject, "JSONObject/configurationEntry",
+			"JSONObject/queryConfiguration", "JSONArray/queryEntries",
+			"JSONObject/0", "JSONArray/clauses", "JSONObject/0",
+			"JSONObject/query");
 
 		JSONObject termsJSONObject = queryJSONObject.getJSONObject("terms");
 
@@ -181,16 +179,28 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					"update SXPBlueprint set elementInstancesJSON = ? where " +
 						"sxpBlueprintId = ?")) {
 
-			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
-				while (resultSet1.next()) {
-					preparedStatement2.setString(
-						1,
-						_fixElementInstancesJSON(
-							resultSet1.getString("elementInstancesJSON")));
-					preparedStatement2.setLong(
-						2, resultSet1.getLong("sxpBlueprintId"));
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					String elementInstancesJSON = resultSet.getString(
+						"elementInstancesJSON");
 
-					preparedStatement2.addBatch();
+					try {
+						preparedStatement2.setString(
+							1, _fixElementInstancesJSON(elementInstancesJSON));
+
+						preparedStatement2.setLong(
+							2, resultSet.getLong("sxpBlueprintId"));
+
+						preparedStatement2.addBatch();
+					}
+					catch (Exception exception) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Unable to upgrade SXPBlueprint " +
+									resultSet.getLong("sxpBlueprintId"),
+								exception);
+						}
+					}
 				}
 
 				preparedStatement2.executeBatch();
@@ -255,23 +265,25 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		JSONArray scopeGroupIdsJSONArray =
 			uiConfigurationValuesJSONObject.getJSONArray("scope_group_ids");
 
-		JSONArray groupIdsExternalReferenceCodesJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		if (scopeGroupIdsJSONArray != null) {
+			JSONArray groupIdsExternalReferenceCodesJSONArray =
+				JSONFactoryUtil.createJSONArray();
 
-		for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
-			JSONObject scopeGroupIDJSONObject =
-				scopeGroupIdsJSONArray.getJSONObject(i);
+			for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
+				JSONObject scopeGroupIDJSONObject =
+					scopeGroupIdsJSONArray.getJSONObject(i);
 
-			groupIdsExternalReferenceCodesJSONArray.put(
-				_createScopeGroupExternalReferenceCodesJSONObject(
-					scopeGroupIDJSONObject));
+				groupIdsExternalReferenceCodesJSONArray.put(
+					_createScopeGroupExternalReferenceCodesJSONObject(
+						scopeGroupIDJSONObject));
+			}
+
+			uiConfigurationValuesJSONObject.remove("scope_group_ids");
+
+			uiConfigurationValuesJSONObject.put(
+				"scope_group_external_reference_codes",
+				groupIdsExternalReferenceCodesJSONArray);
 		}
-
-		uiConfigurationValuesJSONObject.remove("scope_group_ids");
-
-		uiConfigurationValuesJSONObject.put(
-			"scope_group_external_reference_codes",
-			groupIdsExternalReferenceCodesJSONArray);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

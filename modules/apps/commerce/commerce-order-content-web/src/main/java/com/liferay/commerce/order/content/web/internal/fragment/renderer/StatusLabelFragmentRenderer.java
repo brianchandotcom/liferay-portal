@@ -6,7 +6,7 @@
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.content.web.internal.util.CommerceOrderInfoItemUtil;
+import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;

@@ -9,7 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
-import com.liferay.commerce.order.content.web.internal.util.CommerceOrderInfoItemUtil;
+import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;

@@ -8,7 +8,7 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.order.content.web.internal.util.CommerceOrderInfoItemUtil;
+import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderService;

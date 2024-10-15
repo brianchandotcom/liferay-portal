@@ -126,7 +126,7 @@ public class JournalDDMTemplateDisplayContext {
 			groupIds =
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true);
+						_themeDisplay.getScopeGroupId(), false, true);
 		}
 
 		long[] templateGroupIds = groupIds;

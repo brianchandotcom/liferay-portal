@@ -435,7 +435,8 @@ public class MenuItemProvider {
 		try {
 			return _dlFileEntryTypeService.getFolderFileEntryTypes(
 				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true),
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						groupId, false, true),
 				folderId, inherited);
 		}
 		catch (PortalException portalException) {

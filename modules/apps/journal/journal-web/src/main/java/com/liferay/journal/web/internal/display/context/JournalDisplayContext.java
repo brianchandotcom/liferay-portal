@@ -522,7 +522,7 @@ public class JournalDisplayContext {
 		_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_themeDisplay.getScopeGroupId(), true),
+					_themeDisplay.getScopeGroupId(), false, true),
 			getFolderId(), restrictionType);
 
 		if (_journalWebConfiguration.journalBrowseByStructuresSortedByName()) {

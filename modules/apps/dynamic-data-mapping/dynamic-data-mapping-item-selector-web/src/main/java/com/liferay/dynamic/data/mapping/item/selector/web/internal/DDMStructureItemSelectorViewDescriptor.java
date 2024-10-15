@@ -129,7 +129,7 @@ public class DDMStructureItemSelectorViewDescriptor
 			groupIds =
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true);
+						_themeDisplay.getScopeGroupId(), false, true);
 		}
 		else {
 			groupIds = new long[] {_themeDisplay.getScopeGroupId()};

@@ -88,7 +88,7 @@ public class JournalDDMStructuresDisplayContext {
 			groupIds =
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true);
+						_themeDisplay.getScopeGroupId(), false, true);
 		}
 
 		long[] structureGroupIds = groupIds;

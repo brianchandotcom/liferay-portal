@@ -144,7 +144,7 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 				ArrayUtil.contains(
 					SiteConnectedGroupGroupProviderUtil.
 						getCurrentAndAncestorSiteAndDepotGroupIds(
-							serviceContext.getScopeGroupId(), true),
+							serviceContext.getScopeGroupId(), false, true),
 					_dlFileEntryType.getGroupId())) {
 
 				return true;

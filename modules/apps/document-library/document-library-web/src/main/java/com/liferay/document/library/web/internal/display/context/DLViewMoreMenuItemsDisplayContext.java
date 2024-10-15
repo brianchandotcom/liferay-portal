@@ -146,7 +146,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 				themeDisplay.getCompanyId(), folderId,
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						themeDisplay.getScopeGroupId(), true),
+						themeDisplay.getScopeGroupId(), false, true),
 				displayTerms.getKeywords(), includeBasicFileEntryType,
 				_inherited, searchContainer.getStart(),
 				searchContainer.getEnd()),
@@ -154,7 +154,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 				themeDisplay.getCompanyId(), folderId,
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						themeDisplay.getScopeGroupId(), true),
+						themeDisplay.getScopeGroupId(), false, true),
 				displayTerms.getKeywords(), includeBasicFileEntryType,
 				_inherited));
 

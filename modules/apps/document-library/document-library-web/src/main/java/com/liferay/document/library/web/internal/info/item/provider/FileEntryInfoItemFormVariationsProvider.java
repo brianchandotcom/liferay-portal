@@ -199,7 +199,7 @@ public class FileEntryInfoItemFormVariationsProvider
 		throws PortalException {
 
 		return SiteConnectedGroupGroupProviderUtil.
-			getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+			getCurrentAndAncestorSiteAndDepotGroupIds(groupId, false, true);
 	}
 
 	private DLFileEntryType _getDLFileEntryTypeByFileEntryTypeKey(

@@ -56,18 +56,6 @@ export class LanguageOverridePage {
 		}
 	}
 
-	async assertLanguageKeyTranslations({key, translations}: TLanguageKey) {
-		await this.page.getByRole('link', {name: key}).click();
-
-		await this.page.waitForLoadState();
-
-		for (const {languageId, value} of translations) {
-			const input = this.page.getByLabel(languageId);
-
-			await expect(input).toHaveValue(value);
-		}
-	}
-
 	async assertLanguageKeyInListView({key, translations}: TLanguageKey) {
 		if (translations.length) {
 			const normalizedLanguageIds = translations.map(({languageId}) =>
@@ -87,8 +75,20 @@ export class LanguageOverridePage {
 		}
 	}
 
-	async assertLanguageKeyNotInListView({key}: TLanguageKey) {
+    async assertLanguageKeyNotInListView(key: string) {
 		await expect(this.page.getByRole('link', {name: key})).toBeHidden();
+	}
+
+	async assertLanguageKeyTranslations({key, translations}: TLanguageKey) {
+		await this.page.getByRole('link', {name: key}).click();
+
+		await this.page.waitForLoadState();
+
+		for (const {languageId, value} of translations) {
+			const input = this.page.getByLabel(languageId);
+
+			await expect(input).toHaveValue(value);
+		}
 	}
 
 	async changeFilter(option: 'Any Language' | 'Selected Language') {

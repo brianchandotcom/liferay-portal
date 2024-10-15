@@ -68,8 +68,26 @@ export class PageTemplatesPage {
 		await this.page.getByRole('menuitem', {name: action}).click();
 	}
 
+	async clickPageTemplateCollectionAction(action: string, title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: this.page
+				.getByRole('heading', {name: title})
+				.getByLabel('Show Actions'),
+		});
+	}
+
 	async deletePageTemplate(name: string) {
 		await this.clickAction('Delete', name);
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(this.page);
+	}
+
+	async deletePageTemplateCollection(name: string) {
+		await this.clickPageTemplateCollectionAction('Delete', name);
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 

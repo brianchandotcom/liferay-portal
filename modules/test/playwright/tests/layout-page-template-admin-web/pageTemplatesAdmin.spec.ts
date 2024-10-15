@@ -9,6 +9,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
 	isolatedSiteTest,
@@ -64,5 +65,66 @@ test('Add and delete a widget page template', async ({
 
 	await expect(
 		page.getByRole('link', {exact: true, name: pageTemplateName})
+	).not.toBeVisible();
+});
+
+test('Add, rename and delete a page template collection', async ({
+	page,
+	pageTemplatesPage,
+	site,
+}) => {
+
+	// Go to page template administration in global site
+
+	await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+	// Create page template collection
+
+	const pageTemplateCollectionName = getRandomString();
+
+	await pageTemplatesPage.addPageTemplateCollection(
+		pageTemplateCollectionName
+	);
+
+	await expect(
+		page.getByRole('menuitem', {
+			exact: true,
+			name: pageTemplateCollectionName,
+		})
+	).toBeVisible();
+
+	// Rename page template collection
+
+	await pageTemplatesPage.clickPageTemplateCollectionAction(
+		'Edit',
+		pageTemplateCollectionName
+	);
+
+	const newPageTemplateCollectionName = getRandomString();
+
+	await page.getByLabel('Name').fill(newPageTemplateCollectionName);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForAlert(page);
+
+	await expect(
+		page.getByRole('menuitem', {
+			exact: true,
+			name: newPageTemplateCollectionName,
+		})
+	).toBeVisible();
+
+	// Delete page template collection
+
+	await pageTemplatesPage.deletePageTemplateCollection(
+		newPageTemplateCollectionName
+	);
+
+	await expect(
+		page.getByRole('menuitem', {
+			exact: true,
+			name: newPageTemplateCollectionName,
+		})
 	).not.toBeVisible();
 });

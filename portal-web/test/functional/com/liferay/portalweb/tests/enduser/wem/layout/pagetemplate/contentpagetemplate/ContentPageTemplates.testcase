@@ -18,48 +18,6 @@ definition {
 		}
 	}
 
-	@description = "Delete a page template collection."
-	@priority = 5
-	test DeleteCollection {
-		property portal.acceptance = "true";
-
-		task ("Add a page template collection") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				description = "Collection Description Original",
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Collection Name Original");
-
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Rename the collection") {
-			Collection.renameCollection(
-				collectionDescription = "Collection Description New",
-				collectionName = "Collection Name Original",
-				collectionNameEdit = "Collection Name New");
-		}
-
-		task ("Assert the collection was renamed") {
-			Collection.viewPresent(collectionName = "Collection Name New");
-		}
-
-		task ("Assert the actions order of a collection") {
-			Click.waitForMenuToggleJSClick(
-				key_headerName = "Collection Name New",
-				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-			MenuItem.viewOrder(menuItemList = "Edit,Permissions,Delete");
-		}
-
-		task ("Delete the page template collection") {
-			PageTemplatesAdmin.deletePageTemplateSet(setName = "Collection Name New");
-		}
-
-		task ("Assert the collection was deleted") {
-			PageTemplatesAdmin.viewPageTemplateSetNotPresent(setName = "Collection Name New");
-		}
-	}
-
 	@description = "Delete a page template."
 	@priority = 5
 	test DeletePageTemplate {

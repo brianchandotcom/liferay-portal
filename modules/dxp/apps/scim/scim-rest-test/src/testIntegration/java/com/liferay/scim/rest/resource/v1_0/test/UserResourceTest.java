@@ -263,10 +263,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	public void testPostV2UserWhenScimIsNotConfigured() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
-		User postUser = randomUser();
-
 		assertHttpResponseStatusCode(
-			404, userResource.postV2UserHttpResponse(postUser));
+			404, userResource.postV2UserHttpResponse(randomUser()));
 
 		_restoreScimTestConfiguration();
 	}

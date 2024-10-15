@@ -996,6 +996,55 @@ export class PageEditorPage {
 		}
 	}
 
+	async setLinkConfiguration(
+		linkConfiguration:
+			| {
+					type: 'URL';
+					url: string;
+			  }
+			| {layoutTitle: string; type: 'Page'}
+			| {mappingConfiguration: MappingConfiguration; type: 'Mapped URL'}
+	) {
+		await this.page
+			.getByLabel('Link', {exact: true})
+			.locator('select')
+			.selectOption({label: linkConfiguration.type});
+
+		if (linkConfiguration.type === 'URL') {
+			await fillAndClickOutside(
+				this.page,
+				this.page.getByLabel('URL', {exact: true}),
+				linkConfiguration.url
+			);
+
+			await this.waitForChangesSaved();
+		}
+		else if (linkConfiguration.type === 'Page') {
+			const layoutTreeItem = this.page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('treeitem')
+				.filter({hasText: linkConfiguration.layoutTitle});
+
+			await clickAndExpectToBeVisible({
+				target: layoutTreeItem,
+				timeout: 3000,
+				trigger: this.page.getByLabel('Select Page', {exact: true}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: this.page.locator('.modal-dialog'),
+				trigger: layoutTreeItem,
+			});
+
+			await this.waitForChangesSaved();
+		}
+		else {
+			await this.setMappingConfiguration(
+				linkConfiguration.mappingConfiguration
+			);
+		}
+	}
+
 	async setMappedItem({
 		entity,
 		entry,

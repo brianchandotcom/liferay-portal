@@ -374,6 +374,67 @@ test.describe('Advanced Configuration', () => {
 });
 
 test.describe('Styles Configuration', () => {
+	test('Allows selecting a color palette color', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create a page with a Separator fragment
+
+		const separatorId = getRandomString();
+
+		const separatorFragment = getFragmentDefinition({
+			id: separatorId,
+			key: 'BASIC_COMPONENT-separator',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([separatorFragment]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to the created page
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Select the Separator fragment
+
+		await pageEditorPage.selectFragment(separatorId);
+
+		// Select a color in the color palette
+
+		await pageEditorPage.goToConfigurationTab('Styles');
+
+		await page.getByTitle('success', {exact: true}).click();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Check that the color is applied
+
+		expect(
+			page
+				.locator('.component-separator hr')
+				.evaluate((element) =>
+					element.classList.contains('border-success')
+				)
+		).toBeTruthy();
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		expect(
+			page
+				.locator('.component-separator hr')
+				.evaluate((element) =>
+					element.classList.contains('border-success')
+				)
+		).toBeTruthy();
+	});
+
 	test('Allows changing and resetting spacing', async ({
 		apiHelpers,
 		page,

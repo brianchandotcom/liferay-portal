@@ -12,18 +12,18 @@ import i18n from '../../../../../../i18n';
 
 type DownloadTableProps = {
 	loading: boolean;
-	virualItems: VirtualItem[];
+	virtualItems: VirtualItem[];
 };
 
 const DownloadTable: React.FC<DownloadTableProps> = ({
 	loading,
-	virualItems,
+	virtualItems,
 }) => {
 	if (loading) {
 		return <Loading />;
 	}
 
-	if (!virualItems?.length) {
+	if (!virtualItems?.length) {
 		return (
 			<EmptyState
 				description={i18n.translate('no-results-found')}
@@ -60,7 +60,7 @@ const DownloadTable: React.FC<DownloadTableProps> = ({
 					),
 				},
 			]}
-			rows={virualItems}
+			rows={virtualItems}
 		/>
 	);
 };

@@ -35,7 +35,7 @@ const useGetProductByOrderId = (
 						'attachments.accountId': '-1',
 						'images.accountId': '-1',
 						'nestedFields':
-							'attachments,images,productSpecifications',
+							'attachments,categories,images,productSpecifications',
 						'skus.accountId': '-1',
 					})
 				);

@@ -152,6 +152,35 @@ public class FileEntryInfoItemFormVariationsProvider
 		return infoItemFormVariations;
 	}
 
+	@Override
+	public Collection<InfoItemFormVariation>
+		getInfoItemFormVariationsByCompanyId(long companyId) {
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
+
+		infoItemFormVariations.add(_getBasicDocumentInfoItemFormVariation());
+
+		for (DLFileEntryType dlFileEntryType :
+				_dlFileEntryTypeLocalService.getFileEntryTypesByCompanyId(
+					companyId)) {
+
+			infoItemFormVariations.add(
+				new InfoItemFormVariation(
+					dlFileEntryType.getFileEntryTypeKey(),
+					dlFileEntryType.getGroupId(),
+					String.valueOf(dlFileEntryType.getFileEntryTypeId()),
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							dlFileEntryType.getDefaultLanguageId())
+					).values(
+						dlFileEntryType.getNameMap()
+					).build()));
+		}
+
+		return infoItemFormVariations;
+	}
+
 	private InfoItemFormVariation _getBasicDocumentInfoItemFormVariation() {
 		DLFileEntryType basicDocumentDLFileEntryType =
 			_dlFileEntryTypeLocalService.fetchDLFileEntryType(

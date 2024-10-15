@@ -124,6 +124,33 @@ public class JournalArticleInfoItemFormVariationsProvider
 		return infoItemFormVariations;
 	}
 
+	@Override
+	public Collection<InfoItemFormVariation>
+		getInfoItemFormVariationsByCompanyId(long companyId) {
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
+
+		for (DDMStructure ddmStructure :
+				_ddmStructureLocalService.getClassStructures(
+					companyId,
+					_portal.getClassNameId(JournalArticle.class.getName()))) {
+
+			infoItemFormVariations.add(
+				new InfoItemFormVariation(
+					ddmStructure.getStructureKey(), ddmStructure.getGroupId(),
+					String.valueOf(ddmStructure.getStructureId()),
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							ddmStructure.getDefaultLanguageId())
+					).values(
+						ddmStructure.getNameMap()
+					).build()));
+		}
+
+		return infoItemFormVariations;
+	}
+
 	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException {
 

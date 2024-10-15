@@ -674,6 +674,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			_clearCompanyCache(companyId, true);
 			_clearVirtualHostCache(companyId);
 
+			preunregisterCompany(company);
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					PortalInstances.removeCompany(company.getCompanyId());

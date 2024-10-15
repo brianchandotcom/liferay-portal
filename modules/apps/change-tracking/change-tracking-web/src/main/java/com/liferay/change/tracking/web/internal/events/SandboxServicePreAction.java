@@ -29,8 +29,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(property = "key=login.events.post", service = LifecycleAction.class)
-public class LoginPostAction extends Action {
+@Component(
+	property = "key=servlet.service.events.pre", service = LifecycleAction.class
+)
+public class SandboxServicePreAction extends Action {
 
 	@Override
 	public void run(
@@ -41,7 +43,8 @@ public class LoginPostAction extends Action {
 		try {
 			User user = _portal.getUser(httpServletRequest);
 
-			if (!_ctSettingsConfigurationHelper.isEnabled(
+			if ((user == null) ||
+				!_ctSettingsConfigurationHelper.isEnabled(
 					user.getCompanyId()) ||
 				!_ctSettingsConfigurationHelper.isSandboxEnabled(
 					user.getCompanyId())) {

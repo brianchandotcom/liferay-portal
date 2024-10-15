@@ -100,11 +100,13 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 	private void _upgradeDDMTemplates() throws Exception {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
-					"select templateId, script from DDMTemplate");
+					"select ctCollectionId, templateId, script from " +
+						"DDMTemplate");
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMTemplate set script = ? where templateId = ?")) {
+					"update DDMTemplate set script = ? where ctCollectionId " +
+						"= ? and templateId = ?")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -118,7 +120,9 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 							Pattern.compile("\\<\\#assign\\s*\\/?\\>"),
 							resultSet.getString("script")));
 					updatePreparedStatement.setLong(
-						2, resultSet.getLong("templateId"));
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("templateId"));
 
 					updatePreparedStatement.addBatch();
 				}

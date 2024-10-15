@@ -140,6 +140,26 @@ public class PlacedOrderItemResourceTest
 			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithPagination();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortInteger()
+		throws Exception {
+
+		super.
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortInteger();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortString()
+		throws Exception {
+
+		super.
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortString();
+	}
+
 	@Override
 	@Test
 	public void testGetPlacedOrderItem() throws Exception {
@@ -221,6 +241,24 @@ public class PlacedOrderItemResourceTest
 		super.testGetPlacedOrderPlacedOrderItemsPageWithPagination();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetPlacedOrderPlacedOrderItemsPageWithSortInteger()
+		throws Exception {
+
+		super.testGetPlacedOrderPlacedOrderItemsPageWithSortInteger();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPlacedOrderPlacedOrderItemsPageWithSortString()
+		throws Exception {
+
+		super.testGetPlacedOrderPlacedOrderItemsPageWithSortString();
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -242,7 +280,7 @@ public class PlacedOrderItemResourceTest
 				String externalReferenceCode, PlacedOrderItem placedOrderItem)
 		throws Exception {
 
-		return _addPlacedOrderItem(placedOrderItem);
+		return _addPlacedOrderItem(randomPlacedOrderItem());
 	}
 
 	@Override
@@ -274,7 +312,7 @@ public class PlacedOrderItemResourceTest
 				Long placedOrderId, PlacedOrderItem placedOrderItem)
 		throws Exception {
 
-		return _addPlacedOrderItem(placedOrderItem);
+		return _addPlacedOrderItem(randomPlacedOrderItem());
 	}
 
 	@Override

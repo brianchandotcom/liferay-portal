@@ -545,9 +545,11 @@ test(
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 
-		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
-			fragmentCollectionId
-		);
+		expect(
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollectionId
+			)
+		).toHaveProperty('fragmentCollectionId', fragmentCollectionId);
 	}
 );
 
@@ -627,9 +629,11 @@ test(
 
 		// Delete data
 
-		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
-			fragmentCollectionId
-		);
+		expect(
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollectionId
+			)
+		).toHaveProperty('fragmentCollectionId', fragmentCollectionId);
 	}
 );
 
@@ -764,12 +768,19 @@ test(
 
 		// Delete data
 
-		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+		expect(
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				globalFragmentCollection.fragmentCollectionId
+			)
+		).toHaveProperty(
+			'fragmentCollectionId',
 			globalFragmentCollection.fragmentCollectionId
 		);
 
-		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
-			fragmentCollectionId
-		);
+		expect(
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollectionId
+			)
+		).toHaveProperty('fragmentCollectionId', fragmentCollectionId);
 	}
 );

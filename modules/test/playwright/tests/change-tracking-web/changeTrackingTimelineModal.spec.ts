@@ -4,10 +4,12 @@
  */
 
 import {Page, expect, mergeTests} from '@playwright/test';
+import moment from 'moment';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -26,27 +28,10 @@ export const test = mergeTests(
 const publicationCount = 6;
 let ctCollections = [];
 let articleTitle: string;
+let date;
 
 test.beforeEach(
-	async ({
-		apiHelpers,
-		changeTrackingPage,
-		journalEditArticlePage,
-		journalPage,
-		page,
-	}) => {
-		await changeTrackingPage.workOnProduction();
-
-		articleTitle = 'Test ' + getRandomInt() + ' WC Article';
-		await journalEditArticlePage.goto();
-		await page.locator('div[data-qa-id="content"]').waitFor();
-		await journalEditArticlePage.fillTitle(articleTitle);
-		await page.getByRole('button', {name: 'Publish'}).click();
-		await waitForAlert(
-			page,
-			`Success:${articleTitle} was created successfully.`
-		);
-
+	async ({apiHelpers, changeTrackingPage, journalEditArticlePage, page}) => {
 		const ctCollectionNamePrefix = getRandomString();
 		ctCollections = [];
 
@@ -63,43 +48,26 @@ test.beforeEach(
 			await changeTrackingPage.workOnPublication(newCTCollection);
 
 			if (i !== publicationCount) {
-				await journalPage.goto();
-				await page
-					.getByRole('heading', {
-						name: 'Web Content',
-					})
-					.waitFor();
-				await page.getByLabel(`Actions for ${articleTitle}`).waitFor();
-
-				await journalPage.goToJournalArticleAction(
-					'Delete',
-					articleTitle
-				);
+				articleTitle = 'Test ' + getRandomInt() + ' WC Article';
+				await journalEditArticlePage.goto();
+				await page.locator('div[data-qa-id="content"]').waitFor();
+				await journalEditArticlePage.fillTitle(articleTitle);
+				await page.getByRole('button', {name: 'Publish'}).click();
 				await waitForAlert(
 					page,
-					`Success: The element ${articleTitle} was moved to the Recycle Bin.`
+					`Success:${articleTitle} was created successfully.`
 				);
 			}
 		}
 	}
 );
 
-test.afterEach(async ({apiHelpers, changeTrackingPage, journalPage, page}) => {
+test.afterEach(async ({apiHelpers}) => {
 	for (let i = 0; i < ctCollections.length; i++) {
 		await apiHelpers.headlessChangeTracking.deleteCTCollection(
 			ctCollections[i].id
 		);
 	}
-
-	await changeTrackingPage.workOnProduction();
-
-	await journalPage.goto();
-	await page.getByRole('heading', {name: 'Web Content'}).waitFor();
-	await journalPage.goToJournalArticleAction('Delete', articleTitle);
-	await waitForAlert(
-		page,
-		`Success: The element ${articleTitle} was moved to the Recycle Bin.`
-	);
 });
 
 const getEntityHistoryTableLocator = (page: Page) => {
@@ -122,8 +90,6 @@ const goToPublicationTimelineModal = async (
 ) => {
 	await journalPage.goto();
 	await page.getByRole('heading', {name: 'Web Content'}).waitFor();
-	await journalPage.goToJournalArticleAction('Edit', articleTitle);
-	await page.getByRole('tab', {name: 'Properties'}).waitFor();
 
 	const timelineButton = getPublicationTimelineButton(page);
 	await timelineButton.waitFor();
@@ -204,5 +170,68 @@ test('LPD-22768 Add options to interact with the same entity in other publicatio
 
 	await expect(
 		entityHistoryModalLocator.getByRole('menuitem', {name: 'Review Change'})
+	).toBeVisible();
+});
+
+test('LPD-38392 Assert View Entity Modification History sorting', async ({
+	apiHelpers,
+	changeTrackingPage,
+	journalPage,
+	page,
+}) => {
+	await apiHelpers.headlessChangeTracking.publishCTCollection(
+		ctCollections[0].id
+	);
+
+	date = moment().format('ll');
+
+	await changeTrackingPage.workOnProduction();
+	await goToPublicationTimelineModal(page, journalPage);
+	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
+
+	const statusColumnHeader = entityHistoryModalLocator.getByRole('button', {
+		name: 'Status',
+	});
+	await statusColumnHeader.click();
+	await expect(statusColumnHeader).toBeVisible();
+
+	await expect(
+		entityHistoryModalLocator
+			.locator('div:nth-child(1) > div:nth-child(4)')
+			.filter({hasText: 'Approved'})
+	).toBeVisible();
+	await expect(
+		entityHistoryModalLocator
+			.locator('div:nth-child(1) > div:nth-child(5)')
+			.filter({hasText: 'Test Test'})
+	).toBeVisible();
+	await expect(
+		entityHistoryModalLocator
+			.locator('div:nth-child(1) > div:nth-child(6)')
+			.filter({hasText: date})
+	).toBeVisible();
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: entityHistoryModalLocator
+			.locator('div:nth-child(6) > div:nth-child(4)')
+			.filter({hasText: 'Approved'}),
+		trigger: statusColumnHeader,
+	});
+
+	await expect(
+		entityHistoryModalLocator
+			.locator('div:nth-child(6) > div:nth-child(4)')
+			.filter({hasText: 'Approved'})
+	).toBeVisible();
+	await expect(
+		entityHistoryModalLocator
+			.locator('div:nth-child(6) > div:nth-child(5)')
+			.filter({hasText: 'Test Test'})
+	).toBeVisible();
+	await expect(
+		entityHistoryModalLocator
+			.locator('div:nth-child(6) > div:nth-child(6)')
+			.filter({hasText: date})
 	).toBeVisible();
 });

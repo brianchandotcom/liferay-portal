@@ -5,7 +5,7 @@ definition {
 	property custom.properties = "feature.flag.LPS-169837=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Page Editor";
+	property testray.main.component.name = "Content Pages";
 
 	setUp {
 		task ("Set up virtual instance") {

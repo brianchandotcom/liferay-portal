@@ -61,6 +61,12 @@ definition {
 
 		FileUtil.copyDirectory("${projectDir}/modules/test/external-data-source-test-controller-test/src/testIntegration/resources/META-INF/services", "${projectDir}/${testServiceDir}/src/main/resources/META-INF/services");
 
+		var serviceFileExists = FileUtil.exists("${projectDir}/${testServiceDir}/src/main/resources/META-INF/services/com.liferay.portal.kernel.dao.jdbc.DataSourceProvider");
+
+		if (${serviceFileExists} == "false") {
+			fail("FAIL! The service file is not correctly copied.");
+		}
+
 		AntCommands.runCommand("build-test.xml", "build-service -Dgradle.file.path=${testServiceDir}");
 
 		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/test/external-data-source-test-api");

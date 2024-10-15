@@ -11,10 +11,10 @@ import {loginTest} from '../../fixtures/loginTest';
 import {TLanguageKey} from '../../pages/portal-language-override-web/LanguageOverridePage';
 
 const test = mergeTests(
-	languageOverridePageTest,
-	featureFlagsTest({
-		'LPD-27222': true,
+    featureFlagsTest({
+        'LPD-27222': true,
 	}),
+    languageOverridePageTest,
 	loginTest()
 );
 
@@ -40,7 +40,7 @@ const EXPECTED_TRANSLATION: TLanguageKey = {
 	],
 };
 
-test('LPD-36494 assert that the language client extension is deployed', async ({
+test('LPD-36494 Assert that the language client extension is deployed', async ({
 	languageOverridePage,
 }) => {
 	await languageOverridePage.goto();

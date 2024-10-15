@@ -1,6 +1,3 @@
-To import translations into Liferay's Language Override tool, place them into a `[Workspace Root]/language/Language.properties` file using `key=value` syntax and run `../gradlew :buildLang` from the `language` folder. Deploy the translations by running `../gradlew deploy`. Translations with _(Automatic Copy)_ at the end are not imported into Liferay.
+To import translations into Liferay's Language Override tool, place them into a `[Workspace Root]/language/Language.properties` file using `key=value` syntax and run `../gradlew :buildLang` from the `language` folder.
 
-Related documentation:
-
-* [Generating Translations Automatically](https://learn.liferay.com/w/dxp/liferay-development/liferay-internals/extending-liferay/customizing-localization/generating-translations-automatically)
-* [Changing Translations with Language Override](https://learn.liferay.com/w/dxp/system-administration/configuring-liferay/changing-translations-with-language-override)
+Deploy the translations by running `../gradlew deploy`. Translations with _(Automatic Copy)_ at the end are not imported into Liferay.

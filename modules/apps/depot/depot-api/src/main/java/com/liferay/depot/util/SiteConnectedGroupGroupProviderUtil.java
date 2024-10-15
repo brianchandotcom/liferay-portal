@@ -52,7 +52,7 @@ public class SiteConnectedGroupGroupProviderUtil {
 	}
 
 	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(
-			long groupId, boolean ddmStructuresAvailable)
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException {
 
 		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
@@ -61,7 +61,22 @@ public class SiteConnectedGroupGroupProviderUtil {
 
 		return siteConnectedGroupGroupProvider.
 			getCurrentAndAncestorSiteAndDepotGroupIds(
-				groupId, ddmStructuresAvailable);
+				groupId, checkContentSharingWithChildrenEnabled);
+	}
+
+	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long groupId, boolean checkContentSharingWithChildrenEnabled,
+			boolean ddmStructuresAvailable)
+		throws PortalException {
+
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
+			_siteConnectedGroupGroupProviderUtil.
+				_getSiteConnectedGroupGroupProvider();
+
+		return siteConnectedGroupGroupProvider.
+			getCurrentAndAncestorSiteAndDepotGroupIds(
+				groupId, checkContentSharingWithChildrenEnabled,
+				ddmStructuresAvailable);
 	}
 
 	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(
@@ -74,6 +89,19 @@ public class SiteConnectedGroupGroupProviderUtil {
 
 		return siteConnectedGroupGroupProvider.
 			getCurrentAndAncestorSiteAndDepotGroupIds(groupIds);
+	}
+
+	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
+			_siteConnectedGroupGroupProviderUtil.
+				_getSiteConnectedGroupGroupProvider();
+
+		return siteConnectedGroupGroupProvider.
+			getCurrentAndAncestorSiteAndDepotGroupIds(
+				groupIds, checkContentSharingWithChildrenEnabled);
 	}
 
 	private SiteConnectedGroupGroupProviderUtil() {

@@ -57,8 +57,17 @@ public class SiteConnectedGroupGroupProviderImpl
 	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(long groupId)
 		throws PortalException {
 
+		return getCurrentAndAncestorSiteAndDepotGroupIds(groupId, false);
+	}
+
+	@Override
+	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
 		return ArrayUtil.append(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
+			_portal.getCurrentAndAncestorSiteGroupIds(
+				groupId, checkContentSharingWithChildrenEnabled),
 			ListUtil.toLongArray(
 				_depotEntryLocalService.getGroupConnectedDepotEntries(
 					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
@@ -67,11 +76,13 @@ public class SiteConnectedGroupGroupProviderImpl
 
 	@Override
 	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(
-			long groupId, boolean ddmStructuresAvailable)
+			long groupId, boolean checkContentSharingWithChildrenEnabled,
+			boolean ddmStructuresAvailable)
 		throws PortalException {
 
 		return ArrayUtil.append(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
+			_portal.getCurrentAndAncestorSiteGroupIds(
+				groupId, checkContentSharingWithChildrenEnabled),
 			ListUtil.toLongArray(
 				_depotEntryLocalService.getGroupConnectedDepotEntries(
 					groupId, ddmStructuresAvailable, QueryUtil.ALL_POS,
@@ -83,6 +94,14 @@ public class SiteConnectedGroupGroupProviderImpl
 	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(long[] groupIds)
 		throws PortalException {
 
+		return getCurrentAndAncestorSiteAndDepotGroupIds(groupIds, false);
+	}
+
+	@Override
+	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
 		List<DepotEntry> depotEntries = new ArrayList<>();
 
 		for (long groupId : groupIds) {
@@ -92,7 +111,8 @@ public class SiteConnectedGroupGroupProviderImpl
 		}
 
 		return ArrayUtil.append(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupIds),
+			_portal.getCurrentAndAncestorSiteGroupIds(
+				groupIds, checkContentSharingWithChildrenEnabled),
 			ListUtil.toLongArray(depotEntries, DepotEntry::getGroupId));
 	}
 

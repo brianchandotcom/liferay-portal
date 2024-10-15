@@ -115,7 +115,7 @@ test('Add an active page template in global site and deactivate it', async ({
 test(
 	'Disable inherit changes and check it works',
 	{
-		tag: ['@LPS-54099', '@LPS-154130'],
+		tag: ['@LPS-54099', '@LPS-145264', '@LPS-154130'],
 	},
 	async ({
 		page,
@@ -209,5 +209,33 @@ test(
 				.locator('#layout-column_column-1')
 				.getByRole('heading', {name: 'Language Selector'})
 		).not.toBeVisible();
+
+		// Enable inherit changes
+
+		page.on('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.clickOnAction('Configure', layoutTitle);
+
+		await page.getByLabel('Inherit Changes').check();
+
+		await pagesAdminPage.saveConfiguration();
+
+		// Assert changes are inherited
+
+		await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeAttached();
+
+		await expect(
+			page
+				.locator('#layout-column_column-1')
+				.getByRole('heading', {name: 'Language Selector'})
+		).toBeVisible();
 	}
 );

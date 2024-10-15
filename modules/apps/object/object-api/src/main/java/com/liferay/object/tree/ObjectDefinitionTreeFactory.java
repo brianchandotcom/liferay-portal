@@ -50,11 +50,11 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 					ObjectDefinition objectDefinition2 = _getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
-					if ((rootObjectDefinition.getObjectDefinitionId() !=
-							objectDefinition2.getRootObjectDefinitionId()) &&
-						excludeDifferentStatus &&
-						(rootObjectDefinition.getStatus() !=
-							objectDefinition2.getStatus())) {
+					if ((excludeDifferentStatus &&
+						 (rootObjectDefinition.getStatus() !=
+							 objectDefinition2.getStatus())) ||
+						(rootObjectDefinition.getObjectDefinitionId() !=
+							objectDefinition2.getRootObjectDefinitionId())) {
 
 						return null;
 					}

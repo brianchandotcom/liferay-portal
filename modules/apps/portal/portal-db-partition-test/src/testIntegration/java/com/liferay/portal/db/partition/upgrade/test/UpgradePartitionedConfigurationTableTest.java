@@ -262,7 +262,8 @@ public class UpgradePartitionedConfigurationTableTest
 		finally {
 			DBPartitionUtil.forEachCompanyId(
 				currentCompanyId -> {
-					try (PreparedStatement preparedStatement =
+					try (Connection connection = DataAccess.getConnection();
+						PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								StringBundler.concat(
 									"delete from Configuration_ where ",

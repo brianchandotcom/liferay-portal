@@ -2489,7 +2489,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			boolean inheritLocales = GetterUtil.getBoolean(
 				groupTypeSettingsUnicodeProperties.getProperty(
-					"inheritLocales"));
+					"inheritLocales"),
+				true);
 
 			if (inheritLocales) {
 				_updateGroupLocales(

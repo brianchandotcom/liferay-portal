@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.suite.RelevantTestSuite;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -34,34 +37,45 @@ public class PortalAcceptancePullRequestJob
 	@Override
 	public List<BatchTestClassGroup> getBatchTestClassGroups() {
 		synchronized (jobProperties) {
-			if (_isRelevantTestSuite()) {
-				PortalGitWorkingDirectory portalGitWorkingDirectory =
-					getPortalGitWorkingDirectory();
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				getPortalGitWorkingDirectory();
 
-				Properties testProperties =
-					JenkinsResultsParserUtil.getProperties(
-						new File(
-							portalGitWorkingDirectory.getWorkingDirectory(),
-							"test.properties"));
+			Properties testProperties = JenkinsResultsParserUtil.getProperties(
+				new File(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					"test.properties"));
 
-				boolean relevantEngineEnabled = Boolean.parseBoolean(
-					testProperties.getProperty("relevant.engine.enabled"));
+			boolean relevantEngineEnabled = Boolean.parseBoolean(
+				testProperties.getProperty("relevant.engine.enabled"));
 
-				if (relevantEngineEnabled) {
-					if (batchTestClassGroups != null) {
-						return batchTestClassGroups;
-					}
-
-					System.out.println("Relevant engine is enabled");
-
-					batchTestClassGroups = Collections.synchronizedList(
-						new ArrayList<BatchTestClassGroup>());
-
-					batchTestClassGroups.addAll(
-						getBatchTestClassGroups(getTestBatches()));
-
+			if (_isRelevantTestSuite() && relevantEngineEnabled) {
+				if (batchTestClassGroups != null) {
 					return batchTestClassGroups;
 				}
+
+				System.out.println("Relevant engine is enabled");
+
+				batchTestClassGroups = Collections.synchronizedList(
+					new ArrayList<BatchTestClassGroup>());
+
+				batchTestClassGroups.addAll(
+					getBatchTestClassGroups(getTestBatches()));
+
+				return batchTestClassGroups;
+			}
+
+			if (Objects.equals(getTestSuiteName(), "stable") &&
+				relevantEngineEnabled) {
+
+				List<BatchTestClassGroup> stableBatches =
+					getBatchTestClassGroups(getStableRuleBatchNames());
+
+				batchTestClassGroups = Collections.synchronizedList(
+					new ArrayList<BatchTestClassGroup>());
+
+				batchTestClassGroups.addAll(stableBatches);
+
+				return batchTestClassGroups;
 			}
 		}
 
@@ -151,6 +165,21 @@ public class PortalAcceptancePullRequestJob
 		}
 
 		return batchNames;
+	}
+
+	protected Set<String> getStableRuleBatchNames() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		File baseDir = portalGitWorkingDirectory.getWorkingDirectory();
+
+		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+			"test.batch.names", "relevant", null, "stable-rule", this, baseDir,
+			JobProperty.Type.DEFAULT_TEST_DIR, true);
+
+		recordJobProperty(jobProperty);
+
+		return getSetFromString(jobProperty.getValue());
 	}
 
 	@Override

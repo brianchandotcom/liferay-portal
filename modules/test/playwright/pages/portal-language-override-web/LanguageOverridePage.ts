@@ -80,8 +80,12 @@ export class LanguageOverridePage {
 		}
 	}
 
-    async assertLanguageKeyNotInListView(key: string) {
+	async assertLanguageKeyNotInListView(key: string) {
 		await expect(this.page.getByRole('link', {name: key})).toBeHidden();
+	}
+
+	async assertLanguageKeyTranslationIsEmpty(languageId: string) {
+		await expect(this.page.getByLabel(languageId)).toHaveValue('');
 	}
 
 	async assertLanguageKeyTranslations({key, translations}: TLanguageKey) {
@@ -90,9 +94,7 @@ export class LanguageOverridePage {
 		await this.page.waitForLoadState();
 
 		for (const {languageId, value} of translations) {
-			const input = this.page.getByLabel(languageId);
-
-			await expect(input).toHaveValue(value);
+			await expect(this.page.getByLabel(languageId)).toHaveValue(value);
 		}
 	}
 

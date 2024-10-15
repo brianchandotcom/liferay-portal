@@ -57,7 +57,11 @@ export function getProductCategoriesByVocabularyName(
 ) {
 	return categories
 		.filter((category) =>
-			vocabulary.includes(category.vocabulary.replaceAll(' ', '-'))
+			vocabulary
+				.toLowerCase()
+				.includes(
+					category.vocabulary.replaceAll(' ', '-').toLowerCase()
+				)
 		)
 		.map(({name}) => name);
 }

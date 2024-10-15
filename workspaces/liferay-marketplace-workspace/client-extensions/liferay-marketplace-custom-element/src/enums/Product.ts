@@ -18,6 +18,8 @@ export enum SOLUTION_TYPES {
 export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_APP_CATEGORY = 'marketplace-app-category',
 	MARKETPLACE_APP_TAGS = 'marketplace-app-tags',
+	MARKETPLACE_LIFERAY_VERSION = 'marketplace-liferay-version',
+	MARKETPLACE_PRODUCT_TYPE = 'marketplace-product-type',
 	MARKETPLACE_SOLUTION_CATEGORY = 'marketplace-solution-category',
 	MARKETPLACE_SOLUTION_TAGS = 'marketplace-solution-tags',
 }

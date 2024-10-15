@@ -242,4 +242,41 @@ test.describe('Management Toolbar Active State', () => {
 			).toBeVisible();
 		});
 	});
+
+	test('Assert the clear button will be displayed as an icon button in responsive mode @LPS-144539', async ({
+		page,
+	}) => {
+		await test.step('Set the window size to phone size', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+		});
+
+		await test.step('Check that the times circle icon is visible', async () => {
+			await expect(
+				page.locator(
+					'#managementToolbarActiveState .lexicon-icon-times-circle'
+				)
+			).toBeVisible();
+		});
+	});
+
+	test('Assert tooltip message will be displayed when hovered over the clear button in responsive mode @LPS-144539', async ({
+		page,
+	}) => {
+		await test.step('Set the window size to phone size', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+		});
+
+		await test.step('Hover over the clear button', async () => {
+			await page
+				.locator('#managementToolbarActiveState')
+				.getByRole('button', {name: 'Clear'})
+				.hover();
+		});
+
+		await test.step('Check the tooltip text is displayed', async () => {
+			await expect(
+				page.locator('.tooltip-inner').getByText('Clear')
+			).toBeVisible();
+		});
+	});
 });

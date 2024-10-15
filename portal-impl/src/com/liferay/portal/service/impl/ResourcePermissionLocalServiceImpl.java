@@ -599,6 +599,10 @@ public class ResourcePermissionLocalServiceImpl
 				"delete from " + ResourcePermissionModelImpl.TABLE_NAME +
 					" where companyId = ? and name = ? and scope = ?";
 
+			session.flush();
+
+			session.clear();
+
 			session.apply(
 				connection -> {
 					try (PreparedStatement preparedStatement =

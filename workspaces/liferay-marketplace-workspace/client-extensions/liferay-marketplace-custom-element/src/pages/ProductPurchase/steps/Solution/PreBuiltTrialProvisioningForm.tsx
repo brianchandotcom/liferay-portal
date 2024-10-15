@@ -79,16 +79,19 @@ const AccountForm = () => {
 			product
 		);
 
-		await productPurchaseSolutionTrial.createOrder();
+		const order = await productPurchaseSolutionTrial.createOrder();
 
 		const maxTrialsReached =
 			await productPurchaseSolutionTrial.isTrialInHold();
 
 		scrollToTop();
 
-		navigate(`/thank-you${maxTrialsReached ? '?state=hold' : ''}`, {
-			replace: true,
-		});
+		navigate(
+			`/thank-you?orderId=${order.id}${maxTrialsReached ? '&state=hold' : ''}`,
+			{
+				replace: true,
+			}
+		);
 	};
 
 	if (isLoading || isValidating) {

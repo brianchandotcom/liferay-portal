@@ -6,11 +6,13 @@
 package com.liferay.portal.db.partition.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -96,9 +99,7 @@ public class UpgradePartitionedConfigurationTableTest
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		PortalInstancePool.add(_company);
+		_company = CompanyTestUtil.addCompany(true);
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
@@ -153,7 +154,10 @@ public class UpgradePartitionedConfigurationTableTest
 			).build();
 
 		try {
-			try (PreparedStatement preparedStatement =
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						PortalInstancePool.getDefaultCompanyId());
+				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"insert into Configuration_ (configurationId, " +
 							"dictionary) values (?, ?)")) {

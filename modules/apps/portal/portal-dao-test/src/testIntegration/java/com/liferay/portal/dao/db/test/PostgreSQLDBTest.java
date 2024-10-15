@@ -33,26 +33,22 @@ public class PostgreSQLDBTest extends DBTest {
 	}
 
 	@Test
-	public void testGetIndexWithLeftSentence() throws Exception {
-		addIndex(new String[] {_INDEX_LEFT_COLUMN_NAME});
+	public void testGetAndAddIndexWithLeftClause() throws Exception {
+		addIndex(new String[] {_INDEX_COLUMN_NAME_LEFT_CLAUSE});
 
 		List<IndexMetadata> indexes = db.getIndexes(
 			connection, TABLE_NAME_1, null, false);
 
-		_validateIndex(indexes, _INDEX_LEFT_COLUMN_NAME);
+		_assertIndex(indexes);
 
 		db.dropIndexes(connection, TABLE_NAME_1, null);
 
 		db.addIndexes(connection, indexes);
 
-		indexes = db.getIndexes(connection, TABLE_NAME_1, null, false);
-
-		_validateIndex(indexes, _INDEX_LEFT_COLUMN_NAME);
+		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
 	}
 
-	private void _validateIndex(List<IndexMetadata> indexes, String columName)
-		throws Exception {
-
+	private void _assertIndex(List<IndexMetadata> indexes) throws Exception {
 		Assert.assertEquals(indexes.toString(), 1, indexes.size());
 		Assert.assertEquals(
 			dbInspector.normalizeName(INDEX_NAME),
@@ -66,12 +62,13 @@ public class PostgreSQLDBTest extends DBTest {
 			).getColumnNames(
 			).length);
 		Assert.assertEquals(
-			dbInspector.normalizeName(columName),
+			dbInspector.normalizeName(_INDEX_COLUMN_NAME_LEFT_CLAUSE),
 			indexes.get(
 				0
 			).getColumnNames()[0]);
 	}
 
-	private static final String _INDEX_LEFT_COLUMN_NAME = "left(typeText, 15)";
+	private static final String _INDEX_COLUMN_NAME_LEFT_CLAUSE =
+		"left(typeText, 15)";
 
 }

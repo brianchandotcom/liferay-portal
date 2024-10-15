@@ -161,7 +161,7 @@ test.describe('Container configuration', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		pageManagementSite,
+		site,
 	}) => {
 
 		// Create a page with a container
@@ -174,13 +174,13 @@ test.describe('Container configuration', () => {
 					id: containerId,
 				}),
 			]),
-			siteId: pageManagementSite.id,
+			siteId: site.id,
 			title: getRandomString(),
 		});
 
 		// Navigate to the page editor
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		// Change the HTML tag
 
@@ -201,9 +201,7 @@ test.describe('Container configuration', () => {
 
 		await pageEditorPage.publishPage();
 
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 		expect(
 			await page
@@ -216,7 +214,7 @@ test.describe('Container configuration', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		pageManagementSite,
+		site,
 	}) => {
 
 		// Create a page with a container
@@ -229,13 +227,13 @@ test.describe('Container configuration', () => {
 					id: containerId,
 				}),
 			]),
-			siteId: pageManagementSite.id,
+			siteId: site.id,
 			title: getRandomString(),
 		});
 
 		// Navigate to the page editor
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		// Change the container width
 
@@ -269,7 +267,7 @@ test.describe('Container configuration', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		pageManagementSite,
+		site,
 	}) => {
 
 		// Create a page with a container
@@ -282,13 +280,13 @@ test.describe('Container configuration', () => {
 					id: containerId,
 				}),
 			]),
-			siteId: pageManagementSite.id,
+			siteId: site.id,
 			title: getRandomString(),
 		});
 
 		// Navigate to the page editor
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		// Change container styles
 
@@ -369,9 +367,7 @@ test.describe('Container configuration', () => {
 
 		await pageEditorPage.publishPage();
 
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 		const container = page.locator('.lfr-layout-structure-item-container');
 

@@ -26,3 +26,17 @@ export function getDateCustomFormat(
 
 	return date?.toLocaleDateString('en-US', format);
 }
+
+export function getUTCHourAndDateFormat(date: string, locale: string) {
+	return new Date(date)
+		.toLocaleDateString(locale, {
+			day: 'numeric',
+			hour: 'numeric',
+			hour12: true,
+			minute: '2-digit',
+			month: 'numeric',
+			timeZone: 'UTC',
+			year: '2-digit',
+		})
+		.replace(',', '');
+}

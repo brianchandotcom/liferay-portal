@@ -6,6 +6,7 @@
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TCartItem = {
+	id?: number;
 	options?: string;
 	quantity: number;
 	replacedSkuId?: number;
@@ -19,10 +20,13 @@ type TCartItemUOM = {
 
 type TCart = {
 	accountId: number;
+	author?: string;
 	billingAddressId?: number;
 	cartItems?: TCartItem[];
+	createDate?: string;
 	currencyCode?: string;
 	id?: number;
+	modifiedDate?: string;
 	paymentMethod?: string;
 	shippingAddressId?: number;
 	shippingMethod?: string;

@@ -25,15 +25,19 @@ export class CommerceLayoutsPage {
 	readonly createPageMenuItem: Locator;
 	readonly defaultDisplayPageTemplateIcon: Locator;
 	readonly defineCustomThemeCheckbox: Locator;
+	readonly deleteEntriesButton: Locator;
 	readonly deleteLayoutModal: Locator;
 	readonly deleteMenuItemModal: Locator;
 	readonly deletePageButton: Locator;
 	readonly designMenuItem: Locator;
 	readonly designLink: Locator;
+	readonly displayPageTemplateCheckBox: (displayPageName: string) => Locator;
 	readonly displayPageTemplateLink: (name: string) => Locator;
 	readonly displayPageTemplatesLink: Locator;
 	readonly editMenuItem: Locator;
 	readonly firstFragment: Locator;
+	readonly fragmentsAndWidgetsTab: Locator;
+	readonly fragmentMenuItem: (itemName: string) => Locator;
 	readonly iconLock: Locator;
 	readonly infoBoxButton: (label: string) => Locator;
 	readonly infoBoxCancelButton: Locator;
@@ -47,20 +51,27 @@ export class CommerceLayoutsPage {
 	readonly infoBoxValue: (name: string) => Locator;
 	readonly inputTextArea: Locator;
 	readonly inputTextbox: (name: string) => Locator;
+	readonly labelField: Locator;
 	readonly markAsDefaultMenuItem: Locator;
 	readonly moreActionsButton: Locator;
 	readonly orderActionsButton: (orderActionName: string) => Locator;
 	readonly openProductMenuButton: Locator;
+	readonly orderItemCardButton: Locator;
 	readonly page: Page;
+	readonly pageEditorCollectionItem: Locator;
+	readonly pageEditorText: (text: RegExp | string) => Locator;
 	readonly pagesMenuItem: Locator;
 	readonly pageTemplatesMenuItem: Locator;
 	readonly paymentTermsSelect: Locator;
 	readonly pendingOrdersLink: Locator;
 	readonly previewItemSelectorButton: Locator;
+	readonly productMenuItem: Locator;
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
 	readonly searchFormInput: Locator;
+	readonly selectCollectionButton: Locator;
 	readonly selectOtherItemDropdownItem: Locator;
+	readonly selectRelatedItemsCollectionProviders: Locator;
 	readonly showLabelInput: Locator;
 	readonly siteBuilderMenuItem: Locator;
 	readonly siteHomePageLink: Locator;
@@ -93,7 +104,6 @@ export class CommerceLayoutsPage {
 		this.availableThemesFrame = page.frameLocator(
 			'iframe[title="Available Themes"]'
 		);
-
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.cancelButton = page.getByRole('button', {
 			exact: true,
@@ -128,6 +138,9 @@ export class CommerceLayoutsPage {
 		this.defineCustomThemeCheckbox = page.getByLabel(
 			'Define a custom theme for this page.'
 		);
+		this.deleteEntriesButton = page
+			.getByLabel('Delete Entries- Loading')
+			.getByRole('button', {name: 'Delete'});
 		this.deleteLayoutModal = page.locator('#deleteLayoutModalDeleteButton');
 		this.deleteMenuItemModal = page.getByRole('menuitem', {
 			exact: true,
@@ -143,6 +156,8 @@ export class CommerceLayoutsPage {
 			.getByTestId('appGroup')
 			.filter({hasText: 'Design'});
 		this.designLink = page.getByRole('link', {exact: true, name: 'Design'});
+		this.displayPageTemplateCheckBox = (displayPageName: string) =>
+			page.getByLabel(displayPageName);
 		this.displayPageTemplateLink = (name: string) =>
 			page.getByRole('link', {exact: true, name});
 		this.displayPageTemplatesLink = page.getByRole('link', {
@@ -154,6 +169,14 @@ export class CommerceLayoutsPage {
 			name: 'Edit',
 		});
 		this.firstFragment = page.locator('#page-editor div').nth(2);
+		this.fragmentsAndWidgetsTab = page.getByRole('tab', {
+			exact: true,
+			name: 'Fragments and Widgets',
+		});
+		this.fragmentMenuItem = (itemName: string) =>
+			page.getByRole('menuitem', {
+				name: itemName,
+			});
 		this.infoBoxButton = (label: string) =>
 			page.getByTestId(label + '-infoBoxButton');
 		this.infoBoxCancelButton = page.getByRole('button', {
@@ -180,6 +203,7 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Mark as Default',
 		});
+		this.labelField = page.getByLabel('Field', {exact: true});
 		this.moreActionsButton = page.getByLabel('More actions');
 		this.orderActionsButton = (orderActionName: string) =>
 			page.getByRole('button', {exact: true, name: orderActionName});
@@ -187,7 +211,15 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Open Product Menu',
 		});
+		this.orderItemCardButton = page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Select Order Items'});
 		this.page = page;
+		this.pageEditorCollectionItem = page
+			.locator('.page-editor__collection-item__border')
+			.first();
+		this.pageEditorText = (text: RegExp | string) =>
+			page.locator('#page-editor').getByText(text);
 		this.pagesMenuItem = page
 			.getByTestId('app')
 			.filter({hasNotText: 'Locked', hasText: 'Pages'});
@@ -204,6 +236,10 @@ export class CommerceLayoutsPage {
 		this.previewItemSelectorButton = page.getByTestId(
 			'previewItemSelectorButton'
 		);
+		this.productMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Product',
+		});
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',
@@ -212,10 +248,17 @@ export class CommerceLayoutsPage {
 		this.searchFormInput = page.getByRole('textbox', {
 			name: 'Search Form',
 		});
+		this.selectCollectionButton = page.getByRole('button', {
+			exact: true,
+			name: 'Select Collection',
+		});
 		this.selectOtherItemDropdownItem = page.getByTestId(
 			'selectOtherItemDropdownItem'
 		);
 
+		this.selectRelatedItemsCollectionProviders = page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('link', {name: 'Related Items Collection Providers'});
 		this.showLabelInput = page.getByLabel('Show Label', {exact: true});
 		this.siteBuilderMenuItem = page
 			.getByTestId('appGroup')
@@ -239,9 +282,7 @@ export class CommerceLayoutsPage {
 	}
 
 	async addFragment(itemName: string, menuName: string = '') {
-		const source = await this.page.getByRole('menuitem', {
-			name: itemName,
-		});
+		const source = this.fragmentMenuItem(itemName);
 
 		if ((await source.isHidden()) && menuName) {
 			await this.page
@@ -257,22 +298,25 @@ export class CommerceLayoutsPage {
 		await source.press('Enter');
 	}
 
-	async addProductFragment(itemName: string) {
-		await this.page
-			.getByRole('menuitem', {exact: true, name: 'Product'})
-			.click();
+	async addFragmentToCollectionDisplay(itemName: string) {
+		const source = this.fragmentMenuItem(itemName);
 
-		const source = await this.page.getByRole('menuitem', {
-			name: itemName,
-		});
+		const target = this.pageEditorCollectionItem;
+
+		await source.focus();
+		await source.dragTo(target);
+	}
+
+	async addProductFragment(itemName: string) {
+		await this.productMenuItem.click();
+
+		const source = this.fragmentMenuItem(itemName);
 
 		await source.focus();
 		await source.press('Enter');
 		await source.press('Enter');
 
-		await this.page
-			.getByRole('menuitem', {exact: true, name: 'Product'})
-			.click();
+		await this.productMenuItem.click();
 	}
 
 	async addWidget(itemName: string, menuName: string = '') {

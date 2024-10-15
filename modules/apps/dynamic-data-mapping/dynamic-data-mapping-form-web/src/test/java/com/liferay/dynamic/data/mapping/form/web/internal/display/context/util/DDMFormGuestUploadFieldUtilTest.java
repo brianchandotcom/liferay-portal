@@ -32,8 +32,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -90,21 +92,26 @@ public class DDMFormGuestUploadFieldUtilTest {
 		_frameworkUtilMockedStatic.close();
 	}
 
+	@Before
+	public void setUp() {
+		_ddmFormInstanceRecords = new ArrayList<>();
+	}
+
+	@After
+	public void tearDown() {
+		_ddmFormInstanceRecords = null;
+	}
+
 	@Test
 	public void testGuestUserAnsweringForFifthTime() throws Exception {
 		_addUploadField(true);
 
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords = new ArrayList<>();
-
-		for (int i = 0; i < (_MAXIMUM_SUBMISSIONS - 1); i++) {
-			ddmFormInstanceRecords.add(_mockDDMFormInstanceRecord());
-		}
-
-		_mockDDMFormInstanceLocalService(ddmFormInstanceRecords);
+		_addDDMFormInstanceRecords(_IP_ADDRESS_1, _MAXIMUM_SUBMISSIONS - 1);
 
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
-				_mockDDMFormInstance(), _mockHttpServletRequest(false),
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_1, false),
 				_MAXIMUM_SUBMISSIONS));
 	}
 
@@ -112,17 +119,47 @@ public class DDMFormGuestUploadFieldUtilTest {
 	public void testGuestUserAnsweringForSixthTime() throws Exception {
 		_addUploadField(true);
 
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords = new ArrayList<>();
-
-		for (int i = 0; i < _MAXIMUM_SUBMISSIONS; i++) {
-			ddmFormInstanceRecords.add(_mockDDMFormInstanceRecord());
-		}
-
-		_mockDDMFormInstanceLocalService(ddmFormInstanceRecords);
+		_addDDMFormInstanceRecords(_IP_ADDRESS_1, _MAXIMUM_SUBMISSIONS);
 
 		Assert.assertTrue(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
-				_mockDDMFormInstance(), _mockHttpServletRequest(false),
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_1, false),
+				_MAXIMUM_SUBMISSIONS));
+	}
+
+	@Test
+	public void testGuestUsersAnsweringWithDifferentIPAddresses()
+		throws Exception {
+
+		_addUploadField(true);
+
+		_addDDMFormInstanceRecords(_IP_ADDRESS_2, _MAXIMUM_SUBMISSIONS - 1);
+
+		_addDDMFormInstanceRecords(_IP_ADDRESS_1, 1);
+
+		Assert.assertFalse(
+			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_1, false),
+				_MAXIMUM_SUBMISSIONS));
+		Assert.assertFalse(
+			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_2, false),
+				_MAXIMUM_SUBMISSIONS));
+
+		_addDDMFormInstanceRecords(_IP_ADDRESS_2, 1);
+
+		Assert.assertFalse(
+			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_1, false),
+				_MAXIMUM_SUBMISSIONS));
+		Assert.assertTrue(
+			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_2, false),
 				_MAXIMUM_SUBMISSIONS));
 	}
 
@@ -157,7 +194,8 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
-				_mockDDMFormInstance(), _mockHttpServletRequest(false),
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_1, false),
 				_MAXIMUM_SUBMISSIONS));
 	}
 
@@ -165,11 +203,20 @@ public class DDMFormGuestUploadFieldUtilTest {
 	public void testMaxLimitWithSignedInUser() throws Exception {
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
-				_mockDDMFormInstance(), _mockHttpServletRequest(true),
+				_mockDDMFormInstance(),
+				_mockHttpServletRequest(_IP_ADDRESS_1, true),
 				_MAXIMUM_SUBMISSIONS));
 	}
 
 	protected static final JSONFactory jsonFactory = new JSONFactoryImpl();
+
+	private void _addDDMFormInstanceRecords(String ipAddr, int size) {
+		for (int i = 0; i < size; i++) {
+			_ddmFormInstanceRecords.add(_mockDDMFormInstanceRecord(ipAddr));
+		}
+
+		_mockDDMFormInstanceLocalService(_ddmFormInstanceRecords);
+	}
 
 	private void _addUploadField(boolean allowGuestUsers) {
 		DDMFormField ddmFormField = new DDMFormField(
@@ -222,20 +269,22 @@ public class DDMFormGuestUploadFieldUtilTest {
 		);
 	}
 
-	private DDMFormInstanceRecord _mockDDMFormInstanceRecord() {
+	private DDMFormInstanceRecord _mockDDMFormInstanceRecord(String ipAddr) {
 		DDMFormInstanceRecord ddmFormInstanceRecord = Mockito.mock(
 			DDMFormInstanceRecord.class);
 
 		Mockito.when(
 			ddmFormInstanceRecord.getIpAddress()
 		).thenReturn(
-			_IP_ADDRESS
+			ipAddr
 		);
 
 		return ddmFormInstanceRecord;
 	}
 
-	private HttpServletRequest _mockHttpServletRequest(boolean signedIn) {
+	private HttpServletRequest _mockHttpServletRequest(
+		String remoteAddr, boolean signedIn) {
+
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
@@ -250,7 +299,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 		Mockito.when(
 			httpServletRequest.getRemoteAddr()
 		).thenReturn(
-			_IP_ADDRESS
+			remoteAddr
 		);
 
 		return httpServletRequest;
@@ -271,7 +320,9 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private static final long _DDM_FORM_INSTANCE_ID =
 		RandomTestUtil.randomLong();
 
-	private static final String _IP_ADDRESS = RandomTestUtil.randomString();
+	private static final String _IP_ADDRESS_1 = RandomTestUtil.randomString();
+
+	private static final String _IP_ADDRESS_2 = RandomTestUtil.randomString();
 
 	private static final int _MAXIMUM_SUBMISSIONS = 5;
 
@@ -285,6 +336,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 			DDMFormInstanceRecordLocalService.class);
 	private static ServiceRegistration<DDMFormInstanceRecordLocalService>
 		_ddmFormInstanceRecordLocalServiceServiceRegistration;
+	private static ArrayList<DDMFormInstanceRecord> _ddmFormInstanceRecords;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 

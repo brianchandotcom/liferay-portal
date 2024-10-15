@@ -27,6 +27,27 @@ export class PageTemplatesPage {
 		);
 	}
 
+	async addContentPageTemplate(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Content Page Template',
+			}),
+			trigger: this.newButton,
+		});
+
+		await this.page.getByRole('button', {name: 'Blank'}).click();
+
+		await this.page.getByPlaceholder('Name', {exact: true}).fill(name);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(
+			this.page,
+			'Success:The page template was created successfully.'
+		);
+	}
+
 	async addPageTemplateCollection(name: string) {
 		await this.page.getByRole('link', {exact: true, name: 'New'}).click();
 

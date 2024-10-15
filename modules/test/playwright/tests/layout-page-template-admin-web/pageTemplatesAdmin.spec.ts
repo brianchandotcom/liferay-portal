@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -16,6 +17,94 @@ export const test = mergeTests(
 	loginTest(),
 	pageTemplatesPagesTest
 );
+
+test('Add, rename and delete a content page template', async ({
+	page,
+	pageTemplatesPage,
+	site,
+}) => {
+
+	// Go to page template administration
+
+	await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+	// Create page template collection
+
+	const pageTemplateCollectionName = getRandomString();
+
+	await pageTemplatesPage.addPageTemplateCollection(
+		pageTemplateCollectionName
+	);
+
+	// Create content page template
+
+	const pageTemplateName = getRandomString();
+
+	await pageTemplatesPage.addContentPageTemplate(pageTemplateName);
+
+	// Assert content page template
+
+	await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+	await expect(
+		page.getByRole('link', {exact: true, name: pageTemplateName})
+	).toBeVisible();
+
+	// Change thumbnail
+
+	const fileChooserPromise = page.waitForEvent('filechooser');
+
+	await pageTemplatesPage.clickAction('Change Thumbnail', pageTemplateName);
+
+	const iframe = page.frameLocator('iframe[title="Page Template Thumbnail"]');
+
+	await expect(
+		iframe.getByText('Drag & Drop Your Files or Browse to Upload')
+	).toBeVisible();
+
+	await iframe
+		.getByText('Drag & Drop Your Files or Browse to Upload')
+		.click();
+
+	const fileChooser = await fileChooserPromise;
+
+	await fileChooser.setFiles(path.join(__dirname, '/dependencies/image.jpg'));
+
+	await iframe.getByRole('button', {exact: true, name: 'Add'}).click();
+
+	await expect(
+		page
+			.locator('.card-type-asset')
+			.filter({hasText: pageTemplateName})
+			.locator('img')
+	).toBeAttached();
+
+	// Rename content page template
+
+	await pageTemplatesPage.clickAction('Rename', pageTemplateName);
+
+	const newPageTemplateName = getRandomString();
+
+	await page
+		.getByPlaceholder('Name', {exact: true})
+		.fill(newPageTemplateName);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForAlert(page);
+
+	await expect(
+		page.getByRole('link', {exact: true, name: newPageTemplateName})
+	).toBeVisible();
+
+	// Delete content page template
+
+	await pageTemplatesPage.deletePageTemplate(newPageTemplateName);
+
+	await expect(
+		page.getByRole('link', {exact: true, name: newPageTemplateName})
+	).not.toBeVisible();
+});
 
 test('Add and delete a widget page template', async ({
 	page,

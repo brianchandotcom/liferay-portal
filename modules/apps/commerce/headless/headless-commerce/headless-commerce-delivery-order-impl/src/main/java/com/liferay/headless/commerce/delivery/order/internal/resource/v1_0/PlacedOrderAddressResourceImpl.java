@@ -49,7 +49,7 @@ public class PlacedOrderAddressResourceImpl
 					externalReferenceCode);
 		}
 
-		return getPlacedOrderPlacedOrderBillingAddres(
+		return getPlacedOrderPlacedOrderBillingAddress(
 			commerceOrder.getCommerceOrderId());
 	}
 
@@ -69,7 +69,7 @@ public class PlacedOrderAddressResourceImpl
 					externalReferenceCode);
 		}
 
-		return getPlacedOrderPlacedOrderShippingAddres(
+		return getPlacedOrderPlacedOrderShippingAddress(
 			commerceOrder.getCommerceOrderId());
 	}
 
@@ -77,7 +77,7 @@ public class PlacedOrderAddressResourceImpl
 		parentClass = PlacedOrder.class, value = "placedOrderBillingAddress"
 	)
 	@Override
-	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddres(
+	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddress(
 			Long placedOrderId)
 		throws Exception {
 
@@ -109,7 +109,7 @@ public class PlacedOrderAddressResourceImpl
 		parentClass = PlacedOrder.class, value = "placedOrderShippingAddress"
 	)
 	@Override
-	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddres(
+	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddress(
 			Long placedOrderId)
 		throws Exception {
 

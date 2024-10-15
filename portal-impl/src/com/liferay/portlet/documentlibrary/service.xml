@@ -202,6 +202,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="G_DDI" return-type="DLFileEntryType" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="dataDefinitionId" />

@@ -68,10 +68,15 @@ public class DDMTemplateCTUpgradeProcessTest
 		return _ddmTemplateLocalService;
 	}
 
+	protected String getUpgradeStepClassName() {
+		return "com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_2." +
+			"DDMTemplateUpgradeProcess";
+	}
+
 	@Override
 	protected void runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
+			_upgradeStepRegistrator, getUpgradeStepClassName());
 
 		upgradeProcess.upgrade();
 	}
@@ -84,10 +89,6 @@ public class DDMTemplateCTUpgradeProcessTest
 
 		return _ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_2." +
-			"DDMTemplateUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"

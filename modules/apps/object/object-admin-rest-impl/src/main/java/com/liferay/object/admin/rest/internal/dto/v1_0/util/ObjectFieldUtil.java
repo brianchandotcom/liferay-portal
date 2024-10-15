@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,13 +30,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Gabriel Albuquerque
@@ -208,7 +207,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(
-		Locale defaultLocale, boolean enableLocalization,
+		String defaultLanguageId, boolean enableLocalization,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -245,28 +244,18 @@ public class ObjectFieldUtil {
 			objectField.getIndexedLanguageId());
 
 		Map<Locale, String> labelMap = LocalizedMapUtil.getLocalizedMap(
-			objectField.getLabel());
+			defaultLanguageId, objectField.getLabel(), objectField.getName());
 
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+		if (GetterUtil.getBoolean(objectField.getSystem())) {
+			Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
-		if (!Objects.equals(defaultLocale, siteDefaultLocale) &&
-			Validator.isNull(labelMap.get(siteDefaultLocale)) &&
-			Validator.isNotNull(labelMap.get(defaultLocale))) {
-
-			if (GetterUtil.getBoolean(objectField.getSystem())) {
-				labelMap.put(
+			labelMap.put(
+				siteDefaultLocale,
+				LanguageUtil.get(
 					siteDefaultLocale,
-					LanguageUtil.get(
-						siteDefaultLocale,
-						_systemObjectFieldLabelKeys.get(objectField.getName()),
-						labelMap.get(defaultLocale)));
-			}
-			else {
-				labelMap.put(siteDefaultLocale, labelMap.get(defaultLocale));
-			}
+					_systemObjectFieldLabelKeys.get(objectField.getName()),
+					labelMap.get(siteDefaultLocale)));
 		}
-
-		labelMap.putIfAbsent(siteDefaultLocale, objectField.getName());
 
 		serviceBuilderObjectField.setLabelMap(labelMap);
 

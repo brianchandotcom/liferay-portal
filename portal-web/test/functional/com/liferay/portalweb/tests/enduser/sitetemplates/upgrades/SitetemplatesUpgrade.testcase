@@ -387,7 +387,7 @@ definition {
 				pageName = "home",
 				siteName = "Site Name");
 
-			Refresh();
+			Refresh.pauseRefresh();
 
 			Portlet.viewPG(portletName = "Asset Publisher");
 		}

@@ -234,13 +234,15 @@ export default function FieldBase({
 						!!localizedValueEdited?.[editingLanguageId]
 					}
 					key={locale}
-					name={updateFieldNameLocale(
-						editingLanguageId,
-						locale,
-						name
-					)}
 					type="hidden"
 					value={normalizeInputValue(type, value)}
+					{...(locale !== editingLanguageId && {
+						name: updateFieldNameLocale(
+							editingLanguageId,
+							locale,
+							name
+						),
+					})}
 				/>
 			);
 		});

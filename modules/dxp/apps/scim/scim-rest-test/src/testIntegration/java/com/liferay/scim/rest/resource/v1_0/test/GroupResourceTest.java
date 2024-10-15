@@ -64,18 +64,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	public static void setUpClass() throws Exception {
 		BaseUserResourceTestCase.setUpClass();
 
-		_pid = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.scim.rest.internal.configuration." +
-				"ScimClientOAuth2ApplicationConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"matcherField", "email"
-			).put(
-				"oAuth2ApplicationName", "scim-client-test"
-			).put(
-				"userId", TestPropsValues.getUserId()
-			).build());
+		_pid = _restoreScimTestConfiguration();
 
 		UserResource.Builder builder = UserResource.builder();
 
@@ -171,7 +160,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, groupResource.getV2GroupsHttpResponse(5, 0));
 
-		_restoreScimTestConfiguration();
+		_pid = _restoreScimTestConfiguration();
 	}
 
 	@Override
@@ -254,7 +243,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, groupResource.postV2GroupHttpResponse(postGroup));
 
-		_restoreScimTestConfiguration();
+		_pid = _restoreScimTestConfiguration();
 	}
 
 	@Override
@@ -449,8 +438,8 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		return Group.toDTO(groupObject.toString());
 	}
 
-	private void _restoreScimTestConfiguration() throws Exception {
-		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+	private static String _restoreScimTestConfiguration() throws Exception {
+		return ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.scim.rest.internal.configuration." +
 				"ScimClientOAuth2ApplicationConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(

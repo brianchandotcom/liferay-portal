@@ -116,6 +116,19 @@ public class PlacedOrderDTOConverter
 							commerceOrderStatusLabel,
 							commerceOrderStatusLabelI18n);
 					});
+				setOrderType(
+					() -> {
+						CommerceOrderType commerceOrderType =
+							_commerceOrderTypeLocalService.
+								fetchCommerceOrderType(
+									commerceOrder.getCommerceOrderTypeId());
+
+						if (commerceOrderType == null) {
+							return null;
+						}
+
+						return commerceOrderType.getName(locale);
+					});
 				setOrderTypeExternalReferenceCode(
 					() -> _getOrderTypeExternalReferenceCode(
 						commerceOrder.getCommerceOrderTypeId()));

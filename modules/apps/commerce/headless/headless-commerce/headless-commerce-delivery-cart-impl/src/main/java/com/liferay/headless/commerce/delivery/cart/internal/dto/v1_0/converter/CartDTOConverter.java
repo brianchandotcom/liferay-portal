@@ -150,6 +150,18 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 							commerceOrderStatusLabel,
 							commerceOrderStatusLabelI18n);
 					});
+				setOrderType(
+					() -> {
+						CommerceOrderType commerceOrderType =
+							_commerceOrderTypeService.fetchCommerceOrderType(
+								commerceOrder.getCommerceOrderTypeId());
+
+						if (commerceOrderType == null) {
+							return null;
+						}
+
+						return commerceOrderType.getName(locale);
+					});
 				setOrderTypeExternalReferenceCode(
 					() -> _getOrderTypeExternalReferenceCode(
 						commerceOrder.getCommerceOrderTypeId()));

@@ -198,6 +198,27 @@ public class CartItemDTOConverter
 					() -> _cpInstanceHelper.getCPInstanceThumbnailSrc(
 						cartItemDTOConverterContext.getAccountId(),
 						commerceOrderItem.getCPInstanceId()));
+				setUnitOfMeasure(
+					() -> {
+						String unitOfMeasureKey =
+							commerceOrderItem.getUnitOfMeasureKey();
+
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+							_cpInstanceUnitOfMeasureLocalService.
+								fetchCPInstanceUnitOfMeasure(
+									commerceOrderItem.getCPInstanceId(),
+									unitOfMeasureKey);
+
+						if (cpInstanceUnitOfMeasure == null) {
+							return null;
+						}
+
+						return cpInstanceUnitOfMeasure.getName(locale);
+					});
 			}
 		};
 	}

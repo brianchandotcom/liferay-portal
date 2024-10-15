@@ -336,6 +336,23 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		return group;
 	}
 
+	private static String _createScimClientOAuth2ApplicationConfiguration()
+		throws Exception {
+
+		return ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
+			).build());
+	}
+
 	private User _addUser() throws Exception {
 		String emailPrefix = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
@@ -436,21 +453,6 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		Object groupObject = groupResource.getV2GroupById(userId);
 
 		return Group.toDTO(groupObject.toString());
-	}
-
-	private static String _createScimClientOAuth2ApplicationConfiguration() throws Exception {
-		return ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.scim.rest.internal.configuration." +
-				"ScimClientOAuth2ApplicationConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"matcherField", "email"
-			).put(
-				"oAuth2ApplicationName", "scim-client-test"
-			).put(
-				"userId", TestPropsValues.getUserId()
-			).build());
 	}
 
 	private static String _pid;

@@ -23,10 +23,19 @@ public interface SiteConnectedGroupGroupProvider {
 		throws PortalException;
 
 	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(
-			long groupId, boolean ddmStructuresAvailable)
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException;
+
+	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long groupId, boolean checkContentSharingWithChildrenEnabled,
+			boolean ddmStructuresAvailable)
 		throws PortalException;
 
 	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(long[] groupIds)
+		throws PortalException;
+
+	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException;
 
 }

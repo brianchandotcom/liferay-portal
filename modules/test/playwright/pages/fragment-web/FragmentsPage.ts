@@ -157,7 +157,9 @@ export class FragmentsPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: action}),
-			trigger: this.page.getByLabel('Show Actions'),
+			trigger: this.page
+				.locator('.autofit-row', {hasText: 'Fragment Sets'})
+				.getByLabel('Show Actions'),
 		});
 	}
 

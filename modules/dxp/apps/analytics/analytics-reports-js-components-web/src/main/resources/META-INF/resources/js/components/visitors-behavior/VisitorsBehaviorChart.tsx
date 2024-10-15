@@ -13,7 +13,7 @@ import {assetContent, metricNameByType} from '../../utils/metrics';
 import {CircleDot, PublishedVersionDot} from '../metrics/Dots';
 import MetricsChart, {DataKey} from '../metrics/MetricsChart';
 import {IMetricsChartLegendProps} from '../metrics/MetricsChartLegend';
-import {formatter, getFillOpacity} from '../metrics/utils';
+import {getFillOpacity} from '../metrics/utils';
 import {Data} from './VisitorsBehavior';
 import VisitorsBehaviorChartTooltip from './VisitorsBehaviorChartTooltip';
 import {VisitorsBehaviorDataKey, formatVisitorsBehaviorData} from './utils';
@@ -56,17 +56,14 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 			dataKey: VisitorsBehaviorDataKey.Metric,
 			dotColor: metricsChartData?.color ?? 'none',
 			title: metricsChartData.title,
-			total:
-				metricsChartData?.format?.(Number(metricsChartData.total)) ?? 0,
+			total: metricsChartData.total,
 		},
 		{
 			Dot: PublishedVersionDot,
 			dataKey: VisitorsBehaviorDataKey.PublishedVersionData,
 			dotColor: publishedVersionsChartData?.color ?? 'none',
 			title: publishedVersionsChartData.title,
-			total: formatter('number')(
-				Number(publishedVersionsChartData.total)
-			),
+			total: publishedVersionsChartData.total,
 		},
 	];
 

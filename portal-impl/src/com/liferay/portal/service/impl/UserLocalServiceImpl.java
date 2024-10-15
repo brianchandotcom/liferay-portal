@@ -16,6 +16,7 @@ import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -80,6 +81,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.Users_RolesTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
@@ -3063,6 +3066,35 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		return userPersistence.findByC_S(
 			companyId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<User> getUsersByRoleId(long roleId, int start, int end)
+		throws PortalException {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				UserTable.INSTANCE
+			).from(
+				Users_RolesTable.INSTANCE
+			).innerJoinON(
+				UserTable.INSTANCE,
+				Users_RolesTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
+			).where(
+				Users_RolesTable.INSTANCE.roleId.eq(roleId)
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public List<User> getUsersByRoleName(
+			long companyId, String roleName, int start, int end)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(companyId, roleName);
+
+		return getUsersByRoleId(role.getRoleId(), start, end);
 	}
 
 	@Override

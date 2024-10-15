@@ -290,7 +290,9 @@ export class ChangeTrackingPage {
 
 		const checkBox = this.page.getByLabel('Sandbox Enabled');
 
-		if (check) {
+		const checked = await checkBox.isChecked();
+
+		if (check && !checked) {
 			await checkBox.setChecked(true);
 
 			await this.instanceSettingsPage.saveButton.click();

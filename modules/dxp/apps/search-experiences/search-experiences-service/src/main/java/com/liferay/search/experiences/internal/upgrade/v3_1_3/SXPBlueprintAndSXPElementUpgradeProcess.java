@@ -18,22 +18,40 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Objects;
 
 /**
- * @author Joshua Cords
+ * @author Joshua Cords, Felipe Lorenz
  */
 public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeSXPBlueprints();
 		_upgradeSXPElement();
+	}
 
-		_upgradeSXPBlueprint();
+	private boolean _containsSiteElement(ElementInstance[] elementInstances) {
+		for (ElementInstance elementInstance : elementInstances) {
+			SXPElement sxpElement = elementInstance.getSxpElement();
+
+			if (Objects.equals(
+					sxpElement.getExternalReferenceCode(),
+					"LIMIT_SEARCH_TO_THESE_SITES")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private JSONObject _createScopeGroupExternalReferenceCodesJSONObject(
@@ -42,18 +60,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		long groupId = scopeGroupIDJSONObject.getLong("value");
 
+		Group group = _getGroup(groupId);
+
 		return JSONUtil.put(
-			"label", _getLabel(groupId)
+			"label",
+			StringBundler.concat(
+				group.getDescriptiveName(), " (ERC: ",
+				group.getExternalReferenceCode(), ")")
 		).put(
-			"value", _getExternalReferenceCode(groupId)
+			"value", group.getExternalReferenceCode()
 		);
 	}
 
 	private long[] _extractScopeGroupIds(JSONObject termsJSONObject) {
-		Object object = JSONUtil.getValue(
-			termsJSONObject, "Object/scopeGroupId");
+		JSONArray scopeGroupIdJSONArray = JSONUtil.getValueAsJSONArray(
+			termsJSONObject, "JSONArray/scopeGroupId");
 
-		return JSONUtil.toLongArray((JSONArray)object);
+		return JSONUtil.toLongArray(scopeGroupIdJSONArray);
 	}
 
 	private String _fixElementInstancesJSON(String elementInstanceJSON)
@@ -74,7 +97,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				elementInstanceJSONObject.getJSONObject("sxpElement");
 
 			if (sxpElementJSONObject == null) {
-				return elementInstanceJSON;
+				continue;
 			}
 
 			String sxpElementExternalReferenceCode =
@@ -84,7 +107,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					sxpElementExternalReferenceCode,
 					"LIMIT_SEARCH_TO_THESE_SITES")) {
 
-				return elementInstanceJSON;
+				continue;
 			}
 
 			_upgradeConfigurationEntry(elementInstanceJSONObject);
@@ -97,25 +120,15 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		return elementInstanceJSONArray.toString();
 	}
 
-	private String _getExternalReferenceCode(long groupId) throws Exception {
+	private Group _getGroup(long groupId) throws Exception {
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			return group.getExternalReferenceCode();
+			return GroupLocalServiceUtil.getGroup(groupId);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to find assetCategory with id " + groupId);
+			_log.error("Unable to find group with id " + groupId);
 
 			throw exception;
 		}
-	}
-
-	private String _getLabel(long groupId) throws Exception {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		return StringBundler.concat(
-			group.getDescriptiveName(), " (ERC: ",
-			group.getExternalReferenceCode(), ")");
 	}
 
 	private JSONArray _translateIdsToExternalReferencesCodes(long[] groupIds)
@@ -125,8 +138,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONFactoryUtil.createJSONArray();
 
 		for (long groupId : groupIds) {
+			Group group = _getGroup(groupId);
+
 			scopeGroupExternalReferenceCodeJSONArray.put(
-				_getExternalReferenceCode(groupId));
+				group.getExternalReferenceCode());
 		}
 
 		return scopeGroupExternalReferenceCodeJSONArray;
@@ -160,8 +175,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		long[] groupIds = _extractScopeGroupIds(termsJSONObject);
 
-		queryJSONObject.remove("terms");
-
 		queryJSONObject.put(
 			"terms",
 			JSONUtil.put(
@@ -169,7 +182,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				_translateIdsToExternalReferencesCodes(groupIds)));
 	}
 
-	private void _upgradeSXPBlueprint() throws Exception {
+	private void _upgradeSXPBlueprints() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select sxpBlueprintId, elementInstancesJSON from " +
 					"SXPBlueprint");
@@ -181,26 +194,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					String elementInstancesJSON = resultSet.getString(
-						"elementInstancesJSON");
-
-					try {
-						preparedStatement2.setString(
-							1, _fixElementInstancesJSON(elementInstancesJSON));
-
-						preparedStatement2.setLong(
-							2, resultSet.getLong("sxpBlueprintId"));
-
-						preparedStatement2.addBatch();
-					}
-					catch (Exception exception) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Unable to upgrade SXPBlueprint " +
-									resultSet.getLong("sxpBlueprintId"),
-								exception);
-						}
-					}
+					_upgradeSXPElementsInSXPBlueprint(
+						preparedStatement2, resultSet);
 				}
 
 				preparedStatement2.executeBatch();
@@ -232,6 +227,40 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		_upgradeUIConfiguration(
 			elementDefinitionJSONObject.getJSONObject("uiConfiguration"));
+	}
+
+	private void _upgradeSXPElementsInSXPBlueprint(
+			PreparedStatement preparedStatement2, ResultSet resultSet)
+		throws SQLException {
+
+		String elementInstancesJSON = resultSet.getString(
+			"elementInstancesJSON");
+
+		ElementInstance[] elementInstances =
+			ElementInstanceUtil.toElementInstances(elementInstancesJSON);
+
+		if ((elementInstances == null) ||
+			!_containsSiteElement(elementInstances)) {
+
+			return;
+		}
+
+		try {
+			preparedStatement2.setString(
+				1, _fixElementInstancesJSON(elementInstancesJSON));
+
+			preparedStatement2.setLong(2, resultSet.getLong("sxpBlueprintId"));
+
+			preparedStatement2.addBatch();
+		}
+		catch (Exception exception) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to upgrade SXPBlueprint " +
+						resultSet.getLong("sxpBlueprintId"),
+					exception);
+			}
+		}
 	}
 
 	private void _upgradeUIConfiguration(JSONObject uiConfigurationJSONObject) {
@@ -278,11 +307,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 						scopeGroupIDJSONObject));
 			}
 
-			uiConfigurationValuesJSONObject.remove("scope_group_ids");
-
 			uiConfigurationValuesJSONObject.put(
 				"scope_group_external_reference_codes",
-				groupIdsExternalReferenceCodesJSONArray);
+				groupIdsExternalReferenceCodesJSONArray
+			).remove(
+				"scope_group_ids"
+			);
 		}
 	}
 

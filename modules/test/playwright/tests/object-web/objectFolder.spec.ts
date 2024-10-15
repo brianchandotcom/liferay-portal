@@ -353,6 +353,10 @@ test.describe('manage object definitions through view object definitions', () =>
 
 		await viewObjectDefinitionsPage.deleteObjectFolder(objectFolder.name);
 
+		createdEntities.objectFolders.splice(
+			createdEntities.objectFolders.indexOf(objectFolder)
+		);
+
 		await viewObjectDefinitionsPage.defaultObjectFolder.click();
 
 		await expect(

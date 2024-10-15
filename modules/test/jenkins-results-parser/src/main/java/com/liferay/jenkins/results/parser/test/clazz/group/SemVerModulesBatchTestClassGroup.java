@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.nio.file.PathMatcher;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -80,20 +82,22 @@ public class SemVerModulesBatchTestClassGroup
 			getExcludesJobProperties());
 		List<PathMatcher> includesPathMatchers = getIncludesPathMatchers();
 
+		Set<File> moduleDirs = new HashSet<>();
+
 		if (testRelevantChanges &&
 			!(includeStableTestSuite && isStableTestSuiteBatch())) {
 
-			moduleDirsList.addAll(
+			moduleDirs.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList(
 					excludesPathMatchers, includesPathMatchers));
 		}
 		else if (isRootCauseAnalysis()) {
-			moduleDirsList.addAll(
+			moduleDirs.addAll(
 				portalGitWorkingDirectory.getModuleDirsList(
 					excludesPathMatchers, includesPathMatchers));
 		}
 		else {
-			moduleDirsList.addAll(
+			moduleDirs.addAll(
 				portalGitWorkingDirectory.getModuleDirsList(
 					excludesPathMatchers, includesPathMatchers));
 
@@ -104,11 +108,35 @@ public class SemVerModulesBatchTestClassGroup
 				excludesPathMatchers, includesPathMatchers, semVerMarkerFiles);
 
 			for (File semVerMarkerFile : semVerMarkerFiles) {
-				moduleDirsList.add(semVerMarkerFile.getParentFile());
+				moduleDirs.add(semVerMarkerFile.getParentFile());
 			}
 		}
 
-		for (File moduleDir : moduleDirsList) {
+		for (File moduleDir : moduleDirs) {
+			List<File> bndBndFiles = JenkinsResultsParserUtil.findFiles(
+				moduleDir, "bnd.bnd");
+
+			boolean exportPackageModule = false;
+
+			for (File bndBndFile : bndBndFiles) {
+				String bndBndFileContent = JenkinsResultsParserUtil.read(
+					bndBndFile);
+
+				if ((bndBndFileContent == null) ||
+					!bndBndFileContent.contains("Export-Package:")) {
+
+					continue;
+				}
+
+				exportPackageModule = true;
+			}
+
+			if (!exportPackageModule) {
+				continue;
+			}
+
+			moduleDirsList.add(moduleDir);
+
 			TestClass testClass = TestClassFactory.newTestClass(
 				this, moduleDir);
 

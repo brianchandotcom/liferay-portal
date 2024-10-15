@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -24,7 +25,10 @@ export class WidgetPageTemplatesPage {
 	}
 
 	async addGlobalWidgetPageTemplate(name: string) {
-		await this.newButton.click();
+		await clickAndExpectToBeVisible({
+			target: this.page.getByPlaceholder('Name'),
+			trigger: this.newButton,
+		});
 		await this.page.getByPlaceholder('Name').fill(name);
 		await this.page.getByRole('button', {name: 'Save'}).click();
 

@@ -62,6 +62,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -116,7 +117,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -1790,9 +1790,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			_workflowDefinitionManager.getWorkflowDefinition(
 				_adminUser.getCompanyId(), _JOIN_XOR, 1);
 		}
-		catch (WorkflowException workflowException) {
+		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException);
+				_log.debug(noSuchModelException);
 			}
 
 			String content = _readFileToJSON(
@@ -1825,9 +1825,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			_workflowDefinitionManager.getWorkflowDefinition(
 				_adminUser.getCompanyId(), name, 1);
 		}
-		catch (WorkflowException workflowException) {
+		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException);
+				_log.debug(noSuchModelException);
 			}
 
 			String content = _readFileToJSON(fileName);
@@ -1843,9 +1843,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			_workflowDefinitionManager.getWorkflowDefinition(
 				_adminUser.getCompanyId(), _SITE_MEMBER_SINGLE_APPROVER, 1);
 		}
-		catch (WorkflowException workflowException) {
+		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(workflowException);
+				_log.debug(noSuchModelException);
 			}
 
 			String content = _readFileToJSON(

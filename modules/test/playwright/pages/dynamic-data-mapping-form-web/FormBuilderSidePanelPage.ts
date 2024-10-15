@@ -10,6 +10,7 @@ export class FormBuilderSidePanelPage {
 	readonly advancedTab: Locator;
 	readonly backButton: Locator;
 	readonly htmlAutocompleteAttributeField: Locator;
+	readonly label: Locator;
 	readonly objectFieldSelect: Locator;
 	readonly page: Page;
 
@@ -24,6 +25,7 @@ export class FormBuilderSidePanelPage {
 		this.htmlAutocompleteAttributeField = page.getByLabel(
 			'HTML Autocomplete Attribute'
 		);
+		this.label = page.getByLabel('Label', {exact: true}).first();
 		this.objectFieldSelect = page.getByLabel('Object Field');
 		this.page = page;
 	}

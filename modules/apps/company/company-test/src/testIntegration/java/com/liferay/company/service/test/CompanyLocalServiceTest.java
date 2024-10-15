@@ -894,7 +894,7 @@ public class CompanyLocalServiceTest {
 				groupTypeSettingsUnicodeProperties.getProperty(
 					PropsKeys.LOCALES));
 
-			String languageIds = "ca_ES,en_US";
+			String languageIds = "en_US";
 
 			_companyLocalService.updatePreferences(
 				company.getCompanyId(),
@@ -914,6 +914,24 @@ public class CompanyLocalServiceTest {
 
 			Assert.assertEquals(
 				languageIds,
+				groupTypeSettingsUnicodeProperties.getProperty(
+					PropsKeys.LOCALES));
+
+			languageIds = "ca_ES,en_US";
+
+			_companyLocalService.updatePreferences(
+				company.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, languageIds
+				).build());
+
+			group = _groupLocalService.getGroup(group.getGroupId());
+
+			groupTypeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			Assert.assertEquals(
+				"en_US",
 				groupTypeSettingsUnicodeProperties.getProperty(
 					PropsKeys.LOCALES));
 		}

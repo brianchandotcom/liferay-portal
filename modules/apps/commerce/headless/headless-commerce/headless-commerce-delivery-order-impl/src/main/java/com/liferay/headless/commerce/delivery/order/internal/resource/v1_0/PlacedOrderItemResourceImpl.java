@@ -14,11 +14,13 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemDTOConverterContext;
+import com.liferay.headless.commerce.delivery.order.internal.odate.entity.v1_0.PlacedOrderItemEntityModel;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -29,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +48,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PlacedOrderItemResourceImpl
 	extends BasePlacedOrderItemResourceImpl {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
 
 	@Override
 	public Page<PlacedOrderItem>
@@ -200,6 +209,9 @@ public class PlacedOrderItemResourceImpl
 				commerceAccountId, commerceOrderItem.getCommerceOrderItemId(),
 				contextAcceptLanguage.getPreferredLocale()));
 	}
+
+	private static final EntityModel _entityModel =
+		new PlacedOrderItemEntityModel();
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

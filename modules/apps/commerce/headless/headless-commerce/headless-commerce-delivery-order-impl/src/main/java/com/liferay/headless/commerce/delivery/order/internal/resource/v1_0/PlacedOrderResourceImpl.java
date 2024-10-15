@@ -27,6 +27,7 @@ import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
+import com.liferay.headless.commerce.delivery.order.internal.odate.entity.v1_0.PlacedOrderEntityModel;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -63,6 +65,8 @@ import java.security.Key;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -186,6 +190,11 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 			sorts,
 			document -> _toPlacedOrder(
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -459,6 +468,9 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 				commerceOrder.getPrimaryKey(), customFields);
 		}
 	}
+
+	private static final EntityModel _entityModel =
+		new PlacedOrderEntityModel();
 
 	@Reference
 	private AccountEntryService _accountEntryService;

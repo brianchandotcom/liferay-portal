@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.commerce.delivery.cart.internal.odata.entity.v1_0;
+package com.liferay.headless.commerce.delivery.order.internal.odate.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -16,12 +16,11 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import java.util.Map;
 
 /**
- * @author Stefano Motta
  * @author Alessio Antonio Rendina
  */
-public class CartEntityModel implements EntityModel {
+public class PlacedOrderEntityModel implements EntityModel {
 
-	public CartEntityModel() {
+	public PlacedOrderEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new IntegerEntityField(
@@ -42,9 +41,6 @@ public class CartEntityModel implements EntityModel {
 				locale -> "orderDate"),
 			new IntegerEntityField(
 				"id",
-				locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK)),
-			new IntegerEntityField(
-				"orderId",
 				locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK)),
 			new StringEntityField(
 				"account", locale -> Field.getSortableFieldName("accountName"),

@@ -65,20 +65,27 @@ test(
 
 		const pagePromise = context.waitForEvent('page');
 
+		const previewButton = page.getByRole('menuitem', {
+			name: 'Preview in a New Tab',
+		});
+
 		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Preview in a New Tab',
-			}),
+			target: previewButton,
 			trigger: page
 				.locator('.control-menu-nav-item')
 				.getByLabel('Options', {exact: true}),
 		});
 
-		const newPage = await pagePromise;
+		await expect(async () => {
+			if (await previewButton.isVisible()) {
+				await previewButton.click();
+			}
 
-		await expect(
-			newPage.getByText('New editable fragment text')
-		).toBeVisible();
+			const newPage = await pagePromise;
+
+			await expect(
+				newPage.getByText('New editable fragment text')
+			).toBeVisible({timeout: 100});
+		}).toPass();
 	}
 );

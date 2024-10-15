@@ -238,10 +238,8 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	public void testPostV2GroupWhenScimIsNotConfigured() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
-		Group postGroup = randomGroup();
-
 		assertHttpResponseStatusCode(
-			404, groupResource.postV2GroupHttpResponse(postGroup));
+			404, groupResource.postV2GroupHttpResponse(randomGroup()));
 
 		_pid = _createScimClientOAuth2ApplicationConfiguration();
 	}

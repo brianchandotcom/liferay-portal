@@ -195,11 +195,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		return contentDashboardItemTypesJSONArray;
 	}
 
-	private long[] _getGroupIds(long companyId) {
-		return ArrayUtil.toLongArray(
-			_groupLocalService.getGroupIds(companyId, true));
-	}
-
 	private String _getIcon(String className) {
 		String searchClassName =
 			_infoSearchClassMapperRegistry.getSearchClassName(className);
@@ -314,8 +309,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		}
 
 		Collection<InfoItemFormVariation> infoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_getGroupIds(themeDisplay.getCompanyId()));
+			infoItemFormVariationsProvider.getInfoItemFormVariationsByCompanyId(
+				themeDisplay.getCompanyId());
 
 		JSONArray itemSubtypesJSONArray = _jsonFactory.createJSONArray();
 

@@ -11,14 +11,14 @@ import {loginTest} from '../../fixtures/loginTest';
 import {TLanguageKey} from '../../pages/portal-language-override-web/LanguageOverridePage';
 
 const test = mergeTests(
-    featureFlagsTest({
-        'LPD-27222': true,
+	featureFlagsTest({
+		'LPD-27222': true,
 	}),
-    languageOverridePageTest,
+	languageOverridePageTest,
 	loginTest()
 );
 
-const EXPECTED_TRANSLATION: TLanguageKey = {
+const EXPECTED_LANGUAGE_KEY: TLanguageKey = {
 	key: 'do-you-like-to-eat-pizza-with-anchovies',
 	translations: [
 		{
@@ -47,13 +47,15 @@ test('LPD-36494 Assert that the language client extension is deployed', async ({
 
 	await languageOverridePage.changeFilter('Any Language');
 
-	await languageOverridePage.searchLanguageKey(EXPECTED_TRANSLATION.key);
+	await languageOverridePage.searchLanguageKey(EXPECTED_LANGUAGE_KEY.key);
 
 	await languageOverridePage.assertLanguageKeyInListView(
-		EXPECTED_TRANSLATION
+		EXPECTED_LANGUAGE_KEY
 	);
 
 	await languageOverridePage.assertLanguageKeyTranslations(
-		EXPECTED_TRANSLATION
+		EXPECTED_LANGUAGE_KEY
 	);
+
+	await languageOverridePage.assertLanguageKeyTranslationIsEmpty('es-ES');
 });

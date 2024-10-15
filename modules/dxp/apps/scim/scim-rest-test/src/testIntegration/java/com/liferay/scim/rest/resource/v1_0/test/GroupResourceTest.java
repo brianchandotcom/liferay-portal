@@ -64,7 +64,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	public static void setUpClass() throws Exception {
 		BaseUserResourceTestCase.setUpClass();
 
-		_pid = _restoreScimTestConfiguration();
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
 
 		UserResource.Builder builder = UserResource.builder();
 
@@ -160,7 +160,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, groupResource.getV2GroupsHttpResponse(5, 0));
 
-		_pid = _restoreScimTestConfiguration();
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
 	}
 
 	@Override
@@ -243,7 +243,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, groupResource.postV2GroupHttpResponse(postGroup));
 
-		_pid = _restoreScimTestConfiguration();
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
 	}
 
 	@Override
@@ -438,7 +438,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		return Group.toDTO(groupObject.toString());
 	}
 
-	private static String _restoreScimTestConfiguration() throws Exception {
+	private static String _createScimClientOAuth2ApplicationConfiguration() throws Exception {
 		return ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.scim.rest.internal.configuration." +
 				"ScimClientOAuth2ApplicationConfiguration",

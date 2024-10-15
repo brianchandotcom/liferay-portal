@@ -112,7 +112,7 @@ test('LPD-33373 assert that overriden translations can be filtered', async ({
 
 	await languageOverridePage.searchLanguageKey(translation2.key);
 
-	await languageOverridePage.assertLanguageKeyNotInListView(translation2);
+	await languageOverridePage.assertLanguageKeyNotInListView(translation2.key);
 
 	await languageOverridePage.changeFilter('Any Language');
 

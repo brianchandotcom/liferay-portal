@@ -3904,19 +3904,25 @@
 	{
 		"classNames": [
 			"CommerceOrderItemLocalService",
-			"CommerceOrderItemService"
+			"CommerceOrderItemLocalServiceUtil"
 		],
 		"from": "addCommerceOrderItem(long paramName, long paramName, int paramName, int paramName, String paramName, CommerceContext paramName, ServiceContext paramName)",
 		"issueKey": "LPS-197459",
+		"newImports": [
+			"com.liferay.portal.kernel.util.PortalUtil"
+		],
 		"to": "addCommerceOrderItem(0, param#0#, param#1#, param#4#, BigDecimal.valueOf(param#2#), param#1#, BigDecimal.valueOf(param#3#), null, param#5#, param#6#)"
 	},
 	{
 		"classNames": [
-			"CommerceOrderItemLocalServiceUtil",
+			"CommerceOrderItemService",
 			"CommerceOrderItemServiceUtil"
 		],
 		"from": "addCommerceOrderItem(long paramName, long paramName, int paramName, int paramName, String paramName, CommerceContext paramName, ServiceContext paramName)",
 		"issueKey": "LPS-197459",
+		"newImports": [
+			"com.liferay.portal.kernel.util.PortalUtil"
+		],
 		"to": "addCommerceOrderItem(param#0#, param#1#, param#4#, BigDecimal.valueOf(param#2#), param#1#, BigDecimal.valueOf(param#3#), null, param#5#, param#6#)"
 	},
 	{

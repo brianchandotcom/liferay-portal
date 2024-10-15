@@ -922,13 +922,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		int shippedQuantity, String json, CommerceContext commerceContext,
 		ServiceContext serviceContext) {
 
-		CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
-		CommerceOrderItemServiceUtil.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
-		CommerceOrderItemServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
-
 		_commerceOrderItemLocalService.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
 		_commerceOrderItemService.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
-		_commerceOrderItemService.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
 	}
 
 	public void method(

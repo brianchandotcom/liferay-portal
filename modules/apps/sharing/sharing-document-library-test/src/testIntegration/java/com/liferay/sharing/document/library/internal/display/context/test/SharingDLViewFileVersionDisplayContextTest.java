@@ -214,7 +214,9 @@ public class SharingDLViewFileVersionDisplayContextTest {
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@Inject
+	@Inject(
+		filter = "component.name=com.liferay.sharing.document.library.internal.display.context.SharingDLDisplayContextFactory"
+	)
 	private DLDisplayContextFactory _dlDisplayContextFactory;
 
 	@Inject

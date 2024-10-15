@@ -332,7 +332,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			file="${project.dir}/test.properties"
 		>
 			<replacetoken><![CDATA[{temp.batches}]]></replacetoken>
-			<replacevalue><![CDATA[
+			<replacevalue><![CDATA[\
         functional-tomcat-mysql57-jdk21_zulu,\
         js-unit,\
         modules-integration-mysql57-jdk21_zulu,\

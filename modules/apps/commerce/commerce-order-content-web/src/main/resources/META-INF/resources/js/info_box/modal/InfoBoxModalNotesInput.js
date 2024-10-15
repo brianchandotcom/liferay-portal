@@ -44,7 +44,7 @@ const InfoBoxModalNotes = ({
 							restricted,
 						} = note;
 
-						return notes ? (
+						return (
 							<div className="panel-body">
 								<div className="card-row d-flex mb-2">
 									<UserIcon
@@ -116,7 +116,7 @@ const InfoBoxModalNotes = ({
 
 								<hr className="mt-1 separator" />
 							</div>
-						) : null;
+						);
 					})}
 				</div>
 			</InfiniteScrollerComponent>

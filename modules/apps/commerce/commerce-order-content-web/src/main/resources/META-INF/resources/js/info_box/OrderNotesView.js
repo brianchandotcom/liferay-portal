@@ -41,7 +41,7 @@ const OrderNotesView = ({
 	const formatDate = (value) => {
 		if (value.length) {
 			return moment(moment(value, 'YYYYMMDDHHmmss'))
-				.locale('hu_HU')
+				.locale(Liferay.ThemeDisplay.getBCP47LanguageId())
 				.format('L LT');
 		}
 	};

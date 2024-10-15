@@ -85,7 +85,13 @@ function deploy_client_extensions {
 
 		for client_extension_name in $(cat ${client_extensions_list_file})
 		do
-			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
+			if [[ "$client_extension_name" == *\/* ]]; then
+				workspace_path="/${client_extension_name%/*}"
+
+				client_extension_name="${client_extension_name##*/}"
+			fi
+
+			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces${workspace_path} -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
 
 			if [[ $(echo ${client_extension_dir} | wc -w | grep -o -E '[0-9]+') > 1 ]]
 			then

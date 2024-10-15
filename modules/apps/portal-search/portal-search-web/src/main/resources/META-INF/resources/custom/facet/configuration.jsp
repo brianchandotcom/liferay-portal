@@ -186,7 +186,7 @@ JSONArray rangesJSONArray = customFacetPortletPreferences.getRangesJSONArray();
 
 				<liferay-frontend:fieldset
 					collapsible="<%= true %>"
-					cssClass='<%= StringUtil.equals(customFacetPortletPreferences.getOrder(), "rangesConfiguration") ? StringPool.BLANK : "hide" %>'
+					cssClass='<%= StringUtil.equals(customFacetPortletPreferences.getAggregationType(), "terms") ? "hide" : StringPool.BLANK %>'
 					label="ranges-configuration"
 				>
 					<div class="form-text text-weight-normal">

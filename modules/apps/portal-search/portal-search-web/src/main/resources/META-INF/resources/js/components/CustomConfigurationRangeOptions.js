@@ -231,36 +231,15 @@ function CustomConfigurationRangeOptions({
 			}
 		};
 
-		const _handlePreferenceKeyOrderChange = (event) => {
-			const currentValue = event.target.value;
-
-			if (currentValue === RANGES_CONFIGURATION_OPTION.VALUE) {
-				enableRangesConfiguration(aggregationTypeElement.value);
-			}
-			else {
-				disableRangesConfiguration();
-			}
-		};
-
 		aggregationTypeElement?.addEventListener(
 			'change',
 			_handleAggregationTypeChange
-		);
-
-		preferenceKeyOrderElement?.addEventListener(
-			'change',
-			_handlePreferenceKeyOrderChange
 		);
 
 		return () => {
 			aggregationTypeElement?.removeEventListener(
 				'change',
 				_handleAggregationTypeChange
-			);
-
-			preferenceKeyOrderElement?.removeEventListener(
-				'change',
-				_handlePreferenceKeyOrderChange
 			);
 		};
 	}, [namespace, onInputSetsChange]);

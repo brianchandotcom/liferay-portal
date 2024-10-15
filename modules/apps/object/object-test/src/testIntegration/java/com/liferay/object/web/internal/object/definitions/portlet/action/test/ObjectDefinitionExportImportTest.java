@@ -12,9 +12,14 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.BaseExportImportTestCase;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -23,6 +28,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -41,6 +48,59 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testExportImportLocalizedObjectDefinition() throws Exception {
+
+		// Localized modifiable system object definition
+
+		testExportImport(
+			"test-modifiable-system-object-definition.portuguese-default-" +
+				"locale.json",
+			"test-modifiable-system-object-definition.site-default-locale.json",
+			"TESTMODIFIABLESYSTEMOBJECTDEFINITIONPORTUGUESE",
+			"TestModifiableSystemObjectDefinitionptBR");
+
+		objectDefinitionResource.deleteObjectDefinition(
+			getId("TestModifiableSystemObjectDefinitionptBR"));
+
+		// Localized object definition
+
+		testExportImport(
+			"test-object-definition.portuguese-default-locale.json",
+			"test-object-definition.site-default-locale.json",
+			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionptBR");
+
+		objectDefinitionResource.deleteObjectDefinition(
+			getId("TestObjectDefinitionptBR"));
+
+		// Localized object definition with portuguese locale removed from the
+		// company available locales
+
+		Set<Locale> originalAvailableLocales =
+			LanguageUtil.getAvailableLocales();
+
+		try {
+			CompanyTestUtil.resetCompanyLocales(
+				TestPropsValues.getCompanyId(),
+				SetUtil.fromArray(LocaleUtil.SPAIN, LocaleUtil.US),
+				LocaleUtil.getDefault());
+
+			testExportImport(
+				"test-object-definition.portuguese-default-locale.json",
+				"test-object-definition.site-default-locale-without-" +
+					"portuguese.json",
+				"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionptBR");
+
+			objectDefinitionResource.deleteObjectDefinition(
+				getId("TestObjectDefinitionptBR"));
+		}
+		finally {
+			CompanyTestUtil.resetCompanyLocales(
+				TestPropsValues.getCompanyId(), originalAvailableLocales,
+				LocaleUtil.getDefault());
+		}
+	}
 
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
@@ -70,22 +130,6 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, (int)status.getCode());
-
-		// Localized modifiable system object definition
-
-		testExportImport(
-			"test-modifiable-system-object-definition.portuguese-default-" +
-				"locale.json",
-			"test-modifiable-system-object-definition.site-default-locale.json",
-			"TESTMODIFIABLESYSTEMOBJECTDEFINITIONPORTUGUESE",
-			"TestModifiableSystemObjectDefinitionptBR");
-
-		// Localized object definition
-
-		testExportImport(
-			"test-object-definition.portuguese-default-locale.json",
-			"test-object-definition.site-default-locale.json",
-			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionptBR");
 
 		// Published object definition
 

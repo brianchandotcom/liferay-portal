@@ -46,6 +46,17 @@ public class PostgreSQLDBTest extends DBTest {
 		db.addIndexes(connection, indexes);
 
 		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
+
+		db.dropIndexes(connection, TABLE_NAME_1, null);
+
+		db.runSQL(
+			indexes.get(
+				0
+			).getCreateSQL(
+				null
+			));
+
+		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
 	}
 
 	private void _assertIndex(List<IndexMetadata> indexes) throws Exception {

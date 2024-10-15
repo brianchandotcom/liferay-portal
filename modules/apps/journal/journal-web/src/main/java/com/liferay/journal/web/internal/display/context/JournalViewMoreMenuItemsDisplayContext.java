@@ -98,7 +98,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		long[] currentAndAncestorSiteAndDepotGroupIds =
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_themeDisplay.getScopeGroupId(), true);
+					_themeDisplay.getScopeGroupId(), false, true);
 
 		searchContainer.setResultsAndTotal(
 			() -> {

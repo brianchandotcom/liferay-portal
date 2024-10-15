@@ -118,7 +118,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 			if (ArrayUtil.contains(
 					SiteConnectedGroupGroupProviderUtil.
 						getCurrentAndAncestorSiteAndDepotGroupIds(
-							serviceContext.getScopeGroupId(), true),
+							serviceContext.getScopeGroupId(), false, true),
 					_ddmStructure.getGroupId())) {
 
 				return true;

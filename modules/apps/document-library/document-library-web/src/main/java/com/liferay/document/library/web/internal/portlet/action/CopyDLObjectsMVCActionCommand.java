@@ -269,7 +269,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 		long[] groupIds =
 			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, false, true);
 
 		if (ArrayUtil.isEmpty(groupIds)) {
 			return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
@@ -301,7 +301,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 		long[] groupIds =
 			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, false, true);
 
 		if (ArrayUtil.isEmpty(groupIds) ||
 			!ArrayUtil.contains(groupIds, folder.getGroupId())) {

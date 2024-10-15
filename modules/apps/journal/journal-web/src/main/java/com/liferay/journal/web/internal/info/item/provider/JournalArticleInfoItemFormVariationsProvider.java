@@ -155,7 +155,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 		throws PortalException {
 
 		return SiteConnectedGroupGroupProviderUtil.
-			getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+			getCurrentAndAncestorSiteAndDepotGroupIds(groupId, false, true);
 	}
 
 	@Reference

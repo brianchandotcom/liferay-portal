@@ -383,6 +383,11 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileEntryType> getFileEntryTypesByCompanyId(long companyId) {
+		return dlFileEntryTypePersistence.findByCompanyId(companyId);
+	}
+
+	@Override
 	public List<DLFileEntryType> getFolderFileEntryTypes(
 			long[] groupIds, long folderId, boolean inherited)
 		throws PortalException {

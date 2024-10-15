@@ -549,7 +549,30 @@ public class UpgradeReport {
 		).put(
 			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
 		).put(
-			"failed.sqls", upgradeRecorder.getFailedSQLs()
+			"failed.sqls",
+			() -> {
+				List<FailedSQL> failedSQLs = new ArrayList<>();
+
+				List<String> failedSQLQueries = upgradeRecorder.getFailedSQLs();
+
+				for (String failedSQLQuery : failedSQLQueries) {
+					String sql = failedSQLQuery;
+
+					String message = StringPool.BLANK;
+
+					if (failedSQLQuery.contains(StringPool.PIPE)) {
+						int index = failedSQLQuery.indexOf(StringPool.PIPE);
+
+						sql = failedSQLQuery.substring(0, index);
+
+						message = failedSQLQuery.substring(index + 1);
+					}
+
+					failedSQLs.add(new FailedSQL(message, sql));
+				}
+
+				return failedSQLs;
+			}
 		).put(
 			"longest.upgrade.processes",
 			() -> {
@@ -998,6 +1021,28 @@ public class UpgradeReport {
 		public void run() {
 			_dlSize = FileUtils.sizeOfDirectory(new File(_rootDir));
 		}
+
+	}
+
+	private class FailedSQL {
+
+		public FailedSQL(String message, String sql) {
+			_message = message;
+			_sql = sql;
+		}
+
+		@Override
+		public String toString() {
+			if (_logContext) {
+				return StringBundler.concat(_sql, StringPool.COLON, _message);
+			}
+
+			return StringBundler.concat(
+				"SQL: ", _sql, "\nError: ", _message, "\n");
+		}
+
+		private final String _message;
+		private final String _sql;
 
 	}
 

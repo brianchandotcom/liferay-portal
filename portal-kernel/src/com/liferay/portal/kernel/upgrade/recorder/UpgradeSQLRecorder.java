@@ -197,15 +197,15 @@ public class UpgradeSQLRecorder {
 			String sql = _extractSQL(object);
 
 			if (sql != null) {
+				sql += StringPool.SEMICOLON;
+
 				String message = sqlException.getMessage();
 
 				if (Validator.isBlank(message)) {
-					_failedSQLs.add("SQL: " + sql);
+					_failedSQLs.add(sql);
 				}
 				else {
-					_failedSQLs.add(
-						StringBundler.concat(
-							"SQL: ", sql, ";\tError: ", message));
+					_failedSQLs.add(sql + StringPool.PIPE + message);
 				}
 			}
 

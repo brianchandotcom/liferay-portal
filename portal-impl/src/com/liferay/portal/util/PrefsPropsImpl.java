@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -59,8 +58,7 @@ public class PrefsPropsImpl implements PrefsProps {
 
 		_serviceRegistration = bundleContext.registerService(
 			ModelListener.class, new PortalPreferenceValueModelListener(),
-			MapUtil.singletonDictionary(
-				"persistence.test.rule.aware", Boolean.TRUE));
+			null);
 	}
 
 	public void destroy() {

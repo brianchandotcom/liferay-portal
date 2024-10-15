@@ -203,7 +203,7 @@ public class TemplateContextHelper {
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		// Content security policy nonce
+		// Actual content security policy nonce
 
 		contextObjects.put(
 			"nonceAttribute",
@@ -566,6 +566,10 @@ public class TemplateContextHelper {
 		catch (SecurityException securityException) {
 			_log.error(securityException);
 		}
+
+		// Blank content security policy nonce
+
+		variables.put("nonceAttribute", StringPool.BLANK);
 
 		// Param util
 

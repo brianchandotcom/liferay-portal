@@ -180,7 +180,7 @@ public class SiteNavigationMenuConfigurationAction
 					themeDisplay.getScopeGroupId()) {
 
 				portletPreferences.reset(
-					"assetListEntryGroupExternalReferenceCode");
+					"siteNavigationMenuGroupExternalReferenceCode");
 			}
 			else {
 				Group group = groupLocalService.getGroup(

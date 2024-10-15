@@ -2464,10 +2464,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			ListUtil.fromArray(oldLanguageIdsArray),
 			ListUtil.fromArray(StringUtil.split(newLanguageIds)));
 
-		List<String> addedLanguageIds = ListUtil.remove(
-			ListUtil.fromArray(StringUtil.split(newLanguageIds)),
-			ListUtil.fromArray(oldLanguageIdsArray));
-
 		List<Group> groups = _groupLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 				GroupTable.INSTANCE
@@ -2512,18 +2508,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 						groupLanguageIds = ArrayUtil.remove(
 							groupLanguageIds, removedLanguageId);
-
-						updateLocales = true;
-					}
-				}
-			}
-			else {
-				for (String addedLanguageId : addedLanguageIds) {
-					if (!ArrayUtil.contains(
-							groupLanguageIds, addedLanguageId)) {
-
-						groupLanguageIds = ArrayUtil.append(
-							groupLanguageIds, addedLanguageId);
 
 						updateLocales = true;
 					}

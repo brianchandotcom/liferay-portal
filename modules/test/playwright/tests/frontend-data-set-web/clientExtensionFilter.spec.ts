@@ -101,6 +101,6 @@ test('Use filter client extension in the frontend data set', async ({
 
 		const rowCount = await page.locator('.dnd-tbody > .dnd-tr').count();
 
-		await expect(rowCount).toEqual(1);
+		expect(rowCount).toEqual(1);
 	});
 });

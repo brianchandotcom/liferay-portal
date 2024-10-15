@@ -59,4 +59,10 @@ public interface InfoItemFormVariationsProvider<T> {
 		return Collections.emptyList();
 	}
 
+	public default Collection<InfoItemFormVariation>
+		getInfoItemFormVariationsByCompanyId(long companyId) {
+
+		return Collections.emptyList();
+	}
+
 }

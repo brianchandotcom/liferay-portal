@@ -46,10 +46,7 @@ test('Add and delete a widget page template', async ({
 
 	const pageTemplateName = getRandomString();
 
-	await pageTemplatesPage.addPageTemplate(
-		pageTemplateName,
-		'Widget Page Template'
-	);
+	await pageTemplatesPage.addWidgetPageTemplate(pageTemplateName);
 
 	// Assert page template
 

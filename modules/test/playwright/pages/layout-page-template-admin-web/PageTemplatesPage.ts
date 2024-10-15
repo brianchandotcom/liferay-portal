@@ -27,20 +27,6 @@ export class PageTemplatesPage {
 		);
 	}
 
-	async addPageTemplate(name: string, type: string) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: type}),
-			trigger: this.newButton,
-		});
-
-		await this.page.getByPlaceholder('Name', {exact: true}).fill(name);
-
-		await this.page.getByRole('button', {name: 'Save'}).click();
-
-		await this.page.getByRole('heading', {name}).waitFor();
-	}
-
 	async addPageTemplateCollection(name: string) {
 		await this.page.getByRole('link', {exact: true, name: 'New'}).click();
 
@@ -59,6 +45,22 @@ export class PageTemplatesPage {
 			.click();
 
 		await waitForAlert(this.page);
+	}
+
+	async addWidgetPageTemplate(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Widget Page Template',
+			}),
+			trigger: this.newButton,
+		});
+
+		await this.page.getByPlaceholder('Name', {exact: true}).fill(name);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await this.page.getByRole('heading', {name}).waitFor();
 	}
 
 	async clickAction(action: string, title: string) {

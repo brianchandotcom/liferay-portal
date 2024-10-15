@@ -11,8 +11,6 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -427,44 +425,23 @@ test.describe('Container configuration', () => {
 
 		// Change the link of the containers
 
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'URL',
-			fragmentId: containerId1,
-			tab: 'General',
-			value: 'https://liferay.com',
+		await pageEditorPage.selectFragment(containerId1);
+
+		await pageEditorPage.setLinkConfiguration({
+			type: 'URL',
+			url: 'https://liferay.com',
 		});
 
 		await expect(
 			page.locator(`.lfr-layout-structure-item-topper-${containerId1} a`)
 		).toHaveAttribute('href', 'https://liferay.com');
 
-		const linkSelect = page
-			.getByRole('tabpanel', {name: 'General'})
-			.getByLabel('Link', {exact: true});
-
 		await pageEditorPage.selectFragment(containerId2);
 
-		await linkSelect.selectOption('Page');
-
-		await pageEditorPage.waitForChangesSaved();
-
-		const layoutTreeItem = page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('treeitem')
-			.filter({hasText: layoutTitle});
-
-		await clickAndExpectToBeVisible({
-			target: layoutTreeItem,
-			timeout: 3000,
-			trigger: page.getByLabel('Select Page'),
+		await pageEditorPage.setLinkConfiguration({
+			layoutTitle,
+			type: 'Page',
 		});
-
-		await clickAndExpectToBeHidden({
-			target: page.locator('.modal-dialog'),
-			trigger: layoutTreeItem,
-		});
-
-		await pageEditorPage.waitForChangesSaved();
 
 		await expect(
 			page.locator(`.lfr-layout-structure-item-topper-${containerId2} a`)
@@ -475,19 +452,18 @@ test.describe('Container configuration', () => {
 
 		await pageEditorPage.selectFragment(containerId3);
 
-		await linkSelect.selectOption('Mapped URL');
-
-		await pageEditorPage.waitForChangesSaved();
-
-		await pageEditorPage.setMappingConfiguration({
-			mapping: {
-				entity: 'Documents and Media',
-				entry: 'poodle.jpg',
-				entryLocator: page
-					.frameLocator('iframe[title="Select"]')
-					.getByText('poodle.jpg', {exact: false}),
-				field: 'Download URL',
+		await pageEditorPage.setLinkConfiguration({
+			mappingConfiguration: {
+				mapping: {
+					entity: 'Documents and Media',
+					entry: 'poodle.jpg',
+					entryLocator: page
+						.frameLocator('iframe[title="Select"]')
+						.getByText('poodle.jpg', {exact: false}),
+					field: 'Download URL',
+				},
 			},
+			type: 'Mapped URL',
 		});
 
 		await expect(

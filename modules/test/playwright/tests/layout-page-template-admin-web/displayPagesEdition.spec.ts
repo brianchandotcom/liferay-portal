@@ -306,23 +306,55 @@ test(
 
 		await pageEditorPage.addFragment('Basic Components', 'Heading');
 
-		await pageEditorPage.mapLink(
-			'element-text',
-			'More Info Link',
-			'Heading'
-		);
+		await pageEditorPage.mapEditableLink({
+			editableId: 'element-text',
+			fragmentName: 'Heading',
+			linkConfiguration: {
+				mappingConfiguration: {
+					mapping: {
+						field: 'More Info Link',
+					},
+					source: 'structure',
+				},
+				type: 'Mapped URL',
+			},
+		});
 
 		// Map link to image fragment
 
 		await pageEditorPage.addFragment('Basic Components', 'Image');
 
-		await pageEditorPage.mapLink('image-square', 'More Info Link', 'Image');
+		await pageEditorPage.mapEditableLink({
+			editableId: 'image-square',
+			fragmentName: 'Image',
+			linkConfiguration: {
+				mappingConfiguration: {
+					mapping: {
+						field: 'More Info Link',
+					},
+					source: 'structure',
+				},
+				type: 'Mapped URL',
+			},
+		});
 
 		// Map link to button fragment
 
 		await pageEditorPage.addFragment('Basic Components', 'Button');
 
-		await pageEditorPage.mapLink('link', 'More Info Link', 'Button');
+		await pageEditorPage.mapEditableLink({
+			editableId: 'link',
+			fragmentName: 'Button',
+			linkConfiguration: {
+				mappingConfiguration: {
+					mapping: {
+						field: 'More Info Link',
+					},
+					source: 'structure',
+				},
+				type: 'Mapped URL',
+			},
+		});
 
 		// Publish display page template
 

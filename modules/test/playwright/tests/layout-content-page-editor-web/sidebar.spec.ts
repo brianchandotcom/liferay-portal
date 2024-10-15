@@ -627,7 +627,7 @@ test.describe('Fragments Panel', () => {
 	);
 
 	test(
-		'List fragment is disabled when dragging',
+		'Move the list fragment from its boundary and check that it is disabled when dragging',
 		{tag: '@LPS-130964'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 
@@ -640,7 +640,7 @@ test.describe('Fragments Panel', () => {
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			// Check that the list fragment is disabled when dragging
+			// Go to the Fragments and Widget panel
 
 			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
 
@@ -650,13 +650,19 @@ test.describe('Fragments Panel', () => {
 
 			await fragment.hover();
 
+			// Drag the list fragment from its coordinates 0,0 and check that it is disabled when dragging
+
+			const fragmentBox = await fragment.boundingBox();
+
+			await page.mouse.move(fragmentBox.x, fragmentBox.y);
+
 			await page.mouse.down();
 
 			await page
 				.getByText('Drag and drop fragments or widgets here.')
 				.hover();
 
-			expect(fragment).toHaveClass(/disabled/);
+			await expect(fragment).toHaveClass(/disabled/);
 		}
 	);
 });

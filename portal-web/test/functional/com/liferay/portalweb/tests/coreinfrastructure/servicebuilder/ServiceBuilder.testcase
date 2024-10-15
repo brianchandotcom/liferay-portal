@@ -59,7 +59,7 @@ definition {
 		var projectDir = PropsUtil.get("project.dir");
 		var testServiceDir = "/modules/test/external-data-source-test-service";
 
-		FileUtil.copyDirectory("${projectDir}/modules/test/external-data-source-test-controller-test/src/testIntegration/resources/META-INF/services", "${projectDir}/${testServiceDir}/src/main/resources/META-INF");
+		FileUtil.copyDirectory("${projectDir}/modules/test/external-data-source-test-controller-test/src/testIntegration/resources/META-INF/services", "${projectDir}/${testServiceDir}/src/main/resources/META-INF/services");
 
 		AntCommands.runCommand("build-test.xml", "build-service -Dgradle.file.path=${testServiceDir}");
 

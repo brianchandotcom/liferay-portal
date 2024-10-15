@@ -114,7 +114,6 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				_getDropdownItems(commerceOrder, httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:open", commerceOrder.isOpen());
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:reorderURL",
 				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(

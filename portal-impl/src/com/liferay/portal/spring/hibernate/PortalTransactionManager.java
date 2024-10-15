@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.sql.Connection;
 
+import java.util.Map;
+
 import javax.persistence.PersistenceException;
 
 import javax.sql.DataSource;
@@ -143,14 +145,17 @@ public class PortalTransactionManager
 
 			sessionHolder.setTransaction(transaction);
 
+			Map<Object, Object> resources =
+				SpringHibernateThreadLocalUtil.getResources(true);
+
 			SpringHibernateThreadLocalUtil.setResource(
-				_dataSource, newConnectionHolder);
+				resources, _dataSource, newConnectionHolder);
 
 			hibernateTransactionObject.setConnectionHolder(newConnectionHolder);
 
 			if (hibernateTransactionObject.isNewSessionHolder()) {
 				SpringHibernateThreadLocalUtil.setResource(
-					_sessionFactory, sessionHolder);
+					resources, _sessionFactory, sessionHolder);
 			}
 
 			sessionHolder.setSynchronizedWithTransaction(true);
@@ -193,11 +198,16 @@ public class PortalTransactionManager
 		HibernateTransactionObject hibernateTransactionObject =
 			(HibernateTransactionObject)transactionObject;
 
+		Map<Object, Object> resources =
+			SpringHibernateThreadLocalUtil.getResources(false);
+
 		if (hibernateTransactionObject.isNewSessionHolder()) {
-			SpringHibernateThreadLocalUtil.setResource(_sessionFactory, null);
+			SpringHibernateThreadLocalUtil.setResource(
+				resources, _sessionFactory, null);
 		}
 
-		SpringHibernateThreadLocalUtil.setResource(_dataSource, null);
+		SpringHibernateThreadLocalUtil.setResource(
+			resources, _dataSource, null);
 
 		SessionHolder sessionHolder =
 			hibernateTransactionObject.getSessionHolder();
@@ -295,8 +305,12 @@ public class PortalTransactionManager
 		HibernateTransactionObject hibernateTransactionObject =
 			new HibernateTransactionObject();
 
+		Map<Object, Object> resources =
+			SpringHibernateThreadLocalUtil.getResources(false);
+
 		SessionHolder sessionHolder =
-			SpringHibernateThreadLocalUtil.getResource(_sessionFactory);
+			SpringHibernateThreadLocalUtil.getResource(
+				resources, _sessionFactory);
 
 		if (sessionHolder != null) {
 			LastSessionRecorderUtil.setLastSession(sessionHolder.getSession());
@@ -305,7 +319,7 @@ public class PortalTransactionManager
 		}
 
 		hibernateTransactionObject.setConnectionHolder(
-			SpringHibernateThreadLocalUtil.getResource(_dataSource));
+			SpringHibernateThreadLocalUtil.getResource(resources, _dataSource));
 
 		return hibernateTransactionObject;
 	}
@@ -317,12 +331,17 @@ public class PortalTransactionManager
 		SuspendedResourcesHolder suspendedResourcesHolder =
 			(SuspendedResourcesHolder)suspendedResources;
 
+		Map<Object, Object> resources =
+			SpringHibernateThreadLocalUtil.getResources(true);
+
 		SpringHibernateThreadLocalUtil.setResource(
-			_sessionFactory, suspendedResourcesHolder._sessionHolder);
+			resources, _sessionFactory,
+			suspendedResourcesHolder._sessionHolder);
 
 		if (suspendedResourcesHolder._connectionHolder != null) {
 			SpringHibernateThreadLocalUtil.setResource(
-				_dataSource, suspendedResourcesHolder._connectionHolder);
+				resources, _dataSource,
+				suspendedResourcesHolder._connectionHolder);
 		}
 	}
 
@@ -399,9 +418,14 @@ public class PortalTransactionManager
 		hibernateTransactionObject.setConnectionHolder(null);
 		hibernateTransactionObject.setSessionHolder(null);
 
+		Map<Object, Object> resources =
+			SpringHibernateThreadLocalUtil.getResources(false);
+
 		return new SuspendedResourcesHolder(
-			SpringHibernateThreadLocalUtil.setResource(_dataSource, null),
-			SpringHibernateThreadLocalUtil.setResource(_sessionFactory, null));
+			SpringHibernateThreadLocalUtil.setResource(
+				resources, _dataSource, null),
+			SpringHibernateThreadLocalUtil.setResource(
+				resources, _sessionFactory, null));
 	}
 
 	@Override

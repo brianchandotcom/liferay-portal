@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.db.partition.DBPartition;
 import java.sql.Connection;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import org.hibernate.Session;
@@ -97,9 +98,12 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		TransactionStatus portalTransactionStatus =
 			_portalTransactionManager.getTransaction(transactionDefinition);
 
+		Map<Object, Object> resources =
+			SpringHibernateThreadLocalUtil.getResources(false);
+
 		SessionHolder portalSessionHolder =
 			(SessionHolder)SpringHibernateThreadLocalUtil.getResource(
-				_portalTransactionManager.getSessionFactory());
+				resources, _portalTransactionManager.getSessionFactory());
 
 		if (portalSessionHolder == null) {
 			return portalTransactionStatus;
@@ -111,7 +115,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 
 		SessionHolder portletSessionHolder =
 			(SessionHolder)SpringHibernateThreadLocalUtil.getResource(
-				portletSessionFactory);
+				resources, portletSessionFactory);
 
 		if (portletSessionHolder != null) {
 			if (portalConnection == _getConnection(portletSessionHolder)) {
@@ -145,7 +149,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		};
 
 		SpringHibernateThreadLocalUtil.setResource(
-			portletSessionFactory,
+			resources, portletSessionFactory,
 			_createSessionHolder(portletSession, portalSessionHolder));
 
 		if (DBPartition.isPartitionEnabled()) {
@@ -297,6 +301,7 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 			}
 			finally {
 				SpringHibernateThreadLocalUtil.setResource(
+					SpringHibernateThreadLocalUtil.getResources(true),
 					_portletSessionFactory, _previousPortletSessionHolder);
 			}
 		}

@@ -23,10 +23,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 public class SpringHibernateThreadLocalUtil {
 
-	public static <T> T getResource(Object key) {
-		Map<Object, Object> resources = _resourcesThreadLocal.get();
-
-		if (resources == null) {
+	public static <T> T getResource(Map<Object, Object> resources, Object key) {
+		if ((resources == null) || resources.isEmpty()) {
 			return null;
 		}
 
@@ -38,15 +36,23 @@ public class SpringHibernateThreadLocalUtil {
 			if (resourceHolder.isVoid()) {
 				resources.remove(key);
 
-				if (resources.isEmpty()) {
-					_resourcesThreadLocal.remove();
-				}
-
 				return null;
 			}
 		}
 
 		return (T)resource;
+	}
+
+	public static Map<Object, Object> getResources(boolean createIfAbsent) {
+		Map<Object, Object> resources = _resourcesThreadLocal.get();
+
+		if ((resources == null) && createIfAbsent) {
+			resources = new HashMap<>();
+
+			_resourcesThreadLocal.set(resources);
+		}
+
+		return resources;
 	}
 
 	public static boolean isCurrentTransactionReadOnly() {
@@ -62,8 +68,8 @@ public class SpringHibernateThreadLocalUtil {
 		return true;
 	}
 
-	public static <T> T setResource(Object key, Object resource) {
-		Map<Object, Object> resources = _resourcesThreadLocal.get();
+	public static <T> T setResource(
+		Map<Object, Object> resources, Object key, Object resource) {
 
 		Object oldResource = null;
 
@@ -73,18 +79,8 @@ public class SpringHibernateThreadLocalUtil {
 			}
 
 			oldResource = resources.remove(key);
-
-			if (resources.isEmpty()) {
-				_resourcesThreadLocal.remove();
-			}
 		}
 		else {
-			if (resources == null) {
-				resources = new HashMap<>();
-
-				_resourcesThreadLocal.set(resources);
-			}
-
 			oldResource = resources.put(key, resource);
 		}
 

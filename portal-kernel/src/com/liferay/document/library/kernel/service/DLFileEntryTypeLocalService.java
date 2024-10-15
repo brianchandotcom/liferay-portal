@@ -439,6 +439,9 @@ public interface DLFileEntryTypeLocalService
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntryType> getFileEntryTypesByCompanyId(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getFolderFileEntryTypes(
 			long[] groupIds, long folderId, boolean inherited)
 		throws PortalException;

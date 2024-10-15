@@ -105,6 +105,7 @@ create index IX_4F40FE5E on DLFileEntryMetadata (fileEntryId);
 create unique index IX_BE290777 on DLFileEntryMetadata (fileVersionId, ctCollectionId, DDMStructureId);
 create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_D2F8189A on DLFileEntryType (companyId);
 create unique index IX_93ED0F06 on DLFileEntryType (groupId, ctCollectionId, dataDefinitionId);
 create unique index IX_8B9CF803 on DLFileEntryType (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_A5C4723D on DLFileEntryType (groupId, ctCollectionId, fileEntryTypeKey[$COLUMN_LENGTH:75$]);

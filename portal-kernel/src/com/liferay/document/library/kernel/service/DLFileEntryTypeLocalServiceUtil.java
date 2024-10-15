@@ -547,6 +547,12 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getFileEntryTypes(groupIds);
 	}
 
+	public static List<DLFileEntryType> getFileEntryTypesByCompanyId(
+		long companyId) {
+
+		return getService().getFileEntryTypesByCompanyId(companyId);
+	}
+
 	public static List<DLFileEntryType> getFolderFileEntryTypes(
 			long[] groupIds, long folderId, boolean inherited)
 		throws PortalException {

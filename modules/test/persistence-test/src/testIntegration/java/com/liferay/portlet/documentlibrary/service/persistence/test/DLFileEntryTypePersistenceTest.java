@@ -270,6 +270,13 @@ public class DLFileEntryTypePersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByG_DDI() throws Exception {
 		_persistence.countByG_DDI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

@@ -634,6 +634,14 @@ public class DLFileEntryTypeLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<DLFileEntryType> getFileEntryTypesByCompanyId(
+		long companyId) {
+
+		return _dlFileEntryTypeLocalService.getFileEntryTypesByCompanyId(
+			companyId);
+	}
+
+	@Override
 	public java.util.List<DLFileEntryType> getFolderFileEntryTypes(
 			long[] groupIds, long folderId, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {

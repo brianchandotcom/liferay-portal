@@ -2031,35 +2031,15 @@ public class ObjectDefinitionLocalServiceImpl
 			new ObjectDefinitionTreeFactory(
 				objectDefinitionLocalService, _objectRelationshipLocalService);
 
+		boolean containsDraftDescendantNodeObjectDefinitions = false;
+
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition objectDefinition2 =
 				objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId2());
 
 			if (!objectDefinition2.isApproved()) {
-				Tree tree = objectDefinitionTreeFactory.create(
-					false, objectDefinition1.getObjectDefinitionId());
-
-				Node rootNode = tree.getRootNode();
-
-				for (Node childNode : rootNode.getChildNodes()) {
-					Iterator<Node> iterator = tree.iterator(
-						childNode.getPrimaryKey());
-
-					while (iterator.hasNext()) {
-						Node node = iterator.next();
-
-						ObjectDefinition nodeObjectDefinition =
-							objectDefinitionLocalService.getObjectDefinition(
-								node.getPrimaryKey());
-
-						nodeObjectDefinition.setRootObjectDefinitionId(
-							childNode.getPrimaryKey());
-
-						objectDefinitionPersistence.update(
-							nodeObjectDefinition);
-					}
-				}
+				containsDraftDescendantNodeObjectDefinitions = true;
 
 				continue;
 			}
@@ -2090,6 +2070,31 @@ public class ObjectDefinitionLocalServiceImpl
 					previousRESTContextPath);
 
 				deployObjectDefinition(nodeObjectDefinition);
+			}
+		}
+
+		if (containsDraftDescendantNodeObjectDefinitions) {
+			Tree tree = objectDefinitionTreeFactory.create(
+				false, objectDefinition1.getObjectDefinitionId());
+
+			Node rootNode = tree.getRootNode();
+
+			for (Node childNode : rootNode.getChildNodes()) {
+				Iterator<Node> iterator = tree.iterator(
+					childNode.getPrimaryKey());
+
+				while (iterator.hasNext()) {
+					Node node = iterator.next();
+
+					ObjectDefinition nodeObjectDefinition =
+						objectDefinitionLocalService.getObjectDefinition(
+							node.getPrimaryKey());
+
+					nodeObjectDefinition.setRootObjectDefinitionId(
+						childNode.getPrimaryKey());
+
+					objectDefinitionPersistence.update(nodeObjectDefinition);
+				}
 			}
 		}
 	}

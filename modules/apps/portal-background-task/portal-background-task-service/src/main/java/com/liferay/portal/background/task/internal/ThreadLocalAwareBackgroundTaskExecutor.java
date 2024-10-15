@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager
 import com.liferay.portal.kernel.backgroundtask.DelegatingBackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.io.Serializable;
 
@@ -45,6 +46,8 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 		Map<String, Serializable> threadLocalValues =
 			_backgroundTaskThreadLocalManager.getThreadLocalValues();
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+
 		try {
 			try {
 				_backgroundTaskThreadLocalManager.deserializeThreadLocals(
@@ -65,7 +68,7 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 		}
 		finally {
 			_backgroundTaskThreadLocalManager.setThreadLocalValues(
-				backgroundTask.getCompanyId(), threadLocalValues);
+				companyId, threadLocalValues);
 		}
 	}
 

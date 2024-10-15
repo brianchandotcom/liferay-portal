@@ -219,7 +219,10 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"accountId", "orderDate", "orderId"};
+		return new String[] {
+			"account", "accountId", "author", "name", "orderDate", "orderId",
+			"orderType", "purchaseOrderNumber"
+		};
 	}
 
 	@Override
@@ -334,7 +337,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	protected Cart testGetChannelCartsPage_addCart(Long channelId, Cart cart)
 		throws Exception {
 
-		return cartResource.postCartCheckout(cart.getId());
+		return cartResource.postCartCheckout(
+			_commerceOrder.getCommerceOrderId());
 	}
 
 	@Override

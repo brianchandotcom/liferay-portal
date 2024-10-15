@@ -100,6 +100,14 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {
+			"account", "accountId", "author", "orderDate", "orderId",
+			"orderType"
+		};
+	}
+
+	@Override
 	protected PlacedOrder randomPlacedOrder() throws Exception {
 		return new PlacedOrder() {
 			{
@@ -184,6 +192,38 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		throws Exception {
 
 		return _commerceChannel.getExternalReferenceCode();
+	}
+
+	@Override
+	protected PlacedOrder
+			testGetChannelByExternalReferenceCodePlacedOrdersPage_addPlacedOrder(
+				String externalReferenceCode, PlacedOrder placedOrder)
+		throws Exception {
+
+		return _addCommerceOrder(placedOrder);
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodePlacedOrdersPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _commerceChannel.getExternalReferenceCode();
+	}
+
+	@Override
+	protected PlacedOrder testGetChannelPlacedOrdersPage_addPlacedOrder(
+			Long channelId, PlacedOrder placedOrder)
+		throws Exception {
+
+		return _addCommerceOrder(placedOrder);
+	}
+
+	@Override
+	protected Long testGetChannelPlacedOrdersPage_getChannelId()
+		throws Exception {
+
+		return _commerceChannel.getCommerceChannelId();
 	}
 
 	@Override

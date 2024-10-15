@@ -1093,8 +1093,7 @@ export class PageEditorPage {
 			| {mappingConfiguration: MappingConfiguration; type: 'Mapped URL'}
 	) {
 		await this.page
-			.getByLabel('Link', {exact: true})
-			.locator('select')
+			.getByRole('combobox', {exact: true, name: 'Link'})
 			.selectOption({label: linkConfiguration.type});
 
 		if (linkConfiguration.type === 'URL') {

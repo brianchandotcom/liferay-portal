@@ -30,7 +30,6 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
-		additionalAPIURLParameters: '&sort=id:asc',
 		erc: dataSetERC,
 		label: dataSetLabel,
 	});
@@ -52,6 +51,14 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		const SAMPLE_SCALAR_FIELD = 'id';
 		const SAMPLE_OBJECT_FIELD = 'dataSetToDataSetTableSections';
 		const SAMPLE_OBJECT_CHILD_FIELD = 'label';
+
+		await test.step('Update Data Set to include additionalAPIURLParameters', async () => {
+			await dataSetManagerApiHelpers.updateDataSet({
+				additionalAPIURLParameters:
+					'fields=dataSetToDataSetTableSections.label,id,label',
+				erc: dataSetERC,
+			});
+		});
 
 		await test.step('Create table fields', async () => {
 			await dataSetManagerApiHelpers.createDataSetTableSection({
@@ -178,13 +185,14 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		await test.step('Data Set request URL contains additionalAPIURLParameters and nestedFields', async () => {
 			const nestedFieldsValue =
 				'nestedFields=dataSetToDataSetTableSections';
-			const additionalAPIURLParameters = 'sort=id%3Aasc';
+			const additionalAPIURLParameters =
+				'fields=dataSetToDataSetTableSections.label%2Cid%2Clabel';
 
 			const datasetRequestPromise = page.waitForRequest((request) => {
 				return request
 					.url()
 					.includes(
-						`${nestedFieldsValue}&page=1&pageSize=20&${additionalAPIURLParameters}`
+						`${nestedFieldsValue}&page=1&pageSize=20&sort=id%3Aasc&${additionalAPIURLParameters}`
 					);
 			});
 

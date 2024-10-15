@@ -146,6 +146,7 @@ components:
                     readOnly: true
                     type: string
                 rootObjectDefinitionExternalReferenceCode:
+                    readOnly: true
                     type: string
                 scope:
                     type: string

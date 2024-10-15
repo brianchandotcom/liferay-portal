@@ -1692,10 +1692,19 @@ test.describe('Tags Fragment', () => {
 			key: 'INPUTS-submit-button',
 		});
 
+		const inputDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				inputFieldId: 'ObjectField_lemonSize',
+			},
+			id: getRandomString(),
+			key: 'INPUTS-text-input',
+		});
+
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
 			objectDefinitionId,
 			pageElements: [
+				inputDefinition,
 				firstTagsFragmentDefinition,
 				secondTagsFragmentDefinition,
 				submitFragmentDefinition,
@@ -1733,6 +1742,8 @@ test.describe('Tags Fragment', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
+		await page.getByLabel('Lemon Size').fill('Tags test');
+
 		await page.getByRole('combobox').first().click();
 		await page.getByRole('option', {exact: true, name: 'Dogs'}).click();
 
@@ -1754,19 +1765,17 @@ test.describe('Tags Fragment', () => {
 			`/group${pageManagementSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
 		);
 
-		const grid = page.getByRole('grid');
+		const objectRow = page
+			.locator('.dnd-tr')
+			.filter({hasText: 'Tags test'});
 
-		await clickAndExpectToBeVisible({
-			target: grid,
-			trigger: page
-				.locator('.table-list-title')
-				.getByRole('link')
-				.first(),
-		});
+		await objectRow.waitFor();
 
-		await grid.waitFor();
+		await objectRow.getByRole('link').click();
 
-		await expect(grid).toHaveText('RabbitsCatsDogs');
+		await expect(page.getByLabel('Other Metadata')).toContainText(
+			'RabbitsCatsDogs'
+		);
 
 		// Remove the tag created on Global
 

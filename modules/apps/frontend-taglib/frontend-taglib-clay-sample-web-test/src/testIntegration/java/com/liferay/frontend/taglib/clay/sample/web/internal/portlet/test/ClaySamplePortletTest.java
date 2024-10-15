@@ -63,9 +63,7 @@ public class ClaySamplePortletTest {
 	}
 
 	@Test
-	public void testSampleClayPortletContainsNoJerichoErrorsWhenPublished()
-		throws Exception {
-
+	public void testPublishLayoutWithClaySamplePortlet() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

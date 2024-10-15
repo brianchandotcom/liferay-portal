@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {widgetPageTemplatesPagesTest} from '../../fixtures/widgetPageTemplatesPagesTest';
 import getRandomString from '../../utils/getRandomString';
@@ -14,6 +15,7 @@ import getRandomString from '../../utils/getRandomString';
 export const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
+	pageViewModePagesTest,
 	pagesAdminPagesTest,
 	widgetPageTemplatesPagesTest
 );
@@ -108,3 +110,81 @@ test('Add an active page template in global site and deactivate it', async ({
 		page.getByText(widgetPageTemplateName, {exact: true})
 	).not.toBeVisible();
 });
+
+test(
+	'Disable inherit changes and check it works',
+	{
+		tag: '@LPS-154130',
+	},
+	async ({
+		page,
+		pagesAdminPage,
+		site,
+		widgetPagePage,
+		widgetPageTemplatesPage,
+	}) => {
+
+		// Go to page template administration in global site
+
+		await widgetPageTemplatesPage.goto();
+
+		// Assert portlet title
+
+		await expect(
+			page.getByRole('heading', {name: 'Widget Page Templates'})
+		).toBeVisible();
+
+		// Create global page template
+
+		const widgetPageTemplateName = getRandomString();
+
+		await widgetPageTemplatesPage.addGlobalWidgetPageTemplate(
+			widgetPageTemplateName
+		);
+
+		// Create a new page based in global page template
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.gotoSelectGlobalTemplates();
+
+		const layoutTitle = getRandomString();
+
+		await pagesAdminPage.addPage({
+			name: layoutTitle,
+			successMessage: 'Success:The page was created successfully.',
+			template: widgetPageTemplateName,
+		});
+
+		// Disable inherit changes
+
+		await page.getByLabel('Inherit Changes').uncheck();
+
+		await pagesAdminPage.saveConfiguration();
+
+		// Edit global page template
+
+		await widgetPageTemplatesPage.goto();
+
+		await widgetPageTemplatesPage.clickMoreActions(
+			widgetPageTemplateName,
+			'Edit'
+		);
+
+		await widgetPagePage.addPortlet('Web Content Display');
+
+		// Assert changes are not inherited
+
+		await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeAttached();
+
+		await expect(
+			page
+				.locator('#layout-column_column-1')
+				.getByRole('heading', {name: 'Web Content Display'})
+		).not.toBeVisible();
+	}
+);

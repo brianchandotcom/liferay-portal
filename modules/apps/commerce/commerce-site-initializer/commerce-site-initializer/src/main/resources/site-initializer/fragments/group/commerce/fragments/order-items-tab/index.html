@@ -1,0 +1,44 @@
+[#assign isMultishippingEnabled = commerceOrderHttpHelper.isMultishippingEnabled(request)]
+
+<div class="component-tabs">
+	<nav class="[#if !isMultishippingEnabled]hide[/#if] navbar navbar-collapse-relative navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+		<button aria-activedescendant aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-haspopup="listbox" aria-label="${languageUtil.format(locale, 'current-x', ['selection'])}:" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" role="combobox">
+			<span class="navbar-text-truncate">${languageUtil.get(locale, "list")}</span>
+			<span class="icon-caret-bottom"></span>
+		</button>
+
+		<button aria-activedescendant aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-haspopup="listbox" aria-label="${languageUtil.format(locale, 'current-x', ['selection'])}:" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" role="combobox">
+			<span class="navbar-text-truncate">${languageUtil.get(locale, "multishipping")}</span>
+			<span class="icon-caret-bottom"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navigationBarCollapse-${fragmentEntryLinkNamespace}">
+			<ul class="navbar-nav" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button aria-controls="tabPanel1-${fragmentEntryLinkNamespace}" aria-selected="false" class="nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab1-${fragmentEntryLinkNamespace}" role="tab">
+						<span class="navbar-text-truncate" data-lfr-editable-id="title1" data-lfr-editable-type="text" data-lfr-priority="1" tabindex="-1">
+							${languageUtil.get(locale, "list")}
+						</span>
+					</button>
+
+					<button aria-controls="tabPanel2-${fragmentEntryLinkNamespace}" aria-selected="false" class="nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab2-${fragmentEntryLinkNamespace}" role="tab">
+						<span class="navbar-text-truncate" data-lfr-editable-id="title2" data-lfr-editable-type="text" data-lfr-priority="1" tabindex="-1">
+							${languageUtil.get(locale, "multishipping")}
+						</span>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="tab-panel">
+		<div aria-labelledby="tab1-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel1-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
+			<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
+		</div>
+		[#if isMultishippingEnabled || (layouts?size > 0) || (layoutMode == "edit")]
+			<div aria-labelledby="tab2-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel2-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
+				<lfr-drop-zone data-lfr-drop-zone-id="2" data-lfr-priority="2"></lfr-drop-zone>
+			</div>
+		[/#if]
+	</div>
+</div>

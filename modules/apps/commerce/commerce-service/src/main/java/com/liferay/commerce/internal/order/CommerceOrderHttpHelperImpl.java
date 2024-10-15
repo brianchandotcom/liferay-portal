@@ -11,6 +11,7 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderWebKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
@@ -507,6 +508,43 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					groupId, CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
 		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
+	}
+
+	@Override
+	public boolean isMultishippingEnabled(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			CommerceOrder commerceOrder = getCurrentCommerceOrder(
+				httpServletRequest);
+
+			if ((commerceOrder == null) ||
+				!_commerceOrderModelResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_MULTISHIPPING)) {
+
+				return false;
+			}
+
+			CommerceOrderCheckoutConfiguration
+				commerceOrderCheckoutConfiguration =
+					_configurationProvider.getConfiguration(
+						CommerceOrderCheckoutConfiguration.class,
+						new GroupServiceSettingsLocator(
+							_commerceChannelLocalService.
+								getCommerceChannelGroupIdBySiteGroupId(
+									_portal.getScopeGroupId(
+										httpServletRequest)),
+							CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+			return commerceOrderCheckoutConfiguration.multishippingEnabled();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
 	}
 
 	@Override

@@ -5,7 +5,11 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -13,11 +17,15 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -106,6 +114,10 @@ public class MultishippingFragmentRenderer implements FragmentRenderer {
 			commerceOrder = (CommerceOrder)infoItem;
 		}
 
+		if (!_isMultishippingEnabled(commerceOrder, httpServletRequest)) {
+			return;
+		}
+
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -137,6 +149,39 @@ public class MultishippingFragmentRenderer implements FragmentRenderer {
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isMultishippingEnabled(
+		CommerceOrder commerceOrder, HttpServletRequest httpServletRequest) {
+
+		try {
+			if ((commerceOrder == null) ||
+				!_commerceOrderModelResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_MULTISHIPPING)) {
+
+				return false;
+			}
+
+			CommerceOrderCheckoutConfiguration
+				commerceOrderCheckoutConfiguration =
+					_configurationProvider.getConfiguration(
+						CommerceOrderCheckoutConfiguration.class,
+						new GroupServiceSettingsLocator(
+							_commerceChannelLocalService.
+								getCommerceChannelGroupIdBySiteGroupId(
+									_portal.getScopeGroupId(
+										httpServletRequest)),
+							CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+			return commerceOrderCheckoutConfiguration.multishippingEnabled();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return false;
@@ -174,7 +219,19 @@ public class MultishippingFragmentRenderer implements FragmentRenderer {
 		MultishippingFragmentRenderer.class);
 
 	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
+
+	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

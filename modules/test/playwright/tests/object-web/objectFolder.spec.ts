@@ -5,11 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {
-	ObjectAdminRestClient,
-	ObjectDefinition,
-	ObjectFolder,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectFolder} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -149,6 +145,7 @@ test.describe('manage object definitions through model builder', () => {
 			Array.apply(null, Array(5)).map(async () => {
 				const objectFolder =
 					await apiHelpers.objectAdmin.postRandomObjectFolder();
+
 				apiHelpers.data.push({
 					id: objectFolder.id,
 					type: 'objectFolder',
@@ -283,6 +280,7 @@ test.describe('manage object definitions through view object definitions', () =>
 			Array.apply(null, Array(5)).map(async () => {
 				const objectFolder =
 					await apiHelpers.objectAdmin.postRandomObjectFolder();
+
 				apiHelpers.data.push({
 					id: objectFolder.id,
 					type: 'objectFolder',

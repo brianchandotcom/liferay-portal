@@ -2362,7 +2362,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectActionActiveException.class,
-			"Object action if trigger is onAfterRootUpdate but object " +
+			"Object action trigger is onAfterRootUpdate but object " +
 				"definition is not a root node",
 			() -> _objectActionLocalService.updateObjectAction(
 				finalObjectAction.getExternalReferenceCode(),

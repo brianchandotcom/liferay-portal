@@ -118,13 +118,24 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								layoutPageTemplateCollection,
 								ActionKeys.UPDATE),
 						dropdownItem -> {
-							dropdownItem.setHref(
-								_getCopyLayoutPageTemplateCollectionURL(
+							dropdownItem.putData(
+								"action", "copyLayoutPageTemplateCollection");
+							dropdownItem.putData(
+								"itemSelectorURL",
+								_getItemSelectorURL(
 									layoutPageTemplateCollection));
+							dropdownItem.putData(
+								"layoutPageTemplateCollectionId",
+								String.valueOf(
+									layoutPageTemplateCollection.
+										getLayoutPageTemplateCollectionId()));
+							dropdownItem.putData(
+								"layoutPageTemplateCollectionName",
+								layoutPageTemplateCollection.getName());
 							dropdownItem.setIcon("copy");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_httpServletRequest, "make-a-copy"));
+									_httpServletRequest, "copy-to"));
 						}
 					).add(
 						() ->
@@ -225,28 +236,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
-	}
-
-	private String _getCopyLayoutPageTemplateCollectionURL(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/layout_page_template_admin/copy_layout_page_template_entries_" +
-				"and_layout_page_template_collections"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"copyPermissions", true
-		).setParameter(
-			"layoutPageTemplateCollectionsIds",
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
-		).setParameter(
-			"layoutParentPageTemplateCollectionId",
-			layoutPageTemplateCollection.
-				getParentLayoutPageTemplateCollectionId()
-		).buildString();
 	}
 
 	private String _getDeleteDialogTitle(

@@ -5,7 +5,6 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -20,14 +19,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -152,23 +149,9 @@ public class DisplaySettingsDisplayContext {
 			PropsKeys.LOCALES);
 
 		if (groupLanguageIds != null) {
-			Set<String> companyLanguageIds = SetUtil.fromArray(
-				PrefsPropsUtil.getStringArray(
-					_themeDisplay.getCompanyId(), PropsKeys.LOCALES,
-					StringPool.COMMA, PropsValues.LOCALES_ENABLED));
-
-			for (Locale currentLocale :
-					LocaleUtil.fromLanguageIds(
-						StringUtil.split(groupLanguageIds))) {
-
-				if (!companyLanguageIds.contains(
-						LanguageUtil.getLanguageId(currentLocale))) {
-
-					continue;
-				}
-
-				currentLocales.add(currentLocale);
-			}
+			Collections.addAll(
+				currentLocales,
+				LocaleUtil.fromLanguageIds(StringUtil.split(groupLanguageIds)));
 		}
 		else {
 			currentLocales.addAll(_getSiteAvailableLocales());

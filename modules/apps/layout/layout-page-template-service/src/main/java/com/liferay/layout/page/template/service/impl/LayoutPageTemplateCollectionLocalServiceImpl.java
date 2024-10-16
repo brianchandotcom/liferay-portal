@@ -356,9 +356,9 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
-		String name = StringUtil.appendParentheticalSuffix(sourceName, copy);
+		String name = sourceName;
 
-		for (int i = 1;; i++) {
+		for (int i = 0;; i++) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
 				layoutPageTemplateCollectionPersistence.fetchByG_P_N_T(
 					groupId, layoutPageTemplateCollectionId, name, type);
@@ -367,8 +367,13 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				break;
 			}
 
-			name = StringUtil.appendParentheticalSuffix(
-				sourceName, copy + StringPool.SPACE + i);
+			if (i == 0) {
+				name = StringUtil.appendParentheticalSuffix(sourceName, copy);
+			}
+			else {
+				name = StringUtil.appendParentheticalSuffix(
+					sourceName, copy + StringPool.SPACE + i);
+			}
 		}
 
 		return name;

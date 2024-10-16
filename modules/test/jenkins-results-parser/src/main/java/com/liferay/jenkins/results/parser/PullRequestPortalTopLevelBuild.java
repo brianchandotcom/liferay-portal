@@ -174,19 +174,6 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	public String getStableJobResult() {
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
-
-		if (stableJob == null) {
-			return null;
-		}
-
 		if (_stableJobResult != null) {
 			return _stableJobResult;
 		}
@@ -198,6 +185,18 @@ public class PullRequestPortalTopLevelBuild
 		if (stableJobDownstreamBuildsSize == 0) {
 			return null;
 		}
+
+		String result = getResult();
+
+		if (result == null) {
+			return null;
+		}
+
+		if (result.equals("SUCCESS")) {
+			_stableJobResult = result;
+		}
+
+		Job stableJob = _getStableJob();
 
 		List<String> stableJobBatchNames = new ArrayList<>(
 			stableJob.getBatchNames());
@@ -212,14 +211,12 @@ public class PullRequestPortalTopLevelBuild
 			return null;
 		}
 
-		String result = getResult();
 		int stableJobDownstreamBuildsSuccessCount =
 			getJobVariantsDownstreamBuildCount(
 				stableJobBatchNames, "SUCCESS", null);
 
-		if (((result != null) && result.equals("SUCCESS")) ||
-			(stableJobDownstreamBuildsSuccessCount ==
-				stableJobDownstreamBuildsSize)) {
+		if (stableJobDownstreamBuildsSuccessCount ==
+				stableJobDownstreamBuildsSize) {
 
 			_stableJobResult = "SUCCESS";
 		}

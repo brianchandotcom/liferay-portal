@@ -36,21 +36,21 @@ public class PostgreSQLDBTest extends DBTest {
 	public void testGetAndAddIndexWithLeftClause() throws Exception {
 		addIndex(new String[] {_INDEX_COLUMN_NAME_LEFT_CLAUSE});
 
-		List<IndexMetadata> indexes = db.getIndexes(
+		List<IndexMetadata> indexMetadatas = db.getIndexes(
 			connection, TABLE_NAME_1, null, false);
 
-		_assertIndex(indexes);
+		_assertIndex(indexMetadatas);
 
 		db.dropIndexes(connection, TABLE_NAME_1, null);
 
-		db.addIndexes(connection, indexes);
+		db.addIndexes(connection, indexMetadatas);
 
 		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
 
 		db.dropIndexes(connection, TABLE_NAME_1, null);
 
 		db.runSQL(
-			indexes.get(
+			indexMetadatas.get(
 				0
 			).getCreateSQL(
 				null
@@ -59,22 +59,25 @@ public class PostgreSQLDBTest extends DBTest {
 		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
 	}
 
-	private void _assertIndex(List<IndexMetadata> indexes) throws Exception {
-		Assert.assertEquals(indexes.toString(), 1, indexes.size());
+	private void _assertIndex(List<IndexMetadata> indexMetadatas)
+		throws Exception {
+
+		Assert.assertEquals(
+			indexMetadatas.toString(), 1, indexMetadatas.size());
 		Assert.assertEquals(
 			dbInspector.normalizeName(INDEX_NAME),
-			indexes.get(
+			indexMetadatas.get(
 				0
 			).getIndexName());
 		Assert.assertEquals(
 			1,
-			indexes.get(
+			indexMetadatas.get(
 				0
 			).getColumnNames(
 			).length);
 		Assert.assertEquals(
 			dbInspector.normalizeName(_INDEX_COLUMN_NAME_LEFT_CLAUSE),
-			indexes.get(
+			indexMetadatas.get(
 				0
 			).getColumnNames()[0]);
 	}

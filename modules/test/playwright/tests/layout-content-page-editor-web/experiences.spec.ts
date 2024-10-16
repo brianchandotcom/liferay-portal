@@ -586,19 +586,28 @@ test(
 
 		const pagePromise = context.waitForEvent('page');
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Preview in a New Tab',
-			}),
-			trigger: page
-				.locator('.control-menu-nav-item')
-				.getByLabel('Options', {exact: true}),
+		const previewButton = page.getByRole('menuitem', {
+			name: 'Preview in a New Tab',
 		});
 
-		const newPage = await pagePromise;
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				target: previewButton,
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
 
-		await expect(newPage.getByText('E1 Text')).toBeAttached();
+			if (await previewButton.isVisible()) {
+				await previewButton.click();
+			}
+
+			const newPage = await pagePromise;
+
+			await expect(newPage.getByText('E1 Text')).toBeVisible({
+				timeout: 100,
+			});
+		}).toPass();
 	}
 );
 

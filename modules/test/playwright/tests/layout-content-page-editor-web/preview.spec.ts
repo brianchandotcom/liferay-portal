@@ -69,14 +69,14 @@ test(
 			name: 'Preview in a New Tab',
 		});
 
-		await clickAndExpectToBeVisible({
-			target: previewButton,
-			trigger: page
-				.locator('.control-menu-nav-item')
-				.getByLabel('Options', {exact: true}),
-		});
-
 		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				target: previewButton,
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
 			if (await previewButton.isVisible()) {
 				await previewButton.click();
 			}

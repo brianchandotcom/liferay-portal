@@ -180,6 +180,26 @@ export class DisplayPageTemplatesPage {
 		await waitForAlert(this.page);
 	}
 
+	async copyFolderTo(sourceName: string, targetName: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Copy To'}),
+			trigger: this.page
+				.locator('.card-page-item')
+				.filter({hasText: sourceName})
+				.getByLabel('More actions'),
+		});
+
+		const frameLocator = this.page.frameLocator('iframe');
+
+		await frameLocator
+			.getByRole('treeitem', {name: 'Home'})
+			.locator('.component-expander')
+			.click();
+
+		await frameLocator.getByRole('treeitem', {name: targetName}).click();
+	}
+
 	async createTemplate({
 		contentSubtype,
 		contentType,

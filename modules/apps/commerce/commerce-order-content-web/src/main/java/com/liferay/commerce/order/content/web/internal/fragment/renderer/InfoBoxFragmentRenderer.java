@@ -31,7 +31,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -171,9 +170,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		if (commerceOrder == null) {
 			if (_isEditMode(httpServletRequest)) {
-				httpServletRequest.setAttribute(
-					"liferay-commerce:info-box:fieldValue",
-					_getFieldLabel(fragmentEntryLink, field));
+				_printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-info-box-component-will-be-shown-here");
 			}
 
 			return;
@@ -387,50 +386,6 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		}
 
 		return "text";
-	}
-
-	private String _getFieldLabel(
-		FragmentEntryLink fragmentEntryLink, String field) {
-
-		try {
-			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getConfiguration());
-
-			JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
-				"fieldSets");
-
-			JSONArray fieldsJSONArray = fieldSetsJSONArray.getJSONObject(
-				0
-			).getJSONArray(
-				"fields"
-			);
-
-			JSONObject typeOptionsJSONObject = fieldsJSONArray.getJSONObject(
-				0
-			).getJSONObject(
-				"typeOptions"
-			);
-
-			JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
-				"validValues");
-
-			for (Object validValueObject : validValuesJSONArray) {
-				JSONObject validValueJSONObject = (JSONObject)validValueObject;
-
-				String value = validValueJSONObject.getString("value");
-
-				if (value.equals(field)) {
-					return validValueJSONObject.getString("label");
-				}
-			}
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private String _getFieldValue(

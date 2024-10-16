@@ -10,7 +10,7 @@ const COUNTRIES_PATH = '/countries';
 const VERSION = 'v1.0';
 
 function resolvePath(basePath = '') {
-	return `${basePath}${VERSION}${COUNTRIES_PATH}`;
+	return `${basePath}${VERSION}${COUNTRIES_PATH}?pageSize=-1`;
 }
 
 export default function Account(basePath) {

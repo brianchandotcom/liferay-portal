@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -49,12 +50,9 @@ public class PostgreSQLDBTest extends DBTest {
 
 		db.dropIndexes(connection, TABLE_NAME_1, null);
 
-		db.runSQL(
-			indexMetadatas.get(
-				0
-			).getCreateSQL(
-				null
-			));
+		IndexMetadata indexMetadata = indexMetadatas.get(0);
+
+		db.runSQL(indexMetadata.getCreateSQL(null));
 
 		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
 	}
@@ -64,22 +62,20 @@ public class PostgreSQLDBTest extends DBTest {
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 1, indexMetadatas.size());
+
+		IndexMetadata indexMetadata = indexMetadatas.get(0);
+
 		Assert.assertEquals(
 			dbInspector.normalizeName(INDEX_NAME),
-			indexMetadatas.get(
-				0
-			).getIndexName());
+			indexMetadata.getIndexName());
+
+		String[] columnNames = indexMetadata.getColumnNames();
+
 		Assert.assertEquals(
-			1,
-			indexMetadatas.get(
-				0
-			).getColumnNames(
-			).length);
+			Arrays.toString(columnNames), 1, columnNames.length);
 		Assert.assertEquals(
 			dbInspector.normalizeName(_INDEX_COLUMN_NAME_LEFT_CLAUSE),
-			indexMetadatas.get(
-				0
-			).getColumnNames()[0]);
+			columnNames[0]);
 	}
 
 	private static final String _INDEX_COLUMN_NAME_LEFT_CLAUSE =

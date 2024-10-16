@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -107,6 +109,16 @@ public class LayoutUtilityPageEntryUpgradeTest {
 		return _layoutLocalService.updateLayout(curLayout);
 	}
 
+	private void _assertLayoutFriendlyURLs(Layout layout) {
+		for (LayoutFriendlyURL layoutFriendlyURL :
+				_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+					layout.getPlid())) {
+
+			Assert.assertEquals(
+				layout.isPrivateLayout(), layoutFriendlyURL.isPrivateLayout());
+		}
+	}
+
 	private void _assertPublicLayoutTypeUtilityLayout(Layout layout) {
 		Assert.assertFalse(layout.isPrivateLayout());
 		Assert.assertTrue(layout.isTypeUtility());
@@ -114,6 +126,8 @@ public class LayoutUtilityPageEntryUpgradeTest {
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
 				layout.getTypeSettingsProperty("privateLayout")));
+
+		_assertLayoutFriendlyURLs(layout);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -138,12 +152,24 @@ public class LayoutUtilityPageEntryUpgradeTest {
 
 		layout = _layoutLocalService.updateLayout(layout);
 
+		for (LayoutFriendlyURL layoutFriendlyURL :
+				_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+					layout.getPlid())) {
+
+			layoutFriendlyURL.setPrivateLayout(true);
+
+			_layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
+				layoutFriendlyURL);
+		}
+
 		Assert.assertTrue(layout.isPrivateLayout());
 		Assert.assertEquals(LayoutConstants.TYPE_CONTENT, layout.getType());
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				layout.getTypeSettingsProperty("privateLayout")));
+
+		_assertLayoutFriendlyURLs(layout);
 	}
 
 	@Inject(
@@ -153,6 +179,9 @@ public class LayoutUtilityPageEntryUpgradeTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

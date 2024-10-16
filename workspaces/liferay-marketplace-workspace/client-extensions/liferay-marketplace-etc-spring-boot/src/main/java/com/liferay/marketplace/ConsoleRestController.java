@@ -75,13 +75,13 @@ public class ConsoleRestController extends BaseRestController {
 
 		Order order = _marketplaceService.getOrder(orderId);
 
-		JSONObject jsonObject = new JSONObject(json);
-
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
 		JSONArray cloudProvisioningJSONArray = new JSONArray(
 			customFields.get("cloud-provisioning"));
+
+		JSONObject jsonObject = new JSONObject(json);
 
 		JSONObject cloudProvisioningJSONObject =
 			_getCloudProvisioningJSONObject(

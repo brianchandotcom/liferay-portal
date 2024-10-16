@@ -464,8 +464,15 @@ public class PredicateExpressionVisitorImpl
 			_getFieldPredicateProvider(String.valueOf(left), objectDefinition);
 
 		if (fieldPredicateProvider != null) {
+			List<Object> adjustedRights = new ArrayList<>();
+
+			for (Object right : rights) {
+				adjustedRights.add(_getValue(left, objectDefinition, right));
+			}
+
 			return fieldPredicateProvider.getInPredicate(
-				name -> _getColumn(name, objectDefinition), left, rights);
+				name -> _getColumn(name, objectDefinition), left,
+				adjustedRights);
 		}
 
 		return _getColumn(

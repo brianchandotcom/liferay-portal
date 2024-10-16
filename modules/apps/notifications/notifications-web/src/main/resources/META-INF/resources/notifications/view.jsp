@@ -50,14 +50,14 @@ if (Validator.isNotNull(backURL)) {
 				add(
 					navigationItem -> {
 						navigationItem.setActive(!actionRequired);
-						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.FALSE);
+						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.FALSE, "backURL", currentURL);
 						navigationItem.setLabel(LanguageUtil.format(httpServletRequest, "notifications-list-x", UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false)));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(actionRequired);
-						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.TRUE);
+						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.TRUE, "backURL", currentURL);
 						navigationItem.setLabel(LanguageUtil.format(httpServletRequest, "requests-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getArchivedUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, true, false))));
 					});
 			}

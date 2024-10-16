@@ -54,18 +54,6 @@ const autosaveWithoutPermissionsTest = mergeTests(
 	loginTest()
 );
 
-const autoSaveUndoRedoTest = mergeTests(
-	apiHelpersTest,
-	applicationsMenuPageTest,
-	featureFlagsTest({
-		'LPD-11228': true,
-		'LPD-15596': true,
-	}),
-	isolatedSiteTest,
-	journalPagesTest,
-	loginTest()
-);
-
 autoSaveTest(
 	'UndoRedo Should not appear when editing default values',
 	{
@@ -157,7 +145,7 @@ autoSaveTest(
 	}
 );
 
-autoSaveUndoRedoTest(
+autoSaveTest(
 	'Info message appears when autosave is failed due to missing required fields',
 	{
 		tag: '@LPD-34375',
@@ -290,7 +278,7 @@ autoSaveTest(
 	}
 );
 
-autoSaveUndoRedoTest(
+autoSaveTest(
 	'Translation is removed when using Undo and restored when using Redo',
 	{
 		tag: '@LPD-31072',
@@ -342,7 +330,7 @@ autoSaveUndoRedoTest(
 	}
 );
 
-autoSaveUndoRedoTest(
+autoSaveTest(
 	'Undo/Redo buttons work with metadata fields',
 	{
 		tag: '@LPD-26863',
@@ -376,7 +364,7 @@ autoSaveUndoRedoTest(
 	}
 );
 
-autoSaveUndoRedoTest(
+autoSaveTest(
 	'Undo/Redo buttons work with content field',
 	{
 		tag: '@LPD-26863',
@@ -432,7 +420,7 @@ autoSaveUndoRedoTest(
 	}
 );
 
-autoSaveUndoRedoTest(
+autoSaveTest(
 	'History button test',
 	{
 		tag: '@LPD-31063',

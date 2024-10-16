@@ -784,7 +784,8 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
-	public void testBindObjectDefinitionExceedTreeMaxHeight() throws Exception {
+	public void testBindObjectDefinitionsWithGreaterThanTreeMaxHeight()
+		throws Exception {
 
 		// Bind an object definition to a tree that has reached the maximum
 		// height

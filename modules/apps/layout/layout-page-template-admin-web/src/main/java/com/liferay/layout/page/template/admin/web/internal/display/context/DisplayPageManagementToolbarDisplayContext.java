@@ -74,11 +74,11 @@ public class DisplayPageManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"action", "copySelectedEntries");
 							dropdownItem.putData(
-								"copySelectedEntriesURL",
-								_getCopySelectedEntriesURL());
+								"itemSelectorURL", _getItemSelectorURL());
 							dropdownItem.setIcon("copy");
 							dropdownItem.setLabel(
-								LanguageUtil.get(httpServletRequest, "copy"));
+								LanguageUtil.get(
+									httpServletRequest, "copy-to"));
 							dropdownItem.setQuickAction(true);
 						}
 					).build());
@@ -312,23 +312,6 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date", "modified-date", "name"};
-	}
-
-	private String _getCopySelectedEntriesURL() {
-		return PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setActionName(
-			"/layout_page_template_admin/copy_layout_page_template_entries_" +
-				"and_layout_page_template_collections"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"copyPermissions", false
-		).setParameter(
-			"layoutParentPageTemplateCollectionId",
-			ParamUtil.getLong(
-				httpServletRequest, "layoutPageTemplateCollectionId")
-		).buildString();
 	}
 
 	private String _getDeleteSelectedEntriesURL() {

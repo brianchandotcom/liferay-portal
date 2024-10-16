@@ -14,24 +14,36 @@ import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const copySelectedEntries = (itemData) => {
-		const form = document.getElementById(
-			`${portletNamespace}actionEntriesFm`
-		);
+		openSelectionModal({
+			height: '70vh',
+			onSelect: (selectedItem) => {
+				const form = document.getElementById(
+					`${portletNamespace}actionEntriesFm`
+				);
 
-		setFormValues(form, {
-			layoutPageTemplateCollectionsIds: getCheckedCheckboxes(
-				document.getElementById(`${portletNamespace}fm`),
-				'',
-				`${portletNamespace}rowIdsLayoutPageTemplateCollection`
-			),
-			layoutPageTemplateEntriesIds: getCheckedCheckboxes(
-				document.getElementById(`${portletNamespace}fm`),
-				'',
-				`${portletNamespace}rowIds`
-			),
+				setFormValues(form, {
+					copyPermissions: true,
+					layoutPageTemplateCollectionsIds: getCheckedCheckboxes(
+						document.getElementById(`${portletNamespace}fm`),
+						'',
+						`${portletNamespace}rowIdsLayoutPageTemplateCollection`
+					),
+					layoutPageTemplateEntriesIds: getCheckedCheckboxes(
+						document.getElementById(`${portletNamespace}fm`),
+						'',
+						`${portletNamespace}rowIds`
+					),
+					layoutParentPageTemplateCollectionId:
+						selectedItem.resourceid,
+				});
+
+				submitForm(form);
+			},
+			selectEventName: 'selectFolder',
+			size: 'md',
+			title: Liferay.Language.get('copy-entries'),
+			url: itemData.itemSelectorURL,
 		});
-
-		submitForm(form, itemData?.copySelectedEntriesURL);
 	};
 
 	const deleteSelectedEntries = (itemData) => {

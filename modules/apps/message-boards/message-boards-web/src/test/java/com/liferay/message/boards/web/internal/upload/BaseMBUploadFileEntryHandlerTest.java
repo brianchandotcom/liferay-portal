@@ -8,6 +8,7 @@ package com.liferay.message.boards.web.internal.upload;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -28,9 +29,7 @@ public class BaseMBUploadFileEntryHandlerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test(expected = FileExtensionException.InvalidExtension.class)
-	public void testUploadValidatesFileExtension()
-		throws Exception {
-
+	public void testUploadValidatesFileExtension() throws Exception {
 		Mockito.doThrow(
 			FileExtensionException.InvalidExtension.class
 		).when(
@@ -45,7 +44,7 @@ public class BaseMBUploadFileEntryHandlerTest {
 		Mockito.when(
 			_uploadPortletRequest.getFileName(Mockito.anyString())
 		).thenReturn(
-			"TestFileName"
+			RandomTestUtil.randomString()
 		);
 
 		testMBUploadFileEntryHandler.upload(_uploadPortletRequest);
@@ -68,7 +67,7 @@ public class BaseMBUploadFileEntryHandlerTest {
 
 		@Override
 		protected String getParameterName() {
-			return "file";
+			return RandomTestUtil.randomString();
 		}
 
 	}

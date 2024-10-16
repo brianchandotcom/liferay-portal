@@ -270,7 +270,7 @@ public class CIForwardProcessor {
 
 		String propertyValue = JenkinsResultsParserUtil.getProperty(
 			JenkinsResultsParserUtil.getBuildProperties(), propertyName,
-			_pullRequest.getGitRepositoryName());
+			_pullRequest.getGitRepositoryName(), _pullRequest.getRefName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
 			return new String[0];

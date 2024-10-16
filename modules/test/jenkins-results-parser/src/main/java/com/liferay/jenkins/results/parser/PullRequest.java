@@ -526,6 +526,12 @@ public class PullRequest {
 		return userJSONObject.getString("login");
 	}
 
+	public String getRefName() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		return baseJSONObject.getString("ref");
+	}
+
 	public String getSenderBranchName() {
 		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
 

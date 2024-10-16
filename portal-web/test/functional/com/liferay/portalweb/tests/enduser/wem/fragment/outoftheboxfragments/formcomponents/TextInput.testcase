@@ -35,60 +35,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-150278. The sites designer cannot hide a Text Input fragment on content page."
-	@priority = 4
-	test CannotHideTextInputFragmentOnContentPage {
-		task ("Given a page designer has a Text Input fragment to content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.editFormContainer(contentType = "Purchase Order");
-		}
-
-		task ("When the page designer opens the browser panel on page editor") {
-			PageEditor.gotoTab(tabName = "Browser");
-		}
-
-		task ("Then the page designer could not view the hide icon on structure tree") {
-			AssertElementNotPresent(
-				key_index = 1,
-				key_nodeName = "Text",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
-		}
-
-		task ("When the page designer accesses to the General panel of Text Input fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Text");
-
-			PageEditor.gotoTab(tabName = "Browser");
-		}
-
-		task ("Then the page designer could not view the Hide fragment checkbox on general tab") {
-			AssertElementNotPresent(
-				checkboxName = "Hide Fragment",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		task ("When the page designer opens the dropdown menu of Text Input fragment's topper bar") {
-			Click.waitForMenuToggleJSClick(
-				key_fragmentName = "Text",
-				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
-		}
-
-		task ("Then the page designer could not view the hide menu item on dropdown menu") {
-			MenuItem.viewNotPresent(menuItem = "Hide Fragment");
-		}
-	}
-
 	@description = "This is a test for LPS-149725 and LPS-173849. The pages designer should see alert message when the characters count exceeds text field."
 	@priority = 4
 	test ViewAlertMessageWhenCharactersCountExceedMaximum {

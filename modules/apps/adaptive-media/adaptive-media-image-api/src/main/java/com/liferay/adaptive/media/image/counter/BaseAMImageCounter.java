@@ -39,7 +39,7 @@ public abstract class BaseAMImageCounter implements AMImageCounter {
 		AtomicInteger counter = new AtomicInteger(0);
 
 		try {
-			forEachFileEntry(companyId, _getCountDlFileEntryConsumer(counter));
+			forEachFileEntry(companyId, _getCountDLFileEntryConsumer(counter));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -69,7 +69,7 @@ public abstract class BaseAMImageCounter implements AMImageCounter {
 	@Reference
 	protected DLFileEntryConfigurationProvider dlFileEntryConfigurationProvider;
 
-	private Consumer<DLFileEntry> _getCountDlFileEntryConsumer(
+	private Consumer<DLFileEntry> _getCountDLFileEntryConsumer(
 		AtomicInteger counter) {
 
 		Map<Long, Long> groupPreviewableProcessorMaxSizeMap =

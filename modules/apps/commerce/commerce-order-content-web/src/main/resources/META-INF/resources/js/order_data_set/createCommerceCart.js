@@ -48,13 +48,13 @@ const openOrderTypeSelectionModal = (orderTypes) =>
 
 						if (orderTypeSelect) {
 							orderTypeId = parseInt(
-								orderTypeSelect.selectedOptions[0],
+								orderTypeSelect.selectedOptions[0]?.value,
 								10
 							);
 						}
 
-						processClose();
 						proceed(orderTypeId);
+						processClose();
 					},
 					type: 'button',
 				},

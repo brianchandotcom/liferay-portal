@@ -61,7 +61,7 @@ const Technology = () => {
 		<div>
 			<Title
 				description={Liferay.Language.get(
-					'total-number-of-downloads-broken-down-by-device-types-during-the-selected-time-period'
+					'the-total-number-of-downloads-is-broken-down-by-device-types-during-the-selected-time-period'
 				)}
 				section
 				value={title}

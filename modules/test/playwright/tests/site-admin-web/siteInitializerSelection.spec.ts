@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {sitesPageTest} from '../../fixtures/sitesPageTest';
 import {LayoutSetPrototype} from '../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
@@ -16,7 +15,6 @@ import {selectSiteInitializerPagesTest} from './fixtures/selectSiteInitializerPa
 
 const test = mergeTests(
 	apiHelpersTest,
-	isolatedSiteTest,
 	loginTest(),
 	selectSiteInitializerPagesTest,
 	sitesPageTest
@@ -25,12 +23,11 @@ const test = mergeTests(
 test('Check select site initializers accessibility', async ({
 	page,
 	selectSiteInitializerPage,
-	site,
 }) => {
 
 	// Go to site initializers selection page
 
-	await selectSiteInitializerPage.goto(site.friendlyUrlPath);
+	await selectSiteInitializerPage.goto();
 
 	// Check all of them have correct label
 

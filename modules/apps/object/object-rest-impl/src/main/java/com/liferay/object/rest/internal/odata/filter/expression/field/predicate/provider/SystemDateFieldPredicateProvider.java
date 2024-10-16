@@ -217,7 +217,7 @@ public class SystemDateFieldPredicateProvider
 		}
 
 		if (value.length() == 27) {
-			return "dd-MMM-yyyy HH:mm:ss.SSS a"; // Oracle (24-hour format)
+			return "dd-MMM-yyyy HH:mm:ss.SSS a"; // Oracle
 		}
 
 		throw new IllegalArgumentException(

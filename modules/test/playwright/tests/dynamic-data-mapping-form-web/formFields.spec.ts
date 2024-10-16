@@ -19,56 +19,101 @@ test.afterEach(async ({formsPage, page}) => {
 	await deleteItems(formsPage, page);
 });
 
-test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and Text field types', () => {
-	test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters', async ({
+test.describe('Manage fields through Form Preview page', () => {
+	test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and Text field types', () => {
+		test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters', async ({
+			formBuilderPage,
+			formBuilderSidePanelPage,
+		}) => {
+			const testData: {
+				expectedValue: string;
+				fieldTitle: FormFieldTypeTitle;
+				inputValue: string;
+			}[] = [
+				{
+					expectedValue: 'bday',
+					fieldTitle: 'Date',
+					inputValue: '+)(*&^%$#@ bday$__%  ',
+				},
+				{
+					expectedValue: 'one-time-code',
+					fieldTitle: 'Numeric',
+					inputValue: '****[][one-time-code&&#()',
+				},
+				{
+					expectedValue: 'transaction-currency',
+					fieldTitle: 'Text',
+					inputValue: 'transaction-currencyextracharacters',
+				},
+			];
+
+			await formBuilderPage.goToNew();
+
+			await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+			await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+			for (const data of testData) {
+				await formBuilderSidePanelPage.addFieldByDoubleClick(
+					data.fieldTitle
+				);
+
+				await formBuilderSidePanelPage.clickAdvancedTab();
+
+				await expect(
+					formBuilderSidePanelPage.htmlAutocompleteAttributeField
+				).toBeVisible();
+
+				await formBuilderSidePanelPage.htmlAutocompleteAttributeField.fill(
+					data.inputValue
+				);
+
+				await formBuilderSidePanelPage.clickBackButton();
+			}
+
+			const newTabPagePromise = new Promise<Page>((resolve) =>
+				formBuilderPage.page.once('popup', resolve)
+			);
+
+			await formBuilderPage.previewButton.click();
+
+			const newTabPage = await newTabPagePromise;
+
+			await newTabPage.waitForLoadState('domcontentloaded');
+
+			for (const data of testData) {
+				if (data.fieldTitle === 'Date') {
+					await expect(
+						newTabPage.getByPlaceholder('__/__/____')
+					).toHaveAttribute('autocomplete', data.expectedValue);
+
+					continue;
+				}
+
+				await expect(
+					newTabPage.getByLabel(data.fieldTitle)
+				).toHaveAttribute('autocomplete', data.expectedValue);
+			}
+
+			await newTabPage.close();
+		});
+	});
+
+	test('make sure the aria-labelledby reference is present in the captcha form view', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {
-		const testData: {
-			expectedValue: string;
-			fieldTitle: FormFieldTypeTitle;
-			inputValue: string;
-		}[] = [
-			{
-				expectedValue: 'bday',
-				fieldTitle: 'Date',
-				inputValue: '+)(*&^%$#@ bday$__%  ',
-			},
-			{
-				expectedValue: 'one-time-code',
-				fieldTitle: 'Numeric',
-				inputValue: '****[][one-time-code&&#()',
-			},
-			{
-				expectedValue: 'transaction-currency',
-				fieldTitle: 'Text',
-				inputValue: 'transaction-currencyextracharacters',
-			},
-		];
-
 		await formBuilderPage.goToNew();
-
-		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
 		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
-		for (const data of testData) {
-			await formBuilderSidePanelPage.addFieldByDoubleClick(
-				data.fieldTitle
-			);
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 
-			await formBuilderSidePanelPage.clickAdvancedTab();
+		await formBuilderPage.formSettingsButton.click();
 
-			await expect(
-				formBuilderSidePanelPage.htmlAutocompleteAttributeField
-			).toBeVisible();
+		await formBuilderPage.requireCaptchaToggle.click();
 
-			await formBuilderSidePanelPage.htmlAutocompleteAttributeField.fill(
-				data.inputValue
-			);
-
-			await formBuilderSidePanelPage.clickBackButton();
-		}
+		await formBuilderPage.formSettingsDoneButton.click();
 
 		const newTabPagePromise = new Promise<Page>((resolve) =>
 			formBuilderPage.page.once('popup', resolve)
@@ -80,108 +125,73 @@ test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and 
 
 		await newTabPage.waitForLoadState('domcontentloaded');
 
-		for (const data of testData) {
-			if (data.fieldTitle === 'Date') {
-				await expect(
-					newTabPage.getByPlaceholder('__/__/____')
-				).toHaveAttribute('autocomplete', data.expectedValue);
+		const captchaContainer = newTabPage.locator(
+			"[data-field-reference='_CAPTCHA_']"
+		);
 
-				continue;
-			}
+		await expect(captchaContainer).toBeVisible();
 
-			await expect(
-				newTabPage.getByLabel(data.fieldTitle)
-			).toHaveAttribute('autocomplete', data.expectedValue);
-		}
+		const captchaContainerAriaLabelledby =
+			await captchaContainer.getAttribute('aria-labelledby');
+
+		const screenReaderOnlyCaptchaSpan = newTabPage.locator(
+			`span[id='${captchaContainerAriaLabelledby}']`
+		);
+
+		await expect(screenReaderOnlyCaptchaSpan).toHaveClass('sr-only');
+
+		await expect(screenReaderOnlyCaptchaSpan).toContainText('captcha');
 
 		await newTabPage.close();
 	});
 });
 
-test('make sure the aria-labelledby reference is present in the captcha form view', async ({
-	formBuilderPage,
-	formBuilderSidePanelPage,
-}) => {
-	await formBuilderPage.goToNew();
+test.describe('Manage fields through Form Builder page', () => {
+	test('assert edition of a rich text field predefined value that contains a rule', async ({
+		formBuilderPage,
+		formsPage,
+		page,
+	}) => {
+		await formsPage.goTo();
 
-	await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+		await formsPage.importForm(
+			path.join(
+				__dirname,
+				'dependencies',
+				'form-with-rich-text.portlet.lar'
+			)
+		);
 
-	await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+		await formsPage.openForm('Form with rich text field');
 
-	await formBuilderPage.formSettingsButton.click();
+		await expect(
+			page.getByRole('textbox', {name: 'Rich Text'})
+		).toBeVisible();
 
-	await formBuilderPage.requireCaptchaToggle.click();
+		await formBuilderPage.openFieldSettings('Rich Text');
 
-	await formBuilderPage.formSettingsDoneButton.click();
+		await formBuilderPage.settingsAdvancedTab.click();
 
-	const newTabPagePromise = new Promise<Page>((resolve) =>
-		formBuilderPage.page.once('popup', resolve)
-	);
+		const richTextPredefinedValueIframe = page
+			.getByRole('textbox', {name: 'Predefined Value'})
+			.frameLocator('iframe');
 
-	await formBuilderPage.previewButton.click();
+		await richTextPredefinedValueIframe
+			.getByText("Rich's text predefined value")
+			.click();
 
-	const newTabPage = await newTabPagePromise;
+		await page.keyboard.press('Control+A');
 
-	await newTabPage.waitForLoadState('domcontentloaded');
+		await page.keyboard.press('Backspace');
 
-	const captchaContainer = newTabPage.locator(
-		"[data-field-reference='_CAPTCHA_']"
-	);
-
-	await expect(captchaContainer).toBeVisible();
-
-	const captchaContainerAriaLabelledby =
-		await captchaContainer.getAttribute('aria-labelledby');
-
-	const screenReaderOnlyCaptchaSpan = newTabPage.locator(
-		`span[id='${captchaContainerAriaLabelledby}']`
-	);
-
-	await expect(screenReaderOnlyCaptchaSpan).toHaveClass('sr-only');
-
-	await expect(screenReaderOnlyCaptchaSpan).toContainText('captcha');
-
-	await newTabPage.close();
-});
-
-test('assert edition of a rich text field predefined value that contains a rule', async ({
-	formBuilderPage,
-	formsPage,
-	page,
-}) => {
-	await formsPage.goTo();
-
-	await formsPage.importForm(
-		path.join(__dirname, 'dependencies', 'form-with-rich-text.portlet.lar')
-	);
-
-	await formsPage.openForm('Form with rich text field');
-
-	await expect(page.getByRole('textbox', {name: 'Rich Text'})).toBeVisible();
-
-	await formBuilderPage.openFieldSettings('Rich Text');
-
-	await formBuilderPage.settingsAdvancedTab.click();
-
-	const richTextPredefinedValueIframe = page
-		.getByRole('textbox', {name: 'Predefined Value'})
-		.frameLocator('iframe');
-
-	await richTextPredefinedValueIframe
-		.getByText("Rich's text predefined value")
-		.click();
-
-	await page.keyboard.press('Control+A');
-
-	await page.keyboard.press('Backspace');
-
-	await page.keyboard.type(
-		'Typing a new predefined value for the rich text field.'
-	);
-
-	await expect(
-		richTextPredefinedValueIframe.getByText(
+		await page.keyboard.type(
 			'Typing a new predefined value for the rich text field.'
-		)
-	).toBeVisible();
+		);
+
+		await expect(
+			richTextPredefinedValueIframe.getByText(
+				'Typing a new predefined value for the rich text field.'
+			)
+		).toBeVisible();
+	});
 });

@@ -563,17 +563,31 @@ test.describe('Text input field', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			// Type 290 characters and check that the error is shown
+			// Type 290 characters and check that the input error is shown
+
+			const inputError = page.getByText(
+				'Maximum Number of Characters Exceeded: 290 / 280'
+			);
+
+			const formError = page.getByText(
+				'Value exceeds maximum length of 280 for field Lemon Size.'
+			);
 
 			await page.getByLabel('Lemon Size').click();
 
 			await page.keyboard.type('a'.repeat(290));
 
-			await expect(
-				page.getByText(
-					'Maximum Number of Characters Exceeded: 290 / 280'
-				)
-			).toBeVisible();
+			await expect(inputError).toBeVisible();
+
+			await expect(formError).not.toBeVisible();
+
+			// Submit the form and check that the form error is shown as an alert
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(formError).toBeVisible();
+
+			await expect(formError).toHaveClass(/alert/);
 		}
 	);
 

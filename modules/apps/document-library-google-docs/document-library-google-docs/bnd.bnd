@@ -32,3 +32,4 @@ Import-Package:\
 	\
 	*
 Web-ContextPath: /document-library-google-docs
+-noee: true

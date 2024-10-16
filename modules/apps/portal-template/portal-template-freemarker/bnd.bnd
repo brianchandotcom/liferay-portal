@@ -60,3 +60,4 @@ Import-Package:\
 	\
 	*
 -includeresource: @javax.servlet.jsp.jstl-[0-9.]*.jar!/META-INF/*.tld
+-noee: true

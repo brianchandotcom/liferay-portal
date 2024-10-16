@@ -5,15 +5,11 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {languageOverridePageTest} from '../../fixtures/LanguageOverridePageTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {languageOverridePageTest} from '../../fixtures/languageOverridePageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {TLanguageKey} from '../../pages/portal-language-override-web/LanguageOverridePage';
 
 const test = mergeTests(
-	featureFlagsTest({
-		'LPD-27222': true,
-	}),
 	languageOverridePageTest,
 	loginTest()
 );

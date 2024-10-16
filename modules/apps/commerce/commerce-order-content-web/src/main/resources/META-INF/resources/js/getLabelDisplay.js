@@ -28,7 +28,11 @@ export function getLabelDisplay(value) {
 	) {
 		label.displayType = 'info';
 	}
-	else if (label.label === 'expired') {
+	else if (
+		label.label === 'cancelled' ||
+		label.label === 'expired' ||
+		label.label === 'on-hold'
+	) {
 		label.displayType = 'warning';
 	}
 

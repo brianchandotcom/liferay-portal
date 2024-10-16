@@ -18,15 +18,7 @@ const StatusLabel = ({isOpenOrder, namespace, orderId, selectedStatus}) => {
 		({order = null}) => {
 			getOrder(isOpenOrder, order, orderId)
 				.then((order) => {
-					setStatus(
-						getLabelDisplay(
-							order[
-								isOpenOrder
-									? selectedStatus
-									: 'workflowStatusInfo'
-							]
-						)
-					);
+					setStatus(getLabelDisplay(order[selectedStatus]));
 				})
 				.catch((error) => {
 					openToast({

@@ -149,8 +149,9 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		};
 
 		SpringHibernateThreadLocalUtil.setResource(
-			resources, portletSessionFactory,
-			_createSessionHolder(portletSession, portalSessionHolder));
+			portletSessionFactory,
+			_createSessionHolder(portletSession, portalSessionHolder),
+			resources);
 
 		if (DBPartition.isPartitionEnabled()) {
 			LastSessionRecorderUtil.addPortletSession(portletSession);
@@ -301,8 +302,8 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 			}
 			finally {
 				SpringHibernateThreadLocalUtil.setResource(
-					SpringHibernateThreadLocalUtil.getResources(true),
-					_portletSessionFactory, _previousPortletSessionHolder);
+					_portletSessionFactory, _previousPortletSessionHolder,
+					SpringHibernateThreadLocalUtil.getResources(true));
 			}
 		}
 

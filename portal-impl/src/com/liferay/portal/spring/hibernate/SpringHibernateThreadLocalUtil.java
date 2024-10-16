@@ -69,7 +69,7 @@ public class SpringHibernateThreadLocalUtil {
 	}
 
 	public static <T> T setResource(
-		Map<Object, Object> resources, Object key, Object resource) {
+		Object key, Object resource, Map<Object, Object> resources) {
 
 		Object oldResource = null;
 

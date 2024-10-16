@@ -149,13 +149,13 @@ public class PortalTransactionManager
 				SpringHibernateThreadLocalUtil.getResources(true);
 
 			SpringHibernateThreadLocalUtil.setResource(
-				resources, _dataSource, newConnectionHolder);
+				_dataSource, newConnectionHolder, resources);
 
 			hibernateTransactionObject.setConnectionHolder(newConnectionHolder);
 
 			if (hibernateTransactionObject.isNewSessionHolder()) {
 				SpringHibernateThreadLocalUtil.setResource(
-					resources, _sessionFactory, sessionHolder);
+					_sessionFactory, sessionHolder, resources);
 			}
 
 			sessionHolder.setSynchronizedWithTransaction(true);
@@ -335,13 +335,13 @@ public class PortalTransactionManager
 			SpringHibernateThreadLocalUtil.getResources(true);
 
 		SpringHibernateThreadLocalUtil.setResource(
-			resources, _sessionFactory,
-			suspendedResourcesHolder._sessionHolder);
+			_sessionFactory, suspendedResourcesHolder._sessionHolder,
+			resources);
 
 		if (suspendedResourcesHolder._connectionHolder != null) {
 			SpringHibernateThreadLocalUtil.setResource(
-				resources, _dataSource,
-				suspendedResourcesHolder._connectionHolder);
+				_dataSource, suspendedResourcesHolder._connectionHolder,
+				resources);
 		}
 	}
 
@@ -423,9 +423,9 @@ public class PortalTransactionManager
 
 		return new SuspendedResourcesHolder(
 			SpringHibernateThreadLocalUtil.setResource(
-				resources, _dataSource, null),
+				_dataSource, null, resources),
 			SpringHibernateThreadLocalUtil.setResource(
-				resources, _sessionFactory, null));
+				_sessionFactory, null, resources));
 	}
 
 	@Override

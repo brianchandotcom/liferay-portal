@@ -443,167 +443,136 @@ export default function UndoRedo({
 
 	return (
 		<div className="d-flex">
-			{Liferay.FeatureFlags['LPD-36053'] ? (
-				<>
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('undo')}
-						className="btn-monospaced"
-						disabled={step <= 0}
+			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('undo')}
+				className="btn-monospaced"
+				disabled={step <= 0}
+				displayType="secondary"
+				onClick={() => {
+					Liferay.fire('journal:undo');
+					handleUndo(step - 1);
+				}}
+				size="sm"
+				symbol="undo"
+				title={Liferay.Language.get('undo')}
+			/>
+
+			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('redo')}
+				className="btn-monospaced"
+				disabled={!history.length || step === history.length - 1}
+				displayType="secondary"
+				onClick={() => {
+					Liferay.fire('journal:redo');
+					handleRedo(step + 1);
+				}}
+				size="sm"
+				symbol="redo"
+				title={Liferay.Language.get('redo')}
+			/>
+
+			<ClayDropDown
+				active={active}
+				alignmentPosition={Align.BottomLeft}
+				className="ml-2"
+				onActiveChange={setActive}
+				trigger={
+					<ClayButton
+						aria-label={Liferay.Language.get('history')}
+						aria-pressed={active}
+						className="px-2"
+						disabled={history.length <= 1}
 						displayType="secondary"
-						onClick={() => {
-							Liferay.fire('journal:undo');
-							handleUndo(step - 1);
-						}}
 						size="sm"
-						symbol="undo"
-						title={Liferay.Language.get('undo')}
-					/>
-
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('redo')}
-						className="btn-monospaced"
-						disabled={
-							!history.length || step === history.length - 1
-						}
-						displayType="secondary"
-						onClick={() => {
-							Liferay.fire('journal:redo');
-							handleRedo(step + 1);
-						}}
-						size="sm"
-						symbol="redo"
-						title={Liferay.Language.get('redo')}
-					/>
-
-					<ClayDropDown
-						active={active}
-						alignmentPosition={Align.BottomLeft}
-						className="ml-2"
-						onActiveChange={setActive}
-						trigger={
-							<ClayButton
-								aria-label={Liferay.Language.get('history')}
-								aria-pressed={active}
-								className="px-2"
-								disabled={history.length <= 1}
-								displayType="secondary"
-								size="sm"
-								title={Liferay.Language.get('history')}
-							>
-								<span className="inline-item inline-item-before">
-									<ClayIcon symbol="time" />
-								</span>
-
-								<span className="inline-item">
-									<ClayIcon symbol="caret-bottom" />
-								</span>
-							</ClayButton>
-						}
+						title={Liferay.Language.get('history')}
 					>
-						<ClayDropDown.ItemList>
-							{history
-								.map((item, index) => {
-									return (
-										index > 0 && (
-											<ClayDropDown.Item
-												active={step === index}
-												key={index}
-												onClick={() => {
-													if (index === step) {
-														return;
-													}
+						<span className="inline-item inline-item-before">
+							<ClayIcon symbol="time" />
+						</span>
 
-													Liferay.fire(
-														'journal:goto',
-														{
-															step: index,
-														}
-													);
+						<span className="inline-item">
+							<ClayIcon symbol="caret-bottom" />
+						</span>
+					</ClayButton>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{history
+						.map((item, index) => {
+							return (
+								index > 0 && (
+									<ClayDropDown.Item
+										active={step === index}
+										key={index}
+										onClick={() => {
+											if (index === step) {
+												return;
+											}
 
-													if (index < step) {
-														let i = step;
-														while (i > index) {
-															i--;
-															handleUndo(i);
-														}
-													}
-													else {
-														let i = step;
-														while (i < index) {
-															i++;
-															handleRedo(i);
-														}
-													}
+											Liferay.fire('journal:goto', {
+												step: index,
+											});
 
-													setActive(false);
-												}}
-												symbolLeft={
-													step === index
-														? 'check'
-														: ''
+											if (index < step) {
+												let i = step;
+												while (i > index) {
+													i--;
+													handleUndo(i);
 												}
-											>
-												<span className="ml-4 px-1">
-													{METADATA_FIELD_NAME_HISTORY[
-														item.name
-													] || item.name}
-												</span>
-											</ClayDropDown.Item>
-										)
-									);
-								})
-								.reverse()}
+											}
+											else {
+												let i = step;
+												while (i < index) {
+													i++;
+													handleRedo(i);
+												}
+											}
 
-							<ClayDropDown.Divider />
+											setActive(false);
+										}}
+										symbolLeft={
+											step === index ? 'check' : ''
+										}
+									>
+										<span className="ml-4 px-1">
+											{METADATA_FIELD_NAME_HISTORY[
+												item.name
+											] || item.name}
+										</span>
+									</ClayDropDown.Item>
+								)
+							);
+						})
+						.reverse()}
 
-							<ClayDropDown.Item
-								active={step === 0}
-								onClick={() => {
-									if (step === 0) {
-										return;
-									}
+					<ClayDropDown.Divider />
 
-									Liferay.fire('journal:goto', {
-										step: 0,
-									});
+					<ClayDropDown.Item
+						active={step === 0}
+						onClick={() => {
+							if (step === 0) {
+								return;
+							}
 
-									let i = step;
-									while (i > 0) {
-										i--;
-										handleUndo(i);
-									}
+							Liferay.fire('journal:goto', {
+								step: 0,
+							});
 
-									setActive(false);
-								}}
-							>
-								<span className="ml-4 px-1">
-									{Liferay.Language.get('undo-all')}
-								</span>
-							</ClayDropDown.Item>
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				</>
-			) : (
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('undo-all')}
-					className="btn-monospaced"
-					disabled={step === 0}
-					displayType="secondary"
-					onClick={() => {
-						Liferay.fire('journal:goto', {
-							step: 0,
-						});
-						let i = step;
-						while (i > 0) {
-							i--;
-							handleUndo(i);
-						}
-					}}
-					size="sm"
-					symbol="time"
-					title={Liferay.Language.get('undo-all')}
-				/>
-			)}
+							let i = step;
+							while (i > 0) {
+								i--;
+								handleUndo(i);
+							}
+
+							setActive(false);
+						}}
+					>
+						<span className="ml-4 px-1">
+							{Liferay.Language.get('undo-all')}
+						</span>
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 		</div>
 	);
 }

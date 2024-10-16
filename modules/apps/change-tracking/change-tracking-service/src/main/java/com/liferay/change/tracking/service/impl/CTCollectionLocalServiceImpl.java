@@ -385,6 +385,7 @@ public class CTCollectionLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CTCollection deleteCTCollection(CTCollection ctCollection)
 		throws PortalException {

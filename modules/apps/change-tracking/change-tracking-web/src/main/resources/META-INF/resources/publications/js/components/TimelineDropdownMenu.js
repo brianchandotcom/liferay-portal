@@ -226,6 +226,12 @@ export default function TimelineDropdownMenu({
 	});
 
 	if (deleteURL) {
+		const deleteRedirectURL = createMVCRenderCommandURL(
+			timelineItem.ctCollectionId,
+			'/change_tracking/view_publications',
+			namespace
+		);
+
 		dropdownItems.push(
 			{type: 'divider'},
 			{
@@ -237,9 +243,7 @@ export default function TimelineDropdownMenu({
 						),
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
-								fetch(deleteURL, {
-									method: 'DELETE',
-								}).then((response) => {
+								fetch(deleteURL).then((response) => {
 									if (response.ok) {
 										showNotification(
 											sub(
@@ -252,11 +256,10 @@ export default function TimelineDropdownMenu({
 											),
 											false,
 											() => {
-												setTimeout(
-													() =>
-														window.location.reload(),
-													1250
-												);
+												setTimeout(() => {
+													window.location.href =
+														deleteRedirectURL;
+												}, 1250);
 											}
 										);
 									}

@@ -177,6 +177,7 @@ const PublicationTimeline = ({
 												? getEditURL(timelineItem.id)
 												: undefined
 										}
+										namespace={namespace}
 										revertURL={
 											timelineItem.ctCollectionStatus
 												.code ===
@@ -190,6 +191,11 @@ const PublicationTimeline = ({
 												WORKFLOW_STATUS_PENDING &&
 											!!timelineItem.actions.get
 												? getReviewURL(timelineItem.id)
+												: undefined
+										}
+										timelineItem={
+											timelineDeleteURL
+												? timelineItem
 												: undefined
 										}
 									/>

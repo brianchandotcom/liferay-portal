@@ -347,15 +347,15 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 			_commerceOrderModelResourcePermission.
 				getPortletResourcePermission();
 
-		if (!portletResourcePermission.contains(
+		if (portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), groupId,
 				CommerceOrderActionKeys.MANAGE_ALL_ACCOUNTS)) {
 
-			return _commerceAccountHelper.getUserCommerceAccountIds(
-				contextUser.getUserId(), groupId);
+			return null;
 		}
 
-		return null;
+		return _commerceAccountHelper.getUserCommerceAccountIds(
+			contextUser.getUserId(), groupId);
 	}
 
 	private String _getPlacedOrderConfirmationCheckoutStepURL(

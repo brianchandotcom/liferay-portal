@@ -89,46 +89,37 @@ export const FacetUtil = {
 			.map((term) => {
 				const termId = _getTermId(term);
 
-				if (termId === CUSTOM_RANGE_BUCKET_TEXT) {
+				const isCurrentTarget = termId === currentSelectedTermId;
 
-					// For the special case of a range facet, the
-					// termId is 'custom-range' and the parameters are
-					// prefixed with 'from' and 'to'.
-
-					// Set an empty range if a non-custom-range facet
-					// was selected. It should serve as a placeholder to grab
-					// the existing range from the URL parameters.
-
-					if (currentSelectedTermId !== CUSTOM_RANGE_BUCKET_TEXT) {
-						return [];
-					}
-
-					if (
-						form.querySelector('.aggregation-type').value ===
-						'range'
-					) {
-						return [0, 0];
-					}
-
-					// If no min-max values are set, assume it's a date
-					// range, and use the last 24 hours as the default range.
-
-					const endDate = new Date();
-					const startDate = new Date(
-						endDate - 1000 * 60 * 60 * 24 // 24 hours
-					);
-
-					return [
-						startDate.toISOString().split('T')[0],
-						endDate.toISOString().split('T')[0],
-					];
-				}
-				else {
-					return termId;
-				}
+				return this.getSelectedTerm(termId, form, isCurrentTarget);
 			});
 
 		this.selectTerms(form, selectedTerms);
+	},
+
+	changeSelectionForSingleFacet(event) {
+		event.preventDefault();
+
+		const form = event.currentTarget.form;
+
+		if (!form) {
+			return;
+		}
+
+		// Disable checkboxes across all facets to avoid multiple
+		// selections. Only the most recent selection will be added
+		// since the page needs to be reloaded before another selection
+		// can be made.
+
+		const allFacetTerms = document.querySelectorAll(`.${FACET_TERM_CLASS}`);
+
+		allFacetTerms.forEach((term) => {
+			Liferay.Util.toggleDisabled(term, true);
+		});
+
+		const termId = _getTermId(event.currentTarget);
+
+		this.selectTerms(form, [this.getSelectedTerm(termId, form, true)]);
 	},
 
 	clearSelections(event) {
@@ -149,6 +140,67 @@ export const FacetUtil = {
 		inputs.forEach((term) => {
 			Liferay.Util.toggleDisabled(term, false);
 		});
+	},
+
+	getSelectedTerm(termId, form, isCurrentTarget) {
+		if (termId === CUSTOM_RANGE_BUCKET_TEXT) {
+
+			// For the special case of a range facet, the
+			// termId is 'custom-range' and the parameters are
+			// prefixed with 'from' and 'to'. This will return
+			// an array [from, to] for the custom range.
+
+			// If the term is not the current target, apply the
+			// existing range from the URL parameters. This is set
+			// in setURLParameters so use '[]' as a placeholder.
+
+			if (!isCurrentTarget) {
+				return [];
+			}
+
+			// If the term is the current target, use the current
+			// values in the inputs.
+			// General range defaults to [0, 0] if no value is set.
+			// Date range defaults to the last 24 hours if no value is set.
+
+			const fromValue = form.querySelector('[id$=fromInput]').value;
+			const toValue = form.querySelector('[id$=toInput]').value;
+
+			if (form.querySelector('.aggregation-type').value === 'range') {
+				return [fromValue || 0, toValue || 0];
+			}
+
+			let endDate = new Date();
+			let startDate = new Date(
+				endDate - 1000 * 60 * 60 * 24 // 24 hours
+			);
+
+			if (fromValue && toValue) {
+				endDate = new Date(toValue);
+				startDate = new Date(fromValue);
+			}
+
+			return [
+				startDate.toISOString().split('T')[0],
+				endDate.toISOString().split('T')[0],
+			];
+		}
+		else {
+			return termId;
+		}
+	},
+
+	isCustomRangeValid(event) {
+		const form = event.currentTarget.form;
+
+		const fromInputValue = form.querySelector('[id$=fromInput]').value;
+		const toInputValue = form.querySelector('[id$=toInput]').value;
+
+		return (
+			fromInputValue &&
+			toInputValue &&
+			Number(fromInputValue) <= Number(toInputValue)
+		);
 	},
 
 	queryParameterAndUpdateValue(form, search, selections) {

@@ -60,7 +60,6 @@
 							displayType="link"
 							id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
 							name="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
-							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						>
 							<#if customRangeBucketDisplayContext.isSelected()>
 								<strong><@liferay_ui["message"] key="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}" /></strong>
@@ -74,6 +73,28 @@
 								</small>
 							</#if>
 						</@clay.button>
+
+						<@liferay_aui.script>
+							document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onclick = function(event) {
+								if ("${customFacetDisplayContext.getAggregationType()}" == "dateRange") {
+									Liferay.Search.FacetUtil.changeSelection(event);
+								}
+								else {
+									event.preventDefault();
+
+									const customRangeElement = document.getElementById('${namespace}customRange');
+
+									if (customRangeElement.classList.contains('hide')) {
+										customRangeElement.classList.remove('hide');
+									}
+									else {
+										if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+											Liferay.Search.FacetUtil.changeSelection(event);
+										}
+									}
+								}
+							}
+						</@liferay_aui.script>
 					</li>
 				</#if>
 
@@ -105,6 +126,7 @@
 
 						<@clay["button"]
 							cssClass="custom-range-filter-button"
+							disabled=!customFacetDisplayContext.getToParameterValue()?? || !customFacetDisplayContext.getFromParameterValue()?? || customFacetDisplayContext.getToParameterValue()?number < customFacetDisplayContext.getFromParameterValue()?number
 							displayType="secondary"
 							id="${namespace + 'searchCustomRangeButton'}"
 							label="search"

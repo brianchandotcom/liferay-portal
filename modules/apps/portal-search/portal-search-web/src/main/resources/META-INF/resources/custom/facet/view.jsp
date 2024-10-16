@@ -151,8 +151,28 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 												<aui:script>
 													document.getElementById(
 														'<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>'
-													).onchange = function (event) {
-														Liferay.Search.FacetUtil.changeSelection(event);
+													).onclick = function (event) {
+														event.preventDefault();
+
+														if (
+															'<%= customFacetDisplayContext.getAggregationType() %>' == 'dateRange'
+														) {
+															Liferay.Search.FacetUtil.changeSelection(event);
+														}
+														else {
+															const customRangeElement = document.getElementById(
+																'<portlet:namespace />customRange'
+															);
+
+															if (customRangeElement.classList.contains('hide')) {
+																customRangeElement.classList.remove('hide');
+															}
+															else {
+																if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+																	Liferay.Search.FacetUtil.changeSelection(event);
+																}
+															}
+														}
 													};
 												</aui:script>
 
@@ -250,6 +270,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 										<clay:button
 											aria-label='<%= LanguageUtil.get(request, "search") %>'
 											cssClass="custom-range-filter-button"
+											disabled="<%= (customFacetDisplayContext.getToParameterValue() == null) || (customFacetDisplayContext.getFromParameterValue() == null) || (Float.parseFloat(customFacetDisplayContext.getToParameterValue()) < Float.parseFloat(customFacetDisplayContext.getFromParameterValue())) %>"
 											displayType="secondary"
 											id='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
 											label="search"

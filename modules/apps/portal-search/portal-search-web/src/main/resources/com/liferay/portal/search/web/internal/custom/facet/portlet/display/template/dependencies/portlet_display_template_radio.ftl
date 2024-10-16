@@ -73,6 +73,7 @@
 							<label class="facet-checkbox-label" for="${namespace}${customRangeBucketDisplayContext.getBucketText()}">
 								<input
 									${(customRangeBucketDisplayContext.isSelected())?then("checked", "")}
+									data-term-id="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}"
 									class="custom-control-input facet-term"
 									disabled
 									id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
@@ -82,8 +83,24 @@
 								/>
 
 								<@liferay_aui.script>
-									document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onchange = function() {
-										window.location.href = "${customRangeBucketDisplayContext.getFilterValue()}";
+									document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onclick = function(event) {
+										if ("${customFacetDisplayContext.getAggregationType()}" == "dateRange") {
+											window.location.href = "${customRangeBucketDisplayContext.getFilterValue()}";
+										}
+										else {
+											event.preventDefault();
+
+											const customRangeElement = document.getElementById('${namespace}customRange');
+
+											if (customRangeElement.classList.contains('hide')) {
+												customRangeElement.classList.remove('hide');
+											}
+											else {
+												if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+													Liferay.Search.FacetUtil.changeSelectionForSingleFacet(event);
+												}
+											}
+										}
 									}
 								</@liferay_aui.script>
 
@@ -135,6 +152,7 @@
 
 						<@clay["button"]
 							cssClass="custom-range-filter-button"
+							disabled=!customFacetDisplayContext.getToParameterValue()?? || !customFacetDisplayContext.getFromParameterValue()?? || customFacetDisplayContext.getToParameterValue()?number < customFacetDisplayContext.getFromParameterValue()?number
 							displayType="secondary"
 							id="${namespace + 'searchCustomRangeButton'}"
 							label="search"

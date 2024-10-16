@@ -82,8 +82,24 @@
 								/>
 
 								<@liferay_aui.script>
-									document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onchange = function() {
-										Liferay.Search.FacetUtil.changeSelection(event);
+									document.getElementById('${namespace}${customRangeBucketDisplayContext.getBucketText()}').onclick = function(event) {
+										if ("${customFacetDisplayContext.getAggregationType()}" == "dateRange") {
+											Liferay.Search.FacetUtil.changeSelection(event);
+										}
+										else {
+											event.preventDefault();
+
+											const customRangeElement = document.getElementById('${namespace}customRange');
+
+											if (customRangeElement.classList.contains('hide')) {
+												customRangeElement.classList.remove('hide');
+											}
+											else {
+												if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+													Liferay.Search.FacetUtil.changeSelection(event);
+												}
+											}
+										}
 									}
 								</@liferay_aui.script>
 
@@ -135,6 +151,7 @@
 
 						<@clay["button"]
 							cssClass="custom-range-filter-button"
+							disabled=!customFacetDisplayContext.getToParameterValue()?? || !customFacetDisplayContext.getFromParameterValue()?? || (customFacetDisplayContext.getToParameterValue()?number < customFacetDisplayContext.getFromParameterValue()?number)
 							displayType="secondary"
 							id="${namespace + 'searchCustomRangeButton'}"
 							label="search"

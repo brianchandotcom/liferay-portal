@@ -460,7 +460,9 @@ test.describe('Submit button', () => {
 					name: displayPageTemplateName,
 				});
 
-				displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+				await displayPageTemplatesPage.editTemplate(
+					displayPageTemplateName
+				);
 
 				// Add a Form Container and map it to Lemon Weight field
 

@@ -9,10 +9,12 @@ import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
+import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 export const test = mergeTests(
 	clientExtensionsPageTest,
+	editCustomElementPageTest,
 	isolatedLayoutTest({publish: false}),
 	pageEditorPagesTest,
 	loginTest()
@@ -108,3 +110,26 @@ for (const sample of SAMPLES) {
 		});
 	});
 }
+
+test(
+	'Title field does not allow XSS injections',
+	{tag: '@LPD-39400'},
+	async ({clientExtensionsPage, editCustomElementPage, page}) => {
+		const NAME = '<svg onload="document.write(\'\')">';
+
+		await editCustomElementPage.goto();
+
+		await editCustomElementPage.nameInput.fill(NAME);
+		await editCustomElementPage.htmlElementNameInput.fill('test-element');
+		await editCustomElementPage.javaScriptURLInput.fill(
+			'http://localhost:8080'
+		);
+
+		await editCustomElementPage.publish();
+
+		await clientExtensionsPage.goto();
+		await clientExtensionsPage.editClientExtension(NAME);
+
+		expect(page.locator('h3')).toHaveText(NAME);
+	}
+);

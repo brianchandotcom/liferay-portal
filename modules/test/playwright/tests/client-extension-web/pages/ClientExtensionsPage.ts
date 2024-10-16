@@ -52,6 +52,14 @@ export class ClientExtensionsPage {
 		await this.openItemActionsDropdown(clientExtensionName);
 
 		await this.editMenuItem.click();
+
+		// Wait for page to load
+
+		expect(
+			this.page.locator(
+				'#cke__com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_description'
+			)
+		).toBeVisible();
 	}
 
 	getRowByText(text: string) {
@@ -89,6 +97,10 @@ export class ClientExtensionsPage {
 			`${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage` +
 				'?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet'
 		);
+
+		// Wait for page to load
+
+		expect(this.page.locator('.pagination-results')).toBeVisible();
 	}
 
 	async openItemActionsDropdown(clientExtensionName: string) {

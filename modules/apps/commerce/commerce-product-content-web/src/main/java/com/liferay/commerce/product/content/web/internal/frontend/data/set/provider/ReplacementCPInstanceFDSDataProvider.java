@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -68,7 +67,7 @@ public class ReplacementCPInstanceFDSDataProvider
 		long cProductId = ParamUtil.getLong(httpServletRequest, "cProductId");
 
 		if (sort == null) {
-			sort = SortFactoryUtil.getSort(CPInstance.class, "sku", "ASC");
+			sort = new Sort("sku", Sort.STRING_TYPE, false);
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(

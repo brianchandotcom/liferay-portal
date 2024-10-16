@@ -36,7 +36,7 @@ export class InstanceSettingsPage {
 	async goToInstanceSetting(
 		categoryKey: string,
 		configurationName: string,
-		nthMenuItem?: number
+		sectionName?: string
 	) {
 		await this.goto();
 
@@ -47,17 +47,22 @@ export class InstanceSettingsPage {
 			})
 			.click();
 
-		const configurationMenuItem = this.page.getByRole('menuitem', {
-			exact: true,
-			name: configurationName,
-		});
+		let parent: Locator | Page = this.page;
 
-		if (nthMenuItem) {
-			await configurationMenuItem.nth(nthMenuItem).click();
+		if (sectionName) {
+			parent = this.page
+				.locator('div')
+				.filter({hasText: sectionName})
+				.locator('+ div')
+				.getByRole('menubar');
 		}
-		else {
-			await configurationMenuItem.first().click();
-		}
+
+		await parent
+			.getByRole('menuitem', {
+				exact: true,
+				name: configurationName,
+			})
+			.click();
 	}
 
 	async goToSSO() {

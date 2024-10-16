@@ -40,7 +40,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-const testInfoPanel = mergeTests(
+const testForCollections = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPS-189856': true,
@@ -107,8 +107,8 @@ async function addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
 	);
 }
 
-testInfoPanel.describe('InfoPanel', () => {
-	testInfoPanel(
+testForCollections.describe('Tests for Collections', () => {
+	testForCollections(
 		'View the info panel for a display page and for a folder',
 		{
 			tag: ['@LPD-34205', '@LPS-189857'],
@@ -214,6 +214,52 @@ testInfoPanel.describe('InfoPanel', () => {
 			await expect(
 				infoPanel.locator('.sidebar-body .mb-4').nth(3)
 			).toContainText('Modified');
+		}
+	);
+
+	testForCollections(
+		'User can copy a display page folder',
+		{
+			tag: '@LPD-39372',
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create two different display page folder
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageFolderNameSource = getRandomString();
+			const displayPageFolderNameTarget = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageFolderNameSource
+			);
+			await displayPageTemplatesPage.createFolder(
+				displayPageFolderNameTarget
+			);
+
+			// Copy folder source to folder target
+
+			await displayPageTemplatesPage.copyFolderTo(
+				displayPageFolderNameSource,
+				displayPageFolderNameTarget
+			);
+
+			// Assert copy display page collection
+
+			await page
+				.getByRole('link', {
+					exact: true,
+					name: displayPageFolderNameTarget,
+				})
+				.click();
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: displayPageFolderNameSource,
+				})
+			).toBeVisible();
 		}
 	);
 });

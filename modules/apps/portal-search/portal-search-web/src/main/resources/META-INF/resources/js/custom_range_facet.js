@@ -192,8 +192,8 @@ AUI.add(
 					{
 						[rangeRuleName]() {
 							return (
-								instance.fromInputPicker.val() <=
-								instance.toInputPicker.val()
+								Number(instance.fromInputPicker.val()) <=
+								Number(instance.toInputPicker.val())
 							);
 						},
 					},

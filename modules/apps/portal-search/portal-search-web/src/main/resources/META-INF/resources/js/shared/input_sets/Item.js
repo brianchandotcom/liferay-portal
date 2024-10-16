@@ -70,8 +70,9 @@ function Item({
 							displayType="secondary"
 							monospaced
 							onClick={
-								!!onInputSetItemDelete &&
-								onInputSetItemDelete(index)
+								onInputSetItemDelete
+									? onInputSetItemDelete(index)
+									: undefined
 							}
 							small
 						>

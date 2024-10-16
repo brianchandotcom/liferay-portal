@@ -79,7 +79,7 @@ public abstract class BaseCookiesPreferenceHandlingConfigurationScreen
 					portal.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE)),
-					scope, _getScopePk(httpServletRequest, scope)));
+					scope, _getScopePK(httpServletRequest, scope)));
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(
@@ -109,7 +109,7 @@ public abstract class BaseCookiesPreferenceHandlingConfigurationScreen
 	)
 	protected ServletContext servletContext;
 
-	private long _getScopePk(
+	private long _getScopePK(
 		HttpServletRequest httpServletRequest,
 		ExtendedObjectClassDefinition.Scope scope) {
 

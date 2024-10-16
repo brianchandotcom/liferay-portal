@@ -231,6 +231,19 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 						"getCTEntry", _ctCollectionModelResourcePermission);
 				}
 			).put(
+				"delete",
+				() -> {
+					if (ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.DELETE, ctEntry.getCtCollectionId(),
+						"getCTEntry", _ctCollectionModelResourcePermission);
+				}
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, ctEntry.getCtCollectionId(), "getCTEntry",

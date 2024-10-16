@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -108,6 +110,10 @@ public class LayoutUtilityPageEntryUpgradeTest {
 	private void _assertPublicLayoutTypeUtilityLayout(Layout layout) {
 		Assert.assertFalse(layout.isPrivateLayout());
 		Assert.assertTrue(layout.isTypeUtility());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty("privateLayout")));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -125,11 +131,19 @@ public class LayoutUtilityPageEntryUpgradeTest {
 		layout.setPrivateLayout(true);
 		layout.setType(LayoutConstants.TYPE_CONTENT);
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put("privateLayout", "true");
+
 		layout = _layoutLocalService.updateLayout(layout);
 
 		Assert.assertTrue(layout.isPrivateLayout());
-		Assert.assertEquals(
-			LayoutConstants.TYPE_CONTENT, layout.getType());
+		Assert.assertEquals(LayoutConstants.TYPE_CONTENT, layout.getType());
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty("privateLayout")));
 	}
 
 	@Inject(

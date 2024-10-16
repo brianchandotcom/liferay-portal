@@ -171,6 +171,10 @@ public class CustomFacetPortletSharedSearchContributor
 			aggregationType, customFacetPortletPreferences,
 			portletSharedSearchSettings, rangesJSONArray, selectedRanges);
 
+		if (JSONUtil.isEmpty(rangesJSONArray)) {
+			return;
+		}
+
 		_contribute(
 			aggregationField, aggregationType, customFacetPortletPreferences,
 			portletSharedSearchSettings, rangesJSONArray, selectedRanges);

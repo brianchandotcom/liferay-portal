@@ -16,6 +16,7 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
+import {expandSection} from '../../utils/expandSection';
 import getRandomString from '../../utils/getRandomString';
 import {performUserSwitch} from '../../utils/performLogin';
 import {closeProductMenu, openProductMenu} from '../../utils/productMenu';
@@ -663,6 +664,73 @@ test.describe('Fragments Panel', () => {
 				.hover();
 
 			await expect(fragment).toHaveClass(/disabled/);
+		}
+	);
+
+	test(
+		'Correct message is displayed when adding a removed fragment',
+		{tag: '@LPD-39508'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment set with a fragment
+
+			const collectionName = getRandomString();
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: collectionName,
+					}
+				);
+
+			const fragmentName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				fragmentCollectionId,
+				groupId: site.id,
+				html: '<div class="fragment-name">Fragment Example</div>',
+				name: fragmentName,
+				type: 'component',
+			});
+
+			// Create content page and go to edit mode
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Delete the fragment set
+
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollectionId
+			);
+
+			// Try to add the fragment
+
+			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+			const header = page.getByRole('menuitem', {
+				exact: true,
+				name: collectionName,
+			});
+
+			await expandSection(header);
+
+			await page.getByLabel(`Add ${fragmentName}`).focus();
+
+			await page.keyboard.press('Enter');
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByText(
+					'Error:The fragment can no longer be added because it has been deleted.',
+					{exact: true}
+				)
+			).toBeVisible();
 		}
 	);
 });

@@ -135,7 +135,7 @@ public class SampleSQLBuilderTest {
 			"1");
 		properties.put(BenchmarksPropsKeys.MAX_COMPANY_COUNT, "2");
 		properties.put(BenchmarksPropsKeys.MAX_COMPANY_USER_COUNT, "1");
-		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "6");
 		properties.put(
 			BenchmarksPropsKeys.MAX_CP_DEFINITION_ATTACHMENT_TYPE_IMAGE_COUNT,
 			"1");

@@ -77,45 +77,37 @@ public class LayoutUtilityPageEntryUpgradeTest {
 				LayoutUtilityPageEntryConstants.TYPE_STATUS, 0,
 				_serviceContext);
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_classNameLocalService.getClassNameId(Layout.class),
-			layoutUtilityPageEntry.getPlid());
-
-		draftLayout.setPrivateLayout(true);
-		draftLayout.setType(LayoutConstants.TYPE_CONTENT);
-
-		draftLayout = _layoutLocalService.updateLayout(draftLayout);
-
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutUtilityPageEntry.getPlid());
 
-		layout.setPrivateLayout(true);
-		layout.setType(LayoutConstants.TYPE_CONTENT);
+		_setPrivateLayoutTypeContentLayout(layout);
+		_setPrivateLayoutTypeContentLayout(layout.fetchDraftLayout());
 
-		layout = _layoutLocalService.updateLayout(layout);
-
-		Layout sameLayoutIdLayout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		sameLayoutIdLayout.setLayoutId(layout.getLayoutId());
-
-		sameLayoutIdLayout = _layoutLocalService.updateLayout(
-			sameLayoutIdLayout);
+		Layout sameLayoutIdLayout = _addSameLayoutIdLayout(layout);
 
 		_runUpgrade();
-
-		Layout updatedDraftLayout = _layoutLocalService.fetchLayout(
-			draftLayout.getPlid());
-
-		Assert.assertFalse(updatedDraftLayout.isPrivateLayout());
-		Assert.assertTrue(updatedDraftLayout.isTypeUtility());
 
 		Layout updatedLayout = _layoutLocalService.fetchLayout(
 			layout.getPlid());
 
+		_assertPublicLayoutTypeUtilityLayout(updatedLayout);
+		_assertPublicLayoutTypeUtilityLayout(updatedLayout.fetchDraftLayout());
+
 		Assert.assertNotEquals(
 			updatedLayout.getLayoutId(), sameLayoutIdLayout.getLayoutId());
-		Assert.assertFalse(updatedLayout.isPrivateLayout());
-		Assert.assertTrue(updatedLayout.isTypeUtility());
+	}
+
+	private Layout _addSameLayoutIdLayout(Layout layout) throws Exception {
+		Layout curLayout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		curLayout.setLayoutId(layout.getLayoutId());
+
+		return _layoutLocalService.updateLayout(curLayout);
+	}
+
+	private void _assertPublicLayoutTypeUtilityLayout(Layout layout) {
+		Assert.assertFalse(layout.isPrivateLayout());
+		Assert.assertTrue(layout.isTypeUtility());
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -127,6 +119,17 @@ public class LayoutUtilityPageEntryUpgradeTest {
 		}
 
 		_multiVMPool.clear();
+	}
+
+	private void _setPrivateLayoutTypeContentLayout(Layout layout) {
+		layout.setPrivateLayout(true);
+		layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		Assert.assertTrue(layout.isPrivateLayout());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, layout.getType());
 	}
 
 	@Inject(

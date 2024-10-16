@@ -101,8 +101,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				addMessage(
 					fileName,
-					"Tag attribute '" + illegalAttributeName +
-						"' is not allowed, see LPD-18227",
+					"Tag attribute \"" + illegalAttributeName +
+						"\" is not allowed, see LPD-18227",
 					getLineNumber(content, x));
 			}
 		}

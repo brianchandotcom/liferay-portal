@@ -243,6 +243,103 @@ test.describe('Management Toolbar Active State', () => {
 		});
 	});
 
+	test('Assert the action buttons are displayed as icon buttons in responsive mode @LPS-144538', async ({
+		page,
+	}) => {
+		const managementToolbarActiveStateContainer = page.locator(
+			'#managementToolbarActiveState'
+		);
+
+		await test.step('Set the window size to tablet size', async () => {
+			await page.setViewportSize({height: 1024, width: 800});
+		});
+
+		await test.step('Check that the text is not visible', async () => {
+			await expect(
+				managementToolbarActiveStateContainer.getByText('Download')
+			).not.toBeVisible();
+
+			await expect(
+				managementToolbarActiveStateContainer.getByText('Delete')
+			).not.toBeVisible();
+		});
+
+		await test.step('Check that the icon is visible', async () => {
+
+			// This counts the icons because for responsiveness there is one
+			// button with an icon only and another button with icon and text
+			// where one should be visible at a time.
+
+			const downloadIconsLocator =
+				managementToolbarActiveStateContainer.locator(
+					'.lexicon-icon-download'
+				);
+
+			const downloadIcons = await downloadIconsLocator.all();
+
+			let downloadIconVisibleCount = 0;
+
+			for (const downloadIcon of downloadIcons) {
+				if (await downloadIcon.isVisible()) {
+					downloadIconVisibleCount++;
+				}
+			}
+
+			expect(downloadIconVisibleCount).toEqual(1);
+
+			const trashIconsLocator =
+				managementToolbarActiveStateContainer.locator(
+					'.lexicon-icon-trash'
+				);
+
+			const trashIcons = await trashIconsLocator.all();
+
+			let trashIconVisibleCount = 0;
+
+			for (const trashIcon of trashIcons) {
+				if (await trashIcon.isVisible()) {
+					trashIconVisibleCount++;
+				}
+			}
+
+			expect(trashIconVisibleCount).toEqual(1);
+		});
+	});
+
+	test('Assert tooltip message will be displayed when hovered over an action button in responsive mode @LPS-144538', async ({
+		page,
+	}) => {
+		await test.step('Set the window size to tablet size', async () => {
+			await page.setViewportSize({height: 1024, width: 800});
+		});
+
+		await test.step('Hover over the download button', async () => {
+			await page
+				.locator('#managementToolbarActiveState')
+				.getByRole('button', {name: 'Download'})
+				.hover();
+		});
+
+		await test.step('Check the tooltip text is displayed', async () => {
+			await expect(
+				page.locator('.tooltip-inner').getByText('Download')
+			).toBeVisible();
+		});
+
+		await test.step('Hover over the delete button', async () => {
+			await page
+				.locator('#managementToolbarActiveState')
+				.getByRole('link', {name: 'Delete'})
+				.hover();
+		});
+
+		await test.step('Check the tooltip text is displayed', async () => {
+			await expect(
+				page.locator('.tooltip-inner').getByText('Delete')
+			).toBeVisible();
+		});
+	});
+
 	test('Assert the clear button will be displayed as an icon button in responsive mode @LPS-144539', async ({
 		page,
 	}) => {

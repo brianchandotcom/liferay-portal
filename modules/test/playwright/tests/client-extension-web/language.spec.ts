@@ -9,10 +9,7 @@ import {languageOverridePageTest} from '../../fixtures/languageOverridePageTest'
 import {loginTest} from '../../fixtures/loginTest';
 import {TLanguageKey} from '../../pages/portal-language-override-web/LanguageOverridePage';
 
-const test = mergeTests(
-	languageOverridePageTest,
-	loginTest()
-);
+const test = mergeTests(languageOverridePageTest, loginTest());
 
 const EXPECTED_LANGUAGE_KEY: TLanguageKey = {
 	key: 'do-you-like-to-eat-pizza-with-anchovies',
@@ -39,19 +36,23 @@ const EXPECTED_LANGUAGE_KEY: TLanguageKey = {
 test('LPD-36494 Assert that the language client extension is deployed', async ({
 	languageOverridePage,
 }) => {
-	await languageOverridePage.goto();
+	await test.step('Check that the translations were imported', async () => {
+		await languageOverridePage.goto();
 
-	await languageOverridePage.changeFilter('Any Language');
+		await languageOverridePage.changeFilter('Any Language');
 
-	await languageOverridePage.searchLanguageKey(EXPECTED_LANGUAGE_KEY.key);
+		await languageOverridePage.searchLanguageKey(EXPECTED_LANGUAGE_KEY.key);
 
-	await languageOverridePage.assertLanguageKeyInListView(
-		EXPECTED_LANGUAGE_KEY
-	);
+		await languageOverridePage.assertLanguageKeyInListView(
+			EXPECTED_LANGUAGE_KEY
+		);
 
-	await languageOverridePage.assertLanguageKeyTranslations(
-		EXPECTED_LANGUAGE_KEY
-	);
+		await languageOverridePage.assertLanguageKeyTranslations(
+			EXPECTED_LANGUAGE_KEY
+		);
+	});
 
-	await languageOverridePage.assertLanguageKeyTranslationIsEmpty('es-ES');
+	await test.step('Check that a translation with (Automatic Copy) was not imported', async () => {
+		await languageOverridePage.assertLanguageKeyTranslationIsEmpty('es-ES');
+	});
 });

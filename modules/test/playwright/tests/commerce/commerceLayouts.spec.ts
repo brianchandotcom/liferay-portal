@@ -4,11 +4,13 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
@@ -16,6 +18,7 @@ import {liferayConfig} from '../../liferay.config';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -23,6 +26,7 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-11147': true,
 	}),
@@ -1796,6 +1800,189 @@ test('LPD-35558 Order Data Sets and header fragments', async ({
 			'Feature Flags',
 			'Developer'
 		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-33490 Purchase Document in Open Order Details', async ({
+	apiHelpers,
+	commerceLayoutsPage,
+	displayPageTemplatesPage,
+	page,
+}) => {
+	test.setTimeout(180000);
+
+	try {
+		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
+
+		const featureFlagEnabled = await page
+			.getByLabel('COMMERCE-9410')
+			.isChecked();
+
+		if (!featureFlagEnabled) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.uncheck();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'purchaseOrderDocument'
+		);
+		await commerceLayoutsPage.infoBoxLabelInput.fill(
+			'Purchase Order Document'
+		);
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toBeVisible();
+
+		let fileChooserPromise = page.waitForEvent('filechooser');
+
+		await commerceLayoutsPage
+			.infoBoxButton('purchaseOrderDocument')
+			.click();
+
+		let fileChooser = await fileChooserPromise;
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image1.jpg')
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image1.jpg')
+		).toBeVisible();
+
+		fileChooserPromise = page.waitForEvent('filechooser');
+
+		await commerceLayoutsPage.infoBoxEditPurchaseOrderDocumentButton.click();
+
+		fileChooser = await fileChooserPromise;
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image2.jpg')
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxDeletePurchaseOrderDocumentButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toBeVisible();
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toHaveCount(0);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toBeVisible();
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toHaveCount(0);
+	}
+	finally {
+		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
 
 		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
 			await page.getByLabel('COMMERCE-9410').click();

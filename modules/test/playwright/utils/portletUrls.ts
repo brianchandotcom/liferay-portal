@@ -62,6 +62,8 @@ export const PORTLET_URLS = {
 	staging:
 		'/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet',
 	styleBooks: '/~/control_panel/manage/-/style_books/style_books',
+	systemFeatureFlagDeveloper:
+		'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_configurationScreenKey=feature.flag.3.dev.system',
 	tagsAdmin: '/~/control_panel/manage/-/tags_admin/tags',
 	teams: '/~/control_panel/manage/-/site_teams/teams',
 	templates:

@@ -265,7 +265,7 @@ export default function _JournalPortlet({
 		else {
 			showAlert(
 				Liferay.Language.get(
-					'please-ensure-all-mandatory-fields-are-completed-to-enable-autosave'
+					'please-complete-all-mandatory-fields-to-enable-autosave'
 				),
 				Liferay.Language.get('info'),
 				'info'
@@ -462,7 +462,7 @@ export default function _JournalPortlet({
 					lockHolder.lock?.unlock(true);
 					showAlert(
 						Liferay.Language.get(
-							'please-ensure-all-mandatory-fields-are-completed-to-enable-autosave'
+							'please-complete-all-mandatory-fields-to-enable-autosave'
 						),
 						Liferay.Language.get('info'),
 						'info'

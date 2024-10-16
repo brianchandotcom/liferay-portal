@@ -49,7 +49,6 @@ public class CommerceServicePortalInstanceLifecycleListener
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAttribute("forceReloadPermissions", Boolean.TRUE);
 		serviceContext.setCompanyId(company.getCompanyId());
 		serviceContext.setUserId(_getAdminUserId(company.getCompanyId()));
 		serviceContext.setUuid(PortalUUIDUtil.generate());

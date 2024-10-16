@@ -174,7 +174,9 @@ const PublicationTimeline = ({
 												.code ===
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.update
-												? getEditURL(timelineItem.id)
+												? getEditURL(
+														timelineItem.ctCollectionId
+													)
 												: undefined
 										}
 										namespace={namespace}
@@ -182,7 +184,9 @@ const PublicationTimeline = ({
 											timelineItem.ctCollectionStatus
 												.code ===
 											WORKFLOW_STATUS_APPROVED
-												? getRevertURL(timelineItem.id)
+												? getRevertURL(
+														timelineItem.ctCollectionId
+													)
 												: undefined
 										}
 										reviewURL={
@@ -190,7 +194,9 @@ const PublicationTimeline = ({
 												.code !==
 												WORKFLOW_STATUS_PENDING &&
 											!!timelineItem.actions.get
-												? getReviewURL(timelineItem.id)
+												? getReviewURL(
+														timelineItem.ctCollectionId
+													)
 												: undefined
 										}
 										timelineItem={

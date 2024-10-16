@@ -81,9 +81,7 @@ public class ConsoleRestController extends BaseRestController {
 			(Map<String, String>)order.getCustomFields();
 
 		JSONArray cloudProvisioningJSONArray = new JSONArray(
-			customFields.get(
-				"cloud-provisioning"
-			).toString());
+			customFields.get("cloud-provisioning"));
 
 		JSONObject cloudProvisioningJSONObject =
 			_getCloudProvisioningJSONObject(

@@ -4,6 +4,7 @@
  */
 
 import {Page, expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -141,4 +142,46 @@ test('make sure the aria-labelledby reference is present in the captcha form vie
 	await expect(screenReaderOnlyCaptchaSpan).toContainText('captcha');
 
 	await newTabPage.close();
+});
+
+test('assert edition of a rich text field predefined value that contains a rule', async ({
+	formBuilderPage,
+	formsPage,
+	page,
+}) => {
+	await formsPage.goTo();
+
+	await formsPage.importForm(
+		path.join(__dirname, 'dependencies', 'form-with-rich-text.portlet.lar')
+	);
+
+	await formsPage.openForm('Form with rich text field');
+
+	await expect(page.getByRole('textbox', {name: 'Rich Text'})).toBeVisible();
+
+	await formBuilderPage.openFieldSettings('Rich Text');
+
+	await formBuilderPage.settingsAdvancedTab.click();
+
+	const richTextPredefinedValueIframe = page
+		.getByRole('textbox', {name: 'Predefined Value'})
+		.frameLocator('iframe');
+
+	await richTextPredefinedValueIframe
+		.getByText("Rich's text predefined value")
+		.click();
+
+	await page.keyboard.press('Control+A');
+
+	await page.keyboard.press('Backspace');
+
+	await page.keyboard.type(
+		'Typing a new predefined value for the rich text field.'
+	);
+
+	await expect(
+		richTextPredefinedValueIframe.getByText(
+			'Typing a new predefined value for the rich text field.'
+		)
+	).toBeVisible();
 });

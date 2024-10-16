@@ -21,6 +21,7 @@ export class FormBuilderPage {
 	readonly publishButton: Locator;
 	readonly requireCaptchaToggle: Locator;
 	readonly saveButton: Locator;
+	readonly settingsAdvancedTab: Locator;
 	readonly unpublishButton: Locator;
 
 	constructor(page: Page) {
@@ -39,6 +40,7 @@ export class FormBuilderPage {
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.requireCaptchaToggle = page.getByLabel('Require CAPTCHA');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.settingsAdvancedTab = page.getByRole('tab', {name: 'Advanced'});
 		this.unpublishButton = page.getByRole('button', {name: 'Unpublish'});
 	}
 
@@ -64,6 +66,13 @@ export class FormBuilderPage {
 		await expect(this.formsPage.formsHeader).toBeVisible();
 
 		await this.formsPage.clickManagementToolbarNewButton();
+	}
+
+	async openFieldSettings(fieldLabel: string) {
+		await this.page
+			.locator('.ddm-field .form-group')
+			.getByLabel(fieldLabel, {exact: true})
+			.click({force: true});
 	}
 
 	async openFormSubmission() {

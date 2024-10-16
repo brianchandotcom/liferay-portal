@@ -100,7 +100,7 @@ export class FormsPage {
 	async goTo(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.forms}`,
-			{waitUntil: 'load'}
+			{waitUntil: 'networkidle'}
 		);
 	}
 

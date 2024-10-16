@@ -247,20 +247,36 @@ function CustomConfigurationRangeOptions({
 	return (
 		<div className="sort-configurations-options">
 			<InputSets>
-				{ranges.map((valueItem, valueIndex) => (
+				{ranges.map((valueItem, valueIndex) => {
+					const {
+						index,
+						isLastItem,
+						key,
+						onInputSetItemDelete,
+						onInputSetItemMove,
+					} = getInputSetItemProps(valueItem, valueIndex);
 
-					// eslint-disable-next-line react/jsx-key
-					<InputSets.Item
-						{...getInputSetItemProps(valueItem, valueIndex)}
-					>
-						<Inputs
-							index={valueIndex}
-							namespace={namespace}
-							onInputSetItemChange={onInputSetItemChange}
-							value={valueItem}
-						/>
-					</InputSets.Item>
-				))}
+					return (
+						<InputSets.Item
+							index={index}
+							isLastItem={isLastItem}
+							key={key}
+							onInputSetItemDelete={
+								ranges.length === 1
+									? null // Forbid deletion of the last item
+									: onInputSetItemDelete
+							}
+							onInputSetItemMove={onInputSetItemMove}
+						>
+							<Inputs
+								index={valueIndex}
+								namespace={namespace}
+								onInputSetItemChange={onInputSetItemChange}
+								value={valueItem}
+							/>
+						</InputSets.Item>
+					);
+				})}
 
 				<ClayButton
 					aria-label={Liferay.Language.get('add-range')}

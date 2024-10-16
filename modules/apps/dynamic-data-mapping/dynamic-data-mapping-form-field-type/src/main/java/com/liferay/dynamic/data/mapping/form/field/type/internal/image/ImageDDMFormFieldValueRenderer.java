@@ -36,6 +36,10 @@ public class ImageDDMFormFieldValueRenderer
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		Value value = ddmFormFieldValue.getValue();
 
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
 		String valueString = value.getString(locale);
 
 		if (Validator.isNull(valueString)) {

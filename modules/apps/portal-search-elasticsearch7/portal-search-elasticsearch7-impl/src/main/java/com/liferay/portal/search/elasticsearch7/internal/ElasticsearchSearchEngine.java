@@ -62,7 +62,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
 import org.elasticsearch.action.admin.cluster.settings.ClusterGetSettingsResponse;
 import org.elasticsearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
@@ -74,6 +76,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Activate;
@@ -285,19 +288,44 @@ public class ElasticsearchSearchEngine
 		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest =
 			new ClusterUpdateSettingsRequest();
 
-		clusterUpdateSettingsRequest.persistentSettings(
-			Settings.builder(
-			).put(
-				"action.auto_create_index",
-				_createAutoCreateIndexSetting(enable)
-			));
-
 		try {
+			clusterUpdateSettingsRequest.persistentSettings(
+				Settings.builder(
+				).put(
+					"action.auto_create_index",
+					_createAutoCreateIndexSetting(enable)
+				));
+
 			clusterClient.putSettings(
 				clusterUpdateSettingsRequest, RequestOptions.DEFAULT);
 		}
+		catch (ElasticsearchStatusException elasticsearchStatusException) {
+			if (Objects.equals(
+					elasticsearchStatusException.status(),
+					RestStatus.FORBIDDEN) ||
+				Objects.equals(
+					elasticsearchStatusException.status(),
+					RestStatus.UNAUTHORIZED)) {
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Cluster auto create index setting could not be ");
+				sb.append("updated due to lacking permissions. This can lead ");
+				sb.append("to index mappings being created incorrectly: ");
+				sb.append(elasticsearchStatusException.getMessage());
+
+				_log.error(sb.toString());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(elasticsearchStatusException);
+				}
+			}
+			else {
+				_log.error(elasticsearchStatusException);
+			}
+		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			_log.error(ioException);
 		}
 	}
 
@@ -367,7 +395,9 @@ public class ElasticsearchSearchEngine
 		}
 	}
 
-	private String _createAutoCreateIndexSetting(boolean enable) {
+	private String _createAutoCreateIndexSetting(boolean enable)
+		throws IOException {
+
 		String currentValue = _getAutoCreateIndexSetting();
 		String disableAutoCreateLiferayIndexPattern = StringBundler.concat(
 			StringPool.MINUS, _indexNameBuilder.getIndexNamePrefix(),
@@ -424,25 +454,19 @@ public class ElasticsearchSearchEngine
 			currentValue);
 	}
 
-	private String _getAutoCreateIndexSetting() {
+	private String _getAutoCreateIndexSetting() throws IOException {
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchConnectionManager.getRestHighLevelClient();
 
 		ClusterClient clusterClient = restHighLevelClient.cluster();
 
-		try {
-			ClusterGetSettingsResponse clusterGetSettingsResponse =
-				clusterClient.getSettings(
-					new ClusterGetSettingsRequest(), RequestOptions.DEFAULT);
+		ClusterGetSettingsResponse clusterGetSettingsResponse =
+			clusterClient.getSettings(
+				new ClusterGetSettingsRequest(), RequestOptions.DEFAULT);
 
-			Settings settings =
-				clusterGetSettingsResponse.getPersistentSettings();
+		Settings settings = clusterGetSettingsResponse.getPersistentSettings();
 
-			return settings.get("action.auto_create_index");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return settings.get("action.auto_create_index");
 	}
 
 	private Collection<Long> _getIndexedCompanyIds() {

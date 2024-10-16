@@ -73,18 +73,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	public static void setUpClass() throws Exception {
 		BaseUserResourceTestCase.setUpClass();
 
-		_pid = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.scim.rest.internal.configuration." +
-				"ScimClientOAuth2ApplicationConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"matcherField", "email"
-			).put(
-				"oAuth2ApplicationName", "scim-client-test"
-			).put(
-				"userId", TestPropsValues.getUserId()
-			).build());
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
 	}
 
 	@AfterClass
@@ -170,7 +159,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, userResource.getV2UsersHttpResponse(5, 0));
 
-		_restoreScimTestConfiguration();
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
 	}
 
 	@Override
@@ -266,7 +255,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, userResource.postV2UserHttpResponse(randomUser()));
 
-		_restoreScimTestConfiguration();
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
 	}
 
 	@Override
@@ -386,6 +375,23 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		return user;
 	}
 
+	private static String _createScimClientOAuth2ApplicationConfiguration()
+		throws Exception {
+
+		return ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
+			).build());
+	}
+
 	private void _assertListResponse(
 			Object response, long expectedTotalResults,
 			long expectedItemsPerPage, User... expectedUsers)
@@ -451,21 +457,6 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		Object userObject = userResource.getV2UserById(userId);
 
 		return User.toDTO(userObject.toString());
-	}
-
-	private void _restoreScimTestConfiguration() throws Exception {
-		_pid = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.scim.rest.internal.configuration." +
-				"ScimClientOAuth2ApplicationConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"matcherField", "email"
-			).put(
-				"oAuth2ApplicationName", "scim-client-test"
-			).put(
-				"userId", TestPropsValues.getUserId()
-			).build());
 	}
 
 	private static String _pid;

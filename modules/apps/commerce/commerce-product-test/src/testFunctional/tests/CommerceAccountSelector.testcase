@@ -429,6 +429,8 @@ definition {
 			Button.click(button = "Create New Account");
 
 			CommerceAcceleratorsInitializer.createNewAccountInFlow(accountName = "Commerce Account");
+
+			AssertElementNotPresent(locator1 = "//div[@class='modal-content']//div/h1[text()='Create New Account']");
 		}
 
 		task ("AND a buyer user is associated with the account") {

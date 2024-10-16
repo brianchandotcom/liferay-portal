@@ -347,7 +347,9 @@ test.describe('manage object definitions through view object definitions', () =>
 
 		apiHelpers.data.splice(
 			apiHelpers.data.findIndex(
-				(object) => object.id === objectFolder.id
+				(object) =>
+					object.id === objectFolder.id &&
+					object.type === 'objectFolder'
 			),
 			1
 		);

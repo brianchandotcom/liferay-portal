@@ -101,15 +101,11 @@ public abstract class BaseJob implements Job {
 
 		_batchNames = Collections.synchronizedSet(new TreeSet<String>());
 
-		Set<String> batchNames = new TreeSet<>();
-
 		for (BatchTestClassGroup batchTestClassGroup :
 				getBatchTestClassGroups()) {
 
-			batchNames.add(batchTestClassGroup.getBatchName());
+			_batchNames.add(batchTestClassGroup.getBatchName());
 		}
-
-		_batchNames.addAll(batchNames);
 
 		return _batchNames;
 	}

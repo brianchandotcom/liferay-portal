@@ -14,6 +14,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 import getWidgetDefinition from './utils/getWidgetDefinition';
@@ -63,6 +64,114 @@ const COLOR_PICKER_PALETTES = [
 ];
 
 test.describe('Advanced Configuration', () => {
+	test('Checks custom css can be added to a fragment in different viewports', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const getVariableValue = async (variableName: string) => {
+			return await page.evaluate(
+				(variableName) => {
+					const element = document.createElement('div');
+
+					element.style.backgroundColor = `var(--${variableName})`;
+
+					document.body.appendChild(element);
+
+					const value = getComputedStyle(element).backgroundColor;
+
+					document.body.removeChild(element);
+
+					return value;
+				},
+				[variableName]
+			);
+		};
+
+		// Create a content page with a Container fragment
+
+		const containerId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getContainerDefinition({id: containerId}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Custom CSS',
+			fragmentId: containerId,
+			tab: 'Advanced',
+			value: '.[$FRAGMENT_CLASS$] { background-color: var(--success); }',
+		});
+
+		expect(
+			await pageEditorPage.getFragmentStyle({
+				fragmentId: containerId,
+				style: 'backgroundColor',
+			})
+		).toBe(await getVariableValue('success'));
+
+		await pageEditorPage.switchViewport('Tablet');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Custom CSS',
+			fragmentId: containerId,
+			isDesktop: false,
+			tab: 'Advanced',
+			value: '.[$FRAGMENT_CLASS$] { background-color: var(--warning); }',
+		});
+
+		expect(
+			await pageEditorPage.getFragmentStyle({
+				fragmentId: containerId,
+				isDesktop: false,
+				style: 'backgroundColor',
+			})
+		).toBe(await getVariableValue('warning'));
+
+		await pageEditorPage.switchViewport('Landscape Phone');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Custom CSS',
+			fragmentId: containerId,
+			isDesktop: false,
+			tab: 'Advanced',
+			value: '.[$FRAGMENT_CLASS$] { background-color: var(--danger); }',
+		});
+
+		expect(
+			await pageEditorPage.getFragmentStyle({
+				fragmentId: containerId,
+				isDesktop: false,
+				style: 'backgroundColor',
+			})
+		).toBe(await getVariableValue('danger'));
+
+		await pageEditorPage.switchViewport('Portrait Phone');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Custom CSS',
+			fragmentId: containerId,
+			isDesktop: false,
+			tab: 'Advanced',
+			value: '.[$FRAGMENT_CLASS$] { background-color: var(--info); }',
+		});
+
+		expect(
+			await pageEditorPage.getFragmentStyle({
+				fragmentId: containerId,
+				isDesktop: false,
+				style: 'backgroundColor',
+			})
+		).toBe(await getVariableValue('info'));
+	});
+
 	test('Add multiple css classes to fragment', async ({
 		apiHelpers,
 		page,

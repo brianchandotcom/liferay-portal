@@ -660,6 +660,16 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			data.put("timelineClassNameId", classNameId);
 			data.put("timelineClassPK", classPK);
 			data.put(
+				"timelineDeleteURL",
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/change_tracking/delete_ct_collection"
+				).buildString());
+			data.put(
 				"timelineEditURL",
 				PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(

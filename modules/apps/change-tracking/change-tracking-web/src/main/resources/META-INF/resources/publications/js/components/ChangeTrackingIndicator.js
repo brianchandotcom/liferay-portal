@@ -57,6 +57,7 @@ export default function ChangeTrackingIndicator({
 	spritemap,
 	timelineClassNameId,
 	timelineClassPK,
+	timelineDeleteURL,
 	timelineEditURL,
 	timelineIconClass,
 	timelineIconName,
@@ -747,6 +748,7 @@ export default function ChangeTrackingIndicator({
 						spritemap={spritemap}
 						timelineClassNameId={timelineClassNameId}
 						timelineClassPK={timelineClassPK}
+						timelineDeleteURL={timelineDeleteURL}
 						timelineEditURL={timelineEditURL}
 						timelineItemsURL={timelineItemsURL}
 						viewTimelineHistoryURL={viewTimelineHistoryURL}

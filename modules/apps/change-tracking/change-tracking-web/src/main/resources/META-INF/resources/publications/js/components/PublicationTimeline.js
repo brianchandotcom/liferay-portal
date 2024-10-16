@@ -26,6 +26,7 @@ const PublicationTimeline = ({
 	spritemap,
 	timelineClassNameId,
 	timelineClassPK,
+	timelineDeleteURL,
 	timelineEditURL,
 	timelineItemsURL,
 	viewTimelineHistoryURL,
@@ -49,6 +50,12 @@ const PublicationTimeline = ({
 				...additionalParams,
 			}
 		).toString();
+	};
+
+	const getDeleteURL = (ctCollectionId, url) => {
+		return createPortletURL(url, {
+			ctCollectionId,
+		});
 	};
 
 	const getEditURL = (ctCollectionId) => {
@@ -156,8 +163,10 @@ const PublicationTimeline = ({
 												.code ===
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.delete
-												? timelineItem.actions.delete
-														.href
+												? getDeleteURL(
+														timelineItem.ctCollectionId,
+														timelineDeleteURL
+													)
 												: undefined
 										}
 										editURL={

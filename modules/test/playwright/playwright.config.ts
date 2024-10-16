@@ -51,6 +51,7 @@ import {config as loginWebConfig} from './tests/login-web/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/config';
 import {config as nestedPortletsWebConfig} from './tests/nested-portlets-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
+import {config as notificationsWebConfig} from './tests/notifications-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as openIdLinkConfig} from './tests/openid-link/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
@@ -150,6 +151,7 @@ export default defineConfig({
 		messageBoardsWebConfig,
 		nestedPortletsWebConfig,
 		notificationWebConfig,
+		notificationsWebConfig,
 		objectWebConfig,
 		openIdLinkConfig,
 		osbFaroWebConfig,

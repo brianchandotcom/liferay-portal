@@ -60,7 +60,6 @@ const autoSaveUndoRedoTest = mergeTests(
 	featureFlagsTest({
 		'LPD-11228': true,
 		'LPD-15596': true,
-		'LPD-36053': true,
 	}),
 	isolatedSiteTest,
 	journalPagesTest,

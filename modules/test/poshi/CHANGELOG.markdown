@@ -1,5 +1,12 @@
 # Poshi Runner Change Log
 
+## 1.0.493
+
+### Utils
+
+* [POSHI-702](https://liferay.atlassian.net/browse/POSHI-702) - Update ExecUtil to redirect error stream
+* [POSHI-704](https://liferay.atlassian.net/browse/POSHI-704) - Print log regardless of exit value
+
 ## 1.0.491
 
 ### Runner

@@ -33,8 +33,7 @@ public class CommerceOrderStepTrackerHelperImpl
 
 	@Override
 	public List<StepModel> getCommerceOrderSteps(
-			CommerceOrder commerceOrder, Locale locale,
-			boolean showOpenStatuses)
+			boolean admin, CommerceOrder commerceOrder, Locale locale)
 		throws PortalException {
 
 		List<StepModel> stepModels = new ArrayList<>();
@@ -43,7 +42,7 @@ public class CommerceOrderStepTrackerHelperImpl
 			_commerceOrderEngine.getCurrentCommerceOrderStatus(commerceOrder);
 
 		if ((currentCommerceOrderStatus == null) ||
-			(currentCommerceOrderStatus.getPriority() == -1)) {
+			(admin && (currentCommerceOrderStatus.getPriority() == -1))) {
 
 			return stepModels;
 		}
@@ -54,7 +53,7 @@ public class CommerceOrderStepTrackerHelperImpl
 			return _getWorkflowSteps(commerceOrder, locale);
 		}
 
-		if (!showOpenStatuses &&
+		if (admin &&
 			ArrayUtil.contains(
 				CommerceOrderConstants.ORDER_STATUSES_OPEN,
 				commerceOrder.getOrderStatus())) {
@@ -72,11 +71,17 @@ public class CommerceOrderStepTrackerHelperImpl
 				 (commerceOrder.getOrderStatus() !=
 					 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) ||
 				!commerceOrderStatus.isValidForOrder(commerceOrder) ||
-				(!showOpenStatuses &&
-				 ArrayUtil.contains(
+				(admin &&
+				 (ArrayUtil.contains(
 					 CommerceOrderConstants.ORDER_STATUSES_OPEN,
-					 commerceOrderStatus.getKey())) ||
-				(commerceOrderStatus.getPriority() == -1)) {
+					 commerceOrderStatus.getKey()) ||
+				  (commerceOrderStatus.getPriority() == -1))) ||
+				(!admin &&
+				 (((currentCommerceOrderStatus.getPriority() == -1) &&
+				   (currentCommerceOrderStatus.getKey() !=
+					   commerceOrderStatus.getKey())) ||
+				  ((currentCommerceOrderStatus.getPriority() != -1) &&
+				   (commerceOrderStatus.getPriority() == -1))))) {
 
 				continue;
 			}

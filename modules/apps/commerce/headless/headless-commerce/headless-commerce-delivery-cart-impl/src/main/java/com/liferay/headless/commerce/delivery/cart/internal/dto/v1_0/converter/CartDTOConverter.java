@@ -266,7 +266,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setSteps(
 					() -> TransformUtil.transformToArray(
 						_commerceOrderStepTrackerHelper.getCommerceOrderSteps(
-							commerceOrder, locale, true),
+							false, commerceOrder, locale),
 						stepModel -> _toStep(stepModel), Step.class));
 				setSummary(() -> _getSummary(commerceOrder, locale));
 				setWorkflowStatusInfo(

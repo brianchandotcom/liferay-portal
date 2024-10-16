@@ -128,6 +128,8 @@ public class SelectSiteInitializerDisplayContext {
 			"/site_admin/select_site_initializer"
 		).setRedirect(
 			getBackURL()
+		).setTabs1(
+			_getTabs1()
 		).setParameter(
 			"backURLTitle",
 			ParamUtil.getString(_httpServletRequest, "backURLTitle")

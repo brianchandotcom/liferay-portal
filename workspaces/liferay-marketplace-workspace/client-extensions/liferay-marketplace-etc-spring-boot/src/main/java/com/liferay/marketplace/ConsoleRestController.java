@@ -176,6 +176,17 @@ public class ConsoleRestController extends BaseRestController {
 		}
 	}
 
+	private void _checkAvailability(JSONObject jsonObject) throws Exception {
+		if (jsonObject.getLong("shippedQuantity") >= jsonObject.getLong(
+				"quantity")) {
+
+			throw new Exception(
+				"Unable to install app for order item " +
+					jsonObject.getLong("orderItemId") +
+						" because there are no available resources");
+		}
+	}
+
 	private String _createTemporaryDeployment(
 			JSONArray jsonArray, JSONObject jsonObject, Order order,
 			String projectId)
@@ -237,17 +248,6 @@ public class ConsoleRestController extends BaseRestController {
 		}
 
 		return new JSONObject();
-	}
-
-	private void _checkAvailability(JSONObject jsonObject) throws Exception {
-		if (jsonObject.getLong("shippedQuantity") >= jsonObject.getLong(
-				"quantity")) {
-
-			throw new Exception(
-				"Unable to install app for order item " +
-					jsonObject.getLong("orderItemId") +
-						" because there are no available resources");
-		}
 	}
 
 	private static final Log _log = LogFactory.getLog(

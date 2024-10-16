@@ -880,7 +880,7 @@ public class CommerceOrderContentDisplayContext {
 
 	public List<StepModel> getOrderSteps() throws PortalException {
 		return _commerceOrderStepTrackerHelper.getCommerceOrderSteps(
-			getCommerceOrder(), _cpRequestHelper.getLocale(), false);
+			getCommerceOrder(), _cpRequestHelper.getLocale(), true);
 	}
 
 	public PortletURL getPortletURL() throws PortalException {

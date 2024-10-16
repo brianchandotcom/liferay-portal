@@ -630,7 +630,7 @@ public class CommerceOrderEditDisplayContext {
 
 	public List<StepModel> getOrderSteps() throws PortalException {
 		return _commerceOrderStepTrackerHelper.getCommerceOrderSteps(
-			_commerceOrder, _commerceOrderRequestHelper.getLocale(), false);
+			_commerceOrder, _commerceOrderRequestHelper.getLocale(), true);
 	}
 
 	public List<CommerceTermEntry> getPaymentTermsEntries() {

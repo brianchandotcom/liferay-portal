@@ -34,8 +34,10 @@ public class PlacedCommerceOrderFragmentTableFDSView extends BaseTableFDSView {
 
 		return fdsTableSchemaBuilder.add(
 			"id", "order-id",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setContentRenderer("actionLink");
+				fdsTableSchemaField.setSortable(true);
+			}
 		).add(
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
@@ -46,7 +48,8 @@ public class PlacedCommerceOrderFragmentTableFDSView extends BaseTableFDSView {
 			"externalReferenceCode", "erc",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"purchaseOrderNumber", "purchase-order-number"
+			"purchaseOrderNumber", "purchase-order-number",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			"createDate", "date",
 			fdsTableSchemaField -> {
@@ -56,15 +59,14 @@ public class PlacedCommerceOrderFragmentTableFDSView extends BaseTableFDSView {
 		).add(
 			_addAccountNameStringFDSTableSchemaField()
 		).add(
-			"author", "created-by",
+			"author", "submitted-by",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			"orderStatusInfo.label_i18n", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"label")
 		).add(
-			"summary.totalFormatted", "amount",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"summary.totalFormatted", "amount"
 		).build();
 	}
 
@@ -78,6 +80,8 @@ public class PlacedCommerceOrderFragmentTableFDSView extends BaseTableFDSView {
 			"account"
 		).setLabel(
 			"account"
+		).setSortable(
+			true
 		);
 
 		stringFDSTableSchemaField.setTruncate(true);

@@ -665,7 +665,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.google.docs.jar!org.freemarker.jar</file-name>
-				<version>2.3.33.LIFERAY-PATCHED-1</version>
+				<version>2.3.33.LIFERAY-PATCHED-2</version>
 				<project-name>org.freemarker.freemarker</project-name>
 				<licenses>
 					<license>
@@ -2537,7 +2537,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!javax.servlet.jsp.jar</file-name>
-				<version>2.3.3-b02.LIFERAY-PATCHED-9</version>
+				<version>2.3.3-b02.LIFERAY-PATCHED-10</version>
 				<project-name>JSP implementation</project-name>
 				<project-url>http://glassfish.org</project-url>
 				<licenses>
@@ -2549,7 +2549,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
-				<version>2.3.3-b02.LIFERAY-PATCHED-9</version>
+				<version>2.3.3-b02.LIFERAY-PATCHED-10</version>
 				<project-name>JSP implementation</project-name>
 				<project-url>http://glassfish.org</project-url>
 				<licenses>
@@ -3727,7 +3727,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.template.freemarker.jar!org.freemarker.jar</file-name>
-				<version>2.3.33.LIFERAY-PATCHED-1</version>
+				<version>2.3.33.LIFERAY-PATCHED-2</version>
 				<project-name>org.freemarker.freemarker</project-name>
 				<licenses>
 					<license>
@@ -4269,7 +4269,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
-				<version>17.5</version>
+				<version>18.7</version>
 				<project-name>graphql-java</project-name>
 				<project-url>https://github.com/graphql-java/graphql-java</project-url>
 				<licenses>
@@ -6009,7 +6009,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/freemarker.jar</file-name>
-				<version>2.3.33.LIFERAY-PATCHED-1</version>
+				<version>2.3.33.LIFERAY-PATCHED-2</version>
 				<project-name>FreeMarker</project-name>
 				<project-url>http://www.freemarker.org</project-url>
 				<licenses>

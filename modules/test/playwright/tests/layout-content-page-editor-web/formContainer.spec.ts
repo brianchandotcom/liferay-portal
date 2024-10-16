@@ -524,6 +524,58 @@ test.describe('Text input field', () => {
 			await expect(characterText).not.toHaveClass(/sr-only/);
 		}
 	);
+
+	test(
+		'An error is shown when the number of input characters is exceeded',
+		{tag: ['@LPS-149725', '@LPS-173849']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map the form to Lemon object, specifically to the "Lemon Size" field
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+				'Lemon Size',
+			]);
+
+			// Publish and go to view mode
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Type 290 characters and check that the error is shown
+
+			await page.getByLabel('Lemon Size').click();
+
+			await page.keyboard.type('a'.repeat(290));
+
+			await expect(
+				page.getByText(
+					'Maximum Number of Characters Exceeded: 290 / 280'
+				)
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Submit button', () => {

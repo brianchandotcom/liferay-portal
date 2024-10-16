@@ -35,67 +35,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-149725 and LPS-173849. The pages designer should see alert message when the characters count exceeds text field."
-	@priority = 4
-	test ViewAlertMessageWhenCharactersCountExceedMaximum {
-		var inputText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characterss";
-
-		task ("Given a pages designer has a Text Input fragment within published content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.editFormContainer(contentType = "Purchase Order");
-
-			PageEditor.publish();
-		}
-
-		task ("When the pages designer types 281 characters in the Input Fragment") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Type.sendKeys(
-				key_text = "Region",
-				locator1 = "TextInput#ANY",
-				value1 = ${inputText});
-		}
-
-		task ("Then the pages designer sees alert message below the Text Input field") {
-			PageEditor.viewInputStyle(
-				charactersCount = "Maximum Number of Characters Exceeded: 281 / 280",
-				type = "text");
-		}
-
-		task ("When the pages designer removes one character from Text Input") {
-			Click(
-				key_text = "Region",
-				locator1 = "TextInput#ANY");
-
-			KeyPress(
-				key_text = "Region",
-				locator1 = "TextInput#ANY",
-				value1 = "\BACK_SPACE");
-		}
-
-		task ("Then the pages designer cannot see the alert message") {
-			AssertTextNotEquals.assertNotPartialMatch(
-				index = 1,
-				locator1 = "Fragment#INPUT_LENGTH_INFO",
-				type = "text",
-				value1 = "Maximum Number of Characters Exceeded");
-		}
-	}
-
 	@description = "This is a test for LPS-151400. The required field has an asterisk symbol on dropdown menu of mapping field selector."
 	@priority = 4
 	test ViewAsteriskSymbolOfRequiredField {

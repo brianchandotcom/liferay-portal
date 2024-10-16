@@ -111,7 +111,7 @@ public abstract class BaseJob implements Job {
 
 		_batchNames.addAll(batchNames);
 
-		return batchNames;
+		return _batchNames;
 	}
 
 	@Override

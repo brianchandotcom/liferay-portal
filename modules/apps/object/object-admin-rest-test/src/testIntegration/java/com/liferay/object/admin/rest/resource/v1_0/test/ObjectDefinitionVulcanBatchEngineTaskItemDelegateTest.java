@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -62,7 +62,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany(true);
+		_company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.addCompanyAdminUser(_company);
 
@@ -103,6 +103,8 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		PrincipalThreadLocal.setName(_originalName);
+
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -224,7 +226,9 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 		};
 	}
 
-	@DeleteAfterTestRun
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private Company _company;
 
 	@Inject

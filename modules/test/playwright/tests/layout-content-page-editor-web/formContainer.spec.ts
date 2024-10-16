@@ -576,6 +576,66 @@ test.describe('Text input field', () => {
 			).toBeVisible();
 		}
 	);
+
+	test(
+		'Check that the input is a required field by default',
+		{tag: '@LPS-151400'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map the form to Potato object, specifically to the "Potato Origin" field
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Potato', [
+				'Potato Origin',
+			]);
+
+			// Select the input fragment and check that it is a required field
+
+			const inputId = await pageEditorPage.getFragmentId('Text');
+
+			await pageEditorPage.selectFragment(inputId);
+
+			const selectedOption = page
+				.getByLabel('Field', {exact: true})
+				.getByRole('option', {selected: true});
+
+			await expect(selectedOption).toContainText('Potato Origin*');
+
+			await expect(
+				page.getByLabel('Mark as Required', {exact: true})
+			).toBeDisabled();
+
+			// Publish and check that the input has the attribute required
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(page.getByLabel('Potato Origin')).toHaveAttribute(
+				'required'
+			);
+		}
+	);
 });
 
 test.describe('Submit button', () => {

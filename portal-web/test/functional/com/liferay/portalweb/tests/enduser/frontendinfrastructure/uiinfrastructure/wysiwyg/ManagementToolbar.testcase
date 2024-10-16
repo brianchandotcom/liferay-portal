@@ -84,54 +84,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144536. Assert the order button can display the correct icons"
-	@priority = 4
-	test OrderButtonCanDisplayCorrectOrderIcons {
-		task ("And When order dropdown menu is opened") {
-			Click(
-				key_filter = "Order",
-				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_FILTER_OR_ORDER",
-				value1 = "Order");
-		}
-
-		task ("And When descending order is selected") {
-			Click(
-				key_item = "Descending",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
-				value1 = "Descending");
-		}
-
-		task ("Then the order list down icon will be displayed") {
-			Navigator.gotoNavTab(navTab = "Management Toolbars");
-
-			AssertElementPresent(
-				key_text = "order-list-down",
-				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_ANY_ICON");
-		}
-
-		task ("When order dropdown menu is opened") {
-			Click(
-				key_filter = "Order",
-				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_FILTER_OR_ORDER",
-				value1 = "Order");
-		}
-
-		task ("And When ascending order is selected") {
-			Click(
-				key_item = "Ascending",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
-				value1 = "Ascending");
-		}
-
-		task ("Then the order list up icon will be displayed") {
-			Navigator.gotoNavTab(navTab = "Management Toolbars");
-
-			AssertElementPresent(
-				key_text = "order-list-up",
-				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_ANY_ICON");
-		}
-	}
-
 	@description = "LPS-144536. Assert the order button can sort results by descending order"
 	@priority = 5
 	test OrderButtonCanSortOptionsByDescending {

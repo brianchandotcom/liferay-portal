@@ -377,3 +377,70 @@ test.describe('Management Toolbar Active State', () => {
 		});
 	});
 });
+
+test.describe('Management Toolbar Using Display Context', () => {
+	test('Assert the order button can display the correct icons', async ({
+		page,
+	}) => {
+		const managementToolbarUsingDisplayContextContainer = page.locator(
+			'#managementToolbarUsingDisplayContext'
+		);
+
+		await test.step('Open the order dropdown', async () => {
+			await managementToolbarUsingDisplayContextContainer
+				.getByRole('button', {name: 'Order'})
+				.click();
+		});
+
+		await test.step('Check that ascending order is selected', async () => {
+			await expect(
+				page
+					.getByRole('menuitem', {name: 'Ascending'})
+					.locator('.lexicon-icon-check')
+			).toBeVisible();
+		});
+
+		await test.step('Check that the icon is order-list-up', async () => {
+			expect(
+				page
+					.getByRole('button', {name: 'Order'})
+					.locator('.lexicon-icon-order-list-up')
+					.first()
+			).toBeVisible();
+		});
+
+		await test.step('Click on descending', async () => {
+			await page.getByRole('menuitem', {name: 'Descending'}).click();
+		});
+
+		await test.step('Navigate to management toolbar tab', async () => {
+			await page
+				.getByRole('tablist')
+				.getByText('Management Toolbars')
+				.click();
+		});
+
+		await test.step('Open the order dropdown', async () => {
+			await managementToolbarUsingDisplayContextContainer
+				.getByRole('button', {name: 'Order'})
+				.click();
+		});
+
+		await test.step('Check that descending order is selected', async () => {
+			await expect(
+				page
+					.getByRole('menuitem', {name: 'Descending'})
+					.locator('.lexicon-icon-check')
+			).toBeVisible();
+		});
+
+		await test.step('Check that the icon is order-list-down', async () => {
+			expect(
+				page
+					.getByRole('button', {name: 'Order'})
+					.locator('.lexicon-icon-order-list-down')
+					.first()
+			).toBeVisible();
+		});
+	});
+});

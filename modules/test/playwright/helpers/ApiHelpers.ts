@@ -397,6 +397,19 @@ export class DataApiHelpers extends ApiHelpers {
 
 					break;
 				}
+				case 'objectFolder': {
+					const objectAdminRESTClient = await this.buildRestClient(
+						ObjectAdminRestClient
+					);
+
+					await objectAdminRESTClient.objectFolder.deleteObjectFolder(
+						{
+							objectFolderId: item.id,
+						}
+					);
+
+					break;
+				}
 				case 'option':
 					await this.headlessCommerceAdminCatalog.deleteOption(
 						item.id

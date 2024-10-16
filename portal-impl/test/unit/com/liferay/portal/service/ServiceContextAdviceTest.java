@@ -17,7 +17,6 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.junit.Assert;
@@ -52,31 +51,6 @@ public class ServiceContextAdviceTest {
 	}
 
 	@Test
-	public void testMisc() throws Throwable {
-
-		// For code coverage
-
-		TestExceptionServiceContextWrapper testExceptionServiceContextWrapper =
-			new TestExceptionServiceContextWrapper();
-
-		try {
-			AopMethodInvocation aopMethodInvocation =
-				_createTestMethodInvocation(
-					ReflectionTestUtil.getMethod(
-						TestInterceptedClass.class, "method",
-						TestExceptionServiceContextWrapper.class));
-
-			aopMethodInvocation.proceed(
-				new Object[] {testExceptionServiceContextWrapper});
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(exception instanceof InvocationTargetException);
-		}
-	}
-
-	@Test
 	public void testThreadLocalValue() throws Throwable {
 		ServiceContext serviceContext1 = new ServiceContext();
 
@@ -94,6 +68,22 @@ public class ServiceContextAdviceTest {
 
 		Assert.assertSame(
 			serviceContext1, ServiceContextThreadLocal.popServiceContext());
+	}
+
+	@Test
+	public void testWithException() {
+		AopMethodInvocation aopMethodInvocation = _createTestMethodInvocation(
+			ReflectionTestUtil.getMethod(
+				TestInterceptedClass.class, "method", ServiceContext.class));
+
+		try {
+			aopMethodInvocation.proceed(new Object[] {null});
+
+			Assert.fail();
+		}
+		catch (Throwable throwable) {
+			Assert.assertTrue(throwable instanceof IllegalStateException);
+		}
 	}
 
 	@Test
@@ -172,10 +162,6 @@ public class ServiceContextAdviceTest {
 	private final TestInterceptedClass _testInterceptedClass =
 		new TestInterceptedClass();
 
-	private static class TestExceptionServiceContextWrapper
-		extends ServiceContext {
-	}
-
 	private static class TestInterceptedClass {
 
 		@SuppressWarnings("unused")
@@ -190,6 +176,10 @@ public class ServiceContextAdviceTest {
 
 		@SuppressWarnings("unused")
 		public void method(ServiceContext serviceContext) {
+			if (ServiceContextThreadLocal.getServiceContext() == null) {
+				throw new IllegalStateException();
+			}
+
 			if (serviceContext == null) {
 				Assert.assertNotNull(
 					ServiceContextThreadLocal.getServiceContext());
@@ -199,14 +189,6 @@ public class ServiceContextAdviceTest {
 					serviceContext,
 					ServiceContextThreadLocal.getServiceContext());
 			}
-		}
-
-		@SuppressWarnings("unused")
-		public void method(
-				TestExceptionServiceContextWrapper serviceContextWrapper)
-			throws InvocationTargetException {
-
-			throw new InvocationTargetException(null);
 		}
 
 		@SuppressWarnings("unused")

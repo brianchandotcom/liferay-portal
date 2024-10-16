@@ -203,11 +203,11 @@ public class PortalTransactionManager
 
 		if (hibernateTransactionObject.isNewSessionHolder()) {
 			SpringHibernateThreadLocalUtil.setResource(
-				resources, _sessionFactory, null);
+				_sessionFactory, null, resources);
 		}
 
 		SpringHibernateThreadLocalUtil.setResource(
-			resources, _dataSource, null);
+			_dataSource, null, resources);
 
 		SessionHolder sessionHolder =
 			hibernateTransactionObject.getSessionHolder();

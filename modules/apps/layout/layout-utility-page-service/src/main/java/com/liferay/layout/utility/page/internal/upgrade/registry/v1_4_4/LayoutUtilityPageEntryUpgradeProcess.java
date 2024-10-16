@@ -29,12 +29,16 @@ public class LayoutUtilityPageEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement =
+		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update Layout set layoutId = ?, privateLayout = ?," +
-						"type_ = 'utility', typeSettings = ?  where plid = " +
-							"?")) {
+						"type_ = 'utility', typeSettings = ?  where plid = ?");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update LayoutFriendlyURL set privateLayout = ? where " +
+						"plid = ?")) {
 
 			try (Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(
@@ -47,10 +51,10 @@ public class LayoutUtilityPageEntryUpgradeProcess extends UpgradeProcess {
 				while (resultSet.next()) {
 					long groupId = resultSet.getLong("groupId");
 
-					preparedStatement.setLong(
+					preparedStatement1.setLong(
 						1, _layoutLocalService.getNextLayoutId(groupId, false));
 
-					preparedStatement.setBoolean(2, false);
+					preparedStatement1.setBoolean(2, false);
 
 					UnicodeProperties typeSettingsUnicodeProperties =
 						UnicodePropertiesBuilder.create(
@@ -61,17 +65,23 @@ public class LayoutUtilityPageEntryUpgradeProcess extends UpgradeProcess {
 
 					typeSettingsUnicodeProperties.remove("privateLayout");
 
-					preparedStatement.setString(
+					preparedStatement1.setString(
 						3, typeSettingsUnicodeProperties.toString());
 
 					long plid = resultSet.getLong("plid");
 
-					preparedStatement.setLong(4, plid);
+					preparedStatement1.setLong(4, plid);
 
-					preparedStatement.addBatch();
+					preparedStatement1.addBatch();
+
+					preparedStatement2.setBoolean(1, false);
+					preparedStatement2.setLong(2, plid);
+
+					preparedStatement2.addBatch();
 				}
 
-				preparedStatement.executeBatch();
+				preparedStatement1.executeBatch();
+				preparedStatement2.executeBatch();
 			}
 		}
 	}

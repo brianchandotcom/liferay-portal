@@ -228,6 +228,30 @@ public class CartSerDes {
 			sb.append(_toJSON(cart.getCustomFields()));
 		}
 
+		if (cart.getDeliveryTermId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermId\": ");
+
+			sb.append(cart.getDeliveryTermId());
+		}
+
+		if (cart.getDeliveryTermLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getDeliveryTermLabel()));
+
+			sb.append("\"");
+		}
+
 		if (cart.getErrorMessages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -479,6 +503,30 @@ public class CartSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(cart.getPaymentStatusLabel()));
+
+			sb.append("\"");
+		}
+
+		if (cart.getPaymentTermId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermId\": ");
+
+			sb.append(cart.getPaymentTermId());
+		}
+
+		if (cart.getPaymentTermLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getPaymentTermLabel()));
 
 			sb.append("\"");
 		}
@@ -780,6 +828,22 @@ public class CartSerDes {
 			map.put("customFields", String.valueOf(cart.getCustomFields()));
 		}
 
+		if (cart.getDeliveryTermId() == null) {
+			map.put("deliveryTermId", null);
+		}
+		else {
+			map.put("deliveryTermId", String.valueOf(cart.getDeliveryTermId()));
+		}
+
+		if (cart.getDeliveryTermLabel() == null) {
+			map.put("deliveryTermLabel", null);
+		}
+		else {
+			map.put(
+				"deliveryTermLabel",
+				String.valueOf(cart.getDeliveryTermLabel()));
+		}
+
 		if (cart.getErrorMessages() == null) {
 			map.put("errorMessages", null);
 		}
@@ -930,6 +994,21 @@ public class CartSerDes {
 			map.put(
 				"paymentStatusLabel",
 				String.valueOf(cart.getPaymentStatusLabel()));
+		}
+
+		if (cart.getPaymentTermId() == null) {
+			map.put("paymentTermId", null);
+		}
+		else {
+			map.put("paymentTermId", String.valueOf(cart.getPaymentTermId()));
+		}
+
+		if (cart.getPaymentTermLabel() == null) {
+			map.put("paymentTermLabel", null);
+		}
+		else {
+			map.put(
+				"paymentTermLabel", String.valueOf(cart.getPaymentTermLabel()));
 		}
 
 		if (cart.getPrintedNote() == null) {
@@ -1101,6 +1180,12 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryTermId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryTermLabel")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
 				return false;
 			}
@@ -1169,6 +1254,12 @@ public class CartSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "paymentStatusLabel")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentTermId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentTermLabel")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "printedNote")) {
@@ -1326,6 +1417,17 @@ public class CartSerDes {
 					cart.setCustomFields((Map<String, ?>)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryTermId")) {
+				if (jsonParserFieldValue != null) {
+					cart.setDeliveryTermId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryTermLabel")) {
+				if (jsonParserFieldValue != null) {
+					cart.setDeliveryTermLabel((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
 				if (jsonParserFieldValue != null) {
 					cart.setErrorMessages(
@@ -1451,6 +1553,17 @@ public class CartSerDes {
 
 				if (jsonParserFieldValue != null) {
 					cart.setPaymentStatusLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentTermId")) {
+				if (jsonParserFieldValue != null) {
+					cart.setPaymentTermId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentTermLabel")) {
+				if (jsonParserFieldValue != null) {
+					cart.setPaymentTermLabel((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "printedNote")) {

@@ -597,6 +597,88 @@ public class Cart implements Serializable {
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema
+	public Long getDeliveryTermId() {
+		if (_deliveryTermIdSupplier != null) {
+			deliveryTermId = _deliveryTermIdSupplier.get();
+
+			_deliveryTermIdSupplier = null;
+		}
+
+		return deliveryTermId;
+	}
+
+	public void setDeliveryTermId(Long deliveryTermId) {
+		this.deliveryTermId = deliveryTermId;
+
+		_deliveryTermIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeliveryTermId(
+		UnsafeSupplier<Long, Exception> deliveryTermIdUnsafeSupplier) {
+
+		_deliveryTermIdSupplier = () -> {
+			try {
+				return deliveryTermIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long deliveryTermId;
+
+	@JsonIgnore
+	private Supplier<Long> _deliveryTermIdSupplier;
+
+	@Schema
+	public String getDeliveryTermLabel() {
+		if (_deliveryTermLabelSupplier != null) {
+			deliveryTermLabel = _deliveryTermLabelSupplier.get();
+
+			_deliveryTermLabelSupplier = null;
+		}
+
+		return deliveryTermLabel;
+	}
+
+	public void setDeliveryTermLabel(String deliveryTermLabel) {
+		this.deliveryTermLabel = deliveryTermLabel;
+
+		_deliveryTermLabelSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeliveryTermLabel(
+		UnsafeSupplier<String, Exception> deliveryTermLabelUnsafeSupplier) {
+
+		_deliveryTermLabelSupplier = () -> {
+			try {
+				return deliveryTermLabelUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String deliveryTermLabel;
+
+	@JsonIgnore
+	private Supplier<String> _deliveryTermLabelSupplier;
+
+	@Schema
 	public String[] getErrorMessages() {
 		if (_errorMessagesSupplier != null) {
 			errorMessages = _errorMessagesSupplier.get();
@@ -1377,6 +1459,88 @@ public class Cart implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _paymentStatusLabelSupplier;
+
+	@Schema
+	public Long getPaymentTermId() {
+		if (_paymentTermIdSupplier != null) {
+			paymentTermId = _paymentTermIdSupplier.get();
+
+			_paymentTermIdSupplier = null;
+		}
+
+		return paymentTermId;
+	}
+
+	public void setPaymentTermId(Long paymentTermId) {
+		this.paymentTermId = paymentTermId;
+
+		_paymentTermIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPaymentTermId(
+		UnsafeSupplier<Long, Exception> paymentTermIdUnsafeSupplier) {
+
+		_paymentTermIdSupplier = () -> {
+			try {
+				return paymentTermIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long paymentTermId;
+
+	@JsonIgnore
+	private Supplier<Long> _paymentTermIdSupplier;
+
+	@Schema
+	public String getPaymentTermLabel() {
+		if (_paymentTermLabelSupplier != null) {
+			paymentTermLabel = _paymentTermLabelSupplier.get();
+
+			_paymentTermLabelSupplier = null;
+		}
+
+		return paymentTermLabel;
+	}
+
+	public void setPaymentTermLabel(String paymentTermLabel) {
+		this.paymentTermLabel = paymentTermLabel;
+
+		_paymentTermLabelSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPaymentTermLabel(
+		UnsafeSupplier<String, Exception> paymentTermLabelUnsafeSupplier) {
+
+		_paymentTermLabelSupplier = () -> {
+			try {
+				return paymentTermLabelUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String paymentTermLabel;
+
+	@JsonIgnore
+	private Supplier<String> _paymentTermLabelSupplier;
 
 	@Schema
 	public String getPrintedNote() {
@@ -2192,6 +2356,34 @@ public class Cart implements Serializable {
 			sb.append(_toJSON(customFields));
 		}
 
+		Long deliveryTermId = getDeliveryTermId();
+
+		if (deliveryTermId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermId\": ");
+
+			sb.append(deliveryTermId);
+		}
+
+		String deliveryTermLabel = getDeliveryTermLabel();
+
+		if (deliveryTermLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deliveryTermLabel));
+
+			sb.append("\"");
+		}
+
 		String[] errorMessages = getErrorMessages();
 
 		if (errorMessages != null) {
@@ -2485,6 +2677,34 @@ public class Cart implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(paymentStatusLabel));
+
+			sb.append("\"");
+		}
+
+		Long paymentTermId = getPaymentTermId();
+
+		if (paymentTermId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermId\": ");
+
+			sb.append(paymentTermId);
+		}
+
+		String paymentTermLabel = getPaymentTermLabel();
+
+		if (paymentTermLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paymentTermLabel));
 
 			sb.append("\"");
 		}

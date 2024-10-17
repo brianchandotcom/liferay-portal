@@ -305,6 +305,48 @@ public class Cart implements Cloneable, Serializable {
 
 	protected Map<String, ?> customFields;
 
+	public Long getDeliveryTermId() {
+		return deliveryTermId;
+	}
+
+	public void setDeliveryTermId(Long deliveryTermId) {
+		this.deliveryTermId = deliveryTermId;
+	}
+
+	public void setDeliveryTermId(
+		UnsafeSupplier<Long, Exception> deliveryTermIdUnsafeSupplier) {
+
+		try {
+			deliveryTermId = deliveryTermIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long deliveryTermId;
+
+	public String getDeliveryTermLabel() {
+		return deliveryTermLabel;
+	}
+
+	public void setDeliveryTermLabel(String deliveryTermLabel) {
+		this.deliveryTermLabel = deliveryTermLabel;
+	}
+
+	public void setDeliveryTermLabel(
+		UnsafeSupplier<String, Exception> deliveryTermLabelUnsafeSupplier) {
+
+		try {
+			deliveryTermLabel = deliveryTermLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String deliveryTermLabel;
+
 	public String[] getErrorMessages() {
 		return errorMessages;
 	}
@@ -703,6 +745,48 @@ public class Cart implements Cloneable, Serializable {
 	}
 
 	protected String paymentStatusLabel;
+
+	public Long getPaymentTermId() {
+		return paymentTermId;
+	}
+
+	public void setPaymentTermId(Long paymentTermId) {
+		this.paymentTermId = paymentTermId;
+	}
+
+	public void setPaymentTermId(
+		UnsafeSupplier<Long, Exception> paymentTermIdUnsafeSupplier) {
+
+		try {
+			paymentTermId = paymentTermIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long paymentTermId;
+
+	public String getPaymentTermLabel() {
+		return paymentTermLabel;
+	}
+
+	public void setPaymentTermLabel(String paymentTermLabel) {
+		this.paymentTermLabel = paymentTermLabel;
+	}
+
+	public void setPaymentTermLabel(
+		UnsafeSupplier<String, Exception> paymentTermLabelUnsafeSupplier) {
+
+		try {
+			paymentTermLabel = paymentTermLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String paymentTermLabel;
 
 	public String getPrintedNote() {
 		return printedNote;

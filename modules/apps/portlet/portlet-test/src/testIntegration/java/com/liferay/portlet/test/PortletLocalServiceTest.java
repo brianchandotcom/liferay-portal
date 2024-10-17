@@ -60,93 +60,90 @@ public class PortletLocalServiceTest {
 	public void testGetCustomAttributesDisplaysWithCustomAttributesDisplayDisabled() {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		try {
-			String featureFlagKeyEnabled = RandomTestUtil.randomString();
+		String featureFlagKeyEnabled = RandomTestUtil.randomString();
 
-			PropsTestUtil.setProps(
-				"feature.flag." + featureFlagKeyEnabled,
-				Boolean.TRUE.toString());
+		PropsTestUtil.setProps(
+			"feature.flag." + featureFlagKeyEnabled,
+			Boolean.TRUE.toString());
 
-			String portletName = RandomTestUtil.randomString();
+		String portletName = RandomTestUtil.randomString();
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					Portlet.class, new TestPortlet(),
-					MapUtil.singletonDictionary(
-						"javax.portlet.name", portletName)));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", portletName)));
 
-			TestCustomAttributesDisplay
-				testCustomAttributesDisplayWithEnabledFeatureFlag =
-					new TestCustomAttributesDisplay(featureFlagKeyEnabled);
+		TestCustomAttributesDisplay
+			testCustomAttributesDisplayWithEnabledFeatureFlag =
+				new TestCustomAttributesDisplay(featureFlagKeyEnabled);
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					testCustomAttributesDisplayWithEnabledFeatureFlag,
-					MapUtil.singletonDictionary(
-						"javax.portlet.name", portletName)));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				CustomAttributesDisplay.class,
+				testCustomAttributesDisplayWithEnabledFeatureFlag,
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", portletName)));
 
-			TestCustomAttributesDisplay
-				testCustomAttributesDisplayWithNullFeatureFlag =
-					new TestCustomAttributesDisplay(null);
+		TestCustomAttributesDisplay
+			testCustomAttributesDisplayWithNullFeatureFlag =
+				new TestCustomAttributesDisplay(null);
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					testCustomAttributesDisplayWithNullFeatureFlag,
-					MapUtil.singletonDictionary(
-						"javax.portlet.name", portletName)));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				CustomAttributesDisplay.class,
+				testCustomAttributesDisplayWithNullFeatureFlag,
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", portletName)));
 
-			TestCustomAttributesDisplay
-				testCustomAttributesDisplayWithDisabledFeatureFlag =
-					new TestCustomAttributesDisplay(
-						RandomTestUtil.randomString());
+		TestCustomAttributesDisplay
+			testCustomAttributesDisplayWithDisabledFeatureFlag =
+				new TestCustomAttributesDisplay(
+					RandomTestUtil.randomString());
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					testCustomAttributesDisplayWithDisabledFeatureFlag,
-					MapUtil.singletonDictionary(
-						"javax.portlet.name", portletName)));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				CustomAttributesDisplay.class,
+				testCustomAttributesDisplayWithDisabledFeatureFlag,
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", portletName)));
 
-			List<CustomAttributesDisplay> customAttributesDisplays =
-				TransformUtil.transform(
-					_portletLocalService.getCustomAttributesDisplays(),
-					customAttributesDisplay -> {
-						if (Objects.equals(
-								TestCustomAttributesDisplay.class.getName(),
-								customAttributesDisplay.getClassName())) {
+		List<CustomAttributesDisplay> customAttributesDisplays =
+			TransformUtil.transform(
+				_portletLocalService.getCustomAttributesDisplays(),
+				customAttributesDisplay -> {
+					if (Objects.equals(
+							TestCustomAttributesDisplay.class.getName(),
+							customAttributesDisplay.getClassName())) {
 
-							return customAttributesDisplay;
-						}
+						return customAttributesDisplay;
+					}
 
-						return null;
-					});
+					return null;
+				});
 
-			Assert.assertTrue(
-				customAttributesDisplays.toString(),
-				customAttributesDisplays.contains(
-					testCustomAttributesDisplayWithEnabledFeatureFlag));
-			Assert.assertTrue(
-				customAttributesDisplays.toString(),
-				customAttributesDisplays.contains(
-					testCustomAttributesDisplayWithNullFeatureFlag));
-			Assert.assertFalse(
-				customAttributesDisplays.toString(),
-				customAttributesDisplays.contains(
-					testCustomAttributesDisplayWithDisabledFeatureFlag));
-			Assert.assertEquals(
-				customAttributesDisplays.toString(), 2,
-				customAttributesDisplays.size());
-		}
-		finally {
-			PropsUtil.setProps(_props);
+		Assert.assertTrue(
+			customAttributesDisplays.toString(),
+			customAttributesDisplays.contains(
+				testCustomAttributesDisplayWithEnabledFeatureFlag));
+		Assert.assertTrue(
+			customAttributesDisplays.toString(),
+			customAttributesDisplays.contains(
+				testCustomAttributesDisplayWithNullFeatureFlag));
+		Assert.assertFalse(
+			customAttributesDisplays.toString(),
+			customAttributesDisplays.contains(
+				testCustomAttributesDisplayWithDisabledFeatureFlag));
+		Assert.assertEquals(
+			customAttributesDisplays.toString(), 2,
+			customAttributesDisplays.size());
 
-			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
+		PropsUtil.setProps(_props);
 
-				serviceRegistration.unregister();
-			}
+		for (ServiceRegistration<?> serviceRegistration :
+				serviceRegistrations) {
+
+			serviceRegistration.unregister();
 		}
 	}
 

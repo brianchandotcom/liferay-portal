@@ -125,6 +125,8 @@ public class SamlSpAuthRequestPersistenceTest {
 		newSamlSpAuthRequest.setSamlSpAuthRequestKey(
 			RandomTestUtil.randomString());
 
+		newSamlSpAuthRequest.setRelayState(RandomTestUtil.randomString());
+
 		_samlSpAuthRequests.add(_persistence.update(newSamlSpAuthRequest));
 
 		SamlSpAuthRequest existingSamlSpAuthRequest =
@@ -145,6 +147,9 @@ public class SamlSpAuthRequestPersistenceTest {
 		Assert.assertEquals(
 			existingSamlSpAuthRequest.getSamlSpAuthRequestKey(),
 			newSamlSpAuthRequest.getSamlSpAuthRequestKey());
+		Assert.assertEquals(
+			existingSamlSpAuthRequest.getRelayState(),
+			newSamlSpAuthRequest.getRelayState());
 	}
 
 	@Test
@@ -492,6 +497,8 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		samlSpAuthRequest.setSamlSpAuthRequestKey(
 			RandomTestUtil.randomString());
+
+		samlSpAuthRequest.setRelayState(RandomTestUtil.randomString());
 
 		_samlSpAuthRequests.add(_persistence.update(samlSpAuthRequest));
 

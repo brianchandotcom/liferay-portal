@@ -122,6 +122,21 @@ public interface SamlSpAuthRequestModel
 	 */
 	public void setSamlSpAuthRequestKey(String samlSpAuthRequestKey);
 
+	/**
+	 * Returns the relay state of this saml sp auth request.
+	 *
+	 * @return the relay state of this saml sp auth request
+	 */
+	@AutoEscape
+	public String getRelayState();
+
+	/**
+	 * Sets the relay state of this saml sp auth request.
+	 *
+	 * @param relayState the relay state of this saml sp auth request
+	 */
+	public void setRelayState(String relayState);
+
 	@Override
 	public SamlSpAuthRequest cloneWithOriginalValues();
 

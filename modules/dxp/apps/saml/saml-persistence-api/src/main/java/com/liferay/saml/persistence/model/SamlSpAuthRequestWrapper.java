@@ -38,6 +38,7 @@ public class SamlSpAuthRequestWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put("samlSpAuthRequestKey", getSamlSpAuthRequestKey());
+		attributes.put("relayState", getRelayState());
 
 		return attributes;
 	}
@@ -75,6 +76,12 @@ public class SamlSpAuthRequestWrapper
 		if (samlSpAuthRequestKey != null) {
 			setSamlSpAuthRequestKey(samlSpAuthRequestKey);
 		}
+
+		String relayState = (String)attributes.get("relayState");
+
+		if (relayState != null) {
+			setRelayState(relayState);
+		}
 	}
 
 	@Override
@@ -110,6 +117,16 @@ public class SamlSpAuthRequestWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the relay state of this saml sp auth request.
+	 *
+	 * @return the relay state of this saml sp auth request
+	 */
+	@Override
+	public String getRelayState() {
+		return model.getRelayState();
 	}
 
 	/**
@@ -175,6 +192,16 @@ public class SamlSpAuthRequestWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the relay state of this saml sp auth request.
+	 *
+	 * @param relayState the relay state of this saml sp auth request
+	 */
+	@Override
+	public void setRelayState(String relayState) {
+		model.setRelayState(relayState);
 	}
 
 	/**

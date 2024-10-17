@@ -8,6 +8,7 @@ package com.liferay.saml.persistence.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -40,6 +41,8 @@ public class SamlSpAuthRequestTable extends BaseTable<SamlSpAuthRequestTable> {
 		createColumn(
 			"samlSpAuthRequestKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<SamlSpAuthRequestTable, Clob> relayState = createColumn(
+		"relayState", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private SamlSpAuthRequestTable() {
 		super("SamlSpAuthRequest", SamlSpAuthRequestTable::new);

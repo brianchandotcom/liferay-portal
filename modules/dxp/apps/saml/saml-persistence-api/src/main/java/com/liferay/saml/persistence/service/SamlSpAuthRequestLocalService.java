@@ -69,7 +69,7 @@ public interface SamlSpAuthRequestLocalService
 		SamlSpAuthRequest samlSpAuthRequest);
 
 	public SamlSpAuthRequest addSamlSpAuthRequest(
-		String samlIdpEntityId, String samlSpAuthRequestKey,
+		String samlIdpEntityId, String samlSpAuthRequestKey, String relayState,
 		ServiceContext serviceContext);
 
 	/**

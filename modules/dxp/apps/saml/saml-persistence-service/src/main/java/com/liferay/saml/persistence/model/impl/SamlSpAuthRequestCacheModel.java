@@ -55,7 +55,7 @@ public class SamlSpAuthRequestCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{samlSpAuthnRequestId=");
 		sb.append(samlSpAuthnRequestId);
@@ -67,6 +67,8 @@ public class SamlSpAuthRequestCacheModel
 		sb.append(samlIdpEntityId);
 		sb.append(", samlSpAuthRequestKey=");
 		sb.append(samlSpAuthRequestKey);
+		sb.append(", relayState=");
+		sb.append(relayState);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,19 +103,29 @@ public class SamlSpAuthRequestCacheModel
 			samlSpAuthRequestImpl.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
 		}
 
+		if (relayState == null) {
+			samlSpAuthRequestImpl.setRelayState("");
+		}
+		else {
+			samlSpAuthRequestImpl.setRelayState(relayState);
+		}
+
 		samlSpAuthRequestImpl.resetOriginalValues();
 
 		return samlSpAuthRequestImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		samlSpAuthnRequestId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		samlIdpEntityId = objectInput.readUTF();
 		samlSpAuthRequestKey = objectInput.readUTF();
+		relayState = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -136,6 +148,13 @@ public class SamlSpAuthRequestCacheModel
 		else {
 			objectOutput.writeUTF(samlSpAuthRequestKey);
 		}
+
+		if (relayState == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(relayState);
+		}
 	}
 
 	public long samlSpAuthnRequestId;
@@ -143,5 +162,6 @@ public class SamlSpAuthRequestCacheModel
 	public long createDate;
 	public String samlIdpEntityId;
 	public String samlSpAuthRequestKey;
+	public String relayState;
 
 }

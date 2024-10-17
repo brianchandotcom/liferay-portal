@@ -407,7 +407,8 @@ baseTest(
 );
 
 baseTest(
-	'LPD-19384: Select articles to move across multiple pages',
+	'Select articles to move across multiple pages',
+	{tag: '@LPD-19384'},
 	async ({apiHelpers, journalPage, page, site}) => {
 		const contentStructureId =
 			await getBasicWebContentStructureId(apiHelpers);

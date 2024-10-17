@@ -100,6 +100,10 @@ test.describe('Form Configuration', () => {
 				.getByLabel('Success Notification Text', {exact: true})
 				.fill('Request received correctly');
 
+			// add a Tabs fragment that includes drop-zone
+
+			await pageEditorPage.addFragment('Basic Components', 'Tabs');
+
 			await pageEditorPage.publishPage();
 
 			// Go to view mode and check picklist values

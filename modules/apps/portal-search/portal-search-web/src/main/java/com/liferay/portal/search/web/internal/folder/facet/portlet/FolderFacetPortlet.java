@@ -122,7 +122,6 @@ public class FolderFacetPortlet extends MVCPortlet {
 			folderFacetPortletPreferences.getMaxTerms());
 		folderSearchFacetDisplayContextBuilder.setOrder(
 			folderFacetPortletPreferences.getOrder());
-
 		folderSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

@@ -105,7 +105,8 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			new JournalArticleItemSelectorReturnType());
 		infoItemItemSelectorCriterion.setRefererClassPK(
 			_getRefererClassPK(httpServletRequest));
-		infoItemItemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
+		infoItemItemSelectorCriterion.setStatus(
+			WorkflowConstants.STATUS_APPROVED);
 
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(

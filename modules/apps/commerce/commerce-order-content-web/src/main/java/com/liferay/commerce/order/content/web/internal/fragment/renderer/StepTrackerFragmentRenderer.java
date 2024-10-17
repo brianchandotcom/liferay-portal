@@ -82,13 +82,13 @@ public class StepTrackerFragmentRenderer implements FragmentRenderer {
 				_servletContext.getRequestDispatcher(
 					"/fragment/renderer/step_tracker/page.jsp");
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:step-tracker:commerceOrderId",
 				commerceOrder.getCommerceOrderId());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:step-tracker:commerceOrderSteps",

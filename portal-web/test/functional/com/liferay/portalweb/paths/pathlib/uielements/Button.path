@@ -532,7 +532,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION_GENERIC</td>
-	<td>//div[contains(@class,'form-group')]//div[contains(@class,'localized')]//button[contains(@class,'localized')] | //button[contains(@class,'localized')]</td>
+	<td>//div[contains(@class,'form-group')]//div[contains(@class,'localized')]//button[contains(@class,'localized')] | //button[contains(@class,'localized')] | //div[contains(@class,'translation-manager')]/button</td>
 	<td></td>
 </tr>
 <tr>

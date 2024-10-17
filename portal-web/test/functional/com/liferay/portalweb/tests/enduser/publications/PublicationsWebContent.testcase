@@ -184,7 +184,9 @@ definition {
 
 			WebContent.addWithStructureCP(webContentTitle = "WC Title");
 
-			PortletEntry.changeLocale(locale = "de-DE");
+			PortletEntry.changeLocale(
+				locale = "de-DE",
+				translated = "true");
 
 			WebContent.addWithStructureCP(webContentTitle = "WC Titel");
 

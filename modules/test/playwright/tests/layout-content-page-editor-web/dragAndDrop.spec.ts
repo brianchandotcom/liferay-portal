@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -13,7 +14,11 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import dragAndDropElement from '../../utils/dragAndDropElement';
 import getRandomString from '../../utils/getRandomString';
-import {POTATO_OBJECT_ERC} from '../setup/page-management-site/constants';
+import {
+	ANIMALS_COLLECTION_NAME,
+	POTATO_OBJECT_ERC,
+} from '../setup/page-management-site/constants';
+import getCollectionDefinition from './utils/getCollectionDefinition';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -23,6 +28,7 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	collectionsPagesTest,
 	featureFlagsTest({
 		'LPD-18221': true,
 		'LPS-178052': true,
@@ -210,53 +216,102 @@ test(
 	}
 );
 
-test('Check drag and drop from Page Structure Tree', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	site,
-}) => {
-	const gridId = getRandomString();
+test(
+	'Check drag and drop from Page Structure Tree',
+	{tag: ['@LPS-118271', '@LPS-106776']},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
-	const grid = getGridDefinition({
-		id: gridId,
-	});
+		// Add a content page with a fragment, a collection display and a widget
 
-	const assetPublisherId = getRandomString();
+		const heading = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
 
-	const assetPublisher = getWidgetDefinition({
-		id: assetPublisherId,
-		widgetName:
-			'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
-	});
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([grid, assetPublisher]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
+		const collectionId = getRandomString();
 
-	// Go to edit mode
+		const collection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: collectionId,
+		});
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		const assetPublisher = getWidgetDefinition({
+			id: getRandomString(),
+			widgetName:
+				'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+		});
 
-	// Go to the page structure tree and drag the Asset Publisher into the first column of the Grid
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				heading,
+				collection,
+				assetPublisher,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
 
-	await pageEditorPage.goToSidebarTab('Browser');
+		// Go to edit mode and to Browser panel
 
-	await pageEditorPage.selectFragment(gridId);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-	await pageEditorPage.dragTreeNode({
-		source: {label: 'Asset Publisher'},
-		target: {label: 'Module'},
-	});
+		await pageEditorPage.goToSidebarTab('Browser');
 
-	expect(
-		page
-			.locator('[data-name="Grid"]')
-			.locator('[data-name="Asset Publisher"]')
-	).toBeVisible();
-});
+		// Reorder fragments and check it works
+
+		await pageEditorPage.dragTreeNode({
+			position: 'top',
+			source: {label: 'Asset Publisher'},
+			target: {label: 'Heading'},
+		});
+
+		await expect(
+			page.locator('.treeview > .treeview-item').nth(0)
+		).toContainText('Asset Publisher');
+
+		await pageEditorPage.dragTreeNode({
+			position: 'bottom',
+			source: {label: 'Asset Publisher'},
+			target: {label: 'Heading'},
+		});
+
+		await expect(
+			page.locator('.treeview > .treeview-item').nth(1)
+		).toContainText('Asset Publisher');
+
+		// Drag the asset publisher inside the collection item
+
+		await pageEditorPage.selectFragment(collectionId);
+
+		await page
+			.locator('.page-editor__page-structure__tree-node')
+			.filter({hasText: 'Collection Item'})
+			.waitFor();
+
+		await pageEditorPage.dragTreeNode({
+			source: {label: 'Asset Publisher'},
+			target: {label: 'Collection Item'},
+		});
+
+		expect(
+			page
+				.locator('[data-name="Collection Display"]')
+				.locator('[data-name="Asset Publisher"]')
+				.first()
+		).toBeVisible();
+	}
+);
 
 test(
 	'Drag multiple form elements from one step to another',

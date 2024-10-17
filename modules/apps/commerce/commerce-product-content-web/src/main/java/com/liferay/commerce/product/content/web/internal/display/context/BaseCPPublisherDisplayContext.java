@@ -68,6 +68,10 @@ public class BaseCPPublisherDisplayContext {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
+		if (commerceContext == null) {
+			return null;
+		}
+
 		return cpPublisherWebHelper.getCPCatalogEntries(
 			CommerceUtil.getCommerceAccountId(commerceContext),
 			commerceContext.getCommerceChannelGroupId(),

@@ -160,6 +160,10 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		else if (isSelectionStyleManual()) {
 			List<CPCatalogEntry> catalogEntries = getCPCatalogEntries();
 
+			if (catalogEntries == null) {
+				return null;
+			}
+
 			int end = _searchContainer.getEnd();
 
 			if (end > catalogEntries.size()) {

@@ -145,10 +145,21 @@ SearchContainer<AssetEntry> searchContainer = assetPublisherDisplayContext.getSe
 %>
 
 <c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
-	<liferay-ui:search-paginator
-		searchContainer="<%= searchContainer %>"
-		type="<%= assetPublisherDisplayContext.getPaginationType() %>"
-	/>
+	<c:choose>
+		<c:when test="<%= Objects.equals(assetPublisherDisplayContext.getPaginationType(), AssetPublisherDisplayContext.PAGINATION_TYPE_REGULAR) %>">
+			<liferay-ui:search-paginator
+				markupView="lexicon"
+				searchContainer="<%= searchContainer %>"
+				type="<%= assetPublisherDisplayContext.getPaginationType() %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:search-paginator
+				searchContainer="<%= searchContainer %>"
+				type="<%= assetPublisherDisplayContext.getPaginationType() %>"
+			/>
+		</c:otherwise>
+	</c:choose>
 </c:if>
 
 <aui:script sandbox="<%= true %>">

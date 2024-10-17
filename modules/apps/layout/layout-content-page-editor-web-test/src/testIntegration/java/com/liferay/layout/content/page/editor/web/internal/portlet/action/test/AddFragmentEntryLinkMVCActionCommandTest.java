@@ -16,6 +16,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,6 +48,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -77,17 +81,15 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryLink() throws Exception {
+		_assertAddFragmentEntryLink(_getFragmentEntry(_group.getGroupId()));
+	}
+
+	@Test
 	public void testAddFragmentEntryLinkFromGlobalFragmentEntry()
 		throws Exception {
 
 		_assertAddFragmentEntryLink(_getFragmentEntry(_company.getGroupId()));
-	}
-
-	@Test
-	public void testAddFragmentEntryLinkFromPersistedFragmentEntry()
-		throws Exception {
-
-		_assertAddFragmentEntryLink(_getFragmentEntry(_group.getGroupId()));
 	}
 
 	@Test(expected = NoSuchEntryException.class)
@@ -117,35 +119,36 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 
-		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "addFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class},
-			mockLiferayPortletActionRequest);
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLink");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				GetterUtil.getLong(
+					fragmentEntryLinkJSONObject.getString(
+						"fragmentEntryLinkId")));
 
 		Assert.assertNotNull(fragmentEntryLink);
 
-		FragmentEntryLink persistedFragmentEntryLink =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-		Assert.assertNotNull(persistedFragmentEntryLink);
-
 		Assert.assertEquals(
 			fragmentEntry.getFragmentEntryId(),
-			persistedFragmentEntryLink.getFragmentEntryId());
+			fragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(_layout.getPlid(), fragmentEntryLink.getPlid());
+		Assert.assertEquals(fragmentEntry.getCss(), fragmentEntryLink.getCss());
 		Assert.assertEquals(
-			_layout.getPlid(), persistedFragmentEntryLink.getPlid());
-		Assert.assertEquals(
-			fragmentEntry.getCss(), persistedFragmentEntryLink.getCss());
-		Assert.assertEquals(
-			fragmentEntry.getHtml(), persistedFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			fragmentEntry.getJs(), persistedFragmentEntryLink.getJs());
+			fragmentEntry.getHtml(), fragmentEntryLink.getHtml());
+		Assert.assertEquals(fragmentEntry.getJs(), fragmentEntryLink.getJs());
 		Assert.assertEquals(
 			fragmentEntry.getConfiguration(),
-			persistedFragmentEntryLink.getConfiguration());
+			fragmentEntryLink.getConfiguration());
 		Assert.assertEquals(
-			StringPool.BLANK, persistedFragmentEntryLink.getRendererKey());
+			StringPool.BLANK, fragmentEntryLink.getRendererKey());
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(

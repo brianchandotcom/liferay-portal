@@ -13,6 +13,7 @@ import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyE
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionRelTable;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
@@ -25,6 +26,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueR
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -720,6 +722,31 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return cpDefinitionOptionRelPersistence.countByC_SC(
 			cpDefinitionId, skuContributor);
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getCPOptionCPDefinitionOptionRels(
+		long cpOptionId) {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CPDefinitionOptionRelTable.INSTANCE
+			).from(
+				CPDefinitionOptionRelTable.INSTANCE
+			).where(
+				CPDefinitionOptionRelTable.INSTANCE.CPOptionId.eq(cpOptionId)
+			));
+	}
+
+	@Override
+	public int getCPOptionCPDefinitionOptionRelsCount(long cpOptionId) {
+		return dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				CPDefinitionOptionRelTable.INSTANCE
+			).where(
+				CPDefinitionOptionRelTable.INSTANCE.CPOptionId.eq(cpOptionId)
+			));
 	}
 
 	@Override

@@ -101,11 +101,11 @@ baseTest(
 			'Contenu web basique'
 		);
 
-		await expect(
-			page
-				.locator('#ToastAlertContainer')
-				.getByText('test', {exact: true})
-		).toBeVisible();
+		await waitForAlert(
+			page,
+			"Avertissement:Les URL simplifiées suivantes ont été modifiées pour garantir l'unicité",
+			{type: 'warning'}
+		);
 	}
 );
 

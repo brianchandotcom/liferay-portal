@@ -1,0 +1,1 @@
+${dataFactory.toInsertSQL(dataFactory.newNotificationTemplateModel("L_COMMERCE_ORDER_TEMPLATE", "email"))}

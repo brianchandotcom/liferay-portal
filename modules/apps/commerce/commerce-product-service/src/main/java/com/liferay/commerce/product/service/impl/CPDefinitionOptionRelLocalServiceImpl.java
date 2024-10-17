@@ -723,6 +723,18 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionOptionRel> getCPOptionCPDefinitionOptionRels(
+		long cpOptionId) {
+
+		return cpDefinitionOptionRelPersistence.findByCPOptionId(cpOptionId);
+	}
+
+	@Override
+	public int getCPOptionCPDefinitionOptionRelsCount(long cpOptionId) {
+		return cpDefinitionOptionRelPersistence.countByCPOptionId(cpOptionId);
+	}
+
+	@Override
 	public boolean hasCPDefinitionPriceContributorCPDefinitionOptionRels(
 		long cpDefinitionId) {
 

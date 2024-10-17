@@ -51,12 +51,6 @@ const createdEntities = {
 };
 
 test.afterEach(async ({apiHelpers}) => {
-	for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			listTypeDefinition.id
-		);
-	}
-
 	const objectAdminRestClient = await apiHelpers.buildRestClient(
 		ObjectAdminRestClient
 	);
@@ -65,6 +59,12 @@ test.afterEach(async ({apiHelpers}) => {
 		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
 			objectDefinitionId: objectDefinition.id,
 		});
+	}
+
+	for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
+		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+			listTypeDefinition.id
+		);
 	}
 });
 

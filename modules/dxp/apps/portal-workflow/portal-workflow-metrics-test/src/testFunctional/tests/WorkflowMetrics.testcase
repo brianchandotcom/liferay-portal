@@ -6,6 +6,8 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Workflow Metrics";
 
+	static var osgiConfigFileName = "";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -16,6 +18,8 @@ definition {
 		Navigator.openURL();
 
 		Workflow.openWorkflowMetrics();
+
+		var osgiConfigFileName = "com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration.config";
 	}
 
 	tearDown {
@@ -36,6 +40,8 @@ definition {
 		WorkflowMetrics.tearDown();
 
 		Workflow.tearDownWorkflowDefinitions();
+
+		AntCommands.runCommand("build-test-workflow-metrics-sla.xml", "clean-workflow-metrics-sla-osgi-configuration -Dosgi.config.file.name=${osgiConfigFileName}");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -2285,6 +2291,10 @@ definition {
 		var key_testSlaDefinitionName = "SLA Name";
 		var key_testSlaDefinitionStart = "Process Begins";
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+		task ("Add the OSGI configuration file") {
+			AntCommands.runCommand("build-test-workflow-metrics-sla.xml", "prepare-workflow-metrics-sla-osgi-configuration -Dosgi.config.file.name=${osgiConfigFileName}");
+		}
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 

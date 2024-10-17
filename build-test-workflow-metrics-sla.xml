@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="workflow-test-metrics-sla" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="clean-workflow-metrics-sla-osgi-configuration">
+		<delete failonerror="false" file="${liferay.home}/osgi/configs/${osgi.config.file.name}" />
+	</target>
+
+	<target name="prepare-workflow-metrics-sla-osgi-configuration">
+		<property name="osgi.dependency.dir" value="${project.dir}/modules/dxp/apps/portal-workflow/portal-workflow-metrics-test/src/testFunctional/tests/dependencies" />
+
+		<copy
+			file="${osgi.dependency.dir}/${osgi.config.file.name}"
+			todir="${liferay.home}/osgi/configs"
+		/>
+	</target>
+</project>

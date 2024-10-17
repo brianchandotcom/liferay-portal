@@ -69,68 +69,80 @@ async function submitReturnableItems(
 export default function ({
 	namespace,
 	returnableOrderItemsContextParams,
-	viewReturnableCommerceOrderItemsURL,
+	viewReturnableOrderItemsURL,
 }) {
 	const formElement = document[`${namespace}fm`];
-	const cmdInputElement = formElement[`${namespace}cmd`];
+	const cmdInputElement = formElement ? formElement[`${namespace}cmd`] : null;
 
 	Liferay.on(`${namespace}editCommerceReturnableItems`, () => {
-		window.top[`${namespace}handleCTA`]('makeReturn');
+		window.top[`${namespace}handleCTA`](null, 'makeReturn', null);
+	});
+	Liferay.on(`${namespace}makeReturn`, ({accountId, orderId}) => {
+		window.top[`${namespace}handleCTA`](accountId, 'makeReturn', orderId);
 	});
 
-	Liferay.provide(window, `${namespace}handleCTA`, (cmdValue) => {
-		if (cmdValue === 'makeReturn') {
-			let selectedReturnableItems;
+	Liferay.provide(
+		window,
+		`${namespace}handleCTA`,
+		(accountId, cmdValue, orderId) => {
+			if (cmdValue === 'makeReturn') {
+				let selectedReturnableItems;
 
-			window.top.Liferay.on(
-				commerceEvents.SELECTED_RETURNABLE_ITEMS,
-				({selectedItems}) => {
-					selectedReturnableItems = selectedItems;
-				}
-			);
+				window.top.Liferay.on(
+					commerceEvents.SELECTED_RETURNABLE_ITEMS,
+					({selectedItems}) => {
+						selectedReturnableItems = selectedItems;
+					}
+				);
 
-			openModal({
-				buttons: [
-					{
-						displayType: 'secondary',
-						label: Liferay.Language.get('cancel'),
-						type: 'cancel',
-					},
-					{
-						label: Liferay.Language.get('submit'),
-						onClick: () => {
-							submitReturnableItems(
-								returnableOrderItemsContextParams,
-								selectedReturnableItems
-							)
-								.then((response) => {
-									const portletURL = createPortletURL(
-										returnableOrderItemsContextParams.redirect,
-										{
-											commerceReturnId: response.id,
-										}
-									);
-									window.top.location.href =
-										portletURL.toString();
-								})
-								.catch((error) => {
-									openToast({
-										message:
-											error.message ||
-											Liferay.Language.get(
-												'an-unexpected-error-occurred'
-											),
-										type: 'danger',
-									});
-								});
+				openModal({
+					buttons: [
+						{
+							displayType: 'secondary',
+							label: Liferay.Language.get('cancel'),
+							type: 'cancel',
 						},
+						{
+							label: Liferay.Language.get('submit'),
+							onClick: () => {
+								submitReturnableItems(
+									accountId && orderId
+										? {
+												...returnableOrderItemsContextParams,
+												accountEntryId: accountId,
+												commerceOrderId: orderId,
+											}
+										: returnableOrderItemsContextParams,
+									selectedReturnableItems
+								)
+									.then((response) => {
+										const portletURL = createPortletURL(
+											returnableOrderItemsContextParams.redirect,
+											{
+												commerceReturnId: response.id,
+											}
+										);
+										window.top.location.href =
+											portletURL.toString();
+									})
+									.catch((error) => {
+										openToast({
+											message:
+												error.message ||
+												Liferay.Language.get(
+													'an-unexpected-error-occurred'
+												),
+											type: 'danger',
+										});
+									});
+							},
+						},
+					],
+					containerProps: {
+						center: true,
+						className: 'commerce-modal',
 					},
-				],
-				containerProps: {
-					center: true,
-					className: 'commerce-modal',
-				},
-				headerHTML: `
+					headerHTML: `
 					<div class="d-inline-flex flex-row align-items-center">
 						<h1 class="modal-title" id="clay-modal-label-1">${Liferay.Language.get(
 							'select-returnable-items'
@@ -149,27 +161,32 @@ export default function ({
 						</div>
 					</div>
 				`,
-				height: '32rem',
-				iframeBodyCssClass: 'w-100',
-				onOpen: () => {
-					const tooltipHeaderIcon = document.querySelector(
-						'#returnable-items-header-tooltip-icon'
-					);
+					height: '32rem',
+					iframeBodyCssClass: 'w-100',
+					onOpen: () => {
+						const tooltipHeaderIcon = document.querySelector(
+							'#returnable-items-header-tooltip-icon'
+						);
 
-					tooltipHeaderIcon.onmouseover = () =>
-						toggleModalTitleTooltip(true);
-					tooltipHeaderIcon.onmouseout = () =>
-						toggleModalTitleTooltip(false);
-				},
-				size: 'lg',
-				title: Liferay.Language.get('select-returnable-items'),
-				url: viewReturnableCommerceOrderItemsURL,
-			});
-		}
-		else {
-			cmdInputElement.value = cmdValue;
+						tooltipHeaderIcon.onmouseover = () =>
+							toggleModalTitleTooltip(true);
+						tooltipHeaderIcon.onmouseout = () =>
+							toggleModalTitleTooltip(false);
+					},
+					size: 'lg',
+					title: Liferay.Language.get('select-returnable-items'),
+					url: orderId
+						? createPortletURL(viewReturnableOrderItemsURL, {
+								commerceOrderId: orderId,
+							})
+						: viewReturnableOrderItemsURL,
+				});
+			}
+			else {
+				cmdInputElement.value = cmdValue;
 
-			submitForm(formElement);
+				submitForm(formElement);
+			}
 		}
-	});
+	);
 }

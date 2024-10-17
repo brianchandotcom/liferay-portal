@@ -763,9 +763,7 @@ public class CommerceReturnContentDisplayContext {
 			false);
 	}
 
-	public String getViewReturnableCommerceOrderItemsURL()
-		throws PortalException {
-
+	public String getViewReturnableOrderItemsURL() throws PortalException {
 		CommerceReturn commerceReturn = getCommerceReturn();
 
 		if (commerceReturn == null) {

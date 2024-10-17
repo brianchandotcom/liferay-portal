@@ -5,12 +5,16 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceReturn;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
@@ -20,6 +24,7 @@ import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -40,12 +45,14 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -87,6 +94,18 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				themeDisplay.getScopeGroupId());
+
+		if (commerceChannel == null) {
+			return;
+		}
+
 		CommerceOrder commerceOrder =
 			CommerceOrderInfoItemUtil.getCommerceOrder(
 				_commerceOrderService, httpServletRequest);
@@ -117,6 +136,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:order-actions:dropdownItems",
 				_getDropdownItems(commerceOrder, httpServletRequest));
 			httpServletRequest.setAttribute(
+				"liferay-commerce:order-actions:namespace",
+				StringUtil.randomId() + StringPool.UNDERLINE);
+			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:open", commerceOrder.isOpen());
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:orderSummaryURL",
@@ -142,6 +164,21 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
 					_friendlyURLSeparatorProviderSnapshot.get(),
 					httpServletRequest));
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-10562") &&
+				(commerceOrder.getOrderStatus() ==
+					CommerceOrderConstants.ORDER_STATUS_COMPLETED)) {
+
+				httpServletRequest.setAttribute(
+					"liferay-commerce:order-actions:" +
+						"returnableOrderItemsContextParams",
+					_getReturnableOrderItemsContextParams(
+						commerceChannel, httpServletRequest));
+				httpServletRequest.setAttribute(
+					"liferay-commerce:order-actions:" +
+						"viewReturnableOrderItemsURL",
+					_getViewReturnableOrderItemsURL(httpServletRequest));
+			}
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -315,6 +352,51 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 		return dropdownItems;
 	}
 
+	private HashMap<String, Object> _getReturnableOrderItemsContextParams(
+		CommerceChannel commerceChannel,
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			return HashMapBuilder.<String, Object>put(
+				"channelGroupId", commerceChannel.getGroupId()
+			).put(
+				"channelId", commerceChannel.getCommerceChannelId()
+			).put(
+				"channelName", commerceChannel.getName()
+			).put(
+				"redirect",
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest, CommerceReturn.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setMVCRenderCommandName(
+					"/commerce_return_content/view_commerce_return"
+				).setParameter(
+					"commerceReturnId", 0
+				).buildString()
+			).build();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return new HashMap<>();
+		}
+	}
+
+	private String _getViewReturnableOrderItemsURL(
+		HttpServletRequest httpServletRequest) {
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_order_content/view_returnable_commerce_order_items"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	private boolean _hasModelPermission(
 			CommerceOrder commerceOrder, String action)
 		throws PortalException {
@@ -375,6 +457,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			OrderActionsFragmentRenderer.class,
 			FriendlyURLSeparatorProvider.class);
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;

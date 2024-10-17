@@ -494,7 +494,7 @@ if (commerceOrder != null) {
 	}
 </aui:script>
 
-<portlet:renderURL var="viewReturnableCommerceOrderItemsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<portlet:renderURL var="viewReturnableOrderItemsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_returnable_commerce_order_items" />
 	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 </portlet:renderURL>
@@ -506,7 +506,7 @@ if (commerceOrder != null) {
 		).put(
 			"returnableOrderItemsContextParams", commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams()
 		).put(
-			"viewReturnableCommerceOrderItemsURL", viewReturnableCommerceOrderItemsURL
+			"viewReturnableOrderItemsURL", viewReturnableOrderItemsURL
 		).build()
 	%>'
 	module="{viewCommerceOrderDetailsCTAs} from commerce-order-content-web"

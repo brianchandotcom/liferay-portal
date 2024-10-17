@@ -43,5 +43,20 @@
 			propsTransformer="<%= propsTransformer %>"
 			style="<%= displayStyle %>"
 		/>
+
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10562") %>'>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"namespace", namespace
+					).put(
+						"returnableOrderItemsContextParams", returnableOrderItemsContextParams
+					).put(
+						"viewReturnableOrderItemsURL", viewReturnableOrderItemsURL
+					).build()
+				%>'
+				module="{viewCommerceOrderDetailsCTAs} from commerce-order-content-web"
+			/>
+		</c:if>
 	</c:otherwise>
 </c:choose>

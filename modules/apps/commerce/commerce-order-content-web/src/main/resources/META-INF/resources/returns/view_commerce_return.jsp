@@ -170,7 +170,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 								).put(
 									"returnableOrderItemsContextParams", commerceReturnContentDisplayContext.getReturnableOrderItemsContextParams()
 								).put(
-									"viewReturnableCommerceOrderItemsURL", commerceReturnContentDisplayContext.getViewReturnableCommerceOrderItemsURL()
+									"viewReturnableOrderItemsURL", commerceReturnContentDisplayContext.getViewReturnableOrderItemsURL()
 								).build()
 							%>'
 							module="{viewCommerceOrderDetailsCTAs} from commerce-order-content-web"

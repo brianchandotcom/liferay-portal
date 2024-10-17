@@ -45,7 +45,7 @@ const InfoBoxModalNotes = ({
 						} = note;
 
 						return (
-							<div className="panel-body">
+							<div className="panel-body" key={note.id}>
 								<div className="card-row d-flex mb-2">
 									<UserIcon
 										fullName={author}

@@ -37,6 +37,23 @@ export type StepsInformationProps = {
 	subTitle: any;
 };
 
+export type Provisioning = {
+	deployments: Deployment[];
+	orderItemId: number;
+	quantity: number;
+	shippedQuantity: number;
+	sku: string;
+};
+
+export type Deployment = {
+	appId: string;
+	createdAt: number;
+	id: string;
+	loading: boolean;
+	orderId: number;
+	projectId: string;
+};
+
 export type StepsInformation = {
 	[StepCloudInstallation.ENVIRONMENT]: StepsInformationProps;
 	[StepCloudInstallation.INSTALLATION]: StepsInformationProps;

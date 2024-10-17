@@ -9,10 +9,13 @@ import {useOutletContext} from 'react-router-dom';
 import {z} from 'zod';
 
 import RadioCard from '../../../../../../../components/RadioCardList/components/RadioCard';
+import {ORDER_CUSTOM_FIELDS} from '../../../../../../../enums/Order';
 import i18n from '../../../../../../../i18n';
 import zodSchema from '../../../../../../../schema/zod';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
+import {safeJSONParse} from '../../../../../../../utils/util';
 import {CloudProvisioningOutletContext} from '../pages/CloudProvisioningOutlet';
+import {Deployment, Provisioning} from '../types';
 
 type EnvironmentRadioProps = {
 	selectedEnvironment?: z.infer<
@@ -22,20 +25,24 @@ type EnvironmentRadioProps = {
 	setValue: UseFormSetValue<z.infer<typeof zodSchema.installProductSchema>>;
 };
 
-const CUSTOMFIELD_KEY = 'cloud-provisioning';
-
 const EnvironmentRadio: React.FC<EnvironmentRadioProps> = ({
 	selectedEnvironment,
 	selectedProject,
 	setValue,
 }) => {
 	const {placedOrder} = useOutletContext<CloudProvisioningOutletContext>();
-	const deploiments = JSON.parse(placedOrder.customFields[CUSTOMFIELD_KEY])[0]
-		.deployments;
 
-	const handleSelectRadio = (selectedRadio: RadioOption<any>) => {
-		setValue('environment', selectedRadio.value);
-	};
+	const cloudProvisioning = safeJSONParse<Provisioning[]>(
+		placedOrder.customFields[ORDER_CUSTOM_FIELDS.CLOUD_PROVISIONING],
+		[]
+	);
+
+	const handleSelectRadio = (
+		selectedRadio: RadioOption<{
+			isExtensionEnvironment: boolean;
+			projectId: string;
+		}>
+	) => setValue('environment', selectedRadio.value);
 
 	return (
 		<>
@@ -43,12 +50,14 @@ const EnvironmentRadio: React.FC<EnvironmentRadioProps> = ({
 				const [projectName = '', environment = ''] =
 					projectEnvironment.projectId.split('-');
 
-				const hasDisabled = deploiments.find((deployment: any) => {
-					const [_, hasInstallationOnEnvironment = ''] =
-						deployment.projectId.split('-');
+				const disabled = cloudProvisioning.some((provisioning) =>
+					provisioning.deployments.find((deployment: Deployment) => {
+						const [_, _environment = ''] =
+							deployment.projectId.split('-');
 
-					return hasInstallationOnEnvironment === environment;
-				});
+						return _environment === environment;
+					})
+				);
 
 				return (
 					<RadioCard
@@ -56,7 +65,7 @@ const EnvironmentRadio: React.FC<EnvironmentRadioProps> = ({
 							projectEnvironment.projectId ===
 							selectedEnvironment?.projectId
 						}
-						disabled={hasDisabled}
+						disabled={disabled}
 						key={index}
 						leftRadio
 						selectRadio={() =>
@@ -80,7 +89,7 @@ const EnvironmentRadio: React.FC<EnvironmentRadioProps> = ({
 									</ClayBadge>
 								</div>
 
-								{hasDisabled && (
+								{disabled && (
 									<span className="text-red">
 										{i18n.translate(
 											'this-app-is-already-installed-in-this-environment'

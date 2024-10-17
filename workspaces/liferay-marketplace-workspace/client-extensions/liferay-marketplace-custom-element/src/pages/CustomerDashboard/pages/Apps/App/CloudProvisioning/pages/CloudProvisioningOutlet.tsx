@@ -206,7 +206,7 @@ export type CloudProvisioningOutletContext = {
 	onClickCancel: () => void;
 	onSubmit: () => void;
 	orderId: number;
-	placedOrder: any;
+	placedOrder: PlacedOrder;
 	projects: ConsoleUserProjectWithExtension[];
 	selectedAccount: ReturnType<typeof useAccount>;
 };

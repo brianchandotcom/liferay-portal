@@ -1048,6 +1048,63 @@ test.describe('Submit button', () => {
 	);
 });
 
+test.describe('Textarea input field', () => {
+	test(
+		'Check the Textarea input configuration',
+		{tag: '@LPS-170206'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map the form to Lemon object, specifically to the "Lemon History" field
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+				'Lemon History',
+			]);
+
+			const textareaInput = page.getByLabel('Lemon History', {
+				exact: true,
+			});
+
+			// Check the role of the input is textbox
+
+			await expect(textareaInput).toHaveRole('textbox');
+
+			// Check Number of Lines config
+
+			await expect(textareaInput).toHaveAttribute('rows', '5');
+
+			await pageEditorPage.selectFragment(formId);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Number of Lines',
+				fragmentId: await pageEditorPage.getFragmentId('Textarea'),
+				tab: 'General',
+				value: '2',
+			});
+
+			await expect(textareaInput).toHaveAttribute('rows', '2');
+		}
+	);
+});
+
 test.describe('Picklist input field', () => {
 	test('Shows correct options in picklist field selected as title in related object', async ({
 		apiHelpers,

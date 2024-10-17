@@ -959,10 +959,8 @@ test.describe('Submit button', () => {
 						.first(),
 				});
 
-				await pageEditorPage.changeEditableConfiguration({
-					editableId: 'element-text',
+				await pageEditorPage.changeConfiguration({
 					fieldLabel: 'Field',
-					fragmentId: headingId,
 					tab: 'Link',
 					value: displayPageTemplateName,
 				});

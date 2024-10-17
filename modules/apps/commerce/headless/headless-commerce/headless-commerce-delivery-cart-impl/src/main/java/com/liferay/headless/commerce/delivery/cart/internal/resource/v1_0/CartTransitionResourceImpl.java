@@ -106,7 +106,7 @@ public class CartTransitionResourceImpl extends BaseCartTransitionResourceImpl {
 				Validator.isNotNull(
 					commerceOrder.getCommercePaymentMethodKey()) &&
 				!commerceOrderItems.isEmpty() &&
-				_checkShippability(commerceOrder, commerceOrderItems)) {
+				_isShippable(commerceOrder, commerceOrderItems)) {
 
 				int deliveryCommerceTermEntriesCount =
 					_commerceTermEntryLocalService.
@@ -183,7 +183,7 @@ public class CartTransitionResourceImpl extends BaseCartTransitionResourceImpl {
 			new ObjectValuePair<>(workflowTaskId, name));
 	}
 
-	private boolean _checkShippability(
+	private boolean _isShippable(
 		CommerceOrder commerceOrder,
 		List<CommerceOrderItem> commerceOrderItems) {
 

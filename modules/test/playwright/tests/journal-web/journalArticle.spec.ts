@@ -423,7 +423,7 @@ baseTest(
 
 		await page.getByLabel('Items per Page').click();
 
-		await page.getByRole('link', {name: '4 Entries per Page'}).click();
+		await page.getByRole('option', {name: '4 Entries per Page'}).click();
 
 		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
 		await page.getByTestId('row').nth(1).getByRole('checkbox').check();

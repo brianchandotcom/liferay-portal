@@ -65,7 +65,7 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 					PortalUtil.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE)),
-					getScope(), _getScopePk(httpServletRequest)));
+					getScope(), _getScopePK(httpServletRequest)));
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(
@@ -89,7 +89,7 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 	)
 	protected ServletContext servletContext;
 
-	private long _getScopePk(HttpServletRequest httpServletRequest) {
+	private long _getScopePK(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

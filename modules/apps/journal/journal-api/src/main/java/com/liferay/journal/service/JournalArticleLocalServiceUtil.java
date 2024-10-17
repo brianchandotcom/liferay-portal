@@ -903,6 +903,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().fetchLatestIndexableArticle(resourcePrimKey);
 	}
 
+	public static PersistedModel fetchPersistedModel(
+		Serializable primaryKeyObj) {
+
+		return getService().fetchPersistedModel(primaryKeyObj);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -270,7 +270,6 @@ test('Create a page based on a page template', async ({
 
 	await pagesAdminPage.addPage({
 		name: layoutTitle,
-		successMessage: 'Success:The page was created successfully.',
 		template: pageTemplateName,
 	});
 

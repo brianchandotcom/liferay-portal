@@ -52,7 +52,7 @@ public class FragmentServiceConfigurationDisplayContext {
 		).setParameter(
 			"scope", _scope
 		).setParameter(
-			"scopePK", _getScopePk()
+			"scopePK", _getScopePK()
 		).buildString();
 	}
 
@@ -66,7 +66,7 @@ public class FragmentServiceConfigurationDisplayContext {
 		).setParameter(
 			"scope", _scope
 		).setParameter(
-			"scopePK", _getScopePk()
+			"scopePK", _getScopePK()
 		).buildString();
 	}
 
@@ -96,12 +96,12 @@ public class FragmentServiceConfigurationDisplayContext {
 
 	public boolean isPropagateChangesEnabled() {
 		return _fragmentServiceConfigurationHelper.isPropagateChanges(
-			_scope, _getScopePk());
+			_scope, _getScopePK());
 	}
 
 	public boolean isPropagateContributedFragmentChangesEnabled() {
 		return _fragmentServiceConfigurationHelper.
-			isPropagateContributedFragmentChanges(_scope, _getScopePk());
+			isPropagateContributedFragmentChanges(_scope, _getScopePK());
 	}
 
 	public boolean showInfoMessage() throws Exception {
@@ -109,7 +109,7 @@ public class FragmentServiceConfigurationDisplayContext {
 				_scope,
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue()) ||
 			_fragmentServiceConfigurationHelper.hasScopedConfiguration(
-				_getScopePk())) {
+				_getScopePK())) {
 
 			return false;
 		}
@@ -117,7 +117,7 @@ public class FragmentServiceConfigurationDisplayContext {
 		return true;
 	}
 
-	private long _getScopePk() {
+	private long _getScopePK() {
 		if (Objects.equals(
 				_scope,
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {

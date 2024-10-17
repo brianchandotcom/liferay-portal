@@ -170,7 +170,7 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Test
 	@TestInfo("LPS-101333")
-	public void testCannotExecuteFreemarkerCodeInHTMLFragment()
+	public void testCannotExecuteFreeMarkerCodeInHTMLFragment()
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addHTMLFragmentEntryLink(

@@ -18,52 +18,52 @@ export const test = mergeTests(
 	headlessDiscoveryPagesTest
 );
 
+const application = {
+	apiApplicationToAPISchemas: [
+		{
+			description: 'API Application Schema',
+			externalReferenceCode: 'api-application-schema',
+			mainObjectDefinitionERC: 'L_API_APPLICATION',
+			name: 'API Application Schema',
+		},
+	],
+	applicationStatus: 'unpublished',
+	baseURL: 'basic-application',
+	description: 'Test API Application',
+	externalReferenceCode: 'basic-application',
+	title: 'Basic application',
+};
+
 test('can associate and disassociate schema', async ({
 	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
-	const application = await apiHelpers.objectEntry.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		{
-			apiApplicationToAPISchemas: [
+			...application,
+			apiApplicationToAPIEndpoints: [
 				{
-					description: 'API Application Schema',
-					externalReferenceCode: 'api-application-schema',
-					mainObjectDefinitionERC: 'L_API_APPLICATION',
-					name: 'API Application Schema',
+					description: 'Test API Endpoint',
+					externalReferenceCode: 'basic-endpoint',
+					httpMethod: 'get',
+					name: 'Basic API Endpoint',
+					path: '/endpoint/',
+					r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
+						'api-application-schema',
+					retrieveType: 'collection',
+					scope: 'company',
 				},
 			],
-			applicationStatus: 'unpublished',
-			baseURL: 'basic-application',
-			description: 'Test API Application',
-			externalReferenceCode: 'basic-application',
-			title: 'Basic application',
 		},
 		'headless-builder/applications'
-	);
-
-	const endpoint = await apiHelpers.objectEntry.postObjectEntry(
-		{
-			description: 'Test API Endpoint',
-			externalReferenceCode: 'basic-endpoint',
-			httpMethod: 'get',
-			name: 'Basic API Endpoint',
-			path: '/endpoint/',
-			r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
-				application.externalReferenceCode,
-			r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
-				application.apiApplicationToAPISchemas[0].externalReferenceCode,
-			retrieveType: 'collection',
-			scope: 'company',
-		},
-		'headless-builder/endpoints'
 	);
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
 	await applicationPage.goToEndpointsTab();
-	await applicationPage.goToEditEndpoint(endpoint.path);
+	await applicationPage.goToEditEndpoint('/endpoint/');
 	await applicationPage.goToEndpointConfigurationTab();
 
 	await page.getByLabel('Response Body Schema').click();
@@ -79,7 +79,7 @@ test('can associate and disassociate schema', async ({
 
 	await applicationPage.goToDetailsTab();
 	await applicationPage.goToEndpointsTab();
-	await applicationPage.goToEditEndpoint(endpoint.path);
+	await applicationPage.goToEditEndpoint('/endpoint/');
 	await applicationPage.goToEndpointConfigurationTab();
 
 	const responseBodySchemaContent = await page
@@ -178,46 +178,30 @@ test('can see schema unique fields as path parameter properties', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const application = await apiHelpers.objectEntry.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		{
-			apiApplicationToAPISchemas: [
+			...application,
+			apiApplicationToAPIEndpoints: [
 				{
-					description: 'API Application Schema',
-					externalReferenceCode: 'api-application-schema',
-					mainObjectDefinitionERC: 'L_API_APPLICATION',
-					name: 'API Application Schema',
+					description: 'Test API Endpoint',
+					externalReferenceCode: 'basic-endpoint',
+					httpMethod: 'get',
+					name: 'Basic API Endpoint',
+					path: '/endpoint/{pathParam}',
+					r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
+						'api-application-schema',
+					retrieveType: 'singleElement',
+					scope: 'company',
 				},
 			],
-			applicationStatus: 'published',
-			baseURL: 'basic-application',
-			description: 'Test API Application',
-			externalReferenceCode: 'basic-application',
-			title: 'Basic application',
 		},
 		'headless-builder/applications'
-	);
-
-	const endpoint = await apiHelpers.objectEntry.postObjectEntry(
-		{
-			description: 'Test API Endpoint',
-			externalReferenceCode: 'basic-endpoint',
-			httpMethod: 'get',
-			name: 'Basic API Endpoint',
-			path: '/endpoint/{pathParam}',
-			r_apiApplicationToAPIEndpoints_l_apiApplicationERC:
-				application.externalReferenceCode,
-			r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
-				application.apiApplicationToAPISchemas[0].externalReferenceCode,
-			retrieveType: 'singleElement',
-			scope: 'company',
-		},
-		'headless-builder/endpoints'
 	);
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
 	await applicationPage.goToEndpointsTab();
-	await applicationPage.goToEditEndpoint(endpoint.path);
+	await applicationPage.goToEditEndpoint('/endpoint/{pathParam}');
 	await applicationPage.goToEndpointConfigurationTab();
 
 	await page.getByRole('button', {name: 'Select an Option'}).click();

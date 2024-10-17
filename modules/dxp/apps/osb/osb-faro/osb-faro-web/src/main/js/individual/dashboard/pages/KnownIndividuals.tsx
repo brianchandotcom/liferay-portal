@@ -229,6 +229,24 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 									'access-our-documentation-to-learn-more'
 								)}
 							</ClayLink>
+
+							{authorized && (
+								<ClayLink
+									button
+									className='button-root'
+									displayType='primary'
+									href={toRoute(
+										Routes.SETTINGS_ADD_DATA_SOURCE,
+										{
+											groupId
+										}
+									)}
+								>
+									{Liferay.Language.get(
+										'connect-data-source'
+									)}
+								</ClayLink>
+							)}
 						</>
 					}
 					icon={{

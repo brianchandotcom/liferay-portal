@@ -24,6 +24,7 @@ import i18n from '../../../../../../i18n';
 import {
 	createAttachmentAxios,
 	createProductSpecification,
+	createProductVirtualEntry,
 	getCategories,
 	getProductIdCategories,
 	getProductSpecifications,
@@ -74,6 +75,7 @@ export function ProvideAppBuildPage({
 			appType,
 			buildAppPackages,
 			resourceRequirements,
+			virtualSettingId,
 		},
 		dispatch,
 	] = useAppContext();
@@ -265,6 +267,8 @@ export function ProvideAppBuildPage({
 						attachment: base64ToText(
 							(await fileToBase64(appPackage.file)) as string
 						),
+						fileName: appPackage.fileName,
+						id: appPackage.id,
 						version: versionKey,
 					});
 					liferayVersionSpecifications.push({
@@ -284,11 +288,48 @@ export function ProvideAppBuildPage({
 						...liferayVersionSpecifications,
 					],
 					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
-					productVirtualSettings: {
-						productVirtualSettingsFileEntries: items,
-					},
 				}
 			);
+
+			for (const item of items) {
+				const {attachment, fileName, id, version} = item;
+
+				if (!attachment) {
+					continue;
+				}
+
+				const formData = new FormData();
+				const blob = new Blob([attachment]);
+
+				formData.append('file', blob, fileName);
+				formData.append(
+					'productVirtualSettingsFileEntry',
+					JSON.stringify({attachment, version})
+				);
+
+				await createProductVirtualEntry({
+					body: formData,
+					callback: (progress) => {
+						buildAppPackages[version] = buildAppPackages[
+							version
+						].map((file) =>
+							file.id === id
+								? {
+										...file,
+										progress,
+										uploaded: progress === 100,
+									}
+								: file
+						);
+
+						dispatch({
+							payload: buildAppPackages,
+							type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+						});
+					},
+					virtualSettingId,
+				});
+			}
 
 			return;
 		}

@@ -56,24 +56,27 @@ export function createApp({
 	productChannels?: Partial<Channel>[];
 	productSpecifications?: ProductSpecification[];
 }) {
-	return fetch(`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=productVirtualSettings`, {
-		body: JSON.stringify({
-			active: true,
-			catalogId,
-			categories: appCategories,
-			description: {en_US: appDescription},
-			name: {en_US: appName},
-			productChannelFilter: true,
-			productChannels,
-			productConfiguration: {allowBackOrder: true},
-			productSpecifications,
-			productStatus: 2,
-			productType: 'virtual',
-			productVirtualSettings: {},
-		}),
-		headers,
-		method: 'POST',
-	});
+	return fetch(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=productVirtualSettings`,
+		{
+			body: JSON.stringify({
+				active: true,
+				catalogId,
+				categories: appCategories,
+				description: {en_US: appDescription},
+				name: {en_US: appName},
+				productChannelFilter: true,
+				productChannels,
+				productConfiguration: {allowBackOrder: true},
+				productSpecifications,
+				productStatus: 2,
+				productType: 'virtual',
+				productVirtualSettings: {},
+			}),
+			headers,
+			method: 'POST',
+		}
+	);
 }
 
 export async function getTierPrice(

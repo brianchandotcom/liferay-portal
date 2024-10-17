@@ -25,8 +25,8 @@ export const test = mergeTests(
 	searchPageTest
 );
 
-test.describe('Search Bar prevents XSS vulnerability', () => {
-	test('SearchURL is encoded in search bar form @LPD-39110', async ({
+test.describe('Search Bar with user input', () => {
+	test('Alert does not display on search page @LPD-39110', async ({
 		page,
 		searchPage,
 	}) => {
@@ -46,12 +46,12 @@ test.describe('Search Bar prevents XSS vulnerability', () => {
 		await test.step('Check that text does not appear in searchbar', async () => {
 			await page.goto(
 				liferayConfig.environment.baseUrl +
-					'/search;%3B%3Cdiv%20id%3D%221%22%3EXSS%20Vulnerability%3C%2Fdiv%3E'
+					'/search;%3B%3Cdiv%20id%3D%221%22%3EQuestionable%20Text%3C%2Fdiv%3E'
 			);
 
 			await expect(
 				searchPage.searchBarPortletInMainContent
-			).not.toHaveText(/XSS Vulnerability/);
+			).not.toHaveText(/Questionable Text/);
 		});
 	});
 });

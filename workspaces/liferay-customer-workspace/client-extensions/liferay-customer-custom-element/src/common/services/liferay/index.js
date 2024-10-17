@@ -12,6 +12,7 @@ export const Liferay = window.Liferay || {
 	OAuth2Client: {
 		FromUserAgentApplication: (_userAgentApplicationId) => {
 			return {
+				_getOrRequestToken: () => typeof string,
 				fetch: (_url, _options = {}) => typeof fetch,
 			};
 		},

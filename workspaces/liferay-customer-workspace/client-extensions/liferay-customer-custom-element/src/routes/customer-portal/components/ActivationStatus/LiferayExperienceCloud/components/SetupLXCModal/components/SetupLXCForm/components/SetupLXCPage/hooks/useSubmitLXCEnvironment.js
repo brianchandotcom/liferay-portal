@@ -13,8 +13,6 @@ import {
 	updateLiferayContact,
 	updateRaysourceContact,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
-import {useOnboarding} from '~/routes/onboarding/context';
-
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import NotificationQueueService from '../../../../../../../../../../../../common/services/actions/notificationAction';
 import {
@@ -25,7 +23,7 @@ import {
 	getLiferayExperienceCloudEnvironments,
 	updateAccountSubscriptionGroups,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
-import {useCustomerPortal} from '../../../../../../../../../../context';
+import {getOrRequestToken} from '../../../../../../../../../../../../common/services/liferay/security/auth/getOrRequestToken';
 import {
 	STATUS_CODE,
 	STATUS_TAG_TYPE_NAMES,
@@ -44,14 +42,6 @@ export default function useSubmitLXCEnvironment(
 	const {client} = useAppPropertiesContext();
 
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
-
-	const customerPortalContext = useCustomerPortal();
-
-	const onboardingContext = useOnboarding();
-
-	const oAuthToken =
-		customerPortalContext?.[0].oAuthToken ||
-		onboardingContext?.[0].oAuthToken;
 
 	const [createLiferayExperienceCloudEnvironment] =
 		useCreateLiferayExperienceCloudEnvironments();
@@ -192,13 +182,15 @@ export default function useSubmitLXCEnvironment(
 		try {
 			handleLoadingSubmitButton(true);
 
+			const oAuthToken = await getOrRequestToken();
+
 			if (featureFlags.includes('LPS-159127')) {
 				try {
 					await updateRaysourceContact(
 						addContactRoleRaysource,
 						addHighPriorityContactList,
-						project,
 						oAuthToken,
+						project,
 						provisioningServerAPI
 					);
 
@@ -226,8 +218,8 @@ export default function useSubmitLXCEnvironment(
 				await updateRaysourceContact(
 					removeContactRoleRaysource,
 					removeHighPriorityContactList,
-					project,
 					oAuthToken,
+					project,
 					provisioningServerAPI
 				);
 

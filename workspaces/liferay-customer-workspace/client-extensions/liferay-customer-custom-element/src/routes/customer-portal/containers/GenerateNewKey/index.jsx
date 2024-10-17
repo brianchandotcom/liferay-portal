@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 import {Navigate, useLocation, useOutletContext} from 'react-router-dom';
 import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import {useCustomerPortal} from '../../context';
+import {getOrRequestToken} from '../../../../common/services/liferay/security/auth/getOrRequestToken';
 import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
 import {hasAdminUserAccount} from '../ActivationKeysTable/utils/hasAdminUserAccount';
 import GenerateNewKeySkeleton from './Skeleton';
@@ -24,7 +25,8 @@ const GenerateNewKey = ({
 }) => {
 	const {state} = useLocation();
 	const {data: myAccount} = useGetMyUserAccount();
-	const [{project, oAuthToken, userAccount}] = useCustomerPortal();
+	const [oAuthToken, setOAuthToken] = useState();
+	const [{project, userAccount}] = useCustomerPortal();
 	const [selectedKeyData, setSelectedKeyData] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
 	const {setHasSideMenu} = useOutletContext();
@@ -39,6 +41,16 @@ const GenerateNewKey = ({
 	const [licenseEntryTypeName, setLicenseEntryTypeName] = useState('');
 	const [expirationRenewDate, setExpirationRenewDate] = useState('');
 	const [startRenewDate, setStartRenewDate] = useState('');
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		}
+
+		fetchToken();
+	}, []);
 
 	useEffect(() => {
 		setHasSideMenu(false);
@@ -66,9 +78,9 @@ const GenerateNewKey = ({
 				expirationRenewDate={expirationRenewDate}
 				hasComplimentaryKey={hasComplimentaryKey}
 				licenseEntryTypeName={licenseEntryTypeName}
+				oAuthToken={oAuthToken}
 				purposeDescription={purposeDescription}
 				selectedKeyData={selectedKeyData}
-				oAuthToken={oAuthToken}
 				setStep={setStep}
 				startRenewDate={startRenewDate}
 				state={state}
@@ -83,9 +95,9 @@ const GenerateNewKey = ({
 				filterCheckedActivationKeys
 				hasComplimentaryKey={hasComplimentaryKey}
 				identifier
+				oAuthToken={oAuthToken}
 				productGroupName={productGroupName}
 				selectedKeyData={selectedKeyData}
-				oAuthToken={oAuthToken}
 				setExpirationRenewDate={setExpirationRenewDate}
 				setHasComplimentaryKey={setHasComplimentaryKey}
 				setLicenseEntryTypeName={setLicenseEntryTypeName}
@@ -102,10 +114,10 @@ const GenerateNewKey = ({
 				accountKey={project?.accountKey}
 				deactivateKeysStatus={status.deactivate}
 				filterCheckedActivationKeys
+				oAuthToken={oAuthToken}
 				productGroupName={productGroupName}
 				purposeDescription={purposeDescription}
 				selectedKeyData={selectedKeyData}
-				oAuthToken={oAuthToken}
 				setDeactivateKeysStatus={(value) =>
 					setStatus((previousStatus) => ({
 						...previousStatus,

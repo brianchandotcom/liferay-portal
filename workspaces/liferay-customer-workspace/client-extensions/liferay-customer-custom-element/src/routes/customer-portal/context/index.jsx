@@ -18,7 +18,6 @@ import {
 	getStructuredContentFolders,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {getOrRequestToken} from '../../../common/services/liferay/security/auth/getOrRequestToken';
 import {ROLE_TYPES, ROUTE_TYPES} from '../../../common/utils/constants';
 import {getAccountKey} from '../../../common/utils/getAccountKey';
 import {isValidPage} from '../../../common/utils/page.validation';
@@ -28,12 +27,11 @@ import reducer, {actionTypes} from './reducer';
 const AppContext = createContext();
 
 const AppContextProvider = ({children}) => {
-	const {client, oAuthTokenAPI} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
 		isQuickLinksExpanded: true,
 		project: undefined,
 		quickLinks: undefined,
-		oAuthToken: '',
 		structuredContents: undefined,
 		subscriptionGroups: undefined,
 		userAccount: undefined,
@@ -174,17 +172,6 @@ const AppContextProvider = ({children}) => {
 			}
 		};
 
-		const getOAuthToken = async () => {
-			const oAuthToken = await getOrRequestToken(oAuthTokenAPI);
-
-			if (oAuthToken) {
-				dispatch({
-					payload: oAuthToken,
-					type: actionTypes.UPDATE_OAUTH_TOKEN,
-				});
-			}
-		};
-
 		const getStructuredContents = async () => {
 			const {data} = await client.query({
 				query: getStructuredContentFolders,
@@ -254,7 +241,6 @@ const AppContextProvider = ({children}) => {
 						}
 
 						getStructuredContents();
-						getOAuthToken();
 					}
 				}
 			}
@@ -262,7 +248,7 @@ const AppContextProvider = ({children}) => {
 
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [oAuthTokenAPI]);
+	}, []);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

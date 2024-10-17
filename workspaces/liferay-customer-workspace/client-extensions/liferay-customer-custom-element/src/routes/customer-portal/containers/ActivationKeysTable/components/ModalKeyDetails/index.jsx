@@ -38,10 +38,10 @@ const YEAR_FOR_PERMANENT_KEYS = 2100;
 const ModalKeyDetails = ({
 	currentActivationKey,
 	isVisibleModal,
+	oAuthToken,
 	observer,
 	onClose,
 	project,
-	oAuthToken,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
 	const [clipboardValue, setClipboardValue] = useState('');
@@ -79,9 +79,9 @@ const ModalKeyDetails = ({
 		setIsLoading(true);
 
 		getSubscriptionInKey(
+			oAuthToken,
 			provisioningServerAPI,
-			currentActivationKey.id,
-			oAuthToken
+			currentActivationKey.id
 		)
 			.then((result) => {
 				setToggleSubscription(result);
@@ -95,7 +95,7 @@ const ModalKeyDetails = ({
 			.finally(() => {
 				setIsLoading(false);
 			});
-	}, [currentActivationKey.id, provisioningServerAPI, oAuthToken]);
+	}, [currentActivationKey.id, oAuthToken, provisioningServerAPI]);
 
 	const handleToggle = () => setToggleSubscription((toggled) => !toggled);
 
@@ -105,7 +105,7 @@ const ModalKeyDetails = ({
 		const fn = status ? deleteSubscriptionInKey : putSubscriptionInKey;
 
 		try {
-			await fn(provisioningServerAPI, currentActivationKey.id, oAuthToken);
+			await fn(oAuthToken, provisioningServerAPI, currentActivationKey.id);
 
 			openToast('success', 'your-request-completed-successfully', {
 				type: 'success',
@@ -212,8 +212,8 @@ const ModalKeyDetails = ({
 						onClick={async () => {
 							const isAbleToDownloadKey = await downloadActivationLicenseKey(
 								currentActivationKey.id,
-								provisioningServerAPI,
 								oAuthToken,
+								provisioningServerAPI,
 								currentActivationKey.productName,
 								currentActivationKey.productVersion,
 								project.name

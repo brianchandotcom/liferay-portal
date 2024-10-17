@@ -12,6 +12,7 @@ import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import openToast from '~/common/utils/getToast';
 import {STATUS_CODE} from '~/routes/customer-portal/utils/constants';
 import {Button} from '../../../../../../common/components';
+import {getOrRequestToken} from '../../../../../../common/services/liferay/security/auth/getOrRequestToken';
 import getKebabCase from '../../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../../context';
 import {
@@ -32,7 +33,7 @@ const IncidentContactEditModal = ({
 	leftButton,
 	modalFilter,
 }) => {
-	const [{project, oAuthToken}] = useCustomerPortal();
+	const [{project}] = useCustomerPortal();
 
 	const [addHighPriorityContact, setAddHighPriorityContacts] = useState([]);
 
@@ -70,12 +71,14 @@ const IncidentContactEditModal = ({
 		try {
 			setIsLoadingSaveButton(true);
 
+			const oAuthToken = await getOrRequestToken();
+
 			try {
 				await updateRaysourceContact(
 					addContactRoleRaysource,
 					addHighPriorityContact,
-					project,
 					oAuthToken,
+					project,
 					provisioningServerAPI
 				);
 
@@ -103,8 +106,8 @@ const IncidentContactEditModal = ({
 			await updateRaysourceContact(
 				removeContactRoleRaysource,
 				removeHighPriorityContacts,
-				project,
 				oAuthToken,
+				project,
 				provisioningServerAPI
 			);
 

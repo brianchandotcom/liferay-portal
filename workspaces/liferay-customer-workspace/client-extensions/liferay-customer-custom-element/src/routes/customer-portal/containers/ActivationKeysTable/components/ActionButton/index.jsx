@@ -22,9 +22,9 @@ const ActionButton = ({
 	isAbleToDownloadAggregateKeys,
 	isAdminOrPartnerManager,
 	isAdminUserAccount,
+	oAuthToken,
 	productName,
 	project,
-	oAuthToken,
 	setStatus,
 }) => {
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
@@ -58,8 +58,8 @@ const ActionButton = ({
 		const activationKeysDownloadItems = getActivationKeysDownloadItems(
 			isAbleToDownloadAggregateKeys,
 			filterCheckedActivationKeys,
-			provisioningServerAPI,
 			oAuthToken,
+			provisioningServerAPI,
 			handleMultipleAlertStatus,
 			handleAlertStatus,
 			activationKeysByStatusPaginatedChecked,
@@ -84,8 +84,8 @@ const ActionButton = ({
 				className="btn btn-primary"
 				onClick={() =>
 					getActivationKeyDownload(
-						provisioningServerAPI,
 						oAuthToken,
+						provisioningServerAPI,
 						handleAlertStatus,
 						activationKeysByStatusPaginatedChecked[0],
 						project.name
@@ -118,8 +118,8 @@ const ActionButton = ({
 
 	const activationKeysActionsItems = getActivationKeysActionsItems(
 		project?.accountKey,
-		provisioningServerAPI,
 		oAuthToken,
+		provisioningServerAPI,
 		handleAlertStatus,
 		handleRedirectPage,
 		handleDeactivatePage,
@@ -131,8 +131,8 @@ const ActionButton = ({
 
 	const filteredKeysActionsItems = getFilteredKeysActionsItems(
 		project?.accountKey,
-		provisioningServerAPI,
 		oAuthToken,
+		provisioningServerAPI,
 		handleAlertStatus,
 		productName
 	);

@@ -8,18 +8,28 @@ import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
+import {getOrRequestToken} from '../../../../../common/services/liferay/security/auth/getOrRequestToken';
 import ActivationStatus from '../../../components/ActivationStatus/index';
 import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES, PRODUCT_TYPES} from '../../../utils/constants';
 
 const DXPCloud = () => {
-	const [
-		{project, oAuthToken, subscriptionGroups, userAccount},
-	] = useCustomerPortal();
+	const [{project, subscriptionGroups, userAccount}] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
+	const [oAuthToken, setOAuthToken] = useState();
 	const {client} = useAppPropertiesContext();
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	useEffect(() => {
 		setHasSideMenu(true);
@@ -69,9 +79,9 @@ const DXPCloud = () => {
 					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}
+					oAuthToken={oAuthToken}
 					productName="DXP"
 					projectName={project.name}
-					oAuthToken={oAuthToken}
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>
 		</div>

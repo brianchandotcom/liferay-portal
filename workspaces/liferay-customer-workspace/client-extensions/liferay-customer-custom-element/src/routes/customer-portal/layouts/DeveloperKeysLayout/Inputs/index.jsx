@@ -30,9 +30,9 @@ const DeveloperKeysInputs = ({
 	downloadTextHelper,
 	dxpVersion,
 	listType,
+	oAuthToken,
 	productName,
 	projectName,
-	oAuthToken,
 }) => {
 	const {
 		articleDeployingActivationKeysURL,
@@ -75,8 +75,8 @@ const DeveloperKeysInputs = ({
 		const [selectedVersionSplitted] = selectedVersion.split(' ');
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
-			provisioningServerAPI,
 			oAuthToken,
+			provisioningServerAPI,
 			encodeURI(selectedVersionSplitted),
 			productName
 		);

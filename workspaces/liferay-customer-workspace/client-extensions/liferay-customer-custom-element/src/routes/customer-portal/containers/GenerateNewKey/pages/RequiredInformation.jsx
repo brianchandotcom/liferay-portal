@@ -32,8 +32,8 @@ const RequiredInformation = ({
 	expirationRenewDate,
 	hasComplimentaryKey,
 	licenseEntryTypeName,
-	selectedKeyData,
 	oAuthToken,
+	selectedKeyData,
 	setErrors,
 	setStep,
 	setTouched,
@@ -209,7 +209,7 @@ const RequiredInformation = ({
 		}
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, oAuthToken);
+			return putSubscriptionInKey(oAuthToken, provisioningServerAPI, id);
 		};
 
 		try {
@@ -313,9 +313,9 @@ const RequiredInformation = ({
 		isComplimentaryKey,
 		licenseKey,
 		navigate,
+		oAuthToken,
 		provisioningServerAPI,
 		provisioningService,
-		oAuthToken,
 		setErrors,
 		setTouched,
 		urlPreviousPage,

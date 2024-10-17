@@ -9,8 +9,8 @@ import {downloadAllKeysDetails} from './downloadActivationLicenseKey';
 
 export function getActivationKeysActionsItems(
 	accountKey,
-	provisioningServerAPI,
 	oAuthToken,
+	provisioningServerAPI,
 	handleAlertStatus,
 	handleRedirectPage,
 	handleDeactivatePage,
@@ -64,8 +64,8 @@ export function getActivationKeysActionsItems(
 		onClick: async () => {
 			const downloadedAggregated = await downloadAllKeysDetails(
 				accountKey,
-				provisioningServerAPI,
 				oAuthToken,
+				provisioningServerAPI,
 				productName
 			);
 

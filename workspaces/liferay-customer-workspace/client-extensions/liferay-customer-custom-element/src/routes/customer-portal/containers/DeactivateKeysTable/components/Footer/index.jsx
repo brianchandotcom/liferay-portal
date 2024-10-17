@@ -15,8 +15,8 @@ const DeactivateKeysTableFooter = ({
 	accountKey,
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,
-	productName,
 	oAuthToken,
+	productName,
 }) => {
 	const [status, setStatus] = useState({
 		deactivate: '',

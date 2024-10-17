@@ -43,47 +43,19 @@ const raySourceErrorLink = onError(({forward, networkError, operation}) => {
 		networkError.statusCode === 403 ||
 		networkError.statusCode === 405
 	) {
-		operation.setContext({
-			sessionOperation: 'refresh',
-		});
-
 		return forward(operation);
 	}
 });
 
-const getRaysourceAuthLink = (oAuthTokenAPI) =>
-	setContext(async (_, {headers, sessionOperation, ...context}) => {
-		let oAuthToken = Liferay.Util.SessionStorage.getItem(
-			'oauth-token',
-			Liferay.Util.SessionStorage.TYPES.NECESSARY
-		);
-
-		if (sessionOperation === 'refresh') {
-			const oAuthToken = await getOrRequestToken(oAuthTokenAPI);
-
-			Liferay.Util.SessionStorage.setItem(
-				'oauth-token',
-				oAuthToken,
-				Liferay.Util.SessionStorage.TYPES.NECESSARY
-			);
-		}
-
-		if (!oAuthToken) {
-			const oAuthToken = await getOrRequestToken(oAuthTokenAPI);
-
-			Liferay.Util.SessionStorage.setItem(
-				'oauth-token',
-				oAuthToken,
-				Liferay.Util.SessionStorage.TYPES.NECESSARY
-			);
-		}
+const getRaysourceAuthLink = () =>
+	setContext(async (_, {headers, ...context}) => {
+		const oAuthToken = await getOrRequestToken();
 
 		return {
 			headers: {
 				...headers,
 				'OAuth-Token': oAuthToken,
 			},
-			sessionOperation: 'get',
 			...context,
 		};
 	});
@@ -93,7 +65,7 @@ const getRaysourceRestLink = (uri) =>
 		uri,
 	});
 
-export default function useApollo(provisioningServerAPI, oAuthTokenAPI) {
+export default function useApollo(provisioningServerAPI) {
 	const [client, setClient] = useState();
 	const networkStatus = useApolloNetworkStatusReducer(reducer, initialState);
 
@@ -121,7 +93,7 @@ export default function useApollo(provisioningServerAPI, oAuthTokenAPI) {
 					(operation) =>
 						operation.getContext().type === 'raysource-rest',
 					raySourceErrorLink.concat(
-						getRaysourceAuthLink(oAuthTokenAPI).concat(
+						getRaysourceAuthLink().concat(
 							getRaysourceRestLink(provisioningServerAPI)
 						)
 					),
@@ -138,7 +110,7 @@ export default function useApollo(provisioningServerAPI, oAuthTokenAPI) {
 		};
 
 		init();
-	}, [provisioningServerAPI, oAuthTokenAPI]);
+	}, [provisioningServerAPI]);
 
 	return {client, networkStatus};
 }

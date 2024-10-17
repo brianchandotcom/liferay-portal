@@ -15,7 +15,6 @@ import {
 	getLiferayExperienceCloudEnvironments,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {getOrRequestToken} from '../../../common/services/liferay/security/auth/getOrRequestToken';
 import {ROLE_TYPES, ROUTE_TYPES} from '../../../common/utils/constants';
 import {getAccountKey} from '../../../common/utils/getAccountKey';
 import {isValidPage} from '../../../common/utils/page.validation';
@@ -25,14 +24,13 @@ import reducer, {actionTypes} from './reducer';
 const AppContext = createContext();
 
 const AppContextProvider = ({children}) => {
-	const {client, oAuthTokenAPI} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
 		analyticsCloudActivationSubmittedStatus: undefined,
 		dxpCloudActivationSubmittedStatus: undefined,
 		koroneikiAccount: {},
 		liferayExperienceCloudActivationSubmittedStatus: undefined,
 		project: undefined,
-		oAuthToken: '',
 		step: ONBOARDING_STEP_TYPES.welcome,
 		subscriptionGroups: undefined,
 		userAccount: undefined,
@@ -107,17 +105,6 @@ const AppContextProvider = ({children}) => {
 						name: accountBrief.name,
 					},
 					type: actionTypes.UPDATE_PROJECT,
-				});
-			}
-		};
-
-		const getOAuthToken = async () => {
-			const oAuthToken = await getOrRequestToken(oAuthTokenAPI);
-
-			if (oAuthToken) {
-				dispatch({
-					payload: oAuthToken,
-					type: actionTypes.UPDATE_OAUTH_TOKEN,
 				});
 			}
 		};
@@ -238,7 +225,6 @@ const AppContextProvider = ({children}) => {
 					getLiferayExperienceCloudActivationStatus(
 						projectExternalReferenceCode
 					);
-					getOAuthToken();
 
 					client.mutate({
 						context: {
@@ -262,7 +248,7 @@ const AppContextProvider = ({children}) => {
 		};
 
 		fetchData();
-	}, [client, oAuthTokenAPI]);
+	}, [client]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

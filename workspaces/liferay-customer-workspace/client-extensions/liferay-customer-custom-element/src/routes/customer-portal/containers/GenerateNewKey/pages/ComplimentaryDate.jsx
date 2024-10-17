@@ -23,9 +23,9 @@ const SELECTED_PURPOSE_OTHER = 'Other, please specify';
 
 const ComplimentaryDate = ({
 	accountKey,
+	oAuthToken,
 	purposeDescription,
 	selectedKeyData,
-	oAuthToken,
 	setPurposeDescription,
 	setSelectedKeyData,
 	setStep,
@@ -126,7 +126,7 @@ const ComplimentaryDate = ({
 		];
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, oAuthToken);
+			return putSubscriptionInKey(oAuthToken, provisioningServerAPI, id);
 		};
 
 		const generateLicenseKey = async (item, isComplimentary = false) => {
@@ -213,10 +213,10 @@ const ComplimentaryDate = ({
 		isComplimentaryKey,
 		selectedKeyData,
 		navigate,
+		oAuthToken,
 		provisioningServerAPI,
 		provisioningService,
 		purposeDescription,
-		oAuthToken,
 		state.activationKeys,
 		startDate,
 		urlPreviousPage,

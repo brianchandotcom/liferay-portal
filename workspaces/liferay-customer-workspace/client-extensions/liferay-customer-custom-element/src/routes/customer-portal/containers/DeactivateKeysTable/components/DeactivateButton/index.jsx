@@ -39,9 +39,9 @@ const DeactivateButton = ({
 		setIsDeactivating(true);
 
 		const response = await putDeactivateKeys(
+			oAuthToken,
 			provisioningServerAPI,
-			filterCheckedActivationKeys,
-			oAuthToken
+			filterCheckedActivationKeys
 		);
 
 		if (response.status === STATUS_CODE.successNoContent) {

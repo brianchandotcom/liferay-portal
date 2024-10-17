@@ -30,9 +30,9 @@ import {getRenewKeySubtitle} from '../utils/renewKeySubtitle';
 const SelectSubscription = ({
 	accountKey,
 	hasComplimentaryKey,
+	oAuthToken,
 	productGroupName,
 	selectedKeyData,
-	oAuthToken,
 	setExpirationRenewDate,
 	setHasComplimentaryKey,
 	setLicenseEntryTypeName,
@@ -64,9 +64,9 @@ const SelectSubscription = ({
 		const fetchGenerateFormData = async () => {
 			const data = await getNewGenerateKeyFormValues(
 				accountKey,
+				oAuthToken,
 				provisioningServerAPI,
-				productGroupName,
-				oAuthToken
+				productGroupName
 			);
 
 			if (data) {
@@ -77,7 +77,7 @@ const SelectSubscription = ({
 		if (oAuthToken) {
 			fetchGenerateFormData();
 		}
-	}, [accountKey, provisioningServerAPI, productGroupName, oAuthToken]);
+	}, [accountKey, oAuthToken, provisioningServerAPI, productGroupName]);
 
 	const [selectedSubscription, setSelectedSubscription] = useState(
 		selectedKeyData?.selectedSubscription
@@ -332,7 +332,7 @@ const SelectSubscription = ({
 		}
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, oAuthToken);
+			return putSubscriptionInKey(oAuthToken, provisioningServerAPI, id);
 		};
 
 		const generateLicenseKey = async (item) => {
@@ -442,6 +442,7 @@ const SelectSubscription = ({
 		hasComplimentaryKey,
 		licenseEntryTypes,
 		navigate,
+		oAuthToken,
 		provisioningServerAPI,
 		provisioningService,
 		selectedSubscription?.instanceSize,
@@ -449,7 +450,6 @@ const SelectSubscription = ({
 		selectedSubscription?.productPurchaseKey,
 		selectedSubscription?.provisionedCount,
 		selectedSubscription?.startDate,
-		oAuthToken,
 		state.activationKeys,
 		urlPreviousPage,
 	]);

@@ -8,8 +8,8 @@ import Filter from '../../../ActivationKeysTable/components/Filter';
 
 const DeactivationKeysTableHeader = ({
 	activationKeysState,
-	loading,
 	filterState: [filters, setFilters],
+	loading,
 }) => {
 	const [activationKeys] = activationKeysState;
 

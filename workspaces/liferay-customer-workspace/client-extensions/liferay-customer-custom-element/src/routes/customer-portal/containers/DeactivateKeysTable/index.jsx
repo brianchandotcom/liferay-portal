@@ -9,6 +9,7 @@ import {Navigate, useOutletContext} from 'react-router-dom';
 import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import i18n from '../../../../common/I18n';
 import Table from '../../../../common/components/Table';
+import {getOrRequestToken} from '../../../../common/services/liferay/security/auth/getOrRequestToken';
 import {useCustomerPortal} from '../../context';
 import useGetActivationKeysData from '../ActivationKeysTable/hooks/useGetActivationKeysData';
 import usePagination from '../ActivationKeysTable/hooks/usePagination';
@@ -30,8 +31,19 @@ import {DEACTIVATE_COLUMNS} from './utils/constants';
 
 const DeactivateKeysTable = ({initialFilter, productName}) => {
 	const {data: myAccount} = useGetMyUserAccount();
-	const [{project, oAuthToken, userAccount}] = useCustomerPortal();
+	const [oAuthToken, setOAuthToken] = useState();
+	const [{project, userAccount}] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	useEffect(() => {
 		setHasSideMenu(false);
@@ -165,8 +177,8 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 					activationKeysByStatusPaginatedChecked
 				}
 				activationKeysState={[setActivationKeys]}
-				productName={productName}
 				oAuthToken={oAuthToken}
+				productName={productName}
 			/>
 		</div>
 	);

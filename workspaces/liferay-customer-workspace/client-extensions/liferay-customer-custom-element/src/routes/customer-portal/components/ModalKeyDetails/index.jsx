@@ -13,10 +13,10 @@ import TableKeyDetails from '../TableKeyDetails';
 const ModalKeyDetails = ({
 	activationKeys,
 	downloadActivationLicenseKey,
+	oAuthToken,
 	observer,
 	onClose,
 	provisioningServerAPI,
-	oAuthToken,
 }) => {
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
@@ -61,8 +61,8 @@ const ModalKeyDetails = ({
 						onClick={() =>
 							downloadActivationLicenseKey(
 								activationKeys.id,
-								provisioningServerAPI,
-								oAuthToken
+								oAuthToken,
+								provisioningServerAPI
 							)
 						}
 					>

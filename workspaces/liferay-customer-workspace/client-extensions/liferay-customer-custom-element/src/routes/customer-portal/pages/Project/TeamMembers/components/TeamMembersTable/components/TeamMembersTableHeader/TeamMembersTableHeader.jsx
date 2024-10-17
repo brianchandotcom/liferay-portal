@@ -21,9 +21,9 @@ const TeamMembersTableHeader = ({
 	hasAdministratorRole,
 	koroneikiAccount,
 	loading,
+	oAuthToken,
 	onSearch,
 	searching,
-	oAuthToken,
 }) => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [clearSearchTerm, setClearSearchTerm] = useState(false);
@@ -40,12 +40,12 @@ const TeamMembersTableHeader = ({
 						}
 						handlePage={() => onOpenChange(false)}
 						leftButton={i18n.translate('cancel')}
+						oAuthToken={oAuthToken}
 						project={{
 							...koroneikiAccount,
 							id:
 								koroneikiAccount?.r_accountEntryToKoroneikiAccount_accountEntryId,
 						}}
-						oAuthToken={oAuthToken}
 					/>
 				</ClayModal>
 			)}

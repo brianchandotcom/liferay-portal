@@ -20,6 +20,7 @@ import Table from '../../../../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '../../../../../context';
 import {STATUS_TAG_TYPES} from '../../../../../utils/constants/statusTag';
+import {getOrRequestToken} from '../../../../../../../common/services/liferay/security/auth/getOrRequestToken';
 import RemoveUserModal from './components/RemoveUserModal/RemoveUserModal';
 import TeamMembersTableHeader from './components/TeamMembersTableHeader/TeamMembersTableHeader';
 import NameColumn from './components/columns/NameColumn';
@@ -47,9 +48,20 @@ const TeamMembersTable = ({
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
 
+	const [oAuthToken, setOAuthToken] = useState();
 	const provisioningKeys = useProvisioningLicenseKeys();
 
-	const [{project, oAuthToken}] = useCustomerPortal();
+	const [{project}] = useCustomerPortal();
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	const [assignUserAccountWithAccountRole] = useMutation(
 		assignUserAccountWithAccountAndAccountRole,
@@ -273,8 +285,8 @@ const TeamMembersTable = ({
 			currentUserEditing,
 			currentAccountRoles,
 			selectedAccountRoleItem,
-			provisioningServerAPI,
 			oAuthToken,
+			provisioningServerAPI,
 			project,
 			assignUserAccountWithAccountRole,
 			setCurrentUserEditing
@@ -412,9 +424,9 @@ const TeamMembersTable = ({
 				}
 				koroneikiAccount={koroneikiAccount}
 				loading={loading}
+				oAuthToken={oAuthToken}
 				onSearch={(term) => search(term)}
 				searching={searching}
-				oAuthToken={oAuthToken}
 			/>
 
 			<div className="cp-team-members-table-wrapper">

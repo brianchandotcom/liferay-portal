@@ -26,14 +26,14 @@ import useGetAccountUserAccount from './hooks/useGetAccountUserAccount';
 const ActivationKeysTableHeader = ({
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,
+	filterState: [filters, setFilters],
 	hasRenewalSubscription,
 	isRenewTable,
+	loading,
+	oAuthToken,
+	productName,
 	project,
 	setRenewKeysFilterChecked,
-	productName,
-	oAuthToken,
-	loading,
-	filterState: [filters, setFilters],
 }) => {
 	const [activationKeys, setActivationKeys] = activationKeysState;
 
@@ -226,9 +226,9 @@ const ActivationKeysTableHeader = ({
 									isAdminOrPartnerManager
 								}
 								isAdminUserAccount={isAdminUserAccount}
+								oAuthToken={oAuthToken}
 								productName={productName}
 								project={project}
-								oAuthToken={oAuthToken}
 								setStatus={setStatus}
 							/>
 						)}

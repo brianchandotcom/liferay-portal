@@ -46,8 +46,8 @@ const InviteTeamMembersPage = ({
 	handlePage,
 	leftButton,
 	mutateUserData,
-	project,
 	oAuthToken,
+	project,
 	setFieldValue,
 	setTouched,
 	touched,
@@ -291,9 +291,9 @@ const InviteTeamMembersPage = ({
 							emailURI: encodeURI(inviteMember.email),
 							firstName: inviteMember.givenName,
 							lastName: inviteMember.familyName,
+							oAuthToken,
 							provisioningServerAPI,
-							roleName: inviteRole.raysourceName,
-							oAuthToken
+							roleName: inviteRole.raysourceName
 						});
 
 						await assignUserAccountWithAccountRole({

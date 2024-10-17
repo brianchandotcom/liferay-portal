@@ -18,7 +18,6 @@ import {
 	updateLiferayContact,
 	updateRaysourceContact
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
-import {useOnboarding} from '~/routes/onboarding/context';
 import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
@@ -33,7 +32,6 @@ import {
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../utils/validations.form';
-import {useCustomerPortal} from '../../../../routes/customer-portal/context';
 import {
 	STATUS_CODE,
 	STATUS_TAG_TYPE_NAMES,
@@ -43,6 +41,7 @@ import {Button, Input, Select} from '../../../components';
 import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import NotificationQueueService from '../../../services/actions/notificationAction';
+import {getOrRequestToken} from '../../../services/liferay/security/auth/getOrRequestToken';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
@@ -116,14 +115,6 @@ const SetupAnalyticsCloudPage = ({
 	});
 
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
-
-	const customerPortalContext = useCustomerPortal();
-
-	const onboardingContext = useOnboarding();
-
-	const oAuthToken =
-		customerPortalContext?.[0].oAuthToken ||
-		onboardingContext?.[0].oAuthToken;
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>
@@ -287,13 +278,15 @@ const SetupAnalyticsCloudPage = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
+			const oAuthToken = await getOrRequestToken();
+
 			if (featureFlags.includes('LPS-159127')) {
 				try {
 					await updateRaysourceContact(
 						addContactRoleRaysource,
 						addHighPriorityContact,
-						project,
 						oAuthToken,
+						project,
 						provisioningServerAPI
 					);
 
@@ -321,8 +314,8 @@ const SetupAnalyticsCloudPage = ({
 				await updateRaysourceContact(
 					removeContactRoleRaysource,
 					removeHighPriorityContact,
-					project,
 					oAuthToken,
+					project,
 					provisioningServerAPI
 				);
 

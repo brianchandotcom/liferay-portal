@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useEffect, useState} from 'react';
 import useUserAccountsByAccountExternalReferenceCode from '~/routes/customer-portal/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
 import i18n from '../../../common/I18n';
 import InviteTeamMembersForm from '../../../common/containers/setup-forms/InviteTeamMembersForm';
 import SetupAnalyticsCloudForm from '../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
 import SetupDXPCloudForm from '../../../common/containers/setup-forms/SetupDXPCloudForm';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
+import {getOrRequestToken} from '../../../common/services/liferay/security/auth/getOrRequestToken';
 import {PAGE_ROUTER_TYPES} from '../../../common/utils/constants';
 import ConfirmationMessageModal from '../../customer-portal/components/ActivationStatus/LiferayExperienceCloud/components/ConfirmationMessageModal';
 import SetupLiferayExperienceCloudForm from '../../customer-portal/components/ActivationStatus/LiferayExperienceCloud/components/SetupLXCModal/components/SetupLXCForm';
@@ -26,12 +28,23 @@ const Pages = () => {
 			dxpCloudActivationSubmittedStatus,
 			liferayExperienceCloudActivationSubmittedStatus,
 			project,
-			oAuthToken,
 			step,
 			subscriptionGroups,
 		},
 		dispatch,
 	] = useOnboarding();
+
+	const [oAuthToken, setOAuthToken] = useState();
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	const [supportSeatsCount] = useUserAccountsByAccountExternalReferenceCode(
 		project?.accountKey
@@ -115,8 +128,8 @@ const Pages = () => {
 					availableSupportSeatsCount={availableSupportSeatsCount}
 					handlePage={invitesPageHandle}
 					leftButton={i18n.translate('skip-for-now')}
-					project={project}
 					oAuthToken={oAuthToken}
+					project={project}
 				/>
 			),
 		},

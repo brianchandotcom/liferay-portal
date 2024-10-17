@@ -21,8 +21,6 @@ import {
 	updateLiferayContact,
 	updateRaysourceContact,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
-import {useOnboarding} from '~/routes/onboarding/context';
-import {useCustomerPortal} from '../../../../routes/customer-portal/context';
 import {
 	STATUS_CODE,
 	STATUS_TAG_TYPE_NAMES,
@@ -38,7 +36,7 @@ import {
 	getListTypeDefinitions,
 	updateAccountSubscriptionGroups,
 } from '../../../services/liferay/graphql/queries';
-
+import {getOrRequestToken} from '../../../services/liferay/security/auth/getOrRequestToken';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import getKebabCase from '../../../utils/getKebabCase';
 import {isLowercaseAndNumbers} from '../../../utils/validations.form';
@@ -76,13 +74,6 @@ const SetupDXPCloudPage = ({
 	});
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 
-	const customerPortalContext = useCustomerPortal();
-
-	const onboardingContext = useOnboarding();
-
-	const oAuthToken =
-		customerPortalContext?.[0].oAuthToken ||
-		onboardingContext?.[0].oAuthToken;
 	const [addHighPriorityContact, setAddHighPriorityContact] = useState([]);
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState(
 		[]
@@ -297,13 +288,15 @@ const SetupDXPCloudPage = ({
 
 		if (!alreadySubmitted && dxp) {
 			try {
+				const oAuthToken = await getOrRequestToken();
+
 				if (featureFlags.includes('LPS-159127')) {
 					try {
 						await updateRaysourceContact(
 							addContactRoleRaysource,
 							addHighPriorityContact,
-							project,
 							oAuthToken,
+							project,
 							provisioningServerAPI
 						);
 
@@ -331,8 +324,8 @@ const SetupDXPCloudPage = ({
 					await updateRaysourceContact(
 						removeContactRoleRaysource,
 						removeHighPriorityContact,
-						project,
 						oAuthToken,
+						project,
 						provisioningServerAPI
 					);
 

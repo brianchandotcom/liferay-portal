@@ -38,17 +38,18 @@ public class LayoutContentPageEditorWebTestPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			_ALIAS,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET_ALIAS,
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias(_ALIAS);
+		_portletRegistry.unregisterAlias(
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET_ALIAS);
 	}
-
-	private static final String _ALIAS = "test";
 
 	@Reference
 	private PortletRegistry _portletRegistry;

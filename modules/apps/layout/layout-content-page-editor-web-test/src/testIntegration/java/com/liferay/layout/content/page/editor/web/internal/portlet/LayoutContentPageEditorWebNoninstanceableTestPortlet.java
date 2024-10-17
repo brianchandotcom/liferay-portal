@@ -40,17 +40,18 @@ public class LayoutContentPageEditorWebNoninstanceableTestPortlet
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			_ALIAS,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET_ALIAS,
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias(_ALIAS);
+		_portletRegistry.unregisterAlias(
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET_ALIAS);
 	}
-
-	private static final String _ALIAS = "noninstanceable-test";
 
 	@Reference
 	private PortletRegistry _portletRegistry;

@@ -30,6 +30,10 @@ export async function navigateTo({
 	await waitForLoading(page);
 }
 
+export async function navigateToACAdmin({page}: {page: Page}) {
+	await page.goto(`${faroConfig.environment.baseUrl}/admin`);
+}
+
 export async function navigateToACWorkspace({
 	page,
 	workspaceName = 'FARO-DEV-liferay Liferay Demo Enterprise Plan',

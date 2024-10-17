@@ -54,7 +54,9 @@ export class JournalEditArticlePage {
 		this.friendlyUrlToggle = page.locator('a[href="#friendlyUrlContent"]');
 		this.historyButton = page.getByLabel('History');
 		this.journalPage = new JournalPage(page);
-		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});
+		this.propertiesTab = page.getByRole('tab', {
+			name: /properties|propriétés/i,
+		});
 		this.publishButton = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_publishButton'
 		);

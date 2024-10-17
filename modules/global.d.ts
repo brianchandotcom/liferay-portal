@@ -9,6 +9,7 @@
 
 declare module Liferay {
 	export const FeatureFlags: {[key: string]: boolean};
+	export const SPA: any;
 	export function fire(type: string, context?: any): void;
 	export function on(
 		type: string,

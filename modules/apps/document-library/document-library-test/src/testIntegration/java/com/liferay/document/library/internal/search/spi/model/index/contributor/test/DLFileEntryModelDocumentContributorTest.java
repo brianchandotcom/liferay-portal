@@ -15,6 +15,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.lang.SafeCloseable;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -166,17 +167,14 @@ public class DLFileEntryModelDocumentContributorTest {
 			Assert.assertEquals(
 				PropsValues.DL_FILE_INDEXING_MAX_SIZE, content.length());
 
-			try (SafeCloseable safeCloseable =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"DL_FILE_INDEXING_MAX_SIZE", 100)) {
+			_withDLFileIndexingMaxSize(
+				100,
+				() -> _dlFileEntryModelDocumentContributor.contribute(
+					document, dlFileEntry));
 
-				_dlFileEntryModelDocumentContributor.contribute(
-					document, dlFileEntry);
+			content = _getFileAsString(dlFileEntry);
 
-				content = _getFileAsString(dlFileEntry);
-
-				Assert.assertEquals(100, content.length());
-			}
+			Assert.assertEquals(100, content.length());
 		}
 	}
 
@@ -206,19 +204,16 @@ public class DLFileEntryModelDocumentContributorTest {
 			Assert.assertEquals(
 				PropsValues.DL_FILE_INDEXING_MAX_SIZE, content.length());
 
-			try (SafeCloseable safeCloseable =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"DL_FILE_INDEXING_MAX_SIZE", 100)) {
+			_withDLFileIndexingMaxSize(
+				100,
+				() -> _dlFileEntryModelDocumentContributor.contribute(
+					document, dlFileEntry));
 
-				_dlFileEntryModelDocumentContributor.contribute(
-					document, dlFileEntry);
+			content = document.get(
+				_portal.getSiteDefaultLocale(dlFileEntry.getGroupId()),
+				Field.CONTENT);
 
-				content = document.get(
-					_portal.getSiteDefaultLocale(dlFileEntry.getGroupId()),
-					Field.CONTENT);
-
-				Assert.assertEquals(100, content.length());
-			}
+			Assert.assertEquals(100, content.length());
 		}
 	}
 
@@ -414,6 +409,24 @@ public class DLFileEntryModelDocumentContributorTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(expectedLocale),
 			document.get(Field.DEFAULT_LANGUAGE_ID));
+	}
+
+	private <E extends Exception> void _withDLFileIndexingMaxSize(
+			int dlFileIndexingMaxSize, UnsafeRunnable<E> unsafeRunnable)
+		throws Exception {
+
+		PropsUtil.set(
+			PropsKeys.DL_FILE_INDEXING_MAX_SIZE,
+			String.valueOf(dlFileIndexingMaxSize));
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			PropsUtil.set(
+				PropsKeys.DL_FILE_INDEXING_MAX_SIZE,
+				String.valueOf(PropsValues.DL_FILE_INDEXING_MAX_SIZE));
+		}
 	}
 
 	@Inject

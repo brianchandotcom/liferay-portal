@@ -401,6 +401,12 @@ public class KBArticleLocalServiceUtil {
 			groupId, kbFolderId, urlTitle, status);
 	}
 
+	public static PersistedModel fetchPersistedModel(
+		Serializable primaryKeyObj) {
+
+		return getService().fetchPersistedModel(primaryKeyObj);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -445,6 +445,13 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.PersistedModel fetchPersistedModel(
+		java.io.Serializable primaryKeyObj) {
+
+		return _kbArticleLocalService.fetchPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

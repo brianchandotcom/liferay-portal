@@ -259,6 +259,16 @@ test('Checks that a fragment is selected when it is added and the panel does not
 
 	expect(await pageEditorPage.isActive(containerId)).toBe(true);
 
+	await pageEditorPage.deleteFragment(containerId);
+
+	// Checks a fragment composition is selected when it is added to the page
+
+	await pageEditorPage.addFragment('Featured Content', 'Banner Center');
+
+	const bannerId = await pageEditorPage.getFragmentId('Container');
+
+	expect(await pageEditorPage.isActive(bannerId)).toBe(true);
+
 	// Checks that a Widget is selected when it is added to the page
 
 	await pageEditorPage.addWidget('Commerce', 'Sort');

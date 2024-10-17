@@ -503,6 +503,8 @@ export class PageEditorPage {
 	async deleteFragment(fragmentId: string) {
 		await this.selectFragment(fragmentId);
 		await this.page.keyboard.press('Backspace');
+
+		await this.waitForChangesSaved();
 	}
 
 	async dragTreeNode({

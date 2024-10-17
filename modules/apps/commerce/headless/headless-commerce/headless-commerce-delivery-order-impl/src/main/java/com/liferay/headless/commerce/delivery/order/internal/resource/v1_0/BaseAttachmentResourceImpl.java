@@ -1,17 +1,17 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
-import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.Attachment;
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.AttachmentBase64;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.AttachmentResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -57,6 +56,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -65,27 +65,20 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BasePlacedOrderResourceImpl
-	implements EntityModelResource, PlacedOrderResource,
-			   VulcanBatchEngineTaskItemDelegate<PlacedOrder> {
+public abstract class BaseAttachmentResourceImpl
+	implements AttachmentResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<Attachment> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/placed-orders'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments'  -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves placed orders for specific account in the given channel."
-	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "accountExternalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "channelExternalReferenceCode"
+				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -98,24 +91,20 @@ public abstract class BasePlacedOrderResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/placed-orders"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<PlacedOrder>
-			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage(
+	public Page<Attachment>
+			getPlacedOrderByExternalReferenceCodeAttachmentsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("accountExternalReferenceCode")
-				String accountExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("channelExternalReferenceCode")
-				String channelExternalReferenceCode,
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -125,81 +114,86 @@ public abstract class BasePlacedOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/channels/by-externalReferenceCode/{externalReferenceCode}/placed-orders'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64' -d $'{"attachment": ___, "externalReferenceCode": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves placed orders in the given channel."
-	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
 	)
-	@javax.ws.rs.GET
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{externalReferenceCode}/placed-orders"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64"
 	)
+	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<PlacedOrder> getChannelByExternalReferenceCodePlacedOrdersPage(
+	public Attachment postPlacedOrderByExternalReferenceCodeAttachmentByBase64(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context Sort[] sorts)
+			AttachmentBase64 attachmentBase64)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		return new Attachment();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/channels/{channelId}/accounts/{accountId}/placed-orders'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves placed orders for specific account in the given channel."
-	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "accountId"
+				name = "attachmentExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "channelId"
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void
+			deletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("attachmentExternalReferenceCode")
+				String attachmentExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}/attachments'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "placedOrderId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -212,23 +206,17 @@ public abstract class BasePlacedOrderResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/channels/{channelId}/accounts/{accountId}/placed-orders"
-	)
+	@javax.ws.rs.Path("/placed-orders/{placedOrderId}/attachments")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<PlacedOrder> getChannelAccountPlacedOrdersPage(
+	public Page<Attachment> getPlacedOrderAttachmentsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("accountId")
-			Long accountId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("channelId")
-			Long channelId,
+			@javax.ws.rs.PathParam("placedOrderId")
+			Long placedOrderId,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -238,178 +226,77 @@ public abstract class BasePlacedOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/channels/{channelId}/placed-orders'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves placed orders in the given channel."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "channelId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/channels/{channelId}/placed-orders")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<PlacedOrder> getChannelPlacedOrdersPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("channelId")
-			Long channelId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve information of the given Placed Order."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public PlacedOrder getPlacedOrderByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		return new PlacedOrder();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}' -d $'{"attachments": ___, "customFields": ___, "name": ___, "printedNote": ___, "purchaseOrderNumber": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}/attachments/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public PlacedOrder patchPlacedOrderByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			PlacedOrder placedOrder)
-		throws Exception {
-
-		return new PlacedOrder();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "placedOrderId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "contentType"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fieldNames"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url"
-	)
-	@javax.ws.rs.Produces("text/plain")
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/placed-orders/{placedOrderId}/attachments/export-batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
 	@Override
-	public String getPlacedOrderByExternalReferenceCodePaymentURL(
+	public Response postPlacedOrderAttachmentsPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
+			@javax.ws.rs.PathParam("placedOrderId")
+			Long placedOrderId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL)
+			String callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.DefaultValue("JSON")
+			@javax.ws.rs.QueryParam("contentType")
+			String contentType,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fieldNames")
+			String fieldNames)
 		throws Exception {
 
-		return StringPool.BLANK;
+		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
+		vulcanBatchEngineExportTaskResource.setGroupLocalService(
+			groupLocalService);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineExportTaskResource.postExportTask(
+				Attachment.class.getName(), callbackURL, contentType,
+				fieldNames)
+		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}/attachments/by-base64' -d $'{"attachment": ___, "externalReferenceCode": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve information of the given Placed Order."
-	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -419,95 +306,66 @@ public abstract class BasePlacedOrderResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/placed-orders/{placedOrderId}")
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/placed-orders/{placedOrderId}/attachments/by-base64")
+	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PlacedOrder getPlacedOrder(
+	public Attachment postPlacedOrderAttachmentByBase64(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("placedOrderId")
+			Long placedOrderId,
+			AttachmentBase64 attachmentBase64)
+		throws Exception {
+
+		return new Attachment();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}/attachments/{attachmentId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "attachmentId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "placedOrderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Attachment")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/placed-orders/{placedOrderId}/attachments/{attachmentId}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deletePlacedOrderAttachment(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("attachmentId")
+			Long attachmentId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("placedOrderId")
 			Long placedOrderId)
 		throws Exception {
-
-		return new PlacedOrder();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}' -d $'{"attachments": ___, "customFields": ___, "name": ___, "printedNote": ___, "purchaseOrderNumber": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "placedOrderId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/placed-orders/{placedOrderId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public PlacedOrder patchPlacedOrder(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("placedOrderId")
-			Long placedOrderId,
-			PlacedOrder placedOrder)
-		throws Exception {
-
-		return new PlacedOrder();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}/payment-url'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "placedOrderId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/placed-orders/{placedOrderId}/payment-url")
-	@javax.ws.rs.Produces("text/plain")
-	@Override
-	public String getPlacedOrderPaymentURL(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("placedOrderId")
-			Long placedOrderId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL)
-		throws Exception {
-
-		return StringPool.BLANK;
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<PlacedOrder> placedOrders,
+			Collection<Attachment> attachments,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -517,7 +375,7 @@ public abstract class BasePlacedOrderResourceImpl
 
 	@Override
 	public void delete(
-			Collection<PlacedOrder> placedOrders,
+			Collection<Attachment> attachments,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -530,7 +388,7 @@ public abstract class BasePlacedOrderResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray();
 	}
 
 	@Override
@@ -549,7 +407,7 @@ public abstract class BasePlacedOrderResourceImpl
 	}
 
 	public String getResourceName() {
-		return "PlacedOrder";
+		return "Attachment";
 	}
 
 	public String getVersion() {
@@ -557,13 +415,20 @@ public abstract class BasePlacedOrderResourceImpl
 	}
 
 	@Override
-	public Page<PlacedOrder> read(
+	public Page<Attachment> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		if (parameters.containsKey("placedOrderId")) {
+			return getPlacedOrderAttachmentsPage(
+				_parseLong((String)parameters.get("placedOrderId")),
+				pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be specified: [placedOrderId]");
+		}
 	}
 
 	@Override
@@ -590,42 +455,12 @@ public abstract class BasePlacedOrderResourceImpl
 
 	@Override
 	public void update(
-			Collection<PlacedOrder> placedOrders,
+			Collection<Attachment> attachments,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<PlacedOrder, PlacedOrder, Exception>
-			placedOrderUnsafeFunction = null;
-
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
-
-		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			placedOrderUnsafeFunction = placedOrder -> patchPlacedOrder(
-				placedOrder.getId() != null ? placedOrder.getId() :
-					_parseLong((String)parameters.get("placedOrderId")),
-				placedOrder);
-		}
-
-		if (placedOrderUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Update strategy \"" + updateStrategy +
-					"\" is not supported for PlacedOrder");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				placedOrders, placedOrderUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				placedOrders, placedOrderUnsafeFunction::apply);
-		}
-		else {
-			for (PlacedOrder placedOrder : placedOrders) {
-				placedOrderUnsafeFunction.apply(placedOrder);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	private Long _parseLong(String value) {
@@ -642,8 +477,8 @@ public abstract class BasePlacedOrderResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<PlacedOrder>,
-			 UnsafeFunction<PlacedOrder, PlacedOrder, Exception>, Exception>
+			<Collection<Attachment>,
+			 UnsafeFunction<Attachment, Attachment, Exception>, Exception>
 				contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -651,7 +486,7 @@ public abstract class BasePlacedOrderResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<PlacedOrder>, UnsafeConsumer<PlacedOrder, Exception>,
+			<Collection<Attachment>, UnsafeConsumer<Attachment, Exception>,
 			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -912,11 +747,11 @@ public abstract class BasePlacedOrderResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<PlacedOrder>,
-		 UnsafeFunction<PlacedOrder, PlacedOrder, Exception>, Exception>
+		<Collection<Attachment>,
+		 UnsafeFunction<Attachment, Attachment, Exception>, Exception>
 			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<PlacedOrder>, UnsafeConsumer<PlacedOrder, Exception>,
+		<Collection<Attachment>, UnsafeConsumer<Attachment, Exception>,
 		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -937,6 +772,6 @@ public abstract class BasePlacedOrderResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BasePlacedOrderResourceImpl.class);
+		LogFactoryUtil.getLog(BaseAttachmentResourceImpl.class);
 
 }

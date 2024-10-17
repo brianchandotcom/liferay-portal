@@ -5,12 +5,14 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.graphql.query.v1_0;
 
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.OrderTransition;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderAddress;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderComment;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.OrderTransitionResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderAddressResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCommentResource;
@@ -48,6 +50,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<AttachmentResource>
+			attachmentResourceComponentServiceObjects) {
+
+		_attachmentResourceComponentServiceObjects =
+			attachmentResourceComponentServiceObjects;
+	}
 
 	public static void setOrderTransitionResourceComponentServiceObjects(
 		ComponentServiceObjects<OrderTransitionResource>
@@ -96,6 +106,47 @@ public class Query {
 
 		_placedOrderItemShipmentResourceComponentServiceObjects =
 			placedOrderItemShipmentResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodeAttachments(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AttachmentPage placedOrderByExternalReferenceCodeAttachments(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> new AttachmentPage(
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderAttachments(page: ___, pageSize: ___, placedOrderId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AttachmentPage placedOrderAttachments(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> new AttachmentPage(
+				attachmentResource.getPlacedOrderAttachmentsPage(
+					placedOrderId, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -228,7 +279,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCode(externalReferenceCode: ___){account, accountId, author, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentStatus, paymentStatusInfo, paymentStatusLabel, placedOrderBillingAddress, placedOrderBillingAddressId, placedOrderComments, placedOrderItems, placedOrderShippingAddress, placedOrderShippingAddressId, printedNote, purchaseOrderNumber, shippingMethod, shippingOption, status, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCode(externalReferenceCode: ___){account, accountId, attachments, author, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentStatus, paymentStatusInfo, paymentStatusLabel, placedOrderBillingAddress, placedOrderBillingAddressId, placedOrderComments, placedOrderItems, placedOrderShippingAddress, placedOrderShippingAddressId, printedNote, purchaseOrderNumber, shippingMethod, shippingOption, status, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieve information of the given Placed Order."
@@ -268,7 +319,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrder(placedOrderId: ___){account, accountId, author, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentStatus, paymentStatusInfo, paymentStatusLabel, placedOrderBillingAddress, placedOrderBillingAddressId, placedOrderComments, placedOrderItems, placedOrderShippingAddress, placedOrderShippingAddressId, printedNote, purchaseOrderNumber, shippingMethod, shippingOption, status, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrder(placedOrderId: ___){account, accountId, attachments, author, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentStatus, paymentStatusInfo, paymentStatusLabel, placedOrderBillingAddress, placedOrderBillingAddressId, placedOrderComments, placedOrderItems, placedOrderShippingAddress, placedOrderShippingAddressId, printedNote, purchaseOrderNumber, shippingMethod, shippingOption, status, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieve information of the given Placed Order."
@@ -990,6 +1041,36 @@ public class Query {
 
 	@GraphQLTypeExtension(PlacedOrder.class)
 	public class
+		GetPlacedOrderByExternalReferenceCodeAttachmentsPageTypeExtension {
+
+		public GetPlacedOrderByExternalReferenceCodeAttachmentsPageTypeExtension(
+			PlacedOrder placedOrder) {
+
+			_placedOrder = placedOrder;
+		}
+
+		@GraphQLField
+		public AttachmentPage byExternalReferenceCodeAttachments(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_attachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				attachmentResource -> new AttachmentPage(
+					attachmentResource.
+						getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+							_placedOrder.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLTypeExtension(PlacedOrder.class)
+	public class
 		GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddressTypeExtension {
 
 		public GetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddressTypeExtension(
@@ -1013,6 +1094,39 @@ public class Query {
 		}
 
 		private PlacedOrder _placedOrder;
+
+	}
+
+	@GraphQLName("AttachmentPage")
+	public class AttachmentPage {
+
+		public AttachmentPage(Page attachmentPage) {
+			actions = attachmentPage.getActions();
+
+			items = attachmentPage.getItems();
+			lastPage = attachmentPage.getLastPage();
+			page = attachmentPage.getPage();
+			pageSize = attachmentPage.getPageSize();
+			totalCount = attachmentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Attachment> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
 
 	}
 
@@ -1233,6 +1347,19 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(AttachmentResource attachmentResource)
+		throws Exception {
+
+		attachmentResource.setContextAcceptLanguage(_acceptLanguage);
+		attachmentResource.setContextCompany(_company);
+		attachmentResource.setContextHttpServletRequest(_httpServletRequest);
+		attachmentResource.setContextHttpServletResponse(_httpServletResponse);
+		attachmentResource.setContextUriInfo(_uriInfo);
+		attachmentResource.setContextUser(_user);
+		attachmentResource.setGroupLocalService(_groupLocalService);
+		attachmentResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			OrderTransitionResource orderTransitionResource)
 		throws Exception {
@@ -1329,6 +1456,8 @@ public class Query {
 		placedOrderItemShipmentResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<AttachmentResource>
+		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderTransitionResource>
 		_orderTransitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PlacedOrderResource>

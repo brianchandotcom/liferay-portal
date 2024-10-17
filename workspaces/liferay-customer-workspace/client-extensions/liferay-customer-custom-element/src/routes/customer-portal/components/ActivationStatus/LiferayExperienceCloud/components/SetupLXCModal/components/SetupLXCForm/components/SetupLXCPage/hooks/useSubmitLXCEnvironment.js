@@ -13,6 +13,7 @@ import {
 	updateLiferayContact,
 	updateRaysourceContact,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
+
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import NotificationQueueService from '../../../../../../../../../../../../common/services/actions/notificationAction';
 import {

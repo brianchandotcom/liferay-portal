@@ -15,8 +15,11 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.web.internal.portlet.constants.LayoutContentPageEditorWebPortletKeys;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -43,14 +46,17 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -129,6 +135,49 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
 			true);
+	}
+
+	@Test
+	public void testAddFragmentEntryLinkTwiceWithEmbeddedNoninstanceablePortletWithItemMarkedForDeletion()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			StringBundler.concat(
+				"<div><lfr-widget-",
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET_ALIAS,
+				"></lfr-widget-",
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET_ALIAS,
+				"></div>"));
+
+		_assertAddFragmentEntryLinkWithEmbeddedPortlet(
+			fragmentEntry, StringPool.BLANK,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
+			true);
+
+		_markForDeletionFragmentLayoutStructureItems(1);
+
+		_assertAddFragmentEntryLinkWithEmbeddedPortlet(
+			fragmentEntry, StringPool.BLANK,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
+			true);
+
+		_markForDeletionFragmentLayoutStructureItems(2);
+
+		fragmentEntry = _addFragmentEntry(
+			"<div>[@liferay_portlet.runtime portletName=\"" +
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET +
+						"\"/]/div>");
+
+		_assertAddFragmentEntryLinkWithEmbeddedPortlet(
+			fragmentEntry, StringPool.BLANK,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
+			false);
 	}
 
 	@Test
@@ -351,6 +400,38 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			PortletIdCodec.encode(portletId, instanceId));
 	}
 
+	private void _markForDeletionFragmentLayoutStructureItems(int count)
+		throws Exception {
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			MapUtil.toString(fragmentLayoutStructureItems), count,
+			fragmentLayoutStructureItems.size());
+
+		for (Map.Entry<Long, LayoutStructureItem> entry :
+				fragmentLayoutStructureItems.entrySet()) {
+
+			LayoutStructureItem layoutStructureItem = entry.getValue();
+
+			if (layoutStructure.isItemMarkedForDeletion(
+					layoutStructureItem.getItemId())) {
+
+				continue;
+			}
+
+			ContentLayoutTestUtil.markItemForDeletionFromLayout(
+				layoutStructureItem.getItemId(), _layout, StringPool.BLANK);
+		}
+	}
+
 	private FragmentEntryLink _testAddFragmentEntryLink(
 			FragmentEntry fragmentEntry)
 		throws Exception {
@@ -430,6 +511,9 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 	private Layout _layout;
 
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/add_fragment_entry_link"
 	)
@@ -440,5 +524,8 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

@@ -1172,6 +1172,47 @@ public class Cart implements Serializable {
 	private Supplier<String> _paymentMethodLabelSupplier;
 
 	@Schema
+	public Integer getPaymentMethodType() {
+		if (_paymentMethodTypeSupplier != null) {
+			paymentMethodType = _paymentMethodTypeSupplier.get();
+
+			_paymentMethodTypeSupplier = null;
+		}
+
+		return paymentMethodType;
+	}
+
+	public void setPaymentMethodType(Integer paymentMethodType) {
+		this.paymentMethodType = paymentMethodType;
+
+		_paymentMethodTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPaymentMethodType(
+		UnsafeSupplier<Integer, Exception> paymentMethodTypeUnsafeSupplier) {
+
+		_paymentMethodTypeSupplier = () -> {
+			try {
+				return paymentMethodTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer paymentMethodType;
+
+	@JsonIgnore
+	private Supplier<Integer> _paymentMethodTypeSupplier;
+
+	@Schema
 	public Integer getPaymentStatus() {
 		if (_paymentStatusSupplier != null) {
 			paymentStatus = _paymentStatusSupplier.get();
@@ -2330,6 +2371,18 @@ public class Cart implements Serializable {
 			sb.append(_escape(paymentMethodLabel));
 
 			sb.append("\"");
+		}
+
+		Integer paymentMethodType = getPaymentMethodType();
+
+		if (paymentMethodType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentMethodType\": ");
+
+			sb.append(paymentMethodType);
 		}
 
 		Integer paymentStatus = getPaymentStatus();

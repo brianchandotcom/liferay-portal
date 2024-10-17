@@ -418,6 +418,16 @@ public class CartSerDes {
 			sb.append("\"");
 		}
 
+		if (cart.getPaymentMethodType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentMethodType\": ");
+
+			sb.append(cart.getPaymentMethodType());
+		}
+
 		if (cart.getPaymentStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -860,6 +870,15 @@ public class CartSerDes {
 				String.valueOf(cart.getPaymentMethodLabel()));
 		}
 
+		if (cart.getPaymentMethodType() == null) {
+			map.put("paymentMethodType", null);
+		}
+		else {
+			map.put(
+				"paymentMethodType",
+				String.valueOf(cart.getPaymentMethodType()));
+		}
+
 		if (cart.getPaymentStatus() == null) {
 			map.put("paymentStatus", null);
 		}
@@ -1105,6 +1124,9 @@ public class CartSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "paymentMethodLabel")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentMethodType")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "paymentStatus")) {
@@ -1357,6 +1379,12 @@ public class CartSerDes {
 
 				if (jsonParserFieldValue != null) {
 					cart.setPaymentMethodLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentMethodType")) {
+				if (jsonParserFieldValue != null) {
+					cart.setPaymentMethodType(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "paymentStatus")) {

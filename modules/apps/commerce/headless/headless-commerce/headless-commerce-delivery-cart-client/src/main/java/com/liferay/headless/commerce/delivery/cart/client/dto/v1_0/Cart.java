@@ -599,6 +599,27 @@ public class Cart implements Cloneable, Serializable {
 
 	protected String paymentMethodLabel;
 
+	public Integer getPaymentMethodType() {
+		return paymentMethodType;
+	}
+
+	public void setPaymentMethodType(Integer paymentMethodType) {
+		this.paymentMethodType = paymentMethodType;
+	}
+
+	public void setPaymentMethodType(
+		UnsafeSupplier<Integer, Exception> paymentMethodTypeUnsafeSupplier) {
+
+		try {
+			paymentMethodType = paymentMethodTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer paymentMethodType;
+
 	public Integer getPaymentStatus() {
 		return paymentStatus;
 	}

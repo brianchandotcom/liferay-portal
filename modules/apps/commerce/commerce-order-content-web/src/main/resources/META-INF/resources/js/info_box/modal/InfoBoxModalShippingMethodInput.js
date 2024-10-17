@@ -96,7 +96,7 @@ const InfoBoxModalShippingMethodInput = ({
 					{hasShippingMethods ? (
 						<>
 							<label htmlFor="infoBoxModalShippingMethodInput">
-								{Liferay.Language.get('choose-courier')}{' '}
+								{Liferay.Language.get('choose-carrier')}{' '}
 
 								<span className="ml-1 reference-mark text-warning">
 									<ClayIcon symbol="asterisk" />

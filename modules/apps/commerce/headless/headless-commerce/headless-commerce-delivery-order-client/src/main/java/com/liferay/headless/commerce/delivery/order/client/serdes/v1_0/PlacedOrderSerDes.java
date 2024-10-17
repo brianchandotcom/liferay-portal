@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderComment;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItem;
@@ -77,6 +78,26 @@ public class PlacedOrderSerDes {
 			sb.append("\"accountId\": ");
 
 			sb.append(placedOrder.getAccountId());
+		}
+
+		if (placedOrder.getAttachments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachments\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < placedOrder.getAttachments().length; i++) {
+				sb.append(String.valueOf(placedOrder.getAttachments()[i]));
+
+				if ((i + 1) < placedOrder.getAttachments().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (placedOrder.getAuthor() != null) {
@@ -634,6 +655,14 @@ public class PlacedOrderSerDes {
 			map.put("accountId", String.valueOf(placedOrder.getAccountId()));
 		}
 
+		if (placedOrder.getAttachments() == null) {
+			map.put("attachments", null);
+		}
+		else {
+			map.put(
+				"attachments", String.valueOf(placedOrder.getAttachments()));
+		}
+
 		if (placedOrder.getAuthor() == null) {
 			map.put("author", null);
 		}
@@ -984,6 +1013,9 @@ public class PlacedOrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "accountId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "attachments")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "author")) {
 				return false;
 			}
@@ -1146,6 +1178,22 @@ public class PlacedOrderSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrder.setAccountId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "attachments")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Attachment[] attachmentsArray =
+						new Attachment[jsonParserFieldValues.length];
+
+					for (int i = 0; i < attachmentsArray.length; i++) {
+						attachmentsArray[i] = AttachmentSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					placedOrder.setAttachments(attachmentsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "author")) {

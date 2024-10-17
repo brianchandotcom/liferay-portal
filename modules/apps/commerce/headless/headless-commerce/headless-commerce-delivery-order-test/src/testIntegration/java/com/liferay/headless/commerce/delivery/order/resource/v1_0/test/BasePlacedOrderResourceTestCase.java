@@ -1950,6 +1950,14 @@ public abstract class BasePlacedOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("attachments", additionalAssertFieldName)) {
+				if (placedOrder.getAttachments() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("author", additionalAssertFieldName)) {
 				if (placedOrder.getAuthor() == null) {
 					valid = false;
@@ -2417,6 +2425,17 @@ public abstract class BasePlacedOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						placedOrder1.getAccountId(),
 						placedOrder2.getAccountId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("attachments", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrder1.getAttachments(),
+						placedOrder2.getAttachments())) {
 
 					return false;
 				}
@@ -3030,6 +3049,11 @@ public abstract class BasePlacedOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("accountId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("attachments")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

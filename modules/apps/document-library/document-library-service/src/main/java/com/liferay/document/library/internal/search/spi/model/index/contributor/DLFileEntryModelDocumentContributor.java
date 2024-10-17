@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
@@ -283,6 +283,8 @@ public class DLFileEntryModelDocumentContributor
 	private String _extractText(DLFileEntry dlFileEntry)
 		throws IOException, PortalException {
 
+		int dlFileIndexingMaxSize = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.DL_FILE_INDEXING_MAX_SIZE));
 		String indexVersionLabel = _getIndexVersionLabel(dlFileEntry);
 
 		if (_dlIndexerConfiguration.cacheTextExtraction() &&
@@ -296,7 +298,7 @@ public class DLFileEntryModelDocumentContributor
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					indexVersionLabel));
 
-			if (string.length() <= PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
+			if (string.length() <= dlFileIndexingMaxSize) {
 				return string;
 			}
 
@@ -312,7 +314,7 @@ public class DLFileEntryModelDocumentContributor
 		}
 
 		String text = _textExtractor.extractText(
-			inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE);
+			inputStream, dlFileIndexingMaxSize);
 
 		if (_dlIndexerConfiguration.cacheTextExtraction() &&
 			Validator.isNotNull(text) && !_isReadOnlyCtCollection()) {

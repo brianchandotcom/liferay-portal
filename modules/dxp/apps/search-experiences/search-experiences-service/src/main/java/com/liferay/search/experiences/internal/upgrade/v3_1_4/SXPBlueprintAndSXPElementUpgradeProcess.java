@@ -119,8 +119,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				assetCategory.getExternalReferenceCode();
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to find assetCategory with id " + assetCategoryId);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to find assetCategory with id " + assetCategoryId);
+			}
 
 			throw exception;
 		}
@@ -136,9 +138,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				assetCategory.getExternalReferenceCode(), ")");
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to find assetCategory associated with " +
-					assetCategoryId);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to find assetCategory with id " + assetCategoryId);
+			}
 
 			throw exception;
 		}

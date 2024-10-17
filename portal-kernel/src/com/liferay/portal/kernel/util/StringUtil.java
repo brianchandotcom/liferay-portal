@@ -2346,7 +2346,7 @@ public class StringUtil {
 			return s;
 		}
 
-		StringBundler sb = new StringBundler(s.length());
+		StringBuilder sb = new StringBuilder(s.length());
 
 		iterate:
 		for (int i = 0; i < s.length(); i++) {

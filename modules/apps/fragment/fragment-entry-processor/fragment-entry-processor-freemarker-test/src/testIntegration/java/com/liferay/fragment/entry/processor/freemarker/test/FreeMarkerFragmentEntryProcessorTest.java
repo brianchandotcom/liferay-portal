@@ -90,7 +90,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class FreemarkerFragmentEntryProcessorTest {
+public class FreeMarkerFragmentEntryProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -109,7 +109,7 @@ public class FreemarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithFreemarkerVariable() throws Exception {
+	public void testAddFragmentEntryWithFreeMarkerVariable() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_freemarker_variable.html", null);
 
@@ -117,7 +117,7 @@ public class FreemarkerFragmentEntryProcessorTest {
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryWithInvalidFreemarkerVariable()
+	public void testAddFragmentEntryWithInvalidFreeMarkerVariable()
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -392,7 +392,7 @@ public class FreemarkerFragmentEntryProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
-				FreemarkerFragmentEntryProcessorTest.class,
+				FreeMarkerFragmentEntryProcessorTest.class,
 				"dependencies/image.jpg"),
 			null, null, null, new ServiceContext());
 
@@ -587,7 +587,7 @@ public class FreemarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testProcessFragmentEntryLinkHTMLWithInvalidFreemarker()
+	public void testProcessFragmentEntryLinkHTMLWithInvalidFreeMarker()
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(

@@ -1695,31 +1695,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPaginatedAssetsPG(paginationNumber = null, pageNumber = null, nextPageClick = null, pageMod = null) {
-		var key_pageMod = ${pageMod};
-		var key_pageNumber = ${pageNumber};
-		var key_paginationNumber = ${paginationNumber};
-
-		AssertTextEquals(
-			locator1 = "Pagination#PARTICULAR_PAGE",
-			value1 = "Page ${pageNumber}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Pagination#VARIABLE_ITEMS_PER_PAGE",
-			value1 = "${paginationNumber} Items per Page");
-
-		AssertTextEquals(
-			locator1 = "Pagination#VARIABLE_TOTAL_ITEMS",
-			value1 = "Showing ${key_pageMod} results.");
-
-		if (${nextPageClick} == "true") {
-			AssertClick(
-				locator1 = "Pagination#NEXT_LINK",
-				value1 = "Next");
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewPG(assetContent = null, assetTitle = null, assetPriority = null, relatedAssetTitles = null, tagName = null, relatedAssetTitleHidden = null) {
 		var key_assetContent = ${assetContent};
 		var key_assetTitle = ${assetTitle};

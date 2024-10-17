@@ -71,13 +71,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGINATION_ITEMS_PER_PAGE</td>
-	<td>//div[@class='pagination-items-per-page']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PARTICULAR_PAGE</td>
-	<td>//div[@class='lfr-pagination-page-selector']/div/a[contains(.,'Page ${key_pageNumber}')]</td>
+	<td>//ul[@class='pagination']/li[@class='page-item active']/a[contains(.,'${key_pageNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,13 +91,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_PAGE_MENU_INDEX</td>
-	<td>xpath=(//div[contains(@class,'current-page-menu')]/a[contains(@class,'toggle')])[${key_index}]</td>
+	<td>CURRENT_PAGE_SELECT</td>
+	<td>//p[contains(@class,'pagination-results')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_PAGE_SELECT</td>
-	<td>//p[contains(@class,'pagination-results')]</td>
+	<td>CURRENT_PAGE_SELECT_INDEX</td>
+	<td>xpath=(//p[contains(@class,'pagination-results')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,16 +113,6 @@
 <tr>
 	<td>RESULTS</td>
 	<td>xpath=(//div|//p)[@class='pagination-results']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VARIABLE_ITEMS_PER_PAGE</td>
-	<td>//div[@class='clearfix lfr-pagination']/div/div[contains(.,'${key_paginationNumber} Items per Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VARIABLE_TOTAL_ITEMS</td>
-	<td>//div[@class='clearfix lfr-pagination']/small[contains(.,'Showing ${key_pageMod} results.')]</td>
 	<td></td>
 </tr>
 </tbody>

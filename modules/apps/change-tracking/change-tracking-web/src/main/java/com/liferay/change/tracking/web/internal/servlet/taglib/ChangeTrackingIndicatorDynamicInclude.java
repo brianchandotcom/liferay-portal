@@ -669,9 +669,13 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				).setActionName(
 					"/change_tracking/delete_ct_collection"
 				).buildString());
-			data.put(
-				"timelineEditURL",
-				PortletURLBuilder.create(
+
+			String timelineEditURL = null;
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-20556")) {
+
+				timelineEditURL = PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(
 						httpServletRequest, themeDisplay.getScopeGroup(),
 						CTPortletKeys.PUBLICATIONS, 0, 0,
@@ -680,7 +684,22 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"/change_tracking/checkout_ct_collection"
 				).setRedirect(
 					_portal.getCurrentURL(httpServletRequest)
-				).buildString());
+				).buildString();
+			}
+			else {
+				timelineEditURL = PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/change_tracking/edit_ct_collection"
+				).setRedirect(
+					_portal.getCurrentURL(httpServletRequest)
+				).buildString();
+			}
+
+			data.put("timelineEditURL", timelineEditURL);
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
 			data.put(

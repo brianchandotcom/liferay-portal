@@ -58,11 +58,10 @@ const PublicationTimeline = ({
 		});
 	};
 
-	const getEditURL = (ctCollectionId) => {
-		return createMVCRenderCommandURL(
+	const getEditURL = (ctCollectionId, url) => {
+		return createPortletURL(url, {
 			ctCollectionId,
-			'/change_tracking/edit_ct_collection'
-		);
+		});
 	};
 
 	const getRevertURL = (ctCollectionId) => {
@@ -175,7 +174,8 @@ const PublicationTimeline = ({
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.update
 												? getEditURL(
-														timelineItem.ctCollectionId
+														timelineItem.ctCollectionId,
+														timelineEditURL
 													)
 												: undefined
 										}

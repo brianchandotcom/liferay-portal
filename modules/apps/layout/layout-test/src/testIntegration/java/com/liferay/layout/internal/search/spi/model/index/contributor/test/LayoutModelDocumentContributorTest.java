@@ -347,7 +347,7 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
-	public void testReindexPublishedLayoutWithFreemarkerErrors()
+	public void testReindexPublishedLayoutWithFreeMarkerErrors()
 		throws Exception {
 
 		String elementText = RandomTestUtil.randomString();

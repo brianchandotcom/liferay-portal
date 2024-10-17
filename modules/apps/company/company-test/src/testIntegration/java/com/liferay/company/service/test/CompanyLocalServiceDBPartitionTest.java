@@ -48,9 +48,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.portlet.Portlet;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -62,7 +65,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleListener;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -518,6 +524,25 @@ public class CompanyLocalServiceDBPartitionTest
 				new Class<?>[] {String.class}, pid));
 
 		Assert.assertFalse(_persistenceManager.exists(pid));
+	}
+
+	@Test
+	public void testDeleteCompanyServiceReference() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		long companyId = company.getCompanyId();
+
+		companyLocalService.deleteCompany(company);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		Collection<ServiceReference<Portlet>> serviceReferences =
+			bundle.getBundleContext(
+			).getServiceReferences(
+				Portlet.class, "(com.liferay.portlet.company=" + companyId + ")"
+			);
+
+		Assert.assertTrue(serviceReferences.isEmpty());
 	}
 
 	@Test

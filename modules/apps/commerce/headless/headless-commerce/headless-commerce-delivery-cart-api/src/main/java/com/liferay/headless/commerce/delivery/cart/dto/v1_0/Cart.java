@@ -137,6 +137,48 @@ public class Cart implements Serializable {
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
+	@Valid
+	public Attachment[] getAttachments() {
+		if (_attachmentsSupplier != null) {
+			attachments = _attachmentsSupplier.get();
+
+			_attachmentsSupplier = null;
+		}
+
+		return attachments;
+	}
+
+	public void setAttachments(Attachment[] attachments) {
+		this.attachments = attachments;
+
+		_attachmentsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAttachments(
+		UnsafeSupplier<Attachment[], Exception> attachmentsUnsafeSupplier) {
+
+		_attachmentsSupplier = () -> {
+			try {
+				return attachmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Attachment[] attachments;
+
+	@JsonIgnore
+	private Supplier<Attachment[]> _attachmentsSupplier;
+
+	@Schema
 	public String getAuthor() {
 		if (_authorSupplier != null) {
 			author = _authorSupplier.get();
@@ -1975,6 +2017,28 @@ public class Cart implements Serializable {
 			sb.append("\"accountId\": ");
 
 			sb.append(accountId);
+		}
+
+		Attachment[] attachments = getAttachments();
+
+		if (attachments != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachments\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < attachments.length; i++) {
+				sb.append(String.valueOf(attachments[i]));
+
+				if ((i + 1) < attachments.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String author = getAuthor();

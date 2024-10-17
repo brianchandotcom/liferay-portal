@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.delivery.cart.internal.graphql.query.v1_0;
 
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
@@ -13,6 +14,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartTransition;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AddressResource;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
@@ -57,6 +59,14 @@ public class Query {
 
 		_addressResourceComponentServiceObjects =
 			addressResourceComponentServiceObjects;
+	}
+
+	public static void setAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<AttachmentResource>
+			attachmentResourceComponentServiceObjects) {
+
+		_attachmentResourceComponentServiceObjects =
+			attachmentResourceComponentServiceObjects;
 	}
 
 	public static void setCartResourceComponentServiceObjects(
@@ -176,7 +186,48 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCode(externalReferenceCode: ___){account, accountId, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeAttachments(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AttachmentPage cartByExternalReferenceCodeAttachments(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> new AttachmentPage(
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartAttachments(cartId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AttachmentPage cartAttachments(
+			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> new AttachmentPage(
+				attachmentResource.getCartAttachmentsPage(
+					cartId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCode(externalReferenceCode: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieve information of the given Cart by external reference code."
@@ -214,7 +265,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cart(cartId: ___){account, accountId, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cart(cartId: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve information of the given Cart.")
 	public Cart cart(@GraphQLName("cartId") Long cartId) throws Exception {
@@ -956,6 +1007,35 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Cart.class)
+	public class GetCartByExternalReferenceCodeAttachmentsPageTypeExtension {
+
+		public GetCartByExternalReferenceCodeAttachmentsPageTypeExtension(
+			Cart cart) {
+
+			_cart = cart;
+		}
+
+		@GraphQLField
+		public AttachmentPage byExternalReferenceCodeAttachments(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_attachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				attachmentResource -> new AttachmentPage(
+					attachmentResource.
+						getCartByExternalReferenceCodeAttachmentsPage(
+							_cart.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
 	public class
 		GetCartByExternalReferenceCodeShippingMethodsPageTypeExtension {
 
@@ -1053,6 +1133,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Address> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AttachmentPage")
+	public class AttachmentPage {
+
+		public AttachmentPage(Page attachmentPage) {
+			actions = attachmentPage.getActions();
+
+			items = attachmentPage.getItems();
+			lastPage = attachmentPage.getLastPage();
+			page = attachmentPage.getPage();
+			pageSize = attachmentPage.getPageSize();
+			totalCount = attachmentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Attachment> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -1322,6 +1435,19 @@ public class Query {
 		addressResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(AttachmentResource attachmentResource)
+		throws Exception {
+
+		attachmentResource.setContextAcceptLanguage(_acceptLanguage);
+		attachmentResource.setContextCompany(_company);
+		attachmentResource.setContextHttpServletRequest(_httpServletRequest);
+		attachmentResource.setContextHttpServletResponse(_httpServletResponse);
+		attachmentResource.setContextUriInfo(_uriInfo);
+		attachmentResource.setContextUser(_user);
+		attachmentResource.setGroupLocalService(_groupLocalService);
+		attachmentResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(CartResource cartResource)
 		throws Exception {
 
@@ -1411,6 +1537,8 @@ public class Query {
 
 	private static ComponentServiceObjects<AddressResource>
 		_addressResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AttachmentResource>
+		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CartResource>
 		_cartResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CartCommentResource>

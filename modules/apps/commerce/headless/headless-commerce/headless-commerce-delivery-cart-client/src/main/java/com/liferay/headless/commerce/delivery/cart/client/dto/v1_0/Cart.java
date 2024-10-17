@@ -69,6 +69,27 @@ public class Cart implements Cloneable, Serializable {
 
 	protected Long accountId;
 
+	public Attachment[] getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(Attachment[] attachments) {
+		this.attachments = attachments;
+	}
+
+	public void setAttachments(
+		UnsafeSupplier<Attachment[], Exception> attachmentsUnsafeSupplier) {
+
+		try {
+			attachments = attachmentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Attachment[] attachments;
+
 	public String getAuthor() {
 		return author;
 	}

@@ -71,7 +71,7 @@ public abstract class BasePreviewBackgroundTaskExecutor
 		}
 
 		dlFileEntryLocalService.forEachFileEntry(
-			companyId, 0, _getProcessDlFileEntryConsumer(),
+			companyId, 0, _getProcessDLFileEntryConsumer(),
 			previewableProcessorMaxSize, getMimeTypes());
 	}
 
@@ -83,7 +83,7 @@ public abstract class BasePreviewBackgroundTaskExecutor
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 
-	private Consumer<DLFileEntry> _getProcessDlFileEntryConsumer() {
+	private Consumer<DLFileEntry> _getProcessDLFileEntryConsumer() {
 		Map<Long, Long> groupPreviewableProcessorMaxSizeMap =
 			dlFileEntryConfigurationProvider.
 				getGroupPreviewableProcessorMaxSizeMap();
@@ -99,12 +99,12 @@ public abstract class BasePreviewBackgroundTaskExecutor
 						PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) ||
 				(dlFileEntry.getSize() <= previewableProcessorMaxSize)) {
 
-				_processDlFileEntry(dlFileEntry);
+				_processDLFileEntry(dlFileEntry);
 			}
 		};
 	}
 
-	private void _processDlFileEntry(DLFileEntry dlFileEntry) {
+	private void _processDLFileEntry(DLFileEntry dlFileEntry) {
 		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 
 		try {

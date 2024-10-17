@@ -189,7 +189,7 @@ export class JournalEditArticlePage {
 		);
 
 		const title = getRandomString();
-		await fillAndClickOutside(this.page, this.titleInput, title);
+		await this.fillTitle(title);
 		await this.fillFriendlyURL('test');
 
 		await this.publishButton.click();

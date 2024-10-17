@@ -116,6 +116,8 @@ public class CTSearchEventListener implements CTEventListener {
 
 						_reindex(
 							ctEntryEntry.getKey(), ctEntryEntry.getValue());
+
+						_ctEntryIndexer.reindex(ctEntries);
 					}
 				}
 
@@ -165,8 +167,6 @@ public class CTSearchEventListener implements CTEventListener {
 				_indexWriterHelper.deleteDocuments(
 					ctCollection.getCompanyId(), uids,
 					indexer.isCommitImmediately());
-
-				_ctEntryIndexer.reindex(ctEntries);
 			}
 			catch (SearchException searchException) {
 				throw new CTEventException(searchException);

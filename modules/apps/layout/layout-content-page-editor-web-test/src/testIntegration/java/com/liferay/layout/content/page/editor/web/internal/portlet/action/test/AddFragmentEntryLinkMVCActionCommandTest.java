@@ -19,7 +19,9 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -111,6 +113,55 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryLinkTwiceWithEmbeddedNoninstanceablePortlet()
+		throws Exception {
+
+		_assertAddFragmentEntryLinkTwiceWithEmbeddedNoninstanceablePortlet(
+			_addFragmentEntry(
+				StringBundler.concat(
+					"<div><lfr-widget-",
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET_ALIAS,
+					"></lfr-widget-",
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET_ALIAS,
+					"></div>")),
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
+			true);
+	}
+
+	@Test
+	public void testAddFragmentEntryLinkTwiceWithFreeMarkerEmbeddedNoninstanceablePortlet1()
+		throws Exception {
+
+		_assertAddFragmentEntryLinkTwiceWithEmbeddedNoninstanceablePortlet(
+			_addFragmentEntry(
+				"<div>[@liferay_portlet.runtime portletName=\"" +
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET +
+							"\"/]/div>"),
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
+			false);
+	}
+
+	@Test
+	public void testAddFragmentEntryLinkTwiceWithFreeMarkerEmbeddedNoninstanceablePortlet2()
+		throws Exception {
+
+		_assertAddFragmentEntryLinkTwiceWithEmbeddedNoninstanceablePortlet(
+			_addFragmentEntry(
+				"<div>[@liferay_portlet[\"runtime\"] portletName=\"" +
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET +
+							"\"/]/div>"),
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET,
+			false);
+	}
+
+	@Test
 	public void testAddFragmentEntryLinkWithEmbeddedPortlet() throws Exception {
 		String instanceId = RandomTestUtil.randomString();
 
@@ -126,7 +177,8 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 					"></div>")),
 			instanceId,
 			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+			true);
 		_assertAddFragmentEntryLinkWithEmbeddedPortlet(
 			_addFragmentEntry(
 				StringBundler.concat(
@@ -137,7 +189,8 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 					"\"/]/div>")),
 			instanceId,
 			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+			true);
 		_assertAddFragmentEntryLinkWithEmbeddedPortlet(
 			_addFragmentEntry(
 				StringBundler.concat(
@@ -148,7 +201,8 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 					"\"/]/div>")),
 			instanceId,
 			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+			true);
 	}
 
 	private FragmentEntry _addFragmentEntry(String html) throws Exception {
@@ -170,8 +224,63 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	private void
+			_assertAddFragmentEntryLinkTwiceWithEmbeddedNoninstanceablePortlet(
+				FragmentEntry fragmentEntry, String portletId,
+				boolean namespaced)
+		throws Exception {
+
+		_assertAddFragmentEntryLinkWithEmbeddedPortlet(
+			fragmentEntry, StringPool.BLANK, portletId, namespaced);
+
+		List<PortletPreferences> originalPortletPreferences =
+			_portletPreferencesLocalService.getPortletPreferencesByPlid(
+				_layout.getPlid());
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(fragmentEntry.getGroupId());
+
+		mockLiferayPortletActionRequest.addParameter(
+			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
+
+		try {
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_processAddFragmentEntryLink",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "processException",
+				new Class<?>[] {ActionRequest.class, Exception.class},
+				mockLiferayPortletActionRequest, modelListenerException);
+
+			Assert.assertEquals(jsonObject.toString(), 1, jsonObject.length());
+
+			Assert.assertEquals(
+				_language.format(
+					_portal.getSiteDefaultLocale(_group),
+					"the-fragment-could-not-be-added-because-it-contains-a-" +
+						"widget-x-that-can-only-appear-once-in-the-page",
+					"Noninstanciable Test"),
+				jsonObject.getString("error"));
+		}
+
+		List<PortletPreferences> portletPreferences =
+			_portletPreferencesLocalService.getPortletPreferencesByPlid(
+				_layout.getPlid());
+
+		Assert.assertEquals(
+			portletPreferences.toString(), originalPortletPreferences.size(),
+			portletPreferences.size());
+	}
+
 	private void _assertAddFragmentEntryLinkWithEmbeddedPortlet(
-			FragmentEntry fragmentEntry, String instanceId, String portletId)
+			FragmentEntry fragmentEntry, String instanceId, String portletId,
+			boolean namespaced)
 		throws Exception {
 
 		List<PortletPreferences> originalPortletPreferencesList =
@@ -193,9 +302,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		PortletPreferences portletPreferences = portletPreferencesList.get(0);
 
 		Assert.assertEquals(
-			_portal.getJsSafePortletId(
-				PortletIdCodec.encode(
-					portletId, fragmentEntryLink.getNamespace() + instanceId)),
+			_getPortletId(fragmentEntryLink, instanceId, portletId, namespaced),
 			portletPreferences.getPortletId());
 	}
 
@@ -230,6 +337,18 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			"groupId", String.valueOf(groupId));
 
 		return mockLiferayPortletActionRequest;
+	}
+
+	private String _getPortletId(
+		FragmentEntryLink fragmentEntryLink, String instanceId,
+		String portletId, boolean namespaced) {
+
+		if (namespaced) {
+			instanceId = fragmentEntryLink.getNamespace() + instanceId;
+		}
+
+		return _portal.getJsSafePortletId(
+			PortletIdCodec.encode(portletId, instanceId));
 	}
 
 	private FragmentEntryLink _testAddFragmentEntryLink(
@@ -305,6 +424,9 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Language _language;
 
 	private Layout _layout;
 

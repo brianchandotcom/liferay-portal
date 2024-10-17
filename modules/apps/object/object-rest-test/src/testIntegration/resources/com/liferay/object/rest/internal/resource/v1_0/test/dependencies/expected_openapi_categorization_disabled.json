@@ -65,6 +65,11 @@
 						"readOnly": true,
 						"type": "string"
 					},
+					"externalReferenceCode": {
+						"description": "The external reference code of the author.",
+						"readOnly": true,
+						"type": "string"
+					},
 					"familyName": {
 						"description": "The author's surname.",
 						"readOnly": true,

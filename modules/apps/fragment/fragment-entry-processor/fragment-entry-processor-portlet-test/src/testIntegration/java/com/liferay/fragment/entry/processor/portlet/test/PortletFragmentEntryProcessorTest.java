@@ -129,11 +129,13 @@ public class PortletFragmentEntryProcessorTest {
 
 	@Test
 	public void testFragmentEntryLinkPortletPreferences() throws Exception {
+		String instanceId = RandomTestUtil.randomString();
+
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			_getHTML(
 				FragmentEntryLinkPortletKeys.
 					FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET_ALIAS,
-				"widget"));
+				instanceId));
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -168,11 +170,11 @@ public class PortletFragmentEntryProcessorTest {
 
 		PortletPreferences portletPreferences = portletPreferencesList.get(0);
 
-		String instanceId = PortletIdCodec.decodeInstanceId(
+		String curInstanceId = PortletIdCodec.decodeInstanceId(
 			portletPreferences.getPortletId());
 
 		Assert.assertEquals(
-			fragmentEntryLink.getNamespace() + "widget", instanceId);
+			fragmentEntryLink.getNamespace() + instanceId, curInstanceId);
 	}
 
 	private FragmentEntry _addFragmentEntry(String html) throws Exception {

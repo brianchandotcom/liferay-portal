@@ -3736,7 +3736,7 @@ public class DataFactory {
 		return dlFileEntryMetadataModel;
 	}
 
-	public DLFileEntryModel newDlFileEntryModel(
+	public DLFileEntryModel newDLFileEntryModel(
 		DLFolderModel dlFolderModel, String name, String extension,
 		String mimeType, long fileEntryId) {
 
@@ -3784,7 +3784,7 @@ public class DataFactory {
 		return dlFileEntryModel;
 	}
 
-	public List<DLFileEntryModel> newDlFileEntryModels(
+	public List<DLFileEntryModel> newDLFileEntryModels(
 		DLFolderModel dlFolderModel) {
 
 		List<DLFileEntryModel> dlFileEntryModels = new ArrayList<>(
@@ -3794,7 +3794,7 @@ public class DataFactory {
 			 i++) {
 
 			dlFileEntryModels.add(
-				newDlFileEntryModel(
+				newDLFileEntryModel(
 					dlFolderModel, "TestFile" + i, "txt",
 					ContentTypes.TEXT_PLAIN, _counter.get()));
 		}

@@ -135,7 +135,7 @@
 
 			<@insertAssetEntry _entry = dlFolderModel />
 
-			<#local dlFileEntryModels = dataFactory.newDlFileEntryModels(dlFolderModel)>
+			<#local dlFileEntryModels = dataFactory.newDLFileEntryModels(dlFolderModel)>
 
 			<#list dlFileEntryModels as dlFileEntryModel>
 				${dataFactory.toInsertSQL(dlFileEntryModel)}

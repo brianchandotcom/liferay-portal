@@ -85,7 +85,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());
 
-		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
+		_addSXPBlueprint(
 			_getElementInstancesJSON(assetCategory1, assetCategory2));
 
 		_runUpgrade();
@@ -94,7 +94,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			_getExpectedInstancesJSON(
 				assetCategory1, assetCategory2,
 				companyGroup.getExternalReferenceCode()),
-			sxpBlueprint.getSXPBlueprintId());
+			_sxpBlueprint.getSXPBlueprintId());
 	}
 
 	@Test
@@ -142,10 +142,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		}
 	}
 
-	private SXPBlueprint _addSXPBlueprint(String elementInstancesJSON)
+	private void _addSXPBlueprint(String elementInstancesJSON)
 		throws Exception {
 
-		return _sxpBlueprintLocalService.addSXPBlueprint(
+		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			null, TestPropsValues.getUserId(),
 			StringUtil.read(
 				_clazz,
@@ -303,6 +303,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@DeleteAfterTestRun
+	private SXPBlueprint _sxpBlueprint;
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

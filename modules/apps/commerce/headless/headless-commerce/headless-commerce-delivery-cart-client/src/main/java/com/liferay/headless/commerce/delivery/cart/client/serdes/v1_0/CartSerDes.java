@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartItem;
@@ -74,6 +75,26 @@ public class CartSerDes {
 			sb.append("\"accountId\": ");
 
 			sb.append(cart.getAccountId());
+		}
+
+		if (cart.getAttachments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachments\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < cart.getAttachments().length; i++) {
+				sb.append(String.valueOf(cart.getAttachments()[i]));
+
+				if ((i + 1) < cart.getAttachments().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (cart.getAuthor() != null) {
@@ -646,6 +667,13 @@ public class CartSerDes {
 			map.put("accountId", String.valueOf(cart.getAccountId()));
 		}
 
+		if (cart.getAttachments() == null) {
+			map.put("attachments", null);
+		}
+		else {
+			map.put("attachments", String.valueOf(cart.getAttachments()));
+		}
+
 		if (cart.getAuthor() == null) {
 			map.put("author", null);
 		}
@@ -990,6 +1018,9 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "accountId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "attachments")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "author")) {
 				return false;
 			}
@@ -1156,6 +1187,22 @@ public class CartSerDes {
 				if (jsonParserFieldValue != null) {
 					cart.setAccountId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "attachments")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Attachment[] attachmentsArray =
+						new Attachment[jsonParserFieldValues.length];
+
+					for (int i = 0; i < attachmentsArray.length; i++) {
+						attachmentsArray[i] = AttachmentSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					cart.setAttachments(attachmentsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "author")) {

@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AddressResourceImpl.class);
 
+			add(AttachmentResourceImpl.class);
+
 			add(CartResourceImpl.class);
 
 			add(CartCommentResourceImpl.class);

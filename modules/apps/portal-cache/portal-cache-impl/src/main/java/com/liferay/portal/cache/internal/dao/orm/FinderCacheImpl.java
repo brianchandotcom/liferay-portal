@@ -159,6 +159,8 @@ public class FinderCacheImpl
 		}
 
 		if (cacheValue == null) {
+			finderPath.touch();
+
 			PortalCache<Serializable, Serializable> portalCache =
 				_getPortalCache(finderPath.getCacheName());
 
@@ -246,7 +248,7 @@ public class FinderCacheImpl
 	@Override
 	public void putResult(FinderPath finderPath, Object[] args, Object result) {
 		if (!_valueObjectFinderCacheEnabled || !CacheRegistryUtil.isActive() ||
-			(result == null)) {
+			(result == null) || !finderPath.isTouched()) {
 
 			return;
 		}

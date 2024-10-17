@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -60,25 +61,30 @@ public class PortletLocalServiceTest {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		try {
+			String featureFlagKeyEnabled = RandomTestUtil.randomString();
+
 			PropsTestUtil.setProps(
-				"feature.flag.LPD-ENABLED", Boolean.TRUE.toString());
+				"feature.flag." + featureFlagKeyEnabled,
+				Boolean.TRUE.toString());
+
+			String portletName = RandomTestUtil.randomString();
 
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					Portlet.class, new TestPortlet(),
 					MapUtil.singletonDictionary(
-						"javax.portlet.name", _TEST_PORTLET_NAME)));
+						"javax.portlet.name", portletName)));
 
 			TestCustomAttributesDisplay
 				testCustomAttributesDisplayWithEnabledFeatureFlag =
-					new TestCustomAttributesDisplay("LPD-ENABLED");
+					new TestCustomAttributesDisplay(featureFlagKeyEnabled);
 
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					CustomAttributesDisplay.class,
 					testCustomAttributesDisplayWithEnabledFeatureFlag,
 					MapUtil.singletonDictionary(
-						"javax.portlet.name", _TEST_PORTLET_NAME)));
+						"javax.portlet.name", portletName)));
 
 			TestCustomAttributesDisplay
 				testCustomAttributesDisplayWithNullFeatureFlag =
@@ -89,18 +95,19 @@ public class PortletLocalServiceTest {
 					CustomAttributesDisplay.class,
 					testCustomAttributesDisplayWithNullFeatureFlag,
 					MapUtil.singletonDictionary(
-						"javax.portlet.name", _TEST_PORTLET_NAME)));
+						"javax.portlet.name", portletName)));
 
 			TestCustomAttributesDisplay
 				testCustomAttributesDisplayWithDisabledFeatureFlag =
-					new TestCustomAttributesDisplay("LPD-DISABLED");
+					new TestCustomAttributesDisplay(
+						RandomTestUtil.randomString());
 
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					CustomAttributesDisplay.class,
 					testCustomAttributesDisplayWithDisabledFeatureFlag,
 					MapUtil.singletonDictionary(
-						"javax.portlet.name", _TEST_PORTLET_NAME)));
+						"javax.portlet.name", portletName)));
 
 			List<CustomAttributesDisplay> customAttributesDisplays =
 				TransformUtil.transform(
@@ -142,8 +149,6 @@ public class PortletLocalServiceTest {
 			}
 		}
 	}
-
-	private static final String _TEST_PORTLET_NAME = "TEST_PORTLET_NAME";
 
 	private BundleContext _bundleContext;
 

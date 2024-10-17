@@ -7,7 +7,9 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
@@ -45,6 +47,13 @@ public class FinderPath {
 		_baseModelResult = baseModelResult;
 
 		_initCacheKeyPrefix(methodName, params);
+
+		if (_cacheName.contains(".List") || methodName.equals("dslQuery")) {
+			_singleResult = false;
+		}
+		else {
+			_singleResult = true;
+		}
 	}
 
 	public String getCacheKeyPrefix() {
@@ -61,6 +70,22 @@ public class FinderPath {
 
 	public boolean isBaseModelResult() {
 		return _baseModelResult;
+	}
+
+	public boolean isTouched() {
+		if (_singleResult &&
+			((System.nanoTime() - _timestamp) >= _COOL_DOWN_PERIOD)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public void touch() {
+		if (_singleResult) {
+			_timestamp = System.nanoTime();
+		}
 	}
 
 	private static Map<String, String> _getEncodedTypes() {
@@ -103,6 +128,11 @@ public class FinderPath {
 
 	private static final String _ARGS_SEPARATOR = "_A_";
 
+	private static final long _COOL_DOWN_PERIOD = GetterUtil.getLong(
+		PropsUtil.get(
+			"value.object.finder.cache.single.result.cool.down.period"),
+		600_000_000_000L);
+
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
 	private static final String _TABLE_SEPARATOR = "_T_";
@@ -113,5 +143,7 @@ public class FinderPath {
 	private String _cacheKeyPrefix;
 	private final String _cacheName;
 	private final String[] _columnNames;
+	private final boolean _singleResult;
+	private volatile long _timestamp;
 
 }

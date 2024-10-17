@@ -5,7 +5,7 @@
 
 	<target name="verify-token-based-login">
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-H 'SM_USER:${user.token}' ${portal.url}" />
+			<arg line="-H &quot;SM_USER:${user.token}&quot; ${portal.url}" />
 		</exec>
 
 		<echo>${curl.output}</echo>

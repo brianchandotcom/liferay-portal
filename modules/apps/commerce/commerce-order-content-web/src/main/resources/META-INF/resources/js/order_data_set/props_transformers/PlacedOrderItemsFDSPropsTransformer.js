@@ -4,6 +4,7 @@
  */
 
 import {MiniCartUtils} from 'commerce-frontend-js';
+import {createPortletURL, openModal} from 'frontend-js-web';
 
 import ProductOptionsDataRenderer from '../data_renderers/ProductOptionsDataRenderer';
 import ProductURLDataRenderer from '../data_renderers/ProductURLDataRenderer';
@@ -26,7 +27,7 @@ const PlacedOrdersFDSPropsTransformer = (props) => ({
 		action: {
 			data: {id: actionId},
 		},
-		itemData: {productURLs},
+		itemData: {id: orderItemId, productURLs},
 	}) => {
 		if (actionId === 'view') {
 			window.location.href = MiniCartUtils.generateProductPageURL(
@@ -34,6 +35,18 @@ const PlacedOrdersFDSPropsTransformer = (props) => ({
 				productURLs,
 				props.additionalProps.productURLSeparator
 			);
+		}
+
+		if (actionId === 'shipments') {
+			openModal({
+				height: '32rem',
+				iframeBodyCssClass: '',
+				size: 'lg',
+				title: Liferay.Language.get('shipments'),
+				url: createPortletURL(props.additionalProps.viewShipmentsURL, {
+					commerceOrderItemId: orderItemId,
+				}),
+			});
 		}
 	},
 });

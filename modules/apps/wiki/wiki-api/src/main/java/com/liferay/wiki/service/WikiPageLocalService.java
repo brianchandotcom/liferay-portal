@@ -342,6 +342,9 @@ public interface WikiPageLocalService
 	public WikiPage fetchPage(long nodeId, String title, double version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel fetchPersistedModel(Serializable primaryKeyObj);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage fetchWikiPage(long pageId);
 
 	/**

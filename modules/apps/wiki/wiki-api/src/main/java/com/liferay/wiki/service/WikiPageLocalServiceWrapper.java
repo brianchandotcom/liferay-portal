@@ -470,6 +470,13 @@ public class WikiPageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.PersistedModel fetchPersistedModel(
+		java.io.Serializable primaryKeyObj) {
+
+		return _wikiPageLocalService.fetchPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public WikiPage fetchWikiPage(long pageId) {
 		return _wikiPageLocalService.fetchWikiPage(pageId);
 	}

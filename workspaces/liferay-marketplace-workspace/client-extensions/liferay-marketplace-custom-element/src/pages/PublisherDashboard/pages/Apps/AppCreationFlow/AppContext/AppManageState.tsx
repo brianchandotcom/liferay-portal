@@ -58,6 +58,7 @@ export type InitialStateProps = {
 	supportPhone: Specification;
 	supportURL: Specification;
 	versionName?: string;
+	virtualSettingId: string;
 };
 
 export type Sku = {id: number; sku: string};

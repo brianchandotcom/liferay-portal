@@ -84,9 +84,11 @@ public class LanguageResources {
 	}
 
 	public static ResourceBundle getResourceBundle(Locale locale) {
-		return new AggregateResourceBundle(
-			new DynamicOverrideResourceBundle(locale),
-			new LanguageResourcesBundle(locale));
+		return _resourceBundles.computeIfAbsent(
+			locale,
+			key -> new AggregateResourceBundle(
+				new DynamicOverrideResourceBundle(key),
+				new LanguageResourcesBundle(key)));
 	}
 
 	public static Locale getSuperLocale(Locale locale) {
@@ -215,6 +217,8 @@ public class LanguageResources {
 	private static final Map<Locale, MapHolder> _mapHolders =
 		new ConcurrentHashMap<>();
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
+	private static final Map<Locale, ResourceBundle> _resourceBundles =
+		new ConcurrentHashMap<>();
 	private static final Map<Long, Map<Locale, Locale>> _superLocalesMap =
 		new ConcurrentHashMap<>();
 

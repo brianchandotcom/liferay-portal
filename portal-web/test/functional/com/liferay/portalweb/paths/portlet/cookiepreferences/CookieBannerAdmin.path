@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>CONTENT_TEXT</td>
-	<td>//span[normalize-space(text())='${key_text}']</td>
+	<td>//p[normalize-space(text())='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

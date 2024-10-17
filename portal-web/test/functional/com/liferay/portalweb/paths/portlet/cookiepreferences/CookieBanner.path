@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>COOKIES_BANNER_LOCALIZED_TEXT</td>
-	<td>//*[@id='p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_']//span[contains(.,'${key_text}')]</td>
+	<td>//*[@id='p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_']//div[contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

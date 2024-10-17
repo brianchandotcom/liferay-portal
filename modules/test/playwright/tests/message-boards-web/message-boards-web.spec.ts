@@ -159,7 +159,7 @@ test('LPD-37727 Change delta to a higher value when on last page', async ({
 	await messageBoardsPage.goto(site.friendlyUrlPath);
 
 	await page.getByLabel('Items per Page').click();
-	await page.getByRole('link', {name: /4\s+Entries per Page/}).click();
+	await page.getByRole('option', {name: /4\s+Entries per Page/}).click();
 
 	await expect(
 		page.getByRole('link', {name: /Thread with headline #\d+/})
@@ -172,7 +172,7 @@ test('LPD-37727 Change delta to a higher value when on last page', async ({
 	).toHaveCount(1);
 
 	await page.getByLabel('Items per Page').click();
-	await page.getByRole('link', {name: /8\s+Entries per Page/}).click();
+	await page.getByRole('option', {name: /8\s+Entries per Page/}).click();
 
 	await expect(
 		page.getByRole('link', {name: /Thread with headline #\d+/})

@@ -131,7 +131,7 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 					@ExpectedLog(
 						expectedDBType = ExpectedDBType.MARIADB,
 						expectedLog = "Duplicate entry '",
-						expectedType = ExpectedType.PREFIX
+						expectedType = ExpectedType.CONTAINS
 					),
 					@ExpectedLog(
 						expectedDBType = ExpectedDBType.MYSQL,

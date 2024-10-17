@@ -90,35 +90,6 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		_assertAddFragmentEntryLink(_getFragmentEntry(_group.getGroupId()));
 	}
 
-	@Test
-	public void testAddFragmentEntryLinkToLayout() throws Exception {
-		FragmentEntry fragmentEntry = _getFragmentEntry(_group.getGroupId());
-
-		List<FragmentEntryLink> originalFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(_group.getGroupId());
-
-		mockLiferayPortletActionRequest.addParameter(
-			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "addFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class},
-			mockLiferayPortletActionRequest);
-
-		List<FragmentEntryLink> actualFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
-
-		Assert.assertEquals(
-			actualFragmentEntryLinks.toString(),
-			originalFragmentEntryLinks.size() + 1,
-			actualFragmentEntryLinks.size());
-	}
-
 	@Test(expected = NoSuchEntryException.class)
 	public void testAddInvalidFragmentEntryToLayout() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -135,6 +106,10 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 	private void _assertAddFragmentEntryLink(FragmentEntry fragmentEntry)
 		throws Exception {
+
+		List<FragmentEntryLink> originalFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(fragmentEntry.getGroupId());
@@ -171,6 +146,15 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			persistedFragmentEntryLink.getConfiguration());
 		Assert.assertEquals(
 			StringPool.BLANK, persistedFragmentEntryLink.getRendererKey());
+
+		List<FragmentEntryLink> actualFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
+		Assert.assertEquals(
+			actualFragmentEntryLinks.toString(),
+			originalFragmentEntryLinks.size() + 1,
+			actualFragmentEntryLinks.size());
 	}
 
 	private FragmentEntry _getFragmentEntry(long groupId) throws Exception {

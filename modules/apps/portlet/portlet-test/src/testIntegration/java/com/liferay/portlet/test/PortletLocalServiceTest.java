@@ -60,10 +60,10 @@ public class PortletLocalServiceTest {
 	public void testGetCustomAttributesDisplaysWithCustomAttributesDisplayDisabled() {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		String featureFlagKeyEnabled = RandomTestUtil.randomString();
+		String enabledFFKey = RandomTestUtil.randomString();
 
 		PropsTestUtil.setProps(
-			"feature.flag." + featureFlagKeyEnabled,
+			"feature.flag." + enabledFFKey,
 			Boolean.TRUE.toString());
 
 		String portletName = RandomTestUtil.randomString();
@@ -75,36 +75,36 @@ public class PortletLocalServiceTest {
 					"javax.portlet.name", portletName)));
 
 		TestCustomAttributesDisplay
-			testCustomAttributesDisplayWithEnabledFeatureFlag =
-				new TestCustomAttributesDisplay(featureFlagKeyEnabled);
+			enabledFFCustomAttributesDisplay =
+				new TestCustomAttributesDisplay(enabledFFKey);
 
 		serviceRegistrations.add(
 			_bundleContext.registerService(
 				CustomAttributesDisplay.class,
-				testCustomAttributesDisplayWithEnabledFeatureFlag,
+				enabledFFCustomAttributesDisplay,
 				MapUtil.singletonDictionary(
 					"javax.portlet.name", portletName)));
 
 		TestCustomAttributesDisplay
-			testCustomAttributesDisplayWithNullFeatureFlag =
+			nullFFCustomAttributesDisplay =
 				new TestCustomAttributesDisplay(null);
 
 		serviceRegistrations.add(
 			_bundleContext.registerService(
 				CustomAttributesDisplay.class,
-				testCustomAttributesDisplayWithNullFeatureFlag,
+				nullFFCustomAttributesDisplay,
 				MapUtil.singletonDictionary(
 					"javax.portlet.name", portletName)));
 
 		TestCustomAttributesDisplay
-			testCustomAttributesDisplayWithDisabledFeatureFlag =
+			disabledFFCustomAttributesDisplay =
 				new TestCustomAttributesDisplay(
 					RandomTestUtil.randomString());
 
 		serviceRegistrations.add(
 			_bundleContext.registerService(
 				CustomAttributesDisplay.class,
-				testCustomAttributesDisplayWithDisabledFeatureFlag,
+				disabledFFCustomAttributesDisplay,
 				MapUtil.singletonDictionary(
 					"javax.portlet.name", portletName)));
 
@@ -125,15 +125,15 @@ public class PortletLocalServiceTest {
 		Assert.assertTrue(
 			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
-				testCustomAttributesDisplayWithEnabledFeatureFlag));
+				enabledFFCustomAttributesDisplay));
 		Assert.assertTrue(
 			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
-				testCustomAttributesDisplayWithNullFeatureFlag));
+				nullFFCustomAttributesDisplay));
 		Assert.assertFalse(
 			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
-				testCustomAttributesDisplayWithDisabledFeatureFlag));
+				disabledFFCustomAttributesDisplay));
 		Assert.assertEquals(
 			customAttributesDisplays.toString(), 2,
 			customAttributesDisplays.size());

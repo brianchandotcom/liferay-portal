@@ -7,6 +7,7 @@ import {IndividualIdentity, RangeSelectors} from '../types';
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 export async function createBlogsEventsForEveryDayByRangeSelector({
 	apiHelpers,
 	assetId,
@@ -14,6 +15,7 @@ export async function createBlogsEventsForEveryDayByRangeSelector({
 	channel,
 	individualIdentities,
 	page,
+	pages = ['DXP Page 1'],
 	rangeSelector,
 }: {
 	apiHelpers: ApiHelpers;
@@ -24,34 +26,30 @@ export async function createBlogsEventsForEveryDayByRangeSelector({
 	};
 	individualIdentities: IndividualIdentity[];
 	page: Page;
+	pages?: string[];
 	rangeSelector: RangeSelectors;
 }) {
 	const canonicalUrl = 'https://www.liferay.com';
-	const date = new Date();
 
 	let blogEvents = [];
+	let pageEvents = [];
 
-	const pageEvents = individualIdentities.map((identity) => ({
-		canonicalUrl,
-		channelId: channel.id,
-		eventDate: date.toISOString(),
-		title: 'DXP Page 1',
-		userId: identity.id,
-		views: Number(rangeSelector),
-	}));
+	for (const pageTitle of pages) {
+		const date = new Date();
 
-	const sessions = individualIdentities.map((identity) => ({
-		channelId: channel.id,
-		id: identity.id,
-		sessionEnd: date.toISOString(),
-		sessionStart: date.toISOString(),
-		userId: identity.id,
-	}));
+		const currentPageEvents = individualIdentities.map((identity) => ({
+			canonicalUrl,
+			channelId: channel.id,
+			eventDate: date.toISOString(),
+			title: pageTitle,
+			userId: identity.id,
+			views: Number(rangeSelector),
+		}));
 
-	for (let i = 0; i <= Number(rangeSelector); i++) {
-		blogEvents = [
-			...blogEvents,
-			...individualIdentities.map((identity) => ({
+		pageEvents = [...pageEvents, ...currentPageEvents];
+
+		for (let i = 0; i <= Number(rangeSelector); i++) {
+			const currentBlogEvents = individualIdentities.map((identity) => ({
 				assetId,
 				assetTitle,
 				canonicalUrl,
@@ -59,23 +57,24 @@ export async function createBlogsEventsForEveryDayByRangeSelector({
 				clicks: 1,
 				comments: 2,
 				eventDate: date.toISOString(),
+				pageTitle,
 				ratings: 1,
 				ratingsScore: 1,
 				readTime: 1,
 				sessions: 1,
 				userId: identity.id,
 				views: 1,
-			})),
-		];
+			}));
 
-		date.setDate(date.getDate() - 1);
+			blogEvents = [...blogEvents, ...currentBlogEvents];
+
+			date.setDate(date.getDate() - 1);
+		}
 	}
 
-	await apiHelpers.jsonWebServicesOSBAsah.createBlogsDaily(blogEvents);
-
-	await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
-
 	await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily(pageEvents);
+
+	await apiHelpers.jsonWebServicesOSBAsah.createBlogsDaily(blogEvents);
 
 	await page.waitForTimeout(1000);
 }

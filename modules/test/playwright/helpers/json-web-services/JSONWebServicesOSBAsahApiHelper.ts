@@ -15,6 +15,7 @@ type BlogDaily = {
 	clicks: number;
 	comments: number;
 	eventDate: string;
+	pageTitle?: string;
 	ratings: number;
 	ratingsScore: number;
 	readTime: number;
@@ -30,6 +31,7 @@ type DocumentLibraryDaily = {
 	channelId: string;
 	downloads: number;
 	eventDate: string;
+	pageTitle?: string;
 	previews: number;
 	ratings: number;
 	ratingsScore: number;
@@ -81,6 +83,7 @@ type JournalDaily = {
 	canonicalUrl: string;
 	channelId: string;
 	eventDate: string;
+	pageTitle?: string;
 	userId: string;
 	views: number;
 };

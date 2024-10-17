@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -35,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -92,14 +92,9 @@ public class DDMFormGuestUploadFieldUtilTest {
 		_frameworkUtilMockedStatic.close();
 	}
 
-	@Before
-	public void setUp() {
-		_ddmFormInstanceRecords = new ArrayList<>();
-	}
-
 	@After
 	public void tearDown() {
-		_ddmFormInstanceRecords = null;
+		_ddmFormInstanceRecords = new ArrayList<>();
 	}
 
 	@Test
@@ -129,14 +124,13 @@ public class DDMFormGuestUploadFieldUtilTest {
 	}
 
 	@Test
-	public void testGuestUsersAnsweringWithDifferentIPAddresses()
+	public void testGuestUserAnsweringWithDifferentIPAddresses()
 		throws Exception {
 
 		_addUploadField(true);
 
-		_addDDMFormInstanceRecords(_IP_ADDRESS_2, _MAXIMUM_SUBMISSIONS - 1);
-
 		_addDDMFormInstanceRecords(_IP_ADDRESS_1, 1);
+		_addDDMFormInstanceRecords(_IP_ADDRESS_2, _MAXIMUM_SUBMISSIONS - 1);
 
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
@@ -210,12 +204,28 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 	protected static final JSONFactory jsonFactory = new JSONFactoryImpl();
 
-	private void _addDDMFormInstanceRecords(String ipAddr, int size) {
-		for (int i = 0; i < size; i++) {
-			_ddmFormInstanceRecords.add(_mockDDMFormInstanceRecord(ipAddr));
-		}
+	private void _addDDMFormInstanceRecords(String ipAddress, int size) {
+		DDMFormInstanceRecord ddmFormInstanceRecord = Mockito.mock(
+			DDMFormInstanceRecord.class);
 
-		_mockDDMFormInstanceLocalService(_ddmFormInstanceRecords);
+		Mockito.when(
+			ddmFormInstanceRecord.getIpAddress()
+		).thenReturn(
+			ipAddress
+		);
+
+		_ddmFormInstanceRecords.addAll(
+			Collections.nCopies(size, ddmFormInstanceRecord));
+
+		Mockito.when(
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+				Mockito.eq(_DDM_FORM_INSTANCE_ID),
+				Mockito.eq(WorkflowConstants.STATUS_ANY),
+				Mockito.eq(QueryUtil.ALL_POS), Mockito.eq(QueryUtil.ALL_POS),
+				Mockito.eq(null))
+		).thenReturn(
+			_ddmFormInstanceRecords
+		);
 	}
 
 	private void _addUploadField(boolean allowGuestUsers) {
@@ -227,14 +237,6 @@ public class DDMFormGuestUploadFieldUtilTest {
 		_ddmForm.addDDMFormField(ddmFormField);
 	}
 
-	private DDMStructure _createDDMStructure() {
-		DDMStructure ddmStructure = new DDMStructureImpl();
-
-		ddmStructure.setDDMForm(_ddmForm);
-
-		return ddmStructure;
-	}
-
 	private DDMFormInstance _mockDDMFormInstance() throws Exception {
 		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
 
@@ -244,7 +246,9 @@ public class DDMFormGuestUploadFieldUtilTest {
 			_DDM_FORM_INSTANCE_ID
 		);
 
-		DDMStructure ddmStructure = _createDDMStructure();
+		DDMStructure ddmStructure = new DDMStructureImpl();
+
+		ddmStructure.setDDMForm(_ddmForm);
 
 		Mockito.when(
 			ddmFormInstance.getStructure()
@@ -255,40 +259,19 @@ public class DDMFormGuestUploadFieldUtilTest {
 		return ddmFormInstance;
 	}
 
-	private void _mockDDMFormInstanceLocalService(
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords) {
-
-		Mockito.when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-				Mockito.eq(_DDM_FORM_INSTANCE_ID),
-				Mockito.eq(WorkflowConstants.STATUS_ANY),
-				Mockito.eq(QueryUtil.ALL_POS), Mockito.eq(QueryUtil.ALL_POS),
-				Mockito.eq(null))
-		).thenReturn(
-			ddmFormInstanceRecords
-		);
-	}
-
-	private DDMFormInstanceRecord _mockDDMFormInstanceRecord(String ipAddr) {
-		DDMFormInstanceRecord ddmFormInstanceRecord = Mockito.mock(
-			DDMFormInstanceRecord.class);
-
-		Mockito.when(
-			ddmFormInstanceRecord.getIpAddress()
-		).thenReturn(
-			ipAddr
-		);
-
-		return ddmFormInstanceRecord;
-	}
-
 	private HttpServletRequest _mockHttpServletRequest(
 		String remoteAddr, boolean signedIn) {
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
-		ThemeDisplay themeDisplay = _mockThemeDisplay(signedIn);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			signedIn
+		);
 
 		Mockito.when(
 			(ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
@@ -303,18 +286,6 @@ public class DDMFormGuestUploadFieldUtilTest {
 		);
 
 		return httpServletRequest;
-	}
-
-	private ThemeDisplay _mockThemeDisplay(boolean signedIn) {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			themeDisplay.isSignedIn()
-		).thenReturn(
-			signedIn
-		);
-
-		return themeDisplay;
 	}
 
 	private static final long _DDM_FORM_INSTANCE_ID =
@@ -336,7 +307,8 @@ public class DDMFormGuestUploadFieldUtilTest {
 			DDMFormInstanceRecordLocalService.class);
 	private static ServiceRegistration<DDMFormInstanceRecordLocalService>
 		_ddmFormInstanceRecordLocalServiceServiceRegistration;
-	private static ArrayList<DDMFormInstanceRecord> _ddmFormInstanceRecords;
+	private static List<DDMFormInstanceRecord> _ddmFormInstanceRecords =
+		new ArrayList<>();
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 

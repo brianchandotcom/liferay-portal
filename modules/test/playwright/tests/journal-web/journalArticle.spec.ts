@@ -91,7 +91,7 @@ baseTest(
 		tag: '@LPD-32185',
 	},
 	async ({journalEditArticlePage, page, site}) => {
-		await page.goto(`/fr/`);
+		await page.goto('/fr');
 		await journalEditArticlePage.createBasicArticleWithFriendlyURL(
 			site,
 			'Contenu web basique'

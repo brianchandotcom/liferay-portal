@@ -4004,11 +4004,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				typeSettings
 			).build();
 
-		if (GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty(
-					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES),
-				true)) {
+		boolean inheritLocales = GetterUtil.getBoolean(
+			typeSettingsUnicodeProperties.getProperty(
+				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES),
+			true);
 
+		if (inheritLocales) {
 			typeSettingsUnicodeProperties.setProperty(
 				PropsKeys.LOCALES,
 				StringUtil.merge(
@@ -4034,7 +4035,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 			validateLanguageIds(
-				companyGroup.getGroupId(), defaultLanguageId, newLanguageIds);
+				inheritLocales, companyGroup.getGroupId(), defaultLanguageId,
+				newLanguageIds);
 
 			if (!Objects.equals(
 					group.getDefaultLanguageId(), defaultLanguageId)) {
@@ -5130,13 +5132,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected void validateLanguageIds(
-			long groupId, String defaultLanguageId, String languageIds)
+			boolean inheritLocales, long groupId, String defaultLanguageId,
+			String languageIds)
 		throws PortalException {
 
 		String[] languageIdsArray = StringUtil.split(languageIds);
 
 		for (String languageId : languageIdsArray) {
-			if (!LanguageUtil.isAvailableLocale(groupId, languageId)) {
+			if (!inheritLocales &&
+				!LanguageUtil.isAvailableLocale(groupId, languageId)) {
+
 				LocaleException localeException = new LocaleException(
 					LocaleException.TYPE_DISPLAY_SETTINGS);
 

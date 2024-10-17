@@ -7,9 +7,7 @@ package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.display.context.MBListDisplayContext;
-import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.MBThreadServiceUtil;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
@@ -132,29 +130,18 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
-
-			status = WorkflowConstants.STATUS_ANY;
-		}
-
-		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
-			status, themeDisplay.getUserId(), true, searchContainer.getStart(),
-			searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		int status = _getStatus(themeDisplay);
 
 		try {
 			searchContainer.setResultsAndTotal(
 				() -> MBCategoryServiceUtil.getCategories(
 					themeDisplay.getScopeGroupId(), _categoryId,
-					queryDefinition),
+					_getQueryDefinition(
+						searchContainer, status, themeDisplay.getUserId())),
 				MBCategoryServiceUtil.getCategoriesCount(
 					themeDisplay.getScopeGroupId(), _categoryId,
-					queryDefinition));
+					_getQueryDefinition(
+						searchContainer, status, themeDisplay.getUserId())));
 		}
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);
@@ -282,31 +269,19 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			}
 		}
 		else {
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			if (permissionChecker.isContentReviewer(
-					themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId())) {
-
-				status = WorkflowConstants.STATUS_ANY;
-			}
-
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				status, themeDisplay.getUserId(), true,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
+			int status = _getStatus(themeDisplay);
 
 			try {
 				searchContainer.setResultsAndTotal(
 					() -> MBThreadServiceUtil.getThreads(
 						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition),
+						_getQueryDefinition(
+							searchContainer, status, themeDisplay.getUserId())),
 					MBThreadServiceUtil.getThreadsCount(
 						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
+						_getQueryDefinition(
+							searchContainer, status,
+							themeDisplay.getUserId())));
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
@@ -344,6 +319,27 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				MBPortletKeys.MESSAGE_BOARDS, "threadEntriesDelta",
 				String.valueOf(threadEntriesDelta));
 		}
+	}
+
+	private QueryDefinition _getQueryDefinition(
+		SearchContainer searchContainer, int status, long userId) {
+
+		return new QueryDefinition<>(
+			status, userId, true, searchContainer.getStart(),
+			searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	}
+
+	private int _getStatus(ThemeDisplay themeDisplay) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			return WorkflowConstants.STATUS_ANY;
+		}
+
+		return WorkflowConstants.STATUS_APPROVED;
 	}
 
 	private boolean _isShowRecentPosts(String mvcRenderCommandName) {

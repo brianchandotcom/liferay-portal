@@ -204,6 +204,73 @@ baseTest(
 	}
 );
 
+translationAndAutosaveTest(
+	'Article selector should only list approved content',
+	{
+		tag: '@LPD-39264',
+	},
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const fieldName = 'ArticleSelector';
+		const structureName = 'Test Structure';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [
+				{
+					fieldType: 'journal_article',
+					name: fieldName,
+					repeatable: false,
+				},
+			],
+			name: structureName,
+		});
+
+		const selectableWebContent = 'selectable web content';
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: selectableWebContent},
+		});
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const unSelectableWebContent = 'unselectable web content';
+
+		await journalEditArticlePage.scheduleArticle(
+			unSelectableWebContent,
+			'9987-11-26 13:00'
+		);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await page
+			.getByTestId('ArticleSelector')
+			.getByRole('button', {name: 'Select'})
+			.click();
+
+		const articleSelectorIframe = page.frameLocator(
+			'iframe[title="Web Content"]'
+		);
+
+		await expect(
+			articleSelectorIframe.getByText(selectableWebContent)
+		).toBeVisible();
+
+		await expect(
+			articleSelectorIframe.getByText(unSelectableWebContent)
+		).toHaveCount(0);
+	}
+);
+
 baseTest(
 	'Navigate in ddm template selector',
 	{

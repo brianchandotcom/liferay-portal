@@ -4456,6 +4456,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -4467,14 +4468,15 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPDefinitionOptionRelId");
-		ctStrictColumnNames.add("CPDefinitionOptionValueRelId");
-		ctStrictColumnNames.add("CPInstanceId");
+		ctMergeColumnNames.add("CPDefinitionOptionRelId");
+		ctMergeColumnNames.add("CPDefinitionOptionValueRelId");
+		ctMergeColumnNames.add("CPInstanceId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CPInstanceOptionValueRelId"));

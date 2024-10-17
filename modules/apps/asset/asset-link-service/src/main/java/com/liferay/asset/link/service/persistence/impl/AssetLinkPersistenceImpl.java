@@ -3714,6 +3714,7 @@ public class AssetLinkPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3722,13 +3723,14 @@ public class AssetLinkPersistenceImpl
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
-		ctStrictColumnNames.add("entryId1");
-		ctStrictColumnNames.add("entryId2");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("weight");
+		ctMergeColumnNames.add("entryId1");
+		ctMergeColumnNames.add("entryId2");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("weight");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("linkId"));
 		_ctColumnNamesMap.put(

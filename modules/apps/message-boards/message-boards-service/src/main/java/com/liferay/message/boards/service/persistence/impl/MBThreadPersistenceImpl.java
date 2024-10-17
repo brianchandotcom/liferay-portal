@@ -13895,6 +13895,7 @@ public class MBThreadPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
 		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
@@ -13906,23 +13907,25 @@ public class MBThreadPersistenceImpl
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
-		ctMergeColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("categoryId");
-		ctStrictColumnNames.add("rootMessageId");
-		ctStrictColumnNames.add("rootMessageUserId");
-		ctStrictColumnNames.add("title");
-		ctStrictColumnNames.add("lastPostByUserId");
-		ctStrictColumnNames.add("lastPostDate");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("question");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctMergeColumnNames.add("categoryId");
+		ctMergeColumnNames.add("rootMessageId");
+		ctMergeColumnNames.add("rootMessageUserId");
+		ctMergeColumnNames.add("title");
+		ctMergeColumnNames.add("lastPostByUserId");
+		ctMergeColumnNames.add("lastPostDate");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("question");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
 		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
 		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("threadId"));

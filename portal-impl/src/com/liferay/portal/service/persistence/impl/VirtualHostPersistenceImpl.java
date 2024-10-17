@@ -3225,18 +3225,20 @@ public class VirtualHostPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("layoutSetId");
-		ctStrictColumnNames.add("hostname");
-		ctStrictColumnNames.add("defaultVirtualHost");
-		ctStrictColumnNames.add("languageId");
+		ctMergeColumnNames.add("layoutSetId");
+		ctMergeColumnNames.add("hostname");
+		ctMergeColumnNames.add("defaultVirtualHost");
+		ctMergeColumnNames.add("languageId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("virtualHostId"));
 		_ctColumnNamesMap.put(

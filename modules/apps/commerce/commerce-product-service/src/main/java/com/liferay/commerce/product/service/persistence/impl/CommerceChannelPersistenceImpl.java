@@ -5208,6 +5208,7 @@ public class CommerceChannelPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5219,19 +5220,20 @@ public class CommerceChannelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("accountEntryId");
-		ctStrictColumnNames.add("siteGroupId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("typeSettings");
-		ctStrictColumnNames.add("commerceCurrencyCode");
-		ctStrictColumnNames.add("priceDisplayType");
-		ctStrictColumnNames.add("discountsTargetNetPrice");
+		ctMergeColumnNames.add("accountEntryId");
+		ctMergeColumnNames.add("siteGroupId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("typeSettings");
+		ctMergeColumnNames.add("commerceCurrencyCode");
+		ctMergeColumnNames.add("priceDisplayType");
+		ctMergeColumnNames.add("discountsTargetNetPrice");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("commerceChannelId"));

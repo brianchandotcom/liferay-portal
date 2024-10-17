@@ -5227,6 +5227,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5237,22 +5238,23 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPInstanceId");
-		ctStrictColumnNames.add("active_");
-		ctStrictColumnNames.add("incrementalOrderQuantity");
-		ctStrictColumnNames.add("key_");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("precision_");
-		ctStrictColumnNames.add("pricingQuantity");
-		ctStrictColumnNames.add("primary_");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("rate");
-		ctStrictColumnNames.add("sku");
+		ctMergeColumnNames.add("CPInstanceId");
+		ctMergeColumnNames.add("active_");
+		ctMergeColumnNames.add("incrementalOrderQuantity");
+		ctMergeColumnNames.add("key_");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("precision_");
+		ctMergeColumnNames.add("pricingQuantity");
+		ctMergeColumnNames.add("primary_");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("rate");
+		ctMergeColumnNames.add("sku");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CPInstanceUOMId"));

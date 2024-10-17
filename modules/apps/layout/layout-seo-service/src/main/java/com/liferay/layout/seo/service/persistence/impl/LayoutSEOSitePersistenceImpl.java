@@ -2416,6 +2416,7 @@ public class LayoutSEOSitePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2427,14 +2428,15 @@ public class LayoutSEOSitePersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("openGraphEnabled");
-		ctStrictColumnNames.add("openGraphImageAlt");
-		ctStrictColumnNames.add("openGraphImageFileEntryId");
+		ctMergeColumnNames.add("openGraphEnabled");
+		ctMergeColumnNames.add("openGraphImageAlt");
+		ctMergeColumnNames.add("openGraphImageFileEntryId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("layoutSEOSiteId"));

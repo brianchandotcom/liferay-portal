@@ -4180,6 +4180,7 @@ public class CalendarPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -4191,20 +4192,21 @@ public class CalendarPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("calendarResourceId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("timeZoneId");
-		ctStrictColumnNames.add("color");
-		ctStrictColumnNames.add("defaultCalendar");
-		ctStrictColumnNames.add("enableComments");
-		ctStrictColumnNames.add("enableRatings");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("calendarResourceId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("timeZoneId");
+		ctMergeColumnNames.add("color");
+		ctMergeColumnNames.add("defaultCalendar");
+		ctMergeColumnNames.add("enableComments");
+		ctMergeColumnNames.add("enableRatings");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("calendarId"));
 		_ctColumnNamesMap.put(

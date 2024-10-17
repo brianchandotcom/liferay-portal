@@ -3959,6 +3959,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3967,11 +3968,12 @@ public class SocialActivityAchievementPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("createDate");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("firstInGroup");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("firstInGroup");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("activityAchievementId"));

@@ -9341,6 +9341,7 @@ public class CPInstancePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -9353,48 +9354,49 @@ public class CPInstancePersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPDefinitionId");
-		ctStrictColumnNames.add("CPInstanceUuid");
-		ctStrictColumnNames.add("sku");
-		ctStrictColumnNames.add("gtin");
-		ctStrictColumnNames.add("manufacturerPartNumber");
-		ctStrictColumnNames.add("purchasable");
-		ctStrictColumnNames.add("width");
-		ctStrictColumnNames.add("height");
-		ctStrictColumnNames.add("depth");
-		ctStrictColumnNames.add("weight");
-		ctStrictColumnNames.add("price");
-		ctStrictColumnNames.add("promoPrice");
-		ctStrictColumnNames.add("cost");
-		ctStrictColumnNames.add("published");
-		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("overrideSubscriptionInfo");
-		ctStrictColumnNames.add("subscriptionEnabled");
-		ctStrictColumnNames.add("subscriptionLength");
-		ctStrictColumnNames.add("subscriptionType");
-		ctStrictColumnNames.add("subscriptionTypeSettings");
-		ctStrictColumnNames.add("maxSubscriptionCycles");
-		ctStrictColumnNames.add("deliverySubscriptionEnabled");
-		ctStrictColumnNames.add("deliverySubscriptionLength");
-		ctStrictColumnNames.add("deliverySubscriptionType");
-		ctStrictColumnNames.add("deliverySubTypeSettings");
-		ctStrictColumnNames.add("deliveryMaxSubscriptionCycles");
-		ctStrictColumnNames.add("unspsc");
-		ctStrictColumnNames.add("discontinued");
-		ctStrictColumnNames.add("discontinuedDate");
-		ctStrictColumnNames.add("replacementCPInstanceUuid");
-		ctStrictColumnNames.add("replacementCProductId");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("CPDefinitionId");
+		ctMergeColumnNames.add("CPInstanceUuid");
+		ctMergeColumnNames.add("sku");
+		ctMergeColumnNames.add("gtin");
+		ctMergeColumnNames.add("manufacturerPartNumber");
+		ctMergeColumnNames.add("purchasable");
+		ctMergeColumnNames.add("width");
+		ctMergeColumnNames.add("height");
+		ctMergeColumnNames.add("depth");
+		ctMergeColumnNames.add("weight");
+		ctMergeColumnNames.add("price");
+		ctMergeColumnNames.add("promoPrice");
+		ctMergeColumnNames.add("cost");
+		ctMergeColumnNames.add("published");
+		ctMergeColumnNames.add("displayDate");
+		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("overrideSubscriptionInfo");
+		ctMergeColumnNames.add("subscriptionEnabled");
+		ctMergeColumnNames.add("subscriptionLength");
+		ctMergeColumnNames.add("subscriptionType");
+		ctMergeColumnNames.add("subscriptionTypeSettings");
+		ctMergeColumnNames.add("maxSubscriptionCycles");
+		ctMergeColumnNames.add("deliverySubscriptionEnabled");
+		ctMergeColumnNames.add("deliverySubscriptionLength");
+		ctMergeColumnNames.add("deliverySubscriptionType");
+		ctMergeColumnNames.add("deliverySubTypeSettings");
+		ctMergeColumnNames.add("deliveryMaxSubscriptionCycles");
+		ctMergeColumnNames.add("unspsc");
+		ctMergeColumnNames.add("discontinued");
+		ctMergeColumnNames.add("discontinuedDate");
+		ctMergeColumnNames.add("replacementCPInstanceUuid");
+		ctMergeColumnNames.add("replacementCProductId");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("CPInstanceId"));
 		_ctColumnNamesMap.put(

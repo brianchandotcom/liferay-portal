@@ -1363,6 +1363,7 @@ public class CSDiagramPinPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -1372,15 +1373,16 @@ public class CSDiagramPinPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPDefinitionId");
-		ctStrictColumnNames.add("positionX");
-		ctStrictColumnNames.add("positionY");
-		ctStrictColumnNames.add("sequence");
+		ctMergeColumnNames.add("CPDefinitionId");
+		ctMergeColumnNames.add("positionX");
+		ctMergeColumnNames.add("positionY");
+		ctMergeColumnNames.add("sequence");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("CSDiagramPinId"));
 		_ctColumnNamesMap.put(

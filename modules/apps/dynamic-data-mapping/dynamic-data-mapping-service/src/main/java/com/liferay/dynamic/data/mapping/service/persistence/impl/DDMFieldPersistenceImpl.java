@@ -3234,22 +3234,24 @@ public class DDMFieldPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("parentFieldId");
-		ctStrictColumnNames.add("storageId");
-		ctStrictColumnNames.add("structureVersionId");
-		ctStrictColumnNames.add("fieldName");
-		ctStrictColumnNames.add("fieldType");
-		ctStrictColumnNames.add("instanceId");
-		ctStrictColumnNames.add("localizable");
-		ctStrictColumnNames.add("priority");
+		ctMergeColumnNames.add("parentFieldId");
+		ctMergeColumnNames.add("storageId");
+		ctMergeColumnNames.add("structureVersionId");
+		ctMergeColumnNames.add("fieldName");
+		ctMergeColumnNames.add("fieldType");
+		ctMergeColumnNames.add("instanceId");
+		ctMergeColumnNames.add("localizable");
+		ctMergeColumnNames.add("priority");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("fieldId"));
 		_ctColumnNamesMap.put(

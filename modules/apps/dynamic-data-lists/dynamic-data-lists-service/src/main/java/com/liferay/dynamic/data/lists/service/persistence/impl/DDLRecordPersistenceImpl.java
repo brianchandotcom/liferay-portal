@@ -4964,6 +4964,7 @@ public class DDLRecordPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -4973,23 +4974,24 @@ public class DDLRecordPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
-		ctStrictColumnNames.add("versionUserId");
-		ctStrictColumnNames.add("versionUserName");
+		ctMergeColumnNames.add("versionUserId");
+		ctMergeColumnNames.add("versionUserName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("DDMStorageId");
-		ctStrictColumnNames.add("recordSetId");
-		ctStrictColumnNames.add("recordSetVersion");
-		ctStrictColumnNames.add("className");
+		ctMergeColumnNames.add("DDMStorageId");
+		ctMergeColumnNames.add("recordSetId");
+		ctMergeColumnNames.add("recordSetVersion");
+		ctMergeColumnNames.add("className");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("displayIndex");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("displayIndex");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("recordId"));
 		_ctColumnNamesMap.put(

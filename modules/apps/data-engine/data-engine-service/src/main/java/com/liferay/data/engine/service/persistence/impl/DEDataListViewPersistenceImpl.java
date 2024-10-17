@@ -3363,6 +3363,7 @@ public class DEDataListViewPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3374,16 +3375,17 @@ public class DEDataListViewPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("appliedFilters");
-		ctStrictColumnNames.add("ddmStructureId");
-		ctStrictColumnNames.add("fieldNames");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("sortField");
+		ctMergeColumnNames.add("appliedFilters");
+		ctMergeColumnNames.add("ddmStructureId");
+		ctMergeColumnNames.add("fieldNames");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("sortField");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("deDataListViewId"));

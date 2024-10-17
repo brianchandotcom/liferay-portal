@@ -8838,6 +8838,7 @@ public class DLFileVersionPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
 		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
@@ -8849,34 +8850,36 @@ public class DLFileVersionPersistenceImpl
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
-		ctMergeColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("repositoryId");
-		ctStrictColumnNames.add("folderId");
-		ctStrictColumnNames.add("fileEntryId");
-		ctStrictColumnNames.add("treePath");
-		ctStrictColumnNames.add("fileName");
-		ctStrictColumnNames.add("extension");
-		ctStrictColumnNames.add("mimeType");
-		ctStrictColumnNames.add("title");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("changeLog");
-		ctStrictColumnNames.add("extraSettings");
-		ctStrictColumnNames.add("fileEntryTypeId");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("size_");
-		ctStrictColumnNames.add("checksum");
-		ctStrictColumnNames.add("storeUUID");
-		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("reviewDate");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctMergeColumnNames.add("repositoryId");
+		ctMergeColumnNames.add("folderId");
+		ctMergeColumnNames.add("fileEntryId");
+		ctMergeColumnNames.add("treePath");
+		ctMergeColumnNames.add("fileName");
+		ctMergeColumnNames.add("extension");
+		ctMergeColumnNames.add("mimeType");
+		ctMergeColumnNames.add("title");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("changeLog");
+		ctMergeColumnNames.add("extraSettings");
+		ctMergeColumnNames.add("fileEntryTypeId");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("size_");
+		ctMergeColumnNames.add("checksum");
+		ctMergeColumnNames.add("storeUUID");
+		ctMergeColumnNames.add("displayDate");
+		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("reviewDate");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
 		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
 		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("fileVersionId"));

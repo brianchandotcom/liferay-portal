@@ -5407,6 +5407,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5418,25 +5419,26 @@ public class CPDefinitionOptionRelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPDefinitionId");
-		ctStrictColumnNames.add("CPOptionId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("commerceOptionTypeKey");
-		ctStrictColumnNames.add("infoItemServiceKey");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("definedExternally");
-		ctStrictColumnNames.add("facetable");
-		ctStrictColumnNames.add("required");
-		ctStrictColumnNames.add("skuContributor");
-		ctStrictColumnNames.add("key_");
-		ctStrictColumnNames.add("priceType");
-		ctStrictColumnNames.add("typeSettings");
+		ctMergeColumnNames.add("CPDefinitionId");
+		ctMergeColumnNames.add("CPOptionId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("commerceOptionTypeKey");
+		ctMergeColumnNames.add("infoItemServiceKey");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("definedExternally");
+		ctMergeColumnNames.add("facetable");
+		ctMergeColumnNames.add("required");
+		ctMergeColumnNames.add("skuContributor");
+		ctMergeColumnNames.add("key_");
+		ctMergeColumnNames.add("priceType");
+		ctMergeColumnNames.add("typeSettings");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CPDefinitionOptionRelId"));

@@ -5615,14 +5615,14 @@ public class CountryPersistenceImpl
 		ctMergeColumnNames.add("a3");
 		ctMergeColumnNames.add("active_");
 		ctMergeColumnNames.add("billingAllowed");
-		ctStrictColumnNames.add("groupFilterEnabled");
+		ctMergeColumnNames.add("groupFilterEnabled");
 		ctMergeColumnNames.add("idd_");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("number_");
 		ctMergeColumnNames.add("position");
 		ctMergeColumnNames.add("shippingAllowed");
 		ctMergeColumnNames.add("subjectToVAT");
-		ctStrictColumnNames.add("zipRequired");
+		ctMergeColumnNames.add("zipRequired");
 		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

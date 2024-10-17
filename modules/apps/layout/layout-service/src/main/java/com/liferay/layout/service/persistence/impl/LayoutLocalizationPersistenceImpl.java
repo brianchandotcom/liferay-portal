@@ -3249,9 +3249,9 @@ public class LayoutLocalizationPersistenceImpl
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctMergeColumnNames.add("content");
-		ctStrictColumnNames.add("languageId");
-		ctStrictColumnNames.add("plid");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("languageId");
+		ctMergeColumnNames.add("plid");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

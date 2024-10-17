@@ -13106,6 +13106,7 @@ public class CommercePriceListPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -13118,25 +13119,26 @@ public class CommercePriceListPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("commerceCurrencyId");
-		ctStrictColumnNames.add("parentCommercePriceListId");
-		ctStrictColumnNames.add("catalogBasePriceList");
-		ctStrictColumnNames.add("netPrice");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("commerceCurrencyId");
+		ctMergeColumnNames.add("parentCommercePriceListId");
+		ctMergeColumnNames.add("catalogBasePriceList");
+		ctMergeColumnNames.add("netPrice");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("displayDate");
+		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("commercePriceListId"));

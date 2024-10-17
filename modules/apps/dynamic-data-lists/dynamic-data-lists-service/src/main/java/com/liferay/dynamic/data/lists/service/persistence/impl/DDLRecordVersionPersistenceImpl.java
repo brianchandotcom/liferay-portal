@@ -3421,6 +3421,7 @@ public class DDLRecordVersionPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3430,19 +3431,20 @@ public class DDLRecordVersionPersistenceImpl
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
-		ctStrictColumnNames.add("DDMStorageId");
-		ctStrictColumnNames.add("recordSetId");
-		ctStrictColumnNames.add("recordSetVersion");
-		ctStrictColumnNames.add("recordId");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("displayIndex");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("DDMStorageId");
+		ctMergeColumnNames.add("recordSetId");
+		ctMergeColumnNames.add("recordSetVersion");
+		ctMergeColumnNames.add("recordId");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("displayIndex");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("recordVersionId"));

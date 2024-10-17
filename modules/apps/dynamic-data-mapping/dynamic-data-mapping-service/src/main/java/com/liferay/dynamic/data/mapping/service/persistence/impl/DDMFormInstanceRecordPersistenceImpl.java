@@ -4496,6 +4496,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -4505,21 +4506,22 @@ public class DDMFormInstanceRecordPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
-		ctStrictColumnNames.add("versionUserId");
-		ctStrictColumnNames.add("versionUserName");
+		ctMergeColumnNames.add("versionUserId");
+		ctMergeColumnNames.add("versionUserName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("formInstanceId");
-		ctStrictColumnNames.add("formInstanceVersion");
-		ctStrictColumnNames.add("storageId");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("ipAddress");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("formInstanceId");
+		ctMergeColumnNames.add("formInstanceVersion");
+		ctMergeColumnNames.add("storageId");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("ipAddress");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("formInstanceRecordId"));

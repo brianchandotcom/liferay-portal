@@ -2088,6 +2088,7 @@ public class KaleoTimerPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2098,22 +2099,23 @@ public class KaleoTimerPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoClassName");
-		ctStrictColumnNames.add("kaleoClassPK");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("blocking");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("duration");
-		ctStrictColumnNames.add("scale");
-		ctStrictColumnNames.add("recurrenceDuration");
-		ctStrictColumnNames.add("recurrenceScale");
+		ctMergeColumnNames.add("kaleoClassName");
+		ctMergeColumnNames.add("kaleoClassPK");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("blocking");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("duration");
+		ctMergeColumnNames.add("scale");
+		ctMergeColumnNames.add("recurrenceDuration");
+		ctMergeColumnNames.add("recurrenceScale");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("kaleoTimerId"));
 		_ctColumnNamesMap.put(

@@ -15350,22 +15350,22 @@ public class DLFolderPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("repositoryId");
-		ctStrictColumnNames.add("mountPoint");
-		ctStrictColumnNames.add("parentFolderId");
-		ctStrictColumnNames.add("treePath");
+		ctMergeColumnNames.add("repositoryId");
+		ctMergeColumnNames.add("mountPoint");
+		ctMergeColumnNames.add("parentFolderId");
+		ctMergeColumnNames.add("treePath");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
 		ctMaxColumnNames.add("lastPostDate");
-		ctStrictColumnNames.add("defaultFileEntryTypeId");
-		ctStrictColumnNames.add("hidden_");
-		ctStrictColumnNames.add("restrictionType");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
-		ctStrictColumnNames.add("fileEntryTypes");
+		ctMergeColumnNames.add("defaultFileEntryTypeId");
+		ctMergeColumnNames.add("hidden_");
+		ctMergeColumnNames.add("restrictionType");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
+		ctMergeColumnNames.add("fileEntryTypes");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

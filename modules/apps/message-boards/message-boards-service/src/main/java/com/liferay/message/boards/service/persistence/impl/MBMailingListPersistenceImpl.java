@@ -2949,6 +2949,7 @@ public class MBMailingListPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2960,29 +2961,30 @@ public class MBMailingListPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("categoryId");
-		ctStrictColumnNames.add("emailAddress");
-		ctStrictColumnNames.add("inProtocol");
-		ctStrictColumnNames.add("inServerName");
-		ctStrictColumnNames.add("inServerPort");
-		ctStrictColumnNames.add("inUseSSL");
-		ctStrictColumnNames.add("inUserName");
-		ctStrictColumnNames.add("inPassword");
-		ctStrictColumnNames.add("inReadInterval");
-		ctStrictColumnNames.add("outEmailAddress");
-		ctStrictColumnNames.add("outCustom");
-		ctStrictColumnNames.add("outServerName");
-		ctStrictColumnNames.add("outServerPort");
-		ctStrictColumnNames.add("outUseSSL");
-		ctStrictColumnNames.add("outUserName");
-		ctStrictColumnNames.add("outPassword");
-		ctStrictColumnNames.add("allowAnonymous");
-		ctStrictColumnNames.add("active_");
+		ctMergeColumnNames.add("categoryId");
+		ctMergeColumnNames.add("emailAddress");
+		ctMergeColumnNames.add("inProtocol");
+		ctMergeColumnNames.add("inServerName");
+		ctMergeColumnNames.add("inServerPort");
+		ctMergeColumnNames.add("inUseSSL");
+		ctMergeColumnNames.add("inUserName");
+		ctMergeColumnNames.add("inPassword");
+		ctMergeColumnNames.add("inReadInterval");
+		ctMergeColumnNames.add("outEmailAddress");
+		ctMergeColumnNames.add("outCustom");
+		ctMergeColumnNames.add("outServerName");
+		ctMergeColumnNames.add("outServerPort");
+		ctMergeColumnNames.add("outUseSSL");
+		ctMergeColumnNames.add("outUserName");
+		ctMergeColumnNames.add("outPassword");
+		ctMergeColumnNames.add("allowAnonymous");
+		ctMergeColumnNames.add("active_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("mailingListId"));
 		_ctColumnNamesMap.put(

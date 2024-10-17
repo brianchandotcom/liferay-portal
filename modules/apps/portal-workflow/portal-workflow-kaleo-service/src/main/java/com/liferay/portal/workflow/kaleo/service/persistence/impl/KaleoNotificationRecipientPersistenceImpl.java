@@ -2506,6 +2506,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2516,22 +2517,23 @@ public class KaleoNotificationRecipientPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("kaleoNotificationId");
-		ctStrictColumnNames.add("recipientClassName");
-		ctStrictColumnNames.add("recipientClassPK");
-		ctStrictColumnNames.add("recipientRoleType");
-		ctStrictColumnNames.add("recipientScript");
-		ctStrictColumnNames.add("recipientScriptLanguage");
-		ctStrictColumnNames.add("recipientScriptContexts");
-		ctStrictColumnNames.add("address");
-		ctStrictColumnNames.add("notificationReceptionType");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("kaleoNotificationId");
+		ctMergeColumnNames.add("recipientClassName");
+		ctMergeColumnNames.add("recipientClassPK");
+		ctMergeColumnNames.add("recipientRoleType");
+		ctMergeColumnNames.add("recipientScript");
+		ctMergeColumnNames.add("recipientScriptLanguage");
+		ctMergeColumnNames.add("recipientScriptContexts");
+		ctMergeColumnNames.add("address");
+		ctMergeColumnNames.add("notificationReceptionType");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("kaleoNotificationRecipientId"));

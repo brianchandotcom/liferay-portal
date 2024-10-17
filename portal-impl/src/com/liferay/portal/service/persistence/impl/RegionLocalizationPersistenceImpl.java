@@ -1597,8 +1597,8 @@ public class RegionLocalizationPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("regionId");
-		ctStrictColumnNames.add("languageId");
+		ctMergeColumnNames.add("regionId");
+		ctMergeColumnNames.add("languageId");
 		ctMergeColumnNames.add("title");
 
 		_ctColumnNamesMap.put(

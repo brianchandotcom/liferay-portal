@@ -22320,21 +22320,21 @@ public class BlogsEntryPersistenceImpl
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("content");
 		ctMergeColumnNames.add("displayDate");
-		ctStrictColumnNames.add("allowPingbacks");
-		ctStrictColumnNames.add("allowTrackbacks");
-		ctStrictColumnNames.add("trackbacks");
-		ctStrictColumnNames.add("coverImageCaption");
-		ctStrictColumnNames.add("coverImageFileEntryId");
-		ctStrictColumnNames.add("coverImageURL");
-		ctStrictColumnNames.add("smallImage");
-		ctStrictColumnNames.add("smallImageFileEntryId");
-		ctStrictColumnNames.add("smallImageId");
-		ctStrictColumnNames.add("smallImageURL");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("allowPingbacks");
+		ctMergeColumnNames.add("allowTrackbacks");
+		ctMergeColumnNames.add("trackbacks");
+		ctMergeColumnNames.add("coverImageCaption");
+		ctMergeColumnNames.add("coverImageFileEntryId");
+		ctMergeColumnNames.add("coverImageURL");
+		ctMergeColumnNames.add("smallImage");
+		ctMergeColumnNames.add("smallImageFileEntryId");
+		ctMergeColumnNames.add("smallImageId");
+		ctMergeColumnNames.add("smallImageURL");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

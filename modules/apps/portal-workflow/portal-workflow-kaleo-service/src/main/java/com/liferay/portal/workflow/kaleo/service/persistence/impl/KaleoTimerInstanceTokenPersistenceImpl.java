@@ -2841,6 +2841,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2851,25 +2852,26 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoClassName");
-		ctStrictColumnNames.add("kaleoClassPK");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("kaleoInstanceId");
-		ctStrictColumnNames.add("kaleoInstanceTokenId");
-		ctStrictColumnNames.add("kaleoTaskInstanceTokenId");
-		ctStrictColumnNames.add("kaleoTimerId");
-		ctStrictColumnNames.add("kaleoTimerName");
-		ctStrictColumnNames.add("blocking");
-		ctStrictColumnNames.add("completionUserId");
-		ctStrictColumnNames.add("completed");
-		ctStrictColumnNames.add("completionDate");
-		ctStrictColumnNames.add("workflowContext");
+		ctMergeColumnNames.add("kaleoClassName");
+		ctMergeColumnNames.add("kaleoClassPK");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("kaleoInstanceId");
+		ctMergeColumnNames.add("kaleoInstanceTokenId");
+		ctMergeColumnNames.add("kaleoTaskInstanceTokenId");
+		ctMergeColumnNames.add("kaleoTimerId");
+		ctMergeColumnNames.add("kaleoTimerName");
+		ctMergeColumnNames.add("blocking");
+		ctMergeColumnNames.add("completionUserId");
+		ctMergeColumnNames.add("completed");
+		ctMergeColumnNames.add("completionDate");
+		ctMergeColumnNames.add("workflowContext");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("kaleoTimerInstanceTokenId"));

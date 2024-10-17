@@ -2347,18 +2347,20 @@ public class DLFileVersionPreviewPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("fileEntryId");
-		ctStrictColumnNames.add("fileVersionId");
-		ctStrictColumnNames.add("previewStatus");
+		ctMergeColumnNames.add("fileEntryId");
+		ctMergeColumnNames.add("fileVersionId");
+		ctMergeColumnNames.add("previewStatus");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("dlFileVersionPreviewId"));

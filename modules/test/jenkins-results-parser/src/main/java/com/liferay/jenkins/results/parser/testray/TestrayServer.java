@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -289,10 +288,6 @@ public class TestrayServer {
 	public void importCaseResults(TopLevelBuild topLevelBuild) {
 		TestrayResultsParserUtil.processTestrayResultFiles(getResultsDir());
 
-		if (JenkinsResultsParserUtil.isCINode()) {
-			_importCaseResultsFromCI(topLevelBuild);
-		}
-
 		if (TestrayS3Bucket.hasGoogleApplicationCredentials()) {
 			_importCaseResultsToGCP(topLevelBuild);
 		}
@@ -522,37 +517,6 @@ public class TestrayServer {
 
 		return requestGraphQL(
 			false, entityName, entityFields, filter, sort, maxCount, pageSize);
-	}
-
-	private void _importCaseResultsFromCI(TopLevelBuild topLevelBuild) {
-		if (!JenkinsResultsParserUtil.isCINode()) {
-			return;
-		}
-
-		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
-
-		String command = JenkinsResultsParserUtil.combine(
-			"rsync -aqz --chmod=go=rx \"",
-			JenkinsResultsParserUtil.getCanonicalPath(getResultsDir()),
-			"\"/* \"", jenkinsMaster.getName(),
-			"::testray-results/production/\"");
-
-		try {
-			JenkinsResultsParserUtil.executeBashCommands(command);
-		}
-		catch (IOException | TimeoutException exception) {
-			throw new RuntimeException(exception);
-		}
-
-		for (File resultFile :
-				JenkinsResultsParserUtil.findFiles(getResultsDir(), ".*.xml")) {
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Uploaded ",
-					JenkinsResultsParserUtil.getCanonicalPath(resultFile),
-					" by Rsync"));
-		}
 	}
 
 	private void _importCaseResultsToGCP(TopLevelBuild topLevelBuild) {

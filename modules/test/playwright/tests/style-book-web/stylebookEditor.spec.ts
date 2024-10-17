@@ -14,7 +14,6 @@ import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
 import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
 
 const test = mergeTests(
 	apiHelpersTest,

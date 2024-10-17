@@ -118,6 +118,7 @@ public class FolderFacetPortlet extends MVCPortlet {
 
 		folderSearchFacetDisplayContextBuilder.setLocale(
 			_getLocale(portletSharedSearchResponse, renderRequest));
+
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(
 			folderFacetPortletPreferences.getMaxTerms());
 		folderSearchFacetDisplayContextBuilder.setOrder(

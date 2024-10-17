@@ -116,6 +116,7 @@ public class UserFacetPortlet extends MVCPortlet {
 
 		userSearchFacetDisplayContextBuilder.setLocale(
 			_getLocale(portletSharedSearchResponse, renderRequest));
+
 		userSearchFacetDisplayContextBuilder.setMaxTerms(
 			userFacetPortletPreferences.getMaxTerms());
 		userSearchFacetDisplayContextBuilder.setOrder(

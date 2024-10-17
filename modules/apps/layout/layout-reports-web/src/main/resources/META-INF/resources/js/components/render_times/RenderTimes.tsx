@@ -11,10 +11,9 @@ import {
 	SegmentExperience,
 } from '@liferay/layout-js-components-web';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {Fragment, FragmentFilter} from '../../constants/Fragment';
-import {ConstantsContext} from '../../context/ConstantsContext';
 import Filter from './Filter';
 import FragmentList from './FragmentList';
 import ResultsBar from './ResultsBar';
@@ -38,7 +37,6 @@ export default function RenderTimes({
 	const [fragments, setFragments] = useState<Fragment[]>([]);
 	const [searchValue, setSearchValue] = useState('');
 	const [visibleInfo, setVisibleInfo] = useState<boolean>(true);
-	const {learnResources} = useContext(ConstantsContext);
 
 	const filteredFragments = useMemo(() => {
 		const fragmentsByFilterValue = getFragmentsByFilterValue(

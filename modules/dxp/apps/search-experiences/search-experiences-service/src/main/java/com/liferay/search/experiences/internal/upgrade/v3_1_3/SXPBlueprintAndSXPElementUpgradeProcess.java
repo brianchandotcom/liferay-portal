@@ -125,7 +125,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return GroupLocalServiceUtil.getGroup(groupId);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to find group with id " + groupId);
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to find group with id " + groupId);
+			}
 
 			throw exception;
 		}

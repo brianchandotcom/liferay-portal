@@ -49,7 +49,15 @@ async function performLogin(
 
 	const signInButton = page.getByRole('button', {name: 'Sign In'});
 
-	await expect(page.getByPlaceholder('Search')).toBeVisible();
+	let searchInput = page.getByPlaceholder('Search');
+
+	if ((await searchInput.count()) > 1) {
+		searchInput = page
+			.locator('.user-personal-bar')
+			.getByPlaceholder('Search');
+	}
+
+	await expect(searchInput).toBeVisible();
 
 	await signInButton.click();
 

@@ -423,6 +423,12 @@ public class WikiPageLocalServiceUtil {
 		return getService().fetchPage(nodeId, title, version);
 	}
 
+	public static PersistedModel fetchPersistedModel(
+		Serializable primaryKeyObj) {
+
+		return getService().fetchPersistedModel(primaryKeyObj);
+	}
+
 	public static WikiPage fetchWikiPage(long pageId) {
 		return getService().fetchWikiPage(pageId);
 	}

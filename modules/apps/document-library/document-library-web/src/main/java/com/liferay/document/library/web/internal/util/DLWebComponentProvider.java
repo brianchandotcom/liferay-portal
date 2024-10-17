@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 public class DLWebComponentProvider {
 
 	public static DLAdminDisplayContextProvider
-		getDlAdminDisplayContextProvider() {
+		getDLAdminDisplayContextProvider() {
 
 		return _dlAdminDisplayContextProviderSnapshot.get();
 	}

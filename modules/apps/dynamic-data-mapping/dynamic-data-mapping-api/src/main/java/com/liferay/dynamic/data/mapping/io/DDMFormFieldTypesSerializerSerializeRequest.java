@@ -14,7 +14,7 @@ import java.util.List;
  */
 public final class DDMFormFieldTypesSerializerSerializeRequest {
 
-	public List<DDMFormFieldType> getDdmFormFieldTypes() {
+	public List<DDMFormFieldType> getDDMFormFieldTypes() {
 		return _ddmFormFieldTypes;
 	}
 

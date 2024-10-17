@@ -193,7 +193,7 @@ if (recurrence != null) {
 					</aui:field-wrapper>
 
 					<aui:field-wrapper cssClass="calendar-portlet-field-date calendar-portlet-recurrence-limit" label="">
-						<aui:input checked="<%= onChecked %>" label="<%= StringPool.BLANK %>" name="ends" type="radio" value="on" />
+						<aui:input checked="<%= onChecked %>" id="endsRadio" label="<%= StringPool.BLANK %>" name="ends" type="radio" value="on" />
 
 						<div class="calendar-portlet-field-datepicker clearfix">
 							<label><liferay-ui:message key="stop-repeating-on" /></label>
@@ -201,7 +201,7 @@ if (recurrence != null) {
 							<liferay-ui:input-date
 								dayParam="untilDateDay"
 								dayValue="<%= untilJCalendar.get(java.util.Calendar.DATE) %>"
-								disabled="<%= onChecked %>"
+								disabled="<%= !onChecked %>"
 								monthParam="untilDateMonth"
 								monthValue="<%= untilJCalendar.get(java.util.Calendar.MONTH) %>"
 								name="untilDate"
@@ -242,6 +242,8 @@ if (recurrence != null) {
 
 	var afterInput = A.one('#<portlet:namespace />ends_3');
 	var neverInput = A.one('#<portlet:namespace />ends_1');
+	var onInput = A.one('#<portlet:namespace />endsRadio');
+	var untilDate = A.one('#<portlet:namespace />untilDate');
 
 	let onRadioChange = (radioButton) => {
 		radioButton.on('change', (event) => {
@@ -251,8 +253,17 @@ if (recurrence != null) {
 		});
 	};
 
+	let onInputDateChange = (radioButton) => {
+		radioButton.on('change', (event) => {
+			document
+				.getElementById('<portlet:namespace />untilDate')
+				.classList.remove('disabled');
+		});
+	};
+
 	onRadioChange(afterInput);
 	onRadioChange(neverInput);
+	onInputDateChange(onInput);
 
 	var recurrenceDialogController = new Liferay.RecurrenceDialogController({
 		container: '#<portlet:namespace />recurrenceContainer',

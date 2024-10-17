@@ -654,7 +654,7 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 			new ArrayList<>();
 
 		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
-			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
+			dlFileVersionStatusOVPs = getDLFileVersionStatuses(dlFileVersions);
 		}
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
@@ -869,7 +869,7 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		return new LiferayFolder(dlFolder);
 	}
 
-	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
+	protected List<ObjectValuePair<Long, Integer>> getDLFileVersionStatuses(
 		List<DLFileVersion> dlFileVersions) {
 
 		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =

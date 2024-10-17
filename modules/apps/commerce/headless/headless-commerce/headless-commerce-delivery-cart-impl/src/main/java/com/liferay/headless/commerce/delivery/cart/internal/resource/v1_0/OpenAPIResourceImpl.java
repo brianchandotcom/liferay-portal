@@ -101,6 +101,8 @@ public class OpenAPIResourceImpl {
 
 			add(ShippingMethodResourceImpl.class);
 
+			add(TermResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

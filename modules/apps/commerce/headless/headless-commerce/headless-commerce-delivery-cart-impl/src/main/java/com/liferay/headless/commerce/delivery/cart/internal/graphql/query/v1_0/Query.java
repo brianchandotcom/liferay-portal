@@ -13,6 +13,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartTransition;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Term;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AddressResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
@@ -21,6 +22,7 @@ import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartTransitionResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.PaymentMethodResource;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.ShippingMethodResource;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -115,6 +117,14 @@ public class Query {
 
 		_shippingMethodResourceComponentServiceObjects =
 			shippingMethodResourceComponentServiceObjects;
+	}
+
+	public static void setTermResourceComponentServiceObjects(
+		ComponentServiceObjects<TermResource>
+			termResourceComponentServiceObjects) {
+
+		_termResourceComponentServiceObjects =
+			termResourceComponentServiceObjects;
 	}
 
 	/**
@@ -227,7 +237,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCode(externalReferenceCode: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCode(externalReferenceCode: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, deliveryTermId, deliveryTermLabel, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, paymentTermId, paymentTermLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieve information of the given Cart by external reference code."
@@ -265,7 +275,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cart(cartId: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cart(cartId: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, customFields, deliveryTermId, deliveryTermLabel, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, paymentTermId, paymentTermLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve information of the given Cart.")
 	public Cart cart(@GraphQLName("cartId") Long cartId) throws Exception {
@@ -626,6 +636,82 @@ public class Query {
 				shippingMethodResource.getCartShippingMethodsPage(cartId)));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeDeliveryTerms(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve delivery terms available for the Cart."
+	)
+	public TermPage cartByExternalReferenceCodeDeliveryTerms(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> new TermPage(
+				termResource.getCartByExternalReferenceCodeDeliveryTermsPage(
+					externalReferenceCode)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodePaymentTerms(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve payment terms available for the Cart."
+	)
+	public TermPage cartByExternalReferenceCodePaymentTerms(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> new TermPage(
+				termResource.getCartByExternalReferenceCodePaymentTermsPage(
+					externalReferenceCode)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartDeliveryTerms(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve delivery terms available for the Cart."
+	)
+	public TermPage cartDeliveryTerms(@GraphQLName("cartId") Long cartId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> new TermPage(
+				termResource.getCartDeliveryTermsPage(cartId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentTerms(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve payment terms available for the Cart."
+	)
+	public TermPage cartPaymentTerms(@GraphQLName("cartId") Long cartId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> new TermPage(
+				termResource.getCartPaymentTermsPage(cartId)));
+	}
+
 	@GraphQLTypeExtension(Cart.class)
 	public class GetCartPaymentMethodsPageTypeExtension {
 
@@ -643,6 +729,28 @@ public class Query {
 				paymentMethodResource -> new PaymentMethodPage(
 					paymentMethodResource.getCartPaymentMethodsPage(
 						_cart.getId())));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartPaymentTermsPageTypeExtension {
+
+		public GetCartPaymentTermsPageTypeExtension(Cart cart) {
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve payment terms available for the Cart."
+		)
+		public TermPage paymentTerms() throws Exception {
+			return _applyComponentServiceObjects(
+				_termResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				termResource -> new TermPage(
+					termResource.getCartPaymentTermsPage(_cart.getId())));
 		}
 
 		private Cart _cart;
@@ -669,6 +777,28 @@ public class Query {
 					addressResource.
 						getCartByExternalReferenceCodeShippingAddres(
 							_cart.getExternalReferenceCode()));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartDeliveryTermsPageTypeExtension {
+
+		public GetCartDeliveryTermsPageTypeExtension(Cart cart) {
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve delivery terms available for the Cart."
+		)
+		public TermPage deliveryTerms() throws Exception {
+			return _applyComponentServiceObjects(
+				_termResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				termResource -> new TermPage(
+					termResource.getCartDeliveryTermsPage(_cart.getId())));
 		}
 
 		private Cart _cart;
@@ -897,6 +1027,59 @@ public class Query {
 				cartCommentResource -> new CartCommentPage(
 					cartCommentResource.getCartCommentsPage(
 						_cart.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartByExternalReferenceCodePaymentTermsPageTypeExtension {
+
+		public GetCartByExternalReferenceCodePaymentTermsPageTypeExtension(
+			Cart cart) {
+
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve payment terms available for the Cart."
+		)
+		public TermPage byExternalReferenceCodePaymentTerms() throws Exception {
+			return _applyComponentServiceObjects(
+				_termResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				termResource -> new TermPage(
+					termResource.getCartByExternalReferenceCodePaymentTermsPage(
+						_cart.getExternalReferenceCode())));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartByExternalReferenceCodeDeliveryTermsPageTypeExtension {
+
+		public GetCartByExternalReferenceCodeDeliveryTermsPageTypeExtension(
+			Cart cart) {
+
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve delivery terms available for the Cart."
+		)
+		public TermPage byExternalReferenceCodeDeliveryTerms()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_termResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				termResource -> new TermPage(
+					termResource.
+						getCartByExternalReferenceCodeDeliveryTermsPage(
+							_cart.getExternalReferenceCode())));
 		}
 
 		private Cart _cart;
@@ -1379,6 +1562,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("TermPage")
+	public class TermPage {
+
+		public TermPage(Page termPage) {
+			actions = termPage.getActions();
+
+			items = termPage.getItems();
+			lastPage = termPage.getLastPage();
+			page = termPage.getPage();
+			pageSize = termPage.getPageSize();
+			totalCount = termPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Term> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLTypeExtension(CartItem.class)
 	public class ParentCartItemCartItemIdTypeExtension {
 
@@ -1535,6 +1751,19 @@ public class Query {
 		shippingMethodResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(TermResource termResource)
+		throws Exception {
+
+		termResource.setContextAcceptLanguage(_acceptLanguage);
+		termResource.setContextCompany(_company);
+		termResource.setContextHttpServletRequest(_httpServletRequest);
+		termResource.setContextHttpServletResponse(_httpServletResponse);
+		termResource.setContextUriInfo(_uriInfo);
+		termResource.setContextUser(_user);
+		termResource.setGroupLocalService(_groupLocalService);
+		termResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<AddressResource>
 		_addressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AttachmentResource>
@@ -1551,6 +1780,8 @@ public class Query {
 		_paymentMethodResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingMethodResource>
 		_shippingMethodResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TermResource>
+		_termResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

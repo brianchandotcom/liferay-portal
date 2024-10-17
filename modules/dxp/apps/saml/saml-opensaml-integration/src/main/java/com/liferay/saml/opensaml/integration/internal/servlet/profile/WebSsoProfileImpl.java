@@ -594,7 +594,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		_samlSpAuthRequestLocalService.addSamlSpAuthRequest(
 			samlPeerEntityContext.getEntityId(), authnRequest.getID(),
-			serviceContext);
+			relayState, serviceContext);
 
 		sendSamlMessage(messageContext, httpServletResponse);
 	}

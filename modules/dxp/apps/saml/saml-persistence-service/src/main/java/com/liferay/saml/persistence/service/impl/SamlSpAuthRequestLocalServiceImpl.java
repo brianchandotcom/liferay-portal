@@ -32,7 +32,7 @@ public class SamlSpAuthRequestLocalServiceImpl
 
 	@Override
 	public SamlSpAuthRequest addSamlSpAuthRequest(
-		String samlIdpEntityId, String samlSpAuthRequestKey,
+		String samlIdpEntityId, String samlSpAuthRequestKey, String relayState,
 		ServiceContext serviceContext) {
 
 		long samlSpAuthRequestId = counterLocalService.increment(
@@ -45,6 +45,7 @@ public class SamlSpAuthRequestLocalServiceImpl
 		samlSpAuthRequest.setCreateDate(new Date());
 		samlSpAuthRequest.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpAuthRequest.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
+		samlSpAuthRequest.setRelayState(relayState);
 
 		return samlSpAuthRequestPersistence.update(samlSpAuthRequest);
 	}

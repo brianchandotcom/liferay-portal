@@ -61,7 +61,7 @@ public class FreeMarkerFragmentEntryValidator
 					CompanyThreadLocal.getCompanyId());
 
 		if (!freeMarkerFragmentEntryProcessorConfiguration.enable() ||
-			!_isFreemarkerTemplate(html)) {
+			!_isFreeMarkerTemplate(html)) {
 
 			return;
 		}
@@ -155,7 +155,7 @@ public class FreeMarkerFragmentEntryValidator
 		return message;
 	}
 
-	private boolean _isFreemarkerTemplate(String html) {
+	private boolean _isFreeMarkerTemplate(String html) {
 		if (html.contains("${") || html.contains("[#") || html.contains("[@")) {
 			return true;
 		}

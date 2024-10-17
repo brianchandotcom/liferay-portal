@@ -131,7 +131,7 @@ public class PortletRegistryImplTest {
 	}
 
 	@Test
-	public void testGetFragmentEntryLinkPortletIdsFreemarkerRuntimeTag() {
+	public void testGetFragmentEntryLinkPortletIdsFreeMarkerRuntimeTag() {
 		String instanceId = RandomTestUtil.randomString();
 		String portletName = RandomTestUtil.randomString();
 
@@ -164,7 +164,7 @@ public class PortletRegistryImplTest {
 	}
 
 	@Test
-	public void testGetFragmentEntryLinkPortletIdsFreemarkerRuntimeTagPortletNameAttributeFirst() {
+	public void testGetFragmentEntryLinkPortletIdsFreeMarkerRuntimeTagPortletNameAttributeFirst() {
 		String instanceId = RandomTestUtil.randomString();
 		String portletName = RandomTestUtil.randomString();
 

@@ -13,6 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
@@ -72,10 +73,67 @@ test('can create all-day calendar event with different time zone', async ({
 	await expect(endTime).toEqual(startTime);
 });
 
+test('can update an event with recurrence', async ({calendarWidgetPage}) => {
+	await calendarWidgetPage.fillEventWithRecurrenceUntilDate({daysFromNow: 5});
+
+	await expect(
+		calendarWidgetPage.page
+			.frameLocator('iframe')
+			.getByRole('textbox', {name: 'mm/dd/yyyy'})
+	).toBeEnabled();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Done'})
+		.click();
+
+	await calendarWidgetPage.publishEvent();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByLabel('Title', {exact: true})
+		.click();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByLabel('Title', {exact: true})
+		.fill(getRandomString());
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {exact: true, name: 'Publish'})
+		.click();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Following Events'})
+		.click();
+
+	await waitForAlert(
+		calendarWidgetPage.page.frameLocator('iframe'),
+		`Success:Your request completed successfully.`
+	);
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {exact: true, name: 'Publish'})
+		.click();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Entire Series'})
+		.click();
+
+	await waitForAlert(
+		calendarWidgetPage.page.frameLocator('iframe'),
+		`Success:Your request completed successfully.`
+	);
+});
+
 test('can create an all-day calendar event in a different time zone, ensuring that the recurrence link remains consistent', async ({
 	calendarWidgetPage,
 }) => {
-	await calendarWidgetPage.fillEventWithRecurrence(true, recurrence);
+	await calendarWidgetPage.fillEventWithRecurrenceAndAllDay(true, recurrence);
 
 	const {frequency, ocurrences, repeatDays} = recurrence;
 

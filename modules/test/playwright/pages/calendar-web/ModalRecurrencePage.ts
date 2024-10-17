@@ -4,11 +4,14 @@
  */
 
 import {Locator, Page} from '@playwright/test';
+import moment from 'moment';
 
 export class ModalRecurrencePage {
 	readonly afterRadio: Locator;
 	readonly countTextbox: Locator;
 	readonly doneButton: Locator;
+	readonly inputDate: Locator;
+	readonly onRadio: Locator;
 	readonly page: Page;
 	readonly repeatSelect: Locator;
 
@@ -22,6 +25,12 @@ export class ModalRecurrencePage {
 		this.doneButton = page
 			.frameLocator('iframe')
 			.getByRole('button', {name: 'Done'});
+		this.inputDate = page
+			.frameLocator('iframe')
+			.getByRole('textbox', {name: 'mm/dd/yyyy'});
+		this.onRadio = page
+			.frameLocator('iframe')
+			.locator('input[type="radio"][value="on"]');
 		this.page = page;
 		this.repeatSelect = page
 			.frameLocator('iframe')
@@ -40,6 +49,24 @@ export class ModalRecurrencePage {
 		await this.countTextbox.fill(ocurrences);
 
 		await this.doneButton.click();
+	}
+
+	async addRecurrenceUntilDate(daysFromNow: number) {
+		const nowDate = new Date();
+
+		const untilDate = new Date(
+			nowDate.getFullYear(),
+			nowDate.getMonth(),
+			nowDate.getDate() + daysFromNow
+		);
+
+		const formatUntilDate = moment(untilDate).format('MM/DD/YYYY');
+
+		await this.onRadio.check();
+
+		await this.inputDate.click();
+
+		await this.inputDate.fill(formatUntilDate);
 	}
 
 	async handleDayCheckboxesSelection(

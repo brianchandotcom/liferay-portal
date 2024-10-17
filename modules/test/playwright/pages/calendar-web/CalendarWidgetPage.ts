@@ -122,7 +122,10 @@ export class CalendarWidgetPage {
 		await this.page.getByText(title).click();
 	}
 
-	async fillEventWithRecurrence(allDay: boolean, recurrence: Recurrence) {
+	async fillEventWithRecurrenceAndAllDay(
+		allDay: boolean,
+		recurrence: Recurrence
+	) {
 		await this.addEventButton.click();
 
 		await this.allDayCheckbox.hover();
@@ -131,6 +134,18 @@ export class CalendarWidgetPage {
 		await this.repeatCheckbox.setChecked(true);
 
 		await this.modalRecurrencePage.addRecurrence(recurrence);
+	}
+
+	async fillEventWithRecurrenceUntilDate({
+		daysFromNow,
+	}: {
+		daysFromNow: number;
+	}) {
+		await this.addEventButton.click();
+
+		await this.repeatCheckbox.setChecked(true);
+
+		await this.modalRecurrencePage.addRecurrenceUntilDate(daysFromNow);
 	}
 
 	async setCalendarWidgetConfiguration(

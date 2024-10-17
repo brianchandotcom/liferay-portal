@@ -228,6 +228,25 @@ public class CommerceOrderHttpHelperImplTest {
 					_httpServletRequest)));
 	}
 
+	@Test
+	public void testGetCommerceOrderWithNullCommerceContext() throws Exception {
+		frutillaRule.scenario(
+			"Attempt to get a commerce order from http servlet request"
+		).given(
+			"An HttpServletRequest and a ThemeDisplay"
+		).when(
+			"I use an empty HttpServletRequest with null CommerceContext"
+		).then(
+			"I should get a null value"
+		);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderHttpHelper.getCurrentCommerceOrder(
+				new MockHttpServletRequest());
+
+		Assert.assertNull(commerceOrder);
+	}
+
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 

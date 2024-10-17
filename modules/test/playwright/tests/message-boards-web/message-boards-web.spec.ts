@@ -178,3 +178,40 @@ test('LPD-37727 Change delta to a higher value when on last page', async ({
 		page.getByRole('link', {name: /Thread with headline #\d+/})
 	).toHaveCount(5);
 });
+
+test('LPD-39570 Change delta to a higher value when on last page', async ({
+	apiHelpers,
+	messageBoardsWidgetPage,
+	page,
+	site,
+}) => {
+	for (let i = 0; i < 5; i++) {
+		await apiHelpers.headlessDelivery.postMessageBoardThread({
+			articleBody: getRandomString(),
+			headline: 'Thread with headline #' + i,
+			siteId: site.id,
+		});
+	}
+
+	await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+	await page.getByLabel('Items per Page').click();
+	await page.getByRole('option', {name: /4\s+Entries per Page/}).click();
+
+	await expect(
+		page.getByRole('link', {name: /Thread with headline #\d+/})
+	).toHaveCount(4);
+
+	await page.getByRole('link', {name: /Page\s+2/}).click();
+
+	await expect(
+		page.getByRole('link', {name: /Thread with headline #\d+/})
+	).toHaveCount(1);
+
+	await page.getByLabel('Items per Page').click();
+	await page.getByRole('option', {name: /8\s+Entries per Page/}).click();
+
+	await expect(
+		page.getByRole('link', {name: /Thread with headline #\d+/})
+	).toHaveCount(5);
+});

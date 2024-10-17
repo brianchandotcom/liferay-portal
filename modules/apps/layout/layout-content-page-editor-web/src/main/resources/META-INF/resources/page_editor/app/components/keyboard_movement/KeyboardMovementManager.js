@@ -156,7 +156,7 @@ export default function KeyboardMovementManager() {
 								parentItemId: dropItemId,
 								position,
 								selectItems,
-								type: source.type,
+								type: source.fragmentEntryType,
 							});
 						}
 					}

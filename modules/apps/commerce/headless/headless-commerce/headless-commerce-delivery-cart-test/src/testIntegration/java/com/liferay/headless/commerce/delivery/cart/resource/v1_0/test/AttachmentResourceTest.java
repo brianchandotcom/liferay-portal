@@ -104,6 +104,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		};
 	}
 
+	@Override
 	protected Attachment testDeleteCartAttachment_addAttachment()
 		throws Exception {
 
@@ -112,10 +113,12 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 			_toAttachmentBase64(randomAttachment()));
 	}
 
+	@Override
 	protected Long testDeleteCartAttachment_getCartId() throws Exception {
 		return _commerceOrder.getCommerceOrderId();
 	}
 
+	@Override
 	protected Attachment
 			testDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment()
 		throws Exception {
@@ -126,6 +129,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 				_toAttachmentBase64(randomAttachment()));
 	}
 
+	@Override
 	protected Attachment testGetCartAttachmentsPage_addAttachment(
 			Long cartId, Attachment attachment)
 		throws Exception {
@@ -134,6 +138,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 			cartId, _toAttachmentBase64(attachment));
 	}
 
+	@Override
 	protected Long testGetCartAttachmentsPage_getCartId() throws Exception {
 		return _commerceOrder.getCommerceOrderId();
 	}
@@ -157,6 +162,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		return _commerceOrder.getExternalReferenceCode();
 	}
 
+	@Override
 	protected Attachment testGraphQLAttachment_addAttachment()
 		throws Exception {
 
@@ -165,6 +171,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 			_toAttachmentBase64(randomAttachment()));
 	}
 
+	@Override
 	protected Attachment testPostCartAttachmentByBase64_addAttachment(
 			Attachment attachment)
 		throws Exception {

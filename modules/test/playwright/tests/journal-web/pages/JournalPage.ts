@@ -68,6 +68,7 @@ export class JournalPage {
 	}
 
 	async fillArticleDataSiteTemplate(title: string, content: string) {
+		await this.articleTitleInput.focus();
 		await this.articleTitleInput.click();
 		await this.page.keyboard.type(title);
 

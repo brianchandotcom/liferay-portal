@@ -13,6 +13,7 @@ import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,6 +27,18 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+
+		_scimNotificationSchedulerJobConfiguration =
+			new ScimNotificationSchedulerJobConfiguration();
+	}
 
 	@Test
 	public void testIsSendNotification() {
@@ -46,18 +59,6 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		_testIsSendNotification(
 			accessTokenExpirationDate, accessTokenExpirationDate.getTime());
-	}
-
-	private ScimNotificationSchedulerJobConfiguration
-		_prepareScimNotificationSchedulerJobConfiguration() {
-
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
-		return new ScimNotificationSchedulerJobConfiguration();
 	}
 
 	private void _testIsSendNotification(
@@ -84,8 +85,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 				new Date(notificationDurationMillis + 1)));
 	}
 
-	private final ScimNotificationSchedulerJobConfiguration
-		_scimNotificationSchedulerJobConfiguration =
-			_prepareScimNotificationSchedulerJobConfiguration();
+	private ScimNotificationSchedulerJobConfiguration
+		_scimNotificationSchedulerJobConfiguration;
 
 }

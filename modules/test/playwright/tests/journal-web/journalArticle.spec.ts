@@ -106,6 +106,10 @@ baseTest(
 			"Avertissement:Les URL simplifiées suivantes ont été modifiées pour garantir l'unicité",
 			{type: 'warning'}
 		);
+
+		// change back to english language
+
+		await page.goto('/en');
 	}
 );
 

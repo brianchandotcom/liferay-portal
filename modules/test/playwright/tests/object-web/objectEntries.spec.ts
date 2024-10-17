@@ -24,6 +24,7 @@ import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 import {getFDSDateFormat, getPageEditorDateFormat} from './utils/dateFormat';
+import keepCheckingAfterFound from './utils/keepCheckingAfterFound';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
@@ -506,6 +507,103 @@ test.describe('Manage object entries through View Object Entries', () => {
 				page.locator('.dnd-td').getByText(matchString, {exact: true})
 			).toBeVisible();
 		}
+	});
+
+	test('can deselect the last selected option in multiple select picklist and the field is not removed from the DOM when doing so', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const {listTypeDefinitions, objectDefinitions} = createdEntities;
+
+		const {listTypeDefinition, objectEntry, objectFields} =
+			await mockObjectFields({
+				apiHelpers,
+				objectEntryReturn: {format: 'UI'},
+				objectFieldBusinessTypes: [
+					'autoIncrement',
+					'boolean',
+					'date',
+					'decimal',
+					'integer',
+					'longInteger',
+					'longText',
+					'multiselectPicklist',
+					'precisionDecimal',
+					'richText',
+					'text',
+				],
+			});
+
+		const objectAdminRestClient = await apiHelpers.buildRestClient(
+			ObjectAdminRestClient
+		);
+
+		const objectDefinition =
+			await objectAdminRestClient.objectDefinition.postObjectDefinition({
+				requestBody: {
+					active: true,
+					externalReferenceCode: getRandomString(),
+					label: {
+						en_US: getRandomString(),
+					},
+					name: 'ObjectDefinitionName' + getRandomInt(),
+					objectFields,
+					panelCategoryKey: 'control_panel.object',
+					pluralLabel: {
+						en_US: 'NewObject',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				},
+			});
+
+		listTypeDefinitions.push(listTypeDefinition);
+		objectDefinitions.push(objectDefinition);
+
+		await viewObjectEntriesPage.goto(objectDefinition.id);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await page.waitForLoadState('domcontentloaded');
+
+		const placeHolderText = 'Choose Options';
+
+		await expect(page.getByPlaceholder(placeHolderText)).toBeVisible();
+
+		await page.getByPlaceholder(placeHolderText).click();
+
+		const multiselectPicklistField = objectFields.find(
+			({businessType}) => businessType === 'MultiselectPicklist'
+		);
+
+		const firstOptionName = objectEntry[multiselectPicklistField.name][0];
+
+		await page.getByTestId(`labelItem-${firstOptionName}`).click();
+
+		await expect
+			.soft(page.getByText(firstOptionName, {exact: true}))
+			.toBeVisible({timeout: 50});
+
+		const removeOptionButton = page.getByLabel('Remove ' + firstOptionName);
+
+		await removeOptionButton.click();
+
+		const keepsAttached = await page.evaluate(keepCheckingAfterFound, {
+			duration: 4000,
+			selector: `input[placeholder="${placeHolderText}"]`,
+		});
+
+		expect.soft(keepsAttached).toBeTruthy();
+
+		await expect.soft(removeOptionButton).not.toBeVisible();
+
+		expect(test.info().errors).toHaveLength(0);
 	});
 
 	test('can download and delete a file from the Attachment field when adding an object entry', async ({

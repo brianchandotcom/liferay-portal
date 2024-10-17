@@ -4735,20 +4735,22 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("friendlyURLEntryId");
-		ctStrictColumnNames.add("languageId");
-		ctStrictColumnNames.add("urlTitle");
+		ctMergeColumnNames.add("friendlyURLEntryId");
+		ctMergeColumnNames.add("languageId");
+		ctMergeColumnNames.add("urlTitle");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("friendlyURLEntryLocalizationId"));

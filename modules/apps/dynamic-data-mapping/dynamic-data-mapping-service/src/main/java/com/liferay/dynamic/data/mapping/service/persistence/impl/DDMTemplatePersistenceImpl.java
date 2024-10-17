@@ -13046,6 +13046,7 @@ public class DDMTemplatePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -13056,31 +13057,32 @@ public class DDMTemplatePersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
-		ctStrictColumnNames.add("versionUserId");
-		ctStrictColumnNames.add("versionUserName");
+		ctMergeColumnNames.add("versionUserId");
+		ctMergeColumnNames.add("versionUserName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("resourceClassNameId");
-		ctStrictColumnNames.add("templateKey");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("mode_");
-		ctStrictColumnNames.add("language");
-		ctStrictColumnNames.add("script");
-		ctStrictColumnNames.add("cacheable");
-		ctStrictColumnNames.add("smallImage");
-		ctStrictColumnNames.add("smallImageId");
-		ctStrictColumnNames.add("smallImageURL");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("resourceClassNameId");
+		ctMergeColumnNames.add("templateKey");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("mode_");
+		ctMergeColumnNames.add("language");
+		ctMergeColumnNames.add("script");
+		ctMergeColumnNames.add("cacheable");
+		ctMergeColumnNames.add("smallImage");
+		ctMergeColumnNames.add("smallImageId");
+		ctMergeColumnNames.add("smallImageURL");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("templateId"));
 		_ctColumnNamesMap.put(

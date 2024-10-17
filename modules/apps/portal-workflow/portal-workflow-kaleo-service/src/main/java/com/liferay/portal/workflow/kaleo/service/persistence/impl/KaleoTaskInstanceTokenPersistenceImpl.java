@@ -4456,6 +4456,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -4466,24 +4467,25 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("kaleoInstanceId");
-		ctStrictColumnNames.add("kaleoInstanceTokenId");
-		ctStrictColumnNames.add("kaleoTaskId");
-		ctStrictColumnNames.add("kaleoTaskName");
-		ctStrictColumnNames.add("className");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("kaleoInstanceId");
+		ctMergeColumnNames.add("kaleoInstanceTokenId");
+		ctMergeColumnNames.add("kaleoTaskId");
+		ctMergeColumnNames.add("kaleoTaskName");
+		ctMergeColumnNames.add("className");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("completionUserId");
-		ctStrictColumnNames.add("completed");
-		ctStrictColumnNames.add("completionDate");
-		ctStrictColumnNames.add("dueDate");
-		ctStrictColumnNames.add("workflowContext");
+		ctMergeColumnNames.add("completionUserId");
+		ctMergeColumnNames.add("completed");
+		ctMergeColumnNames.add("completionDate");
+		ctMergeColumnNames.add("dueDate");
+		ctMergeColumnNames.add("workflowContext");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("kaleoTaskInstanceTokenId"));

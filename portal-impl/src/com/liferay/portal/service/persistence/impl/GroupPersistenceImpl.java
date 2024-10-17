@@ -15507,6 +15507,7 @@ public class GroupPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -15518,30 +15519,31 @@ public class GroupPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("parentGroupId");
-		ctStrictColumnNames.add("liveGroupId");
-		ctStrictColumnNames.add("treePath");
-		ctStrictColumnNames.add("groupKey");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("typeSettings");
-		ctStrictColumnNames.add("manualMembership");
-		ctStrictColumnNames.add("membershipRestriction");
-		ctStrictColumnNames.add("friendlyURL");
-		ctStrictColumnNames.add("site");
-		ctStrictColumnNames.add("remoteStagingGroupCount");
-		ctStrictColumnNames.add("inheritContent");
-		ctStrictColumnNames.add("active_");
-		ctStrictColumnNames.add("orgs");
-		ctStrictColumnNames.add("roles");
-		ctStrictColumnNames.add("userGroups");
-		ctStrictColumnNames.add("users");
+		ctMergeColumnNames.add("parentGroupId");
+		ctMergeColumnNames.add("liveGroupId");
+		ctMergeColumnNames.add("treePath");
+		ctMergeColumnNames.add("groupKey");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("typeSettings");
+		ctMergeColumnNames.add("manualMembership");
+		ctMergeColumnNames.add("membershipRestriction");
+		ctMergeColumnNames.add("friendlyURL");
+		ctMergeColumnNames.add("site");
+		ctMergeColumnNames.add("remoteStagingGroupCount");
+		ctMergeColumnNames.add("inheritContent");
+		ctMergeColumnNames.add("active_");
+		ctMergeColumnNames.add("orgs");
+		ctMergeColumnNames.add("roles");
+		ctMergeColumnNames.add("userGroups");
+		ctMergeColumnNames.add("users");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("groupId"));
 		_ctColumnNamesMap.put(

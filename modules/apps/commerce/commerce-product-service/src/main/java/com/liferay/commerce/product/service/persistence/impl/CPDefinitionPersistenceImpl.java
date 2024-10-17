@@ -7906,6 +7906,7 @@ public class CPDefinitionPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -7918,48 +7919,49 @@ public class CPDefinitionPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CProductId");
-		ctStrictColumnNames.add("CPTaxCategoryId");
-		ctStrictColumnNames.add("productTypeName");
-		ctStrictColumnNames.add("availableIndividually");
-		ctStrictColumnNames.add("ignoreSKUCombinations");
-		ctStrictColumnNames.add("shippable");
-		ctStrictColumnNames.add("freeShipping");
-		ctStrictColumnNames.add("shipSeparately");
-		ctStrictColumnNames.add("shippingExtraPrice");
-		ctStrictColumnNames.add("width");
-		ctStrictColumnNames.add("height");
-		ctStrictColumnNames.add("depth");
-		ctStrictColumnNames.add("weight");
-		ctStrictColumnNames.add("taxExempt");
-		ctStrictColumnNames.add("telcoOrElectronics");
-		ctStrictColumnNames.add("DDMStructureKey");
-		ctStrictColumnNames.add("published");
-		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("subscriptionEnabled");
-		ctStrictColumnNames.add("subscriptionLength");
-		ctStrictColumnNames.add("subscriptionType");
-		ctStrictColumnNames.add("subscriptionTypeSettings");
-		ctStrictColumnNames.add("maxSubscriptionCycles");
-		ctStrictColumnNames.add("deliverySubscriptionEnabled");
-		ctStrictColumnNames.add("deliverySubscriptionLength");
-		ctStrictColumnNames.add("deliverySubscriptionType");
-		ctStrictColumnNames.add("deliverySubTypeSettings");
-		ctStrictColumnNames.add("deliveryMaxSubscriptionCycles");
-		ctStrictColumnNames.add("accountGroupFilterEnabled");
-		ctStrictColumnNames.add("channelFilterEnabled");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("CProductId");
+		ctMergeColumnNames.add("CPTaxCategoryId");
+		ctMergeColumnNames.add("productTypeName");
+		ctMergeColumnNames.add("availableIndividually");
+		ctMergeColumnNames.add("ignoreSKUCombinations");
+		ctMergeColumnNames.add("shippable");
+		ctMergeColumnNames.add("freeShipping");
+		ctMergeColumnNames.add("shipSeparately");
+		ctMergeColumnNames.add("shippingExtraPrice");
+		ctMergeColumnNames.add("width");
+		ctMergeColumnNames.add("height");
+		ctMergeColumnNames.add("depth");
+		ctMergeColumnNames.add("weight");
+		ctMergeColumnNames.add("taxExempt");
+		ctMergeColumnNames.add("telcoOrElectronics");
+		ctMergeColumnNames.add("DDMStructureKey");
+		ctMergeColumnNames.add("published");
+		ctMergeColumnNames.add("displayDate");
+		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("subscriptionEnabled");
+		ctMergeColumnNames.add("subscriptionLength");
+		ctMergeColumnNames.add("subscriptionType");
+		ctMergeColumnNames.add("subscriptionTypeSettings");
+		ctMergeColumnNames.add("maxSubscriptionCycles");
+		ctMergeColumnNames.add("deliverySubscriptionEnabled");
+		ctMergeColumnNames.add("deliverySubscriptionLength");
+		ctMergeColumnNames.add("deliverySubscriptionType");
+		ctMergeColumnNames.add("deliverySubTypeSettings");
+		ctMergeColumnNames.add("deliveryMaxSubscriptionCycles");
+		ctMergeColumnNames.add("accountGroupFilterEnabled");
+		ctMergeColumnNames.add("channelFilterEnabled");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("CPDefinitionId"));
 		_ctColumnNamesMap.put(

@@ -2123,19 +2123,21 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("email");
-		ctStrictColumnNames.add("sms");
-		ctStrictColumnNames.add("website");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("email");
+		ctMergeColumnNames.add("sms");
+		ctMergeColumnNames.add("website");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("deliveryId"));
 		_ctColumnNamesMap.put(

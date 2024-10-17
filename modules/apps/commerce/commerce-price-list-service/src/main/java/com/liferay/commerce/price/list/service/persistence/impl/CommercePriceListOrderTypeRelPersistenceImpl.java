@@ -2882,6 +2882,7 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2892,15 +2893,16 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("commercePriceListId");
-		ctStrictColumnNames.add("commerceOrderTypeId");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("commercePriceListId");
+		ctMergeColumnNames.add("commerceOrderTypeId");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CPriceListOrderTypeRelId"));

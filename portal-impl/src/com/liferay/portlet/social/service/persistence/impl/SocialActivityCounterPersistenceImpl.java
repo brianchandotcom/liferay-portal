@@ -3203,6 +3203,7 @@ public class SocialActivityCounterPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3211,17 +3212,18 @@ public class SocialActivityCounterPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("ownerType");
-		ctStrictColumnNames.add("currentValue");
-		ctStrictColumnNames.add("totalValue");
-		ctStrictColumnNames.add("graceValue");
-		ctStrictColumnNames.add("startPeriod");
-		ctStrictColumnNames.add("endPeriod");
-		ctStrictColumnNames.add("active_");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("ownerType");
+		ctMergeColumnNames.add("currentValue");
+		ctMergeColumnNames.add("totalValue");
+		ctMergeColumnNames.add("graceValue");
+		ctMergeColumnNames.add("startPeriod");
+		ctMergeColumnNames.add("endPeriod");
+		ctMergeColumnNames.add("active_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("activityCounterId"));

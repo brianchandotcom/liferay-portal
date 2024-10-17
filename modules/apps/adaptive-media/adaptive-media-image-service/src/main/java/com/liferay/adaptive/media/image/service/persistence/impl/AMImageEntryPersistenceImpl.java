@@ -5135,6 +5135,7 @@ public class AMImageEntryPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5143,15 +5144,16 @@ public class AMImageEntryPersistenceImpl
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("createDate");
-		ctStrictColumnNames.add("configurationUuid");
-		ctStrictColumnNames.add("fileVersionId");
-		ctStrictColumnNames.add("mimeType");
-		ctStrictColumnNames.add("height");
-		ctStrictColumnNames.add("width");
-		ctStrictColumnNames.add("size_");
+		ctMergeColumnNames.add("configurationUuid");
+		ctMergeColumnNames.add("fileVersionId");
+		ctMergeColumnNames.add("mimeType");
+		ctMergeColumnNames.add("height");
+		ctMergeColumnNames.add("width");
+		ctMergeColumnNames.add("size_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("amImageEntryId"));
 		_ctColumnNamesMap.put(

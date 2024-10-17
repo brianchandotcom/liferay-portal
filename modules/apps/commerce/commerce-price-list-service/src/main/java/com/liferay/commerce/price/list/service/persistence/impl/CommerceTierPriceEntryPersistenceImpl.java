@@ -6616,6 +6616,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -6627,27 +6628,28 @@ public class CommerceTierPriceEntryPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("commercePriceEntryId");
-		ctStrictColumnNames.add("price");
-		ctStrictColumnNames.add("promoPrice");
-		ctStrictColumnNames.add("discountDiscovery");
-		ctStrictColumnNames.add("discountLevel1");
-		ctStrictColumnNames.add("discountLevel2");
-		ctStrictColumnNames.add("discountLevel3");
-		ctStrictColumnNames.add("discountLevel4");
-		ctStrictColumnNames.add("minQuantity");
-		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("commercePriceEntryId");
+		ctMergeColumnNames.add("price");
+		ctMergeColumnNames.add("promoPrice");
+		ctMergeColumnNames.add("discountDiscovery");
+		ctMergeColumnNames.add("discountLevel1");
+		ctMergeColumnNames.add("discountLevel2");
+		ctMergeColumnNames.add("discountLevel3");
+		ctMergeColumnNames.add("discountLevel4");
+		ctMergeColumnNames.add("minQuantity");
+		ctMergeColumnNames.add("displayDate");
+		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("commerceTierPriceEntryId"));

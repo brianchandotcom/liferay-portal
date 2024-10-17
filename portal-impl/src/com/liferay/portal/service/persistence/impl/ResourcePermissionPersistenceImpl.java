@@ -9556,22 +9556,24 @@ public class ResourcePermissionPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("scope");
-		ctStrictColumnNames.add("primKey");
-		ctStrictColumnNames.add("primKeyId");
-		ctStrictColumnNames.add("roleId");
-		ctStrictColumnNames.add("ownerId");
-		ctStrictColumnNames.add("actionIds");
-		ctStrictColumnNames.add("viewActionId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("scope");
+		ctMergeColumnNames.add("primKey");
+		ctMergeColumnNames.add("primKeyId");
+		ctMergeColumnNames.add("roleId");
+		ctMergeColumnNames.add("ownerId");
+		ctMergeColumnNames.add("actionIds");
+		ctMergeColumnNames.add("viewActionId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("resourcePermissionId"));

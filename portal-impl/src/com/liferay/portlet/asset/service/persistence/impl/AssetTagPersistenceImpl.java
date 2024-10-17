@@ -5042,10 +5042,10 @@ public class AssetTagPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("name");
+		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("assetCount");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("entries");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("entries");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

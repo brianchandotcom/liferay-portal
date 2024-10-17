@@ -3322,6 +3322,7 @@ public class JournalFeedPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3333,26 +3334,27 @@ public class JournalFeedPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("feedId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("DDMStructureId");
-		ctStrictColumnNames.add("DDMTemplateKey");
-		ctStrictColumnNames.add("DDMRendererTemplateKey");
-		ctStrictColumnNames.add("delta");
-		ctStrictColumnNames.add("orderByCol");
-		ctStrictColumnNames.add("orderByType");
-		ctStrictColumnNames.add("targetLayoutFriendlyUrl");
-		ctStrictColumnNames.add("targetPortletId");
-		ctStrictColumnNames.add("contentField");
-		ctStrictColumnNames.add("feedFormat");
-		ctStrictColumnNames.add("feedVersion");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("feedId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("DDMStructureId");
+		ctMergeColumnNames.add("DDMTemplateKey");
+		ctMergeColumnNames.add("DDMRendererTemplateKey");
+		ctMergeColumnNames.add("delta");
+		ctMergeColumnNames.add("orderByCol");
+		ctMergeColumnNames.add("orderByType");
+		ctMergeColumnNames.add("targetLayoutFriendlyUrl");
+		ctMergeColumnNames.add("targetPortletId");
+		ctMergeColumnNames.add("contentField");
+		ctMergeColumnNames.add("feedFormat");
+		ctMergeColumnNames.add("feedVersion");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("id_"));
 		_ctColumnNamesMap.put(

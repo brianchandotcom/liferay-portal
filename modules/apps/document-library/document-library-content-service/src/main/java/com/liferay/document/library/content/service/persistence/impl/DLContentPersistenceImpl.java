@@ -2921,20 +2921,22 @@ public class DLContentPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("repositoryId");
-		ctStrictColumnNames.add("path_");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("data_");
-		ctStrictColumnNames.add("size_");
+		ctMergeColumnNames.add("repositoryId");
+		ctMergeColumnNames.add("path_");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("data_");
+		ctMergeColumnNames.add("size_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("contentId"));
 		_ctColumnNamesMap.put(

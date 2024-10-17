@@ -2102,6 +2102,7 @@ public class KaleoConditionPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2112,17 +2113,18 @@ public class KaleoConditionPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("kaleoNodeId");
-		ctStrictColumnNames.add("script");
-		ctStrictColumnNames.add("scriptLanguage");
-		ctStrictColumnNames.add("scriptRequiredContexts");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("kaleoNodeId");
+		ctMergeColumnNames.add("script");
+		ctMergeColumnNames.add("scriptLanguage");
+		ctMergeColumnNames.add("scriptRequiredContexts");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("kaleoConditionId"));

@@ -7641,6 +7641,7 @@ public class AddressPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -7654,27 +7655,28 @@ public class AddressPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("countryId");
-		ctStrictColumnNames.add("listTypeId");
-		ctStrictColumnNames.add("regionId");
-		ctStrictColumnNames.add("city");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("latitude");
-		ctStrictColumnNames.add("longitude");
-		ctStrictColumnNames.add("mailing");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("primary_");
-		ctStrictColumnNames.add("street1");
-		ctStrictColumnNames.add("street2");
-		ctStrictColumnNames.add("street3");
-		ctStrictColumnNames.add("validationDate");
-		ctStrictColumnNames.add("validationStatus");
-		ctStrictColumnNames.add("zip");
+		ctMergeColumnNames.add("countryId");
+		ctMergeColumnNames.add("listTypeId");
+		ctMergeColumnNames.add("regionId");
+		ctMergeColumnNames.add("city");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("latitude");
+		ctMergeColumnNames.add("longitude");
+		ctMergeColumnNames.add("mailing");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("primary_");
+		ctMergeColumnNames.add("street1");
+		ctMergeColumnNames.add("street2");
+		ctMergeColumnNames.add("street3");
+		ctMergeColumnNames.add("validationDate");
+		ctMergeColumnNames.add("validationStatus");
+		ctMergeColumnNames.add("zip");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("addressId"));
 		_ctColumnNamesMap.put(

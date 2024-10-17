@@ -3099,6 +3099,7 @@ public class JSONStorageEntryPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3106,15 +3107,16 @@ public class JSONStorageEntryPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("parentJSONStorageEntryId");
-		ctStrictColumnNames.add("index_");
-		ctStrictColumnNames.add("key_");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("valueLong");
-		ctStrictColumnNames.add("valueString");
+		ctMergeColumnNames.add("parentJSONStorageEntryId");
+		ctMergeColumnNames.add("index_");
+		ctMergeColumnNames.add("key_");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("valueLong");
+		ctMergeColumnNames.add("valueString");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("jsonStorageEntryId"));

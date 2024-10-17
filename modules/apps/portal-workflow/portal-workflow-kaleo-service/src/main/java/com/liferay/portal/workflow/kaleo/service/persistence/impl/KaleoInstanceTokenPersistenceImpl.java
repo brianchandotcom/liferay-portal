@@ -3676,6 +3676,7 @@ public class KaleoInstanceTokenPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3686,21 +3687,22 @@ public class KaleoInstanceTokenPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("kaleoInstanceId");
-		ctStrictColumnNames.add("parentKaleoInstanceTokenId");
-		ctStrictColumnNames.add("currentKaleoNodeId");
-		ctStrictColumnNames.add("currentKaleoNodeName");
-		ctStrictColumnNames.add("className");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("kaleoInstanceId");
+		ctMergeColumnNames.add("parentKaleoInstanceTokenId");
+		ctMergeColumnNames.add("currentKaleoNodeId");
+		ctMergeColumnNames.add("currentKaleoNodeName");
+		ctMergeColumnNames.add("className");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("completed");
-		ctStrictColumnNames.add("completionDate");
+		ctMergeColumnNames.add("completed");
+		ctMergeColumnNames.add("completionDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("kaleoInstanceTokenId"));

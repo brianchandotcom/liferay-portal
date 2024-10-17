@@ -2176,17 +2176,19 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("assetEntryId");
-		ctStrictColumnNames.add("assetCategoryId");
-		ctStrictColumnNames.add("priority");
+		ctMergeColumnNames.add("assetEntryId");
+		ctMergeColumnNames.add("assetCategoryId");
+		ctMergeColumnNames.add("priority");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("assetEntryAssetCategoryRelId"));

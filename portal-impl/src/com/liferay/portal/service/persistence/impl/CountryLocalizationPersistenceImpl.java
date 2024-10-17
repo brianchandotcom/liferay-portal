@@ -1602,8 +1602,8 @@ public class CountryLocalizationPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("countryId");
-		ctStrictColumnNames.add("languageId");
+		ctMergeColumnNames.add("countryId");
+		ctMergeColumnNames.add("languageId");
 		ctMergeColumnNames.add("title");
 
 		_ctColumnNamesMap.put(

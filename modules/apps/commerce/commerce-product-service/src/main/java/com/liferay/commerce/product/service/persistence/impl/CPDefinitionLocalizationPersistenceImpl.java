@@ -1717,22 +1717,24 @@ public class CPDefinitionLocalizationPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("CPDefinitionId");
-		ctStrictColumnNames.add("languageId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("shortDescription");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("metaTitle");
-		ctStrictColumnNames.add("metaDescription");
-		ctStrictColumnNames.add("metaKeywords");
+		ctMergeColumnNames.add("CPDefinitionId");
+		ctMergeColumnNames.add("languageId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("shortDescription");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("metaTitle");
+		ctMergeColumnNames.add("metaDescription");
+		ctMergeColumnNames.add("metaKeywords");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("cpDefinitionLocalizationId"));

@@ -58433,46 +58433,48 @@ public class KBArticlePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
-		ctStrictColumnNames.add("resourcePrimKey");
+		ctMergeColumnNames.add("resourcePrimKey");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("externalReferenceCode");
-		ctStrictColumnNames.add("rootResourcePrimKey");
-		ctStrictColumnNames.add("parentResourceClassNameId");
-		ctStrictColumnNames.add("parentResourcePrimKey");
-		ctStrictColumnNames.add("kbFolderId");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("title");
-		ctStrictColumnNames.add("urlTitle");
-		ctStrictColumnNames.add("content");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("sections");
-		ctStrictColumnNames.add("latest");
-		ctStrictColumnNames.add("main");
-		ctStrictColumnNames.add("sourceURL");
-		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("reviewDate");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("externalReferenceCode");
+		ctMergeColumnNames.add("rootResourcePrimKey");
+		ctMergeColumnNames.add("parentResourceClassNameId");
+		ctMergeColumnNames.add("parentResourcePrimKey");
+		ctMergeColumnNames.add("kbFolderId");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("title");
+		ctMergeColumnNames.add("urlTitle");
+		ctMergeColumnNames.add("content");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("sections");
+		ctMergeColumnNames.add("latest");
+		ctMergeColumnNames.add("main");
+		ctMergeColumnNames.add("sourceURL");
+		ctMergeColumnNames.add("displayDate");
+		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("reviewDate");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("kbArticleId"));
 		_ctColumnNamesMap.put(

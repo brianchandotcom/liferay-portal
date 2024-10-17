@@ -3753,7 +3753,7 @@ public class RegionPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("countryId");
+		ctMergeColumnNames.add("countryId");
 		ctMergeColumnNames.add("active_");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("position");

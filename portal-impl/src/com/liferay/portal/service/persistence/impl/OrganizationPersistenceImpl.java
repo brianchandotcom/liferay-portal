@@ -10560,6 +10560,7 @@ public class OrganizationPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -10571,23 +10572,24 @@ public class OrganizationPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("parentOrganizationId");
-		ctStrictColumnNames.add("treePath");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("recursable");
-		ctStrictColumnNames.add("regionId");
-		ctStrictColumnNames.add("countryId");
-		ctStrictColumnNames.add("statusListTypeId");
-		ctStrictColumnNames.add("comments");
-		ctStrictColumnNames.add("logoId");
-		ctStrictColumnNames.add("groups_");
-		ctStrictColumnNames.add("users");
+		ctMergeColumnNames.add("parentOrganizationId");
+		ctMergeColumnNames.add("treePath");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("recursable");
+		ctMergeColumnNames.add("regionId");
+		ctMergeColumnNames.add("countryId");
+		ctMergeColumnNames.add("statusListTypeId");
+		ctMergeColumnNames.add("comments");
+		ctMergeColumnNames.add("logoId");
+		ctMergeColumnNames.add("groups_");
+		ctMergeColumnNames.add("users");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("organizationId"));
 		_ctColumnNamesMap.put(

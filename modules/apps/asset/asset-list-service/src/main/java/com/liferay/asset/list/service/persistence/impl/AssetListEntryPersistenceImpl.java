@@ -14461,6 +14461,7 @@ public class AssetListEntryPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -14473,17 +14474,18 @@ public class AssetListEntryPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("assetListEntryKey");
-		ctStrictColumnNames.add("title");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("assetEntrySubtype");
-		ctStrictColumnNames.add("assetEntryType");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("assetListEntryKey");
+		ctMergeColumnNames.add("title");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("assetEntrySubtype");
+		ctMergeColumnNames.add("assetEntryType");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("assetListEntryId"));

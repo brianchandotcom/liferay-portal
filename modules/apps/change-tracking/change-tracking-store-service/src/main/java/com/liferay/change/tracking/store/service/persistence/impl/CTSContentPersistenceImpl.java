@@ -3219,20 +3219,22 @@ public class CTSContentPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("repositoryId");
-		ctStrictColumnNames.add("path_");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("data_");
-		ctStrictColumnNames.add("size_");
-		ctStrictColumnNames.add("storeType");
+		ctMergeColumnNames.add("repositoryId");
+		ctMergeColumnNames.add("path_");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("data_");
+		ctMergeColumnNames.add("size_");
+		ctMergeColumnNames.add("storeType");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("ctsContentId"));
 		_ctColumnNamesMap.put(

@@ -2487,11 +2487,11 @@ public class LayoutSEOEntryPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("privateLayout");
-		ctStrictColumnNames.add("layoutId");
+		ctMergeColumnNames.add("privateLayout");
+		ctMergeColumnNames.add("layoutId");
 		ctMergeColumnNames.add("canonicalURL");
 		ctMergeColumnNames.add("canonicalURLEnabled");
-		ctStrictColumnNames.add("DDMStorageId");
+		ctMergeColumnNames.add("DDMStorageId");
 		ctMergeColumnNames.add("openGraphDescription");
 		ctMergeColumnNames.add("openGraphDescriptionEnabled");
 		ctMergeColumnNames.add("openGraphImageAlt");

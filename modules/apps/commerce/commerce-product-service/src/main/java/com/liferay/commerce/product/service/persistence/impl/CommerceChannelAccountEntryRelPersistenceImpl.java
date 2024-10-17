@@ -5261,6 +5261,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5270,18 +5271,19 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("accountEntryId");
+		ctMergeColumnNames.add("accountEntryId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("commerceChannelId");
-		ctStrictColumnNames.add("overrideEligibility");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("type_");
+		ctMergeColumnNames.add("commerceChannelId");
+		ctMergeColumnNames.add("overrideEligibility");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("type_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CChannelAccountEntryRelId"));

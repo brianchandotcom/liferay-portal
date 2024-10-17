@@ -6593,11 +6593,11 @@ public class LayoutFriendlyURLPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("plid");
-		ctStrictColumnNames.add("privateLayout");
+		ctMergeColumnNames.add("plid");
+		ctMergeColumnNames.add("privateLayout");
 		ctMergeColumnNames.add("friendlyURL");
-		ctStrictColumnNames.add("languageId");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("languageId");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

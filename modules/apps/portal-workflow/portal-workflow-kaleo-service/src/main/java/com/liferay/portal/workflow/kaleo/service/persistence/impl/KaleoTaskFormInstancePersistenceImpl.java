@@ -3737,6 +3737,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3747,22 +3748,23 @@ public class KaleoTaskFormInstancePersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("kaleoDefinitionId");
-		ctStrictColumnNames.add("kaleoDefinitionVersionId");
-		ctStrictColumnNames.add("kaleoInstanceId");
-		ctStrictColumnNames.add("kaleoTaskId");
-		ctStrictColumnNames.add("kaleoTaskInstanceTokenId");
-		ctStrictColumnNames.add("kaleoTaskFormId");
-		ctStrictColumnNames.add("formValues");
-		ctStrictColumnNames.add("formValueEntryGroupId");
-		ctStrictColumnNames.add("formValueEntryId");
-		ctStrictColumnNames.add("formValueEntryUuid");
-		ctStrictColumnNames.add("metadata");
+		ctMergeColumnNames.add("kaleoDefinitionId");
+		ctMergeColumnNames.add("kaleoDefinitionVersionId");
+		ctMergeColumnNames.add("kaleoInstanceId");
+		ctMergeColumnNames.add("kaleoTaskId");
+		ctMergeColumnNames.add("kaleoTaskInstanceTokenId");
+		ctMergeColumnNames.add("kaleoTaskFormId");
+		ctMergeColumnNames.add("formValues");
+		ctMergeColumnNames.add("formValueEntryGroupId");
+		ctMergeColumnNames.add("formValueEntryId");
+		ctMergeColumnNames.add("formValueEntryUuid");
+		ctMergeColumnNames.add("metadata");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("kaleoTaskFormInstanceId"));

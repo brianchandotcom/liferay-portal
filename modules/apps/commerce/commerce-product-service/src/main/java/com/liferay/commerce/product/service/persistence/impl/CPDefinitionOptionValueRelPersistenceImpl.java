@@ -5863,6 +5863,7 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5874,21 +5875,22 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPDefinitionOptionRelId");
-		ctStrictColumnNames.add("CPInstanceUuid");
-		ctStrictColumnNames.add("CProductId");
-		ctStrictColumnNames.add("key_");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("preselected");
-		ctStrictColumnNames.add("price");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("quantity");
-		ctStrictColumnNames.add("unitOfMeasureKey");
+		ctMergeColumnNames.add("CPDefinitionOptionRelId");
+		ctMergeColumnNames.add("CPInstanceUuid");
+		ctMergeColumnNames.add("CProductId");
+		ctMergeColumnNames.add("key_");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("preselected");
+		ctMergeColumnNames.add("price");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("quantity");
+		ctMergeColumnNames.add("unitOfMeasureKey");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CPDefinitionOptionValueRelId"));

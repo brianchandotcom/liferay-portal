@@ -6244,6 +6244,7 @@ public class CPSpecificationOptionPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -6255,19 +6256,20 @@ public class CPSpecificationOptionPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("CPOptionCategoryId");
-		ctStrictColumnNames.add("listTypeDefinitionId");
-		ctStrictColumnNames.add("title");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("facetable");
-		ctStrictColumnNames.add("key_");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("CPOptionCategoryId");
+		ctMergeColumnNames.add("listTypeDefinitionId");
+		ctMergeColumnNames.add("title");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("facetable");
+		ctMergeColumnNames.add("key_");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("CPSpecificationOptionId"));

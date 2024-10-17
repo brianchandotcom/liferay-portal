@@ -10985,22 +10985,22 @@ public class DDMStructurePersistenceImpl
 		ctStrictColumnNames.add("uuid_");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
-		ctMergeColumnNames.add("userId");
-		ctMergeColumnNames.add("userName");
-		ctStrictColumnNames.add("versionUserId");
-		ctStrictColumnNames.add("versionUserName");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctMergeColumnNames.add("versionUserId");
+		ctMergeColumnNames.add("versionUserName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("parentStructureId");
+		ctMergeColumnNames.add("parentStructureId");
 		ctStrictColumnNames.add("classNameId");
-		ctStrictColumnNames.add("structureKey");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("name");
+		ctMergeColumnNames.add("structureKey");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("definition");
-		ctStrictColumnNames.add("storageType");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("storageType");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

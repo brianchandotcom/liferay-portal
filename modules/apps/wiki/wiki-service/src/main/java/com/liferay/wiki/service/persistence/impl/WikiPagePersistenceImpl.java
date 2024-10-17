@@ -24567,39 +24567,41 @@ public class WikiPagePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
-		ctStrictColumnNames.add("resourcePrimKey");
+		ctMergeColumnNames.add("resourcePrimKey");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("externalReferenceCode");
-		ctStrictColumnNames.add("nodeId");
-		ctStrictColumnNames.add("title");
-		ctStrictColumnNames.add("version");
-		ctStrictColumnNames.add("minorEdit");
-		ctStrictColumnNames.add("content");
-		ctStrictColumnNames.add("summary");
-		ctStrictColumnNames.add("format");
-		ctStrictColumnNames.add("head");
-		ctStrictColumnNames.add("parentTitle");
-		ctStrictColumnNames.add("redirectTitle");
-		ctStrictColumnNames.add("lastPublishDate");
-		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("externalReferenceCode");
+		ctMergeColumnNames.add("nodeId");
+		ctMergeColumnNames.add("title");
+		ctMergeColumnNames.add("version");
+		ctMergeColumnNames.add("minorEdit");
+		ctMergeColumnNames.add("content");
+		ctMergeColumnNames.add("summary");
+		ctMergeColumnNames.add("format");
+		ctMergeColumnNames.add("head");
+		ctMergeColumnNames.add("parentTitle");
+		ctMergeColumnNames.add("redirectTitle");
+		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("pageId"));
 		_ctColumnNamesMap.put(

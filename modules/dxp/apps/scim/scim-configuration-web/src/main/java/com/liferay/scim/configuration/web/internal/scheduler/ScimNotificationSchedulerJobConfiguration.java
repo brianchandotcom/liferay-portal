@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -53,12 +52,72 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> _companyLocalService.forEachCompany(this::_process);
-	}
+		return () -> _companyLocalService.forEachCompany(
+			company -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-96845") ||
+					!company.isActive()) {
 
-	public OrderByComparator<OAuth2Authorization> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"OAuth2Authorization", "accessTokenExpirationDate", "asc");
+					return;
+				}
+
+				for (OAuth2Application oAuth2Application :
+						_oAuth2ApplicationLocalService.getOAuth2Applications(
+							company.getCompanyId())) {
+
+					if (!Objects.equals(
+							ScimClientUtil.generateScimClientId(
+								oAuth2Application.getName()),
+							oAuth2Application.getClientId())) {
+
+						continue;
+					}
+
+					List<OAuth2Authorization> applicationOAuth2Authorizations =
+						_oAuth2AuthorizationLocalService.
+							getOAuth2Authorizations(
+								oAuth2Application.getOAuth2ApplicationId(), 0,
+								1,
+								OrderByComparatorFactoryUtil.create(
+									"OAuth2Authorization",
+									"accessTokenExpirationDate", "asc"));
+
+					if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
+						continue;
+					}
+
+					OAuth2Authorization applicationOAuth2Authorization =
+						applicationOAuth2Authorizations.get(0);
+
+					Date accessTokenExpirationDate =
+						applicationOAuth2Authorization.
+							getAccessTokenExpirationDate();
+
+					ExpandoBridge expandoBridge =
+						applicationOAuth2Authorization.getExpandoBridge();
+
+					if (!isSendNotification(
+							accessTokenExpirationDate,
+							System.currentTimeMillis(),
+							(Date)expandoBridge.getAttribute(
+								"lastNotificationDate", false))) {
+
+						continue;
+					}
+
+					try {
+						_sendNotification(
+							accessTokenExpirationDate, company.getCompanyId());
+
+						expandoBridge.setAttribute(
+							"lastNotificationDate", new Date(), false);
+					}
+					catch (Exception exception) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(exception);
+						}
+					}
+				}
+			});
 	}
 
 	@Override
@@ -96,10 +155,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		return false;
 	}
 
-	private boolean _isEnabled() {
-		return FeatureFlagManagerUtil.isEnabled("LPS-96845");
-	}
-
 	private boolean _isSendNotification(
 		long accessTokenExpirationDurationMillis,
 		long lastNotificationDurationMillis, long notificationDurationMillis) {
@@ -112,64 +167,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		}
 
 		return false;
-	}
-
-	private void _process(Company company) {
-		if (!_isEnabled() || !company.isActive()) {
-			return;
-		}
-
-		for (OAuth2Application oAuth2Application :
-				_oAuth2ApplicationLocalService.getOAuth2Applications(
-					company.getCompanyId())) {
-
-			if (!Objects.equals(
-					ScimClientUtil.generateScimClientId(
-						oAuth2Application.getName()),
-					oAuth2Application.getClientId())) {
-
-				continue;
-			}
-
-			List<OAuth2Authorization> applicationOAuth2Authorizations =
-				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
-					oAuth2Application.getOAuth2ApplicationId(), 0, 1,
-					getOrderByComparator());
-
-			if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
-				continue;
-			}
-
-			OAuth2Authorization applicationOAuth2Authorization =
-				applicationOAuth2Authorizations.get(0);
-
-			Date accessTokenExpirationDate =
-				applicationOAuth2Authorization.getAccessTokenExpirationDate();
-
-			ExpandoBridge expandoBridge =
-				applicationOAuth2Authorization.getExpandoBridge();
-
-			if (!isSendNotification(
-					accessTokenExpirationDate, System.currentTimeMillis(),
-					(Date)expandoBridge.getAttribute(
-						"lastNotificationDate", false))) {
-
-				continue;
-			}
-
-			try {
-				_sendNotification(
-					accessTokenExpirationDate, company.getCompanyId());
-
-				expandoBridge.setAttribute(
-					"lastNotificationDate", new Date(), false);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
-			}
-		}
 	}
 
 	private void _sendNotification(

@@ -56,7 +56,7 @@ export function createApp({
 	productChannels?: Partial<Channel>[];
 	productSpecifications?: ProductSpecification[];
 }) {
-	return fetch(`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products`, {
+	return fetch(`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=productVirtualSettings`, {
 		body: JSON.stringify({
 			active: true,
 			catalogId,
@@ -69,6 +69,7 @@ export function createApp({
 			productSpecifications,
 			productStatus: 2,
 			productType: 'virtual',
+			productVirtualSettings: {},
 		}),
 		headers,
 		method: 'POST',
@@ -157,6 +158,32 @@ export async function createAttachmentAxios({
 			onUploadProgress: (event: any) => {
 				const progress = Math.round(
 					(event.loaded * 100) / Number(event.total)
+				);
+
+				callback(progress);
+			},
+		}
+	);
+
+	return response.data;
+}
+
+export async function createProductVirtualEntry({
+	body,
+	callback,
+	virtualSettingId,
+}: {
+	body: Object;
+	callback: (progress: number) => void;
+	virtualSettingId: string;
+}) {
+	const response = await axios.post(
+		`/o/headless-commerce-admin-catalog/v1.0/product-virtual-settings/${virtualSettingId}/product-virtual-settings-file-entries`,
+		body,
+		{
+			onUploadProgress: (event) => {
+				const progress = Math.round(
+					(event.loaded * 100) / Number(event.total || 1)
 				);
 
 				callback(progress);

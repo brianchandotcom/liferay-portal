@@ -60,6 +60,18 @@ public class PortletLocalServiceTest {
 	public void testGetCustomAttributesDisplaysWithCustomAttributesDisplayDisabled() {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
+		TestCustomAttributesDisplay
+			disabledFFCustomAttributesDisplay =
+				new TestCustomAttributesDisplay(
+					RandomTestUtil.randomString());
+
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				CustomAttributesDisplay.class,
+				disabledFFCustomAttributesDisplay,
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", portletName)));
+
 		String enabledFFKey = RandomTestUtil.randomString();
 
 		PropsTestUtil.setProps(
@@ -96,18 +108,6 @@ public class PortletLocalServiceTest {
 				MapUtil.singletonDictionary(
 					"javax.portlet.name", portletName)));
 
-		TestCustomAttributesDisplay
-			disabledFFCustomAttributesDisplay =
-				new TestCustomAttributesDisplay(
-					RandomTestUtil.randomString());
-
-		serviceRegistrations.add(
-			_bundleContext.registerService(
-				CustomAttributesDisplay.class,
-				disabledFFCustomAttributesDisplay,
-				MapUtil.singletonDictionary(
-					"javax.portlet.name", portletName)));
-
 		List<CustomAttributesDisplay> customAttributesDisplays =
 			TransformUtil.transform(
 				_portletLocalService.getCustomAttributesDisplays(),
@@ -122,6 +122,10 @@ public class PortletLocalServiceTest {
 					return null;
 				});
 
+		Assert.assertFalse(
+			customAttributesDisplays.toString(),
+			customAttributesDisplays.contains(
+				disabledFFCustomAttributesDisplay));
 		Assert.assertTrue(
 			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
@@ -130,10 +134,6 @@ public class PortletLocalServiceTest {
 			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
 				nullFFCustomAttributesDisplay));
-		Assert.assertFalse(
-			customAttributesDisplays.toString(),
-			customAttributesDisplays.contains(
-				disabledFFCustomAttributesDisplay));
 		Assert.assertEquals(
 			customAttributesDisplays.toString(), 2,
 			customAttributesDisplays.size());

@@ -150,6 +150,7 @@ export function DefineAppProfilePage({
 						appId: product.id,
 						appProductId: product.productId,
 						appWorkflowStatusInfo: product.workflowStatusInfo,
+						virtualSettingId: product.productVirtualSettings.id,
 					},
 				},
 				type: TYPES.SUBMIT_APP_PROFILE,

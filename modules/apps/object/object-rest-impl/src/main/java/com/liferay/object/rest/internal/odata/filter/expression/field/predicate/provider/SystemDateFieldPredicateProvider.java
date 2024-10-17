@@ -41,22 +41,18 @@ public class SystemDateFieldPredicateProvider
 		Object left, long objectDefinitionId,
 		BinaryExpression.Operation operation, Object right) {
 
+		Expression<String> expression =
+			(Expression<String>)objectDefinitionColumnSupplier.apply(
+				String.valueOf(left));
+
 		if ((operation == BinaryExpression.Operation.NE) && (right == null)) {
-			return objectDefinitionColumnSupplier.apply(
-				String.valueOf(left)
-			).isNotNull();
+			return expression.isNotNull();
 		}
 		else if ((operation == BinaryExpression.Operation.EQ) &&
 				 (right == null)) {
 
-			return objectDefinitionColumnSupplier.apply(
-				String.valueOf(left)
-			).isNull();
+			return expression.isNull();
 		}
-
-		Expression<String> expression =
-			(Expression<String>)objectDefinitionColumnSupplier.apply(
-				String.valueOf(left));
 
 		return _getDateTimePredicate(expression, operation, (String)right);
 	}

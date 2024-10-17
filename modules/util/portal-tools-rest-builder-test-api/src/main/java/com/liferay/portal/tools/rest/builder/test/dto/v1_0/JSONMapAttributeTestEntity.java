@@ -23,8 +23,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -173,7 +173,7 @@ public class JSONMapAttributeTestEntity implements Serializable {
 			return;
 		}
 
-		Map<String, Object> properties1Map = new HashMap<>(properties1);
+		Map<String, Object> properties1Map = new LinkedHashMap<>(properties1);
 
 		properties1Map.replaceAll(
 			(key, value) -> {
@@ -214,7 +214,7 @@ public class JSONMapAttributeTestEntity implements Serializable {
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties1 = Collections.synchronizedMap(
-		new HashMap<>());
+		new LinkedHashMap<>());
 
 	@Schema
 	@Valid
@@ -250,7 +250,7 @@ public class JSONMapAttributeTestEntity implements Serializable {
 			return;
 		}
 
-		Map<String, Object> properties2Map = new HashMap<>(properties2);
+		Map<String, Object> properties2Map = new LinkedHashMap<>(properties2);
 
 		properties2Map.replaceAll(
 			(key, value) -> {
@@ -291,7 +291,7 @@ public class JSONMapAttributeTestEntity implements Serializable {
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties2 = Collections.synchronizedMap(
-		new HashMap<>());
+		new LinkedHashMap<>());
 
 	@Override
 	public boolean equals(Object object) {

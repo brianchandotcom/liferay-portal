@@ -28,8 +28,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -476,7 +476,7 @@ public class ObjectEntry implements Serializable {
 			return;
 		}
 
-		Map<String, Object> propertiesMap = new HashMap<>(properties);
+		Map<String, Object> propertiesMap = new LinkedHashMap<>(properties);
 
 		propertiesMap.replaceAll(
 			(key, value) -> {
@@ -517,7 +517,7 @@ public class ObjectEntry implements Serializable {
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties = Collections.synchronizedMap(
-		new HashMap<>());
+		new LinkedHashMap<>());
 
 	@Schema
 	public String getScopeKey() {

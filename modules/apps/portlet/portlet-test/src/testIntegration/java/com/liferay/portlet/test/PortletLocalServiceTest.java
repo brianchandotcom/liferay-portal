@@ -49,24 +49,23 @@ public class PortletLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_bundleContext = bundle.getBundleContext();
-	}
-
 	@Test
 	public void testGetCustomAttributesDisplaysWithCustomAttributesDisplayDisabled() {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		TestCustomAttributesDisplay
 			disabledFFCustomAttributesDisplay =
 				new TestCustomAttributesDisplay(
 					RandomTestUtil.randomString());
 
+		String portletName = RandomTestUtil.randomString();
+
 		serviceRegistrations.add(
-			_bundleContext.registerService(
+			bundleContext.registerService(
 				CustomAttributesDisplay.class,
 				disabledFFCustomAttributesDisplay,
 				MapUtil.singletonDictionary(
@@ -78,20 +77,12 @@ public class PortletLocalServiceTest {
 			"feature.flag." + enabledFFKey,
 			Boolean.TRUE.toString());
 
-		String portletName = RandomTestUtil.randomString();
-
-		serviceRegistrations.add(
-			_bundleContext.registerService(
-				Portlet.class, new TestPortlet(),
-				MapUtil.singletonDictionary(
-					"javax.portlet.name", portletName)));
-
 		TestCustomAttributesDisplay
 			enabledFFCustomAttributesDisplay =
 				new TestCustomAttributesDisplay(enabledFFKey);
 
 		serviceRegistrations.add(
-			_bundleContext.registerService(
+			bundleContext.registerService(
 				CustomAttributesDisplay.class,
 				enabledFFCustomAttributesDisplay,
 				MapUtil.singletonDictionary(
@@ -102,9 +93,15 @@ public class PortletLocalServiceTest {
 				new TestCustomAttributesDisplay(null);
 
 		serviceRegistrations.add(
-			_bundleContext.registerService(
+			bundleContext.registerService(
 				CustomAttributesDisplay.class,
 				nullFFCustomAttributesDisplay,
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", portletName)));
+
+		serviceRegistrations.add(
+			bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
 				MapUtil.singletonDictionary(
 					"javax.portlet.name", portletName)));
 
@@ -142,8 +139,6 @@ public class PortletLocalServiceTest {
 			serviceRegistration.unregister();
 		}
 	}
-
-	private BundleContext _bundleContext;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

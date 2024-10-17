@@ -97,8 +97,9 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchEntryException noSuchEntryException) {
-			Assert.assertNotNull(noSuchEntryException.getMessage());
+		catch (Exception exception) {
+			Assert.assertEquals(
+				NoSuchEntryException.class, exception.getClass());
 		}
 	}
 

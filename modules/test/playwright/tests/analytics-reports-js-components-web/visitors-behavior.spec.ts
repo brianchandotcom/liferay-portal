@@ -22,6 +22,7 @@ import {
 import {Individuals, MetricType, RangeSelectors} from './types';
 import {formatDate} from './utils/date';
 import {createBlogsEventsForEveryDayByRangeSelector} from './utils/events';
+import {changeGlobalFilters} from './utils/filters';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -45,7 +46,7 @@ let individuals;
 
 async function expectMatchingChartData({
 	expectedResult,
-	filterName,
+	individual,
 	chartLegends,
 	metricType = MetricType.Views,
 	page,
@@ -53,24 +54,12 @@ async function expectMatchingChartData({
 }: {
 	chartLegends: string[];
 	expectedResult: string;
-	filterName: Individuals;
+	individual: Individuals;
 	metricType?: MetricType;
 	page: Page;
 	rangeSelector: RangeSelectors;
 }) {
-	await page.getByTestId('rangeSelectors').click();
-
-	await page.getByTestId(`filter-item-${rangeSelector}`).click();
-
-	await page.getByTestId('individuals').click();
-
-	await page.getByTestId(`filter-item-${filterName}`).click();
-
-	await page
-		.getByTestId(`overview__${metricType.toLowerCase()}-metric`)
-		.click();
-
-	await page.waitForTimeout(1000);
+	await changeGlobalFilters(page, {individual, metricType, rangeSelector});
 
 	const chartElement = page.getByTestId('visitors-behavior-chart-data');
 
@@ -176,7 +165,7 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 			chartLegends: ['Total Views: 60', 'Published Version: 1'],
 			expectedResult:
 				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -187,7 +176,7 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 			chartLegends: ['Total Views: 30', 'Published Version: 1'],
 			expectedResult:
 				'[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]',
-			filterName: Individuals.KnownIndividuals,
+			individual: Individuals.KnownIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -198,7 +187,7 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 			chartLegends: ['Total Views: 30', 'Published Version: 1'],
 			expectedResult:
 				'[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]',
-			filterName: Individuals.AnonymousIndividuals,
+			individual: Individuals.AnonymousIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -209,7 +198,7 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 			chartLegends: ['Total Comments: 120', 'Published Version: 1'],
 			expectedResult:
 				'[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]',
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			metricType: MetricType.Comments,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
@@ -247,7 +236,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 7
 		await expectMatchingChartData({
 			chartLegends: ['Total Views: 14', 'Published Version: 1'],
 			expectedResult: '[2,2,2,2,2,2,2]',
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last7Days,
 		});
@@ -285,7 +274,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 2
 			chartLegends: ['Total Views: 56', 'Published Version: 1'],
 			expectedResult:
 				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last28Days,
 		});
@@ -323,7 +312,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 3
 			chartLegends: ['Total Views: 60', 'Published Version: 1'],
 			expectedResult:
 				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -361,7 +350,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 9
 			chartLegends: ['Total Views: 180', 'Published Version: 1'],
 			expectedResult:
 				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last90Days,
 		});

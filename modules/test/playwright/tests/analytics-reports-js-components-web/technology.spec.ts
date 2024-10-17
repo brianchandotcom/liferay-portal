@@ -22,6 +22,7 @@ import {
 } from '../osb-faro-web/utils/individuals';
 import {Individuals, MetricType, RangeSelectors} from './types';
 import {createBlogsEventsForEveryDayByRangeSelector} from './utils/events';
+import {changeGlobalFilters} from './utils/filters';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -45,7 +46,7 @@ let individuals: Individual[] | null = null;
 
 async function expectMatchingChartData({
 	expectedResult,
-	filterName,
+	individual,
 	chartLegends,
 	metricType = MetricType.Views,
 	page,
@@ -53,24 +54,12 @@ async function expectMatchingChartData({
 }: {
 	chartLegends: string[];
 	expectedResult: string;
-	filterName: Individuals;
+	individual: Individuals;
 	metricType?: MetricType;
 	page: Page;
 	rangeSelector: RangeSelectors;
 }) {
-	await page.getByTestId('rangeSelectors').click();
-
-	await page.getByTestId(`filter-item-${rangeSelector}`).click();
-
-	await page.getByTestId('individuals').click();
-
-	await page.getByTestId(`filter-item-${filterName}`).click();
-
-	await page
-		.getByTestId(`overview__${metricType.toLowerCase()}-metric`)
-		.click();
-
-	await page.waitForTimeout(1000);
+	await changeGlobalFilters(page, {individual, metricType, rangeSelector});
 
 	const chartElement = page.getByTestId('stacked-bar-chart-data');
 
@@ -171,7 +160,7 @@ test('User is able to see data plotted on Technology Chart by all, anonymous and
 				data: [{label: 'Unknown', percentage: 100, value: 60}],
 				total: 60,
 			}),
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -184,7 +173,7 @@ test('User is able to see data plotted on Technology Chart by all, anonymous and
 				data: [{label: 'Unknown', percentage: 100, value: 30}],
 				total: 30,
 			}),
-			filterName: Individuals.KnownIndividuals,
+			individual: Individuals.KnownIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -197,7 +186,7 @@ test('User is able to see data plotted on Technology Chart by all, anonymous and
 				data: [{label: 'Unknown', percentage: 100, value: 30}],
 				total: 30,
 			}),
-			filterName: Individuals.AnonymousIndividuals,
+			individual: Individuals.AnonymousIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -210,7 +199,7 @@ test('User is able to see data plotted on Technology Chart by all, anonymous and
 				data: [{label: 'Unknown', percentage: 100, value: 120}],
 				total: 120,
 			}),
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			metricType: MetricType.Comments,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
@@ -251,7 +240,7 @@ test('User is able to see data plotted on technology Chart for the last 7 days',
 				data: [{label: 'Unknown', percentage: 100, value: 14}],
 				total: 14,
 			}),
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last7Days,
 		});
@@ -291,7 +280,7 @@ test('User is able to see data plotted on technology Chart for the last 28 days'
 				data: [{label: 'Unknown', percentage: 100, value: 56}],
 				total: 56,
 			}),
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last28Days,
 		});
@@ -331,7 +320,7 @@ test('User is able to see data plotted on technology Chart for the last 30 days'
 				data: [{label: 'Unknown', percentage: 100, value: 60}],
 				total: 60,
 			}),
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
@@ -371,7 +360,7 @@ test('User is able to see data plotted on technology Chart for the last 90 days'
 				data: [{label: 'Unknown', percentage: 100, value: 180}],
 				total: 180,
 			}),
-			filterName: Individuals.AllIndividuals,
+			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last90Days,
 		});

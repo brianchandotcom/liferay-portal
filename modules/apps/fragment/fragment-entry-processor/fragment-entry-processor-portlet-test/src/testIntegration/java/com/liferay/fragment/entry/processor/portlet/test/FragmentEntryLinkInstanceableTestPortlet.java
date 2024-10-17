@@ -36,17 +36,18 @@ public class FragmentEntryLinkInstanceableTestPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			_ALIAS,
+			FragmentEntryLinkPortletKeys.
+				FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET_ALIAS,
 			FragmentEntryLinkPortletKeys.
 				FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias(_ALIAS);
+		_portletRegistry.unregisterAlias(
+			FragmentEntryLinkPortletKeys.
+				FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET_ALIAS);
 	}
-
-	private static final String _ALIAS = "fragment-entry-link-instanceable";
 
 	@Reference
 	private PortletRegistry _portletRegistry;

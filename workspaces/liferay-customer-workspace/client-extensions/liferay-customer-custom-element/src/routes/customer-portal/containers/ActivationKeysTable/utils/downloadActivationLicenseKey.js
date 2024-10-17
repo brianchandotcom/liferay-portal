@@ -23,8 +23,8 @@ export async function downloadActivationLicenseKey(
 ) {
 	const license = await getActivationDownloadKey(
 		licenseKey,
-		provisioningServerAPI,
-		oauthToken
+		oauthToken,
+		provisioningServerAPI
 	);
 
 	if (license.status === STATUS_CODE.success) {
@@ -55,8 +55,8 @@ export async function downloadAggregatedActivationKey(
 ) {
 	const license = await getAggregatedActivationDownloadKey(
 		selectedKeysIDs,
-		provisioningServerAPI,
-		oauthToken
+		oauthToken,
+		provisioningServerAPI
 	);
 
 	const DIFFERENT_AGGREGATED_NAMES = 'multiple-products';
@@ -115,8 +115,8 @@ export async function downloadMultipleActivationKey(
 ) {
 	const license = await getMultipleActivationDownloadKey(
 		selectedKeysIDs,
-		provisioningServerAPI,
-		oauthToken
+		oauthToken,
+		provisioningServerAPI
 	);
 
 	const projectFileName = projectName.replaceAll(' ', '').toLowerCase();
@@ -140,8 +140,8 @@ export async function downloadSelectedKeysDetails(
 ) {
 	const license = await getExportedSelectedLicenseKeys(
 		selectedKeysIDs,
-		provisioningServerAPI,
-		oauthToken
+		oauthToken,
+		provisioningServerAPI
 	);
 
 	if (license.status === STATUS_CODE.success) {
@@ -161,8 +161,8 @@ export async function downloadAllKeysDetails(
 ) {
 	const license = await getExportedLicenseKeys(
 		accountKey,
-		provisioningServerAPI,
 		oauthToken,
+		provisioningServerAPI,
 		productName
 	);
 

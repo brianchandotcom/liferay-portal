@@ -79,9 +79,9 @@ const ModalKeyDetails = ({
 		setIsLoading(true);
 
 		getSubscriptionInKey(
+			oauthToken,
 			provisioningServerAPI,
-			currentActivationKey.id,
-			oauthToken
+			currentActivationKey.id
 		)
 			.then((result) => {
 				setToggleSubscription(result);
@@ -105,7 +105,7 @@ const ModalKeyDetails = ({
 		const fn = status ? deleteSubscriptionInKey : putSubscriptionInKey;
 
 		try {
-			await fn(provisioningServerAPI, currentActivationKey.id, oauthToken);
+			await fn(oauthToken, provisioningServerAPI, currentActivationKey.id);
 
 			openToast('success', 'your-request-completed-successfully', {
 				type: 'success',

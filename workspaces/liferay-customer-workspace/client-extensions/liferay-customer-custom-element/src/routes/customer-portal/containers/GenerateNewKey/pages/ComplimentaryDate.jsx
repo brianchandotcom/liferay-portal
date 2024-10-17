@@ -126,7 +126,7 @@ const ComplimentaryDate = ({
 		];
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, oauthToken);
+			return putSubscriptionInKey(oauthToken, provisioningServerAPI, id);
 		};
 
 		const generateLicenseKey = async (item, isComplimentary = false) => {

@@ -328,9 +328,9 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								emailURI: encodeURI(userAccount.emailAddress),
 								firstName,
 								lastName,
+								oauthToken,
 								provisioningServerAPI,
 								roleName: oldAccountRoleRaysourceName,
-								oauthToken,
 							});
 
 							await assignUserAccountWithAccountRole({

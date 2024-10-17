@@ -3,32 +3,35 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-import {useCustomerPortal} from '~/routes/customer-portal/context';
-import {useOnboarding} from '~/routes/onboarding/context';
-
+import {useEffect, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '../contexts/AppPropertiesContext';
 import ProvisioningLicenseKeys from '../services/liferay/rest/raysource/ProvisioningLicenseKeys';
+import {getOrRequestToken} from '../services/liferay/security/auth/getOrRequestToken';
 
 const useProvisioningLicenseKeys = () => {
-	const customerPortalContext = useCustomerPortal();
-
-	const onboardingContext = useOnboarding();
-
-	const oauthToken =
-		customerPortalContext?.[0].oauthToken ||
-		onboardingContext?.[0].oauthToken;
-
+	const [oauthToken, setOAuthToken] = useState<string | null>(null);
 	const {provisioningServerAPI} = useAppPropertiesContext();
 
-	const provisioningLicenseKeysService = useMemo(
-		() =>
-			new ProvisioningLicenseKeys({
-				provisioningServerAPI,
-				oauthToken,
-			}),
-		[provisioningServerAPI, oauthToken]
-	);
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
+
+	const provisioningLicenseKeysService = useMemo(() => {
+		if (!oauthToken) {
+			return null;
+		}
+
+		return new ProvisioningLicenseKeys({
+			oauthToken,
+			provisioningServerAPI,
+		});
+	}, [oauthToken, provisioningServerAPI]);
 
 	return provisioningLicenseKeysService;
 };

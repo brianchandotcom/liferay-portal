@@ -18,7 +18,6 @@ export const AppPropertiesContext = createContext({
 	featureFlags: [],
 	gravatarAPI: '',
 	importDate: null,
-	oauthTokenAPI: '',
 	provisioningServerAPI: '',
 	submitSupportTicketURL: '',
 	theOverviewPageURL: '',

@@ -8,6 +8,7 @@ import {Liferay} from '~/common/services/liferay';
 import i18n from '../../../../../../common/I18n';
 import {Table} from '../../../../../../common/components';
 import {fetchHeadless} from '../../../../../../common/services/liferay/api';
+import {getOrRequestToken} from '../../../../../../common/services/liferay/security/auth/getOrRequestToken';
 import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
 
@@ -38,12 +39,23 @@ const Commerce = () => {
 		ActivationInstructionsData,
 		setActivationInstructionsData,
 	] = useState([]);
+	const [oauthToken, setOAuthToken] = useState();
 	const [
 		isLoadingActivationInstructions,
 		setIsLoadingActivationInstructions,
 	] = useState(false);
 
-	const [{project, oauthToken}] = useCustomerPortal();
+	const [{project}] = useCustomerPortal();
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	const fetchCommerceActivationsKeysInstructions = async () => {
 		const webContentFolderName = 'commerce-activation';

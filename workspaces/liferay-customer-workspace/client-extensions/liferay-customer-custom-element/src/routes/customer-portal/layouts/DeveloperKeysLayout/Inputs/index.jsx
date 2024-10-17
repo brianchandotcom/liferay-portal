@@ -75,8 +75,8 @@ const DeveloperKeysInputs = ({
 		const [selectedVersionSplitted] = selectedVersion.split(' ');
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
-			provisioningServerAPI,
 			oauthToken,
+			provisioningServerAPI,
 			encodeURI(selectedVersionSplitted),
 			productName
 		);

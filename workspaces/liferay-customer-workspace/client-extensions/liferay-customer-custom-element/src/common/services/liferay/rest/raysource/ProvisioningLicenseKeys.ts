@@ -8,8 +8,8 @@ import SearchBuilder from '~/common/core/SearchBuilder';
 import {baseFetcher} from '../../fetcher';
 
 type ProvisioningLicenseKeysConstructor = {
-	provisioningServerAPI: string;
 	oauthToken: string;
+	provisioningServerAPI: string;
 };
 
 class ProvisioningLicenseKeys {

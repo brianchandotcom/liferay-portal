@@ -291,9 +291,9 @@ const InviteTeamMembersPage = ({
 							emailURI: encodeURI(inviteMember.email),
 							firstName: inviteMember.givenName,
 							lastName: inviteMember.familyName,
+							oauthToken,
 							provisioningServerAPI,
-							roleName: inviteRole.raysourceName,
-							oauthToken
+							roleName: inviteRole.raysourceName
 						});
 
 						await assignUserAccountWithAccountRole({

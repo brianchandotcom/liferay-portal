@@ -28,9 +28,9 @@ import {getYearlyTerms} from '../../../utils/getYearlyTerms';
 const ActivationKeysInputs = ({
 	accountKey,
 	accountSubscriptionGroupName,
+	oauthToken,
 	productTitle,
 	projectName,
-	oauthToken,
 }) => {
 	const [{project, userAccount}] = useCustomerPortal();
 
@@ -123,9 +123,9 @@ const ActivationKeysInputs = ({
 			selectDateInterval.endDate.toISOString(),
 			selectDateInterval.startDate.toISOString(),
 			selectedAccountSubscriptionName.toLowerCase(),
+			oauthToken,
 			provisioningServerAPI,
-			encodeURI(productTitle),
-			oauthToken
+			encodeURI(productTitle)
 		);
 
 		const formatText = (text) =>

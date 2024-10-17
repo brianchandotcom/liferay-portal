@@ -209,7 +209,7 @@ const RequiredInformation = ({
 		}
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, oauthToken);
+			return putSubscriptionInKey(oauthToken, provisioningServerAPI, id);
 		};
 
 		try {

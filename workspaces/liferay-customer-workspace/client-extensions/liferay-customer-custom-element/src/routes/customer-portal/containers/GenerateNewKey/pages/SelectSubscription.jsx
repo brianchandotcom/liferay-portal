@@ -64,9 +64,9 @@ const SelectSubscription = ({
 		const fetchGenerateFormData = async () => {
 			const data = await getNewGenerateKeyFormValues(
 				accountKey,
+				oauthToken,
 				provisioningServerAPI,
-				productGroupName,
-				oauthToken
+				productGroupName
 			);
 
 			if (data) {
@@ -332,7 +332,7 @@ const SelectSubscription = ({
 		}
 
 		const saveSubscriptionKey = async (id) => {
-			return putSubscriptionInKey(provisioningServerAPI, id, oauthToken);
+			return putSubscriptionInKey(oauthToken, provisioningServerAPI, id);
 		};
 
 		const generateLicenseKey = async (item) => {

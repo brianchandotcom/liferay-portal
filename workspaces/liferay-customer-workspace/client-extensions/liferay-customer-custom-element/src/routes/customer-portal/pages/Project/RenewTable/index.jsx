@@ -3,20 +3,32 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import RenewTableFooter from '~/routes/customer-portal/containers/ActivationKeysTable/components/RenewTableFooter';
 import {hasAdminUserAccount} from '~/routes/customer-portal/containers/ActivationKeysTable/utils/hasAdminUserAccount';
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
 import {useCustomerPortal} from '../../../context';
+import {getOrRequestToken} from '../../../../../common/services/liferay/security/auth/getOrRequestToken';
 
 const RenewTable = ({hasComplimentaryKey, isDXPTable, isRenewTable}) => {
 	const productName = isDXPTable ? 'DXP' : 'Portal';
 
-	const [{project, oauthToken}] = useCustomerPortal();
+	const [{project}] = useCustomerPortal();
 	const {data: myAccount} = useGetMyUserAccount();
+	const [oauthToken, setOAuthToken] = useState();
 
 	const isAdminUserAccount = hasAdminUserAccount(myAccount);
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	const [keysSelectedCount, setKeysSelectedCount] = useState('');
 	const [activationKeysChecked, setActivationKeysChecked] = useState('');

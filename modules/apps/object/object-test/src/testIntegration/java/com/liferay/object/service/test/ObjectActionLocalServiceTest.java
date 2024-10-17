@@ -260,10 +260,11 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			accountEntryObjectDefinition);
 
-		User omniadminUser = UserTestUtil.addOmniadminUser();
+		User adminUser = UserTestUtil.getAdminUser(
+			TestPropsValues.getCompanyId());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			omniadminUser.getUserId(), 0L, RandomTestUtil.randomString(),
+			adminUser.getUserId(), 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null, null,
 			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,

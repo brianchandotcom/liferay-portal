@@ -559,20 +559,27 @@ definition {
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.viewPaginatedAssetsPG(
-				nextPageClick = "true",
-				pageMod = "1 - 3 of 5",
-				pageNumber = "1 of 2",
-				paginationNumber = 3,
-				paginationType = "Regular");
+			AssertTextEquals.assertPartialText(
+				key_pageNumber = 1,
+				locator1 = "Pagination#PARTICULAR_PAGE",
+				value1 = "Page  1");
+
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 1 to 3 of 5 entries.");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 
 		task ("View the number of displayed assets in Page 2") {
-			AssetPublisherPortlet.viewPaginatedAssetsPG(
-				pageMod = "4 - 5 of 5",
-				pageNumber = "2 of 2",
-				paginationNumber = 3,
-				paginationType = "Regular");
+			AssertTextEquals.assertPartialText(
+				key_pageNumber = 2,
+				locator1 = "Pagination#PARTICULAR_PAGE",
+				value1 = "Page  2");
+
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 4 to 5 of 5 entries.");
 		}
 
 		task ("Configure the ordering") {
@@ -616,33 +623,30 @@ definition {
 		}
 
 		task ("View the number of displayed assets in Page 1") {
-			AssetPublisherPortlet.viewPaginatedAssetsPG(
-				nextPageClick = "true",
-				pageMod = "1 - 3 of 5",
-				pageNumber = "1 of 2",
-				paginationNumber = 3,
-				paginationType = "Regular");
+			AssertTextEquals.assertPartialText(
+				key_pageNumber = 1,
+				locator1 = "Pagination#PARTICULAR_PAGE",
+				value1 = "Page  1");
+
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 1 to 3 of 5 entries.");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 
 		task ("View the number of displayed assets in Page 1") {
-			AssetPublisherPortlet.viewPaginatedAssetsPG(
-				pageMod = "4 - 5 of 5",
-				pageNumber = "2 of 2",
-				paginationNumber = 3,
-				paginationType = "Regular");
+			AssertTextEquals.assertPartialText(
+				key_pageNumber = 2,
+				locator1 = "Pagination#PARTICULAR_PAGE",
+				value1 = "Page  2");
+
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 4 to 5 of 5 entries.");
 		}
 
 		task ("Assert URL contains delta by click next pagination") {
-			AssertLocation.assertPartialLocation(value1 = "_delta");
-		}
-
-		task ("Assert URL contains delta by dropdown pagination") {
-			ClickNoError(
-				key_pageNumber = "2 of 2",
-				locator1 = "Pagination#PARTICULAR_PAGE");
-
-			SelectFrame(value1 = "relative=top");
-
 			AssertLocation.assertPartialLocation(value1 = "_delta");
 		}
 	}
@@ -1922,24 +1926,24 @@ definition {
 			Click(locator1 = "Pagination#NEXT_LINK");
 
 			AssertTextEquals(
-				locator1 = "Pagination#CURRENT_PAGE_MENU",
-				value1 = "Page 2 of 3");
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 2 to 2 of 3 entries.");
 
 			AssertTextEquals(
 				key_index = 2,
-				locator1 = "Pagination#CURRENT_PAGE_MENU_INDEX",
-				value1 = "Page 1 of 3");
+				locator1 = "Pagination#CURRENT_PAGE_SELECT_INDEX",
+				value1 = "Showing 1 to 1 of 3 entries.");
 
 			Click(locator1 = "Pagination#NEXT_LINK_2");
 
 			AssertTextEquals(
-				locator1 = "Pagination#CURRENT_PAGE_MENU",
-				value1 = "Page 2 of 3");
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 2 to 2 of 3 entries.");
 
 			AssertTextEquals(
 				key_index = 2,
-				locator1 = "Pagination#CURRENT_PAGE_MENU_INDEX",
-				value1 = "Page 2 of 3");
+				locator1 = "Pagination#CURRENT_PAGE_SELECT_INDEX",
+				value1 = "Showing 2 to 2 of 3 entries.");
 		}
 	}
 

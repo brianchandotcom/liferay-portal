@@ -49,7 +49,7 @@ public class DDMFormFieldTypesJSONSerializer
 			ddmFormFieldTypesSerializerSerializeRequest) {
 
 		List<DDMFormFieldType> ddmFormFieldTypes =
-			ddmFormFieldTypesSerializerSerializeRequest.getDdmFormFieldTypes();
+			ddmFormFieldTypesSerializerSerializeRequest.getDDMFormFieldTypes();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 

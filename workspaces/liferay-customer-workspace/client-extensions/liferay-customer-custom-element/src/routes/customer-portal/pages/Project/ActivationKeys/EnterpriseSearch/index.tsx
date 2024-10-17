@@ -4,6 +4,7 @@
  */
 
 import {useEffect, useState} from 'react';
+
 import {getOrRequestToken} from '../../../../../../common/services/liferay/security/auth/getOrRequestToken';
 import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';

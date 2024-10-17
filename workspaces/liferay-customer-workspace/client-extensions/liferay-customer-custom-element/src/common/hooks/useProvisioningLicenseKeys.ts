@@ -4,6 +4,7 @@
  */
 
 import {useEffect, useMemo, useState} from 'react';
+
 import {useAppPropertiesContext} from '../contexts/AppPropertiesContext';
 import ProvisioningLicenseKeys from '../services/liferay/rest/raysource/ProvisioningLicenseKeys';
 import {getOrRequestToken} from '../services/liferay/security/auth/getOrRequestToken';

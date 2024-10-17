@@ -12,6 +12,7 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
@@ -30,10 +31,9 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				OAuth2Authorization.class.getName());
@@ -59,9 +59,6 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 			_expandoColumnLocalService.addColumn(
 				expandoTable.getTableId(), "lastNotificationDate",
 				ExpandoColumnConstants.DATE);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
 		}
 	}
 

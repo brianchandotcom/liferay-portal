@@ -123,20 +123,16 @@ public class PortletLocalServiceTest {
 				});
 
 		Assert.assertFalse(
-			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
 				disabledFFCustomAttributesDisplay));
 		Assert.assertTrue(
-			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
 				enabledFFCustomAttributesDisplay));
 		Assert.assertTrue(
-			customAttributesDisplays.toString(),
 			customAttributesDisplays.contains(
 				nullFFCustomAttributesDisplay));
 		Assert.assertEquals(
-			customAttributesDisplays.toString(), 2,
-			customAttributesDisplays.size());
+			2, customAttributesDisplays.size());
 
 		PropsUtil.setProps(_props);
 

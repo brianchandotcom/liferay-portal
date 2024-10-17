@@ -755,7 +755,7 @@ test.describe('Submit button', () => {
 					}
 				);
 
-			const checkObjectFieldValue = async (
+			const checkObjectEntries = async (
 				value: string,
 				status: string
 			) => {
@@ -927,7 +927,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectFieldValue('100', 'Draft');
+				await checkObjectEntries('100', 'Draft');
 			});
 
 			await test.step('Go to edit mode and map the Heading to the draft entry number and select the DPT created before as Field', async () => {
@@ -993,7 +993,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectFieldValue('200', 'Draft');
+				await checkObjectEntries('200', 'Draft');
 			});
 
 			await test.step('Go to view mode, click in the Heading and save the field value as Approved', async () => {
@@ -1017,7 +1017,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectFieldValue('300', 'Approved');
+				await checkObjectEntries('300', 'Approved');
 			});
 
 			await test.step('Go to view mode, click in the Heading and try to save the field value as Draft again', async () => {
@@ -1041,7 +1041,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectFieldValue('300', 'Approved');
+				await checkObjectEntries('300', 'Approved');
 			});
 
 			// Delete previously created object entries

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -66,22 +65,16 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 		throws ModelListenerException {
 
 		if (!Objects.equals(
-				originalCTCollection.getName(), ctCollection.getName()) ||
-			(originalCTCollection.getStatus() != ctCollection.getStatus())) {
+				originalCTCollection.getName(), ctCollection.getName())) {
 
-			Indexer<CTEntry> indexer = _indexerRegistry.getIndexer(
-				CTEntry.class);
-
-			if (indexer != null) {
-				try {
-					indexer.reindex(
-						_ctEntryLocalService.getCTCollectionCTEntries(
-							ctCollection.getCtCollectionId(), QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS, null));
-				}
-				catch (SearchException searchException) {
-					throw new ModelListenerException(searchException);
-				}
+			try {
+				_indexer.reindex(
+					_ctEntryLocalService.getCTCollectionCTEntries(
+						ctCollection.getCtCollectionId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null));
+			}
+			catch (SearchException searchException) {
+				throw new ModelListenerException(searchException);
 			}
 		}
 
@@ -125,8 +118,10 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
 
-	@Reference
-	private IndexerRegistry _indexerRegistry;
+	@Reference(
+		target = "(indexer.class.name=com.liferay.change.tracking.model.CTEntry)"
+	)
+	private Indexer<CTEntry> _indexer;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

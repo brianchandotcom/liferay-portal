@@ -165,6 +165,8 @@ public class CTSearchEventListener implements CTEventListener {
 				_indexWriterHelper.deleteDocuments(
 					ctCollection.getCompanyId(), uids,
 					indexer.isCommitImmediately());
+
+				_ctEntryIndexer.reindex(ctEntries);
 			}
 			catch (SearchException searchException) {
 				throw new CTEventException(searchException);
@@ -254,6 +256,11 @@ public class CTSearchEventListener implements CTEventListener {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.change.tracking.model.CTEntry)"
+	)
+	private Indexer<CTEntry> _ctEntryIndexer;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

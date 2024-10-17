@@ -187,7 +187,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 
 		for (long journalResourcePrimKey : resourcePrimKeys) {
 			AssetDisplayPageEntry assetDisplayPageEntry =
-				fetchAssetDisplayPageEntryByClassPk(journalResourcePrimKey);
+				fetchAssetDisplayPageEntryByClassPK(journalResourcePrimKey);
 
 			Assert.assertNotNull(assetDisplayPageEntry);
 
@@ -298,7 +298,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 		return resourcePrimKeys;
 	}
 
-	protected AssetDisplayPageEntry fetchAssetDisplayPageEntryByClassPk(
+	protected AssetDisplayPageEntry fetchAssetDisplayPageEntryByClassPK(
 			long classPK)
 		throws Exception {
 
@@ -399,10 +399,10 @@ public class UpgradeAssetDisplayPageEntryTest {
 			long liveResourcePrimKey = liveResourcePrimKeys.get(i);
 
 			AssetDisplayPageEntry stagingAssetDisplayPageEntry =
-				fetchAssetDisplayPageEntryByClassPk(stagingResourcePrimKey);
+				fetchAssetDisplayPageEntryByClassPK(stagingResourcePrimKey);
 
 			AssetDisplayPageEntry liveAssetDisplayPageEntry =
-				fetchAssetDisplayPageEntryByClassPk(liveResourcePrimKey);
+				fetchAssetDisplayPageEntryByClassPK(liveResourcePrimKey);
 
 			Assert.assertEquals(
 				liveAssetDisplayPageEntry.getUuid(),

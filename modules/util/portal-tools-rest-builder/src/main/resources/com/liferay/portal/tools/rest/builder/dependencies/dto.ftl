@@ -42,8 +42,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -254,7 +254,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 					return;
 				}
 
-				${propertyType} ${propertyName}Map = new HashMap<>(${propertyName});
+				${propertyType} ${propertyName}Map = new LinkedHashMap<>(${propertyName});
 
 				${propertyName}Map.replaceAll(
 					(key, value) -> {
@@ -346,7 +346,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 
 		<#if propertySchema.jsonMap>
 			@JsonAnyGetter
-			protected ${propertyType} ${propertyName} = Collections.synchronizedMap(new HashMap<>());
+			protected ${propertyType} ${propertyName} = Collections.synchronizedMap(new LinkedHashMap<>());
 		<#else>
 			protected ${propertyType} ${propertyName};
 

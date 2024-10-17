@@ -222,9 +222,9 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
             tags: ["TestEntity"]
-    /test-entities-address/{testEntityId}/test-entities-address:
+    /test-entities/{testEntityId}/test-entity-address:
         get:
-            operationId: getTestEntitiesAddressTestEntityTestEntitiesAddressPage
+            operationId: getTestEntityTestEntityAddress
             parameters:
                 - in: path
                   explode: false
@@ -241,14 +241,10 @@ paths:
                     content:
                         "application/json":
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/TestEntityAddress"
-                                type: array
+                                $ref: "#/components/schemas/TestEntityAddress"
                         "application/xml":
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/TestEntityAddress"
-                                type: array
+                                $ref: "#/components/schemas/TestEntityAddress"
                     description:
                         "OK"
             tags: ["TestEntityAddress"]

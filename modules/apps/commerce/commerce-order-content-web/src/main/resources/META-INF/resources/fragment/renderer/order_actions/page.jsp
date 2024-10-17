@@ -21,6 +21,8 @@
 				"orderSummaryURL", orderSummaryURL
 			).put(
 				"reorderURL", reorderURL
+			).put(
+				"viewReturnableOrderItemsURL", viewReturnableOrderItemsURL
 			).build()
 		%>'
 	/>
@@ -38,3 +40,18 @@
 		%>'
 	/>
 </div>
+
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10562") && Validator.isNotNull(viewReturnableOrderItemsURL) %>'>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"namespace", namespace
+			).put(
+				"returnableOrderItemsContextParams", returnableOrderItemsContextParams
+			).put(
+				"viewReturnableOrderItemsURL", viewReturnableOrderItemsURL
+			).build()
+		%>'
+		module="{viewCommerceOrderDetailsCTAs} from commerce-order-content-web"
+	/>
+</c:if>

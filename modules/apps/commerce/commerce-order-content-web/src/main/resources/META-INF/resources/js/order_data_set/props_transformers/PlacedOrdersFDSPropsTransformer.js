@@ -16,8 +16,17 @@ const PlacedOrdersFDSPropsTransformer = (props) => ({
 		action: {
 			data: {id: actionId},
 		},
-		itemData: {id: orderId, name: orderName},
+		itemData: {accountId, id: orderId, name: orderName},
 	}) => {
+		if (actionId === 'rename') {
+			openOrderNameModal({
+				dataSetId: props.id,
+				isOpen: false,
+				orderId,
+				orderName,
+			});
+		}
+
 		if (actionId === 'reorder') {
 			DeliveryOrderAPI.getOrderTransitionsById(orderId)
 				.then(({items: cartTransitions}) => {
@@ -48,12 +57,10 @@ const PlacedOrdersFDSPropsTransformer = (props) => ({
 				});
 		}
 
-		if (actionId === 'rename') {
-			openOrderNameModal({
-				dataSetId: props.id,
-				isOpen: false,
+		if (actionId === 'return') {
+			Liferay.fire(`${props.namespace || ''}makeReturn`, {
+				accountId,
 				orderId,
-				orderName,
 			});
 		}
 	},

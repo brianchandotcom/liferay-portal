@@ -8,6 +8,7 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceReturn;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -36,6 +37,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,6 +55,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -155,10 +160,13 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 			String fdsName = _getConfigurationValue(
 				fragmentRendererContext, fragmentEntryLink, "fdsName");
 
+			String namespace = StringUtil.randomId() + StringPool.UNDERLINE;
+
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:additionalProps",
 				_getFDSAdditionalProps(
-					commerceChannel, fdsName, httpServletRequest));
+					commerceChannel, fdsName, namespace, httpServletRequest));
+
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:apiURL",
 				_getAPIURL(commerceChannel.getCommerceChannelId(), fdsName));
@@ -173,7 +181,8 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 				_getFDSCreationMenu(fdsName, httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:name", fdsName);
-
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-data-set:namespace", namespace);
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:orderTypes",
 				_getCommerceOrderTypesJSONArray(
@@ -183,6 +192,18 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:order-data-set:propsTransformer",
 				"{OrderDataSetPropsTransformer} from " +
 					"commerce-order-content-web");
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
+				httpServletRequest.setAttribute(
+					"liferay-commerce:order-data-set:" +
+						"returnableOrderItemsContextParams",
+					_getReturnableOrderItemsContextParams(
+						commerceChannel, httpServletRequest));
+				httpServletRequest.setAttribute(
+					"liferay-commerce:order-data-set:" +
+						"viewReturnableOrderItemsURL",
+					_getViewReturnableOrderItemsURL(httpServletRequest));
+			}
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -321,7 +342,7 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 					new FDSActionDropdownItem(
 						StringPool.BLANK, "undo", "return",
 						_language.get(httpServletRequest, "make-a-return"),
-						null, null, "makeReturn"));
+						null, null, "link"));
 			}
 
 			return fdsActionDropdownItems;
@@ -331,7 +352,7 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Map<String, Object> _getFDSAdditionalProps(
-		CommerceChannel commerceChannel, String fdsName,
+		CommerceChannel commerceChannel, String fdsName, String namespace,
 		HttpServletRequest httpServletRequest) {
 
 		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS)) {
@@ -368,6 +389,8 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 		}
 		else if (fdsName.equals(CommerceOrderFragmentFDSNames.PLACED_ORDERS)) {
 			return HashMapBuilder.<String, Object>put(
+				"namespace", namespace
+			).put(
 				"orderDetailURL",
 				_getCommerceOrderFriendlyURL(httpServletRequest)
 			).build();
@@ -407,6 +430,51 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 		}
 
 		return null;
+	}
+
+	private HashMap<String, Object> _getReturnableOrderItemsContextParams(
+		CommerceChannel commerceChannel,
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			return HashMapBuilder.<String, Object>put(
+				"channelGroupId", commerceChannel.getGroupId()
+			).put(
+				"channelId", commerceChannel.getCommerceChannelId()
+			).put(
+				"channelName", commerceChannel.getName()
+			).put(
+				"redirect",
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest, CommerceReturn.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setMVCRenderCommandName(
+					"/commerce_return_content/view_commerce_return"
+				).setParameter(
+					"commerceReturnId", 0
+				).buildString()
+			).build();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return new HashMap<>();
+		}
+	}
+
+	private String _getViewReturnableOrderItemsURL(
+		HttpServletRequest httpServletRequest) {
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_order_content/view_returnable_commerce_order_items"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

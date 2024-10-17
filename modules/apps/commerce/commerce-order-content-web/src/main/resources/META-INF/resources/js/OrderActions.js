@@ -14,9 +14,11 @@ import {PAYMENT_METHOD_TYPE_OFFLINE, getOrder} from './util';
 function OrderActions({
 	checkoutURL,
 	isOpen,
+	namespace,
 	orderId,
 	orderSummaryURL,
 	reorderURL,
+	viewReturnableOrderItemsURL,
 }) {
 	const [actions, setActions] = useState([]);
 	const [currentOrder, setCurrentOrder] = useState({});
@@ -36,7 +38,7 @@ function OrderActions({
 						(item) => item.name === 'quick-checkout'
 					);
 
-					setActions(
+					let actions =
 						open && !quickCheckoutTransition
 							? [
 									...response.items,
@@ -48,9 +50,19 @@ function OrderActions({
 										name: 'quick-checkout',
 									},
 								]
-							: response.items
-					);
+							: response.items;
 
+					if (viewReturnableOrderItemsURL) {
+						actions = [
+							...actions,
+							{
+								label: Liferay.Language.get('make-a-return'),
+								name: 'make-return',
+							},
+						];
+					}
+
+					setActions(actions);
 					setCurrentOrder(order);
 				})
 				.catch((error) => {
@@ -64,7 +76,7 @@ function OrderActions({
 					});
 				});
 		},
-		[orderId, open]
+		[orderId, open, viewReturnableOrderItemsURL]
 	);
 
 	useEffect(() => {
@@ -93,6 +105,12 @@ function OrderActions({
 			handleOrderActionRedirect({
 				checkoutURL,
 				id: action.name,
+			});
+		}
+		else if (action.name === 'make-return') {
+			Liferay.fire(`${namespace || ''}makeReturn`, {
+				accountId: Liferay.CommerceContext.account.accountId,
+				orderId,
 			});
 		}
 		else if (action.name === 'quick-checkout') {

@@ -198,6 +198,10 @@ public class PullRequestPortalTopLevelBuild
 
 		Job stableJob = _getStableJob();
 
+		if (stableJob == null) {
+			return null;
+		}
+
 		List<String> stableJobBatchNames = new ArrayList<>(
 			stableJob.getBatchNames());
 
@@ -281,14 +285,7 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getFailedStableJobSummaryElement() {
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
+		Job stableJob = _getStableJob();
 
 		if (stableJob == null) {
 			return Dom4JUtil.getNewElement("span");
@@ -321,14 +318,7 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected List<Build> getStableJobDownstreamBuilds() {
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
+		Job stableJob = _getStableJob();
 
 		if (stableJob != null) {
 			return getJobVariantsDownstreamBuilds(
@@ -339,14 +329,7 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getStableJobResultElement() {
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
+		Job stableJob = _getStableJob();
 
 		if (stableJob == null) {
 			return null;
@@ -381,14 +364,7 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getStableJobSuccessSummaryElement() {
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
+		Job stableJob = _getStableJob();
 
 		if (stableJob == null) {
 			return Dom4JUtil.getNewElement("span");
@@ -416,14 +392,7 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getStableJobSummaryElement() {
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
+		Job stableJob = _getStableJob();
 
 		if (stableJob == null) {
 			return Dom4JUtil.getNewElement("span");
@@ -473,14 +442,7 @@ public class PullRequestPortalTopLevelBuild
 
 		List<Build> stableJobDownstreamBuilds = new ArrayList<>();
 
-		Job stableJob;
-
-		if (_stableJob != null) {
-			stableJob = _stableJob;
-		}
-		else {
-			stableJob = _getStableJob();
-		}
+		Job stableJob = _getStableJob();
 
 		if (stableJob != null) {
 			stableJobDownstreamBuilds.addAll(getStableJobDownstreamBuilds());

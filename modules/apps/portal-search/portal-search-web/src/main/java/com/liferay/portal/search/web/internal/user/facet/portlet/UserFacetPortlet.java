@@ -120,7 +120,6 @@ public class UserFacetPortlet extends MVCPortlet {
 			userFacetPortletPreferences.getMaxTerms());
 		userSearchFacetDisplayContextBuilder.setOrder(
 			userFacetPortletPreferences.getOrder());
-
 		userSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

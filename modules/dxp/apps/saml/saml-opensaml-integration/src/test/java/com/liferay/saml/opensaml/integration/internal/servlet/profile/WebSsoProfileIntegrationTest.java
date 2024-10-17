@@ -622,7 +622,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		AuthnRequest authnRequest =
 			(AuthnRequest)inboundMessageContext.getMessage();
 
-		Assert.assertEquals(identifiers.get(0), authnRequest.getID());
+		Assert.assertEquals("RDR_" + identifiers.get(0), authnRequest.getID());
 
 		Assert.assertEquals(2, identifiers.size());
 		Assert.assertFalse(authnRequest.isForceAuthn());

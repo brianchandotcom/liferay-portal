@@ -159,16 +159,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public FileEntry addAttachmentFileEntry(
-			BlogsEntry entry, long userId, String fileName, String mimeType,
-			InputStream inputStream)
-		throws PortalException {
-
-		return addAttachmentFileEntry(
-			null, userId, entry.getGroupId(), fileName, mimeType, inputStream);
-	}
-
-	@Override
-	public FileEntry addAttachmentFileEntry(
 			String externalReferenceCode, long userId, long groupId,
 			String fileName, String mimeType, InputStream inputStream)
 		throws PortalException {

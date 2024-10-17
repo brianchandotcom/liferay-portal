@@ -43,7 +43,7 @@ const ACTIONS = {
 			size: 'md',
 			title: sub(
 				Liferay.Language.get('copy-x-to'),
-				`"${layoutPageTemplateCollectionName}"`
+				layoutPageTemplateCollectionName
 			),
 			url: itemSelectorURL,
 		});
@@ -92,7 +92,7 @@ const ACTIONS = {
 			size: 'md',
 			title: sub(
 				Liferay.Language.get('move-x-to'),
-				`"${layoutPageTemplateCollectionName}"`
+				layoutPageTemplateCollectionName
 			),
 			url: itemSelectorURL,
 		});

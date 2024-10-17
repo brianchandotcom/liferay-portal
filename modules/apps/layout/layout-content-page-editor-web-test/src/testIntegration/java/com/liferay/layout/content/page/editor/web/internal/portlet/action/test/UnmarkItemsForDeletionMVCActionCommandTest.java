@@ -6,14 +6,14 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -34,7 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -76,36 +75,21 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 
 	@Test
 	public void testUnmarkItemsForDeletion() throws Exception {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), _layout.getPlid());
+		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		String containerItemId = _addItemToLayout(
-			LayoutDataItemTypeConstants.TYPE_CONTAINER,
-			layoutStructure.getMainItemId());
+		String containerItemId = addItemJSONObject.getString("addedItemId");
 
 		String rowItemId = _addItemToLayout(
 			LayoutDataItemTypeConstants.TYPE_ROW, containerItemId);
 
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		ContentLayoutTestUtil.markItemForDeletionFromLayout(
+			containerItemId, _layout, StringPool.BLANK);
 
-		layoutStructure.markLayoutStructureItemForDeletion(
-			Collections.singletonList(containerItemId),
-			Collections.emptyList());
-
-		layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), _layout.getPlid(),
-					_segmentsExperienceId, layoutStructure.toString());
-
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
 		Assert.assertTrue(
 			layoutStructure.isItemMarkedForDeletion(containerItemId));
@@ -120,8 +104,8 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 					containerItemId
 				).toString()));
 
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
 
 		Assert.assertTrue(
 			JSONUtil.equals(
@@ -137,23 +121,18 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 
 	@Test
 	public void testUnmarkItemsForDeletionRowColumns() throws Exception {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), _layout.getPlid());
+		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		String containerItemId = _addItemToLayout(
-			LayoutDataItemTypeConstants.TYPE_CONTAINER,
-			layoutStructure.getMainItemId());
+		String containerItemId = addItemJSONObject.getString("addedItemId");
 
 		String rowItemId = _addItemToLayout(
 			LayoutDataItemTypeConstants.TYPE_ROW, containerItemId);
 
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 			(RowStyledLayoutStructureItem)
@@ -183,8 +162,8 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 					originalChildrenItemIds[1], originalChildrenItemIds[2]
 				).toString()));
 
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
 
 		Assert.assertTrue(
 			JSONUtil.equals(
@@ -258,8 +237,7 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 	private Layout _layout;
 
 	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/unmark_items_for_deletion"

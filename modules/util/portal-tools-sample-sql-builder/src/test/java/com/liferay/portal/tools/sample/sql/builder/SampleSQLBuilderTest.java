@@ -46,7 +46,7 @@ public class SampleSQLBuilderTest {
 		LogAssertionTestRule.INSTANCE;
 
 	@Test
-	public void testFreemarkerTemplateContent() throws Exception {
+	public void testFreeMarkerTemplateContent() throws Exception {
 		Class<?> clazz = getClass();
 
 		URL url = clazz.getResource(

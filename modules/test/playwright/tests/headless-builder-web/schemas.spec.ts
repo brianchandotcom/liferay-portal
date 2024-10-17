@@ -316,10 +316,7 @@ testFeatureFlagsDisabled(
 
 		expect(objectDefinitionDropdownOptions).not.toContain(['Organization']);
 
-		for (const expectedObjectDefinition of [
-			'APIApplication',
-			'ObjectDefinition',
-		]) {
+		for (const expectedObjectDefinition of ['ObjectDefinition']) {
 			expect(
 				objectDefinitionDropdownOptions.includes(
 					expectedObjectDefinition
@@ -369,7 +366,6 @@ testFeatureFlagsEnabled(
 
 		for (const expectedObjectDefinition of [
 			'AccountEntry',
-			'APIApplication',
 			'ObjectDefinition',
 			'User',
 		]) {
@@ -608,21 +604,6 @@ testFeatureFlagsEnabled(
 				.getByRole('button', {name: 'Account'})
 				.locator('..')
 				.getByLabel('Test Unmodifiable Allowed System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).not.toHaveClass(/disabled/);
-
-		// Assert that modifiable system object properties are enabled
-
-		await schemaPage.page
-			.getByRole('button', {name: 'API Application'})
-			.click();
-
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'API Application'})
-				.locator('..')
-				.getByLabel('Test Modifiable System Object')
 				.getByLabel('Add Author Property')
 				.getByText('Author')
 		).not.toHaveClass(/disabled/);

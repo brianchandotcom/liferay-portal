@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.commerce.order.content.web.internal.info.item.util.CommerceOrderInfoItemUtil;
@@ -27,6 +28,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,6 +51,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -230,6 +236,10 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 				new FDSActionDropdownItem(
 					StringPool.BLANK, "view", "view",
 					_language.get(httpServletRequest, "view"), null, null,
+					"link"),
+				new FDSActionDropdownItem(
+					StringPool.BLANK, "truck", "shipments",
+					_language.get(httpServletRequest, "shipments"), null, null,
 					"link"));
 		}
 
@@ -247,6 +257,8 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 				_portal.getCompanyId(httpServletRequest))
 		).put(
 			"siteDefaultURL", _getSiteDefaultURL(httpServletRequest)
+		).put(
+			"viewShipmentsURL", _getViewShipmentsURL(httpServletRequest)
 		).build();
 	}
 
@@ -275,6 +287,18 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 
 		return HtmlUtil.escape(
 			group.getDisplayURL(themeDisplay, layout.isPrivateLayout()));
+	}
+
+	private String _getViewShipmentsURL(HttpServletRequest httpServletRequest) {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_order_content/view_commerce_order_item_shipments"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {

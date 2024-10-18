@@ -783,7 +783,10 @@ public class DBPartitionUtil {
 			UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception {
 
-		ExecutorService executorService = Executors.newWorkStealingPool();
+		Runtime runtime = Runtime.getRuntime();
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors());
 
 		List<Future<Void>> futures = new ArrayList<>();
 

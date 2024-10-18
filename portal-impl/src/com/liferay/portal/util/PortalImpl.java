@@ -23,9 +23,6 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
-import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
-import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.change.tracking.CTCollectionPreviewThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -6757,19 +6754,18 @@ public class PortalImpl implements Portal {
 		}
 
 		if (!siteGroup.isCompany()) {
-			ThreadLocalCache<Group> threadLocalCache =
-				ThreadLocalCacheManager.getThreadLocalCache(
-					Lifecycle.REQUEST, Company.class.getName());
+			Group companyGroup = null;
 
-			String cacheKey = StringUtil.toHexString(siteGroup.getCompanyId());
+			Company company = CompanyLocalServiceUtil.fetchCompany(
+				siteGroup.getCompanyId());
 
-			Group companyGroup = threadLocalCache.get(cacheKey);
-
-			if (companyGroup == null) {
-				companyGroup = GroupLocalServiceUtil.fetchCompanyGroup(
-					siteGroup.getCompanyId());
-
-				threadLocalCache.put(cacheKey, companyGroup);
+			if (company != null) {
+				try {
+					companyGroup = company.getGroup();
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
 			}
 
 			if (companyGroup != null) {

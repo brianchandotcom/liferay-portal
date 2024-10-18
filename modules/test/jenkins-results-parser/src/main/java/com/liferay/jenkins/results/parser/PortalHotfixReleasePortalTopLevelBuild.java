@@ -50,7 +50,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
 
 		if (PortalRelease.isQuarterlyRelease(portalVersion)) {
-			return "master";
+			return _getQuarterlyReleaseBranch(portalVersion);
 		}
 
 		String majorVersion = matcher.group("majorVersion");
@@ -371,6 +371,18 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		return sb.toString();
 	}
 
+	private String _getQuarterlyReleaseBranch(String portalVersion) {
+		Matcher quarterlyReleaseBranchMatcher =
+			_quarterlyReleaseBranchNamePattern.matcher(portalVersion);
+
+		if (quarterlyReleaseBranchMatcher.find()) {
+			return "release-" +
+				quarterlyReleaseBranchMatcher.group("branchName");
+		}
+
+		return "master";
+	}
+
 	private static final MultiPattern _hotfixZipURLPattern = new MultiPattern(
 		"https?://.*(?<majorVersion>\\d)(?<minorVersion>\\d)" +
 			"(?<fixVersion>\\d{2})\\.(lpkg|zip)",
@@ -394,6 +406,8 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?",
 			"(?<majorVersion>\\d{4}).(?<minorVersion>q\\d+)." +
 				"(?<fixVersion>\\d+)");
+	private static final Pattern _quarterlyReleaseBranchNamePattern =
+		Pattern.compile("(?<branchName>\\d{4}.[Qq]\\d+).\\d+");
 
 	private PortalFixpackRelease _portalFixpackRelease;
 	private PortalHotfixRelease _portalHotfixRelease;

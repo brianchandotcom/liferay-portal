@@ -74,19 +74,6 @@ describe('AssetAppearsOnCard', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should have a Views column for blog', async () => {
-		const {container, getByText} = render(
-			<WrappedComponent
-				accessors={[Accessor.ViewsMetric]}
-				assetType={AssetTypes.Blog}
-			/>
-		);
-
-		await waitForLoadingToBeRemoved(container);
-
-		expect(getByText('Views')).toBeInTheDocument();
-	});
-
 	it('should have a Views column for Blog', async () => {
 		const {container, getByText} = render(
 			<WrappedComponent

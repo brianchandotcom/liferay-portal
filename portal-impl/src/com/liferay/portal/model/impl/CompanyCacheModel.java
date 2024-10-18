@@ -255,6 +255,8 @@ public class CompanyCacheModel
 
 		companyImpl.setCompanySecurityBag(_companySecurityBag);
 
+		companyImpl.setGroupId(_groupId);
+
 		companyImpl.setVirtualHostname(_virtualHostname);
 
 		return companyImpl;
@@ -295,6 +297,7 @@ public class CompanyCacheModel
 
 		_companySecurityBag =
 			(CompanyImpl.CompanySecurityBag)objectInput.readObject();
+		_groupId = (long)objectInput.readObject();
 		_virtualHostname = (String)objectInput.readObject();
 	}
 
@@ -421,6 +424,7 @@ public class CompanyCacheModel
 		}
 
 		objectOutput.writeObject(_companySecurityBag);
+		objectOutput.writeObject(_groupId);
 		objectOutput.writeObject(_virtualHostname);
 	}
 
@@ -448,6 +452,7 @@ public class CompanyCacheModel
 	public String indexNameCurrent;
 	public String indexNameNext;
 	public CompanyImpl.CompanySecurityBag _companySecurityBag;
+	public long _groupId;
 	public String _virtualHostname;
 
 }

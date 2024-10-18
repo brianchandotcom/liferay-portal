@@ -849,6 +849,13 @@ public class CompanyModelImpl
 		CompanyImpl.CompanySecurityBag companySecurityBag) {
 	}
 
+	public long getGroupId() {
+		return 0;
+	}
+
+	public void setGroupId(long groupId) {
+	}
+
 	public String getVirtualHostname() {
 		return null;
 	}
@@ -1214,6 +1221,8 @@ public class CompanyModelImpl
 		setCompanySecurityBag(null);
 
 		companyCacheModel._companySecurityBag = getCompanySecurityBag();
+
+		companyCacheModel._groupId = getGroupId();
 
 		setVirtualHostname(null);
 

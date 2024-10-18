@@ -284,9 +284,7 @@ public class CompanyWrapper
 	}
 
 	@Override
-	public long getGroupId()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public long getGroupId() {
 		return model.getGroupId();
 	}
 
@@ -650,6 +648,11 @@ public class CompanyWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**

@@ -813,6 +813,9 @@ public class CompanyPersistenceImpl
 				companyModelImpl.setCompanySecurityBag(
 					cachedCompanyModelImpl.getCompanySecurityBag());
 
+				companyModelImpl.setGroupId(
+					cachedCompanyModelImpl.getGroupId());
+
 				companyModelImpl.setVirtualHostname(
 					cachedCompanyModelImpl.getVirtualHostname());
 			}

@@ -59,117 +59,133 @@ test.beforeEach(
 );
 
 test.describe('Management Toolbar Default State', () => {
-	test('Assert the New button is displayed as a text button @LPS-144540', async ({
-		page,
-	}) => {
-		await test.step('Check that the new button text is "New"', async () => {
-			await expect(
-				page
-					.locator('#managementToolbarDefaultState')
-					.getByRole('button')
-					.filter({hasText: 'New'})
-			).toBeVisible();
-		});
-	});
+	test(
+		'Assert the New button is displayed as a text button',
+		{tag: '@LPS-144540'},
+		async ({page}) => {
+			await test.step('Check that the new button text is "New"', async () => {
+				await expect(
+					page
+						.locator('#managementToolbarDefaultState')
+						.getByRole('button')
+						.filter({hasText: 'New'})
+				).toBeVisible();
+			});
+		}
+	);
 
-	test('Assert the new button is displayed as an icon button in responsive mode @LPS-144540', async ({
-		page,
-	}) => {
-		await test.step('Set the window size to phone size', async () => {
-			await page.setViewportSize({height: 720, width: 360});
-		});
+	test(
+		'Assert the new button is displayed as an icon button in responsive mode',
+		{tag: '@LPS-144540'},
+		async ({page}) => {
+			await test.step('Set the window size to phone size', async () => {
+				await page.setViewportSize({height: 720, width: 360});
+			});
 
-		await test.step('Check the button is an icon', async () => {
-			await expect(
-				page
+			await test.step('Check the button is an icon', async () => {
+				await expect(
+					page
+						.locator('#managementToolbarDefaultState')
+						.getByRole('button', {name: 'New'})
+						.locator('.lexicon-icon-plus')
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'Assert the tooltip message is displayed when hovered over the new button in responsive mode',
+		{tag: '@LPS-144540'},
+		async ({page}) => {
+			await test.step('Set the window size to phone size', async () => {
+				await page.setViewportSize({height: 720, width: 360});
+			});
+
+			await test.step('Hover over the "New" button', async () => {
+				await page
 					.locator('#managementToolbarDefaultState')
 					.getByRole('button', {name: 'New'})
-					.locator('.lexicon-icon-plus')
-			).toBeVisible();
-		});
-	});
+					.hover();
+			});
 
-	test('Assert the tooltip message is displayed when hovered over the new button in responsive mode @LPS-144540', async ({
-		page,
-	}) => {
-		await test.step('Set the window size to phone size', async () => {
-			await page.setViewportSize({height: 720, width: 360});
-		});
+			await test.step('Check the tooltip text displays "New"', async () => {
+				await expect(
+					page.locator('.tooltip-inner').getByText('New')
+				).toBeVisible();
+			});
+		}
+	);
 
-		await test.step('Hover over the "New" button', async () => {
-			await page
-				.locator('#managementToolbarDefaultState')
-				.getByRole('button', {name: 'New'})
-				.hover();
-		});
+	test(
+		'Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode',
+		{tag: '@LPS-144536'},
+		async ({page}) => {
+			await test.step('Set the window size to phone size', async () => {
+				await page.setViewportSize({height: 720, width: 360});
+			});
 
-		await test.step('Check the tooltip text displays "New"', async () => {
-			await expect(
-				page.locator('.tooltip-inner').getByText('New')
-			).toBeVisible();
-		});
-	});
+			await test.step('Hover over the "Filter" button', async () => {
+				await page
+					.locator('#managementToolbarDefaultState')
+					.getByRole('button', {name: 'Filter'})
+					.hover();
+			});
 
-	test('Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode @LPS-144536', async ({
-		page,
-	}) => {
-		await test.step('Set the window size to phone size', async () => {
-			await page.setViewportSize({height: 720, width: 360});
-		});
+			await test.step('Check the tooltip text displays "Show Filter Options"', async () => {
+				await expect(
+					page
+						.locator('.tooltip-inner')
+						.getByText('Show Filter Options')
+				).toBeVisible();
+			});
 
-		await test.step('Hover over the "Filter" button', async () => {
-			await page
-				.locator('#managementToolbarDefaultState')
-				.getByRole('button', {name: 'Filter'})
-				.hover();
-		});
+			await test.step('Hover over the "Order" button', async () => {
+				await page
+					.locator('#managementToolbarDefaultState')
+					.getByRole('button', {name: 'Order'})
+					.hover();
+			});
 
-		await test.step('Check the tooltip text displays "Show Filter Options"', async () => {
-			await expect(
-				page.locator('.tooltip-inner').getByText('Show Filter Options')
-			).toBeVisible();
-		});
+			await test.step('Check the tooltip text displays "Show Order Options"', async () => {
+				await expect(
+					page
+						.locator('.tooltip-inner')
+						.getByText('Show Order Options')
+				).toBeVisible();
+			});
+		}
+	);
 
-		await test.step('Hover over the "Order" button', async () => {
-			await page
-				.locator('#managementToolbarDefaultState')
-				.getByRole('button', {name: 'Order'})
-				.hover();
-		});
+	test(
+		'Assert the view button displays a double caret icon',
+		{tag: '@LPS-144535'},
+		async ({page}) => {
+			await test.step('Check that the double caret icon is visible', async () => {
+				await expect(
+					page.locator(
+						'#managementToolbarDefaultState .lexicon-icon-caret-double-l'
+					)
+				).toBeVisible();
+			});
+		}
+	);
 
-		await test.step('Check the tooltip text displays "Show Order Options"', async () => {
-			await expect(
-				page.locator('.tooltip-inner').getByText('Show Order Options')
-			).toBeVisible();
-		});
-	});
+	test(
+		'Assert the tooltip message is displayed when hovered over the view button',
+		{tag: '@LPS-144535'},
+		async ({page}) => {
+			await test.step('Hover over the view button', async () => {
+				await page
+					.locator('#managementToolbarDefaultState')
+					.getByLabel(/Select View/)
+					.hover();
+			});
 
-	test('Assert the view button displays a double caret icon @LPS-144535', async ({
-		page,
-	}) => {
-		await test.step('Check that the double caret icon is visible', async () => {
-			await expect(
-				page.locator(
-					'#managementToolbarDefaultState .lexicon-icon-caret-double-l'
-				)
-			).toBeVisible();
-		});
-	});
-
-	test('Assert the tooltip message is displayed when hovered over the view button @LPS-144535', async ({
-		page,
-	}) => {
-		await test.step('Hover over the view button', async () => {
-			await page
-				.locator('#managementToolbarDefaultState')
-				.getByLabel(/Select View/)
-				.hover();
-		});
-
-		await test.step('Check the tooltip text is displayed', async () => {
-			await expect(page.getByText(/Select View/)).toBeVisible();
-		});
-	});
+			await test.step('Check the tooltip text is displayed', async () => {
+				await expect(page.getByText(/Select View/)).toBeVisible();
+			});
+		}
+	);
 });
 
 test.describe('Management Toolbar With Results', () => {
@@ -195,252 +211,264 @@ test.describe('Management Toolbar With Results', () => {
 });
 
 test.describe('Management Toolbar Active State', () => {
-	test('Assert the items in the actions ellipsis are displayed @LPS-144538', async ({
-		page,
-	}) => {
-		let actionsButton: Locator;
+	test(
+		'Assert the items in the actions ellipsis are displayed',
+		{tag: '@LPS-144538'},
+		async ({page}) => {
+			let actionsButton: Locator;
 
-		await test.step('Check that the ellipsis actions button is visible', async () => {
-			actionsButton = page
-				.locator('#managementToolbarActiveState')
-				.getByRole('button')
-				.nth(3);
+			await test.step('Check that the ellipsis actions button is visible', async () => {
+				actionsButton = page
+					.locator('#managementToolbarActiveState')
+					.getByRole('button')
+					.nth(3);
 
-			await expect(actionsButton).toBeVisible();
-		});
-		await test.step('Click on the actions button', async () => {
-			await actionsButton.click();
-		});
+				await expect(actionsButton).toBeVisible();
+			});
+			await test.step('Click on the actions button', async () => {
+				await actionsButton.click();
+			});
 
-		await test.step('Check that the "Edit" button visible', async () => {
-			await expect(
-				page.getByRole('menuitem', {name: 'Edit'})
-			).toBeVisible();
-		});
+			await test.step('Check that the "Edit" button visible', async () => {
+				await expect(
+					page.getByRole('menuitem', {name: 'Edit'})
+				).toBeVisible();
+			});
 
-		await test.step('Check that the "Download" button and icon is visible', async () => {
-			await expect(
-				page.getByRole('menuitem', {name: 'Download'})
-			).toBeVisible();
+			await test.step('Check that the "Download" button and icon is visible', async () => {
+				await expect(
+					page.getByRole('menuitem', {name: 'Download'})
+				).toBeVisible();
 
-			await expect(
-				page
-					.getByRole('menuitem', {name: 'Download'})
-					.locator('.lexicon-icon-download')
-			).toBeVisible();
-		});
+				await expect(
+					page
+						.getByRole('menuitem', {name: 'Download'})
+						.locator('.lexicon-icon-download')
+				).toBeVisible();
+			});
 
-		await test.step('Check that the "Delete" button and icon is visible', async () => {
-			await expect(
-				page.getByRole('menuitem', {name: 'Delete'})
-			).toBeVisible();
+			await test.step('Check that the "Delete" button and icon is visible', async () => {
+				await expect(
+					page.getByRole('menuitem', {name: 'Delete'})
+				).toBeVisible();
 
-			await expect(
-				page
-					.getByRole('menuitem', {name: 'Delete'})
-					.locator('.lexicon-icon-trash')
-			).toBeVisible();
-		});
-	});
+				await expect(
+					page
+						.getByRole('menuitem', {name: 'Delete'})
+						.locator('.lexicon-icon-trash')
+				).toBeVisible();
+			});
+		}
+	);
 
-	test('Assert the action buttons are displayed as icon buttons in responsive mode @LPS-144538', async ({
-		page,
-	}) => {
-		const managementToolbarActiveStateContainer = page.locator(
-			'#managementToolbarActiveState'
-		);
+	test(
+		'Assert the action buttons are displayed as icon buttons in responsive mode',
+		{tag: '@LPS-144538'},
+		async ({page}) => {
+			const managementToolbarActiveStateContainer = page.locator(
+				'#managementToolbarActiveState'
+			);
 
-		await test.step('Set the window size to tablet size', async () => {
-			await page.setViewportSize({height: 1024, width: 800});
-		});
+			await test.step('Set the window size to tablet size', async () => {
+				await page.setViewportSize({height: 1024, width: 800});
+			});
 
-		await test.step('Check that the text is not visible', async () => {
-			await expect(
-				managementToolbarActiveStateContainer.getByText('Download')
-			).not.toBeVisible();
+			await test.step('Check that the text is not visible', async () => {
+				await expect(
+					managementToolbarActiveStateContainer.getByText('Download')
+				).not.toBeVisible();
 
-			await expect(
-				managementToolbarActiveStateContainer.getByText('Delete')
-			).not.toBeVisible();
-		});
+				await expect(
+					managementToolbarActiveStateContainer.getByText('Delete')
+				).not.toBeVisible();
+			});
 
-		await test.step('Check that the icon is visible', async () => {
+			await test.step('Check that the icon is visible', async () => {
 
-			// This counts the icons because for responsiveness there is one
-			// button with an icon only and another button with icon and text
-			// where one should be visible at a time.
+				// This counts the icons because for responsiveness there is one
+				// button with an icon only and another button with icon and text
+				// where one should be visible at a time.
 
-			const downloadIconsLocator =
-				managementToolbarActiveStateContainer.locator(
-					'.lexicon-icon-download'
-				);
+				const downloadIconsLocator =
+					managementToolbarActiveStateContainer.locator(
+						'.lexicon-icon-download'
+					);
 
-			const downloadIcons = await downloadIconsLocator.all();
+				const downloadIcons = await downloadIconsLocator.all();
 
-			let downloadIconVisibleCount = 0;
+				let downloadIconVisibleCount = 0;
 
-			for (const downloadIcon of downloadIcons) {
-				if (await downloadIcon.isVisible()) {
-					downloadIconVisibleCount++;
+				for (const downloadIcon of downloadIcons) {
+					if (await downloadIcon.isVisible()) {
+						downloadIconVisibleCount++;
+					}
 				}
-			}
 
-			expect(downloadIconVisibleCount).toEqual(1);
+				expect(downloadIconVisibleCount).toEqual(1);
 
-			const trashIconsLocator =
-				managementToolbarActiveStateContainer.locator(
-					'.lexicon-icon-trash'
-				);
+				const trashIconsLocator =
+					managementToolbarActiveStateContainer.locator(
+						'.lexicon-icon-trash'
+					);
 
-			const trashIcons = await trashIconsLocator.all();
+				const trashIcons = await trashIconsLocator.all();
 
-			let trashIconVisibleCount = 0;
+				let trashIconVisibleCount = 0;
 
-			for (const trashIcon of trashIcons) {
-				if (await trashIcon.isVisible()) {
-					trashIconVisibleCount++;
+				for (const trashIcon of trashIcons) {
+					if (await trashIcon.isVisible()) {
+						trashIconVisibleCount++;
+					}
 				}
-			}
 
-			expect(trashIconVisibleCount).toEqual(1);
-		});
-	});
+				expect(trashIconVisibleCount).toEqual(1);
+			});
+		}
+	);
 
-	test('Assert tooltip message will be displayed when hovered over an action button in responsive mode @LPS-144538', async ({
-		page,
-	}) => {
-		await test.step('Set the window size to tablet size', async () => {
-			await page.setViewportSize({height: 1024, width: 800});
-		});
+	test(
+		'Assert tooltip message will be displayed when hovered over an action button in responsive mode',
+		{tag: '@LPS-144538'},
+		async ({page}) => {
+			await test.step('Set the window size to tablet size', async () => {
+				await page.setViewportSize({height: 1024, width: 800});
+			});
 
-		await test.step('Hover over the download button', async () => {
-			await page
-				.locator('#managementToolbarActiveState')
-				.getByRole('button', {name: 'Download'})
-				.hover();
-		});
+			await test.step('Hover over the download button', async () => {
+				await page
+					.locator('#managementToolbarActiveState')
+					.getByRole('button', {name: 'Download'})
+					.hover();
+			});
 
-		await test.step('Check the tooltip text is displayed', async () => {
-			await expect(
-				page.locator('.tooltip-inner').getByText('Download')
-			).toBeVisible();
-		});
+			await test.step('Check the tooltip text is displayed', async () => {
+				await expect(
+					page.locator('.tooltip-inner').getByText('Download')
+				).toBeVisible();
+			});
 
-		await test.step('Hover over the delete button', async () => {
-			await page
-				.locator('#managementToolbarActiveState')
-				.getByRole('link', {name: 'Delete'})
-				.hover();
-		});
+			await test.step('Hover over the delete button', async () => {
+				await page
+					.locator('#managementToolbarActiveState')
+					.getByRole('link', {name: 'Delete'})
+					.hover();
+			});
 
-		await test.step('Check the tooltip text is displayed', async () => {
-			await expect(
-				page.locator('.tooltip-inner').getByText('Delete')
-			).toBeVisible();
-		});
-	});
+			await test.step('Check the tooltip text is displayed', async () => {
+				await expect(
+					page.locator('.tooltip-inner').getByText('Delete')
+				).toBeVisible();
+			});
+		}
+	);
 
-	test('Assert the clear button will be displayed as an icon button in responsive mode @LPS-144539', async ({
-		page,
-	}) => {
-		await test.step('Set the window size to phone size', async () => {
-			await page.setViewportSize({height: 720, width: 360});
-		});
+	test(
+		'Assert the clear button will be displayed as an icon button in responsive mode',
+		{tag: '@LPS-144539'},
+		async ({page}) => {
+			await test.step('Set the window size to phone size', async () => {
+				await page.setViewportSize({height: 720, width: 360});
+			});
 
-		await test.step('Check that the times circle icon is visible', async () => {
-			await expect(
-				page.locator(
-					'#managementToolbarActiveState .lexicon-icon-times-circle'
-				)
-			).toBeVisible();
-		});
-	});
+			await test.step('Check that the times circle icon is visible', async () => {
+				await expect(
+					page.locator(
+						'#managementToolbarActiveState .lexicon-icon-times-circle'
+					)
+				).toBeVisible();
+			});
+		}
+	);
 
-	test('Assert tooltip message will be displayed when hovered over the clear button in responsive mode @LPS-144539', async ({
-		page,
-	}) => {
-		await test.step('Set the window size to phone size', async () => {
-			await page.setViewportSize({height: 720, width: 360});
-		});
+	test(
+		'Assert tooltip message will be displayed when hovered over the clear button in responsive mode',
+		{tag: '@LPS-144539'},
+		async ({page}) => {
+			await test.step('Set the window size to phone size', async () => {
+				await page.setViewportSize({height: 720, width: 360});
+			});
 
-		await test.step('Hover over the clear button', async () => {
-			await page
-				.locator('#managementToolbarActiveState')
-				.getByRole('button', {name: 'Clear'})
-				.hover();
-		});
+			await test.step('Hover over the clear button', async () => {
+				await page
+					.locator('#managementToolbarActiveState')
+					.getByRole('button', {name: 'Clear'})
+					.hover();
+			});
 
-		await test.step('Check the tooltip text is displayed', async () => {
-			await expect(
-				page.locator('.tooltip-inner').getByText('Clear')
-			).toBeVisible();
-		});
-	});
+			await test.step('Check the tooltip text is displayed', async () => {
+				await expect(
+					page.locator('.tooltip-inner').getByText('Clear')
+				).toBeVisible();
+			});
+		}
+	);
 });
 
 test.describe('Management Toolbar Using Display Context', () => {
-	test('Assert the order button can display the correct icons', async ({
-		page,
-	}) => {
-		const managementToolbarUsingDisplayContextContainer = page.locator(
-			'#managementToolbarUsingDisplayContext'
-		);
+	test(
+		'Assert the order button can display the correct icons',
+		{tag: '@LPS-144536'},
+		async ({page}) => {
+			const managementToolbarUsingDisplayContextContainer = page.locator(
+				'#managementToolbarUsingDisplayContext'
+			);
 
-		await test.step('Open the order dropdown', async () => {
-			await managementToolbarUsingDisplayContextContainer
-				.getByRole('button', {name: 'Order'})
-				.click();
-		});
-
-		await test.step('Check that ascending order is selected', async () => {
-			await expect(
-				page
-					.getByRole('menuitem', {name: 'Ascending'})
-					.locator('.lexicon-icon-check')
-			).toBeVisible();
-		});
-
-		await test.step('Check that the icon is order-list-up', async () => {
-			expect(
-				page
+			await test.step('Open the order dropdown', async () => {
+				await managementToolbarUsingDisplayContextContainer
 					.getByRole('button', {name: 'Order'})
-					.locator('.lexicon-icon-order-list-up')
-					.first()
-			).toBeVisible();
-		});
+					.click();
+			});
 
-		await test.step('Click on descending', async () => {
-			await page.getByRole('menuitem', {name: 'Descending'}).click();
-		});
+			await test.step('Check that ascending order is selected', async () => {
+				await expect(
+					page
+						.getByRole('menuitem', {name: 'Ascending'})
+						.locator('.lexicon-icon-check')
+				).toBeVisible();
+			});
 
-		await test.step('Navigate to management toolbar tab', async () => {
-			await page
-				.getByRole('tablist')
-				.getByText('Management Toolbars')
-				.click();
-		});
+			await test.step('Check that the icon is order-list-up', async () => {
+				expect(
+					page
+						.getByRole('button', {name: 'Order'})
+						.locator('.lexicon-icon-order-list-up')
+						.first()
+				).toBeVisible();
+			});
 
-		await test.step('Open the order dropdown', async () => {
-			await managementToolbarUsingDisplayContextContainer
-				.getByRole('button', {name: 'Order'})
-				.click();
-		});
+			await test.step('Click on descending', async () => {
+				await page.getByRole('menuitem', {name: 'Descending'}).click();
+			});
 
-		await test.step('Check that descending order is selected', async () => {
-			await expect(
-				page
-					.getByRole('menuitem', {name: 'Descending'})
-					.locator('.lexicon-icon-check')
-			).toBeVisible();
-		});
+			await test.step('Navigate to management toolbar tab', async () => {
+				await page
+					.getByRole('tablist')
+					.getByText('Management Toolbars')
+					.click();
+			});
 
-		await test.step('Check that the icon is order-list-down', async () => {
-			expect(
-				page
+			await test.step('Open the order dropdown', async () => {
+				await managementToolbarUsingDisplayContextContainer
 					.getByRole('button', {name: 'Order'})
-					.locator('.lexicon-icon-order-list-down')
-					.first()
-			).toBeVisible();
-		});
-	});
+					.click();
+			});
+
+			await test.step('Check that descending order is selected', async () => {
+				await expect(
+					page
+						.getByRole('menuitem', {name: 'Descending'})
+						.locator('.lexicon-icon-check')
+				).toBeVisible();
+			});
+
+			await test.step('Check that the icon is order-list-down', async () => {
+				expect(
+					page
+						.getByRole('button', {name: 'Order'})
+						.locator('.lexicon-icon-order-list-down')
+						.first()
+				).toBeVisible();
+			});
+		}
+	);
 });

@@ -172,7 +172,7 @@
 
 <tr>
 	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
-	<td>//div[@role="tablist"][contains(.,'Metadata')]//label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
+	<td>//div[contains(@class,'panel-group')][contains(.,'Metadata')]//label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
 	<td></td>
 </tr>
 <tr>

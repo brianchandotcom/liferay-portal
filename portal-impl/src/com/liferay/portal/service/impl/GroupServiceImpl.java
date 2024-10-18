@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -713,8 +714,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (ArrayUtil.contains(classNames, Company.class.getName())) {
-			Group companyGroup = groupLocalService.getCompanyGroup(
+			Company company = _companyPersistence.fetchByPrimaryKey(
 				user.getCompanyId());
+
+			Group companyGroup = company.getGroup();
 
 			if (GroupPermissionUtil.contains(
 					getPermissionChecker(), companyGroup,
@@ -1190,6 +1193,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 	@BeanReference(type = AssetTagLocalService.class)
 	private AssetTagLocalService _assetTagLocalService;
+
+	@BeanReference(type = CompanyPersistence.class)
+	private CompanyPersistence _companyPersistence;
 
 	@BeanReference(type = UserPersistence.class)
 	private UserPersistence _userPersistence;

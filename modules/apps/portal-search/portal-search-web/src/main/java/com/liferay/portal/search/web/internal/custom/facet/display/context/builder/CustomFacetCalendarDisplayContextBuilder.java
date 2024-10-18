@@ -26,36 +26,36 @@ public class CustomFacetCalendarDisplayContextBuilder {
 	public CustomFacetCalendarDisplayContext build() {
 		_buildBounds();
 
-		CustomFacetCalendarDisplayContext dateFacetCalendarDisplayContext =
+		CustomFacetCalendarDisplayContext customFacetCalendarDisplayContext =
 			new CustomFacetCalendarDisplayContext();
 
 		Calendar fromCalendar = _getFromCalendar();
 
-		dateFacetCalendarDisplayContext.setFromDayValue(
+		customFacetCalendarDisplayContext.setFromDayValue(
 			fromCalendar.get(Calendar.DATE));
-		dateFacetCalendarDisplayContext.setFromFirstDayOfWeek(
+		customFacetCalendarDisplayContext.setFromFirstDayOfWeek(
 			fromCalendar.getFirstDayOfWeek() - 1);
-		dateFacetCalendarDisplayContext.setFromMonthValue(
+		customFacetCalendarDisplayContext.setFromMonthValue(
 			fromCalendar.get(Calendar.MONTH));
-		dateFacetCalendarDisplayContext.setFromYearValue(
+		customFacetCalendarDisplayContext.setFromYearValue(
 			fromCalendar.get(Calendar.YEAR));
 
 		Calendar toCalendar = _getToCalendar();
 
-		dateFacetCalendarDisplayContext.setToDayValue(
+		customFacetCalendarDisplayContext.setToDayValue(
 			toCalendar.get(Calendar.DATE));
-		dateFacetCalendarDisplayContext.setToFirstDayOfWeek(
+		customFacetCalendarDisplayContext.setToFirstDayOfWeek(
 			toCalendar.getFirstDayOfWeek() - 1);
-		dateFacetCalendarDisplayContext.setToMonthValue(
+		customFacetCalendarDisplayContext.setToMonthValue(
 			toCalendar.get(Calendar.MONTH));
-		dateFacetCalendarDisplayContext.setToYearValue(
+		customFacetCalendarDisplayContext.setToYearValue(
 			toCalendar.get(Calendar.YEAR));
-		dateFacetCalendarDisplayContext.setRangeBackwards(
+		customFacetCalendarDisplayContext.setRangeBackwards(
 			_isRangeBackwards(fromCalendar, toCalendar));
 
-		dateFacetCalendarDisplayContext.setSelected(_isSelected());
+		customFacetCalendarDisplayContext.setSelected(_isSelected());
 
-		return dateFacetCalendarDisplayContext;
+		return customFacetCalendarDisplayContext;
 	}
 
 	public CustomFacetCalendarDisplayContextBuilder from(String from) {

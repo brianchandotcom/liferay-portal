@@ -61,7 +61,7 @@ export class PortletConfigurationPermissionsPage {
 			.getByText(startValue + ' Entries', {exact: true})
 			.click();
 		await this.permissionsFrame
-			.getByRole('link', {name: endValue + ' Entries'})
+			.getByRole('option', {name: endValue + ' Entries'})
 			.click();
 		await expect(
 			this.permissionsFrame.getByText('Showing 1 to ' + endValue)

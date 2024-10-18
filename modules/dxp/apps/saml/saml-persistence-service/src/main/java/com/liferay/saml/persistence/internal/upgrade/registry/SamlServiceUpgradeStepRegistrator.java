@@ -152,6 +152,11 @@ public class SamlServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"SamlPeerBinding", "samlNameIdNameQualifier",
 				"VARCHAR(1024) null"));
+
+		registry.register(
+			"3.0.4", "3.1.0",
+			UpgradeProcessFactory.addColumns(
+				"SamlSpAuthRequest", "relayState TEXT null"));
 	}
 
 	@Reference

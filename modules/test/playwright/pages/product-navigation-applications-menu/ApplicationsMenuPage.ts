@@ -23,6 +23,7 @@ export class ApplicationsMenuPage {
 	private readonly commerceShipmentsMenuItem: Locator;
 	private readonly commerceSpecificationsMenuItem: Locator;
 	private readonly controlPanelButton: Locator;
+	private readonly countriesManagementItem: Locator;
 	private readonly customFieldsMenuItem: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
@@ -107,6 +108,10 @@ export class ApplicationsMenuPage {
 		});
 		this.controlPanelButton = page.getByRole('tab', {
 			name: 'Control Panel',
+		});
+		this.countriesManagementItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Countries Management',
 		});
 		this.customFieldsMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -250,6 +255,12 @@ export class ApplicationsMenuPage {
 	async goToClientExtensions() {
 		await this.goto();
 		await this.clientExtensionsLink.click();
+	}
+
+	async goToCountriesManagement() {
+		await this.goto();
+		await this.controlPanelButton.click();
+		await this.countriesManagementItem.click();
 	}
 
 	async goToCustomFields(forceReload = true) {

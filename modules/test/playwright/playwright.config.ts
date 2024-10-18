@@ -8,6 +8,7 @@ import {defineConfig, devices} from '@playwright/test';
 
 import {config as accessibilityMenuWeb} from './tests/accessibility-menu-web/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
+import {config as addressWebConfig} from './tests/address-web/config';
 import {config as analyticsReportsJsComponentsWeb} from './tests/analytics-reports-js-components-web/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
@@ -105,6 +106,7 @@ export default defineConfig({
 	projects: [
 		accessibilityMenuWeb,
 		accountAdminWebConfig,
+		addressWebConfig,
 		analyticsReportsJsComponentsWeb,
 		analyticsSettingsWebConfig,
 		analyticsWebConfig,

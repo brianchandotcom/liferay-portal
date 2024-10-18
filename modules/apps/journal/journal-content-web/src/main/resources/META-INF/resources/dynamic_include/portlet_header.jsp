@@ -7,8 +7,6 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
-
 <div class="visible-interaction">
 
 	<%

@@ -6,8 +6,7 @@
 --%>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.servlet.taglib.PortletHeaderActionDropdownItemsProvider" %><%@

@@ -67,7 +67,7 @@ public class ObjectSQLProvider implements SQLProvider {
 		try (Connection connection = dataSource.getConnection()) {
 			for (String tableName : _tableNames) {
 				for (IndexMetadata indexMetadata :
-						sourceDB.getIndexes(
+						sourceDB.getIndexMetadatas(
 							connection, tableName, null, false)) {
 
 					_indexesSQLSB.append(indexMetadata.getCreateSQL(null));

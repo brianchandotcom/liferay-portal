@@ -443,7 +443,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "typeVarchar"));
 
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-			_db, "getIndexes",
+			_db, "getIndexMetadatas",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
@@ -557,7 +557,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	private void _validateIndex(String[] columnNames) throws Exception {
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-			_db, "getIndexes",
+			_db, "getIndexMetadatas",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},

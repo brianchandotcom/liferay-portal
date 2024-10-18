@@ -616,11 +616,11 @@ public class DBTest {
 	}
 
 	@Test
-	public void testGetIndexes() throws Exception {
+	public void testGetIndexMetadatas() throws Exception {
 		addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-			db, "getIndexes",
+			db, "getIndexMetadatas",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
@@ -866,11 +866,11 @@ public class DBTest {
 				"default 'testValue' not null);"));
 	}
 
-	private List<IndexMetadata> _getIndexes(
+	private List<IndexMetadata> _getIndexMetadatas(
 		String tableName, String[] columnNames) {
 
 		return ReflectionTestUtil.invoke(
-			db, "getIndexes",
+			db, "getIndexMetadatas",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
@@ -878,7 +878,7 @@ public class DBTest {
 	}
 
 	private void _validateIndex(String[] columnNames) throws Exception {
-		List<IndexMetadata> indexMetadatas = _getIndexes(
+		List<IndexMetadata> indexMetadatas = _getIndexMetadatas(
 			TABLE_NAME_1, columnNames);
 
 		Assert.assertEquals(

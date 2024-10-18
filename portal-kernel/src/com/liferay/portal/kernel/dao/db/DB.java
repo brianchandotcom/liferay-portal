@@ -78,7 +78,7 @@ public interface DB {
 
 	public List<Index> getIndexes(Connection connection) throws SQLException;
 
-	public List<IndexMetadata> getIndexes(
+	public List<IndexMetadata> getIndexMetadatas(
 			Connection connection, String tableName, String columnName,
 			boolean onlyUnique)
 		throws SQLException;

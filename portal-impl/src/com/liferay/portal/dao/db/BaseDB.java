@@ -303,7 +303,7 @@ public abstract class BaseDB implements DB {
 		}
 
 		for (IndexMetadata indexMetadata :
-				getIndexes(connection, tableName, null, false)) {
+				getIndexMetadatas(connection, tableName, null, false)) {
 
 			indexMetadatas.add(
 				new IndexMetadata(
@@ -324,7 +324,7 @@ public abstract class BaseDB implements DB {
 			return Collections.emptyList();
 		}
 
-		List<IndexMetadata> indexMetadatas = getIndexes(
+		List<IndexMetadata> indexMetadatas = getIndexMetadatas(
 			connection, tableName, columnName, false);
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
@@ -353,13 +353,13 @@ public abstract class BaseDB implements DB {
 	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
 		return TransformUtil.transform(
-			getIndexes(connection, null, null, false),
+			getIndexMetadatas(connection, null, null, false),
 			index -> new Index(
 				index.getIndexName(), index.getTableName(), index.isUnique()));
 	}
 
 	@Override
-	public List<IndexMetadata> getIndexes(
+	public List<IndexMetadata> getIndexMetadatas(
 			Connection connection, String tableName, String columnName,
 			boolean onlyUnique)
 		throws SQLException {
@@ -1588,7 +1588,7 @@ public abstract class BaseDB implements DB {
 		throws Exception {
 
 		return TransformUtil.transform(
-			getIndexes(connection, tableName, null, false),
+			getIndexMetadatas(connection, tableName, null, false),
 			index -> new Index(
 				index.getIndexName(), index.getTableName(), index.isUnique()));
 	}

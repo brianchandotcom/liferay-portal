@@ -38,7 +38,9 @@ public class OracleDBTest extends DBTest {
 	}
 
 	@Test
-	public void testGetIndexesWithLockedStatisticsTable() throws Exception {
+	public void testGetIndexMetadatasWithLockedStatisticsTable()
+		throws Exception {
+
 		addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
 		try (Statement statement = connection.createStatement()) {
@@ -50,7 +52,7 @@ public class OracleDBTest extends DBTest {
 
 			try {
 				List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-					db, "getIndexes",
+					db, "getIndexMetadatas",
 					new Class<?>[] {
 						Connection.class, String.class, String.class,
 						boolean.class

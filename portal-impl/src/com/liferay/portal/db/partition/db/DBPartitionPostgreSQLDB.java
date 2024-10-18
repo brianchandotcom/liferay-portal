@@ -143,7 +143,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 		sb.append(");");
 
 		for (IndexMetadata indexMetadata :
-				db.getIndexes(connection, fromTableName, null, false)) {
+				db.getIndexMetadatas(connection, fromTableName, null, false)) {
 
 			sb.append(StringPool.NEW_LINE);
 

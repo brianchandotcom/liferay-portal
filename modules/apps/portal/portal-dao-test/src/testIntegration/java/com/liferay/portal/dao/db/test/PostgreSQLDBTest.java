@@ -37,7 +37,7 @@ public class PostgreSQLDBTest extends DBTest {
 	public void testGetAndAddIndexWithLeftClause() throws Exception {
 		addIndex(new String[] {_INDEX_COLUMN_NAME_LEFT_CLAUSE});
 
-		List<IndexMetadata> indexMetadatas = db.getIndexes(
+		List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
 			connection, TABLE_NAME_1, null, false);
 
 		_assertIndex(indexMetadatas);
@@ -46,7 +46,8 @@ public class PostgreSQLDBTest extends DBTest {
 
 		db.addIndexes(connection, indexMetadatas);
 
-		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
+		_assertIndex(
+			db.getIndexMetadatas(connection, TABLE_NAME_1, null, false));
 
 		db.dropIndexes(connection, TABLE_NAME_1, null);
 
@@ -54,7 +55,8 @@ public class PostgreSQLDBTest extends DBTest {
 
 		db.runSQL(indexMetadata.getCreateSQL(null));
 
-		_assertIndex(db.getIndexes(connection, TABLE_NAME_1, null, false));
+		_assertIndex(
+			db.getIndexMetadatas(connection, TABLE_NAME_1, null, false));
 	}
 
 	private void _assertIndex(List<IndexMetadata> indexMetadatas)

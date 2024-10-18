@@ -84,7 +84,7 @@ public class MySQLDB extends BaseDB {
 				ArrayUtil.remove(primaryKeyColumnNames, columnName));
 		}
 
-		List<IndexMetadata> indexMetadatas = getIndexes(
+		List<IndexMetadata> indexMetadatas = getIndexMetadatas(
 			connection, tableName, columnName, false);
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {

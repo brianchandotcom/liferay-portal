@@ -22,6 +22,7 @@ import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeExcepti
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectDefinitionPanelCategoryKeyException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -2449,6 +2450,49 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateRootDescendantObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				StringUtil.randomId(), TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionPanelCategoryKeyException.class,
+			"Panel category key cannot be changed when the object definition " +
+				"is a root descendant node",
+			() -> _testUpdateRootDescendantObjectDefinition(
+				objectDefinition2, RandomTestUtil.randomString()));
+
+		_testUpdateRootDescendantObjectDefinition(objectDefinition2, null);
+		_testUpdateRootDescendantObjectDefinition(
+			objectDefinition2, StringPool.BLANK);
+
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap(), null);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+	}
+
+	@Test
 	public void testUpdateRootObjectDefinitionId() throws Exception {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
@@ -3187,6 +3231,34 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition2);
 		}
+	}
+
+	private void _testUpdateRootDescendantObjectDefinition(
+			ObjectDefinition objectDefinition, String panelCategoryKey)
+		throws Exception {
+
+		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+
+		_objectDefinitionLocalService.updateCustomObjectDefinition(
+			objectDefinition.getExternalReferenceCode(),
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+			objectDefinition.getDescriptionObjectFieldId(),
+			objectDefinition.getObjectFolderId(),
+			objectDefinition.getTitleObjectFieldId(),
+			objectDefinition.isAccountEntryRestricted(),
+			objectDefinition.isActive(),
+			objectDefinition.isEnableCategorization(),
+			objectDefinition.isEnableComments(),
+			objectDefinition.isEnableIndexSearch(),
+			objectDefinition.isEnableLocalization(),
+			objectDefinition.isEnableObjectEntryDraft(),
+			objectDefinition.isEnableObjectEntryHistory(),
+			objectDefinition.getLabelMap(), objectDefinition.getName(),
+			objectDefinition.getPanelAppOrder(), panelCategoryKey,
+			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
+			objectDefinition.getScope(), objectDefinition.getStatus());
 	}
 
 	private ObjectDefinition _updateObjectDefinition(

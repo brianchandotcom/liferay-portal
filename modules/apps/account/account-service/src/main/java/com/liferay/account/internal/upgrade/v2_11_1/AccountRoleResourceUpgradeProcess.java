@@ -51,17 +51,19 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 	private void _updatePermission(String newName, String oldName)
 		throws Exception {
 
-		if (_hasPermission(oldName)) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"update ResourceAction set actionId = ? where " +
-							"actionId = ?")) {
+		if (!_hasPermission(oldName)) {
+			return;
+		}
 
-				preparedStatement.setString(1, newName);
-				preparedStatement.setString(2, oldName);
+		try (PreparedStatement preparedStatement =
+				connection.prepareStatement(
+					"update ResourceAction set actionId = ? where actionId = " +
+						"?")) {
 
-				preparedStatement.executeUpdate();
-			}
+			preparedStatement.setString(1, newName);
+			preparedStatement.setString(2, oldName);
+
+			preparedStatement.executeUpdate();
 		}
 	}
 

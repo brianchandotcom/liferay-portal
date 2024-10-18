@@ -2085,3 +2085,86 @@ test.describe('Dropzone', () => {
 		}
 	);
 });
+
+test.describe('Custom Fragments', () => {
+	test(
+		'Create a fragment using data-lfr-priority and check it works',
+		{
+			tag: '@LPS-121281',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create new fragment collection
+
+			const fragmentCollectionName = getRandomString();
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: fragmentCollectionName,
+					}
+				);
+
+			// Create custom fragment using data-lfr-priority
+
+			const fragmentName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				fragmentCollectionId,
+				groupId: site.id,
+				html: `<div class="fragment-example">
+					<p data-lfr-editable-id="priority-2" data-lfr-editable-type="text" data-lfr-priority="2">
+							Priority 2
+					</p>
+					<p data-lfr-editable-id="priority-1" data-lfr-editable-type="text" data-lfr-priority="1">
+						Priority 1
+					</p>
+				</div>`,
+				name: fragmentName,
+				type: 'component',
+			});
+
+			// Create a content page and go to edit mode
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Add the fragment to the page and go to Browser panel
+
+			await pageEditorPage.addFragment(
+				fragmentCollectionName,
+				fragmentName
+			);
+
+			await pageEditorPage.goToSidebarTab('Browser');
+
+			// Check data-lfr-priority works
+
+			const fragmentId = await pageEditorPage.getFragmentId(fragmentName);
+
+			await pageEditorPage.selectFragment(fragmentId);
+
+			await page
+				.locator('.page-editor__page-structure__tree-node')
+				.filter({hasText: 'priority-1'})
+				.waitFor();
+
+			const fragmentNode = page.locator('.treeview-item', {
+				hasText: fragmentName,
+			});
+
+			await expect(
+				fragmentNode.locator('.treeview-item').nth(0)
+			).toContainText('priority-1');
+
+			await expect(
+				fragmentNode.locator('.treeview-item').nth(1)
+			).toContainText('priority-2');
+		}
+	);
+});

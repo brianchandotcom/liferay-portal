@@ -15,11 +15,15 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import {expandSection} from '../../utils/expandSection';
 import getRandomString from '../../utils/getRandomString';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {performUserSwitch} from '../../utils/performLogin';
 import {closeProductMenu, openProductMenu} from '../../utils/productMenu';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -32,6 +36,7 @@ const test = mergeTests(
 	}),
 	fragmentsPagesTest,
 	isolatedSiteTest,
+	journalPagesTest,
 	loginTest(),
 	pageEditorPagesTest,
 	pageManagementSiteTest,
@@ -802,6 +807,121 @@ test.describe('Page Contents Panel', () => {
 			page.locator('.page-editor__page-contents__page-content')
 		).toContainText('New Content');
 	});
+
+	test(
+		'Allows editing mapped asset from Page Content Panel',
+		{tag: ['@LPS-125985', '@LPS-122396']},
+		async ({apiHelpers, journalPage, page, pageEditorPage, site}) => {
+
+			// Create a page with a Heading fragment
+
+			const headingId = getRandomString();
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			// Create basic web content
+
+			const basicWebContentTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+				groupId: site.id,
+				titleMap: {en_US: basicWebContentTitle},
+			});
+
+			// Go to edit mode of page and map the editable to te BWC
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).waitFor();
+
+			await pageEditorPage.selectEditable(headingId, 'element-text');
+
+			await pageEditorPage.setMappedItem({
+				entity: 'Web Content',
+				entry: basicWebContentTitle,
+				field: 'Title',
+			});
+
+			// Check asset info appears in mapping panel
+
+			const typeLabel = page
+				.getByLabel('Configuration Panel')
+				.locator('.page-editor__mapping-panel__type-label');
+
+			await expect(typeLabel.nth(0)).toContainText(
+				'Content Type:Web Content Article'
+			);
+
+			await expect(typeLabel.nth(1)).toContainText(
+				'Subtype:Basic Web Content'
+			);
+
+			// Go to Page Contents panel and edit web content from there
+
+			await pageEditorPage.goToSidebarTab('Page Content');
+
+			const panel = page.getByLabel('Page Content Panel');
+
+			const content = panel.locator(
+				'.page-editor__page-contents__page-content'
+			);
+
+			await expect(async () => {
+				await hoverAndExpectToBeVisible({
+					autoClick: true,
+					target: content.getByLabel(
+						`Actions for ${basicWebContentTitle}`
+					),
+					trigger: content,
+				});
+
+				await page
+					.getByRole('menuitem', {
+						name: 'Edit',
+					})
+					.waitFor();
+
+				await page
+					.getByRole('menuitem', {
+						name: 'Edit',
+					})
+					.click();
+
+				await expect(
+					page.locator('.article-content-content')
+				).toBeVisible({
+					timeout: 500,
+				});
+			}).toPass();
+
+			await page.getByLabel('Select a language').waitFor();
+
+			const newTitle = getRandomString();
+
+			await journalPage.articleTitleInput.fill(newTitle);
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.page-editor'),
+				timeout: 1000,
+				trigger: page
+					.locator('.journal-article-button-row')
+					.getByRole('button', {name: 'Publish'}),
+			});
+
+			// Check new title is displayed in page editor
+
+			await expect(page.getByText(newTitle)).toBeVisible();
+		}
+	);
 });
 
 test.describe('Page Design Options', () => {

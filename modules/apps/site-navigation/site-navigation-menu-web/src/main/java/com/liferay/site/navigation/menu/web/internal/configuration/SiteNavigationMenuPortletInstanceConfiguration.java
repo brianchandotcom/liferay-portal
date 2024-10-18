@@ -44,8 +44,7 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	public String siteNavigationMenuName();
 
 	@Meta.AD(
-		deflt = "0", name = "display-style-group-external-reference-code",
-		required = false
+		name = "display-style-group-external-reference-code", required = false
 	)
 	public String displayStyleGroupExternalReferenceCode();
 

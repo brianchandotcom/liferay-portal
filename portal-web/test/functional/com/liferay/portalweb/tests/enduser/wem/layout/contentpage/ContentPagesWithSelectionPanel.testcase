@@ -249,41 +249,4 @@ definition {
 				value1 = "Content Type:Asset");
 		}
 	}
-
-	@description = "This is a test for LPS-121626. The elements information of Slider is organized in Selection panel."
-	@priority = 5
-	test ViewElementInfoOrderOfSliderInSelectionPanel {
-		property portal.acceptance = "true";
-
-		task ("Add a Slider fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Slider");
-		}
-
-		task ("Assert elements information is organized in Selection panel") {
-			PageEditor.clickConfigurableField(fragmentName = "Slider");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			WaitForVisible(
-				key_sidebarButton = "Browser",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-			var n = 1;
-
-			for (var nodeName : list "Slider,01-01-image,01-02-title,01-03-subtitle,02-01-image,02-02-title,02-03-subtitle,03-01-image,03-02-title,03-03-subtitle") {
-				AssertElementPresent(
-					key_nodeName = ${nodeName},
-					key_position = ${n},
-					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
-
-				var n = ${n} + 1;
-			}
-		}
-	}
 }

@@ -75,6 +75,8 @@ describe('AssetAppearsOnCard', () => {
 			<WrappedComponent
 				accessors={[Accessor.ViewsMetric]}
 				assetType={AssetTypes.Blog}
+				emptyStateLink={EmptyStateLink.Blog}
+				emptyStateText={EmptyStateText.Blog}
 			/>
 		);
 
@@ -88,6 +90,8 @@ describe('AssetAppearsOnCard', () => {
 			<WrappedComponent
 				accessors={[Accessor.ViewsMetric]}
 				assetType={AssetTypes.Blog}
+				emptyStateLink={EmptyStateLink.Blog}
+				emptyStateText={EmptyStateText.Blog}
 			/>
 		);
 
@@ -101,6 +105,8 @@ describe('AssetAppearsOnCard', () => {
 			<WrappedComponent
 				accessors={[Accessor.DownloadsMetric, Accessor.PreviewsMetric]}
 				assetType={AssetTypes.Document}
+				emptyStateLink={EmptyStateLink.Document}
+				emptyStateText={EmptyStateText.Document}
 			/>
 		);
 
@@ -115,6 +121,8 @@ describe('AssetAppearsOnCard', () => {
 			<WrappedComponent
 				accessors={[Accessor.SubmissionsMetric, Accessor.ViewsMetric]}
 				assetType={AssetTypes.Form}
+				emptyStateLink={EmptyStateLink.Form}
+				emptyStateText={EmptyStateText.Form}
 			/>
 		);
 
@@ -129,6 +137,8 @@ describe('AssetAppearsOnCard', () => {
 			<WrappedComponent
 				accessors={[Accessor.ViewsMetric]}
 				assetType={AssetTypes.Journal}
+				emptyStateLink={EmptyStateLink.Journal}
+				emptyStateText={EmptyStateText.Journal}
 			/>
 		);
 

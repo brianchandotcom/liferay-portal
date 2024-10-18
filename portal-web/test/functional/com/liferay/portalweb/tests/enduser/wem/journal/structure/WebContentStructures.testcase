@@ -280,12 +280,12 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a user has a structure with a structurekey") {
-			SystemSettings.openSystemSettingsAdmin();
+			PortalSettings.openInstanceSettingsAdmin();
 
-			SystemSettings.gotoConfiguration(
+			PortalSettings.gotoConfiguration(
 				configurationCategory = "Web Content",
-				configurationName = "Administration",
-				configurationScope = "System Scope");
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
 
 			FormFields.disableCheckbox(fieldName = "Autogenerate Structure Key");
 
@@ -358,12 +358,12 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a user exports a structure with a structurekey") {
-			SystemSettings.openSystemSettingsAdmin();
+			PortalSettings.openInstanceSettingsAdmin();
 
-			SystemSettings.gotoConfiguration(
+			PortalSettings.gotoConfiguration(
 				configurationCategory = "Web Content",
-				configurationName = "Administration",
-				configurationScope = "System Scope");
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
 
 			FormFields.disableCheckbox(fieldName = "Autogenerate Structure Key");
 

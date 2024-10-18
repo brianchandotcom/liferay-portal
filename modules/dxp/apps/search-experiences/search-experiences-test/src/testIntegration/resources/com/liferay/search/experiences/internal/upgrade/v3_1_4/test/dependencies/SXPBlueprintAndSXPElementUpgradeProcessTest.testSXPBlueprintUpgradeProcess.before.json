@@ -11,7 +11,7 @@
 								"query": {
 									"terms": {
 										"assetCategoryIds": [
-											"$ASSET_CATEGORY_ID_2$"
+											"[$ASSET_CATEGORY_ID_2$]"
 										],
 										"boost": 15
 									}
@@ -94,8 +94,8 @@
 		"uiConfigurationValues": {
 			"asset_category_ids": [
 				{
-					"label": "$ASSET_CATEGORY_LABEL_2$",
-					"value": "$ASSET_CATEGORY_ID_2$"
+					"label": "[$ASSET_CATEGORY_LABEL_2$]",
+					"value": "[$ASSET_CATEGORY_ID_2$]"
 				}
 			],
 			"boost": 15
@@ -116,7 +116,7 @@
 											{
 												"term": {
 													"assetCategoryIds": {
-														"value": "$ASSET_CATEGORY_ID_1$"
+														"value": "[$ASSET_CATEGORY_ID_1$]"
 													}
 												}
 											}
@@ -197,8 +197,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_1$",
-				"value": "$ASSET_CATEGORY_ID_1$"
+				"label": "[$ASSET_CATEGORY_LABEL_1$]",
+				"value": "[$ASSET_CATEGORY_ID_1$]"
 			}
 		}
 	},
@@ -215,7 +215,7 @@
 									"term": {
 										"assetCategoryIds": {
 											"boost": 15,
-											"value": "$ASSET_CATEGORY_ID_1$"
+											"value": "[$ASSET_CATEGORY_ID_1$]"
 										}
 									}
 								}
@@ -318,8 +318,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_1$",
-				"value": "$ASSET_CATEGORY_ID_1$"
+				"label": "[$ASSET_CATEGORY_LABEL_1$]",
+				"value": "[$ASSET_CATEGORY_ID_1$]"
 			},
 			"boost": 15,
 			"keywords": [
@@ -343,7 +343,7 @@
 									"term": {
 										"assetCategoryIds": {
 											"boost": 15,
-											"value": "$ASSET_CATEGORY_ID_1$"
+											"value": "[$ASSET_CATEGORY_ID_1$]"
 										}
 									}
 								}
@@ -460,8 +460,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_1$",
-				"value": "$ASSET_CATEGORY_ID_1$"
+				"label": "[$ASSET_CATEGORY_LABEL_1$]",
+				"value": "[$ASSET_CATEGORY_ID_1$]"
 			},
 			"boost": 15,
 			"end_date": 1728457200,
@@ -481,7 +481,7 @@
 									"term": {
 										"assetCategoryIds": {
 											"boost": 25,
-											"value": "$ASSET_CATEGORY_ID_2$"
+											"value": "[$ASSET_CATEGORY_ID_2$]"
 										}
 									}
 								}
@@ -584,8 +584,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_2$",
-				"value": "$ASSET_CATEGORY_ID_2$"
+				"label": "[$ASSET_CATEGORY_LABEL_2$]",
+				"value": "[$ASSET_CATEGORY_ID_2$]"
 			},
 			"boost": 25,
 			"user_segment_ids": [
@@ -609,7 +609,7 @@
 									"term": {
 										"assetCategoryIds": {
 											"boost": 25,
-											"value": "$ASSET_CATEGORY_ID_1$"
+											"value": "[$ASSET_CATEGORY_ID_1$]"
 										}
 									}
 								}
@@ -704,8 +704,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_1$",
-				"value": "$ASSET_CATEGORY_ID_1$"
+				"label": "[$ASSET_CATEGORY_LABEL_1$]",
+				"value": "[$ASSET_CATEGORY_ID_1$]"
 			},
 			"boost": 25
 		}
@@ -723,7 +723,7 @@
 									"term": {
 										"assetCategoryIds": {
 											"boost": 25,
-											"value": "$ASSET_CATEGORY_ID_1$"
+											"value": "[$ASSET_CATEGORY_ID_1$]"
 										}
 									}
 								}
@@ -833,8 +833,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_1$",
-				"value": "$ASSET_CATEGORY_ID_1$"
+				"label": "[$ASSET_CATEGORY_LABEL_1$]",
+				"value": "[$ASSET_CATEGORY_ID_1$]"
 			},
 			"boost": 25,
 			"time_range": 30
@@ -853,7 +853,7 @@
 									"term": {
 										"assetCategoryIds": {
 											"boost": 25,
-											"value": "$ASSET_CATEGORY_ID_2$"
+											"value": "[$ASSET_CATEGORY_ID_2$]"
 										}
 									}
 								}
@@ -974,8 +974,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_2$",
-				"value": "$ASSET_CATEGORY_ID_2$"
+				"label": "[$ASSET_CATEGORY_LABEL_2$]",
+				"value": "[$ASSET_CATEGORY_ID_2$]"
 			},
 			"boost": 25,
 			"time_of_day": "night"
@@ -996,7 +996,7 @@
 											{
 												"term": {
 													"assetCategoryIds": {
-														"value": "$ASSET_CATEGORY_ID_1$"
+														"value": "[$ASSET_CATEGORY_ID_1$]"
 													}
 												}
 											}
@@ -1089,8 +1089,8 @@
 		},
 		"uiConfigurationValues": {
 			"asset_category_id": {
-				"label": "$ASSET_CATEGORY_LABEL_1$",
-				"value": "$ASSET_CATEGORY_ID_1$"
+				"label": "[$ASSET_CATEGORY_LABEL_1$]",
+				"value": "[$ASSET_CATEGORY_ID_1$]"
 			}
 		}
 	},
@@ -1106,8 +1106,8 @@
 								"query": {
 									"terms": {
 										"assetCategoryIds": [
-											"$ASSET_CATEGORY_ID_1$",
-											"$ASSET_CATEGORY_ID_2$"
+											"[$ASSET_CATEGORY_ID_1$]",
+											"[$ASSET_CATEGORY_ID_2$]"
 										],
 										"boost": 15
 									}
@@ -1190,12 +1190,12 @@
 		"uiConfigurationValues": {
 			"asset_category_ids": [
 				{
-					"label": "$ASSET_CATEGORY_LABEL_1$",
-					"value": "$ASSET_CATEGORY_ID_1$"
+					"label": "[$ASSET_CATEGORY_LABEL_1$]",
+					"value": "[$ASSET_CATEGORY_ID_1$]"
 				},
 				{
-					"label": "$ASSET_CATEGORY_LABEL_2$",
-					"value": "$ASSET_CATEGORY_ID_2$"
+					"label": "[$ASSET_CATEGORY_LABEL_2$]",
+					"value": "[$ASSET_CATEGORY_ID_2$]"
 				}
 			],
 			"boost": 15

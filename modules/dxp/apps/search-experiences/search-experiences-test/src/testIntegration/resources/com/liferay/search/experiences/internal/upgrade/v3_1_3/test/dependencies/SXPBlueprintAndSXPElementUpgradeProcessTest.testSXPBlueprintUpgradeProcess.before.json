@@ -11,8 +11,8 @@
 								"query": {
 									"terms": {
 										"scopeGroupId": [
-											"$SCOPE_GROUP_ID_1$",
-											"$SCOPE_GROUP_ID_2$"
+											"[$SCOPE_GROUP_ID_1$]",
+											"[$SCOPE_GROUP_ID_2$]"
 										]
 									}
 								}
@@ -83,12 +83,12 @@
 		"uiConfigurationValues": {
 			"scope_group_ids": [
 				{
-					"label": "$SCOPE_GROUP_LABEL_1$",
-					"value": "$SCOPE_GROUP_ID_1$"
+					"label": "[$SCOPE_GROUP_LABEL_1$]",
+					"value": "[$SCOPE_GROUP_ID_1$]"
 				},
 				{
-					"label": "$SCOPE_GROUP_LABEL_2$",
-					"value": "$SCOPE_GROUP_ID_2$"
+					"label": "[$SCOPE_GROUP_LABEL_2$]",
+					"value": "[$SCOPE_GROUP_ID_2$]"
 				}
 			]
 		}

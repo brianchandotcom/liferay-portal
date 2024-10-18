@@ -2847,3 +2847,118 @@ test('LPD-38261 All commerce widgets work in a content page', async ({
 
 	await expect(page.getByText('is temporarily unavailable.')).toHaveCount(0);
 });
+
+test('LPD-36953 Order Multishipping fragment', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	displayPageTemplatesPage,
+	page,
+}) => {
+	try {
+		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
+
+		const featureFlagEnabled = await page
+			.getByLabel('COMMERCE-9410')
+			.isChecked();
+
+		if (!featureFlagEnabled) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+
+		await commerceLayoutsPage.addFragment('Multishipping', 'Order');
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku1 = product1.skus[0];
+		const sku2 = product2.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku1.id,
+					},
+					{
+						quantity: 1,
+						skuId: sku2.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText(sku1.sku)).toBeVisible();
+
+		await expect(page.getByText(sku2.sku)).toBeVisible();
+	}
+	finally {
+		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});

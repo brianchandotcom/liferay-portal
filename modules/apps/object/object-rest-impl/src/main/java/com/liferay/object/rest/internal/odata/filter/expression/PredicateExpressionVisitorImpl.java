@@ -99,7 +99,8 @@ public class PredicateExpressionVisitorImpl
 
 	@Override
 	public Predicate visitBinaryExpressionOperation(
-		BinaryExpression.Operation operation, Object left, Object right) {
+			BinaryExpression.Operation operation, Object left, Object right)
+		throws ExpressionVisitException {
 
 		Predicate predicate = null;
 
@@ -262,7 +263,8 @@ public class PredicateExpressionVisitorImpl
 
 	@Override
 	public Object visitMethodExpression(
-		List<Object> expressions, MethodExpression.Type type) {
+			List<Object> expressions, MethodExpression.Type type)
+		throws ExpressionVisitException {
 
 		if (expressions.size() == 2) {
 			String left = (String)expressions.get(0);
@@ -372,8 +374,9 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _contains(
-		Object fieldName, Object fieldValue,
-		ObjectDefinition objectDefinition) {
+			Object fieldName, Object fieldValue,
+			ObjectDefinition objectDefinition)
+		throws ExpressionVisitException {
 
 		FieldPredicateProvider fieldPredicateProvider =
 			_getFieldPredicateProvider(
@@ -458,7 +461,8 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _getInPredicate(
-		Object left, ObjectDefinition objectDefinition, List<Object> rights) {
+			Object left, ObjectDefinition objectDefinition, List<Object> rights)
+		throws ExpressionVisitException {
 
 		FieldPredicateProvider fieldPredicateProvider =
 			_getFieldPredicateProvider(String.valueOf(left), objectDefinition);
@@ -600,8 +604,9 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _getPredicate(
-		Object left, ObjectDefinition objectDefinition,
-		BinaryExpression.Operation operation, Object right) {
+			Object left, ObjectDefinition objectDefinition,
+			BinaryExpression.Operation operation, Object right)
+		throws ExpressionVisitException {
 
 		Predicate predicate = null;
 
@@ -780,8 +785,9 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _startsWith(
-		Object fieldName, Object fieldValue,
-		ObjectDefinition objectDefinition) {
+			Object fieldName, Object fieldValue,
+			ObjectDefinition objectDefinition)
+		throws ExpressionVisitException {
 
 		FieldPredicateProvider fieldPredicateProvider =
 			_getFieldPredicateProvider(

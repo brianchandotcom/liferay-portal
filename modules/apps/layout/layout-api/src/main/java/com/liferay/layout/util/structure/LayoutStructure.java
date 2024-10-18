@@ -525,57 +525,49 @@ public class LayoutStructure {
 
 				position = 0;
 			}
-			else if (parentLayoutStructureItem instanceof
-						FormStyledLayoutStructureItem) {
+			else if (_isMultistepFormTypeFormStyledLayoutStructureItem(
+						parentLayoutStructureItem)) {
 
-				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-					(FormStyledLayoutStructureItem)parentLayoutStructureItem;
+				List<String> childrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
 
-				if (Objects.equals(
-						formStyledLayoutStructureItem.getFormType(),
-						"multistep")) {
+				if (ListUtil.isEmpty(childrenItemIds)) {
+					throw new UnsupportedOperationException(
+						"Unable to copy items because form step does not " +
+							"have a form step container");
+				}
 
-					List<String> childrenItemIds =
-						parentLayoutStructureItem.getChildrenItemIds();
+				for (String childItemId : childrenItemIds) {
+					LayoutStructureItem layoutStructureItem =
+						_layoutStructureItems.get(childItemId);
+
+					if (!(layoutStructureItem instanceof
+							FormStepContainerStyledLayoutStructureItem)) {
+
+						continue;
+					}
+
+					FormStepContainerStyledLayoutStructureItem
+						formStepContainerStyledLayoutStructureItem =
+							(FormStepContainerStyledLayoutStructureItem)
+								layoutStructureItem;
+
+					childrenItemIds =
+						formStepContainerStyledLayoutStructureItem.
+							getChildrenItemIds();
 
 					if (ListUtil.isEmpty(childrenItemIds)) {
 						throw new UnsupportedOperationException(
 							"Unable to copy items because form step does not " +
-								"have a form step container");
+								"have any step items");
 					}
 
-					for (String childItemId : childrenItemIds) {
-						LayoutStructureItem layoutStructureItem =
-							_layoutStructureItems.get(childItemId);
+					currentParentItemId = childrenItemIds.get(0);
 
-						if (!(layoutStructureItem instanceof
-								FormStepContainerStyledLayoutStructureItem)) {
-
-							continue;
-						}
-
-						FormStepContainerStyledLayoutStructureItem
-							formStepContainerStyledLayoutStructureItem =
-								(FormStepContainerStyledLayoutStructureItem)
-									layoutStructureItem;
-
-						childrenItemIds =
-							formStepContainerStyledLayoutStructureItem.
-								getChildrenItemIds();
-
-						if (ListUtil.isEmpty(childrenItemIds)) {
-							throw new UnsupportedOperationException(
-								"Unable to copy items because form step does " +
-									"not have any step items");
-						}
-
-						currentParentItemId = childrenItemIds.get(0);
-
-						break;
-					}
-
-					position = 0;
+					break;
 				}
+
+				position = 0;
 			}
 
 			List<String> childrenItemIds =
@@ -1246,6 +1238,25 @@ public class LayoutStructure {
 		}
 
 		return childrenItemIds;
+	}
+
+	private boolean _isMultistepFormTypeFormStyledLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem) {
+
+		if (!(layoutStructureItem instanceof FormStyledLayoutStructureItem)) {
+			return false;
+		}
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)layoutStructureItem;
+
+		if (Objects.equals(
+				formStyledLayoutStructureItem.getFormType(), "multistep")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _updateColumnSizes(

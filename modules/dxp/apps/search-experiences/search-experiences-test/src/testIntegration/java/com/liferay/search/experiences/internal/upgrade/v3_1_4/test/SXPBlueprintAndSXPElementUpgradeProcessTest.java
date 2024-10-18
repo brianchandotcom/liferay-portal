@@ -220,17 +220,17 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				testName.getMethodName(), ".before.json"));
 
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_ID_1$",
+			elementInstancesJSON, "[$ASSET_CATEGORY_ID_1$]",
 			String.valueOf(assetCategory1.getCategoryId()));
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_ID_2$",
+			elementInstancesJSON, "[$ASSET_CATEGORY_ID_2$]",
 			String.valueOf(assetCategory2.getCategoryId()));
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
+			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_1$]",
 			_createAssetCategoryIDLabel(assetCategory1));
 
 		return StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_2$",
+			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_2$]",
 			_createAssetCategoryIDLabel(assetCategory2));
 	}
 
@@ -245,21 +245,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				testName.getMethodName(), ".after.json"));
 
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$",
+			elementInstancesJSON,
+			"[$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$]",
 			_createAssetCategoryExternalReferenceCode(
 				assetCategory1.getExternalReferenceCode(),
 				companyGroupExternalReferenceCode));
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$",
+			elementInstancesJSON,
+			"[$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$]",
 			_createAssetCategoryExternalReferenceCode(
 				assetCategory2.getExternalReferenceCode(),
 				companyGroupExternalReferenceCode));
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_1$",
+			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_1$]",
 			_createAssetCategoryExternalReferenceCodeLabel(assetCategory1));
 
 		return StringUtil.replace(
-			elementInstancesJSON, "$ASSET_CATEGORY_LABEL_2$",
+			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_2$]",
 			_createAssetCategoryExternalReferenceCodeLabel(assetCategory2));
 	}
 

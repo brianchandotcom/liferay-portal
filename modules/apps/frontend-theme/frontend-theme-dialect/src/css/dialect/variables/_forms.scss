@@ -72,14 +72,33 @@ $form-text-font-size: var(--form-text-font-size);
 $form-text-font-weight: var(--form-text-font-weight);
 $form-text-line-height: var(--form-text-line-height);
 
+$form-control-label-size: () !default;
+$form-control-label-size: map-deep-merge(
+	(
+		border-width: 0.0625rem,
+		font-size: 0.75rem,
+		height: auto,
+		margin-bottom: 0.3125rem,
+		margin-right: 0.625rem,
+		margin-top: 0.3125rem,
+		min-height: 1.5rem,
+		padding-bottom: 0.3125rem,
+		padding-left: 0.5rem,
+		padding-right: 0.5rem,
+		padding-top: 0.3125rem,
+		text-transform: none,
+	),
+	$form-control-label-size
+);
+
 // The following variables must be reset because they cause errors with CSS custom properties as values.
 
 $form-control-tag-group-padding-y: calc(
 	(
-			#{$input-height} - (2 * #{$input-border-width}) - map-get(
+			#{$input-height} - (2 * #{$input-border-width}) - #{map-get(
 					$form-control-label-size,
-					height
-				) - (map-get($form-control-label-size, margin-bottom)) - (map-get($form-control-label-size, margin-top))
+					min-height
+				)} - (#{map-get($form-control-label-size, margin-bottom)}) - (#{map-get($form-control-label-size, margin-top)})
 		) / 2
 );
 

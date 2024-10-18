@@ -218,7 +218,7 @@ public class ObjectRelationshipResourceImpl
 				GetterUtil.getBoolean(objectRelationship.getSystem()),
 				objectRelationship.getTypeAsString(),
 				ObjectFieldUtil.toObjectField(
-					LocaleUtil.getSiteDefault(), false,
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), false,
 					_listTypeDefinitionLocalService,
 					objectRelationship.getObjectField(),
 					_objectFieldLocalService, _objectFieldSettingLocalService,
@@ -268,7 +268,7 @@ public class ObjectRelationshipResourceImpl
 				GetterUtil.getBoolean(objectRelationship.getEdge()),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				ObjectFieldUtil.toObjectField(
-					LocaleUtil.getSiteDefault(), false,
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), false,
 					_listTypeDefinitionLocalService,
 					objectRelationship.getObjectField(),
 					_objectFieldLocalService, _objectFieldSettingLocalService,

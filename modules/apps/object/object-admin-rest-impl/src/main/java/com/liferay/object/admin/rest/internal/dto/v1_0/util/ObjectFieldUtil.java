@@ -35,7 +35,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Gabriel Albuquerque
@@ -208,7 +207,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(
-		Locale defaultLocale, boolean enableLocalization,
+		String defaultLanguageId, boolean enableLocalization,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -244,31 +243,24 @@ public class ObjectFieldUtil {
 		serviceBuilderObjectField.setIndexedLanguageId(
 			objectField.getIndexedLanguageId());
 
-		Map<Locale, String> labelMap = LocalizedMapUtil.getLocalizedMap(
-			objectField.getLabel());
+		Map<Locale, String> localizedLabelMap =
+			LocalizedMapUtil.getLocalizedMap(
+				LocalizedMapUtil.populateI18nMap(
+					defaultLanguageId, objectField.getLabel(),
+					objectField.getName()));
 
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+		if (GetterUtil.getBoolean(objectField.getSystem())) {
+			Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
-		if (!Objects.equals(defaultLocale, siteDefaultLocale) &&
-			Validator.isNull(labelMap.get(siteDefaultLocale)) &&
-			Validator.isNotNull(labelMap.get(defaultLocale))) {
-
-			if (GetterUtil.getBoolean(objectField.getSystem())) {
-				labelMap.put(
+			localizedLabelMap.put(
+				siteDefaultLocale,
+				LanguageUtil.get(
 					siteDefaultLocale,
-					LanguageUtil.get(
-						siteDefaultLocale,
-						_systemObjectFieldLabelKeys.get(objectField.getName()),
-						labelMap.get(defaultLocale)));
-			}
-			else {
-				labelMap.put(siteDefaultLocale, labelMap.get(defaultLocale));
-			}
+					_systemObjectFieldLabelKeys.get(objectField.getName()),
+					localizedLabelMap.get(siteDefaultLocale)));
 		}
 
-		labelMap.putIfAbsent(siteDefaultLocale, objectField.getName());
-
-		serviceBuilderObjectField.setLabelMap(labelMap);
+		serviceBuilderObjectField.setLabelMap(localizedLabelMap);
 
 		serviceBuilderObjectField.setLocalized(
 			GetterUtil.getBoolean(

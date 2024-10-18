@@ -46,6 +46,7 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -110,6 +111,22 @@ public class FragmentEntryLinkModelListener
 	@Override
 	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
+
+		_checkNoninstanceablePortletUsed(fragmentEntryLink);
+	}
+
+	@Override
+	public void onBeforeUpdate(
+			FragmentEntryLink originalFragmentEntryLink,
+			FragmentEntryLink fragmentEntryLink)
+		throws ModelListenerException {
+
+		if (Objects.equals(
+				originalFragmentEntryLink.getHtml(),
+				fragmentEntryLink.getHtml())) {
+
+			return;
+		}
 
 		_checkNoninstanceablePortletUsed(fragmentEntryLink);
 	}

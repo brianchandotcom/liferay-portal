@@ -22,6 +22,7 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {commerceReturnSetUp} from './utils/commerce';
 import {customFormatDate, getDateCustomFormat} from './utils/date';
 
 export const test = mergeTests(
@@ -2598,6 +2599,83 @@ test('LPD-34399 Quick checkout from order actions fragment', async ({
 		await expect(
 			commerceLayoutsPage.orderActionsButton('Quick Checkout')
 		).toBeEnabled();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});
+
+test('LPD-32243 Order Returns Data Set fragment', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const {commerceReturn, order, site} =
+			await commerceReturnSetUp(apiHelpers);
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment(
+			'Order Returns Data Set',
+			'Order'
+		);
+
+		await expect(
+			page.getByText(
+				'The order returns data set component will be shown here.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${order.id}`
+		);
+
+		await expect(
+			page.getByRole('button', {name: 'Return ID'})
+		).toBeVisible();
+		await expect(page.getByText(commerceReturn.id)).toBeVisible();
 	}
 	finally {
 		await systemSettingsPage.goToSystemSetting(

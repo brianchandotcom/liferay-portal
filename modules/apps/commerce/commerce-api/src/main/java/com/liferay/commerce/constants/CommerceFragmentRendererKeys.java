@@ -14,6 +14,10 @@ public class CommerceFragmentRendererKeys {
 		"com_liferay_commerce_order_content_web_internal_fragment_renderer_" +
 			"OrderItemsDataSetFragmentRenderer";
 
+	public static final String ORDER_RETURNS_DATA_SET =
+		"com_liferay_commerce_order_content_web_internal_fragment_renderer_" +
+			"OrderReturnsDataSetFragmentRenderer";
+
 	public static final String ORDERS_DATA_SET =
 		"com_liferay_commerce_order_content_web_internal_fragment_renderer_" +
 			"OrdersDataSetFragmentRenderer";

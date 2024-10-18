@@ -203,7 +203,12 @@ public class IndexUpdaterUtil {
 
 	private static ExecutorService _getExecutorService() {
 		return _executorServiceDCLSingleton.getSingleton(
-			Executors::newWorkStealingPool);
+			() -> {
+				Runtime runtime = Runtime.getRuntime();
+
+				return Executors.newFixedThreadPool(
+					runtime.availableProcessors());
+			});
 	}
 
 	private static Map<String, String> _getIndexesSQLMap(String indexesSQL) {

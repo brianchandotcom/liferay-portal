@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -112,6 +113,10 @@ public class FragmentEntryLinkModelListener
 	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
+		if (CopyLayoutThreadLocal.isCopyLayout()) {
+			return;
+		}
+
 		_checkNoninstanceablePortletUsed(fragmentEntryLink);
 	}
 
@@ -121,7 +126,8 @@ public class FragmentEntryLinkModelListener
 			FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		if (Objects.equals(
+		if (CopyLayoutThreadLocal.isCopyLayout() ||
+			Objects.equals(
 				originalFragmentEntryLink.getHtml(),
 				fragmentEntryLink.getHtml())) {
 

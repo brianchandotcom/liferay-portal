@@ -86,6 +86,9 @@
 			<hint-collection name="ENTITY-ID" />
 		</field>
 		<field name="samlSpAuthRequestKey" type="String" />
+		<field name="relayState" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlSpIdpConnection">
 		<field name="samlSpIdpConnectionId" type="long" />

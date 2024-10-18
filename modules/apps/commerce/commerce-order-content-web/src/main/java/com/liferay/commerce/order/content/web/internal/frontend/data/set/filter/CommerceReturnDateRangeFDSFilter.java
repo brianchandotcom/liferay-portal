@@ -6,6 +6,7 @@
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
@@ -18,7 +19,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFDSNames.RETURNS,
+	property = {
+		"frontend.data.set.name=" + CommerceOrderFDSNames.RETURNS,
+		"frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PLACED_ORDER_RETURNS
+	},
 	service = FDSFilter.class
 )
 public class CommerceReturnDateRangeFDSFilter extends BaseDateRangeFDSFilter {

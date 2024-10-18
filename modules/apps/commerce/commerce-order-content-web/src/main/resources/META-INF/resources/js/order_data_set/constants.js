@@ -14,3 +14,6 @@ export const PLACED_ORDERS_FDS_NAME =
 
 export const PLACED_ORDER_ITEMS_FDS_NAME =
 	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrderItemsDataSetFragmentRenderer-placedOrderItems';
+
+export const PLACED_ORDER_RETURNS_FDS_NAME =
+	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrderReturnsDataSetFragmentRenderer-placedOrderReturns';

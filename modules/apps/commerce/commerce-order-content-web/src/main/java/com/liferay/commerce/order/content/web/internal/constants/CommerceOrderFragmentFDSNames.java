@@ -22,6 +22,10 @@ public class CommerceOrderFragmentFDSNames {
 	public static final String PLACED_ORDER_ITEMS =
 		CommerceFragmentRendererKeys.ORDER_ITEMS_DATA_SET + "-placedOrderItems";
 
+	public static final String PLACED_ORDER_RETURNS =
+		CommerceFragmentRendererKeys.ORDER_RETURNS_DATA_SET +
+			"-placedOrderReturns";
+
 	public static final String PLACED_ORDERS =
 		CommerceFragmentRendererKeys.ORDERS_DATA_SET + "-placedOrders";
 

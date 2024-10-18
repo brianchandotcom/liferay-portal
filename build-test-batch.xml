@@ -3385,17 +3385,17 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 			<if>
 				<equals arg1="${java.jdk.bundle.version}" arg2="none" />
 				<then>
-					<property name="java.version" value="${java.jdk.default.runtime.version}" />
+					<propertycopy from="java.jdk.default.runtime.version" name="java.jdk.runtime.version" />
 				</then>
 				<else>
-					<property name="java.version" value="${java.jdk.bundle.version}" />
+					<property name="java.jdk.runtime.version" value="${java.jdk.bundle.version}" />
 				</else>
 			</if>
 
 			<if>
-				<isset property="test.batch.app.server.tomcat.setenv.gc.new[${java.version}]" />
+				<isset property="test.batch.app.server.tomcat.setenv.gc.new[${java.jdk.runtime.version}]" />
 				<then>
-					<propertycopy from="test.batch.app.server.tomcat.setenv.gc.new[${java.version}]" name="test.batch.app.server.tomcat.setenv.gc.new" override="true" />
+					<propertycopy from="test.batch.app.server.tomcat.setenv.gc.new[${java.jdk.runtime.version}]" name="test.batch.app.server.tomcat.setenv.gc.new" override="true" />
 				</then>
 			</if>
 

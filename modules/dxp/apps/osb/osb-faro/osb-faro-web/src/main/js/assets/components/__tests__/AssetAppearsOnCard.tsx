@@ -32,7 +32,13 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const WrappedComponent = ({accessors, assetType}) => (
+const WrappedComponent = ({
+	accessors,
+	assetType,
+	empty = false,
+	emptyStateLink,
+	emptyStateText
+}) => (
 	<Provider store={mockStore()}>
 		<ApolloProvider client={client}>
 			<StaticRouter>
@@ -40,17 +46,20 @@ const WrappedComponent = ({accessors, assetType}) => (
 					mocks={[
 						mockTimeRangeReq(),
 						mockPreferenceReq(),
-						mockAssetAppearsOnReq({
-							assetType: assetType.toUpperCase(),
-							selectedMetrics: accessors
-						})
+						mockAssetAppearsOnReq(
+							{
+								assetType: assetType.toUpperCase(),
+								selectedMetrics: accessors
+							},
+							empty
+						)
 					]}
 				>
 					<AssetAppearsOnCard
 						accessors={accessors}
 						assetType={assetType}
-						emptyStateLink={EmptyStateLink.Blog}
-						emptyStateText={EmptyStateText.Blog}
+						emptyStateLink={emptyStateLink}
+						emptyStateText={emptyStateText}
 					/>
 				</MockedProvider>
 			</StaticRouter>

@@ -620,7 +620,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 		"ddmFormInstanceVersion.formInstanceId = ?";
 
 	private FinderPath _finderPathFetchByF_V;
-	private FinderPath _finderPathCountByF_V;
 
 	/**
 	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or throws a <code>NoSuchFormInstanceVersionException</code> if it could not be found.
@@ -814,67 +813,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 	 */
 	@Override
 	public int countByF_V(long formInstanceId, String version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceVersion.class)) {
+		DDMFormInstanceVersion ddmFormInstanceVersion = fetchByF_V(
+			formInstanceId, version);
 
-			version = Objects.toString(version, "");
-
-			FinderPath finderPath = _finderPathCountByF_V;
-
-			Object[] finderArgs = new Object[] {formInstanceId, version};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE);
-
-				sb.append(_FINDER_COLUMN_F_V_FORMINSTANCEID_2);
-
-				boolean bindVersion = false;
-
-				if (version.isEmpty()) {
-					sb.append(_FINDER_COLUMN_F_V_VERSION_3);
-				}
-				else {
-					bindVersion = true;
-
-					sb.append(_FINDER_COLUMN_F_V_VERSION_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(formInstanceId);
-
-					if (bindVersion) {
-						queryPos.add(version);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (ddmFormInstanceVersion == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -1580,7 +1526,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 				ddmFormInstanceVersionModelImpl.getVersion()
 			};
 
-			finderCache.putResult(_finderPathCountByF_V, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByF_V, args, ddmFormInstanceVersionModelImpl);
 		}
@@ -2337,11 +2282,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"formInstanceId", "version"}, true);
-
-		_finderPathCountByF_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_V",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceId", "version"}, false);
 
 		_finderPathWithPaginationFindByF_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",

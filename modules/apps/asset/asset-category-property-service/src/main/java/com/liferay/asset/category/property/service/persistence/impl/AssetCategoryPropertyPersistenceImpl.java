@@ -1728,7 +1728,6 @@ public class AssetCategoryPropertyPersistenceImpl
 		"(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
 
 	private FinderPath _finderPathFetchByCA_K;
-	private FinderPath _finderPathCountByCA_K;
 
 	/**
 	 * Returns the asset category property where categoryId = &#63; and key = &#63; or throws a <code>NoSuchCategoryPropertyException</code> if it could not be found.
@@ -1917,67 +1916,14 @@ public class AssetCategoryPropertyPersistenceImpl
 	 */
 	@Override
 	public int countByCA_K(long categoryId, String key) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
+		AssetCategoryProperty assetCategoryProperty = fetchByCA_K(
+			categoryId, key);
 
-			key = Objects.toString(key, "");
-
-			FinderPath finderPath = _finderPathCountByCA_K;
-
-			Object[] finderArgs = new Object[] {categoryId, key};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE);
-
-				sb.append(_FINDER_COLUMN_CA_K_CATEGORYID_2);
-
-				boolean bindKey = false;
-
-				if (key.isEmpty()) {
-					sb.append(_FINDER_COLUMN_CA_K_KEY_3);
-				}
-				else {
-					bindKey = true;
-
-					sb.append(_FINDER_COLUMN_CA_K_KEY_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(categoryId);
-
-					if (bindKey) {
-						queryPos.add(key);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (assetCategoryProperty == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2127,8 +2073,6 @@ public class AssetCategoryPropertyPersistenceImpl
 				assetCategoryPropertyModelImpl.getKey()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByCA_K, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByCA_K, args, assetCategoryPropertyModelImpl);
 		}
@@ -2924,11 +2868,6 @@ public class AssetCategoryPropertyPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"categoryId", "key_"}, true);
-
-		_finderPathCountByCA_K = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"categoryId", "key_"}, false);
 
 		AssetCategoryPropertyUtil.setPersistence(this);
 	}

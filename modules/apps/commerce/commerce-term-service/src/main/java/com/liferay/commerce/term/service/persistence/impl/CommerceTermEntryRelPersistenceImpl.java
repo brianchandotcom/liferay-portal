@@ -1150,7 +1150,6 @@ public class CommerceTermEntryRelPersistenceImpl
 		"commerceTermEntryRel.commerceTermEntryId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the commerce term entry rel where classNameId = &#63; and classPK = &#63; and commerceTermEntryId = &#63; or throws a <code>NoSuchTermEntryRelException</code> if it could not be found.
@@ -1343,55 +1342,15 @@ public class CommerceTermEntryRelPersistenceImpl
 	public int countByC_C_C(
 		long classNameId, long classPK, long commerceTermEntryId) {
 
-		FinderPath finderPath = _finderPathCountByC_C_C;
+		CommerceTermEntryRel commerceTermEntryRel = fetchByC_C_C(
+			classNameId, classPK, commerceTermEntryId);
 
-		Object[] finderArgs = new Object[] {
-			classNameId, classPK, commerceTermEntryId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCETERMENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMMERCETERMENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(commerceTermEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceTermEntryRel == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
@@ -1518,7 +1477,6 @@ public class CommerceTermEntryRelPersistenceImpl
 			commerceTermEntryRelModelImpl.getCommerceTermEntryId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_C_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C_C, args, commerceTermEntryRelModelImpl);
 	}
@@ -2034,14 +1992,6 @@ public class CommerceTermEntryRelPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "commerceTermEntryId"},
 			true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "commerceTermEntryId"},
-			false);
 
 		CommerceTermEntryRelUtil.setPersistence(this);
 	}

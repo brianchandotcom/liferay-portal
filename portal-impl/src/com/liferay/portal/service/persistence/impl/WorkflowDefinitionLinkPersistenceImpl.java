@@ -3104,7 +3104,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		"workflowDefinitionLink.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_C_C_C_T;
-	private FinderPath _finderPathCountByG_C_C_C_T;
 
 	/**
 	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or throws a <code>NoSuchWorkflowDefinitionLinkException</code> if it could not be found.
@@ -3351,68 +3350,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId, long classPK,
 		long typePK) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
+		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_C_T(
+			groupId, companyId, classNameId, classPK, typePK);
 
-			FinderPath finderPath = _finderPathCountByG_C_C_C_T;
-
-			Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, typePK
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(typePK);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (workflowDefinitionLink == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3568,8 +3513,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				workflowDefinitionLinkModelImpl.getTypePK()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByG_C_C_C_T, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByG_C_C_C_T, args,
 				workflowDefinitionLinkModelImpl);
@@ -4447,17 +4390,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				"groupId", "companyId", "classNameId", "classPK", "typePK"
 			},
 			true);
-
-		_finderPathCountByG_C_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "companyId", "classNameId", "classPK", "typePK"
-			},
-			false);
 
 		WorkflowDefinitionLinkUtil.setPersistence(this);
 	}

@@ -1779,7 +1779,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			"(commerceShippingOptionAccountEntryRel.commerceShippingOptionKey IS NULL OR commerceShippingOptionAccountEntryRel.commerceShippingOptionKey = '')";
 
 	private FinderPath _finderPathFetchByA_C;
-	private FinderPath _finderPathCountByA_C;
 
 	/**
 	 * Returns the commerce shipping option account entry rel where accountEntryId = &#63; and commerceChannelId = &#63; or throws a <code>NoSuchShippingOptionAccountEntryRelException</code> if it could not be found.
@@ -1962,49 +1961,16 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByA_C(long accountEntryId, long commerceChannelId) {
-		FinderPath finderPath = _finderPathCountByA_C;
+		CommerceShippingOptionAccountEntryRel
+			commerceShippingOptionAccountEntryRel = fetchByA_C(
+				accountEntryId, commerceChannelId);
 
-		Object[] finderArgs = new Object[] {accountEntryId, commerceChannelId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_C_ACCOUNTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_A_C_COMMERCECHANNELID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountEntryId);
-
-				queryPos.add(commerceChannelId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceShippingOptionAccountEntryRel == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_A_C_ACCOUNTENTRYID_2 =
@@ -2154,7 +2120,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 				getCommerceChannelId()
 		};
 
-		finderCache.putResult(_finderPathCountByA_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByA_C, args,
 			commerceShippingOptionAccountEntryRelModelImpl);
@@ -2737,11 +2702,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "commerceChannelId"}, true);
-
-		_finderPathCountByA_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "commerceChannelId"}, false);
 
 		CommerceShippingOptionAccountEntryRelUtil.setPersistence(this);
 	}

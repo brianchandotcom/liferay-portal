@@ -623,7 +623,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			"kaleoTimerInstanceToken.kaleoInstanceId = ?";
 
 	private FinderPath _finderPathFetchByKITI_KTI;
-	private FinderPath _finderPathCountByKITI_KTI;
 
 	/**
 	 * Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or throws a <code>NoSuchTimerInstanceTokenException</code> if it could not be found.
@@ -822,56 +821,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	 */
 	@Override
 	public int countByKITI_KTI(long kaleoInstanceTokenId, long kaleoTimerId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoTimerInstanceToken.class)) {
+		KaleoTimerInstanceToken kaleoTimerInstanceToken = fetchByKITI_KTI(
+			kaleoInstanceTokenId, kaleoTimerId);
 
-			FinderPath finderPath = _finderPathCountByKITI_KTI;
-
-			Object[] finderArgs = new Object[] {
-				kaleoInstanceTokenId, kaleoTimerId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE);
-
-				sb.append(_FINDER_COLUMN_KITI_KTI_KALEOINSTANCETOKENID_2);
-
-				sb.append(_FINDER_COLUMN_KITI_KTI_KALEOTIMERID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(kaleoInstanceTokenId);
-
-					queryPos.add(kaleoTimerId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (kaleoTimerInstanceToken == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2194,8 +2151,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByKITI_KTI, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByKITI_KTI, args,
 				kaleoTimerInstanceTokenModelImpl);
 		}
@@ -2965,11 +2920,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKITI_KTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"kaleoInstanceTokenId", "kaleoTimerId"}, true);
-
-		_finderPathCountByKITI_KTI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKITI_KTI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"kaleoInstanceTokenId", "kaleoTimerId"}, false);
 
 		_finderPathWithPaginationFindByKITI_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKITI_C",

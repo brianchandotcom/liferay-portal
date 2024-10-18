@@ -1159,7 +1159,6 @@ public class DDMStructureLinkPersistenceImpl
 		"ddmStructureLink.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_C_S;
-	private FinderPath _finderPathCountByC_C_S;
 
 	/**
 	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or throws a <code>NoSuchStructureLinkException</code> if it could not be found.
@@ -1351,60 +1350,14 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_S(long classNameId, long classPK, long structureId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStructureLink.class)) {
+		DDMStructureLink ddmStructureLink = fetchByC_C_S(
+			classNameId, classPK, structureId);
 
-			FinderPath finderPath = _finderPathCountByC_C_S;
-
-			Object[] finderArgs = new Object[] {
-				classNameId, classPK, structureId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_C_C_S_STRUCTUREID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(structureId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (ddmStructureLink == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -1540,8 +1493,6 @@ public class DDMStructureLinkPersistenceImpl
 				ddmStructureLinkModelImpl.getStructureId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByC_C_S, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_C_S, args, ddmStructureLinkModelImpl);
 		}
@@ -2271,13 +2222,6 @@ public class DDMStructureLinkPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "structureId"}, true);
-
-		_finderPathCountByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "structureId"}, false);
 
 		DDMStructureLinkUtil.setPersistence(this);
 	}

@@ -2730,7 +2730,6 @@ public class UserGroupGroupRolePersistenceImpl
 		"userGroupGroupRole.roleId = ?";
 
 	private FinderPath _finderPathFetchByU_G_R;
-	private FinderPath _finderPathCountByU_G_R;
 
 	/**
 	 * Returns the user group group role where userGroupId = &#63; and groupId = &#63; and roleId = &#63; or throws a <code>NoSuchUserGroupGroupRoleException</code> if it could not be found.
@@ -2922,58 +2921,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 */
 	@Override
 	public int countByU_G_R(long userGroupId, long groupId, long roleId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupGroupRole.class)) {
+		UserGroupGroupRole userGroupGroupRole = fetchByU_G_R(
+			userGroupId, groupId, roleId);
 
-			FinderPath finderPath = _finderPathCountByU_G_R;
-
-			Object[] finderArgs = new Object[] {userGroupId, groupId, roleId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_USERGROUPGROUPROLE_WHERE);
-
-				sb.append(_FINDER_COLUMN_U_G_R_USERGROUPID_2);
-
-				sb.append(_FINDER_COLUMN_U_G_R_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_U_G_R_ROLEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(userGroupId);
-
-					queryPos.add(groupId);
-
-					queryPos.add(roleId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (userGroupGroupRole == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3111,8 +3066,6 @@ public class UserGroupGroupRolePersistenceImpl
 				userGroupGroupRoleModelImpl.getRoleId()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByU_G_R, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByU_G_R, args, userGroupGroupRoleModelImpl);
 		}
@@ -3905,13 +3858,6 @@ public class UserGroupGroupRolePersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"userGroupId", "groupId", "roleId"}, true);
-
-		_finderPathCountByU_G_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_G_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"userGroupId", "groupId", "roleId"}, false);
 
 		UserGroupGroupRoleUtil.setPersistence(this);
 	}

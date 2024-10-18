@@ -1612,7 +1612,6 @@ public class LayoutBranchPersistenceImpl
 		"layoutBranch.plid = ?";
 
 	private FinderPath _finderPathFetchByL_P_N;
-	private FinderPath _finderPathCountByL_P_N;
 
 	/**
 	 * Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or throws a <code>NoSuchLayoutBranchException</code> if it could not be found.
@@ -1810,67 +1809,14 @@ public class LayoutBranchPersistenceImpl
 	 */
 	@Override
 	public int countByL_P_N(long layoutSetBranchId, long plid, String name) {
-		name = Objects.toString(name, "");
+		LayoutBranch layoutBranch = fetchByL_P_N(layoutSetBranchId, plid, name);
 
-		FinderPath finderPath = _finderPathCountByL_P_N;
-
-		Object[] finderArgs = new Object[] {layoutSetBranchId, plid, name};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LAYOUTBRANCH_WHERE);
-
-			sb.append(_FINDER_COLUMN_L_P_N_LAYOUTSETBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_P_N_PLID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_L_P_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_L_P_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(layoutSetBranchId);
-
-				queryPos.add(plid);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutBranch == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_L_P_N_LAYOUTSETBRANCHID_2 =
@@ -2571,8 +2517,6 @@ public class LayoutBranchPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByL_P_N, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(
 			_finderPathFetchByL_P_N, args, layoutBranchModelImpl);
 	}
 
@@ -3064,14 +3008,6 @@ public class LayoutBranchPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"layoutSetBranchId", "plid", "name"}, true);
-
-		_finderPathCountByL_P_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"layoutSetBranchId", "plid", "name"}, false);
 
 		_finderPathWithPaginationFindByL_P_M = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P_M",

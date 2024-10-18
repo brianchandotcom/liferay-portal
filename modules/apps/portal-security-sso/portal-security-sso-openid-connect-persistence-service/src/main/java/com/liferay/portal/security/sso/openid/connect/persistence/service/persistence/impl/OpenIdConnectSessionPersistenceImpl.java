@@ -1827,7 +1827,6 @@ public class OpenIdConnectSessionPersistenceImpl
 		"(openIdConnectSession.clientId IS NULL OR openIdConnectSession.clientId = '')";
 
 	private FinderPath _finderPathFetchByU_A_C;
-	private FinderPath _finderPathCountByU_A_C;
 
 	/**
 	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
@@ -2046,80 +2045,15 @@ public class OpenIdConnectSessionPersistenceImpl
 	public int countByU_A_C(
 		long userId, String authServerWellKnownURI, String clientId) {
 
-		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
-		clientId = Objects.toString(clientId, "");
+		OpenIdConnectSession openIdConnectSession = fetchByU_A_C(
+			userId, authServerWellKnownURI, clientId);
 
-		FinderPath finderPath = _finderPathCountByU_A_C;
-
-		Object[] finderArgs = new Object[] {
-			userId, authServerWellKnownURI, clientId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_OPENIDCONNECTSESSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_A_C_USERID_2);
-
-			boolean bindAuthServerWellKnownURI = false;
-
-			if (authServerWellKnownURI.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_A_C_AUTHSERVERWELLKNOWNURI_3);
-			}
-			else {
-				bindAuthServerWellKnownURI = true;
-
-				sb.append(_FINDER_COLUMN_U_A_C_AUTHSERVERWELLKNOWNURI_2);
-			}
-
-			boolean bindClientId = false;
-
-			if (clientId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_A_C_CLIENTID_3);
-			}
-			else {
-				bindClientId = true;
-
-				sb.append(_FINDER_COLUMN_U_A_C_CLIENTID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindAuthServerWellKnownURI) {
-					queryPos.add(authServerWellKnownURI);
-				}
-
-				if (bindClientId) {
-					queryPos.add(clientId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (openIdConnectSession == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_U_A_C_USERID_2 =
@@ -2252,7 +2186,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			openIdConnectSessionModelImpl.getClientId()
 		};
 
-		finderCache.putResult(_finderPathCountByU_A_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByU_A_C, args, openIdConnectSessionModelImpl);
 	}
@@ -2784,15 +2717,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			},
 			new String[] {"userId", "authServerWellKnownURI", "clientId"},
 			true);
-
-		_finderPathCountByU_A_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"userId", "authServerWellKnownURI", "clientId"},
-			false);
 
 		OpenIdConnectSessionUtil.setPersistence(this);
 	}

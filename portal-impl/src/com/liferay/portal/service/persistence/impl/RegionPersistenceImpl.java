@@ -2759,7 +2759,6 @@ public class RegionPersistenceImpl
 		"region.active = ?";
 
 	private FinderPath _finderPathFetchByC_R;
-	private FinderPath _finderPathCountByC_R;
 
 	/**
 	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
@@ -2944,67 +2943,13 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByC_R(long countryId, String regionCode) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
+		Region region = fetchByC_R(countryId, regionCode);
 
-			regionCode = Objects.toString(regionCode, "");
-
-			FinderPath finderPath = _finderPathCountByC_R;
-
-			Object[] finderArgs = new Object[] {countryId, regionCode};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_REGION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
-
-				boolean bindRegionCode = false;
-
-				if (regionCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
-				}
-				else {
-					bindRegionCode = true;
-
-					sb.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(countryId);
-
-					if (bindRegionCode) {
-						queryPos.add(regionCode);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (region == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3135,8 +3080,6 @@ public class RegionPersistenceImpl
 				regionModelImpl.getCountryId(), regionModelImpl.getRegionCode()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByC_R, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByC_R, args, regionModelImpl);
 		}
@@ -3946,11 +3889,6 @@ public class RegionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "regionCode"}, true);
-
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "regionCode"}, false);
 
 		RegionUtil.setPersistence(this);
 	}

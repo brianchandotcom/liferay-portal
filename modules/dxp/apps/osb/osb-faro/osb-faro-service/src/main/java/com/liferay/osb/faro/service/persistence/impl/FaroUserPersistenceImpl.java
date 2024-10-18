@@ -1069,7 +1069,6 @@ public class FaroUserPersistenceImpl
 		"faroUser.liveUserId = ?";
 
 	private FinderPath _finderPathFetchByKey;
-	private FinderPath _finderPathCountByKey;
 
 	/**
 	 * Returns the faro user where key = &#63; or throws a <code>NoSuchFaroUserException</code> if it could not be found.
@@ -1229,58 +1228,14 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public int countByKey(String key) {
-		key = Objects.toString(key, "");
+		FaroUser faroUser = fetchByKey(key);
 
-		FinderPath finderPath = _finderPathCountByKey;
-
-		Object[] finderArgs = new Object[] {key};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_FAROUSER_WHERE);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_KEY_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_KEY_KEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroUser == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "faroUser.key = ?";
@@ -1289,7 +1244,6 @@ public class FaroUserPersistenceImpl
 		"(faroUser.key IS NULL OR faroUser.key = '')";
 
 	private FinderPath _finderPathFetchByG_L;
-	private FinderPath _finderPathCountByG_L;
 
 	/**
 	 * Returns the faro user where groupId = &#63; and liveUserId = &#63; or throws a <code>NoSuchFaroUserException</code> if it could not be found.
@@ -1471,49 +1425,14 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public int countByG_L(long groupId, long liveUserId) {
-		FinderPath finderPath = _finderPathCountByG_L;
+		FaroUser faroUser = fetchByG_L(groupId, liveUserId);
 
-		Object[] finderArgs = new Object[] {groupId, liveUserId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FAROUSER_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_L_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_L_LIVEUSERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(liveUserId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroUser == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_L_GROUPID_2 =
@@ -2056,7 +1975,6 @@ public class FaroUserPersistenceImpl
 		"faroUser.roleId = ?";
 
 	private FinderPath _finderPathFetchByG_E;
-	private FinderPath _finderPathCountByG_E;
 
 	/**
 	 * Returns the faro user where groupId = &#63; and emailAddress = &#63; or throws a <code>NoSuchFaroUserException</code> if it could not be found.
@@ -2236,62 +2154,14 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public int countByG_E(long groupId, String emailAddress) {
-		emailAddress = Objects.toString(emailAddress, "");
+		FaroUser faroUser = fetchByG_E(groupId, emailAddress);
 
-		FinderPath finderPath = _finderPathCountByG_E;
-
-		Object[] finderArgs = new Object[] {groupId, emailAddress};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FAROUSER_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
-
-			boolean bindEmailAddress = false;
-
-			if (emailAddress.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_EMAILADDRESS_3);
-			}
-			else {
-				bindEmailAddress = true;
-
-				sb.append(_FINDER_COLUMN_G_E_EMAILADDRESS_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindEmailAddress) {
-					queryPos.add(emailAddress);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroUser == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_E_GROUPID_2 =
@@ -4062,21 +3932,18 @@ public class FaroUserPersistenceImpl
 
 		Object[] args = new Object[] {faroUserModelImpl.getKey()};
 
-		finderCache.putResult(_finderPathCountByKey, args, Long.valueOf(1));
 		finderCache.putResult(_finderPathFetchByKey, args, faroUserModelImpl);
 
 		args = new Object[] {
 			faroUserModelImpl.getGroupId(), faroUserModelImpl.getLiveUserId()
 		};
 
-		finderCache.putResult(_finderPathCountByG_L, args, Long.valueOf(1));
 		finderCache.putResult(_finderPathFetchByG_L, args, faroUserModelImpl);
 
 		args = new Object[] {
 			faroUserModelImpl.getGroupId(), faroUserModelImpl.getEmailAddress()
 		};
 
-		finderCache.putResult(_finderPathCountByG_E, args, Long.valueOf(1));
 		finderCache.putResult(_finderPathFetchByG_E, args, faroUserModelImpl);
 	}
 
@@ -4550,20 +4417,10 @@ public class FaroUserPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
 			new String[] {String.class.getName()}, new String[] {"key_"}, true);
 
-		_finderPathCountByKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"},
-			false);
-
 		_finderPathFetchByG_L = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "liveUserId"}, true);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "liveUserId"}, false);
 
 		_finderPathWithPaginationFindByG_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
@@ -4588,11 +4445,6 @@ public class FaroUserPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "emailAddress"}, true);
-
-		_finderPathCountByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "emailAddress"}, false);
 
 		_finderPathWithPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",

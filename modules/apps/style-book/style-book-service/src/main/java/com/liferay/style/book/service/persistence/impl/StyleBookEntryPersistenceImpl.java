@@ -1830,7 +1830,6 @@ public class StyleBookEntryPersistenceImpl
 		"styleBookEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Head;
-	private FinderPath _finderPathCountByUUID_G_Head;
 
 	/**
 	 * Returns the style book entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -2033,71 +2032,13 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G_Head(String uuid, long groupId, boolean head) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					StyleBookEntry.class)) {
+		StyleBookEntry styleBookEntry = fetchByUUID_G_Head(uuid, groupId, head);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G_Head;
-
-			Object[] finderArgs = new Object[] {uuid, groupId, head};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_STYLEBOOKENTRY_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_HEAD_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_HEAD_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_HEAD_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_UUID_G_HEAD_HEAD_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					queryPos.add(head);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (styleBookEntry == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -7355,7 +7296,6 @@ public class StyleBookEntryPersistenceImpl
 		"(styleBookEntry.styleBookEntryKey IS NULL OR styleBookEntry.styleBookEntryKey = '')";
 
 	private FinderPath _finderPathFetchByG_SBEK_Head;
-	private FinderPath _finderPathCountByG_SBEK_Head;
 
 	/**
 	 * Returns the style book entry where groupId = &#63; and styleBookEntryKey = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -7565,73 +7505,14 @@ public class StyleBookEntryPersistenceImpl
 	public int countByG_SBEK_Head(
 		long groupId, String styleBookEntryKey, boolean head) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					StyleBookEntry.class)) {
+		StyleBookEntry styleBookEntry = fetchByG_SBEK_Head(
+			groupId, styleBookEntryKey, head);
 
-			styleBookEntryKey = Objects.toString(styleBookEntryKey, "");
-
-			FinderPath finderPath = _finderPathCountByG_SBEK_Head;
-
-			Object[] finderArgs = new Object[] {
-				groupId, styleBookEntryKey, head
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_STYLEBOOKENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_SBEK_HEAD_GROUPID_2);
-
-				boolean bindStyleBookEntryKey = false;
-
-				if (styleBookEntryKey.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_SBEK_HEAD_STYLEBOOKENTRYKEY_3);
-				}
-				else {
-					bindStyleBookEntryKey = true;
-
-					sb.append(_FINDER_COLUMN_G_SBEK_HEAD_STYLEBOOKENTRYKEY_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_SBEK_HEAD_HEAD_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					if (bindStyleBookEntryKey) {
-						queryPos.add(styleBookEntryKey);
-					}
-
-					queryPos.add(head);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (styleBookEntry == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8248,7 +8129,6 @@ public class StyleBookEntryPersistenceImpl
 		"styleBookEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByERC_G_Head;
-	private FinderPath _finderPathCountByERC_G_Head;
 
 	/**
 	 * Returns the style book entry where externalReferenceCode = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -8461,75 +8341,14 @@ public class StyleBookEntryPersistenceImpl
 	public int countByERC_G_Head(
 		String externalReferenceCode, long groupId, boolean head) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					StyleBookEntry.class)) {
+		StyleBookEntry styleBookEntry = fetchByERC_G_Head(
+			externalReferenceCode, groupId, head);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByERC_G_Head;
-
-			Object[] finderArgs = new Object[] {
-				externalReferenceCode, groupId, head
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_STYLEBOOKENTRY_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(
-						_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(
-						_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_G_HEAD_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_ERC_G_HEAD_HEAD_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(groupId);
-
-					queryPos.add(head);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (styleBookEntry == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8548,7 +8367,6 @@ public class StyleBookEntryPersistenceImpl
 		"styleBookEntry.head = ?";
 
 	private FinderPath _finderPathFetchByHeadId;
-	private FinderPath _finderPathCountByHeadId;
 
 	/**
 	 * Returns the style book entry where headId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -8704,50 +8522,13 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public int countByHeadId(long headId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					StyleBookEntry.class)) {
+		StyleBookEntry styleBookEntry = fetchByHeadId(headId);
 
-			FinderPath finderPath = _finderPathCountByHeadId;
-
-			Object[] finderArgs = new Object[] {headId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_STYLEBOOKENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_HEADID_HEADID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(headId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (styleBookEntry == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8903,8 +8684,6 @@ public class StyleBookEntryPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G_Head, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G_Head, args, styleBookEntryModelImpl);
 
 			args = new Object[] {
@@ -8913,8 +8692,6 @@ public class StyleBookEntryPersistenceImpl
 				styleBookEntryModelImpl.isHead()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByG_SBEK_Head, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_SBEK_Head, args, styleBookEntryModelImpl);
 
@@ -8925,14 +8702,10 @@ public class StyleBookEntryPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByERC_G_Head, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByERC_G_Head, args, styleBookEntryModelImpl);
 
 			args = new Object[] {styleBookEntryModelImpl.getHeadId()};
 
-			finderCache.putResult(
-				_finderPathCountByHeadId, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByHeadId, args, styleBookEntryModelImpl);
 		}
@@ -9804,14 +9577,6 @@ public class StyleBookEntryPersistenceImpl
 			},
 			new String[] {"uuid_", "groupId", "head"}, true);
 
-		_finderPathCountByUUID_G_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "head"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -9995,14 +9760,6 @@ public class StyleBookEntryPersistenceImpl
 			},
 			new String[] {"groupId", "styleBookEntryKey", "head"}, true);
 
-		_finderPathCountByG_SBEK_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SBEK_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "styleBookEntryKey", "head"}, false);
-
 		_finderPathWithPaginationFindByERC_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByERC_G",
 			new String[] {
@@ -10030,22 +9787,9 @@ public class StyleBookEntryPersistenceImpl
 			},
 			new String[] {"externalReferenceCode", "groupId", "head"}, true);
 
-		_finderPathCountByERC_G_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"externalReferenceCode", "groupId", "head"}, false);
-
 		_finderPathFetchByHeadId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
-
-		_finderPathCountByHeadId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"},
-			false);
 
 		StyleBookEntryUtil.setPersistence(this);
 	}

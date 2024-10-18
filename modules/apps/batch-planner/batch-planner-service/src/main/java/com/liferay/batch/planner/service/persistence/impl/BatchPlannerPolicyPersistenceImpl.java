@@ -599,7 +599,6 @@ public class BatchPlannerPolicyPersistenceImpl
 			"batchPlannerPolicy.batchPlannerPlanId = ?";
 
 	private FinderPath _finderPathFetchByBPPI_N;
-	private FinderPath _finderPathCountByBPPI_N;
 
 	/**
 	 * Returns the batch planner policy where batchPlannerPlanId = &#63; and name = &#63; or throws a <code>NoSuchPolicyException</code> if it could not be found.
@@ -785,62 +784,15 @@ public class BatchPlannerPolicyPersistenceImpl
 	 */
 	@Override
 	public int countByBPPI_N(long batchPlannerPlanId, String name) {
-		name = Objects.toString(name, "");
+		BatchPlannerPolicy batchPlannerPolicy = fetchByBPPI_N(
+			batchPlannerPlanId, name);
 
-		FinderPath finderPath = _finderPathCountByBPPI_N;
-
-		Object[] finderArgs = new Object[] {batchPlannerPlanId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_BATCHPLANNERPOLICY_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_N_BATCHPLANNERPLANID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_BPPI_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_BPPI_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (batchPlannerPolicy == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_BPPI_N_BATCHPLANNERPLANID_2 =
@@ -960,7 +912,6 @@ public class BatchPlannerPolicyPersistenceImpl
 			batchPlannerPolicyModelImpl.getName()
 		};
 
-		finderCache.putResult(_finderPathCountByBPPI_N, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByBPPI_N, args, batchPlannerPolicyModelImpl);
 	}
@@ -1452,11 +1403,6 @@ public class BatchPlannerPolicyPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"batchPlannerPlanId", "name"}, true);
-
-		_finderPathCountByBPPI_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "name"}, false);
 
 		BatchPlannerPolicyUtil.setPersistence(this);
 	}

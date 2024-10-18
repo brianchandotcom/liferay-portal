@@ -1760,7 +1760,6 @@ public class NotificationRecipientSettingPersistenceImpl
 			"notificationRecipientSetting.notificationRecipientId = ?";
 
 	private FinderPath _finderPathFetchByNRI_N;
-	private FinderPath _finderPathCountByNRI_N;
 
 	/**
 	 * Returns the notification recipient setting where notificationRecipientId = &#63; and name = &#63; or throws a <code>NoSuchNotificationRecipientSettingException</code> if it could not be found.
@@ -1968,62 +1967,15 @@ public class NotificationRecipientSettingPersistenceImpl
 	 */
 	@Override
 	public int countByNRI_N(long notificationRecipientId, String name) {
-		name = Objects.toString(name, "");
+		NotificationRecipientSetting notificationRecipientSetting =
+			fetchByNRI_N(notificationRecipientId, name);
 
-		FinderPath finderPath = _finderPathCountByNRI_N;
-
-		Object[] finderArgs = new Object[] {notificationRecipientId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE);
-
-			sb.append(_FINDER_COLUMN_NRI_N_NOTIFICATIONRECIPIENTID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NRI_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NRI_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(notificationRecipientId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (notificationRecipientSetting == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_NRI_N_NOTIFICATIONRECIPIENTID_2 =
@@ -2166,7 +2118,6 @@ public class NotificationRecipientSettingPersistenceImpl
 			notificationRecipientSettingModelImpl.getName()
 		};
 
-		finderCache.putResult(_finderPathCountByNRI_N, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByNRI_N, args,
 			notificationRecipientSettingModelImpl);
@@ -2739,11 +2690,6 @@ public class NotificationRecipientSettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByNRI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"notificationRecipientId", "name"}, true);
-
-		_finderPathCountByNRI_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNRI_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"notificationRecipientId", "name"}, false);
 
 		NotificationRecipientSettingUtil.setPersistence(this);
 	}

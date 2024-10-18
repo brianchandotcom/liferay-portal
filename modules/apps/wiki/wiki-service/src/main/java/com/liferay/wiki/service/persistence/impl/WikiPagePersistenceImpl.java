@@ -1155,7 +1155,6 @@ public class WikiPagePersistenceImpl
 		"(wikiPage.uuid IS NULL OR wikiPage.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the wiki page where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -1340,67 +1339,13 @@ public class WikiPagePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiPage.class)) {
+		WikiPage wikiPage = fetchByUUID_G(uuid, groupId);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G;
-
-			Object[] finderArgs = new Object[] {uuid, groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (wikiPage == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8529,7 +8474,6 @@ public class WikiPagePersistenceImpl
 		"wikiPage.status = ?";
 
 	private FinderPath _finderPathFetchByR_N_V;
-	private FinderPath _finderPathCountByR_N_V;
 
 	/**
 	 * Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -8719,60 +8663,13 @@ public class WikiPagePersistenceImpl
 	 */
 	@Override
 	public int countByR_N_V(long resourcePrimKey, long nodeId, double version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiPage.class)) {
+		WikiPage wikiPage = fetchByR_N_V(resourcePrimKey, nodeId, version);
 
-			FinderPath finderPath = _finderPathCountByR_N_V;
-
-			Object[] finderArgs = new Object[] {
-				resourcePrimKey, nodeId, version
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
-
-				sb.append(_FINDER_COLUMN_R_N_V_RESOURCEPRIMKEY_2);
-
-				sb.append(_FINDER_COLUMN_R_N_V_NODEID_2);
-
-				sb.append(_FINDER_COLUMN_R_N_V_VERSION_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(resourcePrimKey);
-
-					queryPos.add(nodeId);
-
-					queryPos.add(version);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (wikiPage == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -9963,7 +9860,6 @@ public class WikiPagePersistenceImpl
 		"wikiPage.status = ?";
 
 	private FinderPath _finderPathFetchByG_ERC_V;
-	private FinderPath _finderPathCountByG_ERC_V;
 
 	/**
 	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -10174,73 +10070,14 @@ public class WikiPagePersistenceImpl
 	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, double version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiPage.class)) {
+		WikiPage wikiPage = fetchByG_ERC_V(
+			groupId, externalReferenceCode, version);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByG_ERC_V;
-
-			Object[] finderArgs = new Object[] {
-				groupId, externalReferenceCode, version
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_ERC_V_GROUPID_2);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_ERC_V_VERSION_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(version);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (wikiPage == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -12829,7 +12666,6 @@ public class WikiPagePersistenceImpl
 		"wikiPage.status = ?";
 
 	private FinderPath _finderPathFetchByN_T_V;
-	private FinderPath _finderPathCountByN_T_V;
 
 	/**
 	 * Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -13027,71 +12863,13 @@ public class WikiPagePersistenceImpl
 	 */
 	@Override
 	public int countByN_T_V(long nodeId, String title, double version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiPage.class)) {
+		WikiPage wikiPage = fetchByN_T_V(nodeId, title, version);
 
-			title = Objects.toString(title, "");
-
-			FinderPath finderPath = _finderPathCountByN_T_V;
-
-			Object[] finderArgs = new Object[] {nodeId, title, version};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
-
-				sb.append(_FINDER_COLUMN_N_T_V_NODEID_2);
-
-				boolean bindTitle = false;
-
-				if (title.isEmpty()) {
-					sb.append(_FINDER_COLUMN_N_T_V_TITLE_3);
-				}
-				else {
-					bindTitle = true;
-
-					sb.append(_FINDER_COLUMN_N_T_V_TITLE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_N_T_V_VERSION_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(nodeId);
-
-					if (bindTitle) {
-						queryPos.add(StringUtil.toLowerCase(title));
-					}
-
-					queryPos.add(version);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (wikiPage == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -24046,8 +23824,6 @@ public class WikiPagePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, wikiPageModelImpl);
 
 			args = new Object[] {
@@ -24055,8 +23831,6 @@ public class WikiPagePersistenceImpl
 				wikiPageModelImpl.getNodeId(), wikiPageModelImpl.getVersion()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByR_N_V, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByR_N_V, args, wikiPageModelImpl);
 
@@ -24067,8 +23841,6 @@ public class WikiPagePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByG_ERC_V, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByG_ERC_V, args, wikiPageModelImpl);
 
 			args = new Object[] {
@@ -24076,8 +23848,6 @@ public class WikiPagePersistenceImpl
 				wikiPageModelImpl.getVersion()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByN_T_V, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByN_T_V, args, wikiPageModelImpl);
 		}
@@ -24912,11 +24682,6 @@ public class WikiPagePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -25149,14 +24914,6 @@ public class WikiPagePersistenceImpl
 			},
 			new String[] {"resourcePrimKey", "nodeId", "version"}, true);
 
-		_finderPathCountByR_N_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_N_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"resourcePrimKey", "nodeId", "version"}, false);
-
 		_finderPathWithPaginationFindByR_N_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_N_H",
 			new String[] {
@@ -25214,15 +24971,6 @@ public class WikiPagePersistenceImpl
 				Double.class.getName()
 			},
 			new String[] {"groupId", "externalReferenceCode", "version"}, true);
-
-		_finderPathCountByG_ERC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "version"},
-			false);
 
 		_finderPathWithPaginationFindByG_N_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_H",
@@ -25306,14 +25054,6 @@ public class WikiPagePersistenceImpl
 				Double.class.getName()
 			},
 			new String[] {"nodeId", "title", "version"}, true);
-
-		_finderPathCountByN_T_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"nodeId", "title", "version"}, false);
 
 		_finderPathWithPaginationFindByN_T_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByN_T_H",

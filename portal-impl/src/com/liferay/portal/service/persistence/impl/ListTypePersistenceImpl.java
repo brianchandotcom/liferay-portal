@@ -2254,7 +2254,6 @@ public class ListTypePersistenceImpl
 		"(listType.type IS NULL OR listType.type = '')";
 
 	private FinderPath _finderPathFetchByC_N_T;
-	private FinderPath _finderPathCountByC_N_T;
 
 	/**
 	 * Returns the list type where companyId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchListTypeException</code> if it could not be found.
@@ -2459,79 +2458,14 @@ public class ListTypePersistenceImpl
 	 */
 	@Override
 	public int countByC_N_T(long companyId, String name, String type) {
-		name = Objects.toString(name, "");
-		type = Objects.toString(type, "");
+		ListType listType = fetchByC_N_T(companyId, name, type);
 
-		FinderPath finderPath = _finderPathCountByC_N_T;
-
-		Object[] finderArgs = new Object[] {companyId, name, type};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LISTTYPE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_T_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_T_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_T_NAME_2);
-			}
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_C_N_T_TYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (listType == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_N_T_COMPANYID_2 =
@@ -2658,8 +2592,6 @@ public class ListTypePersistenceImpl
 			listTypeModelImpl.getType()
 		};
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByC_N_T, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
 			_finderPathFetchByC_N_T, args, listTypeModelImpl);
 	}
@@ -3207,14 +3139,6 @@ public class ListTypePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "name", "type_"}, true);
-
-		_finderPathCountByC_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "name", "type_"}, false);
 
 		ListTypeUtil.setPersistence(this);
 	}

@@ -5377,7 +5377,6 @@ public class PortletPreferencesPersistenceImpl
 		"(portletPreferences.portletId IS NULL OR portletPreferences.portletId LIKE '')";
 
 	private FinderPath _finderPathFetchByO_O_P_P;
-	private FinderPath _finderPathCountByO_O_P_P;
 
 	/**
 	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a <code>NoSuchPortletPreferencesException</code> if it could not be found.
@@ -5599,77 +5598,14 @@ public class PortletPreferencesPersistenceImpl
 	public int countByO_O_P_P(
 		long ownerId, int ownerType, long plid, String portletId) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
+		PortletPreferences portletPreferences = fetchByO_O_P_P(
+			ownerId, ownerType, plid, portletId);
 
-			portletId = Objects.toString(portletId, "");
-
-			FinderPath finderPath = _finderPathCountByO_O_P_P;
-
-			Object[] finderArgs = new Object[] {
-				ownerId, ownerType, plid, portletId
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-				sb.append(_FINDER_COLUMN_O_O_P_P_OWNERID_2);
-
-				sb.append(_FINDER_COLUMN_O_O_P_P_OWNERTYPE_2);
-
-				sb.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
-
-				boolean bindPortletId = false;
-
-				if (portletId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
-				}
-				else {
-					bindPortletId = true;
-
-					sb.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(ownerId);
-
-					queryPos.add(ownerType);
-
-					queryPos.add(plid);
-
-					if (bindPortletId) {
-						queryPos.add(portletId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (portletPreferences == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -5815,8 +5751,6 @@ public class PortletPreferencesPersistenceImpl
 				portletPreferencesModelImpl.getPortletId()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByO_O_P_P, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByO_O_P_P, args, portletPreferencesModelImpl);
 		}
@@ -6705,14 +6639,6 @@ public class PortletPreferencesPersistenceImpl
 				Long.class.getName(), String.class.getName()
 			},
 			new String[] {"ownerId", "ownerType", "plid", "portletId"}, true);
-
-		_finderPathCountByO_O_P_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_P_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "plid", "portletId"}, false);
 
 		PortletPreferencesUtil.setPersistence(this);
 	}

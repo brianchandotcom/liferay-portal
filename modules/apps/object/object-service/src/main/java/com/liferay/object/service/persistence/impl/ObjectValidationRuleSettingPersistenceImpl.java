@@ -2352,7 +2352,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		"(objectValidationRuleSetting.name IS NULL OR objectValidationRuleSetting.name = '')";
 
 	private FinderPath _finderPathFetchByN_V;
-	private FinderPath _finderPathCountByN_V;
 
 	/**
 	 * Returns the object validation rule setting where name = &#63; and value = &#63; or throws a <code>NoSuchObjectValidationRuleSettingException</code> if it could not be found.
@@ -2564,74 +2563,15 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	 */
 	@Override
 	public int countByN_V(String name, String value) {
-		name = Objects.toString(name, "");
-		value = Objects.toString(value, "");
+		ObjectValidationRuleSetting objectValidationRuleSetting = fetchByN_V(
+			name, value);
 
-		FinderPath finderPath = _finderPathCountByN_V;
-
-		Object[] finderArgs = new Object[] {name, value};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_V_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_N_V_NAME_2);
-			}
-
-			boolean bindValue = false;
-
-			if (value.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_V_VALUE_3);
-			}
-			else {
-				bindValue = true;
-
-				sb.append(_FINDER_COLUMN_N_V_VALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindValue) {
-					queryPos.add(value);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectValidationRuleSetting == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_N_V_NAME_2 =
@@ -2647,7 +2587,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		"(objectValidationRuleSetting.value IS NULL OR objectValidationRuleSetting.value = '')";
 
 	private FinderPath _finderPathFetchByOVRI_N_V;
-	private FinderPath _finderPathCountByOVRI_N_V;
 
 	/**
 	 * Returns the object validation rule setting where objectValidationRuleId = &#63; and name = &#63; and value = &#63; or throws a <code>NoSuchObjectValidationRuleSettingException</code> if it could not be found.
@@ -2865,80 +2804,15 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	public int countByOVRI_N_V(
 		long objectValidationRuleId, String name, String value) {
 
-		name = Objects.toString(name, "");
-		value = Objects.toString(value, "");
+		ObjectValidationRuleSetting objectValidationRuleSetting =
+			fetchByOVRI_N_V(objectValidationRuleId, name, value);
 
-		FinderPath finderPath = _finderPathCountByOVRI_N_V;
-
-		Object[] finderArgs = new Object[] {
-			objectValidationRuleId, name, value
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE);
-
-			sb.append(_FINDER_COLUMN_OVRI_N_V_OBJECTVALIDATIONRULEID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_OVRI_N_V_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_OVRI_N_V_NAME_2);
-			}
-
-			boolean bindValue = false;
-
-			if (value.isEmpty()) {
-				sb.append(_FINDER_COLUMN_OVRI_N_V_VALUE_3);
-			}
-			else {
-				bindValue = true;
-
-				sb.append(_FINDER_COLUMN_OVRI_N_V_VALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectValidationRuleId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindValue) {
-					queryPos.add(value);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectValidationRuleSetting == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String
@@ -3096,7 +2970,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			objectValidationRuleSettingModelImpl.getValue()
 		};
 
-		finderCache.putResult(_finderPathCountByN_V, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByN_V, args, objectValidationRuleSettingModelImpl);
 
@@ -3106,8 +2979,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			objectValidationRuleSettingModelImpl.getValue()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByOVRI_N_V, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByOVRI_N_V, args,
 			objectValidationRuleSettingModelImpl);
@@ -3699,11 +3570,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"name", "value"}, true);
 
-		_finderPathCountByN_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_V",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"name", "value"}, false);
-
 		_finderPathFetchByOVRI_N_V = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByOVRI_N_V",
 			new String[] {
@@ -3711,14 +3577,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"objectValidationRuleId", "name", "value"}, true);
-
-		_finderPathCountByOVRI_N_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVRI_N_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"objectValidationRuleId", "name", "value"}, false);
 
 		ObjectValidationRuleSettingUtil.setPersistence(this);
 	}

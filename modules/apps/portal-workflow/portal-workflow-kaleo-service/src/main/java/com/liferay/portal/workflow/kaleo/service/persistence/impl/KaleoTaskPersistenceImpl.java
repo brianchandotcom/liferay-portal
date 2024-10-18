@@ -1129,7 +1129,6 @@ public class KaleoTaskPersistenceImpl
 			"kaleoTask.kaleoDefinitionVersionId = ?";
 
 	private FinderPath _finderPathFetchByKaleoNodeId;
-	private FinderPath _finderPathCountByKaleoNodeId;
 
 	/**
 	 * Returns the kaleo task where kaleoNodeId = &#63; or throws a <code>NoSuchTaskException</code> if it could not be found.
@@ -1303,50 +1302,13 @@ public class KaleoTaskPersistenceImpl
 	 */
 	@Override
 	public int countByKaleoNodeId(long kaleoNodeId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoTask.class)) {
+		KaleoTask kaleoTask = fetchByKaleoNodeId(kaleoNodeId);
 
-			FinderPath finderPath = _finderPathCountByKaleoNodeId;
-
-			Object[] finderArgs = new Object[] {kaleoNodeId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_KALEOTASK_WHERE);
-
-				sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(kaleoNodeId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (kaleoTask == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -1464,8 +1426,6 @@ public class KaleoTaskPersistenceImpl
 
 			Object[] args = new Object[] {kaleoTaskModelImpl.getKaleoNodeId()};
 
-			finderCache.putResult(
-				_finderPathCountByKaleoNodeId, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByKaleoNodeId, args, kaleoTaskModelImpl);
 		}
@@ -2209,11 +2169,6 @@ public class KaleoTaskPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKaleoNodeId",
 			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
 			true);
-
-		_finderPathCountByKaleoNodeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
-			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
-			false);
 
 		KaleoTaskUtil.setPersistence(this);
 	}

@@ -648,7 +648,6 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.uuid IS NULL OR cpInstance.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the cp instance where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -833,67 +832,13 @@ public class CPInstancePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPInstance.class)) {
+		CPInstance cpInstance = fetchByUUID_G(uuid, groupId);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G;
-
-			Object[] finderArgs = new Object[] {uuid, groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (cpInstance == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -5470,7 +5415,6 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.sku IS NULL OR cpInstance.sku = '')";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and CPInstanceUuid = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -5656,67 +5600,13 @@ public class CPInstancePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long CPDefinitionId, String CPInstanceUuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPInstance.class)) {
+		CPInstance cpInstance = fetchByC_C(CPDefinitionId, CPInstanceUuid);
 
-			CPInstanceUuid = Objects.toString(CPInstanceUuid, "");
-
-			FinderPath finderPath = _finderPathCountByC_C;
-
-			Object[] finderArgs = new Object[] {CPDefinitionId, CPInstanceUuid};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_CPDEFINITIONID_2);
-
-				boolean bindCPInstanceUuid = false;
-
-				if (CPInstanceUuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_C_CPINSTANCEUUID_3);
-				}
-				else {
-					bindCPInstanceUuid = true;
-
-					sb.append(_FINDER_COLUMN_C_C_CPINSTANCEUUID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPDefinitionId);
-
-					if (bindCPInstanceUuid) {
-						queryPos.add(CPInstanceUuid);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (cpInstance == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -5730,7 +5620,6 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.CPInstanceUuid IS NULL OR cpInstance.CPInstanceUuid = '')";
 
 	private FinderPath _finderPathFetchByCPDI_S;
-	private FinderPath _finderPathCountByCPDI_S;
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and sku = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -5915,67 +5804,13 @@ public class CPInstancePersistenceImpl
 	 */
 	@Override
 	public int countByCPDI_S(long CPDefinitionId, String sku) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPInstance.class)) {
+		CPInstance cpInstance = fetchByCPDI_S(CPDefinitionId, sku);
 
-			sku = Objects.toString(sku, "");
-
-			FinderPath finderPath = _finderPathCountByCPDI_S;
-
-			Object[] finderArgs = new Object[] {CPDefinitionId, sku};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
-
-				sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
-
-				boolean bindSku = false;
-
-				if (sku.isEmpty()) {
-					sb.append(_FINDER_COLUMN_CPDI_S_SKU_3);
-				}
-				else {
-					bindSku = true;
-
-					sb.append(_FINDER_COLUMN_CPDI_S_SKU_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPDefinitionId);
-
-					if (bindSku) {
-						queryPos.add(sku);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (cpInstance == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8397,7 +8232,6 @@ public class CPInstancePersistenceImpl
 		"cpInstance.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
-	private FinderPath _finderPathCountByERC_C;
 
 	/**
 	 * Returns the cp instance where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -8587,69 +8421,13 @@ public class CPInstancePersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPInstance.class)) {
+		CPInstance cpInstance = fetchByERC_C(externalReferenceCode, companyId);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByERC_C;
-
-			Object[] finderArgs = new Object[] {
-				externalReferenceCode, companyId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (cpInstance == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8808,8 +8586,6 @@ public class CPInstancePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, cpInstanceModelImpl);
 
 			args = new Object[] {
@@ -8817,7 +8593,6 @@ public class CPInstancePersistenceImpl
 				cpInstanceModelImpl.getCPInstanceUuid()
 			};
 
-			finderCache.putResult(_finderPathCountByC_C, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_C, args, cpInstanceModelImpl);
 
@@ -8827,8 +8602,6 @@ public class CPInstancePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByCPDI_S, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByCPDI_S, args, cpInstanceModelImpl);
 
 			args = new Object[] {
@@ -8836,8 +8609,6 @@ public class CPInstancePersistenceImpl
 				cpInstanceModelImpl.getCompanyId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByERC_C, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByERC_C, args, cpInstanceModelImpl);
 		}
@@ -9687,11 +9458,6 @@ public class CPInstancePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -9826,20 +9592,10 @@ public class CPInstancePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "CPInstanceUuid"}, true);
 
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "CPInstanceUuid"}, false);
-
 		_finderPathFetchByCPDI_S = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "sku"}, true);
-
-		_finderPathCountByCPDI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDI_S",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "sku"}, false);
 
 		_finderPathWithPaginationFindByC_ST = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_ST",
@@ -9929,11 +9685,6 @@ public class CPInstancePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
-
-		_finderPathCountByERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		CPInstanceUtil.setPersistence(this);
 	}

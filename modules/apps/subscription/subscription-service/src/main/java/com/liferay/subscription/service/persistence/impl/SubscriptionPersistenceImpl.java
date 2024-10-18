@@ -3534,8 +3534,6 @@ public class SubscriptionPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByC_U_C_C, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByC_U_C_C, args, subscriptionModelImpl);
 		}
 	}

@@ -1798,7 +1798,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			"commercePriceListChannelRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByCCI_CPI;
-	private FinderPath _finderPathCountByCCI_CPI;
 
 	/**
 	 * Returns the commerce price list channel rel where commerceChannelId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListChannelRelException</code> if it could not be found.
@@ -1985,56 +1984,14 @@ public class CommercePriceListChannelRelPersistenceImpl
 	public int countByCCI_CPI(
 		long commerceChannelId, long commercePriceListId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceListChannelRel.class)) {
+		CommercePriceListChannelRel commercePriceListChannelRel =
+			fetchByCCI_CPI(commerceChannelId, commercePriceListId);
 
-			FinderPath finderPath = _finderPathCountByCCI_CPI;
-
-			Object[] finderArgs = new Object[] {
-				commerceChannelId, commercePriceListId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_CCI_CPI_COMMERCECHANNELID_2);
-
-				sb.append(_FINDER_COLUMN_CCI_CPI_COMMERCEPRICELISTID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(commerceChannelId);
-
-					queryPos.add(commercePriceListId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceListChannelRel == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2189,8 +2146,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				commercePriceListChannelRelModelImpl.getCommercePriceListId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByCCI_CPI, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByCCI_CPI, args,
 				commercePriceListChannelRelModelImpl);
@@ -3021,11 +2976,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCCI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceChannelId", "commercePriceListId"}, true);
-
-		_finderPathCountByCCI_CPI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCI_CPI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceChannelId", "commercePriceListId"}, false);
 
 		CommercePriceListChannelRelUtil.setPersistence(this);
 	}

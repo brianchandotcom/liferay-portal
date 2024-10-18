@@ -2293,7 +2293,6 @@ public class DDMFieldPersistenceImpl
 		"(ddmField.fieldName IS NULL OR ddmField.fieldName = '')";
 
 	private FinderPath _finderPathFetchByS_I;
-	private FinderPath _finderPathCountByS_I;
 
 	/**
 	 * Returns the ddm field where storageId = &#63; and instanceId = &#63; or throws a <code>NoSuchFieldException</code> if it could not be found.
@@ -2478,67 +2477,13 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Override
 	public int countByS_I(long storageId, String instanceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMField.class)) {
+		DDMField ddmField = fetchByS_I(storageId, instanceId);
 
-			instanceId = Objects.toString(instanceId, "");
-
-			FinderPath finderPath = _finderPathCountByS_I;
-
-			Object[] finderArgs = new Object[] {storageId, instanceId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DDMFIELD_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_I_STORAGEID_2);
-
-				boolean bindInstanceId = false;
-
-				if (instanceId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_S_I_INSTANCEID_3);
-				}
-				else {
-					bindInstanceId = true;
-
-					sb.append(_FINDER_COLUMN_S_I_INSTANCEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(storageId);
-
-					if (bindInstanceId) {
-						queryPos.add(instanceId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (ddmField == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2667,7 +2612,6 @@ public class DDMFieldPersistenceImpl
 				ddmFieldModelImpl.getInstanceId()
 			};
 
-			finderCache.putResult(_finderPathCountByS_I, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByS_I, args, ddmFieldModelImpl);
 		}
@@ -3413,11 +3357,6 @@ public class DDMFieldPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"storageId", "instanceId"}, true);
-
-		_finderPathCountByS_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_I",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "instanceId"}, false);
 
 		DDMFieldUtil.setPersistence(this);
 	}

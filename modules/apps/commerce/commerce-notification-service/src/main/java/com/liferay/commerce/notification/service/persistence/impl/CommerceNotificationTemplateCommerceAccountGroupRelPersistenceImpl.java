@@ -1244,7 +1244,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			"commerceNotificationTemplateCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce notification template commerce account group rel where commerceNotificationTemplateId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchNotificationTemplateCommerceAccountGroupRelException</code> if it could not be found.
@@ -1440,52 +1439,16 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	public int countByC_C(
 		long commerceNotificationTemplateId, long commerceAccountGroupId) {
 
-		FinderPath finderPath = _finderPathCountByC_C;
+		CommerceNotificationTemplateCommerceAccountGroupRel
+			commerceNotificationTemplateCommerceAccountGroupRel = fetchByC_C(
+				commerceNotificationTemplateId, commerceAccountGroupId);
 
-		Object[] finderArgs = new Object[] {
-			commerceNotificationTemplateId, commerceAccountGroupId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(
-				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCENOTIFICATIONTEMPLATEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceNotificationTemplateId);
-
-				queryPos.add(commerceAccountGroupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceNotificationTemplateCommerceAccountGroupRel == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String
@@ -1648,7 +1611,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				getCommerceAccountGroupId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C, args,
 			commerceNotificationTemplateCommerceAccountGroupRelModelImpl);
@@ -2245,14 +2207,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				"commerceNotificationTemplateId", "commerceAccountGroupId"
 			},
 			true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"commerceNotificationTemplateId", "commerceAccountGroupId"
-			},
-			false);
 
 		CommerceNotificationTemplateCommerceAccountGroupRelUtil.setPersistence(
 			this);

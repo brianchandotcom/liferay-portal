@@ -1676,7 +1676,6 @@ public class AccountGroupRelPersistenceImpl
 		"accountGroupRel.classPK = ?";
 
 	private FinderPath _finderPathFetchByA_C_C;
-	private FinderPath _finderPathCountByA_C_C;
 
 	/**
 	 * Returns the account group rel where accountGroupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchGroupRelException</code> if it could not be found.
@@ -1882,55 +1881,15 @@ public class AccountGroupRelPersistenceImpl
 	public int countByA_C_C(
 		long accountGroupId, long classNameId, long classPK) {
 
-		FinderPath finderPath = _finderPathCountByA_C_C;
+		AccountGroupRel accountGroupRel = fetchByA_C_C(
+			accountGroupId, classNameId, classPK);
 
-		Object[] finderArgs = new Object[] {
-			accountGroupId, classNameId, classPK
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_ACCOUNTGROUPREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_C_C_ACCOUNTGROUPID_2);
-
-			sb.append(_FINDER_COLUMN_A_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_A_C_C_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountGroupId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (accountGroupRel == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_A_C_C_ACCOUNTGROUPID_2 =
@@ -2050,7 +2009,6 @@ public class AccountGroupRelPersistenceImpl
 			accountGroupRelModelImpl.getClassPK()
 		};
 
-		finderCache.putResult(_finderPathCountByA_C_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByA_C_C, args, accountGroupRelModelImpl);
 	}
@@ -2575,13 +2533,6 @@ public class AccountGroupRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"accountGroupId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByA_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"accountGroupId", "classNameId", "classPK"}, false);
 
 		AccountGroupRelUtil.setPersistence(this);
 	}

@@ -2325,7 +2325,6 @@ public class SocialActivityAchievementPersistenceImpl
 		"socialActivityAchievement.firstInGroup = ?";
 
 	private FinderPath _finderPathFetchByG_U_N;
-	private FinderPath _finderPathCountByG_U_N;
 
 	/**
 	 * Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or throws a <code>NoSuchActivityAchievementException</code> if it could not be found.
@@ -2532,71 +2531,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public int countByG_U_N(long groupId, long userId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_U_N(
+			groupId, userId, name);
 
-			name = Objects.toString(name, "");
-
-			FinderPath finderPath = _finderPathCountByG_U_N;
-
-			Object[] finderArgs = new Object[] {groupId, userId, name};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_U_N_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_N_USERID_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_U_N_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_G_U_N_NAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(userId);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (socialActivityAchievement == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3347,8 +3289,6 @@ public class SocialActivityAchievementPersistenceImpl
 				socialActivityAchievementModelImpl.getName()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByG_U_N, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByG_U_N, args,
 				socialActivityAchievementModelImpl);
@@ -4143,14 +4083,6 @@ public class SocialActivityAchievementPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"groupId", "userId", "name"}, true);
-
-		_finderPathCountByG_U_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "userId", "name"}, false);
 
 		_finderPathWithPaginationFindByG_U_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F",

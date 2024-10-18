@@ -583,7 +583,6 @@ public class VersionedEntryVersionPersistenceImpl
 			"versionedEntryVersion.versionedEntryId = ?";
 
 	private FinderPath _finderPathFetchByVersionedEntryId_Version;
-	private FinderPath _finderPathCountByVersionedEntryId_Version;
 
 	/**
 	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchVersionedEntryVersionException</code> if it could not be found.
@@ -762,50 +761,15 @@ public class VersionedEntryVersionPersistenceImpl
 	public int countByVersionedEntryId_Version(
 		long versionedEntryId, int version) {
 
-		FinderPath finderPath = _finderPathCountByVersionedEntryId_Version;
+		VersionedEntryVersion versionedEntryVersion =
+			fetchByVersionedEntryId_Version(versionedEntryId, version);
 
-		Object[] finderArgs = new Object[] {versionedEntryId, version};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_VERSIONEDENTRYVERSION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_VERSIONEDENTRYID_VERSION_VERSIONEDENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_VERSIONEDENTRYID_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(versionedEntryId);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (versionedEntryVersion == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String
@@ -1980,8 +1944,6 @@ public class VersionedEntryVersionPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByVersionedEntryId_Version, args, Long.valueOf(1));
-		finderCache.putResult(
 			_finderPathFetchByVersionedEntryId_Version, args,
 			versionedEntryVersionModelImpl);
 	}
@@ -2451,12 +2413,6 @@ public class VersionedEntryVersionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByVersionedEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"versionedEntryId", "version"}, true);
-
-		_finderPathCountByVersionedEntryId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByVersionedEntryId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"versionedEntryId", "version"}, false);
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",

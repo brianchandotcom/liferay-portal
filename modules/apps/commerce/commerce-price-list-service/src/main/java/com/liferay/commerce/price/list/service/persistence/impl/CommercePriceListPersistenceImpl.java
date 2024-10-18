@@ -657,7 +657,6 @@ public class CommercePriceListPersistenceImpl
 		"(commercePriceList.uuid IS NULL OR commercePriceList.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the commerce price list where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
@@ -842,67 +841,13 @@ public class CommercePriceListPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceList.class)) {
+		CommercePriceList commercePriceList = fetchByUUID_G(uuid, groupId);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G;
-
-			Object[] finderArgs = new Object[] {uuid, groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceList == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2552,7 +2497,6 @@ public class CommercePriceListPersistenceImpl
 			"commercePriceList.commerceCurrencyId = ?";
 
 	private FinderPath _finderPathFetchByParentCommercePriceListId;
-	private FinderPath _finderPathCountByParentCommercePriceListId;
 
 	/**
 	 * Returns the commerce price list where parentCommercePriceListId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
@@ -2741,51 +2685,14 @@ public class CommercePriceListPersistenceImpl
 	public int countByParentCommercePriceListId(
 		long parentCommercePriceListId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceList.class)) {
+		CommercePriceList commercePriceList = fetchByParentCommercePriceListId(
+			parentCommercePriceListId);
 
-			FinderPath finderPath = _finderPathCountByParentCommercePriceListId;
-
-			Object[] finderArgs = new Object[] {parentCommercePriceListId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(parentCommercePriceListId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceList == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -4270,7 +4177,6 @@ public class CommercePriceListPersistenceImpl
 		"commercePriceList.companyId = ?";
 
 	private FinderPath _finderPathFetchByG_CatalogBasePriceList;
-	private FinderPath _finderPathCountByG_CatalogBasePriceList;
 
 	/**
 	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
@@ -4471,55 +4377,14 @@ public class CommercePriceListPersistenceImpl
 	public int countByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceList.class)) {
+		CommercePriceList commercePriceList = fetchByG_CatalogBasePriceList(
+			groupId, catalogBasePriceList);
 
-			FinderPath finderPath = _finderPathCountByG_CatalogBasePriceList;
-
-			Object[] finderArgs = new Object[] {groupId, catalogBasePriceList};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_CATALOGBASEPRICELIST_GROUPID_2);
-
-				sb.append(
-					_FINDER_COLUMN_G_CATALOGBASEPRICELIST_CATALOGBASEPRICELIST_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(catalogBasePriceList);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceList == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -8233,7 +8098,6 @@ public class CommercePriceListPersistenceImpl
 		"commercePriceList.status != ?";
 
 	private FinderPath _finderPathFetchByG_C_T;
-	private FinderPath _finderPathCountByG_C_T;
 
 	/**
 	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
@@ -8458,73 +8322,14 @@ public class CommercePriceListPersistenceImpl
 	public int countByG_C_T(
 		long groupId, boolean catalogBasePriceList, String type) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceList.class)) {
+		CommercePriceList commercePriceList = fetchByG_C_T(
+			groupId, catalogBasePriceList, type);
 
-			type = Objects.toString(type, "");
-
-			FinderPath finderPath = _finderPathCountByG_C_T;
-
-			Object[] finderArgs = new Object[] {
-				groupId, catalogBasePriceList, type
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_T_CATALOGBASEPRICELIST_2);
-
-				boolean bindType = false;
-
-				if (type.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_C_T_TYPE_3);
-				}
-				else {
-					bindType = true;
-
-					sb.append(_FINDER_COLUMN_G_C_T_TYPE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(catalogBasePriceList);
-
-					if (bindType) {
-						queryPos.add(type);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceList == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -12145,7 +11950,6 @@ public class CommercePriceListPersistenceImpl
 		"commercePriceList.status != ?";
 
 	private FinderPath _finderPathFetchByERC_C;
-	private FinderPath _finderPathCountByERC_C;
 
 	/**
 	 * Returns the commerce price list where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
@@ -12338,69 +12142,14 @@ public class CommercePriceListPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceList.class)) {
+		CommercePriceList commercePriceList = fetchByERC_C(
+			externalReferenceCode, companyId);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByERC_C;
-
-			Object[] finderArgs = new Object[] {
-				externalReferenceCode, companyId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceList == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -12572,17 +12321,12 @@ public class CommercePriceListPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, commercePriceListModelImpl);
 
 			args = new Object[] {
 				commercePriceListModelImpl.getParentCommercePriceListId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByParentCommercePriceListId, args,
-				Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByParentCommercePriceListId, args,
 				commercePriceListModelImpl);
@@ -12592,9 +12336,6 @@ public class CommercePriceListPersistenceImpl
 				commercePriceListModelImpl.isCatalogBasePriceList()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByG_CatalogBasePriceList, args,
-				Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_CatalogBasePriceList, args,
 				commercePriceListModelImpl);
@@ -12606,8 +12347,6 @@ public class CommercePriceListPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByG_C_T, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByG_C_T, args, commercePriceListModelImpl);
 
 			args = new Object[] {
@@ -12615,8 +12354,6 @@ public class CommercePriceListPersistenceImpl
 				commercePriceListModelImpl.getCompanyId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByERC_C, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByERC_C, args, commercePriceListModelImpl);
 		}
@@ -13460,11 +13197,6 @@ public class CommercePriceListPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -13525,12 +13257,6 @@ public class CommercePriceListPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"parentCommercePriceListId"}, true);
 
-		_finderPathCountByParentCommercePriceListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentCommercePriceListId",
-			new String[] {Long.class.getName()},
-			new String[] {"parentCommercePriceListId"}, false);
-
 		_finderPathWithPaginationFindByG_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
 			new String[] {
@@ -13559,12 +13285,6 @@ public class CommercePriceListPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CatalogBasePriceList",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "catalogBasePriceList"}, true);
-
-		_finderPathCountByG_CatalogBasePriceList = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_CatalogBasePriceList",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "catalogBasePriceList"}, false);
 
 		_finderPathWithPaginationFindByLtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
@@ -13638,14 +13358,6 @@ public class CommercePriceListPersistenceImpl
 			},
 			new String[] {"groupId", "catalogBasePriceList", "type_"}, true);
 
-		_finderPathCountByG_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "catalogBasePriceList", "type_"}, false);
-
 		_finderPathWithPaginationFindByG_C_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_S",
 			new String[] {
@@ -13702,11 +13414,6 @@ public class CommercePriceListPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
-
-		_finderPathCountByERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		CommercePriceListUtil.setPersistence(this);
 	}

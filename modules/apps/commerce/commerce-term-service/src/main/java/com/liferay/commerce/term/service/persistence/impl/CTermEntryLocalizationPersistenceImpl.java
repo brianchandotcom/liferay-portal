@@ -604,7 +604,6 @@ public class CTermEntryLocalizationPersistenceImpl
 			"cTermEntryLocalization.commerceTermEntryId = ?";
 
 	private FinderPath _finderPathFetchByCommerceTermEntryId_LanguageId;
-	private FinderPath _finderPathCountByCommerceTermEntryId_LanguageId;
 
 	/**
 	 * Returns the c term entry localization where commerceTermEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchCTermEntryLocalizationException</code> if it could not be found.
@@ -803,66 +802,16 @@ public class CTermEntryLocalizationPersistenceImpl
 	public int countByCommerceTermEntryId_LanguageId(
 		long commerceTermEntryId, String languageId) {
 
-		languageId = Objects.toString(languageId, "");
+		CTermEntryLocalization cTermEntryLocalization =
+			fetchByCommerceTermEntryId_LanguageId(
+				commerceTermEntryId, languageId);
 
-		FinderPath finderPath =
-			_finderPathCountByCommerceTermEntryId_LanguageId;
-
-		Object[] finderArgs = new Object[] {commerceTermEntryId, languageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_COMMERCETERMENTRYID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(
-					_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceTermEntryId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cTermEntryLocalization == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String
@@ -994,9 +943,6 @@ public class CTermEntryLocalizationPersistenceImpl
 			cTermEntryLocalizationModelImpl.getLanguageId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByCommerceTermEntryId_LanguageId, args,
-			Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByCommerceTermEntryId_LanguageId, args,
 			cTermEntryLocalizationModelImpl);
@@ -1507,12 +1453,6 @@ public class CTermEntryLocalizationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCommerceTermEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"commerceTermEntryId", "languageId"}, true);
-
-		_finderPathCountByCommerceTermEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTermEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commerceTermEntryId", "languageId"}, false);
 
 		CTermEntryLocalizationUtil.setPersistence(this);
 	}

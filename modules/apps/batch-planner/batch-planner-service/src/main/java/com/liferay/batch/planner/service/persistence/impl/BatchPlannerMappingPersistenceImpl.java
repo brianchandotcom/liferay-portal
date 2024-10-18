@@ -601,7 +601,6 @@ public class BatchPlannerMappingPersistenceImpl
 			"batchPlannerMapping.batchPlannerPlanId = ?";
 
 	private FinderPath _finderPathFetchByBPPI_EFN_IFN;
-	private FinderPath _finderPathCountByBPPI_EFN_IFN;
 
 	/**
 	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.
@@ -828,80 +827,15 @@ public class BatchPlannerMappingPersistenceImpl
 		long batchPlannerPlanId, String externalFieldName,
 		String internalFieldName) {
 
-		externalFieldName = Objects.toString(externalFieldName, "");
-		internalFieldName = Objects.toString(internalFieldName, "");
+		BatchPlannerMapping batchPlannerMapping = fetchByBPPI_EFN_IFN(
+			batchPlannerPlanId, externalFieldName, internalFieldName);
 
-		FinderPath finderPath = _finderPathCountByBPPI_EFN_IFN;
-
-		Object[] finderArgs = new Object[] {
-			batchPlannerPlanId, externalFieldName, internalFieldName
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_BATCHPLANNERMAPPING_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_BATCHPLANNERPLANID_2);
-
-			boolean bindExternalFieldName = false;
-
-			if (externalFieldName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_EXTERNALFIELDNAME_3);
-			}
-			else {
-				bindExternalFieldName = true;
-
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_EXTERNALFIELDNAME_2);
-			}
-
-			boolean bindInternalFieldName = false;
-
-			if (internalFieldName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_3);
-			}
-			else {
-				bindInternalFieldName = true;
-
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
-
-				if (bindExternalFieldName) {
-					queryPos.add(externalFieldName);
-				}
-
-				if (bindInternalFieldName) {
-					queryPos.add(internalFieldName);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (batchPlannerMapping == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String
@@ -1034,8 +968,6 @@ public class BatchPlannerMappingPersistenceImpl
 			batchPlannerMappingModelImpl.getInternalFieldName()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByBPPI_EFN_IFN, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByBPPI_EFN_IFN, args, batchPlannerMappingModelImpl);
 	}
@@ -1533,17 +1465,6 @@ public class BatchPlannerMappingPersistenceImpl
 				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
 			},
 			true);
-
-		_finderPathCountByBPPI_EFN_IFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_EFN_IFN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
-			},
-			false);
 
 		BatchPlannerMappingUtil.setPersistence(this);
 	}

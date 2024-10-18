@@ -2264,7 +2264,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			"commerceDiscountAccountRel.commerceDiscountId = ?";
 
 	private FinderPath _finderPathFetchByCAI_CDI;
-	private FinderPath _finderPathCountByCAI_CDI;
 
 	/**
 	 * Returns the commerce discount account rel where commerceAccountId = &#63; and commerceDiscountId = &#63; or throws a <code>NoSuchDiscountAccountRelException</code> if it could not be found.
@@ -2442,51 +2441,15 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	 */
 	@Override
 	public int countByCAI_CDI(long commerceAccountId, long commerceDiscountId) {
-		FinderPath finderPath = _finderPathCountByCAI_CDI;
+		CommerceDiscountAccountRel commerceDiscountAccountRel = fetchByCAI_CDI(
+			commerceAccountId, commerceDiscountId);
 
-		Object[] finderArgs = new Object[] {
-			commerceAccountId, commerceDiscountId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEDISCOUNTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(commerceDiscountId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceDiscountAccountRel == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CAI_CDI_COMMERCEACCOUNTID_2 =
@@ -2626,7 +2589,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			commerceDiscountAccountRelModelImpl.getCommerceDiscountId()
 		};
 
-		finderCache.putResult(_finderPathCountByCAI_CDI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByCAI_CDI, args,
 			commerceDiscountAccountRelModelImpl);
@@ -3205,11 +3167,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCAI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceAccountId", "commerceDiscountId"}, true);
-
-		_finderPathCountByCAI_CDI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCAI_CDI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceAccountId", "commerceDiscountId"}, false);
 
 		CommerceDiscountAccountRelUtil.setPersistence(this);
 	}

@@ -2390,7 +2390,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		"commerceQualifierEntry.targetClassPK = ?";
 
 	private FinderPath _finderPathFetchByS_S_T_T;
-	private FinderPath _finderPathCountByS_S_T_T;
 
 	/**
 	 * Returns the commerce qualifier entry where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63; and targetClassPK = &#63; or throws a <code>NoSuchCommerceQualifierEntryException</code> if it could not be found.
@@ -2604,59 +2603,15 @@ public class CommerceQualifierEntryPersistenceImpl
 		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
 		long targetClassPK) {
 
-		FinderPath finderPath = _finderPathCountByS_S_T_T;
+		CommerceQualifierEntry commerceQualifierEntry = fetchByS_S_T_T(
+			sourceClassNameId, sourceClassPK, targetClassNameId, targetClassPK);
 
-		Object[] finderArgs = new Object[] {
-			sourceClassNameId, sourceClassPK, targetClassNameId, targetClassPK
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_S_S_T_T_SOURCECLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_S_S_T_T_SOURCECLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_S_S_T_T_TARGETCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_S_S_T_T_TARGETCLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(sourceClassNameId);
-
-				queryPos.add(sourceClassPK);
-
-				queryPos.add(targetClassNameId);
-
-				queryPos.add(targetClassPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceQualifierEntry == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_S_S_T_T_SOURCECLASSNAMEID_2 =
@@ -2803,7 +2758,6 @@ public class CommerceQualifierEntryPersistenceImpl
 			commerceQualifierEntryModelImpl.getTargetClassPK()
 		};
 
-		finderCache.putResult(_finderPathCountByS_S_T_T, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByS_S_T_T, args, commerceQualifierEntryModelImpl);
 	}
@@ -3398,18 +3352,6 @@ public class CommerceQualifierEntryPersistenceImpl
 				"targetClassPK"
 			},
 			true);
-
-		_finderPathCountByS_S_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId",
-				"targetClassPK"
-			},
-			false);
 
 		CommerceQualifierEntryUtil.setPersistence(this);
 	}

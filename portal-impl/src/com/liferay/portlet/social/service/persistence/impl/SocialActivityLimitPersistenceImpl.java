@@ -1663,7 +1663,6 @@ public class SocialActivityLimitPersistenceImpl
 		"socialActivityLimit.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_U_C_C_A_A;
-	private FinderPath _finderPathCountByG_U_C_C_A_A;
 
 	/**
 	 * Returns the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; or throws a <code>NoSuchActivityLimitException</code> if it could not be found.
@@ -1924,86 +1923,15 @@ public class SocialActivityLimitPersistenceImpl
 		long groupId, long userId, long classNameId, long classPK,
 		int activityType, String activityCounterName) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityLimit.class)) {
+		SocialActivityLimit socialActivityLimit = fetchByG_U_C_C_A_A(
+			groupId, userId, classNameId, classPK, activityType,
+			activityCounterName);
 
-			activityCounterName = Objects.toString(activityCounterName, "");
-
-			FinderPath finderPath = _finderPathCountByG_U_C_C_A_A;
-
-			Object[] finderArgs = new Object[] {
-				groupId, userId, classNameId, classPK, activityType,
-				activityCounterName
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append(_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_U_C_C_A_A_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_C_C_A_A_USERID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_C_C_A_A_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_C_C_A_A_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYTYPE_2);
-
-				boolean bindActivityCounterName = false;
-
-				if (activityCounterName.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
-				}
-				else {
-					bindActivityCounterName = true;
-
-					sb.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(userId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(activityType);
-
-					if (bindActivityCounterName) {
-						queryPos.add(activityCounterName);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (socialActivityLimit == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2161,8 +2089,6 @@ public class SocialActivityLimitPersistenceImpl
 				socialActivityLimitModelImpl.getActivityCounterName()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByG_U_C_C_A_A, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByG_U_C_C_A_A, args,
 				socialActivityLimitModelImpl);
@@ -2934,19 +2860,6 @@ public class SocialActivityLimitPersistenceImpl
 				"activityCounterName"
 			},
 			true);
-
-		_finderPathCountByG_U_C_C_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"groupId", "userId", "classNameId", "classPK", "activityType",
-				"activityCounterName"
-			},
-			false);
 
 		SocialActivityLimitUtil.setPersistence(this);
 	}

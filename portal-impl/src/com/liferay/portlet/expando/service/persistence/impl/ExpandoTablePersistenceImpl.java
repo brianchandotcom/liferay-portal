@@ -633,7 +633,6 @@ public class ExpandoTablePersistenceImpl
 		"expandoTable.classNameId = ?";
 
 	private FinderPath _finderPathFetchByC_C_N;
-	private FinderPath _finderPathCountByC_C_N;
 
 	/**
 	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or throws a <code>NoSuchTableException</code> if it could not be found.
@@ -835,71 +834,13 @@ public class ExpandoTablePersistenceImpl
 	 */
 	@Override
 	public int countByC_C_N(long companyId, long classNameId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoTable.class)) {
+		ExpandoTable expandoTable = fetchByC_C_N(companyId, classNameId, name);
 
-			name = Objects.toString(name, "");
-
-			FinderPath finderPath = _finderPathCountByC_C_N;
-
-			Object[] finderArgs = new Object[] {companyId, classNameId, name};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_EXPANDOTABLE_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_N_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_N_CLASSNAMEID_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_C_N_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_C_C_N_NAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (expandoTable == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -1035,8 +976,6 @@ public class ExpandoTablePersistenceImpl
 				expandoTableModelImpl.getName()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByC_C_N, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByC_C_N, args, expandoTableModelImpl);
 		}
@@ -1736,14 +1675,6 @@ public class ExpandoTablePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "classNameId", "name"}, true);
-
-		_finderPathCountByC_C_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "name"}, false);
 
 		ExpandoTableUtil.setPersistence(this);
 	}

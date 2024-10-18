@@ -598,7 +598,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			"ercVersionedEntryVersion.ercVersionedEntryId = ?";
 
 	private FinderPath _finderPathFetchByErcVersionedEntryId_Version;
-	private FinderPath _finderPathCountByErcVersionedEntryId_Version;
 
 	/**
 	 * Returns the erc versioned entry version where ercVersionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchERCVersionedEntryVersionException</code> if it could not be found.
@@ -780,50 +779,15 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	public int countByErcVersionedEntryId_Version(
 		long ercVersionedEntryId, int version) {
 
-		FinderPath finderPath = _finderPathCountByErcVersionedEntryId_Version;
+		ERCVersionedEntryVersion ercVersionedEntryVersion =
+			fetchByErcVersionedEntryId_Version(ercVersionedEntryId, version);
 
-		Object[] finderArgs = new Object[] {ercVersionedEntryId, version};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ERCVERSIONEDENTRYVERSION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_ERCVERSIONEDENTRYID_VERSION_ERCVERSIONEDENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_ERCVERSIONEDENTRYID_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ercVersionedEntryId);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ercVersionedEntryVersion == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String
@@ -2553,7 +2517,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		"ercVersionedEntryVersion.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Version;
-	private FinderPath _finderPathCountByUUID_G_Version;
 
 	/**
 	 * Returns the erc versioned entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchERCVersionedEntryVersionException</code> if it could not be found.
@@ -2754,66 +2717,15 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G_Version(String uuid, long groupId, int version) {
-		uuid = Objects.toString(uuid, "");
+		ERCVersionedEntryVersion ercVersionedEntryVersion =
+			fetchByUUID_G_Version(uuid, groupId, version);
 
-		FinderPath finderPath = _finderPathCountByUUID_G_Version;
-
-		Object[] finderArgs = new Object[] {uuid, groupId, version};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_ERCVERSIONEDENTRYVERSION_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_VERSION_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_VERSION_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_VERSION_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_UUID_G_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ercVersionedEntryVersion == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_VERSION_UUID_2 =
@@ -4176,9 +4088,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByErcVersionedEntryId_Version, args,
-			Long.valueOf(1));
-		finderCache.putResult(
 			_finderPathFetchByErcVersionedEntryId_Version, args,
 			ercVersionedEntryVersionModelImpl);
 
@@ -4188,8 +4097,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			ercVersionedEntryVersionModelImpl.getVersion()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByUUID_G_Version, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByUUID_G_Version, args,
 			ercVersionedEntryVersionModelImpl);
@@ -4716,12 +4623,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"ercVersionedEntryId", "version"}, true);
 
-		_finderPathCountByErcVersionedEntryId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByErcVersionedEntryId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ercVersionedEntryId", "version"}, false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4785,14 +4686,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "version"}, true);
-
-		_finderPathCountByUUID_G_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_Version",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "version"}, false);
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",

@@ -1206,7 +1206,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			"commerceInventoryWarehouseRel.commerceInventoryWarehouseId = ?";
 
 	private FinderPath _finderPathFetchByC_C_CIWI;
-	private FinderPath _finderPathCountByC_C_CIWI;
 
 	/**
 	 * Returns the commerce inventory warehouse rel where classNameId = &#63; and classPK = &#63; and commerceInventoryWarehouseId = &#63; or throws a <code>NoSuchInventoryWarehouseRelException</code> if it could not be found.
@@ -1403,55 +1402,15 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	public int countByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId) {
 
-		FinderPath finderPath = _finderPathCountByC_C_CIWI;
+		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel =
+			fetchByC_C_CIWI(classNameId, classPK, commerceInventoryWarehouseId);
 
-		Object[] finderArgs = new Object[] {
-			classNameId, classPK, commerceInventoryWarehouseId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CIWI_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CIWI_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CIWI_COMMERCEINVENTORYWAREHOUSEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(commerceInventoryWarehouseId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceInventoryWarehouseRel == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CIWI_CLASSNAMEID_2 =
@@ -1600,8 +1559,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				getCommerceInventoryWarehouseId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByC_C_CIWI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C_CIWI, args,
 			commerceInventoryWarehouseRelModelImpl);
@@ -2147,13 +2104,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "CIWarehouseId"}, true);
-
-		_finderPathCountByC_C_CIWI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_CIWI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "CIWarehouseId"}, false);
 
 		CommerceInventoryWarehouseRelUtil.setPersistence(this);
 	}

@@ -1232,7 +1232,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		"commerceMLForecastAlertEntry.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_C_T;
-	private FinderPath _finderPathCountByC_C_T;
 
 	/**
 	 * Returns the commerce ml forecast alert entry where companyId = &#63; and commerceAccountId = &#63; and timestamp = &#63; or throws a <code>NoSuchMLForecastAlertEntryException</code> if it could not be found.
@@ -1456,66 +1455,15 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public int countByC_C_T(
 		long companyId, long commerceAccountId, Date timestamp) {
 
-		FinderPath finderPath = _finderPathCountByC_C_T;
+		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
+			fetchByC_C_T(companyId, commerceAccountId, timestamp);
 
-		Object[] finderArgs = new Object[] {
-			companyId, commerceAccountId, _getTime(timestamp)
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_T_COMMERCEACCOUNTID_2);
-
-			boolean bindTimestamp = false;
-
-			if (timestamp == null) {
-				sb.append(_FINDER_COLUMN_C_C_T_TIMESTAMP_1);
-			}
-			else {
-				bindTimestamp = true;
-
-				sb.append(_FINDER_COLUMN_C_C_T_TIMESTAMP_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				if (bindTimestamp) {
-					queryPos.add(new Timestamp(timestamp.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceMLForecastAlertEntry == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_T_COMPANYID_2 =
@@ -4505,7 +4453,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			_getTime(commerceMLForecastAlertEntryModelImpl.getTimestamp())
 		};
 
-		finderCache.putResult(_finderPathCountByC_C_T, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C_T, args,
 			commerceMLForecastAlertEntryModelImpl);
@@ -5056,14 +5003,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
 			},
 			new String[] {"companyId", "commerceAccountId", "timestamp"}, true);
-
-		_finderPathCountByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Date.class.getName()
-			},
-			new String[] {"companyId", "commerceAccountId", "timestamp"},
-			false);
 
 		_finderPathWithPaginationFindByC_C_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",

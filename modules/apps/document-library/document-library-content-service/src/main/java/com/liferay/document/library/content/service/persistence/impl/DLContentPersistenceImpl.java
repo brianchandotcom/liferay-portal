@@ -1894,7 +1894,6 @@ public class DLContentPersistenceImpl
 		"(dlContent.path IS NULL OR dlContent.path LIKE '')";
 
 	private FinderPath _finderPathFetchByC_R_P_V;
-	private FinderPath _finderPathCountByC_R_P_V;
 
 	/**
 	 * Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.
@@ -2128,89 +2127,14 @@ public class DLContentPersistenceImpl
 	public int countByC_R_P_V(
 		long companyId, long repositoryId, String path, String version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLContent.class)) {
+		DLContent dlContent = fetchByC_R_P_V(
+			companyId, repositoryId, path, version);
 
-			path = Objects.toString(path, "");
-			version = Objects.toString(version, "");
-
-			FinderPath finderPath = _finderPathCountByC_R_P_V;
-
-			Object[] finderArgs = new Object[] {
-				companyId, repositoryId, path, version
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_COUNT_DLCONTENT_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_R_P_V_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_R_P_V_REPOSITORYID_2);
-
-				boolean bindPath = false;
-
-				if (path.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_R_P_V_PATH_3);
-				}
-				else {
-					bindPath = true;
-
-					sb.append(_FINDER_COLUMN_C_R_P_V_PATH_2);
-				}
-
-				boolean bindVersion = false;
-
-				if (version.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_R_P_V_VERSION_3);
-				}
-				else {
-					bindVersion = true;
-
-					sb.append(_FINDER_COLUMN_C_R_P_V_VERSION_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(repositoryId);
-
-					if (bindPath) {
-						queryPos.add(path);
-					}
-
-					if (bindVersion) {
-						queryPos.add(version);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (dlContent == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2359,8 +2283,6 @@ public class DLContentPersistenceImpl
 				dlContentModelImpl.getPath(), dlContentModelImpl.getVersion()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByC_R_P_V, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_R_P_V, args, dlContentModelImpl);
 		}
@@ -3112,15 +3034,6 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_", "version"},
 			true);
-
-		_finderPathCountByC_R_P_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "version"},
-			false);
 
 		DLContentUtil.setPersistence(this);
 	}

@@ -1206,7 +1206,6 @@ public class ObjectStateFlowPersistenceImpl
 		"objectStateFlow.companyId = ?";
 
 	private FinderPath _finderPathFetchByObjectFieldId;
-	private FinderPath _finderPathCountByObjectFieldId;
 
 	/**
 	 * Returns the object state flow where objectFieldId = &#63; or throws a <code>NoSuchObjectStateFlowException</code> if it could not be found.
@@ -1374,45 +1373,14 @@ public class ObjectStateFlowPersistenceImpl
 	 */
 	@Override
 	public int countByObjectFieldId(long objectFieldId) {
-		FinderPath finderPath = _finderPathCountByObjectFieldId;
+		ObjectStateFlow objectStateFlow = fetchByObjectFieldId(objectFieldId);
 
-		Object[] finderArgs = new Object[] {objectFieldId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTSTATEFLOW_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTFIELDID_OBJECTFIELDID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectFieldId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectStateFlow == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_OBJECTFIELDID_OBJECTFIELDID_2 =
@@ -1526,8 +1494,6 @@ public class ObjectStateFlowPersistenceImpl
 			objectStateFlowModelImpl.getObjectFieldId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByObjectFieldId, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByObjectFieldId, args, objectStateFlowModelImpl);
 	}
@@ -2046,11 +2012,6 @@ public class ObjectStateFlowPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId",
 			new String[] {Long.class.getName()}, new String[] {"objectFieldId"},
 			true);
-
-		_finderPathCountByObjectFieldId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectFieldId",
-			new String[] {Long.class.getName()}, new String[] {"objectFieldId"},
-			false);
 
 		ObjectStateFlowUtil.setPersistence(this);
 	}

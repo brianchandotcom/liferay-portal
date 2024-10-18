@@ -3920,7 +3920,6 @@ public class CommerceChannelPersistenceImpl
 		"commerceChannel.accountEntryId = ?";
 
 	private FinderPath _finderPathFetchBySiteGroupId;
-	private FinderPath _finderPathCountBySiteGroupId;
 
 	/**
 	 * Returns the commerce channel where siteGroupId = &#63; or throws a <code>NoSuchChannelException</code> if it could not be found.
@@ -4094,50 +4093,13 @@ public class CommerceChannelPersistenceImpl
 	 */
 	@Override
 	public int countBySiteGroupId(long siteGroupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannel.class)) {
+		CommerceChannel commerceChannel = fetchBySiteGroupId(siteGroupId);
 
-			FinderPath finderPath = _finderPathCountBySiteGroupId;
-
-			Object[] finderArgs = new Object[] {siteGroupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_COMMERCECHANNEL_WHERE);
-
-				sb.append(_FINDER_COLUMN_SITEGROUPID_SITEGROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteGroupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commerceChannel == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -4145,7 +4107,6 @@ public class CommerceChannelPersistenceImpl
 		"commerceChannel.siteGroupId = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
-	private FinderPath _finderPathCountByERC_C;
 
 	/**
 	 * Returns the commerce channel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchChannelException</code> if it could not be found.
@@ -4338,69 +4299,14 @@ public class CommerceChannelPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannel.class)) {
+		CommerceChannel commerceChannel = fetchByERC_C(
+			externalReferenceCode, companyId);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByERC_C;
-
-			Object[] finderArgs = new Object[] {
-				externalReferenceCode, companyId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCECHANNEL_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commerceChannel == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -4546,8 +4452,6 @@ public class CommerceChannelPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountBySiteGroupId, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchBySiteGroupId, args, commerceChannelModelImpl);
 
 			args = new Object[] {
@@ -4555,8 +4459,6 @@ public class CommerceChannelPersistenceImpl
 				commerceChannelModelImpl.getCompanyId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByERC_C, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByERC_C, args, commerceChannelModelImpl);
 		}
@@ -5440,20 +5342,10 @@ public class CommerceChannelPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"siteGroupId"},
 			true);
 
-		_finderPathCountBySiteGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySiteGroupId",
-			new String[] {Long.class.getName()}, new String[] {"siteGroupId"},
-			false);
-
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
-
-		_finderPathCountByERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		CommerceChannelUtil.setPersistence(this);
 	}

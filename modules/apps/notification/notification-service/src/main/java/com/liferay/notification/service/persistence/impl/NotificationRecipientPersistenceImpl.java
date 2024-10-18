@@ -1218,7 +1218,6 @@ public class NotificationRecipientPersistenceImpl
 		"notificationRecipient.companyId = ?";
 
 	private FinderPath _finderPathFetchByClassPK;
-	private FinderPath _finderPathCountByClassPK;
 
 	/**
 	 * Returns the notification recipient where classPK = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.
@@ -1387,45 +1386,14 @@ public class NotificationRecipientPersistenceImpl
 	 */
 	@Override
 	public int countByClassPK(long classPK) {
-		FinderPath finderPath = _finderPathCountByClassPK;
+		NotificationRecipient notificationRecipient = fetchByClassPK(classPK);
 
-		Object[] finderArgs = new Object[] {classPK};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_NOTIFICATIONRECIPIENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_CLASSPK_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (notificationRecipient == null) {
+			return 0;
 		}
-
-		return count.intValue();
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 =
@@ -1548,7 +1516,6 @@ public class NotificationRecipientPersistenceImpl
 			notificationRecipientModelImpl.getClassPK()
 		};
 
-		finderCache.putResult(_finderPathCountByClassPK, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByClassPK, args, notificationRecipientModelImpl);
 	}
@@ -2080,11 +2047,6 @@ public class NotificationRecipientPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
 			true);
-
-		_finderPathCountByClassPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
-			new String[] {Long.class.getName()}, new String[] {"classPK"},
-			false);
 
 		NotificationRecipientUtil.setPersistence(this);
 	}

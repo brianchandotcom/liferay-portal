@@ -1890,7 +1890,6 @@ public class PortletPreferenceValuePersistenceImpl
 		"(portletPreferenceValue.smallValue IS NULL OR portletPreferenceValue.smallValue = '')";
 
 	private FinderPath _finderPathFetchByP_I_N;
-	private FinderPath _finderPathCountByP_I_N;
 
 	/**
 	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
@@ -2098,73 +2097,14 @@ public class PortletPreferenceValuePersistenceImpl
 	 */
 	@Override
 	public int countByP_I_N(long portletPreferencesId, int index, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
+		PortletPreferenceValue portletPreferenceValue = fetchByP_I_N(
+			portletPreferencesId, index, name);
 
-			name = Objects.toString(name, "");
-
-			FinderPath finderPath = _finderPathCountByP_I_N;
-
-			Object[] finderArgs = new Object[] {
-				portletPreferencesId, index, name
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE);
-
-				sb.append(_FINDER_COLUMN_P_I_N_PORTLETPREFERENCESID_2);
-
-				sb.append(_FINDER_COLUMN_P_I_N_INDEX_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_P_I_N_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_P_I_N_NAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(portletPreferencesId);
-
-					queryPos.add(index);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (portletPreferenceValue == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3007,8 +2947,6 @@ public class PortletPreferenceValuePersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByP_I_N, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByP_I_N, args, portletPreferenceValueModelImpl);
 		}
 	}
@@ -3790,14 +3728,6 @@ public class PortletPreferenceValuePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"portletPreferencesId", "index_", "name"}, true);
-
-		_finderPathCountByP_I_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I_N",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portletPreferencesId", "index_", "name"}, false);
 
 		_finderPathWithPaginationFindByP_N_SV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N_SV",

@@ -4819,7 +4819,6 @@ public class JournalContentSearchPersistenceImpl
 		"(journalContentSearch.portletId IS NULL OR journalContentSearch.portletId = '')";
 
 	private FinderPath _finderPathFetchByG_P_L_P_A;
-	private FinderPath _finderPathCountByG_P_L_P_A;
 
 	/**
 	 * Returns the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or throws a <code>NoSuchContentSearchException</code> if it could not be found.
@@ -5074,93 +5073,14 @@ public class JournalContentSearchPersistenceImpl
 		long groupId, boolean privateLayout, long layoutId, String portletId,
 		String articleId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalContentSearch.class)) {
+		JournalContentSearch journalContentSearch = fetchByG_P_L_P_A(
+			groupId, privateLayout, layoutId, portletId, articleId);
 
-			portletId = Objects.toString(portletId, "");
-			articleId = Objects.toString(articleId, "");
-
-			FinderPath finderPath = _finderPathCountByG_P_L_P_A;
-
-			Object[] finderArgs = new Object[] {
-				groupId, privateLayout, layoutId, portletId, articleId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_L_P_A_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_L_P_A_PRIVATELAYOUT_2);
-
-				sb.append(_FINDER_COLUMN_G_P_L_P_A_LAYOUTID_2);
-
-				boolean bindPortletId = false;
-
-				if (portletId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_P_L_P_A_PORTLETID_3);
-				}
-				else {
-					bindPortletId = true;
-
-					sb.append(_FINDER_COLUMN_G_P_L_P_A_PORTLETID_2);
-				}
-
-				boolean bindArticleId = false;
-
-				if (articleId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_P_L_P_A_ARTICLEID_3);
-				}
-				else {
-					bindArticleId = true;
-
-					sb.append(_FINDER_COLUMN_G_P_L_P_A_ARTICLEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(privateLayout);
-
-					queryPos.add(layoutId);
-
-					if (bindPortletId) {
-						queryPos.add(portletId);
-					}
-
-					if (bindArticleId) {
-						queryPos.add(articleId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalContentSearch == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -5318,8 +5238,6 @@ public class JournalContentSearchPersistenceImpl
 				journalContentSearchModelImpl.getArticleId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByG_P_L_P_A, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_P_L_P_A, args,
 				journalContentSearchModelImpl);
@@ -6205,18 +6123,6 @@ public class JournalContentSearchPersistenceImpl
 				"groupId", "privateLayout", "layoutId", "portletId", "articleId"
 			},
 			true);
-
-		_finderPathCountByG_P_L_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "layoutId", "portletId", "articleId"
-			},
-			false);
 
 		JournalContentSearchUtil.setPersistence(this);
 	}

@@ -2124,7 +2124,6 @@ public class SocialActivityPersistenceImpl
 		"socialActivity.activitySetId = ?";
 
 	private FinderPath _finderPathFetchByMirrorActivityId;
-	private FinderPath _finderPathCountByMirrorActivityId;
 
 	/**
 	 * Returns the social activity where mirrorActivityId = &#63; or throws a <code>NoSuchActivityException</code> if it could not be found.
@@ -2302,50 +2301,14 @@ public class SocialActivityPersistenceImpl
 	 */
 	@Override
 	public int countByMirrorActivityId(long mirrorActivityId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivity.class)) {
+		SocialActivity socialActivity = fetchByMirrorActivityId(
+			mirrorActivityId);
 
-			FinderPath finderPath = _finderPathCountByMirrorActivityId;
-
-			Object[] finderArgs = new Object[] {mirrorActivityId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SOCIALACTIVITY_WHERE);
-
-				sb.append(_FINDER_COLUMN_MIRRORACTIVITYID_MIRRORACTIVITYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(mirrorActivityId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (socialActivity == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -5880,7 +5843,6 @@ public class SocialActivityPersistenceImpl
 		"socialActivity.receiverUserId = ?";
 
 	private FinderPath _finderPathFetchByG_U_CD_C_C_T_R;
-	private FinderPath _finderPathCountByG_U_CD_C_C_T_R;
 
 	/**
 	 * Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or throws a <code>NoSuchActivityException</code> if it could not be found.
@@ -6138,77 +6100,15 @@ public class SocialActivityPersistenceImpl
 		long groupId, long userId, long createDate, long classNameId,
 		long classPK, int type, long receiverUserId) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivity.class)) {
+		SocialActivity socialActivity = fetchByG_U_CD_C_C_T_R(
+			groupId, userId, createDate, classNameId, classPK, type,
+			receiverUserId);
 
-			FinderPath finderPath = _finderPathCountByG_U_CD_C_C_T_R;
-
-			Object[] finderArgs = new Object[] {
-				groupId, userId, createDate, classNameId, classPK, type,
-				receiverUserId
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(8);
-
-				sb.append(_SQL_COUNT_SOCIALACTIVITY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_USERID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_CREATEDATE_2);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_TYPE_2);
-
-				sb.append(_FINDER_COLUMN_G_U_CD_C_C_T_R_RECEIVERUSERID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(userId);
-
-					queryPos.add(createDate);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(type);
-
-					queryPos.add(receiverUserId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (socialActivity == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -6368,8 +6268,6 @@ public class SocialActivityPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByMirrorActivityId, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByMirrorActivityId, args,
 				socialActivityModelImpl);
 
@@ -6383,8 +6281,6 @@ public class SocialActivityPersistenceImpl
 				socialActivityModelImpl.getReceiverUserId()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByG_U_CD_C_C_T_R, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByG_U_CD_C_C_T_R, args,
 				socialActivityModelImpl);
@@ -7161,11 +7057,6 @@ public class SocialActivityPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"mirrorActivityId"}, true);
 
-		_finderPathCountByMirrorActivityId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByMirrorActivityId", new String[] {Long.class.getName()},
-			new String[] {"mirrorActivityId"}, false);
-
 		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReceiverUserId",
 			new String[] {
@@ -7324,20 +7215,6 @@ public class SocialActivityPersistenceImpl
 				"type_", "receiverUserId"
 			},
 			true);
-
-		_finderPathCountByG_U_CD_C_C_T_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_CD_C_C_T_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"groupId", "userId", "createDate", "classNameId", "classPK",
-				"type_", "receiverUserId"
-			},
-			false);
 
 		SocialActivityUtil.setPersistence(this);
 	}

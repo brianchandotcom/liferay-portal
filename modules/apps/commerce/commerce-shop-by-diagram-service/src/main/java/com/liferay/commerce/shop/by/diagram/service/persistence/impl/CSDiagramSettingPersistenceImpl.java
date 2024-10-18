@@ -1237,7 +1237,6 @@ public class CSDiagramSettingPersistenceImpl
 		"csDiagramSetting.companyId = ?";
 
 	private FinderPath _finderPathFetchByCPDefinitionId;
-	private FinderPath _finderPathCountByCPDefinitionId;
 
 	/**
 	 * Returns the cs diagram setting where CPDefinitionId = &#63; or throws a <code>NoSuchCSDiagramSettingException</code> if it could not be found.
@@ -1398,50 +1397,14 @@ public class CSDiagramSettingPersistenceImpl
 	 */
 	@Override
 	public int countByCPDefinitionId(long CPDefinitionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramSetting.class)) {
+		CSDiagramSetting csDiagramSetting = fetchByCPDefinitionId(
+			CPDefinitionId);
 
-			FinderPath finderPath = _finderPathCountByCPDefinitionId;
-
-			Object[] finderArgs = new Object[] {CPDefinitionId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_CSDIAGRAMSETTING_WHERE);
-
-				sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPDefinitionId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (csDiagramSetting == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -1572,8 +1535,6 @@ public class CSDiagramSettingPersistenceImpl
 				csDiagramSettingModelImpl.getCPDefinitionId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByCPDefinitionId, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByCPDefinitionId, args,
 				csDiagramSettingModelImpl);
@@ -2351,11 +2312,6 @@ public class CSDiagramSettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathCountByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, false);
 
 		CSDiagramSettingUtil.setPersistence(this);
 	}

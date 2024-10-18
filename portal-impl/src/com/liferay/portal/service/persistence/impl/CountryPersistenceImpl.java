@@ -2218,7 +2218,6 @@ public class CountryPersistenceImpl
 		"country.active = ?";
 
 	private FinderPath _finderPathFetchByC_A2;
-	private FinderPath _finderPathCountByC_A2;
 
 	/**
 	 * Returns the country where companyId = &#63; and a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -2403,67 +2402,13 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_A2(long companyId, String a2) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
+		Country country = fetchByC_A2(companyId, a2);
 
-			a2 = Objects.toString(a2, "");
-
-			FinderPath finderPath = _finderPathCountByC_A2;
-
-			Object[] finderArgs = new Object[] {companyId, a2};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COUNTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_A2_COMPANYID_2);
-
-				boolean bindA2 = false;
-
-				if (a2.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_A2_A2_3);
-				}
-				else {
-					bindA2 = true;
-
-					sb.append(_FINDER_COLUMN_C_A2_A2_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindA2) {
-						queryPos.add(a2);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (country == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -2476,7 +2421,6 @@ public class CountryPersistenceImpl
 		"(country.a2 IS NULL OR country.a2 = '')";
 
 	private FinderPath _finderPathFetchByC_A3;
-	private FinderPath _finderPathCountByC_A3;
 
 	/**
 	 * Returns the country where companyId = &#63; and a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -2661,67 +2605,13 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_A3(long companyId, String a3) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
+		Country country = fetchByC_A3(companyId, a3);
 
-			a3 = Objects.toString(a3, "");
-
-			FinderPath finderPath = _finderPathCountByC_A3;
-
-			Object[] finderArgs = new Object[] {companyId, a3};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COUNTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_A3_COMPANYID_2);
-
-				boolean bindA3 = false;
-
-				if (a3.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_A3_A3_3);
-				}
-				else {
-					bindA3 = true;
-
-					sb.append(_FINDER_COLUMN_C_A3_A3_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindA3) {
-						queryPos.add(a3);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (country == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3280,7 +3170,6 @@ public class CountryPersistenceImpl
 		"country.active = ?";
 
 	private FinderPath _finderPathFetchByC_Name;
-	private FinderPath _finderPathCountByC_Name;
 
 	/**
 	 * Returns the country where companyId = &#63; and name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -3465,67 +3354,13 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_Name(long companyId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
+		Country country = fetchByC_Name(companyId, name);
 
-			name = Objects.toString(name, "");
-
-			FinderPath finderPath = _finderPathCountByC_Name;
-
-			Object[] finderArgs = new Object[] {companyId, name};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COUNTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_NAME_COMPANYID_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_NAME_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_C_NAME_NAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (country == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -3539,7 +3374,6 @@ public class CountryPersistenceImpl
 		"(country.name IS NULL OR country.name = '')";
 
 	private FinderPath _finderPathFetchByC_Number;
-	private FinderPath _finderPathCountByC_Number;
 
 	/**
 	 * Returns the country where companyId = &#63; and number = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -3724,67 +3558,13 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_Number(long companyId, String number) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
+		Country country = fetchByC_Number(companyId, number);
 
-			number = Objects.toString(number, "");
-
-			FinderPath finderPath = _finderPathCountByC_Number;
-
-			Object[] finderArgs = new Object[] {companyId, number};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COUNTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_NUMBER_COMPANYID_2);
-
-				boolean bindNumber = false;
-
-				if (number.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_NUMBER_NUMBER_3);
-				}
-				else {
-					bindNumber = true;
-
-					sb.append(_FINDER_COLUMN_C_NUMBER_NUMBER_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindNumber) {
-						queryPos.add(number);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (country == null) {
+			return 0;
+		}
+		else {
+			return 1;
 		}
 	}
 
@@ -5132,16 +4912,12 @@ public class CountryPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByC_A2, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByC_A2, args, countryModelImpl);
 
 			args = new Object[] {
 				countryModelImpl.getCompanyId(), countryModelImpl.getA3()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByC_A3, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByC_A3, args, countryModelImpl);
 
@@ -5150,16 +4926,12 @@ public class CountryPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByC_Name, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByC_Name, args, countryModelImpl);
 
 			args = new Object[] {
 				countryModelImpl.getCompanyId(), countryModelImpl.getNumber()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByC_Number, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByC_Number, args, countryModelImpl);
 		}
@@ -5973,20 +5745,10 @@ public class CountryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "a2"}, true);
 
-		_finderPathCountByC_A2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A2",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "a2"}, false);
-
 		_finderPathFetchByC_A3 = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "a3"}, true);
-
-		_finderPathCountByC_A3 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A3",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "a3"}, false);
 
 		_finderPathWithPaginationFindByC_Active = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_Active",
@@ -6012,20 +5774,10 @@ public class CountryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, true);
 
-		_finderPathCountByC_Name = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Name",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false);
-
 		_finderPathFetchByC_Number = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Number",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "number_"}, true);
-
-		_finderPathCountByC_Number = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Number",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "number_"}, false);
 
 		_finderPathWithPaginationFindByC_A_B = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B",

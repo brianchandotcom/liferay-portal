@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -188,6 +189,39 @@ public class FragmentEntryFragmentRendererTest {
 		Assert.assertTrue(
 			content.contains(
 				"<div class=\"fragment-html-test\">${test}</div>"));
+	}
+
+	@Test
+	public void testFragmentEntryLinkJavascriptVariables() throws Exception {
+		FragmentEntry fragmentEntry = _getFragmentEntry(true);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), _read("configuration.json"), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		_renderFragmentEntryLink(fragmentEntryLink);
+
+		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
+			fragmentEntryLink, _locale);
+
+		Assert.assertTrue(
+			content.contains(
+				"fragmentEntryLinkNamespace = '" +
+					fragmentEntryLink.getNamespace()));
+
+		Assert.assertTrue(
+			content.contains(
+				"fragmentNamespace = '" + fragmentEntryLink.getNamespace()));
+
+		Assert.assertTrue(content.contains("\"buttonType\":\"primary\""));
+
+		Assert.assertTrue(content.contains("\"buttonSize\":\"nm\""));
 	}
 
 	@Test
@@ -645,6 +679,11 @@ public class FragmentEntryFragmentRendererTest {
 				FragmentEntryLink.class, FragmentRendererContext.class
 			},
 			fragmentEntryLink, defaultFragmentRendererContext);
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private MockHttpServletResponse _renderFragmentEntryLink(

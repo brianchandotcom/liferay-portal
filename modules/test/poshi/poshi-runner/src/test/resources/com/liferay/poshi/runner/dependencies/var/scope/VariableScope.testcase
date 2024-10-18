@@ -10,6 +10,7 @@ definition {
 		var testCaseStaticVar = "A static var overridden in the set up.";
 	}
 
+    @disable-webdriver = "true"
 	test ExecuteVarInheritance {
 		RootVar.assertExecuteVar(
 			executeVar = "An execute var that will referenced by another execute var.",
@@ -22,12 +23,14 @@ definition {
 			referenceExecuteVar = "${commandVar}");
 	}
 
+    @disable-webdriver = "true"
 	test MacroStaticVarInheritance {
 		MacroVar.setStaticVar();
 
 		MacroVar.callStaticVar();
 	}
 
+    @disable-webdriver = "true"
 	test RootVarInheritance {
 		RootVar.assertRootVar();
 
@@ -38,6 +41,7 @@ definition {
 		RootVar.overrideRootVarInNestedMacro(rootVar = "An execute variable passed into a macro.");
 	}
 
+    @disable-webdriver = "true"
 	test TestCaseStaticVarInheritance {
 		if ("${testCaseStaticVar}" != "A static var overridden in the set up.") {
 			fail("Expected static var value does not match actual value");

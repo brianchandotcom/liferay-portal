@@ -23,5 +23,5 @@ export {default as SystemSettingsFieldList} from './components/SystemSettingsFie
 // Utils + shared
 
 export {default as CodeMirrorTextArea} from './shared/CodeMirrorTextArea';
-export {default as DateFacetConfiguration} from './shared/DateFacetConfiguration';
 export {default as InitializeClipboard} from './utils/initialize_clipboard';
+export {default as RangeInputs} from './shared/RangeInputs';

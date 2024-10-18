@@ -45,6 +45,7 @@ public class AccountRoleResourceUpgradeProcessTest {
 		_resourceActionLocalService.addResourceAction(
 			AccountEntry.class.getName(), "EDIT_ORGANIZATIONS",
 			RandomTestUtil.randomLong());
+
 		_deleteResourceAction(
 			AccountEntry.class.getName(),
 			AccountActionKeys.UPDATE_ORGANIZATIONS);
@@ -52,12 +53,14 @@ public class AccountRoleResourceUpgradeProcessTest {
 		_resourceActionLocalService.addResourceAction(
 			Organization.class.getName(), "EDIT_SUBORGANIZATIONS",
 			RandomTestUtil.randomLong());
+
 		_deleteResourceAction(
 			Organization.class.getName(), ActionKeys.UPDATE_SUBORGANIZATIONS);
 
 		_resourceActionLocalService.addResourceAction(
 			Organization.class.getName(), "EDIT_SUBORGANIZATIONS_ACCOUNTS",
 			RandomTestUtil.randomLong());
+
 		_deleteResourceAction(
 			Organization.class.getName(),
 			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS);
@@ -79,7 +82,6 @@ public class AccountRoleResourceUpgradeProcessTest {
 			_resourceActionLocalService.fetchResourceAction(
 				AccountEntry.class.getName(),
 				AccountActionKeys.UPDATE_ORGANIZATIONS));
-
 		Assert.assertEquals(
 			0,
 			_resourceActionLocalService.getResourceActions(
@@ -89,7 +91,6 @@ public class AccountRoleResourceUpgradeProcessTest {
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),
 				ActionKeys.UPDATE_SUBORGANIZATIONS));
-
 		Assert.assertEquals(
 			0,
 			_resourceActionLocalService.getResourceActions(

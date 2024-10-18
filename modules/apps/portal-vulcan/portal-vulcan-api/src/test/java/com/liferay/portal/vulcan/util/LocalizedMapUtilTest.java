@@ -12,6 +12,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -115,6 +116,66 @@ public class LocalizedMapUtilTest {
 		Assert.assertEquals(map.toString(), 2, map.size());
 		Assert.assertEquals("bonjour", map.get(LocaleUtil.FRANCE));
 		Assert.assertEquals("hello", map.get(LocaleUtil.US));
+	}
+
+	@Test
+	public void testPopulateI18nMap() {
+
+		// Do not populate i18nMap if both default language and site default
+		// value are undefined
+
+		Map<String, String> i18nMap = HashMapBuilder.put(
+			"pt_BR", RandomTestUtil.randomString()
+		).build();
+
+		Assert.assertEquals(
+			i18nMap, LocalizedMapUtil.populateI18nMap(null, i18nMap, null));
+
+		// Do not populate i18nMap if site default value is already defined
+
+		i18nMap = HashMapBuilder.put(
+			"en_US", RandomTestUtil.randomString()
+		).build();
+
+		Assert.assertEquals(
+			i18nMap,
+			LocalizedMapUtil.populateI18nMap(
+				RandomTestUtil.randomString(), i18nMap,
+				RandomTestUtil.randomString()));
+
+		// Populate i18nMap with default language value
+
+		String defaultValue = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				"en_US", defaultValue
+			).put(
+				"pt_BR", defaultValue
+			).build(),
+			LocalizedMapUtil.populateI18nMap(
+				"pt_BR",
+				HashMapBuilder.put(
+					"pt_BR", defaultValue
+				).build(),
+				RandomTestUtil.randomString()));
+
+		// Populate i18nMap with site default value when default language
+		// is undefined
+
+		String siteDefaultValue = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				"en_US", siteDefaultValue
+			).build(),
+			LocalizedMapUtil.populateI18nMap("pt_BR", null, siteDefaultValue));
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				"en_US", siteDefaultValue
+			).build(),
+			LocalizedMapUtil.populateI18nMap(
+				"pt_BR", Collections.emptyMap(), siteDefaultValue));
 	}
 
 	@Test

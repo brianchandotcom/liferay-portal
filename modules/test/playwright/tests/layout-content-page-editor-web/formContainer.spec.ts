@@ -741,10 +741,7 @@ test.describe('Submit button', () => {
 			pageEditorPage,
 			pageManagementSite,
 		}) => {
-			const checkObjectEntries = async (
-				value: string,
-				status: string
-			) => {
+			const checkObjectEntry = async (value: string, status: string) => {
 
 				// Go to entity
 
@@ -917,7 +914,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntries('100', 'Draft');
+				await checkObjectEntry('100', 'Draft');
 			});
 
 			await test.step('Go to edit mode and map the Heading to the draft entry number and select the DPT created before as Field', async () => {
@@ -985,7 +982,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntries('200', 'Draft');
+				await checkObjectEntry('200', 'Draft');
 			});
 
 			await test.step('Go to view mode, click in the Heading and save the field value as Approved', async () => {
@@ -1011,7 +1008,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntries('300', 'Approved');
+				await checkObjectEntry('300', 'Approved');
 			});
 
 			await test.step('Go to view mode, click in the Heading and try to save the field value as Draft again', async () => {
@@ -1037,7 +1034,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntries('300', 'Approved');
+				await checkObjectEntry('300', 'Approved');
 			});
 
 			// Delete previously created object entries

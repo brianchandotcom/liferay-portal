@@ -60,7 +60,7 @@ test.beforeEach(
 
 test.describe('Management Toolbar Default State', () => {
 	test(
-		'Assert the New button is displayed as a text button',
+		'Assert the "New" button is displayed properly',
 		{tag: '@LPS-144540'},
 		async ({page}) => {
 			await test.step('Check that the new button text is "New"', async () => {
@@ -71,13 +71,7 @@ test.describe('Management Toolbar Default State', () => {
 						.filter({hasText: 'New'})
 				).toBeVisible();
 			});
-		}
-	);
 
-	test(
-		'Assert the new button is displayed as an icon button in responsive mode',
-		{tag: '@LPS-144540'},
-		async ({page}) => {
 			await test.step('Set the window size to phone size', async () => {
 				await page.setViewportSize({height: 720, width: 360});
 			});
@@ -89,16 +83,6 @@ test.describe('Management Toolbar Default State', () => {
 						.getByRole('button', {name: 'New'})
 						.locator('.lexicon-icon-plus')
 				).toBeVisible();
-			});
-		}
-	);
-
-	test(
-		'Assert the tooltip message is displayed when hovered over the new button in responsive mode',
-		{tag: '@LPS-144540'},
-		async ({page}) => {
-			await test.step('Set the window size to phone size', async () => {
-				await page.setViewportSize({height: 720, width: 360});
 			});
 
 			await test.step('Hover over the "New" button', async () => {
@@ -157,7 +141,7 @@ test.describe('Management Toolbar Default State', () => {
 	);
 
 	test(
-		'Assert the view button displays a double caret icon',
+		'Assert the view button is properly displayed',
 		{tag: '@LPS-144535'},
 		async ({page}) => {
 			await test.step('Check that the double caret icon is visible', async () => {
@@ -167,13 +151,7 @@ test.describe('Management Toolbar Default State', () => {
 					)
 				).toBeVisible();
 			});
-		}
-	);
 
-	test(
-		'Assert the tooltip message is displayed when hovered over the view button',
-		{tag: '@LPS-144535'},
-		async ({page}) => {
 			await test.step('Hover over the view button', async () => {
 				await page
 					.locator('#managementToolbarDefaultState')
@@ -225,6 +203,7 @@ test.describe('Management Toolbar Active State', () => {
 
 				await expect(actionsButton).toBeVisible();
 			});
+
 			await test.step('Click on the actions button', async () => {
 				await actionsButton.click();
 			});
@@ -262,7 +241,7 @@ test.describe('Management Toolbar Active State', () => {
 	);
 
 	test(
-		'Assert the action buttons are displayed as icon buttons in responsive mode',
+		'Assert the action buttons are displayed properly in responsive mode',
 		{tag: '@LPS-144538'},
 		async ({page}) => {
 			const managementToolbarActiveStateContainer = page.locator(
@@ -323,16 +302,6 @@ test.describe('Management Toolbar Active State', () => {
 
 				expect(trashIconVisibleCount).toEqual(1);
 			});
-		}
-	);
-
-	test(
-		'Assert tooltip message will be displayed when hovered over an action button in responsive mode',
-		{tag: '@LPS-144538'},
-		async ({page}) => {
-			await test.step('Set the window size to tablet size', async () => {
-				await page.setViewportSize({height: 1024, width: 800});
-			});
 
 			await test.step('Hover over the download button', async () => {
 				await page
@@ -363,7 +332,7 @@ test.describe('Management Toolbar Active State', () => {
 	);
 
 	test(
-		'Assert the clear button will be displayed as an icon button in responsive mode',
+		'Assert the clear button will be displayed properly in responsive mode',
 		{tag: '@LPS-144539'},
 		async ({page}) => {
 			await test.step('Set the window size to phone size', async () => {
@@ -376,16 +345,6 @@ test.describe('Management Toolbar Active State', () => {
 						'#managementToolbarActiveState .lexicon-icon-times-circle'
 					)
 				).toBeVisible();
-			});
-		}
-	);
-
-	test(
-		'Assert tooltip message will be displayed when hovered over the clear button in responsive mode',
-		{tag: '@LPS-144539'},
-		async ({page}) => {
-			await test.step('Set the window size to phone size', async () => {
-				await page.setViewportSize({height: 720, width: 360});
 			});
 
 			await test.step('Hover over the clear button', async () => {

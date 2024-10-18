@@ -1205,7 +1205,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 			else if (!Objects.equals(
 						objectDefinition.getPanelCategoryKey(),
-						panelCategoryKey)) {
+						GetterUtil.getString(panelCategoryKey))) {
 
 				throw new ObjectDefinitionPanelCategoryKeyException(
 					"Panel category key " + errorMessage);

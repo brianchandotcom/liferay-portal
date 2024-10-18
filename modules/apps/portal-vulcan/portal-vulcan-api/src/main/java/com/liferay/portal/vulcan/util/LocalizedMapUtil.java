@@ -6,7 +6,9 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -226,6 +228,32 @@ public class LocalizedMapUtil {
 		}
 
 		return resultLocalizedMap;
+	}
+
+	public static Map<String, String> populateI18nMap(
+		String defaultLanguageId, Map<String, String> i18nMap,
+		String siteDefaultValue) {
+
+		if ((defaultLanguageId == null) && (siteDefaultValue == null)) {
+			return i18nMap;
+		}
+
+		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		if (MapUtil.isEmpty(i18nMap)) {
+			return HashMapBuilder.put(
+				siteDefaultLanguageId, siteDefaultValue
+			).build();
+		}
+
+		i18nMap = new HashMap<>(i18nMap);
+
+		i18nMap.putIfAbsent(
+			siteDefaultLanguageId,
+			MapUtil.getString(i18nMap, defaultLanguageId, siteDefaultValue));
+
+		return i18nMap;
 	}
 
 	public static void validateI18n(

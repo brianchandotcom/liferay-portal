@@ -1287,7 +1287,7 @@ definition {
 
 		SearchFacets.updateFacetConfiguration(
 			portletName = "Custom Facet",
-			sortOption = "Term Frequency Ascending");
+			sortOption = "Frequency Ascending");
 
 		Refresh();
 
@@ -1297,7 +1297,7 @@ definition {
 
 		SearchFacets.updateFacetConfiguration(
 			portletName = "Custom Facet",
-			sortOption = "Term Value Ascending");
+			sortOption = "Value Ascending");
 
 		Refresh();
 
@@ -1307,7 +1307,7 @@ definition {
 
 		SearchFacets.updateFacetConfiguration(
 			portletName = "Custom Facet",
-			sortOption = "Term Value Descending");
+			sortOption = "Value Descending");
 
 		Refresh();
 

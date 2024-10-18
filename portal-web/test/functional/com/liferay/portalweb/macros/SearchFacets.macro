@@ -395,10 +395,18 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(sortOption)) {
-			Select(
-				key_fieldLabel = "Order Terms By",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${sortOption});
+			if (IsElementPresent(key_fieldLabel = "Order By", locator1 = "Select#GENERIC_SELECT_FIELD")) {
+				Select(
+					key_fieldLabel = "Order By",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${sortOption});
+			}
+			else {
+				Select(
+					key_fieldLabel = "Order Terms By",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${sortOption});
+			}
 		}
 
 		if (isSet(displayTemplate)) {

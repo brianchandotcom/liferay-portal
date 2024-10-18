@@ -173,17 +173,17 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				testName.getMethodName(), ".before.json"));
 
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_LABEL_1$",
+			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
 			_createGroupIDLabel(group1));
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_LABEL_2$",
+			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
 			_createGroupIDLabel(group2));
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_ID_1$",
+			elementInstancesJSON, "[$SCOPE_GROUP_ID_1$]",
 			String.valueOf(group1.getGroupId()));
 
 		return StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_ID_2$",
+			elementInstancesJSON, "[$SCOPE_GROUP_ID_2$]",
 			String.valueOf(group2.getGroupId()));
 	}
 
@@ -207,17 +207,17 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				testName.getMethodName(), ".after.json"));
 
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$",
+			elementInstancesJSON, "[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
 			group1.getExternalReferenceCode());
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$",
+			elementInstancesJSON, "[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
 			group2.getExternalReferenceCode());
 		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_LABEL_1$",
+			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
 			_createScopeGroupExternalReferenceCodeLabel(group1));
 
 		return StringUtil.replace(
-			elementInstancesJSON, "$SCOPE_GROUP_LABEL_2$",
+			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
 			_createScopeGroupExternalReferenceCodeLabel(group2));
 	}
 

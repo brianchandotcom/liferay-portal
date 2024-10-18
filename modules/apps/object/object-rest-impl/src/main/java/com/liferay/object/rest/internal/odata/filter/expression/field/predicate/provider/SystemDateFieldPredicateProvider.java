@@ -45,8 +45,8 @@ public class SystemDateFieldPredicateProvider
 			BinaryExpression.Operation operation, Object right)
 		throws ExpressionVisitException {
 
-		Expression<String> expression =
-			(Expression<String>)objectDefinitionColumnSupplier.apply(
+		Expression<Object> expression =
+			(Expression<Object>)objectDefinitionColumnSupplier.apply(
 				String.valueOf(left));
 
 		if (right == null) {
@@ -60,7 +60,7 @@ public class SystemDateFieldPredicateProvider
 
 		if (right instanceof Date) {
 			return _getDateTimePredicate(
-				(Date)right, expression, String::valueOf, operation);
+				(Date)right, expression, date -> date, operation);
 		}
 
 		String valueString = (String)right;
@@ -111,7 +111,7 @@ public class SystemDateFieldPredicateProvider
 			predicate = predicate.or(binaryExpressionPredicate);
 		}
 
-		return predicate;
+		return predicate.withParentheses();
 	}
 
 	@Override
@@ -133,8 +133,8 @@ public class SystemDateFieldPredicateProvider
 	}
 
 	private Predicate _getDateTimePredicate(
-		Date date, Expression<String> expression,
-		Function<Object, String> function,
+		Date date, Expression<Object> expression,
+		Function<Object, Object> function,
 		BinaryExpression.Operation operation) {
 
 		if (operation == BinaryExpression.Operation.EQ) {
@@ -146,19 +146,19 @@ public class SystemDateFieldPredicateProvider
 				expression.lt(function.apply(_incrementSecond(truncatedDate)))
 			).withParentheses();
 		}
+		else if (operation == BinaryExpression.Operation.GE) {
+			return expression.gte(function.apply(_truncateMilliseconds(date)));
+		}
 		else if (operation == BinaryExpression.Operation.GT) {
 			return expression.gte(
 				function.apply(_incrementSecond(_truncateMilliseconds(date))));
 		}
-		else if (operation == BinaryExpression.Operation.GE) {
-			return expression.gte(function.apply(_truncateMilliseconds(date)));
-		}
-		else if (operation == BinaryExpression.Operation.LT) {
-			return expression.lt(function.apply(_truncateMilliseconds(date)));
-		}
 		else if (operation == BinaryExpression.Operation.LE) {
 			return expression.lt(
 				function.apply(_incrementSecond(_truncateMilliseconds(date))));
+		}
+		else if (operation == BinaryExpression.Operation.LT) {
+			return expression.lt(function.apply(_truncateMilliseconds(date)));
 		}
 		else if (operation == BinaryExpression.Operation.NE) {
 			Date truncatedDate = _truncateMilliseconds(date);

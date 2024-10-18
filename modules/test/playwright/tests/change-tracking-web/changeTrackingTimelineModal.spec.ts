@@ -234,4 +234,8 @@ test('LPD-38392 Assert View Entity Modification History sorting', async ({
 			.locator('div:nth-child(6) > div:nth-child(6)')
 			.filter({hasText: date})
 	).toBeVisible();
+
+	await journalPage.goto();
+	await page.locator('label > .custom-checkbox').setChecked(true);
+	await page.getByRole('button', {name: 'Delete'}).click();
 });

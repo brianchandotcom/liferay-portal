@@ -2452,8 +2452,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (fileEntry.getFolderId() != folder.getFolderId()) {
 			throw new NoSuchFileEntryException(
-				"Not a valid blog attachment file {fileEntryId=" +
-					fileEntry.getFileEntryId() + "}");
+				StringBundler.concat(
+					"File entry ", fileEntry.getFileEntryId(),
+					" does not belong to folder ", folder.getFolderId()));
 		}
 	}
 

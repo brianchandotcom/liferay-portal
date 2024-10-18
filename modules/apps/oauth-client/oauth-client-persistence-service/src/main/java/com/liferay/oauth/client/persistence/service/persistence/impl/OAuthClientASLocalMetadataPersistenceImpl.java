@@ -1888,7 +1888,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		"oAuthClientASLocalMetadata.userId = ?";
 
 	private FinderPath _finderPathFetchByLocalWellKnownURI;
-	private FinderPath _finderPathCountByLocalWellKnownURI;
 
 	/**
 	 * Returns the o auth client as local metadata where localWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
@@ -2066,58 +2065,14 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByLocalWellKnownURI(String localWellKnownURI) {
-		localWellKnownURI = Objects.toString(localWellKnownURI, "");
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			fetchByLocalWellKnownURI(localWellKnownURI);
 
-		FinderPath finderPath = _finderPathCountByLocalWellKnownURI;
-
-		Object[] finderArgs = new Object[] {localWellKnownURI};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			boolean bindLocalWellKnownURI = false;
-
-			if (localWellKnownURI.isEmpty()) {
-				sb.append(_FINDER_COLUMN_LOCALWELLKNOWNURI_LOCALWELLKNOWNURI_3);
-			}
-			else {
-				bindLocalWellKnownURI = true;
-
-				sb.append(_FINDER_COLUMN_LOCALWELLKNOWNURI_LOCALWELLKNOWNURI_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindLocalWellKnownURI) {
-					queryPos.add(localWellKnownURI);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (oAuthClientASLocalMetadata == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -2248,8 +2203,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			oAuthClientASLocalMetadataModelImpl.getLocalWellKnownURI()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByLocalWellKnownURI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByLocalWellKnownURI, args,
 			oAuthClientASLocalMetadataModelImpl);
@@ -2777,11 +2730,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByLocalWellKnownURI",
 			new String[] {String.class.getName()},
 			new String[] {"localWellKnownURI"}, true);
-
-		_finderPathCountByLocalWellKnownURI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLocalWellKnownURI", new String[] {String.class.getName()},
-			new String[] {"localWellKnownURI"}, false);
 
 		OAuthClientASLocalMetadataUtil.setPersistence(this);
 	}

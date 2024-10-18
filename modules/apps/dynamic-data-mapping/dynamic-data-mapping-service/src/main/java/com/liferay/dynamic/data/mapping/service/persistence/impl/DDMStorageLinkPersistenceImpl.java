@@ -1233,7 +1233,6 @@ public class DDMStorageLinkPersistenceImpl
 		"ddmStorageLink.companyId = ?";
 
 	private FinderPath _finderPathFetchByClassPK;
-	private FinderPath _finderPathCountByClassPK;
 
 	/**
 	 * Returns the ddm storage link where classPK = &#63; or throws a <code>NoSuchStorageLinkException</code> if it could not be found.
@@ -1389,51 +1388,13 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Override
 	public int countByClassPK(long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStorageLink.class)) {
+		DDMStorageLink ddmStorageLink = fetchByClassPK(classPK);
 
-			FinderPath finderPath = _finderPathCountByClassPK;
-
-			Object[] finderArgs = new Object[] {classPK};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DDMSTORAGELINK_WHERE);
-
-				sb.append(_FINDER_COLUMN_CLASSPK_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (ddmStorageLink == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 =
@@ -2944,8 +2905,6 @@ public class DDMStorageLinkPersistenceImpl
 			Object[] args = new Object[] {ddmStorageLinkModelImpl.getClassPK()};
 
 			finderCache.putResult(
-				_finderPathCountByClassPK, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByClassPK, args, ddmStorageLinkModelImpl);
 		}
 	}
@@ -3684,11 +3643,6 @@ public class DDMStorageLinkPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
 			true);
-
-		_finderPathCountByClassPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
-			new String[] {Long.class.getName()}, new String[] {"classPK"},
-			false);
 
 		_finderPathWithPaginationFindByStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",

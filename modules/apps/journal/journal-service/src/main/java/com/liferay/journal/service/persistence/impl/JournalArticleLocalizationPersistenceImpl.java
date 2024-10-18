@@ -616,7 +616,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		"journalArticleLocalization.articlePK = ?";
 
 	private FinderPath _finderPathFetchByC_A;
-	private FinderPath _finderPathCountByC_A;
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -812,55 +811,14 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByC_A(long companyId, long articlePK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
+		JournalArticleLocalization journalArticleLocalization = fetchByC_A(
+			companyId, articlePK);
 
-			FinderPath finderPath = _finderPathCountByC_A;
-
-			Object[] finderArgs = new Object[] {companyId, articlePK};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_A_ARTICLEPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(articlePK);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticleLocalization == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 =
@@ -870,7 +828,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		"journalArticleLocalization.articlePK = ?";
 
 	private FinderPath _finderPathFetchByA_L;
-	private FinderPath _finderPathCountByA_L;
 
 	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -1065,68 +1022,14 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByA_L(long articlePK, String languageId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
+		JournalArticleLocalization journalArticleLocalization = fetchByA_L(
+			articlePK, languageId);
 
-			languageId = Objects.toString(languageId, "");
-
-			FinderPath finderPath = _finderPathCountByA_L;
-
-			Object[] finderArgs = new Object[] {articlePK, languageId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_A_L_ARTICLEPK_2);
-
-				boolean bindLanguageId = false;
-
-				if (languageId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_A_L_LANGUAGEID_3);
-				}
-				else {
-					bindLanguageId = true;
-
-					sb.append(_FINDER_COLUMN_A_L_LANGUAGEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(articlePK);
-
-					if (bindLanguageId) {
-						queryPos.add(languageId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticleLocalization == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_A_L_ARTICLEPK_2 =
@@ -1139,7 +1042,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		"(journalArticleLocalization.languageId IS NULL OR journalArticleLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_A_L;
-	private FinderPath _finderPathCountByC_A_L;
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -1348,74 +1250,14 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByC_A_L(long companyId, long articlePK, String languageId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
+		JournalArticleLocalization journalArticleLocalization = fetchByC_A_L(
+			companyId, articlePK, languageId);
 
-			languageId = Objects.toString(languageId, "");
-
-			FinderPath finderPath = _finderPathCountByC_A_L;
-
-			Object[] finderArgs = new Object[] {
-				companyId, articlePK, languageId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_A_L_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_A_L_ARTICLEPK_2);
-
-				boolean bindLanguageId = false;
-
-				if (languageId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_A_L_LANGUAGEID_3);
-				}
-				else {
-					bindLanguageId = true;
-
-					sb.append(_FINDER_COLUMN_C_A_L_LANGUAGEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(articlePK);
-
-					if (bindLanguageId) {
-						queryPos.add(languageId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticleLocalization == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_A_L_COMPANYID_2 =
@@ -1431,7 +1273,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		"(journalArticleLocalization.languageId IS NULL OR journalArticleLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_A_T_L;
-	private FinderPath _finderPathCountByC_A_T_L;
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and title = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -1670,90 +1511,14 @@ public class JournalArticleLocalizationPersistenceImpl
 	public int countByC_A_T_L(
 		long companyId, long articlePK, String title, String languageId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
+		JournalArticleLocalization journalArticleLocalization = fetchByC_A_T_L(
+			companyId, articlePK, title, languageId);
 
-			title = Objects.toString(title, "");
-			languageId = Objects.toString(languageId, "");
-
-			FinderPath finderPath = _finderPathCountByC_A_T_L;
-
-			Object[] finderArgs = new Object[] {
-				companyId, articlePK, title, languageId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_A_T_L_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_A_T_L_ARTICLEPK_2);
-
-				boolean bindTitle = false;
-
-				if (title.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_A_T_L_TITLE_3);
-				}
-				else {
-					bindTitle = true;
-
-					sb.append(_FINDER_COLUMN_C_A_T_L_TITLE_2);
-				}
-
-				boolean bindLanguageId = false;
-
-				if (languageId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_A_T_L_LANGUAGEID_3);
-				}
-				else {
-					bindLanguageId = true;
-
-					sb.append(_FINDER_COLUMN_C_A_T_L_LANGUAGEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(articlePK);
-
-					if (bindTitle) {
-						queryPos.add(title);
-					}
-
-					if (bindLanguageId) {
-						queryPos.add(languageId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticleLocalization == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_A_T_L_COMPANYID_2 =
@@ -1939,7 +1704,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				journalArticleLocalizationModelImpl.getArticlePK()
 			};
 
-			finderCache.putResult(_finderPathCountByC_A, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_A, args,
 				journalArticleLocalizationModelImpl);
@@ -1949,7 +1713,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				journalArticleLocalizationModelImpl.getLanguageId()
 			};
 
-			finderCache.putResult(_finderPathCountByA_L, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByA_L, args,
 				journalArticleLocalizationModelImpl);
@@ -1961,8 +1724,6 @@ public class JournalArticleLocalizationPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByC_A_L, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByC_A_L, args,
 				journalArticleLocalizationModelImpl);
 
@@ -1973,8 +1734,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				journalArticleLocalizationModelImpl.getLanguageId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByC_A_T_L, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_A_T_L, args,
 				journalArticleLocalizationModelImpl);
@@ -2719,20 +2478,10 @@ public class JournalArticleLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "articlePK"}, true);
 
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "articlePK"}, false);
-
 		_finderPathFetchByA_L = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_L",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"articlePK", "languageId"}, true);
-
-		_finderPathCountByA_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"articlePK", "languageId"}, false);
 
 		_finderPathFetchByC_A_L = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_L",
@@ -2742,14 +2491,6 @@ public class JournalArticleLocalizationPersistenceImpl
 			},
 			new String[] {"companyId", "articlePK", "languageId"}, true);
 
-		_finderPathCountByC_A_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "articlePK", "languageId"}, false);
-
 		_finderPathFetchByC_A_T_L = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_T_L",
 			new String[] {
@@ -2758,15 +2499,6 @@ public class JournalArticleLocalizationPersistenceImpl
 			},
 			new String[] {"companyId", "articlePK", "title", "languageId"},
 			true);
-
-		_finderPathCountByC_A_T_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_T_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "articlePK", "title", "languageId"},
-			false);
 
 		JournalArticleLocalizationUtil.setPersistence(this);
 	}

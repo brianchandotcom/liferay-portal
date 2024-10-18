@@ -1760,7 +1760,6 @@ public class SegmentsEntryRelPersistenceImpl
 		"segmentsEntryRel.classPK = ?";
 
 	private FinderPath _finderPathFetchByS_CN_CPK;
-	private FinderPath _finderPathCountByS_CN_CPK;
 
 	/**
 	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryRelException</code> if it could not be found.
@@ -1957,61 +1956,14 @@ public class SegmentsEntryRelPersistenceImpl
 	public int countByS_CN_CPK(
 		long segmentsEntryId, long classNameId, long classPK) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
+		SegmentsEntryRel segmentsEntryRel = fetchByS_CN_CPK(
+			segmentsEntryId, classNameId, classPK);
 
-			FinderPath finderPath = _finderPathCountByS_CN_CPK;
-
-			Object[] finderArgs = new Object[] {
-				segmentsEntryId, classNameId, classPK
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRYREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_CN_CPK_SEGMENTSENTRYID_2);
-
-				sb.append(_FINDER_COLUMN_S_CN_CPK_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_S_CN_CPK_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(segmentsEntryId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (segmentsEntryRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_S_CN_CPK_SEGMENTSENTRYID_2 =
@@ -2146,8 +2098,6 @@ public class SegmentsEntryRelPersistenceImpl
 				segmentsEntryRelModelImpl.getClassPK()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByS_CN_CPK, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByS_CN_CPK, args, segmentsEntryRelModelImpl);
 		}
@@ -2933,13 +2883,6 @@ public class SegmentsEntryRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"segmentsEntryId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByS_CN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_CN_CPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"segmentsEntryId", "classNameId", "classPK"}, false);
 
 		SegmentsEntryRelUtil.setPersistence(this);
 	}

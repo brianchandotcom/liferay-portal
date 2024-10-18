@@ -648,7 +648,6 @@ public class AssetListEntryUsagePersistenceImpl
 		"(assetListEntryUsage.uuid IS NULL OR assetListEntryUsage.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the asset list entry usage where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
@@ -834,68 +833,13 @@ public class AssetListEntryUsagePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetListEntryUsage.class)) {
+		AssetListEntryUsage assetListEntryUsage = fetchByUUID_G(uuid, groupId);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G;
-
-			Object[] finderArgs = new Object[] {uuid, groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (assetListEntryUsage == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -5149,7 +5093,6 @@ public class AssetListEntryUsagePersistenceImpl
 		"assetListEntryUsage.type = ?";
 
 	private FinderPath _finderPathFetchByG_C_CK_CT_K_P;
-	private FinderPath _finderPathCountByG_C_CK_CT_K_P;
 
 	/**
 	 * Returns the asset list entry usage where groupId = &#63; and classNameId = &#63; and containerKey = &#63; and containerType = &#63; and key = &#63; and plid = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
@@ -5417,98 +5360,14 @@ public class AssetListEntryUsagePersistenceImpl
 		long groupId, long classNameId, String containerKey, long containerType,
 		String key, long plid) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetListEntryUsage.class)) {
+		AssetListEntryUsage assetListEntryUsage = fetchByG_C_CK_CT_K_P(
+			groupId, classNameId, containerKey, containerType, key, plid);
 
-			containerKey = Objects.toString(containerKey, "");
-			key = Objects.toString(key, "");
-
-			FinderPath finderPath = _finderPathCountByG_C_CK_CT_K_P;
-
-			Object[] finderArgs = new Object[] {
-				groupId, classNameId, containerKey, containerType, key, plid
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append(_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_CLASSNAMEID_2);
-
-				boolean bindContainerKey = false;
-
-				if (containerKey.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_CONTAINERKEY_3);
-				}
-				else {
-					bindContainerKey = true;
-
-					sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_CONTAINERKEY_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_CONTAINERTYPE_2);
-
-				boolean bindKey = false;
-
-				if (key.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_KEY_3);
-				}
-				else {
-					bindKey = true;
-
-					sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_KEY_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_C_CK_CT_K_P_PLID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(classNameId);
-
-					if (bindContainerKey) {
-						queryPos.add(containerKey);
-					}
-
-					queryPos.add(containerType);
-
-					if (bindKey) {
-						queryPos.add(key);
-					}
-
-					queryPos.add(plid);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (assetListEntryUsage == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_CK_CT_K_P_GROUPID_2 =
@@ -5677,8 +5536,6 @@ public class AssetListEntryUsagePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, assetListEntryUsageModelImpl);
 
 			args = new Object[] {
@@ -5690,8 +5547,6 @@ public class AssetListEntryUsagePersistenceImpl
 				assetListEntryUsageModelImpl.getPlid()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByG_C_CK_CT_K_P, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_C_CK_CT_K_P, args,
 				assetListEntryUsageModelImpl);
@@ -6470,11 +6325,6 @@ public class AssetListEntryUsagePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -6642,19 +6492,6 @@ public class AssetListEntryUsagePersistenceImpl
 				"key_", "plid"
 			},
 			true);
-
-		_finderPathCountByG_C_CK_CT_K_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_CK_CT_K_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "containerKey", "containerType",
-				"key_", "plid"
-			},
-			false);
 
 		AssetListEntryUsageUtil.setPersistence(this);
 	}

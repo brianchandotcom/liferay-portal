@@ -2043,7 +2043,6 @@ public class JSONStorageEntryPersistenceImpl
 		"jsonStorageEntry.valueLong = ?";
 
 	private FinderPath _finderPathFetchByCN_CPK_P_I_K;
-	private FinderPath _finderPathCountByCN_CPK_P_I_K;
 
 	/**
 	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or throws a <code>NoSuchJSONStorageEntryException</code> if it could not be found.
@@ -2286,83 +2285,14 @@ public class JSONStorageEntryPersistenceImpl
 		long classNameId, long classPK, long parentJSONStorageEntryId,
 		int index, String key) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
+		JSONStorageEntry jsonStorageEntry = fetchByCN_CPK_P_I_K(
+			classNameId, classPK, parentJSONStorageEntryId, index, key);
 
-			key = Objects.toString(key, "");
-
-			FinderPath finderPath = _finderPathCountByCN_CPK_P_I_K;
-
-			Object[] finderArgs = new Object[] {
-				classNameId, classPK, parentJSONStorageEntryId, index, key
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(_SQL_COUNT_JSONSTORAGEENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_CN_CPK_P_I_K_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_CN_CPK_P_I_K_CLASSPK_2);
-
-				sb.append(
-					_FINDER_COLUMN_CN_CPK_P_I_K_PARENTJSONSTORAGEENTRYID_2);
-
-				sb.append(_FINDER_COLUMN_CN_CPK_P_I_K_INDEX_2);
-
-				boolean bindKey = false;
-
-				if (key.isEmpty()) {
-					sb.append(_FINDER_COLUMN_CN_CPK_P_I_K_KEY_3);
-				}
-				else {
-					bindKey = true;
-
-					sb.append(_FINDER_COLUMN_CN_CPK_P_I_K_KEY_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(parentJSONStorageEntryId);
-
-					queryPos.add(index);
-
-					if (bindKey) {
-						queryPos.add(key);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (jsonStorageEntry == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CN_CPK_P_I_K_CLASSNAMEID_2 =
@@ -2518,8 +2448,6 @@ public class JSONStorageEntryPersistenceImpl
 				jsonStorageEntryModelImpl.getKey()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByCN_CPK_P_I_K, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByCN_CPK_P_I_K, args,
 				jsonStorageEntryModelImpl);
@@ -3325,19 +3253,6 @@ public class JSONStorageEntryPersistenceImpl
 				"key_"
 			},
 			true);
-
-		_finderPathCountByCN_CPK_P_I_K = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK_P_I_K",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "parentJSONStorageEntryId", "index_",
-				"key_"
-			},
-			false);
 
 		JSONStorageEntryUtil.setPersistence(this);
 	}

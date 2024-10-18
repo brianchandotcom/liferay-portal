@@ -1760,7 +1760,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			"cpdAvailabilityEstimate.commerceAvailabilityEstimateId = ?";
 
 	private FinderPath _finderPathFetchByCProductId;
-	private FinderPath _finderPathCountByCProductId;
 
 	/**
 	 * Returns the cpd availability estimate where CProductId = &#63; or throws a <code>NoSuchCPDAvailabilityEstimateException</code> if it could not be found.
@@ -1917,45 +1916,14 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	 */
 	@Override
 	public int countByCProductId(long CProductId) {
-		FinderPath finderPath = _finderPathCountByCProductId;
+		CPDAvailabilityEstimate cpdAvailabilityEstimate = fetchByCProductId(
+			CProductId);
 
-		Object[] finderArgs = new Object[] {CProductId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE);
-
-			sb.append(_FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CProductId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpdAvailabilityEstimate == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2 =
@@ -2080,8 +2048,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			cpdAvailabilityEstimateModelImpl.getCProductId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByCProductId, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByCProductId, args,
 			cpdAvailabilityEstimateModelImpl);
@@ -2640,11 +2606,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCProductId",
 			new String[] {Long.class.getName()}, new String[] {"CProductId"},
 			true);
-
-		_finderPathCountByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			false);
 
 		CPDAvailabilityEstimateUtil.setPersistence(this);
 	}

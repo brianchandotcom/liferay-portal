@@ -83,7 +83,6 @@ public class FaroProjectPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 
 	/**
 	 * Returns the faro project where groupId = &#63; or throws a <code>NoSuchFaroProjectException</code> if it could not be found.
@@ -234,45 +233,13 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		FaroProject faroProject = fetchByGroupId(groupId);
 
-		Object[] finderArgs = new Object[] {groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_FAROPROJECT_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroProject == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
@@ -768,7 +735,6 @@ public class FaroProjectPersistenceImpl
 		"faroProject.userId = ?";
 
 	private FinderPath _finderPathFetchByCorpProjectUuid;
-	private FinderPath _finderPathCountByCorpProjectUuid;
 
 	/**
 	 * Returns the faro project where corpProjectUuid = &#63; or throws a <code>NoSuchFaroProjectException</code> if it could not be found.
@@ -937,58 +903,13 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Override
 	public int countByCorpProjectUuid(String corpProjectUuid) {
-		corpProjectUuid = Objects.toString(corpProjectUuid, "");
+		FaroProject faroProject = fetchByCorpProjectUuid(corpProjectUuid);
 
-		FinderPath finderPath = _finderPathCountByCorpProjectUuid;
-
-		Object[] finderArgs = new Object[] {corpProjectUuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_FAROPROJECT_WHERE);
-
-			boolean bindCorpProjectUuid = false;
-
-			if (corpProjectUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CORPPROJECTUUID_CORPPROJECTUUID_3);
-			}
-			else {
-				bindCorpProjectUuid = true;
-
-				sb.append(_FINDER_COLUMN_CORPPROJECTUUID_CORPPROJECTUUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCorpProjectUuid) {
-					queryPos.add(corpProjectUuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroProject == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -1546,7 +1467,6 @@ public class FaroProjectPersistenceImpl
 		"(faroProject.serverLocation IS NULL OR faroProject.serverLocation = '')";
 
 	private FinderPath _finderPathFetchByWeDeployKey;
-	private FinderPath _finderPathCountByWeDeployKey;
 
 	/**
 	 * Returns the faro project where weDeployKey = &#63; or throws a <code>NoSuchFaroProjectException</code> if it could not be found.
@@ -1712,58 +1632,13 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Override
 	public int countByWeDeployKey(String weDeployKey) {
-		weDeployKey = Objects.toString(weDeployKey, "");
+		FaroProject faroProject = fetchByWeDeployKey(weDeployKey);
 
-		FinderPath finderPath = _finderPathCountByWeDeployKey;
-
-		Object[] finderArgs = new Object[] {weDeployKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_FAROPROJECT_WHERE);
-
-			boolean bindWeDeployKey = false;
-
-			if (weDeployKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_WEDEPLOYKEY_WEDEPLOYKEY_3);
-			}
-			else {
-				bindWeDeployKey = true;
-
-				sb.append(_FINDER_COLUMN_WEDEPLOYKEY_WEDEPLOYKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindWeDeployKey) {
-					queryPos.add(weDeployKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroProject == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_WEDEPLOYKEY_WEDEPLOYKEY_2 =
@@ -1883,21 +1758,16 @@ public class FaroProjectPersistenceImpl
 
 		Object[] args = new Object[] {faroProjectModelImpl.getGroupId()};
 
-		finderCache.putResult(_finderPathCountByGroupId, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByGroupId, args, faroProjectModelImpl);
 
 		args = new Object[] {faroProjectModelImpl.getCorpProjectUuid()};
 
 		finderCache.putResult(
-			_finderPathCountByCorpProjectUuid, args, Long.valueOf(1));
-		finderCache.putResult(
 			_finderPathFetchByCorpProjectUuid, args, faroProjectModelImpl);
 
 		args = new Object[] {faroProjectModelImpl.getWeDeployKey()};
 
-		finderCache.putResult(
-			_finderPathCountByWeDeployKey, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByWeDeployKey, args, faroProjectModelImpl);
 	}
@@ -2340,11 +2210,6 @@ public class FaroProjectPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			true);
 
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -2366,11 +2231,6 @@ public class FaroProjectPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
 			new String[] {String.class.getName()},
 			new String[] {"corpProjectUuid"}, true);
-
-		_finderPathCountByCorpProjectUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCorpProjectUuid",
-			new String[] {String.class.getName()},
-			new String[] {"corpProjectUuid"}, false);
 
 		_finderPathWithPaginationFindByServerLocation = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByServerLocation",
@@ -2394,11 +2254,6 @@ public class FaroProjectPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
 			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
 			true);
-
-		_finderPathCountByWeDeployKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByWeDeployKey",
-			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
-			false);
 
 		FaroProjectUtil.setPersistence(this);
 	}

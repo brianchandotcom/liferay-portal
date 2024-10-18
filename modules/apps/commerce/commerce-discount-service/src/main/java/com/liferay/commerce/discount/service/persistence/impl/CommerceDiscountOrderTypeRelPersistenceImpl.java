@@ -2269,7 +2269,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 			"commerceDiscountOrderTypeRel.commerceOrderTypeId = ?";
 
 	private FinderPath _finderPathFetchByCDI_COTI;
-	private FinderPath _finderPathCountByCDI_COTI;
 
 	/**
 	 * Returns the commerce discount order type rel where commerceDiscountId = &#63; and commerceOrderTypeId = &#63; or throws a <code>NoSuchDiscountOrderTypeRelException</code> if it could not be found.
@@ -2449,51 +2448,14 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	public int countByCDI_COTI(
 		long commerceDiscountId, long commerceOrderTypeId) {
 
-		FinderPath finderPath = _finderPathCountByCDI_COTI;
+		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel =
+			fetchByCDI_COTI(commerceDiscountId, commerceOrderTypeId);
 
-		Object[] finderArgs = new Object[] {
-			commerceDiscountId, commerceOrderTypeId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEDISCOUNTORDERTYPEREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_CDI_COTI_COMMERCEDISCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_CDI_COTI_COMMERCEORDERTYPEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceDiscountId);
-
-				queryPos.add(commerceOrderTypeId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceDiscountOrderTypeRel == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CDI_COTI_COMMERCEDISCOUNTID_2 =
@@ -2633,8 +2595,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 			commerceDiscountOrderTypeRelModelImpl.getCommerceOrderTypeId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByCDI_COTI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByCDI_COTI, args,
 			commerceDiscountOrderTypeRelModelImpl);
@@ -3219,11 +3179,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_COTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceDiscountId", "commerceOrderTypeId"}, true);
-
-		_finderPathCountByCDI_COTI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDI_COTI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceDiscountId", "commerceOrderTypeId"}, false);
 
 		CommerceDiscountOrderTypeRelUtil.setPersistence(this);
 	}

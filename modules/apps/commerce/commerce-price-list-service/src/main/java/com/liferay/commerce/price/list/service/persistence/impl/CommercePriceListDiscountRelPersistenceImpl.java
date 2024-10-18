@@ -1801,7 +1801,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			"commercePriceListDiscountRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByCDI_CPI;
-	private FinderPath _finderPathCountByCDI_CPI;
 
 	/**
 	 * Returns the commerce price list discount rel where commerceDiscountId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListDiscountRelException</code> if it could not be found.
@@ -1989,57 +1988,14 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	public int countByCDI_CPI(
 		long commerceDiscountId, long commercePriceListId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceListDiscountRel.class)) {
+		CommercePriceListDiscountRel commercePriceListDiscountRel =
+			fetchByCDI_CPI(commerceDiscountId, commercePriceListId);
 
-			FinderPath finderPath = _finderPathCountByCDI_CPI;
-
-			Object[] finderArgs = new Object[] {
-				commerceDiscountId, commercePriceListId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELISTDISCOUNTREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_CDI_CPI_COMMERCEDISCOUNTID_2);
-
-				sb.append(_FINDER_COLUMN_CDI_CPI_COMMERCEPRICELISTID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(commerceDiscountId);
-
-					queryPos.add(commercePriceListId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceListDiscountRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CDI_CPI_COMMERCEDISCOUNTID_2 =
@@ -2195,8 +2151,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 				commercePriceListDiscountRelModelImpl.getCommercePriceListId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByCDI_CPI, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByCDI_CPI, args,
 				commercePriceListDiscountRelModelImpl);
@@ -3029,11 +2983,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceDiscountId", "commercePriceListId"}, true);
-
-		_finderPathCountByCDI_CPI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDI_CPI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceDiscountId", "commercePriceListId"}, false);
 
 		CommercePriceListDiscountRelUtil.setPersistence(this);
 	}

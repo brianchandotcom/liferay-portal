@@ -1173,7 +1173,6 @@ public class JournalArticlePersistenceImpl
 		"(journalArticle.uuid IS NULL OR journalArticle.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the journal article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -1358,68 +1357,13 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticle.class)) {
+		JournalArticle journalArticle = fetchByUUID_G(uuid, groupId);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G;
-
-			Object[] finderArgs = new Object[] {uuid, groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticle == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -22213,7 +22157,6 @@ public class JournalArticlePersistenceImpl
 		"journalArticle.classNameId = ?";
 
 	private FinderPath _finderPathFetchByG_ERC_V;
-	private FinderPath _finderPathCountByG_ERC_V;
 
 	/**
 	 * Returns the journal article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -22424,74 +22367,14 @@ public class JournalArticlePersistenceImpl
 	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, double version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticle.class)) {
+		JournalArticle journalArticle = fetchByG_ERC_V(
+			groupId, externalReferenceCode, version);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByG_ERC_V;
-
-			Object[] finderArgs = new Object[] {
-				groupId, externalReferenceCode, version
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_ERC_V_GROUPID_2);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_ERC_V_VERSION_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(version);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticle == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_ERC_V_GROUPID_2 =
@@ -25067,7 +24950,6 @@ public class JournalArticlePersistenceImpl
 		"journalArticle.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_C_DDMSI;
-	private FinderPath _finderPathCountByG_C_DDMSI;
 
 	/**
 	 * Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -25280,61 +25162,14 @@ public class JournalArticlePersistenceImpl
 	public int countByG_C_DDMSI(
 		long groupId, long classNameId, long DDMStructureId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticle.class)) {
+		JournalArticle journalArticle = fetchByG_C_DDMSI(
+			groupId, classNameId, DDMStructureId);
 
-			FinderPath finderPath = _finderPathCountByG_C_DDMSI;
-
-			Object[] finderArgs = new Object[] {
-				groupId, classNameId, DDMStructureId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_DDMSTRUCTUREID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(DDMStructureId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticle == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_DDMSI_GROUPID_2 =
@@ -27556,7 +27391,6 @@ public class JournalArticlePersistenceImpl
 		"(journalArticle.layoutUuid IS NULL OR journalArticle.layoutUuid = '')";
 
 	private FinderPath _finderPathFetchByG_A_V;
-	private FinderPath _finderPathCountByG_A_V;
 
 	/**
 	 * Returns the journal article where groupId = &#63; and articleId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -27761,72 +27595,14 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_A_V(long groupId, String articleId, double version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticle.class)) {
+		JournalArticle journalArticle = fetchByG_A_V(
+			groupId, articleId, version);
 
-			articleId = Objects.toString(articleId, "");
-
-			FinderPath finderPath = _finderPathCountByG_A_V;
-
-			Object[] finderArgs = new Object[] {groupId, articleId, version};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
-
-				boolean bindArticleId = false;
-
-				if (articleId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-				}
-				else {
-					bindArticleId = true;
-
-					sb.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_A_V_VERSION_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					if (bindArticleId) {
-						queryPos.add(articleId);
-					}
-
-					queryPos.add(version);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (journalArticle == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_A_V_GROUPID_2 =
@@ -33493,8 +33269,6 @@ public class JournalArticlePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, journalArticleModelImpl);
 
 			args = new Object[] {
@@ -33503,8 +33277,6 @@ public class JournalArticlePersistenceImpl
 				journalArticleModelImpl.getVersion()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByG_ERC_V, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_ERC_V, args, journalArticleModelImpl);
 
@@ -33515,8 +33287,6 @@ public class JournalArticlePersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByG_C_DDMSI, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByG_C_DDMSI, args, journalArticleModelImpl);
 
 			args = new Object[] {
@@ -33525,8 +33295,6 @@ public class JournalArticlePersistenceImpl
 				journalArticleModelImpl.getVersion()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByG_A_V, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_A_V, args, journalArticleModelImpl);
 		}
@@ -34366,11 +34134,6 @@ public class JournalArticlePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -34861,15 +34624,6 @@ public class JournalArticlePersistenceImpl
 			},
 			new String[] {"groupId", "externalReferenceCode", "version"}, true);
 
-		_finderPathCountByG_ERC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "version"},
-			false);
-
 		_finderPathWithPaginationFindByG_F_ST = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_ST",
 			new String[] {
@@ -34933,13 +34687,6 @@ public class JournalArticlePersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "DDMStructureId"}, true);
 
-		_finderPathCountByG_C_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_DDMSI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "DDMStructureId"}, false);
-
 		_finderPathWithPaginationFindByG_C_DDMTK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_DDMTK",
 			new String[] {
@@ -34997,14 +34744,6 @@ public class JournalArticlePersistenceImpl
 				Double.class.getName()
 			},
 			new String[] {"groupId", "articleId", "version"}, true);
-
-		_finderPathCountByG_A_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"groupId", "articleId", "version"}, false);
 
 		_finderPathWithPaginationFindByG_A_ST = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_ST",

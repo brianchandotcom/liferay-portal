@@ -1115,7 +1115,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		"accountEntryOrganizationRel.organizationId = ?";
 
 	private FinderPath _finderPathFetchByA_O;
-	private FinderPath _finderPathCountByA_O;
 
 	/**
 	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or throws a <code>NoSuchEntryOrganizationRelException</code> if it could not be found.
@@ -1309,49 +1308,14 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Override
 	public int countByA_O(long accountEntryId, long organizationId) {
-		FinderPath finderPath = _finderPathCountByA_O;
+		AccountEntryOrganizationRel accountEntryOrganizationRel = fetchByA_O(
+			accountEntryId, organizationId);
 
-		Object[] finderArgs = new Object[] {accountEntryId, organizationId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_O_ACCOUNTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_A_O_ORGANIZATIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountEntryId);
-
-				queryPos.add(organizationId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (accountEntryOrganizationRel == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_A_O_ACCOUNTENTRYID_2 =
@@ -1484,7 +1448,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			accountEntryOrganizationRelModelImpl.getOrganizationId()
 		};
 
-		finderCache.putResult(_finderPathCountByA_O, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByA_O, args, accountEntryOrganizationRelModelImpl);
 	}
@@ -1990,11 +1953,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "organizationId"}, true);
-
-		_finderPathCountByA_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_O",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "organizationId"}, false);
 
 		AccountEntryOrganizationRelUtil.setPersistence(this);
 	}

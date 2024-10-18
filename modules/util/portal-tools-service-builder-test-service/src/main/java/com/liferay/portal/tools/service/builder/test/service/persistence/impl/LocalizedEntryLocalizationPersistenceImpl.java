@@ -587,7 +587,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			"localizedEntryLocalization.localizedEntryId = ?";
 
 	private FinderPath _finderPathFetchByLocalizedEntryId_LanguageId;
-	private FinderPath _finderPathCountByLocalizedEntryId_LanguageId;
 
 	/**
 	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLocalizedEntryLocalizationException</code> if it could not be found.
@@ -785,65 +784,14 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	public int countByLocalizedEntryId_LanguageId(
 		long localizedEntryId, String languageId) {
 
-		languageId = Objects.toString(languageId, "");
+		LocalizedEntryLocalization localizedEntryLocalization =
+			fetchByLocalizedEntryId_LanguageId(localizedEntryId, languageId);
 
-		FinderPath finderPath = _finderPathCountByLocalizedEntryId_LanguageId;
-
-		Object[] finderArgs = new Object[] {localizedEntryId, languageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LOCALIZEDENTRYID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(
-					_FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(localizedEntryId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (localizedEntryLocalization == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -982,9 +930,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			localizedEntryLocalizationModelImpl.getLanguageId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByLocalizedEntryId_LanguageId, args,
-			Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByLocalizedEntryId_LanguageId, args,
 			localizedEntryLocalizationModelImpl);
@@ -1466,12 +1411,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByLocalizedEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"localizedEntryId", "languageId"}, true);
-
-		_finderPathCountByLocalizedEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLocalizedEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"localizedEntryId", "languageId"}, false);
 
 		LocalizedEntryLocalizationUtil.setPersistence(this);
 	}

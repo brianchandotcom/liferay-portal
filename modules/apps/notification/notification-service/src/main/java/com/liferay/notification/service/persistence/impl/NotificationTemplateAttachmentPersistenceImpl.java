@@ -615,7 +615,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			"notificationTemplateAttachment.notificationTemplateId = ?";
 
 	private FinderPath _finderPathFetchByNTI_OFI;
-	private FinderPath _finderPathCountByNTI_OFI;
 
 	/**
 	 * Returns the notification template attachment where notificationTemplateId = &#63; and objectFieldId = &#63; or throws a <code>NoSuchNotificationTemplateAttachmentException</code> if it could not be found.
@@ -795,51 +794,14 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	 */
 	@Override
 	public int countByNTI_OFI(long notificationTemplateId, long objectFieldId) {
-		FinderPath finderPath = _finderPathCountByNTI_OFI;
+		NotificationTemplateAttachment notificationTemplateAttachment =
+			fetchByNTI_OFI(notificationTemplateId, objectFieldId);
 
-		Object[] finderArgs = new Object[] {
-			notificationTemplateId, objectFieldId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_NTI_OFI_NOTIFICATIONTEMPLATEID_2);
-
-			sb.append(_FINDER_COLUMN_NTI_OFI_OBJECTFIELDID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(notificationTemplateId);
-
-				queryPos.add(objectFieldId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (notificationTemplateAttachment == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -981,7 +943,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			notificationTemplateAttachmentModelImpl.getObjectFieldId()
 		};
 
-		finderCache.putResult(_finderPathCountByNTI_OFI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByNTI_OFI, args,
 			notificationTemplateAttachmentModelImpl);
@@ -1483,11 +1444,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"notificationTemplateId", "objectFieldId"}, true);
-
-		_finderPathCountByNTI_OFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNTI_OFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"notificationTemplateId", "objectFieldId"}, false);
 
 		NotificationTemplateAttachmentUtil.setPersistence(this);
 	}

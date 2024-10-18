@@ -595,7 +595,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 		"redirectNotFoundEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByG_U;
-	private FinderPath _finderPathCountByG_U;
 
 	/**
 	 * Returns the redirect not found entry where groupId = &#63; and url = &#63; or throws a <code>NoSuchNotFoundEntryException</code> if it could not be found.
@@ -776,62 +775,13 @@ public class RedirectNotFoundEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, String url) {
-		url = Objects.toString(url, "");
+		RedirectNotFoundEntry redirectNotFoundEntry = fetchByG_U(groupId, url);
 
-		FinderPath finderPath = _finderPathCountByG_U;
-
-		Object[] finderArgs = new Object[] {groupId, url};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_REDIRECTNOTFOUNDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
-
-			boolean bindUrl = false;
-
-			if (url.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_U_URL_3);
-			}
-			else {
-				bindUrl = true;
-
-				sb.append(_FINDER_COLUMN_G_U_URL_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindUrl) {
-					queryPos.add(url);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (redirectNotFoundEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 =
@@ -960,7 +910,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 			redirectNotFoundEntryModelImpl.getUrl()
 		};
 
-		finderCache.putResult(_finderPathCountByG_U, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByG_U, args, redirectNotFoundEntryModelImpl);
 	}
@@ -1485,11 +1434,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "url"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "url"}, false);
 
 		RedirectNotFoundEntryUtil.setPersistence(this);
 	}

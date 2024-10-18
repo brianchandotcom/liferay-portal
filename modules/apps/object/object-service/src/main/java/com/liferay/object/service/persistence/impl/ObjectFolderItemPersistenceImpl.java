@@ -2229,7 +2229,6 @@ public class ObjectFolderItemPersistenceImpl
 		"objectFolderItem.objectFolderId = ?";
 
 	private FinderPath _finderPathFetchByODI_OFI;
-	private FinderPath _finderPathCountByODI_OFI;
 
 	/**
 	 * Returns the object folder item where objectDefinitionId = &#63; and objectFolderId = &#63; or throws a <code>NoSuchObjectFolderItemException</code> if it could not be found.
@@ -2403,49 +2402,14 @@ public class ObjectFolderItemPersistenceImpl
 	 */
 	@Override
 	public int countByODI_OFI(long objectDefinitionId, long objectFolderId) {
-		FinderPath finderPath = _finderPathCountByODI_OFI;
+		ObjectFolderItem objectFolderItem = fetchByODI_OFI(
+			objectDefinitionId, objectFolderId);
 
-		Object[] finderArgs = new Object[] {objectDefinitionId, objectFolderId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTFOLDERITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_OFI_OBJECTDEFINITIONID_2);
-
-			sb.append(_FINDER_COLUMN_ODI_OFI_OBJECTFOLDERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				queryPos.add(objectFolderId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectFolderItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_ODI_OFI_OBJECTDEFINITIONID_2 =
@@ -2567,7 +2531,6 @@ public class ObjectFolderItemPersistenceImpl
 			objectFolderItemModelImpl.getObjectFolderId()
 		};
 
-		finderCache.putResult(_finderPathCountByODI_OFI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByODI_OFI, args, objectFolderItemModelImpl);
 	}
@@ -3122,11 +3085,6 @@ public class ObjectFolderItemPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"objectDefinitionId", "objectFolderId"}, true);
-
-		_finderPathCountByODI_OFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_OFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"objectDefinitionId", "objectFolderId"}, false);
 
 		ObjectFolderItemUtil.setPersistence(this);
 	}

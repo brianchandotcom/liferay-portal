@@ -1805,7 +1805,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 			"commercePriceListOrderTypeRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByCPI_COTI;
-	private FinderPath _finderPathCountByCPI_COTI;
 
 	/**
 	 * Returns the commerce price list order type rel where commercePriceListId = &#63; and commerceOrderTypeId = &#63; or throws a <code>NoSuchPriceListOrderTypeRelException</code> if it could not be found.
@@ -1994,57 +1993,14 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	public int countByCPI_COTI(
 		long commercePriceListId, long commerceOrderTypeId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceListOrderTypeRel.class)) {
+		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel =
+			fetchByCPI_COTI(commercePriceListId, commerceOrderTypeId);
 
-			FinderPath finderPath = _finderPathCountByCPI_COTI;
-
-			Object[] finderArgs = new Object[] {
-				commercePriceListId, commerceOrderTypeId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCEPRICELISTORDERTYPEREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_CPI_COTI_COMMERCEPRICELISTID_2);
-
-				sb.append(_FINDER_COLUMN_CPI_COTI_COMMERCEORDERTYPEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(commercePriceListId);
-
-					queryPos.add(commerceOrderTypeId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commercePriceListOrderTypeRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CPI_COTI_COMMERCEPRICELISTID_2 =
@@ -2202,8 +2158,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 				commercePriceListOrderTypeRelModelImpl.getCommerceOrderTypeId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByCPI_COTI, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByCPI_COTI, args,
 				commercePriceListOrderTypeRelModelImpl);
@@ -3036,11 +2990,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPI_COTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceOrderTypeId"}, true);
-
-		_finderPathCountByCPI_COTI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPI_COTI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commercePriceListId", "commerceOrderTypeId"}, false);
 
 		CommercePriceListOrderTypeRelUtil.setPersistence(this);
 	}

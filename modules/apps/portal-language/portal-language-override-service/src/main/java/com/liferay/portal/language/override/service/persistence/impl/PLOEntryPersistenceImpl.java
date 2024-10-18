@@ -1736,7 +1736,6 @@ public class PLOEntryPersistenceImpl
 		"(ploEntry.languageId IS NULL OR ploEntry.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_K_L;
-	private FinderPath _finderPathCountByC_K_L;
 
 	/**
 	 * Returns the plo entry where companyId = &#63; and key = &#63; and languageId = &#63; or throws a <code>NoSuchPLOEntryException</code> if it could not be found.
@@ -1943,78 +1942,13 @@ public class PLOEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_K_L(long companyId, String key, String languageId) {
-		key = Objects.toString(key, "");
-		languageId = Objects.toString(languageId, "");
+		PLOEntry ploEntry = fetchByC_K_L(companyId, key, languageId);
 
-		FinderPath finderPath = _finderPathCountByC_K_L;
-
-		Object[] finderArgs = new Object[] {companyId, key, languageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_PLOENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_K_L_COMPANYID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_K_L_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_C_K_L_KEY_2);
-			}
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_K_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_C_K_L_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ploEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_K_L_COMPANYID_2 =
@@ -2141,7 +2075,6 @@ public class PLOEntryPersistenceImpl
 			ploEntryModelImpl.getLanguageId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_K_L, args, Long.valueOf(1));
 		finderCache.putResult(_finderPathFetchByC_K_L, args, ploEntryModelImpl);
 	}
 
@@ -2686,14 +2619,6 @@ public class PLOEntryPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "key_", "languageId"}, true);
-
-		_finderPathCountByC_K_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "key_", "languageId"}, false);
 
 		PLOEntryUtil.setPersistence(this);
 	}

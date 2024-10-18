@@ -2334,7 +2334,6 @@ public class ListTypeEntryPersistenceImpl
 			"listTypeEntry.listTypeDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByLTDI_K;
-	private FinderPath _finderPathCountByLTDI_K;
 
 	/**
 	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
@@ -2532,62 +2531,13 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLTDI_K(long listTypeDefinitionId, String key) {
-		key = Objects.toString(key, "");
+		ListTypeEntry listTypeEntry = fetchByLTDI_K(listTypeDefinitionId, key);
 
-		FinderPath finderPath = _finderPathCountByLTDI_K;
-
-		Object[] finderArgs = new Object[] {listTypeDefinitionId, key};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_LTDI_K_LISTTYPEDEFINITIONID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_LTDI_K_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_LTDI_K_KEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(listTypeDefinitionId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (listTypeEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_LTDI_K_LISTTYPEDEFINITIONID_2 =
@@ -2600,7 +2550,6 @@ public class ListTypeEntryPersistenceImpl
 		"(listTypeEntry.key IS NULL OR listTypeEntry.key = '')";
 
 	private FinderPath _finderPathFetchByERC_C_LTDI;
-	private FinderPath _finderPathCountByERC_C_LTDI;
 
 	/**
 	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
@@ -2830,68 +2779,14 @@ public class ListTypeEntryPersistenceImpl
 		String externalReferenceCode, long companyId,
 		long listTypeDefinitionId) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		ListTypeEntry listTypeEntry = fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
 
-		FinderPath finderPath = _finderPathCountByERC_C_LTDI;
-
-		Object[] finderArgs = new Object[] {
-			externalReferenceCode, companyId, listTypeDefinitionId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_LTDI_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_ERC_C_LTDI_LISTTYPEDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				queryPos.add(listTypeDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (listTypeEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -3030,7 +2925,6 @@ public class ListTypeEntryPersistenceImpl
 			listTypeEntryModelImpl.getKey()
 		};
 
-		finderCache.putResult(_finderPathCountByLTDI_K, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByLTDI_K, args, listTypeEntryModelImpl);
 
@@ -3040,8 +2934,6 @@ public class ListTypeEntryPersistenceImpl
 			listTypeEntryModelImpl.getListTypeDefinitionId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByERC_C_LTDI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByERC_C_LTDI, args, listTypeEntryModelImpl);
 	}
@@ -3638,11 +3530,6 @@ public class ListTypeEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"listTypeDefinitionId", "key_"}, true);
 
-		_finderPathCountByLTDI_K = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLTDI_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"listTypeDefinitionId", "key_"}, false);
-
 		_finderPathFetchByERC_C_LTDI = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_LTDI",
 			new String[] {
@@ -3653,17 +3540,6 @@ public class ListTypeEntryPersistenceImpl
 				"externalReferenceCode", "companyId", "listTypeDefinitionId"
 			},
 			true);
-
-		_finderPathCountByERC_C_LTDI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C_LTDI",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"externalReferenceCode", "companyId", "listTypeDefinitionId"
-			},
-			false);
 
 		ListTypeEntryUtil.setPersistence(this);
 	}

@@ -2807,7 +2807,6 @@ public class CommerceWishListItemPersistenceImpl
 		"commerceWishListItem.CProductId = ?";
 
 	private FinderPath _finderPathFetchByCW_CPI_CP;
-	private FinderPath _finderPathCountByCW_CPI_CP;
 
 	/**
 	 * Returns the commerce wish list item where commerceWishListId = &#63; and CPInstanceUuid = &#63; and CProductId = &#63; or throws a <code>NoSuchWishListItemException</code> if it could not be found.
@@ -3033,68 +3032,14 @@ public class CommerceWishListItemPersistenceImpl
 	public int countByCW_CPI_CP(
 		long commerceWishListId, String CPInstanceUuid, long CProductId) {
 
-		CPInstanceUuid = Objects.toString(CPInstanceUuid, "");
+		CommerceWishListItem commerceWishListItem = fetchByCW_CPI_CP(
+			commerceWishListId, CPInstanceUuid, CProductId);
 
-		FinderPath finderPath = _finderPathCountByCW_CPI_CP;
-
-		Object[] finderArgs = new Object[] {
-			commerceWishListId, CPInstanceUuid, CProductId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_CW_CPI_CP_COMMERCEWISHLISTID_2);
-
-			boolean bindCPInstanceUuid = false;
-
-			if (CPInstanceUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CW_CPI_CP_CPINSTANCEUUID_3);
-			}
-			else {
-				bindCPInstanceUuid = true;
-
-				sb.append(_FINDER_COLUMN_CW_CPI_CP_CPINSTANCEUUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_CW_CPI_CP_CPRODUCTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceWishListId);
-
-				if (bindCPInstanceUuid) {
-					queryPos.add(CPInstanceUuid);
-				}
-
-				queryPos.add(CProductId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceWishListItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CW_CPI_CP_COMMERCEWISHLISTID_2 =
@@ -3224,8 +3169,6 @@ public class CommerceWishListItemPersistenceImpl
 			commerceWishListItemModelImpl.getCProductId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByCW_CPI_CP, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByCW_CPI_CP, args, commerceWishListItemModelImpl);
 	}
@@ -3797,15 +3740,6 @@ public class CommerceWishListItemPersistenceImpl
 			},
 			new String[] {"commerceWishListId", "CPInstanceUuid", "CProductId"},
 			true);
-
-		_finderPathCountByCW_CPI_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI_CP",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"commerceWishListId", "CPInstanceUuid", "CProductId"},
-			false);
 
 		CommerceWishListItemUtil.setPersistence(this);
 	}

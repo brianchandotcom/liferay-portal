@@ -1245,7 +1245,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			"commercePaymentMethodGroupRelQualifier.commercePaymentMethodGroupRelId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the commerce payment method group rel qualifier where classNameId = &#63; and classPK = &#63; and commercePaymentMethodGroupRelId = &#63; or throws a <code>NoSuchPaymentMethodGroupRelQualifierException</code> if it could not be found.
@@ -1450,55 +1449,15 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	public int countByC_C_C(
 		long classNameId, long classPK, long commercePaymentMethodGroupRelId) {
 
-		FinderPath finderPath = _finderPathCountByC_C_C;
+		CommercePaymentMethodGroupRelQualifier
+			commercePaymentMethodGroupRelQualifier = fetchByC_C_C(
+				classNameId, classPK, commercePaymentMethodGroupRelId);
 
-		Object[] finderArgs = new Object[] {
-			classNameId, classPK, commercePaymentMethodGroupRelId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMMERCEPAYMENTMETHODGROUPRELID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(commercePaymentMethodGroupRelId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commercePaymentMethodGroupRelQualifier == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
@@ -1660,7 +1619,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				getCommercePaymentMethodGroupRelId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_C_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C_C, args,
 			commercePaymentMethodGroupRelQualifierModelImpl);
@@ -2232,14 +2190,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "CPaymentMethodGroupRelId"},
 			true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "CPaymentMethodGroupRelId"},
-			false);
 
 		CommercePaymentMethodGroupRelQualifierUtil.setPersistence(this);
 	}

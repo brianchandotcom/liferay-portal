@@ -648,7 +648,6 @@ public class DepotEntryGroupRelPersistenceImpl
 		"(depotEntryGroupRel.uuid IS NULL OR depotEntryGroupRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the depot entry group rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
@@ -834,68 +833,13 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
+		DepotEntryGroupRel depotEntryGroupRel = fetchByUUID_G(uuid, groupId);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G;
-
-			Object[] finderArgs = new Object[] {uuid, groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (depotEntryGroupRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -3110,7 +3054,6 @@ public class DepotEntryGroupRelPersistenceImpl
 		"depotEntryGroupRel.toGroupId = ?";
 
 	private FinderPath _finderPathFetchByD_TGI;
-	private FinderPath _finderPathCountByD_TGI;
 
 	/**
 	 * Returns the depot entry group rel where depotEntryId = &#63; and toGroupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
@@ -3285,55 +3228,14 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByD_TGI(long depotEntryId, long toGroupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
+		DepotEntryGroupRel depotEntryGroupRel = fetchByD_TGI(
+			depotEntryId, toGroupId);
 
-			FinderPath finderPath = _finderPathCountByD_TGI;
-
-			Object[] finderArgs = new Object[] {depotEntryId, toGroupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_D_TGI_DEPOTENTRYID_2);
-
-				sb.append(_FINDER_COLUMN_D_TGI_TOGROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(depotEntryId);
-
-					queryPos.add(toGroupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (depotEntryGroupRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_D_TGI_DEPOTENTRYID_2 =
@@ -4034,8 +3936,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathCountByUUID_G, args, Long.valueOf(1));
-			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, depotEntryGroupRelModelImpl);
 
 			args = new Object[] {
@@ -4043,8 +3943,6 @@ public class DepotEntryGroupRelPersistenceImpl
 				depotEntryGroupRelModelImpl.getToGroupId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByD_TGI, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByD_TGI, args, depotEntryGroupRelModelImpl);
 		}
@@ -4814,11 +4712,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -4897,11 +4790,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"depotEntryId", "toGroupId"}, true);
-
-		_finderPathCountByD_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_TGI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"depotEntryId", "toGroupId"}, false);
 
 		_finderPathWithPaginationFindByS_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_TGI",

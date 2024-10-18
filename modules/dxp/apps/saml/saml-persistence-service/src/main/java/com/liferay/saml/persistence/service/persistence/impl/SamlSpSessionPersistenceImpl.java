@@ -598,7 +598,6 @@ public class SamlSpSessionPersistenceImpl
 			"samlSpSession.samlPeerBindingId = ?";
 
 	private FinderPath _finderPathFetchByJSessionId;
-	private FinderPath _finderPathCountByJSessionId;
 
 	/**
 	 * Returns the saml sp session where jSessionId = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
@@ -779,58 +778,13 @@ public class SamlSpSessionPersistenceImpl
 	 */
 	@Override
 	public int countByJSessionId(String jSessionId) {
-		jSessionId = Objects.toString(jSessionId, "");
+		SamlSpSession samlSpSession = fetchByJSessionId(jSessionId);
 
-		FinderPath finderPath = _finderPathCountByJSessionId;
-
-		Object[] finderArgs = new Object[] {jSessionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SAMLSPSESSION_WHERE);
-
-			boolean bindJSessionId = false;
-
-			if (jSessionId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_JSESSIONID_JSESSIONID_3);
-			}
-			else {
-				bindJSessionId = true;
-
-				sb.append(_FINDER_COLUMN_JSESSIONID_JSESSIONID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindJSessionId) {
-					queryPos.add(jSessionId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (samlSpSession == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_JSESSIONID_JSESSIONID_2 =
@@ -840,7 +794,6 @@ public class SamlSpSessionPersistenceImpl
 		"(samlSpSession.jSessionId IS NULL OR samlSpSession.jSessionId = '')";
 
 	private FinderPath _finderPathFetchBySamlSpSessionKey;
-	private FinderPath _finderPathCountBySamlSpSessionKey;
 
 	/**
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
@@ -1009,58 +962,13 @@ public class SamlSpSessionPersistenceImpl
 	 */
 	@Override
 	public int countBySamlSpSessionKey(String samlSpSessionKey) {
-		samlSpSessionKey = Objects.toString(samlSpSessionKey, "");
+		SamlSpSession samlSpSession = fetchBySamlSpSessionKey(samlSpSessionKey);
 
-		FinderPath finderPath = _finderPathCountBySamlSpSessionKey;
-
-		Object[] finderArgs = new Object[] {samlSpSessionKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SAMLSPSESSION_WHERE);
-
-			boolean bindSamlSpSessionKey = false;
-
-			if (samlSpSessionKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SAMLSPSESSIONKEY_SAMLSPSESSIONKEY_3);
-			}
-			else {
-				bindSamlSpSessionKey = true;
-
-				sb.append(_FINDER_COLUMN_SAMLSPSESSIONKEY_SAMLSPSESSIONKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindSamlSpSessionKey) {
-					queryPos.add(samlSpSessionKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (samlSpSession == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -1763,14 +1671,10 @@ public class SamlSpSessionPersistenceImpl
 		Object[] args = new Object[] {samlSpSessionModelImpl.getJSessionId()};
 
 		finderCache.putResult(
-			_finderPathCountByJSessionId, args, Long.valueOf(1));
-		finderCache.putResult(
 			_finderPathFetchByJSessionId, args, samlSpSessionModelImpl);
 
 		args = new Object[] {samlSpSessionModelImpl.getSamlSpSessionKey()};
 
-		finderCache.putResult(
-			_finderPathCountBySamlSpSessionKey, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchBySamlSpSessionKey, args, samlSpSessionModelImpl);
 	}
@@ -2257,20 +2161,10 @@ public class SamlSpSessionPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"jSessionId"},
 			true);
 
-		_finderPathCountByJSessionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByJSessionId",
-			new String[] {String.class.getName()}, new String[] {"jSessionId"},
-			false);
-
 		_finderPathFetchBySamlSpSessionKey = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlSpSessionKey",
 			new String[] {String.class.getName()},
 			new String[] {"samlSpSessionKey"}, true);
-
-		_finderPathCountBySamlSpSessionKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySamlSpSessionKey", new String[] {String.class.getName()},
-			new String[] {"samlSpSessionKey"}, false);
 
 		_finderPathWithPaginationFindByC_SI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SI",

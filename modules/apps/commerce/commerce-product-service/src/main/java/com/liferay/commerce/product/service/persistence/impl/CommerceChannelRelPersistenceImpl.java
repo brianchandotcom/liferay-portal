@@ -1173,7 +1173,6 @@ public class CommerceChannelRelPersistenceImpl
 		"commerceChannelRel.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the commerce channel rel where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; or throws a <code>NoSuchChannelRelException</code> if it could not be found.
@@ -1371,61 +1370,14 @@ public class CommerceChannelRelPersistenceImpl
 	public int countByC_C_C(
 		long classNameId, long classPK, long commerceChannelId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelRel.class)) {
+		CommerceChannelRel commerceChannelRel = fetchByC_C_C(
+			classNameId, classPK, commerceChannelId);
 
-			FinderPath finderPath = _finderPathCountByC_C_C;
-
-			Object[] finderArgs = new Object[] {
-				classNameId, classPK, commerceChannelId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_COMMERCECHANNELREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_COMMERCECHANNELID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(commerceChannelId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commerceChannelRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
@@ -1561,8 +1513,6 @@ public class CommerceChannelRelPersistenceImpl
 				commerceChannelRelModelImpl.getCommerceChannelId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByC_C_C, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_C_C, args, commerceChannelRelModelImpl);
 		}
@@ -2332,14 +2282,6 @@ public class CommerceChannelRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "commerceChannelId"}, true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "commerceChannelId"},
-			false);
 
 		CommerceChannelRelUtil.setPersistence(this);
 	}

@@ -2312,7 +2312,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 			"commerceTierPriceEntry.commercePriceEntryId = ?";
 
 	private FinderPath _finderPathFetchByC_M;
-	private FinderPath _finderPathCountByC_M;
 
 	/**
 	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or throws a <code>NoSuchTierPriceEntryException</code> if it could not be found.
@@ -2506,68 +2505,14 @@ public class CommerceTierPriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_M(long commercePriceEntryId, BigDecimal minQuantity) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceTierPriceEntry.class)) {
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M(
+			commercePriceEntryId, minQuantity);
 
-			FinderPath finderPath = _finderPathCountByC_M;
-
-			Object[] finderArgs = new Object[] {
-				commercePriceEntryId, minQuantity
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2);
-
-				boolean bindMinQuantity = false;
-
-				if (minQuantity == null) {
-					sb.append(_FINDER_COLUMN_C_M_MINQUANTITY_1);
-				}
-				else {
-					bindMinQuantity = true;
-
-					sb.append(_FINDER_COLUMN_C_M_MINQUANTITY_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(commercePriceEntryId);
-
-					if (bindMinQuantity) {
-						queryPos.add(minQuantity);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commerceTierPriceEntry == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2 =
@@ -5530,7 +5475,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		"commerceTierPriceEntry.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
-	private FinderPath _finderPathCountByERC_C;
 
 	/**
 	 * Returns the commerce tier price entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTierPriceEntryException</code> if it could not be found.
@@ -5725,70 +5669,14 @@ public class CommerceTierPriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceTierPriceEntry.class)) {
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByERC_C(
+			externalReferenceCode, companyId);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByERC_C;
-
-			Object[] finderArgs = new Object[] {
-				externalReferenceCode, companyId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commerceTierPriceEntry == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
@@ -5945,7 +5833,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 				commerceTierPriceEntryModelImpl.getMinQuantity()
 			};
 
-			finderCache.putResult(_finderPathCountByC_M, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_M, args, commerceTierPriceEntryModelImpl);
 
@@ -5954,8 +5841,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 				commerceTierPriceEntryModelImpl.getCompanyId()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByERC_C, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByERC_C, args, commerceTierPriceEntryModelImpl);
 		}
@@ -6875,11 +6760,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 			new String[] {Long.class.getName(), BigDecimal.class.getName()},
 			new String[] {"commercePriceEntryId", "minQuantity"}, true);
 
-		_finderPathCountByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
-			new String[] {Long.class.getName(), BigDecimal.class.getName()},
-			new String[] {"commercePriceEntryId", "minQuantity"}, false);
-
 		_finderPathWithPaginationFindByC_LteM = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LteM",
 			new String[] {
@@ -6964,11 +6844,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
-
-		_finderPathCountByERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		CommerceTierPriceEntryUtil.setPersistence(this);
 	}

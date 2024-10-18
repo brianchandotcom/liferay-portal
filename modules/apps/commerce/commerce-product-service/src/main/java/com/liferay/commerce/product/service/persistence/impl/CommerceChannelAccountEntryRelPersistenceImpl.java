@@ -4129,7 +4129,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		"commerceChannelAccountEntryRel.type = ?";
 
 	private FinderPath _finderPathFetchByA_C_C_C_T;
-	private FinderPath _finderPathCountByA_C_C_C_T;
 
 	/**
 	 * Returns the commerce channel account entry rel where accountEntryId = &#63; and classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63; or throws a <code>NoSuchChannelAccountEntryRelException</code> if it could not be found.
@@ -4366,69 +4365,15 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		long accountEntryId, long classNameId, long classPK,
 		long commerceChannelId, int type) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelAccountEntryRel.class)) {
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			fetchByA_C_C_C_T(
+				accountEntryId, classNameId, classPK, commerceChannelId, type);
 
-			FinderPath finderPath = _finderPathCountByA_C_C_C_T;
-
-			Object[] finderArgs = new Object[] {
-				accountEntryId, classNameId, classPK, commerceChannelId, type
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_A_C_C_C_T_ACCOUNTENTRYID_2);
-
-				sb.append(_FINDER_COLUMN_A_C_C_C_T_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_A_C_C_C_T_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_A_C_C_C_T_COMMERCECHANNELID_2);
-
-				sb.append(_FINDER_COLUMN_A_C_C_C_T_TYPE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(accountEntryId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(commerceChannelId);
-
-					queryPos.add(type);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (commerceChannelAccountEntryRel == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_A_C_C_C_T_ACCOUNTENTRYID_2 =
@@ -4601,8 +4546,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				commerceChannelAccountEntryRelModelImpl.getType()
 			};
 
-			finderCache.putResult(
-				_finderPathCountByA_C_C_C_T, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByA_C_C_C_T, args,
 				commerceChannelAccountEntryRelModelImpl);
@@ -5540,19 +5483,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				"type_"
 			},
 			true);
-
-		_finderPathCountByA_C_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"accountEntryId", "classNameId", "classPK", "commerceChannelId",
-				"type_"
-			},
-			false);
 
 		CommerceChannelAccountEntryRelUtil.setPersistence(this);
 	}

@@ -1104,7 +1104,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			"mfafido2CredentialEntry.credentialKeyHash = ?";
 
 	private FinderPath _finderPathFetchByU_C;
-	private FinderPath _finderPathCountByU_C;
 
 	/**
 	 * Returns the mfafido2 credential entry where userId = &#63; and credentialKeyHash = &#63; or throws a <code>NoSuchMFAFIDO2CredentialEntryException</code> if it could not be found.
@@ -1280,49 +1279,14 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	 */
 	@Override
 	public int countByU_C(long userId, long credentialKeyHash) {
-		FinderPath finderPath = _finderPathCountByU_C;
+		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry = fetchByU_C(
+			userId, credentialKeyHash);
 
-		Object[] finderArgs = new Object[] {userId, credentialKeyHash};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MFAFIDO2CREDENTIALENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_C_USERID_2);
-
-			sb.append(_FINDER_COLUMN_U_C_CREDENTIALKEYHASH_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				queryPos.add(credentialKeyHash);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (mfaFIDO2CredentialEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 =
@@ -1448,7 +1412,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			mfaFIDO2CredentialEntryModelImpl.getCredentialKeyHash()
 		};
 
-		finderCache.putResult(_finderPathCountByU_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByU_C, args, mfaFIDO2CredentialEntryModelImpl);
 	}
@@ -1966,11 +1929,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "credentialKeyHash"}, true);
-
-		_finderPathCountByU_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "credentialKeyHash"}, false);
 
 		MFAFIDO2CredentialEntryUtil.setPersistence(this);
 	}

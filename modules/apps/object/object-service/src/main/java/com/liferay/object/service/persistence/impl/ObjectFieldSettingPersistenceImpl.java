@@ -1721,7 +1721,6 @@ public class ObjectFieldSettingPersistenceImpl
 		"objectFieldSetting.objectFieldId = ?";
 
 	private FinderPath _finderPathFetchByOFI_N;
-	private FinderPath _finderPathCountByOFI_N;
 
 	/**
 	 * Returns the object field setting where objectFieldId = &#63; and name = &#63; or throws a <code>NoSuchObjectFieldSettingException</code> if it could not be found.
@@ -1903,62 +1902,14 @@ public class ObjectFieldSettingPersistenceImpl
 	 */
 	@Override
 	public int countByOFI_N(long objectFieldId, String name) {
-		name = Objects.toString(name, "");
+		ObjectFieldSetting objectFieldSetting = fetchByOFI_N(
+			objectFieldId, name);
 
-		FinderPath finderPath = _finderPathCountByOFI_N;
-
-		Object[] finderArgs = new Object[] {objectFieldId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTFIELDSETTING_WHERE);
-
-			sb.append(_FINDER_COLUMN_OFI_N_OBJECTFIELDID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_OFI_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_OFI_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectFieldId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectFieldSetting == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_OFI_N_OBJECTFIELDID_2 =
@@ -2084,7 +2035,6 @@ public class ObjectFieldSettingPersistenceImpl
 			objectFieldSettingModelImpl.getName()
 		};
 
-		finderCache.putResult(_finderPathCountByOFI_N, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByOFI_N, args, objectFieldSettingModelImpl);
 	}
@@ -2628,11 +2578,6 @@ public class ObjectFieldSettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByOFI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectFieldId", "name"}, true);
-
-		_finderPathCountByOFI_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOFI_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectFieldId", "name"}, false);
 
 		ObjectFieldSettingUtil.setPersistence(this);
 	}

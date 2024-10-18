@@ -2897,7 +2897,6 @@ public class OAuthClientEntryPersistenceImpl
 		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '')";
 
 	private FinderPath _finderPathFetchByC_A_C;
-	private FinderPath _finderPathCountByC_A_C;
 
 	/**
 	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
@@ -3115,80 +3114,14 @@ public class OAuthClientEntryPersistenceImpl
 	public int countByC_A_C(
 		long companyId, String authServerWellKnownURI, String clientId) {
 
-		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
-		clientId = Objects.toString(clientId, "");
+		OAuthClientEntry oAuthClientEntry = fetchByC_A_C(
+			companyId, authServerWellKnownURI, clientId);
 
-		FinderPath finderPath = _finderPathCountByC_A_C;
-
-		Object[] finderArgs = new Object[] {
-			companyId, authServerWellKnownURI, clientId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_A_C_COMPANYID_2);
-
-			boolean bindAuthServerWellKnownURI = false;
-
-			if (authServerWellKnownURI.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_3);
-			}
-			else {
-				bindAuthServerWellKnownURI = true;
-
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_2);
-			}
-
-			boolean bindClientId = false;
-
-			if (clientId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_C_CLIENTID_3);
-			}
-			else {
-				bindClientId = true;
-
-				sb.append(_FINDER_COLUMN_C_A_C_CLIENTID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindAuthServerWellKnownURI) {
-					queryPos.add(authServerWellKnownURI);
-				}
-
-				if (bindClientId) {
-					queryPos.add(clientId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (oAuthClientEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_A_C_COMPANYID_2 =
@@ -3315,7 +3248,6 @@ public class OAuthClientEntryPersistenceImpl
 			oAuthClientEntryModelImpl.getClientId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_A_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_A_C, args, oAuthClientEntryModelImpl);
 	}
@@ -3840,15 +3772,6 @@ public class OAuthClientEntryPersistenceImpl
 			},
 			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
 			true);
-
-		_finderPathCountByC_A_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
-			false);
 
 		OAuthClientEntryUtil.setPersistence(this);
 	}

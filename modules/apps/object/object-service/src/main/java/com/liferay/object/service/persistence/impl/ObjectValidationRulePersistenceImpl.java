@@ -4048,7 +4048,6 @@ public class ObjectValidationRulePersistenceImpl
 		"(objectValidationRule.engine IS NULL OR objectValidationRule.engine = '')";
 
 	private FinderPath _finderPathFetchByERC_C_ODI;
-	private FinderPath _finderPathCountByERC_C_ODI;
 
 	/**
 	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectValidationRuleException</code> if it could not be found.
@@ -4259,68 +4258,14 @@ public class ObjectValidationRulePersistenceImpl
 	public int countByERC_C_ODI(
 		String externalReferenceCode, long companyId, long objectDefinitionId) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		ObjectValidationRule objectValidationRule = fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 
-		FinderPath finderPath = _finderPathCountByERC_C_ODI;
-
-		Object[] finderArgs = new Object[] {
-			externalReferenceCode, companyId, objectDefinitionId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_ODI_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				queryPos.add(objectDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectValidationRule == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -4460,8 +4405,6 @@ public class ObjectValidationRulePersistenceImpl
 			objectValidationRuleModelImpl.getObjectDefinitionId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByERC_C_ODI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByERC_C_ODI, args, objectValidationRuleModelImpl);
 	}
@@ -5129,17 +5072,6 @@ public class ObjectValidationRulePersistenceImpl
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
 			true);
-
-		_finderPathCountByERC_C_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C_ODI",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"externalReferenceCode", "companyId", "objectDefinitionId"
-			},
-			false);
 
 		ObjectValidationRuleUtil.setPersistence(this);
 	}

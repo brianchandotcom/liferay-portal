@@ -2210,7 +2210,6 @@ public class ObjectStatePersistenceImpl
 			"objectState.objectStateFlowId = ?";
 
 	private FinderPath _finderPathFetchByLTEI_OSFI;
-	private FinderPath _finderPathCountByLTEI_OSFI;
 
 	/**
 	 * Returns the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; or throws a <code>NoSuchObjectStateException</code> if it could not be found.
@@ -2400,49 +2399,14 @@ public class ObjectStatePersistenceImpl
 	 */
 	@Override
 	public int countByLTEI_OSFI(long listTypeEntryId, long objectStateFlowId) {
-		FinderPath finderPath = _finderPathCountByLTEI_OSFI;
+		ObjectState objectState = fetchByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId);
 
-		Object[] finderArgs = new Object[] {listTypeEntryId, objectStateFlowId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTSTATE_WHERE);
-
-			sb.append(_FINDER_COLUMN_LTEI_OSFI_LISTTYPEENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_LTEI_OSFI_OBJECTSTATEFLOWID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(listTypeEntryId);
-
-				queryPos.add(objectStateFlowId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (objectState == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_LTEI_OSFI_LISTTYPEENTRYID_2 =
@@ -2561,8 +2525,6 @@ public class ObjectStatePersistenceImpl
 			objectStateModelImpl.getObjectStateFlowId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByLTEI_OSFI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByLTEI_OSFI, args, objectStateModelImpl);
 	}
@@ -3111,11 +3073,6 @@ public class ObjectStatePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByLTEI_OSFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"listTypeEntryId", "objectStateFlowId"}, true);
-
-		_finderPathCountByLTEI_OSFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLTEI_OSFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"listTypeEntryId", "objectStateFlowId"}, false);
 
 		ObjectStateUtil.setPersistence(this);
 	}

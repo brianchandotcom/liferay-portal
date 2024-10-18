@@ -577,7 +577,6 @@ public class FaroPreferencesPersistenceImpl
 		"faroPreferences.groupId = ?";
 
 	private FinderPath _finderPathFetchByG_O;
-	private FinderPath _finderPathCountByG_O;
 
 	/**
 	 * Returns the faro preferences where groupId = &#63; and ownerId = &#63; or throws a <code>NoSuchFaroPreferencesException</code> if it could not be found.
@@ -744,49 +743,13 @@ public class FaroPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByG_O(long groupId, long ownerId) {
-		FinderPath finderPath = _finderPathCountByG_O;
+		FaroPreferences faroPreferences = fetchByG_O(groupId, ownerId);
 
-		Object[] finderArgs = new Object[] {groupId, ownerId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FAROPREFERENCES_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_O_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_O_OWNERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(ownerId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (faroPreferences == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_O_GROUPID_2 =
@@ -901,7 +864,6 @@ public class FaroPreferencesPersistenceImpl
 			faroPreferencesModelImpl.getOwnerId()
 		};
 
-		finderCache.putResult(_finderPathCountByG_O, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByG_O, args, faroPreferencesModelImpl);
 	}
@@ -1361,11 +1323,6 @@ public class FaroPreferencesPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "ownerId"}, true);
-
-		_finderPathCountByG_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_O",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "ownerId"}, false);
 
 		FaroPreferencesUtil.setPersistence(this);
 	}

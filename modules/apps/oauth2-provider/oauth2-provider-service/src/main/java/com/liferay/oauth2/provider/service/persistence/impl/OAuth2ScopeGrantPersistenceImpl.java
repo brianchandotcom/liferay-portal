@@ -625,7 +625,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 			"oAuth2ScopeGrant.oAuth2ApplicationScopeAliasesId = ?";
 
 	private FinderPath _finderPathFetchByC_O_A_B_S;
-	private FinderPath _finderPathCountByC_O_A_B_S;
 
 	/**
 	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a <code>NoSuchOAuth2ScopeGrantException</code> if it could not be found.
@@ -912,102 +911,15 @@ public class OAuth2ScopeGrantPersistenceImpl
 		long companyId, long oAuth2ApplicationScopeAliasesId,
 		String applicationName, String bundleSymbolicName, String scope) {
 
-		applicationName = Objects.toString(applicationName, "");
-		bundleSymbolicName = Objects.toString(bundleSymbolicName, "");
-		scope = Objects.toString(scope, "");
-
-		FinderPath finderPath = _finderPathCountByC_O_A_B_S;
-
-		Object[] finderArgs = new Object[] {
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByC_O_A_B_S(
 			companyId, oAuth2ApplicationScopeAliasesId, applicationName,
-			bundleSymbolicName, scope
-		};
+			bundleSymbolicName, scope);
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_COUNT_OAUTH2SCOPEGRANT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_O_A_B_S_COMPANYID_2);
-
-			sb.append(
-				_FINDER_COLUMN_C_O_A_B_S_OAUTH2APPLICATIONSCOPEALIASESID_2);
-
-			boolean bindApplicationName = false;
-
-			if (applicationName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_3);
-			}
-			else {
-				bindApplicationName = true;
-
-				sb.append(_FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_2);
-			}
-
-			boolean bindBundleSymbolicName = false;
-
-			if (bundleSymbolicName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_B_S_BUNDLESYMBOLICNAME_3);
-			}
-			else {
-				bindBundleSymbolicName = true;
-
-				sb.append(_FINDER_COLUMN_C_O_A_B_S_BUNDLESYMBOLICNAME_2);
-			}
-
-			boolean bindScope = false;
-
-			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_B_S_SCOPE_3);
-			}
-			else {
-				bindScope = true;
-
-				sb.append(_FINDER_COLUMN_C_O_A_B_S_SCOPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(oAuth2ApplicationScopeAliasesId);
-
-				if (bindApplicationName) {
-					queryPos.add(applicationName);
-				}
-
-				if (bindBundleSymbolicName) {
-					queryPos.add(bundleSymbolicName);
-				}
-
-				if (bindScope) {
-					queryPos.add(scope);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (oAuth2ScopeGrant == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_O_A_B_S_COMPANYID_2 =
@@ -1155,8 +1067,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 			oAuth2ScopeGrantModelImpl.getScope()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByC_O_A_B_S, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_O_A_B_S, args, oAuth2ScopeGrantModelImpl);
 	}
@@ -1998,19 +1908,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"bundleSymbolicName", "scope"
 			},
 			true);
-
-		_finderPathCountByC_O_A_B_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O_A_B_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"companyId", "oA2AScopeAliasesId", "applicationName",
-				"bundleSymbolicName", "scope"
-			},
-			false);
 
 		OAuth2ScopeGrantUtil.setPersistence(this);
 	}

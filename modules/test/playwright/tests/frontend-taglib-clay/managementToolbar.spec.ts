@@ -9,13 +9,11 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {claySamplePageTest} from './fixtures/claySamplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	claySamplePageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -25,35 +23,13 @@ export const test = mergeTests(
 
 test.beforeEach(
 	'Setup site and Clay Sample widget',
-	async ({apiHelpers, page, site}) => {
-		let layout: Layout;
-
-		await test.step('Create a content site and the frontend taglib clay widget', async () => {
-			const widgetDefinition = getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_clay_sample_web_portlet_ClaySamplePortlet',
-			});
-
-			layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([widgetDefinition]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
+	async ({apiHelpers, claySamplePage, site}) => {
+		await test.step('Create a content site and the clay sample widget', async () => {
+			await claySamplePage.setupClaySampleWidget({apiHelpers, site});
 		});
 
 		await test.step('Select Management Toolbars tab', async () => {
-			await page.goto(
-				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
-
-			const tabHeading = page
-				.getByRole('tablist')
-				.getByText('Management Toolbars');
-
-			await expect(tabHeading).toBeVisible();
-
-			await tabHeading.click();
+			await claySamplePage.selectTab('Management Toolbars');
 		});
 	}
 );
@@ -62,11 +38,10 @@ test.describe('Management Toolbar Default State', () => {
 	test(
 		'Assert the "New" button is displayed properly',
 		{tag: '@LPS-144540'},
-		async ({page}) => {
+		async ({claySamplePage, page}) => {
 			await test.step('Check that the new button text is "New"', async () => {
 				await expect(
-					page
-						.locator('#managementToolbarDefaultState')
+					claySamplePage.managementToolbarDefaultState
 						.getByRole('button')
 						.filter({hasText: 'New'})
 				).toBeVisible();
@@ -78,23 +53,21 @@ test.describe('Management Toolbar Default State', () => {
 
 			await test.step('Check the button is an icon', async () => {
 				await expect(
-					page
-						.locator('#managementToolbarDefaultState')
+					claySamplePage.managementToolbarDefaultState
 						.getByRole('button', {name: 'New'})
 						.locator('.lexicon-icon-plus')
 				).toBeVisible();
 			});
 
 			await test.step('Hover over the "New" button', async () => {
-				await page
-					.locator('#managementToolbarDefaultState')
+				await claySamplePage.managementToolbarDefaultState
 					.getByRole('button', {name: 'New'})
 					.hover();
 			});
 
 			await test.step('Check the tooltip text displays "New"', async () => {
 				await expect(
-					page.locator('.tooltip-inner').getByText('New')
+					claySamplePage.tooltip.getByText('New')
 				).toBeVisible();
 			});
 		}
@@ -103,14 +76,13 @@ test.describe('Management Toolbar Default State', () => {
 	test(
 		'Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode',
 		{tag: '@LPS-144536'},
-		async ({page}) => {
+		async ({claySamplePage, page}) => {
 			await test.step('Set the window size to phone size', async () => {
 				await page.setViewportSize({height: 720, width: 360});
 			});
 
 			await test.step('Hover over the "Filter" button', async () => {
-				await page
-					.locator('#managementToolbarDefaultState')
+				await claySamplePage.managementToolbarDefaultState
 					.getByRole('button', {name: 'Filter'})
 					.hover();
 			});
@@ -124,8 +96,7 @@ test.describe('Management Toolbar Default State', () => {
 			});
 
 			await test.step('Hover over the "Order" button', async () => {
-				await page
-					.locator('#managementToolbarDefaultState')
+				await claySamplePage.managementToolbarDefaultState
 					.getByRole('button', {name: 'Order'})
 					.hover();
 			});
@@ -143,18 +114,17 @@ test.describe('Management Toolbar Default State', () => {
 	test(
 		'Assert the view button is properly displayed',
 		{tag: '@LPS-144535'},
-		async ({page}) => {
+		async ({claySamplePage, page}) => {
 			await test.step('Check that the double caret icon is visible', async () => {
 				await expect(
-					page.locator(
-						'#managementToolbarDefaultState .lexicon-icon-caret-double-l'
+					claySamplePage.managementToolbarDefaultState.locator(
+						'.lexicon-icon-caret-double-l'
 					)
 				).toBeVisible();
 			});
 
 			await test.step('Hover over the view button', async () => {
-				await page
-					.locator('#managementToolbarDefaultState')
+				await claySamplePage.managementToolbarDefaultState
 					.getByLabel(/Select View/)
 					.hover();
 			});
@@ -167,13 +137,16 @@ test.describe('Management Toolbar Default State', () => {
 });
 
 test.describe('Management Toolbar With Results', () => {
-	test('Clear button has a cursor of type pointer', async ({page}) => {
+	test('Clear button has a cursor of type pointer', async ({
+		claySamplePage,
+	}) => {
 		let clearButton: Locator;
 
 		await test.step('Get the clear button', async () => {
-			clearButton = page
-				.locator('#managementToolbarWithResultsBar')
-				.getByLabel('Clear');
+			clearButton =
+				claySamplePage.managementToolbarWithResultsBar.getByLabel(
+					'Clear'
+				);
 
 			await expect(clearButton).toBeVisible();
 		});
@@ -192,12 +165,11 @@ test.describe('Management Toolbar Active State', () => {
 	test(
 		'Assert the items in the actions ellipsis are displayed',
 		{tag: '@LPS-144538'},
-		async ({page}) => {
+		async ({claySamplePage, page}) => {
 			let actionsButton: Locator;
 
 			await test.step('Check that the ellipsis actions button is visible', async () => {
-				actionsButton = page
-					.locator('#managementToolbarActiveState')
+				actionsButton = claySamplePage.managementToolbarActiveState
 					.getByRole('button')
 					.nth(3);
 
@@ -243,22 +215,22 @@ test.describe('Management Toolbar Active State', () => {
 	test(
 		'Assert the action buttons are displayed properly in responsive mode',
 		{tag: '@LPS-144538'},
-		async ({page}) => {
-			const managementToolbarActiveStateContainer = page.locator(
-				'#managementToolbarActiveState'
-			);
-
+		async ({claySamplePage, page}) => {
 			await test.step('Set the window size to tablet size', async () => {
 				await page.setViewportSize({height: 1024, width: 800});
 			});
 
 			await test.step('Check that the text is not visible', async () => {
 				await expect(
-					managementToolbarActiveStateContainer.getByText('Download')
+					claySamplePage.managementToolbarActiveState.getByText(
+						'Download'
+					)
 				).not.toBeVisible();
 
 				await expect(
-					managementToolbarActiveStateContainer.getByText('Delete')
+					claySamplePage.managementToolbarActiveState.getByText(
+						'Delete'
+					)
 				).not.toBeVisible();
 			});
 
@@ -269,7 +241,7 @@ test.describe('Management Toolbar Active State', () => {
 				// where one should be visible at a time.
 
 				const downloadIconsLocator =
-					managementToolbarActiveStateContainer.locator(
+					claySamplePage.managementToolbarActiveState.locator(
 						'.lexicon-icon-download'
 					);
 
@@ -286,7 +258,7 @@ test.describe('Management Toolbar Active State', () => {
 				expect(downloadIconVisibleCount).toEqual(1);
 
 				const trashIconsLocator =
-					managementToolbarActiveStateContainer.locator(
+					claySamplePage.managementToolbarActiveState.locator(
 						'.lexicon-icon-trash'
 					);
 
@@ -304,28 +276,26 @@ test.describe('Management Toolbar Active State', () => {
 			});
 
 			await test.step('Hover over the download button', async () => {
-				await page
-					.locator('#managementToolbarActiveState')
+				await claySamplePage.managementToolbarActiveState
 					.getByRole('button', {name: 'Download'})
 					.hover();
 			});
 
 			await test.step('Check the tooltip text is displayed', async () => {
 				await expect(
-					page.locator('.tooltip-inner').getByText('Download')
+					claySamplePage.tooltip.getByText('Download')
 				).toBeVisible();
 			});
 
 			await test.step('Hover over the delete button', async () => {
-				await page
-					.locator('#managementToolbarActiveState')
+				await claySamplePage.managementToolbarActiveState
 					.getByRole('link', {name: 'Delete'})
 					.hover();
 			});
 
 			await test.step('Check the tooltip text is displayed', async () => {
 				await expect(
-					page.locator('.tooltip-inner').getByText('Delete')
+					claySamplePage.tooltip.getByText('Delete')
 				).toBeVisible();
 			});
 		}
@@ -334,29 +304,28 @@ test.describe('Management Toolbar Active State', () => {
 	test(
 		'Assert the clear button will be displayed properly in responsive mode',
 		{tag: '@LPS-144539'},
-		async ({page}) => {
+		async ({claySamplePage, page}) => {
 			await test.step('Set the window size to phone size', async () => {
 				await page.setViewportSize({height: 720, width: 360});
 			});
 
 			await test.step('Check that the times circle icon is visible', async () => {
 				await expect(
-					page.locator(
-						'#managementToolbarActiveState .lexicon-icon-times-circle'
+					claySamplePage.managementToolbarActiveState.locator(
+						'.lexicon-icon-times-circle'
 					)
 				).toBeVisible();
 			});
 
 			await test.step('Hover over the clear button', async () => {
-				await page
-					.locator('#managementToolbarActiveState')
+				await claySamplePage.managementToolbarActiveState
 					.getByRole('button', {name: 'Clear'})
 					.hover();
 			});
 
 			await test.step('Check the tooltip text is displayed', async () => {
 				await expect(
-					page.locator('.tooltip-inner').getByText('Clear')
+					claySamplePage.tooltip.getByText('Clear')
 				).toBeVisible();
 			});
 		}
@@ -367,13 +336,9 @@ test.describe('Management Toolbar Using Display Context', () => {
 	test(
 		'Assert the order button can display the correct icons',
 		{tag: '@LPS-144536'},
-		async ({page}) => {
-			const managementToolbarUsingDisplayContextContainer = page.locator(
-				'#managementToolbarUsingDisplayContext'
-			);
-
+		async ({claySamplePage, page}) => {
 			await test.step('Open the order dropdown', async () => {
-				await managementToolbarUsingDisplayContextContainer
+				await claySamplePage.managementToolbarUsingDisplayContext
 					.getByRole('button', {name: 'Order'})
 					.click();
 			});
@@ -407,7 +372,7 @@ test.describe('Management Toolbar Using Display Context', () => {
 			});
 
 			await test.step('Open the order dropdown', async () => {
-				await managementToolbarUsingDisplayContextContainer
+				await claySamplePage.managementToolbarUsingDisplayContext
 					.getByRole('button', {name: 'Order'})
 					.click();
 			});

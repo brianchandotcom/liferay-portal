@@ -19,7 +19,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -138,12 +137,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 			serviceContext.getCompanyId());
 
 		if (company != null) {
-			try {
-				groupIds.add(company.getGroupId());
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+			groupIds.add(company.getGroupId());
 		}
 
 		long ddmStructureKey = GetterUtil.getLong(infoItemFormVariationKey);

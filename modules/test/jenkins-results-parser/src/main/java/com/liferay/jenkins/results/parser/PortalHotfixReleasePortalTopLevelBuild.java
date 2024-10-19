@@ -50,7 +50,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
 
 		if (PortalRelease.isQuarterlyRelease(portalVersion)) {
-			return _getQuarterlyReleaseBranch(portalVersion);
+			return _getQuarterlyReleaseBranchName(portalVersion);
 		}
 
 		String majorVersion = matcher.group("majorVersion");
@@ -371,7 +371,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		return sb.toString();
 	}
 
-	private String _getQuarterlyReleaseBranch(String portalVersion) {
+	private String _getQuarterlyReleaseBranchName(String portalVersion) {
 		Matcher quarterlyReleaseBranchMatcher =
 			_quarterlyReleaseBranchNamePattern.matcher(portalVersion);
 

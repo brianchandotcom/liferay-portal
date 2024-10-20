@@ -1,0 +1,39 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.OrdersDataSetFragmentRenderer"
+					},
+					"fragmentConfig": {
+						"displayStyle": "fluid",
+						"fdsName": "com_liferay_commerce_order_content_web_internal_fragment_renderer_OrdersDataSetFragmentRenderer-placedOrders"
+					},
+					"fragmentFields": [
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "commerce-classic-master"
+		},
+		"styleBook": {
+			"key": "commerce-classic",
+			"name": "Commerce Classic"
+		},
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

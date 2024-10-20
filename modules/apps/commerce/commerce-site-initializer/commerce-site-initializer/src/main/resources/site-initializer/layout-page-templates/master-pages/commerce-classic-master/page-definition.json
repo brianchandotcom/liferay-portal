@@ -6,7 +6,7 @@
 					"cssClasses": [
 						"commerce-main"
 					],
-					"customCSS": ":root  {\n--commerce-header-user-height: 35px;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-height, 0px));\n\toverflow-x: hidden;\n\tposition: relative;\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}",
+					"customCSS": ":root  {\n--commerce-header-user-height: 2.6rem;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-height, 0px));\n\toverflow-x: clip;\n\tposition: relative;\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}",
 					"indexed": true,
 					"layout": {
 					}
@@ -14,6 +14,7 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: sticky;\n  top: var(--control-menu-container-height);\n  z-index: 900;\n}",
 							"htmlProperties": {
 								"htmlTag": "Header"
 							},
@@ -129,6 +130,29 @@
 																					}
 																				},
 																				"fragmentLink": {
+																					"value": {
+																						"href": {
+																							"mapping": {
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.model.Layout",
+																									"fields": [
+																										{
+																											"fieldName": "friendlyURL",
+																											"fieldValue": "/catalog"
+																										},
+																										{
+																											"fieldName": "privatePage",
+																											"fieldValue": "false"
+																										},
+																										{
+																											"fieldName": "siteKey",
+																											"fieldValue": "[$GROUP_KEY$]"
+																										}
+																									]
+																								}
+																							}
+																						}
+																					}
 																				}
 																			}
 																		}
@@ -216,7 +240,7 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"customCSS": ".[$FRAGMENT_CLASS$] #commerce-components-group .cart-root .mini-cart.is-open .mini-cart-wrapper {\n\ttransform: translate3d(calc(100vw / 2 - 624px), 0, 0);\n}\n\n@media (min-width: 1920px) {\n\t.[$FRAGMENT_CLASS$] #commerce-components-group .mini-cart:not(.is-open) .mini-cart-wrapper {\n\t\ttransform: translate3d(50vw, 0, 0);\n\t}\n\n\t.rtl .[$FRAGMENT_CLASS$] #commerce-components-group .mini-cart:not(.is-open) .mini-cart-wrapper {\n\t\ttransform: translate3d(calc(-1 * 50vw), 0, 0);\n\t}\n}",
+																			"customCSS": ".[$FRAGMENT_CLASS$] {}\n\n@media (min-width: 1920px) {\n\t.[$FRAGMENT_CLASS$] #commerce-components-group .mini-cart:not(.is-open) .mini-cart-wrapper {\n\t\ttransform: translate3d(50vw, 0, 0);\n\t}\n\n\t.rtl .[$FRAGMENT_CLASS$] #commerce-components-group .mini-cart:not(.is-open) .mini-cart-wrapper {\n\t\ttransform: translate3d(calc(-1 * 50vw), 0, 0);\n\t}\n}",
 																			"fragment": {
 																				"key": "commerce-components-group",
 																				"siteKey": "[$GROUP_KEY$]"
@@ -291,8 +315,8 @@
 						"definition": {
 							"cssClasses": [
 								"commerce-main-body",
-								"flex-fill",
-								"pb-5"
+								"pb-5",
+								"flex-fill"
 							],
 							"htmlProperties": {
 								"htmlTag": "Main"

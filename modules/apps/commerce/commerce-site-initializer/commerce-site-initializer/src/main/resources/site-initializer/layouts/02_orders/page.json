@@ -1,0 +1,13 @@
+{
+	"friendlyURL": "/orders",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Orders"
+	},
+	"private": false,
+	"system": false,
+	"title_i18n": {
+		"en_US": "Pending Orders"
+	},
+	"type": "Content"
+}

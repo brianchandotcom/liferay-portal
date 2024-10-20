@@ -9,6 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
@@ -44,11 +47,13 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -70,6 +75,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -79,6 +85,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -648,6 +655,85 @@ public class LayoutStagedModelDataHandlerTest
 		Assert.assertNotNull(
 			_styleBookEntryLocalService.fetchStyleBookEntry(
 				importedLayout.getStyleBookEntryId()));
+	}
+
+	@Test
+	@TestInfo("LPS-139864")
+	public void testTypeCollectionLayout() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Layout layout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			RandomTestUtil.randomLocaleStringMap(), null,
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), LayoutConstants.TYPE_COLLECTION,
+			UnicodePropertiesBuilder.put(
+				LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
+			).put(
+				"collectionPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"collectionType", InfoListItemSelectorReturnType.class.getName()
+			).buildString(),
+			false, false, Collections.emptyMap(), 0,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, true, false,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Group stagingGroup = group.getStagingGroup();
+
+		AssetListEntry stagingGroupAssetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntryByUuidAndGroupId(
+				assetListEntry.getUuid(), stagingGroup.getGroupId());
+
+		Layout stagingGroupLayout =
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layout.getUuid(), stagingGroup.getGroupId(), false);
+
+		UnicodeProperties stagingGroupLayoutTypeSettingsUnicodeProperties =
+			stagingGroupLayout.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			stagingGroupAssetListEntry.getAssetListEntryId(),
+			GetterUtil.getLong(
+				stagingGroupLayoutTypeSettingsUnicodeProperties.getProperty(
+					"collectionPK")));
+		Assert.assertEquals(
+			stagingGroupLayoutTypeSettingsUnicodeProperties.getProperty(
+				"collectionType"),
+			InfoListItemSelectorReturnType.class.getName());
+
+		AssetListEntry liveGroupAssetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntryByUuidAndGroupId(
+				assetListEntry.getUuid(), group.getGroupId());
+
+		Layout liveGroupLayout =
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layout.getUuid(), group.getGroupId(), false);
+
+		UnicodeProperties liveGroupLayoutTypeSettingsUnicodeProperties =
+			liveGroupLayout.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			liveGroupAssetListEntry.getAssetListEntryId(),
+			GetterUtil.getLong(
+				liveGroupLayoutTypeSettingsUnicodeProperties.getProperty(
+					"collectionPK")));
+		Assert.assertEquals(
+			liveGroupLayoutTypeSettingsUnicodeProperties.getProperty(
+				"collectionType"),
+			InfoListItemSelectorReturnType.class.getName());
+
+		_groupLocalService.deleteGroup(group);
 	}
 
 	@Test
@@ -1582,6 +1668,9 @@ public class LayoutStagedModelDataHandlerTest
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
@@ -1614,6 +1703,9 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

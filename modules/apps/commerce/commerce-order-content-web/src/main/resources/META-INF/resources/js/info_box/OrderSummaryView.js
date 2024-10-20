@@ -83,9 +83,11 @@ const OrderSummaryView = ({elementId, isOpen, label, namespace, orderId}) => {
 	}, []);
 
 	useEffect(() => {
+		Liferay.on(commerceEvents.CART_UPDATED, onStatusChange);
 		Liferay.on(commerceEvents.ORDER_INFORMATION_ALTERED, onStatusChange);
 
 		return () => {
+			Liferay.detach(commerceEvents.CART_UPDATED, onStatusChange);
 			Liferay.detach(
 				commerceEvents.ORDER_INFORMATION_ALTERED,
 				onStatusChange

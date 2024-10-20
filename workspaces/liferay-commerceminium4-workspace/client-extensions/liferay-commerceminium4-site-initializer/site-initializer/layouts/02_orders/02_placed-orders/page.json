@@ -1,10 +1,10 @@
 {
 	"description": "",
-	"friendlyURL": "/product-detail",
-	"hidden": true,
-	"name": "product-detail",
+	"friendlyURL": "/placed-orders",
+	"hidden": false,
+	"name": "placed-orders",
 	"name_i18n": {
-		"en_US": "Product Detail"
+		"en_US": "Placed Orders"
 	},
 	"permissions": [
 		{
@@ -16,5 +16,5 @@
 	],
 	"private": false,
 	"system": false,
-	"type": "Content"
+	"type": "content"
 }

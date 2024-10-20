@@ -1,0 +1,35 @@
+[
+	{
+		"city": "Los Alamos",
+		"country": 840,
+		"externalReferenceCode": "840NM87544",
+		"latitude": 35.887737,
+		"longitude": -106.326283,
+		"name": "United States - Southwest",
+		"region": "NM",
+		"street1": "1450 47th St",
+		"zip": "87544"
+	},
+	{
+		"city": "Middleburg",
+		"country": 840,
+		"externalReferenceCode": "840VA50309",
+		"latitude": 40.741895,
+		"longitude": -73.989308,
+		"name": "United States - Northeast",
+		"region": "VA",
+		"street1": "36205 Snake Hill Rd",
+		"zip": "50309"
+	},
+	{
+		"city": "Borgorose",
+		"country": 380,
+		"externalReferenceCode": "380RI2021",
+		"latitude": 42.214601,
+		"longitude": 12.796434,
+		"name": "Italy",
+		"region": "RI",
+		"street1": "Via delle Coste 24",
+		"zip": "2021"
+	}
+]

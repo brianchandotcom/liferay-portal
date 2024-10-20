@@ -1,10 +1,9 @@
 {
-	"description": "",
-	"friendlyURL": "/product-detail",
-	"hidden": true,
-	"name": "product-detail",
+	"friendlyURL": "/pending-orders",
+	"hidden": false,
+	"name": "pending-orders",
 	"name_i18n": {
-		"en_US": "Product Detail"
+		"en_US": "Pending Orders"
 	},
 	"permissions": [
 		{

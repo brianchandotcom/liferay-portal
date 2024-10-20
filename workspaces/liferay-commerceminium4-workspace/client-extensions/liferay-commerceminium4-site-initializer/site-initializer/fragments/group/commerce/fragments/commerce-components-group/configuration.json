@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Site Name",
+					"label": "Show Site Name",
+					"name": "showSiteName",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

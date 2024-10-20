@@ -1,0 +1,334 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": [
+						"commerce-side-navigation"
+					],
+					"customCSS": ".commerce-side-navigation {\n    --commerce-header-user-height: 4rem;\n  --commerce-side-bar: 215px;\n}\n\n.[$FRAGMENT_CLASS$] {\n  display: flex;\n}",
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"commerce-aside"
+							],
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n\tbackground-color: var(--dark);\n\tborder-bottom: 1px solid var(--gray-300);\ncolor: var(--gray-400);\nheight: calc(100vh - var(--control-menu-container-height, 0));\nwidth: var(--commerce-side-bar);\n}",
+							"htmlProperties": {
+								"htmlTag": "Aside"
+							},
+							"indexed": true,
+							"layout": {
+								"contentDisplay": "FlexColumn",
+								"justify": "SpaceBetween"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"fontWeight": "400",
+										"width": "100%"
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"align-items-center",
+												"d-flex",
+												"justify-content-center"
+											],
+											"customCSS": ".[$FRAGMENT_CLASS$] {\nheight: var(--commerce-header-user-height, 4rem);\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"value_i18n": {
+																	"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Commerce/site_logo.svg$]"
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "primary-navigation",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"displayStyle": "horizontal",
+												"hoveredItemColor": "",
+												"selectedItemColor": "",
+												"source": "",
+												"sublevels": "-1"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginTop": "5"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"align-items-center",
+												"commerce-user-personal-bar",
+												"d-flex",
+												"px-3"
+											],
+											"customCSS": ".[$FRAGMENT_CLASS$] {\nheight: var(--commerce-header-user-height, 4rem);\n}",
+											"fragment": {
+												"key": "personal-bar",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"commerce-main"
+							],
+							"customCSS": ":root  {\n--commerce-header-user-height: 34px;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-height, 0px));\n\toverflow-x: hidden;\n\tposition: relative;\nwidth: calc(100vw - var(--commerce-side-bar, 0));\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}\n\n.commerce-main .lfr-layout-structure-item-row {\noverflow: unset;\n}",
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground-color: var(--white);\nborder-bottom: 1px solid var(--gray-300);\nheight: var(--commerce-header-user-height, 4rem);\n}",
+									"htmlProperties": {
+										"htmlTag": "Header"
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"gutters": false,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {
+													}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {
+													}
+												}
+											],
+											"verticalAlignment": "middle"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 9
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"cssClasses": [
+																"commerce-header-search"
+															],
+															"customCSS": ".commerce-header-search .portlet {\nmargin-bottom: 0 !important;\n}",
+															"widgetInstance": {
+																"widgetConfig": {
+																	"searchScope": "everything"
+																},
+																"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 3
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "commerce-components-group",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"cssClasses": [
+										"commerce-main-body",
+										"flex-fill",
+										"pb-5"
+									],
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n\tmax-height: calc(100vh - var(--commerce-header-user-height) - var(--control-menu-height, 0));\n  overflow-y: auto;\n}",
+									"htmlProperties": {
+										"htmlTag": "Main"
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentSettings": {
+												"unallowedFragments": [
+												]
+											}
+										},
+										"type": "DropZone"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"styleBook": {
+			"key": "minium",
+			"name": "Minium 4"
+		},
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

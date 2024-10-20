@@ -1,0 +1,43 @@
+[#assign
+	entries = sourceObject.navItems
+	branchNavItems = sourceObject.branchNavItems
+/]
+
+[#if !entries?has_content]
+	<div class="alert alert-info">
+		[@liferay.language key="there-are-no-menu-items-to-display" /]
+	</div>
+[#else]
+	<script id="minium-primary-navigation-data" type="application/ld+json">
+		[@buildProps
+			navItems=entries
+		/]
+	</script>
+[/#if]
+
+[#macro buildProps
+	navItems
+]
+	[
+		[#list navItems as navItem]
+			{
+				[#if navItem.isChildSelected() || navItem.isSelected()]
+					"active": true,
+				[#else]
+					"active": false,
+				[/#if]
+				"friendlyURL": "${navItem.getLayout().getFriendlyURL(locale)}",
+				[#if !navItem.getChildren()?has_content]
+					"href": "${navItem.getURL()}",
+				[#else]
+					"items": [@buildProps navItems=navItem.getChildren() /],
+				[/#if]
+				"id": "${navItem.getLayoutId()}",
+				"label": "${navItem.getName()}"
+			}
+			[#if navItem?has_next]
+			,
+			[/#if]
+		[/#list]
+	]
+[/#macro]

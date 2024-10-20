@@ -1,10 +1,10 @@
 {
 	"description": "",
-	"friendlyURL": "/product-detail",
+	"friendlyURL": "/compare",
 	"hidden": true,
-	"name": "product-detail",
+	"name": "compare",
 	"name_i18n": {
-		"en_US": "Product Detail"
+		"en_US": "Compare"
 	},
 	"permissions": [
 		{

@@ -1,0 +1,16 @@
+[
+	{
+		"facetable": true,
+		"fieldType": "select",
+		"key": "package-quantity",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			"6",
+			"12",
+			"24",
+			"48",
+			"112"
+		]
+	}
+]

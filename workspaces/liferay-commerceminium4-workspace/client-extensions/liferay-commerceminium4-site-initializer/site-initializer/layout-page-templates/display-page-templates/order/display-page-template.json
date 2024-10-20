@@ -1,0 +1,7 @@
+{
+	"contentType": {
+		"className": "com.liferay.commerce.model.CommerceOrder"
+	},
+	"defaultTemplate": true,
+	"name": "Order"
+}

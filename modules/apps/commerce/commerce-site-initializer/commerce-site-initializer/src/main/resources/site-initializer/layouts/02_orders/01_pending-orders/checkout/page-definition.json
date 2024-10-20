@@ -1,0 +1,135 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingTop": 4,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "whiteColor",
+								"borderColor": "gray300Color",
+								"borderRadius": "0.25rem",
+								"borderWidth": "1px",
+								"marginBottom": "4"
+							},
+							"indexed": true,
+							"layout": {
+								"borderColor": "gray300Color",
+								"marginBottom": 2
+							},
+							"name": "Panel"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: 1px solid var(--gray-300);\n}",
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h3"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Checkout"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"backgroundColor": "",
+										"paddingBottom": "3",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "3"
+									},
+									"indexed": true,
+									"name": "Panel Heading"
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": ""
+									},
+									"indexed": true,
+									"layout": {
+									},
+									"name": "Panel Body"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"paddingBottom": "3",
+												"paddingLeft": "5",
+												"paddingRight": "5",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"paddingBottom": 1,
+												"paddingLeft": 4,
+												"paddingRight": 4,
+												"paddingTop": 2
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "commerce-classic-master"
+		},
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

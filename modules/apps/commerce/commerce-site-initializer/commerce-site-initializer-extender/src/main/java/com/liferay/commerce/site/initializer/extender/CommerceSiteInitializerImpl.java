@@ -439,8 +439,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 					CommerceInventoryWarehouse.
 						COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
 				bundleWiring.getClassLoader(),
-				StringUtil.replace(
-					resourcePath, ".json", "/"),
+				StringUtil.replace(resourcePath, ".json", "/"),
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 
 		if (ListUtil.isEmpty(cpDefinitions)) {
@@ -692,8 +691,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				resourcePath.endsWith(".products.specifications.json") ||
 				resourcePath.endsWith(
 					".products.subscriptions.properties.json") ||
-				resourcePath.endsWith(
-					"commerce-option-categories.json") ||
+				resourcePath.endsWith("commerce-option-categories.json") ||
 				!resourcePath.endsWith(".json")) {
 
 				continue;

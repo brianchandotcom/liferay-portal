@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "8029b945-83b9-0174-d0ab-a02cc31f7935",
 		"pageElements": [
 			{
 				"definition": {
@@ -16,6 +17,7 @@
 						"widthType": "Fixed"
 					}
 				},
+				"id": "e51660dc-16d8-050a-20ce-317a5302b72d",
 				"pageElements": [
 					{
 						"definition": {
@@ -52,6 +54,7 @@
 							],
 							"verticalAlignment": "top"
 						},
+						"id": "02007d70-1688-a747-0de1-860c9c421337",
 						"pageElements": [
 							{
 								"definition": {
@@ -75,6 +78,7 @@
 									],
 									"size": 3
 								},
+								"id": "b1aeca93-ce70-328a-d85c-300b70dbe796",
 								"pageElements": [
 									{
 										"definition": {
@@ -108,6 +112,7 @@
 											],
 											"verticalAlignment": "top"
 										},
+										"id": "d15c3273-9bd0-e66d-5fd8-919ce22f21c8",
 										"pageElements": [
 											{
 												"definition": {
@@ -131,6 +136,7 @@
 													],
 													"size": 12
 												},
+												"id": "a4be0735-2afd-90e1-d7ca-18c6a190f342",
 												"pageElements": [
 													{
 														"definition": {
@@ -156,6 +162,7 @@
 																"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 															}
 														},
+														"id": "8179f689-e327-36f0-045e-fcc6b830526a",
 														"type": "Widget"
 													}
 												],
@@ -183,6 +190,7 @@
 													],
 													"size": 12
 												},
+												"id": "d73ad8b5-7f63-1d9c-a649-48fec35b587b",
 												"pageElements": [
 													{
 														"definition": {
@@ -192,6 +200,7 @@
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
 														},
+														"id": "53befb22-2b07-6a36-6da3-7f36dd29165d",
 														"type": "Widget"
 													}
 												],
@@ -219,6 +228,7 @@
 													],
 													"size": 12
 												},
+												"id": "5803d927-07ff-1ace-80cb-3d6b8ec5025e",
 												"pageElements": [
 													{
 														"definition": {
@@ -233,6 +243,7 @@
 																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
 															}
 														},
+														"id": "39a05fcb-ccb5-2866-ed4b-a22d027fe26b",
 														"type": "Widget"
 													}
 												],
@@ -260,6 +271,7 @@
 													],
 													"size": 12
 												},
+												"id": "392e818a-c8f3-936e-b1ce-8b9b82de330d",
 												"pageElements": [
 													{
 														"definition": {
@@ -269,6 +281,7 @@
 																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
 															}
 														},
+														"id": "a4d35bc4-e8c4-c86e-a9a7-e3d527c4a1d2",
 														"type": "Widget"
 													}
 												],
@@ -296,6 +309,7 @@
 													],
 													"size": 12
 												},
+												"id": "df5757d1-9775-09b9-562c-d911b3ae7aa2",
 												"pageElements": [
 													{
 														"definition": {
@@ -305,6 +319,7 @@
 																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet"
 															}
 														},
+														"id": "8b7ead18-38b1-3c49-5166-1a3951544991",
 														"type": "Widget"
 													}
 												],
@@ -332,6 +347,7 @@
 													],
 													"size": 12
 												},
+												"id": "c32c4c01-f911-0071-cd07-c7a01d9241bc",
 												"pageElements": [
 													{
 														"definition": {
@@ -342,6 +358,7 @@
 																"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 															}
 														},
+														"id": "658341dc-cb66-692d-d254-886ac36cf7ae",
 														"type": "Widget"
 													}
 												],
@@ -375,6 +392,7 @@
 									],
 									"size": 9
 								},
+								"id": "a9d9d8c3-8b7c-2c0c-f768-24ce6a34caed",
 								"pageElements": [
 									{
 										"definition": {
@@ -382,6 +400,7 @@
 											"layout": {
 											}
 										},
+										"id": "3bec6abd-10b6-4427-bbf2-e66e60755d27",
 										"pageElements": [
 											{
 												"definition": {
@@ -410,6 +429,7 @@
 													],
 													"verticalAlignment": "middle"
 												},
+												"id": "6c5aead7-ede7-a719-46f3-42f20ecfc51a",
 												"pageElements": [
 													{
 														"definition": {
@@ -433,6 +453,7 @@
 															],
 															"size": 12
 														},
+														"id": "dc86828c-7ff2-a32b-a857-3a73f7d78c6c",
 														"pageElements": [
 															{
 																"definition": {
@@ -443,6 +464,7 @@
 																		"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
 																	}
 																},
+																"id": "9a847994-6a3e-8359-88cb-485cc5509208",
 																"type": "Widget"
 															},
 															{
@@ -467,6 +489,7 @@
 																		"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 																	}
 																},
+																"id": "8cc880f8-4d10-d844-220d-5e4eabf74c60",
 																"type": "Widget"
 															}
 														],
@@ -494,6 +517,7 @@
 															],
 															"size": 12
 														},
+														"id": "dfa22546-bbc3-c6cc-7c67-094b53952d32",
 														"type": "Column"
 													},
 													{
@@ -518,6 +542,7 @@
 															],
 															"size": 12
 														},
+														"id": "fba5b9a0-5959-1147-ce88-2ba4a552f142",
 														"type": "Column"
 													}
 												],

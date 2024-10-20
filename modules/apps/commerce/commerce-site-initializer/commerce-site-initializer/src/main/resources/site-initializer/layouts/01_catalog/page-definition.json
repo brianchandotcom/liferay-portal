@@ -4,25 +4,128 @@
 			{
 				"definition": {
 					"cssClasses": [
-						"search-page-container"
+						"catalog-container"
 					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.[$FRAGMENT_CLASS$] > .lfr-layout-structure-item-row {\noverflow: clip;\n}",
 					"fragmentStyle": {
-						"marginTop": "5"
+						"marginTop": "4"
 					},
 					"indexed": true,
 					"layout": {
-						"marginTop": 4,
+						"marginTop": 2,
 						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": [
-								"search-sidebar"
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.[$FRAGMENT_CLASS$] > .row > .col {\nposition: sticky;\ntop: 17rem;\n}",
+							"verticalAlignment": "middle"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"catalog-sidebar"
+							],
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.[$FRAGMENT_CLASS$] .panel-body .panel-body {\npadding: 0 !important;\n}",
 							"fragmentStyle": {
 								"minHeight": "0px",
 								"minWidth": "0px"
@@ -78,7 +181,6 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.[$FRAGMENT_CLASS$] .panel-body .panel-body {\npadding: 0 !important;\n}",
 											"fragmentStyle": {
 												"backgroundColor": "whiteColor",
 												"borderRadius": "borderRadiusSm"
@@ -143,7 +245,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																	"allowEmptySearches": "true",
-																	"destination": "/search",
+																	"destination": "/catalog",
 																	"displayStyle": "default",
 																	"federatedSearchKey": "",
 																	"invisible": "false",
@@ -385,143 +487,35 @@
 										"pageElements": [
 											{
 												"definition": {
-													"gutters": true,
-													"indexed": true,
-													"modulesPerRow": 1,
-													"numberOfColumns": 3,
-													"reverseOrder": false,
-													"rowViewports": [
-														{
-															"id": "landscapeMobile",
-															"rowViewportDefinition": {
-																"modulesPerRow": 1
-															}
+													"customCSS": ".[$FRAGMENT_CLASS$] {\npadding: 0 0.05rem;\n}",
+													"widgetInstance": {
+														"widgetConfig": {
+															"cpContentListRendererKey": "list-default",
+															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"paginate": "true",
+															"paginationDelta": "15",
+															"selectionStyle": "custom",
+															"simple--cpTypeListEntryRendererKey": "list-entry-default",
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 														},
-														{
-															"id": "portraitMobile",
-															"rowViewportDefinition": {
-															}
-														},
-														{
-															"id": "tablet",
-															"rowViewportDefinition": {
-															}
-														}
-													],
-													"verticalAlignment": "middle"
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"columnViewports": [
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "tablet"
-																}
-															],
-															"size": 12
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: absolute;\nright: 0.75rem;\nz-index: 1;\n}",
-																	"widgetInstance": {
-																		"widgetConfig": {
-																		},
-																		"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
-																	}
-																},
-																"type": "Widget"
-															},
-															{
-																"definition": {
-																	"customCSS": ".[$FRAGMENT_CLASS$] {\nmargin-top: -1.25rem;\n}",
-																	"widgetInstance": {
-																		"widgetConfig": {
-																			"displayInDocumentForm": "false",
-																			"displayStyle": "ddmTemplate_SEARCH-RESULTS-LIST-FTL",
-																			"displayStyleGroupId": "20120",
-																			"displayStyleGroupKey": "19060943739524",
-																			"federatedSearchKey": "",
-																			"fieldsToDisplay": "",
-																			"highlightEnabled": "true",
-																			"paginationDelta": "20",
-																			"paginationDeltaParameterName": "delta",
-																			"paginationStartParameterName": "start",
-																			"showEmptyResultMessage": "true",
-																			"showPagination": "true",
-																			"viewInContext": "true"
-																		},
-																		"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
-																	}
-																},
-																"type": "Widget"
-															}
-														],
-														"type": "Column"
-													},
-													{
-														"definition": {
-															"columnViewports": [
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "tablet"
-																}
-															],
-															"size": 12
-														},
-														"type": "Column"
-													},
-													{
-														"definition": {
-															"columnViewports": [
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "tablet"
-																}
-															],
-															"size": 12
-														},
-														"type": "Column"
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
 													}
-												],
-												"type": "Row"
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"simple--cpTypeListEntryRendererKey": "list-entry-default",
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+														},
+														"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
+													}
+												},
+												"type": "Widget"
 											}
 										],
 										"type": "Section"

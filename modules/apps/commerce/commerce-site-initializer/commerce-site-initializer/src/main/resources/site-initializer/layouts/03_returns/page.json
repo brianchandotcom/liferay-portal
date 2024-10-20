@@ -1,0 +1,12 @@
+{
+	"description": "",
+	"friendlyURL": "/returns",
+	"hidden": false,
+	"name": "returns",
+	"name_i18n": {
+		"en_US": "Returns"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

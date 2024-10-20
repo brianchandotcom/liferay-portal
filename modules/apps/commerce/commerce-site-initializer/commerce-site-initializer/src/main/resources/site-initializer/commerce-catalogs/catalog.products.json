@@ -11,13 +11,13 @@
 		"externalReferenceCode": "MIN93015",
 		"height": 2,
 		"images": [
-			"Minium_ProductImage_24.png"
+			"Sample_ProductImage_24.png"
 		],
 		"length": 7,
 		"manufacturerPartNumber": "BB98318",
 		"minStockQuantity": 5,
 		"name": "ABS Sensor",
-		"price": 50.0,
+		"price": 50,
 		"promoPrice": 0,
 		"sku": "MIN93015",
 		"specificationOptions": [
@@ -61,7 +61,7 @@
 		"externalReferenceCode": "MIN93016",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_103.png"
+			"Sample_ProductImage_103.png"
 		],
 		"length": 4,
 		"minStockQuantity": 5,
@@ -86,8 +86,8 @@
 				],
 				"externalReferenceCode": "MIN93016A",
 				"manufacturerPartNumber": "BB98319",
-				"price": 80.0,
-				"promoPrice": 72.0,
+				"price": 80,
+				"promoPrice": 72,
 				"sku": "MIN93016A",
 				"warehouse1": 100,
 				"warehouse2": 40,
@@ -102,8 +102,8 @@
 				],
 				"externalReferenceCode": "MIN93016B",
 				"manufacturerPartNumber": "BB98320",
-				"price": 80.0,
-				"promoPrice": 72.0,
+				"price": 80,
+				"promoPrice": 72,
 				"sku": "MIN93016B",
 				"warehouse1": 100,
 				"warehouse2": 20,
@@ -118,8 +118,8 @@
 				],
 				"externalReferenceCode": "MIN93016C",
 				"manufacturerPartNumber": "BB98321",
-				"price": 80.0,
-				"promoPrice": 72.0,
+				"price": 80,
+				"promoPrice": 72,
 				"sku": "MIN93016C",
 				"warehouse1": 100,
 				"warehouse2": 100,
@@ -163,14 +163,14 @@
 		"externalReferenceCode": "MIN93017",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_103.png"
+			"Sample_ProductImage_103.png"
 		],
 		"length": 4,
 		"manufacturerPartNumber": "BB98322",
 		"minStockQuantity": 5,
 		"name": "Premium Brake Fluid",
-		"price": 100.0,
-		"promoPrice": 90.0,
+		"price": 100,
+		"promoPrice": 90,
 		"sku": "MIN93017",
 		"specificationOptions": [
 			{
@@ -202,7 +202,7 @@
 	},
 	{
 		"attachments": [
-			"Minium_InstallationGuide.pdf"
+			"Sample_InstallationGuide.pdf"
 		],
 		"availabilityEstimate": "3-5 days",
 		"backOrders": false,
@@ -214,11 +214,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN93027",
 		"height": 8.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 6.2,
 		"manufacturerPartNumber": "BB98334",
 		"minStockQuantity": 5,
 		"name": "Wear Sensors",
-		"price": 60.0,
+		"price": 60,
 		"promoPrice": 0,
 		"sku": "MIN93027",
 		"specificationOptions": [
@@ -248,7 +251,7 @@
 	},
 	{
 		"attachments": [
-			"Minium_InstallationGuide.pdf"
+			"Sample_InstallationGuide.pdf"
 		],
 		"availabilityEstimate": "3-5 days",
 		"backOrders": true,
@@ -261,13 +264,13 @@
 		"externalReferenceCode": "MIN93018",
 		"height": 8.7,
 		"images": [
-			"Minium_ProductImage_83.png"
+			"Sample_ProductImage_83.png"
 		],
 		"length": 6.2,
 		"manufacturerPartNumber": "BB98323",
 		"minStockQuantity": 5,
 		"name": "Brake Pads",
-		"price": 21.0,
+		"price": 21,
 		"promoPrice": 18.9,
 		"relatedProducts": [
 			"Wear Sensors"
@@ -307,7 +310,7 @@
 	},
 	{
 		"attachments": [
-			"Minium_InstallationGuide.pdf"
+			"Sample_InstallationGuide.pdf"
 		],
 		"availabilityEstimate": "3-5 days",
 		"backOrders": true,
@@ -320,13 +323,13 @@
 		"externalReferenceCode": "MIN93019",
 		"height": 8.7,
 		"images": [
-			"Minium_ProductImage_83.png"
+			"Sample_ProductImage_83.png"
 		],
 		"length": 6.2,
 		"manufacturerPartNumber": "BB98324",
 		"minStockQuantity": 5,
 		"name": "Premium Brake Pads",
-		"price": 29.0,
+		"price": 29,
 		"promoPrice": 26.1,
 		"relatedProducts": [
 			"Wear Sensors"
@@ -376,13 +379,13 @@
 		"externalReferenceCode": "MIN93020",
 		"height": 1.7,
 		"images": [
-			"Minium_ProductImage_30.png"
+			"Sample_ProductImage_30.png"
 		],
 		"length": 10.2,
 		"manufacturerPartNumber": "BB98325",
 		"minStockQuantity": 5,
 		"name": "Brake Rotors",
-		"price": 40.0,
+		"price": 40,
 		"promoPrice": 0,
 		"sku": "MIN93020",
 		"specificationOptions": [
@@ -428,11 +431,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN93021",
 		"height": 5.3,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 9.4,
 		"manufacturerPartNumber": "BB98326",
 		"minStockQuantity": 5,
 		"name": "Calipers",
-		"price": 90.0,
+		"price": 90,
 		"promoPrice": 0,
 		"sku": "MIN93021",
 		"specificationOptions": [
@@ -475,6 +481,9 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN93022",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"minStockQuantity": 5,
 		"name": "Hoses",
@@ -498,7 +507,7 @@
 				],
 				"externalReferenceCode": "MIN93022A",
 				"manufacturerPartNumber": "BB98327",
-				"price": 120.0,
+				"price": 120,
 				"promoPrice": 0,
 				"sku": "MIN93022A",
 				"warehouse1": 40,
@@ -514,7 +523,7 @@
 				],
 				"externalReferenceCode": "MIN93022B",
 				"manufacturerPartNumber": "BB98328",
-				"price": 120.0,
+				"price": 120,
 				"promoPrice": 0,
 				"sku": "MIN93022B",
 				"warehouse1": 40,
@@ -530,7 +539,7 @@
 				],
 				"externalReferenceCode": "MIN93022C",
 				"manufacturerPartNumber": "BB98329",
-				"price": 120.0,
+				"price": 120,
 				"promoPrice": 0,
 				"sku": "MIN93022C",
 				"warehouse1": 40,
@@ -576,13 +585,13 @@
 		"externalReferenceCode": "MIN93023",
 		"height": 18,
 		"images": [
-			"Minium_ProductImage_42.png"
+			"Sample_ProductImage_42.png"
 		],
 		"length": 12,
 		"manufacturerPartNumber": "BB98330",
 		"minStockQuantity": 5,
 		"name": "Timing Belt",
-		"price": 600.0,
+		"price": 600,
 		"promoPrice": 0,
 		"sku": "MIN93023",
 		"specificationOptions": [
@@ -616,7 +625,7 @@
 	},
 	{
 		"attachments": [
-			"Minium_InstallationGuide.pdf"
+			"Sample_InstallationGuide.pdf"
 		],
 		"availabilityEstimate": "3-5 days",
 		"backOrders": false,
@@ -629,14 +638,14 @@
 		"externalReferenceCode": "MIN93024",
 		"height": 3.8,
 		"images": [
-			"Minium_ProductImage_77.png",
-			"Minium_ProductImage_105.png"
+			"Sample_ProductImage_77.png",
+			"Sample_ProductImage_105.png"
 		],
 		"length": 2.5,
 		"manufacturerPartNumber": "BB98331",
 		"minStockQuantity": 5,
 		"name": "Master Cylinder",
-		"price": 78.0,
+		"price": 78,
 		"promoPrice": 0,
 		"relatedProducts": [
 			"Wear Sensors"
@@ -673,7 +682,7 @@
 	},
 	{
 		"attachments": [
-			"Minium_InstallationGuide.pdf"
+			"Sample_InstallationGuide.pdf"
 		],
 		"availabilityEstimate": "3-5 days",
 		"backOrders": false,
@@ -686,14 +695,14 @@
 		"externalReferenceCode": "MIN93025",
 		"height": 3.8,
 		"images": [
-			"Minium_ProductImage_77.png",
-			"Minium_ProductImage_105.png"
+			"Sample_ProductImage_77.png",
+			"Sample_ProductImage_105.png"
 		],
 		"length": 2.5,
 		"manufacturerPartNumber": "BB98332",
 		"minStockQuantity": 5,
 		"name": "Master Cylinder",
-		"price": 34.0,
+		"price": 34,
 		"promoPrice": 0,
 		"relatedProducts": [
 			"Wear Sensors"
@@ -730,7 +739,7 @@
 	},
 	{
 		"attachments": [
-			"Minium_InstallationGuide.pdf"
+			"Sample_InstallationGuide.pdf"
 		],
 		"availabilityEstimate": "3-5 days",
 		"backOrders": false,
@@ -743,14 +752,14 @@
 		"externalReferenceCode": "MIN93026",
 		"height": 3.8,
 		"images": [
-			"Minium_ProductImage_77.png",
-			"Minium_ProductImage_105.png"
+			"Sample_ProductImage_77.png",
+			"Sample_ProductImage_105.png"
 		],
 		"length": 2.5,
 		"manufacturerPartNumber": "BB98333",
 		"minStockQuantity": 5,
 		"name": "Master Cylinder",
-		"price": 39.0,
+		"price": 39,
 		"promoPrice": 0,
 		"relatedProducts": [
 			"Wear Sensors"
@@ -796,11 +805,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00673",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "EX938051",
 		"minStockQuantity": 5,
 		"name": "Bearings",
-		"price": 70.0,
+		"price": 70,
 		"promoPrice": 0,
 		"sku": "MIN00673",
 		"specificationOptions": [
@@ -843,11 +855,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00674",
 		"height": 5.3,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 9.4,
 		"manufacturerPartNumber": "EX938052",
 		"minStockQuantity": 5,
 		"name": "Cams",
-		"price": 695.0,
+		"price": 695,
 		"promoPrice": 0,
 		"sku": "MIN00674",
 		"specificationOptions": [
@@ -890,11 +905,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00675",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "EX938053",
 		"minStockQuantity": 5,
 		"name": "Engine Mount",
-		"price": 120.0,
+		"price": 120,
 		"promoPrice": 0,
 		"sku": "MIN00675",
 		"specificationOptions": [
@@ -938,13 +956,13 @@
 		"externalReferenceCode": "MIN00676",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_46.png"
+			"Sample_ProductImage_46.png"
 		],
 		"length": 4,
 		"manufacturerPartNumber": "EX938054",
 		"minStockQuantity": 5,
 		"name": "Oil Filter",
-		"price": 450.0,
+		"price": 450,
 		"promoPrice": 0,
 		"sku": "MIN00676",
 		"specificationOptions": [
@@ -984,13 +1002,13 @@
 		"externalReferenceCode": "MIN00677",
 		"height": 2,
 		"images": [
-			"Minium_ProductImage_33.png"
+			"Sample_ProductImage_33.png"
 		],
 		"length": 7,
 		"manufacturerPartNumber": "EX938055",
 		"minStockQuantity": 5,
 		"name": "Oil Pump",
-		"price": 79.0,
+		"price": 79,
 		"promoPrice": 0,
 		"sku": "MIN00677",
 		"specificationOptions": [
@@ -1033,11 +1051,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00678",
 		"height": 2.5,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 4,
 		"manufacturerPartNumber": "EX938056",
 		"minStockQuantity": 5,
 		"name": "Piston",
-		"price": 14.0,
+		"price": 14,
 		"promoPrice": 0,
 		"sku": "MIN00678",
 		"specificationOptions": [
@@ -1080,11 +1101,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00679",
 		"height": 8.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 6.2,
 		"manufacturerPartNumber": "EX938057",
 		"minStockQuantity": 5,
 		"name": "Pulley Kit",
-		"price": 201.0,
+		"price": 201,
 		"promoPrice": 0,
 		"sku": "MIN00679",
 		"specificationOptions": [
@@ -1127,11 +1151,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00680",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "EX938058",
 		"minStockQuantity": 5,
 		"name": "Seal",
-		"price": 30.0,
+		"price": 30,
 		"promoPrice": 0,
 		"sku": "MIN00680",
 		"specificationOptions": [
@@ -1175,13 +1202,13 @@
 		"externalReferenceCode": "MIN00681",
 		"height": 5.3,
 		"images": [
-			"Minium_ProductImage_94.png"
+			"Sample_ProductImage_94.png"
 		],
 		"length": 9.4,
 		"manufacturerPartNumber": "EX938059",
 		"minStockQuantity": 5,
 		"name": "Timing Chain Tensioner",
-		"price": 30.0,
+		"price": 30,
 		"promoPrice": 0,
 		"sku": "MIN00681",
 		"specificationOptions": [
@@ -1224,11 +1251,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00682",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "EX938060",
 		"minStockQuantity": 5,
 		"name": "Timing Chain",
-		"price": 23.0,
+		"price": 23,
 		"promoPrice": 0,
 		"sku": "MIN00682",
 		"specificationOptions": [
@@ -1271,11 +1301,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN00683",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "EX938061",
 		"minStockQuantity": 5,
 		"name": "Valve Cover Grommets",
-		"price": 6.0,
+		"price": 6,
 		"promoPrice": 0,
 		"sku": "MIN00683",
 		"specificationOptions": [
@@ -1318,11 +1351,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN77822",
 		"height": 5.3,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 9.4,
 		"manufacturerPartNumber": "ES98205",
 		"minStockQuantity": 5,
 		"name": "Catalytic Converters",
-		"price": 106.0,
+		"price": 106,
 		"promoPrice": 0,
 		"sku": "MIN77822",
 		"specificationOptions": [
@@ -1365,11 +1401,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN77823",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "ES98206",
 		"minStockQuantity": 5,
 		"name": "Exhaust Clamps",
-		"price": 9.0,
+		"price": 9,
 		"promoPrice": 0,
 		"sku": "MIN77823",
 		"specificationOptions": [
@@ -1412,11 +1451,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN77824",
 		"height": 2.5,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 4,
 		"manufacturerPartNumber": "ES98207",
 		"minStockQuantity": 5,
 		"name": "Muffler/Resonators",
-		"price": 32.0,
+		"price": 32,
 		"promoPrice": 0,
 		"sku": "MIN77824",
 		"specificationOptions": [
@@ -1459,11 +1501,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN77825",
 		"height": 2,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 7,
 		"manufacturerPartNumber": "ES98208",
 		"minStockQuantity": 5,
 		"name": "Lift Support",
-		"price": 20.0,
+		"price": 20,
 		"promoPrice": 0,
 		"sku": "MIN77825",
 		"specificationOptions": [
@@ -1510,15 +1555,15 @@
 		],
 		"height": 14.4,
 		"images": [
-			"Minium_ProductImage_106.png",
-			"Minium_ProductImage_107.png",
-			"Minium_ProductImage_108.png"
+			"Sample_ProductImage_106.png",
+			"Sample_ProductImage_107.png",
+			"Sample_ProductImage_108.png"
 		],
 		"length": 15.3,
 		"manufacturerPartNumber": "TC90432",
 		"minStockQuantity": 5,
 		"name": "Turbocharger",
-		"price": 665.0,
+		"price": 665,
 		"promoPrice": 0,
 		"sku": "MIN19999",
 		"specificationOptions": [
@@ -1561,11 +1606,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38794",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "HM88893",
 		"minStockQuantity": 5,
 		"name": "Ball Joints",
-		"price": 152.0,
+		"price": 152,
 		"promoPrice": 0,
 		"sku": "MIN38794",
 		"specificationOptions": [
@@ -1608,11 +1656,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38795",
 		"height": 5.3,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 9.4,
 		"manufacturerPartNumber": "HM88894",
 		"minStockQuantity": 5,
 		"name": "Bushings",
-		"price": 18.0,
+		"price": 18,
 		"promoPrice": 0,
 		"sku": "MIN38795",
 		"specificationOptions": [
@@ -1655,11 +1706,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38796",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "HM88895",
 		"minStockQuantity": 5,
 		"name": "CV Axles",
-		"price": 89.0,
+		"price": 89,
 		"promoPrice": 0,
 		"sku": "MIN38796",
 		"specificationOptions": [
@@ -1699,13 +1753,13 @@
 		"externalReferenceCode": "MIN38797",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_20.png"
+			"Sample_ProductImage_20.png"
 		],
 		"length": 4,
 		"manufacturerPartNumber": "HM88896",
 		"minStockQuantity": 5,
 		"name": "Universal CV Boot",
-		"price": 185.0,
+		"price": 185,
 		"promoPrice": 0,
 		"sku": "MIN38797",
 		"specificationOptions": [
@@ -1744,11 +1798,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38798",
 		"height": 2,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 7,
 		"manufacturerPartNumber": "HM88897",
 		"minStockQuantity": 5,
 		"name": "Hub Bearing Assembly - Rear",
-		"price": 175.0,
+		"price": 175,
 		"promoPrice": 0,
 		"sku": "MIN38798",
 		"specificationOptions": [
@@ -1788,14 +1845,14 @@
 		"externalReferenceCode": "MIN38799",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_13.png",
-			"Minium_ProductImage_73.png"
+			"Sample_ProductImage_13.png",
+			"Sample_ProductImage_73.png"
 		],
 		"length": 4,
 		"manufacturerPartNumber": "HM88898",
 		"minStockQuantity": 5,
 		"name": "Coil Spring - Rear",
-		"price": 104.0,
+		"price": 104,
 		"promoPrice": 0,
 		"sku": "MIN38799",
 		"specificationOptions": [
@@ -1834,11 +1891,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38800",
 		"height": 8.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 6.2,
 		"manufacturerPartNumber": "HM88899",
 		"minStockQuantity": 5,
 		"name": "Power Steering Pump",
-		"price": 160.0,
+		"price": 160,
 		"promoPrice": 0,
 		"sku": "MIN38800",
 		"specificationOptions": [
@@ -1881,11 +1941,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38801",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "HM88900",
 		"minStockQuantity": 5,
 		"name": "Differential Ring and Pinion - Universal",
-		"price": 211.0,
+		"price": 211,
 		"promoPrice": 0,
 		"sku": "MIN38801",
 		"specificationOptions": [
@@ -1924,11 +1987,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38802",
 		"height": 5.3,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 9.4,
 		"manufacturerPartNumber": "HM88901",
 		"minStockQuantity": 5,
 		"name": "Shock Absorber",
-		"price": 75.0,
+		"price": 75,
 		"promoPrice": 0,
 		"sku": "MIN38802",
 		"specificationOptions": [
@@ -1967,11 +2033,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38803",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "HM88902",
 		"minStockQuantity": 5,
 		"name": "Shock Strut - Front",
-		"price": 129.0,
+		"price": 129,
 		"promoPrice": 0,
 		"sku": "MIN38803",
 		"specificationOptions": [
@@ -2014,11 +2083,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN38804",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "HM88903",
 		"minStockQuantity": 5,
 		"name": "Tie Rod End Tool",
-		"price": 35.0,
+		"price": 35,
 		"promoPrice": 0,
 		"sku": "MIN38804",
 		"specificationOptions": [
@@ -2062,13 +2134,13 @@
 		"externalReferenceCode": "MIN38805",
 		"height": 5.3,
 		"images": [
-			"Minium_ProductImage_103.png"
+			"Sample_ProductImage_103.png"
 		],
 		"length": 9.4,
 		"manufacturerPartNumber": "HM88904",
 		"minStockQuantity": 5,
 		"name": "Wheel Bearing Grease",
-		"price": 54.0,
+		"price": 54,
 		"promoPrice": 0,
 		"sku": "MIN38805",
 		"specificationOptions": [
@@ -2103,11 +2175,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN55853",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "TT00024",
 		"minStockQuantity": 5,
 		"name": "CV Axles",
-		"price": 89.0,
+		"price": 89,
 		"promoPrice": 0,
 		"sku": "MIN55853",
 		"specificationOptions": [
@@ -2147,13 +2222,13 @@
 		"externalReferenceCode": "MIN55854",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_20.png"
+			"Sample_ProductImage_20.png"
 		],
 		"length": 4,
 		"manufacturerPartNumber": "TT00025",
 		"minStockQuantity": 5,
 		"name": "Universal CV Boot",
-		"price": 185.0,
+		"price": 185,
 		"promoPrice": 0,
 		"sku": "MIN55854",
 		"specificationOptions": [
@@ -2192,11 +2267,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN55855",
 		"height": 2,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 7,
 		"manufacturerPartNumber": "TT00026",
 		"minStockQuantity": 5,
 		"name": "Drive Shafts",
-		"price": 396.0,
+		"price": 396,
 		"promoPrice": 0,
 		"sku": "MIN55855",
 		"specificationOptions": [
@@ -2232,13 +2310,13 @@
 		"externalReferenceCode": "MIN55856",
 		"height": 2.5,
 		"images": [
-			"Minium_ProductImage_103.png"
+			"Sample_ProductImage_103.png"
 		],
 		"length": 4,
 		"manufacturerPartNumber": "TT00027",
 		"minStockQuantity": 5,
 		"name": "Transmission Fluid",
-		"price": 42.0,
+		"price": 42,
 		"promoPrice": 0,
 		"sku": "MIN55856",
 		"specificationOptions": [
@@ -2273,11 +2351,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN55857",
 		"height": 1.7,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 10.2,
 		"manufacturerPartNumber": "TT00028",
 		"minStockQuantity": 5,
 		"name": "Mount",
-		"price": 3.0,
+		"price": 3,
 		"promoPrice": 0,
 		"sku": "MIN55857",
 		"specificationOptions": [
@@ -2320,11 +2401,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN55858",
 		"height": 5.3,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 9.4,
 		"manufacturerPartNumber": "TT00029",
 		"minStockQuantity": 5,
 		"name": "Wheel Seal - Front",
-		"price": 4.0,
+		"price": 4,
 		"promoPrice": 0,
 		"sku": "MIN55858",
 		"specificationOptions": [
@@ -2359,11 +2443,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN55859",
 		"height": 18,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 12,
 		"manufacturerPartNumber": "TT00030",
 		"minStockQuantity": 5,
 		"name": "Torque Converters",
-		"price": 34.0,
+		"price": 34,
 		"promoPrice": 0,
 		"sku": "MIN55859",
 		"specificationOptions": [
@@ -2406,11 +2493,14 @@
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN55860",
 		"height": 2.5,
+		"images": [
+			"Sample_ProductImage_Default.png"
+		],
 		"length": 4,
 		"manufacturerPartNumber": "TT00031",
 		"minStockQuantity": 5,
 		"name": "Transmission Cooler Line Assembly",
-		"price": 15.0,
+		"price": 15,
 		"promoPrice": 0,
 		"sku": "MIN55860",
 		"specificationOptions": [
@@ -2454,13 +2544,13 @@
 		"externalReferenceCode": "MIN55861",
 		"height": 2,
 		"images": [
-			"Minium_ProductImage_64.png"
+			"Sample_ProductImage_64.png"
 		],
 		"length": 7,
 		"manufacturerPartNumber": "TT00032",
 		"minStockQuantity": 5,
 		"name": "U-Joint",
-		"price": 24.0,
+		"price": 24,
 		"promoPrice": 0,
 		"sku": "MIN55861",
 		"specificationOptions": [

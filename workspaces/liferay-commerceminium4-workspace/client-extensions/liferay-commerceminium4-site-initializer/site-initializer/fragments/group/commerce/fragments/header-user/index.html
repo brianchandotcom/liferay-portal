@@ -1,0 +1,84 @@
+<div class="py-1" id="commerce-header-user">
+	<div class="align-items-center container-fluid container-fluid-max-xl d-flex justify-content-end">
+		[#if configuration.showLanguageMenu]
+			<div class="language-selector-container ml-2">
+				<button class="d-flex language language-selector py-1" data-toggle="liferay-dropdown" id="language-selector-id" tabindex="-1">
+					<span class="d-inline-block language-selector-globe-icon">
+						[@clay["icon"] symbol="globe-lines" /]
+					</span>
+					<span class="d-inline-block language-selector-text text-nowrap">
+						[#assign current_locale = locale /]
+
+						[#if current_locale?has_content]
+							[#assign current_locale = locale[0..1]
+								+ " (" + locale[3..4] + ")"
+							/]
+						[/#if]
+
+						${current_locale?upper_case}
+					</span>
+				</button>
+
+				<div aria-labelledby="language-selector-id" class="dropdown-menu dropdown-menu-content">
+					<div class="language-dropdown-list-container">
+						<div class="language-dropdown-list">
+							<ul>
+								[#if entries?has_content]
+									[#list entries as curLanguage]
+										<li class="${(curLanguage.isSelected())?then('selected', '')} language-nav-item">
+
+											[#if curLanguage.isSelected()]
+												<div class="d-inline-block selected-icon">
+													[@clay["icon"] symbol="check" /]
+												</div>
+											[/#if]
+
+											[#assign curLanguageLabel = curLanguage.longDisplayName?capitalize /]
+
+											[#if curLanguage.shortDisplayName="en" | curLanguage.shortDisplayName="pt"]
+												[#assign
+													curLanguageLocale = curLanguage.getLocale()
+													curLanguageLabel = curLanguageLabel + " (" + curLanguageLocale.getDisplayCountry(curLanguageLocale) + ")"
+												/]
+											[/#if]
+
+											[@clay["link"]
+												cssClass="language-entry-long-text"
+												href=curLanguage.getURL()
+												label=curLanguageLabel
+												lang=curLanguage.getW3cLanguageId()
+												localizeLabel=false
+											/]
+										</li>
+									[/#list]
+								[/#if]
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		[/#if]
+
+		[#if configuration.showCurrencyMenu]
+			<div class="currency-selector-container ml-2">
+				<button class="currency currency-selector d-flex py-2" data-toggle="liferay-dropdown" id="currency-selector-id" tabindex="-1">
+					<span class="currency-selector-symbol d-inline-block"></span>
+
+					<span class="currency-selector-text d-inline-block text-nowrap"></span>
+				</button>
+
+				<div aria-labelledby="currency-selector-id" class="dropdown-menu dropdown-menu-content">
+					<div class="currency-dropdown-list-container">
+						<div class="currency-dropdown-list">
+							<ul></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		[/#if]
+
+		<div class="border-left ml-2 pl-3">
+			[@liferay.user_personal_bar /]
+		</div>
+	</div>
+</div>

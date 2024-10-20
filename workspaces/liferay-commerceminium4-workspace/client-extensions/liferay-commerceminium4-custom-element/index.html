@@ -1,0 +1,146 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+
+	<link href="/vite.svg" rel="icon" type="image/svg+xml" />
+
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+	<title>Vite + React</title>
+
+	<link href="https://clayui.com/css/atlas.css" id="clayCSSFile" rel="stylesheet" />
+
+	<script type="importmap">
+	  {
+		"imports": {
+		  "react": "https://unpkg.com/browse/react@16.12.0/",
+		  "react-dom": "https://unpkg.com/browse/react-dom@16.12.0/",
+		  "@clayui/core": "https://unpkg.com/browse/@clayui/core@^3.106.1/",
+		  "@clayui/form": "https://unpkg.com/browse/@clayui/form@^3.106.1/"
+		  "@clayui/icon": "https://unpkg.com/browse/@clayui/icon@^3.106.1/"
+		}
+	  }
+	</script>
+</head>
+
+<body>
+	<div id="myModule"></div>
+
+	<style>
+		:root {
+			--border-radius: 0.375rem; --border-radius-lg: 0.5rem; --border-radius-sm: 0.25rem; --brand-color-1: #5E45F4; --brand-color-2: #646F80; --brand-color-3: #4B37C3; --brand-color-4: #222225; --btn-link-color: #5E45F4; --btn-link-hover-color: #4B37C3; --btn-outline-primary-border-color: #5E45F4; --btn-outline-primary-color: #5E45F4; --btn-outline-primary-hover-background-color: #F5F4FE; --btn-outline-primary-hover-border-color: #5E45F4; --btn-outline-primary-hover-color: #5E45F4; --btn-primary-background-color: #5E45F4; --btn-primary-border-color: #5E45F4; --btn-primary-hover-background-color: #4B37C3; --danger: #E30A10; --dark: #28282B; --gray-dark: #3D3D40; --info: #4071DB; --light: #F7F7F8; --lighter: #FBFBFC; --primary: #5E45F4; --secondary: #646F80; --success: #2F8652; --warning: #B65F0E
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link {
+			color: var(--gray-100);
+		}
+		.menubar-vertical-expand-md.menubar-transparent .nav-link {
+			color: var(--gray-300);
+			font-weight: var(--font-weight-semi-bold);
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link.active {
+			color: var(--gray-100);
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link[aria-expanded="true"], .menubar-vertical-expand-md.menubar-transparent .nav-link.show {
+			color: var(--gray-100);
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link.active::before {
+			background-color: var(--brand-color-1);
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link::before {
+			border-radius: 0;
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link:hover, .menubar-vertical-expand-md.menubar-transparent .nav-link.hover {
+			background-color: transparent;
+			color: var(--gray-100);
+		}
+
+		.menubar-vertical-expand-md.menubar-transparent .nav-link:hover::before, .menubar-vertical-expand-md.menubar-transparent .nav-link.hover::before {
+			background: var(--brand-color-1);
+		}
+
+		/* Inline #66 | http://localhost:8080/web/liferay-commerce-minium-4/catalog */
+
+		.nav.nav-nested.show {
+			background-color: var(--black);
+		}
+
+		.nav-nested .nav-stacked {
+			background-color: #22222B;
+		}
+
+		.lfr-layout-structure-item-primary-navigation .nav-item .nav-link {
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+
+	</style>
+
+	<script type="module">
+		import React from 'react';
+		import ReactDOM from 'react-dom';
+		import MiniumPrimaryNavigation from '/src';
+
+		ReactDOM.render(
+				React.createElement(
+						MiniumPrimaryNavigation,
+						{
+							entries: [
+								{
+									'active': false,
+									'href': 'http://localhost:8080/web/liferay-commerce-minium-4/catalog',
+									'label': 'Catalog',
+									'layoutId': '5'
+								},
+								{
+									'active': false,
+									'items': [
+										{
+											'active': true,
+											'href': 'http://localhost:8080/web/liferay-commerce-minium-4/pending-orders',
+											'label': 'Pending Orders',
+											'layoutId': '13'
+										},
+										{
+											'active': false,
+											'href': 'http://localhost:8080/web/liferay-commerce-minium-4/placed-orders',
+											'label': 'Placed Orders',
+											'layoutId': '17'
+										},
+									],
+									'label': 'Orders',
+									'layoutId': '11'
+								},
+								{
+									'active': false,
+									'href': 'http://localhost:8080/web/liferay-commerce-minium-4/returns',
+									'label': 'Returns',
+									'layoutId': '19'
+								},
+								{
+									'active': false,
+									'href': 'http://localhost:8080/web/liferay-commerce-minium-4/account-management',
+									'label': 'Account Management',
+									'layoutId': '21'
+								},
+								{
+									'active': false,
+									'href': 'http://localhost:8080/web/liferay-commerce-minium-4/lists',
+									'label': 'Lists',
+									'layoutId': '23'
+								},
+							],
+						},
+				),
+				document.getElementById('myModule'),
+		);
+	</script>
+</body>
+</html>

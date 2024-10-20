@@ -61,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Gianmarco Brunialti Masera
  */
 @Component(service = FragmentRenderer.class)
 public class OrderActionsFragmentRenderer implements FragmentRenderer {
@@ -214,10 +215,62 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 			_log.error(portalException);
 		}
 
+		dropdownItems.add(
+			DropdownItemBuilder.setHref(
+				ResourceURLBuilder.createResourceURL(
+					PortletURLFactoryUtil.create(
+						httpServletRequest,
+						CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"commerceOrderId", commerceOrder.getCommerceOrderId()
+				).setParameter(
+					"orderDetailURL",
+					commerceOrderFriendlyURL +
+						commerceOrder.getCommerceOrderId()
+				).setResourceID(
+					"/commerce_order_content/export_commerce_order_report"
+				).buildString()
+			).setLabel(
+				_language.get(httpServletRequest, "print")
+			).build());
+
 		try {
 			if (commerceOrder.isOpen() &&
 				_hasModelPermission(commerceOrder, ActionKeys.DELETE)) {
 
+				dropdownItems.add(
+					DropdownItemBuilder.setData(
+						HashMapBuilder.<String, Object>put(
+							"confirmationMessage",
+							_language.get(
+								httpServletRequest,
+								"are-you-sure-you-want-to-remove-all-items")
+						).build()
+					).setHref(
+						PortletURLBuilder.create(
+							PortletURLFactoryUtil.create(
+								httpServletRequest,
+								CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+								PortletRequest.ACTION_PHASE)
+						).setActionName(
+							"/commerce_open_order_content" +
+								"/edit_commerce_order_item"
+						).setCMD(
+							Constants.RESET
+						).setParameter(
+							"commerceOrderId",
+							commerceOrder.getCommerceOrderId()
+						).setParameter(
+							"orderDetailURL",
+							commerceOrderFriendlyURL +
+								commerceOrder.getCommerceOrderId()
+						).buildString()
+					).setLabel(
+						_language.get(httpServletRequest, "remove-all-items")
+					).setTarget(
+						"submitWithConfirmation"
+					).build());
 				dropdownItems.add(
 					DropdownItemBuilder.setData(
 						HashMapBuilder.<String, Object>put(
@@ -252,65 +305,11 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 					).setTarget(
 						"submitWithConfirmation"
 					).build());
-				dropdownItems.add(
-					DropdownItemBuilder.setData(
-						HashMapBuilder.<String, Object>put(
-							"confirmationMessage",
-							_language.get(
-								httpServletRequest,
-								"are-you-sure-you-want-to-remove-all-items")
-						).build()
-					).setHref(
-						PortletURLBuilder.create(
-							PortletURLFactoryUtil.create(
-								httpServletRequest,
-								CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
-								PortletRequest.ACTION_PHASE)
-						).setActionName(
-							"/commerce_open_order_content" +
-								"/edit_commerce_order_item"
-						).setCMD(
-							Constants.RESET
-						).setParameter(
-							"commerceOrderId",
-							commerceOrder.getCommerceOrderId()
-						).setParameter(
-							"orderDetailURL",
-							commerceOrderFriendlyURL +
-								commerceOrder.getCommerceOrderId()
-						).buildString()
-					).setLabel(
-						_language.get(httpServletRequest, "remove-all-items")
-					).setTarget(
-						"submitWithConfirmation"
-					).build());
 			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
-
-		dropdownItems.add(
-			DropdownItemBuilder.setHref(
-				ResourceURLBuilder.createResourceURL(
-					PortletURLFactoryUtil.create(
-						httpServletRequest,
-						CommercePortletKeys.COMMERCE_ORDER_CONTENT,
-						PortletRequest.RESOURCE_PHASE)
-				).setParameter(
-					"commerceOrderId", commerceOrder.getCommerceOrderId()
-				).setParameter(
-					"orderDetailURL",
-					commerceOrderFriendlyURL +
-						commerceOrder.getCommerceOrderId()
-				).setResourceID(
-					"/commerce_order_content/export_commerce_order_report"
-				).buildString()
-			).setIcon(
-				"print"
-			).setLabel(
-				_language.get(httpServletRequest, "print")
-			).build());
 
 		return dropdownItems;
 	}

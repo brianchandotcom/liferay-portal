@@ -1,0 +1,20 @@
+{
+	"description": "",
+	"friendlyURL": "/compare",
+	"hidden": true,
+	"name": "compare",
+	"name_i18n": {
+		"en_US": "Compare"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

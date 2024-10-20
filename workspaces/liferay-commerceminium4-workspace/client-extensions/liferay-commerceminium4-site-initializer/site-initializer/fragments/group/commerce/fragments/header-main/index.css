@@ -1,0 +1,82 @@
+#commerce-header-main {
+	background-color: var(--white);
+	border-bottom: 1px solid var(--gray-300);
+}
+
+#commerce-header-main .cart-root .mini-cart {
+	height: 35px;
+	transition:
+		height 0ms ease-out,
+		width 0ms ease-out,
+		top 0ms ease-out;
+	transition-delay: 200ms !important;
+	width: 35px;
+}
+
+#commerce-header-main .cart-root .mini-cart.is-open {
+	height: calc(
+		100vh - var(--control-menu-height, 0px) - var(--commerce-header-user-height) -
+		10px
+	);
+}
+
+#commerce-header-main .cart-root .mini-cart .mini-cart-overlay {
+	height: 100%;
+	position: relative;
+	top: 0;
+	transition: top 0ms ease-out;
+	transition-delay: 200ms;
+	width: 35px;
+}
+
+#commerce-header-main .cart-root .mini-cart.is-open .mini-cart-overlay {
+	height: calc(100vh - var(--control-menu-height, 0px));
+	position: fixed;
+	top: var(--control-menu-height, 0px);
+	transition-delay: 0ms;
+	width: 100vw;
+}
+
+#commerce-header-main .cart-root .mini-cart .mini-cart-wrapper {
+	height: calc(100vh - var(--control-menu-height, 0px));
+	top: calc(-1 * var(--commerce-header-user-height) - 10px);
+}
+
+#commerce-header-main .cart-root .mini-cart.is-open .mini-cart-wrapper {
+	background-color: #fff;
+	height: calc(100vh - var(--control-menu-height, 0px));
+	top: calc(-1 * var(--commerce-header-user-height) - 10px);
+	transform: translate3d(calc(100vw / 2 - 612px), 0, 0);
+	z-index: 1000;
+}
+
+#commerce-header-main .cart-root .mini-cart .mini-cart-opener {
+	height: 35px;
+	width: 35px;
+}
+
+#commerce-header-search .portlet-search-bar {
+	max-width: 400px;
+	width: 65%;
+}
+
+#commerce-header-components {
+	min-height: var(--commerce-header-user-height)
+}
+
+@media (min-width: 1920px) {
+	#commerce-header-main .mini-cart:not(.is-open) .mini-cart-wrapper {
+		transform: translate3d(50vw, 0, 0);
+	}
+
+	.rtl #commerce-header-main .mini-cart:not(.is-open) .mini-cart-wrapper {
+		transform: translate3d(calc(-1 * 50vw), 0, 0);
+	}
+}
+
+#commerce-header-main
+.account-selector-root
+.btn-account-selector
+.sticker-user-icon {
+	border-radius: var(--border-radius);
+}

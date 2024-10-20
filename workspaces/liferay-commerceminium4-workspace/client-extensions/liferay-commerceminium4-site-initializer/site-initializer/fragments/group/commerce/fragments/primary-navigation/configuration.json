@@ -1,0 +1,13 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "source",
+					"name": "source",
+					"type": "navigationMenuSelector"
+				}
+			]
+		}
+	]
+}

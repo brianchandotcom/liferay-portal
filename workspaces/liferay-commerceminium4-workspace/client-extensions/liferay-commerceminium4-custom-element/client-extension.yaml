@@ -1,0 +1,9 @@
+assemble:
+    - from: vite-build
+      into: static
+minium-primary-navigation-js-import-maps-entry:
+    bareSpecifier: minium-primary-navigation
+    name: Minium Primary Navigation JS Import Maps Entry
+    type: jsImportMapsEntry
+    url: index.js
+    useESM: true

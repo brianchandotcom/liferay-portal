@@ -1,0 +1,8 @@
+{
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"client-extensions/liferay-commerceminium4-custom-element"
+		]
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"defaultTemplate": false,
+	"externalReferenceCode": "COMMERCE-500-ERROR",
+	"name": "500",
+	"type": "ErrorCode500"
+}

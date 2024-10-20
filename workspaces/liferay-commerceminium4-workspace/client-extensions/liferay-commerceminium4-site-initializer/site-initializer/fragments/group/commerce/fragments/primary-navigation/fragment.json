@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "root.html",
+	"icon": "code",
+	"jsPath": "index.js",
+	"name": "Minium Primary Navigation",
+	"type": "component"
+}

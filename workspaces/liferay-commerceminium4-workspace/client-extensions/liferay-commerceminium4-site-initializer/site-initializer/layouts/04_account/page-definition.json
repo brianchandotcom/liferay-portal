@@ -1,0 +1,23 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+						},
+						"widgetName": "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet"
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "minium-master"
+		}
+	},
+	"version": 1.1
+}

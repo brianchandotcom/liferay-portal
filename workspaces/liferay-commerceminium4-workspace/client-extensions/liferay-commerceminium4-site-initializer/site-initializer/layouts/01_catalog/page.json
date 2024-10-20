@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"friendlyURL": "/catalog",
+	"hidden": false,
+	"name": "catalog",
+	"name_i18n": {
+		"en_US": "Catalog"
+	},
+	"priority": 0,
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

@@ -1,0 +1,20 @@
+{
+	"description": "",
+	"friendlyURL": "/product-detail",
+	"hidden": true,
+	"name": "product-detail",
+	"name_i18n": {
+		"en_US": "Product Detail"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

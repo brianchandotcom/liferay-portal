@@ -1,0 +1,45 @@
+#commerce-header-nav {
+	background-color: var(--white);
+	border-bottom: 1px solid var(--gray-300);
+}
+
+#commerce-header-nav .lfr-nav-item {
+	line-height: 1.5;
+	position: relative;
+}
+
+#commerce-header-nav .lfr-nav-item > a {
+	color: var(--gray-600);
+	font-size: revert;
+	font-weight: var(--font-weight-semi-bold, 600);
+	margin-bottom: calc(((3rem - 0.0625rem - 0px) - 2rem) * 0.5);
+	margin-top: calc(((3rem - 0.0625rem - 0px) - 2rem) * 0.5);
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+#commerce-header-nav .lfr-nav-item.selected::after {
+	background-color: #80acff;
+	bottom: 0px;
+	content: '';
+	height: 4px;
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+
+#commerce-header-nav .lfr-nav-item:hover > a,
+#commerce-header-nav .lfr-nav-item.selected > a {
+	color: var(--gray-900);
+	font-family: var(--font-family-sans-serif);
+}
+
+#commerce-header-nav .lfr-nav-item.dropdown .child-menu .selected > a {
+	background-color: var(--gray-200);
+	font-weight: var(--font-weight-semi-bold, 600);
+}
+
+#commerce-header-nav .lfr-nav-item.dropdown .child-menu .selected > a:hover {
+	background-color: #f0f5ff;
+	font-weight: var(--font-weight-semi-bold, 600);
+}

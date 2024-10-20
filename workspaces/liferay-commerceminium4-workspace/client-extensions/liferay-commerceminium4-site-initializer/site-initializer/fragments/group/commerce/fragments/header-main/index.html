@@ -1,0 +1,21 @@
+<div class="py-2" id="commerce-header-main">
+	<div class="container-fluid container-fluid-max-xl">
+		<div class="align-items-center row">
+			<div class="col-3" id="commerce-header-logo">
+				<img alt="" data-lfr-editable-id="commerce-site-main-logo" data-lfr-editable-type="image" src="[resources:site_logo.svg]" />
+			</div>
+
+			<div class="col-6 d-flex justify-content-center" id="commerce-header-search">
+				[#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) /]
+
+				[@liferay.search_bar default_preferences="${preferences}" /]
+			</div>
+
+			<div class="align-items-center col-3 d-flex justify-content-end position-relative" id="commerce-header-components">
+				[@liferay_commerce_ui["account-selector"] cssClasses="mr-6" /]
+
+				[@liferay_commerce_ui["mini-cart"] cssClasses="position-absolute sticky-top" /]
+			</div>
+		</div>
+	</div>
+</div>

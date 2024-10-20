@@ -1,10 +1,10 @@
 {
 	"description": "",
-	"friendlyURL": "/search",
-	"hidden": true,
-	"name": "search",
+	"friendlyURL": "/lists",
+	"hidden": false,
+	"name": "lists",
 	"name_i18n": {
-		"en_US": "Search"
+		"en_US": "Lists"
 	},
 	"permissions": [
 		{
@@ -16,5 +16,5 @@
 	],
 	"private": false,
 	"system": false,
-	"type": "Content"
+	"type": "content"
 }

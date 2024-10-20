@@ -691,6 +691,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				resourcePath.endsWith(".products.specifications.json") ||
 				resourcePath.endsWith(
 					".products.subscriptions.properties.json") ||
+				resourcePath.endsWith("commerce-option-categories.json") ||
 				!resourcePath.endsWith(".json")) {
 
 				continue;

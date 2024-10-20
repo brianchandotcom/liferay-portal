@@ -1,18 +1,28 @@
 #commerce-components-group .cart-root .mini-cart {
-	height: var(--commerce-header-user-height, 35px);
+	display: contents;
+	height: var(--commerce-header-user-height, 0);
 	transition:
 		height 0ms ease-out,
 		width 0ms ease-out,
 		top 0ms ease-out;
 	transition-delay: 200ms !important;
-	width: var(--commerce-header-user-height, 35px);
+	width: var(--commerce-header-user-height, 0);
 }
 
 #commerce-components-group .cart-root .mini-cart.is-open {
 	height: calc(
-		100vh - var(--control-menu-height, 0px) - var(--commerce-header-user-height) -
+		100vh - var(--control-menu-container-height, 0) - var(--commerce-header-user-height) -
 		12px
 	);
+}
+
+#commerce-components-group .cart-root .mini-cart .mini-cart-opener {
+	align-items: center;
+	display: flex;
+	height: 3.25rem;
+	justify-content: center;
+	position: relative;
+	width: 64px;
 }
 
 #commerce-components-group .cart-root .mini-cart .mini-cart-overlay {
@@ -21,36 +31,30 @@
 	top: 0;
 	transition: top 0ms ease-out;
 	transition-delay: 200ms;
-	width: var(--commerce-header-user-height, 35px);
+	width: var(--commerce-header-user-height, 0);
 }
 
 #commerce-components-group .cart-root .mini-cart.is-open .mini-cart-overlay {
-	height: calc(100vh - var(--control-menu-height, 0px));
+	height: calc(100vh - var(--control-menu-container-height, 0));
 	position: fixed;
-	top: var(--control-menu-height, 0px);
+	top: var(--control-menu-container-height, 0);
+	transform: translate3d(0, 0, 0);
 	transition-delay: 0ms;
 	width: 100vw;
 }
 
 #commerce-components-group .cart-root .mini-cart .mini-cart-wrapper {
-	height: calc(100vh - var(--control-menu-height, 0px));
-	top: calc(-1 * var(--commerce-header-user-height) - 12px);
+	position: fixed;
+	transform: translate3d(600px, 0, 0);
 }
 
 #commerce-components-group .cart-root .mini-cart.is-open .mini-cart-wrapper {
-	background-color: #fff;
-	height: calc(100vh - var(--control-menu-height, 0px));
-	top: calc(-1 * var(--commerce-header-user-height) - 12px);
+	background-color: var(--white);
+	height: calc(100vh - var(--control-menu-container-height, 0));
+	position: fixed;
+	top: var(--control-menu-container-height, 0);
+	transform: translate3d(0, 0, 0);
 	z-index: 1000;
-}
-
-#commerce-components-group .cart-root .mini-cart .mini-cart-opener {
-	height: var(--commerce-header-user-height, 35px);
-	width: var(--commerce-header-user-height, 35px);
-}
-
-#commerce-components-group {
-	min-height: var(--commerce-header-user-height)
 }
 
 #commerce-components-group

@@ -92,7 +92,10 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		await listTypeDefinitionPage.goto();
 
@@ -118,7 +121,10 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		await listTypeDefinitionPage.goto();
 
@@ -135,7 +141,10 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		await listTypeDefinitionPage.goto();
 
@@ -210,7 +219,10 @@ test.describe('ensure picklist translation', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		const listTypeDefinitionName: string = listTypeDefinition.name;
 
@@ -231,7 +243,10 @@ test.describe('ensure picklist translation', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await page.goto('/');
 
@@ -290,7 +305,10 @@ test.describe('ensure picklist translation', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		const listTypeDefinitionName: string = listTypeDefinition.name;
 
@@ -323,8 +341,10 @@ test.describe('ensure picklist translation', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
-
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 

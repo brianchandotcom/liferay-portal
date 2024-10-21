@@ -21,6 +21,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
+	cssClass="pt-0"
 	method="post"
 	name="fm"
 	onSubmit="event.preventDefault();"

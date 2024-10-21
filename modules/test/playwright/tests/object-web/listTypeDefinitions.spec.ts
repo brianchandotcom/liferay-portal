@@ -12,6 +12,7 @@ import {
 import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -22,15 +23,15 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	apiHelpersTest,
 	formsPagesTest,
+	isolatedSiteTest,
 	listTypeDefinitionsPagesTest,
 	loginTest(),
 	objectPagesTest,
 	siteSettingsPagesTest
 );
 
-let customDefaultSiteLanguage: string;
-let siteLanguage: string;
-let userLanguage: string;
+let siteLanguage = 'en';
+let userLanguage = 'en_US';
 
 const createdEntities = {
 	listTypeDefinitions: [],
@@ -40,65 +41,45 @@ const createdEntities = {
 	objectDefinitions: ObjectDefinition[];
 };
 
-test.afterEach(
-	async ({
-		accountSettingsPage,
-		apiHelpers,
-		page,
-		siteSettingsLocalizationPage,
-		siteSettingsPage,
-	}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+test.afterEach(async ({accountSettingsPage, apiHelpers, page}) => {
+	const objectAdminRestClient = await apiHelpers.buildRestClient(
+		ObjectAdminRestClient
+	);
 
-		for (const objectDefinition of createdEntities.objectDefinitions) {
-			await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
-				{
-					objectDefinitionId: objectDefinition.id,
-				}
-			);
-		}
-
-		createdEntities.objectDefinitions = [];
-
-		for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
-			await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-				listTypeDefinition.id
-			);
-		}
-
-		createdEntities.listTypeDefinitions = [];
-
-		if (siteLanguage !== 'en') {
-			await page.goto('en');
-
-			siteLanguage = 'en';
-		}
-
-		if (userLanguage === 'pt_BR') {
-			await page.goto('en');
-
-			await page.locator('button[data-qa-id="userPersonalMenu"]').click();
-
-			await page
-				.getByRole('menuitem', {name: 'Account Settings'})
-				.click();
-
-			await accountSettingsPage.selectAccountLanguage('en_US');
-
-			userLanguage = 'en_US';
-		}
-
-		if (customDefaultSiteLanguage) {
-			await page.goto('/');
-			await siteSettingsLocalizationPage.goto();
-			await siteSettingsLocalizationPage.selectDefaultLanguageOption();
-			await siteSettingsPage.saveConfiguration();
-			customDefaultSiteLanguage = '';
-		}
+	for (const objectDefinition of createdEntities.objectDefinitions) {
+		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+			objectDefinitionId: objectDefinition.id,
+		});
 	}
-);
+
+	createdEntities.objectDefinitions = [];
+
+	for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
+		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+			listTypeDefinition.id
+		);
+	}
+
+	createdEntities.listTypeDefinitions = [];
+
+	if (siteLanguage !== 'en') {
+		await page.goto('en');
+
+		siteLanguage = 'en';
+	}
+
+	if (userLanguage !== 'en_US') {
+		await page.goto('en');
+
+		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+
+		await page.getByRole('menuitem', {name: 'Account Settings'}).click();
+
+		await accountSettingsPage.selectAccountLanguage('en_US');
+
+		userLanguage = 'en_US';
+	}
+});
 
 test.describe('manage picklists inside the picklists portlet', () => {
 	test('can create a picklist', async ({
@@ -122,17 +103,15 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		apiHelpers,
 		listTypeDefinitionPage,
 		page,
+		site,
 		siteSettingsLocalizationPage,
 	}) => {
-		await page.goto('/');
+		await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 
-		await siteSettingsLocalizationPage.goto();
-
-		await siteSettingsLocalizationPage.selectCustomDefaultLanguageOption();
-
-		await siteSettingsLocalizationPage.setCustomDefaultLanguage('pt_BR');
-
-		customDefaultSiteLanguage = 'pt_BR';
+		await siteSettingsLocalizationPage.setCustomDefaultLanguage(
+			'pt_BR',
+			site.friendlyUrlPath
+		);
 
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();

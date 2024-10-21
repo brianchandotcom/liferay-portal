@@ -4,6 +4,7 @@
 
 ### Utils
 
+* [LPD-38993](https://liferay.atlassian.net/browse/LPD-38993) - Technical task | fix Poshi Runner DateUtils method
 * [POSHI-702](https://liferay.atlassian.net/browse/POSHI-702) - Update ExecUtil to redirect error stream
 * [POSHI-704](https://liferay.atlassian.net/browse/POSHI-704) - Print log regardless of exit value
 

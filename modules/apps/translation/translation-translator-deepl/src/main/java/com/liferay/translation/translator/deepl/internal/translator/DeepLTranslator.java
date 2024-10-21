@@ -73,8 +73,8 @@ public class DeepLTranslator extends BaseTranslator {
 		List<String> supportedLanguageCodes = _getSupportedLanguageCodes(
 			deepLTranslatorConfiguration);
 
-		String targetLanguageCode = getLanguageCode(
-			translatorPacket.getTargetLanguageId());
+		String targetLanguageCode = StringUtil.toUpperCase(
+			getLanguageCode(translatorPacket.getTargetLanguageId()));
 
 		if (!supportedLanguageCodes.contains(targetLanguageCode)) {
 			throw new TranslatorException(
@@ -88,7 +88,8 @@ public class DeepLTranslator extends BaseTranslator {
 		Map<String, String> translatedFieldsMap = _translate(
 			deepLTranslatorConfiguration, translatorPacket.getFieldsMap(),
 			translatorPacket.getHTMLMap(),
-			getLanguageCode(translatorPacket.getSourceLanguageId()),
+			StringUtil.toUpperCase(
+				getLanguageCode(translatorPacket.getSourceLanguageId())),
 			targetLanguageCode);
 
 		return new TranslatorPacket() {

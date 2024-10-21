@@ -23,19 +23,11 @@ export const test = mergeTests(
 );
 
 test.beforeEach(async ({changeTrackingPage}) => {
-	await changeTrackingPage.workOnProduction();
-
 	await changeTrackingPage.toggleSandboxConfiguration(true);
 });
 
-test.afterEach(async ({apiHelpers, changeTrackingPage, ctCollection, page}) => {
-	await performLogout(page);
-
-	await performLogin(page, 'test');
-
+test.afterEach(async ({changeTrackingPage}) => {
 	await changeTrackingPage.toggleSandboxConfiguration(false);
-
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
 });
 
 test('LPD-34602 Add view-only mode for production when using Publications sandbox', async ({
@@ -48,8 +40,6 @@ test('LPD-34602 Add view-only mode for production when using Publications sandbo
 	await performLogout(page);
 
 	await performLogin(page, user.alternateName);
-
-	await page.bringToFront();
 
 	const changeTrackingIndicatorButton = page.locator(
 		'.change-tracking-indicator-button'

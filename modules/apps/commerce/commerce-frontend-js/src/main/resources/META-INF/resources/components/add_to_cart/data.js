@@ -138,11 +138,13 @@ export async function addToCart(
 			includedCartItem &&
 			!Liferay.CommerceContext.showSeparateOrderItems
 		) {
-			includedCartItem.quantity = Number(
-				Number(includedCartItem.quantity + cpInstance.quantity).toFixed(
-					cpInstance.skuUnitOfMeasure?.precision || 0
-				)
-			);
+			includedCartItem.quantity =
+				parseFloat(includedCartItem.quantity) +
+				parseFloat(cpInstance.quantity);
+
+			includedCartItem.quantity = Number(includedCartItem.quantity.toFixed(
+				cpInstance.skuUnitOfMeasure?.precision || 0
+			));
 		}
 		else {
 			updatedCartItems.push(

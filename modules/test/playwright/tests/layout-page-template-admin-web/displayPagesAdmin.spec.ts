@@ -150,28 +150,36 @@ testForCollections.describe('Tests for Collections', () => {
 			).toContainText('Folder');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(0)
+			).toContainText('Manage Permissions');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
 			).toContainText('Location');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
 			).toContainText(`Home > ${displayPageTemplateFolderName}`);
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
 			).toContainText('Number of Items');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
 			).toContainText('1');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(2)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(3)
 			).toContainText('Created');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(3)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(4)
 			).toContainText('Modified');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
+			).toContainText('Description');
 
 			// Check display page info panel
 
@@ -192,27 +200,31 @@ testForCollections.describe('Tests for Collections', () => {
 			).toContainText('Approved');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(0)
+			).toContainText('Manage Permissions');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
 			).toContainText('Location');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
 			).toContainText(`Home > ${displayPageTemplateFolderName}`);
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
 			).toContainText('Content Type');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
 			).toContainText('Blogs Entry');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(2)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(3)
 			).toContainText('Created');
 
 			await expect(
-				infoPanel.locator('.sidebar-body .mb-4').nth(3)
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(4)
 			).toContainText('Modified');
 		}
 	);

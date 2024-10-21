@@ -28,6 +28,10 @@ definition {
 			layoutName = "Staging Test Page");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Guest");
 	}
 
 	tearDown {

@@ -48,12 +48,12 @@ public class DisplayPageTemplateCollectionHorizontalCard
 		LayoutPageTemplateCollectionActionDropdownItem
 			layoutPageTemplateCollectionActionDropdownItem =
 				new LayoutPageTemplateCollectionActionDropdownItem(
-					httpServletRequest, _renderResponse);
+					httpServletRequest, _layoutPageTemplateCollection,
+					_renderResponse, "display-page-templates");
 
 		try {
 			return layoutPageTemplateCollectionActionDropdownItem.
-				getActionDropdownItems(
-					_layoutPageTemplateCollection, "display-page-templates");
+				getActionDropdownItems();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

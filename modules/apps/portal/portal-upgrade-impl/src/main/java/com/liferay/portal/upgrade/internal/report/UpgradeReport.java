@@ -560,12 +560,13 @@ public class UpgradeReport {
 
 					String message = StringPool.BLANK;
 
-					if (failedSQLString.contains(StringPool.PIPE)) {
-						int index = failedSQLString.indexOf(StringPool.PIPE);
+					int index = failedSQLString.indexOf(
+						StringPool.SEMICOLON + StringPool.PIPE);
 
-						sql = failedSQLString.substring(0, index);
+					if (index != -1) {
+						sql = failedSQLString.substring(0, index + 1);
 
-						message = failedSQLString.substring(index + 1);
+						message = failedSQLString.substring(index + 2);
 					}
 
 					failedSQLs.add(new FailedSQL(message, sql));
@@ -670,9 +671,9 @@ public class UpgradeReport {
 
 					String upgradeProcessClassName = StringPool.BLANK;
 
-					if (key.contains(StringPool.PIPE)) {
-						int index = key.indexOf(StringPool.PIPE);
+					int index = key.indexOf(StringPool.PIPE);
 
+					if (index != -1) {
 						upgradeProcessClassName = key.substring(0, index);
 
 						sql = key.substring(index + 1);

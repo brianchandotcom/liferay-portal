@@ -40,7 +40,7 @@ public class ClosePortletConfigurationIcon
 
 	@Override
 	public String getIconCssClass() {
-		return "item-remove portlet-close portlet-close-icon";
+		return "trash";
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class ClosePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(getLocale(portletRequest), "remove");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override

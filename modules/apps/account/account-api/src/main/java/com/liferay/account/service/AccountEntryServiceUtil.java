@@ -122,6 +122,14 @@ public class AccountEntryServiceUtil {
 		return getService().getAccountEntry(accountEntryId);
 	}
 
+	public static AccountEntry getAccountEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getAccountEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -215,6 +215,13 @@ public class LayoutCommonTag extends IncludeTag {
 
 				keys.add(key);
 			}
+			else if (key.endsWith("_requestProcessedSuccess") &&
+					 Validator.isNotNull(message)) {
+
+				sb.append(_getScript(message, "success"));
+
+				keys.add(key);
+			}
 			else if (key.endsWith("_requestProcessedWarning") &&
 					 Validator.isNotNull(message)) {
 

@@ -120,6 +120,10 @@
 	</entity>
 	<entity local-service="true" name="KaleoDefinition" remote-service="true">
 
+		<!-- External reference code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="kaleoDefinitionId" primary="true" type="long" />

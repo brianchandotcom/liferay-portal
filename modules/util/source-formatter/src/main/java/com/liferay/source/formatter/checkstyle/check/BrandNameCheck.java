@@ -54,7 +54,7 @@ public class BrandNameCheck extends BaseCheck {
 		}
 	}
 
-	private static final String[] _BRAND_NAMES = {"FreeMarker"};
+	private static final String[] _BRAND_NAMES = {"FreeMarker", "JavaScript"};
 
 	private static final String _MSG_RENAME = "rename";
 

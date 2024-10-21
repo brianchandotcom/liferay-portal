@@ -202,14 +202,10 @@ public class DropZoneFragmentEntryLinkListener
 			}
 
 			if (childrenItemIds.size() > elements.size()) {
-				List<String> childrenItemIdsToRemove = childrenItemIds.subList(
-					elements.size(), childrenItemIds.size());
-
-				childrenItemIdsToRemove.forEach(
-					itemId ->
-						layoutStructure.markLayoutStructureItemForDeletion(
-							Collections.singletonList(itemId),
-							Collections.emptyList()));
+				layoutStructure.markLayoutStructureItemForDeletion(
+					childrenItemIds.subList(
+						elements.size(), childrenItemIds.size()),
+					Collections.emptyList());
 			}
 			else {
 				for (int i = childrenItemIds.size(); i < elements.size(); i++) {

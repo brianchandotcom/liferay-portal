@@ -1328,7 +1328,6 @@
 		<!-- Other fields -->
 
 		<column name="CPOptionCategoryId" type="long" />
-		<column name="listTypeDefinitionId" type="long" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="facetable" type="boolean" />
@@ -1350,12 +1349,37 @@
 		<finder name="CPOptionCategoryId" return-type="Collection">
 			<finder-column name="CPOptionCategoryId" />
 		</finder>
-		<finder name="ListTypeDefinitionId" return-type="Collection">
-			<finder-column name="listTypeDefinitionId" />
-		</finder>
 		<finder name="C_K" return-type="CPSpecificationOption" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="key" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPSpecificationOptionListTypeDefinitionRel" remote-service="true" table="CPSOListTypeDefinitionRel">
+
+		<!-- PK fields -->
+
+		<column db-name="CPSOListTypeDefinitionRelId" name="CPSpecificationOptionListTypeDefinitionRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="CPSpecificationOptionId" type="long" />
+		<column name="listTypeDefinitionId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPSpecificationOptionId" return-type="Collection">
+			<finder-column name="CPSpecificationOptionId" />
+		</finder>
+		<finder name="ListTypeDefinitionId" return-type="Collection">
+			<finder-column name="listTypeDefinitionId" />
+		</finder>
+		<finder name="C_L" return-type="CPSpecificationOptionListTypeDefinitionRel">
+			<finder-column name="CPSpecificationOptionId" />
+			<finder-column name="listTypeDefinitionId" />
 		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" name="CPTaxCategory" remote-service="true" uuid="true">
@@ -1469,6 +1493,7 @@
 		<exception>DuplicateCPMeasurementUnitKey</exception>
 		<exception>DuplicateCProduct</exception>
 		<exception>DuplicateCPSpecificationOptionKey</exception>
+		<exception>DuplicateCPSpecificationOptionListTypeDefinitionRel</exception>
 		<exception>DuplicateCPTaxCategory</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 		<exception>RequiredCPConfigurationList</exception>

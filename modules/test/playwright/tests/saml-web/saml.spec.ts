@@ -5,8 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {searchAdminPageTest} from '../../fixtures/searchAdminPageTest';
+import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
@@ -17,7 +19,9 @@ import {
 	TIdpConnection,
 	TSpConnection,
 } from '../../helpers/SamlProviderConnectionHelper';
+import {EActions} from '../../helpers/ServerAdministrationHelper';
 import {liferayConfig} from '../../liferay.config';
+import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
 import {
 	AttributeMapping,
 	IdentityProviderConnectionsPage,
@@ -74,9 +78,11 @@ import {
 } from './utils/samlVirtualInstanceUtil';
 
 export const test = mergeTests(
+	applicationsMenuPageTest,
 	loginTest(),
 	searchAdminPageTest,
 	usersAndOrganizationsPagesTest,
+	serverAdministrationPageTest,
 	virtualInstancesPagesTest
 );
 
@@ -1038,6 +1044,94 @@ test('Verify Custom Fields can be used for user matching in SAML, see LPS-128600
 	await expect(await editUserPage.customField(customFieldName)).toHaveValue(
 		'newValue'
 	);
+});
+
+test('Verify during SP initiated SSO, RelayState is correct and present regardless of VM cache', async ({
+	applicationsMenuPage,
+	browser,
+	serverAdministrationPage,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create a user on the IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Create a new page on the SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const spNewPageUrl = DEFAULT_SP_URL + '/web/guest/' + pageTitle;
+
+	// Perform Sp initiated SSO with the new user from the new page
+
+	const spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		spNewPageUrl
+	);
+
+	// Assert user is redirected back to new page after SSO
+
+	expect(await spInstancePage.url()).toEqual(spNewPageUrl);
+
+	await performLogout(spInstancePage);
+
+	await spInstancePage.waitForTimeout(8000);
+
+	// Perform Sp to IdP SSO redirection only, no authentication yet
+
+	await spInstancePage.goto(spNewPageUrl);
+
+	await clickSignInButton(spInstancePage);
+
+	// Reset VM cache to clear relayState cache
+
+	await applicationsMenuPage.goToServerAdministration();
+
+	await serverAdministrationPage.executeAction(EActions.CLEAR_VM_CACHE);
+
+	// Authenticate on IdP to finish SSO
+
+	await spInstancePage
+		.getByLabel('Email Address')
+		.fill(userAccount.emailAddress);
+	await spInstancePage.getByLabel('Password').fill('test');
+	await spInstancePage.getByLabel('Remember Me').check();
+	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
+
+	await spInstancePage
+		.getByTitle('User Profile Menu')
+		.waitFor({timeout: 30 * 1000});
+
+	// Assert we are redirected to correct URL, even without relayState cache
+
+	expect(await spInstancePage.url()).toEqual(spNewPageUrl);
 });
 
 test('Verify IdP initiated SLO also logs out of authenticated SP when Require Authn Request Signature and Sign Metadata are enabled.  See LPS-128578.', async ({

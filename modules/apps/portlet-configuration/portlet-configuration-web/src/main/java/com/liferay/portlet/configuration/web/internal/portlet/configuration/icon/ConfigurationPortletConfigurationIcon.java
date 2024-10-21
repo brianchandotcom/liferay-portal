@@ -108,7 +108,7 @@ public class ConfigurationPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 14.0;
+		return 16.0;
 	}
 
 	@Override

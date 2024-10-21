@@ -79,7 +79,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 16.0;
+		return 13.0;
 	}
 
 	@Override

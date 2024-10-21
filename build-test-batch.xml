@@ -2783,14 +2783,11 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							parameters.put("gradle.jvm.args", "@{test.junit.args}");
 
 							StringBuilder sb = new StringBuilder();
-							int testCount = 1;
 
 							for (String test : projectTestEntry.getValue()) {
 								sb.append("--tests ");
 								sb.append(test);
 								sb.append(" ");
-
-								testCount++;
 							}
 
 							parameters.put("test.name", sb.toString());
@@ -2798,8 +2795,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							parameters.put("test.task", projectTestEntry.getKey() + ":" + "@{test.task}");
 
 							int timeout = Integer.parseInt(project.getProperty("test.class.timeout.minutes"));
-
-							timeout = timeout + testCount * 4;
 
 							try {
 								System.out.println("\"gradle-execute-modules\" will timeout in " + timeout);

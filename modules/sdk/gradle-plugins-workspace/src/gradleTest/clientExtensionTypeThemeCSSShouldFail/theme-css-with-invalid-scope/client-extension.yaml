@@ -1,0 +1,4 @@
+theme-css-with-invalid-scope:
+    name: theme-css-with-invalid-scope
+    scope: foo
+    type: themeCSS

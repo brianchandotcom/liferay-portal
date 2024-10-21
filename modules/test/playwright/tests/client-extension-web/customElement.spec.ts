@@ -8,6 +8,8 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
@@ -133,3 +135,243 @@ test(
 		expect(page.locator('h3')).toHaveText(NAME);
 	}
 );
+
+test.describe('Client Extension admin', () => {
+	test('Can cancel the creation of a Custom Element', async ({
+		clientExtensionsPage,
+		page,
+	}) => {
+		const clientExtensionName = getRandomString();
+
+		await clientExtensionsPage.goto();
+
+		await clientExtensionsPage.addNewClientExtensionButton.waitFor();
+
+		await clientExtensionsPage.addNewClientExtensionButton.click();
+		await page.getByRole('menuitem', {name: 'Add Custom Element'}).click();
+
+		await clientExtensionsPage.fillNewCustomElementFormModal({
+			cssUrl: getRandomString(),
+			description: getRandomString(),
+			friendlyUrlMapping: getRandomString(),
+			htmlElementName: 'html' + getRandomString(),
+			instanceable: true,
+			javaScriptUrl: getRandomString(),
+			name: clientExtensionName,
+			sourceCodeUrl: getRandomString(),
+			useEsModulesInstanceable: true,
+		});
+
+		await clientExtensionsPage.newCustomElementFormModal.cancelButton.click();
+
+		await expect(
+			clientExtensionsPage.getRowByText(clientExtensionName)
+		).not.toBeVisible();
+	});
+
+	test('Can check that Name field is required and can be translated for Custom Elements', async ({
+		clientExtensionsPage,
+		page,
+	}) => {
+		await clientExtensionsPage.goto();
+
+		await clientExtensionsPage.addNewClientExtensionButton.waitFor();
+
+		await clientExtensionsPage.addNewClientExtensionButton.click();
+		await page.getByRole('menuitem', {name: 'Add Custom Element'}).click();
+
+		await test.step('Check that Name field is required', async () => {
+			await clientExtensionsPage.newCustomElementFormModal.publishButton.waitFor();
+
+			await clientExtensionsPage.fillNewCustomElementFormModal({
+				htmlElementName: `html-${getRandomString()}`,
+				javaScriptUrl: getRandomString(),
+			});
+
+			await clientExtensionsPage.newCustomElementFormModal.publishButton.click();
+
+			await expect(
+				page.getByText('Error:Client extension name is required.')
+			).toBeVisible();
+		});
+
+		await test.step('Use pt_BR translation for name', async () => {
+			const defaultTranslationName = getRandomString();
+			const ptTranslationName = getRandomString();
+
+			await clientExtensionsPage.fillNewCustomElementFormModal({
+				name: defaultTranslationName,
+			});
+
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal.nameInput
+			).toHaveValue(defaultTranslationName);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.locator('.input-localized-palette-container'),
+				trigger:
+					clientExtensionsPage.newCustomElementFormModal
+						.localizedNameButton,
+			});
+
+			await page
+				.getByRole('button', {name: 'Current translation is'})
+				.click();
+
+			await page
+				.getByRole('menuitem', {name: /Not translated into Portuguese/})
+				.click();
+
+			await clientExtensionsPage.fillNewCustomElementFormModal({
+				name: ptTranslationName,
+			});
+
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal.nameInput
+			).toHaveValue(ptTranslationName);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.locator('.input-localized-palette-container'),
+				trigger:
+					clientExtensionsPage.newCustomElementFormModal
+						.localizedNameButton,
+			});
+
+			await page
+				.getByRole('button', {name: 'Current translation is'})
+				.click();
+			await page
+				.getByRole('menuitem', {name: 'Default translation is'})
+				.click();
+
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal.nameInput
+			).toHaveValue(defaultTranslationName);
+		});
+	});
+
+	test('Can check that JavaScript URL field is required for Custom Elements', async ({
+		clientExtensionsPage,
+		page,
+	}) => {
+		await clientExtensionsPage.goto();
+
+		await clientExtensionsPage.addNewClientExtensionButton.waitFor();
+
+		await clientExtensionsPage.addNewClientExtensionButton.click();
+		await page.getByRole('menuitem', {name: 'Add Custom Element'}).click();
+
+		await test.step('Check that JavaScript URL field is required', async () => {
+			await clientExtensionsPage.newCustomElementFormModal.publishButton.waitFor();
+
+			await clientExtensionsPage.fillNewCustomElementFormModal({
+				htmlElementName: `html-${getRandomString()}`,
+				name: getRandomString(),
+			});
+
+			await clientExtensionsPage.newCustomElementFormModal.publishButton.click();
+
+			await expect(
+				page.getByText('The JavaScript URL field is')
+			).toBeVisible();
+		});
+	});
+
+	test('Can create, edit and delete a Custom Element', async ({
+		clientExtensionsPage,
+		page,
+	}) => {
+		const clientExtensionName = getRandomString();
+		const newClientExtensionName = getRandomString();
+
+		await clientExtensionsPage.goto();
+
+		await clientExtensionsPage.addNewClientExtensionButton.waitFor();
+
+		await test.step('Create a new Custom Element', async () => {
+			await clientExtensionsPage.addClientExtension({
+				name: clientExtensionName,
+				type: 'Add Custom Element',
+			});
+
+			await expect(
+				clientExtensionsPage.getRowByText(clientExtensionName)
+			).toBeVisible();
+		});
+
+		await test.step('Edit the Custom Element', async () => {
+			const newCssUrl = getRandomString();
+			const newDescription = getRandomString();
+			const newFriendlyUrlMapping = getRandomString();
+			const newHtmlElementName = 'html-element-' + getRandomString();
+			const newJavaScriptUrl = getRandomString();
+			const newSourceCodeUrl = getRandomString();
+
+			await clientExtensionsPage.editClientExtension(clientExtensionName);
+
+			await clientExtensionsPage.fillNewCustomElementFormModal({
+				cssUrl: newCssUrl,
+				description: newDescription,
+				friendlyUrlMapping: newFriendlyUrlMapping,
+				htmlElementName: newHtmlElementName,
+				javaScriptUrl: newJavaScriptUrl,
+				name: newClientExtensionName,
+				sourceCodeUrl: newSourceCodeUrl,
+			});
+
+			await clientExtensionsPage.newCustomElementFormModal.publishButton.click();
+
+			await clientExtensionsPage.openItemActionsDropdown(
+				newClientExtensionName
+			);
+
+			await page
+				.getByText(newClientExtensionName, {exact: true})
+				.first()
+				.click();
+
+			await clientExtensionsPage.newCustomElementFormModal.publishButton.waitFor();
+
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal.cssUrlInput
+			).toHaveValue(`/${newCssUrl}`);
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal
+					.descriptionTextbox
+			).toHaveText(newDescription);
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal
+					.friendlyUrlMappingInput
+			).toHaveValue(newFriendlyUrlMapping);
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal
+					.htmlElementNameInput
+			).toHaveValue(newHtmlElementName);
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal
+					.javaScriptUrlInput
+			).toHaveValue(`/${newJavaScriptUrl}`);
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal.nameInput
+			).toHaveValue(newClientExtensionName);
+			await expect(
+				clientExtensionsPage.newCustomElementFormModal
+					.sourceCodeUrlInput
+			).toHaveValue(newSourceCodeUrl);
+
+			await clientExtensionsPage.newCustomElementFormModal.cancelButton.click();
+		});
+
+		await test.step('Delete the Custom Element', async () => {
+			await clientExtensionsPage.deleteClientExtension(
+				newClientExtensionName
+			);
+
+			await expect(
+				clientExtensionsPage.getRowByText(newClientExtensionName)
+			).not.toBeVisible();
+		});
+	});
+});

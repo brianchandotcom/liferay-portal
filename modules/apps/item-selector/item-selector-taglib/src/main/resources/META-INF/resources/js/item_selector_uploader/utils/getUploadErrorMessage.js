@@ -10,7 +10,7 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 		'an-unexpected-error-occurred-while-uploading-your-file'
 	);
 
-	if (error && error.errorType) {
+	if (error?.errorType) {
 		const errorType = error.errorType;
 
 		switch (errorType) {
@@ -44,12 +44,14 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 				break;
 			case STATUS_CODE.SC_FILE_SIZE_EXCEPTION:
 			case STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
-				message = sub(
-					Liferay.Language.get(
-						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
-					),
-					[formatStorage(maxFileSize)]
-				);
+				message =
+					error?.message ||
+					sub(
+						Liferay.Language.get(
+							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+						),
+						[formatStorage(maxFileSize)]
+					);
 
 				break;
 			case STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION: {

@@ -45,20 +45,20 @@ public class AccountRoleResourceUpgradeProcessTest {
 		_resourceActionLocalService.addResourceAction(
 			AccountEntry.class.getName(), "EDIT_ORGANIZATIONS",
 			RandomTestUtil.randomLong());
-		_deleteResourceAction(
+		_removeConflictingResourceActions(
 			AccountEntry.class.getName(),
 			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		_resourceActionLocalService.addResourceAction(
 			Organization.class.getName(), "EDIT_SUBORGANIZATIONS",
 			RandomTestUtil.randomLong());
-		_deleteResourceAction(
+		_removeConflictingResourceActions(
 			Organization.class.getName(), ActionKeys.UPDATE_SUBORGANIZATIONS);
 
 		_resourceActionLocalService.addResourceAction(
 			Organization.class.getName(), "EDIT_SUBORGANIZATIONS_ACCOUNTS",
 			RandomTestUtil.randomLong());
-		_deleteResourceAction(
+		_removeConflictingResourceActions(
 			Organization.class.getName(),
 			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS);
 
@@ -101,7 +101,9 @@ public class AccountRoleResourceUpgradeProcessTest {
 				AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS));
 	}
 
-	private void _deleteResourceAction(String className, String actionId) {
+	private void _removeConflictingResourceActions(
+		String className, String actionId) {
+
 		ResourceAction resourceAction =
 			_resourceActionLocalService.fetchResourceAction(
 				className, actionId);

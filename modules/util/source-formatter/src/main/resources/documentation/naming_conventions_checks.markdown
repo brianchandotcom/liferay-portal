@@ -2,6 +2,7 @@
 
 Check | File Extensions | Description
 ----- | --------------- | -----------
+BrandNameCheck | .java | Checks the correct brand name. |
 [CamelCaseNameCheck](check/camel_case_name_check.markdown#camelcasenamecheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks variable names for correct use of `CamelCase`. |
 ConstantNameCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that variable names of constants follow correct naming rules. |
 ExceptionVariableNameCheck | .java | Validates variable names that have type `*Exception`. |

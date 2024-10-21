@@ -38,6 +38,7 @@ BNDStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | App
 [BNDSuiteCheck](check/bnd_suite_check.markdown#bndsuitecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .bnd | Checks that deprecated apps are moved to the `archived` folder. |
 [BNDWebContextPathCheck](check/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks if the property value for `Web-ContextPath` matches the module directory. |
 BNDWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Finds missing and unnecessary whitespace in `.bnd` files. |
+BrandNameCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java | Checks the correct brand name. |
 CDNCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | | Checks the URL in `artifact.properties` files. |
 CIMergeAndGitRepoFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .gitrepo or ci-merge | Checks that `ci-merge` and `.gitrepo` files can not be added or modified. |
 CQLKeywordCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .cql | Checks that Cassandra keywords are upper case. |

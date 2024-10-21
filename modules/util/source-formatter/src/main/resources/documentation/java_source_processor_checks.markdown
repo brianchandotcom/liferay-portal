@@ -15,6 +15,7 @@ AssertFailCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention
 AssignAsUsedCheck | [Performance](performance_checks.markdown#performance-checks) | Finds cases where an assign statement can be inlined or moved closer to where it is used. |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/checks/blocks/avoidnestedblocks.html) | [Styling](styling_checks.markdown#styling-checks) | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/checks/imports/avoidstarimport.html) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there are no import statements that use the * notation. |
+BrandNameCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks the correct brand name. |
 [CamelCaseNameCheck](check/camel_case_name_check.markdown#camelcasenamecheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks variable names for correct use of `CamelCase`. |
 ChainingCheck | [Styling](styling_checks.markdown#styling-checks) | Checks that method chaining can be used when possible. |
 ClassNameIdCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Avoid caching noncompany scoped class name IDs. |

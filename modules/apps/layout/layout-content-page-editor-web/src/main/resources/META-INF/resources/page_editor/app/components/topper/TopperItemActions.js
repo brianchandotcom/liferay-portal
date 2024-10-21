@@ -100,11 +100,7 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
-		if (items.length) {
-			items.push({
-				type: 'divider',
-			});
-		}
+		addDivider(items);
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
@@ -154,12 +150,6 @@ export default function TopperItemActions({disabled, item}) {
 				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
 			});
-
-			if (!Liferay.FeatureFlags['LPD-18221']) {
-				items.push({
-					type: 'divider',
-				});
-			}
 		}
 
 		if (
@@ -196,11 +186,9 @@ export default function TopperItemActions({disabled, item}) {
 				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
 			});
-
-			items.push({
-				type: 'divider',
-			});
 		}
+
+		addDivider(items);
 
 		if (canBeRemoved(item, layoutData)) {
 			items.push({
@@ -295,6 +283,18 @@ export default function TopperItemActions({disabled, item}) {
 			)}
 		</>
 	);
+}
+
+function addDivider(items) {
+	const lastItem = items.at(-1);
+
+	if (!items.length || lastItem.type === 'divider') {
+		return;
+	}
+
+	items.push({
+		type: 'divider',
+	});
 }
 
 TopperItemActions.propTypes = {

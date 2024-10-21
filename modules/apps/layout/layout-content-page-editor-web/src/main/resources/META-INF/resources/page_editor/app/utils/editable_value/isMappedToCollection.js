@@ -4,5 +4,5 @@
  */
 
 export default function isMappedToCollection(editable) {
-	return editable && editable.collectionFieldId;
+	return editable && !!editable.collectionFieldId;
 }

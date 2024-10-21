@@ -4,5 +4,5 @@
  */
 
 export default function isMappedToStructure(editable) {
-	return editable && editable.mappedField;
+	return editable && !!editable.mappedField;
 }

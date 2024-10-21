@@ -221,6 +221,22 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry getAccountEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		AccountEntry accountEntry =
+			accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntry.getAccountEntryId(),
+			ActionKeys.VIEW);
+
+		return accountEntry;
+	}
+
+	@Override
 	public BaseModelSearchResult<AccountEntry> searchAccountEntries(
 			String keywords, LinkedHashMap<String, Object> params, int cur,
 			int delta, String orderByField, boolean reverse)

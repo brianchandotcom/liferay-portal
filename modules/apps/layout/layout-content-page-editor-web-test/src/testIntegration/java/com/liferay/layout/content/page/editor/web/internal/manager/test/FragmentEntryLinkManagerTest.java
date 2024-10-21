@@ -141,14 +141,14 @@ public class FragmentEntryLinkManagerTest {
 		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
-		JSONObject freemarkerEntryProcessorJSONObject =
+		JSONObject freeMarkerEntryProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		String inputLabel = RandomTestUtil.randomString();
 
-		freemarkerEntryProcessorJSONObject.put(
+		freeMarkerEntryProcessorJSONObject.put(
 			"inputLabel",
 			JSONUtil.put(
 				LocaleUtil.toLanguageId(LocaleUtil.SPAIN), inputLabel));

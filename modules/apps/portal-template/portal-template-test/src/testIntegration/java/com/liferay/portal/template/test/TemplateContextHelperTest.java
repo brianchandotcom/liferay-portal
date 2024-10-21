@@ -6,6 +6,7 @@
 package com.liferay.portal.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,16 +36,15 @@ public class TemplateContextHelperTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testHelperRestrictedUtilitiesHaveBlankNonceAttribute()
-		throws Exception {
-
+	public void testHelperRestrictedUtilitiesHaveBlankNonceAttribute() {
 		TemplateContextHelper templateContextHelper =
 			new TemplateContextHelper();
 
 		Map<String, Object> helperUtilities =
 			templateContextHelper.getHelperUtilities(true);
 
-		Assert.assertTrue(helperUtilities.containsKey("nonceAttribute"));
+		Assert.assertEquals(
+			StringPool.BLANK, helperUtilities.get("nonceAttribute"));
 	}
 
 	@Test
@@ -79,7 +79,8 @@ public class TemplateContextHelperTest {
 		Map<String, Object> helperUtilities =
 			templateContextHelper.getHelperUtilities(false);
 
-		Assert.assertTrue(helperUtilities.containsKey("nonceAttribute"));
+		Assert.assertEquals(
+			StringPool.BLANK, helperUtilities.get("nonceAttribute"));
 	}
 
 }

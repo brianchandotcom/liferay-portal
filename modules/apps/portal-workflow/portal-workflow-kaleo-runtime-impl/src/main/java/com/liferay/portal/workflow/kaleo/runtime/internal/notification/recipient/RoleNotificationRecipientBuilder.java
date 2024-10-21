@@ -266,6 +266,10 @@ public class RoleNotificationRecipientBuilder
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();
 
+		if (kaleoTaskInstanceToken == null) {
+			return false;
+		}
+
 		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
 			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
 
@@ -307,9 +311,9 @@ public class RoleNotificationRecipientBuilder
 		return false;
 	}
 
-	private volatile ServiceTrackerList<GroupAwareRoleValidator>
+	private static volatile ServiceTrackerList<GroupAwareRoleValidator>
 		_serviceTrackerList;
-	private volatile WorkflowDefinitionConfiguration
+	private static volatile WorkflowDefinitionConfiguration
 		_workflowDefinitionConfiguration;
 
 }

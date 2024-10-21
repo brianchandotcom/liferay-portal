@@ -109,6 +109,10 @@ public interface PortletConfigurationIcon {
 
 	public double getWeight();
 
+	public default boolean hasSeparator() {
+		return false;
+	}
+
 	public boolean include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

@@ -199,11 +199,6 @@ public class AccountServiceUpgradeStepRegistrator
 				}
 
 			});
-
-		registry.register(
-			"2.11.0", "2.11.1",
-			new com.liferay.account.internal.upgrade.v2_11_1.
-				AccountRoleResourceUpgradeProcess());
 	}
 
 	@Reference

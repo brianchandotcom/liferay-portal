@@ -164,6 +164,10 @@
 		<finder name="Active" return-type="Collection">
 			<finder-column name="active" />
 		</finder>
+		<finder name="ERC_C" return-type="KaleoDefinition">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="C_N" return-type="KaleoDefinition">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

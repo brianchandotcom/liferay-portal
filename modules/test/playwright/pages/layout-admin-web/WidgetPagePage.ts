@@ -119,7 +119,7 @@ export class WidgetPagePage {
 
 		await this.page
 			.getByRole('menuitem', {
-				name: 'Remove',
+				name: 'Delete',
 			})
 			.click();
 	}

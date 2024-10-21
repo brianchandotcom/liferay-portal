@@ -486,7 +486,7 @@ definition {
 
 		Click(locator1 = "Portlet#SPECIFIC_ELLIPSIS_ICON");
 
-		MenuItem.clickNoError(menuItem = "Remove");
+		MenuItem.clickNoError(menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to remove this component?");
 	}
@@ -886,9 +886,9 @@ definition {
 			value1 = "Permissions");
 
 		AssertTextEquals(
-			key_menuItem = "Remove",
+			key_menuItem = "Delete",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Remove");
+			value1 = "Delete");
 	}
 
 	@summary = "Default summary"

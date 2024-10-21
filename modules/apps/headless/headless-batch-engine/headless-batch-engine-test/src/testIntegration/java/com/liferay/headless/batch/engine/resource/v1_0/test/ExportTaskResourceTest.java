@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -115,7 +113,7 @@ public class ExportTaskResourceTest {
 	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_logCaptures.add(
 			LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
@@ -126,6 +124,33 @@ public class ExportTaskResourceTest {
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR));
+
+		_contentExportTaskResource = ExportTaskResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).header(
+			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
+		).build();
+
+		_exportTaskResource = ExportTaskResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).header(
+			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
+		).parameter(
+			"siteId", String.valueOf(TestPropsValues.getGroupId())
+		).build();
+
+		_importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).header(
+			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
+		).header(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON
+		).parameter(
+			"siteId", String.valueOf(TestPropsValues.getGroupId())
+		).build();
 	}
 
 	@After
@@ -134,7 +159,7 @@ public class ExportTaskResourceTest {
 	}
 
 	@Test
-	public void testPostExportTask() throws Exception {
+	public void testPostExportTask() {
 		Assert.assertFalse(_testableClassNames.isEmpty());
 
 		StringBundler sb = new StringBundler();
@@ -204,40 +229,22 @@ public class ExportTaskResourceTest {
 	}
 
 	private void _testPostExportTask(String className) throws Exception {
-		ExportTaskResource.Builder builder = ExportTaskResource.builder();
-
-		ExportTaskResource exportTaskResource = builder.authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).header(
-			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
-		).build();
-
 		Map<String, String> classNamePartsMap = _splitClassName(className);
 
-		Group group = _groupLocalService.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
-
-		builder.parameter("siteId", String.valueOf(group.getGroupId()));
-
-		ExportTask exportTask = exportTaskResource.postExportTask(
+		ExportTask exportTask = _exportTaskResource.postExportTask(
 			classNamePartsMap.get("className"), "jsont", null, null, null,
 			classNamePartsMap.get("taskItemDelegateName"));
 
 		String externalReferenceCode = exportTask.getExternalReferenceCode();
 
 		_assertExecuteStatusEquals(
-			ExportTask.ExecuteStatus.COMPLETED, exportTask, exportTaskResource);
+			ExportTask.ExecuteStatus.COMPLETED, exportTask,
+			_exportTaskResource);
 
 		String json = null;
 
-		exportTaskResource = builder.authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).header(
-			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
-		).build();
-
 		HttpInvoker.HttpResponse httpResponse =
-			exportTaskResource.
+			_contentExportTaskResource.
 				getExportTaskByExternalReferenceCodeContentHttpResponse(
 					externalReferenceCode);
 
@@ -266,18 +273,7 @@ public class ExportTaskResourceTest {
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).header(
-			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
-		).header(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON
-		).build();
-
-		builder.parameter("siteId", String.valueOf(group.getGroupId()));
-
-		ImportTask importTask = importTaskResource.postImportTask(
+		ImportTask importTask = _importTaskResource.postImportTask(
 			classNamePartsMap.get("className"), null, "UPSERT", null, null,
 			null, classNamePartsMap.get("taskItemDelegateName"),
 			itemsJSONArray);
@@ -286,7 +282,7 @@ public class ExportTaskResourceTest {
 
 		while (true) {
 			importTask =
-				importTaskResource.getImportTaskByExternalReferenceCode(
+				_importTaskResource.getImportTaskByExternalReferenceCode(
 					externalReferenceCode);
 
 			if (Objects.equals(
@@ -327,11 +323,16 @@ public class ExportTaskResourceTest {
 	private static VulcanBatchEngineTaskItemDelegateRegistry
 		_vulcanBatchEngineTaskItemDelegateRegistry;
 
+	private ExportTaskResource _contentExportTaskResource;
+	private ExportTaskResource _exportTaskResource;
+
 	@Inject
 	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private Http _http;
+
+	private ImportTaskResource _importTaskResource;
 
 	@Inject
 	private JSONFactory _jsonFactory;

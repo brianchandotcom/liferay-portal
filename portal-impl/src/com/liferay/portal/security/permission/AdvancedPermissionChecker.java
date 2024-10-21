@@ -892,12 +892,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 						String.valueOf(parentOrganization.getOrganizationId()),
 						getRoleIds(getUserId(), parentGroup.getGroupId()),
 						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch) ||
-					doCheckPermission(
+					(doCheckPermission(
 						parentGroup.getCompanyId(), parentGroup.getGroupId(),
 						Organization.class.getName(),
 						String.valueOf(parentOrganization.getOrganizationId()),
 						getRoleIds(getUserId(), parentGroup.getGroupId()),
-						ActionKeys.UPDATE_SUBORGANIZATIONS, stopWatch)) {
+						ActionKeys.UPDATE_SUBORGANIZATIONS, stopWatch))) {
 
 					return true;
 				}

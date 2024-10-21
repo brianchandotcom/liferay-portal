@@ -19,15 +19,15 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_updatePermission(
-			AccountActionKeys.UPDATE_ORGANIZATIONS, "EDIT_ORGANIZATIONS");
+			"EDIT_ORGANIZATIONS", AccountActionKeys.UPDATE_ORGANIZATIONS);
 		_updatePermission(
-			ActionKeys.UPDATE_SUBORGANIZATIONS, "EDIT_SUBORGANIZATIONS");
+			"EDIT_SUBORGANIZATIONS", ActionKeys.UPDATE_SUBORGANIZATIONS);
 		_updatePermission(
-			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS,
-			"EDIT_SUBORGANIZATIONS_ACCOUNTS");
+			"EDIT_SUBORGANIZATIONS_ACCOUNTS",
+			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS);
 	}
 
-	private void _updatePermission(String newName, String oldName)
+	private void _updatePermission(String oldName, String newName)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

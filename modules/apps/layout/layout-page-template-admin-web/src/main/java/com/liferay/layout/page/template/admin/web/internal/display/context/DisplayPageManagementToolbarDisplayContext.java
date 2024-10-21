@@ -351,6 +351,10 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	private String _getItemSelectorURL() {
+		if (_itemSelectorURL != null) {
+			return _itemSelectorURL;
+		}
+
 		ItemSelector itemSelector =
 			(ItemSelector)httpServletRequest.getAttribute(
 				LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
@@ -362,15 +366,18 @@ public class DisplayPageManagementToolbarDisplayContext
 		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
 
-		return String.valueOf(
+		_itemSelectorURL = String.valueOf(
 			itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(
 					liferayPortletRequest),
 				liferayPortletResponse.getNamespace() + "selectFolder",
 				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion));
+
+		return _itemSelectorURL;
 	}
 
 	private final DisplayPageDisplayContext _displayPageDisplayContext;
+	private String _itemSelectorURL;
 	private final ThemeDisplay _themeDisplay;
 
 }

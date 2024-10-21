@@ -120,9 +120,11 @@ testForCollections.describe('Tests for Collections', () => {
 			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 			const displayPageTemplateFolderName = getRandomString();
+			const displayPageTemplateFolderDescription = getRandomString();
 
 			await displayPageTemplatesPage.createFolder(
-				displayPageTemplateFolderName
+				displayPageTemplateFolderName,
+				displayPageTemplateFolderDescription
 			);
 
 			// Create a display page template for Blogs Entry
@@ -180,6 +182,10 @@ testForCollections.describe('Tests for Collections', () => {
 			await expect(
 				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
 			).toContainText('Description');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
+			).toContainText(displayPageTemplateFolderDescription);
 
 			// Check display page info panel
 

@@ -103,6 +103,11 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
+	public boolean hasSeparator() {
+		return true;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

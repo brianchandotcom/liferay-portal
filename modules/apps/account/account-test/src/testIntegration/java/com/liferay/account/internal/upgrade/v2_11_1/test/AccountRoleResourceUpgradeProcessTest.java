@@ -9,15 +9,12 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -37,80 +34,51 @@ public class AccountRoleResourceUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(new LiferayIntegrationTestRule());
 
 	@Test
 	public void testAccountRoleResourceUpgradeProcess() throws Exception {
 		_resourceActionLocalService.addResourceAction(
 			AccountEntry.class.getName(), "EDIT_ORGANIZATIONS",
 			RandomTestUtil.randomLong());
-		_removeConflictingResourceActions(
-			AccountEntry.class.getName(),
-			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		_resourceActionLocalService.addResourceAction(
 			Organization.class.getName(), "EDIT_SUBORGANIZATIONS",
 			RandomTestUtil.randomLong());
-		_removeConflictingResourceActions(
-			Organization.class.getName(), ActionKeys.UPDATE_SUBORGANIZATIONS);
 
 		_resourceActionLocalService.addResourceAction(
-			Organization.class.getName(), "EDIT_SUBORGANIZATIONS_ACCOUNTS",
+			Organization.class.getName(), "EDIT_SUBORGANIZATION_ACCOUNTS",
 			RandomTestUtil.randomLong());
-		_removeConflictingResourceActions(
-			Organization.class.getName(),
-			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS);
 
 		_runUpgrade();
 
 		CacheRegistryUtil.clear();
-		_entityCache.clearCache(ResourceActionImpl.class);
-		_finderCache.clearCache(ResourceActionImpl.class);
 
-		_resourceActionLocalService.checkResourceActions();
-
-		Assert.assertEquals(
-			0,
-			_resourceActionLocalService.getResourceActions(
-				"EDIT_ORGANIZATIONS"
-			).size());
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				AccountEntry.class.getName(), "EDIT_ORGANIZATIONS"));
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				AccountEntry.class.getName(),
 				AccountActionKeys.UPDATE_ORGANIZATIONS));
 
-		Assert.assertEquals(
-			0,
-			_resourceActionLocalService.getResourceActions(
-				"EDIT_SUBORGANIZATIONS"
-			).size());
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				Organization.class.getName(), "EDIT_SUBORGANIZATIONS"));
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),
 				ActionKeys.UPDATE_SUBORGANIZATIONS));
 
-		Assert.assertEquals(
-			0,
-			_resourceActionLocalService.getResourceActions(
-				"EDIT_SUBORGANIZATIONS_ACCOUNTS"
-			).size());
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				Organization.class.getName(),
+				"EDIT_SUBORGANIZATIONS_ACCOUNTS"));
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),
 				AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS));
-	}
-
-	private void _removeConflictingResourceActions(
-		String className, String actionId) {
-
-		ResourceAction resourceAction =
-			_resourceActionLocalService.fetchResourceAction(
-				className, actionId);
-
-		if (resourceAction != null) {
-			_resourceActionLocalService.deleteResourceAction(resourceAction);
-		}
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -131,11 +99,5 @@ public class AccountRoleResourceUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.account.internal.upgrade.registry.AccountServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private EntityCache _entityCache;
-
-	@Inject
-	private FinderCache _finderCache;
 
 }

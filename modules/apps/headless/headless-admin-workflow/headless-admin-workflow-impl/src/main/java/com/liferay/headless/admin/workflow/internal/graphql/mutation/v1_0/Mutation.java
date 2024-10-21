@@ -7,6 +7,7 @@ package com.liferay.headless.admin.workflow.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinitionLink;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
@@ -17,6 +18,7 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignableUsers;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskIds;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskTransitions;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTasksBulkSelection;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionLinkResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
@@ -61,6 +63,14 @@ public class Mutation {
 
 		_workflowDefinitionResourceComponentServiceObjects =
 			workflowDefinitionResourceComponentServiceObjects;
+	}
+
+	public static void setWorkflowDefinitionLinkResourceComponentServiceObjects(
+		ComponentServiceObjects<WorkflowDefinitionLinkResource>
+			workflowDefinitionLinkResourceComponentServiceObjects) {
+
+		_workflowDefinitionLinkResourceComponentServiceObjects =
+			workflowDefinitionLinkResourceComponentServiceObjects;
 	}
 
 	public static void setWorkflowInstanceResourceComponentServiceObjects(
@@ -269,6 +279,39 @@ public class Mutation {
 			workflowDefinitionResource ->
 				workflowDefinitionResource.putWorkflowDefinitionBatch(
 					callbackURL, object));
+	}
+
+	@GraphQLField
+	public WorkflowDefinitionLink
+			createWorkflowDefinitionLinkByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("workflowDefinitionLink") WorkflowDefinitionLink
+					workflowDefinitionLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionLinkResource ->
+				workflowDefinitionLinkResource.
+					postWorkflowDefinitionLinkByExternalReferenceCode(
+						externalReferenceCode, workflowDefinitionLink));
+	}
+
+	@GraphQLField
+	public WorkflowDefinitionLink createWorkflowDefinitionLink(
+			@GraphQLName("workflowDefinitionId") Long workflowDefinitionId,
+			@GraphQLName("workflowDefinitionLink") WorkflowDefinitionLink
+				workflowDefinitionLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionLinkResource ->
+				workflowDefinitionLinkResource.postWorkflowDefinitionLink(
+					workflowDefinitionId, workflowDefinitionLink));
 	}
 
 	@GraphQLField
@@ -636,6 +679,29 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			WorkflowDefinitionLinkResource workflowDefinitionLinkResource)
+		throws Exception {
+
+		workflowDefinitionLinkResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		workflowDefinitionLinkResource.setContextCompany(_company);
+		workflowDefinitionLinkResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		workflowDefinitionLinkResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		workflowDefinitionLinkResource.setContextUriInfo(_uriInfo);
+		workflowDefinitionLinkResource.setContextUser(_user);
+		workflowDefinitionLinkResource.setGroupLocalService(_groupLocalService);
+		workflowDefinitionLinkResource.setRoleLocalService(_roleLocalService);
+
+		workflowDefinitionLinkResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		workflowDefinitionLinkResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			WorkflowInstanceResource workflowInstanceResource)
 		throws Exception {
 
@@ -738,6 +804,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<WorkflowDefinitionResource>
 		_workflowDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WorkflowDefinitionLinkResource>
+		_workflowDefinitionLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowInstanceResource>
 		_workflowInstanceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowLogResource>

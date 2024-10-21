@@ -586,12 +586,12 @@ public class EditInfoItemStrutsActionValidationTest {
 		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 			inputFragmentEntryLink.getEditableValues());
 
-		JSONObject freemarkerEntryProcessorJSONObject =
+		JSONObject freeMarkerEntryProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-		freemarkerEntryProcessorJSONObject.put("inputRequired", true);
+		freeMarkerEntryProcessorJSONObject.put("inputRequired", true);
 
 		inputFragmentEntryLink =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(

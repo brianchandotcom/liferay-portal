@@ -639,14 +639,16 @@ definition {
 	@priority = 5
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property portal.acceptance = "quarantine";
-		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var openIdConnectClientSecret = PropsUtil.get("openid.provider.google.client.secret.1");
-		var osgiConfigFileName = "googleClient1.json";
-		var userEmailAddress = PropsUtil.get("email.address.2");
-		var userPassword = PropsUtil.get("email.password.2");
+		var openIdConnectClientSecret = PropsUtil.get("openid.provider.default.client.password");
+		var userEmailAddress = "user1";
+		var osgiConfigFileName = "keycloak.json";
+
+		task ("Startup Keycloak for test") {
+			AntCommands.runCommand("build-test-keycloak.xml", "prepare-selenium-keycloak-server");
+		}
 
 		task ("Add CP") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -659,11 +661,11 @@ definition {
 			User.firstLoginUI(
 				domain = "www.able.com",
 				password = PropsUtil.get("default.admin.password"),
-				specificURL = "https://www.able.com:8443",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "https://www.able.com:8443",
+				baseURL = "http://www.able.com:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenID Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -671,23 +673,35 @@ definition {
 			PortalSettings.enableOpenIDConnectCP();
 		}
 
+		task ("And: Add Auth Server Local Metadata") {
+			OAuthClient.openOAuthClientAdmin(
+				baseURL = "http://www.able.com:8080",
+				navbar = "Auth Server Local Metadata");
+
+			OAuthClient.addAuthServer(jsonFileName = "keycloak-local-metadata.json");
+
+			var wellknownURI = OAuthClient.getWellKnownURI();
+		}
+
 		task ("Add OAuth Client") {
 			OAuthClient.openOAuthClientAdmin(
-				baseURL = "https://www.able.com:8443",
+				baseURL = "http://www.able.com:8080",
 				navbar = "Clients");
 
 			AntCommands.runCommand("build-test-openid-connect.xml", "prepare-openid-connect-json-configuration -DopenIdConnectClientSecret=${openIdConnectClientSecret} -Dosgi.config.file.name=${osgiConfigFileName}");
 
-			OAuthClient.addClient(jsonFileName = "googleClient1.json");
+			OAuthClient.addClient(
+				jsonFileName = "keycloak.json",
+				wellknownURI = ${wellknownURI});
 		}
 
 		task ("Sign out and Login at able.com with OpenID Connect enabled") {
 			UserBar.signOut();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				specificURL = "https://www.able.com:8443",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = ${userEmailAddress},
-				userPassword = ${userPassword});
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Sign out and Login") {
@@ -695,7 +709,7 @@ definition {
 
 			User.firstLoginUI(
 				password = PropsUtil.get("default.admin.password"),
-				specificURL = "https://www.able.com:8443",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
 	}

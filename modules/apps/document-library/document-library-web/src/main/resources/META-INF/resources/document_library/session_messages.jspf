@@ -7,7 +7,7 @@
 
 <%
 String friendlyURLChangedMessage = GetterUtil.getString(SessionMessages.get(request, "friendlyURLChanged_requestProcessedWarning"));
-String scheduledDocumentMessage = GetterUtil.getString(SessionMessages.get(request, "scheduledDocumentRequestProcessedSuccess"));
+String scheduledDocumentMessage = GetterUtil.getString(SessionMessages.get(request, "scheduledDocument_requestProcessedSuccess"));
 %>
 
 <c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">

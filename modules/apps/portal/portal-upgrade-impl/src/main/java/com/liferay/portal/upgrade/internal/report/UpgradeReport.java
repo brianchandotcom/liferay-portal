@@ -553,19 +553,19 @@ public class UpgradeReport {
 			() -> {
 				List<FailedSQL> failedSQLs = new ArrayList<>();
 
-				List<String> failedSQLQueries = upgradeRecorder.getFailedSQLs();
+				List<String> failedSQLStrings = upgradeRecorder.getFailedSQLs();
 
-				for (String failedSQLQuery : failedSQLQueries) {
-					String sql = failedSQLQuery;
+				for (String failedSQLString : failedSQLStrings) {
+					String sql = failedSQLString;
 
 					String message = StringPool.BLANK;
 
-					if (failedSQLQuery.contains(StringPool.PIPE)) {
-						int index = failedSQLQuery.indexOf(StringPool.PIPE);
+					if (failedSQLString.contains(StringPool.PIPE)) {
+						int index = failedSQLString.indexOf(StringPool.PIPE);
 
-						sql = failedSQLQuery.substring(0, index);
+						sql = failedSQLString.substring(0, index);
 
-						message = failedSQLQuery.substring(index + 1);
+						message = failedSQLString.substring(index + 1);
 					}
 
 					failedSQLs.add(new FailedSQL(message, sql));

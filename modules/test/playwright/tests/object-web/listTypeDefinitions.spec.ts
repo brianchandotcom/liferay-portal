@@ -11,6 +11,7 @@ import {
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPagesTest';
@@ -22,6 +23,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 export const test = mergeTests(
 	accountSettingsPagesTest,
 	apiHelpersTest,
+	dataApiHelpersTest,
 	formsPagesTest,
 	isolatedSiteTest,
 	listTypeDefinitionsPagesTest,
@@ -90,7 +92,7 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		createdEntities.listTypeDefinitions.push(listTypeDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
 
 		await listTypeDefinitionPage.goto();
 
@@ -116,7 +118,7 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		createdEntities.listTypeDefinitions.push(listTypeDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
 
 		await listTypeDefinitionPage.goto();
 
@@ -133,7 +135,7 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		createdEntities.listTypeDefinitions.push(listTypeDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
 
 		await listTypeDefinitionPage.goto();
 
@@ -208,7 +210,7 @@ test.describe('ensure picklist translation', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		createdEntities.listTypeDefinitions.push(listTypeDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
 
 		const listTypeDefinitionName: string = listTypeDefinition.name;
 
@@ -229,7 +231,7 @@ test.describe('ensure picklist translation', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 		await page.goto('/');
 
@@ -288,7 +290,7 @@ test.describe('ensure picklist translation', () => {
 		const listTypeDefinition: ListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		createdEntities.listTypeDefinitions.push(listTypeDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'});
 
 		const listTypeDefinitionName: string = listTypeDefinition.name;
 
@@ -321,7 +323,8 @@ test.describe('ensure picklist translation', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
 
 		await viewObjectDefinitionsPage.goto();
 

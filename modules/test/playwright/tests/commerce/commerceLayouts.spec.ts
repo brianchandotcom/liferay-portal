@@ -20,6 +20,8 @@ import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {customFormatDate, getDateCustomFormat} from './utils/date';
 
 export const test = mergeTests(
@@ -2607,4 +2609,163 @@ test('LPD-34399 Quick checkout from order actions fragment', async ({
 			await page.getByLabel('COMMERCE-9410').click();
 		}
 	}
+});
+
+test('LPD-38261 All commerce widgets work in a content page', async ({
+	apiHelpers,
+	page,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_discount_content_web_internal_portlet_CommerceDiscountContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentMiniPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_order_content_web_internal_portlet_CommerceReturnContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_shipment_content_web_internal_portlet_CommerceShipmentContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_wish_list_web_internal_portlet_MyCommerceWishListsPortlet',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await page.goto(
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
+
+	await expect(page.getByText('is temporarily unavailable.')).toHaveCount(0);
 });

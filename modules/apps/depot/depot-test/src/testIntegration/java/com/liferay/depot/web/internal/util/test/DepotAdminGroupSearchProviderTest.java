@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -196,7 +197,10 @@ public class DepotAdminGroupSearchProviderTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}

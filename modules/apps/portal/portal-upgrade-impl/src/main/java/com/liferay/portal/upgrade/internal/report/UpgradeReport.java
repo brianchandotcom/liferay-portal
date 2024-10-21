@@ -1178,8 +1178,8 @@ public class UpgradeReport {
 			}
 
 			return StringBundler.concat(
-				StringPool.TAB, _upgradeProcessClassName, " took ",
-				_timeDescription, " ms to complete");
+				_upgradeProcessClassName, " took ", _timeDescription,
+				" ms to complete\n");
 		}
 
 		private final String _timeDescription;

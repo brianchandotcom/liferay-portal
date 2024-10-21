@@ -11,11 +11,17 @@ import {
 	ObjectRelationship,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
+	loginTest(),
+	objectPagesTest
+);
 
 const createdEntities = {
 	objectDefinitionIds: [],
@@ -68,7 +74,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -83,10 +89,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -147,7 +157,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -162,10 +172,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -194,7 +208,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await expect(
 			modelBuilderDiagramPage.objectRelationshipEdges.filter({
@@ -226,7 +243,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -241,10 +258,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -265,7 +286,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await expect(
 			modelBuilderDiagramPage.objectRelationshipEdges.filter({
@@ -307,7 +331,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -322,10 +346,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -349,7 +377,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await expect(
 			modelBuilderDiagramPage.objectRelationshipEdges.filter({
@@ -370,7 +401,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -392,11 +423,18 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id,
-			objectDefinition3.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition3.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -431,7 +469,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -460,7 +501,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship2.id);
+		apiHelpers.data.push({
+			id: objectRelationship2.id,
+			type: 'objectRelationship',
+		});
 
 		await expect(
 			modelBuilderDiagramPage.objectRelationshipEdges.filter({
@@ -491,7 +535,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -500,7 +544,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(objectDefinition.id);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipDetails: {
 			label: string;
@@ -546,7 +593,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 						requestBody: objectRelationshipData,
 					}
 				);
-			createdEntities.objectRelationshipIds.push(objectRelationship.id);
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
 		}
 
 		await viewObjectDefinitionsPage.goto();
@@ -595,7 +645,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -610,10 +660,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -646,7 +700,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -704,7 +761,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -719,10 +776,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -757,7 +818,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -812,7 +876,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectDefinitionIds.push(objectDefinition1.id);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -858,7 +925,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		createdEntities.objectFolderIds.push(objectFolder.id);
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -875,10 +942,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 1},
 			});
 
-		createdEntities.objectDefinitionIds.push(
-			objectDefinition1.id,
-			objectDefinition2.id
-		);
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -911,7 +982,10 @@ test.describe('Manage object relationships through Model Builder', () => {
 				}
 			);
 
-		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		const publishedObjectDefinition2 =
 			await objectAdminRestClient.objectDefinition.postObjectDefinitionPublish(

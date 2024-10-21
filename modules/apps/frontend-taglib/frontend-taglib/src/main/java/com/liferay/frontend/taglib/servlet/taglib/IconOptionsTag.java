@@ -156,6 +156,11 @@ public class IconOptionsTag extends IncludeTag {
 							dropdownItem.setLabel(
 								portletConfigurationIcon.getMessage(
 									_getPortletRequest()));
+
+							if (portletConfigurationIcon.hasSeparator()) {
+								dropdownItem.setSeparator(true);
+							}
+
 							dropdownItem.setTarget(
 								portletConfigurationIcon.getTarget());
 						});

@@ -12,19 +12,11 @@ import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -39,7 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,10 +53,6 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addCompanyAdminUser(_company);
-
 		_objectDefinitionResource.setContextAcceptLanguage(
 			new AcceptLanguage() {
 
@@ -85,158 +72,84 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 				}
 
 			});
-		_objectDefinitionResource.setContextCompany(_company);
-		_objectDefinitionResource.setContextUser(user);
-
-		_originalName = PrincipalThreadLocal.getName();
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			_permissionCheckerFactory.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(_originalName);
+		_objectDefinitionResource.setContextCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		_objectDefinitionResource.setContextUser(TestPropsValues.getUser());
 	}
 
 	@Test
 	public void testCreate() throws Exception {
-		ObjectDefinition objectDefinition1 = _createObjectDefinition(
-			"approved");
-
-		objectDefinition1.setStatus(
-			new Status() {
-				{
-					code = Integer.valueOf(WorkflowConstants.STATUS_APPROVED);
-					label = "approved";
-					label_i18n = "Approved";
-				}
-			});
-
-		ObjectDefinition objectDefinition2 = _createObjectDefinition("draft");
-
-		objectDefinition2.setStatus(
-			new Status() {
-				{
-					code = Integer.valueOf(WorkflowConstants.STATUS_DRAFT);
-					label = "draft";
-					label_i18n = "Draft";
-				}
-			});
-
 		VulcanBatchEngineTaskItemDelegate<ObjectDefinition>
 			vulcanBatchEngineTaskItemDelegate =
 				(VulcanBatchEngineTaskItemDelegate<ObjectDefinition>)
 					_objectDefinitionResource;
 
+		ObjectDefinition objectDefinition1 = _createObjectDefinition(
+			WorkflowConstants.STATUS_APPROVED);
+		ObjectDefinition objectDefinition2 = _createObjectDefinition(
+			WorkflowConstants.STATUS_DRAFT);
+
 		vulcanBatchEngineTaskItemDelegate.create(
 			Arrays.asList(objectDefinition1, objectDefinition2),
 			Collections.emptyMap());
+
+		_assertObjectDefinitionActive(true, objectDefinition1);
+		_assertObjectDefinitionActive(false, objectDefinition2);
+	}
+
+	private void _assertObjectDefinitionActive(
+			boolean expectedActive, ObjectDefinition objectDefinition)
+		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
 				_objectDefinitionLocalService.
 					fetchObjectDefinitionByExternalReferenceCode(
-						objectDefinition1.getExternalReferenceCode(),
-						_company.getCompanyId());
+						objectDefinition.getExternalReferenceCode(),
+						TestPropsValues.getCompanyId());
 
-		Assert.assertNotNull(serviceBuilderObjectDefinition);
-		Assert.assertTrue(serviceBuilderObjectDefinition.isActive());
-
-		serviceBuilderObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					objectDefinition2.getExternalReferenceCode(),
-					_company.getCompanyId());
-
-		Assert.assertNotNull(serviceBuilderObjectDefinition);
-		Assert.assertFalse(serviceBuilderObjectDefinition.isActive());
+		Assert.assertEquals(
+			expectedActive, serviceBuilderObjectDefinition.isActive());
 	}
 
-	private ObjectDefinition _createObjectDefinition(String name) {
-		String finalName = name.toLowerCase(LocaleUtil.getDefault());
-		boolean finalSystem = RandomTestUtil.randomBoolean();
-
+	private ObjectDefinition _createObjectDefinition(int statusCode) {
 		return new ObjectDefinition() {
 			{
-				accountEntryRestricted = false;
-				accountEntryRestrictedObjectFieldName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				active = false;
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				enableCategorization = RandomTestUtil.randomBoolean();
-				enableComments = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
-				label = Collections.singletonMap("en_US", "Test" + finalName);
-				modifiable = !finalSystem;
-				name = "Test" + finalName;
-				objectFields = new ObjectField[] {_createObjectField()};
-				panelAppOrder = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				panelCategoryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				parameterRequired = RandomTestUtil.randomBoolean();
-				pluralLabel = Collections.singletonMap(
-					"en_US", "Test" + finalName + "s");
-				portlet = RandomTestUtil.randomBoolean();
-				restContextPath = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				scope = ObjectDefinitionConstants.SCOPE_COMPANY;
-				system = finalSystem;
-				titleObjectFieldName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-
-				setStorageType(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
-							return StringPool.BLANK;
+				label = Collections.singletonMap(
+					"en_US", RandomTestUtil.randomString());
+				name = ObjectDefinitionTestUtil.getRandomName();
+				objectFields = new ObjectField[] {
+					new ObjectField() {
+						{
+							businessType = BusinessType.TEXT;
+							label = Collections.singletonMap(
+								"en_US", RandomTestUtil.randomString());
+							name = "a" + RandomTestUtil.randomString();
 						}
-
-						return StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-					});
+					}
+				};
+				pluralLabel = Collections.singletonMap(
+					"en_US", RandomTestUtil.randomString());
+				scope = ObjectDefinitionConstants.SCOPE_COMPANY;
+				status = new Status() {
+					{
+						code = statusCode;
+					}
+				};
 			}
 		};
 	}
 
-	private ObjectField _createObjectField() {
-		return new ObjectField() {
-			{
-				businessType = BusinessType.TEXT;
-				DBType = ObjectField.DBType.create("String");
-				indexed = false;
-				indexedAsKeyword = false;
-				label = Collections.singletonMap("en_US", "Column");
-				name = "column";
-				readOnly = ReadOnly.FALSE;
-				required = false;
-				system = false;
-			}
-		};
-	}
-
-	@DeleteAfterTestRun
-	private Company _company;
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectDefinitionResource _objectDefinitionResource;
-
-	private String _originalName;
-	private PermissionChecker _originalPermissionChecker;
-
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 }

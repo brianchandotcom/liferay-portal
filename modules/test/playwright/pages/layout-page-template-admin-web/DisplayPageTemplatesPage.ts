@@ -164,7 +164,7 @@ export class DisplayPageTemplatesPage {
 		);
 	}
 
-	async createFolder(name: string) {
+	async createFolder(name: string, description?: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Folder'}),
@@ -175,8 +175,11 @@ export class DisplayPageTemplatesPage {
 
 		await this.page.getByLabel('Name').fill(name);
 
-		await this.page.getByRole('button', {name: 'Create'}).click();
+		if (description) {
+			await this.page.getByLabel('Description').fill(description);
+		}
 
+		await this.page.getByRole('button', {name: 'Create'}).click();
 		await waitForAlert(this.page);
 	}
 

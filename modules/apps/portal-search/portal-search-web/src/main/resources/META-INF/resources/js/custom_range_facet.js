@@ -277,7 +277,10 @@ AUI.add(
 					instance.searchCustomRangeToggleName
 				);
 
-				if (!searchCustomRangeToggle?.hasAttribute('data-term-id')) {
+				if (
+					!searchCustomRangeToggle?.hasAttribute('data-term-id') ||
+					searchCustomRangeToggle?.type === 'radio'
+				) {
 					parameterArray = CustomRangeFacetUtil.removeURLParameters(
 						param,
 						parameterArray

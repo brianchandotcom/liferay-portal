@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -203,8 +204,9 @@ public class DropZoneFragmentEntryLinkListener
 
 			if (childrenItemIds.size() > elements.size()) {
 				layoutStructure.markLayoutStructureItemForDeletion(
-					childrenItemIds.subList(
-						elements.size(), childrenItemIds.size()),
+					new ArrayList<>(
+						childrenItemIds.subList(
+							elements.size(), childrenItemIds.size())),
 					Collections.emptyList());
 			}
 			else {

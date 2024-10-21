@@ -10,12 +10,14 @@ import {
 	ObjectDefinition,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	headlessBuilderPagesTest(),
 	headlessDiscoveryPagesTest
@@ -35,42 +37,6 @@ const application = {
 	description: 'Test API Application',
 	externalReferenceCode: 'basic-application',
 	title: 'Basic application',
-};
-
-const objectDefinitionData: ObjectDefinition = {
-	active: true,
-	externalReferenceCode: `objectDefinition`,
-	label: {
-		en_US: `objectDefinition`,
-	},
-	name: `ObjectDefinition`,
-	objectFields: [
-		{
-			DBType: 'String',
-			businessType: 'Text',
-			externalReferenceCode: 'ObjectFieldERC',
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: 'en_US',
-			label: {
-				en_US: 'Object Field',
-			},
-			listTypeDefinitionId: 0,
-			name: 'objectField',
-			required: false,
-			state: false,
-			system: false,
-			type: 'String',
-		},
-	],
-	pluralLabel: {
-		en_US: `objectDefinitions`,
-	},
-	portlet: true,
-	scope: 'company',
-	status: {
-		code: 0,
-	},
 };
 
 test('can associate and disassociate schema', async ({
@@ -139,14 +105,13 @@ test('can see available path parameter properties of a singleElement endpoint', 
 	headlessBuilderPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
 	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: objectDefinitionData,
-		});
+		(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		})) as ObjectDefinition;
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.addNewApplicationButton.click();
@@ -177,9 +142,6 @@ test('can see available path parameter properties of a singleElement endpoint', 
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.deleteApplication('My-app');
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
 });
 
 test('can see path parameter property with map details', async ({
@@ -188,14 +150,13 @@ test('can see path parameter property with map details', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
 	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: objectDefinitionData,
-		});
+		(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		})) as ObjectDefinition;
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.addNewApplicationButton.click();
@@ -232,9 +193,6 @@ test('can see path parameter property with map details', async ({
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.deleteApplication('My-app');
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
 });
 
 test('can see schema unique fields as path parameter properties', async ({

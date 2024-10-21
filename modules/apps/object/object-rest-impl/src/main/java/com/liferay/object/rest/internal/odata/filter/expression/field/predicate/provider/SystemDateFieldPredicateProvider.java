@@ -60,7 +60,7 @@ public class SystemDateFieldPredicateProvider
 
 		if (right instanceof Date) {
 			return _getDateTimePredicate(
-				(Date)right, expression, date -> date, operation);
+				(Date)right, expression, Function.identity(), operation);
 		}
 
 		String valueString = (String)right;

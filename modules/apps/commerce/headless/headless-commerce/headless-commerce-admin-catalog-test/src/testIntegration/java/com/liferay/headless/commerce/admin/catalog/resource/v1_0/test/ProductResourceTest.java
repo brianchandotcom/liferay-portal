@@ -691,10 +691,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			postProduct.getId());
 
-		CPInstance cpInstance = cpDefinition.getCPInstances(
-		).get(
-			0
-		);
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		CPInstance cpInstance = cpInstances.get(0);
 
 		Assert.assertEquals(
 			cpInstance.getStatus(), WorkflowConstants.STATUS_APPROVED);

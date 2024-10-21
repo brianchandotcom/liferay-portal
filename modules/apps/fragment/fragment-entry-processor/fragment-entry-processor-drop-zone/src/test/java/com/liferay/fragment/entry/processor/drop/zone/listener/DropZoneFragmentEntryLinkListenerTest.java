@@ -15,6 +15,7 @@ import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -114,7 +116,8 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
+		_assertUpdateLayoutPageTemplateStructureData(
+			true, new String[0], fragmentEntryLink);
 	}
 
 	@Test
@@ -164,7 +167,8 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
+		_assertUpdateLayoutPageTemplateStructureData(
+			true, new String[0], fragmentEntryLink);
 	}
 
 	@Test
@@ -186,7 +190,8 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
+		_assertUpdateLayoutPageTemplateStructureData(
+			true, new String[0], fragmentEntryLink);
 	}
 
 	@Test
@@ -229,6 +234,46 @@ public class DropZoneFragmentEntryLinkListenerTest {
 				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),
 			new KeyValuePair(
 				dropZoneId2, fragmentDropZoneLayoutStructureItem2.getItemId()));
+	}
+
+	@Test
+	@TestInfo("LPD-39780")
+	public void testProcessFragmentEntryLinkHTMLInEditRemovingDropZonesWithoutIds()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		FragmentDropZoneLayoutStructureItem[]
+			fragmentDropZoneLayoutStructureItems =
+				FragmentEntryProcessorDropZoneTestUtil.
+					addFragmentDropZoneLayoutStructureItems(
+						fragmentEntryLink, layoutStructure, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK);
+
+		_setUpFragmentEntryProcessorRegistry(
+			fragmentEntryLink,
+			FragmentEntryProcessorDropZoneTestUtil.getHTML(StringPool.BLANK));
+
+		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem =
+				fragmentDropZoneLayoutStructureItems[0];
+
+		_assertUpdateLayoutPageTemplateStructureData(
+			false,
+			TransformUtil.transform(
+				ArrayUtil.subset(fragmentDropZoneLayoutStructureItems, 1, 2),
+				curFragmentDropZoneLayoutStructureItem ->
+					curFragmentDropZoneLayoutStructureItem.getItemId(),
+				String.class),
+			fragmentEntryLink,
+			new KeyValuePair(
+				StringPool.BLANK,
+				fragmentDropZoneLayoutStructureItem.getItemId()));
 	}
 
 	@Test
@@ -281,7 +326,8 @@ public class DropZoneFragmentEntryLinkListenerTest {
 	}
 
 	private void _assertUpdateLayoutPageTemplateStructureData(
-			boolean never, FragmentEntryLink fragmentEntryLink,
+			boolean never, String[] deletedItemIds,
+			FragmentEntryLink fragmentEntryLink,
 			KeyValuePair... dropZoneIdItemIdKeyValuePairs)
 		throws Exception {
 
@@ -387,6 +433,11 @@ public class DropZoneFragmentEntryLinkListenerTest {
 				Assert.assertEquals(itemId, layoutStructureItem.getItemId());
 			}
 		}
+
+		for (String deletedItemId : deletedItemIds) {
+			Assert.assertTrue(
+				layoutStructure.isItemMarkedForDeletion(deletedItemId));
+		}
 	}
 
 	private void _assertUpdateLayoutPageTemplateStructureData(
@@ -395,7 +446,8 @@ public class DropZoneFragmentEntryLinkListenerTest {
 		throws Exception {
 
 		_assertUpdateLayoutPageTemplateStructureData(
-			false, fragmentEntryLink, dropZoneIdItemIdKeyValuePairs);
+			false, new String[0], fragmentEntryLink,
+			dropZoneIdItemIdKeyValuePairs);
 	}
 
 	private void _assertUpdateLayoutPageTemplateStructureData(

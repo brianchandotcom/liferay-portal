@@ -99,7 +99,7 @@ public class OrganizationPermissionUtil {
 				(permissionChecker.hasPermission(
 					groupId, Organization.class.getName(),
 					organization.getOrganizationId(),
-					ActionKeys.UPDATE_SUBORGANIZATIONS) ||
+					ActionKeys.EDIT_SUBORGANIZATIONS) ||
 				 permissionChecker.hasPermission(
 					 groupId, Organization.class.getName(),
 					 organization.getOrganizationId(),

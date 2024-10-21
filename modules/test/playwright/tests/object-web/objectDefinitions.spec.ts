@@ -11,8 +11,8 @@ import {
 	ObjectFolder,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -87,7 +87,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		const commerceOrderItemLabel = 'Commerce Order Item';
 
-		apiHelpers.data.push({id: objectDefinition.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -146,7 +149,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 					objectDefinitionLabel
 				);
 
-			apiHelpers.data.push({id: objectDefinition.id, type: "objectDefinition"});
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
 
 			const rightSidebar =
 				modelBuilderRightSidebarPage.getRightSidebarLocator(
@@ -188,7 +194,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 				objectDefinitionLabel
 			);
 
-		apiHelpers.data.push({id: objectDefinition.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		expect(page.getByText(objectDefinitionLabel)).toBeVisible();
 
@@ -225,8 +234,14 @@ test.describe('Manage object definitions through Model Builder', () => {
 				status: {code: 2},
 			});
 
-		apiHelpers.data.push({id: objectDefinition1.id, type: "objectDefinition"});
-		apiHelpers.data.push({id: objectDefinition2.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -277,8 +292,14 @@ test.describe('Manage object definitions through Model Builder', () => {
 				'ObjectDefinition' + getRandomInt()
 			);
 
-		apiHelpers.data.push({id: objectDefinition1.id, type: "objectDefinition"});
-		apiHelpers.data.push({id: objectDefinition2.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.toggleSidebarsButton.click();
 
@@ -330,8 +351,14 @@ test.describe('Manage object definitions through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition1.id, type: "objectDefinition"});
-		apiHelpers.data.push({id: objectDefinition2.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -442,7 +469,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		apiHelpers.data.push({id: objectFolder.id, type: "objectFolder"});
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
 		const objectAdminRestClient = await apiHelpers.buildRestClient(
 			ObjectAdminRestClient
@@ -476,7 +503,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 				},
 			});
 
-		apiHelpers.data.push({id: department.id, type: "objectDefinition"})
+		apiHelpers.data.push({id: department.id, type: 'objectDefinition'});
 
 		const employee =
 			await objectAdminRestClient.objectDefinition.postObjectDefinition({
@@ -500,7 +527,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 				},
 			});
 
-		apiHelpers.data.push({id: employee.id, type: "objectDefinition"})
+		apiHelpers.data.push({id: employee.id, type: 'objectDefinition'});
 
 		await modelBuilderDiagramPage.goto({
 			objectFolderName: objectFolder.name,
@@ -599,8 +626,14 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 				status: {code: 2},
 			});
 
-		apiHelpers.data.push({id: objectDefinition1.id, type: "objectDefinition"});
-		apiHelpers.data.push({id: objectDefinition2.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -644,7 +677,10 @@ test.describe('Manage object definitions through a Page', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -680,7 +716,10 @@ test.describe('Manage object definitions through a Page', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: "objectDefinition"});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectDefinitionsPage.goto();
 

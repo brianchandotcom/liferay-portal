@@ -11,9 +11,9 @@ import {
 	ObjectField,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -76,8 +76,6 @@ test.describe('Manage object entries through Page Templates', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const {objectDefinitions} = createdEntities;
-
 		const objectFields: ObjectField[] = [
 			{
 				DBType: 'String',
@@ -126,7 +124,10 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 			});
 
-		apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -134,7 +135,10 @@ test.describe('Manage object entries through Page Templates', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -200,9 +204,6 @@ test.describe('Manage object entries through Page Templates', () => {
 		pageEditorPage,
 	}) => {
 		test.slow();
-
-		const {listTypeDefinitions, objectDefinitions} = createdEntities;
-
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
@@ -257,8 +258,14 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 			});
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'})
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
@@ -356,8 +363,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const {listTypeDefinitions, objectDefinitions} = createdEntities;
-
 		const ATTACHMENT_FILE_NAME = 'astronaut.png';
 		const {listTypeDefinition, objectEntry, objectFields} =
 			await mockObjectFields({
@@ -404,8 +409,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'})
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
@@ -516,8 +527,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const {listTypeDefinitions, objectDefinitions} = createdEntities;
-
 		const {listTypeDefinition, objectEntry, objectFields} =
 			await mockObjectFields({
 				apiHelpers,
@@ -563,8 +572,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		listTypeDefinitions.push(listTypeDefinition);
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
@@ -613,8 +628,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const {objectDefinitions} = createdEntities;
-
 		const ATTACHMENT_FILE_NAME = 'astronaut.png';
 		const {objectFields} = await mockObjectFields({
 			apiHelpers,
@@ -647,7 +660,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
@@ -691,8 +707,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const {objectDefinitions} = createdEntities;
-
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'default',
@@ -700,7 +714,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 				titleObjectFieldName: 'textField',
 			});
 
-		apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -708,7 +725,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -772,8 +792,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		apiHelpers,
 		viewObjectEntriesPage,
 	}) => {
-		const {objectDefinitions} = createdEntities;
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
@@ -783,7 +801,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await viewObjectEntriesPage.goto(objectDefinition.id, 'ar');
 
@@ -807,8 +828,6 @@ test.describe('Manage object entries through Workflow', () => {
 		workflowTaskDetailsPage,
 		workflowTasksPage,
 	}) => {
-		const {objectDefinitions} = createdEntities;
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'default',
@@ -816,7 +835,10 @@ test.describe('Manage object entries through Workflow', () => {
 				titleObjectFieldName: 'textField',
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await applicationsMenuPage.goToProcessBuilder();
 
@@ -873,8 +895,6 @@ test.describe('Manage object entries through Workflow', () => {
 		metricsPage,
 		page,
 	}) => {
-		const {objectDefinitions} = createdEntities;
-
 		const assetType = 'Single Approver';
 
 		const objectDefinition =
@@ -884,7 +904,10 @@ test.describe('Manage object entries through Workflow', () => {
 				titleObjectFieldName: 'textField',
 			});
 
-		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await applicationsMenuPage.goToProcessBuilder();
 

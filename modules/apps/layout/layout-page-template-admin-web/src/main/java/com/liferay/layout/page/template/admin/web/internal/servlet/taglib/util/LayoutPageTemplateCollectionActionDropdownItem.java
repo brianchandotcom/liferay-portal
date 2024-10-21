@@ -46,8 +46,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		_renderResponse = renderResponse;
 		_tabs1 = tabs1;
 
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -285,6 +283,13 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	private String _getItemSelectorURL() {
+		if (_itemSelectorURL != null) {
+			return _itemSelectorURL;
+		}
+
+		ItemSelector itemSelector =
+			(ItemSelector)_httpServletRequest.getAttribute(
+				LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
 
 		LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion
 			layoutPageTemplateCollectionTreeNodeItemSelectorCriterion =
@@ -299,12 +304,14 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 						getLayoutPageTemplateCollectionId()
 				});
 
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
+		_itemSelectorURL = PortletURLBuilder.create(
+			itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				"selectFolder",
 				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion)
 		).buildString();
+
+		return _itemSelectorURL;
 	}
 
 	private String _getPermissionsLayoutPageTemplateCollectionURL()
@@ -348,7 +355,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
+	private String _itemSelectorURL;
 	private final LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private final RenderResponse _renderResponse;
 	private final String _tabs1;

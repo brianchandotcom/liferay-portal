@@ -99,9 +99,6 @@ public class OrganizationModelPreFilterContributor
 							 organization.getOrganizationId()) ||
 						 OrganizationPermissionUtil.contains(
 							 permissionChecker, organization,
-							 ActionKeys.EDIT_SUBORGANIZATIONS) ||
-						 OrganizationPermissionUtil.contains(
-							 permissionChecker, organization,
 							 ActionKeys.MANAGE_SUBORGANIZATIONS))) {
 
 						treePath = treePath + "*";

@@ -65,13 +65,10 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
 		for (Organization organization : organizations) {
 			if (OrganizationPermissionUtil.contains(
-					permissionChecker, organization,
-					ActionKeys.EDIT_SUBORGANIZATIONS) ||
+					permissionChecker, organization, ActionKeys.MANAGE_USERS) ||
 				OrganizationPermissionUtil.contains(
 					permissionChecker, organization,
-					ActionKeys.MANAGE_SUBORGANIZATIONS) ||
-				OrganizationPermissionUtil.contains(
-					permissionChecker, organization, ActionKeys.MANAGE_USERS)) {
+					ActionKeys.MANAGE_SUBORGANIZATIONS)) {
 
 				return true;
 			}

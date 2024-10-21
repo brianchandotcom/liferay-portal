@@ -99,13 +99,9 @@ public class OrganizationPermissionUtil {
 				(permissionChecker.hasPermission(
 					groupId, Organization.class.getName(),
 					organization.getOrganizationId(),
-					ActionKeys.EDIT_SUBORGANIZATIONS) ||
-				permissionChecker.hasPermission(
-					groupId, Organization.class.getName(),
-					organization.getOrganizationId(),
 					ActionKeys.MANAGE_SUBORGANIZATIONS) ||
-				PortalPermissionUtil.contains(
-					permissionChecker, ActionKeys.ADD_ORGANIZATION))) {
+				 PortalPermissionUtil.contains(
+					 permissionChecker, ActionKeys.ADD_ORGANIZATION))) {
 
 				return true;
 			}

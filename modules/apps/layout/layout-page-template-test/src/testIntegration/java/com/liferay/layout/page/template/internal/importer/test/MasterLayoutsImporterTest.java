@@ -283,13 +283,13 @@ public class MasterLayoutsImporterTest {
 			_jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
-		JSONObject freemarkerJSONObject =
+		JSONObject freeMarkerJSONObject =
 			configurationValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertEquals(
-			"h1", freemarkerJSONObject.getString("headingLevel"));
+			"h1", freeMarkerJSONObject.getString("headingLevel"));
 	}
 
 	@Test

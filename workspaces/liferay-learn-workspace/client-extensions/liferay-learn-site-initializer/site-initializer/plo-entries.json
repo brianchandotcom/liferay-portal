@@ -14,7 +14,7 @@
 	{
 		"key": "learn-recipe-header-text",
 		"value": {
-			"en-US": "While we make every effort to ensure this Recipe is accurate, it may not always reflect the most recent updates or official guidelines. We appreciate your understanding and encourage you to reach out with any feedback or concerns."
+			"en-US": "Recipes are not official guidelines or officially supported documentation. They are contributed content and may not always reflect the latest updates to Liferay DXP. We welcome your feedback to improve Recipes!"
 		}
 	},
 	{

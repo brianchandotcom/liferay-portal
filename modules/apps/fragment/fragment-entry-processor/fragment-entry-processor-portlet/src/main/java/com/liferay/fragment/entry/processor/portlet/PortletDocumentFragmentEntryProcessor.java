@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -64,8 +62,6 @@ public class PortletDocumentFragmentEntryProcessor
 		}
 
 		Elements elements = document.getAllElements();
-
-		Set<String> processedPortletIds = new HashSet<>();
 
 		for (Element element : elements) {
 			String tagName = element.tagName();
@@ -135,8 +131,6 @@ public class PortletDocumentFragmentEntryProcessor
 			portletElement.html(portletHTML);
 
 			element.replaceWith(portletElement);
-
-			processedPortletIds.add(portletName);
 		}
 	}
 

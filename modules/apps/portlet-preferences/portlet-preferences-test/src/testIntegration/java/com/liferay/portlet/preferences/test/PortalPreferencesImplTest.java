@@ -165,13 +165,13 @@ public class PortalPreferencesImplTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.NONE,
-				expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
+				expectedDBType = ExpectedDBType.DB2,
+				expectedLog = "HHH000315: Exception executing batch [com.ibm.db2.jcc.am.BatchUpdateException",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "HHH000315: Exception executing batch [com.ibm.db2.jcc.am.BatchUpdateException",
+				expectedDBType = ExpectedDBType.NONE,
+				expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -255,13 +255,13 @@ public class PortalPreferencesImplTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.NONE,
-				expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
+				expectedDBType = ExpectedDBType.DB2,
+				expectedLog = "HHH000315: Exception executing batch [com.ibm.db2.jcc.am.BatchUpdateException",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "HHH000315: Exception executing batch [com.ibm.db2.jcc.am.BatchUpdateException",
+				expectedDBType = ExpectedDBType.NONE,
+				expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -344,13 +344,13 @@ public class PortalPreferencesImplTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.NONE,
-				expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
+				expectedDBType = ExpectedDBType.DB2,
+				expectedLog = "HHH000315: Exception executing batch [com.ibm.db2.jcc.am.BatchUpdateException",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "HHH000315: Exception executing batch [com.ibm.db2.jcc.am.BatchUpdateException",
+				expectedDBType = ExpectedDBType.NONE,
+				expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

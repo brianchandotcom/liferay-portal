@@ -254,6 +254,26 @@ components:
                 version:
                     type: string
             type: object
+        WorkflowDefinitionLink:
+            properties:
+                className:
+                    type: string
+                groupId:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                workflowDefinitionName:
+                    description:
+                        The name of the instance's workflow definition.
+                    readOnly: true
+                    type: string
+                workflowDefinitionVersion:
+                    readOnly: true
+                    type: integer
+            type: object
         WorkflowInstance:
             # @review
             description:
@@ -893,6 +913,65 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/WorkflowDefinition"
             tags: ["WorkflowDefinition"]
+    "/workflow-definitions/{workflowDefinitionId}/workflow-definition-links":
+        get:
+            operationId: getWorkflowDefinitionLinks
+            parameters:
+                - in: path
+                  name: workflowDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowDefinitionLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowDefinitionLink"
+                                type: array
+            tags: ["WorkflowDefinitionLink"]
+        post:
+            operationId: postWorkflowDefinitionLink
+            parameters:
+                - in: path
+                  name: workflowDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinitionLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinitionLink"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinitionLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinitionLink"
+            tags: ["WorkflowDefinitionLink"]
     "/workflow-instances":
         get:
             operationId: getWorkflowInstancesPage

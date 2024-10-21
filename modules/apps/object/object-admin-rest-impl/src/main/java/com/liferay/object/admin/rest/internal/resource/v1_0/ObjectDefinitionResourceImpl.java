@@ -854,8 +854,7 @@ public class ObjectDefinitionResourceImpl
 
 				objectAction.setLabel(
 					() -> LocalizedMapUtil.populateI18nMap(
-						defaultLanguageId, i18nMap,
-						objectAction.getName()));
+						defaultLanguageId, i18nMap, objectAction.getName()));
 
 				objectActionResource.postObjectDefinitionObjectAction(
 					objectDefinitionId, objectAction);
@@ -1140,8 +1139,7 @@ public class ObjectDefinitionResourceImpl
 		String defaultLanguageId, Map<String, String> i18nMap) {
 
 		return LocalizedMapUtil.getLocalizedMap(
-			LocalizedMapUtil.populateI18nMap(
-				defaultLanguageId, i18nMap, null));
+			LocalizedMapUtil.populateI18nMap(defaultLanguageId, i18nMap, null));
 	}
 
 	private long _getObjectFolderId(String objectFolderExternalReferenceCode)

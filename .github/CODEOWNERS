@@ -29,7 +29,7 @@ modules/apps/connected-app/
 modules/apps/contacts/
 modules/apps/content-dashboard/
 modules/apps/cookies/
-modules/apps/cookies/cookies-banner-web/
+modules/apps/cookies/cookies-banner-web/    @liferay-frontend
 modules/apps/counter/
 modules/apps/data-cleanup/
 modules/apps/data-engine/
@@ -50,11 +50,11 @@ modules/apps/flags/
 modules/apps/fragment/
 modules/apps/friendly-url/
 modules/apps/frontend-css/
-modules/apps/frontend-data-set/
-modules/apps/frontend-editor/
-modules/apps/frontend-icons/
-modules/apps/frontend-js/
-modules/apps/frontend-taglib/
+modules/apps/frontend-data-set/    @liferay-frontend
+modules/apps/frontend-editor/    @liferay-frontend
+modules/apps/frontend-icons/    @liferay-frontend
+modules/apps/frontend-js/    @liferay-frontend
+modules/apps/frontend-taglib/    @liferay-frontend
 modules/apps/frontend-theme/
 modules/apps/frontend-token/
 modules/apps/glowroot/

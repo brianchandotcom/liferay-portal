@@ -119,7 +119,9 @@ public class SystemDateFieldPredicateProvider
 		String fieldName,
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier) {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"Unsupported method getIsNotEmptyPredicate for " +
+				"dateCreated/dateModified fields");
 	}
 
 	@Override

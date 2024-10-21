@@ -5269,21 +5269,27 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2);
+		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_3);
 
 		_objectEntry1.setCreateDate(
 			_dateTimeDateFormat.parse("2023-09-20T10:00:00.150Z"));
 		_objectEntry2.setCreateDate(
 			_dateTimeDateFormat.parse("2023-09-20T10:05:00.450Z"));
+		_objectEntry3.setCreateDate(null);
 
 		_objectEntry1.setModifiedDate(
 			_dateTimeDateFormat.parse("2023-09-20T10:00:00.150Z"));
 		_objectEntry2.setModifiedDate(
 			_dateTimeDateFormat.parse("2023-09-20T10:05:00.450Z"));
+		_objectEntry3.setModifiedDate(null);
 
 		_objectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			_objectEntry1);
 		_objectEntry2 = _objectEntryLocalService.updateObjectEntry(
 			_objectEntry2);
+		_objectEntry3 = _objectEntryLocalService.updateObjectEntry(
+			_objectEntry3);
 
 		for (String fieldName : new String[] {"dateCreated", "dateModified"}) {
 
@@ -5305,6 +5311,9 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2,
 				URLCodec.encodeURL(fieldName + " eq 2023-09-20T10:05:00.999Z"),
 				_objectDefinition1);
+			_assertFilterString(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_3,
+				URLCodec.encodeURL(fieldName + " eq null"), _objectDefinition1);
 
 			// Test case for 'ge' (greater than or equal)
 
@@ -5333,10 +5342,6 @@ public class ObjectEntryResourceTest {
 			_assertFilteredObjectEntries(
 				2,
 				fieldName + " in (2023-09-20T10:05:00Z,2023-09-20T10:00:00Z)");
-
-			// Test case for 'isNotEmpty' (check that dateModified is not null)
-
-			_assertFilteredObjectEntries(2, fieldName + " ne null");
 
 			// Test case for 'le' (less than or equal)
 
@@ -5370,6 +5375,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2,
 				URLCodec.encodeURL(fieldName + " ne 2023-09-20T10:00:00Z"),
 				_objectDefinition1);
+			_assertFilteredObjectEntries(2, fieldName + " ne null");
 		}
 	}
 

@@ -11,6 +11,7 @@ import {
 	ObjectField,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -31,6 +32,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	collectionsPagesTest,
+	dataApiHelpersTest,
 	isolatedSiteTest,
 	featureFlagsTest({
 		'LPS-178052': true,
@@ -124,7 +126,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 			});
 
-		objectDefinitions.push(objectDefinition1);
+		apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'})
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -132,7 +134,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				status: {code: 0},
 			});
 
-		objectDefinitions.push(objectDefinition2);
+		apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'})
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -255,8 +257,8 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 			});
 
-		listTypeDefinitions.push(listTypeDefinition);
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'})
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
 
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
@@ -402,8 +404,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		listTypeDefinitions.push(listTypeDefinition);
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: listTypeDefinition.id, type: 'listTypeDefinition'})
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
@@ -645,7 +647,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
@@ -698,7 +700,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				titleObjectFieldName: 'textField',
 			});
 
-		objectDefinitions.push(objectDefinition1);
+		apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'})
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -706,7 +708,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				status: {code: 0},
 			});
 
-		objectDefinitions.push(objectDefinition2);
+		apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'})
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -781,7 +783,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				status: {code: 0},
 			});
 
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
 
 		await viewObjectEntriesPage.goto(objectDefinition.id, 'ar');
 
@@ -814,7 +816,7 @@ test.describe('Manage object entries through Workflow', () => {
 				titleObjectFieldName: 'textField',
 			});
 
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
 
 		await applicationsMenuPage.goToProcessBuilder();
 
@@ -882,7 +884,7 @@ test.describe('Manage object entries through Workflow', () => {
 				titleObjectFieldName: 'textField',
 			});
 
-		objectDefinitions.push(objectDefinition);
+		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'})
 
 		await applicationsMenuPage.goToProcessBuilder();
 

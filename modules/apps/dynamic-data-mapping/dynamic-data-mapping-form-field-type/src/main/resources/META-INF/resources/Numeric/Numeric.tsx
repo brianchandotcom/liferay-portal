@@ -48,6 +48,10 @@ const adaptiveMask = (rawValue: string, inputMaskFormat: string) => {
 	);
 };
 
+export function maxLengthExceeded(value: string, inputMaskFormat?: string) {
+	return !!(inputMaskFormat && value.length > inputMaskFormat.length);
+}
+
 const getMaskedValue = ({
 	dataType,
 	decimalPlaces,
@@ -259,6 +263,10 @@ const Numeric: React.FC<IProps> = ({
 	const handleChange: ChangeEventHandler<HTMLInputElement> = ({
 		target: {value},
 	}) => {
+		if (maxLengthExceeded(value, inputMaskFormat)) {
+			return;
+		}
+
 		value =
 			inputMask && dataType === 'integer'
 				? value

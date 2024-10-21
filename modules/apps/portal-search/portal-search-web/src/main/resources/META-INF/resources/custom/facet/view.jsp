@@ -158,18 +158,20 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 														) {
 															Liferay.Search.FacetUtil.changeSelection(event);
 														}
-														else {
+
+														if ('<%= customFacetDisplayContext.getAggregationType() %>' == 'range') {
 															const customRangeElement = document.getElementById(
 																'<portlet:namespace />customRange'
 															);
 
-															if (customRangeElement.classList.contains('hide')) {
+															if (
+																customRangeElement &&
+																customRangeElement.classList.contains('hide')
+															) {
 																customRangeElement.classList.remove('hide');
 															}
-															else {
-																if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
-																	Liferay.Search.FacetUtil.changeSelection(event);
-																}
+															else if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+																Liferay.Search.FacetUtil.changeSelection(event);
 															}
 														}
 													};

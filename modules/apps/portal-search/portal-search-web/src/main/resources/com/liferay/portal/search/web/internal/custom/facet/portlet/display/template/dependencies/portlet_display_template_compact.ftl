@@ -79,18 +79,17 @@
 								if ("${customFacetDisplayContext.getAggregationType()}" == "dateRange") {
 									Liferay.Search.FacetUtil.changeSelection(event);
 								}
-								else {
+
+								if ("${customFacetDisplayContext.getAggregationType()}" == "range") {
 									event.preventDefault();
 
 									const customRangeElement = document.getElementById('${namespace}customRange');
 
-									if (customRangeElement.classList.contains('hide')) {
+									if (customRangeElement && customRangeElement.classList.contains('hide')) {
 										customRangeElement.classList.remove('hide');
 									}
-									else {
-										if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
-											Liferay.Search.FacetUtil.changeSelection(event);
-										}
+									else if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+										Liferay.Search.FacetUtil.changeSelection(event);
 									}
 								}
 							}

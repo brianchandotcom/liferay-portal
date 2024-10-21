@@ -97,7 +97,7 @@ export const FacetUtil = {
 		this.selectTerms(form, selectedTerms);
 	},
 
-	changeSelectionForSingleFacet(event) {
+	changeSingleSelection(event) {
 		event.preventDefault();
 
 		const form = event.currentTarget.form;

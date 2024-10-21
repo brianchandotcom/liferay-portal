@@ -87,18 +87,17 @@
 										if ("${customFacetDisplayContext.getAggregationType()}" == "dateRange") {
 											window.location.href = "${customRangeBucketDisplayContext.getFilterValue()}";
 										}
-										else {
+
+										if ("${customFacetDisplayContext.getAggregationType()}" == "range") {
 											event.preventDefault();
 
 											const customRangeElement = document.getElementById('${namespace}customRange');
 
-											if (customRangeElement.classList.contains('hide')) {
+											if (customRangeElement && customRangeElement.classList.contains('hide')) {
 												customRangeElement.classList.remove('hide');
 											}
-											else {
-												if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
-													Liferay.Search.FacetUtil.changeSelectionForSingleFacet(event);
-												}
+											else if (Liferay.Search.FacetUtil.isCustomRangeValid(event)) {
+												Liferay.Search.FacetUtil.changeSingleSelection(event);
 											}
 										}
 									}

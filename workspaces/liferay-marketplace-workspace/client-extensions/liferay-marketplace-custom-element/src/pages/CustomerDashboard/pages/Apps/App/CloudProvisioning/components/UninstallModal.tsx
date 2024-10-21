@@ -56,13 +56,13 @@ const UninstallModal = ({
 	>
 		<p>
 			{i18n.translate(
-				'i-certify-that-all-liferay-software-running-on-instances-activated-with-the-selected-license-has-been-shut-down-there-are-no-active-liferay-installations-or-deployments-associated-with-this-license'
+				'deleting-a-service-cannot-be-undone-confirm-the-deletion-before-proceeding'
 			)}
 		</p>
 
 		<p>
 			{i18n.translate(
-				'a-request-to-uninstall-the-license-will-be-processed-and-it-will-no-longer-be-visible-in-your-account'
+				'the-app-and-all-its-client-extensions-services-will-be-deleted-and-uninstalled-from-liferay-dxp'
 			)}
 		</p>
 	</Modal>

@@ -366,12 +366,12 @@ public class EditableValuesExportImportContentProcessorTest {
 			_jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
-		JSONObject freemarkerJSONObject =
+		JSONObject freeMarkerJSONObject =
 			configurationValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject myURLJSONObject = freemarkerJSONObject.getJSONObject(
+		JSONObject myURLJSONObject = freeMarkerJSONObject.getJSONObject(
 			"myURL");
 
 		return myURLJSONObject.getJSONObject("layout");

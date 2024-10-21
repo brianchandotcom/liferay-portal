@@ -276,11 +276,11 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
-		JSONObject freemarkerJSONObject = jsonObject.getJSONObject(
+		JSONObject freeMarkerJSONObject = jsonObject.getJSONObject(
 			FragmentEntryProcessorConstants.
 				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject collectionJSONObject = freemarkerJSONObject.getJSONObject(
+		JSONObject collectionJSONObject = freeMarkerJSONObject.getJSONObject(
 			"collection");
 
 		Assert.assertEquals(

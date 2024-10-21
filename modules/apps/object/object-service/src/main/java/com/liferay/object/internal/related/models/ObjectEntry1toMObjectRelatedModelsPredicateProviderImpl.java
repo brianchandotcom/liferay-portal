@@ -86,11 +86,14 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 		Column<?, ?> objectDefinition2PKObjectFieldColumn =
 			objectDefinition2DynamicObjectDefinitionTable.getPrimaryKeyColumn();
 
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			objectRelationshipColumn.getTable();
+
 		return objectDefinition2PKObjectFieldColumn.in(
 			DSLQueryFactoryUtil.select(
-				objectDefinition2PKObjectFieldColumn
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 			).from(
-				objectRelationshipColumn.getTable()
+				dynamicObjectDefinitionTable
 			).where(
 				_getPredicate(
 					objectRelationshipColumn,

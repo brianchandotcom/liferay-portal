@@ -111,7 +111,11 @@ public class SystemDateFieldPredicateProvider
 			predicate = predicate.or(binaryExpressionPredicate);
 		}
 
-		return predicate.withParentheses();
+		if (predicate != null) {
+			predicate = predicate.withParentheses();
+		}
+
+		return predicate;
 	}
 
 	@Override

@@ -10,12 +10,18 @@ import {
 	ObjectDefinition,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
+	loginTest(),
+	objectPagesTest
+);
 
 const objectDefinitions: ObjectDefinition[] = [];
 
@@ -49,8 +55,9 @@ test('can create an object custom view using object relationship entry', async (
 			status: {code: 0},
 		});
 
-	objectDefinitions.push(objectDefinition1);
-	objectDefinitions.push(objectDefinition2);
+	apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'});
+
+	apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'});
 
 	const objectRelationshipLabel = 'objectRelationshipLabel' + getRandomInt();
 	const objectRelationshipName =

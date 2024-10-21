@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -76,40 +77,42 @@ public class ExportTaskResourceTest {
 
 		long companyId = TestPropsValues.getCompanyId();
 
-		_testableClassNames = TransformUtil.transform(
-			_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
-				companyId),
-			className -> {
-				if (!_vulcanBatchEngineTaskItemDelegateRegistry.
-						isBatchPlannerExportEnabled(companyId, className) ||
-					!_vulcanBatchEngineTaskItemDelegateRegistry.
-						isBatchPlannerImportEnabled(companyId, className)) {
+		_testableClassNames = ListUtil.sort(
+			TransformUtil.transform(
+				_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
+					companyId),
+				className -> {
+					if (!_vulcanBatchEngineTaskItemDelegateRegistry.
+							isBatchPlannerExportEnabled(companyId, className) ||
+						!_vulcanBatchEngineTaskItemDelegateRegistry.
+							isBatchPlannerImportEnabled(companyId, className)) {
 
-					return null;
-				}
+						return null;
+					}
 
-				VulcanBatchEngineTaskItemDelegate
-					vulcanBatchEngineTaskItemDelegate =
-						_vulcanBatchEngineTaskItemDelegateRegistry.
-							getVulcanBatchEngineTaskItemDelegate(
-								companyId, className);
+					VulcanBatchEngineTaskItemDelegate
+						vulcanBatchEngineTaskItemDelegate =
+							_vulcanBatchEngineTaskItemDelegateRegistry.
+								getVulcanBatchEngineTaskItemDelegate(
+									companyId, className);
 
-				Set<String> availableCreateStrategies =
-					vulcanBatchEngineTaskItemDelegate.
-						getAvailableCreateStrategies();
+					Set<String> availableCreateStrategies =
+						vulcanBatchEngineTaskItemDelegate.
+							getAvailableCreateStrategies();
 
-				if ((availableCreateStrategies == null) ||
-					!availableCreateStrategies.contains("UPSERT") ||
-					_untestableDTOClassNames.contains(className) ||
-					StringUtil.startsWith(
-						className,
-						"com.liferay.object.rest.dto.v1_0.ObjectEntry#C_")) {
+					if ((availableCreateStrategies == null) ||
+						!availableCreateStrategies.contains("UPSERT") ||
+						_untestableDTOClassNames.contains(className) ||
+						StringUtil.startsWith(
+							className,
+							"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
+								"C_")) {
 
-					return null;
-				}
+						return null;
+					}
 
-				return className;
-			});
+					return className;
+				}));
 	}
 
 	@Before

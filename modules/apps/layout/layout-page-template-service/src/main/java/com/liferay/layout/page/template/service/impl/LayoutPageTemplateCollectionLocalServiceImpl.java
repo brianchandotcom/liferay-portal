@@ -354,12 +354,20 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		long groupId, long layoutPageTemplateCollectionId, String sourceName,
 		int type) {
 
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionPersistence.fetchByG_P_N_T(
+				groupId, layoutPageTemplateCollectionId, sourceName, type);
+
+		if (layoutPageTemplateCollection == null) {
+			return sourceName;
+		}
+
 		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
-		String name = sourceName;
+		String name = StringUtil.appendParentheticalSuffix(sourceName, copy);
 
-		for (int i = 0;; i++) {
-			LayoutPageTemplateCollection layoutPageTemplateCollection =
+		for (int i = 1;; i++) {
+			layoutPageTemplateCollection =
 				layoutPageTemplateCollectionPersistence.fetchByG_P_N_T(
 					groupId, layoutPageTemplateCollectionId, name, type);
 
@@ -367,13 +375,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				break;
 			}
 
-			if (i == 0) {
-				name = StringUtil.appendParentheticalSuffix(sourceName, copy);
-			}
-			else {
-				name = StringUtil.appendParentheticalSuffix(
-					sourceName, copy + StringPool.SPACE + i);
-			}
+			name = StringUtil.appendParentheticalSuffix(
+				sourceName, copy + StringPool.SPACE + i);
 		}
 
 		return name;

@@ -636,6 +636,14 @@
 		<field name="publishedCPDefinitionId" type="long" />
 		<field name="latestVersion" type="int" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPSOListTypeDefinitionRel">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="CPSOListTypeDefinitionRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="CPSpecificationOptionId" type="long" />
+		<field name="listTypeDefinitionId" type="long" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPSpecificationOption">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
@@ -648,7 +656,6 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPOptionCategoryId" type="long" />
-		<field name="listTypeDefinitionId" type="long" />
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>

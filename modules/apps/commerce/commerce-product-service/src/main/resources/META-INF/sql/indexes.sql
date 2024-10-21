@@ -121,10 +121,12 @@ create unique index IX_DA77C838 on CPOptionValue (CPOptionId, ctCollectionId, ke
 create unique index IX_DC509C0C on CPOptionValue (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_D7C1A0BF on CPOptionValue (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_8A69C0A5 on CPSOListTypeDefinitionRel (CPSpecificationOptionId, listTypeDefinitionId);
+create index IX_BB2AB5C5 on CPSOListTypeDefinitionRel (listTypeDefinitionId);
+
 create index IX_421ED80 on CPSpecificationOption (CPOptionCategoryId);
 create unique index IX_7CEAF068 on CPSpecificationOption (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_669F7749 on CPSpecificationOption (companyId, ctCollectionId, key_[$COLUMN_LENGTH:75$]);
-create index IX_BF5FD94B on CPSpecificationOption (listTypeDefinitionId);
 create index IX_972DFDE3 on CPSpecificationOption (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_79A007D5 on CPTaxCategory (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);

@@ -49,7 +49,6 @@ public class CPSpecificationOptionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPOptionCategoryId", getCPOptionCategoryId());
-		attributes.put("listTypeDefinitionId", getListTypeDefinitionId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("facetable", isFacetable());
@@ -128,13 +127,6 @@ public class CPSpecificationOptionWrapper
 
 		if (CPOptionCategoryId != null) {
 			setCPOptionCategoryId(CPOptionCategoryId);
-		}
-
-		Long listTypeDefinitionId = (Long)attributes.get(
-			"listTypeDefinitionId");
-
-		if (listTypeDefinitionId != null) {
-			setListTypeDefinitionId(listTypeDefinitionId);
 		}
 
 		String title = (String)attributes.get("title");
@@ -362,14 +354,23 @@ public class CPSpecificationOptionWrapper
 		return model.getLastPublishDate();
 	}
 
-	/**
-	 * Returns the list type definition ID of this cp specification option.
-	 *
-	 * @return the list type definition ID of this cp specification option
-	 */
 	@Override
-	public long getListTypeDefinitionId() {
-		return model.getListTypeDefinitionId();
+	public long getListTypeDefinitionCount() {
+		return model.getListTypeDefinitionCount();
+	}
+
+	@Override
+	public java.util.List<com.liferay.list.type.model.ListTypeDefinition>
+		getListTypeDefinitions() {
+
+		return model.getListTypeDefinitions();
+	}
+
+	@Override
+	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
+		getListTypeEntries() {
+
+		return model.getListTypeEntries();
 	}
 
 	/**
@@ -713,16 +714,6 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
-	}
-
-	/**
-	 * Sets the list type definition ID of this cp specification option.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID of this cp specification option
-	 */
-	@Override
-	public void setListTypeDefinitionId(long listTypeDefinitionId) {
-		model.setListTypeDefinitionId(listTypeDefinitionId);
 	}
 
 	/**

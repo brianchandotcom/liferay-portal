@@ -54,4 +54,12 @@ public interface CPSpecificationOption
 	public CPOptionCategory getCPOptionCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public long getListTypeDefinitionCount();
+
+	public java.util.List<com.liferay.list.type.model.ListTypeDefinition>
+		getListTypeDefinitions();
+
+	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
+		getListTypeEntries();
+
 }

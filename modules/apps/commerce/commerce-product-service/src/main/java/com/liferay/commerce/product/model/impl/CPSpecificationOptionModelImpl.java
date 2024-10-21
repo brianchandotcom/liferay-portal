@@ -77,8 +77,7 @@ public class CPSpecificationOptionModelImpl
 		{"CPSpecificationOptionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPOptionCategoryId", Types.BIGINT},
-		{"listTypeDefinitionId", Types.BIGINT}, {"title", Types.VARCHAR},
+		{"CPOptionCategoryId", Types.BIGINT}, {"title", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"facetable", Types.BOOLEAN},
 		{"key_", Types.VARCHAR}, {"priority", Types.DOUBLE},
 		{"lastPublishDate", Types.TIMESTAMP}
@@ -99,7 +98,6 @@ public class CPSpecificationOptionModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPOptionCategoryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
@@ -109,7 +107,7 @@ public class CPSpecificationOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPSpecificationOption (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPSpecificationOptionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionCategoryId LONG,listTypeDefinitionId LONG,title STRING null,description STRING null,facetable BOOLEAN,key_ VARCHAR(75) null,priority DOUBLE,lastPublishDate DATE null,primary key (CPSpecificationOptionId, ctCollectionId))";
+		"create table CPSpecificationOption (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPSpecificationOptionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionCategoryId LONG,title STRING null,description STRING null,facetable BOOLEAN,key_ VARCHAR(75) null,priority DOUBLE,lastPublishDate DATE null,primary key (CPSpecificationOptionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPSpecificationOption";
@@ -157,20 +155,14 @@ public class CPSpecificationOptionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 16L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 64L;
+	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -310,9 +302,6 @@ public class CPSpecificationOptionModelImpl
 				"CPOptionCategoryId",
 				CPSpecificationOption::getCPOptionCategoryId);
 			attributeGetterFunctions.put(
-				"listTypeDefinitionId",
-				CPSpecificationOption::getListTypeDefinitionId);
-			attributeGetterFunctions.put(
 				"title", CPSpecificationOption::getTitle);
 			attributeGetterFunctions.put(
 				"description", CPSpecificationOption::getDescription);
@@ -386,10 +375,6 @@ public class CPSpecificationOptionModelImpl
 				"CPOptionCategoryId",
 				(BiConsumer<CPSpecificationOption, Long>)
 					CPSpecificationOption::setCPOptionCategoryId);
-			attributeSetterBiConsumers.put(
-				"listTypeDefinitionId",
-				(BiConsumer<CPSpecificationOption, Long>)
-					CPSpecificationOption::setListTypeDefinitionId);
 			attributeSetterBiConsumers.put(
 				"title",
 				(BiConsumer<CPSpecificationOption, String>)
@@ -659,31 +644,6 @@ public class CPSpecificationOptionModelImpl
 	public long getOriginalCPOptionCategoryId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("CPOptionCategoryId"));
-	}
-
-	@JSON
-	@Override
-	public long getListTypeDefinitionId() {
-		return _listTypeDefinitionId;
-	}
-
-	@Override
-	public void setListTypeDefinitionId(long listTypeDefinitionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_listTypeDefinitionId = listTypeDefinitionId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalListTypeDefinitionId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
 	}
 
 	@JSON
@@ -1153,8 +1113,6 @@ public class CPSpecificationOptionModelImpl
 		cpSpecificationOptionImpl.setModifiedDate(getModifiedDate());
 		cpSpecificationOptionImpl.setCPOptionCategoryId(
 			getCPOptionCategoryId());
-		cpSpecificationOptionImpl.setListTypeDefinitionId(
-			getListTypeDefinitionId());
 		cpSpecificationOptionImpl.setTitle(getTitle());
 		cpSpecificationOptionImpl.setDescription(getDescription());
 		cpSpecificationOptionImpl.setFacetable(isFacetable());
@@ -1194,8 +1152,6 @@ public class CPSpecificationOptionModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		cpSpecificationOptionImpl.setCPOptionCategoryId(
 			this.<Long>getColumnOriginalValue("CPOptionCategoryId"));
-		cpSpecificationOptionImpl.setListTypeDefinitionId(
-			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
 		cpSpecificationOptionImpl.setTitle(
 			this.<String>getColumnOriginalValue("title"));
 		cpSpecificationOptionImpl.setDescription(
@@ -1356,9 +1312,6 @@ public class CPSpecificationOptionModelImpl
 		cpSpecificationOptionCacheModel.CPOptionCategoryId =
 			getCPOptionCategoryId();
 
-		cpSpecificationOptionCacheModel.listTypeDefinitionId =
-			getListTypeDefinitionId();
-
 		cpSpecificationOptionCacheModel.title = getTitle();
 
 		String title = cpSpecificationOptionCacheModel.title;
@@ -1471,7 +1424,6 @@ public class CPSpecificationOptionModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _CPOptionCategoryId;
-	private long _listTypeDefinitionId;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;
@@ -1524,8 +1476,6 @@ public class CPSpecificationOptionModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("CPOptionCategoryId", _CPOptionCategoryId);
-		_columnOriginalValues.put(
-			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("title", _title);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("facetable", _facetable);
@@ -1578,19 +1528,17 @@ public class CPSpecificationOptionModelImpl
 
 		columnBitmasks.put("CPOptionCategoryId", 1024L);
 
-		columnBitmasks.put("listTypeDefinitionId", 2048L);
+		columnBitmasks.put("title", 2048L);
 
-		columnBitmasks.put("title", 4096L);
+		columnBitmasks.put("description", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("facetable", 8192L);
 
-		columnBitmasks.put("facetable", 16384L);
+		columnBitmasks.put("key_", 16384L);
 
-		columnBitmasks.put("key_", 32768L);
+		columnBitmasks.put("priority", 32768L);
 
-		columnBitmasks.put("priority", 65536L);
-
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

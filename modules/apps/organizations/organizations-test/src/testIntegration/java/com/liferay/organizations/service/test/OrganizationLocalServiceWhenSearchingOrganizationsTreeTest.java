@@ -112,20 +112,18 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 	}
 
 	@Test
-	public void testShouldIncludeSuborganizationsWithEditSuborganizationsPermission()
+	public void testShouldIncludeRelatedOrganizationsOnlyWithEditSuborganizationsPermission()
 		throws Exception {
-
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
 
 		RoleTestUtil.addResourcePermission(
 			_role, Organization.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_user.getCompanyId()),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_organization.getOrganizationId()),
 			ActionKeys.EDIT_SUBORGANIZATIONS);
 
-		userLocalService.addRoleUser(_role.getRoleId(), _user);
-
 		_assertSearch(true);
+
 	}
 
 	@Test

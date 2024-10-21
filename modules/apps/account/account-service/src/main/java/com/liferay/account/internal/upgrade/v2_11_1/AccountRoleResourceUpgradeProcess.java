@@ -55,10 +55,9 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement preparedStatement =
-				connection.prepareStatement(
-					"update ResourceAction set actionId = ? where actionId = " +
-						"?")) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update ResourceAction set actionId = ? where actionId = " +
+					"?")) {
 
 			preparedStatement.setString(1, newName);
 			preparedStatement.setString(2, oldName);

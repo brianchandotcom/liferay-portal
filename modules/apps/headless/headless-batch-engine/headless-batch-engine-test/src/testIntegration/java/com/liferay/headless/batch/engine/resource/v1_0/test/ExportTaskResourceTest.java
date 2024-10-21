@@ -11,6 +11,7 @@ import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 
 import java.io.InputStream;
 
@@ -55,13 +56,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
-
 /**
  * Modify the value of _testableClassNames to test specific class names.
  *
@@ -82,80 +76,42 @@ public class ExportTaskResourceTest {
 			return;
 		}
 
-		Bundle bundle = FrameworkUtil.getBundle(ExportTaskResourceTest.class);
+		long companyId = TestPropsValues.getCompanyId();
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ServiceTracker<Object, String> serviceTracker = new ServiceTracker<>(
-			bundleContext,
-			FrameworkUtil.createFilter(
-				StringBundler.concat(
-					"(&(batch.engine.task.item.delegate=true)",
-					"(batch.planner.export.enabled=true)",
-					"(batch.planner.import.enabled=true))")),
-			new ServiceTrackerCustomizer<Object, String>() {
-
-				@Override
-				public String addingService(
-					ServiceReference<Object> serviceReference) {
-
-					String className = (String)serviceReference.getProperty(
-						"batch.engine.entity.class.name");
-
-					try {
-						VulcanBatchEngineTaskItemDelegate
-							vulcanBatchEngineTaskItemDelegate =
-								(VulcanBatchEngineTaskItemDelegate)
-									bundleContext.getService(serviceReference);
-
-						Set<String> availableCreateStrategies =
-							vulcanBatchEngineTaskItemDelegate.
-								getAvailableCreateStrategies();
-
-						if ((availableCreateStrategies != null) &&
-							availableCreateStrategies.contains("UPSERT")) {
-
-							return className;
-						}
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Error while checking create strategies for " +
-								className,
-							exception);
-					}
+		_testableClassNames = TransformUtil.transform(
+			_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
+				companyId),
+			className -> {
+				if (!_vulcanBatchEngineTaskItemDelegateRegistry.
+						isBatchPlannerExportEnabled(companyId, className) ||
+					!_vulcanBatchEngineTaskItemDelegateRegistry.
+						isBatchPlannerImportEnabled(companyId, className)) {
 
 					return null;
 				}
 
-				@Override
-				public void modifiedService(
-					ServiceReference<Object> serviceReference,
-					String className) {
+				VulcanBatchEngineTaskItemDelegate
+					vulcanBatchEngineTaskItemDelegate =
+						_vulcanBatchEngineTaskItemDelegateRegistry.
+							getVulcanBatchEngineTaskItemDelegate(
+								companyId, className);
+
+				Set<String> availableCreateStrategies =
+					vulcanBatchEngineTaskItemDelegate.
+						getAvailableCreateStrategies();
+
+				if ((availableCreateStrategies == null) ||
+					!availableCreateStrategies.contains("UPSERT") ||
+					_untestableDTOClassNames.contains(className) ||
+					StringUtil.startsWith(
+						className,
+						"com.liferay.object.rest.dto.v1_0.ObjectEntry#C_")) {
+
+					return null;
 				}
 
-				@Override
-				public void removedService(
-					ServiceReference<Object> serviceReference,
-					String className) {
-				}
-
+				return className;
 			});
-
-		serviceTracker.open();
-
-		try {
-			_testableClassNames = ListUtil.filter(
-				ListUtil.fromMapValues(serviceTracker.getTracked()),
-				className ->
-					!(_untestableDTOClassNames.contains(className) ||
-					  StringUtil.startsWith(
-						  className,
-						  "com.liferay.object.rest.dto.v1_0.ObjectEntry#C_")));
-		}
-		finally {
-			serviceTracker.close();
-		}
 	}
 
 	@Before
@@ -366,6 +322,10 @@ public class ExportTaskResourceTest {
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
 		"com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory",
 		"com.liferay.headless.delivery.dto.v1_0.WikiPage");
+
+	@Inject
+	private static VulcanBatchEngineTaskItemDelegateRegistry
+		_vulcanBatchEngineTaskItemDelegateRegistry;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

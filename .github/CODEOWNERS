@@ -32,7 +32,7 @@ modules/apps/cookies/
 modules/apps/cookies/cookies-banner-web/    @liferay-frontend
 modules/apps/counter/
 modules/apps/data-cleanup/
-modules/apps/data-engine/
+modules/apps/data-engine/    @liferay-bpm
 modules/apps/depot/
 modules/apps/diff/
 modules/apps/digital-signature/
@@ -40,8 +40,8 @@ modules/apps/dispatch/
 modules/apps/document-library/
 modules/apps/document-library-google-docs/
 modules/apps/document-library-opener/
-modules/apps/dynamic-data-lists/
-modules/apps/dynamic-data-mapping/
+modules/apps/dynamic-data-lists/    @liferay-bpm
+modules/apps/dynamic-data-mapping/    @liferay-bpm
 modules/apps/expando/
 modules/apps/export-import/
 modules/apps/external-reference/
@@ -95,7 +95,7 @@ modules/apps/notification/
 modules/apps/notifications/
 modules/apps/oauth-client/
 modules/apps/oauth2-provider/
-modules/apps/object/
+modules/apps/object/    @liferay-bpm
 modules/apps/on-demand-admin/
 modules/apps/organizations/
 modules/apps/password-policies-admin/
@@ -133,7 +133,7 @@ modules/apps/portal-transaction/
 modules/apps/portal-url-builder/
 modules/apps/portal-validation/
 modules/apps/portal-vulcan/
-modules/apps/portal-workflow/
+modules/apps/portal-workflow/    @liferay-bpm
 modules/apps/portlet/
 modules/apps/portlet-configuration/
 modules/apps/portlet-dependency-factory/
@@ -199,8 +199,8 @@ modules/dxp/apps/portal-search-learning-to-rank/
 modules/dxp/apps/portal-search-similar-results/
 modules/dxp/apps/portal-search-tuning/
 modules/dxp/apps/portal-security-audit/
-modules/dxp/apps/portal-workflow/
-modules/dxp/apps/portal-workflow-kaleo-forms/
+modules/dxp/apps/portal-workflow/    @liferay-bpm
+modules/dxp/apps/portal-workflow-kaleo-forms/    @liferay-bpm
 modules/dxp/apps/salesforce-connector/
 modules/dxp/apps/saml/
 modules/dxp/apps/scim/

@@ -93,7 +93,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 							<ClayInput
 								className="bg-white license-card-input py-5 text-right"
 								onChange={(event) => {
-									const regExp = /^[0-9.,]+$/;
+									const regExp = /^[0-9.,]*$/;
 
 									if (regExp.test(event.target.value)) {
 										onChange(index, {
@@ -104,7 +104,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 								}}
 								placeholder="$0,00"
 								type="text"
-								value={tierPrice.value}
+								value={tierPrice.value || ''}
 							/>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>

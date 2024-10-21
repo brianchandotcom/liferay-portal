@@ -403,6 +403,9 @@
 								},
 								"mainURL": {
 									"type": "string"
+								},
+								"scope": {
+									"type": "string"
 								}
 							},
 							"type": "object"

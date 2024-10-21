@@ -1216,6 +1216,10 @@ public class ClientExtensionProjectConfigurator
 				clientExtension, "membershipType", "open", "private",
 				"restricted");
 		}
+		else if (Objects.equals(clientExtension.type, "themeCSS")) {
+			_validateTypeSettingsValues(
+				clientExtension, "scope", "controlPanel", "page");
+		}
 	}
 
 	private void _validateGlobalJSScriptElementAttributes(

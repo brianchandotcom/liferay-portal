@@ -43,4 +43,10 @@ public interface ThemeCSSCET extends CET {
 	)
 	public String getMainURL();
 
+	@CETProperty(
+		defaultValue = "page", label = "scope", name = "scope",
+		type = CETProperty.Type.String
+	)
+	public String getScope();
+
 }

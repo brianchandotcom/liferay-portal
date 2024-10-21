@@ -8,7 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
-export const searchTableRowByValue = async function (
+const searchTableRowByValue = async function (
 	tableLocator: Locator,
 	colPosition: number,
 	value: string,
@@ -34,6 +34,7 @@ export const searchTableRowByValue = async function (
 
 	throw new Error(`Cannot locate table row with value ${value}`);
 };
+
 export class CountriesManagementPage {
 	readonly activateButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
@@ -84,8 +85,8 @@ export class CountriesManagementPage {
 		this.filterMenuItem = (option: string) => {
 			return page.getByRole('menuitem', {
 				exact: true,
-				name: option
-			})
+				name: option,
+			});
 		};
 		this.page = page;
 	}

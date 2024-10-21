@@ -386,6 +386,12 @@ public class CommerceOrderModelResourcePermissionLogic
 			}
 		}
 
+		if (commerceOrder.isQuote()) {
+			return _hasPermission(
+				permissionChecker, commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.MANAGE_QUOTES);
+		}
+
 		return _hasAncestorPermission(
 			permissionChecker, accountEntry.getAccountEntryGroupId(),
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);

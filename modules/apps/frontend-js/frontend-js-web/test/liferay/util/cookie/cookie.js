@@ -174,6 +174,7 @@ describe('Liferay.Util.Cookie', () => {
 				Cookie.TYPES.NECESSARY,
 				{
 					'domain': domainValue,
+					'httponly': false,
 					'max-age': maxAgeValue,
 					'path': pathValue,
 					'samesite': samesiteValue,
@@ -184,6 +185,7 @@ describe('Liferay.Util.Cookie', () => {
 			expect(cookieSetterMock).toHaveBeenCalled();
 			expect(cookieValue).not.toBeUndefined();
 			expect(cookieValue.includes(`domain=${domainValue}`)).toBe(true);
+			expect(cookieValue.includes('httponly')).toBe(false);
 			expect(cookieValue.includes(`max-age=${maxAgeValue}`)).toBe(true);
 			expect(cookieValue.includes(`path=${pathValue}`)).toBe(true);
 			expect(cookieValue.includes('secure')).toBe(true);

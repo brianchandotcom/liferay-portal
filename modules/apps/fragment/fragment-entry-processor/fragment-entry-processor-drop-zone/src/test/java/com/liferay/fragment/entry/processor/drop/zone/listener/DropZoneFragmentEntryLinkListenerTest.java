@@ -195,7 +195,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 	}
 
 	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditRemovingDropZone()
+	public void testProcessFragmentEntryLinkHTMLInEditRemovingDropZones()
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -211,12 +211,18 @@ public class DropZoneFragmentEntryLinkListenerTest {
 				FragmentEntryProcessorDropZoneTestUtil.
 					addFragmentDropZoneLayoutStructureItems(
 						fragmentEntryLink, layoutStructure, dropZoneId1,
-						RandomTestUtil.randomString(), dropZoneId2);
+						RandomTestUtil.randomString(), dropZoneId2,
+						RandomTestUtil.randomString());
 
+		FragmentDropZoneLayoutStructureItem
+			deletedFragmentDropZoneLayoutStructureItem1 =
+				fragmentDropZoneLayoutStructureItems[1];
+		FragmentDropZoneLayoutStructureItem
+			deletedFragmentDropZoneLayoutStructureItem2 =
+				fragmentDropZoneLayoutStructureItems[3];
 		FragmentDropZoneLayoutStructureItem
 			fragmentDropZoneLayoutStructureItem1 =
 				fragmentDropZoneLayoutStructureItems[0];
-
 		FragmentDropZoneLayoutStructureItem
 			fragmentDropZoneLayoutStructureItem2 =
 				fragmentDropZoneLayoutStructureItems[2];
@@ -229,6 +235,11 @@ public class DropZoneFragmentEntryLinkListenerTest {
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
 		_assertUpdateLayoutPageTemplateStructureData(
+			false,
+			new String[] {
+				deletedFragmentDropZoneLayoutStructureItem1.getItemId(),
+				deletedFragmentDropZoneLayoutStructureItem2.getItemId()
+			},
 			fragmentEntryLink,
 			new KeyValuePair(
 				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),

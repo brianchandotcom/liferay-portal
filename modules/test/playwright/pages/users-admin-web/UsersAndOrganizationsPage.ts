@@ -65,15 +65,6 @@ export class UsersAndOrganizationsPage {
 	readonly myOrganizationsTableRowLink: (
 		organizationName: string
 	) => Promise<Locator>;
-	readonly myOrganizationsUserAndOrgsTable: Locator;
-	readonly myOrganizationsUserAndOrgsTableRow: (
-		colPosition: number,
-		value: string,
-		strictEqual?: boolean
-	) => Promise<{column: Locator; row: Locator}>;
-	readonly myOrganizationsUserAndOrgsTableRowLink: (
-		organizationName: string
-	) => Promise<Locator>;
 	readonly organizationActionsMenu: (
 		organizationName: string
 	) => Promise<Locator>;
@@ -188,38 +179,6 @@ export class UsersAndOrganizationsPage {
 
 			if (myOrganizationsTableRow && myOrganizationsTableRow.column) {
 				return myOrganizationsTableRow.column.getByRole('link', {
-					name: organizationName,
-				});
-			}
-
-			throw new Error(
-				`Cannot locate organization row with name ${organizationName}`
-			);
-		};
-		this.myOrganizationsUserAndOrgsTable = page.locator(
-			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_organizationUsersSearchContainer'
-		);
-		this.myOrganizationsUserAndOrgsTableRow = async (
-			colPosition: number,
-			value: string,
-			strictEqual: boolean = false
-		) => {
-			return await searchTableRowByValue(
-				this.myOrganizationsUserAndOrgsTable,
-				colPosition,
-				value,
-				strictEqual
-			);
-		};
-		this.myOrganizationsUserAndOrgsTableRowLink = async (organizationName: string) => {
-			const row = await this.myOrganizationsUserAndOrgsTableRow(
-				1,
-				organizationName,
-				true
-			);
-
-			if (row && row.column) {
-				return row.column.getByRole('link', {
 					name: organizationName,
 				});
 			}

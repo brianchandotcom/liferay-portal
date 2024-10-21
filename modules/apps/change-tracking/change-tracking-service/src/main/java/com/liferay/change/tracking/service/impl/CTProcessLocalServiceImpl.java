@@ -18,6 +18,7 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Indexable;
@@ -70,8 +71,12 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		ctCollection = _ctCollectionLocalService.updateCTCollection(
 			ctCollection);
 
-		_ctPreferencesLocalService.resetCTPreferences(
-			ctCollection.getCtCollectionId());
+		if (!FeatureFlagManagerUtil.isEnabled(
+				ctCollection.getCompanyId(), "LPD-39203")) {
+
+			_ctPreferencesLocalService.resetCTPreferences(
+				ctCollection.getCtCollectionId());
+		}
 
 		long ctProcessId = counterLocalService.increment(
 			CTProcess.class.getName());

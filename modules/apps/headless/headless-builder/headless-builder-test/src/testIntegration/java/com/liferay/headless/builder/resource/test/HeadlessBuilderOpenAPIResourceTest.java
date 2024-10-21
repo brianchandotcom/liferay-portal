@@ -379,6 +379,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	@Test
 	public void test() throws Exception {
 		_addAPIApplication();
+		_addUnrelatedAPIApplication();
 
 		String apiApplicationURL = "/c/" + _API_BASE_URL;
 
@@ -914,6 +915,40 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			"headless-builder/applications/by-external-reference-code/" +
 				_API_APPLICATION_ERC,
 			Http.Method.PATCH);
+	}
+
+	private void _addUnrelatedAPIApplication() throws Exception {
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"apiApplicationToAPISchemas",
+				JSONUtil.put(
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.put(
+							JSONUtil.put(
+								"description", RandomTestUtil.randomString()
+							).put(
+								"name", RandomTestUtil.randomString()
+							).put(
+								"objectFieldERC", "APPLICATION_STATUS"
+							))
+					).put(
+						"description", RandomTestUtil.randomString()
+					).put(
+						"mainObjectDefinitionERC", "L_API_APPLICATION"
+					).put(
+						"name", RandomTestUtil.randomString()
+					))
+			).put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

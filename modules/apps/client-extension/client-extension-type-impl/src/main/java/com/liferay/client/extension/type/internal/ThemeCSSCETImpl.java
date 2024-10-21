@@ -60,6 +60,11 @@ public class ThemeCSSCETImpl extends BaseCETImpl implements ThemeCSSCET {
 	}
 
 	@Override
+	public String getScope() {
+		return getString("scope");
+	}
+
+	@Override
 	public String getType() {
 		return ClientExtensionEntryConstants.TYPE_THEME_CSS;
 	}

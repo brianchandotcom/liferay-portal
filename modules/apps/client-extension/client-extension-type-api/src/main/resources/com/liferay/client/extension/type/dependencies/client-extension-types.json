@@ -452,6 +452,11 @@
 				"type": "CETProperty.Type.String"
 			},
 			{
+				"default": "page",
+				"name": "scope",
+				"type": "CETProperty.Type.String"
+			},
+			{
 				"default": "https://www.liferay.com",
 				"name": "sourceCodeURL",
 				"type": "CETProperty.Type.String"

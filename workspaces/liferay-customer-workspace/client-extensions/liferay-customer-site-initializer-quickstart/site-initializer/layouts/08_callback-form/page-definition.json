@@ -325,6 +325,7 @@
 											"ja_JP": "関連チケットID（複数可） ",
 											"pt_BR": "ID(s) do Ticket Relacionado(s)"
 										},
+										"inputShowHelpText": true,
 										"showCharactersCount": false
 									},
 									"fragmentFields": [
@@ -356,6 +357,7 @@
 											"ja_JP": "説明",
 											"pt_BR": "Descrição"
 										},
+										"inputShowHelpText": true,
 										"numberOfCharacters": 2000,
 										"showCharactersCount": false
 									},

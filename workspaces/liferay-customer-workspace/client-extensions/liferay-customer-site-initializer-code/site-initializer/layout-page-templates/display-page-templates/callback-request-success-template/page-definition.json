@@ -4,7 +4,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "colorNeutral1",
 						"paddingLeft": "5",
 						"paddingRight": "5",
 						"paddingTop": "5"
@@ -31,6 +30,7 @@
 								"paddingLeft": "5",
 								"paddingRight": "5",
 								"paddingTop": "5",
+								"shadow": "boxShadowLg",
 								"width": "680px"
 							},
 							"indexed": true,

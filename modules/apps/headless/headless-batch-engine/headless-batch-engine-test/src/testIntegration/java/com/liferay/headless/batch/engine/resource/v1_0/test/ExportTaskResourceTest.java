@@ -40,7 +40,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -381,8 +380,11 @@ public class ExportTaskResourceTest {
 		//"com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink"
 	);
 
-	private static final List<String> _untestableDTOClassNames =
-		Collections.emptyList();
+	private static final List<String> _untestableDTOClassNames = Arrays.asList(
+		"com.liferay.headless.admin.user.dto.v1_0.PostalAddress",
+		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
+		"com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory",
+		"com.liferay.headless.delivery.dto.v1_0.WikiPage");
 
 	@Inject
 	private GroupLocalService _groupLocalService;

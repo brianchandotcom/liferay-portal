@@ -253,13 +253,13 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableIndexSearch()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
-					_getLocalizedLabelMap(
+					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),
 					objectDefinition.getName(),
 					objectDefinition.getPanelAppOrder(),
 					objectDefinition.getPanelCategoryKey(),
-					_getLocalizedLabelMap(
+					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getPluralLabel()),
 					GetterUtil.getBoolean(objectDefinition.getPortlet()),
@@ -288,13 +288,13 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableLocalization()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryDraft()),
-					_getLocalizedLabelMap(
+					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),
 					objectDefinition.getName(),
 					objectDefinition.getPanelAppOrder(),
 					objectDefinition.getPanelCategoryKey(),
-					_getLocalizedLabelMap(
+					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getPluralLabel()),
 					GetterUtil.getBoolean(objectDefinition.getPortlet(), true),
@@ -532,14 +532,14 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryHistory()),
-					_getLocalizedLabelMap(
+					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),
 					objectDefinition.getName(),
 					objectDefinition.getPanelAppOrder(),
 					objectDefinition.getPanelCategoryKey(),
 					GetterUtil.getBoolean(objectDefinition.getPortlet()),
-					_getLocalizedLabelMap(
+					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getPluralLabel()),
 					objectDefinition.getScope(), statusInt);
@@ -850,11 +850,11 @@ public class ObjectDefinitionResourceImpl
 					continue;
 				}
 
-				Map<String, String> i18nLabelMap = objectAction.getLabel();
+				Map<String, String> i18nMap = objectAction.getLabel();
 
 				objectAction.setLabel(
 					() -> LocalizedMapUtil.populateI18nMap(
-						defaultLanguageId, i18nLabelMap,
+						defaultLanguageId, i18nMap,
 						objectAction.getName()));
 
 				objectActionResource.postObjectDefinitionObjectAction(
@@ -1136,12 +1136,12 @@ public class ObjectDefinitionResourceImpl
 		return accountEntryRestrictedObjectRelationshipsNames;
 	}
 
-	private Map<Locale, String> _getLocalizedLabelMap(
-		String defaultLanguageId, Map<String, String> i18nLabelMap) {
+	private Map<Locale, String> _getLocalizedMap(
+		String defaultLanguageId, Map<String, String> i18nMap) {
 
 		return LocalizedMapUtil.getLocalizedMap(
 			LocalizedMapUtil.populateI18nMap(
-				defaultLanguageId, i18nLabelMap, null));
+				defaultLanguageId, i18nMap, null));
 	}
 
 	private long _getObjectFolderId(String objectFolderExternalReferenceCode)

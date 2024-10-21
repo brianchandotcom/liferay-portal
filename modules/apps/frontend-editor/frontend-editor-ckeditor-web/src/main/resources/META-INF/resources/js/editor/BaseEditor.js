@@ -131,6 +131,10 @@ const BaseEditor = forwardRef(
 					return contents;
 				},
 			};
+
+			return () => {
+				delete window[name];
+			};
 		}, [contents, getHTML, name]);
 
 		return loading ? (

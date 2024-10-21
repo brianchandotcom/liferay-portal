@@ -138,12 +138,12 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 							>
 
 								<%
-								LayoutPageTemplateCollectionActionDropdownItem layoutPageTemplateCollectionActionDropdownItem = new LayoutPageTemplateCollectionActionDropdownItem(request, renderResponse);
+								LayoutPageTemplateCollectionActionDropdownItem layoutPageTemplateCollectionActionDropdownItem = new LayoutPageTemplateCollectionActionDropdownItem(request, layoutPageTemplateCollection, renderResponse, "page-templates");
 								%>
 
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-									dropdownItems='<%= layoutPageTemplateCollectionActionDropdownItem.getActionDropdownItems(layoutPageTemplateCollection, "page-templates") %>'
+									dropdownItems="<%= layoutPageTemplateCollectionActionDropdownItem.getActionDropdownItems() %>"
 									propsTransformer="{LayoutPageTemplateCollectionPropsTransformer} from layout-page-template-admin-web"
 								/>
 							</clay:content-col>

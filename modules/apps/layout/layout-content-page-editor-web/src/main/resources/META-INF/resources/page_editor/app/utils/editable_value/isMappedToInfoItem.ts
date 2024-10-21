@@ -38,7 +38,11 @@ export default function isMappedToInfoItem(
 
 	return (
 		'classNameId' in editable &&
+		editable.classNameId !== '' &&
 		'fieldId' in editable &&
-		('classPK' in editable || 'externalReferenceCode' in editable)
+		editable.fieldId !== '' &&
+		(('classPK' in editable && editable.classPK !== '') ||
+			('externalReferenceCode' in editable &&
+				editable.externalReferenceCode !== ''))
 	);
 }

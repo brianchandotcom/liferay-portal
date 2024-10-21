@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
@@ -41,6 +42,19 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				"com.liferay.search.experiences.configuration." +
 					"SemanticSearchConfiguration.scoped",
 				SemanticSearchConfiguration.class.getName() + ".scoped"));
+
+		String dateFacetPortletKey =
+			"com_liferay_portal_search_web_date_facet_portlet_DateFacetPortlet";
+
+		registry.register(
+			"2.0.1", "2.0.2",
+			UpgradeProcessFactory.runSQL(
+				"delete from PortletPreferences where portletId like '" +
+					dateFacetPortletKey + "%'",
+				"delete from ResourceAction where name = '" +
+					dateFacetPortletKey + "'",
+				"delete from ResourcePermission where name = '" +
+					dateFacetPortletKey + "'"));
 	}
 
 	@Reference

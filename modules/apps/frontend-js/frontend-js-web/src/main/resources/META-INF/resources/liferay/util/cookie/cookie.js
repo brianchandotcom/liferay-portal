@@ -17,12 +17,15 @@ const generateCookie = (name, value, options = {}) => {
 	}
 
 	for (const [key, value] of Object.entries(options)) {
-		if (key === 'secure') {
-			cookie += value ? '; secure' : '';
+		if (value === false) {
 			continue;
 		}
-
-		cookie += `; ${key}=${value}`;
+		else if (value === true) {
+			cookie += `; ${key}`;
+		}
+		else {
+			cookie += `; ${key}=${value}`;
+		}
 	}
 
 	return cookie;

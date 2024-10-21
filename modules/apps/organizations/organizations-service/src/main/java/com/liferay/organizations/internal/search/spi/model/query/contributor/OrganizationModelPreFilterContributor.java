@@ -99,7 +99,7 @@ public class OrganizationModelPreFilterContributor
 							 organization.getOrganizationId()) ||
 						 OrganizationPermissionUtil.contains(
 							 permissionChecker, organization,
-							 ActionKeys.UPDATE_SUBORGANIZATIONS) ||
+							 ActionKeys.EDIT_SUBORGANIZATIONS) ||
 						 OrganizationPermissionUtil.contains(
 							 permissionChecker, organization,
 							 ActionKeys.MANAGE_SUBORGANIZATIONS))) {

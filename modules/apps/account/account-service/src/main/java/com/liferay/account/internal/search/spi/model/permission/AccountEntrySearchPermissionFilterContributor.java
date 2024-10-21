@@ -92,7 +92,7 @@ public class AccountEntrySearchPermissionFilterContributor
 				if (hasManageAvailableAccountsPermission ||
 					OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
-						AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS) ||
+						AccountActionKeys.EDIT_SUBORGANIZATIONS_ACCOUNTS) ||
 					OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) {

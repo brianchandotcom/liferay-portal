@@ -5267,7 +5267,6 @@ public class ObjectEntryResourceTest {
 	public void testGetObjectEntriesFilteredBySystemDate() throws Exception {
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2);
 
@@ -5298,7 +5297,6 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 				URLCodec.encodeURL(fieldName + " eq 2023-09-20T10:00:00.999Z"),
 				_objectDefinition1);
-
 			_assertFilterString(
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2,
 				URLCodec.encodeURL(fieldName + " eq 2023-09-20T10:05:00Z"),
@@ -5314,8 +5312,10 @@ public class ObjectEntryResourceTest {
 				2, fieldName + " ge 2023-09-20T10:00:00Z");
 			_assertFilteredObjectEntries(
 				2, fieldName + " ge 2023-09-20T10:00:00.999Z");
-			_assertFilteredObjectEntries(
-				1, fieldName + " ge 2023-09-20T10:00:01Z");
+			_assertFilterString(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2,
+				URLCodec.encodeURL(fieldName + " ge 2023-09-20T10:00:01Z"),
+				_objectDefinition1);
 
 			// Test case for 'gt' (greater than)
 
@@ -5344,8 +5344,10 @@ public class ObjectEntryResourceTest {
 				2, fieldName + " le 2023-09-20T10:05:00Z");
 			_assertFilteredObjectEntries(
 				2, fieldName + " le 2023-09-20T10:05:00.999Z");
-			_assertFilteredObjectEntries(
-				1, fieldName + " le 2023-09-20T10:04:00.999Z");
+			_assertFilterString(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+				URLCodec.encodeURL(fieldName + " le 2023-09-20T10:04:00.999Z"),
+				_objectDefinition1);
 
 			// Test case for 'lt' (less than)
 

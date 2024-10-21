@@ -249,8 +249,7 @@ public class ActionKeys {
 
 	public static final String UPDATE_LAYOUT_LIMITED = "UPDATE_LAYOUT_LIMITED";
 
-	public static final String UPDATE_SUBORGANIZATIONS =
-		"UPDATE_SUBORGANIZATIONS";
+	public static final String UPDATE_SUBORGANIZATIONS = "UPDATE_SUBORGANIZATIONS";
 
 	public static final String UPDATE_THREAD_PRIORITY =
 		"UPDATE_THREAD_PRIORITY";

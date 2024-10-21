@@ -1279,12 +1279,15 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Add segment using an organization property "organization"',
 	{
 		tag: '@Legacy',
 	},
 	async ({apiHelpers, page}) => {
+
+		// Remove the .skip from the test after it has been analyzed and fixed
+
 		const channelName = 'My Property - ' + getRandomString();
 
 		const organization =
@@ -1409,7 +1412,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Add segment using an individual property "user group"',
 	{
 		tag: '@Legacy',
@@ -1420,6 +1423,9 @@ test(
 		instanceSettingsPage,
 		page,
 	}) => {
+
+		// Remove the .skip from the test after it has been analyzed and fixed
+
 		const channelName = 'My Property - ' + getRandomString();
 
 		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();

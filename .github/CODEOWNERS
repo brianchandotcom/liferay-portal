@@ -1,4 +1,4 @@
-modules/apps/accessibility/
+modules/apps/accessibility/    @liferay-platform-experience
 modules/apps/account/
 modules/apps/adaptive-media/
 modules/apps/address/
@@ -45,18 +45,18 @@ modules/apps/dynamic-data-mapping/
 modules/apps/expando/
 modules/apps/export-import/
 modules/apps/external-reference/
-modules/apps/feature-flag/
+modules/apps/feature-flag/    @liferay-platform-experience
 modules/apps/flags/
 modules/apps/fragment/
 modules/apps/friendly-url/
-modules/apps/frontend-css/
+modules/apps/frontend-css/    @liferay-platform-experience
 modules/apps/frontend-data-set/    @liferay-frontend
 modules/apps/frontend-editor/    @liferay-frontend
 modules/apps/frontend-icons/    @liferay-frontend
 modules/apps/frontend-js/    @liferay-frontend
 modules/apps/frontend-taglib/    @liferay-frontend
-modules/apps/frontend-theme/
-modules/apps/frontend-token/
+modules/apps/frontend-theme/    @liferay-platform-experience
+modules/apps/frontend-token/    @liferay-platform-experience
 modules/apps/glowroot/
 modules/apps/gogo-shell/
 modules/apps/google-places/
@@ -145,7 +145,7 @@ modules/apps/questions/
 modules/apps/ratings/
 modules/apps/reading-time/
 modules/apps/redirect/
-modules/apps/release-feature-flag/
+modules/apps/release-feature-flag/    @liferay-platform-experience
 modules/apps/repository/
 modules/apps/roles/
 modules/apps/rss/
@@ -161,7 +161,7 @@ modules/apps/site-navigation/
 modules/apps/social/
 modules/apps/staging/
 modules/apps/static/
-modules/apps/style-book/
+modules/apps/style-book/    @liferay-platform-experience
 modules/apps/subscription/
 modules/apps/template/
 modules/apps/text-localizer/
@@ -187,7 +187,7 @@ modules/dxp/apps/commerce-demo-pack/
 modules/dxp/apps/commerce-punchout/
 modules/dxp/apps/document-library-opener/
 modules/dxp/apps/enterprise-product-notification/
-modules/dxp/apps/frontend-theme/
+modules/dxp/apps/frontend-theme/    @liferay-platform-experience
 modules/dxp/apps/multi-factor-authentication/
 modules/dxp/apps/osb/
 modules/dxp/apps/portal/

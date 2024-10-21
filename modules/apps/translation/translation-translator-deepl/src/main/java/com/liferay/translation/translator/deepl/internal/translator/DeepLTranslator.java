@@ -80,7 +80,7 @@ public class DeepLTranslator extends BaseTranslator {
 			throw new TranslatorException(
 				StringBundler.concat(
 					"Target language code ", targetLanguageCode,
-					" is not among the supported langauge codes: ",
+					" is not among the supported language codes: ",
 					StringUtil.merge(
 						supportedLanguageCodes, StringPool.COMMA_AND_SPACE)));
 		}

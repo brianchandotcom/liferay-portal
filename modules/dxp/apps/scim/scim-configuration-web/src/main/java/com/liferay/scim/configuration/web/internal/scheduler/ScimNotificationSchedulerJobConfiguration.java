@@ -136,7 +136,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		);
 
 		String body =
-			"The access token for the SCIM client will expire at " +
+			"The access token for the SCIM client will expire on " +
 				_format.format(accessTokenExpirationDate);
 
 		Company company = _companyLocalService.getCompany(companyId);

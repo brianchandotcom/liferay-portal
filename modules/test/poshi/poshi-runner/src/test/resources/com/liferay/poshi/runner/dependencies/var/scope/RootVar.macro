@@ -2,6 +2,12 @@ definition {
 
 	var rootVar = "A global variable in the macro file.";
 
+	macro assertCommandVar {
+		if ("${referenceExecuteVar}" != "A command var that will not be overridden by an execute var.") {
+			fail("'referenceExecuteVar' does not match the value set by the previous command var in VariableScope.testcase");
+		}
+	}
+
 	macro assertExecuteVar {
 		if ("${referenceExecuteVar}" != "An execute var that will referenced by another execute var.") {
 			fail("'referenceExecuteVar' does not match the value set by the previous execute var in VariableScope.testcase");

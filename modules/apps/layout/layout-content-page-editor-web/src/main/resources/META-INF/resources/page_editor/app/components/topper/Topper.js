@@ -264,8 +264,8 @@ function TopperContent({
 		>
 			{isActive || isHighlighted ? (
 				<TopperLabel
+					isDragging={isDraggingSource}
 					itemElement={itemElement}
-					style={isDraggingSource ? {opacity: 0} : {}}
 				>
 					<ul className="tbar-nav">
 						{canBeDragged && (

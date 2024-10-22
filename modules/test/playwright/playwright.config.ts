@@ -20,7 +20,21 @@ import {config as calendarWebConfig} from './tests/calendar-web/config';
 import {config as captchaWebConfig} from './tests/captcha-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
-import {config as commerceConfig} from './tests/commerce/config';
+import {config as commerceAccountWebConfig} from './tests/commerce/commerce-account-web/config';
+import {config as commerceCartContentWebConfig} from './tests/commerce/commerce-cart-content-web/config';
+import {config as commerceChannelWebConfig} from './tests/commerce/commerce-channel-web/config';
+import {config as commerceCheckoutWebConfig} from './tests/commerce/commerce-checkout-web/config';
+import {config as commerceDiscountContentWebConfig} from './tests/commerce/commerce-discount-content-web/config';
+import {config as commerceOrderContentWebConfig} from './tests/commerce/commerce-order-content-web/config';
+import {config as commercePaymentsWebConfig} from './tests/commerce/commerce-payment-web/config';
+import {config as commerceProductContentSearchWebConfig} from './tests/commerce/commerce-product-content-search-web/config';
+import {config as commerceProductContentWebConfig} from './tests/commerce/commerce-product-content-web/config';
+import {config as commerceProductDefinitionsWebConfig} from './tests/commerce/commerce-product-definitions-web/config';
+import {config as commerceProductOptionsWebConfig} from './tests/commerce/commerce-product-options-web/config';
+import {config as commerceShippingEngineWebConfig} from './tests/commerce/commerce-shipping-engine-fixed-web/config';
+import {config as commerceSiteInitializerWebConfig} from './tests/commerce/commerce-site-initializer/config';
+import {config as commerceThemeMiniumWebConfig} from './tests/commerce/commerce-theme-minium/config';
+import {config as commerceWishListWebConfig} from './tests/commerce/commerce-wish-list-web/config';
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/config';
@@ -119,7 +133,21 @@ export default defineConfig({
 		cookiesBannerWebConfig,
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,
-		commerceConfig,
+		commerceAccountWebConfig,
+		commerceCartContentWebConfig,
+		commerceChannelWebConfig,
+		commerceCheckoutWebConfig,
+		commerceDiscountContentWebConfig,
+		commerceOrderContentWebConfig,
+		commercePaymentsWebConfig,
+		commerceProductContentSearchWebConfig,
+		commerceProductContentWebConfig,
+		commerceProductDefinitionsWebConfig,
+		commerceProductOptionsWebConfig,
+		commerceShippingEngineWebConfig,
+		commerceSiteInitializerWebConfig,
+		commerceThemeMiniumWebConfig,
+		commerceWishListWebConfig,
 		commerceWorkspaceConfig,
 		configurationAdminWebConfig,
 		contentDashboardWebConfig,

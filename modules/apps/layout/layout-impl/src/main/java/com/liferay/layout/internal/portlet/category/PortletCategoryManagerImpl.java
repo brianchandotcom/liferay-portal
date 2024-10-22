@@ -164,7 +164,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 	}
 
 	private Set<String> _getFragmentEntryLinksPortletNames(
-		ThemeDisplay themeDisplay) {
+		boolean deleted, ThemeDisplay themeDisplay) {
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -183,7 +183,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinksBySegmentsExperienceId(
 						themeDisplay.getScopeGroupId(), segmentsExperiencesIds,
-						themeDisplay.getPlid(), false)) {
+						themeDisplay.getPlid(), deleted)) {
 
 			portletIds.addAll(
 				_portletRegistry.getFragmentEntryLinkPortletIds(
@@ -245,8 +245,10 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		Map<String, JSONObject> portletCategoryJSONObjectsMap =
 			new LinkedHashMap<>();
 
+		Set<String> deletedFragmentEntryLinksPortletNames =
+			_getFragmentEntryLinksPortletNames(true, themeDisplay);
 		Set<String> fragmentEntryLinksPortletNames =
-			_getFragmentEntryLinksPortletNames(themeDisplay);
+			_getFragmentEntryLinksPortletNames(false, themeDisplay);
 		Set<String> layoutDecodedPortletNames = _getLayoutDecodedPortletNames(
 			themeDisplay);
 
@@ -276,6 +278,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				portletCategoryJSONObject -> portletCategoryJSONObject);
 
 			JSONArray portletsJSONArray = _getPortletsJSONArray(
+				deletedFragmentEntryLinksPortletNames,
 				fragmentEntryLinksPortletNames, highlightedPortletIds,
 				httpServletRequest, layoutDecodedPortletNames,
 				currentPortletCategory, themeDisplay);
@@ -413,6 +416,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 	}
 
 	private JSONArray _getPortletsJSONArray(
+			Set<String> deletedFragmentEntryLinksPortletNames,
 			Set<String> fragmentEntryLinksPortletNames,
 			Set<String> highlightedPortletIds,
 			HttpServletRequest httpServletRequest,
@@ -440,6 +444,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 					"embedded",
 					() -> {
 						if (fragmentEntryLinksPortletNames.contains(
+								portlet.getPortletId()) ||
+							deletedFragmentEntryLinksPortletNames.contains(
 								portlet.getPortletId())) {
 
 							return false;
@@ -479,7 +485,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 						Layout layout = themeDisplay.getLayout();
 
 						if (!layout.isTypePortlet() ||
-							portlet.isInstanceable()) {
+							portlet.isInstanceable() ||
+							deletedFragmentEntryLinksPortletNames.contains(
+								portlet.getPortletId())) {
 
 							return false;
 						}

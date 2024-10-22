@@ -519,8 +519,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	protected String getPermissionCheckerResourceName(Object id)
 		throws Exception {
 
-		return ObjectDefinition.class.getName() + "#" +
-			_objectDefinition.getObjectDefinitionId();
+		return _objectDefinition.getClassName();
 	}
 
 	@Override

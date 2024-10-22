@@ -2787,8 +2787,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		PLOEntry labelPLOEntryKey = _ploEntryLocalService.fetchPLOEntry(
 			objectDefinition.getCompanyId(),
-			"model.resource.com.liferay.object.model.ObjectDefinition#" +
-				objectDefinition.getObjectDefinitionId(),
+			"model.resource." + objectDefinition.getClassName(),
 			objectDefinition.getDefaultLanguageId());
 
 		Assert.assertEquals(labelPLOEntryKey.getValue(), label);

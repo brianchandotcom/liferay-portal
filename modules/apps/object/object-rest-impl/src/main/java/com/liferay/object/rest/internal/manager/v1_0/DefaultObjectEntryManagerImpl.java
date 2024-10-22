@@ -8,7 +8,6 @@ package com.liferay.object.rest.internal.manager.v1_0;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -423,42 +422,37 @@ public class DefaultObjectEntryManagerImpl
 				ActionUtil.addAction(
 					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
 					"postObjectEntry", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"createBatch",
 				ActionUtil.addAction(
 					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
 					"postObjectEntryBatch", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"deleteBatch",
 				ActionUtil.addAction(
 					ActionKeys.DELETE, ObjectEntryResourceImpl.class, null,
 					"deleteObjectEntryBatch", null,
 					objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"get",
 				ActionUtil.addAction(
 					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,
 					"getObjectEntriesPage", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"updateBatch",
 				ActionUtil.addAction(
 					ActionKeys.UPDATE, ObjectEntryResourceImpl.class, null,
 					"putObjectEntryBatch", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).build(),
 			facets,
 			TransformUtil.transform(
@@ -490,17 +484,15 @@ public class DefaultObjectEntryManagerImpl
 				ActionUtil.addAction(
 					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
 					"postObjectEntry", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"get",
 				ActionUtil.addAction(
 					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,
 					"getObjectEntriesPage", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getResourceName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -647,9 +639,8 @@ public class DefaultObjectEntryManagerImpl
 					ObjectEntryRelatedObjectsResourceImpl.class, objectEntryId,
 					"getCurrentObjectEntriesObjectRelationshipNamePage", null,
 					serviceBuilderObjectEntry.getUserId(),
-					_getObjectEntryPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
+					objectDefinition.getClassName(), groupId,
+					dtoConverterContext.getUriInfo())
 			).build(),
 			_toObjectEntries(
 				dtoConverterContext,
@@ -1185,10 +1176,6 @@ public class DefaultObjectEntryManagerImpl
 			objectRelationship.getObjectRelationshipId(), primaryKey);
 	}
 
-	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
-		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
-	}
-
 	private ObjectEntry _getObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, Map<String, Serializable> values)
@@ -1204,10 +1191,6 @@ public class DefaultObjectEntryManagerImpl
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
-	}
-
-	private String _getObjectEntryPermissionName(long objectDefinitionId) {
-		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
 	private Map<String, ObjectRelationship> _getObjectRelationships(

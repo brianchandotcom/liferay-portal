@@ -1618,9 +1618,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_ploEntryLocalService.addOrUpdatePLOEntry(
 				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
-				"model.resource.com.liferay.object.model.ObjectDefinition#" +
-					objectDefinition.getObjectDefinitionId(),
-				languageId, objectDefinition.getLabel(locale));
+				"model.resource." + objectDefinition.getClassName(), languageId,
+				objectDefinition.getLabel(locale));
 			_ploEntryLocalService.addOrUpdatePLOEntry(
 				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
 				"model.resource." + objectDefinition.getResourceName(),
@@ -1765,8 +1764,7 @@ public class ObjectDefinitionLocalServiceImpl
 			"model.resource." + objectDefinition.getResourceName());
 		_ploEntryLocalService.deletePLOEntries(
 			objectDefinition.getCompanyId(),
-			"model.resource.com.liferay.object.model.ObjectDefinition#" +
-				objectDefinition.getObjectDefinitionId());
+			"model.resource." + objectDefinition.getClassName());
 	}
 
 	private void _dropTable(String dbTableName) {

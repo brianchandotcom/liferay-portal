@@ -1011,9 +1011,7 @@ public class BundleSiteInitializerTest {
 			_commerceNotificationTemplateLocalService.
 				getCommerceNotificationTemplates(
 					commerceChannel.getGroupId(),
-					"com.liferay.object.model.ObjectDefinition#" +
-						objectDefinition.getObjectDefinitionId() + "#create",
-					true);
+					objectDefinition.getClassName() + "#create", true);
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
 			commerceNotificationTemplates.get(0);
@@ -3350,9 +3348,7 @@ public class BundleSiteInitializerTest {
 
 		resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
-				_group.getCompanyId(),
-				"com.liferay.object.model.ObjectDefinition#" +
-					objectDefinition.getObjectDefinitionId(),
+				_group.getCompanyId(), objectDefinition.getClassName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(_group.getCompanyId()), role.getRoleId());
 
@@ -3422,9 +3418,7 @@ public class BundleSiteInitializerTest {
 
 		resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
-				_group.getCompanyId(),
-				"com.liferay.object.model.ObjectDefinition#" +
-					objectDefinition.getObjectDefinitionId(),
+				_group.getCompanyId(), objectDefinition.getClassName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(_group.getCompanyId()), role.getRoleId());
 

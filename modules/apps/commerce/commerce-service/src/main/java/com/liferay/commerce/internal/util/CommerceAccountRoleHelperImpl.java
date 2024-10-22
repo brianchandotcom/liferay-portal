@@ -28,7 +28,6 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -429,21 +428,16 @@ public class CommerceAccountRoleHelperImpl
 				}
 
 				companyResourceActionIds.put(
-					"com.liferay.object#" +
-						objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getResourceName(),
 					new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
 				companyResourceActionIds.put(
-					"com.liferay.object.model.ObjectDefinition#" +
-						objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getClassName(),
 					new String[] {
 						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
 						ActionKeys.UPDATE, ActionKeys.VIEW
 					});
 				companyResourceActionIds.put(
-					StringBundler.concat(
-						"com_liferay_object_web_internal_object_",
-						"definitions_portlet_ObjectDefinitionsPortlet_",
-						objectDefinition.getObjectDefinitionId()),
+					objectDefinition.getPortletId(),
 					new String[] {ActionKeys.VIEW});
 			}
 		}
@@ -460,8 +454,7 @@ public class CommerceAccountRoleHelperImpl
 				}
 
 				companyResourceActionIds.put(
-					"com.liferay.object#" +
-						objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getResourceName(),
 					new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
 			}
 

@@ -148,9 +148,7 @@ public class EditInfoItemStrutsActionTest {
 		_objectDefinition = _addObjectDefinition();
 
 		_classNameId = String.valueOf(
-			_portal.getClassNameId(
-				ObjectDefinition.class.getName() + "#" +
-					_objectDefinition.getObjectDefinitionId()));
+			_portal.getClassNameId(_objectDefinition.getClassName()));
 
 		_layout = _addLayout();
 	}

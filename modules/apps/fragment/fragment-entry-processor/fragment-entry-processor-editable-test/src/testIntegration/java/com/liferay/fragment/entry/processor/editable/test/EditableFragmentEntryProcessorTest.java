@@ -733,8 +733,7 @@ public class EditableFragmentEntryProcessorTest {
 			false);
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				objectDefinition.getObjectDefinitionId());
+			objectDefinition.getClassName());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),

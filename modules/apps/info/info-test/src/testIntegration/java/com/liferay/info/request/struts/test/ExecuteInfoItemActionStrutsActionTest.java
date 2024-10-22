@@ -95,9 +95,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		_classNameId = String.valueOf(
-			_portal.getClassNameId(
-				ObjectDefinition.class.getName() + "#" +
-					objectDefinition.getObjectDefinitionId()));
+			_portal.getClassNameId(objectDefinition.getClassName()));
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_user.getUserId(), _group.getGroupId(),

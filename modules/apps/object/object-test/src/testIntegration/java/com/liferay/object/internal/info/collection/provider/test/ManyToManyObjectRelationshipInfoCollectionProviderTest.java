@@ -22,8 +22,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -181,9 +179,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				RelatedInfoItemCollectionProvider.class,
-				StringBundler.concat(
-					ObjectDefinition.class.getName(), StringPool.POUND,
-					objectDefinition.getObjectDefinitionId()));
+				objectDefinition.getClassName());
 
 		Assert.assertNotNull(relatedInfoItemCollectionProvider);
 

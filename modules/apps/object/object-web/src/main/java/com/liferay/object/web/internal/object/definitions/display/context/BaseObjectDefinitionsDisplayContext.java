@@ -9,6 +9,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -16,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -65,6 +68,17 @@ public abstract class BaseObjectDefinitionsDisplayContext {
 		return objectDefinition.getObjectDefinitionId();
 	}
 
+	public String getObjectFolderName() throws PortalException {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		ObjectFolder objectFolder = _objectFolderLocalService.getObjectFolder(
+			objectDefinition.getObjectFolderId());
+
+		return ParamUtil.getString(
+			objectRequestHelper.getRequest(), "objectFolderName",
+			objectFolder.getName());
+	}
+
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(
 			PortletURLUtil.getCurrent(
@@ -84,10 +98,13 @@ public abstract class BaseObjectDefinitionsDisplayContext {
 	protected BaseObjectDefinitionsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ObjectFolderLocalService objectFolderLocalService) {
 
 		this.objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
+
+		_objectFolderLocalService = objectFolderLocalService;
 
 		objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -106,5 +123,7 @@ public abstract class BaseObjectDefinitionsDisplayContext {
 	protected final ModelResourcePermission<ObjectDefinition>
 		objectDefinitionModelResourcePermission;
 	protected final ObjectRequestHelper objectRequestHelper;
+
+	private final ObjectFolderLocalService _objectFolderLocalService;
 
 }

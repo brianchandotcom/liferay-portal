@@ -228,6 +228,47 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
+	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
+
+			_classNameSupplier = null;
+		}
+
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+
+		_classNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
+
+		_classNameSupplier = () -> {
+			try {
+				return classNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String className;
+
+	@JsonIgnore
+	private Supplier<String> _classNameSupplier;
+
+	@Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -1686,6 +1727,22 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"active\": ");
 
 			sb.append(active);
+		}
+
+		String className = getClassName();
+
+		if (className != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(className));
+
+			sb.append("\"");
 		}
 
 		Date dateCreated = getDateCreated();

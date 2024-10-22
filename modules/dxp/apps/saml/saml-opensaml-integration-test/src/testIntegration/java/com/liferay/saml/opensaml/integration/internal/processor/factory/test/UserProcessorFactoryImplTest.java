@@ -6,10 +6,10 @@
 package com.liferay.saml.opensaml.integration.internal.processor.factory.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -18,9 +18,7 @@ import com.liferay.saml.opensaml.integration.field.expression.handler.registry.U
 import com.liferay.saml.opensaml.integration.processor.UserProcessor;
 import com.liferay.saml.opensaml.integration.processor.factory.UserProcessorFactory;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,65 +35,42 @@ public class UserProcessorFactoryImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		user.setScreenName("john.doe");
-		user.setEmailAddress("john.doe@example.com");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-
-		_currentUser = _userLocalService.updateUser(user);
-	}
-
-	@After
-	public void tearDown() throws PortalException {
-		_userLocalService.deleteUser(_currentUser);
-	}
-
 	@Test
 	public void testAllUserFieldsAreUpdatedWhenEmailIsChanged()
 		throws Exception {
 
+		_user = UserTestUtil.addUser();
+
+		_user.setScreenName("john.doe");
+		_user.setEmailAddress("john.doe@example.com");
+		_user.setFirstName("John");
+		_user.setLastName("Doe");
+
+		_user = _userLocalService.updateUser(_user);
+
 		// Updated email contains capital letters
 
-		User newUser = _processUserFromSaml(
+		_assertProcess(
 			"John-changed", "Doe-changed", "JOHN.DOE@example.com",
 			"john.doe.changed");
 
-		_assertUserFields(newUser);
-
 		// Updated email contains lower case letters
 
-		newUser = _processUserFromSaml(
+		_assertProcess(
 			"John-changed", "Doe-changed", "john.doe@example.com", "john.doe");
-
-		_assertUserFields(newUser);
 
 		// Updated email entirely changed
 
-		newUser = _processUserFromSaml(
-			"Jane", "Doena", "jane.doena@example.com", "jane.doena");
-
-		_assertUserFields(newUser);
+		_assertProcess("Jane", "Doena", "jane.doena@example.com", "jane.doena");
 	}
 
-	private void _assertUserFields(User newUser) {
-		Assert.assertEquals(
-			_currentUser.getFirstName(), newUser.getFirstName());
-		Assert.assertEquals(_currentUser.getLastName(), newUser.getLastName());
-		Assert.assertEquals(
-			_currentUser.getScreenName(), newUser.getScreenName());
-	}
-
-	private User _processUserFromSaml(
+	private void _assertProcess(
 			String firstName, String lastName, String emailAddress,
 			String screenName)
 		throws Exception {
 
 		UserProcessor userProcessor = _userProcessorFactory.create(
-			_currentUser, _userFieldExpressionHandlerRegistry);
+			_user, _userFieldExpressionHandlerRegistry);
 
 		userProcessor.setValueArray(
 			"emailAddress", new String[] {emailAddress});
@@ -103,11 +78,16 @@ public class UserProcessorFactoryImplTest {
 		userProcessor.setValueArray("lastName", new String[] {lastName});
 		userProcessor.setValueArray("screenName", new String[] {screenName});
 
-		return userProcessor.process(
+		User user = userProcessor.process(
 			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(_user.getFirstName(), user.getFirstName());
+		Assert.assertEquals(_user.getLastName(), user.getLastName());
+		Assert.assertEquals(_user.getScreenName(), user.getScreenName());
 	}
 
-	private User _currentUser;
+	@DeleteAfterTestRun
+	private User _user;
 
 	@Inject
 	private UserFieldExpressionHandlerRegistry

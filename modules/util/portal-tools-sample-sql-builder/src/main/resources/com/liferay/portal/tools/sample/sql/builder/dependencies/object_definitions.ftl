@@ -1,5 +1,5 @@
 <#assign
-	objectDefinitionModel = dataFactory.newObjectDefinitionModel("L_COMMERCE_ORDER", true, "CommerceOrder", 0)
+	objectDefinitionModel = dataFactory.newObjectDefinitionModel()
 />
 
 ${dataFactory.toInsertSQL(objectDefinitionModel)}

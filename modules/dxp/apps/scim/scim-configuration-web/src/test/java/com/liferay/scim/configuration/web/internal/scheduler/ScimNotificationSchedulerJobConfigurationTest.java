@@ -35,9 +35,6 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
-
-		_scimNotificationSchedulerJobConfiguration =
-			new ScimNotificationSchedulerJobConfiguration();
 	}
 
 	@Test
@@ -48,15 +45,12 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		_testIsSendNotification(
 			accessTokenExpirationDate,
 			accessTokenExpirationDate.getTime() - (Time.DAY * 30));
-
 		_testIsSendNotification(
 			accessTokenExpirationDate,
 			accessTokenExpirationDate.getTime() - (Time.DAY * 10));
-
 		_testIsSendNotification(
 			accessTokenExpirationDate,
 			accessTokenExpirationDate.getTime() - Time.DAY);
-
 		_testIsSendNotification(
 			accessTokenExpirationDate, accessTokenExpirationDate.getTime());
 	}
@@ -68,17 +62,14 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				accessTokenExpirationDate, notificationDurationMillis,
 				new Date(0)));
-
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				accessTokenExpirationDate, notificationDurationMillis,
 				new Date(notificationDurationMillis - 1)));
-
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				accessTokenExpirationDate, notificationDurationMillis,
 				new Date(notificationDurationMillis)));
-
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
 				accessTokenExpirationDate, notificationDurationMillis,
@@ -86,6 +77,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	}
 
 	private ScimNotificationSchedulerJobConfiguration
-		_scimNotificationSchedulerJobConfiguration;
+		_scimNotificationSchedulerJobConfiguration =
+			new ScimNotificationSchedulerJobConfiguration();
 
 }

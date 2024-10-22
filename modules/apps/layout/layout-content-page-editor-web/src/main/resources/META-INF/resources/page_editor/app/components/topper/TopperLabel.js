@@ -15,7 +15,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 const TOPPER_BAR_HEIGHT = 24;
 const TOPPER_BAR_BORDER_WIDTH = 2;
 
-export function TopperLabel({children, isDragging, itemElement}) {
+export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 	const globalContext = useGlobalContext();
 	const languageId = useSelector(selectLanguageId);
 	const layoutData = useSelector((state) => state.layoutData);
@@ -172,7 +172,11 @@ export function TopperLabel({children, isDragging, itemElement}) {
 					'cadmin',
 					'page-editor__topper__bar',
 					'tbar',
-					{'page-editor__topper__bar--inset': positionConfig.isInset}
+					{
+						'page-editor__topper__bar--hovered': isHovered,
+						'page-editor__topper__bar--inset':
+							positionConfig.isInset,
+					}
 				)}
 				style={{
 					...(isDragging && {opacity: 0}),

@@ -75,7 +75,7 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	protected boolean isSendNotification(
-		Date accessTokenExpirationDate, long currentTime,
+		Date accessTokenExpirationDate, long notificationDurationMillis,
 		Date lastNotificationDate) {
 
 		long accessTokenExpirationDurationMillis =

@@ -139,12 +139,14 @@ public class ScimNotificationSchedulerJobConfiguration
 			"The access token for the SCIM client will expire on " +
 				_format.format(accessTokenExpirationDate);
 
-		Company company = _companyLocalService.getCompany(companyId);
-
 		subscriptionSender.setBody(body);
 		subscriptionSender.setEntryTitle(body);
+
+		Company company = _companyLocalService.getCompany(companyId);
+
 		subscriptionSender.setFrom(
 			"scim-notification@" + company.getMx(), "SCIM-Notification");
+
 		subscriptionSender.setMailId("popPortletPrefix", "ids");
 		subscriptionSender.setNotificationType(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);

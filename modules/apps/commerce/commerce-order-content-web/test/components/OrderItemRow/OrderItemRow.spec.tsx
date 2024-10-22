@@ -27,6 +27,11 @@ interface ILocators {
 	deliveryGroup2Input: HTMLInputElement | HTMLSelectElement | null;
 	image: HTMLImageElement;
 	quantityCell: HTMLElement;
+	row0Actions: HTMLButtonElement;
+	row0CopyColumnAction: HTMLButtonElement;
+	row0RemoveItemAction: HTMLButtonElement;
+	row0ResetRowAction: HTMLButtonElement;
+	row0SplitQuantityAction: HTMLButtonElement;
 	skuNameCell: HTMLElement;
 }
 
@@ -49,16 +54,43 @@ const getLocators = (
 			`orderItem${orderItemId}-${deliveryGroups[1]?.id}Input`
 		) as HTMLInputElement | HTMLSelectElement,
 		image: renderedComponent.queryByRole('img') as HTMLImageElement,
-		quantityCell: renderedComponent.getByRole('cell', {name: 'quantity'}),
-		skuNameCell: renderedComponent.getByRole('cell', {name: 'sku-name'}),
+		quantityCell: renderedComponent.queryByTestId(
+			`orderItem${orderItemId}Quantity`
+		) as HTMLElement,
+		row0Actions: renderedComponent.queryByTestId(
+			'row0Actions'
+		) as HTMLButtonElement,
+		row0CopyColumnAction: renderedComponent.queryByTestId(
+			'row0CopyColumn'
+		) as HTMLButtonElement,
+		row0RemoveItemAction: renderedComponent.queryByTestId(
+			'row0RemoveItem'
+		) as HTMLButtonElement,
+		row0ResetRowAction: renderedComponent.queryByTestId(
+			'row0ResetRow'
+		) as HTMLButtonElement,
+		row0SplitQuantityAction: renderedComponent.queryByTestId(
+			'row0SplitQuantity'
+		) as HTMLButtonElement,
+		skuNameCell: renderedComponent.queryByRole('cell', {
+			name: 'sku-name',
+		}) as HTMLElement,
 	};
 };
 
 describe('OrderItemRow', () => {
 	const handleSubmit = jest.fn();
 
+	beforeEach(() => {
+		(window as any).Liferay = {
+			...(window as any).Liferay,
+			CustomDialogs: {},
+		};
+	});
+
 	afterEach(() => {
 		fetchMock.restore();
+		jest.restoreAllMocks();
 		jest.clearAllMocks();
 
 		cleanup();
@@ -1001,6 +1033,1592 @@ describe('OrderItemRow', () => {
 
 		await waitFor(() => {
 			expect(quantityCell).toHaveTextContent(String(3));
+		});
+	});
+});
+
+describe('OrderItemRow - actions', () => {
+	const handleSubmit = jest.fn();
+
+	beforeEach(() => {
+		(window as any).Liferay = {
+			...(window as any).Liferay,
+			CustomDialogs: {},
+		};
+
+		fetchMock.mock('*', JSON.stringify({}));
+	});
+
+	afterEach(() => {
+		fetchMock.restore();
+		jest.restoreAllMocks();
+		jest.clearAllMocks();
+
+		cleanup();
+	});
+
+	it('Must display row actions', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 4,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			quantityCell,
+			row0Actions,
+			row0CopyColumnAction,
+			row0RemoveItemAction,
+			row0ResetRowAction,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0CopyColumnAction).toBeVisible();
+			expect(row0CopyColumnAction).toBeEnabled();
+			expect(row0RemoveItemAction).toBeVisible();
+			expect(row0RemoveItemAction).toBeEnabled();
+			expect(row0ResetRowAction).toBeVisible();
+			expect(row0ResetRowAction).toBeEnabled();
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeEnabled();
+		});
+	});
+
+	it('Must display actions disabled with no delivery group', async () => {
+		const deliveryGroups: Array<IDeliveryGroup> = [];
+
+		const orderItem: IOrderItem = {
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 4,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			quantityCell,
+			row0Actions,
+			row0CopyColumnAction,
+			row0RemoveItemAction,
+			row0ResetRowAction,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0CopyColumnAction).toBeVisible();
+			expect(row0CopyColumnAction).toBeDisabled();
+			expect(row0RemoveItemAction).toBeVisible();
+			expect(row0RemoveItemAction).toBeEnabled();
+			expect(row0ResetRowAction).toBeVisible();
+			expect(row0ResetRowAction).toBeDisabled();
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeDisabled();
+		});
+	});
+
+	it('Must display actions disabled with one delivery group', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 4,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			quantityCell,
+			row0Actions,
+			row0CopyColumnAction,
+			row0RemoveItemAction,
+			row0ResetRowAction,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0CopyColumnAction).toBeVisible();
+			expect(row0CopyColumnAction).toBeDisabled();
+			expect(row0RemoveItemAction).toBeVisible();
+			expect(row0RemoveItemAction).toBeEnabled();
+			expect(row0ResetRowAction).toBeVisible();
+			expect(row0ResetRowAction).toBeEnabled();
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeDisabled();
+		});
+	});
+
+	it('Must reset the quantities', async () => {
+		jest.spyOn(window, 'confirm')
+			.mockImplementationOnce(() => false)
+			.mockImplementation(() => true);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 9,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0ResetRowAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(4);
+		expect(deliveryGroup2Input).toHaveValue(5);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0ResetRowAction).toBeVisible();
+			expect(row0ResetRowAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0ResetRowAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(9));
+			expect(deliveryGroup1Input).toHaveValue(4);
+			expect(deliveryGroup2Input).toHaveValue(5);
+		});
+
+		expect(handleSubmit).not.toBeCalled();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0ResetRowAction).toBeVisible();
+			expect(row0ResetRowAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0ResetRowAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(
+				String(orderItem.settings?.minQuantity)
+			);
+			expect(deliveryGroup1Input).toHaveValue(
+				orderItem.settings?.minQuantity
+			);
+			expect(deliveryGroup2Input).not.toHaveValue();
+
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 2,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 0,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
+		});
+	});
+
+	it('Must reset the quantities if not primary delivery group', async () => {
+		jest.spyOn(window, 'confirm').mockImplementation(() => true);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 5,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0ResetRowAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).not.toHaveValue();
+		expect(deliveryGroup2Input).toHaveValue(5);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0ResetRowAction).toBeVisible();
+			expect(row0ResetRowAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0ResetRowAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(
+				String(orderItem.settings?.minQuantity)
+			);
+			expect(deliveryGroup1Input).toHaveValue(
+				orderItem.settings?.minQuantity
+			);
+			expect(deliveryGroup2Input).not.toHaveValue();
+
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 0,
+					originalQuantity: 2,
+					quantity: 2,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 0,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
+		});
+	});
+
+	it('Must copy the quantities', async () => {
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 9,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0CopyColumnAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(4);
+		expect(deliveryGroup2Input).toHaveValue(5);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0CopyColumnAction).toBeVisible();
+			expect(row0CopyColumnAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0CopyColumnAction.click();
+		});
+
+		await waitFor(() => {
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
+
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(8));
+			expect(deliveryGroup1Input).toHaveValue(4);
+			expect(deliveryGroup2Input).toHaveValue(4);
+		});
+	});
+
+	it('Must copy be disabled if no primary delivery group', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 5,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).not.toHaveValue();
+		expect(deliveryGroup2Input).toHaveValue(5);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			const {row0CopyColumnAction} = getLocators(
+				deliveryGroups,
+				orderItem.id,
+				renderedComponent
+			);
+
+			expect(row0CopyColumnAction).toBeVisible();
+			expect(row0CopyColumnAction).toBeDisabled();
+		});
+	});
+
+	it('Must copy be disabled if too much quantity', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10002,
+				name: 'DeliveryGroup3',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 2,
+					quantity: 10,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 10,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 20,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(10);
+		expect(deliveryGroup2Input).not.toHaveValue();
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			const {row0CopyColumnAction} = getLocators(
+				deliveryGroups,
+				orderItem.id,
+				renderedComponent
+			);
+
+			expect(row0CopyColumnAction).toBeVisible();
+			expect(row0CopyColumnAction).toBeDisabled();
+		});
+	});
+
+	it('Must delete the order item', async () => {
+		jest.spyOn(window, 'confirm')
+			.mockImplementationOnce(() => false)
+			.mockImplementation(() => true);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 9,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0RemoveItemAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(4);
+		expect(deliveryGroup2Input).toHaveValue(5);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0RemoveItemAction).toBeVisible();
+			expect(row0RemoveItemAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0RemoveItemAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(9));
+			expect(deliveryGroup1Input).toHaveValue(4);
+			expect(deliveryGroup2Input).toHaveValue(5);
+		});
+
+		expect(handleSubmit).not.toBeCalled();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0RemoveItemAction).toBeVisible();
+			expect(row0RemoveItemAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0RemoveItemAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(0));
+			expect(deliveryGroup1Input).not.toHaveValue();
+			expect(deliveryGroup2Input).not.toHaveValue();
+
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 0,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 0,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
+		});
+	});
+
+	it('Must delete the order item also without delivery groups', async () => {
+		jest.spyOn(window, 'confirm').mockImplementation(() => true);
+
+		const deliveryGroups: Array<IDeliveryGroup> = [];
+
+		const orderItem: IOrderItem = {
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 9,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {quantityCell, row0Actions, row0RemoveItemAction} = getLocators(
+			deliveryGroups,
+			orderItem.id,
+			renderedComponent
+		);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0RemoveItemAction).toBeVisible();
+			expect(row0RemoveItemAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0RemoveItemAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(0));
+
+			expect(handleSubmit).toBeCalledWith(
+				{
+					...orderItem,
+					deliveryGroups: {},
+					quantity: 0,
+				},
+				true
+			);
+		});
+	});
+
+	it('Must split be disabled if not enough quantity', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10002,
+				name: 'DeliveryGroup3',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 2,
+					quantity: 3,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 3,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(3);
+		expect(deliveryGroup2Input).not.toHaveValue();
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeDisabled();
+		});
+	});
+
+	it('Must split be disabled if allowed quantities provided', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 10,
+					quantity: 10,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 10,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				allowedQuantities: [2, 3, 4, 10],
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(String(10));
+		expect(deliveryGroup2Input).not.toHaveValue();
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeDisabled();
+		});
+	});
+
+	it('Must split the quantities', async () => {
+		jest.spyOn(window, 'confirm')
+			.mockImplementationOnce(() => false)
+			.mockImplementation(() => true);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 8,
+					quantity: 8,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 2,
+					quantity: 2,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 10,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(8);
+		expect(deliveryGroup2Input).toHaveValue(2);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0SplitQuantityAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(10));
+			expect(deliveryGroup1Input).toHaveValue(8);
+			expect(deliveryGroup2Input).toHaveValue(2);
+		});
+
+		expect(handleSubmit).not.toBeCalled();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0SplitQuantityAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(10));
+			expect(deliveryGroup1Input).toHaveValue(5);
+			expect(deliveryGroup2Input).toHaveValue(5);
+
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 2,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
+		});
+	});
+
+	it('Must split the quantities with reminder', async () => {
+		jest.spyOn(window, 'confirm').mockImplementation(() => true);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 5,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).toHaveValue(5);
+		expect(deliveryGroup2Input).not.toHaveValue();
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0SplitQuantityAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(5));
+			expect(deliveryGroup1Input).toHaveValue(3);
+			expect(deliveryGroup2Input).toHaveValue(2);
+
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 3,
+					quantity: 3,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 0,
+					originalQuantity: 2,
+					quantity: 2,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
+		});
+	});
+
+	it('Must split the quantities if no primary delivery group', async () => {
+		jest.spyOn(window, 'confirm').mockImplementation(() => true);
+
+		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
+			handleSubmit(param.deliveryGroups);
+		});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroups: {
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 5,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 5,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 2,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSubmit={handleSubmitWrapper}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {
+			deliveryGroup1Input,
+			deliveryGroup2Input,
+			quantityCell,
+			row0Actions,
+			row0SplitQuantityAction,
+		} = getLocators(deliveryGroups, orderItem.id, renderedComponent);
+
+		expect(quantityCell).toHaveTextContent(String(orderItem.quantity));
+		expect(deliveryGroup1Input).not.toHaveValue();
+		expect(deliveryGroup2Input).toHaveValue(5);
+		expect(row0Actions).toBeVisible();
+
+		await act(async () => {
+			row0Actions.click();
+		});
+
+		await waitFor(() => {
+			expect(row0SplitQuantityAction).toBeVisible();
+			expect(row0SplitQuantityAction).toBeEnabled();
+		});
+
+		await act(async () => {
+			row0SplitQuantityAction.click();
+		});
+
+		await waitFor(() => {
+			expect(quantityCell).toBeVisible();
+			expect(quantityCell).toHaveTextContent(String(5));
+			expect(deliveryGroup1Input).toHaveValue(3);
+			expect(deliveryGroup2Input).toHaveValue(2);
+
+			expect(handleSubmit).toBeCalledWith({
+				10000: {
+					options: '[]',
+					orderItemId: 0,
+					originalQuantity: 3,
+					quantity: 3,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+				10001: {
+					options: '[]',
+					orderItemId: 101,
+					originalQuantity: 5,
+					quantity: 2,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			});
 		});
 	});
 });

@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -74,6 +75,19 @@ public class DisplayPageManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"action", "copySelectedEntries");
 							dropdownItem.putData(
+								"copySelectedEntriesURL",
+								PortletURLBuilder.createActionURL(
+									liferayPortletResponse
+								).setActionName(
+									StringBundler.concat(
+										"/layout_page_template_admin",
+										"/copy_layout_page_template_entries",
+										"_and_layout_page_template",
+										"_collections")
+								).setRedirect(
+									_themeDisplay.getURLCurrent()
+								).buildString());
+							dropdownItem.putData(
 								"itemSelectorURL", _getItemSelectorURL());
 							dropdownItem.setIcon("copy");
 							dropdownItem.setLabel(
@@ -112,6 +126,19 @@ public class DisplayPageManagementToolbarDisplayContext
 								"action", "moveSelectedEntries");
 							dropdownItem.putData(
 								"itemSelectorURL", _getItemSelectorURL());
+							dropdownItem.putData(
+								"moveSelectedEntriesURL",
+								PortletURLBuilder.createActionURL(
+									liferayPortletResponse
+								).setActionName(
+									StringBundler.concat(
+										"/layout_page_template_admin",
+										"/move_layout_page_template_entries",
+										"_and_layout_page_template",
+										"_collections")
+								).setRedirect(
+									_themeDisplay.getURLCurrent()
+								).buildString());
 							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "move"));

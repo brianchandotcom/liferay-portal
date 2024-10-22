@@ -37,7 +37,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						selectedItem.resourceid,
 				});
 
-				submitForm(form);
+				submitForm(form, itemData?.copySelectedEntriesURL);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',
@@ -99,11 +99,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						'',
 						`${portletNamespace}rowIds`
 					),
-					targetLayoutPageTemplateCollectionId:
+					layoutParentPageTemplateCollectionId:
 						selectedItem.resourceid,
 				});
 
-				submitForm(form);
+				submitForm(form, itemData?.moveSelectedEntriesURL);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',

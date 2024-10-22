@@ -146,25 +146,11 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	</div>
 </c:if>
 
-<portlet:actionURL name="/layout_page_template_admin/copy_layout_page_template_entries_and_layout_page_template_collections" var="copyEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<aui:form action="<%= copyEntriesURL %>" name="actionEntriesFm">
+<aui:form name="actionEntriesFm">
 	<aui:input name="layoutPageTemplateCollectionsIds" type="hidden" />
 	<aui:input name="layoutPageTemplateEntriesIds" type="hidden" />
 	<aui:input name="layoutParentPageTemplateCollectionId" type="hidden" />
 	<aui:input name="copyPermisisons" type="hidden" />
-</aui:form>
-
-<portlet:actionURL name="/layout_page_template_admin/move_layout_page_template_entries_and_layout_page_template_collections" var="moveEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<aui:form action="<%= moveEntriesURL %>" name="actionEntriesFm">
-	<aui:input name="layoutPageTemplateCollectionsIds" type="hidden" />
-	<aui:input name="layoutPageTemplateEntriesIds" type="hidden" />
-	<aui:input name="targetLayoutPageTemplateCollectionId" type="hidden" />
 </aui:form>
 
 <portlet:actionURL name="/layout_page_template_admin/update_layout_page_template_entry_preview" var="updateLayoutPageTemplateEntryPreviewURL">

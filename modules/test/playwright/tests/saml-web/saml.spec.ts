@@ -1292,13 +1292,13 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 
-	await apiHelpers.headlessSite.createSite({
+	const site1 = await apiHelpers.headlessSite.createSite({
 		name: site1Name,
 		templateKey: 'com.liferay.site.initializer.welcome',
 		templateType: 'site-initializer',
 	});
 
-	await apiHelpers.headlessSite.createSite({
+	const site2 = await apiHelpers.headlessSite.createSite({
 		name: site2Name,
 		templateKey: 'com.liferay.site.initializer.welcome',
 		templateType: 'site-initializer',
@@ -1310,7 +1310,11 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	let siteSettingsPage = new SiteSettingsPage(secondarySpAdminPage);
 
-	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		'Site URL',
+		site1.friendlyUrlPath
+	);
 
 	const site1VirtualHostName = 'www.easy.com';
 
@@ -1328,7 +1332,11 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	siteSettingsPage = new SiteSettingsPage(secondarySpAdminPage);
 
-	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		'Site URL',
+		site2.friendlyUrlPath
+	);
 
 	const site2VirtualHostName = 'www.fox.com';
 
@@ -1596,7 +1604,11 @@ test('Verify the SAML configuration is not applied to the sites when ACS is disa
 
 	const siteSettingsPage = new SiteSettingsPage(spAdminPage);
 
-	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		'Site URL',
+		site.friendlyUrlPath
+	);
 
 	const siteVirtualHostName = 'www.easy.com';
 

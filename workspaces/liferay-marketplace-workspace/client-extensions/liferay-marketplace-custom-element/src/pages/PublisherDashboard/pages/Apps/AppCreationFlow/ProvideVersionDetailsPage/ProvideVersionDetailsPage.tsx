@@ -7,11 +7,10 @@ import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
-import {Liferay} from '../../../../../../liferay/liferay';
 import {
-	addExpandoValue,
 	createAppSKU,
 	getOptions,
+	patchSKUById,
 	postOption,
 	postOptionValue,
 	postProductOption,
@@ -66,16 +65,24 @@ export function ProvideVersionDetailsPage({
 
 	const isDXP = appType.value === 'dxp';
 
-	const createExpandoValue = (skuId: number) => {
-		addExpandoValue({
-			attributeValues: {
-				'Version': appVersion,
-				'Version Description': appNotes,
-			},
-			className: 'com.liferay.commerce.product.model.CPInstance',
-			classPK: skuId,
-			companyId: Liferay.ThemeDisplay.getCompanyId(),
-			tableName: 'CUSTOM_FIELDS',
+	const createVersionDescription = async (skuId: number) => {
+		await patchSKUById(skuId, {
+			customFields: [
+				{
+					customValue: {
+						data: appNotes,
+					},
+					dataType: 'Text',
+					name: 'Version Description',
+				},
+				{
+					customValue: {
+						data: appVersion,
+					},
+					dataType: 'Text',
+					name: 'Version',
+				},
+			],
 		});
 	};
 
@@ -224,7 +231,7 @@ export function ProvideVersionDetailsPage({
 					});
 				}
 
-				createExpandoValue(response.id);
+				createVersionDescription(response.id);
 			}
 
 			return;
@@ -236,7 +243,7 @@ export function ProvideVersionDetailsPage({
 
 		const response = await createAppSKU(sku);
 
-		createExpandoValue(response.id);
+		createVersionDescription(response.id);
 
 		dispatch({
 			payload: {value: response.id},

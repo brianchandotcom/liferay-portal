@@ -10,6 +10,7 @@ export {default as CreateAssetListActionButtonPropsTransformer} from './CreateAs
 export {default as DisplaySettings} from './DisplaySettings';
 export {default as Ordering} from './Ordering';
 export {default as ScopeActionDropdownPropsTransformer} from './ScopeActionDropdownPropsTransformer';
+export {default as SelectCollection} from './SelectCollection';
 export {default as SelectStructureField} from './SelectStructureField';
 export {default as Source} from './Source';
 export {default as AssetFilterBuilder} from './components/AssetFilterBuilder/index';

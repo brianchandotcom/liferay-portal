@@ -1321,6 +1321,62 @@ public class AssetPublisherDisplayContext {
 		return portletNamespace + "selectAssetList";
 	}
 
+	public Map<String, Object> getSelectCollectionProps() throws Exception {
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		return HashMapBuilder.<String, Object>put(
+			"assetListEntryId",
+			() -> {
+				if (assetListEntry != null) {
+					return assetListEntry.getAssetListEntryId();
+				}
+
+				return 0;
+			}
+		).put(
+			"clearButtonEnabled",
+			() -> {
+				if ((assetListEntry != null) ||
+					Validator.isNotNull(getInfoListProviderKey())) {
+
+					return true;
+				}
+
+				return false;
+			}
+		).put(
+			"defaultTitle",
+			LanguageUtil.get(_httpServletRequest, "no-collection-selected")
+		).put(
+			"infoListProviderKey",
+			() -> {
+				if (Validator.isNotNull(getInfoListProviderKey())) {
+					return getInfoListProviderKey();
+				}
+
+				return StringPool.BLANK;
+			}
+		).put(
+			"selectEventName", getSelectAssetListEventName()
+		).put(
+			"title",
+			() -> {
+				if (assetListEntry != null) {
+					return HtmlUtil.escape(assetListEntry.getTitle());
+				}
+
+				if (Validator.isNotNull(getInfoListProviderKey())) {
+					return getInfoListProviderLabel();
+				}
+
+				return LanguageUtil.get(
+					_httpServletRequest, "no-collection-selected");
+			}
+		).put(
+			"url", getAssetListSelectorURL()
+		).build();
+	}
+
 	public String getSelectionStyle() {
 		if (_selectionStyle != null) {
 			return _selectionStyle;

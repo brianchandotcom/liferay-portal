@@ -11,7 +11,6 @@ import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
-	addExpandoValue,
 	createAppSKU,
 	createProductSpecification,
 	deleteTrialSKU,
@@ -26,7 +25,6 @@ import {TYPES} from '../AppContext/actionTypes';
 
 import './InformLicensingTermsPage.scss';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
-import {Liferay} from '../../../../../../liferay/liferay';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
@@ -104,11 +102,24 @@ export function InformLicensingTermsPage({
 			await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
 
 		for (const sku of skus) {
-			const freeOrPerpertual =
-				priceModel.value === 'Free' || appLicense.value === 'Perpetual';
-
 			await patchSKUById(sku.id, {
-				neverExpire: freeOrPerpertual,
+				customFields: [
+					{
+						customValue: {
+							data: appNotes,
+						},
+						dataType: 'Text',
+						name: 'Version Description',
+					},
+					{
+						customValue: {
+							data: appVersion,
+						},
+						dataType: 'Text',
+						name: 'Version',
+					},
+				],
+				neverExpire: true,
 				price:
 					priceModel.value === 'Free'
 						? 0
@@ -163,17 +174,6 @@ export function InformLicensingTermsPage({
 				value: _skuTrialId,
 			},
 			type: TYPES.UPDATE_SKU_TRIAL_ID,
-		});
-
-		addExpandoValue({
-			attributeValues: {
-				'Version': appVersion,
-				'Version Description': appNotes,
-			},
-			className: 'com.liferay.commerce.product.model.CPInstance',
-			classPK: skuTrialId,
-			companyId: Liferay.ThemeDisplay.getCompanyId(),
-			tableName: 'CUSTOM_FIELDS',
 		});
 	};
 

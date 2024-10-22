@@ -12,6 +12,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {LEMON_OBJECT_ERC} from '../setup/page-management-site/constants';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
@@ -21,6 +22,7 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-32075': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
@@ -29,45 +31,69 @@ const test = mergeTests(
 	pageManagementSiteTest
 );
 
-test('Allows accessing the widget configuration easily', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	site,
-}) => {
+test(
+	'Check widget configuration is displayed in fragments topper and not in overlay',
+	{tag: ['@LPD-32047']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 
-	// Create page with Search Bar widget and go to edit mode
+		// Create page with Search Bar widget and go to edit mode
 
-	const widgetId = getRandomString();
+		const widgetId = getRandomString();
 
-	const widgetDefinition = getWidgetDefinition({
-		id: widgetId,
-		widgetName:
-			'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
-	});
+		const widgetDefinition = getWidgetDefinition({
+			id: widgetId,
+			widgetName:
+				'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
+		});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([widgetDefinition]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	// Check widget configuration is accessible
+		// Check widget options are accesible from fragments topper
 
-	const topper = pageEditorPage.getTopper(widgetId);
+		await pageEditorPage.selectFragment(widgetId);
 
-	await topper.hover();
+		await page
+			.locator('.page-editor__topper__item')
+			.getByRole('button', {name: 'Options'})
+			.click();
 
-	await expect(topper.locator('.portlet-options')).toBeVisible();
+		const dropdown = page.locator('.dropdown-menu.show');
 
-	await topper.locator('.portlet-options').click();
+		await expect(
+			dropdown.getByText('Configuration', {exact: true})
+		).toBeVisible();
 
-	await expect(
-		page.getByRole('menuitem', {exact: true, name: 'Configuration'})
-	).toBeVisible();
-});
+		await expect(dropdown.getByText('Export / Import')).toBeVisible();
+
+		await expect(
+			dropdown.getByText('Configuration Templates')
+		).toBeVisible();
+
+		await expect(dropdown.getByText('Permissions')).toBeVisible();
+
+		// Check widget configuration is not accessible from overlay
+
+		const topper = pageEditorPage.getTopper(widgetId);
+
+		await topper.hover();
+
+		await expect(topper.locator('.portlet-options')).not.toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.page-editor__topper__bar')
+				.getByLabel('Options'),
+			trigger: topper,
+		});
+	}
+);
 
 test('It is not possible to drag a widget inside a Form Container', async ({
 	apiHelpers,

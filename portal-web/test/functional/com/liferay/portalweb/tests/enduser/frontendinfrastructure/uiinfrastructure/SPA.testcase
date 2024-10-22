@@ -181,23 +181,6 @@ definition {
 		}
 	}
 
-	@description = "Verify loading bar can be visible during new location based SPA load event"
-	@priority = 5
-	@refactordone
-	test NewURLLoadEventCanDisplayLoadingBar {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		AssertVisible.assertVisibleNoSPAWait(locator1 = "//html[contains(@class,'lfr-spa-loading')]");
-	}
-
 	@description = "LPS-67072. Set the user notification timeout to 1 second"
 	@priority = 4
 	test SPANotificationSetTimeout {

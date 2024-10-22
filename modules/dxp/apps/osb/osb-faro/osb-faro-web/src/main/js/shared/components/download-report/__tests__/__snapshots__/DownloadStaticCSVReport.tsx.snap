@@ -1,7 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DownloadReportIndividualModal CSV renders component 1`] = `
+exports[`DownloadStaticCSVReport renders component 1`] = `
 <div>
+  <button
+    aria-hidden="true"
+    class="btn btn-outline-borderless btn-sm btn-outline-secondary"
+    data-suppressed="true"
+    type="button"
+  >
+    <svg
+      class="lexicon-icon lexicon-icon-download mr-2"
+      role="presentation"
+    >
+      <use
+        href="#download"
+      />
+    </svg>
+    Download Reports
+  </button>
   <div
     aria-hidden="true"
     class="modal-backdrop fade show"
@@ -49,7 +65,7 @@ exports[`DownloadReportIndividualModal CSV renders component 1`] = `
             class="modal-body"
           >
             <p>
-              This list will be downloaded respecting the current ordering and search results. The maximum number of entries supported per export is 10,000. Are you sure you want to download the CSV file?
+              The generated CSV file supports up to 10,000 entries per export and it will respect the current ordering and search results. Please ensure that any desired changes have been successfully applied before downloading the Individuals list.
             </p>
           </div>
           <div
@@ -97,21 +113,5 @@ exports[`DownloadReportIndividualModal CSV renders component 1`] = `
       </div>
     </div>
   </div>
-  <button
-    aria-hidden="true"
-    class="btn btn-outline-borderless btn-sm btn-outline-secondary"
-    data-suppressed="true"
-    type="button"
-  >
-    <svg
-      class="lexicon-icon lexicon-icon-download mr-2"
-      role="presentation"
-    >
-      <use
-        href="#download"
-      />
-    </svg>
-    Download Reports
-  </button>
 </div>
 `;

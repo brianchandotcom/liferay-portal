@@ -39,8 +39,14 @@ public class UserProcessorFactoryImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_currentUser = _createUser(
-			"John", "Doe", "john.doe@example.com", "john.doe");
+		User user = UserTestUtil.addUser();
+
+		user.setScreenName("john.doe");
+		user.setEmailAddress("john.doe@example.com");
+		user.setFirstName("John");
+		user.setLastName("Doe");
+
+		_currentUser = _userLocalService.updateUser(user);
 	}
 
 	@After
@@ -81,21 +87,6 @@ public class UserProcessorFactoryImplTest {
 		Assert.assertEquals(_currentUser.getLastName(), newUser.getLastName());
 		Assert.assertEquals(
 			_currentUser.getScreenName(), newUser.getScreenName());
-	}
-
-	private User _createUser(
-			String firstName, String lastName, String emailAddress,
-			String screenName)
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-
-		user.setScreenName(screenName);
-		user.setEmailAddress(emailAddress);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-
-		return _userLocalService.updateUser(user);
 	}
 
 	private User _processUserFromSaml(

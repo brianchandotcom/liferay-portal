@@ -11,13 +11,20 @@ $sidebarButtonWidth: 42px;
 
 $product-menu-width: 320px;
 
+// Portlet Topper
+
+$portletTopperZIndex: 986;
+
+$portletTopperActiveZIndex: $portletTopperZIndex + 1;
+
+$portletTopperHoveredZIndex: $portletTopperActiveZIndex + 1;
+
 // z-indexes, ordered numerically.
 
 $dragSourceZIndex: 977;
 $translationStatusListZIndex: 977;
-$portletTopperZIndex: 986;
 $sidebarZIndex: 988;
-$keyboardMovementPreviewZIndex: 1051;
 $alloyEditorZIndex: 992;
 $undoHistoryOverlayZIndex: 1001;
 $modalZIndex: 1050;
+$keyboardMovementPreviewZIndex: 1051;

@@ -18,7 +18,7 @@ html#{$cadmin-selector} {
 			min-width: 120px;
 			padding: 0 8px 0 4px;
 			position: absolute;
-			z-index: $portletTopperZIndex + 1;
+			z-index: $portletTopperActiveZIndex;
 
 			.btn {
 				color: inherit;

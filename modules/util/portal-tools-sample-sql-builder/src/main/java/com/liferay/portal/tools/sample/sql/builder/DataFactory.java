@@ -7708,6 +7708,12 @@ public class DataFactory {
 				else if (name.equals("DbTableName")) {
 					name = "DBTableName";
 				}
+				else if (name.equals("DbColumnName")) {
+					name = "DBColumnName";
+				}
+				else if (name.equals("DbType")) {
+					name = "DBType";
+				}
 				else if (name.equals("DeliveryCTermEntryDescription")) {
 					name = "DeliveryCommerceTermEntryDescription";
 				}

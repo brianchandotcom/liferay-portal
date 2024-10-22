@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -99,6 +101,17 @@ public class ScanCodeProject {
 	}
 
 	public JSONObject getAnalyzeDockerImageJSONObject(String dockerTag) {
+		Matcher matcher = _dockerTagPattern.matcher(dockerTag);
+
+		if (!matcher.find()) {
+			throw new IllegalArgumentException(
+				"Invalid docker tag: " + dockerTag);
+		}
+
+		String buildProfile = matcher.group("buildProfile");
+
+		String releaseVersion = matcher.group("releaseVersion");
+
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
@@ -106,7 +119,7 @@ public class ScanCodeProject {
 		).put(
 			"input_urls", "docker://liferay/" + dockerTag
 		).put(
-			"labels", _getLabels("docker", dockerTag)
+			"labels", _getLabels("docker", buildProfile, releaseVersion)
 		).put(
 			"name",
 			JenkinsResultsParserUtil.combine(
@@ -416,6 +429,10 @@ public class ScanCodeProject {
 	private static final String[] _RESULT_FILES_EXTENSIONS = {
 		"attribution", "cyclonedx", "spdx", "xls"
 	};
+
+	private static final Pattern _dockerTagPattern = Pattern.compile(
+		"(?<buildProfile>portal|dxp):(?<releaseVersion>" +
+			"\\d+.\\d+.\\d+[.\\d+]*-(ga|u)\\d+|\\d{4}.[qQ]\\d+.\\d+)");
 
 	static {
 		try {

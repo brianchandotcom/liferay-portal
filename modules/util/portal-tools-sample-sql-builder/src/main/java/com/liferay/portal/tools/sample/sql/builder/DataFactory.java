@@ -5063,7 +5063,9 @@ public class DataFactory {
 		return mbThreadModels;
 	}
 
-	public NotificationTemplateModel newNotificationTemplateModel() {
+	public NotificationTemplateModel newNotificationTemplateModel()
+		throws Exception {
+
 		NotificationTemplateModel notificationTemplateModel =
 			new NotificationTemplateModelImpl();
 
@@ -5086,6 +5088,9 @@ public class DataFactory {
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplateModel.setName("Commerce Order Notification");
 		notificationTemplateModel.setRecipientType("email");
+		notificationTemplateModel.setSubject(
+			StringUtil.read(
+				getResourceInputStream("notification_template/subject.xml")));
 		notificationTemplateModel.setSystem(false);
 		notificationTemplateModel.setType("email");
 

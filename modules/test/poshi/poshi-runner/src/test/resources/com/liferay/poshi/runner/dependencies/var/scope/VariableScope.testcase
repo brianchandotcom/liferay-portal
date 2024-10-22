@@ -11,16 +11,19 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	test CommandVarInheritance {
+		var commandVar = "A command var that will not be overridden by an execute var.";
+
+		RootVar.assertCommandVar(
+			commandVar = "An execute var that will referenced by another execute var.",
+			referenceExecuteVar = "${commandVar}");
+	}
+
+	@disable-webdriver = "true"
 	test ExecuteVarInheritance {
 		RootVar.assertExecuteVar(
 			executeVar = "An execute var that will referenced by another execute var.",
 			referenceExecuteVar = "${executeVar}");
-
-		var commandVar = "A command var that will be overridden by an execute var.";
-
-		RootVar.assertExecuteVar(
-			commandVar = "An execute var that will referenced by another execute var.",
-			referenceExecuteVar = "${commandVar}");
 	}
 
 	@disable-webdriver = "true"

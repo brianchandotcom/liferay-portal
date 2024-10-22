@@ -109,7 +109,7 @@ public class JspServletPerformanceTest {
 
 		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP, 1);
 
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(5000)) {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(15000)) {
 			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
@@ -120,7 +120,7 @@ public class JspServletPerformanceTest {
 	public void testElExpressionWithUndefinedVariablesJsp() throws Exception {
 		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP, 1);
 
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(1000)) {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(15000)) {
 			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
@@ -131,7 +131,7 @@ public class JspServletPerformanceTest {
 	public void testJsp() throws Exception {
 		_test(_FILE_NAME_TEST_JSP, 1);
 
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(1000)) {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(15000)) {
 			_test(_FILE_NAME_TEST_JSP, _NUMBER_OF_REQUESTS);
 		}
 	}

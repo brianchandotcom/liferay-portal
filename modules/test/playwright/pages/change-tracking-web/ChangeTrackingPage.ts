@@ -168,8 +168,45 @@ export class ChangeTrackingPage {
 		await expect(this.page.getByText(content)).toBeVisible();
 	}
 
+	async enablePublications(check: boolean) {
+		await this.page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
+
+		await this.page.getByRole('menuitem', {name: 'Publications'}).click();
+
+		await expect(this.page.getByText('Enable Publications')).toBeVisible();
+
+		const checkBox = this.page.getByRole('checkbox', {
+			name: 'Enable Publications',
+		});
+
+		if (check) {
+			await checkBox.setChecked(true);
+
+			await expect(
+				this.page.getByText('Allow Unapproved Changes')
+			).toBeVisible();
+
+			await this.goto();
+		}
+		else {
+			await checkBox.setChecked(false);
+
+			await expect(
+				this.page.getByText('Allow Unapproved Changes')
+			).not.toBeVisible();
+		}
+	}
+
 	async goto() {
 		await this.page.goto(`/group/guest${PORTLET_URLS.publications}`);
+
+		const changeTrackingIndicatorButton = this.page.locator(
+			'.change-tracking-indicator-button'
+		);
+
+		if (!(await changeTrackingIndicatorButton.isVisible())) {
+			await this.enablePublications(true);
+		}
 	}
 
 	async goToPublicationHistory() {

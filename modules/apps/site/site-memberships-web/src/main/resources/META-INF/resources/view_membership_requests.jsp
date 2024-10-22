@@ -25,6 +25,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewMembershipRequestsDisplayContext) %>"
+	showSearch="<%= false %>"
 />
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />

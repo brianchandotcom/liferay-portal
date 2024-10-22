@@ -332,7 +332,7 @@ public class PortletDataRendererImplTest {
 	}
 
 	@Test
-	public void testScriptTypeIsTextJavascriptWhenESMImportsAreMissing()
+	public void testScriptTypeIsTextJavaScriptWhenESMImportsAreMissing()
 		throws Exception {
 
 		PortletDataRendererImpl portletDataRendererImpl =

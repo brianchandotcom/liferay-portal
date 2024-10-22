@@ -132,8 +132,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		OIDCProviderMetadata oidcProviderMetadata =
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
-				oAuthClientEntry.getAuthServerWellKnownURI(), oAuthClientEntry.getClientId(),
-				metadataCacheInSecs);
+				oAuthClientEntry.getAuthServerWellKnownURI(),
+				oAuthClientEntry.getClientId(), metadataCacheInSecs);
 
 		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 			authenticationSuccessResponse,
@@ -227,8 +227,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				_authorizationServerMetadataResolver.
 					resolveOIDCProviderMetadata(
 						oAuthClientEntry.getAuthServerWellKnownURI(),
-						oAuthClientEntry.getClientId(),
-						metadataCacheInSecs);
+						oAuthClientEntry.getClientId(), metadataCacheInSecs);
 
 			URI authenticationRequestURI = _getAuthenticationRequestURI(
 				oidcProviderMetadata.getAuthorizationEndpointURI(),

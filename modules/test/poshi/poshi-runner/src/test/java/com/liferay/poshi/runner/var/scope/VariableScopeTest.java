@@ -22,6 +22,11 @@ public class VariableScopeTest extends PoshiRunnerTestCase {
 	}
 
 	@Test
+	public void testAssertCommandVarInheritance() throws Exception {
+		runPoshiTest("VariableScope#CommandVarInheritance");
+	}
+
+	@Test
 	public void testAssertExecuteVarInheritance() throws Exception {
 		runPoshiTest("VariableScope#ExecuteVarInheritance");
 	}

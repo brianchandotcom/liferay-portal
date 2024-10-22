@@ -84,9 +84,7 @@ public class OrderItemsDataSetFragmentRenderer implements FragmentRenderer {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
 					getClass(),
-					"/com/liferay/commerce/order/content/web/internal" +
-						"/fragment/renderer/order_items_data_set/dependencies" +
-							"/configuration.json"));
+					"order_items_data_set/dependencies/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
 				jsonObject, resourceBundle);

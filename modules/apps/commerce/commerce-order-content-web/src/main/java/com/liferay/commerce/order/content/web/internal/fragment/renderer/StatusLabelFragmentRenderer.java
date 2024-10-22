@@ -66,9 +66,7 @@ public class StatusLabelFragmentRenderer implements FragmentRenderer {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
 					getClass(),
-					"/com/liferay/commerce/order/content/web/internal" +
-						"/fragment/renderer/status_label/dependencies" +
-							"/configuration.json"));
+					"status_label/dependencies/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
 				jsonObject, resourceBundle);

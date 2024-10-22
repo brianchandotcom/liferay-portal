@@ -107,10 +107,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
-					getClass(),
-					"/com/liferay/commerce/order/content/web/internal" +
-						"/fragment/renderer/info_box/dependencies" +
-							"/configuration.json"));
+					getClass(), "info_box/dependencies/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
 				jsonObject, resourceBundle);

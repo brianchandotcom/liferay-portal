@@ -70,9 +70,8 @@ public class InlineEditableOrderFieldFragmentRenderer
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
 					getClass(),
-					"/com/liferay/commerce/order/content/web/internal" +
-						"/fragment/renderer/inline_editable_order_field" +
-							"/dependencies/configuration.json"));
+					"inline_editable_order_field/dependencies" +
+						"/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
 				jsonObject, resourceBundle);

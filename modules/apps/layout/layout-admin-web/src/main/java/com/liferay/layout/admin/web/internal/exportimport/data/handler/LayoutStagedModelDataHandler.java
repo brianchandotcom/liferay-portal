@@ -1730,16 +1730,16 @@ public class LayoutStagedModelDataHandler
 			UnicodeProperties typeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			String javascript = GetterUtil.getString(
+			String javaScript = GetterUtil.getString(
 				typeSettingsUnicodeProperties.getProperty(
 					"javascript", StringPool.BLANK));
 
-			if (Validator.isNotNull(javascript)) {
+			if (Validator.isNotNull(javaScript)) {
 				typeSettingsUnicodeProperties.setProperty(
 					"javascript",
 					_dlReferencesExportImportContentProcessor.
 						replaceExportContentReferences(
-							portletDataContext, layout, javascript, true,
+							portletDataContext, layout, javaScript, true,
 							false));
 
 				layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
@@ -2658,11 +2658,11 @@ public class LayoutStagedModelDataHandler
 			UnicodeProperties typeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			String javascript = GetterUtil.getString(
+			String javaScript = GetterUtil.getString(
 				typeSettingsUnicodeProperties.getProperty(
 					"javascript", StringPool.BLANK));
 
-			if (Validator.isNotNull(javascript)) {
+			if (Validator.isNotNull(javaScript)) {
 				UnicodeProperties importedLayoutTypeSettingsUnicodeProperties =
 					importedLayout.getTypeSettingsProperties();
 
@@ -2670,7 +2670,7 @@ public class LayoutStagedModelDataHandler
 					"javascript",
 					_dlReferencesExportImportContentProcessor.
 						replaceImportContentReferences(
-							portletDataContext, layout, javascript));
+							portletDataContext, layout, javaScript));
 
 				importedLayout.setTypeSettingsProperties(
 					importedLayoutTypeSettingsUnicodeProperties);

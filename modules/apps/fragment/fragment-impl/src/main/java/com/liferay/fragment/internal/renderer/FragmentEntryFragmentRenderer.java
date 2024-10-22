@@ -7,7 +7,7 @@ package com.liferay.fragment.internal.renderer;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
-import com.liferay.fragment.configuration.FragmentJavascriptConfiguration;
+import com.liferay.fragment.configuration.FragmentJavaScriptConfiguration;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
@@ -234,7 +234,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return fragmentEntry.isCacheable();
 	}
 
-	private boolean _isJavascriptModuleEnabled(
+	private boolean _isJavaScriptModuleEnabled(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -242,12 +242,12 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			FragmentJavascriptConfiguration fragmentJavascriptConfiguration =
+			FragmentJavaScriptConfiguration fragmentJavaScriptConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					FragmentJavascriptConfiguration.class,
+					FragmentJavaScriptConfiguration.class,
 					themeDisplay.getCompanyId());
 
-			return fragmentJavascriptConfiguration.javascriptModuleEnabled();
+			return fragmentJavaScriptConfiguration.javaScriptModuleEnabled();
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
@@ -333,10 +333,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (Validator.isNotNull(fragmentEntryLink.getJs())) {
-			boolean javascriptModuleEnabled = _isJavascriptModuleEnabled(
+			boolean javaScriptModuleEnabled = _isJavaScriptModuleEnabled(
 				httpServletRequest);
 
-			if (javascriptModuleEnabled) {
+			if (javaScriptModuleEnabled) {
 				sb.append("<script type=\"module\"");
 				sb.append(
 					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
@@ -376,7 +376,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append("';");
 			sb.append(fragmentEntryLink.getJs());
 
-			if (javascriptModuleEnabled) {
+			if (javaScriptModuleEnabled) {
 				sb.append(";</script>");
 			}
 			else {

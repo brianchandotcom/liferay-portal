@@ -17,7 +17,7 @@ import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
-import com.liferay.fragment.configuration.FragmentJavascriptConfiguration;
+import com.liferay.fragment.configuration.FragmentJavaScriptConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -224,7 +224,7 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
-	public void testJavascriptModuleConfiguration() throws Exception {
+	public void testJavaScriptModuleConfiguration() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(false);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -263,9 +263,9 @@ public class FragmentEntryFragmentRendererTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						FragmentJavascriptConfiguration.class.getName(),
+						FragmentJavaScriptConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"javascriptModuleEnabled", false
+							"javaScriptModuleEnabled", false
 						).build())) {
 
 			mockHttpServletResponse = new MockHttpServletResponse();

@@ -19,16 +19,16 @@ import org.osgi.annotation.versioning.ProviderType;
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.fragment.configuration.FragmentJavascriptConfiguration",
+	id = "com.liferay.fragment.configuration.FragmentJavaScriptConfiguration",
 	localization = "content/Language", name = "javascript-configuration-name"
 )
 @ProviderType
-public interface FragmentJavascriptConfiguration {
+public interface FragmentJavaScriptConfiguration {
 
 	@Meta.AD(
 		deflt = "true", description = "javascript-module-enabled-description",
 		name = "javascript-module-enabled", required = false
 	)
-	public boolean javascriptModuleEnabled();
+	public boolean javaScriptModuleEnabled();
 
 }

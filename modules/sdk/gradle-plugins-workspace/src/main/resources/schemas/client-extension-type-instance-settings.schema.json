@@ -1548,14 +1548,14 @@
 		},
 		{
 			"properties": {
-				"javascriptModuleEnabled": {
+				"javaScriptModuleEnabled": {
 					"default": true,
 					"description": "When enabled, fragment JavaScript is embedded in a script as a module instead of as a function.",
 					"title": "Javascript Module Enabled",
 					"type": "boolean"
 				},
 				"pid": {
-					"const": "com.liferay.fragment.configuration.FragmentJavascriptConfiguration",
+					"const": "com.liferay.fragment.configuration.FragmentJavaScriptConfiguration",
 					"title": "Javascript"
 				}
 			},
@@ -4030,7 +4030,7 @@
 				"com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
 				"com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
 				"com.liferay.flags.configuration.FlagsGroupServiceConfiguration",
-				"com.liferay.fragment.configuration.FragmentJavascriptConfiguration",
+				"com.liferay.fragment.configuration.FragmentJavaScriptConfiguration",
 				"com.liferay.fragment.configuration.FragmentServiceConfiguration",
 				"com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration",
 				"com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration",

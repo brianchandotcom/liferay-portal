@@ -48,6 +48,7 @@ export class CountriesManagementPage {
 	readonly deactivateButton: Locator;
 	readonly filterButton: Locator;
 	readonly filterMenuItem: (option: string) => Locator;
+	readonly filterStatus: (status: string) => Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -88,19 +89,20 @@ export class CountriesManagementPage {
 				name: option,
 			});
 		};
+		this.filterStatus = (status: string) => {
+			return page.getByText('Status: ' + status);
+		};
 		this.page = page;
 	}
 
-	async changeFilter(option: 'Active' | 'Inactive' | 'All') {
+	async changeFilter(option: 'Active' | 'Inactive') {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.filterMenuItem(option),
 			trigger: this.filterButton,
 		});
 
-		await this.page
-			.getByText('Search Results', {exact: true})
-			.waitFor({state: 'visible'});
+		await this.filterStatus(option).waitFor({state: 'visible'});
 	}
 
 	async checkMultipleCountries(countries: string[]) {

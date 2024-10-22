@@ -94,13 +94,15 @@ FormStepWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
 };
 
-const FormStep = React.forwardRef(({children, className}, ref) => {
-	return (
-		<div className={className} ref={ref}>
-			{children}
-		</div>
-	);
-});
+const FormStep = React.forwardRef(
+	({children, className, ...otherProps}, ref) => {
+		return (
+			<div className={className} ref={ref} {...otherProps}>
+				{children}
+			</div>
+		);
+	}
+);
 
 FormStep.displayName = 'FormStep';
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -64,7 +65,7 @@ public class PortletCategoryManagerTest {
 
 	@Test
 	public void testAssertEmbeddedValue() throws Exception {
-		_assertEmbedded(false);
+		_assertPortletJSONObject(false, false);
 	}
 
 	@Test
@@ -78,10 +79,11 @@ public class PortletCategoryManagerTest {
 			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET, portlet,
 			PortletConstants.DEFAULT_PREFERENCES);
 
-		_assertEmbedded(true);
+		_assertPortletJSONObject(true, true);
 	}
 
 	@Test
+	@TestInfo("LPD-37705")
 	public void testAssertEmbeddedValueWithPortletInDeletedFragmentEntryLink()
 		throws Exception {
 
@@ -93,7 +95,7 @@ public class PortletCategoryManagerTest {
 			jsonObject.getString("addedItemId"), _draftLayout,
 			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
-		_assertEmbedded(false);
+		_assertPortletJSONObject(false, false);
 	}
 
 	@Test
@@ -104,10 +106,12 @@ public class PortletCategoryManagerTest {
 			_draftLayout,
 			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
-		_assertEmbedded(false);
+		_assertPortletJSONObject(false, true);
 	}
 
-	private void _assertEmbedded(boolean expectedValue) throws Exception {
+	private void _assertPortletJSONObject(boolean embedded, boolean used)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -136,8 +140,10 @@ public class PortletCategoryManagerTest {
 							LAYOUT_NONINSTANCEABLE_TEST_PORTLET)) {
 
 					Assert.assertEquals(
-						expectedValue,
-						portletJSONObject.getBoolean("embedded"));
+						embedded, portletJSONObject.getBoolean("embedded"));
+
+					Assert.assertEquals(
+						used, portletJSONObject.getBoolean("used"));
 				}
 			}
 		}

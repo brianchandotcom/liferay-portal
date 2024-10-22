@@ -7,9 +7,9 @@ package com.liferay.layout.internal.portlet.category.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
+import com.liferay.layout.test.constants.LayoutPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -70,12 +70,12 @@ public class PortletCategoryManagerTest {
 	@Test
 	public void testAssertEmbeddedValueWithEmbeddedPortlet() throws Exception {
 		Portlet portlet = _portletLocalService.getPortletById(
-			LoginPortletKeys.LOGIN);
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			_group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _draftLayout.getPlid(),
-			LoginPortletKeys.LOGIN, portlet,
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET, portlet,
 			PortletConstants.DEFAULT_PREFERENCES);
 
 		_assertEmbedded(true);
@@ -86,11 +86,12 @@ public class PortletCategoryManagerTest {
 		throws Exception {
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addPortletToLayout(
-			_draftLayout, LoginPortletKeys.LOGIN);
+			_draftLayout,
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
 		ContentLayoutTestUtil.markItemForDeletionFromLayout(
 			jsonObject.getString("addedItemId"), _draftLayout,
-			LoginPortletKeys.LOGIN);
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
 		_assertEmbedded(false);
 	}
@@ -100,7 +101,8 @@ public class PortletCategoryManagerTest {
 		throws Exception {
 
 		ContentLayoutTestUtil.addPortletToLayout(
-			_draftLayout, LoginPortletKeys.LOGIN);
+			_draftLayout,
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
 		_assertEmbedded(false);
 	}
@@ -130,7 +132,8 @@ public class PortletCategoryManagerTest {
 
 				if (Objects.equals(
 						portletJSONObject.get("portletId"),
-						LoginPortletKeys.LOGIN)) {
+						LayoutPortletKeys.
+							LAYOUT_NONINSTANCEABLE_TEST_PORTLET)) {
 
 					Assert.assertEquals(
 						expectedValue,

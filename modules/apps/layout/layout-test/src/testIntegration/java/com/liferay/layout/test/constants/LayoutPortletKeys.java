@@ -10,6 +10,9 @@ package com.liferay.layout.test.constants;
  */
 public class LayoutPortletKeys {
 
+	public static final String LAYOUT_NONINSTANCEABLE_TEST_PORTLET =
+		"com_liferay_test_portlet_LayoutNoninstanceablePortletTest";
+
 	public static final String LAYOUT_TEST_PORTLET =
 		"com_liferay_test_portlet_LayoutTestPortlet";
 

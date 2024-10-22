@@ -5,7 +5,8 @@ import DownloadPDFReport from 'shared/components/download-report/DownloadPDFRepo
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
-import {DownloadIndividualReportModal} from 'shared/components/download-report/DownloadIndividualReportModal';
+import {CSVType} from 'shared/components/download-report/utils';
+import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
@@ -126,8 +127,10 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 			{matchedRoute === Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS && (
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
-						<DownloadIndividualReportModal
+						<DownloadStaticCSVReport
 							disabled={dataSourceStates.empty}
+							type={CSVType.Individual}
+							typeLang={Liferay.Language.get('individuals')}
 						/>
 					</div>
 				</BasePage.SubHeader>

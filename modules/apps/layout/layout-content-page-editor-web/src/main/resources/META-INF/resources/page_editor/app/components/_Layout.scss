@@ -114,7 +114,7 @@ html#{$cadmin-selector} {
 		}
 
 		&__form-step {
-			border: 1px solid $cadmin-primary-l2;
+			box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
 			height: 100%;
 		}
 

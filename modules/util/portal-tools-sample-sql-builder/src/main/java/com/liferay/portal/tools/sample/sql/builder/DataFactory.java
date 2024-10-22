@@ -5168,7 +5168,11 @@ public class DataFactory {
 				"Commerce Order</Label></root>"));
 		objectDefinitionModel.setModifiable(true);
 		objectDefinitionModel.setName("CommerceOrder");
-		objectDefinitionModel.setPluralLabel("L_COMMERCE_ORDER");
+		objectDefinitionModel.setPluralLabel(
+				StringBundler.concat(
+						"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
+						"default-locale=\"en_US\"><PluralLabel language-id=\"en_US\">",
+						"Commerce Orders</PluralLabel></root>"));
 		objectDefinitionModel.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinitionModel.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);

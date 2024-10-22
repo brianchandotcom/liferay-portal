@@ -5131,6 +5131,11 @@ public class DataFactory {
 		objectActionModel.setObjectDefinitionId(objectDefinitionId);
 		objectActionModel.setActive(false);
 		objectActionModel.setConditionExpression("orderStatus == 1");
+		objectActionModel.setLabel(
+			StringBundler.concat(
+				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
+				"default-locale=\"en_US\"><Label language-id=\"en_US\">",
+				"Commerce Order Notification</Label></root>"));
 		objectActionModel.setName("commerceOrderNotification");
 		objectActionModel.setObjectActionExecutorKey("notification");
 		objectActionModel.setObjectActionTriggerKey(

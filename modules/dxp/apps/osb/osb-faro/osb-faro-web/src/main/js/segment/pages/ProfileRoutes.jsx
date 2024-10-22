@@ -11,6 +11,8 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
 import {compose} from 'shared/hoc';
+import {CSVType} from 'shared/components/download-report/utils';
+import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
 import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {PropTypes} from 'prop-types';
 import {Segment} from 'shared/util/records';
@@ -204,6 +206,22 @@ export class SegmentProfileRoutes extends React.Component {
 								showDateRange={false}
 								subtitle={selectedChannel?.name}
 								title={title}
+							/>
+						</div>
+					</BasePage.SubHeader>
+				)}
+
+				{getMatchedRoute(NAV_ITEMS) ===
+					Routes.CONTACTS_SEGMENT_MEMBERSHIP && (
+					<BasePage.SubHeader>
+						<div className='d-flex justify-content-end w-100'>
+							<DownloadStaticCSVReport
+								disabled={this.checkDisabled()}
+								segmentId={segment.get('id')}
+								type={CSVType.Membership}
+								typeLang={Liferay.Language.get(
+									'segment-membership'
+								)}
 							/>
 						</div>
 					</BasePage.SubHeader>

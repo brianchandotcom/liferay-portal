@@ -3293,7 +3293,7 @@ public class ObjectEntryLocalServiceImpl
 				result = _getValue(
 					entryValues, scalarDSLQueryAlias.getSQLType());
 
-				if (Validator.isNull(result)) {
+				if (result == null) {
 					result = "0";
 				}
 				else {

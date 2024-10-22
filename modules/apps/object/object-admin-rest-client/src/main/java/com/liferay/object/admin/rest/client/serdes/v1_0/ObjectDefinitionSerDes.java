@@ -107,6 +107,20 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getActive());
 		}
 
+		if (objectDefinition.getClassName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getClassName()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -639,6 +653,14 @@ public class ObjectDefinitionSerDes {
 			map.put("active", String.valueOf(objectDefinition.getActive()));
 		}
 
+		if (objectDefinition.getClassName() == null) {
+			map.put("className", null);
+		}
+		else {
+			map.put(
+				"className", String.valueOf(objectDefinition.getClassName()));
+		}
+
 		if (objectDefinition.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -961,6 +983,9 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "active")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "className")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -1115,6 +1140,11 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "className")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setClassName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

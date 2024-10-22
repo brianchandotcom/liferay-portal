@@ -49,11 +49,11 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> javascriptElements = rootElement.elements("javascript");
+		List<Element> javaScriptElements = rootElement.elements("javascript");
 
-		for (Element javascriptElement : javascriptElements) {
+		for (Element javaScriptElement : javaScriptElements) {
 			checkElementOrder(
-				fileName, javascriptElement, "ignore-error", null,
+				fileName, javaScriptElement, "ignore-error", null,
 				ignoreErrorElementComparator);
 		}
 

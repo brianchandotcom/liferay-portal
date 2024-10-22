@@ -42,7 +42,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createCopyLinkClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		requestSharingJavascript();
+		requestSharingJavaScript();
 
 		String link = _getAssetURLShare(className, classPK, httpServletRequest);
 
@@ -53,7 +53,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		requestSharingJavascript();
+		requestSharingJavaScript();
 
 		return StringBundler.concat(
 			"Liferay.Sharing.manageCollaborators(",
@@ -65,7 +65,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createSharingOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		requestSharingJavascript();
+		requestSharingJavaScript();
 
 		return StringBundler.concat(
 			"Liferay.Sharing.share(",
@@ -77,7 +77,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	}
 
 	@Override
-	public void requestSharingJavascript() {
+	public void requestSharingJavaScript() {
 		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 	}
 

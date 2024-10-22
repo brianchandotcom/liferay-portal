@@ -73,7 +73,7 @@ public class SharingButtonTag extends BaseSharingTag {
 				WebKeys.THEME_DISPLAY);
 
 		if (_containsSharePermission(classNameId, getClassPK(), themeDisplay)) {
-			sharingJavaScriptFactory.requestSharingJavascript();
+			sharingJavaScriptFactory.requestSharingJavaScript();
 		}
 
 		try {

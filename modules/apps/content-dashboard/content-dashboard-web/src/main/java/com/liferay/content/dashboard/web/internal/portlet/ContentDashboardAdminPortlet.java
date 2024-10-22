@@ -179,7 +179,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 				_portal.getHttpServletRequest(liferayPortletRequest),
 				_infoSearchClassMapperRegistry));
 
-		_sharingJavaScriptFactory.requestSharingJavascript();
+		_sharingJavaScriptFactory.requestSharingJavaScript();
 
 		super.render(renderRequest, renderResponse);
 	}

@@ -89,7 +89,7 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 			SharingJavaScriptFactory sharingJavaScriptFactory =
 				SharingJavaScriptFactoryUtil.getSharingJavaScriptFactory();
 
-			sharingJavaScriptFactory.requestSharingJavascript();
+			sharingJavaScriptFactory.requestSharingJavaScript();
 
 			data.put("canManageCollaborators", true);
 		}

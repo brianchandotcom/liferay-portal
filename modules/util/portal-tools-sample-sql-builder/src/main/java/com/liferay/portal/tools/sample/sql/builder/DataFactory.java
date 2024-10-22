@@ -5196,6 +5196,8 @@ public class DataFactory {
 				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
 				"default-locale=\"en_US\"><PluralLabel language-id=\"en_US\">",
 				"Commerce Orders</PluralLabel></root>"));
+
+		objectDefinitionModel.setPortlet(false);
 		objectDefinitionModel.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinitionModel.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);

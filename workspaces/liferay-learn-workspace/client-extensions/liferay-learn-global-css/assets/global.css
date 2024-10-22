@@ -1483,20 +1483,22 @@ pre[class*='language-'] {
 	}
 }
 
-.page-tabs{
+.page-tabs {
+	@media (max-width: 576px) {
+		.navbar-nav .nav-item {
+			width: 50%;
+		}
+
+		.navbar-nav .nav-item .navbar-text-truncate span {
+			display: flex;
+			line-height: normal;
+			white-space: normal;
+		}
+	}
+	
 	@media (max-width: 768px) {
 		.d-md-none {
 			display: none !important;
-		}
-	}
-	@media (max-width: 576px) {
-		.navbar-nav .nav-item{
-			width:50%;
-		}
-		.navbar-nav .nav-item .navbar-text-truncate span{
-			white-space:normal;
-			display: flex;
-			line-height: normal;
 		}
 	}
 }

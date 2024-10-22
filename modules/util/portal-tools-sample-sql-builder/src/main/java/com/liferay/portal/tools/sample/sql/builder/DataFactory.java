@@ -5181,6 +5181,12 @@ public class DataFactory {
 
 		objectDefinitionModel.setClassName(clazz.getName());
 
+		objectDefinitionModel.setEnableCategorization(true);
+		objectDefinitionModel.setEnableComments(false);
+		objectDefinitionModel.setEnableIndexSearch(true);
+		objectDefinitionModel.setEnableLocalization(false);
+		objectDefinitionModel.setEnableObjectEntryDraft(false);
+		objectDefinitionModel.setEnableObjectEntryHistory(false);
 		objectDefinitionModel.setModifiable(false);
 		objectDefinitionModel.setName("CommerceOrder");
 		objectDefinitionModel.setPluralLabel(

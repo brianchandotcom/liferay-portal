@@ -28,7 +28,7 @@ public class OAuthClientEntryModelListener
 	public void onAfterRemove(OAuthClientEntry oAuthClientEntry)
 		throws ModelListenerException {
 
-		_removeMetadataFromCache(oAuthClientEntry);
+		_oidcProviderMetadataPortalCache.remove(oAuthClientEntry.getClientId());
 	}
 
 	public void onAfterUpdate(
@@ -36,11 +36,8 @@ public class OAuthClientEntryModelListener
 			OAuthClientEntry oAuthClientEntry)
 		throws ModelListenerException {
 
-		_removeMetadataFromCache(originalOAuthClientEntry);
-	}
-
-	private void _removeMetadataFromCache(OAuthClientEntry oAuthClientEntry) {
-		_oidcProviderMetadataPortalCache.remove(oAuthClientEntry.getClientId());
+		_oidcProviderMetadataPortalCache.remove(
+			originalOAuthClientEntry.getClientId());
 	}
 
 	private final PortalCache<String, OIDCProviderMetadata>

@@ -3,16 +3,29 @@
 		font-size: MEDIUM;
 	}
 
+	.app-category {
+		display:block;
+		flex: 1;
+		max-width:200px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	.app-container .app-category {
 		background-color: #e6ebf5;
 		color: #1c3667;
-		padding: 6px 8px 4px
+		padding: 4px 8px;
+
 	}
 
 	.app-container .app-product-type {
 		border-color: #2e5aac !important;
-		color:#2e5aac;
-		padding: 4px 8px;
+		color: #2e5aac;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -72,7 +85,7 @@
 />
 
 <div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
-	<div class="d-flex">
+	<div class="d-flex flex-wrap">
 		<#if productSpecifications?has_content>
 
 			<#assign productTypes = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type")) />
@@ -91,7 +104,7 @@
 				</#if>
 
 				<#if type?has_content && icon?has_content>
-					<div class="app-product-type border border-radius-small d-flex mb-1 mr-2 px-1 rounded">
+					<div class="app-product-type border border-radius-small d-flex mb-1 mr-2 px-2 rounded-lg align-items-center">
 						<div class="app-product-type-icon mr-1">
 							<img alt="Icon" class="mb-1" src="/documents/d/${siteName}/${icon}" />
 						</div>
@@ -105,9 +118,9 @@
 		<#if categories?has_content>
 			<#list categories as category>
 				<#if category.vocabulary?replace(" ", "-")?upper_case == VOCABULARY_PRODUCT_CATEGORY>
-					<div class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded">
+					<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">
 						${category.name}
-					</div>
+					</span>
 				</#if>
 			</#list>
 		</#if>

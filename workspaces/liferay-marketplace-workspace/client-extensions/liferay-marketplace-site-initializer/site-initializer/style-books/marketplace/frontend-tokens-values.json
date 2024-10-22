@@ -49,7 +49,7 @@
 	},
 	"gray100Color": {
 		"cssVariableMapping": "gray-100",
-		"value": "#F4F6F9"
+		"value": " #F7F7F8"
 	},
 	"gray200Color": {
 		"cssVariableMapping": "gray-200",

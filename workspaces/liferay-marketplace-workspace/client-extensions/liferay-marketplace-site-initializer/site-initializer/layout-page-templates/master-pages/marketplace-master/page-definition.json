@@ -5,7 +5,7 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"minHeight": "94vh"
+						"minHeight": "100vh"
 					},
 					"indexed": true,
 					"layout": {
@@ -853,6 +853,10 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"styleBook": {
+			"key": "Marketplace",
+			"name": "Marketplace"
+		},
 		"themeName": "Classic",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

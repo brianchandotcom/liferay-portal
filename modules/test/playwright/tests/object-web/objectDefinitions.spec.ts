@@ -255,7 +255,15 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		await modelBuilderObjectDefinitionNodePage.deleteObjectDefinitionOption.click();
 
-		objectDefinitions.splice(objectDefinitions.indexOf(objectDefinition1));
+		apiHelpers.data.splice(
+			apiHelpers.data.findIndex(
+				(object) =>
+					object.id === objectDefinition1.id &&
+					object.type === 'objectDefinition'
+			),
+			1
+		);
+
 
 		await expect(
 			modelBuilderLeftSidebarPage.sidebarItems.filter({
@@ -314,7 +322,14 @@ test.describe('Manage object definitions through Model Builder', () => {
 			objectDefinition1.name
 		);
 
-		objectDefinitions.splice(objectDefinitions.indexOf(objectDefinition1));
+		apiHelpers.data.splice(
+			apiHelpers.data.findIndex(
+				(object) =>
+					object.id === objectDefinition1.id &&
+					object.type === 'objectDefinition'
+			),
+			1
+		);
 
 		await expect(
 			modelBuilderDiagramPage.objectDefinitionNodes.filter({
@@ -647,7 +662,14 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
 
-		objectDefinitions.splice(objectDefinitions.indexOf(objectDefinition2));
+		apiHelpers.data.splice(
+			apiHelpers.data.findIndex(
+				(object) =>
+					object.id === objectDefinition2.id &&
+					object.type === 'objectDefinition'
+			),
+			1
+		);
 
 		await expect(
 			viewObjectDefinitionsPage.frontendDataSetEntries.filter({

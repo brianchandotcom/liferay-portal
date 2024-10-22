@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
@@ -66,6 +67,7 @@ public class EditObjectRelationshipMVCRenderCommand
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
 					_objectDefinitionService, _objectFieldService,
+					_objectFolderLocalService,
 					_systemObjectDefinitionManagerRegistry));
 		}
 		catch (PortalException portalException) {
@@ -89,6 +91,9 @@ public class EditObjectRelationshipMVCRenderCommand
 
 	@Reference
 	private ObjectFieldService _objectFieldService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

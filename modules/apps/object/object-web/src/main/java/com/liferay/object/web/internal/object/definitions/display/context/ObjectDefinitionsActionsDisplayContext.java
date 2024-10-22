@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -56,10 +57,13 @@ public class ObjectDefinitionsActionsDisplayContext
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
+		ObjectFolderLocalService objectFolderLocalService,
 		ScriptManagementConfigurationHelper
 			scriptManagementConfigurationHelper) {
 
-		super(httpServletRequest, objectDefinitionModelResourcePermission);
+		super(
+			httpServletRequest, objectDefinitionModelResourcePermission,
+			objectFolderLocalService);
 
 		_jsonFactory = jsonFactory;
 		_notificationTemplateLocalService = notificationTemplateLocalService;

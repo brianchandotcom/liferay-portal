@@ -14,6 +14,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,9 +48,12 @@ public class ObjectDefinitionsFieldsDisplayContext
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
-		ObjectFieldSettingLocalService objectFieldSettingLocalService) {
+		ObjectFieldSettingLocalService objectFieldSettingLocalService,
+		ObjectFolderLocalService objectFolderLocalService) {
 
-		super(httpServletRequest, objectDefinitionModelResourcePermission);
+		super(
+			httpServletRequest, objectDefinitionModelResourcePermission,
+			objectFolderLocalService);
 
 		_listTypeDefinitionService = listTypeDefinitionService;
 		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;

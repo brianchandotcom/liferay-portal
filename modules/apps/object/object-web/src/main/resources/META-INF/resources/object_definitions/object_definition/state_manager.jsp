@@ -8,14 +8,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 
 ObjectDefinitionsStateManagerDisplayContext objectDefinitionsStateManagerDisplayContext = (ObjectDefinitionsStateManagerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(
+	ParamUtil.getString(
+		request, "backURL",
+		URLBuilder.create(
+			String.valueOf(renderResponse.createRenderURL())
+		).setParameter(
+			"objectFolderName", objectDefinitionsStateManagerDisplayContext.getObjectFolderName()
+		).build()));
 
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
@@ -26,6 +31,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsStateManagerDisplayContext.getAPIURL()
+			).put(
+				"backURL", portletDisplay.getURLBack()
 			).put(
 				"creationMenu", objectDefinitionsStateManagerDisplayContext.getCreationMenu()
 			).put(

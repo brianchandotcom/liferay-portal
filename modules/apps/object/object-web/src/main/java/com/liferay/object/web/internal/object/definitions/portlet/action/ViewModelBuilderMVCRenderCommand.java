@@ -64,13 +64,14 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 				_listTypeDefinitionService,
 				_objectDefinitionModelResourcePermission,
 				_objectFieldBusinessTypeRegistry,
-				_objectFieldSettingLocalService));
+				_objectFieldSettingLocalService, _objectFolderLocalService));
 		renderRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITIONS_RELATIONSHIP_DISPLAY_CONTEXT,
 			new ObjectDefinitionsRelationshipsDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
 				_objectDefinitionModelResourcePermission,
 				_objectDefinitionService, _objectFieldService,
+				_objectFolderLocalService,
 				_systemObjectDefinitionManagerRegistry));
 
 		return "/object_folders/view_model_builder.jsp";

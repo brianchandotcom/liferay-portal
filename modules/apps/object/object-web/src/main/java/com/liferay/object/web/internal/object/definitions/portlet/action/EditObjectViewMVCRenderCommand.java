@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsViewsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,7 +59,8 @@ public class EditObjectViewMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsViewsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
-					_objectDefinitionModelResourcePermission));
+					_objectDefinitionModelResourcePermission,
+					_objectFolderLocalService));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -75,6 +77,9 @@ public class EditObjectViewMVCRenderCommand implements MVCRenderCommand {
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;

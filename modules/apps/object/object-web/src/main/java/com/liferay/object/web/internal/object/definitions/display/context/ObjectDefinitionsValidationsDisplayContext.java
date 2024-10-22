@@ -12,6 +12,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -42,11 +43,14 @@ public class ObjectDefinitionsValidationsDisplayContext
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
+		ObjectFolderLocalService objectFolderLocalService,
 		ObjectValidationRuleEngineRegistry objectValidationRuleEngineRegistry,
 		ScriptManagementConfigurationHelper
 			scriptManagementConfigurationHelper) {
 
-		super(httpServletRequest, objectDefinitionModelResourcePermission);
+		super(
+			httpServletRequest, objectDefinitionModelResourcePermission,
+			objectFolderLocalService);
 
 		_objectValidationRuleEngineRegistry =
 			objectValidationRuleEngineRegistry;

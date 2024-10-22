@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -46,10 +47,13 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			objectDefinitionModelResourcePermission,
 		ObjectDefinitionService objectDefinitionService,
 		ObjectFieldService objectFieldService,
+		ObjectFolderLocalService objectFolderLocalService,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
 
-		super(httpServletRequest, objectDefinitionModelResourcePermission);
+		super(
+			httpServletRequest, objectDefinitionModelResourcePermission,
+			objectFolderLocalService);
 
 		_objectDefinitionService = objectDefinitionService;
 		_objectFieldService = objectFieldService;

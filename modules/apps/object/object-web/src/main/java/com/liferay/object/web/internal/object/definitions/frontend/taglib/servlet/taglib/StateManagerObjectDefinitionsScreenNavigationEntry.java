@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsStateManagerDisplayContext;
 import com.liferay.portal.kernel.model.User;
@@ -60,7 +61,7 @@ public class StateManagerObjectDefinitionsScreenNavigationEntry
 			new ObjectDefinitionsStateManagerDisplayContext(
 				httpServletRequest, _listTypeDefinitionService,
 				_objectDefinitionModelResourcePermission,
-				_objectFieldSettingLocalService));
+				_objectFieldSettingLocalService, _objectFolderLocalService));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -76,5 +77,8 @@ public class StateManagerObjectDefinitionsScreenNavigationEntry
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 }

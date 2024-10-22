@@ -11,6 +11,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsLayoutsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,7 +63,8 @@ public class EditObjectLayoutMVCRenderCommand implements MVCRenderCommand {
 				new ObjectDefinitionsLayoutsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
-					_objectFieldBusinessTypeRegistry));
+					_objectFieldBusinessTypeRegistry,
+					_objectFolderLocalService));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -82,6 +84,9 @@ public class EditObjectLayoutMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectLayoutLocalService _objectLayoutLocalService;

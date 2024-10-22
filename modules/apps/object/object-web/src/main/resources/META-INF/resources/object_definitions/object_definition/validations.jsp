@@ -8,14 +8,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 
 ObjectDefinitionsValidationsDisplayContext objectDefinitionsValidationsDisplayContext = (ObjectDefinitionsValidationsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(
+	ParamUtil.getString(
+		request, "backURL",
+		URLBuilder.create(
+			String.valueOf(renderResponse.createRenderURL())
+		).setParameter(
+			"objectFolderName", objectDefinitionsValidationsDisplayContext.getObjectFolderName()
+		).build()));
 
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
@@ -28,6 +33,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 				"allowScriptContentToBeExecutedOrIncluded", objectDefinitionsValidationsDisplayContext.isAllowScriptContentToBeExecutedOrIncluded()
 			).put(
 				"apiURL", objectDefinitionsValidationsDisplayContext.getAPIURL()
+			).put(
+				"backURL", portletDisplay.getURLBack()
 			).put(
 				"creationMenu", objectDefinitionsValidationsDisplayContext.getCreationMenu()
 			).put(

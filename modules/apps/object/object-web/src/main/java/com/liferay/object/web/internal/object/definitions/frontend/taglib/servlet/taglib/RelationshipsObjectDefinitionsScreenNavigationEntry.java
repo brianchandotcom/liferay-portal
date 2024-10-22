@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
@@ -61,6 +62,7 @@ public class RelationshipsObjectDefinitionsScreenNavigationEntry
 			new ObjectDefinitionsRelationshipsDisplayContext(
 				httpServletRequest, _objectDefinitionModelResourcePermission,
 				_objectDefinitionService, _objectFieldService,
+				_objectFolderLocalService,
 				_systemObjectDefinitionManagerRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
@@ -77,6 +79,9 @@ public class RelationshipsObjectDefinitionsScreenNavigationEntry
 
 	@Reference
 	private ObjectFieldService _objectFieldService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

@@ -401,7 +401,7 @@ public class PoshiProperties extends Properties {
 		getProperty(TCAT_ENABLED));
 	public boolean testAssertConsoleErrors = GetterUtil.getBoolean(
 		getProperty(TEST_ASSERT_CONSOLE_ERRORS));
-	public boolean testAssertJavascriptErrors = GetterUtil.getBoolean(
+	public boolean testAssertJavaScriptErrors = GetterUtil.getBoolean(
 		getProperty(TEST_ASSERT_JAVASCRIPT_ERRORS));
 	public boolean testAssertWarningExceptions = GetterUtil.getBoolean(
 		getProperty(TEST_ASSERT_WARNING_EXCEPTIONS));

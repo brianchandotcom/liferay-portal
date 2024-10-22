@@ -52,18 +52,6 @@ const PublicationTimeline = ({
 		).toString();
 	};
 
-	const getDeleteURL = (ctCollectionId, url) => {
-		return createPortletURL(url, {
-			ctCollectionId,
-		});
-	};
-
-	const getEditURL = (ctCollectionId, url) => {
-		return createPortletURL(url, {
-			ctCollectionId,
-		});
-	};
-
 	const getRevertURL = (ctCollectionId) => {
 		return createMVCRenderCommandURL(
 			ctCollectionId,
@@ -162,9 +150,12 @@ const PublicationTimeline = ({
 												.code ===
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.delete
-												? getDeleteURL(
-														timelineItem.ctCollectionId,
-														timelineDeleteURL
+												? createPortletURL(
+														timelineDeleteURL,
+														{
+															ctCollectionId:
+																timelineItem.ctCollectionId,
+														}
 													)
 												: undefined
 										}
@@ -173,9 +164,12 @@ const PublicationTimeline = ({
 												.code ===
 												WORKFLOW_STATUS_DRAFT &&
 											!!timelineItem.actions.update
-												? getEditURL(
-														timelineItem.ctCollectionId,
-														timelineEditURL
+												? createPortletURL(
+														timelineEditURL,
+														{
+															ctCollectionId:
+																timelineItem.ctCollectionId,
+														}
 													)
 												: undefined
 										}

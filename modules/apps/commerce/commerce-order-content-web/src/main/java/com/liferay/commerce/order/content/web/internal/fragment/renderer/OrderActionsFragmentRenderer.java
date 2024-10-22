@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -351,7 +352,7 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 		return dropdownItems;
 	}
 
-	private HashMap<String, Object> _getReturnableOrderItemsContextParams(
+	private Map<String, Object> _getReturnableOrderItemsContextParams(
 		CommerceChannel commerceChannel,
 		HttpServletRequest httpServletRequest) {
 

@@ -432,7 +432,7 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 		return null;
 	}
 
-	private HashMap<String, Object> _getReturnableOrderItemsContextParams(
+	private Map<String, Object> _getReturnableOrderItemsContextParams(
 		CommerceChannel commerceChannel,
 		HttpServletRequest httpServletRequest) {
 

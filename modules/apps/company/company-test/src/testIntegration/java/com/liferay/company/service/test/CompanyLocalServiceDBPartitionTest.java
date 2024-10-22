@@ -66,6 +66,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -516,12 +517,12 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		Collection<ServiceReference<Portlet>> serviceReferences =
-			bundle.getBundleContext(
-			).getServiceReferences(
+			bundleContext.getServiceReferences(
 				Portlet.class,
-				"(com.liferay.portlet.company=" + company.getCompanyId() + ")"
-			);
+				"(com.liferay.portlet.company=" + company.getCompanyId() + ")");
 
 		Assert.assertTrue(serviceReferences.isEmpty());
 
@@ -589,13 +590,13 @@ public class CompanyLocalServiceDBPartitionTest
 
 			Bundle bundle = FrameworkUtil.getBundle(getClass());
 
+			BundleContext bundleContext = bundle.getBundleContext();
+
 			Collection<ServiceReference<Portlet>> serviceReferences =
-				bundle.getBundleContext(
-				).getServiceReferences(
+				bundleContext.getServiceReferences(
 					Portlet.class,
 					"(com.liferay.portlet.company=" + company.getCompanyId() +
-						")"
-				);
+						")");
 
 			Assert.assertTrue(serviceReferences.isEmpty());
 		}

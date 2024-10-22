@@ -122,9 +122,15 @@ public class PortletCategoryManagerTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		JSONArray jsonArray = _portletCategoryManager.getPortletsJSONArray(
-			mockHttpServletRequest, themeDisplay);
+		JSONObject jsonObject = _getPortletJSONObject(
+			_portletCategoryManager.getPortletsJSONArray(
+				mockHttpServletRequest, themeDisplay));
 
+		Assert.assertEquals(embedded, jsonObject.getBoolean("embedded"));
+		Assert.assertEquals(used, jsonObject.getBoolean("used"));
+	}
+
+	private JSONObject _getPortletJSONObject(JSONArray jsonArray) {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -139,14 +145,12 @@ public class PortletCategoryManagerTest {
 						LayoutPortletKeys.
 							LAYOUT_NONINSTANCEABLE_TEST_PORTLET)) {
 
-					Assert.assertEquals(
-						embedded, portletJSONObject.getBoolean("embedded"));
-
-					Assert.assertEquals(
-						used, portletJSONObject.getBoolean("used"));
+					return portletJSONObject;
 				}
 			}
 		}
+
+		return null;
 	}
 
 	@Inject

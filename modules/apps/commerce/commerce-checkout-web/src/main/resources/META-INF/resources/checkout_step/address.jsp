@@ -133,6 +133,28 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 		</div>
 	</c:if>
 
+	<c:if test="<%= baseAddressCheckoutStepDisplayContext.isCommerceOrderMultishipping() && Objects.equals(CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME, paramName) %>">
+		<div class="panel-body">
+			<div class="h5">
+				<liferay-ui:message key="delivery-groups" />
+			</div>
+
+			<frontend-data-set:classic-display
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+					).build()
+				%>'
+				dataProviderKey="<%= CommerceCheckoutFDSNames.DELIVERY_GROUP %>"
+				id="<%= CommerceCheckoutFDSNames.DELIVERY_GROUP %>"
+				itemsPerPage="<%= 10 %>"
+				selectedItemsKey="name"
+				showManagementBar="<%= false %>"
+				showSearch="<%= false %>"
+			/>
+		</div>
+	</c:if>
+
 	<aui:script>
 		Liferay.provide(
 			window,

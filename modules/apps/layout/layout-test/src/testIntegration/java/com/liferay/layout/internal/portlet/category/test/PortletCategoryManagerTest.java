@@ -70,14 +70,9 @@ public class PortletCategoryManagerTest {
 
 	@Test
 	public void testAssertEmbeddedValueWithEmbeddedPortlet() throws Exception {
-		Portlet portlet = _portletLocalService.getPortletById(
-			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
-
-		_portletPreferencesLocalService.addPortletPreferences(
-			_group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _draftLayout.getPlid(),
-			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET, portlet,
-			PortletConstants.DEFAULT_PREFERENCES);
+		_addPortletPreferences(
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET,
+			LayoutPortletKeys.LAYOUT_TEST_PORTLET);
 
 		_assertPortletJSONObject(true, true);
 	}
@@ -87,13 +82,9 @@ public class PortletCategoryManagerTest {
 	public void testAssertEmbeddedValueWithPortletInDeletedFragmentEntryLink()
 		throws Exception {
 
-		JSONObject jsonObject = ContentLayoutTestUtil.addPortletToLayout(
-			_draftLayout,
-			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
-
-		ContentLayoutTestUtil.markItemForDeletionFromLayout(
-			jsonObject.getString("addedItemId"), _draftLayout,
-			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
+		_addPortletMarkedForDeletionToLayout(
+			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET,
+			LayoutPortletKeys.LAYOUT_TEST_PORTLET);
 
 		_assertPortletJSONObject(false, false);
 	}
@@ -105,8 +96,33 @@ public class PortletCategoryManagerTest {
 		ContentLayoutTestUtil.addPortletToLayout(
 			_draftLayout,
 			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
+		ContentLayoutTestUtil.addPortletToLayout(
+			_draftLayout, LayoutPortletKeys.LAYOUT_TEST_PORTLET);
 
 		_assertPortletJSONObject(false, true);
+	}
+
+	private void _addPortletMarkedForDeletionToLayout(String... portletIds)
+		throws Exception {
+
+		for (String portletId : portletIds) {
+			JSONObject jsonObject = ContentLayoutTestUtil.addPortletToLayout(
+				_draftLayout, portletId);
+
+			ContentLayoutTestUtil.markItemForDeletionFromLayout(
+				jsonObject.getString("addedItemId"), _draftLayout, portletId);
+		}
+	}
+
+	private void _addPortletPreferences(String... portletIds) {
+		for (String portletId : portletIds) {
+			Portlet portlet = _portletLocalService.getPortletById(portletId);
+
+			_portletPreferencesLocalService.addPortletPreferences(
+				_group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _draftLayout.getPlid(),
+				portletId, portlet, PortletConstants.DEFAULT_PREFERENCES);
+		}
 	}
 
 	private void _assertPortletJSONObject(boolean embedded, boolean used)
@@ -122,15 +138,25 @@ public class PortletCategoryManagerTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		JSONArray jsonArray = _portletCategoryManager.getPortletsJSONArray(
+			mockHttpServletRequest, themeDisplay);
+
 		JSONObject jsonObject = _getPortletJSONObject(
-			_portletCategoryManager.getPortletsJSONArray(
-				mockHttpServletRequest, themeDisplay));
+			jsonArray, LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET);
 
 		Assert.assertEquals(embedded, jsonObject.getBoolean("embedded"));
 		Assert.assertEquals(used, jsonObject.getBoolean("used"));
+
+		jsonObject = _getPortletJSONObject(
+			jsonArray, LayoutPortletKeys.LAYOUT_TEST_PORTLET);
+
+		Assert.assertEquals(embedded, jsonObject.getBoolean("embedded"));
+		Assert.assertFalse(jsonObject.getBoolean("used"));
 	}
 
-	private JSONObject _getPortletJSONObject(JSONArray jsonArray) {
+	private JSONObject _getPortletJSONObject(
+		JSONArray jsonArray, String portletId) {
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -141,9 +167,7 @@ public class PortletCategoryManagerTest {
 					j);
 
 				if (Objects.equals(
-						portletJSONObject.get("portletId"),
-						LayoutPortletKeys.
-							LAYOUT_NONINSTANCEABLE_TEST_PORTLET)) {
+						portletJSONObject.get("portletId"), portletId)) {
 
 					return portletJSONObject;
 				}

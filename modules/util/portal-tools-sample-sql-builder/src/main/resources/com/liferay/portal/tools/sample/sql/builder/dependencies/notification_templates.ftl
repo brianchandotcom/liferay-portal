@@ -1,1 +1,4 @@
-${dataFactory.toInsertSQL(dataFactory.newNotificationTemplateModel())}
+<#assign
+	notificationTemplateModel = dataFactory.newNotificationTemplateModel()
+/>
+${dataFactory.toInsertSQL(notificationTemplateModel)}

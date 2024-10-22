@@ -186,8 +186,10 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 						themeDisplay.getPlid(), deleted)) {
 
 			portletIds.addAll(
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink));
+				TransformUtil.transform(
+					_portletRegistry.getFragmentEntryLinkPortletIds(
+						fragmentEntryLink),
+					portletId -> PortletIdCodec.decodePortletName(portletId)));
 		}
 
 		return portletIds;

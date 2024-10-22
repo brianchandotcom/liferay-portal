@@ -60,7 +60,9 @@ test(
 
 		// Access to the configuration of the widget from the page editor
 
-		await pageEditorPage.goToWidgetConfiguration(layout, site, widgetId);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
 
 		// Set asset selection and create a manual collection
 
@@ -112,7 +114,9 @@ test(
 
 		// Access to the configuration of the widget from the page editor
 
-		await pageEditorPage.goToWidgetConfiguration(layout, site, widgetId);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
 
 		// Set asset selection and create a manual collection
 

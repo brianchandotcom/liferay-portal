@@ -5083,7 +5083,7 @@ public class DataFactory {
 
 		notificationTemplateModel.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
-		notificationTemplateModel.setName("L_COMMERCE_ORDER_TEMPLATE");
+		notificationTemplateModel.setName("Commerce Order Notification");
 		notificationTemplateModel.setSystem(false);
 		notificationTemplateModel.setType("email");
 

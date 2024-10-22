@@ -28,11 +28,11 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 			"EDIT_SUBORGANIZATIONS_ACCOUNTS");
 	}
 
-	private boolean _hasPermission(String oldName) throws Exception {
+	private boolean _hasPermission(String name) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from ResourceAction where actionId = ?")) {
 
-			preparedStatement.setString(1, oldName);
+			preparedStatement.setString(1, name);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -55,10 +55,21 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement preparedStatement =
-				connection.prepareStatement(
-					"update ResourceAction set actionId = ? where actionId = " +
-						"?")) {
+		if (_hasPermission(newName)) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"delete from ResourceAction where actionId = ?")) {
+
+				preparedStatement.setString(1, oldName);
+
+				preparedStatement.executeUpdate();
+			}
+
+			return;
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update ResourceAction set actionId = ? where actionId = ?")) {
 
 			preparedStatement.setString(1, newName);
 			preparedStatement.setString(2, oldName);

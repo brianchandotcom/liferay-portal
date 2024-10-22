@@ -31,6 +31,18 @@ public class BrandNameCheck extends BaseCheck {
 		for (String brandName : _BRAND_NAMES) {
 			String lowerCaseBrandName = StringUtil.toLowerCase(brandName);
 
+			if ((detailAST.getType() == TokenTypes.PARAMETER_DEF) ||
+				(detailAST.getType() == TokenTypes.RESOURCE) ||
+				(detailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+
+				String lowerCaseTypeName = StringUtil.toLowerCase(
+					getTypeName(detailAST, false));
+
+				if (lowerCaseTypeName.contains(lowerCaseBrandName)) {
+					continue;
+				}
+			}
+
 			if (name.startsWith(lowerCaseBrandName)) {
 				String newName =
 					StringUtil.lowerCaseFirstLetter(brandName) +

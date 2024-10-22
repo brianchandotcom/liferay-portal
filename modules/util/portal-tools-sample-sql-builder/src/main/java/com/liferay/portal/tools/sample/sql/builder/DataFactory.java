@@ -31,6 +31,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -5175,6 +5176,11 @@ public class DataFactory {
 				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
 				"default-locale=\"en_US\"><Label language-id=\"en_US\">",
 				"Commerce Order</Label></root>"));
+
+		Class<?> clazz = CommerceOrder.class;
+
+		objectDefinitionModel.setClassName(clazz.getName());
+
 		objectDefinitionModel.setModifiable(false);
 		objectDefinitionModel.setName("CommerceOrder");
 		objectDefinitionModel.setPluralLabel(

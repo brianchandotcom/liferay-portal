@@ -12,14 +12,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
 import com.liferay.saml.opensaml.integration.processor.UserProcessor;
 import com.liferay.saml.opensaml.integration.processor.factory.UserProcessorFactory;
-
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -102,28 +99,18 @@ public class UserProcessorFactoryImplTest {
 	}
 
 	private User _processUserFromSaml(
-			String firsName, String lastName, String emailAddress,
+			String firstName, String lastName, String emailAddress,
 			String screenName)
 		throws Exception {
 
 		UserProcessor userProcessor = _userProcessorFactory.create(
 			_currentUser, _userFieldExpressionHandlerRegistry);
 
-		Map<String, String> userMap = HashMapBuilder.put(
-			"emailAddress", emailAddress
-		).put(
-			"firstName", firsName
-		).put(
-			"lastName", lastName
-		).put(
-			"screenName", screenName
-		).build();
-
-		for (Map.Entry<String, String> entry : userMap.entrySet()) {
-			String key = entry.getKey();
-
-			userProcessor.setValueArray(key, new String[] {userMap.get(key)});
-		}
+		userProcessor.setValueArray(
+			"emailAddress", new String[] {emailAddress});
+		userProcessor.setValueArray("firstName", new String[] {firstName});
+		userProcessor.setValueArray("lastName", new String[] {lastName});
+		userProcessor.setValueArray("screenName", new String[] {screenName});
 
 		return userProcessor.process(
 			ServiceContextTestUtil.getServiceContext());

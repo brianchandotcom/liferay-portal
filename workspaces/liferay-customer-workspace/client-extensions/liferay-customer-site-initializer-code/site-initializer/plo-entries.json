@@ -9,6 +9,15 @@
 		}
 	},
 	{
+		"key": "choose-an-organization",
+		"value": {
+			"en-US": "Search or choose your organization",
+			"es-ES": "Busca o escoge tu organización",
+			"ja-JP": "組織を検索または選択してください。",
+			"pt-BR": "Pesquise ou escolha sua organização"
+		}
+	},
+	{
 		"key": "community",
 		"value": {
 			"en-US": "Community"

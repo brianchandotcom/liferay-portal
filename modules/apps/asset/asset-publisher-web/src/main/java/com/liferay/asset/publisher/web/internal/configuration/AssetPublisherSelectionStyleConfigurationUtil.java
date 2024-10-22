@@ -5,7 +5,9 @@
 
 package com.liferay.asset.publisher.web.internal.configuration;
 
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Map;
 
@@ -23,6 +25,10 @@ import org.osgi.service.component.annotations.Modified;
 public class AssetPublisherSelectionStyleConfigurationUtil {
 
 	public static String defaultSelectionStyle() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-39304")) {
+			return AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST;
+		}
+
 		return _assetPublisherSelectionStyleConfiguration.
 			defaultSelectionStyle();
 	}

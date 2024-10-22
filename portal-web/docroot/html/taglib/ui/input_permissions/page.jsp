@@ -66,7 +66,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 		boolean submitted = request.getParameter(groupPermissionsName) != null;
 
-		boolean inputPermissionsShowOptions = ParamUtil.getBoolean(request, "inputPermissionsShowOptions");
+		boolean inputPermissionsShowOptions = FeatureFlagManagerUtil.isEnabled("LPD-19787") || ParamUtil.getBoolean(request, "inputPermissionsShowOptions");
 
 		String inputPermissionsViewRole = ParamUtil.getString(request, "inputPermissionsViewRole", InputPermissionsParamsTag.getDefaultViewRole(modelName, themeDisplay));
 		%>
@@ -113,13 +113,15 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
 				</select>
 
-				<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" onclick="<%= uniqueNamespace %>inputPermissionsToggle();" type="button">
-					<%= inputPermissionsShowOptions ? LanguageUtil.get(request, "hide-options") : LanguageUtil.get(request, "more-options") %>
-				</button>
+				<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
+					<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" onclick="<%= uniqueNamespace %>inputPermissionsToggle();" type="button">
+						<%= inputPermissionsShowOptions ? LanguageUtil.get(request, "hide-options") : LanguageUtil.get(request, "more-options") %>
+					</button>
 
-				<span class="mt-3 <%= inputPermissionsShowOptions ? "hide" : "" %>" id="<%= uniqueNamespace %>inputPermissionsShowOptionsHelp">
-					<liferay-ui:icon-help message="input-permissions-more-options-help" />
-				</span>
+					<span class="mt-3 <%= inputPermissionsShowOptions ? "hide" : "" %>" id="<%= uniqueNamespace %>inputPermissionsShowOptionsHelp">
+						<liferay-ui:icon-help message="input-permissions-more-options-help" />
+					</span>
+				</c:if>
 			</p>
 		</c:if>
 

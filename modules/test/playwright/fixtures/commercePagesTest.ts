@@ -37,7 +37,6 @@ import {CommerceAdminProductDetailsVisibilityPage} from '../pages/commerce/comme
 import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
 import {CommerceAdminReturnsPage} from '../pages/commerce/commerceAdminReturnsPage';
 import {CommerceAdminShipmentsPage} from '../pages/commerce/commerceAdminShipmentsPage';
-import {CommerceCatalogPage} from '../pages/commerce/commerceCatalogPage';
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefaultsPage';
 import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSettingsPage';
@@ -68,7 +67,6 @@ const commercePagesTest = test.extend<{
 	commerceAdminShipmentsPage: CommerceAdminShipmentsPage;
 	commerceCartPage: CommerceCartPage;
 	commerceCartSummaryPage: CommerceCartSummaryPage;
-	commerceCatalogPage: CommerceCatalogPage;
 	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	commerceChannelDefaultsPage: CommerceChannelDefaultsPage;
 	commerceInstanceSettingsPage: CommerceInstanceSettingsPage;
@@ -150,9 +148,6 @@ const commercePagesTest = test.extend<{
 	},
 	commerceCartSummaryPage: async ({page}, use) => {
 		await use(new CommerceCartSummaryPage(page));
-	},
-	commerceCatalogPage: async ({page}, use) => {
-		await use(new CommerceCatalogPage(page));
 	},
 	commerceCatalogSystemSettingsPage: async ({page}, use) => {
 		await use(new CommerceCatalogSystemSettingsPage(page));

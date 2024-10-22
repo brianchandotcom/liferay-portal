@@ -3,20 +3,34 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 export class CommerceThemeMiniumCatalogPage {
+	readonly catalogSearch: Locator;
+	readonly clearSearchButton: Locator;
 	readonly configurationIFrame: FrameLocator;
 	readonly configurationIFrameCloseButton: Locator;
 	readonly configurationIFrameDefaultSortingDropdownMenu: Locator;
 	readonly configurationIFrameSaveButton: Locator;
 	readonly configurationMenuItem: Locator;
 	readonly firstCardItem: Locator;
+	readonly globalSearchBarButton: Locator;
+	readonly globalSearchBarInput: Locator;
+	readonly globalSearchBarCommerceItemLink: (text: string) => Locator;
+	readonly globalSearchBarCommerceOrderLink: (
+		orderId: string,
+		accountName: string
+	) => Locator;
 	readonly optionsButton: Locator;
 	readonly orderByButton: Locator;
 	readonly page: Page;
+	readonly productLink: (productName: string) => Locator;
 
 	constructor(page: Page) {
+		this.catalogSearch = page.getByTestId('searchInput');
+		this.clearSearchButton = page.getByRole('button', {
+			name: 'Clear Search',
+		});
 		this.configurationIFrame = page.frameLocator(
 			'iframe[id="modalIframe"]'
 		);
@@ -33,6 +47,22 @@ export class CommerceThemeMiniumCatalogPage {
 			name: 'Configuration',
 		});
 		this.firstCardItem = page.locator('.product-card').first();
+		this.globalSearchBarButton = page
+			.locator('.commerce-topbar-button__icon')
+			.first();
+		this.globalSearchBarInput = page
+			.locator('#search-bar')
+			.getByPlaceholder('Search');
+		this.globalSearchBarCommerceItemLink = (text) =>
+			page.getByRole('link', {name: text});
+		this.globalSearchBarCommerceOrderLink = (
+			orderId: string,
+			accountName: string
+		) =>
+			page
+				.getByRole('link', {name: orderId})
+				.filter({hasText: accountName});
+
 		this.optionsButton = page
 			.locator(
 				'[id^="portlet_com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"]'
@@ -40,6 +70,11 @@ export class CommerceThemeMiniumCatalogPage {
 			.getByTitle('Options');
 		this.orderByButton = page.locator('#commerce-order-by');
 		this.page = page;
+		this.productLink = (productName: string) =>
+			this.page.getByRole('link', {
+				exact: true,
+				name: productName,
+			});
 	}
 
 	async selectSorting(orderByText: string) {
@@ -47,5 +82,15 @@ export class CommerceThemeMiniumCatalogPage {
 		const orderByLink = this.page.getByText(orderByText);
 		await orderByLink.click();
 		await this.page.waitForTimeout(1000);
+	}
+
+	async search(query: string) {
+		await this.globalSearchBarInput.waitFor({state: 'visible'});
+		await this.globalSearchBarInput.fill(query);
+	}
+
+	async focusGlobalSearchBarInput() {
+		await expect(this.globalSearchBarButton).toBeAttached();
+		await this.globalSearchBarButton.click();
 	}
 }

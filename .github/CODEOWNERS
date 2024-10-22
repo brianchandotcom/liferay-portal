@@ -7,8 +7,23 @@ modules/apps/analytics/
 modules/apps/announcements/    @liferay-content-management
 modules/apps/application-list/
 modules/apps/archived/
+modules/apps/archived/youtube-web    @liferay-page-management
 modules/apps/asset-tags-validator/    @liferay-content-management
 modules/apps/asset/
+modules/apps/asset/asset-entry-query-processor-custom-user-attributes    @liferay-page-management
+modules/apps/asset/asset-display-page-api    @liferay-page-management
+modules/apps/asset/asset-display-page-item-selector-api    @liferay-page-management
+modules/apps/asset/asset-display-page-item-selector-web    @liferay-page-management
+modules/apps/asset/asset-display-page-service    @liferay-page-management
+modules/apps/asset/asset-display-page-test    @liferay-page-management
+modules/apps/asset/asset-display-web    @liferay-page-management
+modules/apps/asset/asset-info-display-api    @liferay-page-management
+modules/apps/asset/asset-info-display-impl    @liferay-page-management
+modules/apps/asset/asset-publisher-web    @liferay-page-management
+modules/apps/asset/asset-publisher-api    @liferay-page-management
+modules/apps/asset/asset-publisher-layout-prototype    @liferay-page-management
+modules/apps/asset/asset-publisher-test    @liferay-page-management
+modules/apps/asset/asset-publisher-web    @liferay-page-management
 modules/apps/batch-engine/
 modules/apps/batch-planner/
 modules/apps/bean-portlet/
@@ -47,7 +62,7 @@ modules/apps/export-import/
 modules/apps/external-reference/
 modules/apps/feature-flag/    @liferay-platform-experience
 modules/apps/flags/    @liferay-content-management
-modules/apps/fragment/
+modules/apps/fragment/    @liferay-page-management
 modules/apps/friendly-url/
 modules/apps/frontend-css/    @liferay-platform-experience
 modules/apps/frontend-data-set/    @liferay-frontend
@@ -61,12 +76,19 @@ modules/apps/glowroot/
 modules/apps/gogo-shell/
 modules/apps/google-places/
 modules/apps/headless/
+modules/apps/headless/headless-admin-site    @liferay-page-management
+modules/apps/headless/headless-delivery    @liferay-page-management
 modules/apps/hello-velocity/
 modules/apps/iframe/
+modules/apps/iframe/iframe-web    @liferay-page-management
 modules/apps/image-uploader/
 modules/apps/image/
 modules/apps/imageio-plugins/
 modules/apps/info/
+modules/apps/info/info-api    @liferay-page-management
+modules/apps/info/info-test    @liferay-page-management
+modules/apps/info/info-test-util    @liferay-page-management
+modules/apps/info/info-impl    @liferay-page-management
 modules/apps/invitation/
 modules/apps/ip-geocoder/
 modules/apps/item-selector/    @liferay-content-management
@@ -74,6 +96,35 @@ modules/apps/journal/    @liferay-content-management
 modules/apps/json-storage/
 modules/apps/knowledge-base/    @liferay-content-management
 modules/apps/layout/
+modules/apps/layout/layout-admin-api    @liferay-page-management
+modules/apps/layout/layout-admin-web    @liferay-page-management
+modules/apps/layout/layout-admin-web-test    @liferay-page-management
+modules/apps/layout/layout-api    @liferay-page-management
+modules/apps/layout/layout-content-page-editor-api    @liferay-page-management
+modules/apps/layout/layout-content-page-editor-web    @liferay-page-management
+modules/apps/layout/layout-content-page-editor-web-test    @liferay-page-management
+modules/apps/layout/layout-impl    @liferay-page-management
+modules/apps/layout/layout-page-template-admin-api    @liferay-page-management
+modules/apps/layout/layout-page-template-admin-web    @liferay-page-management
+modules/apps/layout/layout-page-template-admin-web-test    @liferay-page-management
+modules/apps/layout/layout-page-template-api    @liferay-page-management
+modules/apps/layout/layout-page-template-service    @liferay-page-management
+modules/apps/layout/layout-page-template-test    @liferay-page-management
+modules/apps/layout/layout-prototype-api    @liferay-page-management
+modules/apps/layout/layout-prototype-impl    @liferay-page-management
+modules/apps/layout/layout-prototype-test    @liferay-page-management
+modules/apps/layout/layout-reports-web/layout-reports-web    @liferay-page-management
+modules/apps/layout/layout-seo-api    @liferay-page-management
+modules/apps/layout/layout-seo-service    @liferay-page-management
+modules/apps/layout/layout-seo-test    @liferay-page-management
+modules/apps/layout/layout-seo-web    @liferay-page-management
+modules/apps/layout/layout-seo-web-test    @liferay-page-management
+modules/apps/layout/layout-taglib    @liferay-page-management
+modules/apps/layout/layout-test    @liferay-page-management
+modules/apps/layout/layout-test-util    @liferay-page-management
+modules/apps/layout/layout-utility-page/layout-utility-page-api    @liferay-page-management
+modules/apps/layout/layout-utility-page/layout-utility-page-service    @liferay-page-management
+modules/apps/layout/layout-utility-page/layout-utility-page-test    @liferay-page-management
 modules/apps/learn/
 modules/apps/license-manager/
 modules/apps/list-type/
@@ -81,6 +132,7 @@ modules/apps/locked-items/    @liferay-content-management
 modules/apps/login/
 modules/apps/mail/
 modules/apps/map/
+modules/apps/map/map-google-maps    @liferay-page-management
 modules/apps/marketplace/
 modules/apps/mentions/    @liferay-content-management
 modules/apps/message-boards/    @liferay-content-management
@@ -90,6 +142,7 @@ modules/apps/mobile-device-rules/
 modules/apps/monitoring/
 modules/apps/my-subscriptions/    @liferay-content-management
 modules/apps/nested-portlets/
+modules/apps/nested-portlets/nested-portlets-web    @liferay-page-management
 modules/apps/normalizer/
 modules/apps/notification/
 modules/apps/notifications/    @liferay-content-management
@@ -135,11 +188,20 @@ modules/apps/portal-vulcan/
 modules/apps/portal-workflow/    @liferay-bpm
 modules/apps/portal/
 modules/apps/portlet-configuration/
+modules/apps/portlet-configuration/portlet-configuration-web    @liferay-page-management
+modules/apps/portlet-configuration/portlet-configuration-css-web    @liferay-page-management
 modules/apps/portlet-dependency-factory/
 modules/apps/portlet-display-template/
+modules/apps/portlet-display-template/portlet-display-template-api    @liferay-page-management
+modules/apps/portlet-display-template/portlet-display-template-impl    @liferay-page-management
+modules/apps/portlet-display-template/portlet-display-template-web    @liferay-page-management
 modules/apps/portlet-preferences/
 modules/apps/portlet/
 modules/apps/product-navigation/
+modules/apps/product-navigation/product-navigation-simulation-api    @liferay-page-management
+modules/apps/product-navigation/product-navigation-simulation-device    @liferay-page-management
+modules/apps/product-navigation/product-navigation-simulation-theme-contributor    @liferay-page-management
+modules/apps/product-navigation/product-navigation-simulation-web    @liferay-page-management
 modules/apps/push-notifications/
 modules/apps/questions/    @liferay-content-management
 modules/apps/ratings/    @liferay-content-management
@@ -149,6 +211,10 @@ modules/apps/release-feature-flag/    @liferay-platform-experience
 modules/apps/repository/    @liferay-content-management
 modules/apps/roles/
 modules/apps/rss/
+modules/apps/rss/rss-api    @liferay-page-management
+modules/apps/rss/rss-impl    @liferay-page-management
+modules/apps/rss/rss-taglib    @liferay-page-management
+modules/apps/rss/rss-web    @liferay-page-management
 modules/apps/saved-content/    @liferay-content-management
 modules/apps/segments/
 modules/apps/server/
@@ -157,6 +223,7 @@ modules/apps/shared-dependencies/
 modules/apps/sharing/    @liferay-content-management
 modules/apps/site-initializer/
 modules/apps/site-navigation/
+modules/apps/site-navigation/site-navigation-language-web    @liferay-page-management
 modules/apps/site/
 modules/apps/social/    @liferay-content-management
 modules/apps/staging/

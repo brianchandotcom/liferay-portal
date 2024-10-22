@@ -18,10 +18,10 @@ import {
 
 import '../css/main.scss';
 
-export {default as searchBar} from './search_bar/SearchBar';
-export {default as searchResults} from './search_results/SearchResults';
 export {default as discontinuedLabelCPInstanceChangeHandler} from './discontinued_label/DiscontinuedLabelCPInstanceChangeHandler';
 export {default as infoBoxHandler} from './info_box';
+export {default as searchBar} from './search_bar/SearchBar';
+export {default as searchResults} from './search_results/SearchResults';
 
 export function accountSelectorTag({
 	accountEntryAllowedTypes,

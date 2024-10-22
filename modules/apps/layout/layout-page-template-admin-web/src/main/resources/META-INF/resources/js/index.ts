@@ -5,13 +5,9 @@
 
 // @ts-ignore
 
-export {default as LayoutPrototypeDropdownPropsTransformer} from './propsTransformers/LayoutPrototypeDropdownPropsTransformer';
+export {default as ActionsComponentPropsTransformer} from './ActionsComponentPropsTransformer';
 
 export {default as ImportPageTemplates} from './ImportPageTemplates';
-
-// @ts-ignore
-
-export {default as ActionsComponentPropsTransformer} from './ActionsComponentPropsTransformer';
 
 // @ts-ignore
 
@@ -19,11 +15,11 @@ export {default as AssetDisplayPageUsagesManagementToolbarPropsTransformer} from
 
 // @ts-ignore
 
-export {default as DisplayPageManagementToolbarPropsTransformer} from './propsTransformers/DisplayPageManagementToolbarPropsTransformer';
+export {default as DisplayPageDropdownPropsTransformer} from './propsTransformers/DisplayPageDropdownPropsTransformer';
 
 // @ts-ignore
 
-export {default as DisplayPageDropdownPropsTransformer} from './propsTransformers/DisplayPageDropdownPropsTransformer';
+export {default as DisplayPageManagementToolbarPropsTransformer} from './propsTransformers/DisplayPageManagementToolbarPropsTransformer';
 
 // @ts-ignore
 
@@ -36,6 +32,10 @@ export {default as LayoutPageTemplateEntryManagementToolbarPropsTransformer} fro
 // @ts-ignore
 
 export {default as LayoutPageTemplateEntryPropsTransformer} from './propsTransformers/LayoutPageTemplateEntryPropsTransformer';
+
+// @ts-ignore
+
+export {default as LayoutPrototypeDropdownPropsTransformer} from './propsTransformers/LayoutPrototypeDropdownPropsTransformer';
 
 // @ts-ignore
 

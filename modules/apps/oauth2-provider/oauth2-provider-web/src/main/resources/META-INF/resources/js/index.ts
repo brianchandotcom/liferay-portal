@@ -11,8 +11,8 @@ export {default as OAuth2ApplicationsManagementToolbarPropsTransformer} from './
 
 export {default as OAuth2AuthorizationsManagementToolbarPropsTransformer} from './OAuth2AuthorizationsManagementToolbarPropsTransformer';
 
+export {default as EditClientDetails} from './components/EditClientDetails';
+
 // @ts-ignore
 
 export {default as oAuth2ConnectedApplicationsManagementToolbarPropsTransformer} from './oAuth2ConnectedApplicationsManagementToolbarPropsTransformer';
-
-export {default as EditClientDetails} from './components/EditClientDetails';

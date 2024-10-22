@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export {ListTypeEntryBaseField} from './components/BaseEntryFields/ListTypeEntryBaseField';
 export {
 	BuilderScreen,
 	TBuilderScreenItem,
 } from './components/BuilderScreen/BuilderScreen';
 export {Card} from './components/Card';
+export {CodeEditorLocalized} from './components/CodeEditor/CodeEditorLocalized';
 export {
 	default as CodeEditor,
 	CodeMirrorEditor,
@@ -15,27 +17,27 @@ export {
 	Element,
 	SidebarCategory,
 } from './components/CodeEditor/index';
-export {CodeEditorLocalized} from './components/CodeEditor/CodeEditorLocalized';
 export {DatePicker} from './components/DatePicker';
 export {
 	ExpressionBuilder,
 	ExpressionBuilderModal,
 } from './components/ExpressionBuilder';
 export {Input} from './components/Input';
-export {ManagementToolbar} from './components/ManagementToolbar/index';
 export {ManagementToolbarSearch} from './components/ManagementToolbar/ManagementToolbarSearch';
 export {ModalEditObjectDefinitionExternalReferenceCode} from './components/ManagementToolbar/ModalEditObjectDefinitionExternalReferenceCode';
-export {CustomVerticalBar} from './components/VerticalBar/CustomVerticalBar';
-export {ListTypeEntryBaseField} from './components/BaseEntryFields/ListTypeEntryBaseField';
+export {ManagementToolbar} from './components/ManagementToolbar/index';
+export {Panel} from './components/Panel/Panel';
+export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';
+export {PanelHeader} from './components/Panel/PanelHeader';
 export {RadioField} from './components/RadioField/RadioField';
 export {RichTextLocalized} from './components/RichTextLocalized';
+
 export {
 	MultipleSelect,
 	MultiSelectItem,
 	MultiSelectItemChild,
 } from './components/Select/MultipleSelect';
 export {SingleSelect} from './components/Select/SingleSelect';
-
 export {
 	closeSidePanel,
 	openToast,
@@ -44,17 +46,15 @@ export {
 	SidePanelForm,
 } from './components/SidePanelContent';
 export {Toggle} from './components/Toggle';
+export {CustomVerticalBar} from './components/VerticalBar/CustomVerticalBar';
 export {
 	invalidateLocalizableLabelRequired,
 	invalidateRequired,
 	useForm,
 	FormError,
 } from './hooks/useForm';
-export {onActionDropdownItemClick} from './utils/fdsUtil';
 export {createAutoCorrectedDatePipe} from './utils/createAutoCorrectedDatePipe';
-export {Panel} from './components/Panel/Panel';
-export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';
-export {PanelHeader} from './components/Panel/PanelHeader';
+export {onActionDropdownItemClick} from './utils/fdsUtil';
 export * as API from './utils/api';
 export * as stringUtils from './utils/string';
 export * as arrayUtils from './utils/array';

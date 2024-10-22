@@ -4,9 +4,9 @@
  */
 
 export {default as orderAPI} from './Order';
+export {default as orderRuleAPI} from './OrderRule';
 export {default as orderRuleAccountAPI} from './OrderRuleAccount';
 export {default as orderRuleAccountGroupAPI} from './OrderRuleAccountGroup';
-export {default as orderRuleAPI} from './OrderRule';
 export {default as orderRuleChannelAPI} from './OrderRuleChannel';
 export {default as orderRuleOrderTypeAPI} from './OrderRuleOrderType';
 export {default as orderTypeAPI} from './OrderType';

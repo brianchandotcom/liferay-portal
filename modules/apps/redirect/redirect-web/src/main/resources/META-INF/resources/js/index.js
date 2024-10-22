@@ -6,7 +6,7 @@
 export {default as ChainedRedirections} from './ChainedRedirections';
 export {default as ChainedRedirectionsModal} from './ChainedRedirectionsModal';
 export {default as DestinationUrlInput} from './DestinationUrlInput';
-export {default as editRedirectEntry} from './editRedirectEntry';
 export {default as RedirectManagementToolbarPropsTransformer} from './RedirectManagementToolbarPropsTransformer';
 export {default as RedirectNotFoundEntriesManagementToolbarPropsTransformer} from './RedirectNotFoundEntriesManagementToolbarPropsTransformer';
 export {default as RedirectPatterns} from './RedirectPatterns';
+export {default as editRedirectEntry} from './editRedirectEntry';

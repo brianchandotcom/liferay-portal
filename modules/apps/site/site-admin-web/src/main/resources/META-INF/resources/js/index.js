@@ -5,11 +5,11 @@
 
 export {default as AddGroup} from './AddGroup';
 export {default as MenuAccess} from './MenuAccess';
-export {default as openDeleteSiteModal} from './openDeleteSiteModal';
 export {default as SelectSiteInitializerVerticalCardPropsTransformer} from './SelectSiteInitializerVerticalCardPropsTransformer';
 export {default as SiteDropdownDefaultPropsTransformer} from './SiteDropdownDefaultPropsTransformer';
 export {default as SiteLanguageConfiguration} from './SiteLanguageConfiguration';
 export {default as SiteManagementToolbarPropsTransformer} from './SiteManagementToolbarPropsTransformer';
+export {default as openDeleteSiteModal} from './openDeleteSiteModal';
 
 export {default as Details} from './site/Details';
 export {default as Ratings} from './site/Ratings';

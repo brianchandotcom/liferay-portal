@@ -4,8 +4,8 @@
  */
 
 export {default as addFragmentComposition} from './addFragmentComposition';
-export {default as addFragmentEntryLinks} from './addFragmentEntryLinks';
 export {default as addFragmentEntryLinkComment} from './addFragmentEntryLinkComment';
+export {default as addFragmentEntryLinks} from './addFragmentEntryLinks';
 export {default as addMappingFields} from './addMappingFields';
 export {default as addRule} from './addRule';
 export {default as deleteFragmentEntryLinkComment} from './deleteFragmentEntryLinkComment';

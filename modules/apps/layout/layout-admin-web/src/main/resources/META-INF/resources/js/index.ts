@@ -17,33 +17,7 @@ export {default as CustomizationButtonPropsTransformer} from './CustomizationBut
 
 export {default as CustomizationSettingsActionDropdownPropsTransformer} from './CustomizationSettingsActionDropdownPropsTransformer';
 
-// @ts-ignore
-
-export {default as InformationMessages} from './dynamic_include/InformationMessages';
 export {default as EditLayout} from './EditLayout';
-
-// @ts-ignore
-
-export {default as IncompleteLayoutEventListener} from './layout/IncompleteLayoutEventListener';
-
-// @ts-ignore
-
-export {default as Layout} from './layout/Layout';
-
-// @ts-ignore
-
-export {default as Favicon} from './layout/look_and_feel/Favicon';
-export {default as GlobalCSSCETsConfiguration} from './layout/look_and_feel/GlobalCSSCETsConfiguration';
-export {default as GlobalJSCETsConfiguration} from './layout/look_and_feel/GlobalJSCETsConfiguration';
-
-// @ts-ignore
-
-export {default as MasterLayoutConfiguration} from './layout/look_and_feel/MasterLayoutConfiguration';
-
-// @ts-ignore
-
-export {default as StyleBookConfiguration} from './layout/look_and_feel/StyleBookConfiguration';
-export {default as ThemeSpritemapCETsConfiguration} from './layout/look_and_feel/ThemeSpritemapCETsConfiguration';
 
 // @ts-ignore
 
@@ -52,11 +26,8 @@ export {default as LayoutActionDropdownPropsTransformer} from './LayoutActionDro
 // @ts-ignore
 
 export {default as LayoutCustomizationSettings} from './LayoutCustomizationSettings';
+
 export {default as LayoutPageTemplateEntryCard} from './LayoutPageTemplateEntryCard';
-
-// @ts-ignore
-
-export {default as LayoutsManagementToolbarPropsTransformer} from './LayoutsManagementToolbarPropsTransformer';
 
 // @ts-ignore
 
@@ -65,6 +36,10 @@ export {default as LayoutUtilityPageEntriesManagementToolbarPropsTransformer} fr
 // @ts-ignore
 
 export {default as LayoutUtilityPageEntryDropdownPropsTransformer} from './LayoutUtilityPageEntryDropdownPropsTransformer';
+
+// @ts-ignore
+
+export {default as LayoutsManagementToolbarPropsTransformer} from './LayoutsManagementToolbarPropsTransformer';
 
 // @ts-ignore
 
@@ -86,3 +61,32 @@ export {default as SelectLayoutCollectionManagementToolbarPropsTransformer} from
 
 export {default as SelectLayoutUtilityPageEntryMasterLayoutVerticalCardPropsTransformer} from './SelectLayoutUtilityPageEntryMasterLayoutVerticalCardPropsTransformer';
 export {default as ThemeCSSReplacementSelector} from './ThemeCSSReplacementSelector';
+
+// @ts-ignore
+
+export {default as InformationMessages} from './dynamic_include/InformationMessages';
+
+// @ts-ignore
+
+export {default as IncompleteLayoutEventListener} from './layout/IncompleteLayoutEventListener';
+
+// @ts-ignore
+
+export {default as Layout} from './layout/Layout';
+
+// @ts-ignore
+
+export {default as Favicon} from './layout/look_and_feel/Favicon';
+
+export {default as GlobalCSSCETsConfiguration} from './layout/look_and_feel/GlobalCSSCETsConfiguration';
+
+export {default as GlobalJSCETsConfiguration} from './layout/look_and_feel/GlobalJSCETsConfiguration';
+
+// @ts-ignore
+
+export {default as MasterLayoutConfiguration} from './layout/look_and_feel/MasterLayoutConfiguration';
+
+// @ts-ignore
+
+export {default as StyleBookConfiguration} from './layout/look_and_feel/StyleBookConfiguration';
+export {default as ThemeSpritemapCETsConfiguration} from './layout/look_and_feel/ThemeSpritemapCETsConfiguration';

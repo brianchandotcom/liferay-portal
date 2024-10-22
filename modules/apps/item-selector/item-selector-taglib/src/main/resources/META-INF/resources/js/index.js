@@ -4,12 +4,12 @@
  */
 
 export {default as ImageEditor} from './ImageEditor';
-export {default as ImageSelector} from './image_selector/ImageSelector';
-export {default as ItemSelectorRepositoryEntryBrowserManagementToolbarPropsTransformer} from './repository_entry_browser/ItemSelectorRepositoryEntryBrowserManagementToolbarPropsTransformer';
-export {default as ItemSelectorRepositoryEntryBrowser} from './repository_entry_browser/ItemSelectorRepositoryEntryBrowser';
-export {default as ItemSelectorRepositoryEntryBrowserConfigureAIModal} from './repository_entry_browser/ItemSelectorRepositoryEntryBrowserConfigureAIModal';
-
 export {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
 	default as imageSelectorImageAtom,
 } from './atoms/imageSelectorImageAtom';
+export {default as ImageSelector} from './image_selector/ImageSelector';
+export {default as ItemSelectorRepositoryEntryBrowser} from './repository_entry_browser/ItemSelectorRepositoryEntryBrowser';
+export {default as ItemSelectorRepositoryEntryBrowserConfigureAIModal} from './repository_entry_browser/ItemSelectorRepositoryEntryBrowserConfigureAIModal';
+
+export {default as ItemSelectorRepositoryEntryBrowserManagementToolbarPropsTransformer} from './repository_entry_browser/ItemSelectorRepositoryEntryBrowserManagementToolbarPropsTransformer';

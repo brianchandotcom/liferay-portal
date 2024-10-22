@@ -8,7 +8,7 @@ export {default as AssetCategoriesManagementToolbarPropsTransformer} from './Ass
 export {default as AssetCategoriesSelectorTag} from './AssetCategoriesSelectorTag';
 export {default as CategoryActionDropdownPropsTransformer} from './CategoryActionDropdownPropsTransformer';
 export {default as ItemSelectorAddCategory} from './ItemSelectorAddCategory';
-export {default as openDeleteCategoryModal} from './openDeleteCategoryModal';
-export {default as openDeleteVocabularyModal} from './openDeleteVocabularyModal';
 export {default as SaveAndAddNewPropsTransformer} from './SaveAndAddNewPropsTransformer';
 export {default as VocabularyActionDropdownPropsTransformer} from './VocabularyActionDropdownPropsTransformer';
+export {default as openDeleteCategoryModal} from './openDeleteCategoryModal';
+export {default as openDeleteVocabularyModal} from './openDeleteVocabularyModal';

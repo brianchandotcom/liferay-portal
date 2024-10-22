@@ -9,8 +9,8 @@ export {default as AssetEntrySelectionDropdownPropsTransformer} from './AssetEnt
 export {default as CreateAssetListActionButtonPropsTransformer} from './CreateAssetListActionButtonPropsTransformer';
 export {default as DisplaySettings} from './DisplaySettings';
 export {default as Ordering} from './Ordering';
-export {default as printPageButtonPropsTransformer} from './printPageButtonPropsTransformer';
 export {default as ScopeActionDropdownPropsTransformer} from './ScopeActionDropdownPropsTransformer';
 export {default as SelectStructureField} from './SelectStructureField';
 export {default as Source} from './Source';
 export {default as AssetFilterBuilder} from './components/AssetFilterBuilder/index';
+export {default as printPageButtonPropsTransformer} from './printPageButtonPropsTransformer';

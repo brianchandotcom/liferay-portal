@@ -4,7 +4,7 @@
  */
 
 export {default as State} from './State';
-export {default as useLiferayState} from './hooks/useLiferayState';
-
 export type {Atom, Selector} from './State';
+
+export {default as useLiferayState} from './hooks/useLiferayState';
 export type {Immutable} from './types';

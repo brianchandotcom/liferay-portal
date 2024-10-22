@@ -102,10 +102,10 @@ import Validation from './Validation/Validation';
 
 export {default as Checkbox} from './Checkbox/Checkbox';
 export {default as Numeric} from './Numeric/Numeric';
-export {default as Select} from './Select/Select';
-export {default as MultipleSelection} from './Select/MultipleSelect';
-export type {FieldChangeEventHandler} from './types';
 export {default as NumericInputMask} from './NumericInputMask/NumericInputMask';
+export {default as MultipleSelection} from './Select/MultipleSelect';
+export {default as Select} from './Select/Select';
+export type {FieldChangeEventHandler} from './types';
 
 export {
 	Captcha,

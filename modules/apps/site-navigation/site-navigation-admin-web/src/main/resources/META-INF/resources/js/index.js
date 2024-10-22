@@ -4,8 +4,8 @@
  */
 
 export {default as AddSiteNavigationMenuItem} from './AddSiteNavigationMenuItem';
-export {default as openDeleteSiteNavigationMenuModal} from './openDeleteSiteNavigationMenuModal';
 export {default as SiteNavigationManagementToolbarPropsTransformer} from './SiteNavigationManagementToolbarPropsTransformer';
 export {default as SiteNavigationMenuDropdownDefaultPropsTransformer} from './SiteNavigationMenuDropdownDefaultPropsTransformer';
+export {default as openDeleteSiteNavigationMenuModal} from './openDeleteSiteNavigationMenuModal';
 
 export {default as App} from './site_navigation_menu_editor/index';

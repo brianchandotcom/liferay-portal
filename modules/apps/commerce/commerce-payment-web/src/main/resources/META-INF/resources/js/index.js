@@ -4,8 +4,8 @@
  */
 
 export {default as DefaultCommercePaymentMethod} from './DefaultCommercePaymentMethod';
-export {default as editCommercePaymentEntry} from './editCommercePaymentEntry';
-export {default as commerceTermEntries} from './commerceTermEntries';
 export {default as commerceOrderTypes} from './commerceOrderTypes';
 export {default as commercePaymentPropsTransformer} from './commercePaymentPropsTransformer';
+export {default as commerceTermEntries} from './commerceTermEntries';
+export {default as editCommercePaymentEntry} from './editCommercePaymentEntry';
 export {default as qualifiers} from './qualifiers';

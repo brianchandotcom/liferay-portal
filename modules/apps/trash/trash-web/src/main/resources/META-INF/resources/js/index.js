@@ -4,5 +4,5 @@
  */
 
 export {default as EntriesPropsTransformer} from './EntriesPropsTransformer';
-export {default as openDeleteEntryModal} from './openDeleteEntryModal';
 export {default as TrashManagementToolbarPropsTransformer} from './TrashManagementToolbarPropsTransformer';
+export {default as openDeleteEntryModal} from './openDeleteEntryModal';

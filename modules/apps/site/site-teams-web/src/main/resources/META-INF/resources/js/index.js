@@ -5,5 +5,5 @@
 
 export {default as EditSiteTeamAssignmentsUserGroupsManagementToolbarPropsTransformer} from './EditSiteTeamAssignmentsUserGroupsManagementToolbarPropsTransformer';
 export {default as EditTeamAssignmentsUsersManagementToolbarPropsTransformer} from './EditTeamAssignmentsUsersManagementToolbarPropsTransformer';
-export {default as UserDropdownDefaultPropsTransformer} from './UserDropdownDefaultPropsTransformer';
 export {default as SiteTeamsManagementToolbarPropsTransformer} from './SiteTeamsManagementToolbarPropsTransformer';
+export {default as UserDropdownDefaultPropsTransformer} from './UserDropdownDefaultPropsTransformer';

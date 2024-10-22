@@ -234,15 +234,21 @@ const ActivableTopperEmpty = ({
 					},
 				})}
 
-				{isActive ? (
-					<TopperEmptyLabel item={item} itemElement={itemElement} />
+				{isActive ||
+				(isHovered && Liferay.FeatureFlags['LPD-32075']) ? (
+					<TopperEmptyLabel
+						isActive={isActive}
+						isHovered={isHovered && !isActive}
+						item={item}
+						itemElement={itemElement}
+					/>
 				) : null}
 			</>
 		);
 	});
 };
 
-const TopperEmptyLabel = ({item, itemElement}) => {
+const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 	const copiedItemIds = useCopiedItemIds();
 	const activeItemIds = useActiveItemIds();
 
@@ -262,13 +268,17 @@ const TopperEmptyLabel = ({item, itemElement}) => {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
 	return (
-		<TopperLabel item={item} itemElement={itemElement}>
+		<TopperLabel
+			isHovered={isHovered}
+			item={item}
+			itemElement={itemElement}
+		>
 			<ul className="tbar-nav">
 				<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
 					{name}
 				</li>
 
-				{canUpdatePageStructure ? (
+				{canUpdatePageStructure && isActive ? (
 					<li className="page-editor__topper__item tbar-item">
 						<ClayDropDown
 							alignmentPosition={Align.BottomRight}

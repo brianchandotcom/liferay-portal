@@ -262,13 +262,16 @@ function TopperContent({
 			}}
 			tabIndex={isFocusable ? 0 : -1}
 		>
-			{isActive || isHighlighted ? (
+			{isActive ||
+			isHighlighted ||
+			(isHovered && Liferay.FeatureFlags['LPD-32075']) ? (
 				<TopperLabel
 					isDragging={isDraggingSource}
+					isHovered={isHovered && !isActive}
 					itemElement={itemElement}
 				>
 					<ul className="tbar-nav">
-						{canBeDragged && (
+						{canBeDragged && isActive && (
 							<li
 								className="page-editor__topper__drag-handler page-editor__topper__item tbar-item"
 								ref={topperRef}
@@ -287,34 +290,37 @@ function TopperContent({
 							{name}
 						</li>
 
-						{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (
-							<li className="page-editor__topper__item tbar-item">
-								<ClayButton
-									aria-label={Liferay.Language.get(
-										'comments'
-									)}
-									disabled={isMultiSelect}
-									displayType="unstyled"
-									onClick={(event) => event.stopPropagation()}
-									size="sm"
-									title={Liferay.Language.get('comments')}
-								>
-									<ClayIcon
-										className="page-editor__topper__icon"
-										onClick={() => {
-											dispatch(
-												switchSidebarPanel({
-													sidebarOpen: true,
-													sidebarPanelId:
-														commentsPanelId,
-												})
-											);
-										}}
-										symbol="comments"
-									/>
-								</ClayButton>
-							</li>
-						)}
+						{item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+							isActive && (
+								<li className="page-editor__topper__item tbar-item">
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'comments'
+										)}
+										disabled={isMultiSelect}
+										displayType="unstyled"
+										onClick={(event) =>
+											event.stopPropagation()
+										}
+										size="sm"
+										title={Liferay.Language.get('comments')}
+									>
+										<ClayIcon
+											className="page-editor__topper__icon"
+											onClick={() => {
+												dispatch(
+													switchSidebarPanel({
+														sidebarOpen: true,
+														sidebarPanelId:
+															commentsPanelId,
+													})
+												);
+											}}
+											symbol="comments"
+										/>
+									</ClayButton>
+								</li>
+							)}
 
 						{canUpdatePageStructure && isActive && (
 							<li className="page-editor__topper__item tbar-item">

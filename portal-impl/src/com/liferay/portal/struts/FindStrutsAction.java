@@ -222,7 +222,6 @@ public abstract class FindStrutsAction implements StrutsAction {
 		if (securityMode.equals("domain")) {
 			String[] allowedDomains = RedirectURLSettingsUtil.getAllowedDomains(
 				companyId);
-
 			String domain = HttpComponentsUtil.getDomain(noSuchEntryRedirect);
 
 			if (ArrayUtil.contains(allowedDomains, domain)) {

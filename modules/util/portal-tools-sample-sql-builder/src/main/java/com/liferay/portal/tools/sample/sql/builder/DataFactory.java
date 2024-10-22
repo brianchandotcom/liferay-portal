@@ -5168,6 +5168,7 @@ public class DataFactory {
 		objectDefinitionModel.setObjectFolderId(objectFolderId);
 		objectDefinitionModel.setRootObjectDefinitionId(0);
 		objectDefinitionModel.setTitleObjectFieldId(_counter.get());
+		objectDefinitionModel.setAccountEntryRestricted(false);
 		objectDefinitionModel.setActive(true);
 		objectDefinitionModel.setLabel(
 			StringBundler.concat(

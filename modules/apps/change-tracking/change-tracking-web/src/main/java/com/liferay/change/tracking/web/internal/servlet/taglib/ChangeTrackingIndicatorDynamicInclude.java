@@ -700,6 +700,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 
 			data.put("timelineEditURL", timelineEditURL);
+
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
 			data.put(

@@ -5,13 +5,13 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	commercePagesTest,

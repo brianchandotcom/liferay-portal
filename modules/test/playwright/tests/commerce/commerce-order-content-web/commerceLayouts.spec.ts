@@ -6,24 +6,24 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
-import {liferayConfig} from '../../liferay.config';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import {waitForAlert} from '../../utils/waitForAlert';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {commerceReturnSetUp} from './utils/commerce';
-import {customFormatDate, getDateCustomFormat} from './utils/date';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../../liferay.config';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {commerceReturnSetUp} from '../utils/commerce';
+import {customFormatDate, getDateCustomFormat} from '../utils/date';
 
 export const test = mergeTests(
 	apiHelpersTest,

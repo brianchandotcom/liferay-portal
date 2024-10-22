@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
+import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

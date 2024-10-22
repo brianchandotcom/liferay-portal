@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import performLogin, {performLogout} from '../../utils/performLogin';
-import {commerceReturnSetUp, miniumSetUp} from './utils/commerce';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import performLogin, {performLogout} from '../../../utils/performLogin';
+import {commerceReturnSetUp, miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,

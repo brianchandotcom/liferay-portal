@@ -5,18 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	accountsPagesTest,

@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

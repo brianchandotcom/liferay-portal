@@ -5157,10 +5157,10 @@ public class DataFactory {
 		objectDefinitionModel.setUserName(_SAMPLE_USER_NAME);
 		objectDefinitionModel.setCreateDate(new Date());
 		objectDefinitionModel.setModifiedDate(new Date());
-		objectDefinitionModel.setObjectFolderId(objectFolderId);
 
 		// Other field
 
+		objectDefinitionModel.setObjectFolderId(objectFolderId);
 		objectDefinitionModel.setActive(true);
 		objectDefinitionModel.setLabel(externalReferenceCode);
 		objectDefinitionModel.setModifiable(modifiable);

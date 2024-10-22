@@ -3521,10 +3521,6 @@ public class ObjectEntryLocalServiceImpl
 			return GetterUtil.getInteger(object);
 		}
 		else if (sqlType == Types.VARCHAR) {
-			if (object == null) {
-				return StringPool.BLANK;
-			}
-
 			return object;
 		}
 

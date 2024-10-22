@@ -154,7 +154,7 @@ test(
 );
 
 test(
-	'Change delta to a higher value when on last page',
+	'Message Boards Admin: Change delta to a higher value when on last page',
 	{tag: '@LPD-37727'},
 	async ({apiHelpers, messageBoardsPage, page, site}) => {
 		for (let i = 0; i < 5; i++) {
@@ -190,7 +190,7 @@ test(
 );
 
 test(
-	'Change delta to a higher value when on last page',
+	'Message Boards Widget: Change delta to a higher value when on last page',
 	{tag: '@LPD-39570'},
 	async ({apiHelpers, messageBoardsWidgetPage, page, site}) => {
 		for (let i = 0; i < 5; i++) {

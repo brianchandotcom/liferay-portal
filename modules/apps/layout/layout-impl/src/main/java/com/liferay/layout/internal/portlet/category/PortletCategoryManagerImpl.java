@@ -445,9 +445,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				JSONUtil.put(
 					"embedded",
 					() -> {
-						if (fragmentEntryLinksPortletNames.contains(
+						if (deletedFragmentEntryLinksPortletNames.contains(
 								portlet.getPortletId()) ||
-							deletedFragmentEntryLinksPortletNames.contains(
+							fragmentEntryLinksPortletNames.contains(
 								portlet.getPortletId())) {
 
 							return false;

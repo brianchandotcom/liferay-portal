@@ -203,6 +203,7 @@ const ActivableTopperEmpty = ({
 							origin: ITEM_ACTIVATION_ORIGINS.layout,
 						});
 					},
+					onFocus: (event) => event.stopPropagation(),
 					onMouseLeave: (event) => {
 						event.stopPropagation();
 

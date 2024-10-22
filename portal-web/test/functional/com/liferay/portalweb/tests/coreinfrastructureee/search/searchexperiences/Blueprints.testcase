@@ -4896,6 +4896,11 @@ definition {
 			key_linkText = "Learn how",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
+		Click(
+			key_linkContext = "portlet-configuration",
+			key_linkText = "Learn how",
+			locator1 = "Blueprints#DOC_LINK_GENERIC");
+
 		SelectWindow(value1 = "Using a Search Blueprint on a Search Page - Liferay Learn");
 	}
 

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -177,6 +178,19 @@ public class KaleoServiceUpgradeStepRegistrator
 		registry.register(
 			"4.0.0", "4.0.1",
 			new DDLFormRecordToDDMFormInstanceRecordUpgradeClassNames());
+
+		registry.register(
+			"4.0.1", "4.1.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"KaleoDefinition", "kaleoDefinitionId"}
+					};
+				}
+
+			});
 	}
 
 }

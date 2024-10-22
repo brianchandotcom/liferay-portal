@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 
+import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
@@ -18,6 +19,8 @@ import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFor
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminFieldSetDisplayContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -50,6 +53,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -136,6 +141,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
 		String currentTab = ParamUtil.getString(
 			renderRequest, "currentTab", "forms");
 
@@ -158,6 +166,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmStorageAdapterRegistry, _ddmStructureLocalService,
 					_ddmStructureService, _jsonFactory, _npmResolver,
 					_objectDefinitionLocalService, _portal));
+
+			httpServletRequest.setAttribute(
+				CTTimelineKeys.CLASS_NAME, DDMStructure.class.getName());
 		}
 		else {
 			renderRequest.setAttribute(
@@ -178,6 +189,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmStorageAdapterRegistry, _ddmStructureLocalService,
 					_ddmStructureService, _jsonFactory, _npmResolver,
 					_objectDefinitionLocalService, _portal));
+
+			httpServletRequest.setAttribute(
+				CTTimelineKeys.CLASS_NAME, DDMFormInstance.class.getName());
 		}
 	}
 

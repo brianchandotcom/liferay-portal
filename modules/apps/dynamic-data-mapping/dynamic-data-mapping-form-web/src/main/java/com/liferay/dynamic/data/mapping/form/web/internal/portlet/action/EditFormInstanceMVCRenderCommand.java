@@ -5,13 +5,17 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,6 +42,17 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 			"com.liferay.dynamic.data.mapping.form.web#" +
 				"EditFormInstanceMVCRenderCommand#render",
 			true);
+
+		long formInstanceId = ParamUtil.getLong(
+			renderRequest, "formInstanceId");
+
+		if (formInstanceId > 0) {
+			HttpServletRequest httpServletRequest =
+				portal.getHttpServletRequest(renderRequest);
+
+			httpServletRequest.setAttribute(
+				CTTimelineKeys.CLASS_PK, formInstanceId);
+		}
 
 		return "/admin/edit_form_instance.jsp";
 	}

@@ -298,8 +298,8 @@ public class ExportTaskResourceTest {
 
 				throw new AssertionError(
 					StringBundler.concat(
-						"Import task for ", classNamePartsMap.get("className"),
-						" has FAILED with an error:\n",
+						"Unable to import task for ",
+						classNamePartsMap.get("className"), ":\n",
 						importTask.getErrorMessage()));
 			}
 		}

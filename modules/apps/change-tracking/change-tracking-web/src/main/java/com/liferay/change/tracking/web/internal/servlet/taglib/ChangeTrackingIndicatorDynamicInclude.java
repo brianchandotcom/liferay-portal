@@ -703,12 +703,18 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
-			data.put(
-				"timelineItemsURL",
-				StringBundler.concat(
-					_portal.getPortalURL(themeDisplay),
-					"/o/change-tracking-rest/v1.0/ct-entries/history?",
-					"classNameId=", classNameId, "&classPK=", classPK));
+
+			String timelineItemsURL = StringBundler.concat(
+				_portal.getPortalURL(themeDisplay),
+				"/o/change-tracking-rest/v1.0/ct-entries/history?",
+				"classNameId=", classNameId);
+
+			if (classPK != 0) {
+				timelineItemsURL = StringBundler.concat(
+					timelineItemsURL, "&classPK=", classPK);
+			}
+
+			data.put("timelineItemsURL", timelineItemsURL);
 
 			CTDisplayRenderer<?> ctDisplayRenderer =
 				_ctDisplayRendererRegistry.getCTDisplayRenderer(classNameId);

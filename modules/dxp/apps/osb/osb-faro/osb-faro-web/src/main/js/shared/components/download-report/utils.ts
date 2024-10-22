@@ -4,19 +4,21 @@ import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {DEFAULT_RANGE_SELECTORS} from 'shared/hooks/useQueryRangeSelectors';
 import {INDIVIDUALS} from 'shared/util/router';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {RangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
 
-export function formatDate(date) {
+export function formatDate(date: string | Date) {
 	return moment(date).format(DEFAULT_DATE_FORMAT);
 }
 
 export enum CSVType {
-	Individual = 'individual',
 	Blog = 'blog',
 	Document = 'document',
-	Form = 'form',
-	Journal = 'journal',
 	Event = 'event',
+	Form = 'form',
+	Individual = 'individual',
+	Journal = 'journal',
+	Membership = 'membership',
 	Page = 'page'
 }
 
@@ -24,17 +26,18 @@ export function useDownloadCSV({
 	assetId,
 	assetType,
 	individualId,
+	segmentId,
 	type
 }: {
 	assetId?: string;
 	assetType?: string;
 	individualId?: string;
+	segmentId?: string;
 	type: CSVType;
 }) {
 	const {channelId, groupId, title} = useParams();
 
-	return initialRangeSelectors => {
-		const rangeSelectors = initialRangeSelectors || DEFAULT_RANGE_SELECTORS;
+	return (rangeSelectors: RangeSelectors = DEFAULT_RANGE_SELECTORS) => {
 		const searchParams = new URLSearchParams(location.search);
 
 		const field = searchParams.get('field');
@@ -51,33 +54,31 @@ export function useDownloadCSV({
 			url += `&rangeKey=${rangeSelectors.rangeKey}`;
 		}
 
-		if (assetId) {
-			url += `&assetId=${encodeURIComponent(assetId)}`;
-		}
+		const optionalParams = {
+			assetId: assetId && encodeURIComponent(assetId),
+			assetTitle: title,
+			assetType,
+			individualId,
+			orderByFields:
+				field && sortOrder
+					? encodeURIComponent(
+							JSON.stringify(
+								buildOrderByFields(
+									{field, sortOrder},
+									INDIVIDUALS
+								)
+							)
+					  )
+					: null,
+			query,
+			segmentId
+		};
 
-		if (title) {
-			url += `&assetTitle=${title}`;
-		}
-
-		if (assetType) {
-			url += `&assetType=${assetType}`;
-		}
-
-		if (individualId) {
-			url += `&individualId=${individualId}`;
-		}
-
-		if (field && sortOrder) {
-			const orderByFields = JSON.stringify(
-				buildOrderByFields({field, sortOrder}, INDIVIDUALS)
-			);
-
-			url += `&orderByFields=${encodeURIComponent(orderByFields)}`;
-		}
-
-		if (query) {
-			url += `&query=${query}`;
-		}
+		Object.entries(optionalParams).forEach(([key, value]) => {
+			if (value) {
+				url += `&${key}=${value}`;
+			}
+		});
 
 		return url;
 	};

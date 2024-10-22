@@ -1,6 +1,8 @@
 import sendRequest from 'shared/util/request';
 import {CSVType} from 'shared/components/download-report/utils';
 
+export const fetchCSV = (url: string) => fetch(url);
+
 export const fetchCount = ({
 	groupId,
 	type,

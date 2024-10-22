@@ -826,24 +826,23 @@ export class PageEditorPage {
 		await selectElement(tabElement);
 	}
 
-	async goToWidgetConfiguration(
-		layout: Layout,
-		site: Site,
-		widgetId: string
-	) {
-		await this.goto(layout, site.friendlyUrlPath);
+	async goToWidgetConfiguration(widgetId: string) {
+		if (await this.page.evaluate(() => Liferay.FeatureFlags['32075'])) {
+			await this.clickFragmentOption(widgetId, 'Configuration');
+		}
+		else {
+			const topper = this.getTopper(widgetId);
 
-		const topper = this.getTopper(widgetId);
+			await topper.hover();
 
-		await topper.hover();
+			await expect(topper.locator('.portlet-options')).toBeVisible();
 
-		await expect(topper.locator('.portlet-options')).toBeVisible();
+			await topper.locator('.portlet-options').click();
 
-		await topper.locator('.portlet-options').click();
-
-		await this.page
-			.getByRole('menuitem', {exact: true, name: 'Configuration'})
-			.click();
+			await this.page
+				.getByRole('menuitem', {exact: true, name: 'Configuration'})
+				.click();
+		}
 	}
 
 	async hideFragment(fragmentId: string, isDesktop = true) {

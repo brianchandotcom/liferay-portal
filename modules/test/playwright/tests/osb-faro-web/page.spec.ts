@@ -263,11 +263,9 @@ test(
 				siteName,
 			});
 
-			await pageEditorPage.goToWidgetConfiguration(
-				layout,
-				site,
-				widgetId
-			);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.goToWidgetConfiguration(widgetId);
 
 			await assetPublisherPage.changeAssetSelection('Dynamic');
 

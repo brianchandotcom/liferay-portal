@@ -20,16 +20,16 @@ if (Validator.isNotNull(assetCategoryIdsString)) {
 	categoryIds = jsonSerializer.serializeDeep(assetCategoryIdsString.split(StringPool.COMMA));
 }
 
+String accountIds = "[]";
+
 AccountEntry accountEntry = null;
 
 if (commerceContext != null) {
 	accountEntry = commerceContext.getAccountEntry();
-}
 
-String accountIds = "[]";
-
-if (accountEntry != null) {
-	accountIds = jsonSerializer.serializeDeep(new Long[] {accountEntry.getAccountEntryId()});
+	if (accountEntry != null) {
+		accountIds = jsonSerializer.serializeDeep(new Long[] {accountEntry.getAccountEntryId()});
+	}
 }
 %>
 

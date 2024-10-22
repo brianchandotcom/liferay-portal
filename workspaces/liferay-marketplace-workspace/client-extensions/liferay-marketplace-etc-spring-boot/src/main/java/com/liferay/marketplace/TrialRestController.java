@@ -7,7 +7,6 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
-import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
@@ -104,12 +103,8 @@ public class TrialRestController extends BaseRestController {
 	public void postNotifyEnd(@PathVariable long orderId) throws Exception {
 		Order order = _marketplaceService.getOrder(orderId);
 
-		UserAccountResource userAccountResource = _getUserAccountResource();
-
-		UserAccount userAccount =
-			userAccountResource.getUserAccountByEmailAddress(
-				order.getCreatorEmailAddress());
-
+		UserAccount userAccount = _marketplaceService.getUserAccount(
+			order.getCreatorEmailAddress());
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
@@ -176,6 +171,19 @@ public class TrialRestController extends BaseRestController {
 		_marketplaceService.updateOrder(
 			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
+		UserAccount userAccount = _marketplaceService.getUserAccount(
+			modelDTOOrderJSONObject.getString("creatorEmailAddress"));
+
+		_postNotificationQueueEntry(
+			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+			"TRY-IT-NOW-PROCESSING-ORDER",
+			new HashMapBuilder<String, Object>().put(
+				"[%COMMERCEORDER_AUTHOR_FIRST_NAME%]",
+				userAccount.getGivenName()
+			).put(
+				"[%COMMERCEORDER_ID%]", String.valueOf(orderId)
+			).build());
+
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
 			orderId);
@@ -235,10 +243,7 @@ public class TrialRestController extends BaseRestController {
 				"%EMAIL%",
 				modelDTOOrderJSONObject.getString("creatorEmailAddress")
 			).put(
-				"%NAME%",
-				jwt.getClaim(
-					"username"
-				).toString()
+				"%NAME%", userAccount.getGivenName()
 			).put(
 				"%URL%", portalInstance.getVirtualHost()
 			).build());
@@ -313,21 +318,6 @@ public class TrialRestController extends BaseRestController {
 			_getPortalInstanceResource();
 
 		return portalInstanceResource.getPortalInstancesPage(true);
-	}
-
-	private UserAccountResource _getUserAccountResource() throws Exception {
-		URL liferayDXPURL = new URL(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
-
-		return UserAccountResource.builder(
-		).endpoint(
-			liferayDXPURL
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
-		).build();
 	}
 
 	private void _postNotificationQueueEntry(

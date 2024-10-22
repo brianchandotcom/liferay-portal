@@ -6,8 +6,10 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
+import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
@@ -208,6 +210,12 @@ public class MarketplaceService extends BaseRestController {
 		).build();
 	}
 
+	public UserAccount getUserAccount(String emailAddress) throws Exception {
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		return userAccountResource.getUserAccountByEmailAddress(emailAddress);
+	}
+
 	public void updateOrder(
 			Map<String, ?> customFields, long orderId, int orderStatus)
 		throws Exception {
@@ -252,6 +260,18 @@ public class MarketplaceService extends BaseRestController {
 					"headless-server")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+	}
+
+	private UserAccountResource _getUserAccountResource() throws Exception {
+		return UserAccountResource.builder(
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).header(
+			org.apache.http.HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server")
 		).build();
 	}
 

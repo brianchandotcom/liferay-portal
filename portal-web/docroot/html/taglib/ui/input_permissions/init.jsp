@@ -7,4 +7,5 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
+<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>

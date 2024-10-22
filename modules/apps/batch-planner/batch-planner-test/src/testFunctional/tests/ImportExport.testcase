@@ -707,6 +707,10 @@ definition {
 		task ("Then the import is triggered automatically at that time") {
 			JobScheduler.openJobSchedulerAdmin();
 
+			while ((IsElementNotPresent(key_rowEntry = "Scheduled Object Definition Import", key_rowStatus = "Success", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_STATUS")) && (maxIterations = "15")) {
+				Refresh();
+			}
+
 			AssertElementPresent(
 				key_rowEntry = "Scheduled Object Definition Import",
 				key_rowStatus = "Success",

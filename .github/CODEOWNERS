@@ -1,52 +1,52 @@
 modules/apps/accessibility/    @liferay-platform-experience
 modules/apps/account/
-modules/apps/adaptive-media/
+modules/apps/adaptive-media/    @liferay-content-management
 modules/apps/address/
 modules/apps/ai-creator/
 modules/apps/analytics/
-modules/apps/announcements/
+modules/apps/announcements/    @liferay-content-management
 modules/apps/application-list/
 modules/apps/archived/
-modules/apps/asset-tags-validator/
+modules/apps/asset-tags-validator/    @liferay-content-management
 modules/apps/asset/
 modules/apps/batch-engine/
 modules/apps/batch-planner/
 modules/apps/bean-portlet/
-modules/apps/blogs/
-modules/apps/bookmarks/
-modules/apps/bulk/
+modules/apps/blogs/    @liferay-content-management
+modules/apps/bookmarks/    @liferay-content-management
+modules/apps/bulk/    @liferay-content-management
 modules/apps/calendar/
 modules/apps/captcha/
 modules/apps/change-tracking/
 modules/apps/changeset/
 modules/apps/click-to-chat/
 modules/apps/client-extension/
-modules/apps/comment/
+modules/apps/comment/    @liferay-content-management
 modules/apps/commerce/    @liferay-commerce
 modules/apps/company/
 modules/apps/configuration-admin/
-modules/apps/connected-app/
+modules/apps/connected-app/    @liferay-content-management
 modules/apps/contacts/
-modules/apps/content-dashboard/
+modules/apps/content-dashboard/    @liferay-content-management
 modules/apps/cookies/
 modules/apps/cookies/cookies-banner-web/    @liferay-frontend
 modules/apps/counter/
 modules/apps/data-cleanup/
 modules/apps/data-engine/    @liferay-bpm
-modules/apps/depot/
+modules/apps/depot/    @liferay-content-management
 modules/apps/diff/
 modules/apps/digital-signature/
 modules/apps/dispatch/
-modules/apps/document-library-google-docs/
-modules/apps/document-library-opener/
-modules/apps/document-library/
+modules/apps/document-library-google-docs/    @liferay-content-management
+modules/apps/document-library-opener/    @liferay-content-management
+modules/apps/document-library/    @liferay-content-management
 modules/apps/dynamic-data-lists/    @liferay-bpm
 modules/apps/dynamic-data-mapping/    @liferay-bpm
 modules/apps/expando/
 modules/apps/export-import/
 modules/apps/external-reference/
 modules/apps/feature-flag/    @liferay-platform-experience
-modules/apps/flags/
+modules/apps/flags/    @liferay-content-management
 modules/apps/fragment/
 modules/apps/friendly-url/
 modules/apps/frontend-css/    @liferay-platform-experience
@@ -69,30 +69,30 @@ modules/apps/imageio-plugins/
 modules/apps/info/
 modules/apps/invitation/
 modules/apps/ip-geocoder/
-modules/apps/item-selector/
-modules/apps/journal/
+modules/apps/item-selector/    @liferay-content-management
+modules/apps/journal/    @liferay-content-management
 modules/apps/json-storage/
-modules/apps/knowledge-base/
+modules/apps/knowledge-base/    @liferay-content-management
 modules/apps/layout/
 modules/apps/learn/
 modules/apps/license-manager/
 modules/apps/list-type/
-modules/apps/locked-items/
+modules/apps/locked-items/    @liferay-content-management
 modules/apps/login/
 modules/apps/mail/
 modules/apps/map/
 modules/apps/marketplace/
-modules/apps/mentions/
-modules/apps/message-boards/
-modules/apps/microblogs/
+modules/apps/mentions/    @liferay-content-management
+modules/apps/message-boards/    @liferay-content-management
+modules/apps/microblogs/    @liferay-content-management
 modules/apps/microsoft-translator/
 modules/apps/mobile-device-rules/
 modules/apps/monitoring/
-modules/apps/my-subscriptions/
+modules/apps/my-subscriptions/    @liferay-content-management
 modules/apps/nested-portlets/
 modules/apps/normalizer/
 modules/apps/notification/
-modules/apps/notifications/
+modules/apps/notifications/    @liferay-content-management
 modules/apps/oauth-client/
 modules/apps/oauth2-provider/
 modules/apps/object/    @liferay-bpm
@@ -141,33 +141,33 @@ modules/apps/portlet-preferences/
 modules/apps/portlet/
 modules/apps/product-navigation/
 modules/apps/push-notifications/
-modules/apps/questions/
-modules/apps/ratings/
-modules/apps/reading-time/
+modules/apps/questions/    @liferay-content-management
+modules/apps/ratings/    @liferay-content-management
+modules/apps/reading-time/    @liferay-content-management
 modules/apps/redirect/
 modules/apps/release-feature-flag/    @liferay-platform-experience
-modules/apps/repository/
+modules/apps/repository/    @liferay-content-management
 modules/apps/roles/
 modules/apps/rss/
-modules/apps/saved-content/
+modules/apps/saved-content/    @liferay-content-management
 modules/apps/segments/
 modules/apps/server/
 modules/apps/service-component/
 modules/apps/shared-dependencies/
-modules/apps/sharing/
+modules/apps/sharing/    @liferay-content-management
 modules/apps/site-initializer/
 modules/apps/site-navigation/
 modules/apps/site/
-modules/apps/social/
+modules/apps/social/    @liferay-content-management
 modules/apps/staging/
 modules/apps/static/
 modules/apps/style-book/    @liferay-platform-experience
-modules/apps/subscription/
+modules/apps/subscription/    @liferay-content-management
 modules/apps/template/
 modules/apps/text-localizer/
-modules/apps/translation/
-modules/apps/trash/
-modules/apps/upload/
+modules/apps/translation/    @liferay-content-management
+modules/apps/trash/    @liferay-content-management
+modules/apps/upload/    @liferay-content-management
 modules/apps/user-associated-data/
 modules/apps/user-groups-admin/
 modules/apps/user/
@@ -175,7 +175,7 @@ modules/apps/users-admin/
 modules/apps/view-count/
 modules/apps/website/
 modules/apps/websocket/
-modules/apps/wiki/
+modules/apps/wiki/    @liferay-content-management
 modules/apps/words/
 modules/apps/xstream/
 modules/dxp/apps/akismet/
@@ -185,7 +185,7 @@ modules/dxp/apps/commerce-avalara/    @liferay-commerce
 modules/dxp/apps/commerce-demo-pack/    @liferay-commerce
 modules/dxp/apps/commerce-punchout/    @liferay-commerce
 modules/dxp/apps/commerce/    @liferay-commerce
-modules/dxp/apps/document-library-opener/
+modules/dxp/apps/document-library-opener/    @liferay-content-management
 modules/dxp/apps/enterprise-product-notification/
 modules/dxp/apps/frontend-theme/    @liferay-platform-experience
 modules/dxp/apps/multi-factor-authentication/
@@ -206,5 +206,5 @@ modules/dxp/apps/saml/
 modules/dxp/apps/scim/
 modules/dxp/apps/search-experiences/
 modules/dxp/apps/segments/
-modules/dxp/apps/sharepoint-rest/
-modules/dxp/apps/sharepoint-soap/
+modules/dxp/apps/sharepoint-rest/    @liferay-content-management
+modules/dxp/apps/sharepoint-soap/    @liferay-content-management

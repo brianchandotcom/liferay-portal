@@ -8,6 +8,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.commerce.checkout.web.internal.util.CommerceOrderUtil;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -177,6 +178,10 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isCommerceOrderMultishipping() {
+		return CommerceOrderUtil.isCommerceOrderMultishipping(_commerceOrder);
 	}
 
 	public boolean isShippingUsedAsBilling() throws PortalException {

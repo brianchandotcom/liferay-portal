@@ -76,7 +76,14 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		<c:if test="<%= supportedActions.contains(ActionKeys.VIEW) %>">
 			<p>
 				<label class="control-label" for="<%= namespace %>inputPermissionsViewRole">
-					<liferay-ui:message key="viewable-by" />
+					<c:choose>
+						<c:when test='<%= supportedActions.contains(ActionKeys.DOWNLOAD) && FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
+							<liferay-ui:message key="viewable-and-downloadable-by" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="viewable-by" />
+						</c:otherwise>
+					</c:choose>
 				</label>
 
 				<select class="form-control" id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= uniqueNamespace %>updatePermissionsView();">

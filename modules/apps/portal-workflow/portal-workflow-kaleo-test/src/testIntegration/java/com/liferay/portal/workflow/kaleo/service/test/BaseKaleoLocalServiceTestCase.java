@@ -96,16 +96,17 @@ public abstract class BaseKaleoLocalServiceTestCase {
 
 		return addKaleoDefinition(
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString());
+			StringUtil.randomString(), StringUtil.randomString());
 	}
 
 	protected KaleoDefinition addKaleoDefinition(
-			String name, String title, String description)
+			String externalReferenceCode, String name, String title,
+			String description)
 		throws IOException, PortalException {
 
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.addKaleoDefinition(
-				name, title, description,
+				externalReferenceCode, name, title, description,
 				_read("legal-marketing-workflow-definition.xml"),
 				StringPool.BLANK, 1, serviceContext);
 
@@ -268,6 +269,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 		throws IOException, PortalException {
 
 		kaleoDefinition = _kaleoDefinitionLocalService.updatedKaleoDefinition(
+			kaleoDefinition.getExternalReferenceCode(),
 			kaleoDefinition.getKaleoDefinitionId(), StringUtil.randomString(),
 			StringUtil.randomString(), kaleoDefinition.getContent(),
 			serviceContext);

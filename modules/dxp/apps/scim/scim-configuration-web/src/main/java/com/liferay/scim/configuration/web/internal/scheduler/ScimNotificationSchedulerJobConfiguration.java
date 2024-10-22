@@ -64,58 +64,7 @@ public class ScimNotificationSchedulerJobConfiguration
 						_oAuth2ApplicationLocalService.getOAuth2Applications(
 							company.getCompanyId())) {
 
-					if (!Objects.equals(
-							ScimClientUtil.generateScimClientId(
-								oAuth2Application.getName()),
-							oAuth2Application.getClientId())) {
-
-						continue;
-					}
-
-					List<OAuth2Authorization> applicationOAuth2Authorizations =
-						_oAuth2AuthorizationLocalService.
-							getOAuth2Authorizations(
-								oAuth2Application.getOAuth2ApplicationId(), 0,
-								1,
-								OrderByComparatorFactoryUtil.create(
-									"OAuth2Authorization",
-									"accessTokenExpirationDate", "asc"));
-
-					if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
-						continue;
-					}
-
-					OAuth2Authorization applicationOAuth2Authorization =
-						applicationOAuth2Authorizations.get(0);
-
-					Date accessTokenExpirationDate =
-						applicationOAuth2Authorization.
-							getAccessTokenExpirationDate();
-
-					ExpandoBridge expandoBridge =
-						applicationOAuth2Authorization.getExpandoBridge();
-
-					if (!isSendNotification(
-							accessTokenExpirationDate,
-							System.currentTimeMillis(),
-							(Date)expandoBridge.getAttribute(
-								"lastNotificationDate", false))) {
-
-						continue;
-					}
-
-					try {
-						_sendNotification(
-							accessTokenExpirationDate, company.getCompanyId());
-
-						expandoBridge.setAttribute(
-							"lastNotificationDate", new Date(), false);
-					}
-					catch (Exception exception) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(exception);
-						}
-					}
+					_sendNotification(oAuth2Application);
 				}
 			});
 	}
@@ -207,6 +156,56 @@ public class ScimNotificationSchedulerJobConfiguration
 				"scim-access-token-email-subject"));
 
 		subscriptionSender.flushNotifications();
+	}
+
+	private void _sendNotification(OAuth2Application oAuth2Application) {
+		if (!Objects.equals(
+				ScimClientUtil.generateScimClientId(
+					oAuth2Application.getName()),
+				oAuth2Application.getClientId())) {
+
+			return;
+		}
+
+		List<OAuth2Authorization> applicationOAuth2Authorizations =
+			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+				oAuth2Application.getOAuth2ApplicationId(), 0, 1,
+				OrderByComparatorFactoryUtil.create(
+					"OAuth2Authorization", "accessTokenExpirationDate", "asc"));
+
+		if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
+			return;
+		}
+
+		OAuth2Authorization applicationOAuth2Authorization =
+			applicationOAuth2Authorizations.get(0);
+
+		Date accessTokenExpirationDate =
+			applicationOAuth2Authorization.getAccessTokenExpirationDate();
+
+		ExpandoBridge expandoBridge =
+			applicationOAuth2Authorization.getExpandoBridge();
+
+		if (!isSendNotification(
+				accessTokenExpirationDate, System.currentTimeMillis(),
+				(Date)expandoBridge.getAttribute(
+					"lastNotificationDate", false))) {
+
+			return;
+		}
+
+		try {
+			_sendNotification(
+				accessTokenExpirationDate, oAuth2Application.getCompanyId());
+
+			expandoBridge.setAttribute(
+				"lastNotificationDate", new Date(), false);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

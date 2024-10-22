@@ -113,6 +113,7 @@ export default function Cart(basePath) {
 			AJAX.GET(
 				resolveCartsPath(basePath, cartId) + '?nestedFields=cartItems'
 			),
+
 		getCartDeliveryTermsPage: (cartId) =>
 			AJAX.GET(resolveCartsPath(basePath, cartId) + '/delivery-terms'),
 

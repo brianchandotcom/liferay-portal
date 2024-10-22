@@ -46,7 +46,7 @@ export const DownloadStaticCSVReport: React.FC<IDownloadStaticCSVReport> = ({
 
 						try {
 							const url = generateURL();
-							const response = await fetch(url);
+							const response = await API.csv.fetchCSV(url);
 
 							if (!response.ok) {
 								throw new Error();

@@ -41,6 +41,7 @@ import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
 import Cookie from './util/cookie/cookie';
 import fetch from './util/fetch.es';
+import findEventSourceNode from './util/find_event_source_node';
 import focusFormField from './util/focus_form_field';
 import getFormElement from './util/form/get_form_element.es';
 import objectToFormData from './util/form/object_to_form_data.es';
@@ -248,6 +249,7 @@ Liferay.Util.escape = (string) => {
 };
 Liferay.Util.escapeHTML = escapeHTML;
 Liferay.Util.fetch = fetch;
+Liferay.Util.findEventSourceNode = findEventSourceNode;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {focusFormField} from 'frontend-js-web'`

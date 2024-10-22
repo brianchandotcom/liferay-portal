@@ -5085,6 +5085,7 @@ public class DataFactory {
 		notificationTemplateModel.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplateModel.setName("Commerce Order Notification");
+		notificationTemplateModel.setRecipientType("email");
 		notificationTemplateModel.setSystem(false);
 		notificationTemplateModel.setType("email");
 

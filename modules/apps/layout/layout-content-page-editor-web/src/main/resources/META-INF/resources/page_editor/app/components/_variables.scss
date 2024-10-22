@@ -16,6 +16,8 @@ $product-menu-width: 320px;
 $dragSourceZIndex: 977;
 $translationStatusListZIndex: 977;
 $portletTopperZIndex: 986;
+$portletTopperActiveZIndex: $portletTopperZIndex + 1;
+$portletTopperHoveredZIndex: $portletTopperActiveZIndex + 1;
 $sidebarZIndex: 988;
 $keyboardMovementPreviewZIndex: 1051;
 $alloyEditorZIndex: 992;

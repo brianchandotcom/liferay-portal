@@ -5166,7 +5166,7 @@ public class DataFactory {
 				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
 				"default-locale=\"en_US\"><Label language-id=\"en_US\">",
 				"Commerce Order</Label></root>"));
-		objectDefinitionModel.setModifiable(true);
+		objectDefinitionModel.setModifiable(false);
 		objectDefinitionModel.setName("CommerceOrder");
 		objectDefinitionModel.setPluralLabel(
 				StringBundler.concat(

@@ -44,8 +44,8 @@ public class
 			actionRequest, "layoutPageTemplateCollectionsIds");
 		long[] layoutPageTemplateEntriesIds = ParamUtil.getLongValues(
 			actionRequest, "layoutPageTemplateEntriesIds");
-		long targetLayoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "targetLayoutPageTemplateCollectionId");
+		long layoutParentPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutParentPageTemplateCollectionId");
 
 		try {
 			for (long selectedLayoutPageTemplateCollectionId :
@@ -54,7 +54,7 @@ public class
 				_layoutPageTemplateCollectionService.
 					moveLayoutPageTemplateCollection(
 						selectedLayoutPageTemplateCollectionId,
-						targetLayoutPageTemplateCollectionId);
+						layoutParentPageTemplateCollectionId);
 			}
 
 			for (long selectedLayoutPageTemplateEntryId :
@@ -62,7 +62,7 @@ public class
 
 				_layoutPageTemplateEntryService.moveLayoutPageTemplateEntry(
 					selectedLayoutPageTemplateEntryId,
-					targetLayoutPageTemplateCollectionId);
+					layoutParentPageTemplateCollectionId);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

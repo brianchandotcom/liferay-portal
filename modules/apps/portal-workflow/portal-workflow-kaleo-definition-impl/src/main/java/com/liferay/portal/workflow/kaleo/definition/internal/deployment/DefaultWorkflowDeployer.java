@@ -175,12 +175,12 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 		if (kaleoDefinition == null) {
 			kaleoDefinition = _kaleoDefinitionService.addKaleoDefinition(
-				name, title, definition.getDescription(),
+				null, name, title, definition.getDescription(),
 				definition.getContent(), scope, 1, serviceContext);
 		}
 		else {
 			kaleoDefinition = _kaleoDefinitionService.updateKaleoDefinition(
-				kaleoDefinition.getKaleoDefinitionId(), title,
+				kaleoDefinition.getExternalReferenceCode(), kaleoDefinition.getKaleoDefinitionId(), title,
 				definition.getDescription(), definition.getContent(),
 				serviceContext);
 		}

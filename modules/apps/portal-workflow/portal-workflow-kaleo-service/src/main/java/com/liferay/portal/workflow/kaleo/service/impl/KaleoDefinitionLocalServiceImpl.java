@@ -13,8 +13,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
+import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionExternalReferenceCodeException;
+import com.liferay.portal.workflow.kaleo.exception.KaleoDefinitionExternalReferenceCodeException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
@@ -105,16 +108,23 @@ public class KaleoDefinitionLocalServiceImpl
 
 	@Override
 	public KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			String scope, int version, ServiceContext serviceContext)
+			String externalReferenceCode, String name, String title,
+			String description, String content, String scope, int version,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Kaleo definition
 
 		long kaleoDefinitionId = counterLocalService.increment();
 
+		_validateExternalReferenceCode(
+			externalReferenceCode, kaleoDefinitionId,
+			serviceContext.getCompanyId());
+
 		KaleoDefinition kaleoDefinition = kaleoDefinitionPersistence.create(
 			kaleoDefinitionId);
+
+		kaleoDefinition.setExternalReferenceCode(externalReferenceCode);
 
 		kaleoDefinition.setGroupId(
 			_staging.getLiveGroupId(serviceContext.getScopeGroupId()));
@@ -340,11 +350,15 @@ public class KaleoDefinitionLocalServiceImpl
 
 	@Override
 	public KaleoDefinition updatedKaleoDefinition(
-			long kaleoDefinitionId, String title, String description,
-			String content, ServiceContext serviceContext)
+			String externalReferenceCode, long kaleoDefinitionId, String title,
+			String description, String content, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Kaleo definition
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, kaleoDefinitionId,
+			serviceContext.getCompanyId());
 
 		User user = _userLocalService.getUser(
 			serviceContext.getGuestOrUserId());
@@ -353,6 +367,7 @@ public class KaleoDefinitionLocalServiceImpl
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
+		kaleoDefinition.setExternalReferenceCode(externalReferenceCode);
 		kaleoDefinition.setGroupId(
 			_staging.getLiveGroupId(serviceContext.getScopeGroupId()));
 		kaleoDefinition.setUserId(user.getUserId());
@@ -385,6 +400,34 @@ public class KaleoDefinitionLocalServiceImpl
 
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long kaleoDefinitionId,
+			long companyId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
+
+		if ((kaleoDefinition != null) &&
+			(kaleoDefinition.getKaleoDefinitionId() != kaleoDefinitionId)) {
+
+			throw new DuplicateKaleoDefinitionExternalReferenceCodeException();
+		}
+
+		char[] externalReferenceCodeCharArray =
+			externalReferenceCode.toCharArray();
+
+		if (externalReferenceCodeCharArray.length > 75) {
+			throw new KaleoDefinitionExternalReferenceCodeException.
+				MustBeLessThan75Characters();
+		}
 	}
 
 	@Reference

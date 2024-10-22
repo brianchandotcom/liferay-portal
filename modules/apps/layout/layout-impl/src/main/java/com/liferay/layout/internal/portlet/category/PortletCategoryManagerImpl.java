@@ -15,6 +15,7 @@ import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -30,18 +31,24 @@ import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -53,6 +60,7 @@ import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -163,6 +171,67 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		_serviceTrackerMap.close();
 	}
 
+	private String _getConfigurationTemplatesURL(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest,
+					PortletConfigurationApplicationType.PortletConfiguration.
+						CLASS_NAME,
+					PortletProvider.Action.VIEW)
+			).setMVCPath(
+				"/edit_configuration_templates.jsp"
+			).setRedirect(
+				() -> {
+					String redirect = ParamUtil.getString(
+						httpServletRequest, "redirect");
+
+					if (Validator.isNotNull(redirect)) {
+						return redirect;
+					}
+
+					return null;
+				}
+			).setPortletResource(
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getId();
+				}
+			).setParameter(
+				"portletConfiguration", true
+			).setParameter(
+				"returnToFullPageURL",
+				() -> {
+					String returnToFullPageURL = ParamUtil.getString(
+						httpServletRequest, "returnToFullPageURL");
+
+					if (Validator.isNotNull(returnToFullPageURL)) {
+						return returnToFullPageURL;
+					}
+
+					return null;
+				}
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private Set<String> _getFragmentEntryLinksPortletNames(
 		boolean deleted, ThemeDisplay themeDisplay) {
 
@@ -236,6 +305,46 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		}
 
 		return layoutDecodedPortletNames;
+	}
+
+	private String _getPermissionsURL(HttpServletRequest httpServletRequest) {
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest,
+					PortletConfigurationApplicationType.PortletConfiguration.
+						CLASS_NAME,
+					PortletProvider.Action.VIEW)
+			).setMVCPath(
+				"/edit_permissions.jsp"
+			).setPortletResource(
+				portletDisplay.getId()
+			).setParameter(
+				"portletConfiguration", true
+			).setParameter(
+				"resourcePrimKey",
+				PortletPermissionUtil.getPrimaryKey(
+					themeDisplay.getPlid(), portletDisplay.getId())
+			).setParameter(
+				"returnToFullPageURL",
+				ParamUtil.getString(httpServletRequest, "returnToFullPageURL")
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private Map<String, JSONObject> _getPortletCategoryJSONObjectsMap(
@@ -443,6 +552,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		for (Portlet portlet : portlets) {
 			jsonArray.put(
 				JSONUtil.put(
+					"configurationTemplatesURL",
+					_getConfigurationTemplatesURL(httpServletRequest)
+				).put(
 					"embedded",
 					() -> {
 						if (deletedFragmentEntryLinksPortletNames.contains(
@@ -472,6 +584,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 					highlightedPortletIds.contains(portlet.getPortletId())
 				).put(
 					"instanceable", portlet.isInstanceable()
+				).put(
+					"permissionsURL", _getPermissionsURL(httpServletRequest)
 				).put(
 					"portletId", portlet.getPortletId()
 				).put(

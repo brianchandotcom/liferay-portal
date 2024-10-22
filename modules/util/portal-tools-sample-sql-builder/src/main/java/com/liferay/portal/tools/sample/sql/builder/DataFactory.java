@@ -5164,6 +5164,7 @@ public class DataFactory {
 
 		// Other field
 
+		objectDefinitionModel.setDescriptionObjectFieldId(0);
 		objectDefinitionModel.setObjectFolderId(objectFolderId);
 		objectDefinitionModel.setTitleObjectFieldId(_counter.get());
 		objectDefinitionModel.setActive(true);

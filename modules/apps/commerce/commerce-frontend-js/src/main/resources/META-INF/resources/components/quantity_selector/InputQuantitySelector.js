@@ -240,6 +240,15 @@ const InputQuantitySelector = forwardRef(
 			};
 		}, [handleUOMChanged, namespace]);
 
+		useEffect(() => {
+			setInputProperties((prevState) => {
+				return {
+					...prevState,
+					quantity,
+				};
+			});
+		}, [quantity]);
+
 		return (
 			<ClayForm.Group
 				className={classNames({

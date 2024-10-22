@@ -64,32 +64,51 @@ const createRequestData = (
 	const data: Array<IOrderItem> = [];
 
 	items.forEach((orderItem) => {
-		for (const [deliveryGroupId, orderItemConf] of Object.entries(
-			orderItem.deliveryGroups || {}
-		)) {
-			let deliveryGroup = null;
+		if (deliveryGroups.length) {
+			for (const [deliveryGroupId, orderItemConf] of Object.entries(
+				orderItem.deliveryGroups || {}
+			)) {
+				let deliveryGroup = null;
 
-			if (0 === Number(deliveryGroupId)) {
-				deliveryGroup = deliveryGroups[0];
-			}
-			else {
-				deliveryGroup = deliveryGroups.find((item) => {
-					return item.id === Number(deliveryGroupId);
-				});
-			}
+				if (0 === Number(deliveryGroupId)) {
+					deliveryGroup = deliveryGroups[0];
+				}
+				else {
+					deliveryGroup = deliveryGroups.find((item) => {
+						return item.id === Number(deliveryGroupId);
+					});
+				}
 
-			if (deliveryGroup && orderItemConf.quantity > 0) {
-				data.push({
-					deliveryGroup: deliveryGroup.name,
-					id: orderItemConf.orderItemId,
-					options: orderItemConf.options,
-					quantity: orderItemConf.quantity,
-					replacedSkuId: orderItemConf.replacedSkuId,
-					requestedDeliveryDate: deliveryGroup.deliveryDate,
-					shippingAddressId: deliveryGroup.addressId,
-					skuId: orderItemConf.skuId,
-					skuUnitOfMeasure: orderItemConf.skuUnitOfMeasure,
-				});
+				if (deliveryGroup && orderItemConf.quantity > 0) {
+					data.push({
+						deliveryGroup: deliveryGroup.name,
+						id: orderItemConf.orderItemId,
+						options: orderItemConf.options,
+						quantity: orderItemConf.quantity,
+						replacedSkuId: orderItemConf.replacedSkuId,
+						requestedDeliveryDate: deliveryGroup.deliveryDate,
+						shippingAddressId: deliveryGroup.addressId,
+						skuId: orderItemConf.skuId,
+						skuUnitOfMeasure: orderItemConf.skuUnitOfMeasure,
+					});
+				}
+			}
+		}
+		else {
+			console.error(orderItem.quantity);
+			if (orderItem.quantity > 0) {
+				data.push(
+					formatCartItem(
+						{
+							addressId: 0,
+							deliveryDate: '',
+							id: 0,
+							name: '',
+						},
+						orderItem,
+						orderItem.quantity
+					) as IOrderItem
+				);
 			}
 		}
 	});
@@ -337,17 +356,41 @@ const Multishipping = ({
 		}));
 	}, []);
 
-	const handleRowUpdate = useCallback((orderItem: IOrderItem) => {
-		setFormattedOrderItems((prevState) => {
-			return prevState.map((item) => {
-				if (item.id === orderItem.id) {
-					return orderItem;
-				}
+	const handleRowUpdate = useCallback(
+		async (orderItem: IOrderItem, saveFullOrder: boolean = false) => {
+			const originalFormattedOrderItems = {...formattedOrderItems};
+			const currentFormattedOrderItems = formattedOrderItems.map(
+				(item) => {
+					if (item.id === orderItem.id) {
+						return orderItem;
+					}
 
-				return item;
-			});
-		});
-	}, []);
+					return item;
+				}
+			);
+
+			setFormattedOrderItems(currentFormattedOrderItems);
+
+			if (saveFullOrder) {
+				try {
+					await updateFullCart(
+						createRequestData(
+							deliveryGroups,
+							currentFormattedOrderItems
+						)
+					);
+				}
+				catch (error) {
+					console.error(error);
+
+					setFormattedOrderItems(originalFormattedOrderItems);
+
+					showError(error as IAPIResponseError);
+				}
+			}
+		},
+		[deliveryGroups, formattedOrderItems, updateFullCart]
+	);
 
 	const handleSubmitDeliveryGroup = useCallback(
 		async (deliveryGroup: IDeliveryGroup) => {

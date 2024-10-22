@@ -5189,6 +5189,8 @@ public class DataFactory {
 		objectDefinitionModel.setEnableObjectEntryHistory(false);
 		objectDefinitionModel.setModifiable(false);
 		objectDefinitionModel.setName("CommerceOrder");
+		objectDefinitionModel.setPKObjectFieldDBColumnName("commerceOrderId");
+		objectDefinitionModel.setPKObjectFieldName("commerceOrderId");
 		objectDefinitionModel.setPluralLabel(
 			StringBundler.concat(
 				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",

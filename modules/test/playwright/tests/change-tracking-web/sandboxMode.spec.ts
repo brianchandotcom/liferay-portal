@@ -71,6 +71,8 @@ test('LPD-34602 Add view-only mode for production when using Publications sandbo
 
 	await performLogin(page, 'test');
 
+	await changeTrackingPage.workOnProduction();
+
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 });
 
@@ -115,6 +117,8 @@ test.skip('LPD-39341 Sandbox mode allows users to work on production without per
 	await performLogout(page);
 
 	await performLogin(page, 'test');
+
+	await changeTrackingPage.workOnProduction();
 
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 });

@@ -81,8 +81,9 @@ public abstract class BaseKaleoTableReferenceDefinitionTestCase
 	protected KaleoDefinition addKaleoDefinition() throws Exception {
 		return _kaleoDefinitionLocalService.addKaleoDefinition(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, _read("legal-marketing-workflow-definition.xml"),
-			StringPool.BLANK, 1, serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			_read("legal-marketing-workflow-definition.xml"), StringPool.BLANK,
+			1, serviceContext);
 	}
 
 	protected KaleoInstance addKaleoInstance() throws Exception {

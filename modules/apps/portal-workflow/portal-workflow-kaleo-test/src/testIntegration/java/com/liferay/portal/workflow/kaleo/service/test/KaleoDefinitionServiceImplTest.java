@@ -214,6 +214,7 @@ public class KaleoDefinitionServiceImplTest {
 				WorkflowConstants.RESOURCE_NAME, ",ADD_DEFINITION permission ",
 				"for null "),
 			() -> _kaleoDefinitionService.updateKaleoDefinition(
+				kaleoDefinition.getExternalReferenceCode(),
 				kaleoDefinition.getKaleoDefinitionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				kaleoDefinition.getContent(), _serviceContext));
@@ -228,6 +229,7 @@ public class KaleoDefinitionServiceImplTest {
 
 		Assert.assertNotNull(
 			_kaleoDefinitionService.updateKaleoDefinition(
+				kaleoDefinition.getExternalReferenceCode(),
 				kaleoDefinition.getKaleoDefinitionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				kaleoDefinition.getContent(), _serviceContext));
@@ -236,8 +238,8 @@ public class KaleoDefinitionServiceImplTest {
 	private KaleoDefinition _addKaleoDefinition() throws Exception {
 		return _kaleoDefinitionService.addKaleoDefinition(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), _read(), "company", 1,
-			_serviceContext);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_read(), "company", 1, _serviceContext);
 	}
 
 	private User _addUser() throws Exception {

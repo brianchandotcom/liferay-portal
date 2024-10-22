@@ -35,7 +35,6 @@ definition {
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels (Asset Library and Instance Settings), the limit from AL will take effect."
 	@priority = 4
 	test ALTakesEffectOverInstanceLimit {
-		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -66,7 +65,6 @@ definition {
 	@description = "This test ensures that user is able to upload files to an asset library that is not bigger than the Mime Type Size Limit in the asset library."
 	@priority = 4
 	test CanLimitMultipleMimeTypesSize {
-		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -102,7 +100,6 @@ definition {
 	@description = "This test ensures that the Mime Type Size Limit setting only takes effect in the current asset library."
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentDepot {
-		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -149,7 +146,6 @@ definition {
 	@e2etest
 	@priority = 4
 	test SystemTakesEffectOverALLimit {
-		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

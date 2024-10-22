@@ -3,7 +3,7 @@ assemble:
       into: static
 liferay-commerceminium4-js-import-maps-entry:
     bareSpecifier: minium-primary-navigation
-    name: Minium Primary Navigation JS Import Maps Entry
+    name: Liferay Commerce Minium 4 JS Import Maps Entry
     type: jsImportMapsEntry
     url: index.js
     useESM: true

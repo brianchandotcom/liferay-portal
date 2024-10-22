@@ -117,6 +117,7 @@ public class ObjectDefinitionUtil {
 						return serviceBuilderObjectField.getName();
 					});
 				setActive(serviceBuilderObjectDefinition::isActive);
+				setClassName(serviceBuilderObjectDefinition::getClassName);
 				setDateCreated(serviceBuilderObjectDefinition::getCreateDate);
 				setDateModified(
 					serviceBuilderObjectDefinition::getModifiedDate);

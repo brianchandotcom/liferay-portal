@@ -67,6 +67,8 @@ components:
                     type: object
                 active:
                     type: boolean
+                className:
+                    type: string
                 dateCreated:
                     format: date
                     readOnly: true

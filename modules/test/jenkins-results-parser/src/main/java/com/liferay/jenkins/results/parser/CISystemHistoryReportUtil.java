@@ -470,9 +470,9 @@ public class CISystemHistoryReportUtil {
 				"title", _title
 			);
 
-			String javascriptVarValue = jsonObject.toString();
+			String javaScriptVarValue = jsonObject.toString();
 
-			return javascriptVarValue.replaceAll(
+			return javaScriptVarValue.replaceAll(
 				"\\\"([^\\\"]+_\\d{4}_\\d{2})\\\"", "$1");
 		}
 
@@ -621,12 +621,12 @@ public class CISystemHistoryReportUtil {
 		}
 
 		private String _getJavaScriptID() {
-			String javascriptID = _buildType + "_" + _durationReportType;
+			String javaScriptID = _buildType + "_" + _durationReportType;
 
-			javascriptID = javascriptID.replaceAll("-", "_");
-			javascriptID = javascriptID.replaceAll("\\.", "_");
+			javaScriptID = javaScriptID.replaceAll("-", "_");
+			javaScriptID = javaScriptID.replaceAll("\\.", "_");
 
-			return javascriptID;
+			return javaScriptID;
 		}
 
 		private final String _buildType;

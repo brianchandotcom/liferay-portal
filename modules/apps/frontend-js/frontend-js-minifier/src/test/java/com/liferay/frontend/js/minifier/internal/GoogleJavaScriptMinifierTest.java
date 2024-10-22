@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * @author Iván Zaera Avellón
  */
-public class GoogleJavascriptMinifierTest {
+public class GoogleJavaScriptMinifierTest {
 
 	@ClassRule
 	@Rule

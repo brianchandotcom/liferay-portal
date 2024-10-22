@@ -95,9 +95,25 @@ export class SearchPage {
 			),
 		});
 
-		await categoryPanel.getByText(portletName).click();
+		await categoryPanel.getByText(portletName, {exact: true}).click();
 
-		await categoryPanel.getByRole('button', {name: 'Add Content'}).click();
+		await categoryPanel
+			.locator('li')
+			.filter({hasText: new RegExp(`^${portletName}$`)})
+			.getByLabel('Add Content')
+			.click();
+	}
+
+	async fillPortletConfigurationsInput(
+		options: {label: string; value: string}[]
+	) {
+		for (const option of options) {
+			const configurationInput = this.modalIFrame.getByLabel(
+				option.label
+			);
+
+			await configurationInput.fill(option.value);
+		}
 	}
 
 	async getSearchFacetCheckbox(
@@ -148,6 +164,34 @@ export class SearchPage {
 		await expect(this.page.locator('#modalIframe')).toBeVisible();
 	}
 
+	async removeSearchPortlet(portletName: string, index: number = 0) {
+		const portletTopper = this.page
+			.locator('.portlet-topper', {hasText: portletName})
+			.nth(index);
+
+		await this.page
+			.locator('.portlet', {
+				hasText: portletName,
+			})
+			.nth(index)
+			.hover();
+
+		await expect(portletTopper).toBeVisible();
+
+		await portletTopper.getByLabel('Options').click();
+
+		await this.page.once('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: 'Remove',
+			})
+			.click();
+	}
+
 	async savePortletConfiguration() {
 		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();
 
@@ -171,18 +215,18 @@ export class SearchPage {
 		await this.searchBarInputInNavBar.press('Enter');
 	}
 
-	async selectPaginationItemsPerPage(delta: number) {
+	async selectPaginationItemsPerPage(delta: number, index: number = 0) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.searchResultsPaginationItemsPerPageDropdown.locator(
-				`xpath=//*[@id='${delta}']`
-			),
-			trigger: this.searchResultsPaginationItemsPerPageToggle,
+			target: this.searchResultsPaginationItemsPerPageDropdown
+				.nth(index)
+				.locator(`xpath=//*[@id='${delta}']`),
+			trigger: this.searchResultsPaginationItemsPerPageToggle.nth(index),
 		});
 
-		await expect(this.searchResultsPaginationItemsPerPageToggle).toHaveText(
-			new RegExp(`${delta.toString()} Entries`)
-		);
+		await expect(
+			this.searchResultsPaginationItemsPerPageToggle.nth(index)
+		).toHaveText(new RegExp(`${delta.toString()} Entries`));
 	}
 
 	async selectPaginationPageNumber(pageNumber: number) {

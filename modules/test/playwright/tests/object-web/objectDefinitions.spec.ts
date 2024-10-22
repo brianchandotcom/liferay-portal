@@ -5,11 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {
-	ObjectAdminRestClient,
-	ObjectDefinition,
-	ObjectFolder,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -38,37 +34,6 @@ export const test = mergeTests(
 	objectPagesTest,
 	pageEditorPagesTest
 );
-
-let objectDefinitions: ObjectDefinition[] = [];
-let objectFolders: ObjectFolder[] = [];
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	if (objectDefinitions.length) {
-		for (const objectDefinition of objectDefinitions) {
-			await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
-				{
-					objectDefinitionId: objectDefinition.id,
-				}
-			);
-		}
-
-		objectDefinitions = [];
-	}
-
-	if (objectFolders.length) {
-		for (const objectFolder of objectFolders) {
-			await objectAdminRestClient.objectFolder.deleteObjectFolder({
-				objectFolderId: objectFolder.id,
-			});
-		}
-
-		objectFolders = [];
-	}
-});
 
 test.describe('Manage object definitions through Model Builder', () => {
 	test.beforeEach(({page}) => {
@@ -263,7 +228,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 			),
 			1
 		);
-
 
 		await expect(
 			modelBuilderLeftSidebarPage.sidebarItems.filter({

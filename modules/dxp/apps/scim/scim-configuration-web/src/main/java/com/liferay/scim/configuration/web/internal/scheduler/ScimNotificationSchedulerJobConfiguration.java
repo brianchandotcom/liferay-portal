@@ -122,10 +122,10 @@ public class ScimNotificationSchedulerJobConfiguration
 			Date accessTokenExpirationDate, long companyId)
 		throws Exception {
 
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
 		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
-
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		ListUtil.filter(
 			_userLocalService.getRoleUsers(role.getRoleId()),

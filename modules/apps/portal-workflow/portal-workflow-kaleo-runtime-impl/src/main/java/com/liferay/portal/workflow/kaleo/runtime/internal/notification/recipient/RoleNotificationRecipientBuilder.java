@@ -266,6 +266,10 @@ public class RoleNotificationRecipientBuilder
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();
 
+		if (kaleoTaskInstanceToken == null) {
+			return false;
+		}
+
 		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
 			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
 

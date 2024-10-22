@@ -22,7 +22,7 @@ const ACTIONS = {
 };
 
 export default function propsTransformer({
-	items,
+	items: groups,
 	portletNamespace,
 	...otherProps
 }) {
@@ -52,34 +52,37 @@ export default function propsTransformer({
 
 	return {
 		...otherProps,
-		items: items.map((item) => {
+		items: groups.map((group) => {
 			return {
-				...item,
-				onClick(event) {
-					const action = item.data?.action;
+				...group,
+				items: group.items.map((item) => ({
+					...item,
+					onClick(event) {
+						const action = item.data?.action;
 
-					if (action) {
-						const globalAction = item.data?.globalAction;
+						if (action) {
+							const globalAction = item.data?.globalAction;
 
-						if (globalAction) {
-							event.preventDefault();
+							if (globalAction) {
+								event.preventDefault();
 
-							const callback =
-								Liferay.Util.getPortletConfigurationIconAction(
-									action
-								);
+								const callback =
+									Liferay.Util.getPortletConfigurationIconAction(
+										action
+									);
 
-							if (callback) {
-								callback(event, item.data);
+								if (callback) {
+									callback(event, item.data);
+								}
+							}
+							else {
+								event.preventDefault();
+
+								ACTIONS[action](item.data);
 							}
 						}
-						else {
-							event.preventDefault();
-
-							ACTIONS[action](item.data);
-						}
-					}
-				},
+					},
+				})),
 			};
 		}),
 		menuProps: {

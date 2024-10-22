@@ -654,7 +654,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId2}");
 
-		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+		AssertElementPresent(
+			key_title = "HTTP Status 404",
+			locator1 = "Header#H1_TITLE");
 	}
 
 	@description = "This is the use case for LPS-183473."

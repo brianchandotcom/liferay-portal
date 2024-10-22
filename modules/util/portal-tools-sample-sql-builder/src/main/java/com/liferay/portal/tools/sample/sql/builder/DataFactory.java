@@ -5127,7 +5127,7 @@ public class DataFactory {
 		// Other field
 
 		objectActionModel.setObjectDefinitionId(objectDefinitionId);
-		objectActionModel.setActive(true);
+		objectActionModel.setActive(false);
 		objectActionModel.setConditionExpression("orderStatus == 1");
 		objectActionModel.setDescription("");
 		objectActionModel.setName("commerceOrderNotification");

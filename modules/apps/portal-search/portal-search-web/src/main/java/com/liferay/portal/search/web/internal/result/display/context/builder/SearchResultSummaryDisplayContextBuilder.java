@@ -802,14 +802,14 @@ public class SearchResultSummaryDisplayContextBuilder {
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
 
-			String[] parts = StringUtil.split(className, "#");
-
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					Long.valueOf(parts[1]));
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					_themeDisplay.getCompanyId(), className);
 
-			modelResource = objectDefinition.getLabel(
-				_themeDisplay.getLocale());
+			if (objectDefinition != null) {
+				modelResource = objectDefinition.getLabel(
+					_themeDisplay.getLocale());
+			}
 		}
 
 		if (!Validator.isBlank(modelResource)) {

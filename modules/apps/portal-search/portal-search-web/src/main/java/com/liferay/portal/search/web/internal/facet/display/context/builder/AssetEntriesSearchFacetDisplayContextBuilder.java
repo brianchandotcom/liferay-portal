@@ -216,11 +216,10 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 						ObjectDefinitionConstants.
 							CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
 
-				String[] parts = StringUtil.split(className, "#");
-
 				ObjectDefinition objectDefinition =
-					ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-						Long.valueOf(parts[1]));
+					ObjectDefinitionLocalServiceUtil.
+						fetchObjectDefinitionByClassName(
+							_themeDisplay.getCompanyId(), className);
 
 				if (objectDefinition == null) {
 					continue;

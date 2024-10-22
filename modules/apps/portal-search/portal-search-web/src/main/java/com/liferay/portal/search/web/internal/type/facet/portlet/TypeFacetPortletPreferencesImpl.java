@@ -59,7 +59,7 @@ public class TypeFacetPortletPreferencesImpl
 					return null;
 				}
 
-				return _getKeyValuePair(locale, assetType);
+				return _getKeyValuePair(assetType, companyId, locale);
 			});
 	}
 
@@ -69,7 +69,7 @@ public class TypeFacetPortletPreferencesImpl
 
 		return TransformUtil.transformToList(
 			getCurrentAssetTypesArray(companyId),
-			assetType -> _getKeyValuePair(locale, assetType));
+			assetType -> _getKeyValuePair(assetType, companyId, locale));
 	}
 
 	@Override
@@ -113,7 +113,9 @@ public class TypeFacetPortletPreferencesImpl
 		return _searchableAssetClassNamesProvider.getClassNames(companyId);
 	}
 
-	private KeyValuePair _getKeyValuePair(Locale locale, String className) {
+	private KeyValuePair _getKeyValuePair(
+		String className, long companyId, Locale locale) {
+
 		String modelResource = ResourceActionsUtil.getModelResource(
 			locale, className);
 
@@ -121,13 +123,13 @@ public class TypeFacetPortletPreferencesImpl
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
 
-			String[] parts = StringUtil.split(className, "#");
-
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					Long.valueOf(parts[1]));
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					companyId, className);
 
-			modelResource = objectDefinition.getLabel(locale);
+			if (objectDefinition != null) {
+				modelResource = objectDefinition.getLabel(locale);
+			}
 		}
 
 		return new KeyValuePair(className, modelResource);

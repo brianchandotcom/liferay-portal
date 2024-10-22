@@ -137,7 +137,7 @@ public class FacetResponseProcessor {
 			return _getSiteDisplayName(GetterUtil.getLong(term), locale);
 		}
 		else if (StringUtil.equals("type", facetConfiguration.getName())) {
-			return _getTypeDisplayName(locale, term);
+			return _getTypeDisplayName(term, companyId, locale);
 		}
 
 		return term;
@@ -222,16 +222,16 @@ public class FacetResponseProcessor {
 		return term;
 	}
 
-	private String _getTypeDisplayName(Locale locale, String className) {
+	private String _getTypeDisplayName(
+		String className, long companyId, Locale locale) {
+
 		if (className.startsWith(
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
 
-			String[] parts = StringUtil.split(className, "#");
-
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					Long.valueOf(parts[1]));
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					companyId, className);
 
 			if (objectDefinition != null) {
 				return objectDefinition.getLabel(locale);

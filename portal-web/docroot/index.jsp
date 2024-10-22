@@ -65,10 +65,10 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 	</head>
 
 	<body>
-		<aui:script position="inline">
-			document.body.onload = function() {
-				window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
-			}
-		</aui:script>
+		<liferay-util:on
+			event="load"
+		>
+			window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
+		</liferay-util:on>
 	</body>
 </html>

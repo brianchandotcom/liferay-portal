@@ -36,6 +36,12 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 	</head>
 
 	<body>
+		<liferay-util:on
+			event="load"
+		>
+			window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
+		</liferay-util:on>
+
 		<center>
 			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
 				<tr>
@@ -49,11 +55,5 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 				</tr>
 			</table>
 		</center>
-
-		<aui:script position="inline">
-			document.body.onload = function() {
-				window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
-			}
-		</aui:script>
 	</body>
 </html>

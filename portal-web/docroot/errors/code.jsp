@@ -76,6 +76,11 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 			</head>
 
 			<body>
+				<liferay-util:on
+					event="load"
+				>
+					window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
+				</liferay-util:on>
 
 				<!--
 				The numbers below are used to fill up space so that this works properly in IE.
@@ -87,11 +92,6 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 				12345678901234567890123456789012345678901234567890123456789012345678901234567890
 				-->
 
-				<aui:script position="inline">
-					document.body.onload = function() {
-						window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
-					}
-				</aui:script>
 			</body>
 		</html>
 	</c:when>

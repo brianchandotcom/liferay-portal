@@ -47,6 +47,12 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 			</head>
 
 			<body>
+				<liferay-util:on
+					event="load"
+				>
+					setTimeout('document.fm.submit()', 100);
+				</liferay-util:on>
+
 				<center>
 					<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
 						<tr>
@@ -67,12 +73,6 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 						</tr>
 					</table>
 				</center>
-
-				<aui:script position="inline">
-					document.body.onload = function() {
-						setTimeout('document.fm.submit()', 100);
-					}
-				</aui:script>
 			</body>
 		</html>
 
@@ -114,11 +114,11 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 			</head>
 
 			<body>
-				<aui:script position="inline">
-					document.body.onload = function() {
-						window.location.replace('<%= themeDisplay.getPathMain() %>');
-					}
-				</aui:script>
+				<liferay-util:on
+					event="load"
+				>
+					window.location.replace('<%= themeDisplay.getPathMain() %>');
+				</liferay-util:on>
 			</body>
 		</html>
 	</c:otherwise>

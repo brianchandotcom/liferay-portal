@@ -50,10 +50,12 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -110,6 +112,9 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.text.ParseException;
 
@@ -1361,7 +1366,8 @@ public class DefaultObjectEntryManagerImpl
 
 		if ((fileEntry == null) ||
 			((fileEntry.getExternalReferenceCode() == null) &&
-			 (fileEntry.getFileBase64() == null))) {
+			 (fileEntry.getFileBase64() == null) &&
+			 (fileEntry.getFileSourceURL() == null))) {
 
 			return;
 		}
@@ -1378,14 +1384,31 @@ public class DefaultObjectEntryManagerImpl
 				"File source " + fileSource + " is not supported");
 		}
 
-		com.liferay.portal.kernel.repository.model.FileEntry
-			serviceBuilderFileEntry = null;
-
 		byte[] fileContent = {};
 
 		if (fileEntry.getFileBase64() != null) {
 			fileContent = _decode(fileEntry.getFileBase64());
 		}
+		else if (fileEntry.getFileSourceURL() != null) {
+			URL url = new URL(fileEntry.getFileSourceURL());
+
+			if (Objects.equals(url.getProtocol(), "file")) {
+
+				// TODO Have a more specific Exception
+
+				throw new SystemException("Unsupported URL protocol");
+			}
+
+			URLConnection urlConnection = url.openConnection();
+
+			urlConnection.connect();
+
+			fileContent = StreamUtil.toByteArray(
+				urlConnection.getInputStream());
+		}
+
+		com.liferay.portal.kernel.repository.model.FileEntry
+			serviceBuilderFileEntry = null;
 
 		String groupExternalReferenceCode = null;
 

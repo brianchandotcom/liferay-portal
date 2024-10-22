@@ -8,7 +8,6 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -91,14 +90,6 @@ public class DepotAdminDLDisplayContext {
 
 		return PropertiesParamUtil.getBoolean(
 			unicodeProperties, _httpServletRequest, "directoryIndexingEnabled");
-	}
-
-	public boolean isShowFileSizePerMimeType() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-114786")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private final DepotEntry _depotEntry;

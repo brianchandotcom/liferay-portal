@@ -20,20 +20,18 @@ DepotAdminDLDisplayContext depotAdminDLDisplayContext = (DepotAdminDLDisplayCont
 
 	<aui:input helpMessage='<%= LanguageUtil.format(request, "file-max-size-help", new Object[] {"overall-maximum-upload-request-size", "upload-servlet-request-configuration-name"}, true) %>' label="file-max-size" name="fileMaxSize" type="number" value="<%= depotAdminDLDisplayContext.getFileMaxSize() %>" />
 
-	<c:if test="<%= depotAdminDLDisplayContext.isShowFileSizePerMimeType() %>">
-		<liferay-frontend:fieldset
-			collapsible="<%= true %>"
-			cssClass="mt-5"
-			label='<%= LanguageUtil.get(request, "mime-type-limit") %>'
-		>
-			<div>
-				<span aria-hidden="true" class="loading-animation"></span>
+	<liferay-frontend:fieldset
+		collapsible="<%= true %>"
+		cssClass="mt-5"
+		label='<%= LanguageUtil.get(request, "mime-type-limit") %>'
+	>
+		<div>
+			<span aria-hidden="true" class="loading-animation"></span>
 
-				<react:component
-					module="{FileSizeMimetypes} from document-library-web"
-					props="<%= depotAdminDLDisplayContext.getFileSizePerMimeTypeData() %>"
-				/>
-			</div>
-		</liferay-frontend:fieldset>
-	</c:if>
+			<react:component
+				module="{FileSizeMimetypes} from document-library-web"
+				props="<%= depotAdminDLDisplayContext.getFileSizePerMimeTypeData() %>"
+			/>
+		</div>
+	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset>

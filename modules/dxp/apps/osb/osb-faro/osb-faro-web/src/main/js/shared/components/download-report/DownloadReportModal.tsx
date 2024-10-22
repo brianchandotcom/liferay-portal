@@ -3,14 +3,12 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert, RangeSelectors} from 'shared/types';
 import {Align} from '@clayui/drop-down';
 import {DropdownRangeKey} from '../dropdown-range-key/DropdownRangeKey';
 import {pickBy} from 'lodash';
+import {RangeSelectors} from 'shared/types';
 import {setUriQueryValues} from 'shared/util/router';
 import {Text} from '@clayui/core';
-import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 export enum ReportType {
@@ -19,7 +17,6 @@ export enum ReportType {
 }
 
 interface IDownloadReportModal {
-	alertMessage: string;
 	dateRangeDescription?: string;
 	disabled?: boolean;
 	infoMessage: string;
@@ -32,7 +29,6 @@ interface IDownloadReportModal {
 }
 
 export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
-	alertMessage,
 	children,
 	dateRangeDescription = Liferay.Language.get(
 		'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
@@ -46,7 +42,6 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	showDateRange = true,
 	type
 }) => {
-	const dispatch = useDispatch();
 	const history = useHistory();
 	const [openAlert, setOpenAlert] = useState(true);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -63,13 +58,6 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 					setSubmitDisabled(true);
 
 					onClose();
-
-					dispatch(
-						addAlert({
-							alertType: Alert.Types.Default,
-							message: alertMessage
-						})
-					);
 
 					if (type === 'CSV') {
 						onSubmit(rangeSelectors);

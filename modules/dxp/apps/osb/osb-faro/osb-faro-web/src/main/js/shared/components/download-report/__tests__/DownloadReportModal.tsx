@@ -115,7 +115,6 @@ interface IWrapperComponent {
 }
 
 const WrapperComponent: React.FC<IWrapperComponent> = ({
-	alertMessage,
 	children,
 	infoMessage,
 	onSubmit,
@@ -137,7 +136,6 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 							<Provider store={mockStore()}>
 								<DownloadReportModal
 									{...otherProps}
-									alertMessage={alertMessage}
 									infoMessage={infoMessage}
 									observer={observer}
 									onClose={jest.fn()}

@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -52,6 +53,9 @@ export const test = mergeTests(
 	serverAdministrationPageTest,
 	systemSettingsPageTest,
 	loginTest(),
+	featureFlagsTest({
+		'LPD-39304': true,
+	}),
 	pagesAdminPagesTest
 );
 

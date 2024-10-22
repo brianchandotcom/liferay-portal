@@ -66,6 +66,13 @@ const expect = baseExpect.extend({
 	}),
 });
 
+const assetPublisherDeprecationTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-39304': true,
+	})
+);
+
 const keepTitlesUntranslated = mergeTests(baseTest);
 
 const prefixUrlTest = mergeTests(
@@ -1556,7 +1563,7 @@ baseTest(
 	}
 );
 
-baseTest(
+assetPublisherDeprecationTest(
 	'Can paginate Web Content in an Asset Publisher',
 	{
 		tag: '@LPD-35348',

@@ -24,6 +24,7 @@ const test = mergeTests(
 	loginTest(),
 	featureFlagsTest({
 		'LPD-11147': true,
+		'LPD-39304': true,
 		'LPS-178052': true,
 	})
 );

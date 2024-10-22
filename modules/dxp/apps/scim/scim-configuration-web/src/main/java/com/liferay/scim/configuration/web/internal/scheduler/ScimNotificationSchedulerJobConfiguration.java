@@ -167,24 +167,21 @@ public class ScimNotificationSchedulerJobConfiguration
 			return;
 		}
 
-		List<OAuth2Authorization> applicationOAuth2Authorizations =
+		List<OAuth2Authorization> oAuth2Authorizations =
 			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 				oAuth2Application.getOAuth2ApplicationId(), 0, 1,
 				OrderByComparatorFactoryUtil.create(
 					"OAuth2Authorization", "accessTokenExpirationDate", "asc"));
 
-		if (ListUtil.isEmpty(applicationOAuth2Authorizations)) {
+		if (ListUtil.isEmpty(oAuth2Authorizations)) {
 			return;
 		}
 
-		OAuth2Authorization applicationOAuth2Authorization =
-			applicationOAuth2Authorizations.get(0);
+		OAuth2Authorization oAuth2Authorization = oAuth2Authorizations.get(0);
 
 		Date accessTokenExpirationDate =
-			applicationOAuth2Authorization.getAccessTokenExpirationDate();
-
-		ExpandoBridge expandoBridge =
-			applicationOAuth2Authorization.getExpandoBridge();
+			oAuth2Authorization.getAccessTokenExpirationDate();
+		ExpandoBridge expandoBridge = oAuth2Authorization.getExpandoBridge();
 
 		if (!isSendNotification(
 				accessTokenExpirationDate, System.currentTimeMillis(),

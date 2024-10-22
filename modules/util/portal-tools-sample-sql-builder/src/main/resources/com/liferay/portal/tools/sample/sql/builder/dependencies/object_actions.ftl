@@ -1,1 +1,1 @@
-${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(objectDefinitionModel.getObjectDefinitionId()))}
+${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(objectDefinitionModel.objectDefinitionId))}

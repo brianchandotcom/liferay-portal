@@ -1,6 +1,8 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import html2canvas from 'html2canvas';
 import React, {useEffect, useMemo, useState} from 'react';
+import {addAlert} from 'shared/actions/alerts';
+import {Alert} from 'shared/types';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal} from './DownloadReportModal';
 import {
@@ -12,6 +14,7 @@ import {
 } from './jsPDF';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
+import {useDispatch} from 'react-redux';
 import {useDownloadReportContext} from './DownloadReportContext';
 import {useModal} from '@clayui/modal';
 
@@ -233,6 +236,8 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	const {reportContainers} = useDownloadReportContext();
 	const [containers, setContainers] = useState<ContainerList | {}>({});
 
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (open) {
 			setContainers(formattedContainers(reportContainers));
@@ -254,14 +259,6 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 
 			{open && (
 				<DownloadReportModal
-					alertMessage={
-						sub(
-							Liferay.Language.get(
-								'the-x-file-is-being-generated-and-your-download-will-start-soon'
-							),
-							['PDF']
-						) as string
-					}
 					dateRangeDescription={dateRangeDescription}
 					disabled={!filteredContainers.length}
 					infoMessage={Liferay.Language.get(
@@ -270,6 +267,18 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onSubmit={() => {
+						dispatch(
+							addAlert({
+								alertType: Alert.Types.Default,
+								message: sub(
+									Liferay.Language.get(
+										'the-x-file-is-being-generated-and-your-download-will-start-soon'
+									),
+									['PDF']
+								) as string
+							})
+						);
+
 						setLoading(true);
 
 						/**

@@ -1,6 +1,6 @@
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
+import {Alert, RangeSelectors} from 'shared/types';
 import {CSVType, formatDate, MAX_CSV_ENTRIES, useDownloadCSV} from './utils';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal, ReportType} from './DownloadReportModal';
@@ -21,6 +21,18 @@ export interface IDownloadReport {
 	type: CSVType;
 	typeLang: string;
 }
+
+const formatRangeSelectors = (rangeSelectors?: RangeSelectors) => {
+	if (rangeSelectors?.rangeKey === RangeKeyTimeRanges.CustomRange) {
+		return {
+			rangeEnd: formatDate(rangeSelectors.rangeEnd),
+			rangeKey: RangeKeyTimeRanges.CustomRange,
+			rangeStart: formatDate(rangeSelectors.rangeStart)
+		};
+	}
+
+	return rangeSelectors;
+};
 
 const DownloadCSVReport: React.FC<IDownloadReport> = ({
 	assetId,
@@ -50,14 +62,6 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 
 			{open && (
 				<DownloadReportModal
-					alertMessage={
-						sub(
-							Liferay.Language.get(
-								'the-x-file-is-being-generated-and-your-download-will-start-soon'
-							),
-							['CSV']
-						) as string
-					}
 					infoMessage={
 						sub(
 							Liferay.Language.get(
@@ -69,41 +73,44 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onSubmit={async rangeSelectors => {
-						const url = generateURL(rangeSelectors);
-						const a = document.createElement('a');
-
-						a.href = url;
-						a.click();
-
-						let rangeKey;
-						let fromDate;
-						let toDate;
-
-						if (rangeSelectors) {
-							if (
-								rangeSelectors.rangeKey ===
-								RangeKeyTimeRanges.CustomRange
-							) {
-								(rangeKey = 'CUSTOM'),
-									(fromDate = formatDate(
-										rangeSelectors?.rangeStart
-									));
-								toDate = formatDate(rangeSelectors?.rangeEnd);
-							} else {
-								rangeKey = rangeSelectors.rangeKey;
-							}
-						}
-
 						try {
+							const url = generateURL(rangeSelectors);
+							const response = await fetch(url);
+
+							if (!response.ok) {
+								throw new Error();
+							}
+
+							const a = document.createElement('a');
+
+							a.href = url;
+							a.click();
+
+							dispatch(
+								addAlert({
+									alertType: Alert.Types.Default,
+									message: sub(
+										Liferay.Language.get(
+											'the-x-file-is-being-generated-and-your-download-will-start-soon'
+										),
+										['CSV']
+									) as string
+								})
+							);
+
+							const formattedRangeSelector = formatRangeSelectors(
+								rangeSelectors
+							);
+
 							const count = await fetchCount({
 								assetId,
 								assetType,
 								channelId,
-								fromDate,
+								fromDate: formattedRangeSelector?.rangeStart,
 								groupId,
 								individualId,
-								rangeKey,
-								toDate,
+								rangeKey: formattedRangeSelector?.rangeKey,
+								toDate: formattedRangeSelector?.rangeEnd,
 								type
 							});
 
@@ -120,7 +127,16 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 									})
 								);
 							}
-						} catch (e) {}
+						} catch (e) {
+							dispatch(
+								addAlert({
+									alertType: Alert.Types.Error,
+									message: Liferay.Language.get(
+										'it-was-not-possible-to-generate-a-csv-file-at-this-moment.-please-try-again-later'
+									)
+								})
+							);
+						}
 					}}
 					rangeSelectors={rangeSelectors}
 					type={ReportType.CSV}

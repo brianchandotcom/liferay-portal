@@ -28,7 +28,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message='<%= LanguageUtil.get(request, "open-actions-menu") %>'
 	showExpanded="<%= row == null %>"
 >
 	<c:if test="<%= !workflowTask.isCompleted() %>">

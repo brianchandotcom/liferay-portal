@@ -26,4 +26,6 @@
 	<#include "notification_templates.ftl">
 
 	<#include "object_definitions.ftl">
+
+	<#include "object_actions.ftl">
 </#list>

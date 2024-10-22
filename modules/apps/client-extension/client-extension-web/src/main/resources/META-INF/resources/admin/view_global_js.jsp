@@ -16,10 +16,9 @@ for (Method method : methods) {
 	CETProperty cetProperty = method.getAnnotation(CETProperty.class);
 	String label = viewClientExtensionEntryDisplayContext.getLabel(method);
 	String name = cetProperty.name();
-	String type = viewClientExtensionEntryDisplayContext.getType();
 	Object value = viewClientExtensionEntryDisplayContext.getValue(method);
 
-	if (!FeatureFlagManagerUtil.isEnabled("LPD-30371") && type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS) && (name.equals("scope") || name.equals("scriptLocation"))) {
+	if (!FeatureFlagManagerUtil.isEnabled("LPD-30371") && (name.equals("scope") || name.equals("scriptLocation"))) {
 		continue;
 	}
 %>

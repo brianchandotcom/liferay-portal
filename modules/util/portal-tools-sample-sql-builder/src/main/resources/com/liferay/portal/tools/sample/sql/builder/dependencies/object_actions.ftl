@@ -1,1 +1,1 @@
-${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(objectDefinitionModel.objectDefinitionId))}
+${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(objectDefinitionModel.objectDefinitionId, notificationTemplateModel.notificationTemplateId))}

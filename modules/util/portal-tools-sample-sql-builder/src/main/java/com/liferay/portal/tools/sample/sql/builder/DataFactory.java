@@ -5109,7 +5109,9 @@ public class DataFactory {
 		return notificationTemplateModel;
 	}
 
-	public ObjectActionModel newObjectActionModel(long objectDefinitionId) {
+	public ObjectActionModel newObjectActionModel(
+		long objectDefinitionId, long notificationTemplateId) {
+
 		ObjectActionModel objectActionModel = new ObjectActionModelImpl();
 
 		// PK fields
@@ -5133,7 +5135,8 @@ public class DataFactory {
 		objectActionModel.setObjectActionExecutorKey("notification");
 		objectActionModel.setObjectActionTriggerKey(
 			"liferay/commerce_order_status");
-		objectActionModel.setParameters("");
+		objectActionModel.setParameters(
+			"notificationTemplateId=" + notificationTemplateId);
 		objectActionModel.setSystem(true);
 		objectActionModel.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
 

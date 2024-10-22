@@ -10,8 +10,7 @@
 <%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.client.extension.constants.ClientExtensionEntryConstants" %><%@
-page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
+<%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
 page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
 page import="com.liferay.client.extension.type.CommerceCheckoutStepCET" %><%@
 page import="com.liferay.client.extension.type.CustomElementCET" %><%@

@@ -13,6 +13,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
+import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 const picklistBooleanOptionLabel = 'Boolean';
@@ -765,7 +766,7 @@ test(
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: customDataSetERC,
 				label: customDataSetLabel,
-				restApplication: '/data-set-admin/data-sets',
+				restApplication: `${API_ENDPOINT_PATH}`,
 				restSchema: 'DataSet',
 			});
 		});
@@ -786,7 +787,7 @@ test(
 				itemLabel: 'fieldName',
 				label_i18n: {en_US: filterLabel},
 				multiple: true,
-				source: `/o/data-set-admin/cards-sections/`,
+				source: `/o${API_ENDPOINT_PATH}/cards-sections/`,
 				sourceType: 'API_REST_APPLICATION',
 			});
 		});

@@ -12,6 +12,7 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
+import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 
@@ -238,7 +239,7 @@ test('Can create a selection filter with API Headless source', async ({
 			itemLabel: 'label',
 			name: SELECTION_API_HEADLESS_FILTER_NAME,
 			preselectedValues: [dataSetLabel],
-			restApplication: '/data-set-admin/data-sets',
+			restApplication: `${API_ENDPOINT_PATH}`,
 			restEndpoint: '/',
 			restSchema: 'DataSet',
 			selectionType: 'Single',
@@ -329,7 +330,7 @@ test(
 				itemLabel: 'label',
 				name: SELECTION_API_HEADLESS_FILTER_NAME,
 				preselectedValues: [dataSetLabel],
-				restApplication: '/data-set-admin/data-sets',
+				restApplication: `${API_ENDPOINT_PATH}`,
 				restEndpoint: '/',
 				restSchema: 'DataSet',
 				selectionType: 'Single',

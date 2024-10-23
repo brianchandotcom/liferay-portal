@@ -12,6 +12,7 @@ import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {
 	EAsyncActionMethod,
 	EItemActionType,
@@ -327,7 +328,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionUrl = '/o/data-set-admin/table-sections/{id}';
+		const asyncItemActionUrl = `/o${API_ENDPOINT_PATH}/table-sections/{id}`;
 		const headlessItemActionName = 'Headless item action';
 		const headlessItemActionPermissionKey = 'delete';
 		const nonAvailableHeadlessItemActionName =
@@ -483,7 +484,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionUrl = '/o/data-set-admin/table-sections/{id}';
+		const asyncItemActionUrl = `/o${API_ENDPOINT_PATH}/table-sections/{id}`;
 		const asyncItemNewLabel = getRandomString();
 		const headlessItemActionName = 'Headless item action';
 		const headlessItemActionPermissionKey = 'update';
@@ -637,8 +638,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionWrongUrl =
-			'/o/data-set-admin/table-sections/{foo}';
+		const asyncItemActionWrongUrl = `/o${API_ENDPOINT_PATH}/table-sections/{foo}`;
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({

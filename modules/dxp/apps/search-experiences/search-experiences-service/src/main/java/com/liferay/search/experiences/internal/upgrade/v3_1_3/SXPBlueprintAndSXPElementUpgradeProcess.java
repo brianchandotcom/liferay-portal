@@ -29,7 +29,8 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 /**
- * @author Joshua Cords, Felipe Lorenz
+ * @author Joshua Cords
+ * @author Felipe Lorenz
  */
 public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 

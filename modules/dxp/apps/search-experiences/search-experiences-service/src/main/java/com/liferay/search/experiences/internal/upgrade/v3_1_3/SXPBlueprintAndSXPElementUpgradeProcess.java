@@ -99,9 +99,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			}
 
 			_upgradeConfigurationEntry(elementInstanceJSONObject);
-
 			_upgradeElementDefinition(sxpElementJSONObject);
-
 			_upgradeUIConfigurationValues(elementInstanceJSONObject);
 		}
 

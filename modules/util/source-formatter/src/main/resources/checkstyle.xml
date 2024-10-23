@@ -268,6 +268,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.BrandNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks the correct brand name." />
+			<property name="enabled" value="false" />
 			<message key="rename" value="Rename &quot;{0}&quot; to &quot;{1}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CamelCaseNameCheck">

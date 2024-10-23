@@ -227,6 +227,8 @@ components:
                 description:
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -279,23 +281,29 @@ public class JournalPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 			String path = getPath(renderRequest, renderResponse);
 
 			if (Objects.equals(path, "/edit_article.jsp") ||
 				Objects.equals(path, "/view_article_history.jsp")) {
 
-				ActionUtil.getArticle(
-					_portal.getHttpServletRequest(renderRequest));
+				ActionUtil.getArticle(httpServletRequest);
+			}
+			else if (Objects.equals(path, "/view_ddm_structures.jsp")) {
+				httpServletRequest.setAttribute(
+					CTTimelineKeys.CLASS_NAME, DDMStructure.class.getName());
+			}
+			else if (Objects.equals(path, "/view_ddm_templates.jsp")) {
+				httpServletRequest.setAttribute(
+					CTTimelineKeys.CLASS_NAME, DDMTemplate.class.getName());
 			}
 			else if (Validator.isNull(path)) {
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(renderRequest);
-
 				httpServletRequest.setAttribute(
 					CTTimelineKeys.CLASS_NAME, JournalArticle.class.getName());
 			}
 			else {
-				_getFolder(_portal.getHttpServletRequest(renderRequest));
+				_getFolder(httpServletRequest);
 			}
 		}
 		catch (Exception exception) {

@@ -55,9 +55,11 @@ public class ObjectEntryKeywordQueryContributor
 	implements KeywordQueryContributor {
 
 	public ObjectEntryKeywordQueryContributor(
+		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectViewLocalService objectViewLocalService) {
 
+		_objectDefinition = objectDefinition;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectViewLocalService = objectViewLocalService;
 	}
@@ -74,26 +76,6 @@ public class ObjectEntryKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		long objectDefinitionId = GetterUtil.getLong(
-			searchContext.getAttribute("objectDefinitionId"));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Object definition ID " + objectDefinitionId);
-		}
-
-		if (objectDefinitionId == 0) {
-			String className = keywordQueryContributorHelper.getClassName();
-
-			if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
-				String[] parts = StringUtil.split(className, "#");
-
-				objectDefinitionId = Long.valueOf(parts[1]);
-			}
-			else {
-				return;
-			}
-		}
-
 		AtomicBoolean addObjectEntryTitle = new AtomicBoolean(true);
 		List<ObjectField> objectFields = null;
 
@@ -102,7 +84,7 @@ public class ObjectEntryKeywordQueryContributor
 
 			ObjectView defaultObjectView =
 				_objectViewLocalService.fetchDefaultObjectView(
-					objectDefinitionId);
+					_objectDefinition.getObjectDefinitionId());
 
 			if (defaultObjectView != null) {
 				addObjectEntryTitle.set(false);
@@ -126,7 +108,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		if (objectFields == null) {
 			objectFields = _objectFieldLocalService.getObjectFields(
-				objectDefinitionId, false);
+				_objectDefinition.getObjectDefinitionId(), false);
 		}
 
 		for (String token : _tokenizeKeywords(keywords)) {
@@ -458,6 +440,7 @@ public class ObjectEntryKeywordQueryContributor
 
 	private static final Pattern _pattern = Pattern.compile("\\d{14}");
 
+	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectViewLocalService _objectViewLocalService;
 

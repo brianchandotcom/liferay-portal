@@ -5,7 +5,6 @@
 
 package com.liferay.object.web.internal.info.item.provider;
 
-import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -25,11 +24,9 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 /**
@@ -75,92 +72,57 @@ public class ObjectEntryInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		try {
-			return _getInfoForm(
-				0,
-				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					_getModelClassName(0), StringPool.BLANK,
-					ObjectEntry.class.getSimpleName(), 0));
-		}
-		catch (NoSuchFormVariationException noSuchFormVariationException) {
-			throw new RuntimeException(noSuchFormVariationException);
-		}
+		return _getInfoForm(0);
 	}
 
 	@Override
 	public InfoForm getInfoForm(ObjectEntry objectEntry) {
-		long objectDefinitionId = _objectDefinition.getObjectDefinitionId();
-
-		try {
-			return _getInfoForm(
-				objectDefinitionId,
-				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					_getModelClassName(objectDefinitionId), StringPool.BLANK,
-					ObjectEntry.class.getSimpleName(), 0));
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(
-				StringBundler.concat(
-					"Unable to get object definition ", objectDefinitionId,
-					" for object entry ", objectEntry.getObjectEntryId()),
-				portalException);
-		}
+		return _getInfoForm(objectEntry.getGroupId());
 	}
 
 	@Override
-	public InfoForm getInfoForm(String formVariationKey, long groupId)
-		throws NoSuchFormVariationException {
+	public InfoForm getInfoForm(String formVariationKey, long groupId) {
+		return _getInfoForm(groupId);
+	}
 
-		long objectDefinitionId = GetterUtil.getLong(formVariationKey);
-
-		if (objectDefinitionId == 0) {
-			objectDefinitionId = _objectDefinition.getObjectDefinitionId();
+	private InfoForm _getInfoForm(long groupId) {
+		try {
+			return ObjectEntryInfoItemFormProviderUtil.getInfoForm(
+				InfoFieldSet.builder(
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.authorInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.createDateInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.externalReferenceCodeInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.modifiedDateInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.objectEntryIdInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.publishDateInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.statusInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.userProfileImageInfoField
+				).labelInfoLocalizedValue(
+					InfoLocalizedValue.localize(getClass(), "basic-information")
+				).name(
+					"basic-information"
+				).build(),
+				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+					_objectDefinition.getClassName(), StringPool.BLANK,
+					ObjectEntry.class.getSimpleName(), groupId),
+				_infoItemFieldReaderFieldSetProvider,
+				_objectDefinition.getClassName(), _objectActionLocalService,
+				_objectDefinition, _objectDefinition.getObjectDefinitionId(),
+				_objectDefinitionLocalService, _objectFieldInfoFieldConverter,
+				_objectFieldLocalService, _objectRelationshipLocalService,
+				_templateInfoItemFieldSetProvider);
 		}
-
-		return _getInfoForm(
-			objectDefinitionId,
-			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				_getModelClassName(objectDefinitionId), StringPool.BLANK,
-				ObjectEntry.class.getSimpleName(), groupId));
-	}
-
-	private InfoForm _getInfoForm(
-			long objectDefinitionId, InfoFieldSet displayPageInfoFieldSet)
-		throws NoSuchFormVariationException {
-
-		return ObjectEntryInfoItemFormProviderUtil.getInfoForm(
-			InfoFieldSet.builder(
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.authorInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.createDateInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.externalReferenceCodeInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.modifiedDateInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.objectEntryIdInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.publishDateInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.statusInfoField
-			).infoFieldSetEntry(
-				ObjectEntryInfoItemFields.userProfileImageInfoField
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "basic-information")
-			).name(
-				"basic-information"
-			).build(),
-			displayPageInfoFieldSet, _infoItemFieldReaderFieldSetProvider,
-			_getModelClassName(objectDefinitionId), _objectActionLocalService,
-			_objectDefinition, objectDefinitionId,
-			_objectDefinitionLocalService, _objectFieldInfoFieldConverter,
-			_objectFieldLocalService, _objectRelationshipLocalService,
-			_templateInfoItemFieldSetProvider);
-	}
-
-	private String _getModelClassName(long objectDefinitionId) {
-		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	private final DisplayPageInfoItemFieldSetProvider

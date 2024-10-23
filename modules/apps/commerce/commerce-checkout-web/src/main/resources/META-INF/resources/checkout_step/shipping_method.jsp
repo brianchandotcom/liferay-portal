@@ -44,6 +44,19 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 			</aui:script>
 		</c:when>
 		<c:otherwise>
+			<c:if test="<%= shippingMethodCheckoutStepDisplayContext.isCommerceOrderMultishipping() %>">
+				<clay:row>
+					<clay:col
+						size="12"
+					>
+						<clay:alert
+							displayType="warning"
+							message="shipping-method-multishipping-warning"
+						/>
+					</clay:col>
+				</clay:row>
+			</c:if>
+
 			<ul class="list-group">
 
 				<%

@@ -102,7 +102,7 @@
 									"mapping": {
 										"fieldKey": "ObjectField_field1",
 										"itemReference": {
-											"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]",
+											"className": "[OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]",
 											"classPK": "[$TestObjectDefinition3#TEST_OBJECT_ENTRY_1$]"
 										}
 									}

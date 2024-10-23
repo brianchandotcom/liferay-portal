@@ -132,6 +132,7 @@ interface ObjectDefinition {
 	accountEntryRestrictedObjectFieldName: string;
 	actions: Actions;
 	active: boolean;
+	className?: string;
 	dateCreated: string;
 	dateModified: string;
 	dbTableName?: string;

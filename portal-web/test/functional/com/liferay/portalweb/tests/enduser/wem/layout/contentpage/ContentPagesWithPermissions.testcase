@@ -1158,8 +1158,10 @@ definition {
 			task ("Define the permissions of regular role") {
 				var objectDefinitionId = JSONObject.getObjectId(objectName = ${objectName});
 
+				var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectDefinitionId});
+
 				Permissions.definePermissionsViaJSONAPI(
-					resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE,VIEW:com.liferay.object#${objectDefinitionId},ADD_OBJECT_ENTRY:com.liferay.object.model.ObjectDefinition#${objectDefinitionId},VIEW",
+					resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE,VIEW:com.liferay.object#${objectDefinitionId},ADD_OBJECT_ENTRY:${objectDefinitionClassName},VIEW",
 					roleTitle = ${randomRoleKey},
 					roleType = "regular");
 			}
@@ -2294,9 +2296,10 @@ definition {
 				fieldName = "name",
 				objectName = "${objectName}2",
 				value = "Liferay");
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectDefinitionId});
 
 			Permissions.definePermissionsViaJSONAPI(
-				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE:com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinitionId},VIEW:com.liferay.object.model.ObjectDefinition#${objectDefinitionId},VIEW",
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE:com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinitionId},VIEW:${objectDefinitionClassName},VIEW",
 				roleTitle = ${randomRoleKey},
 				roleType = "regular");
 

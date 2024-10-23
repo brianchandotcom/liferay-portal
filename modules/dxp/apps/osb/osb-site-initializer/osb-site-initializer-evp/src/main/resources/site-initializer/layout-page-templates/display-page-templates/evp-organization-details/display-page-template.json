@@ -1,6 +1,6 @@
 {
 	"contentType": {
-		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]"
+		"className": "[$OBJECT_DEFINITION_CLASS_NAME:EVPOrganization$]"
 	},
 	"defaultTemplate": true,
 	"name": "EVP Organization Details"

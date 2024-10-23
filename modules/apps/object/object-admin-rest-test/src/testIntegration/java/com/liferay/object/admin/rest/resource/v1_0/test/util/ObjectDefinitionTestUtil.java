@@ -67,10 +67,9 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			"L_" + StringUtil.toLowerCase(RandomTestUtil.randomString()),
-			TestPropsValues.getUserId(), 0, ObjectDefinition.class.getName(),
-			null, false, false, false, LocalizedMapUtil.getLocalizedMap(value),
-			true, "Test", null, null, null, null,
-			LocalizedMapUtil.getLocalizedMap(value), true,
+			TestPropsValues.getUserId(), 0, null, null, false, false, false,
+			LocalizedMapUtil.getLocalizedMap(value), true, "Test", null, null,
+			null, null, LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, 0,
 			Collections.emptyList());
 	}

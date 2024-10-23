@@ -2380,9 +2380,11 @@ definition {
 			roleTitle = "Guest",
 			roleType = "regular");
 
+		var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+			resourceName = ${objectDefinitionClassName},
 			roleTitle = "Guest",
 			roleType = "regular");
 
@@ -2595,9 +2597,11 @@ definition {
 
 		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
+		var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+			resourceName = ${objectDefinitionClassName},
 			roleTitle = "Guest",
 			roleType = "regular");
 

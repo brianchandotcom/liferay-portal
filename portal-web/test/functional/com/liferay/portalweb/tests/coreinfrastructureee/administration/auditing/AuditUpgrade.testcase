@@ -63,20 +63,20 @@ definition {
 		task ("Then you should see the groupId in the audit event") {
 			Audit.openAuditAdmin();
 
-			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
 
 			AssertElementPresent(
 				key_resourceAction = "ADD",
-				key_resourceName = ${resourceName},
+				key_resourceName = ${objectDefinitionClassName},
 				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
 
 			Audit.viewAuditDetails(
 				additionalInformation = "myObjectField,Test Content",
 				groupId = ${groupId},
 				key_resourceAction = "ADD",
-				key_resourceName = "ObjectDefinition#${objectId}",
+				key_resourceName = ${objectDefinitionClassName},
 				resourceAction = "ADD",
-				resourceName = "ObjectDefinition#${objectId}",
+				resourceName = ${objectDefinitionClassName},
 				userName = "Test Test");
 		}
 	}

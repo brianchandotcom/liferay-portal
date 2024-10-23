@@ -486,7 +486,7 @@ test(
 			key: basicFragmentEntryName,
 		});
 
-		const {id: objectDefinitionId} =
+		const {className: objectDefinitionClassName} =
 			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 				LEMON_OBJECT_ERC
 			);
@@ -498,7 +498,7 @@ test(
 
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
-			objectDefinitionId,
+			objectDefinitionClassName,
 			pageElements: [inputFragmentDefinition],
 		});
 

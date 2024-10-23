@@ -5,7 +5,7 @@
 				"definition": {
 					"formConfig": {
 						"formReference": {
-							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+							"className": "[$OBJECT_DEFINITION_CLASS_NAME:EVPOrganization$]",
 							"classType": 0
 						},
 						"formSuccessSubmissionResult": {

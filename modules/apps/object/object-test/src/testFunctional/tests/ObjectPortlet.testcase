@@ -860,10 +860,12 @@ definition {
 			roleTitle = "Regular Role",
 			roleType = "regular");
 
+		var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
+
 		for (var resourceActionIndex : list "VIEW,DELETE") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+				resourceName = ${objectDefinitionClassName},
 				roleTitle = "Regular Role",
 				roleType = "regular");
 		}
@@ -1376,9 +1378,11 @@ definition {
 			roleTitle = "Regular Role",
 			roleType = "regular");
 
+		var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+			resourceName = ${objectDefinitionClassName},
 			roleTitle = "Regular Role",
 			roleType = "regular");
 
@@ -1697,10 +1701,12 @@ definition {
 			roleTitle = "Regular Role",
 			roleType = "regular");
 
+		var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
+
 		for (var resourceActionIndex : list "VIEW,UPDATE") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+				resourceName = ${objectDefinitionClassName},
 				roleTitle = "Regular Role",
 				roleType = "regular");
 		}
@@ -1991,9 +1997,11 @@ definition {
 			roleTitle = "Regular Role",
 			roleType = "regular");
 
+		var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+			resourceName = ${objectDefinitionClassName},
 			roleTitle = "Regular Role",
 			roleType = "regular");
 

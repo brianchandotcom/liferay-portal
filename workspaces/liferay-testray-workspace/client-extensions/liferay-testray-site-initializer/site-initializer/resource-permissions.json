@@ -11,6 +11,844 @@
 	},
 	{
 		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Build$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Build$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Build$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Build$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Case$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Case$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Case$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Case$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseResult$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseResult$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseResult$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseResult$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseType$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseType$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseType$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CaseType$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Component$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Component$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Component$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Component$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Factor$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Factor$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Factor$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Factor$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorCategory$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorCategory$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorCategory$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorCategory$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorOption$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorOption$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorOption$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:FactorOption$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ProductVersion$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ProductVersion$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ProductVersion$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ProductVersion$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Project$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Project$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Project$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Project$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Requirement$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Requirement$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Requirement$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Requirement$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RequirementsCases$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RequirementsCases$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RequirementsCases$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RequirementsCases$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Routine$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Routine$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Routine$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Routine$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Run$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Run$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Run$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Run$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Subtask$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Subtask$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Subtask$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Subtask$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Suite$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Suite$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Suite$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Suite$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:SuitesCases$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:SuitesCases$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:SuitesCases$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:SuitesCases$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Task$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Task$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Task$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Task$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksCaseTypes$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksCaseTypes$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksCaseTypes$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksCaseTypes$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksUsers$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW",
+			"DELETE"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksUsers$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksUsers$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksUsers$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Team$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Team$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Team$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Team$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"REPLY_TO_MESSAGE"
 		],
 		"primKey": "0",
@@ -671,844 +1509,6 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Testray User",
 		"scope": 4
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Factor$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Factor$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Factor$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Factor$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RequirementsCases$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RequirementsCases$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RequirementsCases$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RequirementsCases$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SuitesCases$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SuitesCases$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SuitesCases$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SuitesCases$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksCaseTypes$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksCaseTypes$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksCaseTypes$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksCaseTypes$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksUsers$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksUsers$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksUsers$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TasksUsers$]",
-		"roleName": "Testray User",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
-		"roleName": "Testray Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
-		"roleName": "Testray Analyst",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
-		"roleName": "Testray Lead",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
-		"roleName": "Testray User",
-		"scope": 1
 	},
 	{
 		"actionIds": [

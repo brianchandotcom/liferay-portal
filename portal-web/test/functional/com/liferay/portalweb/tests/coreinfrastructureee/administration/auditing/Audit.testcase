@@ -380,7 +380,7 @@ definition {
 		task ("When you search for SiteID of Site A and export audit events") {
 			Audit.openAuditAdmin();
 
-			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
 
 			Audit.searchCP(
 				groupId = ${groupId1},
@@ -399,7 +399,7 @@ definition {
 		task ("Then verify that only Site A related entry is returning to the result table") {
 			AssertTextEquals(
 				key_resourceAction = "ADD",
-				key_resourceName = ${resourceName},
+				key_resourceName = ${objectDefinitionClassName},
 				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
 				value1 = "ADD");
 
@@ -411,9 +411,9 @@ definition {
 				additionalInformation = "myObjectField,Test Content",
 				groupId = ${groupId1},
 				key_resourceAction = "ADD",
-				key_resourceName = "ObjectDefinition#${objectId}",
+				key_resourceName = ${objectDefinitionClassName},
 				resourceAction = "ADD",
-				resourceName = "ObjectDefinition#${objectId}",
+				resourceName = ${objectDefinitionClassName},
 				userName = "Test Test");
 		}
 
@@ -638,20 +638,20 @@ definition {
 		task ("Then you should see the groupId in the audit event") {
 			Audit.openAuditAdmin();
 
-			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${objectId});
 
 			AssertElementPresent(
 				key_resourceAction = "ADD",
-				key_resourceName = ${resourceName},
+				key_resourceName = ${objectDefinitionClassName},
 				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
 
 			Audit.viewAuditDetails(
 				additionalInformation = "myObjectField,Test Content",
 				groupId = ${groupId},
 				key_resourceAction = "ADD",
-				key_resourceName = "ObjectDefinition#${objectId}",
+				key_resourceName = ${objectDefinitionClassName},
 				resourceAction = "ADD",
-				resourceName = "ObjectDefinition#${objectId}",
+				resourceName = ${objectDefinitionClassName},
 				userName = "Test Test");
 		}
 
@@ -667,7 +667,7 @@ definition {
 		task ("Then the relevant audit events should display") {
 			AssertTextEquals(
 				key_resourceAction = "ADD",
-				key_resourceName = ${resourceName},
+				key_resourceName = ${objectDefinitionClassName},
 				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
 				value1 = "ADD");
 		}
@@ -792,20 +792,23 @@ definition {
 		task ("Then you should see the groupId in the audit event on virtual instance") {
 			Audit.openAuditAdmin(baseURL = "http://www.able.com:8080");
 
-			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(
+				objectDefinitionId = ${objectId},
+				userEmailAddress = "test@www.able.com",
+				virtualHost = "www.able.com");
 
 			AssertElementPresent(
 				key_resourceAction = "ADD",
-				key_resourceName = ${resourceName},
+				key_resourceName = ${objectDefinitionClassName},
 				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
 
 			Audit.viewAuditDetails(
 				additionalInformation = "myObjectField,Test Content",
 				groupId = ${groupId},
 				key_resourceAction = "ADD",
-				key_resourceName = "ObjectDefinition#${objectId}",
+				key_resourceName = ${objectDefinitionClassName},
 				resourceAction = "ADD",
-				resourceName = "ObjectDefinition#${objectId}",
+				resourceName = ${objectDefinitionClassName},
 				userName = "Test Test");
 		}
 	}

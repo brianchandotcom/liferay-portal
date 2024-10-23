@@ -127,7 +127,7 @@
 										"definition": {
 											"formConfig": {
 												"formReference": {
-													"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPPaymentConfirmation$]"
+													"className": "[$OBJECT_DEFINITION_CLASS_NAME:EVPPaymentConfirmation$]"
 												}
 											},
 											"indexed": true,

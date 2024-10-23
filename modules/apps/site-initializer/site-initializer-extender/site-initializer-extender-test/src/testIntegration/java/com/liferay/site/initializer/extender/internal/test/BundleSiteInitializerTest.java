@@ -1345,7 +1345,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertFalse(
 			infoItemClassName.contains(
-				"[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"));
+				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition1$]"));
 
 		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
@@ -1401,7 +1401,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertFalse(
 			infoItemClassName.contains(
-				"[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"));
+				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition1$]"));
 
 		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
@@ -3144,7 +3144,7 @@ public class BundleSiteInitializerTest {
 				"[$TestObjectDefinition3#Test_Object_Entry_1$]"));
 		Assert.assertFalse(
 			pageDefinitionString.contains(
-				"[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"));
+				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"));
 
 		layout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-url-layout");
@@ -3273,7 +3273,7 @@ public class BundleSiteInitializerTest {
 				"[$TestObjectDefinition3#Test_Object_Entry_1$]"));
 		Assert.assertFalse(
 			pageDefinitionString.contains(
-				"[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"));
+				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"));
 
 		layout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-url-layout");

@@ -11,5 +11,5 @@
 		"en-US": "This is a subject for Test Commerce Notification Template"
 	},
 	"to": "test@liferay.com",
-	"type": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]#create"
+	"type": "[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition1$]#create"
 }

@@ -28,6 +28,66 @@
 	},
 	{
 		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RaylifeApplication$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RaylifeApplication$]",
+		"roleName": "Underwriter",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RaylifeClaim$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RaylifePolicy$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RaylifeQuote$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:RaylifeSalesGoal$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"MANAGE_ORGANIZATIONS"
 		],
 		"primKey": "0",
@@ -239,66 +299,6 @@
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
 		"roleName": "Producer",
 		"scope": 1
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Underwriter",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeClaim$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifePolicy$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
-		"roleName": "Producer",
-		"scope": "1"
 	},
 	{
 		"actionIds": [

@@ -143,9 +143,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given the role "Test" assigned to student entry") {
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${staticObjectDefinitionId});
+
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
-				resourceName = "com.liferay.object.model.ObjectDefinition#${staticObjectDefinitionId}",
+				resourceName = ${objectDefinitionClassName},
 				roleTitle = "Test",
 				roleType = "regular");
 		}
@@ -192,9 +194,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given the role "Test" assigned to student entry through jsonws") {
+			var objectDefinitionClassName = ObjectDefinitionAPI._getObjectDefinitionClassNameById(objectDefinitionId = ${staticObjectDefinitionId});
+
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
-				resourceName = "com.liferay.object.model.ObjectDefinition#${staticObjectDefinitionId}",
+				resourceName = ${objectDefinitionClassName},
 				roleTitle = "Test",
 				roleType = "regular");
 		}

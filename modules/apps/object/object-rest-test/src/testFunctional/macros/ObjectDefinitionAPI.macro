@@ -225,6 +225,43 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _getObjectDefinitionClassNameById(objectDefinitionId = null, virtualHost = null, token = null, userEmailAddress = null, userPassword = null) {
+		Variables.assertDefined(parameterList = ${objectDefinitionId});
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = PropsUtil.get("default.admin.password");
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
+		var objectDefinitionClassName = JSONCurlUtil.get(${curl}, "$.className");
+
+		return ${objectDefinitionClassName};
+	}
+
+	@summary = "Default summary"
 	macro _getObjectDefinitionStatusById(objectDefinitionId = null, virtualHost = null, token = null) {
 		Variables.assertDefined(parameterList = ${objectDefinitionId});
 

@@ -80,7 +80,7 @@
 						"definition": {
 							"formConfig": {
 								"formReference": {
-									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SupportTicketEscalation$]",
+									"className": "[$OBJECT_DEFINITION_CLASS_NAME:SupportTicketEscalation$]",
 									"classType": 0
 								},
 								"formSuccessSubmissionResult": {

@@ -162,7 +162,7 @@ test.describe('Captcha Fragment', () => {
 
 			// Create a page with a form fragment with a captcha fragment
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 					LEMON_OBJECT_ERC
 				);
@@ -179,7 +179,7 @@ test.describe('Captcha Fragment', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [captchaDefinition, submitFragmentDefinition],
 			});
 
@@ -1488,7 +1488,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1508,7 +1508,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment],
 			});
 
@@ -1570,7 +1570,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1583,7 +1583,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 			});
 
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -1669,7 +1669,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1697,7 +1697,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment],
 				steps: [[headingDefinition], [buttonDefinition]],
 			});
@@ -1747,7 +1747,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1788,7 +1788,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
-				objectDefinitionId,
+				objectDefinitionClassName,
 				steps: [
 					[headingDefinition, formButtonNext],
 					[buttonDefinition, formButtonPrevious, formButtonSubmit],
@@ -1880,7 +1880,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1913,14 +1913,14 @@ test.describe('Multistep', () => {
 
 			const form1Definition = getFormContainerDefinition({
 				id: getRandomString(),
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment1],
 				steps: [[headingDefinition], []],
 			});
 
 			const form2Definition = getFormContainerDefinition({
 				id: getRandomString(),
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment2],
 				steps: [[buttonDefinition], []],
 			});
@@ -1978,7 +1978,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1998,7 +1998,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment],
 				steps: [[]],
 			});
@@ -2048,7 +2048,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -2061,7 +2061,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [],
 			});
 
@@ -2125,7 +2125,7 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 					LEMON_OBJECT_ERC
 				);
@@ -2143,7 +2143,7 @@ test.describe('Multistep', () => {
 
 			const firstFormDefinition = getFormContainerDefinition({
 				id: firstFormId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment],
 				steps: [[]],
 			});
@@ -2152,7 +2152,7 @@ test.describe('Multistep', () => {
 
 			const secondFormDefinition = getFormContainerDefinition({
 				id: secondFormId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [],
 			});
 
@@ -2228,7 +2228,7 @@ test.describe('Multistep', () => {
 
 			// Get the id of Potato object from the site initializer
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 					POTATO_OBJECT_ERC
 				);
@@ -2264,7 +2264,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment],
 				steps: [[], [textInputFragment], [submitButtonFragment]],
 			});
@@ -2374,7 +2374,7 @@ test.describe('Multistep', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -2402,7 +2402,7 @@ test.describe('Multistep', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [stepperFragment],
 				steps: [[], [headingDefinition], []],
 			});
@@ -2594,7 +2594,7 @@ test.describe('Edit mode form errors', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -2607,7 +2607,7 @@ test.describe('Edit mode form errors', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
-				objectDefinitionId,
+				objectDefinitionClassName,
 				pageElements: [],
 			});
 
@@ -2645,7 +2645,7 @@ test.describe('Edit mode form errors', () => {
 				ObjectAdminRestClient
 			);
 
-			const {id: objectDefinitionId} =
+			const {className: objectDefinitionClassName} =
 				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 					{
 						externalReferenceCode: LEMON_OBJECT_ERC,
@@ -2672,7 +2672,7 @@ test.describe('Edit mode form errors', () => {
 
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
-				objectDefinitionId,
+				objectDefinitionClassName,
 				steps: [[nextButton], [previousButton], [], [nextButton]],
 			});
 

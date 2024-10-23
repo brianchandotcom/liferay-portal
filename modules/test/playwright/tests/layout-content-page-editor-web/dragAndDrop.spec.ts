@@ -320,7 +320,7 @@ test(
 
 		// Get the id of Potato object from the site initializer
 
-		const {id: objectDefinitionId} =
+		const {className: objectDefinitionClassName} =
 			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 				POTATO_OBJECT_ERC
 			);
@@ -353,7 +353,7 @@ test(
 
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
-			objectDefinitionId,
+			objectDefinitionClassName,
 			pageElements: [stepperFragment],
 			steps: [[firstInputDefinition, secondInputDefintion], []],
 		});

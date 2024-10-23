@@ -115,7 +115,7 @@
 							],
 							"formConfig": {
 								"formReference": {
-									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ReplacementActivationKeyRequest$]"
+									"className": "[$OBJECT_DEFINITION_CLASS_NAME:ReplacementActivationKeyRequest$]"
 								}
 							},
 							"fragmentStyle": {

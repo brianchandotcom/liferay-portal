@@ -1,6 +1,6 @@
 {
 	"contentType": {
-		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackRequest$]"
+		"className": "[$OBJECT_DEFINITION_CLASS_NAME:CallbackRequest$]"
 	},
 	"defaultTemplate": true,
 	"name": "Callback Request Success Template"

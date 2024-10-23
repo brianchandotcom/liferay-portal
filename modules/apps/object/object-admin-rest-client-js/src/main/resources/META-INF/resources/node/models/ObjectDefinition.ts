@@ -14,6 +14,7 @@ export type ObjectDefinition = {
     accountEntryRestrictedObjectFieldName?: string;
     readonly actions?: Record<string, Record<string, string>>;
     active?: boolean;
+    className?: string;
     readonly dateCreated?: string;
     readonly dateModified?: string;
     defaultLanguageId?: string;

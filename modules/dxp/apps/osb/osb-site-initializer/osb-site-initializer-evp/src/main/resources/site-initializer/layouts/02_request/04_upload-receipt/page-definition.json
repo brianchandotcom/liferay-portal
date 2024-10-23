@@ -131,7 +131,7 @@
 										"definition": {
 											"formConfig": {
 												"formReference": {
-													"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPUploadReceipt$]",
+													"className": "[$OBJECT_DEFINITION_CLASS_NAME:EVPUploadReceipt$]",
 													"classType": 0
 												}
 											},

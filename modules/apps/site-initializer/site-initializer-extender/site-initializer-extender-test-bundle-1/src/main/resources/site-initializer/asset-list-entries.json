@@ -41,7 +41,7 @@
 	{
 		"title": "Test Asset List Entry 4",
 		"unicodeProperties": {
-			"classNameIds": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"
+			"classNameIds": "[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition1$]"
 		}
 	}
 ]

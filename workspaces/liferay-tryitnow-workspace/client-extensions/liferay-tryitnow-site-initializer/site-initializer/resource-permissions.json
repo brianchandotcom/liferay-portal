@@ -1,6 +1,47 @@
 [
 	{
 		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:J3Y7Ticket$]",
+		"roleName": "M2H8 Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW",
+			"AssignTicketToMe"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:J3Y7Ticket$]",
+		"roleName": "M2H8 Ticket Solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:M2H8ProgressTracker$]",
+		"roleName": "M2H8 Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:M2H8ProgressTracker$]",
+		"roleName": "M2H8 Ticket Solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",
@@ -117,47 +158,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "M2H8 Ticket Solvers",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "M2H8 Petitionaries",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW",
-			"AssignTicketToMe"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "M2H8 Ticket Solvers",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:M2H8ProgressTracker$]",
-		"roleName": "M2H8 Petitionaries",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:M2H8ProgressTracker$]",
 		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},

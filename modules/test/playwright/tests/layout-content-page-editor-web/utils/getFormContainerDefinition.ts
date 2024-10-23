@@ -9,18 +9,18 @@ type Step = PageElement[];
 
 type Props = {
 	id: string;
-	objectDefinitionId?: number;
+	objectDefinitionClassName?: string;
 	pageElements?: PageElement[];
 	steps?: Step[];
 };
 
 export default function getFormContainerDefinition({
 	id,
-	objectDefinitionId,
+	objectDefinitionClassName,
 	pageElements = [],
 	steps = [],
 }: Props): PageElement {
-	if (!objectDefinitionId) {
+	if (!objectDefinitionClassName) {
 		return {
 			definition: {},
 			id,
@@ -38,7 +38,7 @@ export default function getFormContainerDefinition({
 		definition: {
 			formConfig: {
 				formReference: {
-					className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionId}`,
+					className: objectDefinitionClassName,
 					classType: 0,
 				},
 				formType: steps.length ? 'multistep' : 'simple',

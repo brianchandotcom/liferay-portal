@@ -972,10 +972,14 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setAccountEntryRestricted(false);
 		objectDefinition.setAccountEntryRestrictedObjectFieldName("");
 		objectDefinition.setActive(false);
+		objectDefinition.setClassName(
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString());
+		objectDefinition.setEnableLocalization(true);
 		objectDefinition.setLabel(
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));
-		objectDefinition.setEnableLocalization(true);
 		objectDefinition.setModifiable(true);
 		objectDefinition.setName("O" + objectDefinition.getName());
 		objectDefinition.setObjectFolderExternalReferenceCode(

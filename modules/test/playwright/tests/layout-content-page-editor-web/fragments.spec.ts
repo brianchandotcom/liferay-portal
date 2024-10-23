@@ -1721,7 +1721,7 @@ test.describe('Tags Fragment', () => {
 			ObjectAdminRestClient
 		);
 
-		const {id: objectDefinitionId} =
+		const {className: objectDefinitionClassName, id: objectDefinitionId} =
 			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 				{
 					externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1768,7 +1768,7 @@ test.describe('Tags Fragment', () => {
 
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
-			objectDefinitionId,
+			objectDefinitionClassName,
 			pageElements: [
 				inputDefinition,
 				firstTagsFragmentDefinition,
@@ -1872,7 +1872,7 @@ test.describe('Tags Fragment', () => {
 			ObjectAdminRestClient
 		);
 
-		const {id: objectDefinitionId} =
+		const {className: objectDefinitionClassName} =
 			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 				{
 					externalReferenceCode: LEMON_BASKET_OBJECT_ERC,
@@ -1892,7 +1892,7 @@ test.describe('Tags Fragment', () => {
 
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
-			objectDefinitionId,
+			objectDefinitionClassName,
 			pageElements: [
 				getFragmentDefinition({
 					id: getRandomString(),

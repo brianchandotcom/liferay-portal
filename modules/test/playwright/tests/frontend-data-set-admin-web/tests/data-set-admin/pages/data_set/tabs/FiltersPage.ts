@@ -284,7 +284,7 @@ export class FiltersPage {
 		await this.newSelectionFilterForm.restApplicationField.click();
 		await this.newSelectionFilterForm.restApplicationOptions.waitFor();
 		await this.newSelectionFilterForm.restApplicationOptions
-			.getByRole('option', {name: restApplication})
+			.getByRole('option', {exact: true, name: restApplication})
 			.click();
 
 		await this.newSelectionFilterForm.restSchemaField.waitFor();

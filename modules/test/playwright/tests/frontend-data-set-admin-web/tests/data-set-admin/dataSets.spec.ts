@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 
@@ -54,14 +55,14 @@ const skusDataSetConfig = {
 
 const tableSectionsDataSetConfig = {
 	name: getRandomString(),
-	restApplication: '/data-set-admin/table-sections',
+	restApplication: `${API_ENDPOINT_PATH}/table-sections`,
 	restEndpoint: '/',
 	restSchema: 'DataSetTableSection',
 };
 
 const tableSectionsWithSpecialCharactersDataSetConfig = {
 	name: 'Data Set ~!@#$%^&*(){}[].<>/? name',
-	restApplication: '/data-set-admin/table-sections',
+	restApplication: `${API_ENDPOINT_PATH}/table-sections`,
 	restEndpoint: '/',
 	restSchema: 'DataSetTableSection',
 };

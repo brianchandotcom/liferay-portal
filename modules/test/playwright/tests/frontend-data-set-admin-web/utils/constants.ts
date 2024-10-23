@@ -5,6 +5,8 @@
 
 import {liferayConfig} from '../../../liferay.config';
 
+const API_ENDPOINT_PATH = '/data-set-admin/data-sets';
+
 const ES_BASE_URL = `${liferayConfig.environment.baseUrl}/es`;
 const EN_BASE_URL = `${liferayConfig.environment.baseUrl}/en`;
 const PT_BASE_URL = `${liferayConfig.environment.baseUrl}/pt`;
@@ -38,6 +40,7 @@ const SELECTION_FILTER_DATA_SET_RELATIONSHIP =
 const SORT_DATA_SET_RELATIONSHIP = REL_PREFIX + 'DataSetSorts' + REL_POSTFIX;
 
 export {
+	API_ENDPOINT_PATH,
 	CARDS_SECTION_DATA_SET_RELATIONSHIP,
 	CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP,
 	LIST_SECTION_DATA_SET_RELATIONSHIP,

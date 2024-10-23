@@ -10,6 +10,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {detailsPageTest} from './fixtures/detailsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
@@ -92,7 +93,7 @@ test.describe('Data Set Details', () => {
 
 			await test.step('Check the URL Preview input properly displays the REST endpoint with the encoded parameters', async () => {
 				await expect(detailsPage.urlPreviewInput).toHaveValue(
-					'/data-set-admin/table-sections?filter=name%20eq%20%22Test%20Test%22'
+					`${API_ENDPOINT_PATH}/table-sections?filter=name%20eq%20%22Test%20Test%22`
 				);
 			});
 		});

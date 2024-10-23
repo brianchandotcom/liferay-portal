@@ -7,7 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import {DEFAULT_LABEL} from '../../../utils/constants';
+import {API_ENDPOINT_PATH, DEFAULT_LABEL} from '../../../utils/constants';
 
 export class DataSetsPage {
 	readonly apiHelpers: ApiHelpers;
@@ -62,7 +62,7 @@ export class DataSetsPage {
 
 	async createDataSet({
 		name = DEFAULT_LABEL.DATA_SET,
-		restApplication = '/data-set-admin/table-sections',
+		restApplication = `${API_ENDPOINT_PATH}/table-sections`,
 		restEndpoint = '/',
 		restSchema = 'DataSetTableSection',
 	}: {
@@ -153,7 +153,7 @@ export class DataSetsPage {
 			this.page.waitForResponse(
 				(response) =>
 					response.status() === 200 &&
-					response.url().includes('/data-set-admin/data-sets?')
+					response.url().includes(`${API_ENDPOINT_PATH}?`)
 			),
 		]);
 	}

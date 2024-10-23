@@ -77,7 +77,7 @@ export class DocumentLibraryEditFilePage {
 		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
 	}
 
-	async openFieldset(name: 'Categorization') {
+	async openFieldset(name: string) {
 		const fieldset = await this.page.getByRole('group', {
 			name,
 		});

@@ -298,26 +298,28 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		JSONArray scopeGroupIdsJSONArray =
 			uiConfigurationValuesJSONObject.getJSONArray("scope_group_ids");
 
-		if (scopeGroupIdsJSONArray != null) {
-			JSONArray groupIdsExternalReferenceCodesJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
-				JSONObject scopeGroupIDJSONObject =
-					scopeGroupIdsJSONArray.getJSONObject(i);
-
-				groupIdsExternalReferenceCodesJSONArray.put(
-					_createScopeGroupExternalReferenceCodesJSONObject(
-						scopeGroupIDJSONObject));
-			}
-
-			uiConfigurationValuesJSONObject.put(
-				"scope_group_external_reference_codes",
-				groupIdsExternalReferenceCodesJSONArray
-			).remove(
-				"scope_group_ids"
-			);
+		if (scopeGroupIdsJSONArray == null) {
+			return;
 		}
+
+		JSONArray groupIdsExternalReferenceCodesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
+			JSONObject scopeGroupIDJSONObject =
+				scopeGroupIdsJSONArray.getJSONObject(i);
+
+			groupIdsExternalReferenceCodesJSONArray.put(
+				_createScopeGroupExternalReferenceCodesJSONObject(
+					scopeGroupIDJSONObject));
+		}
+
+		uiConfigurationValuesJSONObject.put(
+			"scope_group_external_reference_codes",
+			groupIdsExternalReferenceCodesJSONArray
+		).remove(
+			"scope_group_ids"
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

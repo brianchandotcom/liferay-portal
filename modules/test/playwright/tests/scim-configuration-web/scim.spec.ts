@@ -16,9 +16,6 @@ import {liferayConfig} from '../../liferay.config';
 import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
-import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
-import {UserGroupsPage} from '../../pages/users-admin-web/UserGroupsPage';
-import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../utils/performLogin';
 
@@ -451,15 +448,11 @@ test('LPD-37452 verify expando field is not visible for user added to SCIM', asy
 
 	await apiHelper.scim.postUser(newUser);
 
-	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(page);
-
 	await usersAndOrganizationsPage.goToUsers(true);
 
 	await (
 		await usersAndOrganizationsPage.usersTableRowLink(newUser.userName)
 	).click();
-
-	editUserPage = await new EditUserPage(page);
 
 	await expect(
 		await editUserPage.customField('scimClientId')
@@ -488,8 +481,6 @@ test('LPD-37452 verify expando field is not visible for group added to SCIM', as
 	const apiHelper = new ApiHelpers(page);
 
 	await apiHelper.scim.postGroup(newGroup);
-
-	userGroupsPage = await new UserGroupsPage(page);
 
 	await userGroupsPage.goto(true);
 

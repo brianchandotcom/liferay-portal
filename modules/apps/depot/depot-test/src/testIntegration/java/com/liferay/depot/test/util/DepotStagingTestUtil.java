@@ -80,7 +80,7 @@ public class DepotStagingTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		_addStagingAttributes(serviceContext);
+		_setStagingAttributes(serviceContext);
 
 		serviceContext.setAttribute("staging", Boolean.TRUE);
 
@@ -110,12 +110,12 @@ public class DepotStagingTestUtil {
 			serviceContext.setScopeGroupId(
 				remoteStagingDepotEntry.getGroupId());
 
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext,
 				StagingUtil.getStagedPortletId(_DEPOT_ADMIN_PORTLET_ID), true);
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 				false);
 
@@ -159,7 +159,7 @@ public class DepotStagingTestUtil {
 			liveGroup.getGroupId(), false, parameters);
 	}
 
-	private static void _addStagingAttribute(
+	private static void _setStagingAttribute(
 		ServiceContext serviceContext, String key, Object value) {
 
 		serviceContext.setAttribute(
@@ -167,15 +167,15 @@ public class DepotStagingTestUtil {
 			String.valueOf(value));
 	}
 
-	private static void _addStagingAttributes(ServiceContext serviceContext) {
-		_addStagingAttribute(
+	private static void _setStagingAttributes(ServiceContext serviceContext) {
+		_setStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.DATA_STRATEGY_MIRROR, true);
-		_addStagingAttribute(
+		_setStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
 			true);
-		_addStagingAttribute(
+		_setStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, true);
-		_addStagingAttribute(
+		_setStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL, true);
 	}
 

@@ -116,7 +116,7 @@ public class LayoutPageTemplateEntryRemoteStagingTest {
 					_remoteLiveGroup.getGroupId()));
 	}
 
-	private void _addStagingAttribute(
+	private void _setStagingAttribute(
 		ServiceContext serviceContext, String key, Object value) {
 
 		serviceContext.setAttribute(
@@ -143,9 +143,9 @@ public class LayoutPageTemplateEntryRemoteStagingTest {
 			serviceContext.setAddGuestPermissions(true);
 			serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
 
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 				false);
 

@@ -45,14 +45,14 @@ public class FileEntryRemoteStagingTestUtil {
 			serviceContext.setAddGuestPermissions(true);
 			serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
 
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext,
 				StagingUtil.getStagedPortletId(
 					DLPortletKeys.DOCUMENT_LIBRARY_ADMIN),
 				true);
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
-			_addStagingAttribute(
+			_setStagingAttribute(
 				serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 				false);
 
@@ -68,7 +68,7 @@ public class FileEntryRemoteStagingTestUtil {
 		}
 	}
 
-	private static void _addStagingAttribute(
+	private static void _setStagingAttribute(
 		ServiceContext serviceContext, String key, Object value) {
 
 		serviceContext.setAttribute(

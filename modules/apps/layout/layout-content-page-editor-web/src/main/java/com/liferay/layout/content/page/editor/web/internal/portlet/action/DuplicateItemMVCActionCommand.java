@@ -166,7 +166,7 @@ public class DuplicateItemMVCActionCommand
 	@Override
 	protected String getNoninstanceablePortletExceptionMessage() {
 		return "the-layout-could-not-be-duplicated-because-it-contains-a-" +
-			"widget-x-that-can-only-appear-once-in-the-page";
+			"widget-x-that-can-only-appear-once-on-the-page";
 	}
 
 	@Override

@@ -165,7 +165,7 @@ public class CopyItemsMVCActionCommand
 	@Override
 	protected String getNoninstanceablePortletExceptionMessage() {
 		return "the-layout-could-not-be-copied-because-it-contains-a-widget-" +
-			"x-that-can-only-appear-once-in-the-page";
+			"x-that-can-only-appear-once-on-the-page";
 	}
 
 	@Override

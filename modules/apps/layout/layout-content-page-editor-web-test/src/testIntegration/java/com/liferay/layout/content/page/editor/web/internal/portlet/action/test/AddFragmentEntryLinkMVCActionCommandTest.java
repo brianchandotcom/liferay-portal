@@ -313,7 +313,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 				_language.format(
 					_portal.getSiteDefaultLocale(_group),
 					"the-fragment-could-not-be-added-because-it-contains-a-" +
-						"widget-x-that-can-only-appear-once-in-the-page",
+						"widget-x-that-can-only-appear-once-on-the-page",
 					"Noninstanciable Test"),
 				jsonObject.getString("error"));
 		}

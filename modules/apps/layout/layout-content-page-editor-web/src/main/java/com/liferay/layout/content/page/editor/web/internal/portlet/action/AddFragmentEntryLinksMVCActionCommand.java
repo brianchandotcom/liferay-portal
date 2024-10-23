@@ -99,7 +99,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 			errorMessage = _language.format(
 				themeDisplay.getRequest(),
 				"the-fragment-could-not-be-added-because-it-contains-a-" +
-					"widget-x-that-can-only-appear-once-in-the-page",
+					"widget-x-that-can-only-appear-once-on-the-page",
 				new String[] {
 					_portal.getPortletTitle(
 						portlet, httpSession.getServletContext(),

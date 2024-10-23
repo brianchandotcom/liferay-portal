@@ -312,8 +312,7 @@ public class ClientExtensionProjectConfigurator
 		_configureLiferayRoutes(project, workspaceExtension);
 
 		if (_isLanguageProject(project)) {
-			GradleUtil.applyPlugin(
-				project.getRootProject(), LangBuilderPlugin.class);
+			GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 
 			_configureLanguageProject(project);
 		}
@@ -940,11 +939,17 @@ public class ClientExtensionProjectConfigurator
 	private void _configureLanguageProject(Project project) {
 		TaskProvider<BuildLangTask> buildLangTaskProvider =
 			GradleUtil.getTaskProvider(
-				project.getRootProject(),
-				LangBuilderPlugin.BUILD_LANG_TASK_NAME, BuildLangTask.class);
+				project, LangBuilderPlugin.BUILD_LANG_TASK_NAME,
+				BuildLangTask.class);
 
 		buildLangTaskProvider.configure(
-			task -> task.setLangDir(project.getProjectDir()));
+			task -> {
+				task.setLangDir(project.getProjectDir());
+
+				Project rootProject = project.getRootProject();
+
+				task.setWorkingDir(rootProject.getProjectDir());
+			});
 
 		TaskProvider<WriteLanguageBatchEngineDataTask>
 			writeLanguageBatchEngineDataTaskProvider =

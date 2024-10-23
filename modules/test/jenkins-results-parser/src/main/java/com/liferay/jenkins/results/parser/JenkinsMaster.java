@@ -478,6 +478,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 	}
 
+	public JenkinsSlave getRandomJenkinsSlave() {
+		return JenkinsResultsParserUtil.getRandomListItem(getJenkinsSlaves());
+	}
+
 	public String getRemoteURL() {
 		return _masterRemoteURL;
 	}

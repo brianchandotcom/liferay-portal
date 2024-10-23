@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	property = "fds.data.provider.key=" + CommerceCheckoutFDSNames.DELIVERY_GROUP,
+	property = "fds.data.provider.key=" + CommerceCheckoutFDSNames.DELIVERY_GROUPS,
 	service = FDSDataProvider.class
 )
 public class CommerceCheckoutDeliveryGroupFDSDataProvider
@@ -71,12 +71,12 @@ public class CommerceCheckoutDeliveryGroupFDSDataProvider
 				Country country = commerceAddress.getCountry();
 
 				DeliveryGroup deliveryGroup = new DeliveryGroup(
+					commerceAddress.getCommerceAddressId(),
 					StringBundler.concat(
 						commerceAddress.getStreet1(),
 						StringPool.COMMA_AND_SPACE, commerceAddress.getCity(),
 						StringPool.COMMA_AND_SPACE,
 						country.getName(_portal.getLocale(httpServletRequest))),
-					commerceAddress.getCommerceAddressId(),
 					commerceOrderItem.getRequestedDeliveryDate(),
 					commerceOrderItem.getDeliveryGroup());
 

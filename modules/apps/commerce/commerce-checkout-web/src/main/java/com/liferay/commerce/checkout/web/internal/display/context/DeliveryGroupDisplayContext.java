@@ -1,0 +1,54 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.checkout.web.internal.display.context;
+
+import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Luca Pellizzon
+ */
+public class DeliveryGroupDisplayContext {
+
+	public DeliveryGroupDisplayContext(
+		CommerceAddressService commerceAddressService) {
+
+		_commerceAddressService = commerceAddressService;
+	}
+
+	public CommerceAddress getCommerceAddress(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		String commerceAddressIdString = getCommerceAddressId(
+			httpServletRequest);
+
+		return _commerceAddressService.fetchCommerceAddress(
+			GetterUtil.getLong(commerceAddressIdString));
+	}
+
+	public String getCommerceAddressId(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "addressId");
+	}
+
+	public Date getDeliveryGroupDate(HttpServletRequest httpServletRequest) {
+		return new Date(ParamUtil.getLong(httpServletRequest, "deliveryDate"));
+	}
+
+	public String getDeliveryGroupName(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "deliveryGroupName");
+	}
+
+	private final CommerceAddressService _commerceAddressService;
+
+}

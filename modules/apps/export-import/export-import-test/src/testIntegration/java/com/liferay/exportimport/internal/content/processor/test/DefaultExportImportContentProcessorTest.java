@@ -869,6 +869,57 @@ public class DefaultExportImportContentProcessorTest {
 		portalUtil.setPortal(new PortalImpl());
 	}
 
+	@Test
+	public void testReplaceExportContentReferencesWithFileEntryInTrash()
+		throws Exception {
+
+		String content = _replaceParameters(
+			_getContent("journal-content.xml"), _fileEntry);
+
+		FileEntry deletedFileEntry = DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		content = StringUtil.replace(
+			content,
+			new String[] {
+				"[$GROUP_ID_DELETED$]", "[$TITLE_DELETED$]", "[$UUID_DELETED$]"
+			},
+			new String[] {
+				String.valueOf(deletedFileEntry.getGroupId()),
+				deletedFileEntry.getTitle(), deletedFileEntry.getUuid()
+			});
+
+		_referrerStagedModel = JournalTestUtil.addArticle(
+			_stagingGroup.getGroupId(), RandomTestUtil.randomString(), content);
+
+		DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
+			TestPropsValues.getUserId(), deletedFileEntry);
+
+		Element referrerStagedModelElement =
+			_portletDataContextExport.getExportDataElement(
+				_referrerStagedModel);
+
+		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+			_referrerStagedModel);
+
+		referrerStagedModelElement.addAttribute(
+			"path", referrerStagedModelPath);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			true);
+
+		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
+
+		_exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+	}
+
 	private Layout _addMultiLocaleLayout(Group group, boolean privateLayout)
 		throws Exception {
 
@@ -1162,8 +1213,9 @@ public class DefaultExportImportContentProcessorTest {
 				"[$EXTERNAL_GROUP_FRIENDLY_URL$]",
 				"[$EXTERNAL_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 				"[$EXTERNAL_PUBLIC_LAYOUT_FRIENDLY_URL$]",
-				"[$FILE_ENTRY_FRIENDLY_URL$]", "[$FRIENDLY_URL_SEPARATOR$]",
-				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$GROUP_NAME$]",
+				"[$FILE_ENTRY_FRIENDLY_URL$]", "[$FILE_NAME$]",
+				"[$FRIENDLY_URL_SEPARATOR$]", "[$GROUP_FRIENDLY_URL$]",
+				"[$GROUP_ID$]", "[$GROUP_NAME$]",
 				"[$GROUP_PRIVATE_PAGES_VIRTUAL_HOST$]",
 				"[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]", "[$IMAGE_ID$]",
 				"[$LIVE_GROUP_FRIENDLY_URL$]", "[$LIVE_GROUP_ID$]",
@@ -1191,7 +1243,8 @@ public class DefaultExportImportContentProcessorTest {
 				_externalPublicLayout.getFriendlyURL(),
 				FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
 					fileEntry.getTitle()),
-				Portal.FRIENDLY_URL_SEPARATOR, _stagingGroup.getFriendlyURL(),
+				fileEntry.getFileName(), Portal.FRIENDLY_URL_SEPARATOR,
+				_stagingGroup.getFriendlyURL(),
 				String.valueOf(fileEntry.getGroupId()),
 				StringUtil.removeFirst(
 					_stagingGroup.getFriendlyURL(), StringPool.SLASH),
@@ -1430,7 +1483,10 @@ public class DefaultExportImportContentProcessorTest {
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;
+
+	@DeleteAfterTestRun
 	private Group _stagingGroup;
+
 	private Layout _stagingPrivateLayout;
 	private Layout _stagingPublicLayout;
 

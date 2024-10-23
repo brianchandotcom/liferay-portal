@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceCheckoutFDSNames.DELIVERY_GROUP,
+	property = "frontend.data.set.name=" + CommerceCheckoutFDSNames.DELIVERY_GROUP_INFO,
 	service = FDSView.class
 )
-public class CommerceCheckoutDeliveryGroupTableFDSView
+public class CommerceCheckoutDeliveryGroupInfoTableFDSView
 	extends BaseTableFDSView {
 
 	@Override

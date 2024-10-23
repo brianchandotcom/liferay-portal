@@ -12,7 +12,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
  */
 public class CommerceCheckoutFDSNames {
 
-	public static final String DELIVERY_GROUPS =
-		CommercePortletKeys.COMMERCE_CHECKOUT + "-deliveryGroups";
+	public static final String DELIVERY_GROUP_INFO =
+		CommercePortletKeys.COMMERCE_CHECKOUT + "-deliveryGroupInfo";
 
 }

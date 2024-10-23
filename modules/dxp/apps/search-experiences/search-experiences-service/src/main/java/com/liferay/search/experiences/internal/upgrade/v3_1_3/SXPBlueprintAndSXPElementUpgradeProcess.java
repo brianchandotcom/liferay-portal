@@ -35,8 +35,37 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeSXPBlueprints();
-		_upgradeSXPElement();
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select sxpBlueprintId, elementInstancesJSON from " +
+					"SXPBlueprint");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update SXPBlueprint set elementInstancesJSON = ? where " +
+						"sxpBlueprintId = ?")) {
+
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					_upgradeSXPElementsInSXPBlueprint(
+						preparedStatement2, resultSet);
+				}
+
+				preparedStatement2.executeBatch();
+			}
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update SXPElement set elementDefinitionJSON = ? where " +
+					"externalReferenceCode = 'LIMIT_SEARCH_TO_THESE_SITES'")) {
+
+			preparedStatement.setString(
+				1,
+				StringUtil.read(
+					getClass(),
+					"dependencies/limit_search_to_these_sites.json"));
+
+			preparedStatement.executeUpdate();
+		}
 	}
 
 	private String _fixElementInstancesJSON(String elementInstanceJSON)
@@ -155,42 +184,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 					return jsonArray;
 				}));
-	}
-
-	private void _upgradeSXPBlueprints() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select sxpBlueprintId, elementInstancesJSON from " +
-					"SXPBlueprint");
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update SXPBlueprint set elementInstancesJSON = ? where " +
-						"sxpBlueprintId = ?")) {
-
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					_upgradeSXPElementsInSXPBlueprint(
-						preparedStatement2, resultSet);
-				}
-
-				preparedStatement2.executeBatch();
-			}
-		}
-	}
-
-	private void _upgradeSXPElement() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update SXPElement set elementDefinitionJSON = ? where " +
-					"externalReferenceCode = 'LIMIT_SEARCH_TO_THESE_SITES'")) {
-
-			preparedStatement.setString(
-				1,
-				StringUtil.read(
-					getClass(),
-					"dependencies/limit_search_to_these_sites.json"));
-
-			preparedStatement.executeUpdate();
-		}
 	}
 
 	private void _upgradeSXPElement(JSONObject sxpElementJSONObject) {

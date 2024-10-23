@@ -24,8 +24,8 @@ modules/apps/asset/asset-publisher-api    @liferay-page-management
 modules/apps/asset/asset-publisher-layout-prototype    @liferay-page-management
 modules/apps/asset/asset-publisher-test    @liferay-page-management
 modules/apps/asset/asset-publisher-web    @liferay-page-management
-modules/apps/batch-engine/
-modules/apps/batch-planner/
+modules/apps/batch-engine/    @liferay-headless
+modules/apps/batch-planner/    @liferay-headless
 modules/apps/bean-portlet/
 modules/apps/blogs/    @liferay-content-management
 modules/apps/bookmarks/    @liferay-content-management
@@ -51,7 +51,7 @@ modules/apps/data-engine/    @liferay-bpm
 modules/apps/depot/    @liferay-content-management
 modules/apps/diff/
 modules/apps/digital-signature/
-modules/apps/dispatch/
+modules/apps/dispatch/    @liferay-headless
 modules/apps/document-library-google-docs/    @liferay-content-management
 modules/apps/document-library-opener/    @liferay-content-management
 modules/apps/document-library/    @liferay-content-management
@@ -75,9 +75,22 @@ modules/apps/frontend-token/    @liferay-platform-experience
 modules/apps/glowroot/
 modules/apps/gogo-shell/
 modules/apps/google-places/
-modules/apps/headless/
-modules/apps/headless/headless-admin-site    @liferay-page-management
-modules/apps/headless/headless-delivery    @liferay-page-management
+modules/apps/headless/headless-admin-address/
+modules/apps/headless/headless-admin-content/
+modules/apps/headless/headless-admin-list-type/
+modules/apps/headless/headless-admin-site/    @liferay-page-management
+modules/apps/headless/headless-admin-taxonomy/
+modules/apps/headless/headless-admin-user/
+modules/apps/headless/headless-admin-workflow/
+modules/apps/headless/headless-batch-engine/    @liferay-headless
+modules/apps/headless/headless-builder/    @liferay-headless
+modules/apps/headless/headless-common-spi/
+modules/apps/headless/headless-delivery/    @liferay-page-management
+modules/apps/headless/headless-discovery/    @liferay-headless
+modules/apps/headless/headless-form/
+modules/apps/headless/headless-portal-instances/
+modules/apps/headless/headless-site/
+modules/apps/headless/headless-user-notification/
 modules/apps/hello-velocity/
 modules/apps/iframe/
 modules/apps/iframe/iframe-web    @liferay-page-management
@@ -149,6 +162,8 @@ modules/apps/notifications/    @liferay-content-management
 modules/apps/oauth-client/
 modules/apps/oauth2-provider/
 modules/apps/object/    @liferay-bpm
+modules/apps/object/object-rest-impl    @liferay-headless
+modules/apps/object/object-rest-test    @liferay-headless
 modules/apps/on-demand-admin/
 modules/apps/organizations/
 modules/apps/password-policies-admin/
@@ -184,7 +199,7 @@ modules/apps/portal-template/
 modules/apps/portal-transaction/
 modules/apps/portal-url-builder/
 modules/apps/portal-validation/
-modules/apps/portal-vulcan/
+modules/apps/portal-vulcan/    @liferay-headless
 modules/apps/portal-workflow/    @liferay-bpm
 modules/apps/portal/
 modules/apps/portlet-configuration/
@@ -226,7 +241,7 @@ modules/apps/site-navigation/
 modules/apps/site-navigation/site-navigation-language-web    @liferay-page-management
 modules/apps/site/
 modules/apps/social/    @liferay-content-management
-modules/apps/staging/
+modules/apps/staging/    @liferay-headless
 modules/apps/static/
 modules/apps/style-book/    @liferay-platform-experience
 modules/apps/subscription/    @liferay-content-management
@@ -275,3 +290,9 @@ modules/dxp/apps/search-experiences/
 modules/dxp/apps/segments/
 modules/dxp/apps/sharepoint-rest/    @liferay-content-management
 modules/dxp/apps/sharepoint-soap/    @liferay-content-management
+modules/util/portal-tools-rest-builder/    @liferay-headless
+modules/util/portal-tools-rest-builder-test-api/    @liferay-headless
+modules/util/portal-tools-rest-builder-test-client/    @liferay-headless
+modules/util/portal-tools-rest-builder-test-client-js/    @liferay-headless
+modules/util/portal-tools-rest-builder-test-impl/    @liferay-headless
+modules/util/portal-tools-rest-builder-test-test/    @liferay-headless

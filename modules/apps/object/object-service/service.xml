@@ -90,15 +90,15 @@
 		<column name="titleObjectFieldId" type="long" />
 		<column name="accountEntryRestricted" type="boolean" />
 		<column name="active" type="boolean" />
-		<column method-name="DBTableName" name="dbTableName" type="String" />
-		<column localized="true" name="label" type="String" />
 		<column name="className" type="String" />
+		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column name="enableCategorization" type="boolean" />
 		<column name="enableComments" type="boolean" />
 		<column name="enableIndexSearch" type="boolean" />
 		<column name="enableLocalization" type="boolean" />
 		<column name="enableObjectEntryDraft" type="boolean" />
 		<column name="enableObjectEntryHistory" type="boolean" />
+		<column localized="true" name="label" type="String" />
 		<column name="modifiable" type="boolean" />
 		<column name="name" type="String" />
 		<column name="panelAppOrder" type="String" />

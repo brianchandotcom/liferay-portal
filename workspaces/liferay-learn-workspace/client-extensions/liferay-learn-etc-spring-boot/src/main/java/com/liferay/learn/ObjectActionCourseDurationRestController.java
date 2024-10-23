@@ -41,9 +41,9 @@ public class ObjectActionCourseDurationRestController
 				"Bearer " + jwt.getTokenValue(),
 				StringBundler.concat(
 					"/o/c/courses/scopes/", _siteGroupId,
-					"?fields=id,module.quizDurationMinutes,module.lesson",
-					"DurationMinutes&nestedFields=module&filter=module/id eq '",
-					_getModuleId(json), "'")));
+					"?fields=id,module.lessonDurationMinutes,module.",
+					"quizDurationMinutes&filter=module/id eq '",
+					_getModuleId(json), "'&nestedFields=module")));
 
 		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 

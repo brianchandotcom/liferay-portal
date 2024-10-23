@@ -16,6 +16,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.NoSuchObjectFolderException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
+import com.liferay.object.exception.ObjectDefinitionClassNameException;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
@@ -99,6 +100,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
@@ -602,6 +604,64 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
+	}
+
+	@Test
+	public void testAddOrUpdateCustomObjectDefinitionClassName()
+		throws Exception {
+
+		String className1 =
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition1 = _addCustomObjectDefinition(
+			className1, ObjectDefinitionTestUtil.getRandomName());
+
+		objectDefinition1 = _updateCustomObjectDefinition(
+			RandomTestUtil.randomString(), objectDefinition1);
+
+		Assert.assertEquals(className1, objectDefinition1.getClassName());
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionClassNameException.MustNotBeDuplicate.class,
+			"Duplicate class name " + className1,
+			() -> _addCustomObjectDefinition(
+				className1, ObjectDefinitionTestUtil.getRandomName()));
+		AssertUtils.assertFailure(
+			ObjectDefinitionClassNameException.MustStartWithPrefix.class,
+			"Class name must start with " +
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION,
+			() -> _addCustomObjectDefinition(
+				RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName()));
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.addObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				TestPropsValues.getUserId(), 0, true, false);
+
+		Assert.assertTrue(Validator.isNull(objectDefinition2.getClassName()));
+
+		String className2 =
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString();
+
+		objectDefinition2 = _updateCustomObjectDefinition(
+			className2, objectDefinition2);
+
+		Assert.assertEquals(className2, objectDefinition2.getClassName());
+
+		ObjectDefinition objectDefinition3 = _addCustomObjectDefinition(
+			null, ObjectDefinitionTestUtil.getRandomName());
+
+		Assert.assertTrue(
+			StringUtil.startsWith(
+				objectDefinition3.getClassName(),
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
 	}
 
 	@Test
@@ -2733,16 +2793,30 @@ public class ObjectDefinitionLocalServiceTest {
 	private ObjectDefinition _addCustomObjectDefinition(String name)
 		throws Exception {
 
-		return _addCustomObjectDefinition(name, name, name);
+		return _addCustomObjectDefinition(null, name, name, name);
+	}
+
+	private ObjectDefinition _addCustomObjectDefinition(
+			String className, String name)
+		throws Exception {
+
+		return _addCustomObjectDefinition(className, name, name, name);
 	}
 
 	private ObjectDefinition _addCustomObjectDefinition(
 			String label, String name, String pluralLabel)
 		throws Exception {
 
+		return _addCustomObjectDefinition(null, label, name, pluralLabel);
+	}
+
+	private ObjectDefinition _addCustomObjectDefinition(
+			String className, String label, String name, String pluralLabel)
+		throws Exception {
+
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), 0, null, false, true, false, false,
-			LocalizedMapUtil.getLocalizedMap(label), name, null, null,
+			TestPropsValues.getUserId(), 0, className, false, true, false,
+			false, LocalizedMapUtil.getLocalizedMap(label), name, null, null,
 			LocalizedMapUtil.getLocalizedMap(pluralLabel), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
@@ -3265,6 +3339,32 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.isEnableObjectEntryHistory(),
 			objectDefinition.getLabelMap(), objectDefinition.getName(),
 			objectDefinition.getPanelAppOrder(), panelCategoryKey,
+			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
+			objectDefinition.getScope(), objectDefinition.getStatus());
+	}
+
+	private ObjectDefinition _updateCustomObjectDefinition(
+			String className, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+			objectDefinition.getExternalReferenceCode(),
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+			objectDefinition.getDescriptionObjectFieldId(),
+			objectDefinition.getObjectFolderId(),
+			objectDefinition.getTitleObjectFieldId(),
+			objectDefinition.isAccountEntryRestricted(),
+			objectDefinition.isActive(), className,
+			objectDefinition.isEnableCategorization(),
+			objectDefinition.isEnableComments(),
+			objectDefinition.isEnableIndexSearch(),
+			objectDefinition.isEnableLocalization(),
+			objectDefinition.isEnableObjectEntryDraft(),
+			objectDefinition.isEnableObjectEntryHistory(),
+			objectDefinition.getLabelMap(), objectDefinition.getShortName(),
+			objectDefinition.getPanelAppOrder(),
+			objectDefinition.getPanelCategoryKey(),
 			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
 			objectDefinition.getScope(), objectDefinition.getStatus());
 	}

@@ -15,7 +15,7 @@ import {debounce} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
 import {showError} from './ErrorMessage';
-import {formatCartItem} from './MultiShipping';
+import {formatCartItem} from './Multishipping';
 import OrderItemDetailModal from './OrderItemDetailModal';
 import {
 	IAPIResponseError,

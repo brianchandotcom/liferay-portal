@@ -10,14 +10,14 @@ import fetchMock from 'fetch-mock';
 import {
 	IDeliveryGroup,
 	IOrderItem,
-} from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
+} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import OrderItemRow from '../../../src/main/resources/META-INF/resources/js/multi_shipping/OrderItemRow';
+import OrderItemRow from '../../../src/main/resources/META-INF/resources/js/multishipping/OrderItemRow';
 import {setFieldValue} from '../../utils/utils.spec';
 
 interface ILocators {

@@ -10,7 +10,7 @@ import fetchMock from 'fetch-mock';
 import {
 	ICountryAPIResponse,
 	IPostalAddressAPIResponse,
-} from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
+} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {
@@ -23,7 +23,7 @@ import {
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import AddDeliveryGroupButton from '../../../src/main/resources/META-INF/resources/js/multi_shipping/AddDeliveryGroupButton';
+import AddDeliveryGroupButton from '../../../src/main/resources/META-INF/resources/js/multishipping/AddDeliveryGroupButton';
 import {setFieldValue} from '../../utils/utils.spec';
 
 interface ILocators {

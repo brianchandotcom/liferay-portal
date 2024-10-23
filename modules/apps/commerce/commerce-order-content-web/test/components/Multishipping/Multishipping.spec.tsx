@@ -10,14 +10,14 @@ import fetchMock from 'fetch-mock';
 import {
 	IOrderItem,
 	IOrderItemAPIResponse,
-} from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
+} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import MultiShipping from '../../../src/main/resources/META-INF/resources/js/multi_shipping/MultiShipping';
+import Multishipping from '../../../src/main/resources/META-INF/resources/js/multishipping/Multishipping';
 import {setFieldValue} from '../../utils/utils.spec';
 
 interface ILocators {
@@ -51,7 +51,7 @@ const getLocators = (
 	};
 };
 
-describe('MultiShipping', () => {
+describe('Multishipping', () => {
 	afterEach(() => {
 		fetchMock.restore();
 		jest.clearAllMocks();
@@ -92,7 +92,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {addDeliveryGroupButton, loadingSpinner, searchInput} =
@@ -153,7 +153,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -287,7 +287,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {loadingSpinner, searchInput} = getLocators(
@@ -367,7 +367,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {addDeliveryGroupButton, loadingSpinner} = getLocators(
@@ -415,7 +415,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} readonly={true} />
+			<Multishipping accountId={10} orderId={10} readonly={true} />
 		);
 
 		const {addDeliveryGroupButton, loadingSpinner} = getLocators(
@@ -469,7 +469,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -516,7 +516,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -601,7 +601,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -709,7 +709,7 @@ describe('MultiShipping', () => {
 		);
 
 		const renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		const {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -810,7 +810,7 @@ describe('MultiShipping', () => {
 		);
 
 		let renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		let {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -829,7 +829,7 @@ describe('MultiShipping', () => {
 		renderedComponent.unmount();
 
 		renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		({loadingSpinner} = getLocators(orderItems, renderedComponent));
@@ -848,7 +848,7 @@ describe('MultiShipping', () => {
 		renderedComponent.unmount();
 
 		renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		({loadingSpinner} = getLocators(orderItems, renderedComponent));
@@ -867,7 +867,7 @@ describe('MultiShipping', () => {
 		renderedComponent.unmount();
 
 		renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		({loadingSpinner} = getLocators(orderItems, renderedComponent));
@@ -965,7 +965,7 @@ describe('MultiShipping', () => {
 		);
 
 		let renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		let {loadingSpinner} = getLocators(orderItems, renderedComponent);
@@ -984,7 +984,7 @@ describe('MultiShipping', () => {
 		renderedComponent.unmount();
 
 		renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		({loadingSpinner} = getLocators(orderItems, renderedComponent));
@@ -1003,7 +1003,7 @@ describe('MultiShipping', () => {
 		renderedComponent.unmount();
 
 		renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		({loadingSpinner} = getLocators(orderItems, renderedComponent));
@@ -1022,7 +1022,7 @@ describe('MultiShipping', () => {
 		renderedComponent.unmount();
 
 		renderedComponent = render(
-			<MultiShipping accountId={10} orderId={10} />
+			<Multishipping accountId={10} orderId={10} />
 		);
 
 		({loadingSpinner} = getLocators(orderItems, renderedComponent));

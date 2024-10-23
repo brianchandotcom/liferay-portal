@@ -15,7 +15,7 @@ import ClayTable from '@clayui/table';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import './MultiShipping.scss';
+import './Multishipping.scss';
 import AddDeliveryGroupButton from './AddDeliveryGroupButton';
 import DeliveryGroupHeaderCell from './DeliveryGroupHeaderCell';
 import {showError} from './ErrorMessage';
@@ -30,7 +30,7 @@ import {
 
 const MAX_DELIVERY_GROUPS = 20;
 
-interface IMultiShippingProps {
+interface IMultishippingProps {
 	accountId: number;
 	namespace?: string;
 	orderId: number;
@@ -97,13 +97,13 @@ const createRequestData = (
 	return data;
 };
 
-const MultiShipping = ({
+const Multishipping = ({
 	accountId,
 	namespace = '',
 	orderId,
 	readonly = false,
 	spritemap,
-}: IMultiShippingProps) => {
+}: IMultishippingProps) => {
 	const [deliveryGroups, setDeliveryGroups] = useState<Array<IDeliveryGroup>>(
 		[]
 	);
@@ -601,4 +601,4 @@ const MultiShipping = ({
 	);
 };
 
-export default MultiShipping;
+export default Multishipping;

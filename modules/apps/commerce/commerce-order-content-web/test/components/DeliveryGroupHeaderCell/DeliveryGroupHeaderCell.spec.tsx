@@ -10,14 +10,14 @@ import fetchMock from 'fetch-mock';
 import {
 	ICountryAPIResponse,
 	IPostalAddressAPIResponse,
-} from '../../../src/main/resources/META-INF/resources/js/multi_shipping/Types';
+} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import DeliveryGroupHeaderCell from '../../../src/main/resources/META-INF/resources/js/multi_shipping/DeliveryGroupHeaderCell';
+import DeliveryGroupHeaderCell from '../../../src/main/resources/META-INF/resources/js/multishipping/DeliveryGroupHeaderCell';
 import {setFieldValue} from '../../utils/utils.spec';
 
 interface ILocators {

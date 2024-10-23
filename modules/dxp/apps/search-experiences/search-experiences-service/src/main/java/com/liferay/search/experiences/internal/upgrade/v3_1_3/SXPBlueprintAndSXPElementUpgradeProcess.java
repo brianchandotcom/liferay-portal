@@ -39,23 +39,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPElement();
 	}
 
-	private boolean _hasLimitSearchToTheseSites(
-		ElementInstance[] elementInstances) {
-
-		for (ElementInstance elementInstance : elementInstances) {
-			SXPElement sxpElement = elementInstance.getSxpElement();
-
-			if (Objects.equals(
-					sxpElement.getExternalReferenceCode(),
-					"LIMIT_SEARCH_TO_THESE_SITES")) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private JSONObject _createScopeGroupExternalReferenceCodesJSONObject(
 			JSONObject scopeGroupIDJSONObject)
 		throws Exception {
@@ -133,6 +116,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			throw exception;
 		}
+	}
+
+	private boolean _hasLimitSearchToTheseSites(
+		ElementInstance[] elementInstances) {
+
+		for (ElementInstance elementInstance : elementInstances) {
+			SXPElement sxpElement = elementInstance.getSxpElement();
+
+			if (Objects.equals(
+					sxpElement.getExternalReferenceCode(),
+					"LIMIT_SEARCH_TO_THESE_SITES")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private JSONArray _translateIdsToExternalReferencesCodes(long[] groupIds)

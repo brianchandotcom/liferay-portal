@@ -47,14 +47,11 @@
 		<field name="titleObjectFieldId" type="long" />
 		<field name="accountEntryRestricted" type="boolean" />
 		<field name="active" type="boolean" />
-		<field name="DBTableName" type="String">
-			<validator name="required" />
-		</field>
-		<field localized="true" name="label" type="String">
-			<validator name="required" />
-		</field>
 		<field name="className" type="String">
 			<hint name="max-length">255</hint>
+		</field>
+		<field name="DBTableName" type="String">
+			<validator name="required" />
 		</field>
 		<field name="enableCategorization" type="boolean" />
 		<field name="enableComments" type="boolean" />
@@ -62,6 +59,9 @@
 		<field name="enableLocalization" type="boolean" />
 		<field name="enableObjectEntryDraft" type="boolean" />
 		<field name="enableObjectEntryHistory" type="boolean" />
+		<field localized="true" name="label" type="String">
+			<validator name="required" />
+		</field>
 		<field name="modifiable" type="boolean" />
 		<field name="name" type="String" />
 		<field name="panelAppOrder" type="String" />

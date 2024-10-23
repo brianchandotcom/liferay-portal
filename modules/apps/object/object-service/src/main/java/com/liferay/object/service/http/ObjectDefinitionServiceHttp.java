@@ -44,8 +44,9 @@ public class ObjectDefinitionServiceHttp {
 	public static com.liferay.object.model.ObjectDefinition
 			addCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, long objectFolderId,
-				boolean enableComments, boolean enableIndexSearch,
-				boolean enableLocalization, boolean enableObjectEntryDraft,
+				String className, boolean enableComments,
+				boolean enableIndexSearch, boolean enableLocalization,
+				boolean enableObjectEntryDraft,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -60,10 +61,10 @@ public class ObjectDefinitionServiceHttp {
 				_addCustomObjectDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectFolderId, enableComments, enableIndexSearch,
-				enableLocalization, enableObjectEntryDraft, labelMap, name,
-				panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
-				storageType, objectFields);
+				methodKey, objectFolderId, className, enableComments,
+				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+				labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
+				portlet, scope, storageType, objectFields);
 
 			Object returnObj = null;
 
@@ -590,7 +591,7 @@ public class ObjectDefinitionServiceHttp {
 				long accountEntryRestrictedObjectFieldId,
 				long descriptionObjectFieldId, long objectFolderId,
 				long titleObjectFieldId, boolean accountEntryRestricted,
-				boolean active, boolean enableCategorization,
+				boolean active, String className, boolean enableCategorization,
 				boolean enableComments, boolean enableIndexSearch,
 				boolean enableLocalization, boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
@@ -610,8 +611,8 @@ public class ObjectDefinitionServiceHttp {
 				methodKey, externalReferenceCode, objectDefinitionId,
 				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 				objectFolderId, titleObjectFieldId, accountEntryRestricted,
-				active, enableCategorization, enableComments, enableIndexSearch,
-				enableLocalization, enableObjectEntryDraft,
+				active, className, enableCategorization, enableComments,
+				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 				enableObjectEntryHistory, labelMap, name, panelAppOrder,
 				panelCategoryKey, portlet, pluralLabelMap, scope, status);
 
@@ -821,10 +822,10 @@ public class ObjectDefinitionServiceHttp {
 
 	private static final Class<?>[] _addCustomObjectDefinitionParameterTypes0 =
 		new Class[] {
-			long.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, java.util.Map.class, String.class, String.class,
-			String.class, java.util.Map.class, boolean.class, String.class,
-			String.class, java.util.List.class
+			long.class, String.class, boolean.class, boolean.class,
+			boolean.class, boolean.class, java.util.Map.class, String.class,
+			String.class, String.class, java.util.Map.class, boolean.class,
+			String.class, String.class, java.util.List.class
 		};
 	private static final Class<?>[] _addObjectDefinitionParameterTypes1 =
 		new Class[] {String.class, long.class, boolean.class, boolean.class};
@@ -864,11 +865,11 @@ public class ObjectDefinitionServiceHttp {
 	private static final Class<?>[]
 		_updateCustomObjectDefinitionParameterTypes13 = new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
-			long.class, boolean.class, boolean.class, boolean.class,
+			long.class, boolean.class, boolean.class, String.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, java.util.Map.class, String.class, String.class,
-			String.class, boolean.class, java.util.Map.class, String.class,
-			int.class
+			boolean.class, boolean.class, java.util.Map.class, String.class,
+			String.class, String.class, boolean.class, java.util.Map.class,
+			String.class, int.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes14 = new Class[] {

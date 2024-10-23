@@ -331,120 +331,6 @@ public interface ObjectDefinitionModel
 	public void setActive(boolean active);
 
 	/**
-	 * Returns the db table name of this object definition.
-	 *
-	 * @return the db table name of this object definition
-	 */
-	@AutoEscape
-	public String getDBTableName();
-
-	/**
-	 * Sets the db table name of this object definition.
-	 *
-	 * @param dbTableName the db table name of this object definition
-	 */
-	public void setDBTableName(String dbTableName);
-
-	/**
-	 * Returns the label of this object definition.
-	 *
-	 * @return the label of this object definition
-	 */
-	public String getLabel();
-
-	/**
-	 * Returns the localized label of this object definition in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized label of this object definition
-	 */
-	@AutoEscape
-	public String getLabel(Locale locale);
-
-	/**
-	 * Returns the localized label of this object definition in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this object definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getLabel(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized label of this object definition in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized label of this object definition
-	 */
-	@AutoEscape
-	public String getLabel(String languageId);
-
-	/**
-	 * Returns the localized label of this object definition in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this object definition
-	 */
-	@AutoEscape
-	public String getLabel(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getLabelCurrentLanguageId();
-
-	@AutoEscape
-	public String getLabelCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized labels of this object definition.
-	 *
-	 * @return the locales and localized labels of this object definition
-	 */
-	public Map<Locale, String> getLabelMap();
-
-	/**
-	 * Sets the label of this object definition.
-	 *
-	 * @param label the label of this object definition
-	 */
-	public void setLabel(String label);
-
-	/**
-	 * Sets the localized label of this object definition in the language.
-	 *
-	 * @param label the localized label of this object definition
-	 * @param locale the locale of the language
-	 */
-	public void setLabel(String label, Locale locale);
-
-	/**
-	 * Sets the localized label of this object definition in the language, and sets the default locale.
-	 *
-	 * @param label the localized label of this object definition
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setLabel(String label, Locale locale, Locale defaultLocale);
-
-	public void setLabelCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized labels of this object definition from the map of locales and localized labels.
-	 *
-	 * @param labelMap the locales and localized labels of this object definition
-	 */
-	public void setLabelMap(Map<Locale, String> labelMap);
-
-	/**
-	 * Sets the localized labels of this object definition from the map of locales and localized labels, and sets the default locale.
-	 *
-	 * @param labelMap the locales and localized labels of this object definition
-	 * @param defaultLocale the default locale
-	 */
-	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
-
-	/**
 	 * Returns the class name of this object definition.
 	 *
 	 * @return the class name of this object definition
@@ -458,6 +344,21 @@ public interface ObjectDefinitionModel
 	 * @param className the class name of this object definition
 	 */
 	public void setClassName(String className);
+
+	/**
+	 * Returns the db table name of this object definition.
+	 *
+	 * @return the db table name of this object definition
+	 */
+	@AutoEscape
+	public String getDBTableName();
+
+	/**
+	 * Sets the db table name of this object definition.
+	 *
+	 * @param dbTableName the db table name of this object definition
+	 */
+	public void setDBTableName(String dbTableName);
 
 	/**
 	 * Returns the enable categorization of this object definition.
@@ -584,6 +485,105 @@ public interface ObjectDefinitionModel
 	 * @param enableObjectEntryHistory the enable object entry history of this object definition
 	 */
 	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory);
+
+	/**
+	 * Returns the label of this object definition.
+	 *
+	 * @return the label of this object definition
+	 */
+	public String getLabel();
+
+	/**
+	 * Returns the localized label of this object definition in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized label of this object definition
+	 */
+	@AutoEscape
+	public String getLabel(Locale locale);
+
+	/**
+	 * Returns the localized label of this object definition in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getLabel(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized label of this object definition in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized label of this object definition
+	 */
+	@AutoEscape
+	public String getLabel(String languageId);
+
+	/**
+	 * Returns the localized label of this object definition in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object definition
+	 */
+	@AutoEscape
+	public String getLabel(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getLabelCurrentLanguageId();
+
+	@AutoEscape
+	public String getLabelCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized labels of this object definition.
+	 *
+	 * @return the locales and localized labels of this object definition
+	 */
+	public Map<Locale, String> getLabelMap();
+
+	/**
+	 * Sets the label of this object definition.
+	 *
+	 * @param label the label of this object definition
+	 */
+	public void setLabel(String label);
+
+	/**
+	 * Sets the localized label of this object definition in the language.
+	 *
+	 * @param label the localized label of this object definition
+	 * @param locale the locale of the language
+	 */
+	public void setLabel(String label, Locale locale);
+
+	/**
+	 * Sets the localized label of this object definition in the language, and sets the default locale.
+	 *
+	 * @param label the localized label of this object definition
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setLabel(String label, Locale locale, Locale defaultLocale);
+
+	public void setLabelCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized labels of this object definition from the map of locales and localized labels.
+	 *
+	 * @param labelMap the locales and localized labels of this object definition
+	 */
+	public void setLabelMap(Map<Locale, String> labelMap);
+
+	/**
+	 * Sets the localized labels of this object definition from the map of locales and localized labels, and sets the default locale.
+	 *
+	 * @param labelMap the locales and localized labels of this object definition
+	 * @param defaultLocale the default locale
+	 */
+	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
 
 	/**
 	 * Returns the modifiable of this object definition.

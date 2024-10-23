@@ -53,9 +53,8 @@ public class ObjectDefinitionWrapper
 		attributes.put("titleObjectFieldId", getTitleObjectFieldId());
 		attributes.put("accountEntryRestricted", isAccountEntryRestricted());
 		attributes.put("active", isActive());
-		attributes.put("dbTableName", getDBTableName());
-		attributes.put("label", getLabel());
 		attributes.put("className", getClassName());
+		attributes.put("dbTableName", getDBTableName());
 		attributes.put("enableCategorization", isEnableCategorization());
 		attributes.put("enableComments", isEnableComments());
 		attributes.put("enableIndexSearch", isEnableIndexSearch());
@@ -63,6 +62,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("enableObjectEntryDraft", isEnableObjectEntryDraft());
 		attributes.put(
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
+		attributes.put("label", getLabel());
 		attributes.put("modifiable", isModifiable());
 		attributes.put("name", getName());
 		attributes.put("panelAppOrder", getPanelAppOrder());
@@ -185,22 +185,16 @@ public class ObjectDefinitionWrapper
 			setActive(active);
 		}
 
-		String dbTableName = (String)attributes.get("dbTableName");
-
-		if (dbTableName != null) {
-			setDBTableName(dbTableName);
-		}
-
-		String label = (String)attributes.get("label");
-
-		if (label != null) {
-			setLabel(label);
-		}
-
 		String className = (String)attributes.get("className");
 
 		if (className != null) {
 			setClassName(className);
+		}
+
+		String dbTableName = (String)attributes.get("dbTableName");
+
+		if (dbTableName != null) {
+			setDBTableName(dbTableName);
 		}
 
 		Boolean enableCategorization = (Boolean)attributes.get(
@@ -242,6 +236,12 @@ public class ObjectDefinitionWrapper
 
 		if (enableObjectEntryHistory != null) {
 			setEnableObjectEntryHistory(enableObjectEntryHistory);
+		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
 		}
 
 		Boolean modifiable = (Boolean)attributes.get("modifiable");

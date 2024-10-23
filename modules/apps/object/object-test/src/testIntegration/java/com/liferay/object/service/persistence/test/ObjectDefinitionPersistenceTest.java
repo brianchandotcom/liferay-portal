@@ -151,11 +151,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setActive(RandomTestUtil.randomBoolean());
 
-		newObjectDefinition.setDBTableName(RandomTestUtil.randomString());
-
-		newObjectDefinition.setLabel(RandomTestUtil.randomString());
-
 		newObjectDefinition.setClassName(RandomTestUtil.randomString());
+
+		newObjectDefinition.setDBTableName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setEnableCategorization(
 			RandomTestUtil.randomBoolean());
@@ -173,6 +171,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
+
+		newObjectDefinition.setLabel(RandomTestUtil.randomString());
 
 		newObjectDefinition.setModifiable(RandomTestUtil.randomBoolean());
 
@@ -254,14 +254,11 @@ public class ObjectDefinitionPersistenceTest {
 			existingObjectDefinition.isActive(),
 			newObjectDefinition.isActive());
 		Assert.assertEquals(
-			existingObjectDefinition.getDBTableName(),
-			newObjectDefinition.getDBTableName());
-		Assert.assertEquals(
-			existingObjectDefinition.getLabel(),
-			newObjectDefinition.getLabel());
-		Assert.assertEquals(
 			existingObjectDefinition.getClassName(),
 			newObjectDefinition.getClassName());
+		Assert.assertEquals(
+			existingObjectDefinition.getDBTableName(),
+			newObjectDefinition.getDBTableName());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableCategorization(),
 			newObjectDefinition.isEnableCategorization());
@@ -280,6 +277,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryHistory(),
 			newObjectDefinition.isEnableObjectEntryHistory());
+		Assert.assertEquals(
+			existingObjectDefinition.getLabel(),
+			newObjectDefinition.getLabel());
 		Assert.assertEquals(
 			existingObjectDefinition.isModifiable(),
 			newObjectDefinition.isModifiable());
@@ -510,15 +510,15 @@ public class ObjectDefinitionPersistenceTest {
 			true, "modifiedDate", true, "accountEntryRestrictedObjectFieldId",
 			true, "descriptionObjectFieldId", true, "objectFolderId", true,
 			"rootObjectDefinitionId", true, "titleObjectFieldId", true,
-			"accountEntryRestricted", true, "active", true, "dbTableName", true,
-			"label", true, "className", true, "enableCategorization", true,
-			"enableComments", true, "enableIndexSearch", true,
-			"enableLocalization", true, "enableObjectEntryDraft", true,
-			"enableObjectEntryHistory", true, "modifiable", true, "name", true,
-			"panelAppOrder", true, "panelCategoryKey", true,
-			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
-			true, "system", true, "version", true, "status", true);
+			"accountEntryRestricted", true, "active", true, "className", true,
+			"dbTableName", true, "enableCategorization", true, "enableComments",
+			true, "enableIndexSearch", true, "enableLocalization", true,
+			"enableObjectEntryDraft", true, "enableObjectEntryHistory", true,
+			"label", true, "modifiable", true, "name", true, "panelAppOrder",
+			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
+			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
+			"scope", true, "storageType", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -862,11 +862,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setActive(RandomTestUtil.randomBoolean());
 
-		objectDefinition.setDBTableName(RandomTestUtil.randomString());
-
-		objectDefinition.setLabel(RandomTestUtil.randomString());
-
 		objectDefinition.setClassName(RandomTestUtil.randomString());
+
+		objectDefinition.setDBTableName(RandomTestUtil.randomString());
 
 		objectDefinition.setEnableCategorization(
 			RandomTestUtil.randomBoolean());
@@ -882,6 +880,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
+
+		objectDefinition.setLabel(RandomTestUtil.randomString());
 
 		objectDefinition.setModifiable(RandomTestUtil.randomBoolean());
 

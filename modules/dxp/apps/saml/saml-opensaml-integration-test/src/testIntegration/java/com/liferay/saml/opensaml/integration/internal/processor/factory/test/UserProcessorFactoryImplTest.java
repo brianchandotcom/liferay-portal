@@ -57,6 +57,9 @@ public class UserProcessorFactoryImplTest {
 		// Updated email entirely changed
 
 		_assertProcess("Jane", "Doena", "jane.doena@example.com", "jane.doena");
+
+		_assertProcess(
+			null, null, "jane.doena@example.com", null);
 	}
 
 	private void _assertProcess(
@@ -67,11 +70,10 @@ public class UserProcessorFactoryImplTest {
 		UserProcessor userProcessor = _userProcessorFactory.create(
 			_user, _userFieldExpressionHandlerRegistry);
 
-		userProcessor.setValueArray(
-			"emailAddress", new String[] {emailAddress});
-		userProcessor.setValueArray("firstName", new String[] {firstName});
-		userProcessor.setValueArray("lastName", new String[] {lastName});
-		userProcessor.setValueArray("screenName", new String[] {screenName});
+		_set(userProcessor, "emailAddress", emailAddress);
+		_set(userProcessor, "firstName", firstName);
+		_set(userProcessor, "lastName", lastName);
+		_set(userProcessor, "screenName", screenName);
 
 		User user2 = userProcessor.process(
 			ServiceContextTestUtil.getServiceContext());
@@ -86,6 +88,12 @@ public class UserProcessorFactoryImplTest {
 		Assert.assertEquals(_user.getScreenName(), user2.getScreenName());
 
 		_user = user2;
+	}
+
+	private void _set(UserProcessor userProcessor, String fieldExpression, String value) {
+		if (value != null) {
+			userProcessor.setValueArray(fieldExpression, new String[] {value});
+		}
 	}
 
 	@DeleteAfterTestRun

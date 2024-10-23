@@ -300,9 +300,10 @@ public class OpenSearchSearchEngine
 
 				StringBundler sb = new StringBundler(4);
 
-				sb.append("Cluster auto create index setting could not be ");
-				sb.append("updated due to lacking permissions. This can lead ");
-				sb.append("to index mappings being created incorrectly: ");
+				sb.append("Unable to update cluster auto create index ");
+				sb.append("setting due to lack of permissions. This can lead ");
+				sb.append("to incorrectly created index mappings: ");
+
 				sb.append(ioException.getMessage());
 
 				_log.error(sb.toString());

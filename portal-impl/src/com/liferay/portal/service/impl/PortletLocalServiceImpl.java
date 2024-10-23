@@ -8,6 +8,8 @@ package com.liferay.portal.service.impl;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -132,6 +134,7 @@ import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -173,6 +176,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
@@ -185,11 +189,19 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		Filter filter = SystemBundleUtil.createFilter(
 			"(objectClass=" + FriendlyURLMapper.class.getName() + ")");
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
 		_serviceTracker = new ServiceTracker<>(
-			SystemBundleUtil.getBundleContext(), filter,
+			bundleContext, filter,
 			new FriendlyURLMapperServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+
+		_serviceTrackerList =
+			(ServiceTrackerList<Consumer<Long>>)
+				(ServiceTrackerList<?>)ServiceTrackerListFactory.open(
+					bundleContext, Consumer.class,
+					"(portlets.map.clear.consumer=true)");
 	}
 
 	@Override
@@ -279,6 +291,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Transactional(enabled = false)
 	public void clearPortletsMap() {
 		_portletsMaps.clear();
+
+		for (Consumer<Long> consumer : _serviceTrackerList) {
+			consumer.accept(null);
+		}
 	}
 
 	@Override
@@ -441,7 +457,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@Override
 	public void destroy() {
-		super.destroy();
+		_serviceTrackerList.close();
 
 		_serviceTracker.close();
 
@@ -449,6 +465,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			PortalCacheManagerNames.SINGLE_VM,
 			PortletLocalServiceImpl.class.getName() +
 				"._PortletFriendlyURLMapperMatch");
+
+		super.destroy();
 	}
 
 	@Override
@@ -1133,6 +1151,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId) {
 		_portletsMaps.remove(companyId);
+
+		for (Consumer<Long> consumer : _serviceTrackerList) {
+			consumer.accept(companyId);
+		}
 	}
 
 	@Override
@@ -2944,6 +2966,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private RoleLocalService _roleLocalService;
 
 	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
+	private ServiceTrackerList<Consumer<Long>> _serviceTrackerList;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<FriendlyURLMapper, String[]> {

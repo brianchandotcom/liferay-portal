@@ -148,19 +148,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			JSONCompareMode.STRICT);
 	}
 
-	private String _createGroupIDLabel(Group group) throws Exception {
-		return StringBundler.concat(
-			group.getDescriptiveName(), " (ID: ", group.getGroupId(), ")");
-	}
-
-	private String _createScopeGroupExternalReferenceCodeLabel(Group group)
-		throws Exception {
-
-		return StringBundler.concat(
-			group.getDescriptiveName(), " (ERC: ",
-			group.getExternalReferenceCode(), ")");
-	}
-
 	private String _getElementInstancesJSON(Group group1, Group group2)
 		throws Exception {
 
@@ -172,10 +159,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
-			_createGroupIDLabel(group1));
+			StringBundler.concat(
+				group1.getDescriptiveName(), " (ID: ", group1.getGroupId(),
+				")"));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
-			_createGroupIDLabel(group2));
+			StringBundler.concat(
+				group2.getDescriptiveName(), " (ID: ", group2.getGroupId(),
+				")"));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_ID_1$]",
 			String.valueOf(group1.getGroupId()));
@@ -202,11 +193,15 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			group2.getExternalReferenceCode());
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
-			_createScopeGroupExternalReferenceCodeLabel(group1));
+			StringBundler.concat(
+				group1.getDescriptiveName(), " (ERC: ",
+				group1.getExternalReferenceCode(), ")"));
 
 		return StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
-			_createScopeGroupExternalReferenceCodeLabel(group2));
+			StringBundler.concat(
+				group2.getDescriptiveName(), " (ERC: ",
+				group2.getExternalReferenceCode(), ")"));
 	}
 
 	@DeleteAfterTestRun

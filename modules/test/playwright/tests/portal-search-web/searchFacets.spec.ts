@@ -6,15 +6,23 @@
 import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {searchPageTest} from '../../fixtures/searchPageTest';
 import getRandomString from '../../utils/getRandomString';
 
-export const test = mergeTests(loginTest(), searchPageTest, dataApiHelpersTest);
+export const test = mergeTests(
+	isolatedLayoutTest({type: 'portlet'}),
+	loginTest(),
+	searchPageTest,
+	dataApiHelpersTest
+);
 
 test.describe('Category facet configuration for vocabularies', () => {
 	test('Lists 20+ sites available to the user @LPD-33194', async ({
 		apiHelpers,
+		layout,
+		page,
 		searchPage,
 	}) => {
 		const siteName = getRandomString();
@@ -29,12 +37,16 @@ test.describe('Category facet configuration for vocabularies', () => {
 			}
 		});
 
-		await test.step('Navigate to search page', async () => {
-			await searchPage.goto();
+		await test.step('Add search bar and results portlet to new page', async () => {
+			await page.goto('/web/guest' + layout.friendlyURL);
+
+			await searchPage.addPortlet('Search Bar', 'Search');
+			await searchPage.addPortlet('Category Facet', 'Search');
+			await searchPage.addPortlet('Search Results', 'Search');
 		});
 
 		await test.step('Search for keyword "Test"', async () => {
-			await searchPage.searchKeywordInNavBar('test');
+			await searchPage.searchKeywordInMainContent('test');
 
 			await expect(searchPage.searchResultsTotalLabel).toHaveText(
 				/\d+ Results for test/
@@ -72,12 +84,23 @@ test.describe('Clear and retain facet selections', () => {
 	let userTestTestFacetCheckbox: Locator;
 	let lastModifiedPastYearFacetLink: Locator;
 
-	test.beforeEach(async ({searchPage}) => {
-		await searchPage.goto();
+	test.beforeEach(async ({layout, page, searchPage}) => {
+
+		// Add search portlet to a new page
+
+		await page.goto('/web/guest' + layout.friendlyURL);
+
+		await searchPage.addPortlet('Search Bar', 'Search');
+		await searchPage.addPortlet('Folder Facet', 'Search');
+		await searchPage.addPortlet('Type Facet', 'Search');
+		await searchPage.addPortlet('User Facet', 'Search');
+		await searchPage.addPortlet('Modified Facet', 'Search');
+		await searchPage.addPortlet('Search Results', 'Search');
+		await searchPage.addPortlet('Search Options', 'Search');
 
 		// Perform a search
 
-		await searchPage.searchKeywordInNavBar('test');
+		await searchPage.searchKeywordInMainContent('test');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
 			/\d+ Results for test/
@@ -134,7 +157,7 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Perform new search with different keyword
 
-		await searchPage.searchKeywordInNavBar('png');
+		await searchPage.searchKeywordInMainContent('png');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
 			/\d+ Results for png/
@@ -157,7 +180,7 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Perform new search with same keyword
 
-		await searchPage.searchKeywordInNavBar('test');
+		await searchPage.searchKeywordInMainContent('test');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
 			/\d+ Results for test/
@@ -187,7 +210,7 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Perform new search with different keyword
 
-		await searchPage.searchKeywordInNavBar('png');
+		await searchPage.searchKeywordInMainContent('png');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
 			/\d+ Results for png/
@@ -230,7 +253,7 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Perform new search with empty keyword
 
-		await searchPage.searchKeywordInNavBar('');
+		await searchPage.searchKeywordInMainContent('');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
 			/\d+ Results for\s+/
@@ -268,7 +291,7 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Perform new search with different keyword
 
-		await searchPage.searchKeywordInNavBar('png');
+		await searchPage.searchKeywordInMainContent('png');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
 			/\d+ Results for png/

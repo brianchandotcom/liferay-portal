@@ -280,6 +280,105 @@ testForCollections.describe('Tests for Collections', () => {
 			).toBeVisible();
 		}
 	);
+
+	testForCollections(
+		'User can manage permissions from info panel',
+		{
+			tag: '@LPD-39372',
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create a folder
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateFolderName = getRandomString();
+			const displayPageTemplateFolderDescription = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageTemplateFolderName,
+				displayPageTemplateFolderDescription
+			);
+
+			// Create a display page template for Blogs Entry
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Blogs Entry',
+				folderName: displayPageTemplateFolderName,
+				name: displayPageTemplateName,
+			});
+
+			// Open the info panel
+
+			await page
+				.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
+				.check();
+
+			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
+
+			const infoPanel = page.getByLabel('Info Panel', {exact: true});
+
+			await infoPanel
+				.getByRole('button', {name: 'Manage Permissions'})
+				.click();
+
+			const iframe = page.frameLocator('iframe[title="Permissions"]');
+
+			// Change permissions for display page template
+
+			await iframe.locator('#guest_ACTION_DELETE').check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_DELETE')
+				.check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_PERMISSIONS')
+				.check();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				iframe.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+
+			await iframe.getByRole('button', {name: 'Cancel'}).click();
+
+			// Open the info panel
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const folderCard = page
+				.locator('.card-page-item-directory')
+				.filter({hasText: displayPageTemplateFolderName});
+
+			await folderCard.locator('input').check();
+
+			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
+
+			await infoPanel
+				.getByRole('button', {name: 'Manage Permissions'})
+				.click();
+
+			// Change permissions for folder
+
+			await iframe.locator('#guest_ACTION_DELETE').check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_DELETE')
+				.check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_PERMISSIONS')
+				.check();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				iframe.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+
+			await iframe.getByRole('button', {name: 'Cancel'}).click();
+		}
+	);
 });
 
 test.describe('Configuration', () => {

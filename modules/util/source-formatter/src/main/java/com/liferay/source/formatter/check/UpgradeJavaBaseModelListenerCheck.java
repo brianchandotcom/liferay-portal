@@ -136,7 +136,13 @@ public class UpgradeJavaBaseModelListenerCheck extends BaseUpgradeCheck {
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
 
-		String parameter = JavaSourceUtil.getParameters(methodCall);
+		List<String> parameters = JavaSourceUtil.getParameterNames(methodCall);
+
+		if (parameters.size() != 1) {
+			return javaMethodContent;
+		}
+
+		String parameter = parameters.get(0);
 
 		String newParameters;
 

@@ -73,3 +73,69 @@ test(
 		});
 	}
 );
+
+test(
+	'Can change user notification timeout',
+	{tag: '@LPS-67072'},
+	async ({page, systemSettingsPage}) => {
+		await test.step('Navigate to SPA Settings page', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Infrastructure',
+				'Frontend SPA Infrastructure'
+			);
+		});
+
+		const userNotificationTimeoutLabel = page.getByLabel(
+			'User Notification Timeout',
+			{
+				exact: true,
+			}
+		);
+
+		const updateButton = page.getByRole('button', {
+			name: 'Update',
+		});
+
+		await test.step('Check if SPA is enabled', async () => {
+			expect(await isSPAEnabled({page})).toBeTruthy();
+		});
+
+		await test.step('Change the default timeout from 30000ms to 30ms', async () => {
+			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
+			expect(userNotificationTimeoutLabel).toHaveValue('30000');
+
+			await userNotificationTimeoutLabel.click();
+			await userNotificationTimeoutLabel.fill('30');
+
+			await updateButton.isVisible();
+			await updateButton.click();
+			await waitForAlert(page);
+		});
+
+		await test.step('Reload SPA Settings page, navigate and check that the User Notificacion appears in the page', async () => {
+			await page.reload();
+
+			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
+
+			await updateButton.isVisible();
+			await updateButton.click();
+			await waitForAlert(
+				page,
+				'Oops:It looks like this is taking longer than expected.',
+				{type: 'warning'}
+			);
+		});
+
+		await test.step('Change the timeout back to 30000ms', async () => {
+			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
+			expect(userNotificationTimeoutLabel).toHaveValue('30');
+
+			await userNotificationTimeoutLabel.click();
+			await userNotificationTimeoutLabel.fill('30000');
+
+			await updateButton.isVisible();
+			await updateButton.click();
+			await waitForAlert(page);
+		});
+	}
+);

@@ -181,57 +181,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-67072. Set the user notification timeout to 1 second"
-	@priority = 4
-	test SPANotificationSetTimeout {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: set the user notification timeout to 1 second") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Infrastructure",
-				configurationName = "Frontend SPA Infrastructure",
-				configurationScope = "System Scope");
-
-			Type(
-				key_text = "User Notification Timeout",
-				locator1 = "TextInput#ANY",
-				value1 = 1000);
-
-			SystemSettings.saveConfiguration();
-
-			Refresh();
-		}
-
-		task ("When: Activate the slow script/portlet to cause a SPA timeout") {
-			ServerAdministration.openServerAdmin();
-
-			var script = '''
-				sleep(1000);
-				out.println('Timeout notification warning triggered');
-			''';
-
-			ServerAdministration.executeScript(
-				language = "Groovy",
-				script = ${script});
-		}
-
-		task ("And When: pause for 1 second") {
-
-			// We need this pause to wait for notification timeout. See LRQA-29748
-
-			Pause(value1 = 1000);
-		}
-
-		task ("Then: notification timeout pop up immediately appears") {
-			AssertTextEquals(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "Timeout notification warning triggered");
-		}
-	}
-
 	@description = "LPS-172764 Confirm that the first selection is displayed at the top of the first Web Content page"
 	@priority = 4
 	test TheItemsListIsCorrectInFirstPage {

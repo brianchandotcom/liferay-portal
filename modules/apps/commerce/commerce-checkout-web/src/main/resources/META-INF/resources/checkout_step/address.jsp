@@ -145,9 +145,10 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
 					).build()
 				%>'
-				dataProviderKey="<%= CommerceCheckoutFDSNames.DELIVERY_GROUP %>"
-				id="<%= CommerceCheckoutFDSNames.DELIVERY_GROUP %>"
+				dataProviderKey="<%= CommerceCheckoutFDSNames.DELIVERY_GROUP_INFO %>"
+				id="<%= CommerceCheckoutFDSNames.DELIVERY_GROUP_INFO %>"
 				itemsPerPage="<%= 10 %>"
+				propsTransformer="{DeliveryGroupFDSPropsTransformer} from commerce-checkout-web"
 				selectedItemsKey="name"
 				showManagementBar="<%= false %>"
 				showSearch="<%= false %>"

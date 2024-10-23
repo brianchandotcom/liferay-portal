@@ -38,10 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	property = "fds.data.provider.key=" + CommerceCheckoutFDSNames.DELIVERY_GROUP,
+	property = "fds.data.provider.key=" + CommerceCheckoutFDSNames.DELIVERY_GROUP_INFO,
 	service = FDSDataProvider.class
 )
-public class CommerceCheckoutDeliveryGroupFDSDataProvider
+public class CommerceCheckoutDeliveryGroupInfoFDSDataProvider
 	implements FDSDataProvider<DeliveryGroupInfo> {
 
 	@Override
@@ -50,7 +50,7 @@ public class CommerceCheckoutDeliveryGroupFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		Map<String, DeliveryGroupInfo> deliveryGroupMap = new HashMap<>();
+		Map<String, DeliveryGroupInfo> deliveryGroupInfos = new HashMap<>();
 
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
@@ -61,29 +61,32 @@ public class CommerceCheckoutDeliveryGroupFDSDataProvider
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			if (!deliveryGroupMap.containsKey(
+			if (deliveryGroupInfos.containsKey(
 					commerceOrderItem.getDeliveryGroup())) {
 
-				CommerceAddress commerceAddress =
+				continue;
+			}
+
+			CommerceAddress commerceAddress =
 				_commerceAddressLocalService.getCommerceAddress(
 					commerceOrderItem.getShippingAddressId());
-	
-				Country country = commerceAddress.getCountry();
-	
-				DeliveryGroupInfo deliveryGroupInfo = new DeliveryGroupInfo(
-					commerceAddress.getCommerceAddressId(),
-					StringBundler.concat(
-						commerceAddress.getStreet1(), StringPool.COMMA_AND_SPACE,
-						commerceAddress.getCity(), StringPool.COMMA_AND_SPACE,
-						country.getName(_portal.getLocale(httpServletRequest))),
-					commerceOrderItem.getRequestedDeliveryDate(),
-					commerceOrderItem.getDeliveryGroup());
-	
-				deliveryGroupMap.put(deliveryGroupInfo.getName(), deliveryGroupInfo);
-			}
+
+			Country country = commerceAddress.getCountry();
+
+			DeliveryGroupInfo deliveryGroupInfo = new DeliveryGroupInfo(
+				commerceAddress.getCommerceAddressId(),
+				StringBundler.concat(
+					commerceAddress.getStreet1(), StringPool.COMMA_AND_SPACE,
+					commerceAddress.getCity(), StringPool.COMMA_AND_SPACE,
+					country.getName(_portal.getLocale(httpServletRequest))),
+				commerceOrderItem.getRequestedDeliveryDate(),
+				commerceOrderItem.getDeliveryGroup());
+
+			deliveryGroupInfos.put(
+				deliveryGroupInfo.getName(), deliveryGroupInfo);
 		}
 
-		return new ArrayList<>(deliveryGroupMap.values());
+		return new ArrayList<>(deliveryGroupInfos.values());
 	}
 
 	@Override
@@ -94,7 +97,7 @@ public class CommerceCheckoutDeliveryGroupFDSDataProvider
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
 
-		return CommerceOrderUtil.getCommerceOrderDeliveryGroupQuantity(
+		return CommerceOrderUtil.getCommerceOrderDeliveryGroupsCount(
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId));
 	}
 

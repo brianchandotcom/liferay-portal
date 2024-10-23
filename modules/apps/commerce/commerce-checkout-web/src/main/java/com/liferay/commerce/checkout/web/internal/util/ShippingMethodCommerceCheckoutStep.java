@@ -212,7 +212,7 @@ public class ShippingMethodCommerceCheckoutStep
 					return shippingAmount.multiply(
 						BigDecimal.valueOf(
 							CommerceOrderUtil.
-								getCommerceOrderDeliveryGroupCount(
+								getCommerceOrderDeliveryGroupsCount(
 									commerceOrder)));
 				}
 

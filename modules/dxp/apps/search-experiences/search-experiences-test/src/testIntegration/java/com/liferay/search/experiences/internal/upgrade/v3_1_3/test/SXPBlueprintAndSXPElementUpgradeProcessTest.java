@@ -68,32 +68,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Test
 	public void testSXPBlueprintUpgradeProcess() throws Exception {
-		Group group1 = GroupTestUtil.addGroup();
-		Group group2 = GroupTestUtil.addGroup();
-
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(),
-			StringUtil.read(
-				_clazz,
-				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), ".configurationJSON.json")),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			_getElementInstancesJSON(group1, group2), "1.1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
-
-		_runUpgrade();
-
-		_assertSXPBlueprint(
-			_getExpectedInstancesJSON(group1, group2),
-			sxpBlueprint.getSXPBlueprintId());
-	}
-
-	@Test
-	public void testSXPElementUpgradeProcess() throws Exception {
 		SXPElement sxpElement =
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
@@ -117,7 +91,28 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 		}
 
+		Group group1 = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
+
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(),
+			StringUtil.read(
+				_clazz,
+				StringBundler.concat(
+					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".configurationJSON.json")),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_getElementInstancesJSON(group1, group2), "1.1",
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_serviceContext);
+
 		_runUpgrade();
+
+		_assertSXPBlueprint(
+			_getExpectedInstancesJSON(group1, group2),
+			sxpBlueprint.getSXPBlueprintId());
 
 		sxpElement =
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
@@ -185,8 +180,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		return StringUtil.read(
 			clazz,
 			StringBundler.concat(
-				"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".json"));
+				"dependencies/", clazz.getSimpleName(),
+				".testSXPElementUpgradeProcess.json"));
 	}
 
 	private String _getExpectedInstancesJSON(Group group1, Group group2)

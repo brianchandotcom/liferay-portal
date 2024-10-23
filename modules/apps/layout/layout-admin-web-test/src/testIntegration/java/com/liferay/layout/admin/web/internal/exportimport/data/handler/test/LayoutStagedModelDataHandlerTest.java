@@ -56,7 +56,10 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -120,7 +123,9 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.template.model.TemplateEntry;
@@ -601,6 +606,115 @@ public class LayoutStagedModelDataHandlerTest
 		_assertLayoutSEOEntry(
 			stagingLayoutSEOEntry.getCanonicalURLMap(), group.getGroupId(),
 			stagingLayoutSEOEntry.getUuid());
+	}
+
+	@Test
+	@TestInfo("LPS-128438")
+	public void testSegmentsExperiencesPriority() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					group.getGroupId(), draftLayout.getPlid());
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				group.getGroupId(), layout.getPlid());
+
+		_layoutPageTemplateStructureRelLocalService.
+			addLayoutPageTemplateStructureRel(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperience1.getSegmentsExperienceId(),
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData(),
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				group.getGroupId(), layout.getPlid());
+
+		_layoutPageTemplateStructureRelLocalService.
+			addLayoutPageTemplateStructureRel(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperience2.getSegmentsExperienceId(),
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData(),
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		SegmentsExperience segmentsExperience3 =
+			SegmentsTestUtil.addSegmentsExperience(
+				group.getGroupId(), layout.getPlid());
+
+		_layoutPageTemplateStructureRelLocalService.
+			addLayoutPageTemplateStructureRel(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperience3.getSegmentsExperienceId(),
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData(),
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+
+		Group stagingGroup = group.getStagingGroup();
+
+		Layout stagingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), stagingGroup.getGroupId(), false);
+
+		SegmentsExperience stagingSegmentsExperience1 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				stagingGroup.getGroupId(),
+				segmentsExperience1.getSegmentsExperienceKey(),
+				stagingLayout.getPlid());
+
+		SegmentsExperience stagingSegmentsExperience2 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				stagingGroup.getGroupId(),
+				segmentsExperience2.getSegmentsExperienceKey(),
+				stagingLayout.getPlid());
+
+		SegmentsExperience stagingSegmentsExperience3 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				stagingGroup.getGroupId(),
+				segmentsExperience3.getSegmentsExperienceKey(),
+				stagingLayout.getPlid());
+
+		stagingSegmentsExperience1 =
+			_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
+				stagingSegmentsExperience1.getSegmentsExperienceId(),
+				stagingSegmentsExperience2.getPriority());
+
+		_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
+			stagingSegmentsExperience3.getSegmentsExperienceId(),
+			stagingSegmentsExperience1.getPriority());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"LoggerExportImportLifecycleListener",
+				LoggerTestUtil.ERROR)) {
+
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				group.getGroupId(), false,
+				ExportImportConfigurationParameterMapFactoryUtil.
+					buildFullPublishParameterMap());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
 	}
 
 	@Test
@@ -1725,6 +1839,14 @@ public class LayoutStagedModelDataHandlerTest
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureRelLocalService
+		_layoutPageTemplateStructureRelLocalService;
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

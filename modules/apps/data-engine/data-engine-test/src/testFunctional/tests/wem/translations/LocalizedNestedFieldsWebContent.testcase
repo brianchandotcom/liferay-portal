@@ -374,7 +374,9 @@ definition {
 
 		WebContent.addCP(webContentTitle = "WC Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		DataEngine.addRepeatableField(fieldLabel = "Grupo de Campos");
 
@@ -401,7 +403,9 @@ definition {
 			key_index = 2,
 			locator1 = "FormFields#FIELD_REMOVE");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		for (var n : list "1,2") {
 			for (var label : list "Grupo de Campos,Texto,Numérico") {
@@ -508,7 +512,9 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		for (var label : list "Grupo de Campos,Texto,Data") {
 			AssertVisible(
@@ -539,7 +545,9 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "10/10/2020",
@@ -566,7 +574,9 @@ definition {
 			webContentDate = "01/01/2021",
 			webContentText = "This is a Text field");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -605,7 +615,9 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 123,
@@ -620,7 +632,9 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -747,7 +761,9 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 5,
@@ -758,7 +774,9 @@ definition {
 			webContentTextFieldLabel = "Texto",
 			webContentTitle = "Título do conteúdo da web");
 
-		PortletEntry.changeLocale(locale = "de-DE");
+		PortletEntry.changeLocale(
+			locale = "de-DE",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 543,
@@ -769,7 +787,9 @@ definition {
 			webContentTextFieldLabel = "Text German",
 			webContentTitle = "WC Structure Title German");
 
-		PortletEntry.changeLocale(locale = "ja-JP");
+		PortletEntry.changeLocale(
+			locale = "ja-JP",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 321,
@@ -794,7 +814,9 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -815,7 +837,9 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		PortletEntry.changeLocale(locale = "de-DE");
+		PortletEntry.changeLocale(
+			locale = "de-DE",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -836,7 +860,9 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		PortletEntry.changeLocale(locale = "ja-JP");
+		PortletEntry.changeLocale(
+			locale = "ja-JP",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -882,7 +908,9 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentColor = 000000,
@@ -938,14 +966,18 @@ definition {
 			webContentText = "English Text",
 			webContentTitle = "WC WebContent English");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentRichText = "ptBR Rich Text",
 			webContentText = "ptBR Text",
 			webContentTitle = "WC WebContent ptBR");
 
-		PortletEntry.changeLocale(locale = "fr-FR");
+		PortletEntry.changeLocale(
+			locale = "fr-FR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentRichText = "frFR Rich Text",
@@ -959,7 +991,9 @@ definition {
 			webContentText = "English Text",
 			webContentTitle = "WC WebContent English");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -970,7 +1004,9 @@ definition {
 			webContentRichText = "ptBR Rich Text",
 			webContentText = "ptBR Text");
 
-		PortletEntry.changeLocale(locale = "fr-FR");
+		PortletEntry.changeLocale(
+			locale = "fr-FR",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",

@@ -314,6 +314,7 @@ definition {
 	@description = "This is a use case for LPS-69593 and LRQA-61632. Assert the selected image is kept in Image field under localized."
 	@priority = 4
 	test ViewFieldTranslationsWithImageField {
+		property custom.properties = "feature.flag.LPD-11228=true${line.separator}feature.flag.LPD-15596=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -366,7 +367,9 @@ definition {
 			fieldName = "Image",
 			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		FormFields.editText(
 			fieldName = "title",
@@ -376,7 +379,9 @@ definition {
 			fieldName = "Image",
 			fieldValue = "Spanish (Spain) Image Description");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		FormFields.editText(
 			fieldName = "title",
@@ -387,6 +392,20 @@ definition {
 			fieldValue = "Portuguese (Brazil) Image Description");
 
 		PortletEntry.publish();
+
+		AssertClick(
+			buttonName = "Publish With Permissions",
+			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
+			value1 = "Publish With Permissions");
+
+		WaitForElementPresent(
+			locator1 = "Modal#SELECT_WITH_LABEL",
+			selectLabel = "Viewable by");
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "Modal#PRIMARY_BUTTON",
+			value1 = "Publish");
 
 		WebContentAdmin.gotoEntry(entry = "English (United States) Title");
 
@@ -404,7 +423,9 @@ definition {
 			fieldName = "Image",
 			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
@@ -420,7 +441,9 @@ definition {
 			fieldName = "Image",
 			fieldValue = "Spanish (Spain) Image Description");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		FormFields.viewTextValue(
 			fieldName = "title",

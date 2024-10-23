@@ -270,6 +270,8 @@ definition {
 	@description = "This is a test for LRQA-71711. This test verifies that the Web Content data persists upon editing the related Structure by creating a Fields Group"
 	@priority = 4
 	test CanDataBeEditedInNewFieldsGroup {
+		property custom.properties = "feature.flag.LPD-11228=true${line.separator}feature.flag.LPD-15596=true";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -298,7 +300,21 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		Button.clickPublish();
+		PortletEntry.publish();
+
+		AssertClick(
+			buttonName = "Publish With Permissions",
+			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
+			value1 = "Publish With Permissions");
+
+		WaitForElementPresent(
+			locator1 = "Modal#SELECT_WITH_LABEL",
+			selectLabel = "Viewable by");
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "Modal#PRIMARY_BUTTON",
+			value1 = "Publish");
 
 		NavItem.gotoStructures();
 
@@ -328,6 +344,8 @@ definition {
 	@description = "Verify that the Web Content data persists upon editing the related Structure by creating a Fields Group	"
 	@priority = 4
 	test CanDataBeEditedInNewFieldsGroupTranslated {
+		property custom.properties = "feature.flag.LPD-11228=true${line.separator}feature.flag.LPD-15596=true";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -356,7 +374,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -367,6 +387,20 @@ definition {
 			value = 123456);
 
 		Button.clickPublish();
+
+		AssertClick(
+			buttonName = "Publish With Permissions",
+			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
+			value1 = "Publish With Permissions");
+
+		WaitForElementPresent(
+			locator1 = "Modal#SELECT_WITH_LABEL",
+			selectLabel = "Viewable by");
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "Modal#PRIMARY_BUTTON",
+			value1 = "Publish");
 
 		NavItem.gotoStructures();
 
@@ -390,7 +424,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -612,7 +648,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -634,7 +672,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -644,7 +684,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 456);
 
-		PortletEntry.changeLocale(locale = "en-US");
+		PortletEntry.changeLocale(
+			locale = "en-US",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -654,7 +696,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 321);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -676,7 +720,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 321);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1064,6 +1110,8 @@ definition {
 	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
 	@priority = 4
 	test CanInputDataOnDuplicatedFieldTranslated {
+		property custom.properties = "feature.flag.LPD-11228=true${line.separator}feature.flag.LPD-15596=true";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -1109,7 +1157,9 @@ definition {
 			index = 2,
 			value = 456);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -1131,7 +1181,21 @@ definition {
 			index = 2,
 			value = 123456);
 
-		Button.clickPublish();
+		PortletEntry.publish();
+
+		AssertClick(
+			buttonName = "Publish With Permissions",
+			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
+			value1 = "Publish With Permissions");
+
+		WaitForElementPresent(
+			locator1 = "Modal#SELECT_WITH_LABEL",
+			selectLabel = "Viewable by");
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "Modal#PRIMARY_BUTTON",
+			value1 = "Publish");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1155,7 +1219,9 @@ definition {
 			index = 2,
 			value = 456);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1367,7 +1433,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -1389,7 +1457,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1411,7 +1481,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = "");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -1433,7 +1505,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = "");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1495,6 +1569,8 @@ definition {
 	@description = "Verify that is possible to remove duplicated repeatable Fields Group"
 	@priority = 4
 	test CanRemoveDuplicatedRepeatableFieldsGroupTranslated {
+		property custom.properties = "feature.flag.LPD-11228=true${line.separator}feature.flag.LPD-15596=true";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -1540,7 +1616,9 @@ definition {
 			index = 2,
 			value = 456);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -1562,7 +1640,21 @@ definition {
 			index = 2,
 			value = 123456);
 
-		Button.clickPublish();
+		PortletEntry.publish();
+
+		AssertClick(
+			buttonName = "Publish With Permissions",
+			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
+			value1 = "Publish With Permissions");
+
+		WaitForElementPresent(
+			locator1 = "Modal#SELECT_WITH_LABEL",
+			selectLabel = "Viewable by");
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "Modal#PRIMARY_BUTTON",
+			value1 = "Publish");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1586,7 +1678,9 @@ definition {
 			index = 2,
 			value = 456);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1608,7 +1702,12 @@ definition {
 			index = 2,
 			value = 123456);
 
-		Button.clickPublish();
+		PortletEntry.publish();
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
+			value1 = "Publish");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1616,7 +1715,12 @@ definition {
 			fieldLabel = "Text",
 			index = 2);
 
-		Button.clickPublish();
+		PortletEntry.publish();
+
+		AssertClick(
+			buttonName = "Publish",
+			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
+			value1 = "Publish");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1630,7 +1734,9 @@ definition {
 			index = 1,
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1810,7 +1916,9 @@ definition {
 				row = ${index});
 		}
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		for (var index : list "3,4") {
 			DERenderer.inputDataInGridField(
@@ -1830,7 +1938,9 @@ definition {
 				row = ${index});
 		}
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		for (var index : list "3,4") {
 			DERenderer.assertDataInGridField(
@@ -1913,7 +2023,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInMultipleSelectionField(
 			fieldLabel = "Multiple Selection",
@@ -1927,7 +2039,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInMultipleSelectionField(
 			fieldLabel = "Multiple Selection",
@@ -1975,7 +2089,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -1997,7 +2113,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",

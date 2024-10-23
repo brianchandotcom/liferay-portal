@@ -58,7 +58,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title pt-BR");
 
-		PortletEntry.changeLocale(locale = "en-US");
+		PortletEntry.changeLocale(
+			locale = "en-US",
+			translated = "true");
 
 		WebContent.editWebContentContent(
 			webContentContentEdit = "WC WebContent Content en-US",
@@ -73,7 +75,9 @@ definition {
 			webContentContent = "WC WebContent Content pt-BR",
 			webContentTitle = "WC WebContent Title pt-BR");
 
-		PortletEntry.changeLocale(locale = "en-US");
+		PortletEntry.changeLocale(
+			locale = "en-US",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content en-US",
@@ -137,7 +141,9 @@ definition {
 				row = ${index});
 		}
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -163,7 +169,9 @@ definition {
 				row = ${index});
 		}
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -220,7 +228,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 2");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -264,7 +274,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 4");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -326,7 +338,9 @@ definition {
 			fieldLabel = "Select from List",
 			optionValue = "Option 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -350,7 +364,9 @@ definition {
 			key_menuItem = "Option 1",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -404,7 +420,9 @@ definition {
 			fieldLabel = "Single Selection",
 			optionValue = "Option 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -424,7 +442,9 @@ definition {
 			fieldLabel = "Single Selection",
 			optionValue = "Option 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -472,14 +492,18 @@ definition {
 			webContentDate = "01/02/3000",
 			webContentTitle = "WC Structure Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Date - pt-BR",
 			locator1 = "WCEditWebContent#DATE_INPUT",
 			value1 = "02/01/3000");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Date - zh-CN",
@@ -527,7 +551,9 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "10.00");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric",
@@ -658,7 +684,9 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = 12345);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "数字",
@@ -928,7 +956,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
@@ -950,7 +980,9 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
@@ -1021,7 +1053,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 2");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -1059,7 +1093,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 3");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1115,7 +1151,9 @@ definition {
 			fieldLabel = "Color",
 			value = "ff0d0d");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -1127,7 +1165,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1171,7 +1211,9 @@ definition {
 			webContentDate = "01/01/1000",
 			webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "1000/01/01",
@@ -1182,7 +1224,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1227,7 +1271,9 @@ definition {
 			webContentNumeric = 12345,
 			webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 12345,
@@ -1238,7 +1284,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1283,7 +1331,9 @@ definition {
 			webContentRichText = "This is a Rich Text field",
 			webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentRichText = "这是一个富文本字段",
@@ -1294,7 +1344,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1342,7 +1394,9 @@ definition {
 			webContentText = "Test",
 			webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentText = "测试",
@@ -1353,7 +1407,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1411,7 +1467,9 @@ definition {
 			webContentTextFieldLabel = "Text - en-US",
 			webContentTitle = "Test - en-US");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "Test - zh-CN");
 
@@ -1422,7 +1480,9 @@ definition {
 			webContentTextFieldLabel = "Text - zh-CN",
 			webContentTitle = "Test - zh-CN");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "Test - pt-BR");
 
@@ -1451,7 +1511,9 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = 12345);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1467,7 +1529,9 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = 54321);
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1531,7 +1595,9 @@ definition {
 			webContentTextFieldLabel = "Text - en-US",
 			webContentTitle = "Test - en-US");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 54321,
@@ -1540,7 +1606,9 @@ definition {
 			webContentTextFieldLabel = "Text - zh-CN",
 			webContentTitle = "Test - zh-CN");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = 98765,
@@ -1569,7 +1637,9 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = 12345);
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1587,7 +1657,9 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = 54321);
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -1650,7 +1722,9 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
 
@@ -1658,7 +1732,9 @@ definition {
 			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addCP(webContentTitle = "Web Content Title - zh-CN");
 
@@ -1720,7 +1796,9 @@ definition {
 
 		FormFields.assertFieldsGroup(fieldName = "Fields Group");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
 
@@ -1730,7 +1808,9 @@ definition {
 			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addCP(webContentTitle = "Web Content Title - zh-CN");
 
@@ -1784,13 +1864,17 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 1");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
 
 		DataEngine.assertNonLocalizableField(fieldFieldName = "Multiple Selection - pt-BR");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addCP(webContentTitle = "Web Content Title - zh-CN");
 
@@ -2022,7 +2106,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 3");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "Test zh-CN");
 
@@ -3111,7 +3197,9 @@ definition {
 			webContentUpload = "Document_1.jpg",
 			webContentWebContent = "Web Content Title 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.addWithStructureCP(
 			column = 2,
@@ -3170,7 +3258,9 @@ definition {
 			webContentUpload = "Document_1.jpg",
 			webContentWebContent = "Web Content Title 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -3315,7 +3405,9 @@ definition {
 			index = 2,
 			value = "This is a Text field 2");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text - pt-BR",
@@ -3341,7 +3433,9 @@ definition {
 			index = 2,
 			value = "This is a Text field 2");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text - pt-BR",
@@ -3394,7 +3488,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -3420,7 +3516,9 @@ definition {
 			fieldLabel = "Upload",
 			webContentUpload = "Document_1.jpg");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -3469,7 +3567,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertClick(
 			key_fieldFieldLabel = "Image",
@@ -3495,7 +3595,9 @@ definition {
 			key_image = "Document_2.jpeg",
 			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -3548,7 +3650,9 @@ definition {
 			linkToPageContent = "Test Page Name 1",
 			linkToPageFieldLabel = "Link to Page");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		PortletEntry.inputTitle(title = "测试");
 
@@ -3574,7 +3678,9 @@ definition {
 			linkToPageContent = "Pages > Test Page Name 1",
 			linkToPageFieldLabel = "Link to Page");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -3626,7 +3732,9 @@ definition {
 			webContentTitle = "Test",
 			webContentWebContent = "Web Content Title 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertClick(
 			key_fieldFieldLabel = "网页内容",
@@ -3651,7 +3759,9 @@ definition {
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Web Content Title 1");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -3684,7 +3794,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.editWebContentContent(
 			webContentContentEdit = "WC WebContent Content zh-CN",
@@ -3693,7 +3805,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.editWebContentContent(
 			webContentContentEdit = "WC WebContent Content pt-BR",
@@ -3708,13 +3822,19 @@ definition {
 			webContentContent = "WC WebContent Content en-US",
 			webContentTitle = "WC WebContent Title en-US");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content zh-CN",
 			webContentTitle = "WC WebContent Title zh-CN");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
+
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			translated = "true");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content pt-BR",

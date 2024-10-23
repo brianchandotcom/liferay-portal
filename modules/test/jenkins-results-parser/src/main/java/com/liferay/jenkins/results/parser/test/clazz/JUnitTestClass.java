@@ -127,6 +127,22 @@ public class JUnitTestClass extends BaseTestClass {
 			"testray_main_component_name");
 	}
 
+	protected File getParentTestProperties(File currentDirectory) {
+		if (currentDirectory.compareTo(_modulesBaseDirectory) == 0) {
+			return null;
+		}
+
+		File parentDirectory = currentDirectory.getParentFile();
+
+		File parentProperties = new File(parentDirectory + "/test.properties");
+
+		if (parentProperties.exists()) {
+			return parentProperties;
+		} 
+
+		return getParentTestProperties(parentDirectory);
+	}
+
 	protected File getPortalModulesBaseDir() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();

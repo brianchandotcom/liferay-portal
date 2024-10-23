@@ -39,24 +39,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPElement();
 	}
 
-	private JSONObject _createScopeGroupExternalReferenceCodesJSONObject(
-			JSONObject scopeGroupIDJSONObject)
-		throws Exception {
-
-		long groupId = scopeGroupIDJSONObject.getLong("value");
-
-		Group group = _getGroup(groupId);
-
-		return JSONUtil.put(
-			"label",
-			StringBundler.concat(
-				group.getDescriptiveName(), " (ERC: ",
-				group.getExternalReferenceCode(), ")")
-		).put(
-			"value", group.getExternalReferenceCode()
-		);
-	}
-
 	private long[] _extractScopeGroupIds(JSONObject termsJSONObject) {
 		JSONArray scopeGroupIdJSONArray = JSONUtil.getValueAsJSONArray(
 			termsJSONObject, "JSONArray/scopeGroupId");
@@ -309,9 +291,17 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONObject scopeGroupIDJSONObject =
 				scopeGroupIdsJSONArray.getJSONObject(i);
 
+			Group group = _getGroup(scopeGroupIDJSONObject.getLong("value"));
+
 			groupIdsExternalReferenceCodesJSONArray.put(
-				_createScopeGroupExternalReferenceCodesJSONObject(
-					scopeGroupIDJSONObject));
+				JSONUtil.put(
+					"label",
+					StringBundler.concat(
+						group.getDescriptiveName(), " (ERC: ",
+						group.getExternalReferenceCode(), ")")
+				).put(
+					"value", group.getExternalReferenceCode()
+				));
 		}
 
 		uiConfigurationValuesJSONObject.put(

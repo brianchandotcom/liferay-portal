@@ -76,16 +76,18 @@ public class JUnitTestClass extends BaseTestClass {
 			_testPropertiesFile = new File(
 				testPropertiesBaseDir, "test.properties");
 
-			String testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getProperties(_testPropertiesFile),
-				"testray.main.component.name");
+			String testrayMainComponentName =
+				JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getProperties(_testPropertiesFile),
+					"testray.main.component.name");
 
-			if (testrayMainComponentName == null && _modulesBaseDirectory.exists()) {
-				File parentTestProperties = getParentTestProperties(testPropertiesBaseDir);
+			if ((testrayMainComponentName == null) &&
+				_modulesBaseDirectory.exists()) {
 
 				testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getProperties(parentTestProperties),
-				"testray.main.component.name");
+					JenkinsResultsParserUtil.getProperties(
+						getParentTestProperties(testPropertiesBaseDir)),
+					"testray.main.component.name");
 			}
 
 			_testrayMainComponentName = testrayMainComponentName;
@@ -140,12 +142,13 @@ public class JUnitTestClass extends BaseTestClass {
 		String testrayMainComponentName = jsonObject.optString(
 			"testray_main_component_name");
 
-		if (testrayMainComponentName == null && _modulesBaseDirectory.exists()) {
-			File parentTestProperties = getParentTestProperties(testPropertiesBaseDir);
+		if ((testrayMainComponentName == null) &&
+			_modulesBaseDirectory.exists()) {
 
 			testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
-			JenkinsResultsParserUtil.getProperties(parentTestProperties),
-			"testray.main.component.name");
+				JenkinsResultsParserUtil.getProperties(
+					getParentTestProperties(testPropertiesBaseDir)),
+				"testray.main.component.name");
 		}
 
 		_testrayMainComponentName = testrayMainComponentName;
@@ -162,7 +165,7 @@ public class JUnitTestClass extends BaseTestClass {
 
 		if (parentProperties.exists()) {
 			return parentProperties;
-		} 
+		}
 
 		return getParentTestProperties(parentDirectory);
 	}

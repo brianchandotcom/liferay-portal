@@ -78,7 +78,7 @@ public class
 		_serviceContext = _getServiceContext(
 			_group, TestPropsValues.getUserId());
 
-		_layoutPageTemplateEntry =
+		_layoutPageTemplateEntryMasterLayout =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				LayoutPageTemplateConstants.
@@ -96,10 +96,17 @@ public class
 	}
 
 	@Test
-	public void testCopyLayoutPageTemplateEntryMVCActionCommand()
-		throws Exception {
-
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest();
+	public void testCopyLayoutPageTemplateEntryMasterLayout() throws Exception {
+		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
+			null,
+			new String[] {
+				String.valueOf(
+					_layoutPageTemplateEntryMasterLayout.
+						getLayoutPageTemplateEntryId())
+			},
+			String.valueOf(
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
@@ -107,7 +114,8 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -118,7 +126,8 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNotNull(targetLayoutPageTemplateEntry);
 	}
@@ -127,10 +136,20 @@ public class
 	public void testCopyLayoutPageTemplateEntryRollbackMVCActionCommand()
 		throws Exception {
 
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest();
+		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
+			null,
+			new String[] {
+				String.valueOf(
+					_layoutPageTemplateEntryMasterLayout.
+						getLayoutPageTemplateEntryId())
+			},
+			String.valueOf(
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
-		_layoutLocalService.deleteLayout(_layoutPageTemplateEntry.getPlid());
+		_layoutLocalService.deleteLayout(
+			_layoutPageTemplateEntryMasterLayout.getPlid());
 
 		long originalLayoutsCount = _layoutLocalService.getLayoutsCount(
 			_group.getGroupId());
@@ -142,7 +161,8 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -156,7 +176,16 @@ public class
 	public void testCopyLayoutPageTemplateEntryUniqueNameMVCActionCommand()
 		throws Exception {
 
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest();
+		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
+			null,
+			new String[] {
+				String.valueOf(
+					_layoutPageTemplateEntryMasterLayout.
+						getLayoutPageTemplateEntryId())
+			},
+			String.valueOf(
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
@@ -164,7 +193,8 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -177,7 +207,8 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		LayoutPageTemplateEntry secondTargetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -185,7 +216,7 @@ public class
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				StringUtil.appendParentheticalSuffix(
-					_layoutPageTemplateEntry.getName(),
+					_layoutPageTemplateEntryMasterLayout.getName(),
 					LanguageUtil.get(LocaleUtil.getSiteDefault(), "copy") +
 						StringPool.SPACE + 1),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
@@ -194,8 +225,10 @@ public class
 		Assert.assertNotNull(secondTargetLayoutPageTemplateEntry);
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			String[] layoutPageTemplateCollectionsIds,
+			String[] layoutPageTemplateEntriesIds,
+			String parentLayoutPageTemplateCollectionId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -208,22 +241,28 @@ public class
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 		mockLiferayPortletActionRequest.setParameter(
 			"copyPermissions", Boolean.TRUE.toString());
-		mockLiferayPortletActionRequest.setParameter(
-			"layoutPageTemplateEntriesIds",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		if (layoutPageTemplateCollectionsIds != null) {
+			mockLiferayPortletActionRequest.setParameter(
+				"layoutPageTemplateCollectionsIds",
+				layoutPageTemplateCollectionsIds);
+		}
+
+		if (layoutPageTemplateEntriesIds != null) {
+			mockLiferayPortletActionRequest.setParameter(
+				"layoutPageTemplateEntriesIds", layoutPageTemplateEntriesIds);
+		}
+
 		mockLiferayPortletActionRequest.setParameter(
 			"layoutParentPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+			parentLayoutPageTemplateCollectionId);
 
 		return mockLiferayPortletActionRequest;
 	}
 
-	private String _getName() {
+	private String _getName(String name) {
 		return StringUtil.appendParentheticalSuffix(
-			_layoutPageTemplateEntry.getName(),
-			LanguageUtil.get(_serviceContext.getLocale(), "copy"));
+			name, LanguageUtil.get(_serviceContext.getLocale(), "copy"));
 	}
 
 	private ServiceContext _getServiceContext(Group group, long userId)
@@ -273,11 +312,11 @@ public class
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
-
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	private LayoutPageTemplateEntry _layoutPageTemplateEntryMasterLayout;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_page_template_admin/copy_layout_page_template_entries_and_layout_page_template_collections"

@@ -77,6 +77,7 @@ const renderTopperItemActions = ({
 	return render(
 		<StoreAPIContextProvider
 			getState={() => ({
+				fragmentEntryLinks: {},
 				layoutData,
 			})}
 		>

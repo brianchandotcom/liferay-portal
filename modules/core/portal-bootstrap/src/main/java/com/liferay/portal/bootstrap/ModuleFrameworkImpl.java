@@ -1836,7 +1836,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES);
 
 	private BundleListener _bundleListener;
-	private Framework _framework;
+	private volatile Framework _framework;
 	private LogListener _logListener;
 	private final Map
 		<ConfigurableApplicationContext, Collection<ServiceRegistration<?>>>

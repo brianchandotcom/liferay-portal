@@ -62,11 +62,11 @@ public class JUnitTestClass extends BaseTestClass {
 
 		File modulesBaseDirectory = getPortalModulesBaseDir();
 
-		if (modulesBaseDirectory != null) {
+		if ((modulesBaseDirectory != null) && modulesBaseDirectory.exists()) {
 			_modulesBaseDirectory = modulesBaseDirectory;
 		}
 		else {
-			_modulesBaseDirectory = null;
+			_modulesBaseDirectory = new File(".");
 		}
 
 		File testPropertiesBaseDir = getTestPropertiesBaseDir(
@@ -76,9 +76,19 @@ public class JUnitTestClass extends BaseTestClass {
 			_testPropertiesFile = new File(
 				testPropertiesBaseDir, "test.properties");
 
-			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+			String testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(_testPropertiesFile),
 				"testray.main.component.name");
+
+			if (testrayMainComponentName == null && _modulesBaseDirectory.exists()) {
+				File parentTestProperties = getParentTestProperties(testPropertiesBaseDir);
+
+				testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getProperties(parentTestProperties),
+				"testray.main.component.name");
+			}
+
+			_testrayMainComponentName = testrayMainComponentName;
 		}
 		else {
 			_testPropertiesFile = null;
@@ -107,7 +117,7 @@ public class JUnitTestClass extends BaseTestClass {
 
 		File modulesBaseDirectory = getPortalModulesBaseDir();
 
-		if (modulesBaseDirectory != null) {
+		if ((modulesBaseDirectory != null) && modulesBaseDirectory.exists()) {
 			_modulesBaseDirectory = modulesBaseDirectory;
 		}
 		else {
@@ -124,8 +134,21 @@ public class JUnitTestClass extends BaseTestClass {
 			_testPropertiesFile = null;
 		}
 
-		_testrayMainComponentName = jsonObject.optString(
+		File testPropertiesBaseDir = getTestPropertiesBaseDir(
+			getTestClassFile());
+
+		String testrayMainComponentName = jsonObject.optString(
 			"testray_main_component_name");
+
+		if (testrayMainComponentName == null && _modulesBaseDirectory.exists()) {
+			File parentTestProperties = getParentTestProperties(testPropertiesBaseDir);
+
+			testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+			JenkinsResultsParserUtil.getProperties(parentTestProperties),
+			"testray.main.component.name");
+		}
+
+		_testrayMainComponentName = testrayMainComponentName;
 	}
 
 	protected File getParentTestProperties(File currentDirectory) {
@@ -336,7 +359,7 @@ public class JUnitTestClass extends BaseTestClass {
 			"(?<methodName>[^\\(\\s]+)"));
 
 	private boolean _classIgnored;
-	private File _modulesBaseDirectory;
+	private final File _modulesBaseDirectory;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

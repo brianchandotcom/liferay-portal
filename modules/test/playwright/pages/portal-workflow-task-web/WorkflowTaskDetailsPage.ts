@@ -8,6 +8,9 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {WorkflowTasksPage} from './WorkflowTasksPage';
 
+const MY_WORKFLOW_TASK_PORTLET_NAMESPACE =
+	'_com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet_';
+
 export class WorkflowTaskDetailsPage {
 	readonly activitiesButton: Locator;
 	readonly approveMenuItem: Locator;
@@ -22,6 +25,7 @@ export class WorkflowTaskDetailsPage {
 	readonly doneButton: Locator;
 	readonly editAssetButton: Locator;
 	readonly page: Page;
+	readonly portletNameSpace: string;
 	readonly previewMessageBoards: Locator;
 	readonly rejectMenuItem: Locator;
 	readonly replyButton: Locator;
@@ -34,7 +38,7 @@ export class WorkflowTaskDetailsPage {
 		this.activitiesButton = page.getByRole('button', {name: 'Activities'});
 		this.approveMenuItem = page.getByRole('menuitem', {name: 'approve'});
 		this.assignToDialogIFRAME = page.frameLocator(
-			'iframe[name="_com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet_assignToDialog_iframe_"]'
+			`iframe[name="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}assignToDialog_iframe_"]`
 		);
 		this.assignToMenuItem = page.getByRole('link', {name: 'Assign to...'});
 		this.assignToSingleSelect =
@@ -51,13 +55,14 @@ export class WorkflowTaskDetailsPage {
 		this.doneButton = page.getByRole('button', {name: 'Done'});
 		this.editAssetButton = page.locator('[title="Edit"]');
 		this.page = page;
+		this.portletNameSpace = MY_WORKFLOW_TASK_PORTLET_NAMESPACE;
 		this.previewMessageBoards = page.getByRole('button', {
 			name: 'Preview of Message Boards',
 		});
 		this.rejectMenuItem = page.getByRole('menuitem', {name: 'reject'});
 		this.replyButton = page.getByRole('button', {name: 'Reply'});
 		this.reviewActionMenu = page.locator(
-			'[id="_com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet_kldx___menu"]'
+			`[id="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}kldx___menu"]`
 		);
 		this.reviewComment = page.getByRole('textbox', {name: 'Comment'});
 		this.subscribeButton = page.getByLabel('Subscribe to Comments');

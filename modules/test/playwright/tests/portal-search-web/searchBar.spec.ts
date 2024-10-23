@@ -26,10 +26,7 @@ export const test = mergeTests(
 );
 
 test.describe('Search Bar with user input', () => {
-	test('Alert does not display on search page @LPD-39110', async ({
-		page,
-		searchPage,
-	}) => {
+	test('Alert does not display on search page @LPD-39110', async ({page}) => {
 		await test.step('Check that an alert with message does not appear', async () => {
 			page.on('dialog', async (dialog) => {
 				dialog.accept();
@@ -49,9 +46,7 @@ test.describe('Search Bar with user input', () => {
 					'/search;%3B%3Cdiv%20id%3D%221%22%3EQuestionable%20Text%3C%2Fdiv%3E'
 			);
 
-			await expect(
-				searchPage.searchBarPortletInMainContent
-			).not.toHaveText(/Questionable Text/);
+			await expect(page.getByText(/Questionable Text/)).toBeNull;
 		});
 	});
 });

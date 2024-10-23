@@ -6,9 +6,12 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -87,12 +90,92 @@ public class
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
+		_layoutPageTemplateEntryDisplayPage =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		_layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					StringUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					_serviceContext);
+
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testCopyLayoutPageTemplateEntriesAndCollections()
+		throws Exception {
+
+		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
+			new String[] {
+				String.valueOf(
+					_layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId())
+			},
+			new String[] {
+				String.valueOf(
+					_layoutPageTemplateEntryDisplayPage.
+						getLayoutPageTemplateEntryId())
+			},
+			String.valueOf(
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
+		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
+
+		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					_group.getGroupId(),
+					_getName(_layoutPageTemplateCollection.getName()),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
+		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(_layoutPageTemplateEntryDisplayPage.getName()),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+		Assert.assertNull(targetLayoutPageTemplateCollection);
+		Assert.assertNull(targetLayoutPageTemplateEntry);
+
+		_mvcActionCommand.processAction(actionRequest, actionResponse);
+
+		targetLayoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					_group.getGroupId(),
+					_getName(_layoutPageTemplateCollection.getName()),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
+		targetLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(_layoutPageTemplateEntryDisplayPage.getName()),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+		Assert.assertNotNull(targetLayoutPageTemplateCollection);
+		Assert.assertNotNull(targetLayoutPageTemplateEntry);
 	}
 
 	@Test
@@ -311,6 +394,14 @@ public class
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	private LayoutPageTemplateEntry _layoutPageTemplateEntryDisplayPage;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

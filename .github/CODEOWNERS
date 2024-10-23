@@ -5,7 +5,7 @@ modules/apps/address/
 modules/apps/ai-creator/
 modules/apps/analytics/
 modules/apps/announcements/    @liferay-content-management
-modules/apps/application-list/
+modules/apps/application-list/    @liferay-platform-experience
 modules/apps/archived/
 modules/apps/archived/youtube-web    @liferay-page-management
 modules/apps/asset-tags-validator/    @liferay-content-management
@@ -39,7 +39,7 @@ modules/apps/client-extension/
 modules/apps/comment/    @liferay-content-management
 modules/apps/commerce/    @liferay-commerce
 modules/apps/company/
-modules/apps/configuration-admin/
+modules/apps/configuration-admin/    @liferay-platform-experience
 modules/apps/connected-app/    @liferay-content-management
 modules/apps/contacts/
 modules/apps/content-dashboard/    @liferay-content-management
@@ -65,12 +65,14 @@ modules/apps/flags/    @liferay-content-management
 modules/apps/fragment/    @liferay-page-management
 modules/apps/friendly-url/
 modules/apps/frontend-css/    @liferay-platform-experience
+modules/apps/frontend-css/frontend-css-rtl-servlet/    @liferay-frontend
 modules/apps/frontend-data-set/    @liferay-frontend
 modules/apps/frontend-editor/    @liferay-frontend
 modules/apps/frontend-icons/    @liferay-frontend
 modules/apps/frontend-js/    @liferay-frontend
 modules/apps/frontend-taglib/    @liferay-frontend
 modules/apps/frontend-theme/    @liferay-platform-experience
+modules/apps/frontend-theme/frontend-theme-favicon-servlet/
 modules/apps/frontend-token/    @liferay-platform-experience
 modules/apps/glowroot/
 modules/apps/gogo-shell/
@@ -159,6 +161,10 @@ modules/apps/portal-configuration/
 modules/apps/portal-crypto-hash/
 modules/apps/portal-instances/
 modules/apps/portal-language/
+modules/apps/portal-language/portal-language-override-api/    @liferay-platform-experience
+modules/apps/portal-language/portal-language-override-service/    @liferay-platform-experience
+modules/apps/portal-language/portal-language-override-test/    @liferay-platform-experience
+modules/apps/portal-language/portal-language-override-web/    @liferay-platform-experience
 modules/apps/portal-lock/
 modules/apps/portal-mobile-device-recognition/
 modules/apps/portal-model-relationship/
@@ -178,7 +184,9 @@ modules/apps/portal-search/
 modules/apps/portal-security-audit/
 modules/apps/portal-security-sso/
 modules/apps/portal-security/
-modules/apps/portal-settings/
+modules/apps/portal-settings/    @liferay-appsec
+modules/apps/portal-settings/portal-settings-api/    @liferay-platform-experience
+modules/apps/portal-settings/portal-settings-web/    @liferay-platform-experience
 modules/apps/portal-store/
 modules/apps/portal-template/
 modules/apps/portal-transaction/
@@ -197,7 +205,7 @@ modules/apps/portlet-display-template/portlet-display-template-impl    @liferay-
 modules/apps/portlet-display-template/portlet-display-template-web    @liferay-page-management
 modules/apps/portlet-preferences/
 modules/apps/portlet/
-modules/apps/product-navigation/
+modules/apps/product-navigation/    @liferay-platform-experience
 modules/apps/product-navigation/product-navigation-simulation-api    @liferay-page-management
 modules/apps/product-navigation/product-navigation-simulation-device    @liferay-page-management
 modules/apps/product-navigation/product-navigation-simulation-theme-contributor    @liferay-page-management

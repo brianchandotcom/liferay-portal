@@ -188,7 +188,7 @@
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks the correct brand name." />
 			<property name="enabled" value="false" />
-			<message key="rename" value="Rename &quot;{0}&quot; to &quot;{1}&quot;" />
+			<message key="rename" value="Rename {0} &quot;{1}&quot; to &quot;{2}&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CamelCaseNameCheck">
 			<property name="category" value="Naming Conventions" />

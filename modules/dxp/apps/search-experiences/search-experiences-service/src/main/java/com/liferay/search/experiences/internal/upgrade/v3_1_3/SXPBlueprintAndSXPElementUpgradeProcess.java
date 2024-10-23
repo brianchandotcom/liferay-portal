@@ -89,19 +89,18 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			String sxpElementExternalReferenceCode =
+			String externalReferenceCode =
 				sxpElementJSONObject.getString("externalReferenceCode");
 
 			if (!Objects.equals(
-					sxpElementExternalReferenceCode,
-					"LIMIT_SEARCH_TO_THESE_SITES")) {
+					externalReferenceCode, "LIMIT_SEARCH_TO_THESE_SITES")) {
 
 				continue;
 			}
 
 			_upgradeConfigurationEntry(elementInstanceJSONObject);
 
-			_upgradeSXPElement(sxpElementJSONObject);
+			_upgradeElementDefinition(sxpElementJSONObject);
 
 			_upgradeUIConfigurationValues(elementInstanceJSONObject);
 		}
@@ -172,7 +171,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				}));
 	}
 
-	private void _upgradeSXPElement(JSONObject sxpElementJSONObject) {
+	private void _upgradeElementDefinition(JSONObject sxpElementJSONObject) {
 		JSONObject elementDefinitionJSONObject =
 			sxpElementJSONObject.getJSONObject("elementDefinition");
 
@@ -248,11 +247,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeUIConfigurationValues(JSONObject jsonObject1)
+	private void _upgradeUIConfigurationValues(
+			JSONObject elementInstanceJSONObject)
 		throws Exception {
 
-		JSONObject uiConfigurationValuesJSONObject = jsonObject1.getJSONObject(
-			"uiConfigurationValues");
+		JSONObject uiConfigurationValuesJSONObject =
+			elementInstanceJSONObject.getJSONObject(
+				"uiConfigurationValues");
 
 		JSONArray scopeGroupIdsJSONArray =
 			uiConfigurationValuesJSONObject.getJSONArray("scope_group_ids");

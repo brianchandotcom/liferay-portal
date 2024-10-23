@@ -538,7 +538,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 				},
 			],
 			status: 'warning',
-			title: Liferay.Language.get('delete-filter'),
+			title: Liferay.Language.get('delete-field'),
 		});
 	};
 

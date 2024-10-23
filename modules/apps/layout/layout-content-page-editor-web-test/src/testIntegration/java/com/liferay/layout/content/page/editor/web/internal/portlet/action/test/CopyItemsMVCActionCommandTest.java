@@ -340,7 +340,7 @@ public class CopyItemsMVCActionCommandTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				null, TestPropsValues.getUserId(), _layout.getGroupId(),
 				0, 0, segmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				editableValueJSONObject.toString(),

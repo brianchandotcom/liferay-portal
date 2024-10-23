@@ -126,7 +126,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			_getExpectedElementDefinitionJSON(),
+			StringUtil.read(
+				_clazz,
+				StringBundler.concat(
+					"dependencies/", _clazz.getSimpleName(),
+					".testSXPElementUpgradeProcess.json")),
 			sxpElement.getElementDefinitionJSON());
 	}
 
@@ -179,16 +183,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		return StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_ID_2$]",
 			String.valueOf(group2.getGroupId()));
-	}
-
-	private String _getExpectedElementDefinitionJSON() {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz,
-			StringBundler.concat(
-				"dependencies/", clazz.getSimpleName(),
-				".testSXPElementUpgradeProcess.json"));
 	}
 
 	private String _getExpectedInstancesJSON(Group group1, Group group2)

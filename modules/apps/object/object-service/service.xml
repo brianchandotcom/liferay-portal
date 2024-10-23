@@ -1044,6 +1044,7 @@
 		<exception>ObjectDefinitionAccountEntryRestricted</exception>
 		<exception>ObjectDefinitionAccountEntryRestrictedObjectFieldId</exception>
 		<exception>ObjectDefinitionActive</exception>
+		<exception>ObjectDefinitionClassName</exception>
 		<exception>ObjectDefinitionEnableCategorization</exception>
 		<exception>ObjectDefinitionEnableComments</exception>
 		<exception>ObjectDefinitionEnableLocalization</exception>

@@ -31,9 +31,4 @@ public class NullConvertibleEntryLocalServiceImpl
 		return nullConvertibleEntryPersistence.fetchByName(name);
 	}
 
-	@Override
-	public int getNullConvertibleEntries(String name) {
-		return nullConvertibleEntryPersistence.countByName(name);
-	}
-
 }

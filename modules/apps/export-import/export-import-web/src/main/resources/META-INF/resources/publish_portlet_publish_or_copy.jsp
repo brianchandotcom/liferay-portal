@@ -15,16 +15,16 @@ String tabs3 = ParamUtil.getString(request, "tabs3", "new-publish-process");
 boolean newPublication = tabs3.equals("new-publish-process");
 
 String defaultRange = ExportImportDateUtil.RANGE_ALL;
-String javascriptOnSubmitFunction = "event.halt(); " + liferayPortletResponse.getNamespace();
+String javaScriptOnSubmitFunction = "event.halt(); " + liferayPortletResponse.getNamespace();
 long workingGroupId = liveGroupId;
 
 if (newPublication) {
 	defaultRange = ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE;
-	javascriptOnSubmitFunction += "publishToLive();";
+	javaScriptOnSubmitFunction += "publishToLive();";
 	workingGroupId = stagingGroupId;
 }
 else {
-	javascriptOnSubmitFunction += "copyFromLive();";
+	javaScriptOnSubmitFunction += "copyFromLive();";
 }
 %>
 
@@ -39,7 +39,7 @@ else {
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit="<%= javascriptOnSubmitFunction %>">
+<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit="<%= javaScriptOnSubmitFunction %>">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.PUBLISH_TO_LIVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 	<aui:input name="plid" type="hidden" value="<%= plid %>" />

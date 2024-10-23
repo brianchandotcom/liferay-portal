@@ -7,6 +7,7 @@ package com.liferay.fragment.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -25,12 +26,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -40,10 +44,14 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -112,6 +120,55 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		return FragmentPortletKeys.FRAGMENT;
 	}
 
+	@Test
+	@TestInfo("LPD-40051")
+	public void testEnableLocalStagingWithPropagationEnabled()
+		throws Exception {
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						FragmentServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"propagateChanges", true
+						).build())) {
+
+			Group group = GroupTestUtil.addGroup();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group, TestPropsValues.getUserId());
+
+			FragmentEntry fragmentEntry = _addFragmentEntry(serviceContext);
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport.internal.lifecycle." +
+						"LoggerExportImportLifecycleListener",
+					LoggerTestUtil.ERROR)) {
+
+				_stagingLocalService.enableLocalStaging(
+					TestPropsValues.getUserId(), group, false, false,
+					serviceContext);
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+			}
+
+			Group stagingGroup = group.getStagingGroup();
+
+			FragmentEntry importedGroupFragmentEntry =
+				_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
+					fragmentEntry.getUuid(), stagingGroup.getGroupId());
+
+			_assertContains(
+				"Original HTML Fragment", importedGroupFragmentEntry.getHtml());
+		}
+	}
+
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
@@ -132,7 +189,9 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 							"propagateChanges", true
 						).build())) {
 
-			FragmentEntry fragmentEntry = _addFragmentEntry();
+			FragmentEntry fragmentEntry = _addFragmentEntry(
+				ServiceContextTestUtil.getServiceContext(
+					group, TestPropsValues.getUserId()));
 
 			exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
 
@@ -203,10 +262,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
-	private FragmentEntry _addFragmentEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId());
+	private FragmentEntry _addFragmentEntry(ServiceContext serviceContext)
+		throws Exception {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
@@ -295,5 +352,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

@@ -59,6 +59,15 @@ public class JUnitTestClass extends BaseTestClass {
 
 		super(batchTestClassGroup, testClassFile);
 
+		File modulesBaseDirectory = getPortalModulesBaseDir();
+
+		if (modulesBaseDirectory != null) {
+			_modulesBaseDirectory = modulesBaseDirectory;
+		}
+		else {
+			modulesBaseDirectory = null;
+		}
+
 		File testPropertiesBaseDir = getTestPropertiesBaseDir(
 			getTestClassFile());
 
@@ -95,6 +104,15 @@ public class JUnitTestClass extends BaseTestClass {
 
 		super(batchTestClassGroup, jsonObject);
 
+		File modulesBaseDirectory = getPortalModulesBaseDir();
+
+		if (modulesBaseDirectory != null) {
+			_modulesBaseDirectory = modulesBaseDirectory;
+		}
+		else {
+			_modulesBaseDirectory = null;
+		}
+
 		_classIgnored = jsonObject.getBoolean("ignored");
 
 		if (jsonObject.has("test_properties_file")) {
@@ -107,6 +125,14 @@ public class JUnitTestClass extends BaseTestClass {
 
 		_testrayMainComponentName = jsonObject.optString(
 			"testray_main_component_name");
+	}
+
+	protected File getPortalModulesBaseDir() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		return new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 	}
 
 	@Override
@@ -293,6 +319,7 @@ public class JUnitTestClass extends BaseTestClass {
 			"(?<methodName>[^\\(\\s]+)"));
 
 	private boolean _classIgnored;
+	private final File _modulesBaseDirectory;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

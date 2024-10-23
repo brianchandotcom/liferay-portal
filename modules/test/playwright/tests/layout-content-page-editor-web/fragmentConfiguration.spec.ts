@@ -1196,66 +1196,67 @@ test.describe('General Configuration', () => {
 });
 
 test.describe('Styles Configuration', () => {
-	test('Allows selecting a color palette color', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	test(
+		'Allows selecting a color palette color',
+		{tag: '@LPS-97179'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
 
-		// Create a page with a Separator fragment
+			// Create a page with a Separator fragment
 
-		const separatorId = getRandomString();
+			const separatorId = getRandomString();
 
-		const separatorFragment = getFragmentDefinition({
-			id: separatorId,
-			key: 'BASIC_COMPONENT-separator',
-		});
+			const separatorFragment = getFragmentDefinition({
+				id: separatorId,
+				key: 'BASIC_COMPONENT-separator',
+			});
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([separatorFragment]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([separatorFragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
 
-		// Go to the created page
+			// Go to the created page
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Select the Separator fragment
+			// Select the Separator fragment
 
-		await pageEditorPage.selectFragment(separatorId);
+			await pageEditorPage.selectFragment(separatorId);
 
-		// Select a color in the color palette
+			// Select a color in the color palette
 
-		await pageEditorPage.goToConfigurationTab('Styles');
+			await pageEditorPage.goToConfigurationTab('Styles');
 
-		await page.getByTitle('success', {exact: true}).click();
+			await page.getByTitle('success', {exact: true}).click();
 
-		await pageEditorPage.waitForChangesSaved();
+			await pageEditorPage.waitForChangesSaved();
 
-		// Check that the color is applied
+			// Check that the color is applied
 
-		expect(
-			page
-				.locator('.component-separator hr')
-				.evaluate((element) =>
-					element.classList.contains('border-success')
-				)
-		).toBeTruthy();
+			expect(
+				page
+					.locator('.component-separator hr')
+					.evaluate((element) =>
+						element.classList.contains('border-success')
+					)
+			).toBeTruthy();
 
-		await pageEditorPage.publishPage();
+			await pageEditorPage.publishPage();
 
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
-		expect(
-			page
-				.locator('.component-separator hr')
-				.evaluate((element) =>
-					element.classList.contains('border-success')
-				)
-		).toBeTruthy();
-	});
+			expect(
+				page
+					.locator('.component-separator hr')
+					.evaluate((element) =>
+						element.classList.contains('border-success')
+					)
+			).toBeTruthy();
+		}
+	);
 
 	test('Allows changing and resetting spacing', async ({
 		apiHelpers,
@@ -1396,57 +1397,60 @@ test.describe('Styles Configuration', () => {
 		}
 	);
 
-	test('Renders correct sections in color picker', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
-		await page.goto('/');
+	test(
+		'Renders correct sections in color picker',
+		{tag: '@LPS-140717'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			await page.goto('/');
 
-		// Create a page with a Heading fragment and go to edit mode
+			// Create a page with a Heading fragment and go to edit mode
 
-		const headingId = getRandomString();
+			const headingId = getRandomString();
 
-		const headingFragment = getFragmentDefinition({
-			id: headingId,
-			key: 'BASIC_COMPONENT-heading',
-		});
+			const headingFragment = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([headingFragment]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingFragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Check correct sections are displayed
+			// Check correct sections are displayed
 
-		await pageEditorPage.selectFragment(headingId);
+			await pageEditorPage.selectFragment(headingId);
 
-		await pageEditorPage.goToConfigurationTab('Styles');
+			await pageEditorPage.goToConfigurationTab('Styles');
 
-		await page.locator('.layout__dropdown-color-picker__selector').click();
+			await page
+				.locator('.layout__dropdown-color-picker__selector')
+				.click();
 
-		for (const palette of COLOR_PICKER_PALETTES) {
-			await expect(
-				page
-					.locator('.layout__dropdown-color-picker__color-palette')
-					.getByText(palette.title)
-			).toBeAttached();
-
-			for (const section of palette.sections) {
+			for (const palette of COLOR_PICKER_PALETTES) {
 				await expect(
 					page
 						.locator(
 							'.layout__dropdown-color-picker__color-palette'
 						)
-						.getByText(section)
+						.getByText(palette.title)
 				).toBeAttached();
+
+				for (const section of palette.sections) {
+					await expect(
+						page
+							.locator(
+								'.layout__dropdown-color-picker__color-palette'
+							)
+							.getByText(section)
+					).toBeAttached();
+				}
 			}
 		}
-	});
+	);
 
 	test('Changes the value in the Color Picker when the reset button is clicked', async ({
 		apiHelpers,

@@ -84,17 +84,20 @@ test('Workflow task view page is accessible', async ({
 
 	await page.waitForLoadState();
 
-	const taskContentActionsSelectors = ['edit', 'view', 'viewUsages'].map(
-		(sufix) => `#${workflowTaskDetailsPage.portletNameSpace + sufix}`
-	);
+	const assetMetadataWrapperElementSelector = 'div.taglib-asset-metadata';
 
 	const openActionsMenuLinkSelector =
 		'a[title="Open Actions Menu"][role="button"]';
+
+	const taskContentActionsSelectors = ['edit', 'view', 'viewUsages'].map(
+		(sufix) => `#${workflowTaskDetailsPage.portletNameSpace + sufix}`
+	);
 
 	await checkAccessibility({
 		page,
 		selectors: [
 			...taskContentActionsSelectors,
+			assetMetadataWrapperElementSelector,
 			openActionsMenuLinkSelector,
 		],
 	});

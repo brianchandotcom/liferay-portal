@@ -174,6 +174,7 @@ public class JournalTransformerTest {
 	@Test
 	public void testCreateTemplateNode() throws Exception {
 		_testCreateTemplateNodeDocumentLibraryDDMFormField();
+		_testCreateTemplateNodeSelectTypeDDMFormFieldWithNoOptions();
 		_testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions();
 		_testCreateTemplateNodeSelectTypeDDMFormFieldWithoutOptions();
 	}
@@ -733,6 +734,40 @@ public class JournalTransformerTest {
 		Assert.assertEquals(
 			jsonObject.getString("groupId"),
 			templateNode.getAttribute("groupId"));
+	}
+
+	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithNoOptions() {
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.SELECT);
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setMultiple(true);
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		rootElement.addElement("dynamic-content");
+
+		TemplateNode templateNode = ReflectionTestUtil.invoke(
+			_journalTransformer, "_createTemplateNode",
+			new Class<?>[] {
+				DDMFormField.class, Element.class, Locale.class,
+				ThemeDisplay.class
+			},
+			ddmFormField, rootElement, LocaleUtil.getDefault(),
+			new ThemeDisplay());
+
+		Assert.assertTrue(MapUtil.isEmpty(templateNode.getAttributes()));
+		Assert.assertEquals(StringPool.BLANK, templateNode.getData());
+		Assert.assertEquals("name", templateNode.getName());
+		Assert.assertEquals("select", templateNode.getType());
+
+		List<String> options = templateNode.getOptions();
+
+		Assert.assertEquals(options.toString(), 0, options.size());
+
+		Assert.assertTrue(MapUtil.isEmpty(templateNode.getOptionsMap()));
 	}
 
 	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions() {

@@ -197,7 +197,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	const deleteAction = ({item}: {item: IAction}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this-action'
+				'are-you-sure-you-want-to-delete-this-action?-fragments-using-it-will-be-affected'
 			),
 			buttons: [
 				{

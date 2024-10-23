@@ -11,7 +11,7 @@
 String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-metadata:metadataFields");
 %>
 
-<dl class="taglib-asset-metadata">
+<div class="taglib-asset-metadata">
 	<c:choose>
 		<c:when test="<%= metadataFields.length == 1 %>">
 
@@ -61,4 +61,4 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 			</c:if>
 		</c:otherwise>
 	</c:choose>
-</dl>
+</div>

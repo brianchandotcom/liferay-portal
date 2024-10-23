@@ -191,6 +191,10 @@ function TopperContent({
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 
+	const isNotAllowed = activeItemIds.some(
+		(activeItemId) => item.itemId === activeItemId
+	);
+
 	return (
 		<div
 			className={classNames(className, 'page-editor__topper', {
@@ -212,12 +216,17 @@ function TopperContent({
 				'drop-container': isDropContainer,
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
+				'not-allowed': isNotAllowed,
 			})}
 			data-name={name}
 			onClick={(event) => {
 				event.stopPropagation();
 
 				if (isDraggingSource) {
+					return;
+				}
+
+				if (isNotAllowed) {
 					return;
 				}
 

@@ -139,20 +139,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
-	private void _upgradeConfiguration(JSONObject configurationJSONObject) {
-		JSONObject queryJSONObject = JSONUtil.getValueAsJSONObject(
-			configurationJSONObject, "JSONObject/queryConfiguration",
-			"JSONArray/queryEntries", "JSONObject/0", "JSONArray/clauses",
-			"JSONObject/0", "JSONObject/query");
-
-		JSONObject termsJSONObject = queryJSONObject.getJSONObject("terms");
-
-		termsJSONObject.put(
-			"scopeGroupExternalReferenceCode",
-			"${configuration.scope_group_external_reference_codes}");
-		termsJSONObject.remove("scopeGroupId");
-	}
-
 	private void _upgradeConfigurationEntry(
 			JSONObject elementInstanceJSONObject)
 		throws Exception {
@@ -190,11 +176,42 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		JSONObject elementDefinitionJSONObject =
 			sxpElementJSONObject.getJSONObject("elementDefinition");
 
-		_upgradeConfiguration(
-			elementDefinitionJSONObject.getJSONObject("configuration"));
+		JSONUtil.getValueAsJSONObject(
+			elementDefinitionJSONObject, "JSONObject/configuration",
+			"JSONObject/queryConfiguration", "JSONArray/queryEntries",
+			"JSONObject/0", "JSONArray/clauses", "JSONObject/0",
+			"JSONObject/query"
+		).getJSONObject(
+			"terms"
+		).put(
+			"scopeGroupExternalReferenceCode",
+			"${configuration.scope_group_external_reference_codes}"
+		).remove(
+			"scopeGroupId"
+		);
 
-		_upgradeUIConfiguration(
-			elementDefinitionJSONObject.getJSONObject("uiConfiguration"));
+		JSONObject uiConfigurationJSONObject =
+			elementDefinitionJSONObject.getJSONObject("uiConfiguration");
+
+		JSONArray fieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			uiConfigurationJSONObject, "JSONArray/fieldSets", "JSONObject/0",
+			"JSONArray/fields");
+
+		for (int i = 0; i < fieldsJSONArray.length(); i++) {
+			JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
+
+			fieldJSONObject.put(
+				"helpText", "scope-group-external-reference-codes-help"
+			).put(
+				"label", "scope-group-external-reference-codes"
+			).put(
+				"name", "scope_group_external_reference_codes"
+			).remove(
+				"helpTextLocalized"
+			);
+
+			fieldJSONObject.remove("labelLocalized");
+		}
 	}
 
 	private void _upgradeSXPElementsInSXPBlueprint(
@@ -228,28 +245,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 						resultSet.getLong("sxpBlueprintId"),
 					exception);
 			}
-		}
-	}
-
-	private void _upgradeUIConfiguration(JSONObject uiConfigurationJSONObject) {
-		JSONArray fieldsJSONArray = JSONUtil.getValueAsJSONArray(
-			uiConfigurationJSONObject, "JSONArray/fieldSets", "JSONObject/0",
-			"JSONArray/fields");
-
-		for (int i = 0; i < fieldsJSONArray.length(); i++) {
-			JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
-
-			fieldJSONObject.put(
-				"helpText", "scope-group-external-reference-codes-help"
-			).put(
-				"label", "scope-group-external-reference-codes"
-			).put(
-				"name", "scope_group_external_reference_codes"
-			).remove(
-				"helpTextLocalized"
-			);
-
-			fieldJSONObject.remove("labelLocalized");
 		}
 	}
 

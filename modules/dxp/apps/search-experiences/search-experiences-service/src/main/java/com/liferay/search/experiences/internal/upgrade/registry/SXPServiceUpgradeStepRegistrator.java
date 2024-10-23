@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -108,13 +109,16 @@ public class SXPServiceUpgradeStepRegistrator
 		registry.register(
 			"3.1.2", "3.1.3",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_3.
-				SXPBlueprintAndSXPElementUpgradeProcess());
+				SXPBlueprintAndSXPElementUpgradeProcess(_groupLocalService));
 
 		registry.register(
 			"3.1.3", "3.1.4",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_4.
 				SXPElementUpgradeProcess());
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

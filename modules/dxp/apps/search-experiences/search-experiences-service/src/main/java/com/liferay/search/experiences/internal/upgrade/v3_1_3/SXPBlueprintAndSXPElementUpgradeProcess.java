@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +32,12 @@ import java.util.Objects;
  * @author Joshua Cords, Felipe Lorenz
  */
 public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
+
+	public SXPBlueprintAndSXPElementUpgradeProcess(
+		GroupLocalService groupLocalService) {
+
+		_groupLocalService = groupLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -106,19 +112,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		return elementInstanceJSONArray.toString();
 	}
 
-	private Group _getGroup(long groupId) throws Exception {
-		try {
-			return GroupLocalServiceUtil.getGroup(groupId);
-		}
-		catch (Exception exception) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to find group with id " + groupId);
-			}
-
-			throw exception;
-		}
-	}
-
 	private boolean _hasLimitSearchToTheseSites(
 		ElementInstance[] elementInstances) {
 
@@ -160,7 +153,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 					for (long groupId : groupIds) {
-						Group group = _getGroup(groupId);
+						Group group = _groupLocalService.getGroup(groupId);
 
 						jsonArray.put(group.getExternalReferenceCode());
 					}
@@ -266,7 +259,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONObject scopeGroupIDJSONObject =
 				scopeGroupIdsJSONArray.getJSONObject(i);
 
-			Group group = _getGroup(scopeGroupIDJSONObject.getLong("value"));
+			Group group = _groupLocalService.getGroup(
+				scopeGroupIDJSONObject.getLong("value"));
 
 			groupIdsExternalReferenceCodesJSONArray.put(
 				JSONUtil.put(
@@ -289,5 +283,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintAndSXPElementUpgradeProcess.class);
+
+	private final GroupLocalService _groupLocalService;
 
 }

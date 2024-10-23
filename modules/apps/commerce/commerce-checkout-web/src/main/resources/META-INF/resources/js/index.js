@@ -26,3 +26,5 @@ export function attachModalToHTMLElement({
 			});
 		});
 }
+
+export {default as DeliveryGroupFDSPropsTransformer} from './props_transformers/DeliveryGroupFDSPropsTransformer';

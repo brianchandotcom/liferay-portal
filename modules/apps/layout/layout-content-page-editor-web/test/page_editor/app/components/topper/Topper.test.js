@@ -210,6 +210,7 @@ describe('Topper', () => {
 				items: {
 					formStep1: {
 						children: [],
+						config: {},
 						itemId: 'formStep1',
 						parentId: 'formStepContainer',
 						type: LAYOUT_DATA_ITEM_TYPES.formStep,
@@ -217,6 +218,7 @@ describe('Topper', () => {
 
 					formStep2: {
 						children: [],
+						config: {},
 						itemId: 'formStep2',
 						parentId: 'formStepContainer',
 						type: LAYOUT_DATA_ITEM_TYPES.formStep,
@@ -224,6 +226,7 @@ describe('Topper', () => {
 
 					formStepContainer: {
 						children: ['formStep1', 'formStep2'],
+						config: {},
 						itemId: 'formStepContainer',
 						parentId: null,
 						type: LAYOUT_DATA_ITEM_TYPES.formStepContainer,

@@ -613,8 +613,8 @@ definition {
 				fieldValue = "Entry test");
 
 			AssertClick(
-				locator1 = "Button#SUBMIT_FOR_WORKFLOW",
-				value1 = "Submit for Workflow");
+				locator1 = "Button#SAVE",
+				value1 = "Save");
 
 			Alert.viewSuccessMessage();
 		}

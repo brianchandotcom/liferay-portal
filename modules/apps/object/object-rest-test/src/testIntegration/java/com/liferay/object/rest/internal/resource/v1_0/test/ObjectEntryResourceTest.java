@@ -12893,7 +12893,8 @@ public class ObjectEntryResourceTest {
 			type);
 	}
 
-	private void _testGetObjectEntriesFilteredBySystemDate(String fieldName) {
+	private void _testGetObjectEntriesFilteredBySystemDate(String fieldName)
+		throws Exception {
 
 		// eq
 

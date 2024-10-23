@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.service.builder.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -38,6 +39,9 @@ public class NullConvertibleEntryTest {
 		Assert.assertEquals(
 			nullConvertibleEntry,
 			_nullConvertibleEntryLocalService.fetchNullConvertibleEntry(null));
+
+		Assert.assertEquals(
+			nullConvertibleEntry.getName(), StringPool.BLANK);
 	}
 
 	@Inject

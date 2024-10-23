@@ -39,13 +39,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPElement();
 	}
 
-	private long[] _extractScopeGroupIds(JSONObject termsJSONObject) {
-		JSONArray scopeGroupIdJSONArray = JSONUtil.getValueAsJSONArray(
-			termsJSONObject, "JSONArray/scopeGroupId");
-
-		return JSONUtil.toLongArray(scopeGroupIdJSONArray);
-	}
-
 	private String _fixElementInstancesJSON(String elementInstanceJSON)
 		throws Exception {
 
@@ -159,7 +152,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		JSONObject termsJSONObject = queryJSONObject.getJSONObject("terms");
 
-		long[] groupIds = _extractScopeGroupIds(termsJSONObject);
+		long[] groupIds = JSONUtil.toLongArray(
+			JSONUtil.getValueAsJSONArray(
+				termsJSONObject, "JSONArray/scopeGroupId"));
 
 		queryJSONObject.put(
 			"terms",

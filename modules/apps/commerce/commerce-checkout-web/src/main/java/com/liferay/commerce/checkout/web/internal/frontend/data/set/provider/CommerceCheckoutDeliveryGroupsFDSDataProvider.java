@@ -6,7 +6,7 @@
 package com.liferay.commerce.checkout.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.checkout.web.internal.constants.CommerceCheckoutFDSNames;
-import com.liferay.commerce.checkout.web.internal.model.DeliveryGroupInfo;
+import com.liferay.commerce.checkout.web.internal.model.DeliveryGroup;
 import com.liferay.commerce.checkout.web.internal.util.CommerceOrderUtil;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -38,19 +38,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	property = "fds.data.provider.key=" + CommerceCheckoutFDSNames.DELIVERY_GROUP,
+	property = "fds.data.provider.key=" + CommerceCheckoutFDSNames.DELIVERY_GROUPS,
 	service = FDSDataProvider.class
 )
-public class CommerceCheckoutDeliveryGroupFDSDataProvider
-	implements FDSDataProvider<DeliveryGroupInfo> {
+public class CommerceCheckoutDeliveryGroupsFDSDataProvider
+	implements FDSDataProvider<DeliveryGroup> {
 
 	@Override
-	public List<DeliveryGroupInfo> getItems(
+	public List<DeliveryGroup> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		Map<String, DeliveryGroupInfo> deliveryGroupMap = new HashMap<>();
+		Map<String, DeliveryGroup> deliveryGroups = new HashMap<>();
 
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
@@ -61,29 +61,31 @@ public class CommerceCheckoutDeliveryGroupFDSDataProvider
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			if (!deliveryGroupMap.containsKey(
-					commerceOrderItem.getDeliveryGroup())) {
+			if (deliveryGroups.containsKey(
+					commerceOrderItem.getDeliveryGroupName())) {
 
-				CommerceAddress commerceAddress =
+				continue;
+			}
+
+			CommerceAddress commerceAddress =
 				_commerceAddressLocalService.getCommerceAddress(
 					commerceOrderItem.getShippingAddressId());
-	
-				Country country = commerceAddress.getCountry();
-	
-				DeliveryGroupInfo deliveryGroupInfo = new DeliveryGroupInfo(
-					commerceAddress.getCommerceAddressId(),
-					StringBundler.concat(
-						commerceAddress.getStreet1(), StringPool.COMMA_AND_SPACE,
-						commerceAddress.getCity(), StringPool.COMMA_AND_SPACE,
-						country.getName(_portal.getLocale(httpServletRequest))),
-					commerceOrderItem.getRequestedDeliveryDate(),
-					commerceOrderItem.getDeliveryGroup());
-	
-				deliveryGroupMap.put(deliveryGroupInfo.getName(), deliveryGroupInfo);
-			}
+
+			Country country = commerceAddress.getCountry();
+
+			DeliveryGroup deliveryGroup = new DeliveryGroup(
+				commerceAddress.getCommerceAddressId(),
+				StringBundler.concat(
+					commerceAddress.getStreet1(), StringPool.COMMA_AND_SPACE,
+					commerceAddress.getCity(), StringPool.COMMA_AND_SPACE,
+					country.getName(_portal.getLocale(httpServletRequest))),
+				commerceOrderItem.getRequestedDeliveryDate(),
+				commerceOrderItem.getDeliveryGroupName());
+
+			deliveryGroups.put(deliveryGroup.getName(), deliveryGroup);
 		}
 
-		return new ArrayList<>(deliveryGroupMap.values());
+		return new ArrayList<>(deliveryGroups.values());
 	}
 
 	@Override
@@ -94,7 +96,7 @@ public class CommerceCheckoutDeliveryGroupFDSDataProvider
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
 
-		return CommerceOrderUtil.getCommerceOrderDeliveryGroupQuantity(
+		return CommerceOrderUtil.getCommerceOrderDeliveryGroupNamesCount(
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId));
 	}
 

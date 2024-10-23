@@ -7,9 +7,10 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,20 +18,15 @@ import java.util.Set;
  */
 public class CommerceOrderUtil {
 
-	public static int getCommerceOrderDeliveryGroupCount(
+	public static int getCommerceOrderDeliveryGroupNamesCount(
 		CommerceOrder commerceOrder) {
 
-		Set<String> deliveryGroupStrings = new HashSet<>();
+		Set<String> deliveryGroupNames = SetUtil.fromArray(
+			TransformUtil.transformToArray(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItem::getDeliveryGroupName, String.class));
 
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
-
-			if (Validator.isNotNull(commerceOrderItem.getDeliveryGroup())) {
-				deliveryGroupStrings.add(commerceOrderItem.getDeliveryGroup());
-			}
-		}
-
-		return deliveryGroupStrings.size();
+		return deliveryGroupNames.size();
 	}
 
 	public static boolean isCommerceOrderMultishipping(
@@ -39,7 +35,7 @@ public class CommerceOrderUtil {
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			if (Validator.isNotNull(commerceOrderItem.getDeliveryGroup())) {
+			if (Validator.isNotNull(commerceOrderItem.getDeliveryGroupName())) {
 				return true;
 			}
 		}

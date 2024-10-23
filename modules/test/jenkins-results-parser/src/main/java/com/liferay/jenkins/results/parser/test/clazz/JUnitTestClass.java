@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 
@@ -65,7 +66,7 @@ public class JUnitTestClass extends BaseTestClass {
 			_modulesBaseDirectory = modulesBaseDirectory;
 		}
 		else {
-			modulesBaseDirectory = null;
+			_modulesBaseDirectory = null;
 		}
 
 		File testPropertiesBaseDir = getTestPropertiesBaseDir(
@@ -335,7 +336,7 @@ public class JUnitTestClass extends BaseTestClass {
 			"(?<methodName>[^\\(\\s]+)"));
 
 	private boolean _classIgnored;
-	private final File _modulesBaseDirectory;
+	private File _modulesBaseDirectory;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

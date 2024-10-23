@@ -62,7 +62,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -112,6 +111,12 @@ public class PlacedOrderItemResourceTest
 			_accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
+		_commerceOrder.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
+
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), testGroup.getGroupId(),
@@ -119,45 +124,6 @@ public class PlacedOrderItemResourceTest
 				true, CommercePriceListConstants.TYPE_PRICE_LIST, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.nextDouble(), 1,
 				1, 2022, 12, 0, 0, 0, 0, 0, 0, true, _serviceContext);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage()
-		throws Exception {
-
-		super.testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortInteger()
-		throws Exception {
-
-		super.
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortInteger();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortString()
-		throws Exception {
-
-		super.
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithSortString();
 	}
 
 	@Override
@@ -225,46 +191,17 @@ public class PlacedOrderItemResourceTest
 			virtualItemURLs, getPlacedOrderItem.getVirtualItemURLs());
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderPlacedOrderItemsPage() throws Exception {
-		super.testGetPlacedOrderPlacedOrderItemsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderPlacedOrderItemsPageWithPagination()
-		throws Exception {
-
-		super.testGetPlacedOrderPlacedOrderItemsPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderPlacedOrderItemsPageWithSortInteger()
-		throws Exception {
-
-		super.testGetPlacedOrderPlacedOrderItemsPageWithSortInteger();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetPlacedOrderPlacedOrderItemsPageWithSortString()
-		throws Exception {
-
-		super.testGetPlacedOrderPlacedOrderItemsPageWithSortString();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"productId", "quantity", "sku", "skuId", "subscription",
 			"virtualItemURLs"
 		};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"quantity"};
 	}
 
 	@Override
@@ -354,6 +291,14 @@ public class PlacedOrderItemResourceTest
 
 	private PlacedOrderItem _addPlacedOrderItem(PlacedOrderItem placedOrderItem)
 		throws Exception {
+
+		_commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
+
+		_commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_OPEN);
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(

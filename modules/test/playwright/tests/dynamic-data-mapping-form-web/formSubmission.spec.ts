@@ -20,11 +20,10 @@ export const test = mergeTests(
 	virtualInstancesPagesTest
 );
 
-let hasDataProvider: boolean = false;
-
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
 const deleteAfterTestVirtualInstances = new Set<string>();
+let hasDataProvider: boolean = false;
 
 test.afterEach(async ({formsPage, page, virtualInstancesPage}) => {
 	await formsPage.goTo();
@@ -42,7 +41,6 @@ test.afterEach(async ({formsPage, page, virtualInstancesPage}) => {
 	}
 
 	for (const virtualInstanceName of deleteAfterTestVirtualInstances) {
-
 		await virtualInstancesPage.deleteVirtualInstance(virtualInstanceName);
 
 		deleteAfterTestVirtualInstances.delete(virtualInstanceName);
@@ -90,13 +88,17 @@ test.describe('Manage forms through submission page', () => {
 
 		const pagePromise = virtualInstancePage.waitForEvent('popup');
 
-		const virtualInstanceFormBuilderPage = new FormBuilderPage(virtualInstancePage);
+		const virtualInstanceFormBuilderPage = new FormBuilderPage(
+			virtualInstancePage
+		);
 
 		await virtualInstanceFormBuilderPage.openFormSubmission();
 
 		const virtualInstanceFormSubmissionPage = await pagePromise;
 
-		await virtualInstanceFormSubmissionPage.getByRole('button', {name: 'Submit'}).click();
+		await virtualInstanceFormSubmissionPage
+			.getByRole('button', {name: 'Submit'})
+			.click();
 
 		await expect(
 			virtualInstanceFormSubmissionPage.getByText(

@@ -10,9 +10,9 @@ import java.util.Date;
 /**
  * @author Luca Pellizzon
  */
-public class DeliveryGroupInfo {
+public class DeliveryGroup {
 
-	public DeliveryGroupInfo(
+	public DeliveryGroup(
 		long addressId, String addressSummary, Date deliveryDate, String name) {
 
 		_addressId = addressId;

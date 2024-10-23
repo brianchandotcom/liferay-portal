@@ -209,7 +209,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_bundleContext.registerService(
 					KeywordQueryContributor.class,
 					new ObjectEntryKeywordQueryContributor(
-						_objectFieldLocalService, _objectViewLocalService),
+						objectDefinition, _objectFieldLocalService,
+						_objectViewLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"component.name",
 						ObjectEntryKeywordQueryContributor.class.getName()

@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -14,6 +15,9 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
+import getCollectionDefinition from './utils/getCollectionDefinition';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -21,6 +25,7 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	collectionsPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -64,6 +69,60 @@ const COLOR_PICKER_PALETTES = [
 ];
 
 test.describe('Editable Configuration', () => {
+	test(
+		'Can map a date in the date editable and change the date format',
+		{tag: ['@LPS-147897', '@LPS-147897']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const basicWebContentTitle = getRandomString();
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId:
+					await getBasicWebContentStructureId(apiHelpers),
+				datePublished: '2024-01-01T00:00:00Z',
+				siteId: site.id,
+				title: basicWebContentTitle,
+				viewableBy: 'Anyone',
+			});
+
+			const dateFragmentId = getRandomString();
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: dateFragmentId,
+						key: 'BASIC_COMPONENT-date',
+					}),
+				]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Navigate to the page editor
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Change the link of the containers
+
+			await pageEditorPage.selectEditable(dateFragmentId, 'element-date');
+
+			await pageEditorPage.setMappingConfiguration({
+				mapping: {
+					entity: 'Web Content',
+					entry: basicWebContentTitle,
+					field: 'Display Date',
+				},
+			});
+
+			await expect(page.getByText('1/1/24')).toBeVisible();
+
+			await page.getByLabel('Date Format').selectOption('yy/MM/dd');
+
+			await expect(page.getByText('24/01/01')).toBeVisible();
+		}
+	);
+
 	test('Can set a link to a link editable', async ({
 		apiHelpers,
 		page,
@@ -480,6 +539,660 @@ test.describe('Advanced Configuration', () => {
 
 		await expect(page.getByLabel('Color', {exact: true})).toBeVisible();
 	});
+});
+
+test.describe('General Configuration', () => {
+	test(
+		'Allows using a configuration of type itemSelector',
+		{tag: '@LPS-164242'},
+		async ({
+			apiHelpers,
+			collectionsPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create a fragment with itemSelector configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: pageManagementSite.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								label: 'itemSelector',
+								name: 'itemSelector',
+								type: 'itemSelector',
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-name">
+				[#if itemSelectorObject??]
+					\${itemSelectorObject.getUrlTitle()}
+				[/#if]
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: pageManagementSite.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with a collection and the fragment
+
+			const animalsClassPK = await collectionsPage.getCollectionClassPK(
+				ANIMALS_COLLECTION_NAME,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const collectionDefinition = getCollectionDefinition({
+				classPK: animalsClassPK,
+				id: getRandomString(),
+				pageElements: [
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([collectionDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to the layout and check that the fragment is showing the correct mapping
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await expect(
+				page.getByText('animal-01-dogs-and-cats-categories')
+			).toBeVisible();
+			await expect(
+				page.getByText('animal-02-dogs-category')
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Allows using a configuration of type collectionSelector',
+		{tag: '@LPS-191007'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a fragment with collection selector configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: pageManagementSite.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								label: 'Collection',
+								name: 'collection',
+								type: 'collectionSelector',
+								typeOptions: {
+									numberOfItems: 1,
+								},
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-configuration">
+				<h1>
+					List of Items:
+				</h1>
+				<ul>
+					[#if collectionObjectList??]
+						[#list collectionObjectList as item]
+							<li>\${item.title}</li>
+						[/#list]
+					[/#if]
+				</ul>
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: pageManagementSite.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with the fragment
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to the layout and map to a collection
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.selectFragment(fragmentEntryName);
+
+			await pageEditorPage.setMappedItem({
+				customMappingButtonLocator:
+					page.getByLabel('Select Collection'),
+				entity: 'Collections',
+				entry: ANIMALS_COLLECTION_NAME,
+			});
+
+			// Check that it shows one item
+
+			await expect(page.getByText('Animal 01')).toBeVisible();
+			await expect(page.getByText('Animal 02')).not.toBeVisible();
+		}
+	);
+
+	test(
+		'Allows using a configuration of type url',
+		{tag: '@LPS-164081'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with url configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								label: 'Link',
+								name: 'link',
+								type: 'url',
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-configuration">
+				[#if configuration.link?has_content] \${configuration.link}[/#if]
+
+				Link example
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: site.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with the fragment
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			// Go to the layout and change the url
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.selectFragment(fragmentEntryName);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'URL',
+				fragmentId: fragmentEntryName,
+				tab: 'General',
+				value: 'example.com',
+			});
+
+			// Check that the url is showing
+
+			await expect(
+				page
+					.locator('.fragment-configuration')
+					.filter({hasText: 'example.com'})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Allows using a configuration of type checkbox',
+		{tag: '@LPS-97177'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with checkbox configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								defaultValue: false,
+								label: 'Make Bold',
+								name: 'makeBold',
+								type: 'checkbox',
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-configuration">
+				[#if configuration.makeBold == true]
+					<b>Bold Words</b>
+				[#else]
+					<p>Not bold words</p>
+				[/#if]
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: site.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with the fragment
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check that it shows the default value
+
+			await expect(page.getByText('Not bold words')).toBeVisible();
+
+			// Check the value
+
+			await pageEditorPage.selectFragment(fragmentEntryName);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Make Bold',
+				fragmentId: fragmentEntryName,
+				tab: 'General',
+				value: true,
+			});
+
+			// Check that configuration is applied
+
+			await expect(page.getByText('Bold words')).toBeVisible();
+		}
+	);
+
+	test(
+		'Allows using a configuration of type select',
+		{tag: '@LPS-96685'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with select configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								dataType: 'string',
+								defaultValue: 'light',
+								label: 'Applied Style',
+								name: 'headingAppliedStyle',
+								type: 'select',
+								typeOptions: {
+									validValues: [
+										{
+											value: 'dark',
+										},
+										{
+											value: 'light',
+										},
+									],
+								},
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-configuration">
+				[#if configuration.headingAppliedStyle == "dark"]
+				<div class="dark">
+					<h1>Title-dark</h1>
+				</div>
+				[#else]
+				<div class="light">
+					<h1>Title-light</h1>
+				</div>
+				[/#if]
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: site.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with the fragment
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check that it shows the default value
+
+			await expect(page.getByText('Title-light')).toBeVisible();
+
+			// Select a new value
+
+			await pageEditorPage.selectFragment(fragmentEntryName);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Applied Style',
+				fragmentId: fragmentEntryName,
+				tab: 'General',
+				value: 'dark',
+			});
+
+			await expect(page.getByText('Title-dark')).toBeVisible();
+		}
+	);
+
+	test(
+		'Allows using a configuration of type text',
+		{tag: '@LPS-97192'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with text configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								dataType: 'string',
+								defaultValue: 'Go Somewhere',
+								label: 'Button Text',
+								name: 'buttonText',
+								type: 'text',
+								typeOptions: {
+									placeholder: 'Placeholder',
+								},
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-configuration">
+				<button type="button" class="btn btn-primary">\${configuration.buttonText}</button>
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: site.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with the fragment
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check that it shows the default value
+
+			await expect(page.getByText('Go Somewhere')).toBeVisible();
+
+			// Select the fragment and check that the placeholder is visible
+
+			await pageEditorPage.selectFragment(fragmentEntryName);
+
+			await pageEditorPage.goToConfigurationTab('General');
+
+			expect(page.getByPlaceholder('Placeholder')).toBeVisible();
+
+			// Change the value
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Button Text',
+				fragmentId: fragmentEntryName,
+				tab: 'General',
+				value: 'Go Somewhere Else',
+			});
+
+			// Check that the new value is applied
+
+			await expect(page.getByText('Go Somewhere Else')).toBeVisible();
+		}
+	);
+
+	test(
+		'Text configuration allows setting a max and min value',
+		{tag: '@LPS-109138'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with type text and validation
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								dataType: 'int',
+								defaultValue: '1',
+								label: 'Number',
+								name: 'number',
+								type: 'text',
+								typeOptions: {
+									validation: {
+										max: 10,
+										min: 1,
+										type: 'number',
+									},
+								},
+							},
+						],
+					},
+				],
+			};
+
+			const html = `
+			<div class="fragment-configuration">
+				<button type="button" class="btn btn-primary">Number: \${configuration.number}</button>
+			</div>
+		`;
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration,
+				fragmentCollectionId,
+				groupId: site.id,
+				html,
+				name: fragmentEntryName,
+			});
+
+			// Create a layout with the fragment
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: fragmentEntryName,
+						key: fragmentEntryName,
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check that it shows the default value
+
+			await expect(page.getByText('Number: 1')).toBeVisible();
+
+			// Select the fragment and check that the validation is applied
+
+			await pageEditorPage.selectFragment(fragmentEntryName);
+
+			await pageEditorPage.goToConfigurationTab('General');
+
+			await fillAndClickOutside(page, page.getByLabel('Number'), '0');
+
+			expect(
+				page.getByText('You have entered invalid data.')
+			).toBeVisible();
+
+			await fillAndClickOutside(page, page.getByLabel('Number'), '11');
+
+			expect(
+				page.getByText('You have entered invalid data.')
+			).toBeVisible();
+
+			// Change the value
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Number',
+				fragmentId: fragmentEntryName,
+				tab: 'General',
+				value: '3',
+			});
+
+			// Check that the new value is applied
+
+			await expect(page.getByText('Number: 3')).toBeVisible();
+		}
+	);
 });
 
 test.describe('Styles Configuration', () => {

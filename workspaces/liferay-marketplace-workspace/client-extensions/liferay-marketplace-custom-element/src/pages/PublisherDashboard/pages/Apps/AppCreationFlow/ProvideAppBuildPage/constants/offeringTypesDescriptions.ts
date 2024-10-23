@@ -12,12 +12,14 @@ export const offeringTypesDescription = {
 			description: i18n.translate(
 				'the-cloud-app-is-client-extension-based-and-is-compatible-with-a-customer’s-self-hosted-environment'
 			),
+			disabled: true,
 			label: i18n.translate('liferay-self-hosted'),
 		},
 		{
 			description: i18n.translate(
 				'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay’s-self-managed-formerly-dxp-cloud-offering'
 			),
+			disabled: true,
 			label: i18n.translate('liferay-paas'),
 		},
 		{
@@ -38,13 +40,14 @@ export const offeringTypesDescription = {
 			description: i18n.translate(
 				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud'
 			),
-			label: i18n.translate('self-managed'),
+			label: i18n.translate('liferay-paas'),
 		},
 		{
 			description: i18n.translate(
 				'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc'
 			),
-			label: i18n.translate('fully-managed'),
+			disabled: true,
+			label: i18n.translate('liferay-saas'),
 		},
 	],
 } as const;

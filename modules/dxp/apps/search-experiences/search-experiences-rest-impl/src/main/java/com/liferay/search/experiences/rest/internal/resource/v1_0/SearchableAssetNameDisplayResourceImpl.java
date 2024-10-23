@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -54,7 +55,10 @@ public class SearchableAssetNameDisplayResourceImpl
 		String modelResource = ResourceActionsUtil.getModelResource(
 			LocaleUtil.fromLanguageId(languageId), className);
 
-		if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
+		if (className.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
 			String[] parts = StringUtil.split(className, "#");
 
 			ObjectDefinition objectDefinition =

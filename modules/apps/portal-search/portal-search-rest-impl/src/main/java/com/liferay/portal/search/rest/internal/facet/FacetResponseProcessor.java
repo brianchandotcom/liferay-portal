@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -222,7 +223,10 @@ public class FacetResponseProcessor {
 	}
 
 	private String _getTypeDisplayName(Locale locale, String className) {
-		if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
+		if (className.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
 			String[] parts = StringUtil.split(className, "#");
 
 			ObjectDefinition objectDefinition =

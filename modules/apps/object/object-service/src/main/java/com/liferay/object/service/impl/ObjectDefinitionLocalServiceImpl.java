@@ -1779,7 +1779,8 @@ public class ObjectDefinitionLocalServiceImpl
 			return className;
 		}
 
-		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
+		return ObjectDefinitionConstants.
+			CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION + objectDefinitionId;
 	}
 
 	private String _getDBTableName(

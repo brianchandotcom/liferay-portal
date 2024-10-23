@@ -210,8 +210,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		String editableValues = _getEditableFieldValues(
 			_portal.getClassNameId(
-				ObjectDefinition.class.getName() + "#" +
-					RandomTestUtil.randomLong()),
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+						RandomTestUtil.randomLong()),
 			classPK, fieldId,
 			"action/editable_values_action_default_text.json");
 
@@ -246,8 +247,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		String editableValues = _getEditableFieldValues(
 			_portal.getClassNameId(
-				ObjectDefinition.class.getName() + "#" +
-					RandomTestUtil.randomLong()),
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+						RandomTestUtil.randomLong()),
 			classPK, fieldId, "action/editable_values_action_inline_text.json");
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
@@ -276,8 +278,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		String editableValues = _getEditableFieldValues(
 			_portal.getClassNameId(
-				ObjectDefinition.class.getName() + "#" +
-					RandomTestUtil.randomLong()),
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+						RandomTestUtil.randomLong()),
 			RandomTestUtil.randomLong(),
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
 				RandomTestUtil.randomLong(),
@@ -301,8 +304,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -333,8 +337,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -394,8 +399,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -430,8 +436,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -491,8 +498,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -523,8 +531,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -584,8 +593,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -620,8 +630,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -681,8 +692,9 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +

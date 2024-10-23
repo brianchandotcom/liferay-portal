@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -116,7 +117,10 @@ public class TypeFacetPortletPreferencesImpl
 		String modelResource = ResourceActionsUtil.getModelResource(
 			locale, className);
 
-		if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
+		if (className.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
 			String[] parts = StringUtil.split(className, "#");
 
 			ObjectDefinition objectDefinition =

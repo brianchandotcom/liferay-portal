@@ -692,7 +692,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(
 			StringUtil.startsWith(
 				assetListEntry.getAssetEntryType(),
-				"com.liferay.object.model.ObjectDefinition"));
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
 	}
 
 	private void _assertAssetVocabularies() throws Exception {
@@ -3721,7 +3722,9 @@ public class BundleSiteInitializerTest {
 		String type = siteNavigationMenuItem7.getType();
 
 		Assert.assertTrue(
-			type.startsWith("com.liferay.object.model.ObjectDefinition#"));
+			type.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
 	}
 
 	private void _assertSiteNavigationMenu2() {
@@ -3800,7 +3803,9 @@ public class BundleSiteInitializerTest {
 		String type = siteNavigationMenuItem7.getType();
 
 		Assert.assertTrue(
-			type.startsWith("com.liferay.object.model.ObjectDefinition#"));
+			type.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
 
 		SiteNavigationMenuItem siteNavigationMenuItem8 =
 			siteNavigationMenuItems.get(7);

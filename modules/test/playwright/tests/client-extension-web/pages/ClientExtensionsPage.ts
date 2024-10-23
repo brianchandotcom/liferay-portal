@@ -84,7 +84,7 @@ export class ClientExtensionsPage {
 			}),
 			localizedNameButton: page
 				.locator('.input-localized')
-				.getByRole('button'), // page.getByRole('button', { name: 'Current translation is' }),
+				.getByRole('button'),
 			nameInput: page.getByLabel('Name Required', {exact: true}),
 			newCustomElementHeader: page.locator('h3'),
 			publishButton: page.getByRole('button', {name: 'Publish'}),

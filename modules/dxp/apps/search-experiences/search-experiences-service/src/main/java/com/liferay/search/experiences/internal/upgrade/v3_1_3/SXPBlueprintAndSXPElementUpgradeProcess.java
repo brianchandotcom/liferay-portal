@@ -222,7 +222,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		try {
 			preparedStatement2.setString(
 				1, _fixElementInstancesJSON(elementInstancesJSON));
-
 			preparedStatement2.setLong(2, resultSet.getLong("sxpBlueprintId"));
 
 			preparedStatement2.addBatch();
@@ -230,7 +229,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to upgrade SXPBlueprint " +
+					"Unable to upgrade search experiences blueprint " +
 						resultSet.getLong("sxpBlueprintId"),
 					exception);
 			}

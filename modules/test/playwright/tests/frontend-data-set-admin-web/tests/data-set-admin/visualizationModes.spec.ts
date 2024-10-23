@@ -913,6 +913,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const deleteModal =
 				await visualizationModesPage.page.getByRole('dialog');
 
+			await expect(deleteModal.locator('.modal-title')).toContainText(
+				'Delete Field'
+			);
+
 			await expect(deleteModal).toContainText(
 				'Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.'
 			);

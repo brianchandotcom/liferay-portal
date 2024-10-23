@@ -69,7 +69,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	@Test
 	public void testSXPBlueprintUpgradeProcess() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
-
 		Group group2 = GroupTestUtil.addGroup();
 
 		SXPBlueprint sxpBlueprint = _addSXPBlueprint(

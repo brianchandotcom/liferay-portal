@@ -25,6 +25,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:portlet-display-template:portlet-display-template-api")
 	testIntegrationImplementation project(":apps:product-navigation:product-navigation-control-menu-api")
 	testIntegrationImplementation project(":apps:segments:segments-api")
+	testIntegrationImplementation project(":apps:segments:segments-test-util")
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-api")
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-menu-item-api")
 	testIntegrationImplementation project(":apps:style-book:style-book-api")

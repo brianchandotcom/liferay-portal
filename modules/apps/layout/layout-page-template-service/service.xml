@@ -106,11 +106,11 @@
 		<column name="defaultTemplate" type="boolean" />
 		<column name="layoutPrototypeId" type="long" />
 		<column name="plid" type="long" />
-		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
-		<column change-tracking-resolution-type="merge" name="statusByUserId" type="long" />
-		<column change-tracking-resolution-type="merge" name="statusByUserName" type="String" />
-		<column change-tracking-resolution-type="merge" name="statusDate" type="Date" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -305,7 +305,7 @@
 
 		<column name="layoutPageTemplateStructureId" type="long" />
 		<column name="segmentsExperienceId" type="long" />
-		<column change-tracking-resolution-type="merge" name="data" type="String" />
+		<column name="data" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

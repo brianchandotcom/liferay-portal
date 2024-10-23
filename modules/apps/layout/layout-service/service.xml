@@ -97,7 +97,7 @@
 
 		<!-- Other fields -->
 
-		<column change-tracking-resolution-type="merge" name="content" type="String" />
+		<column name="content" type="String" />
 		<column name="languageId" type="String" />
 		<column name="plid" type="long" />
 		<column name="lastPublishDate" type="Date" />

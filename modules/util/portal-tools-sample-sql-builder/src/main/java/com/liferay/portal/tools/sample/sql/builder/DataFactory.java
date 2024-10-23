@@ -5183,11 +5183,7 @@ public class DataFactory {
 				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
 				"default-locale=\"en_US\"><Label language-id=\"en_US\">",
 				"Commerce Order</Label></root>"));
-
-		Class<?> clazz = CommerceOrder.class;
-
-		objectDefinitionModel.setClassName(clazz.getName());
-
+		objectDefinitionModel.setClassName(CommerceOrder.class.getName());
 		objectDefinitionModel.setEnableCategorization(true);
 		objectDefinitionModel.setEnableComments(false);
 		objectDefinitionModel.setEnableIndexSearch(true);
@@ -5203,7 +5199,6 @@ public class DataFactory {
 				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
 				"default-locale=\"en_US\"><PluralLabel language-id=\"en_US\">",
 				"Commerce Orders</PluralLabel></root>"));
-
 		objectDefinitionModel.setPortlet(false);
 		objectDefinitionModel.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinitionModel.setStorageType(

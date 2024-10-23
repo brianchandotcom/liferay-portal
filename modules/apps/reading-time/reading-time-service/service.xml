@@ -23,7 +23,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column change-tracking-resolution-type="merge" name="readingTime" type="long" />
+		<column name="readingTime" type="long" />
 
 		<!-- Order -->
 

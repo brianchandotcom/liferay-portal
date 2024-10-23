@@ -40,7 +40,7 @@
 		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="extraSettings" type="String" />
 		<column name="fileEntryTypeId" type="long" />
-		<column change-tracking-resolution-type="merge" name="version" type="String" />
+		<column name="version" type="String" />
 		<column name="size" type="long" />
 		<column name="smallImageId" type="long" />
 		<column name="largeImageId" type="long" />
@@ -292,7 +292,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
-		<column change-tracking-resolution-type="merge" name="modifiedDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
@@ -319,7 +319,7 @@
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
-		<column change-tracking-resolution-type="merge" name="statusDate" type="Date" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -400,8 +400,8 @@
 		<column name="mountPoint" type="boolean" />
 		<column name="parentFolderId" parent-container-model="true" type="long" />
 		<column name="treePath" type="String" />
-		<column change-tracking-resolution-type="merge" name="name" type="String" uad-nonanonymizable="true" />
-		<column change-tracking-resolution-type="merge" name="description" type="String" uad-nonanonymizable="true" />
+		<column name="name" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column change-tracking-resolution-type="max" name="lastPostDate" type="Date" />
 		<column name="defaultFileEntryTypeId" type="long" />
 		<column name="hidden" type="boolean" />

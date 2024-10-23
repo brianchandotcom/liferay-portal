@@ -87,7 +87,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column change-tracking-resolution-type="merge" name="friendlyURLEntryId" type="long" />
+		<column name="friendlyURLEntryId" type="long" />
 
 		<!-- Finder methods -->
 

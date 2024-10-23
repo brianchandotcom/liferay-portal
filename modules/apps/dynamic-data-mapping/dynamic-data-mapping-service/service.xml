@@ -440,8 +440,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column change-tracking-resolution-type="merge" name="userId" type="long" />
-		<column change-tracking-resolution-type="merge" name="userName" type="String" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
 		<column name="versionUserId" type="long" />
 		<column name="versionUserName" type="String" />
 		<column name="createDate" type="Date" />
@@ -454,8 +454,8 @@
 		<column name="structureKey" type="String" />
 		<column name="version" type="String" />
 		<column localized="true" name="name" type="String" />
-		<column change-tracking-resolution-type="merge" localized="true" name="description" type="String" />
-		<column change-tracking-resolution-type="merge" name="definition" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />

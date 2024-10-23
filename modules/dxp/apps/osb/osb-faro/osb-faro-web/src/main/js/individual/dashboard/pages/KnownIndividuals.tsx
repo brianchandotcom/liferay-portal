@@ -195,10 +195,10 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 						authorized
 							? Liferay.Language.get(
 									'connect-a-data-source-with-people-data'
-								)
+							  )
 							: Liferay.Language.get(
 									'please-contact-your-site-administrator-to-add-people-data-sources'
-								)
+							  )
 					}
 					primary
 					title={Liferay.Language.get('no-data-sources-connected')}
@@ -214,10 +214,10 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-with-people-data'
-									)
+								  )
 								: Liferay.Language.get(
 										'please-contact-your-site-administrator-to-add-people-data-sources'
-									)}
+								  )}
 
 							<ClayLink
 								className='d-block mb-3'
@@ -284,10 +284,10 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-to-get-started'
-									)
+								  )
 								: Liferay.Language.get(
 										'please-contact-your-workspace-administrator-to-add-data-sources'
-									)}
+								  )}
 
 							<ClayLink
 								className='d-block mb-3'

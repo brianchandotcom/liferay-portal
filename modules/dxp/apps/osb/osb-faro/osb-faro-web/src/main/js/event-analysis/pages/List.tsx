@@ -67,10 +67,10 @@ const List = () => {
 								{authorized
 									? Liferay.Language.get(
 											'connect-a-data-source-to-get-started'
-										)
+									  )
 									: Liferay.Language.get(
 											'please-contact-your-workspace-administrator-to-add-data-sources'
-										)}
+									  )}
 
 								<ClayLink
 									className='d-block mb-3'

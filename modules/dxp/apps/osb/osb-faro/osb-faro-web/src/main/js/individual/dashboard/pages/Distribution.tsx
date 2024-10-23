@@ -45,10 +45,10 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 						{authorized
 							? Liferay.Language.get(
 									'connect-a-data-source-to-get-started'
-								)
+							  )
 							: Liferay.Language.get(
 									'please-contact-your-workspace-administrator-to-add-data-sources'
-								)}
+							  )}
 
 						<ClayLink
 							className='d-block mb-3'

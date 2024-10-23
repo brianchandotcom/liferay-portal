@@ -71,10 +71,10 @@ const ExperimentsListPage = () => {
 								{authorized
 									? Liferay.Language.get(
 											'connect-a-data-source-with-sites-data'
-										)
+									  )
 									: Liferay.Language.get(
 											'please-contact-your-workspace-administrator-to-add-data-sources'
-										)}
+									  )}
 
 								<ClayLink
 									className='d-block mb-3'

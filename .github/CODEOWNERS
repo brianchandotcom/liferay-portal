@@ -22,7 +22,9 @@ modules/apps/asset/asset-display-page-service    @liferay-page-management
 modules/apps/asset/asset-display-page-test    @liferay-page-management
 modules/apps/asset/asset-display-web    @liferay-page-management
 modules/apps/asset/asset-entry-query-processor-custom-user-attributes    @liferay-page-management
-modules/apps/asset/asset-entry-rel-test    @liferay-content-management
+modules/apps/asset/asset-entry-rel-api    @liferay-search
+modules/apps/asset/asset-entry-rel-service    @liferay-search
+modules/apps/asset/asset-entry-rel-test    @liferay-search
 modules/apps/asset/asset-info-display-api    @liferay-page-management
 modules/apps/asset/asset-info-display-impl    @liferay-page-management
 modules/apps/asset/asset-link-test    @liferay-content-management

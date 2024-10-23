@@ -32,16 +32,27 @@ public class NullConvertibleEntryTest {
 
 	@Test
 	public void testFetchNullConvertibleEntry() {
-		NullConvertibleEntry nullConvertibleEntry =
-			_nullConvertibleEntryLocalService.addNullConvertibleEntry(
-				(String)null);
+		NullConvertibleEntry nullConvertibleEntry = null;
 
-		Assert.assertEquals(
-			nullConvertibleEntry,
-			_nullConvertibleEntryLocalService.fetchNullConvertibleEntry(null));
+		try {
+			nullConvertibleEntry =
+				_nullConvertibleEntryLocalService.addNullConvertibleEntry(
+					(String)null);
 
-		Assert.assertEquals(
-			nullConvertibleEntry.getName(), StringPool.BLANK);
+			Assert.assertEquals(
+				nullConvertibleEntry,
+				_nullConvertibleEntryLocalService.fetchNullConvertibleEntry(
+					null));
+
+			Assert.assertEquals(
+				nullConvertibleEntry.getName(), StringPool.BLANK);
+		}
+		finally {
+			if (nullConvertibleEntry != null) {
+				_nullConvertibleEntryLocalService.deleteNullConvertibleEntry(
+					nullConvertibleEntry);
+			}
+		}
 	}
 
 	@Inject

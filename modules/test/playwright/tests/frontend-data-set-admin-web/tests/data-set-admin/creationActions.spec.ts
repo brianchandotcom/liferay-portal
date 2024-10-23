@@ -580,6 +580,20 @@ test(
 				row: actionRow,
 			});
 
+			await test.step('Check the modal title and description', async () => {
+				await expect(
+					actionsPage.deletionConfirmationModal.locator(
+						'.modal-title'
+					)
+				).toContainText('Delete Action');
+
+				await expect(
+					actionsPage.deletionConfirmationModal
+				).toContainText(
+					'Are you sure you want to delete this action? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.'
+				);
+			});
+
 			await actionsPage.deletionConfirmationModal
 				.getByRole('button', {
 					name: 'Delete',

@@ -68,13 +68,15 @@ public class ReportController extends BaseFaroController {
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam,
 			@QueryParam("query") String query,
 			@QueryParam("rangeKey") String rangeKey,
+			@QueryParam("segmentId") String segmentId,
 			@QueryParam("toDate") String toDateString,
 			@PathParam("type") String type)
 		throws Exception {
 
 		Object result = _buildQueryParameters(
 			assetId, assetType, channelId, fromDateString, individualId,
-			orderByFieldsFaroParam, query, rangeKey, toDateString, type);
+			orderByFieldsFaroParam, query, rangeKey, segmentId, toDateString,
+			type);
 
 		Map<String, List<String>> queryParameters;
 
@@ -150,7 +152,7 @@ public class ReportController extends BaseFaroController {
 
 		Object result = _buildQueryParameters(
 			assetId, assetType, channelId, fromDateString, individualId, null,
-			query, rangeKey, toDateString, type);
+			query, rangeKey, null, toDateString, type);
 
 		if (!(result instanceof Map<?, ?>)) {
 			return result;
@@ -169,13 +171,13 @@ public class ReportController extends BaseFaroController {
 		String assetId, String assetType, String channelId,
 		String fromDateString, String individualId,
 		FaroParam<List<OrderByField>> orderByFieldsFaroParam, String query,
-		String rangeKey, String toDateString, String type) {
+		String rangeKey, String segmentId, String toDateString, String type) {
 
 		if (!_csvExportTypes.contains(type)) {
 			return _reportControllerResponseFactory.create(
 				"The \"type\" query parameter must be either \"blog\", " +
 					"\"document\", \"event\", \"form\", \"individual\", " +
-						"\"journal\", or \"page\".",
+						"\"membership\", \"journal\", or \"page\".",
 				Response.Status.BAD_REQUEST);
 		}
 
@@ -213,6 +215,11 @@ public class ReportController extends BaseFaroController {
 							orderByField.getOrderBy();
 					})
 			);
+
+		if (Validator.isNotNull(segmentId)) {
+			hashMapWrapper.put(
+				"segmentId", Collections.singletonList(segmentId));
+		}
 
 		if (!StringUtil.equals(type, "individual") ||
 			Validator.isNotNull(assetType)) {
@@ -297,7 +304,8 @@ public class ReportController extends BaseFaroController {
 		ReportController.class);
 
 	private static final Set<String> _csvExportTypes = SetUtil.fromArray(
-		"blog", "document", "event", "form", "individual", "journal", "page");
+		"blog", "document", "event", "form", "individual", "journal",
+		"membership", "page");
 	private static final DateTimeFormatter _dateDateTimeFormatter =
 		DateTimeFormatter.ofPattern(_ISO_8601_DATE_FORMAT);
 	private static final DateTimeFormatter _dateTimeDateTimeFormatter =

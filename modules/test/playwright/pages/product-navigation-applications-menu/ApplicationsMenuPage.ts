@@ -213,13 +213,13 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'System Settings',
 		});
-		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Users and Organizations',
-		});
 		this.userGroupsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'User Groups',
+		});
+		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Users and Organizations',
 		});
 		this.virtualInstancesItem = page.getByRole('menuitem', {
 			exact: true,
@@ -476,6 +476,19 @@ export class ApplicationsMenuPage {
 		await this.serviceAccountsItem.click();
 	}
 
+	async goToUserGroups(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+
+			await expect(this.applicationsMenuTabButton).toBeVisible();
+		}
+		await this.controlPanelButton.click();
+		await this.userGroupsItem.click();
+	}
+
 	async goToUsersAndOrganizations(forceReload = true) {
 		if (forceReload) {
 			await this.goto();
@@ -494,18 +507,5 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.controlPanelButton.click();
 		await this.virtualInstancesItem.click();
-	}
-
-	async goToUserGroups(forceReload = true) {
-		if (forceReload) {
-			await this.goto();
-		}
-		else {
-			await this.homePage.openApplicationMenu();
-
-			await expect(this.applicationsMenuTabButton).toBeVisible();
-		}
-		await this.controlPanelButton.click();
-		await this.userGroupsItem.click();
 	}
 }

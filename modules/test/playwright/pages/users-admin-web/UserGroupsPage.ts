@@ -37,6 +37,9 @@ export const searchTableRowByValue = async function (
 export class UserGroupsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly customField: (fieldName: string) => Promise<Locator>;
+	readonly editUserGroupMenuItem: Locator;
+	readonly page: Page;
+	readonly userGroupsTable: Locator;
 	readonly userGroupsTableRow: (
 		colPosition: number,
 		value: string,
@@ -45,9 +48,6 @@ export class UserGroupsPage {
 	readonly userGroupsTableRowActions: (
 		screenName: string
 	) => Promise<Locator>;
-	readonly userGroupsTable: Locator;
-	readonly editUserGroupMenuItem: Locator;
-	readonly page: Page;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -63,6 +63,11 @@ export class UserGroupsPage {
 			throw new Error(`Cannot locate Custom Field ${fieldName}`);
 		};
 
+		this.editUserGroupMenuItem = page.getByRole('menuitem', {
+			name: 'Edit',
+		});
+
+		this.page = page;
 		this.userGroupsTable = page.locator(
 			'#_com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet_userGroupsSearchContainer'
 		);
@@ -95,12 +100,6 @@ export class UserGroupsPage {
 				`Cannot locate user group row with screenName ${screenName}`
 			);
 		};
-
-		this.editUserGroupMenuItem = page.getByRole('menuitem', {
-			name: 'Edit',
-		});
-
-		this.page = page;
 	}
 
 	async goto(forceReload?: boolean) {

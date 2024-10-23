@@ -111,6 +111,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -1490,9 +1491,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setActive(
 			_isUnmodifiableSystemObject(modifiable, system));
 		objectDefinition.setClassName(
-			_getClassName(
-				objectDefinition.getObjectDefinitionId(), className, modifiable,
-				system));
+			_getClassName(user.getCompanyId(), className, modifiable, system));
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setEnableCategorization(
 			!objectDefinition.isUnmodifiableSystemObject() &&
@@ -1776,8 +1775,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getClassName(
-		long objectDefinitionId, String className, boolean modifiable,
-		boolean system) {
+		long companyId, String className, boolean modifiable, boolean system) {
 
 		if (Validator.isNotNull(className) ||
 			_isUnmodifiableSystemObject(modifiable, system)) {
@@ -1785,8 +1783,29 @@ public class ObjectDefinitionLocalServiceImpl
 			return className;
 		}
 
-		return ObjectDefinitionConstants.
-			CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION + objectDefinitionId;
+		while (true) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION);
+			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+			sb.append(RandomUtil.nextInt(10));
+			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+			sb.append(RandomUtil.nextInt(10));
+
+			ObjectDefinition existingObjectDefinition =
+				objectDefinitionPersistence.fetchByC_C(
+					companyId, sb.toString());
+
+			if (existingObjectDefinition == null) {
+				className = sb.toString();
+
+				break;
+			}
+		}
+
+		return className;
 	}
 
 	private String _getDBTableName(
@@ -2215,7 +2234,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (Validator.isNull(oldClassName)) {
 			objectDefinition.setClassName(
 				_getClassName(
-					objectDefinition.getObjectDefinitionId(), className,
+					objectDefinition.getCompanyId(), className,
 					objectDefinition.isModifiable(),
 					objectDefinition.isSystem()));
 		}

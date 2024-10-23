@@ -71,8 +71,19 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		Group group1 = GroupTestUtil.addGroup();
 		Group group2 = GroupTestUtil.addGroup();
 
-		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
-			_getElementInstancesJSON(group1, group2));
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(),
+			StringUtil.read(
+				_clazz,
+				StringBundler.concat(
+					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".configurationJSON.json")),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_getElementInstancesJSON(group1, group2), "1.1",
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_serviceContext);
 
 		_runUpgrade();
 
@@ -119,24 +130,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Rule
 	public TestName testName = new TestName();
-
-	private SXPBlueprint _addSXPBlueprint(String elementInstancesJSON)
-		throws Exception {
-
-		return _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(),
-			StringUtil.read(
-				_clazz,
-				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), ".configurationJSON.json")),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			elementInstancesJSON, "1.1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
-	}
 
 	private void _assertSXPBlueprint(
 		String expectedInstancesJSON, long sxpBlueprintId) {

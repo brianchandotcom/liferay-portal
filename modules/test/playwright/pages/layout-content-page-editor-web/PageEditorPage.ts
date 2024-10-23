@@ -1160,13 +1160,22 @@ export class PageEditorPage {
 	}
 
 	async setMappedItem({
+		customMappingButtonLocator,
 		entity,
 		entry,
 		entryLocator,
 		field,
 		folder,
-	}: Omit<MappingItemConfiguration, 'field'> & {field?: string}) {
-		await this.selectItemMappingButton.click();
+	}: Omit<MappingItemConfiguration, 'field'> & {
+		customMappingButtonLocator?: Locator;
+		field?: string;
+	}) {
+		if (customMappingButtonLocator) {
+			await customMappingButtonLocator.click();
+		}
+		else {
+			await this.selectItemMappingButton.click();
+		}
 
 		const recentItem = this.page.getByRole('menuitem', {name: entry});
 

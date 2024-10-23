@@ -180,7 +180,8 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		if (!fragmentServiceConfiguration.propagateChanges() ||
 			(ExportImportThreadLocal.isStagingInProcess() &&
 			 _stagingGroupHelper.isStagedPortlet(
-				 portletDataContext.getGroupId(), getPortletId()))) {
+				 portletDataContext.getGroupId(),
+				 FragmentPortletKeys.FRAGMENT))) {
 
 			for (Element fragmentEntryElement : fragmentEntryElements) {
 				StagedModelDataHandlerUtil.importStagedModel(

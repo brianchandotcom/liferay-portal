@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -41,7 +42,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,6 +53,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -103,20 +107,26 @@ public class SPAHelper {
 	}
 
 	public JSONArray getPortletsBlacklistJSONArray(ThemeDisplay themeDisplay) {
-		JSONArray portletsBlacklistJSONArray = _jsonFactory.createJSONArray();
-
-		_portletLocalService.visitPortlets(
+		return _portletsBlacklistJSONArrays.computeIfAbsent(
 			themeDisplay.getCompanyId(),
-			portlet -> {
-				if (!portlet.isSinglePageApplication() &&
-					!portlet.isUndeployedPortlet() && portlet.isActive() &&
-					portlet.isReady()) {
+			companyId -> {
+				JSONArray portletsBlacklistJSONArray =
+					_jsonFactory.createJSONArray();
 
-					portletsBlacklistJSONArray.put(portlet.getPortletId());
-				}
+				_portletLocalService.visitPortlets(
+					companyId,
+					portlet -> {
+						if (!portlet.isSinglePageApplication() &&
+							!portlet.isUndeployedPortlet() &&
+							portlet.isActive() && portlet.isReady()) {
+
+							portletsBlacklistJSONArray.put(
+								portlet.getPortletId());
+						}
+					});
+
+				return portletsBlacklistJSONArray;
 			});
-
-		return portletsBlacklistJSONArray;
 	}
 
 	public int getRequestTimeout() {
@@ -200,10 +210,24 @@ public class SPAHelper {
 			new NavigationExceptionSelectorTrackerCustomizer(bundleContext));
 
 		_navigationExceptionSelectorTracker.open();
+
+		_serviceRegistration = bundleContext.registerService(
+			Consumer.class,
+			companyId -> {
+				if (companyId == null) {
+					_portletsBlacklistJSONArrays.clear();
+				}
+				else {
+					_portletsBlacklistJSONArrays.remove(companyId);
+				}
+			},
+			MapUtil.singletonDictionary(
+				"portlets.map.clear.consumer", Boolean.TRUE));
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceRegistration.unregister();
 		_navigationExceptionSelectorTracker.close();
 	}
 
@@ -321,6 +345,9 @@ public class SPAHelper {
 	@Reference
 	private PortletLocalService _portletLocalService;
 
+	private final Map<Long, JSONArray> _portletsBlacklistJSONArrays =
+		new ConcurrentHashMap<>();
+	private ServiceRegistration<?> _serviceRegistration;
 	private volatile SPAConfiguration _spaConfiguration;
 	private volatile JSONArray _spaExcludedPathsJSONArray;
 	private volatile JSONArray _spaExcludedTargetPortletsJSONArray;

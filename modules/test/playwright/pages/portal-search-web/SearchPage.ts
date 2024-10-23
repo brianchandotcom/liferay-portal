@@ -95,9 +95,13 @@ export class SearchPage {
 			),
 		});
 
-		await categoryPanel.getByText(portletName).click();
+		await categoryPanel.getByText(portletName, {exact: true}).click();
 
-		await categoryPanel.getByRole('button', {name: 'Add Content'}).click();
+		await categoryPanel
+			.locator('li')
+			.filter({hasText: new RegExp(`^${portletName}$`)})
+			.getByLabel('Add Content')
+			.click();
 	}
 
 	async getSearchFacetCheckbox(

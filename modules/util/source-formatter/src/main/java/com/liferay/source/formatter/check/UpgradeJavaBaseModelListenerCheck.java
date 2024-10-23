@@ -136,30 +136,31 @@ public class UpgradeJavaBaseModelListenerCheck extends BaseUpgradeCheck {
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
 
-		List<String> parameters = JavaSourceUtil.getParameterNames(methodCall);
+		List<String> parameterNames = JavaSourceUtil.getParameterNames(
+			methodCall);
 
-		if (parameters.size() != 1) {
+		if (parameterNames.size() != 1) {
 			return javaMethodContent;
 		}
 
-		String parameter = parameters.get(0);
+		String parameterName = parameterNames.get(0);
 
-		String newParameters;
+		String newParameter = null;
 
 		if (parameterUpgrade) {
-			newParameters = StringBundler.concat(
-				"original", StringUtil.upperCaseFirstLetter(parameter),
-				StringPool.COMMA_AND_SPACE, parameter);
+			newParameter = StringBundler.concat(
+				"original", StringUtil.upperCaseFirstLetter(parameterName),
+				StringPool.COMMA_AND_SPACE, parameterName);
 		}
 		else {
-			newParameters = StringBundler.concat(
+			newParameter = StringBundler.concat(
 				StringPool.OPEN_PARENTHESIS, _modelType,
-				StringPool.CLOSE_PARENTHESIS, parameter, ".clone(), ",
-				parameter);
+				StringPool.CLOSE_PARENTHESIS, parameterName, ".clone(), ",
+				parameterName);
 		}
 
 		String newMethodCall = StringUtil.replace(
-			methodCall, parameter, newParameters);
+			methodCall, parameterName, newParameter);
 
 		return StringUtil.replace(javaMethodContent, methodCall, newMethodCall);
 	}

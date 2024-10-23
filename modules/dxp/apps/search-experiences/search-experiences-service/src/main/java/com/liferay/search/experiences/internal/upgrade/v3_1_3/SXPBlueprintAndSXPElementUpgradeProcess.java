@@ -39,7 +39,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPElement();
 	}
 
-	private boolean _containsSiteElement(ElementInstance[] elementInstances) {
+	private boolean _hasLimitSearchToTheseSites(
+		ElementInstance[] elementInstances) {
+
 		for (ElementInstance elementInstance : elementInstances) {
 			SXPElement sxpElement = elementInstance.getSxpElement();
 
@@ -242,7 +244,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			ElementInstanceUtil.toElementInstances(elementInstancesJSON);
 
 		if ((elementInstances == null) ||
-			!_containsSiteElement(elementInstances)) {
+			!_hasLimitSearchToTheseSites(elementInstances)) {
 
 			return;
 		}

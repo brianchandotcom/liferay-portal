@@ -138,13 +138,13 @@ public class WebServerServletTest {
 			null, null, serviceContext);
 
 		_removeResourcePermission(
+			fileEntry.getFileEntryId(), RoleConstants.GUEST,
+			ActionKeys.DOWNLOAD);
+		_removeResourcePermission(
 			fileEntry.getFileEntryId(), RoleConstants.OWNER,
 			ActionKeys.DOWNLOAD);
 		_removeResourcePermission(
 			fileEntry.getFileEntryId(), RoleConstants.SITE_MEMBER,
-			ActionKeys.DOWNLOAD);
-		_removeResourcePermission(
-			fileEntry.getFileEntryId(), RoleConstants.GUEST,
 			ActionKeys.DOWNLOAD);
 
 		MockHttpServletRequest mockHttpServletRequest =

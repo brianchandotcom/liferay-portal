@@ -19,6 +19,11 @@ modules/apps/asset/asset-display-page-test    @liferay-page-management
 modules/apps/asset/asset-display-web    @liferay-page-management
 modules/apps/asset/asset-info-display-api    @liferay-page-management
 modules/apps/asset/asset-info-display-impl    @liferay-page-management
+modules/apps/asset/asset-list-api    @liferay-search
+modules/apps/asset/asset-list-item-selector-web    @liferay-search
+modules/apps/asset/asset-list-service    @liferay-search
+modules/apps/asset/asset-list-test    @liferay-search
+modules/apps/asset/asset-list-web    @liferay-search
 modules/apps/asset/asset-publisher-web    @liferay-page-management
 modules/apps/asset/asset-publisher-api    @liferay-page-management
 modules/apps/asset/asset-publisher-layout-prototype    @liferay-page-management
@@ -192,10 +197,10 @@ modules/apps/portal-reports-engine/
 modules/apps/portal-rules-engine/
 modules/apps/portal-scheduler/
 modules/apps/portal-scripting/
-modules/apps/portal-search-elasticsearch7/
-modules/apps/portal-search-opensearch2/
-modules/apps/portal-search-solr8/
-modules/apps/portal-search/
+modules/apps/portal-search-elasticsearch7/    @liferay-search
+modules/apps/portal-search-opensearch2/    @liferay-search
+modules/apps/portal-search-solr8/    @liferay-search
+modules/apps/portal-search/    @liferay-search
 modules/apps/portal-security-audit/
 modules/apps/portal-security-sso/
 modules/apps/portal-security/
@@ -291,11 +296,11 @@ modules/dxp/apps/multi-factor-authentication/
 modules/dxp/apps/osb/
 modules/dxp/apps/portal-reports-engine-console/
 modules/dxp/apps/portal-rules-engine-drools/
-modules/dxp/apps/portal-search-elasticsearch-cross-cluster-replication/
-modules/dxp/apps/portal-search-elasticsearch-monitoring/
-modules/dxp/apps/portal-search-learning-to-rank/
-modules/dxp/apps/portal-search-similar-results/
-modules/dxp/apps/portal-search-tuning/
+modules/dxp/apps/portal-search-elasticsearch-cross-cluster-replication/    @liferay-search
+modules/dxp/apps/portal-search-elasticsearch-monitoring/    @liferay-search
+modules/dxp/apps/portal-search-learning-to-rank/    @liferay-search
+modules/dxp/apps/portal-search-similar-results/    @liferay-search
+modules/dxp/apps/portal-search-tuning/    @liferay-search
 modules/dxp/apps/portal-security-audit/
 modules/dxp/apps/portal-workflow-kaleo-forms/    @liferay-bpm
 modules/dxp/apps/portal-workflow/    @liferay-bpm
@@ -303,7 +308,7 @@ modules/dxp/apps/portal/
 modules/dxp/apps/salesforce-connector/
 modules/dxp/apps/saml/
 modules/dxp/apps/scim/
-modules/dxp/apps/search-experiences/
+modules/dxp/apps/search-experiences/    @liferay-search
 modules/dxp/apps/segments/
 modules/dxp/apps/sharepoint-rest/    @liferay-content-management
 modules/dxp/apps/sharepoint-soap/    @liferay-content-management

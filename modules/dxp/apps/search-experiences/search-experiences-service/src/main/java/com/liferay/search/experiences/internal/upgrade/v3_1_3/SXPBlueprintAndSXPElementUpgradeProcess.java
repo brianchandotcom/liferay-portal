@@ -110,22 +110,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
-	private JSONArray _translateIdsToExternalReferencesCodes(long[] groupIds)
-		throws Exception {
-
-		JSONArray scopeGroupExternalReferenceCodeJSONArray =
-			JSONFactoryUtil.createJSONArray();
-
-		for (long groupId : groupIds) {
-			Group group = _getGroup(groupId);
-
-			scopeGroupExternalReferenceCodeJSONArray.put(
-				group.getExternalReferenceCode());
-		}
-
-		return scopeGroupExternalReferenceCodeJSONArray;
-	}
-
 	private void _upgradeConfiguration(JSONObject configurationJSONObject) {
 		JSONObject queryJSONObject = JSONUtil.getValueAsJSONObject(
 			configurationJSONObject, "JSONObject/queryConfiguration",
@@ -160,7 +144,17 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			"terms",
 			JSONUtil.put(
 				"scopeGroupExternalReferenceCode",
-				_translateIdsToExternalReferencesCodes(groupIds)));
+				() -> {
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+					for (long groupId : groupIds) {
+						Group group = _getGroup(groupId);
+
+						jsonArray.put(group.getExternalReferenceCode());
+					}
+
+					return jsonArray;
+				}));
 	}
 
 	private void _upgradeSXPBlueprints() throws Exception {

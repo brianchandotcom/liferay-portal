@@ -122,9 +122,8 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 				"create table if not exists ", toPartitionName,
 				StringPool.PERIOD, toTableName, " (like ", fromPartitionName,
 				StringPool.PERIOD, fromTableName,
-				" including all excluding indexes);"));
+				" including all excluding indexes);\n"));
 
-		sb.append(StringPool.NEW_LINE);
 		sb.append("alter table ");
 		sb.append(toPartitionName + StringPool.PERIOD + toTableName);
 		sb.append(" add primary key (");

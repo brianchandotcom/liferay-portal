@@ -491,10 +491,14 @@ public class JournalTransformer {
 			while (iterator.hasNext()) {
 				Element optionElement = iterator.next();
 
-				dataJSONArray.put(optionElement.getData());
+				if (Validator.isNotNull(optionElement.getData())) {
+					dataJSONArray.put(optionElement.getData());
+				}
 			}
 
-			data = JSONUtil.toString(dataJSONArray);
+			if (dataJSONArray.length() != 0) {
+				data = JSONUtil.toString(dataJSONArray);
+			}
 		}
 
 		if (dynamicContentElement != null) {

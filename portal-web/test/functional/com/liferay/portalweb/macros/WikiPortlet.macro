@@ -48,10 +48,14 @@ definition {
 			configurationName = "Deprecation",
 			configurationScope = "Virtual Instance Scope");
 
-		Check.checkToggleSwitch(
-			locator1 = "FeatureFlag#TOGGLE_ROW",
-			title_row = "Wiki",
-			toggle_state = "Disabled");
+		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Wiki", toggle_state = "Disabled")) {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Wiki",
+				toggle_state = "Disabled");
+		}
+
+		Navigator.openURL();
 	}
 
 	@summary = "Default summary"

@@ -784,3 +784,95 @@ test(
 		).toHaveProperty('fragmentCollectionId', fragmentCollectionId);
 	}
 );
+
+test(
+	'Can change resource image and propagate',
+	{tag: '@LPS-152633'},
+	async ({
+		apiHelpers,
+		fragmentEditorPage,
+		fragmentsPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create a new fragment set and fragment
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const setName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(setName);
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(setName, fragmentName);
+
+		await fragmentEditorPage.addHTML(` 
+		<div class="fragment-name">
+			Test Fragment
+		</div>
+	`);
+
+		await fragmentEditorPage.publish();
+
+		// Add the fragment to a page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.addFragment(setName, fragmentName);
+
+		await expect(page.getByText('Test Fragment')).toBeVisible();
+
+		// Edit the fragment but don't publish it
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await fragmentsPage.clickAction('Edit', fragmentName);
+
+		await fragmentEditorPage.addHTML(` 
+		<div class="fragment-name">
+			Test Fragment New
+		</div>
+	`);
+
+		await fragmentEditorPage.publish();
+
+		// Check that the fragment is not updated on the page
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(
+			page.getByText('Test Fragment', {exact: true})
+		).toBeVisible();
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		// Propagate the changes
+
+		await fragmentsPage.clickAction('View Usages', fragmentName);
+
+		await page
+			.getByLabel('Select All Items on the Page')
+			.check({trial: true});
+
+		await page.getByLabel('Select All Items on the Page').check();
+
+		await page.getByRole('button', {name: 'Propagate'}).click();
+
+		await waitForAlert(page);
+
+		// Check that the fragment is updated on the page
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(page.getByText('Test Fragment New')).toBeVisible();
+	}
+);

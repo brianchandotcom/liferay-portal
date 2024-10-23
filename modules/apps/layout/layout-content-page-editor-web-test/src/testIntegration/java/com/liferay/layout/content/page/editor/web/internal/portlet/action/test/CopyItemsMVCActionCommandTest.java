@@ -16,8 +16,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -97,6 +96,10 @@ public class CopyItemsMVCActionCommandTest {
 
 		_layout = layout.fetchDraftLayout();
 
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
@@ -108,13 +111,13 @@ public class CopyItemsMVCActionCommandTest {
 			new MockLiferayPortletActionResponse());
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
-		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_company, _group, _layout);
 
-		themeDisplay.setRequest(mockHttpServletRequest);
+		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		_serviceContext.setRequest(mockHttpServletRequest);
 
@@ -128,24 +131,16 @@ public class CopyItemsMVCActionCommandTest {
 
 	@Test
 	public void testCopyDropZoneFragmentEntryLink() throws Exception {
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
 		FragmentEntryLink dropzoneFragmentEntryLink = _addFragmentEntryLink(
 			"{}",
 			"<lfr-drop-zone " +
 				"data-lfr-drop-zone-id=${fragmentEntryLinkNamespace}>" +
 					"</lfr-drop-zone>",
-			null, segmentsExperienceId);
+			null);
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
 		FragmentStyledLayoutStructureItem
 			dropZoneFragmentStyledLayoutStructureItem =
@@ -171,11 +166,10 @@ public class CopyItemsMVCActionCommandTest {
 			).toString(),
 			"<h1 data-lfr-editable-id=\"element-text\" " +
 				"data-lfr-editable-type=\"text\">Heading Example</h1>",
-			fragmentDropZoneLayoutStructureItem.getItemId(),
-			segmentsExperienceId);
+			fragmentDropZoneLayoutStructureItem.getItemId());
 
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
 
 		FragmentStyledLayoutStructureItem
 			headingFragmentStyledLayoutStructureItem =
@@ -194,8 +188,7 @@ public class CopyItemsMVCActionCommandTest {
 				new String[] {
 					dropZoneFragmentStyledLayoutStructureItem.getItemId()
 				},
-				dropZoneFragmentStyledLayoutStructureItem.getItemId(),
-				segmentsExperienceId),
+				dropZoneFragmentStyledLayoutStructureItem.getItemId()),
 			new MockLiferayPortletActionResponse());
 
 		List<String> copiedItemIds = (List<String>)jsonObject.get(
@@ -205,8 +198,8 @@ public class CopyItemsMVCActionCommandTest {
 
 		Assert.assertNotNull(copiedItemId);
 
-		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
 
 		FragmentStyledLayoutStructureItem
 			copiedDropZoneFragmentStyledLayoutStructureItem =
@@ -247,17 +240,9 @@ public class CopyItemsMVCActionCommandTest {
 
 	@Test
 	public void testCopyMultipleItems() throws Exception {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
 		LayoutStructureItem rowStyledLayoutStructureItem1 =
 			layoutStructure.addRowStyledLayoutStructureItem(
@@ -284,8 +269,7 @@ public class CopyItemsMVCActionCommandTest {
 					rowStyledLayoutStructureItem1.getItemId(),
 					rowStyledLayoutStructureItem2.getItemId()
 				},
-				rowStyledLayoutStructureItem3.getItemId(),
-				segmentsExperienceId),
+				rowStyledLayoutStructureItem3.getItemId()),
 			new MockLiferayPortletActionResponse());
 
 		List<String> copiedItemIds = (List<String>)jsonObject.get(
@@ -313,17 +297,9 @@ public class CopyItemsMVCActionCommandTest {
 	public void testCopyNoninstantiableItemsMarkedForDeletion()
 		throws Exception {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
 		LayoutStructureItem rowStyledLayoutStructureItem =
 			layoutStructure.addRowStyledLayoutStructureItem(
@@ -333,8 +309,8 @@ public class CopyItemsMVCActionCommandTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _layout.getGroupId(),
-				0, 0, segmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
+				null, TestPropsValues.getUserId(), _layout.getGroupId(), 0, 0,
+				_segmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(
 					"instanceId", StringPool.BLANK
@@ -365,7 +341,7 @@ public class CopyItemsMVCActionCommandTest {
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
 				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
-				rowStyledLayoutStructureItem.getItemId(), segmentsExperienceId),
+				rowStyledLayoutStructureItem.getItemId()),
 			new MockLiferayPortletActionResponse());
 
 		List<String> copiedItemIds = (List<String>)jsonObject.get(
@@ -403,8 +379,7 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-			String editableValues, String html, String parentItemId,
-			long segmentsExperienceId)
+			String editableValues, String html, String parentItemId)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -429,7 +404,7 @@ public class CopyItemsMVCActionCommandTest {
 				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), _layout,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-				parentItemId, 0, segmentsExperienceId);
+				parentItemId, 0, _segmentsExperienceId);
 
 		for (FragmentEntryLinkListener fragmentEntryLinkListener :
 				_fragmentEntryLinkListenerRegistry.
@@ -560,7 +535,7 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String[] itemIds, String parentItemId, long segmentExperienceId)
+			String[] itemIds, String parentItemId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -568,32 +543,15 @@ public class CopyItemsMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(WebKeys.LAYOUT, _layout);
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		mockLiferayPortletActionRequest.addParameter("itemIds", itemIds);
 		mockLiferayPortletActionRequest.addParameter(
 			"parentItemId", parentItemId);
 		mockLiferayPortletActionRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentExperienceId));
+			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
 
 		return mockLiferayPortletActionRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLayoutSet(_layout.getLayoutSet());
-		themeDisplay.setLocale(LocaleUtil.US);
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPlid(_layout.getPlid());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
 	}
 
 	private Company _company;
@@ -626,15 +584,21 @@ public class CopyItemsMVCActionCommandTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
 	@Inject(filter = "mvc.command.name=/layout_content_page_editor/copy_items")
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
 	private Portal _portal;
 
+	private long _segmentsExperienceId;
+
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+	private ThemeDisplay _themeDisplay;
 
 }

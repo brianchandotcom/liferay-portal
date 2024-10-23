@@ -297,12 +297,6 @@ public class NullConvertibleEntryLocalServiceWrapper
 			start, end);
 	}
 
-	@Override
-	public int getNullConvertibleEntries(String name) {
-		return _nullConvertibleEntryLocalService.getNullConvertibleEntries(
-			name);
-	}
-
 	/**
 	 * Returns the number of null convertible entries.
 	 *

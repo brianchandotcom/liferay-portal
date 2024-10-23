@@ -247,10 +247,6 @@ public class NullConvertibleEntryLocalServiceUtil {
 		return getService().getNullConvertibleEntries(start, end);
 	}
 
-	public static int getNullConvertibleEntries(String name) {
-		return getService().getNullConvertibleEntries(name);
-	}
-
 	/**
 	 * Returns the number of null convertible entries.
 	 *

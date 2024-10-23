@@ -228,9 +228,6 @@ public interface NullConvertibleEntryLocalService
 	public List<NullConvertibleEntry> getNullConvertibleEntries(
 		int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNullConvertibleEntries(String name);
-
 	/**
 	 * Returns the number of null convertible entries.
 	 *

@@ -23,9 +23,9 @@ public class DeleteStalePWCVersionsUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		processConcurrently(
 			StringBundler.concat(
-				"select DLFileEntry.companyId, DLFileEntry.repositoryId, ",
-				"DLFileEntry.name from DLFileEntry where '",
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+				"select distinct DLFileEntry.companyId, ",
+				"DLFileEntry.repositoryId, DLFileEntry.name from DLFileEntry ",
+				"where '", DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 				"' not in (select version from DLFileVersion where ",
 				"DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)"),
 			resultSet -> new Object[] {

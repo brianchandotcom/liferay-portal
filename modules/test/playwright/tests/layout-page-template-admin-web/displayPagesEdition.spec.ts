@@ -60,424 +60,465 @@ async function addDefaultAnimalDisplayPageTemplate(
 	);
 }
 
-test('Allow mapping repeatable fields collection provider', async ({
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
-
-	// Create DPT for Animal
-
-	await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentSubtype: 'Animal',
-		contentType: 'Web Content Article',
-		name: displayPageTemplateName,
-	});
-
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	// Add collection and image fragment
-
-	await pageEditorPage.addFragment('Content Display', 'Collection Display');
-
-	await page.locator('.lfr-layout-structure-item-collection').click();
-
-	await pageEditorPage.chooseCollectionDisplayOption(
-		'Repeatable Fields Collection Providers',
-		'Species'
-	);
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await pageEditorPage.addFragment(
-		'Basic Components',
-		'Image',
-		page.locator('.page-editor__collection-item.empty').last()
-	);
-
-	// Map editable to image field
-
-	const imageFragmentId = await pageEditorPage.getFragmentId('Image');
-
-	await pageEditorPage.selectEditable(imageFragmentId, 'image-square');
-
-	await page.getByLabel('Source Selection').selectOption('Mapping');
-
-	await page.getByLabel('Field').selectOption('Species Image');
-
-	await pageEditorPage.waitForChangesSaved();
-
-	// Change preview with item
-
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {
-			name: 'Select Other Item',
-		}),
-		trigger: page.getByLabel('Preview With'),
-	});
-
-	const folderCard = page
-		.frameLocator('iframe[title="Select"]')
-		.getByRole('link', {name: 'Animals'});
-
-	const articleCard = page
-		.frameLocator('iframe[title="Select"]')
-		.getByText('Animal 01', {exact: false});
-
-	await clickAndExpectToBeVisible({target: articleCard, trigger: folderCard});
-
-	await clickAndExpectToBeHidden({
-		target: page.locator('.modal-dialog'),
-		trigger: articleCard,
-	});
-
-	// Check src of images
-
-	const imageFragments = page.locator('.component-image img');
-
-	expect(await imageFragments.first().getAttribute('src')).toContain(
-		'poodle.jpg'
-	);
-	expect(await imageFragments.last().getAttribute('src')).toContain(
-		'pug.jpg'
-	);
-});
-
-test('Allow mapping editables to fields of related object', async ({
-	displayPageTemplatesPage,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
-
-	// Create DPT for Lemon
-
-	await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Lemon',
-		name: displayPageTemplateName,
-	});
-
-	// Add fragment and select editable
-
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-	const headingId = await pageEditorPage.getFragmentId('Heading');
-
-	await pageEditorPage.selectEditable(headingId, 'element-text');
-
-	// Map to field from related Lemon Basket object
-
-	await pageEditorPage.setMappingConfiguration({
-		mapping: {
-			field: 'Lemon Basket Color',
-		},
-		relationship: 'Lemon Basket',
-		source: 'relationship',
-	});
-
-	// Check editable is mapped
-
-	const editable = pageEditorPage.getEditable({
-		editableId: 'element-text',
-		fragmentId: headingId,
-	});
-
-	await expect(editable).toHaveClass(/page-editor__editable--mapped/);
-});
-
-test(
-	'Allow mapping background image',
-	{
-		tag: '@LPS-98030',
-	},
-	async ({
-		apiHelpers,
+test.describe('General', () => {
+	test('Allow mapping repeatable fields collection provider', async ({
 		displayPageTemplatesPage,
 		page,
 		pageEditorPage,
 		pageManagementSite,
 	}) => {
 
-		// Create display page template for Animal and mark as default
-
-		const displayPageTemplateName = getRandomString();
-
-		await addDefaultAnimalDisplayPageTemplate(
-			apiHelpers,
-			displayPageTemplateName,
-			pageManagementSite
-		);
-
-		// Go to edit display page template
+		// Create DPT for Animal
 
 		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
 
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentSubtype: 'Animal',
+			contentType: 'Web Content Article',
+			name: displayPageTemplateName,
+		});
+
 		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-		// Map background image
+		// Add collection and image fragment
 
-		await pageEditorPage.addFragment('Layout Elements', 'Container');
+		await pageEditorPage.addFragment(
+			'Content Display',
+			'Collection Display'
+		);
 
-		const containerId = await pageEditorPage.getFragmentId('Container');
+		await page.locator('.lfr-layout-structure-item-collection').click();
 
-		await pageEditorPage.selectFragment(containerId);
-
-		await page.getByRole('tab', {exact: true, name: 'Styles'}).click();
-
-		await page
-			.getByLabel('Image Source', {exact: true})
-			.selectOption({label: 'Mapping'});
+		await pageEditorPage.chooseCollectionDisplayOption(
+			'Repeatable Fields Collection Providers',
+			'Species'
+		);
 
 		await pageEditorPage.waitForChangesSaved();
 
-		await page
-			.getByLabel('Field', {exact: true})
-			.selectOption({label: 'Main Image'});
-
-		// Publish display page template
-
-		await displayPageTemplatesPage.publishTemplate();
-
-		// Assert background image in view mode
-
-		await page.goto(
-			`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+		await pageEditorPage.addFragment(
+			'Basic Components',
+			'Image',
+			page.locator('.page-editor__collection-item.empty').last()
 		);
 
-		await expect(
-			page.locator(
-				'.lfr-layout-structure-item-container[style*="dogs.jpg"]'
-			)
-		).toBeAttached();
-
-		// Delete default display page template
-
-		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
-
-		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
-
-		await expect(
-			page.getByText(displayPageTemplateName, {exact: true})
-		).not.toBeVisible();
-	}
-);
-
-test(
-	'Allow mapping link',
-	{
-		tag: '@LPS-98030',
-	},
-	async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
-
-		// Create display page template for Animal and mark as default
-
-		const displayPageTemplateName = getRandomString();
-
-		await addDefaultAnimalDisplayPageTemplate(
-			apiHelpers,
-			displayPageTemplateName,
-			pageManagementSite
-		);
-
-		// Go to edit display page template
-
-		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
-
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		// Map link to header fragment
-
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-		await pageEditorPage.mapEditableLink({
-			editableId: 'element-text',
-			fragmentName: 'Heading',
-			linkConfiguration: {
-				mappingConfiguration: {
-					mapping: {
-						field: 'More Info Link',
-					},
-					source: 'structure',
-				},
-				type: 'Mapped URL',
-			},
-		});
-
-		// Map link to image fragment
-
-		await pageEditorPage.addFragment('Basic Components', 'Image');
-
-		await pageEditorPage.mapEditableLink({
-			editableId: 'image-square',
-			fragmentName: 'Image',
-			linkConfiguration: {
-				mappingConfiguration: {
-					mapping: {
-						field: 'More Info Link',
-					},
-					source: 'structure',
-				},
-				type: 'Mapped URL',
-			},
-		});
-
-		// Map link to button fragment
-
-		await pageEditorPage.addFragment('Basic Components', 'Button');
-
-		await pageEditorPage.mapEditableLink({
-			editableId: 'link',
-			fragmentName: 'Button',
-			linkConfiguration: {
-				mappingConfiguration: {
-					mapping: {
-						field: 'More Info Link',
-					},
-					source: 'structure',
-				},
-				type: 'Mapped URL',
-			},
-		});
-
-		// Publish display page template
-
-		await displayPageTemplatesPage.publishTemplate();
-
-		// Assert mapped link in view mode
-
-		await page.goto(
-			`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
-		);
-
-		expect(
-			await page
-				.locator('.component-heading')
-				.getByRole('link')
-				.getAttribute('href')
-		).toContain('https://en.wikipedia.org/wiki/Dog');
-
-		expect(
-			await page
-				.locator('.component-image')
-				.getByRole('link')
-				.getAttribute('href')
-		).toContain('https://en.wikipedia.org/wiki/Dog');
-
-		expect(
-			await page
-				.locator('.component-button')
-				.getByRole('link')
-				.getAttribute('href')
-		).toContain('https://en.wikipedia.org/wiki/Dog');
-
-		// Delete default display page template
-
-		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
-
-		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
-
-		await expect(
-			page.getByText(displayPageTemplateName, {exact: true})
-		).not.toBeVisible();
-	}
-);
-
-test(
-	'Allow mapping text fields and image fields',
-	{
-		tag: ['@LPS-86550', '@LPS-182999'],
-	},
-	async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
-
-		// Create display page template for Animal and mark as default
-
-		const displayPageTemplateName = getRandomString();
-
-		await addDefaultAnimalDisplayPageTemplate(
-			apiHelpers,
-			displayPageTemplateName,
-			pageManagementSite
-		);
-
-		// Go to edit display page template
-
-		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
-
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		// Map author name
-
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-		const headingFragmentId = await pageEditorPage.getFragmentId('Heading');
-
-		await pageEditorPage.selectEditable(headingFragmentId, 'element-text');
-
-		await page.getByLabel('Field').selectOption('Author Name');
-
-		// Map author profile image
-
-		await pageEditorPage.addFragment('Basic Components', 'Image');
+		// Map editable to image field
 
 		const imageFragmentId = await pageEditorPage.getFragmentId('Image');
 
 		await pageEditorPage.selectEditable(imageFragmentId, 'image-square');
 
-		await page
-			.getByLabel('Source Selection', {exact: true})
-			.selectOption('Mapping');
+		await page.getByLabel('Source Selection').selectOption('Mapping');
+
+		await page.getByLabel('Field').selectOption('Species Image');
 
 		await pageEditorPage.waitForChangesSaved();
 
-		await page.getByLabel('Field').selectOption('Author Profile Image');
+		// Change preview with item
 
-		// Publish display page template
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Select Other Item',
+			}),
+			trigger: page.getByLabel('Preview With'),
+		});
 
-		await displayPageTemplatesPage.publishTemplate();
+		const folderCard = page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('link', {name: 'Animals'});
 
-		// Assert mapped fields in view mode
+		const articleCard = page
+			.frameLocator('iframe[title="Select"]')
+			.getByText('Animal 01', {exact: false});
 
-		await page.goto(
-			`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+		await clickAndExpectToBeVisible({
+			target: articleCard,
+			trigger: folderCard,
+		});
+
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-dialog'),
+			trigger: articleCard,
+		});
+
+		// Check src of images
+
+		const imageFragments = page.locator('.component-image img');
+
+		expect(await imageFragments.first().getAttribute('src')).toContain(
+			'poodle.jpg'
 		);
+		expect(await imageFragments.last().getAttribute('src')).toContain(
+			'pug.jpg'
+		);
+	});
 
-		await expect(
-			page.getByRole('heading', {name: 'Test Test'})
-		).toBeVisible();
+	test('Allow mapping editables to fields of related object', async ({
+		displayPageTemplatesPage,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
-		await expect(page.getByRole('img', {name: 'Test Test'})).toBeVisible();
-
-		// Delete default display page template
+		// Create DPT for Lemon
 
 		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
 
-		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
+		const displayPageTemplateName = getRandomString();
 
-		await expect(
-			page.getByText(displayPageTemplateName, {exact: true})
-		).not.toBeVisible();
-	}
-);
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Lemon',
+			name: displayPageTemplateName,
+		});
+
+		// Add fragment and select editable
+
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		const headingId = await pageEditorPage.getFragmentId('Heading');
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		// Map to field from related Lemon Basket object
+
+		await pageEditorPage.setMappingConfiguration({
+			mapping: {
+				field: 'Lemon Basket Color',
+			},
+			relationship: 'Lemon Basket',
+			source: 'relationship',
+		});
+
+		// Check editable is mapped
+
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: headingId,
+		});
+
+		await expect(editable).toHaveClass(/page-editor__editable--mapped/);
+	});
+
+	test(
+		'Allow mapping background image',
+		{
+			tag: '@LPS-98030',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create display page template for Animal and mark as default
+
+			const displayPageTemplateName = getRandomString();
+
+			await addDefaultAnimalDisplayPageTemplate(
+				apiHelpers,
+				displayPageTemplateName,
+				pageManagementSite
+			);
+
+			// Go to edit display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Map background image
+
+			await pageEditorPage.addFragment('Layout Elements', 'Container');
+
+			const containerId = await pageEditorPage.getFragmentId('Container');
+
+			await pageEditorPage.selectFragment(containerId);
+
+			await page.getByRole('tab', {exact: true, name: 'Styles'}).click();
+
+			await page
+				.getByLabel('Image Source', {exact: true})
+				.selectOption({label: 'Mapping'});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await page
+				.getByLabel('Field', {exact: true})
+				.selectOption({label: 'Main Image'});
+
+			// Publish display page template
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Assert background image in view mode
+
+			await page.goto(
+				`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+			);
+
+			await expect(
+				page.locator(
+					'.lfr-layout-structure-item-container[style*="dogs.jpg"]'
+				)
+			).toBeAttached();
+
+			// Delete default display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.deleteTemplate(
+				displayPageTemplateName
+			);
+
+			await expect(
+				page.getByText(displayPageTemplateName, {exact: true})
+			).not.toBeVisible();
+		}
+	);
+
+	test(
+		'Allow mapping link',
+		{
+			tag: '@LPS-98030',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create display page template for Animal and mark as default
+
+			const displayPageTemplateName = getRandomString();
+
+			await addDefaultAnimalDisplayPageTemplate(
+				apiHelpers,
+				displayPageTemplateName,
+				pageManagementSite
+			);
+
+			// Go to edit display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Map link to header fragment
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await pageEditorPage.mapEditableLink({
+				editableId: 'element-text',
+				fragmentName: 'Heading',
+				linkConfiguration: {
+					mappingConfiguration: {
+						mapping: {
+							field: 'More Info Link',
+						},
+						source: 'structure',
+					},
+					type: 'Mapped URL',
+				},
+			});
+
+			// Map link to image fragment
+
+			await pageEditorPage.addFragment('Basic Components', 'Image');
+
+			await pageEditorPage.mapEditableLink({
+				editableId: 'image-square',
+				fragmentName: 'Image',
+				linkConfiguration: {
+					mappingConfiguration: {
+						mapping: {
+							field: 'More Info Link',
+						},
+						source: 'structure',
+					},
+					type: 'Mapped URL',
+				},
+			});
+
+			// Map link to button fragment
+
+			await pageEditorPage.addFragment('Basic Components', 'Button');
+
+			await pageEditorPage.mapEditableLink({
+				editableId: 'link',
+				fragmentName: 'Button',
+				linkConfiguration: {
+					mappingConfiguration: {
+						mapping: {
+							field: 'More Info Link',
+						},
+						source: 'structure',
+					},
+					type: 'Mapped URL',
+				},
+			});
+
+			// Publish display page template
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Assert mapped link in view mode
+
+			await page.goto(
+				`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+			);
+
+			expect(
+				await page
+					.locator('.component-heading')
+					.getByRole('link')
+					.getAttribute('href')
+			).toContain('https://en.wikipedia.org/wiki/Dog');
+
+			expect(
+				await page
+					.locator('.component-image')
+					.getByRole('link')
+					.getAttribute('href')
+			).toContain('https://en.wikipedia.org/wiki/Dog');
+
+			expect(
+				await page
+					.locator('.component-button')
+					.getByRole('link')
+					.getAttribute('href')
+			).toContain('https://en.wikipedia.org/wiki/Dog');
+
+			// Delete default display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.deleteTemplate(
+				displayPageTemplateName
+			);
+
+			await expect(
+				page.getByText(displayPageTemplateName, {exact: true})
+			).not.toBeVisible();
+		}
+	);
+
+	test(
+		'Allow mapping text fields and image fields',
+		{
+			tag: ['@LPS-86550', '@LPS-182999'],
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create display page template for Animal and mark as default
+
+			const displayPageTemplateName = getRandomString();
+
+			await addDefaultAnimalDisplayPageTemplate(
+				apiHelpers,
+				displayPageTemplateName,
+				pageManagementSite
+			);
+
+			// Go to edit display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Map author name
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingFragmentId =
+				await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.selectEditable(
+				headingFragmentId,
+				'element-text'
+			);
+
+			await page.getByLabel('Field').selectOption('Author Name');
+
+			// Map author profile image
+
+			await pageEditorPage.addFragment('Basic Components', 'Image');
+
+			const imageFragmentId = await pageEditorPage.getFragmentId('Image');
+
+			await pageEditorPage.selectEditable(
+				imageFragmentId,
+				'image-square'
+			);
+
+			await page
+				.getByLabel('Source Selection', {exact: true})
+				.selectOption('Mapping');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await page.getByLabel('Field').selectOption('Author Profile Image');
+
+			// Publish display page template
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Assert mapped fields in view mode
+
+			await page.goto(
+				`web${pageManagementSite.friendlyUrlPath}/w/${ANIMAL_01_FRIENDLY_URL}`
+			);
+
+			await expect(
+				page.getByRole('heading', {name: 'Test Test'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('img', {name: 'Test Test'})
+			).toBeVisible();
+
+			// Delete default display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.deleteTemplate(
+				displayPageTemplateName
+			);
+
+			await expect(
+				page.getByText(displayPageTemplateName, {exact: true})
+			).not.toBeVisible();
+		}
+	);
+});

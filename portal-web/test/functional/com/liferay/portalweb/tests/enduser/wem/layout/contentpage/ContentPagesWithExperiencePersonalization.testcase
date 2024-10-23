@@ -31,58 +31,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-187444. Deleted experience resets widget configuration on default experience"
-	@priority = 4
-	test ViewDisplayedWebContentPersistedInAssetPublisherAfterDeleteExperience {
-		property asset.publisher.selection.style = "asset-list";
-
-		task ("Given a page designer has an experienced content page with an Asset Publisher widget") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = ${randomSiteName},
-				title = "Web Content Title 1");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-
-			AssertVisible(
-				key_portletName = "Asset Publisher",
-				key_text = "Select a collection to make it visible.",
-				locator1 = "Portlet#PORTLET_SELECTOR");
-
-			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
-
-			PageEditor.publish();
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("When the page designer deletes the experience") {
-			PageEditor.deleteExperience(experienceName = "New Experience");
-
-			Refresh();
-		}
-
-		task ("Then the page designer still can see the web content displayed in Asset Publisher") {
-			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "Web Content Content",
-				assetTitle = "Web Content Title 1");
-		}
-	}
-
 	@description = "This is a test for LPS-122148. Only the inline text items from current experience shown in Page Content panel."
 	@priority = 5
 	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {

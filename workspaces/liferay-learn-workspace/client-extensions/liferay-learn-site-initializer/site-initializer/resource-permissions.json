@@ -50,6 +50,15 @@
 	},
 	{
 		"actionIds": [
+			"CREATE_TOKEN"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.oauth2.provider.model.OAuth2Application",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW",
 			"VIEW_SITE_ADMINISTRATION"
 		],

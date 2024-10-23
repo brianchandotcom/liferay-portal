@@ -9,6 +9,7 @@ import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {TEXT_EDITABLE_TYPES} from '../../config/constants/textEditableTypes';
 import {
 	useGetContent,
@@ -263,7 +264,10 @@ const FragmentContent = ({
 								!hasInnerCommonStyles(fragmentEntryLink),
 							'custom-height': item.config.styles?.height,
 							'page-editor__fragment-content--portlet-topper-hidden':
-								!canConfigureWidgets,
+								!canConfigureWidgets ||
+								(Liferay.FeatureFlags['LPD-32075'] &&
+									fragmentEntryLink.fragmentEntryType ===
+										FRAGMENT_ENTRY_TYPES.widget),
 						}
 					)}
 					contentRef={elementRef}

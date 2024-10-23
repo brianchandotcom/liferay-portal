@@ -6,6 +6,7 @@
 export const FRAGMENT_ENTRY_TYPES = {
 	composition: 'composition',
 	input: 'input',
+	widget: 'widget',
 } as const;
 
 export type FragmentEntryType =

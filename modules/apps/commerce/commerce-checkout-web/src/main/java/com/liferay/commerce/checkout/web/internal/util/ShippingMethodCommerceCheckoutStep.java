@@ -200,11 +200,25 @@ public class ShippingMethodCommerceCheckoutStep
 			commerceShippingEngine.getCommerceShippingOptions(
 				commerceContext, commerceOrder, locale);
 
+		BigDecimal shippingAmount = null;
+
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
 
 			if (shippingOptionName.equals(commerceShippingOption.getKey())) {
-				return commerceShippingOption.getAmount();
+				shippingAmount = commerceShippingOption.getAmount();
+
+				if (CommerceOrderUtil.isCommerceOrderMultishipping(
+						commerceOrder)) {
+
+					return shippingAmount.multiply(
+						BigDecimal.valueOf(
+							CommerceOrderUtil.
+								getCommerceOrderDeliveryGroupCount(
+									commerceOrder)));
+				}
+
+				return shippingAmount;
 			}
 		}
 

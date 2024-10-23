@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.checkout.web.internal.util.CommerceOrderUtil;
 import com.liferay.commerce.checkout.web.internal.util.ShippingMethodCommerceCheckoutStep;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
@@ -192,6 +193,10 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		}
 
 		return commerceShippingOptions;
+	}
+
+	public boolean isCommerceOrderMultishipping() {
+		return CommerceOrderUtil.isCommerceOrderMultishipping(_commerceOrder);
 	}
 
 	public boolean isHideShippingPriceZero() throws PortalException {

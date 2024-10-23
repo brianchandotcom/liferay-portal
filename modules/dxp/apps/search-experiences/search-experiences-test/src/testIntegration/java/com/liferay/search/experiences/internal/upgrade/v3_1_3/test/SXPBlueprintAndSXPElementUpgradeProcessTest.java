@@ -108,7 +108,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
 
-		_runUpgrade();
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator,
+			"com.liferay.search.experiences.internal.upgrade.v3_1_3." +
+				"SXPBlueprintAndSXPElementUpgradeProcess");
+
+		upgradeProcess.upgrade();
+
+		_multiVMPool.clear();
 
 		_assertSXPBlueprint(
 			_getExpectedInstancesJSON(group1, group2),
@@ -206,17 +213,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		return StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
 			_createScopeGroupExternalReferenceCodeLabel(group2));
-	}
-
-	private void _runUpgrade() throws Exception {
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator,
-			"com.liferay.search.experiences.internal.upgrade.v3_1_3." +
-				"SXPBlueprintAndSXPElementUpgradeProcess");
-
-		upgradeProcess.upgrade();
-
-		_multiVMPool.clear();
 	}
 
 	@DeleteAfterTestRun

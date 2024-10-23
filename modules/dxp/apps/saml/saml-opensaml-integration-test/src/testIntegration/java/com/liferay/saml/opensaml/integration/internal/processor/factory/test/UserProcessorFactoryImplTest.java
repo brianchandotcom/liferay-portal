@@ -11,7 +11,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
@@ -39,25 +40,19 @@ public class UserProcessorFactoryImplTest {
 	public void testAllUserFieldsAreUpdatedWhenEmailIsChanged()
 		throws Exception {
 
-		_user = UserTestUtil.addUser();
+		_user = _userLocalService.createUser(0);
 
-		_user.setScreenName("john.doe");
-		_user.setEmailAddress("john.doe@example.com");
-		_user.setFirstName("John");
-		_user.setLastName("Doe");
+		_user.setCompanyId(TestPropsValues.getCompanyId());
 
-		_user = _userLocalService.updateUser(_user);
+		_assertProcess("John", "john.doe", "john.doe@example.com", "john.doe");
 
-		// Updated email contains capital letters
+		Assert.assertNotEquals(0, _user.getUserId());
+
+		// Assert handling case-insensitive email addresses during update
 
 		_assertProcess(
 			"John-changed", "Doe-changed", "JOHN.DOE@example.com",
 			"john.doe.changed");
-
-		// Updated email contains lower case letters
-
-		_assertProcess(
-			"John-changed", "Doe-changed", "john.doe@example.com", "john.doe");
 
 		// Updated email entirely changed
 
@@ -78,12 +73,19 @@ public class UserProcessorFactoryImplTest {
 		userProcessor.setValueArray("lastName", new String[] {lastName});
 		userProcessor.setValueArray("screenName", new String[] {screenName});
 
-		User user = userProcessor.process(
+		User user2 = userProcessor.process(
 			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(_user.getFirstName(), user.getFirstName());
-		Assert.assertEquals(_user.getLastName(), user.getLastName());
-		Assert.assertEquals(_user.getScreenName(), user.getScreenName());
+		user2 = _userLocalService.getUser(user2.getUserId());
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(_user.getEmailAddress()),
+			user2.getEmailAddress());
+		Assert.assertEquals(_user.getFirstName(), user2.getFirstName());
+		Assert.assertEquals(_user.getLastName(), user2.getLastName());
+		Assert.assertEquals(_user.getScreenName(), user2.getScreenName());
+
+		_user = user2;
 	}
 
 	@DeleteAfterTestRun

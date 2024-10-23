@@ -80,12 +80,6 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		String namespace = StringUtil.randomId();
 
 		if (Validator.isNotNull(portletId)) {
-			Portlet portlet = portletLocalService.getPortletById(portletId);
-
-			if (!portlet.isInstanceable()) {
-				throw new NoninstanceablePortletException(portletId);
-			}
-
 			String oldInstanceId = editableValuesJSONObject.getString(
 				"instanceId");
 

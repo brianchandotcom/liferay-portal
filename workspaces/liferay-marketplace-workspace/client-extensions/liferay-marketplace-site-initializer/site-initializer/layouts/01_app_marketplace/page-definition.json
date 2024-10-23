@@ -594,7 +594,7 @@
 																	"maxTerms": "10",
 																	"order": "count:desc",
 																	"parameterName": "Liferay Platform Offering",
-																	"vocabularyIds": "33756"
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Platform Offering$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}

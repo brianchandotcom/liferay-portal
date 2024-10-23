@@ -1,10 +1,10 @@
 /*Source Sans 3*/
 @font-face {
 	font-display: swap;
-	font-family: "Source Sans 3";
+	font-family: 'Source Sans 3';
 	font-style: normal;
 	font-weight: 400;
-	src: url("/documents/d/marketplace/sourcesans3-regular-ttf");
+	src: url('/documents/d/marketplace/sourcesans3-regular-ttf');
 }
 
 .lfr-layout-structure-item-com-liferay-portal-search-web-category-facet-portlet-categoryfacetportlet,
@@ -28,11 +28,9 @@
 	color: #004ad7 !important;
 }
 
-.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
-	.nav-link {
+.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected) .nav-link {
 	border-bottom: #004AD7 solid 3px !important;
 	color: #004ad7 !important;
-
 }
 
 .child-menu.dropdown-menu {
@@ -41,15 +39,15 @@
 }
 
 .card.main-image {
-	border-radius:10px !important;
+	border-radius: 10px !important;
 }
 
-.product-gallery .arrow.next{
+.product-gallery .arrow.next {
 	border-bottom-right-radius: 10px;
 	border-top-right-radius: 10px;
 }
 
-.product-gallery .arrow.prev{
+.product-gallery .arrow.prev {
 	border-bottom-left-radius: 10px;
 	border-top-left-radius: 10px;
 }

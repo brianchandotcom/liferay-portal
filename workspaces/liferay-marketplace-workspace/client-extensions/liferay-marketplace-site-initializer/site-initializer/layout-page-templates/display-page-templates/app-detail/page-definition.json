@@ -76,7 +76,7 @@
 													"customCSS": ".[$FRAGMENT_CLASS$] img {\n    height: 90px;\n    object-fit: contain;\n    width: 90px;\n}",
 													"fragment": {
 														"key": "image",
-														"siteKey": "Marketplace"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"imageSize": "w-100"
@@ -175,7 +175,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "Marketplace"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-paragraph-base",

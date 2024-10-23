@@ -103,7 +103,7 @@
 </#if>
 
 <div class="d-flex flex-column">
-	<div class="d-flex">
+	<div class="d-flex mb-3">
 		<span class="help-and-support-link-icon">
 			<@clay["icon"] symbol="envelope-closed" />
 		</span>

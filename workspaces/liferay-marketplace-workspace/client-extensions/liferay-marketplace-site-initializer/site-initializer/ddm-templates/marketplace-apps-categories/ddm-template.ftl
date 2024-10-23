@@ -4,9 +4,9 @@
 	}
 
 	.app-category {
-		display:block;
+		display: block;
 		flex: 1;
-		max-width:200px;
+		max-width: 200px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -16,7 +16,6 @@
 		background-color: #e6ebf5;
 		color: #1c3667;
 		padding: 4px 8px;
-
 	}
 
 	.app-container .app-product-type {
@@ -104,7 +103,7 @@
 				</#if>
 
 				<#if type?has_content && icon?has_content>
-					<div class="app-product-type border border-radius-small d-flex mb-1 mr-2 px-2 rounded-lg align-items-center">
+					<div class="align-items-center app-product-type border border-radius-small d-flex mb-1 mr-2 px-2 rounded-lg">
 						<div class="app-product-type-icon mr-1">
 							<img alt="Icon" class="mb-1" src="/documents/d/${siteName}/${icon}" />
 						</div>

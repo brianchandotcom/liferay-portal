@@ -9,6 +9,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
+import {userGroupsPageTest} from '../../fixtures/userGroupsPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
@@ -16,6 +17,7 @@ import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInst
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
 import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
+import {UserGroupsPage} from '../../pages/users-admin-web/UserGroupsPage';
 import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../utils/performLogin';
@@ -27,6 +29,7 @@ export const test = mergeTests(
 	loginTest(),
 	applicationsMenuPageTest,
 	serverAdministrationPageTest,
+	userGroupsPageTest,
 	usersAndOrganizationsPagesTest
 );
 
@@ -461,6 +464,42 @@ test('LPD-37452 verify expando field is not visible for user added to SCIM', asy
 	await expect(
 		await editUserPage.customField('scimClientId')
 	).not.toBeVisible();
+
+	await scimConfigurationPage.goTo();
+	await scimConfigurationPage.resetClientData();
+});
+
+test('LPD-37452 verify expando field is not visible for group added to SCIM', async ({
+	page,
+	userGroupsPage,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	const randomNumber = getRandomInt();
+
+	const newGroup = {
+		displayName: `Foo${randomNumber}`,
+	};
+
+	const apiHelper = new ApiHelpers(page);
+
+	await apiHelper.scim.postGroup(newGroup);
+
+	userGroupsPage = await new UserGroupsPage(page);
+
+	await userGroupsPage.goto(true);
+
+	await (
+		await userGroupsPage.userGroupsTableRowActions(newGroup.displayName)
+	).click();
+
+	await userGroupsPage.editUserGroupMenuItem.click();
+
+	await expect(await page.getByLabel('Scimclientid')).not.toBeVisible();
 
 	await scimConfigurationPage.goTo();
 	await scimConfigurationPage.resetClientData();

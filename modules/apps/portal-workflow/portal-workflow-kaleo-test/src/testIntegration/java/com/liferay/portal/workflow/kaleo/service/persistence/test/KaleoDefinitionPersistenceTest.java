@@ -120,6 +120,9 @@ public class KaleoDefinitionPersistenceTest {
 
 		newKaleoDefinition.setCtCollectionId(RandomTestUtil.nextLong());
 
+		newKaleoDefinition.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newKaleoDefinition.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoDefinition.setCompanyId(RandomTestUtil.nextLong());
@@ -157,6 +160,9 @@ public class KaleoDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoDefinition.getCtCollectionId(),
 			newKaleoDefinition.getCtCollectionId());
+		Assert.assertEquals(
+			existingKaleoDefinition.getExternalReferenceCode(),
+			newKaleoDefinition.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingKaleoDefinition.getKaleoDefinitionId(),
 			newKaleoDefinition.getKaleoDefinitionId());
@@ -209,6 +215,15 @@ public class KaleoDefinitionPersistenceTest {
 		_persistence.countByActive(RandomTestUtil.randomBoolean());
 
 		_persistence.countByActive(RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -295,10 +310,11 @@ public class KaleoDefinitionPersistenceTest {
 	protected OrderByComparator<KaleoDefinition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"KaleoDefinition", "mvccVersion", true, "ctCollectionId", true,
-			"kaleoDefinitionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "scope", true, "version", true, "active", true);
+			"externalReferenceCode", true, "kaleoDefinitionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true, "title",
+			true, "description", true, "scope", true, "version", true, "active",
+			true);
 	}
 
 	@Test
@@ -569,6 +585,17 @@ public class KaleoDefinitionPersistenceTest {
 
 	private void _assertOriginalValues(KaleoDefinition kaleoDefinition) {
 		Assert.assertEquals(
+			kaleoDefinition.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(kaleoDefinition.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+
+		Assert.assertEquals(
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				kaleoDefinition, "getColumnOriginalValue",
@@ -620,6 +647,8 @@ public class KaleoDefinitionPersistenceTest {
 		kaleoDefinition.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoDefinition.setCtCollectionId(RandomTestUtil.nextLong());
+
+		kaleoDefinition.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		kaleoDefinition.setGroupId(RandomTestUtil.nextLong());
 

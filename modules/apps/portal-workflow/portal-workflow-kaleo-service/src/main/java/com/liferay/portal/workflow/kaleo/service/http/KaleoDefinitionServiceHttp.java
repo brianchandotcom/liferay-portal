@@ -43,8 +43,9 @@ public class KaleoDefinitionServiceHttp {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition
 			addKaleoDefinition(
-				HttpPrincipal httpPrincipal, String name, String title,
-				String description, String content, String scope, int version,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				String name, String title, String description, String content,
+				String scope, int version,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -54,8 +55,8 @@ public class KaleoDefinitionServiceHttp {
 				_addKaleoDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, name, title, description, content, scope, version,
-				serviceContext);
+				methodKey, externalReferenceCode, name, title, description,
+				content, scope, version, serviceContext);
 
 			Object returnObj = null;
 
@@ -275,8 +276,9 @@ public class KaleoDefinitionServiceHttp {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition
 			updateKaleoDefinition(
-				HttpPrincipal httpPrincipal, long kaleoDefinitionId,
-				String title, String description, String content,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long kaleoDefinitionId, String title, String description,
+				String content,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -286,8 +288,8 @@ public class KaleoDefinitionServiceHttp {
 				_updateKaleoDefinitionParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, kaleoDefinitionId, title, description, content,
-				serviceContext);
+				methodKey, externalReferenceCode, kaleoDefinitionId, title,
+				description, content, serviceContext);
 
 			Object returnObj = null;
 
@@ -324,7 +326,7 @@ public class KaleoDefinitionServiceHttp {
 	private static final Class<?>[] _addKaleoDefinitionParameterTypes0 =
 		new Class[] {
 			String.class, String.class, String.class, String.class,
-			String.class, int.class,
+			String.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getKaleoDefinitionParameterTypes1 =
@@ -347,7 +349,7 @@ public class KaleoDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _updateKaleoDefinitionParameterTypes5 =
 		new Class[] {
-			long.class, String.class, String.class, String.class,
+			String.class, long.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

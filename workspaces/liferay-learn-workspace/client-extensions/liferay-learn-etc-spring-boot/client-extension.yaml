@@ -1,0 +1,16 @@
+assemble:
+    - fromTask: bootJar
+liferay-learn-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Learn Etc Spring Boot OAuth Application User Agent
+    scopes:
+        - c_course.everything
+        - c_lesson.everything
+        - c_module.everything
+    type: oAuthApplicationUserAgent
+liferay-learn-etc-spring-boot-object-action-course-duration:
+    name: Liferay Learn Etc Spring Boot Object Action Course Duration
+    oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /object/action/course-duration
+    type: objectAction

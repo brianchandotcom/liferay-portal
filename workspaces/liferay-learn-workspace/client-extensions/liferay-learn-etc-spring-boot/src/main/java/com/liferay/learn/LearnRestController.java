@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.lms;
+package com.liferay.learn;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.petra.string.StringBundler;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/object/action/course-duration")
 @RestController
-public class LMSRestController extends BaseRestController {
+public class LearnRestController extends BaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(
@@ -93,9 +93,10 @@ public class LMSRestController extends BaseRestController {
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private static final Log _log = LogFactory.getLog(LMSRestController.class);
+	private static final Log _log = LogFactory.getLog(
+		LearnRestController.class);
 
-	@Value("${liferay.lms.dxp.site.group.id}")
+	@Value("${liferay.learn.dxp.site.group.id}")
 	private long _siteGroupId;
 
 }

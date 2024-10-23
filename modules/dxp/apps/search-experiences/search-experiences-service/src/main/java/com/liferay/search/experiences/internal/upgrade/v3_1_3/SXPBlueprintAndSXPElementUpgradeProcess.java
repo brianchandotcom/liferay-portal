@@ -52,8 +52,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					_upgradeSXPElementsInSXPBlueprint(
-						preparedStatement2, resultSet);
+					_upgradeSXPBlueprint(preparedStatement2, resultSet);
 				}
 
 				preparedStatement2.executeBatch();
@@ -204,7 +203,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeSXPElementsInSXPBlueprint(
+	private void _upgradeSXPBlueprint(
 			PreparedStatement preparedStatement2, ResultSet resultSet)
 		throws SQLException {
 

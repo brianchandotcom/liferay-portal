@@ -89,8 +89,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			String externalReferenceCode =
-				sxpElementJSONObject.getString("externalReferenceCode");
+			String externalReferenceCode = sxpElementJSONObject.getString(
+				"externalReferenceCode");
 
 			if (!Objects.equals(
 					externalReferenceCode, "LIMIT_SEARCH_TO_THESE_SITES")) {
@@ -250,8 +250,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		JSONObject uiConfigurationValuesJSONObject =
-			elementInstanceJSONObject.getJSONObject(
-				"uiConfigurationValues");
+			elementInstanceJSONObject.getJSONObject("uiConfigurationValues");
 
 		JSONArray scopeGroupIdsJSONArray =
 			uiConfigurationValuesJSONObject.getJSONArray("scope_group_ids");

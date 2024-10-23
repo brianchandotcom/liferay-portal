@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author José Abelenda
  */
-@RequestMapping("/object/action/course-duration")
+@RequestMapping("/object/action/course/duration")
 @RestController
 public class LearnRestController extends BaseRestController {
 

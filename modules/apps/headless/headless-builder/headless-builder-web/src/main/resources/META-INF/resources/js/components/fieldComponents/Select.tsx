@@ -142,16 +142,21 @@ export function Select({
 			)}
 
 			<DropDown.ItemList items={options}>
-				{(item: SelectOption) => (
-					<DropDown.Item
-						key={item.value}
-						onClick={() => {
-							handleSelect(item);
-						}}
-					>
-						{item.label}
-					</DropDown.Item>
-				)}
+				{
+
+					// @ts-ignore
+
+					(item: SelectOption) => (
+						<DropDown.Item
+							key={item.value}
+							onClick={() => {
+								handleSelect(item);
+							}}
+						>
+							{item.label}
+						</DropDown.Item>
+					)
+				}
 			</DropDown.ItemList>
 		</DropDown>
 	);

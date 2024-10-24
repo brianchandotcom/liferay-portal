@@ -64,8 +64,8 @@ public class AssetAutoTaggerEntryLocalServiceImpl
 
 		if (assetTag == null) {
 			assetTag = _assetTagLocalService.addTag(
-				assetEntry.getUserId(), assetEntry.getGroupId(), assetTagName,
-				new ServiceContext());
+				null, assetEntry.getUserId(), assetEntry.getGroupId(),
+				assetTagName, new ServiceContext());
 		}
 
 		_assetTagLocalService.addAssetEntryAssetTag(

@@ -108,7 +108,7 @@ public class AssetTagLocalServiceTest {
 	@Test
 	public void testAddTag() throws PortalException {
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
 		Assert.assertEquals("tag", assetTag.getName());
@@ -117,8 +117,8 @@ public class AssetTagLocalServiceTest {
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithEmptyName() throws Exception {
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.BLANK,
-			_serviceContext);
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			StringPool.BLANK, _serviceContext);
 	}
 
 	@Test(expected = AssetTagException.class)
@@ -127,14 +127,14 @@ public class AssetTagLocalServiceTest {
 			AssetHelper.INVALID_CHARACTERS);
 
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			stringWithInvalidCharacters, _serviceContext);
 	}
 
 	@Test
 	public void testAddTagWithMultipleWords() throws PortalException {
 		AssetTag tag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag name",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag name",
 			_serviceContext);
 
 		Assert.assertEquals("tag name", tag.getName());
@@ -143,15 +143,15 @@ public class AssetTagLocalServiceTest {
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithNullName() throws Exception {
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), null,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_serviceContext);
 	}
 
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithOnlySpacesInName() throws Exception {
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.SPACE,
-			_serviceContext);
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			StringPool.SPACE, _serviceContext);
 	}
 
 	@Test
@@ -159,7 +159,7 @@ public class AssetTagLocalServiceTest {
 		throws PortalException {
 
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "-_^()!$",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "-_^()!$",
 			_serviceContext);
 	}
 
@@ -168,7 +168,7 @@ public class AssetTagLocalServiceTest {
 		int originalTagsCount = _assetTagLocalService.getAssetTagsCount();
 
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
 		Assert.assertEquals(
@@ -178,7 +178,7 @@ public class AssetTagLocalServiceTest {
 	@Test
 	public void testAddUTF8FormattedTags() throws PortalException {
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "標籤名稱",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "標籤名稱",
 			_serviceContext);
 
 		Assert.assertEquals("標籤名稱", assetTag.getName());
@@ -207,7 +207,7 @@ public class AssetTagLocalServiceTest {
 	@Test
 	public void testDeleteTag() throws Exception {
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
 			_serviceContext);
 
 		_serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
@@ -276,7 +276,7 @@ public class AssetTagLocalServiceTest {
 				new String[] {"tAg1", "TAG1"});
 
 			_assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), group.getGroupId(), "tAg1",
+				null, TestPropsValues.getUserId(), group.getGroupId(), "tAg1",
 				_serviceContext);
 
 			for (AssetTag assetTag : assetTags) {
@@ -302,13 +302,13 @@ public class AssetTagLocalServiceTest {
 
 		try {
 			AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), _group.getGroupId(), "tAg1",
+				null, TestPropsValues.getUserId(), _group.getGroupId(), "tAg1",
 				_serviceContext);
 			AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), group.getGroupId(), "tAg1",
+				null, TestPropsValues.getUserId(), group.getGroupId(), "tAg1",
 				_serviceContext);
 			AssetTag expectedAssetTag3 = _assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
+				null, TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
 				_serviceContext);
 
 			Assert.assertTrue(
@@ -408,7 +408,7 @@ public class AssetTagLocalServiceTest {
 		throws PortalException {
 
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(100), _serviceContext);
 	}
 
@@ -461,13 +461,13 @@ public class AssetTagLocalServiceTest {
 	@Test
 	public void testUpdateTagWithCaseSensitive() throws PortalException {
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
 			_serviceContext);
 
 		String tagName = "updated TAG1";
 
 		AssetTag actualAssetTag = _assetTagLocalService.updateTag(
-			TestPropsValues.getUserId(), assetTag.getTagId(), tagName,
+			null, TestPropsValues.getUserId(), assetTag.getTagId(), tagName,
 			_serviceContext);
 
 		Assert.assertEquals(tagName, actualAssetTag.getName());
@@ -492,8 +492,8 @@ public class AssetTagLocalServiceTest {
 		for (String tagName : tagNames) {
 			assetTags.add(
 				_assetTagLocalService.addTag(
-					TestPropsValues.getUserId(), _group.getGroupId(), tagName,
-					_serviceContext));
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					tagName, _serviceContext));
 		}
 
 		return assetTags;
@@ -533,7 +533,7 @@ public class AssetTagLocalServiceTest {
 
 		for (String tagName : tagNames) {
 			AssetTag assetTag = _assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), tagName,
 				_serviceContext);
 
 			Assert.assertEquals(tagName, assetTag.getName());

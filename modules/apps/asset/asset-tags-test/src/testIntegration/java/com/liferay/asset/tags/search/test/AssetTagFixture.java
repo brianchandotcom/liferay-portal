@@ -39,7 +39,7 @@ public class AssetTagFixture {
 				_group.getGroupId(), userId);
 
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			userId, _group.getGroupId(), RandomTestUtil.randomString(),
+			null, userId, _group.getGroupId(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		_assetTags.add(assetTag);

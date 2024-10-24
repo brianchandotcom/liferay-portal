@@ -106,7 +106,7 @@ public class AssetTestUtil {
 		long userId = TestPropsValues.getUserId();
 
 		return AssetTagLocalServiceUtil.addTag(
-			userId, groupId, assetTagName,
+			null, userId, groupId, assetTagName,
 			ServiceContextTestUtil.getServiceContext(groupId, userId));
 	}
 

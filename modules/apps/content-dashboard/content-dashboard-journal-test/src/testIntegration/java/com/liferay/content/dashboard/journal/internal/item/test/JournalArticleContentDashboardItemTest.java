@@ -217,7 +217,7 @@ public class JournalArticleContentDashboardItemTest {
 	@Test
 	public void testGetAssetTags() throws Exception {
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), _serviceContext);
 
 		_serviceContext.setAssetTagNames(new String[] {assetTag.getName()});

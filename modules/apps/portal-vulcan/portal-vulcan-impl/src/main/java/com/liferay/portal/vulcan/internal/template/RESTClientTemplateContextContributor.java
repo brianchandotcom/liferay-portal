@@ -8,6 +8,8 @@ package com.liferay.portal.vulcan.internal.template;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -59,6 +61,17 @@ public class RESTClientTemplateContextContributor
 		}
 
 		public Object get(String path) throws Exception {
+			try {
+				return _get(path);
+			}
+			catch (Throwable throwable) {
+				_log.error(throwable, throwable);
+
+				throw throwable;
+			}
+		}
+
+		private Object _get(String path) throws Exception {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 			ServletContext servletContext = _getServletContext();
@@ -108,6 +121,9 @@ public class RESTClientTemplateContextContributor
 
 		return _servletContext;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RESTClientTemplateContextContributor.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

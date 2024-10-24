@@ -23,7 +23,7 @@ import PageDesignOptionsSidebar from '../../plugins/page_design_options/componen
 import RulesSidebar from '../../plugins/page_rules/components/RulesSidebar';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
-import {useSetOpenShorcutModal} from '../contexts/ShortcutContext';
+import {useSetOpenShortcutModal} from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpen';
@@ -72,7 +72,7 @@ export default function Sidebar() {
 	const [resizing, setResizing] = useStateSafe(false);
 	const selectItem = useSelectItem();
 	const separatorRef = useRef();
-	const setOpenShorcutModal = useSetOpenShorcutModal();
+	const setOpenShortcutModal = useSetOpenShortcutModal();
 	const shortcutButtonTitleId = useId();
 	const sidebarContentId = useId();
 	const sidebarId = useId();
@@ -368,7 +368,7 @@ export default function Sidebar() {
 						data-tooltip-align="left"
 						displayType="unstyled"
 						id={`${sidebarId}keyboard_shortcuts`}
-						onClick={() => setOpenShorcutModal(true)}
+						onClick={() => setOpenShortcutModal(true)}
 						size="sm"
 						symbol="question-circle-full"
 					/>

@@ -28,35 +28,35 @@ export default function ShortcutModal({onCloseModal}) {
 					{Liferay.Language.get('fragments')}
 				</p>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get('duplicate-fragment')}
 					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'D']}
 				/>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get('delete-fragment')}
 					keyCombinations={['⌫']}
 				/>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get(
 						'save-composition-for-containers-and-grids'
 					)}
 					keyCombinations={[KEY_LABEL, 'S']}
 				/>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get('show-hide-fragment')}
 					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'H']}
 				/>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get('rename')}
 					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'R']}
 				/>
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
-					<KeyboardShorcut
+					<KeyboardShortcut
 						betaFeatureIndicator
 						description={Liferay.Language.get('cut')}
 						keyCombinations={[KEY_LABEL, 'X']}
@@ -64,7 +64,7 @@ export default function ShortcutModal({onCloseModal}) {
 				) : null}
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
-					<KeyboardShorcut
+					<KeyboardShortcut
 						betaFeatureIndicator
 						description={Liferay.Language.get('copy')}
 						keyCombinations={[KEY_LABEL, 'C']}
@@ -72,7 +72,7 @@ export default function ShortcutModal({onCloseModal}) {
 				) : null}
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
-					<KeyboardShorcut
+					<KeyboardShortcut
 						betaFeatureIndicator
 						description={Liferay.Language.get('paste')}
 						keyCombinations={[KEY_LABEL, 'V']}
@@ -83,14 +83,14 @@ export default function ShortcutModal({onCloseModal}) {
 					{Liferay.Language.get('selection')}
 				</p>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get('select-parent')}
 					keyCombinations={['⇧', 'Enter']}
 				/>
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<>
-						<KeyboardShorcut
+						<KeyboardShortcut
 							betaFeatureIndicator
 							description={Liferay.Language.get(
 								'range-selection'
@@ -101,7 +101,7 @@ export default function ShortcutModal({onCloseModal}) {
 				) : null}
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
-					<KeyboardShorcut
+					<KeyboardShortcut
 						betaFeatureIndicator
 						description={Liferay.Language.get(
 							'noncontinuous-selection'
@@ -114,7 +114,7 @@ export default function ShortcutModal({onCloseModal}) {
 					{Liferay.Language.get('view')}
 				</p>
 
-				<KeyboardShorcut
+				<KeyboardShortcut
 					description={Liferay.Language.get('toggle-sidebars')}
 					keyCombinations={[KEY_LABEL, '⇧', '.']}
 				/>
@@ -123,14 +123,14 @@ export default function ShortcutModal({onCloseModal}) {
 	);
 }
 
-function KeyboardShorcut({
+function KeyboardShortcut({
 	betaFeatureIndicator = false,
 	description,
 	keyCombinations,
 }) {
 	return (
 		<div className="align-items-center d-flex mb-3">
-			<div className="page-editor__shorcut-modal__shorcut text-right">
+			<div className="page-editor__shortcut-modal__shortcut text-right">
 				<kbd className="c-kbd c-kbd-light">
 					{keyCombinations.map((key, index) => (
 						<React.Fragment key={index}>
@@ -144,7 +144,7 @@ function KeyboardShorcut({
 				</kbd>
 			</div>
 
-			<p className="mb-0 ml-3 mr-2 page-editor__shorcut-modal__shorcut-description text-3 text-weight-semi-bold">
+			<p className="mb-0 ml-3 mr-2 page-editor__shortcut-modal__shortcut-description text-3 text-weight-semi-bold">
 				{description}
 			</p>
 

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
@@ -276,14 +275,9 @@ public class WorkflowTaskUserNotificationHandler
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollectionId)) {
 
-				for (User user :
-						WorkflowTaskManagerUtil.getNotifiableUsers(
-							jsonObject.getLong("workflowTaskId"))) {
-
-					if (user.getUserId() == serviceContext.getUserId()) {
-						return true;
-					}
-				}
+				return WorkflowTaskManagerUtil.isNotifiableUser(
+					serviceContext.getUserId(),
+					jsonObject.getLong("workflowTaskId"));
 			}
 		}
 		catch (PortalException portalException) {

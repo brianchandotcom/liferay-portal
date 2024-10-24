@@ -164,6 +164,15 @@ public class UserGroupServiceWrapper
 	}
 
 	@Override
+	public UserGroup getUserGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupService.getUserGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public java.util.List<UserGroup> getUserGroups(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

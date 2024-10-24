@@ -155,6 +155,14 @@ public class UserGroupServiceUtil {
 		return getService().getUserGroup(name);
 	}
 
+	public static UserGroup getUserGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getUserGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static List<UserGroup> getUserGroups(long companyId)
 		throws PortalException {
 

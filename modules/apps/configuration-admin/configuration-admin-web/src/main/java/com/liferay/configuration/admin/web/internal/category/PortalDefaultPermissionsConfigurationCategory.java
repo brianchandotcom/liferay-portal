@@ -18,7 +18,7 @@ public class PortalDefaultPermissionsConfigurationCategory
 
 	@Override
 	public String getCategoryIcon() {
-		return "document-default";
+		return "diary";
 	}
 
 	@Override

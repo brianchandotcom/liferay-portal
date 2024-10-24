@@ -283,6 +283,28 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	public void testFragmentEntryLinkNonceAttribute() throws Exception {
+		FragmentEntry fragmentEntry = _getFragmentEntry(false);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(fragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertFalse(content.contains("data-lfr-nonce"));
+	}
+
+	@Test
 	public void testJavaScriptModuleConfiguration() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(false);
 
@@ -749,7 +771,7 @@ public class FragmentEntryFragmentRendererTest {
 		return _fragmentEntryLocalService.addFragmentEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
-			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), ".component{color:blue;}",
 			"Fragment Entry HTML", "console.log('test');", cacheable, null,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);

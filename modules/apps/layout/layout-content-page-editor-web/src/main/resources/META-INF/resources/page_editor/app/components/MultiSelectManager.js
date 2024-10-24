@@ -32,7 +32,7 @@ export default function MultiSelectManager() {
 	const selectItem = useSelectItem();
 
 	keymapRef.current = {
-		rangeMuliSelect: {
+		rangeMultiSelect: {
 			action: () => {
 				activateMultiSelect(MULTI_SELECT_TYPES.range);
 			},

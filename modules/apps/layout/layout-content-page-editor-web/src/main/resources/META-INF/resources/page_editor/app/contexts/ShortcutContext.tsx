@@ -53,18 +53,18 @@ function useSetEditedNodeId() {
 	return useContext(ShortcutContext).setEditedNodeId;
 }
 
-function useOpenShorcutModal() {
+function useOpenShortcutModal() {
 	return useContext(ShortcutContext).openShortcutModal;
 }
 
-function useSetOpenShorcutModal() {
+function useSetOpenShortcutModal() {
 	return useContext(ShortcutContext).setOpenShortcutModal;
 }
 
 export {
 	ShortcutContextProvider,
 	useEditedNodeId,
-	useOpenShorcutModal,
+	useOpenShortcutModal,
 	useSetEditedNodeId,
-	useSetOpenShorcutModal,
+	useSetOpenShortcutModal,
 };

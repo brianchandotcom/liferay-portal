@@ -32,9 +32,9 @@ import {
 	useSelectMultipleItems,
 } from '../contexts/ControlsContext';
 import {
-	useOpenShorcutModal,
+	useOpenShortcutModal,
 	useSetEditedNodeId,
-	useSetOpenShorcutModal,
+	useSetOpenShortcutModal,
 } from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import {useGetWidgets} from '../contexts/WidgetsContext';
@@ -85,12 +85,12 @@ export default function ShortcutManager() {
 	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const [openSaveModal, setOpenSaveModal] = useState(false);
-	const openShortcutModal = useOpenShorcutModal();
+	const openShortcutModal = useOpenShortcutModal();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const setCopiedItemIds = useSetCopiedItemIds();
 	const setEditedNodeId = useSetEditedNodeId();
-	const setOpenShorcutModal = useSetOpenShorcutModal();
+	const setOpenShortcutModal = useSetOpenShortcutModal();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
 	const {onRedo, onUndo} = useUndoRedoActions();
@@ -346,7 +346,7 @@ export default function ShortcutManager() {
 				event.code === PERIOD_KEY_CODE,
 		},
 		openShortcutModal: {
-			action: () => setOpenShorcutModal(true),
+			action: () => setOpenShortcutModal(true),
 			canBeExecuted: (event) =>
 				!isInteractiveElement(event.target) &&
 				!isWithinIframe() &&
@@ -484,7 +484,7 @@ export default function ShortcutManager() {
 
 			{openShortcutModal && (
 				<ShortcutModal
-					onCloseModal={() => setOpenShorcutModal(false)}
+					onCloseModal={() => setOpenShortcutModal(false)}
 				/>
 			)}
 		</>

@@ -192,7 +192,7 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
-	public void testFragmentEntryLinkJavascriptVariables() throws Exception {
+	public void testFragmentEntryLinkJavaScriptVariables() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -219,9 +219,8 @@ public class FragmentEntryFragmentRendererTest {
 			content.contains(
 				"fragmentNamespace = '" + fragmentEntryLink.getNamespace()));
 
-		Assert.assertTrue(content.contains("\"buttonType\":\"primary\""));
-
 		Assert.assertTrue(content.contains("\"buttonSize\":\"nm\""));
+		Assert.assertTrue(content.contains("\"buttonType\":\"primary\""));
 	}
 
 	@Test

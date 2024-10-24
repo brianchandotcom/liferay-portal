@@ -9,7 +9,7 @@
 		"@liferay/frontend-js-state-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
-		"react": "16.12.0"
+		"react": "18.2.0"
 	},
 	"main": "js/index.ts",
 	"name": "@liferay/accessibility-menu-web",

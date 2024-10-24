@@ -12,8 +12,8 @@
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
-		"react": "16.12.0",
-		"react-dom": "16.12.0"
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
 	},
 	"main": "js/index.js",
 	"name": "product-navigation-applications-menu-web",
@@ -21,7 +21,7 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "node-scripts test"
+		"test": "USE_REACT_16=true node-scripts test"
 	},
 	"version": "2.0.70"
 }

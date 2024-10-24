@@ -16,10 +16,9 @@ import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
-import {ProductType} from '../../../../../enums/ProductType';
+import {OrderType} from '../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
-import {getSpecificationByKey} from '../../../../../utils/productUtils';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
@@ -99,11 +98,6 @@ const AppOutlet = () => {
 			routes={({placedOrder, product}) => {
 				const {isPaidApp} = getProductPriceModel(product);
 
-				const productType = getSpecificationByKey(
-					'type',
-					product
-				)?.value?.toLowerCase();
-
 				const isCompletedOrderWithVirtualItems =
 					placedOrder.workflowStatusInfo.code ===
 						ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
@@ -118,7 +112,10 @@ const AppOutlet = () => {
 					},
 				];
 
-				if (productType === ProductType.CLOUD) {
+				if (
+					placedOrder.orderTypeExternalReferenceCode ===
+					OrderType.CLOUD
+				) {
 					return [
 						...tabs,
 						{
@@ -130,15 +127,15 @@ const AppOutlet = () => {
 					];
 				}
 
-				if (productType === ProductType.DXP) {
+				if (
+					placedOrder.orderTypeExternalReferenceCode === OrderType.DXP
+				) {
 					return [
 						...tabs,
 						{
 							name: i18n.translate('download'),
 							path: 'download',
-							visible:
-								properties.featureFlags.includes('LPD-21582') &&
-								isCompletedOrderWithVirtualItems,
+							visible: isCompletedOrderWithVirtualItems,
 						},
 						{
 							name: i18n.translate('licenses'),

@@ -35,7 +35,6 @@ export function CheckboxCard({
 				'checkbox-container-disabled': disabled,
 			})}
 			htmlFor={label}
-			onClick={() => onChange(label)}
 		>
 			<ClayCheckbox
 				checked={checked}
@@ -44,7 +43,7 @@ export function CheckboxCard({
 				onChange={() => onChange(label)}
 			/>
 			<div className="mx-2 w-100">
-				<label>{label}</label>
+				<span>{label}</span>
 				<p className="checkbox-container-description">{description}</p>
 			</div>
 

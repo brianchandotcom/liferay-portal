@@ -45,8 +45,11 @@ public class NotificationQueueEntryUpgradeProcess extends UpgradeProcess {
 					"notificationQueueEntryId not in (select primKeyId from ",
 					"ResourcePermission where name = ?)"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select objectDefinitionId from ObjectEntry where " +
-					"objectEntryId = ?");
+				StringBundler.concat(
+					"select ObjectDefinition.className from ObjectDefinition ",
+					"where ObjectDefinition.objectDefinitionId = (select ",
+					"ObjectEntry.objectDefinitionId from ObjectEntry where ",
+					"objectEntryId = ?)"));
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -65,7 +68,7 @@ public class NotificationQueueEntryUpgradeProcess extends UpgradeProcess {
 						resultSet1.getLong("notificationQueueEntryId"), false,
 						true, true);
 
-					long objectDefinitionId = 0;
+					String classNameString = null;
 
 					preparedStatement2.setLong(
 						1, resultSet1.getLong("classPK"));
@@ -74,18 +77,16 @@ public class NotificationQueueEntryUpgradeProcess extends UpgradeProcess {
 							preparedStatement2.executeQuery()) {
 
 						if (resultSet2.next()) {
-							objectDefinitionId = resultSet2.getLong(
-								"objectDefinitionId");
+							classNameString = resultSet2.getString("className");
 						}
 					}
 
-					if (objectDefinitionId == 0) {
+					if (classNameString == null) {
 						continue;
 					}
 
 					ClassName className = _classNameLocalService.fetchClassName(
-						"com.liferay.object.model.ObjectDefinition#" +
-							objectDefinitionId);
+						classNameString);
 
 					if (className == null) {
 						continue;

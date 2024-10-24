@@ -31,11 +31,12 @@ public class AssetTagServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static AssetTag addTag(
-			long groupId, String name,
+			String externalReferenceCode, long groupId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().addTag(groupId, name, serviceContext);
+		return getService().addTag(
+			externalReferenceCode, groupId, name, serviceContext);
 	}
 
 	public static void deleteTag(long tagId) throws PortalException {
@@ -183,11 +184,12 @@ public class AssetTagServiceUtil {
 	}
 
 	public static AssetTag updateTag(
-			long tagId, String name,
+			String externalReferenceCode, long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().updateTag(tagId, name, serviceContext);
+		return getService().updateTag(
+			externalReferenceCode, tagId, name, serviceContext);
 	}
 
 	public static AssetTagService getService() {

@@ -28,11 +28,12 @@ public class AssetTagServiceWrapper
 
 	@Override
 	public AssetTag addTag(
-			long groupId, String name,
+			String externalReferenceCode, long groupId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _assetTagService.addTag(groupId, name, serviceContext);
+		return _assetTagService.addTag(
+			externalReferenceCode, groupId, name, serviceContext);
 	}
 
 	@Override
@@ -216,11 +217,12 @@ public class AssetTagServiceWrapper
 
 	@Override
 	public AssetTag updateTag(
-			long tagId, String name,
+			String externalReferenceCode, long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _assetTagService.updateTag(tagId, name, serviceContext);
+		return _assetTagService.updateTag(
+			externalReferenceCode, tagId, name, serviceContext);
 	}
 
 	@Override

@@ -27,7 +27,9 @@ interface ITableStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	refetch: () => void;
 }
 
-const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
+const TableStateRenderer: React.FC<
+	{children?: React.ReactNode | undefined} & ITableStateRendererProps
+> = ({
 	children,
 	empty,
 	emptyState: {contentRenderer, description = '', noResultsTitle, title},

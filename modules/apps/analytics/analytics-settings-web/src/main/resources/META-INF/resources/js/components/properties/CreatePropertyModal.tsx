@@ -20,11 +20,9 @@ interface IModalProps {
 	onSubmit: () => void;
 }
 
-const CreatePropertyModal: React.FC<IModalProps> = ({
-	observer,
-	onCancel,
-	onSubmit,
-}) => {
+const CreatePropertyModal: React.FC<
+	{children?: React.ReactNode | undefined} & IModalProps
+> = ({observer, onCancel, onSubmit}) => {
 	const [propertyName, setPropertyName] = useState('');
 	const [submitting, setSubmitting] = useState(false);
 

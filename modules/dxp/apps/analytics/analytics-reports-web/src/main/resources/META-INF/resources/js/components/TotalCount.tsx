@@ -4,7 +4,7 @@
  */
 
 import {useStateSafe} from '@liferay/frontend-js-react-web';
-import React, {ReactNode, useContext, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
@@ -49,7 +49,7 @@ function TotalCount({
 		}
 	}, [dispatch, dataProvider, setValue, validAnalyticsConnection]);
 
-	let displayValue: ReactNode = '-';
+	let displayValue: React.ReactNode = '-';
 
 	if (validAnalyticsConnection && languageTag && !publishedToday) {
 		displayValue =

@@ -8,8 +8,8 @@ import React from 'react';
 import Connect from '../../components/connect/Connect';
 import {IGenericPageProps} from './DefaultPage';
 
-const ConnectPage: React.FC<IGenericPageProps> = ({title}) => (
-	<Connect title={title} />
-);
+const ConnectPage: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericPageProps
+> = ({title}) => <Connect title={title} />;
 
 export default ConnectPage;

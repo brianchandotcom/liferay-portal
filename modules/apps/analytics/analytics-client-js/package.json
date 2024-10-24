@@ -44,7 +44,7 @@
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
 		"start": "webpack serve",
-		"test": "node-scripts test"
+		"test": "USE_REACT_16=true node-scripts test"
 	},
 	"version": "1.0.0"
 }

@@ -13,6 +13,7 @@ import {OrderBy} from '../../utils/filter';
 import {Events, useData, useDispatch} from './Context';
 import {EColumnAlign, TColumn} from './types';
 interface IContentProps {
+	children?: React.ReactNode | undefined;
 	columns: TColumn[];
 	disabled: boolean;
 	showCheckbox: boolean;

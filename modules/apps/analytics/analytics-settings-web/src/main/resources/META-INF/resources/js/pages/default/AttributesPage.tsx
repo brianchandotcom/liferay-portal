@@ -9,7 +9,9 @@ import BasePage from '../../components/BasePage';
 import Attributes from '../../components/attributes/Attributes';
 import {IGenericPageProps} from './DefaultPage';
 
-const AttributesPage: React.FC<IGenericPageProps> = ({title}) => (
+const AttributesPage: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericPageProps
+> = ({title}) => (
 	<BasePage
 		description={Liferay.Language.get('attributes-step-description')}
 		title={title}

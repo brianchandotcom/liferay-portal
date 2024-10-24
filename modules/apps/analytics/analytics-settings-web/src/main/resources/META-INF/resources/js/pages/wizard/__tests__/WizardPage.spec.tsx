@@ -34,9 +34,9 @@ const responseAttributesMock = {
 	product: 0,
 };
 
-const WrappedComponent: React.FC<React.HTMLAttributes<HTMLElement>> = ({
-	children,
-}) => {
+const WrappedComponent: React.FC<
+	{children?: React.ReactNode | undefined} & React.HTMLAttributes<HTMLElement>
+> = ({children}) => {
 	return (
 		<AppContextProvider
 			connected={false}

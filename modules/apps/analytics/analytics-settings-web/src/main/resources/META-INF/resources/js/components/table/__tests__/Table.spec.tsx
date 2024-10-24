@@ -80,7 +80,9 @@ const EMPTY_STATE = {
 	title: 'there are no items',
 };
 
-const WrappedTable: React.FC<Partial<ITableProps<TRawItem>>> = (props) => {
+const WrappedTable: React.FC<
+	{children?: React.ReactNode | undefined} & Partial<ITableProps<TRawItem>>
+> = (props) => {
 	return (
 		<Table<TRawItem>
 			columns={HEADER}

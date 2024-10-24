@@ -68,7 +68,7 @@ function KeyboardMovementContextProvider({children}: Props) {
 
 	const screenReaderAnnouncerRef = useRef<any>();
 
-	const sendMessage = useCallback((message) => {
+	const sendMessage = useCallback((message: any) => {
 		const ref = screenReaderAnnouncerRef;
 
 		if (ref.current) {

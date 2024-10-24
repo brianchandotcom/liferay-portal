@@ -14,7 +14,9 @@ import {ESteps, IGenericStepProps} from './WizardPage';
 
 interface IStepProps extends IGenericStepProps {}
 
-const Step: React.FC<IStepProps> = ({onChangeStep}) => {
+const Step: React.FC<{children?: React.ReactNode | undefined} & IStepProps> = ({
+	onChangeStep,
+}) => {
 	const dispatch = useDispatch();
 
 	return (

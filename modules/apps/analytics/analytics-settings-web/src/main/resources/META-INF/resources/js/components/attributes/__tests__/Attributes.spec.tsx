@@ -50,7 +50,9 @@ interface IComponentWithDataProps {
 	requestFn: (params: TTableRequestParams) => Promise<any>;
 }
 
-const ComponentWithData: React.FC<IComponentWithDataProps> = ({requestFn}) => {
+const ComponentWithData: React.FC<
+	{children?: React.ReactNode | undefined} & IComponentWithDataProps
+> = ({requestFn}) => {
 	const {observer} = useModal({onClose: () => {}});
 
 	return (

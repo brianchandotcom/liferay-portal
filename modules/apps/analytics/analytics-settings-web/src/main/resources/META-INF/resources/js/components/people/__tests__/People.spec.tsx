@@ -88,7 +88,9 @@ interface IComponentWithEmptyStateProps {
 	requestFn: (params: TTableRequestParams) => Promise<any>;
 }
 
-const ComponentWithData: React.FC<IComponentWithDataProps> = ({requestFn}) => {
+const ComponentWithData: React.FC<
+	{children?: React.ReactNode | undefined} & IComponentWithDataProps
+> = ({requestFn}) => {
 	const {observer} = useModal({onClose: () => {}});
 
 	const emptyState: TEmptyState = {
@@ -124,9 +126,9 @@ const ComponentWithData: React.FC<IComponentWithDataProps> = ({requestFn}) => {
 	);
 };
 
-const ComponentWithEmptyState: React.FC<IComponentWithEmptyStateProps> = ({
-	requestFn,
-}) => {
+const ComponentWithEmptyState: React.FC<
+	{children?: React.ReactNode | undefined} & IComponentWithEmptyStateProps
+> = ({requestFn}) => {
 	const {observer} = useModal({onClose: () => {}});
 
 	const emptyState: TEmptyState = {

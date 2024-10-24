@@ -22,7 +22,9 @@ interface IConnectProps {
 	title: string;
 }
 
-const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
+const Connect: React.FC<
+	{children?: React.ReactNode | undefined} & IConnectProps
+> = ({onConnect, title}) => {
 	const {
 		connected,
 		liferayAnalyticsURL,

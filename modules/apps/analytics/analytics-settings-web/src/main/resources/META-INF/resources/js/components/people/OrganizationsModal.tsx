@@ -9,13 +9,9 @@ import {fetchContactsOrganization} from '../../utils/api';
 import Modal, {ICommonModalProps} from './Modal';
 import {EPeople} from './People';
 
-const ModalOrganizations: React.FC<ICommonModalProps> = ({
-	observer,
-	onCloseModal,
-	syncAllAccounts,
-	syncAllContacts,
-	syncedIds,
-}) => (
+const ModalOrganizations: React.FC<
+	{children?: React.ReactNode | undefined} & ICommonModalProps
+> = ({observer, onCloseModal, syncAllAccounts, syncAllContacts, syncedIds}) => (
 	<Modal
 		columns={[
 			{

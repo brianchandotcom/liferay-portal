@@ -9,7 +9,9 @@ import BasePage from '../../components/BasePage';
 import Properties from '../../components/properties/Properties';
 import {IGenericPageProps} from './DefaultPage';
 
-const PropertiesPage: React.FC<IGenericPageProps> = ({title}) => (
+const PropertiesPage: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericPageProps
+> = ({title}) => (
 	<BasePage
 		description={Liferay.Language.get('property-description')}
 		title={title}

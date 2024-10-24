@@ -56,13 +56,9 @@ const columns: TColumn[] = [
 	},
 ];
 
-const Modal: React.FC<IModalProps> = ({
-	observer,
-	onCancel,
-	onSubmit,
-	requestFn,
-	title,
-}) => {
+const Modal: React.FC<
+	{children?: React.ReactNode | undefined} & IModalProps
+> = ({observer, onCancel, onSubmit, requestFn, title}) => {
 	const [items, setItems] = useState<TFormattedItems>({});
 
 	return (

@@ -8,7 +8,9 @@ import React from 'react';
 import Connect from '../../components/connect/Connect';
 import {ESteps, IGenericStepProps} from './WizardPage';
 
-const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => (
+const Step: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericStepProps
+> = ({onChangeStep}) => (
 	<Connect
 		onConnect={() => onChangeStep(ESteps.Property)}
 		title={Liferay.Language.get('connect-analytics-cloud')}

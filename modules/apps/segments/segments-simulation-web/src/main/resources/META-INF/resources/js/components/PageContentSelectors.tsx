@@ -58,7 +58,7 @@ function PageContentSelectors({
 	const firstRenderRef = useRef(true);
 
 	const simulateSegmentsEntries = useCallback(
-		(segmentsEntryId) => {
+		(segmentsEntryId: any) => {
 			const iframe = document.querySelector('iframe');
 
 			if (iframe) {
@@ -84,7 +84,7 @@ function PageContentSelectors({
 	);
 
 	const simulateSegmentsExperience = useCallback(
-		(experience) => {
+		(experience: any) => {
 			const iframe = document.querySelector('iframe');
 
 			if (iframe) {

@@ -10,7 +10,9 @@ import BasePage from '../../components/BasePage';
 import Properties from '../../components/properties/Properties';
 import {ESteps, IGenericStepProps} from './WizardPage';
 
-const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => (
+const Step: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericStepProps
+> = ({onChangeStep}) => (
 	<BasePage
 		description={Liferay.Language.get('property-description')}
 		title={Liferay.Language.get('property-assignment')}

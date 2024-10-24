@@ -200,12 +200,9 @@ interface ITableContextProps {
 	initialPagination?: TPagination;
 }
 
-const TableContext: React.FC<ITableContextProps> = ({
-	children,
-	initialFilter,
-	initialKeywords,
-	initialPagination,
-}) => {
+const TableContext: React.FC<
+	{children?: React.ReactNode | undefined} & ITableContextProps
+> = ({children, initialFilter, initialKeywords, initialPagination}) => {
 	const [state, dispatch] = useReducer<React.Reducer<TState, TAction>>(
 		reducer,
 		{

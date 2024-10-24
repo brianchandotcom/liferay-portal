@@ -82,12 +82,9 @@ const columns: TColumn[] = [
 
 // NOTE: to render properly in the tests, this Component is sligthly different from attributes/Modal.tsx
 
-const Component: React.FC<IModalProps> = ({
-	onCancel,
-	onSubmit,
-	requestFn,
-	title,
-}) => {
+const Component: React.FC<
+	{children?: React.ReactNode | undefined} & IModalProps
+> = ({onCancel, onSubmit, requestFn, title}) => {
 	const [items, setItems] = useState<TFormattedItems>({});
 
 	return (

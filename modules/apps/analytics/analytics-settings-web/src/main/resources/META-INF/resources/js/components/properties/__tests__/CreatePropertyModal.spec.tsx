@@ -23,7 +23,9 @@ interface IModalProps {
 
 // NOTE: to render properly in the tests, this Component is sligthly different from properties/CreatePropertyModal.tsx
 
-const Component: React.FC<IModalProps> = ({onCancel}) => {
+const Component: React.FC<
+	{children?: React.ReactNode | undefined} & IModalProps
+> = ({onCancel}) => {
 	const [propertyName, setPropertyName] = useState('');
 	const [submitting] = useState(false);
 

@@ -40,11 +40,9 @@ interface IChannelTabProps {
 	property: TProperty;
 }
 
-const ChannelTab: React.FC<IChannelTabProps> = ({
-	initialIds,
-	onChannelsChange,
-	property,
-}) => (
+const ChannelTab: React.FC<
+	{children?: React.ReactNode | undefined} & IChannelTabProps
+> = ({initialIds, onChannelsChange, property}) => (
 	<Tab
 		columns={columns.map(({id}) => id) as Array<keyof TRawItem>}
 		description={Liferay.Language.get('channels-tab-description')}

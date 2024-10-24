@@ -71,13 +71,9 @@ const AppContent = () => {
 	);
 };
 
-const AppContextProvider: React.FC<IAppProps> = ({
-	children,
-	connected,
-	liferayAnalyticsURL,
-	token,
-	wizardMode,
-}) => {
+const AppContextProvider: React.FC<
+	{children?: React.ReactNode | undefined} & IAppProps
+> = ({children, connected, liferayAnalyticsURL, token, wizardMode}) => {
 	const [state, dispatch] = useReducer(reducer, {
 		connected,
 		liferayAnalyticsURL,
@@ -117,7 +113,9 @@ function reducer(state: TData, action: {payload: any; type: Events}) {
 	}
 }
 
-const App: React.FC<IAppProps> = (props) => {
+const App: React.FC<{children?: React.ReactNode | undefined} & IAppProps> = (
+	props
+) => {
 	return (
 		<AppContextProvider {...props}>
 			<div className="analytics-settings-web mt-5">

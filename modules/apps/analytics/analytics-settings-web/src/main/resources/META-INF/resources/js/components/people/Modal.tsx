@@ -45,7 +45,9 @@ interface IModalProps {
 	title: string;
 }
 
-const Modal: React.FC<IModalProps> = ({
+const Modal: React.FC<
+	{children?: React.ReactNode | undefined} & IModalProps
+> = ({
 	columns,
 	emptyState,
 	name,

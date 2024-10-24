@@ -10,7 +10,9 @@ import BasePage from '../../components/BasePage';
 import People from '../../components/people/People';
 import {ESteps, IGenericStepProps} from './WizardPage';
 
-const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => (
+const Step: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericStepProps
+> = ({onChangeStep}) => (
 	<BasePage
 		description={Liferay.Language.get('sync-people-description')}
 		title={Liferay.Language.get('sync-people')}

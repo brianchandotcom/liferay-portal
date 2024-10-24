@@ -17,7 +17,9 @@ interface IPaginationBarProps {
 	disabled: boolean;
 }
 
-const PaginationBar: React.FC<IPaginationBarProps> = ({disabled}) => {
+const PaginationBar: React.FC<
+	{children?: React.ReactNode | undefined} & IPaginationBarProps
+> = ({disabled}) => {
 	const {
 		pagination: {page, pageSize, totalCount},
 	} = useData();

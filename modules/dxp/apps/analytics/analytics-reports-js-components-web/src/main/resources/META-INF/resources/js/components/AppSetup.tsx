@@ -35,6 +35,7 @@ type Data = {
 };
 
 interface IAppSetupProps {
+	children?: React.ReactNode;
 	data: Data;
 }
 

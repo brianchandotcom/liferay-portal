@@ -9,7 +9,9 @@ import BasePage from '../../components/BasePage';
 import People from '../../components/people/People';
 import {IGenericPageProps} from './DefaultPage';
 
-const PeoplePage: React.FC<IGenericPageProps> = ({title}) => (
+const PeoplePage: React.FC<
+	{children?: React.ReactNode | undefined} & IGenericPageProps
+> = ({title}) => (
 	<BasePage
 		description={Liferay.Language.get('sync-people-description')}
 		title={title}

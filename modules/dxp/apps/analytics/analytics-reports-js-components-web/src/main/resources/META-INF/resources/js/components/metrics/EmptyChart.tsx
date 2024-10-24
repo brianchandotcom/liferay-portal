@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 export interface IChartEmptyStateProps {
+	children?: React.ReactNode;
 	description: string;
 	link: {
 		title: string;

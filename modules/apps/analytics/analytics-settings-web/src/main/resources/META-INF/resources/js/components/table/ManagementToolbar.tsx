@@ -24,7 +24,9 @@ interface IManagementToolbarProps {
 	showCheckbox: boolean;
 }
 
-const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
+const ManagementToolbar: React.FC<
+	{children?: React.ReactNode | undefined} & IManagementToolbarProps
+> = ({
 	addItemTitle = Liferay.Language.get('add-item'),
 	columns,
 	disabled,

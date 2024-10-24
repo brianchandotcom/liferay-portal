@@ -11,12 +11,9 @@ interface ILoadingProps extends React.HTMLAttributes<HTMLSpanElement> {
 	inline?: boolean;
 }
 
-const Loading: React.FC<ILoadingProps> = ({
-	absolute = false,
-	className,
-	inline = false,
-	style,
-}) => {
+const Loading: React.FC<
+	{children?: React.ReactNode | undefined} & ILoadingProps
+> = ({absolute = false, className, inline = false, style}) => {
 	return (
 		<span
 			className={classNames(className, {

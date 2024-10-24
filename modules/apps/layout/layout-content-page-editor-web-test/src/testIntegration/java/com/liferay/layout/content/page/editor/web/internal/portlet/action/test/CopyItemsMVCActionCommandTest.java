@@ -16,6 +16,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.content.page.editor.web.internal.portlet.constants.LayoutContentPageEditorWebPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -26,9 +27,11 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -297,62 +300,92 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	@Test
+	public void testCopyNoninstanceablePortletFragmentEntryLink()
+		throws Exception {
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			_addFragmentStyledLayoutStructureItem(
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			_addLayoutStructureItem(LayoutDataItemTypeConstants.TYPE_ROW);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
+
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
+				rowStyledLayoutStructureItem.getItemId());
+
+		try {
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "processException",
+				new Class<?>[] {ActionRequest.class, Exception.class},
+				mockLiferayPortletActionRequest, modelListenerException);
+
+			Assert.assertEquals(jsonObject.toString(), 1, jsonObject.length());
+
+			Assert.assertEquals(
+				_language.format(
+					_portal.getSiteDefaultLocale(_group),
+					"the-layout-could-not-be-copied-because-it-contains-a-" +
+						"widget-x-that-can-only-appear-once-on-the-page",
+					"Noninstanciable Test"),
+				jsonObject.getString("error"));
+		}
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
+
+		List<LayoutStructureItem> curLayoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			curLayoutStructureItems.toString(), layoutStructureItems.size(),
+			curLayoutStructureItems.size());
+	}
+
+	@Test
 	@TestInfo("LPD-37704")
 	public void testCopyNoninstanceablePortletFragmentEntryLinkMarkedForDeletion()
 		throws Exception {
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
 			_addFragmentStyledLayoutStructureItem(
-				"com_liferay_login_web_portlet_LoginPortlet");
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
 		ContentLayoutTestUtil.markItemForDeletionFromLayout(
 			fragmentStyledLayoutStructureItem.getItemId(), _layout,
-			"com_liferay_login_web_portlet_LoginPortlet");
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
-		LayoutStructureItem rowStyledLayoutStructureItem =
-			_addLayoutStructureItem(LayoutDataItemTypeConstants.TYPE_ROW);
+		_testCopyFragmentStyledLayoutStructureItem(
+			2, fragmentStyledLayoutStructureItem);
+	}
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doTransactionalCommand",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			_getMockLiferayPortletActionRequest(
-				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
-				rowStyledLayoutStructureItem.getItemId()),
-			new MockLiferayPortletActionResponse());
-
-		List<String> copiedItemIds = (List<String>)jsonObject.get(
-			"copiedItemIds");
-
-		Assert.assertEquals(copiedItemIds.toString(), 1, copiedItemIds.size());
-
-		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
-			"layoutData");
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutDataJSONObject.toString());
-
-		FragmentStyledLayoutStructureItem
-			copiedFragmentStyledLayoutStructureItem =
-				(FragmentStyledLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(
-						copiedItemIds.get(0));
-
-		_assertCopiedFragmentEntryLink(
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				copiedFragmentStyledLayoutStructureItem.
-					getFragmentEntryLinkId()),
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()));
-
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				layoutStructure.getMainItemId());
-
-		List<String> childrenItemIds =
-			mainLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 2, childrenItemIds.size());
+	@Test
+	public void testCopyPortletFragmentEntryLink() throws Exception {
+		_testCopyFragmentStyledLayoutStructureItem(
+			3,
+			_addFragmentStyledLayoutStructureItem(
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -573,6 +606,57 @@ public class CopyItemsMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
+	private void _testCopyFragmentStyledLayoutStructureItem(
+			int count,
+			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem)
+		throws Exception {
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			_addLayoutStructureItem(LayoutDataItemTypeConstants.TYPE_ROW);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
+				rowStyledLayoutStructureItem.getItemId()),
+			new MockLiferayPortletActionResponse());
+
+		List<String> copiedItemIds = (List<String>)jsonObject.get(
+			"copiedItemIds");
+
+		Assert.assertEquals(copiedItemIds.toString(), 1, copiedItemIds.size());
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		FragmentStyledLayoutStructureItem
+			copiedFragmentStyledLayoutStructureItem =
+				(FragmentStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(
+						copiedItemIds.get(0));
+
+		_assertCopiedFragmentEntryLink(
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				copiedFragmentStyledLayoutStructureItem.
+					getFragmentEntryLinkId()),
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()));
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<String> childrenItemIds =
+			mainLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), count, childrenItemIds.size());
+	}
+
 	private Company _company;
 
 	@Inject
@@ -596,6 +680,9 @@ public class CopyItemsMVCActionCommandTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Language _language;
 
 	private Layout _layout;
 

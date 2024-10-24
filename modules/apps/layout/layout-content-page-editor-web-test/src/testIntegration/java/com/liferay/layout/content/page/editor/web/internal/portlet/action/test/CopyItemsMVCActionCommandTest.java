@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -56,8 +58,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -297,44 +299,16 @@ public class CopyItemsMVCActionCommandTest {
 	public void testCopyNoninstantiableItemsMarkedForDeletion()
 		throws Exception {
 
-		LayoutStructure layoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				_layout.getPlid(), _segmentsExperienceId);
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			_addFragmentStyledLayoutStructureItem(
+				"com_liferay_login_web_portlet_LoginPortlet");
+
+		ContentLayoutTestUtil.markItemForDeletionFromLayout(
+			fragmentStyledLayoutStructureItem.getItemId(), _layout,
+			"com_liferay_login_web_portlet_LoginPortlet");
 
 		LayoutStructureItem rowStyledLayoutStructureItem =
-			layoutStructure.addRowStyledLayoutStructureItem(
-				layoutStructure.getMainItemId(), 0, 1);
-
-		String portletId = "com_liferay_login_web_portlet_LoginPortlet";
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _layout.getGroupId(), 0, 0,
-				_segmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				JSONUtil.put(
-					"instanceId", StringPool.BLANK
-				).put(
-					"portletId", portletId
-				).toString(),
-				RandomTestUtil.randomString(), 0, null,
-				FragmentConstants.TYPE_PORTLET, _serviceContext);
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure.addFragmentStyledLayoutStructureItem(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					layoutStructure.getMainItemId(), 1);
-
-		layoutStructure.markLayoutStructureItemForDeletion(
-			Collections.singletonList(
-				fragmentStyledLayoutStructureItem.getItemId()),
-			Collections.singletonList(portletId));
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_layout.getGroupId(), _layout.getPlid(),
-				layoutStructure.toString());
+			_addLayoutStructureItem(LayoutDataItemTypeConstants.TYPE_ROW);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
@@ -352,20 +326,21 @@ public class CopyItemsMVCActionCommandTest {
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
 
-		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
 
-		fragmentStyledLayoutStructureItem =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure.getLayoutStructureItem(copiedItemIds.get(0));
-
-		Assert.assertNotEquals(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+		FragmentStyledLayoutStructureItem
+			copiedFragmentStyledLayoutStructureItem =
+				(FragmentStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(
+						copiedItemIds.get(0));
 
 		_assertCopiedFragmentEntryLink(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()),
-			fragmentEntryLink);
+				copiedFragmentStyledLayoutStructureItem.
+					getFragmentEntryLinkId()),
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()));
 
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -414,6 +389,45 @@ public class CopyItemsMVCActionCommandTest {
 		}
 
 		return fragmentEntryLink;
+	}
+
+	private FragmentStyledLayoutStructureItem
+			_addFragmentStyledLayoutStructureItem(String portletId)
+		throws Exception {
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addPortletToLayout(
+			_layout, portletId);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLink");
+
+		return (FragmentStyledLayoutStructureItem)
+			fragmentLayoutStructureItems.get(
+				GetterUtil.getLong(
+					fragmentEntryLinkJSONObject.getString(
+						"fragmentEntryLinkId")));
+	}
+
+	private LayoutStructureItem _addLayoutStructureItem(String itemType)
+		throws Exception {
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", itemType, _layout, _layoutStructureProvider,
+			_segmentsExperienceId);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
+
+		return layoutStructure.getLayoutStructureItem(
+			jsonObject.getString("addedItemId"));
 	}
 
 	private LayoutStructureItem _assertChildrenItems(
@@ -478,6 +492,9 @@ public class CopyItemsMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentEntryLink.getFragmentEntryId(),
 			copiedFragmentEntryLink.getFragmentEntryId());
+		Assert.assertNotEquals(
+			copiedFragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getFragmentEntryLinkId());
 		Assert.assertEquals(
 			fragmentEntryLink.getHtml(), copiedFragmentEntryLink.getHtml());
 		Assert.assertNotEquals(

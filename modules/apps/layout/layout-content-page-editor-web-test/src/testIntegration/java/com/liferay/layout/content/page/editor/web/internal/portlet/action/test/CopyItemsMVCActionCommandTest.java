@@ -13,7 +13,6 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -328,24 +327,18 @@ public class CopyItemsMVCActionCommandTest {
 			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 1);
 
-		JSONObject editableValueJSONObject =
-			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				StringPool.BLANK, StringPool.BLANK);
-
 		String portletId = "com_liferay_login_web_portlet_LoginPortlet";
-
-		editableValueJSONObject.put(
-			"instanceId", StringPool.BLANK
-		).put(
-			"portletId", portletId
-		);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _layout.getGroupId(),
 				0, 0, segmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				editableValueJSONObject.toString(),
+				JSONUtil.put(
+					"instanceId", StringPool.BLANK
+				).put(
+					"portletId", portletId
+				).toString(),
 				RandomTestUtil.randomString(), 0, null,
 				FragmentConstants.TYPE_PORTLET, _serviceContext);
 
@@ -563,9 +556,6 @@ public class CopyItemsMVCActionCommandTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Inject
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@DeleteAfterTestRun
 	private Group _group;

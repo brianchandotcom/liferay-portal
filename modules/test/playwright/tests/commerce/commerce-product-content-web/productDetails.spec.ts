@@ -756,3 +756,237 @@ test(`LPD-29993 Users can view and download a product's attachments`, async ({
 
 	expect(filePath).toBeTruthy();
 });
+
+test('LPD-39598 Can view SKU UOM discount is applied on product details page', async ({
+	apiHelpers,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: getRandomString(),
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+	});
+
+	const discount = await apiHelpers.headlessCommerceAdminPricing.postDiscount(
+		{
+			discountProducts: [
+				{
+					productId: product.productId,
+				},
+			],
+			percentageLevel1: 50,
+			target: 'skus',
+			usePercentage: true,
+		}
+	);
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const uom1 =
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku.id,
+			{
+				basePrice: 10,
+				incrementalOrderQuantity: 1,
+				name: {en_US: getRandomString()},
+				primary: true,
+				priority: 1,
+			}
+		);
+
+	await apiHelpers.headlessCommerceAdminPricing.postDiscountSku(discount.id, {
+		skuId: sku.id,
+		unitOfMeasureKey: uom1.key,
+	});
+
+	const uom2 =
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku.id,
+			{
+				basePrice: 20,
+				incrementalOrderQuantity: 1,
+				name: {en_US: getRandomString()},
+				priority: 2,
+			}
+		);
+
+	const discount2 =
+		await apiHelpers.headlessCommerceAdminPricing.postDiscountSku(
+			discount.id,
+			{
+				skuId: sku.id,
+				unitOfMeasureKey: uom2.key,
+			}
+		);
+
+	await commerceLayoutsPage.goToPages(true, site.name);
+
+	await commerceLayoutsPage.createWidgetPage(getRandomString());
+
+	await page.goto(`/web/${site.name}`);
+
+	await productDetailsPage.addProductDetailsWidget();
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	await page.goto(`/web/${site.name}/p/` + product.name['en_US']);
+
+	await productDetailsPage.uomCombobox.selectOption(uom1.key);
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 10.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'–50%',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 5.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await productDetailsPage.uomCombobox.selectOption(uom2.key);
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 20.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'–50%',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 10.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await performLogout(page);
+
+	await performLogin(page, 'test');
+
+	await apiHelpers.headlessCommerceAdminPricing.deleteDiscountSku(
+		discount2.discountSkuId
+	);
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	await page.goto(`/web/${site.name}/p/` + product.name['en_US']);
+
+	await productDetailsPage.uomCombobox.selectOption(uom1.key);
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 10.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'–50%',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 10.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await productDetailsPage.uomCombobox.selectOption(uom2.key);
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 20.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'–50%',
+			productDetailsPage.priceContainer
+		)
+	).not.toBeVisible();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 10.00',
+			productDetailsPage.priceContainer
+		)
+	).not.toBeVisible();
+});

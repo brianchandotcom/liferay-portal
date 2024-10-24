@@ -38,6 +38,24 @@ type TDiscountRule = {
 	typeSettings?: string;
 };
 
+type TDiscountSku = {
+	discountExternalReferenceCode?: string;
+	discountSkuId?: number;
+	productId?: number;
+	productName?: string;
+	sku?: [
+		{
+			basePrice?: number;
+			basePriceFormatted?: string;
+			basePromoPrice?: number;
+			basePromoPriceFormatted?: string;
+		},
+	];
+	skuExternalReferenceCode?: string;
+	skuId: number;
+	unitOfMeasureKey?: string;
+};
+
 class TPriceEntry {
 	skuId: number;
 	price: number;
@@ -57,6 +75,11 @@ export class HeadlessCommerceAdminPricingApiHelper {
 	async deleteDiscount(discountId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/discounts/${discountId}`
+		);
+	}
+	async deleteDiscountSku(discountSkuId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/discount-skus/${discountSkuId}`
 		);
 	}
 
@@ -159,5 +182,16 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		}
 
 		return discountRule;
+	}
+
+	async postDiscountSku(discountId: number, discountSku?: TDiscountSku) {
+		discountSku = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/discounts/${discountId}/discount-skus`,
+			{
+				data: discountSku,
+			}
+		);
+
+		return discountSku;
 	}
 }

@@ -75,6 +75,7 @@ export class ProductDetailsPage {
 		shortDescription: string
 	) => Promise<Locator>;
 	readonly skuField: (sku: string) => Promise<Locator>;
+	readonly uomCombobox: Locator;
 	readonly uomTable: (uomTableCell: string) => Promise<Locator>;
 	readonly viewButton: Locator;
 	readonly waitForEditScuccessMessage: Locator;
@@ -206,6 +207,7 @@ export class ProductDetailsPage {
 		this.skuField = async (sku: string) => {
 			return page.getByText(sku);
 		};
+		this.uomCombobox = page.getByRole('combobox', {exact: true});
 		this.uomTable = async (cellValue: string) => {
 			return page.getByRole('cell', {name: cellValue});
 		};

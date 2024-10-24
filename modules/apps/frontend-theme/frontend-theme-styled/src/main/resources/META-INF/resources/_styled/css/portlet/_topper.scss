@@ -10,6 +10,11 @@ html#{$cadmin-selector} {
 		display: flex;
 		padding: 3px 12px 3px 24px;
 		position: relative;
+
+		.lexicon-icon.lexicon-icon-drag {
+			height: 16px;
+			width: 16px;
+		}
 	}
 
 	.portlet > .cadmin.portlet-topper {
@@ -127,6 +132,7 @@ html#{$cadmin-selector} {
 		.cadmin {
 			&.portlet-topper {
 				@include media-breakpoint-down(sm) {
+					align-items: center;
 					display: box;
 					display: flex;
 				}

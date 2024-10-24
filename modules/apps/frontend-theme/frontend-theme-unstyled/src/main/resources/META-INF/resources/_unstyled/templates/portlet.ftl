@@ -21,6 +21,13 @@
 
 		<#if (portlet_configuration_icons?has_content || portlet_title_menus?has_content)>
 			<header class="cadmin portlet-topper">
+				<#if portletDisplay.isShowMoveIcon()>
+					<@clay["icon"]
+						cssClass="mr-2 mt-0"
+						symbol="drag"
+					/>
+				</#if>
+
 				<div class="portlet-title-default">
 					<span class="portlet-name-text">${portlet_display_name}</span>
 				</div>

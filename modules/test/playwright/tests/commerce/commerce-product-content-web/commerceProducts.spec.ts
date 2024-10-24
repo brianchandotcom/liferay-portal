@@ -8,16 +8,23 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	loginTest()
 );
 
@@ -440,6 +447,128 @@ test('COMMERCE-8153 Verify the visibility rules', async ({
 	expect(productPins2.items[1].mappedProduct.productId).toEqual(
 		product2.productId
 	);
+});
+
+test('LPD-33807 Mapped product add to cart', async ({
+	apiHelpers,
+	commerceAdminChannelsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'ProductDetailsSite',
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product'},
+	});
+
+	const productDiagram =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			diagram: {
+				attachmentBase64: {
+					attachment:
+						'iVBORw0KGgoAAAANSUhEUgAAAOAAAADgCAMAAAAt85rTAAAAeFBMVEX///8LY84AXM+frr4AYM0AWcwAXMwAUspRgta9zO2NquIAYc0AXs35+ffL0tqotsS5zOkRadH///sAV8u0xefv8/sueNOyye2HpN5vldjA0efu8fR5ntnn7PJjktiowuVfjNfR3ezX4OqOqtpIhdcob9CNseMYbtMc8dVDAAADbUlEQVR4nO2da3OqMBBAQwv4CGoFi4+qtbW2//8fFmE6t9mAo3cwpMw5H3e2jqcwCYlLVikAAAAAAAAAAAAAAAAAAAAAAAAAAACAP8hkOnt0xGw6ca73vAyyB2dkyfLZrd9TnoWBQ3SWP7n1S1zqnUlcGj679zsburtLl5l7vyDIlq78JonuQjAMXI2l004uYHEJp44EZw/dCD7MHAk+diX4iCCCCCKIIII+CuokNqnWUlpEq0c8K/naB7/uBHVwWI1/sxqW4dyMjvfzwkXP12Z0lV9p2J1gctiJlLe8uIbZJjWjL9u4SN6+mNF0c+WzbXeC8djKGRaCAyu6iIIgGlnhQW8ERwgi6AIEFYImCCLYLggqBE0QRLBdbMGVTElLwVSGy9XEwkr2XjAcvomvvDkVi9joVRju9kmxHtyLxWP6GvkuGASnocnpHNRfIppXybkIf3m/oi+uoaSM6tqolez/nowjELyfoM4GJlF528UieqkyQ0cy2bpzO9w2zDdmRvp6HjjiTzGKvn80Guq5HHI31m5il/OgnPGqedD6TX3ROCGEQ+sjVrE/grc8yTQJWsljBO8FggpBBBWCdwRBhSCCCsE7gqDqm2CyFoUTaldWWbyL6OQov/M/wVwWarysZeV7hwve+XZksNiXX/pjYYaPl/bP9mbyYjv3Z8Eb6CQyqf75oYherGmSH2Ens+mE4H8L6rj2Fq3HSq52oqy73KNbtBhkxAixv+D3dRQjUrXXJgaZkU+DTLKvnSbqiY9ys+09832aaJjo66n/fdDviR5BBBFEsE0QVAiaIIhguyCoEDTxX7C+CKFB0CrGmwx8L0JoKCOpJ/wQu4npZ3xeBvtcRtJUCNRgKJPLK+V1IZAjEHQueFM5ZX1FpteC1xbEVttntTW1fgveUtKsT/J92DdrpvFO8JaidHseVB7Ng02C1l82v1bg95MMgj8g+BsE7waCCAoQRLBdEERQ0DNBazXxZwVrjjwq1oNx7ZFHYS7eklW7gz9VFg1Yh1atLx1aNRTnXh0Cj7YNmwxvOXYsrE32W7BlEEQQQQQRRNAHwd4fJN77o+AngdNmGj/oxFljlL63Y+h/Q43et0Qpm9o4baoROm5qc25LlLhsSxS4bkuket9YCgAAAAAAAAAAAAAAAAAAAAAAAAAAAKAFvgGY6WrR7U77yAAAAABJRU5ErkJggg==',
+					title: {en_US: 'title'},
+				},
+			},
+			name: {en_US: 'diagram'},
+			productType: 'diagram',
+		});
+
+	await apiHelpers.headlessCommerceAdminCatalog.postPin(
+		productDiagram.productId,
+		{
+			mappedProduct: {
+				productId: product.productId,
+				quantity: 1,
+				sequence: '1',
+				sku: product.skus[0].sku,
+				skuId: product.skus[0].id,
+			},
+			sequence: '1',
+		}
+	);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Account',
+		type: 'business',
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'COMMERCE_CART_FRAGMENTS-mini-cart',
+			}),
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'COMMERCE_ACCOUNT_FRAGMENTS-account-selector',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'DiagramSite',
+		siteGroupId: site.id,
+	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
+
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+		},
+		channel.id
+	);
+
+	await page.goto(`/web/${site.name}/p/diagram`);
+
+	await productDetailsPage.mappedProductCheckbox.setChecked(true);
+
+	await productDetailsPage.mappedProductAddToCartButton.click();
+
+	await waitForAlert(
+		page,
+		'Success:The product was successfully added to the cart.'
+	);
+
+	await productDetailsPage.mappedProductAddToCartButton.click();
+
+	await waitForAlert(
+		page,
+		'Success:The product was successfully added to the cart.'
+	);
+
+	const cartItems =
+		await apiHelpers.headlessCommerceDeliveryCart.getCartItems(cart.id);
+
+	await expect(cartItems.items[0].quantity).toEqual(2);
 });
 
 test('COMMERCE-12805 As a buyer, I want to be able to verify the included and excluded option values are disabled with reason messages', async ({

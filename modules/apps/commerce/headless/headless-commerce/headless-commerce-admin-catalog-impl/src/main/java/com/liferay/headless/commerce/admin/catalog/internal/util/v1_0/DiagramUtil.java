@@ -58,7 +58,7 @@ public class DiagramUtil {
 			cpDefinitionId, GetterUtil.getLong(diagram.getImageId()),
 			GetterUtil.getString(diagram.getColor()),
 			GetterUtil.getDouble(diagram.getRadius()),
-			GetterUtil.getString(diagram.getType()));
+			GetterUtil.getString(diagram.getType(), "diagram.type.default"));
 	}
 
 	public static CSDiagramSetting addOrUpdateCSDiagramSetting(

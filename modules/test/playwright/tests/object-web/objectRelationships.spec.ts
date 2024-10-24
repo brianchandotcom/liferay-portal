@@ -733,8 +733,13 @@ test.describe('Manage object relationships through Model Builder', () => {
 			objectRelationshipName
 		);
 
-		createdEntities.objectRelationshipIds.splice(
-			createdEntities.objectRelationshipIds.indexOf(objectRelationship.id)
+		apiHelpers.data.splice(
+			apiHelpers.data.findIndex(
+				(object) =>
+					object.id === objectRelationship.id &&
+					object.type === 'objectRelationship'
+			),
+			1
 		);
 
 		await expect(

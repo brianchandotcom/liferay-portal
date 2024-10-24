@@ -25,6 +25,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -58,6 +59,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -444,9 +446,45 @@ public class CopyItemsMVCActionCommandTest {
 		return childLayoutStructureItem;
 	}
 
+	private void _assertCopiedEditableValues(
+			FragmentEntryLink copiedFragmentEntryLink,
+			FragmentEntryLink fragmentEntryLink)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+		JSONObject copiedJSONObject = _jsonFactory.createJSONObject(
+			copiedFragmentEntryLink.getEditableValues());
+
+		Assert.assertEquals(jsonObject.length(), copiedJSONObject.length());
+
+		for (String key : jsonObject.keySet()) {
+			if (Objects.equals(key, "instanceId") &&
+				Objects.equals(
+					jsonObject.get(key), fragmentEntryLink.getNamespace())) {
+
+				Assert.assertEquals(
+					copiedFragmentEntryLink.getNamespace(),
+					copiedJSONObject.get(key));
+			}
+			else if (jsonObject.get(key) instanceof JSONObject) {
+				Assert.assertTrue(
+					JSONUtil.toString(copiedJSONObject.getJSONObject(key)),
+					JSONUtil.equals(
+						jsonObject.getJSONObject(key),
+						copiedJSONObject.getJSONObject(key)));
+			}
+			else {
+				Assert.assertEquals(
+					jsonObject.get(key), copiedJSONObject.get(key));
+			}
+		}
+	}
+
 	private void _assertCopiedFragmentEntryLink(
-		FragmentEntryLink copiedFragmentEntryLink,
-		FragmentEntryLink fragmentEntryLink) {
+			FragmentEntryLink copiedFragmentEntryLink,
+			FragmentEntryLink fragmentEntryLink)
+		throws Exception {
 
 		Assert.assertEquals(
 			fragmentEntryLink.getFragmentEntryId(),
@@ -458,6 +496,11 @@ public class CopyItemsMVCActionCommandTest {
 			copiedFragmentEntryLink.getNamespace());
 		Assert.assertEquals(
 			0, copiedFragmentEntryLink.getOriginalFragmentEntryLinkId());
+		Assert.assertEquals(
+			copiedFragmentEntryLink.getType(),
+			copiedFragmentEntryLink.getType());
+
+		_assertCopiedEditableValues(copiedFragmentEntryLink, fragmentEntryLink);
 	}
 
 	private FragmentDropZoneLayoutStructureItem
@@ -559,6 +602,9 @@ public class CopyItemsMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
 

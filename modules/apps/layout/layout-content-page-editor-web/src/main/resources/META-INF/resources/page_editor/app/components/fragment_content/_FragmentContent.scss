@@ -68,4 +68,8 @@ html#{$cadmin-selector} {
 			font-family: $cadmin-font-family-base;
 		}
 	}
+
+	.page-editor__topper.hovered.not-allowed .page-editor__fragment-content {
+		cursor: not-allowed;
+	}
 }

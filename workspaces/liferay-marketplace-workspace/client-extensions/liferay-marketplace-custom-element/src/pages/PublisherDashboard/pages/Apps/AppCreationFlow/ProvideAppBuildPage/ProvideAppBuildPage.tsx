@@ -22,7 +22,6 @@ import {ProductVersionOption} from '../../../../../../enums/ProductVersionOption
 import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
 import i18n from '../../../../../../i18n';
 import {
-	createAttachmentAxios,
 	createProductSpecification,
 	createProductVirtualEntry,
 	getCategories,
@@ -33,14 +32,12 @@ import {
 	patchProductIdCategory,
 	updateProductSpecification,
 } from '../../../../../../utils/api';
-import {submitBase64EncodedFile} from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
-import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../../enums/Product';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -64,7 +61,6 @@ export function ProvideAppBuildPage({
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [isProcessing, setProcessing] = useState(false);
-	const {properties} = useMarketplaceContext();
 
 	const [
 		{
@@ -245,74 +241,71 @@ export function ProvideAppBuildPage({
 	};
 
 	const submitAppBuildPackages = async () => {
-		if (properties.featureFlags?.includes('LPD-21582')) {
-			const items = [];
-			const liferayVersionSpecifications = [];
+		const items = [];
+		const liferayVersionSpecifications = [];
 
-			const dataProductSpecifications = await getProductSpecifications({
-				appProductId,
-			});
+		const dataProductSpecifications = await getProductSpecifications({
+			appProductId,
+		});
 
-			const filteredProductSpecifications =
-				dataProductSpecifications.filter(
-					(specification) =>
-						specification.specificationKey !== 'liferay-version'
-				);
+		const filteredProductSpecifications = dataProductSpecifications.filter(
+			(specification) =>
+				specification.specificationKey !== 'liferay-version'
+		);
 
-			for (const versionKey in buildAppPackages) {
-				const appPackagesByVersion = buildAppPackages[versionKey];
+		for (const versionKey in buildAppPackages) {
+			const appPackagesByVersion = buildAppPackages[versionKey];
 
-				for (const appPackage of appPackagesByVersion) {
-					items.push({
-						attachment: base64ToText(
-							(await fileToBase64(appPackage.file)) as string
-						),
-						fileName: appPackage.fileName,
-						id: appPackage.id,
-						version: versionKey,
-					});
-					liferayVersionSpecifications.push({
-						specificationKey: 'liferay-version',
-						value: {
-							en_US: versionKey,
-						},
-					});
-				}
+			for (const appPackage of appPackagesByVersion) {
+				items.push({
+					attachment: base64ToText(
+						(await fileToBase64(appPackage.file)) as string
+					),
+					fileName: appPackage.fileName,
+					id: appPackage.id,
+					version: versionKey,
+				});
+				liferayVersionSpecifications.push({
+					specificationKey: 'liferay-version',
+					value: {
+						en_US: versionKey,
+					},
+				});
+			}
+		}
+
+		await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+			appERC,
+			{
+				productSpecifications: [
+					...filteredProductSpecifications,
+					...liferayVersionSpecifications,
+				],
+				productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+			}
+		);
+
+		for (const item of items) {
+			const {attachment, fileName, id, version} = item;
+
+			if (!attachment) {
+				continue;
 			}
 
-			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
-				appERC,
-				{
-					productSpecifications: [
-						...filteredProductSpecifications,
-						...liferayVersionSpecifications,
-					],
-					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
-				}
+			const formData = new FormData();
+			const blob = new Blob([attachment]);
+
+			formData.append('file', blob, fileName);
+			formData.append(
+				'productVirtualSettingsFileEntry',
+				JSON.stringify({attachment, version})
 			);
 
-			for (const item of items) {
-				const {attachment, fileName, id, version} = item;
-
-				if (!attachment) {
-					continue;
-				}
-
-				const formData = new FormData();
-				const blob = new Blob([attachment]);
-
-				formData.append('file', blob, fileName);
-				formData.append(
-					'productVirtualSettingsFileEntry',
-					JSON.stringify({attachment, version})
-				);
-
-				await createProductVirtualEntry({
-					body: formData,
-					callback: (progress) => {
-						buildAppPackages[version] = buildAppPackages[
-							version
-						].map((file) =>
+			await createProductVirtualEntry({
+				body: formData,
+				callback: (progress) => {
+					buildAppPackages[version] = buildAppPackages[version].map(
+						(file) =>
 							file.id === id
 								? {
 										...file,
@@ -320,85 +313,17 @@ export function ProvideAppBuildPage({
 										uploaded: progress === 100,
 									}
 								: file
-						);
+					);
 
-						dispatch({
-							payload: buildAppPackages,
-							type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-						});
-					},
-					virtualSettingId,
-				});
-			}
+					dispatch({
+						payload: buildAppPackages,
+						type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+					});
+				},
+				virtualSettingId,
+			});
 
 			return;
-		}
-
-		for (const versionKey in buildAppPackages) {
-			const appPackagesByVersion = buildAppPackages[versionKey];
-
-			try {
-				for (const appPackage of appPackagesByVersion) {
-					if (appPackage.uploaded) {
-
-						// eslint-disable-next-line no-console
-						console.info('File already uploaded', appPackage);
-
-						continue;
-					}
-					await submitBase64EncodedFile({
-						appERC,
-						callback: (progress) => {
-							buildAppPackages[versionKey] = buildAppPackages[
-								versionKey
-							].map((file) => {
-								if (file.id === appPackage.id) {
-									return {
-										...file,
-										progress,
-										uploaded: progress === 100,
-									};
-								}
-
-								return file;
-							});
-
-							dispatch({
-								payload: buildAppPackages,
-								type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-							});
-						},
-						file: appPackage.file,
-						isAppIcon: false,
-						requestFunction: createAttachmentAxios,
-						title: appPackage.fileName,
-					}).catch((error) => {
-						buildAppPackages[versionKey] = buildAppPackages[
-							versionKey
-						].map((file) => {
-							if (file.id === appPackage.id) {
-								return {
-									...file,
-									error,
-								};
-							}
-
-							return file;
-						});
-					});
-				}
-
-				dispatch({
-					payload: buildAppPackages,
-					type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-				});
-			}
-			catch (error) {
-				console.error(
-					'Failed during the submitAppBuildPackages',
-					error
-				);
-			}
 		}
 	};
 
@@ -711,44 +636,24 @@ export function ProvideAppBuildPage({
 
 					<Section
 						description={i18n.translate(
-							!properties.featureFlags?.includes('LPD-21582') &&
-								appType.value === ProductType.CLOUD
+							appType.value === ProductType.CLOUD
 								? 'select-a-local-file-to-upload'
 								: 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
 						)}
 						label={i18n.translate(
-							!properties.featureFlags?.includes('LPD-21582') &&
-								appType.value === ProductType.CLOUD
+							appType.value === ProductType.CLOUD
 								? 'upload-zip-files'
 								: 'upload-liferay-plugin-packages'
 						)}
 						required
 						tooltip={i18n.translate(
-							!properties.featureFlags?.includes('LPD-21582') &&
-								appType.value === ProductType.CLOUD
+							appType.value === ProductType.CLOUD
 								? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
 								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 						)}
 						tooltipText={i18n.translate('more-info')}
 					>
-						{!properties.featureFlags?.includes('LPD-21582') && (
-							<>
-								{appType.value === ProductType.CLOUD && (
-									<UploadAppPackagesComponent
-										isProcessing={isProcessing}
-										versionName={ProductType.CLOUD}
-									/>
-								)}
-
-								{appType.value === ProductType.DXP && (
-									<BuildAppPackageVersionsComponent />
-								)}
-							</>
-						)}
-
-						{properties.featureFlags?.includes('LPD-21582') && (
-							<BuildAppPackageVersionsComponent />
-						)}
+						<BuildAppPackageVersionsComponent />
 
 						{visibleSelectVersionModal && (
 							<PackageVersionModal

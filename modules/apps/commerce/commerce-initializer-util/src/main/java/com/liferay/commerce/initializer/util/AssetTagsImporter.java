@@ -46,7 +46,7 @@ public class AssetTagsImporter {
 
 			if (assetTag == null) {
 				assetTag = _assetTagLocalService.addTag(
-					userId, scopeGroupId, tagName, serviceContext);
+					null, userId, scopeGroupId, tagName, serviceContext);
 			}
 
 			assetTags.add(assetTag);

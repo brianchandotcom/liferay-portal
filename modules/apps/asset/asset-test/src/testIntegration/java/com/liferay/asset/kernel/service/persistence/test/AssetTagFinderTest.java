@@ -91,7 +91,7 @@ public class AssetTagFinderTest {
 	@Test
 	public void testCountByG_C_N_WithCaseSensitiveTags() throws Exception {
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
 			_serviceContext);
 
 		_testCountByG_C_N("Tag1", _portal.getClassNameId(MBMessage.class));
@@ -120,7 +120,7 @@ public class AssetTagFinderTest {
 	@Test
 	public void testFindByG_C_N_WithCaseSensitiveTags() throws Exception {
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
 			_serviceContext);
 
 		_serviceContext.setAssetTagNames(new String[] {"tag1"});

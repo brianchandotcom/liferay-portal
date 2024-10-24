@@ -506,8 +506,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		return _assetTagLocalService.addTag(
-			user.getUserId(), testGroup.getGroupId(), StringUtil.randomString(),
-			serviceContext);
+			null, user.getUserId(), testGroup.getGroupId(),
+			StringUtil.randomString(), serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

@@ -192,7 +192,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 		return _toKeyword(
 			_assetTagService.addTag(
-				siteId, keyword.getName(), new ServiceContext()));
+				null, siteId, keyword.getName(), new ServiceContext()));
 	}
 
 	@Override
@@ -200,7 +200,8 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		throws Exception {
 
 		return _toKeyword(
-			_assetTagService.updateTag(keywordId, keyword.getName(), null));
+			_assetTagService.updateTag(
+				null, keywordId, keyword.getName(), null));
 	}
 
 	@Override

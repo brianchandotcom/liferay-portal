@@ -60,11 +60,11 @@ public class AssetTagsSearchTest {
 	@Test
 	public void testExactMatchSearch() throws Exception {
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
 			_serviceContext);
 
 		BaseModelSearchResult<AssetTag> searchResult =
@@ -77,11 +77,11 @@ public class AssetTagsSearchTest {
 	@Test
 	public void testNoMatchSearch() throws Exception {
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
 			_serviceContext);
 
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag2",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag2",
 			_serviceContext);
 
 		BaseModelSearchResult<AssetTag> searchResult =
@@ -97,8 +97,8 @@ public class AssetTagsSearchTest {
 
 		for (String assetTag : searchAssetTags) {
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), _group.getGroupId(), assetTag,
-				_serviceContext);
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				assetTag, _serviceContext);
 		}
 
 		BaseModelSearchResult<AssetTag> searchResult =

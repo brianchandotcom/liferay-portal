@@ -70,6 +70,12 @@ interface APISchemaPropertyItem {
 	objectRelationshipNames: string;
 	r_apiSchemaToAPIProperties_l_apiSchemaERC: string;
 	r_apiSchemaToAPIProperties_l_apiSchemaId: number;
+	type: schemaPropertyItem;
+}
+
+interface schemaPropertyItem {
+	key: string;
+	name: string;
 }
 
 interface APISchemaUIData {

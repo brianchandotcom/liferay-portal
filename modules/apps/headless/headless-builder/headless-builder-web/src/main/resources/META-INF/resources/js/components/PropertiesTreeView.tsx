@@ -6,11 +6,15 @@
 import ClayButton from '@clayui/button';
 import {TreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {openModal, openToast, sub} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction} from 'react';
 
 import EditAPIPropertyModalContent from './modals/EditAPIPropertyModalContent';
-import {BUSINESS_TYPES_TO_SYMBOLS} from './utils/constants';
+import {
+	BUSINESS_TYPES_TO_SYMBOLS,
+	UNSUPPORTED_BUSINESS_TYPES,
+} from './utils/constants';
 
 interface PropertiesTreeViewProps {
 	schemaUIData: APISchemaUIData;
@@ -172,9 +176,30 @@ export default function PropertiesTreeView({
 
 							<span className="treeview-item-label">{name}</span>
 
+							{UNSUPPORTED_BUSINESS_TYPES.includes(
+								businessType
+							) && (
+								<ClayTooltipProvider>
+									<span
+										className="inline-item-after"
+										title={Liferay.Language.get(
+											'under-development'
+										)}
+									>
+										<ClayIcon
+											className="text-secondary"
+											symbol="warning-full"
+										/>
+									</span>
+								</ClayTooltipProvider>
+							)}
+
 							<span className="text-truncate treeview-item-path">
 								&nbsp;
-								{`(${objectDefinitionName}.${objectFieldName})`}
+								{!UNSUPPORTED_BUSINESS_TYPES.includes(
+									businessType
+								) &&
+									`(${objectDefinitionName}.${objectFieldName})`}
 							</span>
 						</TreeView.Item>
 					)}

@@ -5,10 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {
-	ObjectAdminRestClient,
-	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -22,20 +19,6 @@ export const test = mergeTests(
 	loginTest(),
 	objectPagesTest
 );
-
-const objectDefinitions: ObjectDefinition[] = [];
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	for (const objectDefinition of objectDefinitions) {
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
-	}
-});
 
 test('can create an object custom view using object relationship entry', async ({
 	apiHelpers,

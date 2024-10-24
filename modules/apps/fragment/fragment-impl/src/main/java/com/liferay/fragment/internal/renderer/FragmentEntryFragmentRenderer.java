@@ -28,6 +28,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
@@ -188,6 +189,17 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return inputTemplateNode.toJSONObject();
 	}
 
+	private String _getNonceAttribute(
+		boolean cacheable, HttpServletRequest httpServletRequest) {
+
+		if (cacheable) {
+			return StringPool.SPACE + _NONCE_PLACEHOLDER_ATTRIBUTE;
+		}
+
+		return ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+			httpServletRequest);
+	}
+
 	private boolean _isCacheable(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentRendererContext fragmentRendererContext) {
@@ -257,7 +269,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-		String configuration, String css,
+		boolean cacheable, String configuration, String css,
 		FragmentRendererContext fragmentRendererContext, String html,
 		HttpServletRequest httpServletRequest) {
 
@@ -279,9 +291,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.isIndexMode()) {
 
 				sb.append("<style");
-				sb.append(
-					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-						httpServletRequest));
+				sb.append(_getNonceAttribute(cacheable, httpServletRequest));
 				sb.append(StringPool.GREATER_THAN);
 				sb.append(css);
 				sb.append("</style>");
@@ -315,8 +325,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				if (!cssLoaded) {
 					sb.append("<style");
 					sb.append(
-						ContentSecurityPolicyNonceProviderUtil.
-							getNonceAttribute(httpServletRequest));
+						_getNonceAttribute(cacheable, httpServletRequest));
 					sb.append(StringPool.GREATER_THAN);
 					sb.append(css);
 					sb.append("</style>");
@@ -338,9 +347,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 			if (javaScriptModuleEnabled) {
 				sb.append("<script type=\"module\"");
-				sb.append(
-					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-						httpServletRequest));
+				sb.append(_getNonceAttribute(cacheable, httpServletRequest));
 				sb.append(StringPool.GREATER_THAN);
 			}
 			else {
@@ -398,12 +405,18 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		String content = StringPool.BLANK;
 
-		if (_isCacheable(fragmentEntryLink, fragmentRendererContext)) {
+		boolean cacheable = _isCacheable(
+			fragmentEntryLink, fragmentRendererContext);
+
+		if (cacheable) {
 			content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
 				fragmentEntryLink, fragmentRendererContext.getLocale());
 
 			if (Validator.isNotNull(content)) {
-				return content;
+				return StringUtil.replace(
+					content, _NONCE_PLACEHOLDER_ATTRIBUTE,
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+						httpServletRequest));
 			}
 		}
 
@@ -464,10 +477,15 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		content = _renderFragmentEntry(
-			configurationJSONObject.toString(), css, fragmentRendererContext,
-			html, httpServletRequest);
+			cacheable, configurationJSONObject.toString(), css,
+			fragmentRendererContext, html, httpServletRequest);
 
-		if (_isCacheable(fragmentEntryLink, fragmentRendererContext)) {
+		if (cacheable) {
+			content = StringUtil.replace(
+				content, _NONCE_PLACEHOLDER_ATTRIBUTE,
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					httpServletRequest));
+
 			_fragmentEntryLinkCache.putFragmentEntryLinkContent(
 				content, fragmentEntryLink,
 				fragmentRendererContext.getLocale());
@@ -492,6 +510,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		return unsyncStringWriter.toString();
 	}
+
+	private static final String _NONCE_PLACEHOLDER_ATTRIBUTE = "data-lfr-nonce";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryFragmentRenderer.class);

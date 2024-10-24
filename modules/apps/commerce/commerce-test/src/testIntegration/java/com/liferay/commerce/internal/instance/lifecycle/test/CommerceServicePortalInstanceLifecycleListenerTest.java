@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -24,9 +23,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,79 +42,47 @@ public class CommerceServicePortalInstanceLifecycleListenerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_role = _roleLocalService.fetchRole(
-			_company.getCompanyId(),
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
-
-		_resourcePermission =
-			_resourcePermissionLocalService.fetchResourcePermission(
-				_company.getCompanyId(), AccountEntry.class.getName(),
-				ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", _role.getRoleId());
-
-		_resourcePermission.removeResourceAction(
-			AccountActionKeys.MANAGE_ADDRESSES);
-
-		_resourcePermission =
-			_resourcePermissionLocalService.updateResourcePermission(
-				_resourcePermission);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_companyLocalService.deleteCompany(_company.getCompanyId());
-	}
-
 	@Test
-	public void testNewCompanyHasDefaultPermissions() throws Exception {
-		Company newCompany = CompanyTestUtil.addCompany();
+	public void testDefaultRolePermissionsDoNotRevert() throws Exception {
+		_company = CompanyTestUtil.addCompany();
 
 		try {
 			_role = _roleLocalService.fetchRole(
-				newCompany.getCompanyId(),
+				_company.getCompanyId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+			Assert.assertNotNull(_role);
 
 			_resourcePermission =
 				_resourcePermissionLocalService.fetchResourcePermission(
-					newCompany.getCompanyId(), AccountEntry.class.getName(),
+					_company.getCompanyId(), AccountEntry.class.getName(),
 					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 					_role.getRoleId());
 
-			Assert.assertTrue(
+			_resourcePermission.removeResourceAction(
+				AccountActionKeys.MANAGE_ADDRESSES);
+
+			_resourcePermission =
+				_resourcePermissionLocalService.updateResourcePermission(
+					_resourcePermission);
+
+			_portalInstanceLifecycleListener.portalInstanceRegistered(_company);
+
+			_resourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					_company.getCompanyId(), AccountEntry.class.getName(),
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+					_role.getRoleId());
+
+			Assert.assertFalse(
 				_resourcePermission.hasActionId(
 					AccountActionKeys.MANAGE_ADDRESSES));
 		}
 		finally {
-			if (newCompany != null) {
-				_companyLocalService.deleteCompany(newCompany.getCompanyId());
+			if (_company != null) {
+				_companyLocalService.deleteCompany(_company.getCompanyId());
 			}
 		}
-	}
-
-	@Test
-	public void testRemovedDefaultRolePermissionsDoNotRevert()
-		throws Exception {
-
-		Assert.assertFalse(
-			_resourcePermissionLocalService.hasActionId(
-				_resourcePermission,
-				_resourceActionLocalService.fetchResourceAction(
-					AccountEntry.class.getName(),
-					AccountActionKeys.MANAGE_ADDRESSES)));
-
-		_portalInstanceLifecycleListener.portalInstanceRegistered(_company);
-
-		_resourcePermission =
-			_resourcePermissionLocalService.fetchResourcePermission(
-				_company.getCompanyId(), AccountEntry.class.getName(),
-				ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", _role.getRoleId());
-
-		Assert.assertFalse(
-			_resourcePermission.hasActionId(
-				AccountActionKeys.MANAGE_ADDRESSES));
 	}
 
 	private Company _company;
@@ -129,9 +94,6 @@ public class CommerceServicePortalInstanceLifecycleListenerTest {
 		filter = "component.name=com.liferay.commerce.internal.instance.lifecycle.CommerceServicePortalInstanceLifecycleListener"
 	)
 	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
-
-	@Inject
-	private ResourceActionLocalService _resourceActionLocalService;
 
 	private ResourcePermission _resourcePermission;
 

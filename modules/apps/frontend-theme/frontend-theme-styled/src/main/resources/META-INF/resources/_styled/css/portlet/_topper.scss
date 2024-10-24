@@ -181,6 +181,7 @@ html#{$cadmin-selector} {
 	border-radius: $portlet-content-border-radius;
 	border-style: solid;
 	border-width: $portlet-content-border-width;
+	transition: border-color 0.15s ease;
 
 	.portlet > & {
 		border-color: transparent;

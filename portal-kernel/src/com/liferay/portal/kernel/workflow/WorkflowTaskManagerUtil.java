@@ -303,6 +303,15 @@ public class WorkflowTaskManagerUtil {
 		return workflowTaskManager.hasAssignableUsers(workflowTaskId);
 	}
 
+	public static boolean isNotifiableUser(long userId, long workflowTaskId)
+		throws PortalException {
+
+		WorkflowTaskManager workflowTaskManager =
+			_workflowTaskManagerSnapshot.get();
+
+		return workflowTaskManager.isNotifiableUser(userId, workflowTaskId);
+	}
+
 	public static List<WorkflowTask> search(
 			long companyId, long userId, String assetTitle, String[] taskNames,
 			String[] assetTypes, Long[] assetPrimaryKeys,

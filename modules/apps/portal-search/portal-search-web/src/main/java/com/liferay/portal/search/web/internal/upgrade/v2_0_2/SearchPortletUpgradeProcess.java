@@ -28,22 +28,16 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_deleteDateFacetPortletData();
-	}
-
-	private void _deleteDateFacetPortletData() throws Exception {
 		runSQL(
-			"delete from Portlet where portletId = '" +
-				_DATE_FACET_PORTLET_KEY + "'");
+			"delete from Portlet where portletId = '" + _PORTLET_ID + "'");
 		runSQL(
 			"delete from PortletPreferences where portletId like '" +
-				_DATE_FACET_PORTLET_KEY + "%'");
+				_PORTLET_ID + "%'");
 		runSQL(
-			"delete from ResourceAction where name = '" +
-				_DATE_FACET_PORTLET_KEY + "'");
+			"delete from ResourceAction where name = '" + _PORTLET_ID + "'");
 		runSQL(
 			"delete from ResourcePermission where name = '" +
-				_DATE_FACET_PORTLET_KEY + "'");
+				_PORTLET_ID + "'");
 
 		_removeDateFacetPortletFromLayouts();
 	}
@@ -51,11 +45,11 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 	private void _removeDateFacetPortletFromLayouts() throws Exception {
 		System.out.println(
 			"select plid, typeSettings from Layout where " +
-				getTypeSettingsCriteria(_DATE_FACET_PORTLET_KEY));
+				getTypeSettingsCriteria(_PORTLET_ID));
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select plid, typeSettings from Layout where " +
-					getTypeSettingsCriteria(_DATE_FACET_PORTLET_KEY));
+					getTypeSettingsCriteria(_PORTLET_ID));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -72,7 +66,7 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 		ArrayUtil.isNotEmptyForEach(
 			portletIds,
 			portletId -> {
-				if (!portletId.startsWith(_DATE_FACET_PORTLET_KEY)) {
+				if (!portletId.startsWith(_PORTLET_ID)) {
 					updatedPortletIds.add(portletId);
 				}
 			});
@@ -120,7 +114,7 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 		return typeSettingsUnicodeProperties.toString();
 	}
 
-	private static final String _DATE_FACET_PORTLET_KEY =
+	private static final String _PORTLET_ID =
 		"com_liferay_portal_search_web_date_facet_portlet_DateFacetPortlet";
 
 }

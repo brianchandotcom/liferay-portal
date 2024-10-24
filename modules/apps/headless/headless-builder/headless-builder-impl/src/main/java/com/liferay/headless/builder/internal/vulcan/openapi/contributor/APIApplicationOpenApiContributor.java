@@ -137,7 +137,37 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 				continue;
 			}
 
-			paths.put(_formatPath(endpoint), _toOpenAPIPathItem(endpoint));
+			paths.compute(
+				_formatPath(endpoint),
+				(key, pathItem) -> {
+					PathItem openAPIPathItem = _toOpenAPIPathItem(endpoint);
+
+					if (pathItem == null) {
+						return openAPIPathItem;
+					}
+
+					if (openAPIPathItem.getDelete() != null) {
+						pathItem.setDelete(openAPIPathItem.getDelete());
+					}
+
+					if (openAPIPathItem.getGet() != null) {
+						pathItem.setGet(openAPIPathItem.getGet());
+					}
+
+					if (openAPIPathItem.getPatch() != null) {
+						pathItem.setPatch(openAPIPathItem.getPatch());
+					}
+
+					if (openAPIPathItem.getPost() != null) {
+						pathItem.setPost(openAPIPathItem.getPost());
+					}
+
+					if (openAPIPathItem.getPut() != null) {
+						pathItem.setPut(openAPIPathItem.getPut());
+					}
+
+					return pathItem;
+				});
 
 			APIApplication.Schema requestSchema = endpoint.getRequestSchema();
 

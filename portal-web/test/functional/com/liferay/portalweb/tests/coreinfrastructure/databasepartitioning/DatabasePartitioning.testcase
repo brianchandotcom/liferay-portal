@@ -590,6 +590,8 @@ definition {
 
 				import java.util.concurrent.atomic.AtomicInteger;
 
+				sleep(60000);
+
 				AtomicInteger total = new AtomicInteger();
 
 				DBPartitionUtil.forEachCompanyId({companyId -> total.incrementAndGet()});
@@ -658,6 +660,8 @@ definition {
 				import com.liferay.portal.kernel.instance.PortalInstancePool;
 
 				import java.util.List;
+
+				sleep(60000);
 
 				List <Long> companyIds = PortalInstancePool.getCompanyIds();
 

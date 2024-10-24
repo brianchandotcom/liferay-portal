@@ -345,9 +345,6 @@ public class FeatureFlagsBagProviderImpl
 	private static final Map<Long, FeatureFlagsBag> _featureFlagsBags =
 		new ConcurrentHashMap<>();
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -356,6 +353,9 @@ public class FeatureFlagsBagProviderImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private ServiceTrackerMap<String, List<FeatureFlagListener>>
 		_serviceTrackerMap;

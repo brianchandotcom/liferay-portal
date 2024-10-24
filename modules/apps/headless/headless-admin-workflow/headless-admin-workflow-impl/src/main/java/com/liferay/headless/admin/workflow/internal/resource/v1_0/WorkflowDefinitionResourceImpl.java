@@ -214,6 +214,7 @@ public class WorkflowDefinitionResourceImpl
 
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.deployWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode(),
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_getTitle(workflowDefinition), workflowDefinition.getName(),
 				content.getBytes()));
@@ -228,6 +229,7 @@ public class WorkflowDefinitionResourceImpl
 
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.saveWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode(),
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_getTitle(workflowDefinition), workflowDefinition.getName(),
 				content.getBytes()));
@@ -346,6 +348,8 @@ public class WorkflowDefinitionResourceImpl
 				setDateCreated(workflowDefinition::getCreateDate);
 				setDateModified(workflowDefinition::getModifiedDate);
 				setDescription(workflowDefinition::getDescription);
+				setExternalReferenceCode(
+					workflowDefinition::getExternalReferenceCode);
 				setId(workflowDefinition::getWorkflowDefinitionId);
 				setName(workflowDefinition::getName);
 				setNodes(

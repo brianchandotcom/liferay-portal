@@ -128,6 +128,8 @@ public class KaleoWorkflowModelConverterImpl
 			kaleoDefinition.getContentAsXML());
 		defaultWorkflowDefinition.setDescription(
 			kaleoDefinition.getDescription());
+		defaultWorkflowDefinition.setExternalReferenceCode(
+			kaleoDefinition.getExternalReferenceCode());
 		defaultWorkflowDefinition.setModifiedDate(
 			kaleoDefinition.getModifiedDate());
 		defaultWorkflowDefinition.setName(kaleoDefinition.getName());

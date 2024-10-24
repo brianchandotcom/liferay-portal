@@ -77,14 +77,10 @@ export class DocumentLibraryEditFilePage {
 		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
 	}
 
-	async openFieldset(name: string) {
-		const fieldset = await this.page.getByRole('group', {
-			name,
-		});
-
-		if (await fieldset.locator('.panel-body').isHidden()) {
-			await fieldset.getByRole('button', {name}).click();
-		}
+	async openFieldset(
+		name: 'Categorization' | 'Display Page' | 'Permissions'
+	) {
+		return await openFieldset(this.page, name);
 	}
 
 	async publishFileEntry() {
@@ -203,7 +199,7 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const fieldset = await openFieldset(this.page, 'Display Page');
+		const fieldset = await this.openFieldset('Display Page');
 
 		await fieldset
 			.getByTitle('Display Page Template Type')

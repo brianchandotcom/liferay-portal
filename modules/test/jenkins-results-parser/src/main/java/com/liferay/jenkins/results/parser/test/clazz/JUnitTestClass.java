@@ -86,7 +86,7 @@ public class JUnitTestClass extends BaseTestClass {
 
 				testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
 					JenkinsResultsParserUtil.getProperties(
-						getParentTestProperties(testPropertiesBaseDir)),
+						getParentTestPropertiesFile(testPropertiesBaseDir)),
 					"testray.main.component.name");
 			}
 
@@ -147,27 +147,28 @@ public class JUnitTestClass extends BaseTestClass {
 
 			testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(
-					getParentTestProperties(testPropertiesBaseDir)),
+					getParentTestPropertiesFile(testPropertiesBaseDir)),
 				"testray.main.component.name");
 		}
 
 		_testrayMainComponentName = testrayMainComponentName;
 	}
 
-	protected File getParentTestProperties(File currentDirectory) {
+	protected File getParentTestPropertiesFile(File currentDirectory) {
 		if (currentDirectory.compareTo(_modulesBaseDirectory) == 0) {
 			return null;
 		}
 
 		File parentDirectory = currentDirectory.getParentFile();
 
-		File parentProperties = new File(parentDirectory, "test.properties");
+		File parentPropertiesFile = new File(
+			parentDirectory, "test.properties");
 
-		if (parentProperties.exists()) {
-			return parentProperties;
+		if (parentPropertiesFile.exists()) {
+			return parentPropertiesFile;
 		}
 
-		return getParentTestProperties(parentDirectory);
+		return getParentTestPropertiesFile(parentDirectory);
 	}
 
 	protected File getPortalModulesBaseDir() {

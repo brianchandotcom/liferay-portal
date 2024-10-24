@@ -643,6 +643,19 @@ public class FragmentEntryFragmentRendererTest {
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
+	private HttpServletRequest _getHttpServletRequest() throws Exception {
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			TilesUtil.DEFINITION,
+			new Definition(StringPool.BLANK, new HashMap<>()));
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
+
+		return mockHttpServletRequest;
+	}
+
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -694,20 +707,11 @@ public class FragmentEntryFragmentRendererTest {
 
 		defaultFragmentRendererContext.setLocale(_locale);
 
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			TilesUtil.DEFINITION,
-			new Definition(StringPool.BLANK, new HashMap<>()));
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		_fragmentRenderer.render(
-			defaultFragmentRendererContext, mockHttpServletRequest,
+			defaultFragmentRendererContext, _getHttpServletRequest(),
 			mockHttpServletResponse);
 
 		return mockHttpServletResponse;

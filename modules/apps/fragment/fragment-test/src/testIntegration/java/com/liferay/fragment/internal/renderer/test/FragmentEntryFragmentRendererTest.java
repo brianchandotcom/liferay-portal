@@ -79,6 +79,11 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -167,6 +172,60 @@ public class FragmentEntryFragmentRendererTest {
 			fragmentEntryLink, _locale);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
+	}
+
+	@Test
+	public void testCacheableFragmentEntryLinkNonceAttribute()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(true);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(_locale);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String nonce = RandomTestUtil.randomString();
+
+		httpServletRequest.setAttribute(
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"ContentSecurityPolicyNonceManager#NONCE",
+			nonce);
+
+		_fragmentRenderer.render(
+			defaultFragmentRendererContext, httpServletRequest,
+			mockHttpServletResponse);
+
+		Document document = Jsoup.parseBodyFragment(
+			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+				fragmentEntryLink, _locale));
+
+		Elements styleElements = document.getElementsByTag("style");
+
+		Element styleElement = styleElements.get(0);
+
+		Assert.assertEquals(nonce, styleElement.attr("nonce"));
+
+		Elements scriptElements = document.getElementsByTag("script");
+
+		Element scriptElement = scriptElements.get(0);
+
+		Assert.assertEquals(nonce, scriptElement.attr("nonce"));
 	}
 
 	@Test
@@ -378,6 +437,59 @@ public class FragmentEntryFragmentRendererTest {
 		Assert.assertNull(
 			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
 				fragmentEntryLink, _locale));
+	}
+
+	@Test
+	public void testNoncacheableFragmentEntryLinkNonceAttribute()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(false);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(_locale);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String nonce = RandomTestUtil.randomString();
+
+		httpServletRequest.setAttribute(
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"ContentSecurityPolicyNonceManager#NONCE",
+			nonce);
+
+		_fragmentRenderer.render(
+			defaultFragmentRendererContext, httpServletRequest,
+			mockHttpServletResponse);
+
+		Document document = Jsoup.parseBodyFragment(
+			mockHttpServletResponse.getContentAsString());
+
+		Elements styleElements = document.getElementsByTag("style");
+
+		Element styleElement = styleElements.get(0);
+
+		Assert.assertEquals(nonce, styleElement.attr("nonce"));
+
+		Elements scriptElements = document.getElementsByTag("script");
+
+		Element scriptElement = scriptElements.get(0);
+
+		Assert.assertEquals(nonce, scriptElement.attr("nonce"));
 	}
 
 	@Test

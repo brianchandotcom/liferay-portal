@@ -165,8 +165,8 @@ public class UpgradeSQLRecorder {
 		};
 	}
 
-	public static List<String> getFailedSQLs() {
-		return _failedSQLs;
+	public static List<String> getFailedSQLMessages() {
+		return _failedSQLMessages;
 	}
 
 	public static Map<String, Long> getSQLExecutionTimes() {
@@ -176,7 +176,7 @@ public class UpgradeSQLRecorder {
 	public static void start() {
 		_enabled = true;
 
-		_failedSQLs.clear();
+		_failedSQLMessages.clear();
 
 		_sqlExecutionTimes.clear();
 	}
@@ -202,10 +202,10 @@ public class UpgradeSQLRecorder {
 				String message = sqlException.getMessage();
 
 				if (Validator.isBlank(message)) {
-					_failedSQLs.add(sql);
+					_failedSQLMessages.add(sql);
 				}
 				else {
-					_failedSQLs.add(sql + StringPool.PIPE + message);
+					_failedSQLMessages.add(sql + StringPool.PIPE + message);
 				}
 			}
 
@@ -395,7 +395,7 @@ public class UpgradeSQLRecorder {
 			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD));
 
 	private static boolean _enabled;
-	private static final List<String> _failedSQLs =
+	private static final List<String> _failedSQLMessages =
 		new CopyOnWriteArrayList<>();
 	private static final Map<String, Long> _sqlExecutionTimes =
 		new ConcurrentHashMap<>();

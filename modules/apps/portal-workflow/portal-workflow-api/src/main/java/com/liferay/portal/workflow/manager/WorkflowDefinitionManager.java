@@ -22,16 +22,16 @@ import java.util.List;
 public interface WorkflowDefinitionManager {
 
 	public default WorkflowDefinition deployWorkflowDefinition(
-			long companyId, long userId, String title, String name,
-			byte[] bytes)
+			String externalReferenceCode, long companyId, long userId,
+			String title, String name, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public default WorkflowDefinition deployWorkflowDefinition(
-			long companyId, long userId, String title, String name,
-			String scope, byte[] bytes)
+			String externalReferenceCode, long companyId, long userId,
+			String title, String name, String scope, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -169,8 +169,8 @@ public interface WorkflowDefinitionManager {
 	 *         definition
 	 */
 	public default WorkflowDefinition saveWorkflowDefinition(
-			long companyId, long userId, String title, String name,
-			byte[] bytes)
+			String externalReferenceCode, long companyId, long userId,
+			String title, String name, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -192,8 +192,8 @@ public interface WorkflowDefinitionManager {
 	 *         definition
 	 */
 	public default WorkflowDefinition saveWorkflowDefinition(
-			long companyId, long userId, String title, String name,
-			String scope, byte[] bytes)
+			String externalReferenceCode, long companyId, long userId,
+			String title, String name, String scope, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();

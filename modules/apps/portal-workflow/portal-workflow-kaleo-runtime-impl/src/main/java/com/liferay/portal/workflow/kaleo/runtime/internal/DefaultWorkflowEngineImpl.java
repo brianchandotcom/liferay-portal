@@ -135,7 +135,8 @@ public class DefaultWorkflowEngineImpl
 
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
-			String title, String name, String scope, InputStream inputStream,
+			String externalReferenceCode, String title, String name,
+			String scope, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws WorkflowException {
 
@@ -153,7 +154,8 @@ public class DefaultWorkflowEngineImpl
 					definitionName, serviceContext);
 
 			WorkflowDefinition workflowDefinition = _workflowDeployer.deploy(
-				title, definitionName, scope, definition, serviceContext);
+				externalReferenceCode, title, definitionName, scope, definition,
+				serviceContext);
 
 			if (kaleoDefinition != null) {
 				List<WorkflowDefinitionLink> workflowDefinitionLinks =
@@ -441,16 +443,17 @@ public class DefaultWorkflowEngineImpl
 
 	@Override
 	public WorkflowDefinition saveWorkflowDefinition(
-			String title, String name, String scope, byte[] bytes,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String title, String name,
+			String scope, byte[] bytes, ServiceContext serviceContext)
 		throws WorkflowException {
 
 		try {
 			Definition definition = _getDefinition(bytes);
 
 			return _workflowDeployer.save(
-				title, _getDefinitionName(definition, name, serviceContext),
-				scope, definition, serviceContext);
+				externalReferenceCode, title,
+				_getDefinitionName(definition, name, serviceContext), scope,
+				definition, serviceContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;

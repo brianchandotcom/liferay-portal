@@ -3894,6 +3894,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 				typeSettings =
 					siteNavigationMenuItemType.getTypeSettingsFromLayout(
 						layout);
+
+				boolean useCustomName = menuItemJSONObject.getBoolean(
+					"useCustomName");
+
+				if (useCustomName) {
+					UnicodePropertiesBuilder.UnicodePropertiesWrapper
+						unicodePropertiesWrapper =
+							_getNavigationMenuItemUnicodePropertiesWrapper(
+								menuItemJSONObject);
+
+					if (unicodePropertiesWrapper != null) {
+						typeSettings = unicodePropertiesWrapper.load(
+							typeSettings
+						).put(
+							"useCustomName", useCustomName
+						).buildString();
+					}
+				}
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
 				UnicodePropertiesBuilder.UnicodePropertiesWrapper

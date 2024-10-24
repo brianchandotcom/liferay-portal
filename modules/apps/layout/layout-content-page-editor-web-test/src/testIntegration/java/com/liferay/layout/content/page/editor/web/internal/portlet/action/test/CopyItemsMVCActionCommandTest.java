@@ -344,10 +344,11 @@ public class CopyItemsMVCActionCommandTest {
 				RandomTestUtil.randomString(), 0, null,
 				FragmentConstants.TYPE_PORTLET, _serviceContext);
 
-		LayoutStructureItem fragmentStyledLayoutStructureItem =
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				layoutStructure.getMainItemId(), 1);
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					layoutStructure.getMainItemId(), 1);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
 			Collections.singletonList(
@@ -376,6 +377,19 @@ public class CopyItemsMVCActionCommandTest {
 			"layoutData");
 
 		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+
+		fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(copiedItemIds.get(0));
+
+		Assert.assertNotEquals(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		_assertCopiedFragmentEntryLink(
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()),
+			fragmentEntryLink);
 
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(

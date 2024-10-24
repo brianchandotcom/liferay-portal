@@ -507,7 +507,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 					type: 'cancel',
 				},
 				{
-					displayType: 'warning',
+					displayType: 'danger',
 					label: Liferay.Language.get('delete'),
 					onClick: async ({
 						processClose,
@@ -537,7 +537,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 					},
 				},
 			],
-			status: 'warning',
+			status: 'danger',
 			title: Liferay.Language.get('delete-field'),
 		});
 	};

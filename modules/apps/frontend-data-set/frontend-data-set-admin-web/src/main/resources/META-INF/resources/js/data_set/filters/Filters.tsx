@@ -420,8 +420,7 @@ function Filters({
 					},
 				},
 			],
-			size: 'lg',
-			status: 'warning',
+			status: 'danger',
 			title: Liferay.Language.get('delete-filter'),
 		});
 	};

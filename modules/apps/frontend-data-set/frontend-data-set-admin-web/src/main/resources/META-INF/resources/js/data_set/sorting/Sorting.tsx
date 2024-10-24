@@ -577,7 +577,7 @@ const Sorting = ({
 					},
 				},
 			],
-			status: 'warning',
+			status: 'danger',
 			title: Liferay.Language.get('delete-sorting'),
 		});
 	};

@@ -18,10 +18,10 @@ $portlet-topper-border-width: $portlet-topper-border-top-width
 
 $portlet-content-border-radius: 0 0 $navbar-border-radius $navbar-border-radius !default;
 
-$portlet-content-border-bottom-width: 1px !default;
-$portlet-content-border-left-width: 1px !default;
-$portlet-content-border-right-width: 1px !default;
-$portlet-content-border-top-width: 1px !default;
+$portlet-content-border-bottom-width: 2px !default;
+$portlet-content-border-left-width: 2px !default;
+$portlet-content-border-right-width: 2px !default;
+$portlet-content-border-top-width: 2px !default;
 $portlet-content-border-width: $portlet-content-border-top-width
 	$portlet-content-border-right-width $portlet-content-border-bottom-width
 	$portlet-content-border-left-width !default;

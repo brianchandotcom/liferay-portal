@@ -669,6 +669,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTracker.close();
+	}
+
+	@Override
 	public Company extractDBPartitionCompany(long companyId)
 		throws PortalException {
 

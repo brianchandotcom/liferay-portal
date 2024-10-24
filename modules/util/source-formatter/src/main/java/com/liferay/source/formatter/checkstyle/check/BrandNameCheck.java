@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 /**
  * @author Alan Huang
@@ -26,6 +27,12 @@ public class BrandNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if ((detailAST.getType() == TokenTypes.METHOD_DEF) &&
+			AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+
+			return;
+		}
+
 		String name = getName(detailAST);
 
 		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());

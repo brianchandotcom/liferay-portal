@@ -44,14 +44,15 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public AssetTag addTag(
-			long groupId, String name, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetTagsPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_TAG);
 
 		return assetTagLocalService.addTag(
-			getUserId(), groupId, name, serviceContext);
+			externalReferenceCode, getUserId(), groupId, name, serviceContext);
 	}
 
 	@Override

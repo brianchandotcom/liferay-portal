@@ -35,6 +35,10 @@ public interface WorkflowDefinition extends WorkflowModel {
 		return "";
 	}
 
+	public default String getExternalReferenceCode() {
+		return null;
+	}
+
 	public InputStream getInputStream();
 
 	public default Date getModifiedDate() {

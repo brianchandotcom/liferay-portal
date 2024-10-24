@@ -53,6 +53,11 @@ public class DefaultWorkflowDefinition
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}
@@ -145,6 +150,10 @@ public class DefaultWorkflowDefinition
 		_description = description;
 	}
 
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public void setInputStream(InputStream inputStream) {
 		_inputStream = inputStream;
 	}
@@ -197,6 +206,7 @@ public class DefaultWorkflowDefinition
 	private String _contentAsXML;
 	private Date _createDate;
 	private String _description;
+	private String _externalReferenceCode;
 	private InputStream _inputStream;
 	private Date _modifiedDate;
 	private String _name;

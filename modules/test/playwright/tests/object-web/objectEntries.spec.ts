@@ -44,32 +44,6 @@ export const test = mergeTests(
 	workflowPagesTest
 );
 
-const createdEntities = {
-	listTypeDefinitions: [],
-	objectDefinitions: [],
-} as {
-	listTypeDefinitions: ListTypeDefinition[];
-	objectDefinitions: ObjectDefinition[];
-};
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	for (const objectDefinition of createdEntities.objectDefinitions) {
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
-	}
-
-	for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			listTypeDefinition.id
-		);
-	}
-});
-
 test.describe('Manage object entries through Page Templates', () => {
 	test('can view all entries related to an object in the relationship field', async ({
 		apiHelpers,

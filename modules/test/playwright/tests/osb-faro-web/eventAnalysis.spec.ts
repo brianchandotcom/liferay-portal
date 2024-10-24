@@ -183,7 +183,7 @@ test(
 				filterName: 'pageTitle',
 				operator: 'contains',
 				page,
-				pageTitle: `${pageTitle} - ${siteName}`,
+				input: `${pageTitle} - ${siteName}`,
 			});
 		});
 

@@ -18,7 +18,7 @@ export async function addBreakdown({
 }) {
 	await page
 		.locator('.attribute-breakdown-section-root')
-		.getByRole('button')
+		.getByLabel('Add')
 		.click();
 
 	await page.locator('.card-tab').filter({hasText: tab}).first().click();
@@ -56,14 +56,14 @@ export async function addCustomEvent({
 
 export async function addFilter({
 	filterName,
+	input,
 	operator,
 	page,
-	pageTitle,
 }: {
 	filterName: string;
 	operator: string;
 	page: Page;
-	pageTitle: string;
+	input: any;
 }) {
 	await page
 		.locator('.attribute-filter-section-root')
@@ -72,14 +72,19 @@ export async function addFilter({
 
 	await page.getByRole('menuitem', {exact: true, name: filterName}).click();
 
-	await page.locator('select.select-root').click();
+	await page.getByLabel('Condition').click();
 
 	await selectAndExpectToHaveValue({
 		optionLabel: operator,
 		select: page.getByLabel('Condition'),
 	});
 
-	await page.getByTestId('attribute-value-string-input').fill(pageTitle);
+	await page
+		.locator(
+			"xpath=//div[contains(@class,'event-analysis-editor-attribute-dropdown-root show')]//input"
+		)
+		.first()
+		.fill(input);
 
 	await page.keyboard.press('Enter');
 

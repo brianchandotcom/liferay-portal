@@ -53,24 +53,12 @@ public class DefaultLandingPageActionTest {
 	}
 
 	@Test
-	public void testDefaultLandingPage() throws Exception {
-		Assert.assertEquals("/home", _getDefaultLandingPagePath("/home"));
-	}
-
-	@Test
-	public void testDefaultLandingPageWithMultibyteCharacters()
-		throws Exception {
-
+	public void testGetDefaultLandingPagePath() throws Exception {
 		Assert.assertEquals("/%E5%AE%B6", _getDefaultLandingPagePath("/家"));
-	}
-
-	@Test
-	public void testDefaultLandingPageWithReplacement() throws Exception {
-		String expectedPath = StringBundler.concat(
-			"/web/", _user.getScreenName(), "/", _user.getUserId());
-
+		Assert.assertEquals("/home", _getDefaultLandingPagePath("/home"));
 		Assert.assertEquals(
-			expectedPath,
+			StringBundler.concat(
+				"/web/", _user.getScreenName(), "/", _user.getUserId()),
 			_getDefaultLandingPagePath(
 				"/web/${liferay:screenName}/${liferay:userId}"));
 	}
@@ -93,10 +81,9 @@ public class DefaultLandingPageActionTest {
 
 			mockHttpServletRequest.setSession(mockHttpSession);
 
-			LifecycleEvent lifecycleEvent = new LifecycleEvent(
-				mockHttpServletRequest, new MockHttpServletResponse());
-
-			_lifecycleAction.processLifecycleEvent(lifecycleEvent);
+			_lifecycleAction.processLifecycleEvent(
+				new LifecycleEvent(
+					mockHttpServletRequest, new MockHttpServletResponse()));
 
 			HttpSession httpSession = mockHttpServletRequest.getSession();
 

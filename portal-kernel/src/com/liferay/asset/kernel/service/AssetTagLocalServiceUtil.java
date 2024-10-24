@@ -72,19 +72,22 @@ public class AssetTagLocalServiceUtil {
 	/**
 	 * Adds an asset tag.
 	 *
-	 * @param userId the primary key of the user adding the asset tag
-	 * @param groupId the primary key of the group in which the asset tag is to
+	 * @param externalReferenceCode
+	 * @param userId                the primary key of the user adding the asset tag
+	 * @param groupId               the primary key of the group in which the asset tag is to
 	 be added
-	 * @param name the asset tag's name
-	 * @param serviceContext the service context to be applied
+	 * @param name                  the asset tag's name
+	 * @param serviceContext        the service context to be applied
 	 * @return the asset tag that was added
 	 */
 	public static AssetTag addTag(
-			long userId, long groupId, String name,
+			String externalReferenceCode, long userId, long groupId,
+			String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().addTag(userId, groupId, name, serviceContext);
+		return getService().addTag(
+			externalReferenceCode, userId, groupId, name, serviceContext);
 	}
 
 	/**
@@ -869,11 +872,12 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	public static AssetTag updateTag(
-			long userId, long tagId, String name,
+			String externalReferenceCode, long userId, long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().updateTag(userId, tagId, name, serviceContext);
+		return getService().updateTag(
+			externalReferenceCode, userId, tagId, name, serviceContext);
 	}
 
 	public static AssetTagLocalService getService() {

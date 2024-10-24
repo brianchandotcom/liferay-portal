@@ -42,7 +42,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AssetTagServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetTag addTag(
-			HttpPrincipal httpPrincipal, long groupId, String name,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long groupId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -51,7 +52,8 @@ public class AssetTagServiceHttp {
 				AssetTagServiceUtil.class, "addTag", _addTagParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, serviceContext);
+				methodKey, externalReferenceCode, groupId, name,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -902,7 +904,8 @@ public class AssetTagServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetTag updateTag(
-			HttpPrincipal httpPrincipal, long tagId, String name,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -912,7 +915,7 @@ public class AssetTagServiceHttp {
 				_updateTagParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, tagId, name, serviceContext);
+				methodKey, externalReferenceCode, tagId, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -945,7 +948,7 @@ public class AssetTagServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AssetTagServiceHttp.class);
 
 	private static final Class<?>[] _addTagParameterTypes0 = new Class[] {
-		long.class, String.class,
+		String.class, long.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _deleteTagParameterTypes1 = new Class[] {
@@ -1017,7 +1020,7 @@ public class AssetTagServiceHttp {
 	private static final Class<?>[] _unsubscribeTagParameterTypes24 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _updateTagParameterTypes25 = new Class[] {
-		long.class, String.class,
+		String.class, long.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 

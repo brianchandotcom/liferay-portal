@@ -125,7 +125,7 @@ export class SearchPage {
 	}
 
 	async goto() {
-		await this.page.goto('/search');
+		await this.page.goto('/web/guest/search');
 	}
 
 	async openSearchPortletConfiguration(

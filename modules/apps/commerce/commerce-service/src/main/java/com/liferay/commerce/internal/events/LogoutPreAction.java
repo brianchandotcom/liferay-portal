@@ -42,13 +42,15 @@ public class LogoutPreAction extends Action {
 			for (Cookie cookie : cookies) {
 				String name = cookie.getName();
 
-				if (name.startsWith(
-						CommerceOrder.class.getName() + StringPool.POUND)) {
+				if (name.startsWith("COMMERCE_COMPARE")) {
+					CookiesManagerUtil.deleteCookies(
+						domain, httpServletRequest, httpServletResponse, name);
+				}
+				else if (name.startsWith(
+							CommerceOrder.class.getName() + StringPool.POUND)) {
 
 					CookiesManagerUtil.deleteCookies(
 						domain, httpServletRequest, httpServletResponse, name);
-
-					break;
 				}
 			}
 		}

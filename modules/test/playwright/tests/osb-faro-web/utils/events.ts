@@ -61,9 +61,9 @@ export async function addFilter({
 	page,
 }: {
 	filterName: string;
+	input: any;
 	operator: string;
 	page: Page;
-	input: any;
 }) {
 	await page
 		.locator('.attribute-filter-section-root')

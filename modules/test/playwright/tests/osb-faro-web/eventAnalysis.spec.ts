@@ -15,6 +15,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {
@@ -24,11 +25,14 @@ import {
 	removeAttribute,
 	setEventAnalysisName,
 } from './utils/events';
-import {ACPage, navigateToACSettingsViaURL, navigateToACPageViaURL} from './utils/navigation';
+import {
+	ACPage,
+	navigateToACPageViaURL,
+	navigateToACSettingsViaURL,
+} from './utils/navigation';
 import {createSitePage, navigateToSitePage} from './utils/portal';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
-import { selectAndExpectToHaveValue } from '../../utils/selectAndExpectToHaveValue';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -169,11 +173,7 @@ temp: "11",
 			});
 		});
 
-		const attributeNameList = [
-			'category',
-			'duration',
-			'temp',
-		];
+		const attributeNameList = ['category', 'duration', 'temp'];
 
 		await test.step('Add a breakdown to the analysis', async () => {
 			for (const attributeName of attributeNameList) {
@@ -182,7 +182,6 @@ temp: "11",
 					page,
 					tab: 'Event',
 				});
-	
 			}
 		});
 
@@ -196,34 +195,40 @@ temp: "11",
 		await test.step('Add a filter to the analysis', async () => {
 			await addFilter({
 				filterName: 'temp',
+				input: '10',
 				operator: 'is greater than',
 				page,
-				input: '10',
 			});
-
-			
 		});
 
 		await test.step('Check the analysis result appears and save the analysis', async () => {
 			await page.setViewportSize({height: 1080, width: 1920});
 
 			for (const attributeName of attributeNameList) {
-				await expect(page.getByRole('button', { name: `EVENT ${attributeName}`, exact: true })).toBeVisible();
+				await expect(
+					page.getByRole('button', {
+						exact: true,
+						name: `EVENT ${attributeName}`,
+					})
+				).toBeVisible();
 			}
 
 			const tableInfo = page.getByRole('cell');
 
 			await expect(tableInfo.getByText('wetsuit')).toBeVisible();
-			await expect(tableInfo.getByText('Between 01:00:00 - 01:00:59')).toBeVisible();
+			await expect(
+				tableInfo.getByText('Between 01:00:00 - 01:00:59')
+			).toBeVisible();
 			await expect(tableInfo.getByText('10 - 19')).toBeVisible();
 			await expect(tableInfo.getByText('100%')).toBeVisible();
-
 
 			await page.getByText('Save Analysis').click();
 		});
 
 		await test.step('Check the analysis result appears and save the', async () => {
-			await expect(page.getByText(`Event Analysis ${randomString}`)).toBeVisible();
+			await expect(
+				page.getByText(`Event Analysis ${randomString}`)
+			).toBeVisible();
 		});
 
 		await test.step('Navigation to attributes tab', async () => {
@@ -233,18 +238,19 @@ temp: "11",
 				projectID: project.groupId,
 			});
 
-			await page.getByRole('link', { name: 'Attributes', exact: true }).click();
+			await page
+				.getByRole('link', {exact: true, name: 'Attributes'})
+				.click();
 		});
 
 		await test.step('Edit the new attribute', async () => {
-
 			await page.getByPlaceholder('Search').fill('temp');
 
 			await page.keyboard.press('Enter');
 
 			await expect(page.getByText('NUMBER')).toBeVisible();
 
-			await page.getByRole('link', { name: 'temp' }).click();
+			await page.getByRole('link', {name: 'temp'}).click();
 
 			await page.getByRole('button', {name: 'Edit'}).click();
 
@@ -254,8 +260,8 @@ temp: "11",
 				optionValue: 'DATE',
 				select: page.getByLabel('Default Data Typecast'),
 			});
-			
-			await page.getByRole('button', { name: 'Save' }).click();
+
+			await page.getByRole('button', {name: 'Save'}).click();
 		});
 
 		await test.step('Check that the type of the attribute has been changed', async () => {
@@ -265,7 +271,9 @@ temp: "11",
 				projectID: project.groupId,
 			});
 
-			await page.getByRole('link', { name: 'Attributes', exact: true }).click();
+			await page
+				.getByRole('link', {exact: true, name: 'Attributes'})
+				.click();
 
 			await page.getByPlaceholder('Search').fill('temp');
 
@@ -282,30 +290,38 @@ temp: "11",
 				projectID: project.groupId,
 			});
 
-			await page.getByRole('link', { name: 'Event Analysis', exact: false}).click();
-			
+			await page
+				.getByRole('link', {exact: false, name: 'Event Analysis'})
+				.click();
 		});
 
 		await test.step('Check the analysis result appears', async () => {
 			for (const attributeName of attributeNameList) {
-				await expect(page.getByRole('button', { name: `EVENT ${attributeName}`, exact: true })).toBeVisible();
+				await expect(
+					page.getByRole('button', {
+						exact: true,
+						name: `EVENT ${attributeName}`,
+					})
+				).toBeVisible();
 			}
 
 			const tableInfo = page.getByRole('cell');
 
 			await expect(tableInfo.getByText('wetsuit')).toBeVisible();
-			await expect(tableInfo.getByText('Between 01:00:00 - 01:00:59')).toBeVisible();
+			await expect(
+				tableInfo.getByText('Between 01:00:00 - 01:00:59')
+			).toBeVisible();
 			await expect(tableInfo.getByText('10 - 19')).toBeVisible();
 			await expect(tableInfo.getByText('100%')).toBeVisible();
-
 		});
 
 		await test.step('Check that the attributes used have not had the attribute type changed', async () => {
-			await expect(page.getByRole('button', { name: 'Event | temp is greater than' })).toBeVisible();
-
+			await expect(
+				page.getByRole('button', {name: 'Event | temp is greater than'})
+			).toBeVisible();
 		});
-
-	});
+	}
+);
 
 test(
 	'The analysis result should not appear if any of the attribute conditions are not contained within the result',
@@ -399,9 +415,9 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await addFilter({
 				filterName: 'pageTitle',
+				input: `${pageTitle} - ${siteName}`,
 				operator: 'contains',
 				page,
-				input: `${pageTitle} - ${siteName}`,
 			});
 		});
 
@@ -425,9 +441,9 @@ test(
 
 			await addFilter({
 				filterName: 'pageTitle',
+				input: `${pageTitle} - ${siteName}`,
 				operator: 'does not contain',
 				page,
-				input: `${pageTitle} - ${siteName}`,
 			});
 		});
 

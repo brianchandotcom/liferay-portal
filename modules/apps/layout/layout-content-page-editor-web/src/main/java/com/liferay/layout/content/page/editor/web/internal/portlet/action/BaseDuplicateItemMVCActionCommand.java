@@ -80,18 +80,25 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		String namespace = StringUtil.randomId();
 
 		if (Validator.isNotNull(portletId)) {
-			String oldInstanceId = editableValuesJSONObject.getString(
-				"instanceId");
+			Portlet portlet = portletLocalService.getPortletById(portletId);
 
-			editableValuesJSONObject.put("instanceId", namespace);
+			if (!portlet.isInstanceable()) {
+				editableValuesJSONObject.put("instanceId", StringPool.BLANK);
+			}
+			else {
+				String oldInstanceId = editableValuesJSONObject.getString(
+					"instanceId");
 
-			_copyPortletPermissions(
-				fragmentEntryLink.getCompanyId(),
-				fragmentEntryLink.getGroupId(), namespace, oldInstanceId,
-				fragmentEntryLink.getPlid(), portletId);
-			_copyPortletPreferences(
-				serviceContext.getRequest(), portletId, oldInstanceId,
-				namespace);
+				editableValuesJSONObject.put("instanceId", namespace);
+
+				_copyPortletPermissions(
+					fragmentEntryLink.getCompanyId(),
+					fragmentEntryLink.getGroupId(), namespace, oldInstanceId,
+					fragmentEntryLink.getPlid(), portletId);
+				_copyPortletPreferences(
+					serviceContext.getRequest(), portletId, oldInstanceId,
+					namespace);
+			}
 		}
 
 		if (fragmentEntryLink.isTypeInput()) {

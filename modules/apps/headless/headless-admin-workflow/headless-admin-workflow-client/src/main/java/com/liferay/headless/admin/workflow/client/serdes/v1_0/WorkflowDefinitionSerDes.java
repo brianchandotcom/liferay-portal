@@ -144,6 +144,20 @@ public class WorkflowDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (workflowDefinition.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowDefinition.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (workflowDefinition.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -330,6 +344,15 @@ public class WorkflowDefinitionSerDes {
 				String.valueOf(workflowDefinition.getDescription()));
 		}
 
+		if (workflowDefinition.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(workflowDefinition.getExternalReferenceCode()));
+		}
+
 		if (workflowDefinition.getId() == null) {
 			map.put("id", null);
 		}
@@ -422,6 +445,11 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -489,6 +517,14 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					workflowDefinition.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					workflowDefinition.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

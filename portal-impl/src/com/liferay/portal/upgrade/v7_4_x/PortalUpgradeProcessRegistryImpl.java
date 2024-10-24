@@ -504,6 +504,17 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 12, 0),
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"AssetTag", "tagId"}};
+				}
+
+			});
 	}
 
 }

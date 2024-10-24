@@ -39,10 +39,6 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 			"delete from ResourcePermission where name = '" +
 				_PORTLET_ID + "'");
 
-		_removeDateFacetPortletFromLayouts();
-	}
-
-	private void _removeDateFacetPortletFromLayouts() throws Exception {
 		System.out.println(
 			"select plid, typeSettings from Layout where " +
 				getTypeSettingsCriteria(_PORTLET_ID));

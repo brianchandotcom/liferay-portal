@@ -45,6 +45,8 @@ export class ProductDetailsPage {
 	) => Promise<Locator>;
 	readonly gtinField: (gtin: string) => Promise<Locator>;
 	readonly layoutsPage: CommerceLayoutsPage;
+	readonly mappedProductAddToCartButton: Locator;
+	readonly mappedProductCheckbox: Locator;
 	readonly mpnField: (mpn: string) => Promise<Locator>;
 	readonly menuItemSpecification: (
 		chooseAddOrCreate: string
@@ -156,6 +158,10 @@ export class ProductDetailsPage {
 			return page.getByText(gtin);
 		};
 		this.layoutsPage = new CommerceLayoutsPage(page);
+		this.mappedProductAddToCartButton = page.getByRole('button', {
+			name: 'Add Selected Product(s) to',
+		});
+		this.mappedProductCheckbox = page.getByLabel('Select SKU');
 		this.mpnField = async (mpn: string) => {
 			return page.getByText(mpn, {exact: true});
 		};

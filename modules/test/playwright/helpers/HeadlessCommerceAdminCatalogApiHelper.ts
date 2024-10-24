@@ -7,6 +7,13 @@ import {getRandomDouble} from '../utils/getRandomDouble';
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
+export type TAttachmentBase64 = {
+	attachment: string;
+	title: {
+		[key: string]: string;
+	};
+};
+
 type TCatalog = {
 	accountId?: number;
 	currencyCode?: string;
@@ -34,6 +41,10 @@ type TCategory = {
 	vocabulary?: string;
 };
 
+export type TDiagram = {
+	attachmentBase64: TAttachmentBase64;
+};
+
 export type TPin = {
 	id?: number;
 	mappedProduct: {
@@ -56,6 +67,7 @@ export type TProduct = {
 	description?: {
 		[key: string]: string;
 	};
+	diagram?: TDiagram;
 	externalReferenceCode?: string;
 	id?: number;
 	name?: {

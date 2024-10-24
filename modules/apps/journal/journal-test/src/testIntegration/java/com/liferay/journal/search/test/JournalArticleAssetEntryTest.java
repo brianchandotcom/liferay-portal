@@ -170,7 +170,7 @@ public class JournalArticleAssetEntryTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		AssetTag assetTag1 = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		serviceContext.setAssetTagNames(new String[] {assetTag1.getName()});
@@ -187,7 +187,7 @@ public class JournalArticleAssetEntryTest {
 			false, true, serviceContext);
 
 		AssetTag assetTag2 = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		serviceContext.setAssetTagNames(new String[] {assetTag2.getName()});
@@ -216,7 +216,7 @@ public class JournalArticleAssetEntryTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
@@ -230,7 +230,7 @@ public class JournalArticleAssetEntryTest {
 		String updatedAssetTagName = RandomTestUtil.randomString();
 
 		_assetTagLocalService.updateTag(
-			TestPropsValues.getUserId(), assetTag.getTagId(),
+			null, TestPropsValues.getUserId(), assetTag.getTagId(),
 			updatedAssetTagName, serviceContext);
 
 		_assertSearch(updatedAssetTagName, journalArticle);

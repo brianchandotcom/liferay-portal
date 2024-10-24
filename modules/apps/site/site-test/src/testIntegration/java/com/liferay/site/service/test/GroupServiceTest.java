@@ -318,7 +318,7 @@ public class GroupServiceTest {
 			group.getGroupId());
 
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		Assert.assertEquals(

@@ -132,22 +132,23 @@ public abstract class BaseAssetSearchTestCase {
 			serviceContext = ServiceContextTestUtil.getServiceContext(groupId);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), groupId, "liferay",
+				null, TestPropsValues.getUserId(), groupId, "liferay",
 				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), groupId, "architecture",
+				null, TestPropsValues.getUserId(), groupId, "architecture",
 				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), groupId, "modularity",
+				null, TestPropsValues.getUserId(), groupId, "modularity",
 				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), groupId, "osgi", serviceContext);
+				null, TestPropsValues.getUserId(), groupId, "osgi",
+				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), groupId, "services",
+				null, TestPropsValues.getUserId(), groupId, "services",
 				serviceContext);
 		}
 

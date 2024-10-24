@@ -55,11 +55,11 @@ public class AssetAutoTaggerEntryLocalServiceTest {
 		throws PortalException {
 
 		AssetTag assetTag = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
 			_serviceContext);
 
 		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
 		AssetAutoTaggerEntry assetAutoTaggerEntry =

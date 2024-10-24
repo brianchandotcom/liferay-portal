@@ -872,7 +872,8 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testBoostTaggedContents() throws Exception {
 		_assetTag = AssetTagLocalServiceUtil.addTag(
-			_user.getUserId(), _group.getGroupId(), "Boost", _serviceContext);
+			null, _user.getUserId(), _group.getGroupId(), "Boost",
+			_serviceContext);
 
 		_journalArticleBuilder.setTitle(
 			"Article"
@@ -906,7 +907,8 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testBoostTagsMatch() throws Exception {
 		_assetTag = AssetTagLocalServiceUtil.addTag(
-			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);
+			null, _user.getUserId(), _group.getGroupId(), "cola",
+			_serviceContext);
 
 		_journalArticleBuilder.setTitle(
 			"coca cola"

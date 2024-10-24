@@ -94,13 +94,13 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			// Add tag
 
 			_assetTagService.addTag(
-				serviceContext.getScopeGroupId(), name, serviceContext);
+				null, serviceContext.getScopeGroupId(), name, serviceContext);
 		}
 		else {
 
 			// Update tag
 
-			_assetTagService.updateTag(tagId, name, serviceContext);
+			_assetTagService.updateTag(null, tagId, name, serviceContext);
 		}
 	}
 

@@ -635,7 +635,7 @@ public class PortalRequestProcessor {
 					return _PATH_PORTAL_UPDATE_PASSWORD;
 				}
 				else if (path.equals(_PATH_PORTAL_UPDATE_PASSWORD)) {
-					return _PATH_PORTAL_LAYOUT;
+					return _PATH_PORTAL_UPDATE_PASSWORD;
 				}
 
 				// Authenticated users must have an email address

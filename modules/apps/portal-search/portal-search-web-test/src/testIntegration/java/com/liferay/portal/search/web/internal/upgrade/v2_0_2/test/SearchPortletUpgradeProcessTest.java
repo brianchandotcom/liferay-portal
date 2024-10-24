@@ -75,19 +75,19 @@ public class SearchPortletUpgradeProcessTest {
 			"select count(*) from ResourcePermission where name = '",
 			_DATE_FACET_PORTLET_KEY, "'");
 
-		Assert.assertEquals(sql1, 3, _getCount(sql1));
-		Assert.assertEquals(sql2, 1, _getCount(sql2));
-		Assert.assertEquals(sql3, 1, _getCount(sql3));
-		Assert.assertEquals(sql3, 1, _getCount(sql4));
-		Assert.assertEquals(sql3, 1, _getCount(sql4));
+		Assert.assertEquals(sql1, 3, _count(sql1));
+		Assert.assertEquals(sql2, 1, _count(sql2));
+		Assert.assertEquals(sql3, 1, _count(sql3));
+		Assert.assertEquals(sql3, 1, _count(sql4));
+		Assert.assertEquals(sql3, 1, _count(sql4));
 
 		_searchPortletUpgradeProcess.upgrade();
 
-		Assert.assertEquals(sql1, 0, _getCount(sql1));
-		Assert.assertEquals(sql2, 0, _getCount(sql2));
-		Assert.assertEquals(sql3, 0, _getCount(sql3));
-		Assert.assertEquals(sql3, 0, _getCount(sql4));
-		Assert.assertEquals(sql3, 0, _getCount(sql5));
+		Assert.assertEquals(sql1, 0, _count(sql1));
+		Assert.assertEquals(sql2, 0, _count(sql2));
+		Assert.assertEquals(sql3, 0, _count(sql3));
+		Assert.assertEquals(sql3, 0, _count(sql4));
+		Assert.assertEquals(sql3, 0, _count(sql5));
 	}
 
 	private void _addLayouts() throws Exception {
@@ -120,11 +120,10 @@ public class SearchPortletUpgradeProcessTest {
 			).buildString());
 	}
 
-	private int _getCount(String sql) throws Exception {
+	private int _count(String sql) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
-
-			 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
+			 PreparedStatement preparedStatement =
+			 	connection.prepareStatement(sql);
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();

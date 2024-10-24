@@ -5,13 +5,12 @@
 
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderTest} from '../headless-builder-web/fixtures/headlessBuilderTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	headlessBuilderTest(),
 	loginTest()
 );
@@ -39,6 +38,8 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
 			status: {code: 0},
 		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	const apiApplication = await apiHelpers.apiBuilder.postApiApplication({
 		apiApplicationToAPIEndpoints: [
@@ -71,6 +72,8 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 		externalReferenceCode: 'APPLICATION',
 		title: 'title',
 	});
+
+	apiHelpers.data.unshift({id: apiApplication.id, type: 'apiApplication'});
 
 	expect(apiApplication.status).toStrictEqual({
 		code: 0,
@@ -130,14 +133,4 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 			textProperty: 'value5',
 		},
 	]);
-
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
-
-	await apiHelpers.apiBuilder.deleteApiApplication(apiApplication.id);
 });

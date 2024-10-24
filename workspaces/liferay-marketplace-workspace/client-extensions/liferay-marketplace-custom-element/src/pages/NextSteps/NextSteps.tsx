@@ -204,9 +204,7 @@ export function NextSteps() {
 							: 'go-to-dashboard'
 					)}
 					continueButtonText={i18n.translate(
-						properties.featureFlags?.includes('LPD-21582') &&
-							orderTypeExternalReferenceCode ===
-								ORDER_TYPES.DXPAPP
+						orderTypeExternalReferenceCode === ORDER_TYPES.DXPAPP
 							? 'download-app'
 							: properties.featureFlags?.includes('LPD-34129')
 								? 'continue-to-install'
@@ -230,9 +228,8 @@ export function NextSteps() {
 					}}
 					onClickContinue={() => {
 						if (
-							properties.featureFlags?.includes('LPD-21582') &&
 							orderTypeExternalReferenceCode ===
-								ORDER_TYPES.DXPAPP
+							ORDER_TYPES.DXPAPP
 						) {
 							Liferay.Util.navigate(
 								Liferay.ThemeDisplay.getLayoutURL().replace(
@@ -262,9 +259,7 @@ export function NextSteps() {
 							}
 						}
 					}}
-					showContinueButton={properties.featureFlags?.includes(
-						'LPD-21582'
-					)}
+					showContinueButton={true}
 				/>
 
 				{(paymentStatus === PaymentStatus.PAID || isTrial) && (

@@ -7,7 +7,6 @@ import {filesize} from 'filesize';
 
 import {DropzoneUpload} from '../../../../../../../components/DropzoneUpload/DropzoneUpload';
 import {FileList} from '../../../../../../../components/FileList/FileList';
-import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import {ProductType} from '../../../../../../../enums/ProductType';
 import i18n from '../../../../../../../i18n';
 import {getRandomID} from '../../../../../../../utils/string';
@@ -36,7 +35,6 @@ export function UploadAppPackagesComponent({
 	versionName,
 }: UploadAppPackagesComponentProps) {
 	const [{appType, buildAppPackages}, dispatch] = useAppContext();
-	const {properties} = useMarketplaceContext();
 
 	const enableUploadFiles =
 		!isProcessing &&
@@ -113,9 +111,7 @@ export function UploadAppPackagesComponent({
 									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 								)
 					}
-					maxFiles={
-						properties.featureFlags?.includes('LPD-21582') ? 1 : 10
-					}
+					maxFiles={1}
 					maxSize={UPLOAD_MAX_SIZE}
 					multiple={true}
 					onHandleUpload={handleUploadAppPackages}

@@ -13,7 +13,6 @@ import OrderStatus, {
 	Statuses as OrderStatuses,
 } from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {Analytics} from '../../../core/Analytics';
 import {ORDER_TYPES} from '../../../enums/Order';
 import {OrderType} from '../../../enums/OrderType';
@@ -28,8 +27,6 @@ type AppsTableProps = {
 
 const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 	const navigate = useNavigate();
-	const {properties} = useMarketplaceContext();
-
 	if (!items?.length) {
 		return (
 			<DashboardEmptyTable
@@ -245,15 +242,10 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 															: orderStatusIsNotCompleted
 													}
 													onClick={() => {
-														if (
-															properties.featureFlags?.includes(
-																'LPD-21582'
-															)
-														) {
-															return navigate(
-																`order/${id}/download`
-															);
-														}
+														navigate(
+															`order/${id}/download`
+														);
+
 														if (!virtualURL) {
 															Analytics.track(
 																'VIRTUAL_URL_NOT_FOUND',

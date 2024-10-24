@@ -35,9 +35,7 @@ const CustomerDashboardRouter = () => {
 					<Route element={<AppOutlet />} path="order/:orderId">
 						<Route element={<App />} index />
 
-						{properties.featureFlags?.includes('LPD-21582') && (
-							<Route element={<Download />} path="download" />
-						)}
+						<Route element={<Download />} path="download" />
 
 						<Route element={<Licenses />} path="licenses" />
 

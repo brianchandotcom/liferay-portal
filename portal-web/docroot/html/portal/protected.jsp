@@ -35,25 +35,21 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		<aui:link cssClass="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(themeDisplay.getClayCSSURL()) %>" rel="stylesheet" type="text/css" />
 	</head>
 
-	<body>
-		<liferay-util:on
-			event="load"
-		>
-			window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
-		</liferay-util:on>
+	<liferay-ui:csp>
+		<body onload="window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');">
+			<center>
+				<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
+					<tr>
+						<td align="center" valign="middle">
+							<strong><liferay-ui:message key="processing-login" /></strong>
 
-		<center>
-			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
-				<tr>
-					<td align="center" valign="middle">
-						<strong><liferay-ui:message key="processing-login" /></strong>
+							<br /><br />
 
-						<br /><br />
-
-						<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
-					</td>
-				</tr>
-			</table>
-		</center>
-	</body>
+							<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+						</td>
+					</tr>
+				</table>
+			</center>
+		</body>
+	</liferay-ui:csp>
 </html>

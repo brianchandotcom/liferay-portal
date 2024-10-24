@@ -6,6 +6,10 @@
 package com.liferay.document.library.internal.upgrade.v3_2_6.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -15,18 +19,23 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreArea;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -91,6 +100,66 @@ public class DeleteStalePWCVersionsUpgradeProcessTest {
 		Assert.assertFalse(_hasPWCVersion(fileEntry1));
 		Assert.assertTrue(_hasPWCVersion(fileEntry2));
 		Assert.assertTrue(_hasPWCVersion(fileEntry3));
+	}
+
+	@Test
+	public void testDeletePWCVersionsPreservesCheckedOutDocumentsWithPublication()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			CTCollection ctCollection =
+				_ctCollectionLocalService.addCTCollection(
+					null, TestPropsValues.getCompanyId(),
+					TestPropsValues.getUserId(), 0,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+
+			FileEntry fileEntry1 = null;
+			FileEntry fileEntry2 = null;
+			FileEntry fileEntry3 = null;
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				fileEntry1 = _addFileEntry();
+				fileEntry2 = _addFileEntry();
+				fileEntry3 = _addFileEntry();
+
+				_checkOutFileEntry(fileEntry1);
+				_checkOutFileEntry(fileEntry2);
+				_checkOutFileEntry(fileEntry3);
+
+				Assert.assertTrue(_hasPWCVersion(fileEntry1));
+				Assert.assertTrue(_hasPWCVersion(fileEntry2));
+				Assert.assertTrue(_hasPWCVersion(fileEntry3));
+
+				_checkInFileEntry(fileEntry1);
+
+				Assert.assertFalse(_hasPWCVersion(fileEntry1));
+
+				_createStalePWCVersion(fileEntry1);
+
+				Assert.assertTrue(_hasPWCVersion(fileEntry1));
+			}
+
+			_ctProcessLocalService.addCTProcess(
+				ctCollection.getUserId(), ctCollection.getCtCollectionId());
+
+			_runUpgrade();
+
+			Assert.assertFalse(_hasPWCVersion(fileEntry1));
+			Assert.assertTrue(_hasPWCVersion(fileEntry2));
+			Assert.assertTrue(_hasPWCVersion(fileEntry3));
+		}
 	}
 
 	private FileEntry _addFileEntry() throws PortalException {
@@ -192,10 +261,16 @@ public class DeleteStalePWCVersionsUpgradeProcessTest {
 		"com.liferay.document.library.internal.upgrade.v3_2_6." +
 			"DeleteStalePWCVersionsUpgradeProcess";
 
+	@Inject
+	private static CTProcessLocalService _ctProcessLocalService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private DLAppService _dlAppService;

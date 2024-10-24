@@ -43,9 +43,11 @@ create index IX_FEC4A201 on AssetEntry (layoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_2E4E3885 on AssetEntry (publishDate);
 create index IX_9029E15A on AssetEntry (visible);
 
+create unique index IX_FBB2C925 on AssetTag (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_D63322F9 on AssetTag (groupId, name[$COLUMN_LENGTH:75$]);
+create unique index IX_B421E018 on AssetTag (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_C43137AF on AssetTag (name[$COLUMN_LENGTH:75$]);
-create unique index IX_A43FBC4 on AssetTag (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+create index IX_562A3FC4 on AssetTag (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_B22D908C on AssetVocabulary (companyId);
 create unique index IX_E06DEF51 on AssetVocabulary (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);

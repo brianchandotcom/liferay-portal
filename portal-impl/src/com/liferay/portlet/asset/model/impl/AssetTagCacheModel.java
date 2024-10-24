@@ -67,7 +67,7 @@ public class AssetTagCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -75,6 +75,8 @@ public class AssetTagCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", tagId=");
 		sb.append(tagId);
 		sb.append(", groupId=");
@@ -112,6 +114,13 @@ public class AssetTagCacheModel
 		}
 		else {
 			assetTagImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			assetTagImpl.setExternalReferenceCode("");
+		}
+		else {
+			assetTagImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		assetTagImpl.setTagId(tagId);
@@ -167,6 +176,7 @@ public class AssetTagCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		tagId = objectInput.readLong();
 
@@ -195,6 +205,13 @@ public class AssetTagCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(tagId);
@@ -229,6 +246,7 @@ public class AssetTagCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long tagId;
 	public long groupId;
 	public long companyId;

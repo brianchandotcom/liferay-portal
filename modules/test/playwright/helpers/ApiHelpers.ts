@@ -72,6 +72,21 @@ interface PostOptions<T> {
 	multipart?: {[key: string]: any};
 }
 
+async function getCSRFTokenHeader(page: Page) {
+	const authToken = await page.evaluate(() => Liferay.authToken);
+
+	return {
+		'x-csrf-token': authToken,
+	};
+}
+
+export async function getHeader(page: Page) {
+	return {
+		'Content-Type': 'application/json',
+		...(await getCSRFTokenHeader(page)),
+	};
+}
+
 export class ApiHelpers {
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
@@ -206,7 +221,7 @@ export class ApiHelpers {
 			BASE: liferayConfig.environment.baseUrl + '/o',
 			HEADERS: {
 				Cookie: `JSESSIONID=${await this.getJSessionId()};`,
-				...(await this.getCSRFTokenHeader()),
+				...(await getCSRFTokenHeader(this.page)),
 			},
 		});
 	}
@@ -218,7 +233,7 @@ export class ApiHelpers {
 		return await this.page.request.post(url, {
 			data,
 			failOnStatusCode: failOnStatusCode || false,
-			headers: headers || (await this.getHeader()),
+			headers: headers || (await getHeader(this.page)),
 			multipart,
 		});
 	}
@@ -240,7 +255,7 @@ export class ApiHelpers {
 	) {
 		return await this.page.request.get(url, {
 			failOnStatusCode: failOnStatusCode || false,
-			headers: headers || (await this.getHeader()),
+			headers: headers || (await getHeader(this.page)),
 		});
 	}
 
@@ -261,7 +276,7 @@ export class ApiHelpers {
 		return await this.page.request.put(url, {
 			data,
 			failOnStatusCode: failOnStatusCode || false,
-			headers: headers || (await this.getHeader()),
+			headers: headers || (await getHeader(this.page)),
 			multipart,
 		});
 	}
@@ -269,7 +284,7 @@ export class ApiHelpers {
 	async delete(url: string, headers?: any) {
 		return this.page.request.delete(url, {
 			headers: {
-				...(await this.getHeader()),
+				...(await getHeader(this.page)),
 				...(headers || {}),
 			},
 		});
@@ -288,7 +303,7 @@ export class ApiHelpers {
 	async patch(url: string, data: DataObject) {
 		const response = await this.page.request.patch(url, {
 			data,
-			headers: await this.getHeader(),
+			headers: await getHeader(this.page),
 		});
 
 		const text = await response.text();
@@ -304,14 +319,7 @@ export class ApiHelpers {
 		return {
 			'Authorization': ApiHelpers._authorization,
 			'Content-Type': 'application/x-www-form-urlencoded',
-			...(await this.getCSRFTokenHeader()),
-		};
-	}
-
-	async getHeader() {
-		return {
-			'Content-Type': 'application/json',
-			...(await this.getCSRFTokenHeader()),
+			...(await getCSRFTokenHeader(this.page)),
 		};
 	}
 
@@ -322,11 +330,7 @@ export class ApiHelpers {
 	}
 
 	async getCSRFTokenHeader() {
-		const authToken = await this.page.evaluate(() => Liferay.authToken);
-
-		return {
-			'x-csrf-token': authToken,
-		};
+		return getCSRFTokenHeader(this.page);
 	}
 
 	getAuthorizationHeader() {

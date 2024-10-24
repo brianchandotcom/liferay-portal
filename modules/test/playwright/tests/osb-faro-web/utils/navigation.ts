@@ -11,6 +11,7 @@ import {waitForLoading} from './loading';
 export enum ACPage {
 	assetPage = 'assets',
 	eventAnalysisPage = 'event-analysis',
+	eventAttributesPage = 'definitions/event-attributes/global',
 	individualPage = 'contacts/individuals',
 	segmentPage = 'contacts/segments',
 	sitePage = 'sites',

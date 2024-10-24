@@ -54,7 +54,6 @@ public class VariableNameCheck extends BaseCheck {
 			_checkTypo(detailAST, name);
 		}
 
-		_checkCaps(detailAST, name);
 		_checkIsVariableName(detailAST, name);
 
 		DetailAST typeDetailAST = detailAST.findFirstToken(TokenTypes.TYPE);
@@ -178,35 +177,6 @@ public class VariableNameCheck extends BaseCheck {
 	}
 
 	protected static final String MSG_RENAME_VARIABLE = "variable.rename";
-
-	private void _checkCaps(DetailAST detailAST, String name) {
-		for (String[] array : _ALL_CAPS_STRINGS) {
-			String s = array[1];
-
-			int x = -1;
-
-			while (true) {
-				x = name.indexOf(s, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				int y = x + s.length();
-
-				if ((y != name.length()) &&
-					!Character.isUpperCase(name.charAt(y))) {
-
-					continue;
-				}
-
-				String newName =
-					name.substring(0, x) + array[0] + name.substring(y);
-
-				log(detailAST, MSG_RENAME_VARIABLE, name, newName);
-			}
-		}
-	}
 
 	private void _checkClassNameVariable(
 		DetailAST detailAST, String variableName) {
@@ -993,10 +963,6 @@ public class VariableNameCheck extends BaseCheck {
 
 		return false;
 	}
-
-	private static final String[][] _ALL_CAPS_STRINGS = {
-		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"}
-	};
 
 	private static final String _ALLOWED_VARIABLE_NAMES_KEY =
 		"allowedVariableNames";

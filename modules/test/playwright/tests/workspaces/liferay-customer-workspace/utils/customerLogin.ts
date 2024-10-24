@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
 
-import {HomePage} from '../pages/HomePage';
 import {LoginPage} from '../pages/LoginPage';
+import {LogoutPage} from '../pages/LogoutPage';
+import {CUSTOMER_SITE_FRIENLY_URL_PATH} from './constants';
 
 export async function customerPerformLogin(
 	page: Page,
 	userEmailAddress: string
 ) {
-	const homePage = new HomePage(page);
 	const loginPage = new LoginPage(page);
 
-	await homePage.goto();
+	await loginPage.goto();
 
 	await loginPage.emailField.fill(userEmailAddress);
 
@@ -25,17 +25,13 @@ export async function customerPerformLogin(
 
 	await loginPage.signInButton.click();
 
-	await expect(homePage.heading).toBeVisible({
-		timeout: 30 * 1000,
-	});
+	await page.waitForURL(CUSTOMER_SITE_FRIENLY_URL_PATH);
 }
 
 export async function customerPerformLogout(page: Page) {
-	const homePage = new HomePage(page);
+	const logoutPage = new LogoutPage(page);
 
-	await homePage.accountMenu.click();
-
-	await homePage.signOutButton.click();
+	await logoutPage.goto();
 }
 
 export async function customerPerformUserSwitch(

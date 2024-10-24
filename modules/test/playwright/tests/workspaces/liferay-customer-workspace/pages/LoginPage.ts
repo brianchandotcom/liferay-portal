@@ -20,4 +20,8 @@ export class LoginPage {
 		this.rememberMeCheckBox = page.getByLabel('Remember Me');
 		this.signInButton = page.getByRole('button', {name: 'Sign In'});
 	}
+
+	async goto() {
+		await this.page.goto(`/c/portal/login`);
+	}
 }

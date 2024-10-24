@@ -5,13 +5,22 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../../../../../fixtures/loginTest';
 import {customerPagesTest} from '../../../fixtures/customerPagesTest';
+import {
+	customerPerformLogin,
+	customerPerformLogout,
+} from '../../../utils/customerLogin';
 import {mockOktaApiSession} from '../../../utils/oktaUtil';
 
-export const test = mergeTests(customerPagesTest, loginTest());
+export const test = mergeTests(customerPagesTest);
+
+test.afterEach(async ({page}) => {
+	await customerPerformLogout(page);
+});
 
 test.beforeEach(async ({page}) => {
+	await customerPerformLogin(page, 'test@liferay.com');
+
 	await mockOktaApiSession(page);
 });
 

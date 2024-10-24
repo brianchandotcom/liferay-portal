@@ -6,24 +6,26 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
-import {loginTest} from '../../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../../utils/getRandomString';
 import {customerApiHelpersTest} from '../../../fixtures/customerApiHelpersTest';
 import {customerPagesTest} from '../../../fixtures/customerPagesTest';
+import {
+	customerPerformLogin,
+	customerPerformLogout,
+} from '../../../utils/customerLogin';
 import {mockOktaApiSession} from '../../../utils/oktaUtil';
 import {mockProvisioningApiAssignUser} from '../../../utils/provisioningUtil';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	customerApiHelpersTest,
-	customerPagesTest,
-	loginTest()
+	customerPagesTest
 );
 
 const accountExternalReferenceCode = 'ERC-001';
 let userEmailAddress: string;
 
-test.afterEach(async ({apiHelpers}) => {
+test.afterEach(async ({apiHelpers, page}) => {
 	const account =
 		await apiHelpers.headlessAdminUser.getAccountByExternalReferenceCode(
 			accountExternalReferenceCode
@@ -40,9 +42,13 @@ test.afterEach(async ({apiHelpers}) => {
 		);
 
 	await apiHelpers.headlessAdminUser.deleteUserAccount(userAccount.id);
+
+	await customerPerformLogout(page);
 });
 
 test.beforeEach(async ({apiHelpers, page}) => {
+	await customerPerformLogin(page, 'test@liferay.com');
+
 	await mockOktaApiSession(page);
 	await mockProvisioningApiAssignUser(page);
 

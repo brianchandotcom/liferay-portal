@@ -161,7 +161,7 @@ public class JUnitTestClass extends BaseTestClass {
 
 		File parentDirectory = currentDirectory.getParentFile();
 
-		File parentProperties = new File(parentDirectory + "/test.properties");
+		File parentProperties = new File(parentDirectory, "test.properties");
 
 		if (parentProperties.exists()) {
 			return parentProperties;

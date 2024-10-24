@@ -23,42 +23,6 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-const createdEntities = {
-	objectDefinitionIds: [],
-	objectFolderIds: [],
-	objectRelationshipIds: [],
-} as {
-	objectDefinitionIds: number[];
-	objectFolderIds: number[];
-	objectRelationshipIds: number[];
-};
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	for (const id of createdEntities.objectRelationshipIds) {
-		await objectAdminRestClient.objectRelationship.deleteObjectRelationship(
-			{
-				objectRelationshipId: id,
-			}
-		);
-	}
-
-	for (const id of createdEntities.objectDefinitionIds) {
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: id,
-		});
-	}
-
-	for (const id of createdEntities.objectFolderIds) {
-		await objectAdminRestClient.objectFolder.deleteObjectFolder({
-			objectFolderId: id,
-		});
-	}
-});
-
 test.describe('Manage object relationships through Model Builder', () => {
 	test.beforeEach(({page}) => {
 		page.setViewportSize({height: 1080, width: 1920});

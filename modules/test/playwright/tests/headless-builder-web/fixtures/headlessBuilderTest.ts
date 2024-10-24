@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests, test} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {
 	FeatureFlagsOptions,
 	featureFlagsTest,
 } from '../../../fixtures/featureFlagsTest';
+import {getHeader} from '../../../helpers/ApiHelpers';
 
 function headlessBuilderTest(featureFlags?: FeatureFlagsOptions) {
 	return mergeTests(
@@ -17,11 +17,11 @@ function headlessBuilderTest(featureFlags?: FeatureFlagsOptions) {
 			...featureFlags,
 			'LPS-178642': true,
 		}),
-		apiHelpersTest.extend<{
+		test.extend<{
 			headlessBuilder: void;
 		}>({
 			headlessBuilder: [
-				async ({apiHelpers, page}, use) => {
+				async ({page}, use) => {
 					await page.goto('/');
 					for (const endpoint of [
 						'applications',
@@ -37,8 +37,7 @@ function headlessBuilderTest(featureFlags?: FeatureFlagsOptions) {
 									await page.request.get(
 										`/o/headless-builder/${endpoint}`,
 										{
-											headers:
-												await apiHelpers.getHeader(),
+											headers: await getHeader(page),
 										}
 									)
 								).status()

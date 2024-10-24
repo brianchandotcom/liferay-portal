@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
@@ -17,9 +18,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @author Petteri Karttunen
  */
 @Component(service = UpgradeStepRegistrator.class)
-public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
+public class SearchWebUpgradeStepRegistrator
+	extends BasePortletIdUpgradeProcess implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
@@ -41,6 +44,11 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				"com.liferay.search.experiences.configuration." +
 					"SemanticSearchConfiguration.scoped",
 				SemanticSearchConfiguration.class.getName() + ".scoped"));
+
+		registry.register(
+			"2.0.1", "2.0.2",
+			new com.liferay.portal.search.web.internal.upgrade.v2_0_2.
+				SearchPortletUpgradeProcess());
 	}
 
 	@Reference

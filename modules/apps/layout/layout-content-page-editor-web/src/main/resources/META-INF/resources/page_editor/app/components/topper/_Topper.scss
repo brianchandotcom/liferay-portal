@@ -125,6 +125,10 @@ html#{$cadmin-selector} {
 			z-index: $portletTopperHoveredZIndex;
 		}
 
+		&.hovered.not-allowed {
+			color: $cadmin-gray-600;
+		}
+
 		&.active:not(.page-editor__col):after,
 		&.active > .page-editor__col__border:after,
 		&.highlighted:after {

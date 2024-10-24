@@ -3,7 +3,7 @@
 		"className": "com.liferay.portal.language.rest.dto.v1_0.Message",
 		"parameters": {
 			"containsHeaders": "true",
-			"importStrategy": "ON_ERROR_FAIL",
+			"importStrategy": "ON_ERROR_CONTINUE",
 			"updateStrategy": "UPDATE"
 		},
 		"taskItemDelegateName": "DEFAULT"

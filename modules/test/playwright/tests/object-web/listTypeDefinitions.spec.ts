@@ -35,35 +35,7 @@ export const test = mergeTests(
 let siteLanguage = 'en';
 let userLanguage = 'en_US';
 
-const createdEntities = {
-	listTypeDefinitions: [],
-	objectDefinitions: [],
-} as {
-	listTypeDefinitions: ListTypeDefinition[];
-	objectDefinitions: ObjectDefinition[];
-};
-
-test.afterEach(async ({accountSettingsPage, apiHelpers, page}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	for (const objectDefinition of createdEntities.objectDefinitions) {
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
-	}
-
-	createdEntities.objectDefinitions = [];
-
-	for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			listTypeDefinition.id
-		);
-	}
-
-	createdEntities.listTypeDefinitions = [];
-
+test.afterEach(async ({accountSettingsPage, page}) => {
 	if (siteLanguage !== 'en') {
 		await page.goto('en');
 
@@ -288,7 +260,15 @@ test.describe('ensure picklist translation', () => {
 			})
 		).toBeVisible();
 
-		await accountSettingsPage.selectAccountLanguage('en_US');
+		await page.goto('/');
+		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+		await page
+			.getByRole('menuitem', {name: 'Configurações da Conta'})
+			.click();
+		await page.getByLabel('Linguagem').selectOption('en_US');
+		await page.getByRole('button', {
+			name: 'Salvar',
+		});
 	});
 
 	test('verify if translated picklist item will be displayed on forms', async ({

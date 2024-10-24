@@ -175,8 +175,9 @@ public class AssetTagStagedModelDataHandler
 		else {
 			try {
 				importedAssetTag = _assetTagLocalService.updateTag(
-					null, userId, existingAssetTag.getTagId(),
-					assetTag.getName(), serviceContext);
+					existingAssetTag.getExternalReferenceCode(), userId,
+					existingAssetTag.getTagId(), assetTag.getName(),
+					serviceContext);
 			}
 			catch (DuplicateTagException duplicateTagException) {
 				if (_log.isDebugEnabled()) {
@@ -184,7 +185,8 @@ public class AssetTagStagedModelDataHandler
 				}
 
 				importedAssetTag = _assetTagLocalService.updateTag(
-					null, userId, existingAssetTag.getTagId(),
+					existingAssetTag.getExternalReferenceCode(), userId,
+					existingAssetTag.getTagId(),
 					assetTag.getName() + " (Duplicate)", serviceContext);
 			}
 		}

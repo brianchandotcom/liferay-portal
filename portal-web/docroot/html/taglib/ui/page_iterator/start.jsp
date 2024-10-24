@@ -79,19 +79,20 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 		<%
 		String ariaPagination = namespace + id + "_ariaPagination";
+		String ariaPaginationButton = namespace + id + "_ariaPaginationButton";
 		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
 		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
 		%>
 
 		<c:if test="<%= deltaConfigurable %>">
 			<div class="dropdown pagination-items-per-page" id="<%= ariaPagination %>">
-				<button aria-controls="<%= ariaPaginationPicker %>" aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-haspopup="listbox" aria-label="<%= LanguageUtil.get(request, "items-per-page") %>" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" role="combobox">
+				<button aria-controls="<%= ariaPaginationPicker %>" aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-haspopup="listbox" aria-label="<%= LanguageUtil.get(request, "items-per-page") %>" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" id=<%= ariaPaginationButton %> role="combobox">
 					<liferay-ui:message arguments="<%= delta %>" key="x-entries" />
 
 					<aui:icon image="caret-double-l" markupView="lexicon" />
 				</button>
 
-				<ul aria-labelledby="<%= ariaPagination %>" class="dropdown-menu dropdown-menu-top" id="<%= ariaPaginationPicker %>" role="listbox" tabindex="-1">
+				<ul aria-labelledby="<%= ariaPaginationButton %>" class="dropdown-menu dropdown-menu-top" id="<%= ariaPaginationPicker %>" role="listbox" tabindex="-1">
 
 					<%
 					for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

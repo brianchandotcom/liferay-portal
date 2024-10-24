@@ -1339,8 +1339,6 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
-            required:
-                - name
             type: object
         UserGroupBrief:
             description:
@@ -6857,6 +6855,107 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+            tags: ["UserGroup"]
+    "/user-groups/by-external-reference-code/{externalReferenceCode}/user-group-users":
+        delete:
+            operationId: deleteUserGroupByExternalReferenceCodeUsers
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserGroup"]
+        get:
+            description:
+                Retrieves the list of users in a user group.
+            operationId: getUserGroupByExternalReferenceCodeUsersPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+            tags: ["UserAccount"]
+        post:
+            operationId: postUserGroupByExternalReferenceCodeUsers
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["UserGroup"]
     "/user-groups/{userGroupId}":
         delete:

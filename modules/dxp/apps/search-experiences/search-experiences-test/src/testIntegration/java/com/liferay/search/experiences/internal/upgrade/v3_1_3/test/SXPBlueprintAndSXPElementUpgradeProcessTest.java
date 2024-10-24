@@ -45,7 +45,8 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
- * @author Joshua Cords, Felipe Lorenz
+ * @author Joshua Cords
+ * @author Felipe Lorenz
  */
 @RunWith(Arquillian.class)
 public class SXPBlueprintAndSXPElementUpgradeProcessTest {
@@ -59,11 +60,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
+
 		User user = TestPropsValues.getUser();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, user.getUserId());
+			_group1, user.getUserId());
 	}
 
 	@Test
@@ -91,9 +94,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 		}
 
-		Group group1 = GroupTestUtil.addGroup();
-		Group group2 = GroupTestUtil.addGroup();
-
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			null, TestPropsValues.getUserId(),
 			StringUtil.read(
@@ -103,7 +103,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 					testName.getMethodName(), ".configurationJSON.json")),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_getElementInstancesJSON(group1, group2), "1.1",
+			_getElementInstancesJSON(), "1.1",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
@@ -118,8 +118,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_multiVMPool.clear();
 
 		_assertSXPBlueprint(
-			_getExpectedInstancesJSON(group1, group2),
-			sxpBlueprint.getSXPBlueprintId());
+			_getExpectedInstancesJSON(), sxpBlueprint.getSXPBlueprintId());
 
 		sxpElement =
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
@@ -148,9 +147,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			JSONCompareMode.STRICT);
 	}
 
-	private String _getElementInstancesJSON(Group group1, Group group2)
-		throws Exception {
-
+	private String _getElementInstancesJSON() throws Exception {
 		String elementInstancesJSON = StringUtil.read(
 			_clazz,
 			StringBundler.concat(
@@ -160,25 +157,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
 			StringBundler.concat(
-				group1.getDescriptiveName(), " (ID: ", group1.getGroupId(),
+				_group1.getDescriptiveName(), " (ID: ", _group1.getGroupId(),
 				")"));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
 			StringBundler.concat(
-				group2.getDescriptiveName(), " (ID: ", group2.getGroupId(),
+				_group2.getDescriptiveName(), " (ID: ", _group2.getGroupId(),
 				")"));
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_ID_1$]",
-			String.valueOf(group1.getGroupId()));
+			String.valueOf(_group1.getGroupId()));
 
 		return StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_ID_2$]",
-			String.valueOf(group2.getGroupId()));
+			String.valueOf(_group2.getGroupId()));
 	}
 
-	private String _getExpectedInstancesJSON(Group group1, Group group2)
-		throws Exception {
-
+	private String _getExpectedInstancesJSON() throws Exception {
 		String elementInstancesJSON = StringUtil.read(
 			_clazz,
 			StringBundler.concat(
@@ -187,26 +182,27 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
-			group1.getExternalReferenceCode());
+			_group1.getExternalReferenceCode());
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
-			group2.getExternalReferenceCode());
+			_group2.getExternalReferenceCode());
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
 			StringBundler.concat(
-				group1.getDescriptiveName(), " (ERC: ",
-				group1.getExternalReferenceCode(), ")"));
+				_group1.getDescriptiveName(), " (ERC: ",
+				_group1.getExternalReferenceCode(), ")"));
 
 		return StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
 			StringBundler.concat(
-				group2.getDescriptiveName(), " (ERC: ",
-				group2.getExternalReferenceCode(), ")"));
+				_group2.getDescriptiveName(), " (ERC: ",
+				_group2.getExternalReferenceCode(), ")"));
 	}
 
 	@DeleteAfterTestRun
-	private static Group _group;
+	private static Group _group1;
 
+	private static Group _group2;
 	private static ServiceContext _serviceContext;
 
 	@Inject(

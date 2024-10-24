@@ -17,6 +17,7 @@ export const BUSINESS_TYPES_TO_SYMBOLS = {
 	'MultiselectPicklist': 'list',
 	'Picklist': 'list',
 	'PrecisionDecimal': 'number',
+	'Record': 'folder',
 	'Relationship': 'text',
 	'RichText': 'text',
 	'Text': 'text',
@@ -41,3 +42,5 @@ export const STR_BLANK = '';
 export const ALLOWED_UNMODIFIABLE_OBJECTS = Liferay.FeatureFlags['LPD-21414']
 	? ['L_ACCOUNT', 'L_USER']
 	: [];
+
+export const UNSUPPORTED_BUSINESS_TYPES = ['Record'];

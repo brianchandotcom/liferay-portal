@@ -3676,6 +3676,10 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.LAYOUT,
 			siteNavigationMenuItem1.getType());
+		Assert.assertFalse(
+			StringUtil.contains(
+				siteNavigationMenuItem1.getTypeSettings(), "useCustomName",
+				StringPool.BLANK));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);
@@ -3747,6 +3751,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.LAYOUT,
 			siteNavigationMenuItem1.getType());
+		Assert.assertTrue(
+			StringUtil.contains(
+				siteNavigationMenuItem1.getTypeSettings(), "useCustomName",
+				StringPool.BLANK));
+		Assert.assertTrue(
+			StringUtil.contains(
+				siteNavigationMenuItem1.getTypeSettings(), "Test Layout",
+				StringPool.BLANK));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);

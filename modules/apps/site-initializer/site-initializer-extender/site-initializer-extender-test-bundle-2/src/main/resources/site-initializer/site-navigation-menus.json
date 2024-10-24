@@ -4,8 +4,12 @@
 			{
 				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM1",
 				"friendlyURL": "/test-public-layout",
+				"name_i18n": {
+					"en_US": "Test Layout"
+				},
 				"privateLayout": false,
-				"type": "layout"
+				"type": "layout",
+				"useCustomName": true
 			},
 			{
 				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM2",

@@ -383,6 +383,14 @@ public class AssetTagLocalServiceWrapper
 		return _assetTagLocalService.fetchAssetTag(tagId);
 	}
 
+	@Override
+	public AssetTag fetchAssetTagByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _assetTagLocalService.fetchAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the asset tag matching the UUID and group.
 	 *
@@ -467,6 +475,15 @@ public class AssetTagLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetTagLocalService.getAssetTag(tagId);
+	}
+
+	@Override
+	public AssetTag getAssetTagByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagLocalService.getAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

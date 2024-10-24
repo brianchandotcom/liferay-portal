@@ -251,6 +251,21 @@ public abstract class AssetTagLocalServiceBaseImpl
 		return assetTagPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public AssetTag fetchAssetTagByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return assetTagPersistence.fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	@Override
+	public AssetTag getAssetTagByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return assetTagPersistence.findByERC_G(externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the asset tag with the primary key.
 	 *

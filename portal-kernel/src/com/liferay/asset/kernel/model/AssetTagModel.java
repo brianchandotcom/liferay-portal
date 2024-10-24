@@ -7,6 +7,7 @@ package com.liferay.asset.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -29,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetTagModel
-	extends BaseModel<AssetTag>, CTModel<AssetTag>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<AssetTag>, CTModel<AssetTag>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -102,6 +103,23 @@ public interface AssetTagModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this asset tag.
+	 *
+	 * @return the external reference code of this asset tag
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this asset tag.
+	 *
+	 * @param externalReferenceCode the external reference code of this asset tag
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the tag ID of this asset tag.

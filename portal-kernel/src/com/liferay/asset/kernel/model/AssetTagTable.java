@@ -29,6 +29,10 @@ public class AssetTagTable extends BaseTable<AssetTagTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AssetTagTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetTagTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<AssetTagTable, Long> tagId = createColumn(
 		"tagId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AssetTagTable, Long> groupId = createColumn(

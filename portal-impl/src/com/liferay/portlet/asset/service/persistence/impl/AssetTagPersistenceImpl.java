@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import com.liferay.asset.kernel.exception.DuplicateAssetTagExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagTable;
@@ -25,9 +26,14 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -35,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3914,6 +3921,211 @@ public class AssetTagPersistenceImpl
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 =
 		"(assetTag.name IS NULL OR assetTag.name LIKE '')";
 
+	private FinderPath _finderPathFetchByERC_G;
+
+	/**
+	 * Returns the asset tag where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching asset tag
+	 * @throws NoSuchTagException if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag findByERC_G(String externalReferenceCode, long groupId)
+		throws NoSuchTagException {
+
+		AssetTag assetTag = fetchByERC_G(externalReferenceCode, groupId);
+
+		if (assetTag == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchTagException(sb.toString());
+		}
+
+		return assetTag;
+	}
+
+	/**
+	 * Returns the asset tag where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag fetchByERC_G(String externalReferenceCode, long groupId) {
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns the asset tag where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					AssetTag.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, groupId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByERC_G, finderArgs, this);
+			}
+
+			if (result instanceof AssetTag) {
+				AssetTag assetTag = (AssetTag)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						assetTag.getExternalReferenceCode()) ||
+					(groupId != assetTag.getGroupId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_ASSETTAG_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					List<AssetTag> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByERC_G, finderArgs, list);
+						}
+					}
+					else {
+						AssetTag assetTag = list.get(0);
+
+						result = assetTag;
+
+						cacheResult(assetTag);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (AssetTag)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the asset tag where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the asset tag that was removed
+	 */
+	@Override
+	public AssetTag removeByERC_G(String externalReferenceCode, long groupId)
+		throws NoSuchTagException {
+
+		AssetTag assetTag = findByERC_G(externalReferenceCode, groupId);
+
+		return remove(assetTag);
+	}
+
+	/**
+	 * Returns the number of asset tags where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching asset tags
+	 */
+	@Override
+	public int countByERC_G(String externalReferenceCode, long groupId) {
+		AssetTag assetTag = fetchByERC_G(externalReferenceCode, groupId);
+
+		if (assetTag == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"assetTag.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(assetTag.externalReferenceCode IS NULL OR assetTag.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"assetTag.groupId = ?";
+
 	public AssetTagPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3946,6 +4158,13 @@ public class AssetTagPersistenceImpl
 			FinderCacheUtil.putResult(
 				_finderPathFetchByUUID_G,
 				new Object[] {assetTag.getUuid(), assetTag.getGroupId()},
+				assetTag);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_G,
+				new Object[] {
+					assetTag.getExternalReferenceCode(), assetTag.getGroupId()
+				},
 				assetTag);
 		}
 	}
@@ -4035,6 +4254,14 @@ public class AssetTagPersistenceImpl
 
 			FinderCacheUtil.putResult(
 				_finderPathFetchByUUID_G, args, assetTagModelImpl);
+
+			args = new Object[] {
+				assetTagModelImpl.getExternalReferenceCode(),
+				assetTagModelImpl.getGroupId()
+			};
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_G, args, assetTagModelImpl);
 		}
 	}
 
@@ -4172,6 +4399,66 @@ public class AssetTagPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			assetTag.setUuid(uuid);
+		}
+
+		if (Validator.isNull(assetTag.getExternalReferenceCode())) {
+			assetTag.setExternalReferenceCode(assetTag.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					assetTagModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					assetTag.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = assetTag.getCompanyId();
+
+					long groupId = assetTag.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = assetTag.getPrimaryKey();
+					}
+
+					try {
+						assetTag.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								AssetTag.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								assetTag.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			AssetTag ercAssetTag = fetchByERC_G(
+				assetTag.getExternalReferenceCode(), assetTag.getGroupId());
+
+			if (isNew) {
+				if (ercAssetTag != null) {
+					throw new DuplicateAssetTagExternalReferenceCodeException(
+						"Duplicate asset tag with external reference code " +
+							assetTag.getExternalReferenceCode() +
+								" and group " + assetTag.getGroupId());
+				}
+			}
+			else {
+				if ((ercAssetTag != null) &&
+					(assetTag.getTagId() != ercAssetTag.getTagId())) {
+
+					throw new DuplicateAssetTagExternalReferenceCodeException(
+						"Duplicate asset tag with external reference code " +
+							assetTag.getExternalReferenceCode() +
+								" and group " + assetTag.getGroupId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -5036,6 +5323,7 @@ public class AssetTagPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -5060,6 +5348,9 @@ public class AssetTagPersistenceImpl
 		_mappingTableNames.add("AssetEntries_AssetTags");
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "groupId"});
 	}
 
 	/**
@@ -5185,6 +5476,11 @@ public class AssetTagPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, false);
+
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
 
 		AssetTagUtil.setPersistence(this);
 	}

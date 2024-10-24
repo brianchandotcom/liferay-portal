@@ -5,10 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {
-	ObjectAdminRestClient,
-	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectDefinition} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';

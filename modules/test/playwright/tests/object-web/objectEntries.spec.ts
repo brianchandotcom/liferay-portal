@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {
 	ObjectAdminRestClient,
-	ObjectDefinition,
 	ObjectField,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';

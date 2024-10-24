@@ -551,28 +551,29 @@ public class UpgradeReport {
 		).put(
 			"failed.sqls",
 			() -> {
-				List<FailedSQL> failedSQLs = new ArrayList<>();
+				List<FailedSQLEntry> failedSQLEntries = new ArrayList<>();
 
-				List<String> failedSQLStrings = upgradeRecorder.getFailedSQLs();
+				List<String> failedSQLMessages =
+					upgradeRecorder.getFailedSQLMessages();
 
-				for (String failedSQLString : failedSQLStrings) {
-					String sql = failedSQLString;
+				for (String failedSQLMessage : failedSQLMessages) {
+					String sql = failedSQLMessage;
 
 					String message = StringPool.BLANK;
 
-					int index = failedSQLString.indexOf(
+					int index = failedSQLMessage.indexOf(
 						StringPool.SEMICOLON + StringPool.PIPE);
 
 					if (index != -1) {
-						sql = failedSQLString.substring(0, index + 1);
+						sql = failedSQLMessage.substring(0, index + 1);
 
-						message = failedSQLString.substring(index + 2);
+						message = failedSQLMessage.substring(index + 2);
 					}
 
-					failedSQLs.add(new FailedSQL(message, sql));
+					failedSQLEntries.add(new FailedSQLEntry(message, sql));
 				}
 
-				return failedSQLs;
+				return failedSQLEntries;
 			}
 		).put(
 			"longest.upgrade.processes",
@@ -647,7 +648,8 @@ public class UpgradeReport {
 		).put(
 			"longest.running.sqls",
 			() -> {
-				List<RunningSQL> longestRunningSQLs = new ArrayList<>();
+				List<RunningSQLEntry> longestRunningSQLEntries =
+					new ArrayList<>();
 
 				Map<String, Long> sqlExecutionTimes =
 					upgradeRecorder.getSQLExecutionTimes();
@@ -679,12 +681,12 @@ public class UpgradeReport {
 						sql = key.substring(index + 1);
 					}
 
-					longestRunningSQLs.add(
-						new RunningSQL(
+					longestRunningSQLEntries.add(
+						new RunningSQLEntry(
 							entry.getValue(), sql, upgradeProcessClassName));
 				}
 
-				return longestRunningSQLs;
+				return longestRunningSQLEntries;
 			}
 		).put(
 			"warnings",
@@ -1025,9 +1027,9 @@ public class UpgradeReport {
 
 	}
 
-	private class FailedSQL {
+	private class FailedSQLEntry {
 
-		public FailedSQL(String message, String sql) {
+		public FailedSQLEntry(String message, String sql) {
 			_message = message;
 			_sql = sql;
 		}
@@ -1131,9 +1133,9 @@ public class UpgradeReport {
 
 	}
 
-	private class RunningSQL {
+	private class RunningSQLEntry {
 
-		public RunningSQL(
+		public RunningSQLEntry(
 			long duration, String sql, String upgradeProcessClassName) {
 
 			_duration = duration;

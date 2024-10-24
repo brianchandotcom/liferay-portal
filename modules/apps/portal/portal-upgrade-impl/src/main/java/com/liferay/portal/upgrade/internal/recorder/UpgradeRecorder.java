@@ -48,8 +48,8 @@ public class UpgradeRecorder {
 		return _errorMessages;
 	}
 
-	public List<String> getFailedSQLs() {
-		return UpgradeSQLRecorder.getFailedSQLs();
+	public List<String> getFailedSQLMessages() {
+		return UpgradeSQLRecorder.getFailedSQLMessages();
 	}
 
 	public String getFinalSchemaVersion(String servletContextName) {

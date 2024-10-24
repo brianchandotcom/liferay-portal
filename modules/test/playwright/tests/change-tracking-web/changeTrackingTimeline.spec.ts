@@ -14,10 +14,12 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	documentLibraryPagesTest,
 	isolatedSiteTest,
+	journalPagesTest,
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-20556': true,
@@ -443,4 +445,78 @@ test('LPD-37842 Timeline icon is yellow for cross-publication edits.', async ({
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		ctCollection2.id
 	);
+});
+
+test('LPD-39412 Assert publication timeline history is enabled for structures', async ({
+	journalStructuresPage,
+	page,
+	site,
+}) => {
+	await journalStructuresPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {name: 'Add'}).click();
+
+	await page
+		.getByLabel('Press enter to add Text field.')
+		.dragTo(page.getByText('Drag fields from the sidebar'));
+	await page.getByPlaceholder('Untitled Structure').pressSequentially(title1);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await page.waitForTimeout(500);
+
+	await journalStructuresPage.goto(site.friendlyUrlPath);
+
+	const timelineButton = page.getByLabel('timeline-button');
+	await timelineButton.waitFor();
+	await timelineButton.click();
+
+	const timelineActionsButton = page.locator('.publication-timeline button');
+
+	await expect(timelineActionsButton).toBeVisible();
+
+	await page.getByText('Description').click();
+
+	await page.getByRole('link', {name: title1}).click();
+
+	await page.waitForTimeout(500);
+
+	await timelineButton.click();
+
+	await expect(timelineActionsButton).toBeVisible();
+});
+
+test('LPD-39412 Assert publication timeline history is enabled for templates', async ({
+	journalEditTemplatePage,
+	page,
+	site,
+}) => {
+	await journalEditTemplatePage.goto(site.friendlyUrlPath);
+
+	await page
+		.getByPlaceholder('Untitled Template')
+		.pressSequentially(title2, {delay: 50});
+
+	await page
+		.getByRole('button', {exact: true, name: 'Save and Continue'})
+		.click();
+
+	await page.waitForTimeout(500);
+
+	const timelineButton = page.getByLabel('timeline-button');
+	await timelineButton.waitFor();
+	await timelineButton.click();
+
+	const timelineActionsButton = page.locator('.publication-timeline button');
+
+	await expect(timelineActionsButton).toBeVisible();
+
+	await journalEditTemplatePage.goto(site.friendlyUrlPath);
+
+	await page.waitForTimeout(500);
+
+	await timelineButton.waitFor();
+	await timelineButton.click();
+
+	await expect(timelineActionsButton).toBeVisible();
 });

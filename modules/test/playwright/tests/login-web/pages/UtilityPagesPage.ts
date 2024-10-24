@@ -33,6 +33,7 @@ export class UtilityPagesPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('button', {name: 'Publish'}),
+			timeout: 2000,
 			trigger: this.page.getByRole('button', {name: 'Save'}),
 		});
 	}

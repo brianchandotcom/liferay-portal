@@ -28,16 +28,14 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			"delete from Portlet where portletId = '" + _PORTLET_ID + "'");
+		runSQL("delete from Portlet where portletId = '" + _PORTLET_ID + "'");
 		runSQL(
 			"delete from PortletPreferences where portletId like '" +
 				_PORTLET_ID + "%'");
+		runSQL("delete from ResourceAction where name = '" + _PORTLET_ID + "'");
 		runSQL(
-			"delete from ResourceAction where name = '" + _PORTLET_ID + "'");
-		runSQL(
-			"delete from ResourcePermission where name = '" +
-				_PORTLET_ID + "'");
+			"delete from ResourcePermission where name = '" + _PORTLET_ID +
+				"'");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select plid, typeSettings from Layout where " +
@@ -50,20 +48,6 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 					_updateTypeSettings(resultSet.getString("typeSettings")));
 			}
 		}
-	}
-
-	private List<String> _updatePortletIds(String[] portletIds) {
-		List<String> updatedPortletIds = new ArrayList<>();
-
-		ArrayUtil.isNotEmptyForEach(
-			portletIds,
-			portletId -> {
-				if (!portletId.startsWith(_PORTLET_ID)) {
-					updatedPortletIds.add(portletId);
-				}
-			});
-
-		return updatedPortletIds;
 	}
 
 	private String _updateTypeSettings(String typeSettings) {
@@ -89,9 +73,16 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 				continue;
 			}
 
-			List<String> portletIds = _updatePortletIds(
+			List<String> portletIds = new ArrayList<>();
+
+			ArrayUtil.isNotEmptyForEach(
 				StringUtil.split(
-					typeSettingsUnicodeProperties.getProperty(key)));
+					typeSettingsUnicodeProperties.getProperty(key)),
+				portletId -> {
+					if (!portletId.startsWith(_PORTLET_ID)) {
+						portletIds.add(portletId);
+					}
+				});
 
 			if (portletIds.isEmpty()) {
 				iterator.remove();

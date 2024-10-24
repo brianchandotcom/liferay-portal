@@ -23,5 +23,5 @@ export {default as SemanticSearchConfiguration} from './components/semantic_sear
 // Utils + shared
 
 export {default as CodeMirrorTextArea} from './shared/CodeMirrorTextArea';
-export {default as InitializeClipboard} from './utils/initialize_clipboard';
 export {default as RangeInputs} from './shared/RangeInputs';
+export {default as InitializeClipboard} from './utils/initialize_clipboard';

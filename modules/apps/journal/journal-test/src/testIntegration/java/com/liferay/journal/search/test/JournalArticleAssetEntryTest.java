@@ -230,8 +230,8 @@ public class JournalArticleAssetEntryTest {
 		String updatedAssetTagName = RandomTestUtil.randomString();
 
 		_assetTagLocalService.updateTag(
-			null, TestPropsValues.getUserId(), assetTag.getTagId(),
-			updatedAssetTagName, serviceContext);
+			assetTag.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			assetTag.getTagId(), updatedAssetTagName, serviceContext);
 
 		_assertSearch(updatedAssetTagName, journalArticle);
 	}

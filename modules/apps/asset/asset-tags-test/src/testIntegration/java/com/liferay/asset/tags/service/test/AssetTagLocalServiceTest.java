@@ -467,8 +467,8 @@ public class AssetTagLocalServiceTest {
 		String tagName = "updated TAG1";
 
 		AssetTag actualAssetTag = _assetTagLocalService.updateTag(
-			null, TestPropsValues.getUserId(), assetTag.getTagId(), tagName,
-			_serviceContext);
+			assetTag.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			assetTag.getTagId(), tagName, _serviceContext);
 
 		Assert.assertEquals(tagName, actualAssetTag.getName());
 	}

@@ -19,66 +19,83 @@ export function AddObjectFieldsDataToProperties({
 	schemaProperties,
 }: AddObjectFieldsDataToProperties) {
 	const propertiesTreeViewItems = schemaProperties.map(
-		({description, id, name, objectFieldERC, objectRelationshipNames}) => {
-			const objectRelationshipNamesArray =
-				objectRelationshipNames?.split(',');
-
-			const objectRelationshipName =
-				objectRelationshipNamesArray?.[
-					objectRelationshipNamesArray.length - 1
-				];
-
-			const mainObjectDefinition = objectDefinitions.find(
-				(definition) =>
-					definition.externalReferenceCode ===
-					apiSchema.mainObjectDefinitionERC
-			);
-
-			let objectDefinitionId2: number;
-
-			objectDefinitions.forEach((definition) => {
-				definition.objectRelationships.forEach((relationship) => {
-					{
-						if (relationship.name === objectRelationshipName) {
-							objectDefinitionId2 =
-								relationship.objectDefinitionId2;
-						}
-					}
-				});
-			});
-
-			const relatedObjectDefinition = objectDefinitions.find(
-				(parentObjectDefinition) =>
-					parentObjectDefinition.id === objectDefinitionId2
-			);
-
-			const parentObjectDefinition =
-				relatedObjectDefinition ?? mainObjectDefinition;
-
-			const currentObjectField =
-				parentObjectDefinition?.objectFields.find(
-					(objectField) =>
-						objectField.externalReferenceCode === objectFieldERC
-				);
-
-			if (currentObjectField && parentObjectDefinition) {
+		({
+			description,
+			id,
+			name,
+			objectFieldERC,
+			objectRelationshipNames,
+			type,
+		}) => {
+			if (type.key === 'record') {
 				return {
-					businessType: currentObjectField?.businessType!,
-					...((description || description === '') && {
-						description,
-					}),
+					businessType: type.name,
 					id,
 					name,
-					objectDefinitionName: parentObjectDefinition?.name!,
-					objectFieldERC,
-					objectFieldId: currentObjectField?.id!,
-					objectFieldName: currentObjectField?.name!,
-					...(objectRelationshipNames && {
-						objectRelationshipNames,
-					}),
-					r_apiSchemaToAPIProperties_l_apiSchemaId: apiSchema.id,
 					type: 'trewViewItem',
 				};
+			}
+			else {
+				const objectRelationshipNamesArray =
+					objectRelationshipNames?.split(',');
+
+				const objectRelationshipName =
+					objectRelationshipNamesArray?.[
+						objectRelationshipNamesArray.length - 1
+					];
+
+				const mainObjectDefinition = objectDefinitions.find(
+					(definition) =>
+						definition.externalReferenceCode ===
+						apiSchema.mainObjectDefinitionERC
+				);
+
+				let objectDefinitionId2: number;
+
+				objectDefinitions.forEach((definition) => {
+					definition.objectRelationships.forEach((relationship) => {
+						{
+							if (relationship.name === objectRelationshipName) {
+								objectDefinitionId2 =
+									relationship.objectDefinitionId2;
+							}
+						}
+					});
+				});
+
+				const relatedObjectDefinition = objectDefinitions.find(
+					(parentObjectDefinition) =>
+						parentObjectDefinition.id === objectDefinitionId2
+				);
+
+				const parentObjectDefinition =
+					relatedObjectDefinition ?? mainObjectDefinition;
+
+				const currentObjectField =
+					parentObjectDefinition?.objectFields.find(
+						(objectField) =>
+							objectField.externalReferenceCode === objectFieldERC
+					);
+
+				if (currentObjectField && parentObjectDefinition) {
+					return {
+						businessType: currentObjectField?.businessType!,
+						...((description || description === '') && {
+							description,
+						}),
+						id,
+						name,
+						objectDefinitionName: parentObjectDefinition?.name!,
+						objectFieldERC,
+						objectFieldId: currentObjectField?.id!,
+						objectFieldName: currentObjectField?.name!,
+						...(objectRelationshipNames && {
+							objectRelationshipNames,
+						}),
+						r_apiSchemaToAPIProperties_l_apiSchemaId: apiSchema.id,
+						type: 'trewViewItem',
+					};
+				}
 			}
 		}
 	);

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
@@ -32,6 +33,11 @@ const SAMPLES = [
 		erc: 'LXC:liferay-sample-theme-css-2',
 		mainURL: '/o/liferay-sample-theme-css-2/css/main.css',
 		name: 'Liferay Sample Theme CSS 2',
+	},
+	{
+		erc: 'LXC:liferay-sample-theme-css-4',
+		mainURL: '/o/liferay-sample-theme-css-4/css/main.css',
+		name: 'Liferay Sample Theme CSS 4',
 	},
 ];
 
@@ -146,3 +152,30 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 		await clientExtensionsPage.deleteClientExtension(clientExtensionName);
 	});
 });
+
+const controlPanelScopedTest = mergeTests(
+	loginTest(),
+	featureFlagsTest({
+		'LPD-34650': true,
+	}),
+	clientExtensionsPageTest
+);
+
+controlPanelScopedTest(
+	'LPD-37516 Sample control panel theme CSS client extension is properly deployed',
+	async ({clientExtensionsPage, page}) => {
+		await clientExtensionsPage.goto();
+
+		const background = await page
+			.locator('.control-menu')
+			.evaluate((controlMenu) => {
+				const computedStyle = window.getComputedStyle(controlMenu);
+
+				return computedStyle.background;
+			});
+
+		expect(background).toBe(
+			'rgba(0, 0, 0, 0) linear-gradient(105deg, rgb(0, 63, 91), rgb(43, 75, 125), rgb(95, 81, 149), rgb(152, 80, 157), rgb(204, 76, 145), rgb(242, 83, 117), rgb(255, 111, 78), rgb(255, 153, 19)) repeat scroll 0% 0% / auto padding-box border-box'
+		);
+	}
+);
